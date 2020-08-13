@@ -44,7 +44,7 @@ namespace Goedel.Mesh.Test {
 
             var deviceAdmin = machineAliceAdmin.MeshHost.CreateMeshWithAccount("main");
 
-            using var catalog = deviceAdmin.GetCatalogCredential();
+            using var catalog = deviceAdmin.GetStore(CatalogCredential.Label) as CatalogCredential;
             var entry1 = new CatalogedCredential() {
                 Service = "example.com",
                 Username = "alice",
@@ -113,7 +113,7 @@ namespace Goedel.Mesh.Test {
 
             var deviceAdmin = machineAliceAdmin.MeshHost.CreateMeshWithAccount("main");
 
-            var catalog = deviceAdmin.GetCatalogDevice();
+            var catalog = deviceAdmin.GetStore(CatalogDevice.Label) as CatalogDevice;
 
             //var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.KeySignature.UDF);
             //var Entry1 = MakeCatalogEntryDevice(deviceAdmin.ProfileDevice, keySign);
@@ -172,7 +172,7 @@ namespace Goedel.Mesh.Test {
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
             var deviceAdmin = machineAliceAdmin.MeshHost.CreateMeshWithAccount("main");
 
-            var catalog = deviceAdmin.GetCatalogContact();
+            var catalog = deviceAdmin.GetStore(CatalogContact.Label) as CatalogContact;
 
             var Contact1 = new ContactPerson("Alice", "Example");
             var Entry1 = new CatalogedContact(Contact1);

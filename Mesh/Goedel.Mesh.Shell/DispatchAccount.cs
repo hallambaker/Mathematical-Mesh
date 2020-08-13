@@ -78,7 +78,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountStatus(AccountStatus Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             var result = contextAccount.Status();
 
             return new ResultStatus() {
@@ -94,7 +94,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountSync(AccountSync Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             var result = contextAccount.Sync();
 
 
@@ -121,7 +121,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The dispatch options.</param>
         /// <returns>The result of the operation.</returns>
         public override ShellResult AccountGetPIN(AccountGetPIN Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
 
             var expire = TimeSpan.Parse(Options.Expire.Value);
 
@@ -143,7 +143,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountConnect(AccountConnect Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
 
             var catalogedDevice = contextAccount.Connect(Options.Uri.Value);
 
@@ -163,7 +163,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountEscrow(AccountEscrow Options) {
-            var contextMesh = GetContextAccount(Options);
+            var contextMesh = GetContextUser(Options);
             var shares = contextMesh.Escrow(3, 2);
 
             var textShares = new List<string>();
@@ -185,7 +185,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountPurge(AccountPurge Options) {
-            var contextMesh = GetContextAccount(Options);
+            var contextMesh = GetContextUser(Options);
 
             throw new NYI();
             }

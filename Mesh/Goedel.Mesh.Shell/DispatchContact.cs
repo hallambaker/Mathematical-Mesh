@@ -13,13 +13,12 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactSelf(ContactSelf Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextUser = GetContextUser(Options);
             var file = Options.File.Value;
 
             "Need to merge in the self contact info and label with a name.".TaskFunctionality(true);
 
-            var catalog = contextAccount.GetCatalogContact();
-            var entry = catalog.AddFromFile(file, self: true);
+            var entry = contextUser.AddFromFile(file, self: true);
 
             return new ResultEntry() {
                 Success = true,
@@ -33,10 +32,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactStatic(ContactStatic Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextUser = GetContextUser(Options);
 
-
-            var uri = contextAccount.ContactUri(false, null);
+            var uri = contextUser.ContactUri(false, null);
 
             var result = new ResultPublish() {
                 Success = true,
@@ -51,10 +49,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactDynamic(ContactDynamic Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextUser = GetContextUser(Options);
             var expiry = DateTime.Now.AddTicks(Constants.DayInTicks);
 
-            var uri = contextAccount.ContactUri(true, expiry);
+            var uri = contextUser.ContactUri(true, expiry);
 
             var result = new ResultPublish() {
                 Success = true,
@@ -69,10 +67,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactExchange(ContactExchange Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextUser = GetContextUser(Options);
             var recipient = Options.Uri.Value;
 
-            var entry = contextAccount.ContactExchange(recipient, true, out var message);
+            var entry = contextUser.ContactExchange(recipient, true, out var message);
 
             return new ResultEntrySent() {
                 Success = true,
@@ -87,10 +85,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactFetch(ContactFetch Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextUser = GetContextUser(Options);
             var recipient = Options.Uri.Value;
 
-            var entry = contextAccount.ContactExchange(recipient, false, out _);
+            var entry = contextUser.ContactExchange(recipient, false, out _);
 
             return new ResultEntry() {
                 Success = true,
@@ -106,16 +104,14 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactExport(ContactExport Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextUser = GetContextUser(Options);
             var file = Options.File.Value;
             var contactId = Options.Identifier.Value;
 
-            var catalog = contextAccount.GetCatalogContact();
-
-            var entry = catalog.Get(contactId);
+            var entry = contextUser.GetContact(contactId);
 
             using var fileStream = file.OpenFileNew();
-            catalog.WriteToStream(fileStream, entry);
+            entry.WriteToStream(fileStream);
 
             return new ResultEntry() {
                 Success = true,
@@ -129,11 +125,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactAdd(ContactAdd Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextUser = GetContextUser(Options);
             var file = Options.File.Value;
 
-            var catalog = contextAccount.GetCatalogContact();
-            var entry = catalog.AddFromFile(file, self: false);
+            var entry = contextUser.AddFromFile(file, self: false);
 
             return new ResultEntry() {
                 Success = true,
@@ -147,11 +142,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactGet(ContactGet Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextUser = GetContextUser(Options);
             var identifier = Options.Identifier.Value;
 
-            var catalog = contextAccount.GetCatalogContact();
-            var result = catalog.Locate(identifier);
+            var result = contextUser.GetContact(identifier);
 
             return new ResultEntry() {
                 Success = result != null,
@@ -165,14 +159,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactDelete(ContactDelete Options) {
-            var contextAccount = GetContextAccount(Options);
-            var identifier = Options.Identifier.Value;
+            var contextUser = GetContextUser(Options);
+            var key = Options.Identifier.Value;
 
-            var catalog = contextAccount.GetCatalogContact();
-            var result = catalog.Get(identifier);
-            result.AssertNotNull(EntryNotFound.Throw, identifier);
-            catalog.Delete(result);
-
+            var transaction = contextUser.TransactBegin();
+            var catalog = transaction.GetCatalogContact();
+            var result = catalog.Locate(key);
+            result.AssertNotNull(EntryNotFound.Throw, key);
+            transaction.CatalogDelete(catalog, result);
+            transaction.Transact();
 
             return new Result() {
                 Success = true
@@ -186,12 +181,12 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactDump(ContactDump Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextUser = GetContextUser(Options);
             var result = new ResultDump() {
                 Success = true,
                 CatalogedEntries = new List<CatalogedEntry>()
                 };
-            var catalog = contextAccount.GetCatalogContact();
+            var catalog = contextUser.GetStore(CatalogContact.Label) as CatalogContact;
             foreach (var entry in catalog) {
                 result.CatalogedEntries.Add(entry);
                 }

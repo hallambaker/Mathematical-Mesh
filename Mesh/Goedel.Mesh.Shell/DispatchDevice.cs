@@ -85,7 +85,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DevicePending(DevicePending Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             contextAccount.Sync();
 
             // get the inbound spool
@@ -140,7 +140,7 @@ namespace Goedel.Mesh.Shell {
             ProcessRequest(Options, Options.CompletionCode.Value, false);
 
         ShellResult ProcessRequest(IAccountOptions Options, string messageID, bool accept) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
 
             // Hack: should be able to accept, reject specific requests, not just
             // the last one.
@@ -176,7 +176,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DevicePreconfigure(DevicePreconfigure Options) {
-            using var contextAccount = GetContextAccount(Options);
+            using var contextAccount = GetContextUser(Options);
 
             contextAccount.Preconfigure(out var filename, out var profileDevice, out var connectUri);
 
@@ -196,7 +196,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceDelete(DeviceDelete Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             var result = new Result() {
 
                 };
@@ -209,7 +209,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceList(DeviceList Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             var result = new Result() {
 
                 };
@@ -223,7 +223,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceAuthorize(DeviceAuthorize Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             var result = new ResultAuthorize() {
 
                 };

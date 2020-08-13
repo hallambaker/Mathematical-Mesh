@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
+
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
 
@@ -9,7 +12,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordAdd(PasswordAdd Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             var site = Options.Site.Value;
             var username = Options.Username.Value;
             var password = Options.Password.Value;
@@ -20,8 +23,10 @@ namespace Goedel.Mesh.Shell {
                 Password = password
                 };
 
-            var catalog = contextAccount.GetCatalogCredential();
-            catalog.Update(entry);
+            var transaction = contextAccount.TransactBegin();
+            var catalog = transaction.GetCatalogCredential();
+            transaction.CatalogUpdate(catalog, entry);
+            transaction.Transact();
 
             return new ResultEntry() {
                 Success = true,
@@ -35,10 +40,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordGet(PasswordGet Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             var site = Options.Site.Value;
 
-            var catalog = contextAccount.GetCatalogCredential();
+            var catalog = contextAccount.GetStore(CatalogCredential.Label) as CatalogCredential;
             var result = catalog.LocateByService(site);
 
 
@@ -54,14 +59,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordDelete(PasswordDelete Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             var site = Options.Site.Value;
 
-
-            var catalog = contextAccount.GetCatalogCredential();
-            var result = catalog.LocateByService(site);
-            catalog.Delete(result);
-
+            var transaction = contextAccount.TransactBegin();
+            var catalog = transaction.GetCatalogCredential();
+            var result = catalog.Locate(site);
+            result.AssertNotNull(EntryNotFound.Throw, site);
+            transaction.CatalogDelete(catalog, result);
+            transaction.Transact();
 
             return new Result() {
                 Success = true
@@ -74,12 +80,12 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordDump(PasswordDump Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             var result = new ResultDump() {
                 Success = true,
                 CatalogedEntries = new List<CatalogedEntry>()
                 };
-            var catalog = contextAccount.GetCatalogCredential();
+            var catalog = contextAccount.GetStore(CatalogCredential.Label) as CatalogCredential;
             foreach (var entry in catalog) {
                 result.CatalogedEntries.Add(entry);
                 }

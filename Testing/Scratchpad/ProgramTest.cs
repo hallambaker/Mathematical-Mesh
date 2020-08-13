@@ -33,9 +33,7 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
-            // Messages are not being marked as read after processing
-            // PINs are not being marked as being used
-            // need test to see how many messages are processed...
+            TestService.Test().MeshCatalogGroup();
 
             // 4 tests
             //TestService.Test().MeshGrantAdmin();
@@ -44,7 +42,7 @@ namespace Scratchpad {
             //TestService.Test().MeshGrantRevokeExternal();
 
             // 5 tests
-            ShellTests.Test().TestProfileBookmark();
+            //ShellTests.Test().TestProfileBookmark();
             //ShellTests.Test().TestProfileCalendar();
             //ShellTests.Test().TestProfileContact();
             //ShellTests.Test().TestProfileNetwork();

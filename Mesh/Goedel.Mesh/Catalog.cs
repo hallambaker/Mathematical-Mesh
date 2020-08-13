@@ -80,7 +80,7 @@ namespace Goedel.Mesh {
 
             if (readContainer) {
                 foreach (var indexEntry in PersistenceStore.ObjectIndex) {
-                    var objectData = indexEntry.Value.JsonObject as CatalogedEntry;
+                    var objectData = indexEntry.Value.JsonObject as T;
                     NewEntry(objectData);
                     }
                 }
@@ -102,14 +102,14 @@ namespace Goedel.Mesh {
         /// derrived classes to update local indexes.
         /// </summary>
         /// <param name="catalogedEntry">The entry being added.</param>
-        public virtual void NewEntry(CatalogedEntry catalogedEntry) { }
+        public virtual void NewEntry(T catalogedEntry) { }
 
         /// <summary>
         /// Callback called before updating an entry in the catalog. May be overriden in 
         /// derrived classes to update local indexes.
         /// </summary>
         /// <param name="catalogedEntry">The entry being updated.</param>
-        public virtual void UpdateEntry(CatalogedEntry catalogedEntry) { }
+        public virtual void UpdateEntry(T catalogedEntry) { }
 
         /// <summary>
         /// Callback called before deleting an entry from the catalog. May be overriden in 
@@ -134,8 +134,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="catalogEntry">The entry to add.</param>
         /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
-        public void New(CatalogedEntry catalogEntry, CryptoKey encryptionKey = null) {
-
+        public void New(T catalogEntry, CryptoKey encryptionKey = null) {
             var envelope = PersistenceStore.PrepareNew(catalogEntry, encryptionKey);
             PersistenceStore.Apply(envelope);
             NewEntry(catalogEntry);
@@ -147,7 +146,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="catalogEntry">The entry to update.</param>
         /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
-        public void Update(CatalogedEntry catalogEntry, CryptoKey encryptionKey = null) {
+        public void Update(T catalogEntry, CryptoKey encryptionKey = null) {
             var envelope = PersistenceStore.PrepareUpdate(out _, catalogEntry, encryptionKey: encryptionKey);
             PersistenceStore.Apply(envelope);
             UpdateEntry(catalogEntry);
@@ -157,7 +156,7 @@ namespace Goedel.Mesh {
         /// Delete <paramref name="catalogEntry"/> from the catalog.
         /// </summary>
         /// <param name="catalogEntry">The entry to delete.</param>
-        public void Delete(CatalogedEntry catalogEntry) {
+        public void Delete(T catalogEntry) {
             var envelope = PersistenceStore.PrepareDelete(out _, catalogEntry._PrimaryKey);
             PersistenceStore.Apply(envelope);
             DeleteEntry(catalogEntry._PrimaryKey);
@@ -250,34 +249,34 @@ namespace Goedel.Mesh {
 
 
 
-        /// <summary>
-        /// Write the catalog entry data speficied in the file <paramref name="stream"/>.
-        /// </summary>
-        /// <param name="stream">The stream to write the entry data to.</param>
-        /// <param name="format">The file format to write the output in.</param>
-        /// <param name="data">The data to write.</param>
-        public virtual void WriteToStream(
-                    Stream stream,
-                    T data,
-                    CatalogedEntryFormat format = CatalogedEntryFormat.Default) =>
-            data.WriteToStream(stream, format);
+        ///// <summary>
+        ///// Write the catalog entry data speficied in the file <paramref name="stream"/>.
+        ///// </summary>
+        ///// <param name="stream">The stream to write the entry data to.</param>
+        ///// <param name="format">The file format to write the output in.</param>
+        ///// <param name="data">The data to write.</param>
+        //public virtual void WriteToStream(
+        //            Stream stream,
+        //            T data,
+        //            CatalogedEntryFormat format = CatalogedEntryFormat.Default) =>
+        //    data.WriteToStream(stream, format);
 
-        /// <summary>
-        /// Write the catalog entry data speficied in the file <paramref name="stream"/>.
-        /// </summary>
-        /// <param name="stream">The stream to write the entry data to.</param>
-        /// <param name="format">The file format to write the output in.</param>
-        /// <param name="data">The list of entries to write.</param>
-        public virtual void WriteToStream(
-                    Stream stream,
-                    List<T> data,
-                    CatalogedEntryFormat format = CatalogedEntryFormat.Default) {
-            stream.Future();
-            data.Future();
-            format.Future();
+        ///// <summary>
+        ///// Write the catalog entry data speficied in the file <paramref name="stream"/>.
+        ///// </summary>
+        ///// <param name="stream">The stream to write the entry data to.</param>
+        ///// <param name="format">The file format to write the output in.</param>
+        ///// <param name="data">The list of entries to write.</param>
+        //public virtual void WriteToStream(
+        //            Stream stream,
+        //            List<T> data,
+        //            CatalogedEntryFormat format = CatalogedEntryFormat.Default) {
+        //    stream.Future();
+        //    data.Future();
+        //    format.Future();
 
-            throw new NYI();
-            }
+        //    throw new NYI();
+        //    }
 
 
         /// <summary>
@@ -285,8 +284,8 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="key">Unique identifier of the entry to locate.</param>
         /// <returns>The entry (if found).</returns>
-        public CatalogedEntry Locate(string key) =>
-            (PersistenceStore.Get(key) as StoreEntry)?.JsonObject as CatalogedEntry;
+        public T Locate(string key) =>
+            (PersistenceStore.Get(key) as StoreEntry)?.JsonObject as T;
 
 
         /// <summary>

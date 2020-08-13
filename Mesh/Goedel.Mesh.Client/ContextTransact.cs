@@ -47,11 +47,11 @@ namespace Goedel.Mesh.Client {
                 // update in memory structure
                 switch (action) {
                     case PersistenceStore.EventNew: {
-                        Catalog.NewEntry(envelope.JSONObject as CatalogedEntry);
+                        Catalog.NewEntry(envelope.JSONObject as T);
                         break;
                         }
                     case PersistenceStore.EventUpdate: {
-                        Catalog.UpdateEntry(envelope.JSONObject as CatalogedEntry);
+                        Catalog.UpdateEntry(envelope.JSONObject as T);
                         break;
                         }
                     case PersistenceStore.EventDelete: {
@@ -89,25 +89,211 @@ namespace Goedel.Mesh.Client {
 
     public partial class ContextAccount {
 
+        /// <summary>
+        /// Begin a transaction.
+        /// </summary>
+        /// <returns></returns>
+        public new TransactAccount TransactBegin() => new TransactAccount(this);
+
+        /// <summary>
+        /// Perform the transaction described by <paramref name="transactRequest"/>. If the
+        /// remote operation succeeds, apply the changes to the local stores.
+        /// </summary>
+        /// <param name="transactRequest">The transaction to perform.</param>
+        /// <returns>Response from the Mesh service.</returns>
+        public TransactResponse Transact<T>(
+                Transaction<T> transact) where T : ContextAccount {
+
+            var transactRequest = transact.TransactRequest;
+            Connect();
+
+            if (transact.InboundReferences != null) {
+                var message = new MessageComplete() {
+                    References = transact.InboundReferences
+                    };
+                transact.InboundMessage(message);
+                }
+            if (transact.LocalReferences != null) {
+                var message = new MessageComplete() {
+                    References = transact.LocalReferences
+                    };
+                transact.LocalMessage(message);
+                }
+
+            var response = MeshClient.Transact(transactRequest);
+
+
+            if (response.Success()) {
+                if (transactRequest.Updates != null) {
+                    // Perform local updates to each store.
+                    foreach (var update in transactRequest.Updates) {
+                        var catalogUpdate = update as TransactionUpdate;
+                        catalogUpdate.Commit();
+                        }
+                    }
+                if (transactRequest.Inbound != null) {
+                    var spoolInbound = GetStore(SpoolInbound.Label) as SpoolInbound;
+                    foreach (var envelope in transactRequest.Inbound) {
+                        spoolInbound.Add(envelope);
+                        }
+                    }
+                if (transactRequest.Local != null) {
+                    var spoolLocal = GetStore(SpoolLocal.Label) as SpoolLocal;
+                    foreach (var envelope in transactRequest.Local) {
+                        spoolLocal.Add(envelope);
+                        }
+                    }
+
+                }
+
+            return response;
+            }
+
+
+
+        }
+
+    public partial class ContextUser {
+
+        /// <summary>
+        /// Begin a transaction.
+        /// </summary>
+        /// <returns></returns>
+        public new TransactUser TransactBegin() => new TransactUser(this);
+        }
+
+
+    public partial class ContextGroup {
+
+        /// <summary>
+        /// Begin a transaction.
+        /// </summary>
+        /// <returns></returns>
+        public new TransactGroup TransactBegin() => new TransactGroup(this);
+        }
+
+    public partial class TransactAccount : Transaction<ContextAccount> {
+        /// <summary>The account context in which this transaction takes place.</summary>
+        public override ContextAccount ContextAccount  { get; }
+
+        public TransactAccount(ContextAccount contextAccount) => ContextAccount = contextAccount;
+
+
+
+
+        }
+
+
+    public partial class TransactUser : Transaction<ContextUser> {
+        /// <summary>The account context in which this transaction takes place.</summary>
+        public override ContextUser ContextAccount => ContextUser;
+        /// <summary>The account context in which this transaction takes place.</summary>
+        public ContextUser ContextUser { get; }
+
+        public TransactUser(ContextUser contextUser) => ContextUser = contextUser;
+
+
+        ///<summary>Returns the application catalog for the account</summary>
+        public CatalogApplication GetCatalogApplication() => ContextUser.GetStore(CatalogApplication.Label) as CatalogApplication;
+
+        ///<summary>Returns the contacts catalog for the account</summary>
+        public CatalogDevice GetCatalogDevice() => ContextUser.GetStore(CatalogDevice.Label) as CatalogDevice;
+
+        ///<summary>Returns the contacts catalog for the account</summary>
+        public CatalogContact GetCatalogContact() => ContextUser.GetStore(CatalogContact.Label) as CatalogContact;
+
+        ///<summary>Returns the credential catalog for the account</summary>
+        public CatalogCredential GetCatalogCredential() => ContextUser.GetStore(CatalogCredential.Label) as CatalogCredential;
+
+        ///<summary>Returns the bookmark catalog for the account</summary>
+        public CatalogBookmark GetCatalogBookmark() => ContextUser.GetStore(CatalogBookmark.Label) as CatalogBookmark;
+
+        ///<summary>Returns the calendar catalog for the account</summary>
+        public CatalogCalendar GetCatalogCalendar() => ContextUser.GetStore(CatalogCalendar.Label) as CatalogCalendar;
+
+        ///<summary>Returns the network catalog for the account</summary>
+        public CatalogNetwork GetCatalogNetwork() => ContextUser.GetStore(CatalogNetwork.Label) as CatalogNetwork;
+
+        ///<summary>Returns the inbound spool for the account</summary>
+        public SpoolInbound GetSpoolInbound() => ContextUser.GetStore(SpoolInbound.Label) as SpoolInbound;
+
+
+
+        }
+
+
+    public partial class TransactGroup : Transaction<ContextGroup> {
+
+        /// <summary>The account context in which this transaction takes place.</summary>
+        public override ContextGroup ContextAccount => ContextGroup;
+
+        /// <summary>The account context in which this transaction takes place.</summary>
+        public ContextGroup ContextGroup { get; }
+
+        public TransactGroup(ContextGroup contextGroup) => ContextGroup = contextGroup;
+
+        ///<summary>Returns the network catalog for the account</summary>
+        public CatalogMember GetCatalogMember() => ContextGroup.GetStore(CatalogMember.Label) as CatalogMember;
+
+        }
+
+    public abstract class Transaction<T> : Disposable where T : ContextAccount {
+        #region // Properties
+
+        /// <summary>The account context in which this transaction takes place.</summary>
+        public abstract T ContextAccount { get; }
 
         KeyPair SignOutboundMessage => null;
         KeyPair SignInboundMessage => null;
         KeyPair SignLocalMessage => null;
 
+        CryptoKey TryFindKeyEncryption(string recipient) => ContextAccount.TryFindKeyEncryption(recipient);
 
+
+        /// <summary>The transaction request message being assembled</summary>
+        public TransactRequest TransactRequest = new TransactRequest();
+
+        /// <summary>List of completion references to be added to the local spool</summary>
+        public List<Reference> LocalReferences;
+
+        /// <summary>List of completion references to be added to the inbound spool</summary>
+        public List<Reference> InboundReferences;
+
+
+        //public Transaction<T>() {
+        //    }
+
+        #endregion
+        #region // Operations
+        ///<summary>Returns the network catalog for the account</summary>
+        public CatalogPublication GetCatalogPublication() => 
+            ContextAccount.GetStore(CatalogPublication.Label) as CatalogPublication;
+
+
+        ///<summary>Returns the network catalog for the account</summary>
+        public CatalogCapability GetCatalogCapability() => 
+            ContextAccount.GetStore(CatalogCapability.Label) as CatalogCapability;
+
+
+
+
+
+        #endregion
+
+
+
+        #region // Operations
         /// <summary>
-        /// Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
-        /// outbound message of <paramref name="transactRequest"/>.
+        /// Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> as an
+        /// outbound message.
         /// </summary>
-        /// <param name="transactRequest">The transaction request being built</param>
-        /// <param name="recipient">The message recipient</param>
+        /// <param name="recipientAddress">The message recipient</param>
         /// <param name="message">The message to send</param>
         public void OutboundMessage(
-                TransactRequest transactRequest,
                 string recipientAddress,
                 Message message) {
             var recipientEncryptionKey = TryFindKeyEncryption(recipientAddress);
-            OutboundMessage(transactRequest, recipientAddress, recipientEncryptionKey,
+            OutboundMessage(recipientAddress, recipientEncryptionKey,
                 message);
             }
 
@@ -116,39 +302,35 @@ namespace Goedel.Mesh.Client {
         /// Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
         /// outbound message of <paramref name="transactRequest"/>.
         /// </summary>
-        /// <param name="transactRequest">The transaction request being built</param>
         /// <param name="recipient">The message recipient</param>
         /// <param name="message">The message to send</param>
         public void OutboundMessage(
-                TransactRequest transactRequest,
                 NetworkProtocolEntry recipient,
                 Message message) {
 
             var recipientAddress = recipient.NetworkAddress.Address;
             var recipientEncryptionKey = recipient.MeshKeyEncryption;
 
-            OutboundMessage(transactRequest, recipientAddress, recipientEncryptionKey,
+            OutboundMessage(recipientAddress, recipientEncryptionKey,
                 message);
             }
 
         /// <summary>
         /// Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> 
         /// encrypted under <paramref name="recipientEncryptionKey"/> as an
-        /// outbound message of <paramref name="transactRequest"/>.
+        /// outbound message.
         /// </summary>
-        /// <param name="transactRequest">The transaction request being built</param>
         /// <param name="recipientAddress">The message recipient address</param>
         /// <param name="recipientEncryptionKey">The message recipient encryption key</param>
         /// <param name="message">The message to send</param>
         public void OutboundMessage(
-                TransactRequest transactRequest,
                 string recipientAddress,
                 CryptoKey recipientEncryptionKey,
                 Message message) {
-            transactRequest.Outbound ??= new List<Cryptography.Dare.DareEnvelope>();
-            transactRequest.Accounts ??= new List<string>();
+            TransactRequest.Outbound ??= new List<Cryptography.Dare.DareEnvelope>();
+            TransactRequest.Accounts ??= new List<string>();
 
-            message.Sender ??= AccountAddress;
+            message.Sender ??= ContextAccount.AccountAddress;
 
             //var envelope = message.Encode(signingKey: SignOutboundMessage,
             //        encryptionKey: recipientEncryptionKey); // Todo: Sign, encrypt
@@ -156,91 +338,82 @@ namespace Goedel.Mesh.Client {
             var envelope = message.Encode(); // Todo: Sign, encrypt
             envelope.JSONObject = message;
 
-            transactRequest.Outbound.Add(envelope);
+            TransactRequest.Outbound.Add(envelope);
             if (recipientAddress != null) {
-                transactRequest.Accounts.Add(recipientAddress);
+                TransactRequest.Accounts.Add(recipientAddress);
                 }
             }
 
 
         /// <summary>
-        /// Add the message <paramref name="message"/> as an
-        /// inbound message of <paramref name="transactRequest"/>.
+        /// Add the message <paramref name="message"/> as an inbound message.
         /// </summary>
-        /// <param name="transactRequest">The transaction request being built</param>
         /// <param name="message">The message to append to the inbound spool.</param>
         public void InboundMessage(
-                TransactRequest transactRequest,
                 Message message) {
-            transactRequest.Inbound ??= new List<Cryptography.Dare.DareEnvelope>();
+            TransactRequest.Inbound ??= new List<Cryptography.Dare.DareEnvelope>();
             var envelope = message.Encode(); // Todo: Sign, encrypt
             envelope.JSONObject = message;
-            transactRequest.Inbound.Add(envelope);
+            TransactRequest.Inbound.Add(envelope);
             }
 
         /// <summary>
         /// Add the message <paramref name="message"/> as a
-        /// local message of <paramref name="transactRequest"/>.
+        /// local message.
         /// </summary>
-        /// <param name="transactRequest">The transaction request being built</param>
         /// <param name="message">The message to append to the local spool.</param>
         public void LocalMessage(
-                TransactRequest transactRequest,
                 Message message) {
-            transactRequest.Local ??= new List<Cryptography.Dare.DareEnvelope>();
+            TransactRequest.Local ??= new List<Cryptography.Dare.DareEnvelope>();
             var envelope = message.Encode(); // Todo: Sign, encrypt
             envelope.JSONObject = message;
-            transactRequest.Local.Add(envelope);
+            TransactRequest.Local.Add(envelope);
             }
 
         /// <summary>
         /// Mark the message <paramref name="completed"/> on the inbound spool as having status 
-        /// <paramref name="messageStatus"/> on <paramref name="transactRequest"/>. If 
+        /// <paramref name="messageStatus"/>. If 
         /// <paramref name="response"/> is not null, mark it as the response.
         /// </summary>
-        /// <param name="transactRequest">The transaction request being built</param>
         /// <param name="messageStatus">The new message status.</param>
         /// <param name="completed">The message whose status is being changed.</param>
         /// <param name="response">The message generated in response.</param>
         public void InboundComplete(
-                TransactRequest transactRequest,
                 MessageStatus messageStatus,
                 Message completed,
                 Message response=null
                 ) {
 
-            transactRequest.InboundReferences ??= new List<Reference>();
+            InboundReferences ??= new List<Reference>();
             var reference = new Reference() {
                 MessageStatus =messageStatus,
                 MessageID = completed.MessageID,
                 ResponseID = response?.MessageID
                 };
-            transactRequest.InboundReferences.Add(reference);
+            InboundReferences.Add(reference);
             }
 
         /// <summary>
         /// Mark the message <paramref name="completed"/> on the local spool as having status 
-        /// <paramref name="messageStatus"/> on <paramref name="transactRequest"/>. If 
+        /// <paramref name="messageStatus"/>. If 
         /// <paramref name="response"/> is not null, mark it as the response.
         /// </summary>
-        /// <param name="transactRequest">The transaction request being built</param>
         /// <param name="messageStatus">The new message status.</param>
         /// <param name="completed">The message whose status is being changed.</param>
         /// <param name="response">The message generated in response.</param>
         public void LocalComplete(
-                TransactRequest transactRequest,
                 MessageStatus messageStatus,
                 Message completed,
                 Message response= null
                 ) {
 
-            transactRequest.LocalReferences ??= new List<Reference>();
+            LocalReferences ??= new List<Reference>();
             var reference = new Reference() {
                 MessageStatus = messageStatus,
                 MessageID = completed.MessageID,
                 ResponseID = response?.MessageID
                 };
-            transactRequest.LocalReferences.Add(reference);
+            LocalReferences.Add(reference);
 
             }
 
@@ -264,97 +437,35 @@ namespace Goedel.Mesh.Client {
 
         /// <summary>
         /// Append a request to append <paramref name="catalogedEntry"/> to the catalog
-        /// <paramref name="catalog"/> to the transaction <paramref name="transactRequest"/>.
+        /// <paramref name="catalog"/> to the transaction.
         /// </summary>
-        /// <param name="transactRequest">The transaction request being built</param>
         /// <param name="catalog">The catalog to be updated</param>
         /// <param name="catalogedEntry">The entry to add as an update.</param>
         public void CatalogUpdate<T>(
-                TransactRequest transactRequest,
                 Catalog<T> catalog,
                 T catalogedEntry) where T : CatalogedEntry {
-            transactRequest.Updates ??= new List<ContainerUpdate>();
-            var update = GetContainerUpdate(transactRequest.Updates, catalog);
+            TransactRequest.Updates ??= new List<ContainerUpdate>();
+            var update = GetContainerUpdate(TransactRequest.Updates, catalog);
             update.Update(catalogedEntry);
-            transactRequest.Updates.Add(update);
+            TransactRequest.Updates.Add(update);
             }
 
         /// <summary>
         /// Append a request to delete <paramref name="catalogedEntry"/> from the catalog
-        /// <paramref name="catalog"/> to the transaction <paramref name="transactRequest"/>.
+        /// <paramref name="catalog"/> to the transaction.
         /// </summary>
-        /// <param name="transactRequest">The transaction request being built</param>
         /// <param name="catalog">The catalog to be updated</param>
         /// <param name="catalogedEntry">The entry to add as an update.</param>
         public void CatalogDelete<T>(
-                TransactRequest transactRequest,
                 Catalog<T> catalog,
                 T catalogedEntry) where T : CatalogedEntry {
-            transactRequest.Updates ??= new List<ContainerUpdate>();
-            var update = GetContainerUpdate(transactRequest.Updates, catalog);
+            TransactRequest.Updates ??= new List<ContainerUpdate>();
+            var update = GetContainerUpdate(TransactRequest.Updates, catalog);
             update.Delete(catalogedEntry);
-            transactRequest.Updates.Add(update);
+            TransactRequest.Updates.Add(update);
             }
+        #endregion
 
-
-        /// <summary>
-        /// Begin a transaction.
-        /// </summary>
-        /// <returns></returns>
-        public TransactRequest TransactBegin() => new TransactRequest();
-
-        /// <summary>
-        /// Perform the transaction described by <paramref name="transactRequest"/>. If the
-        /// remote operation succeeds, apply the changes to the local stores.
-        /// </summary>
-        /// <param name="transactRequest">The transaction to perform.</param>
-        /// <returns>Response from the Mesh service.</returns>
-        public TransactResponse Transact(
-                TransactRequest transactRequest) {
-            Connect();
-
-            if (transactRequest.InboundReferences != null) {
-                var message = new MessageComplete() {
-                    References = transactRequest.InboundReferences
-                    };
-                InboundMessage(transactRequest, message);
-                }
-            if (transactRequest.LocalReferences != null) {
-                var message = new MessageComplete() {
-                    References = transactRequest.LocalReferences
-                    };
-                LocalMessage(transactRequest, message);
-                }
-
-            var response = MeshClient.Transact(transactRequest);
-
-
-            if (response.Success()) {
-                if (transactRequest.Updates != null) {
-                    // Perform local updates to each store.
-                    foreach (var update in transactRequest.Updates) {
-                        var catalogUpdate = update as TransactionUpdate;
-                        catalogUpdate.Commit();
-                        }
-                    }
-                if (transactRequest.Inbound!= null) {
-                    var spoolInbound = GetSpoolInbound();
-                    foreach (var envelope in transactRequest.Inbound) {
-                        spoolInbound.Add(envelope);
-                        }
-                    }
-                if (transactRequest.Local != null) {
-                    var spoolLocal = GetSpoolLocal();
-                    foreach (var envelope in transactRequest.Local) {
-                        spoolLocal.Add(envelope);
-                        }
-                    }
-
-                }
-
-            return response;
-            }
-
-
+        public TransactResponse Transact() => ContextAccount.Transact(this);
         }
     }

@@ -92,22 +92,6 @@ namespace Goedel.Mesh.Client {
         ///<summary>The Account Address</summary>
         public abstract string AccountAddress { get; }
 
-
-        ///<summary>Returns the network catalog for the account</summary>
-        public CatalogPublication GetCatalogPublication() => GetStore(CatalogPublication.Label) as CatalogPublication;
-
-
-
-        ///<summary>Returns the network catalog for the account</summary>
-        public CatalogCapability GetCatalogCapability() => GetStore(CatalogCapability.Label) as CatalogCapability;
-
-        ///<summary>Returns the local spool  for the account</summary>
-        public SpoolLocal GetSpoolLocal() => GetStore(SpoolLocal.Label) as SpoolLocal;
-
-        ///<summary>Returns the local spool  for the account</summary>
-        public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;
-
-
         ///<summary>List of catalogs</summary>
         public virtual Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;
         Dictionary<string, StoreFactoryDelegate> catalogDelegates = new Dictionary<string, StoreFactoryDelegate>() {
@@ -191,8 +175,8 @@ namespace Goedel.Mesh.Client {
 
 
             var transactRequest = TransactBegin();
-            LocalMessage(transactRequest, messageConnectionPIN);
-            Transact(transactRequest);
+            transactRequest.LocalMessage(messageConnectionPIN);
+            transactRequest.Transact();
 
             //SendMessageAdmin(messageConnectionPIN);
             return messageConnectionPIN;
@@ -204,7 +188,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="PinUDF">The identifier of the PIN</param>
         /// <returns>The message (if found), otherwise null.</returns>
         public MessagePIN GetMessagePIN(string PinUDF) {
-            var spoolLocal = GetSpoolLocal();
+            var spoolLocal = GetStore(SpoolLocal.Label) as SpoolLocal;
 
             var pinCreate = spoolLocal.CheckPIN(PinUDF);
 
@@ -396,69 +380,6 @@ namespace Goedel.Mesh.Client {
             return uploads;
 
             }
-
-        ///// <summary>
-        ///// Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
-        ///// </summary>
-        ///// <param name="meshMessage">The message to send.</param>
-        ///// <param name="recipient">The recipient service ID.</param>
-        ///// <param name="encryptionKey">The encryption key to encrypt the message to.</param>
-        //public void SendMessage(Message meshMessage, string recipient,
-        //            CryptoKey encryptionKey=null) =>
-        //    SendMessage(meshMessage, new List<string> { recipient }, encryptionKey);
-
-
-        ///// <summary>
-        ///// Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
-        ///// is not null, the message is to be posted to the outbound spool to be forwarded to the
-        ///// appropriate Mesh Service. Otherwise, the message is posted to the local spool for local
-        ///// collection.
-        ///// </summary>
-        ///// <param name="meshMessage">The message to post</param>
-        ///// <param name="recipients">The recipients the message is to be sent to. If null, the
-        ///// message is for local pickup.</param>
-        ///// <param name="encryptionKey">The encryption key to encrypt the message to.</param>
-        //public void SendMessage(
-        //            Message meshMessage,
-        //            List<string> recipients = null,
-        //            CryptoKey encryptionKey = null,
-        //            List<Reference> inboundComplete = null,
-        //            List<Reference> localComplete = null
-        //            ) {
-        //    Connect();
-
-        //    meshMessage.Sender = AccountAddress;
-
-
-        //    var envelope = meshMessage.Encode(encryptionKey: encryptionKey);
-            
-        //    // this is not working because of the dopey idea that no recipient means the local spool.
-
-        //    var uploadRequest = new TransactRequest() {
-        //        Accounts = recipients,
-        //        Outbound = new List<DareEnvelope>() { envelope }
-        //        };
-
-
-        //    MeshClient.Transact(uploadRequest);
-        //    }
-
-        ///// <summary>
-        ///// Send a message signed using the mesh administration key.
-        ///// </summary>
-        ///// <param name="meshMessage"></param>
-        //public void SendMessageAdmin(Message meshMessage) {
-        //    Connect();
-
-        //    var message = meshMessage.Encode(KeySignature);
-
-        //    var uploadRequest = new TransactRequest() {
-        //        Local = new List<DareEnvelope>() { message }
-        //        };
-
-
-        //    MeshClient.Transact(uploadRequest);
-        //    }
 
         void Connect() {
             if (MeshClient != null) {

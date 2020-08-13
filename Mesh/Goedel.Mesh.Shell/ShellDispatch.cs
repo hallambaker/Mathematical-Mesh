@@ -205,7 +205,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command options.</param>
         /// <returns>The account context.</returns>
-        public virtual ContextUser GetContextAccount(IAccountOptions options) {
+        public virtual ContextUser GetContextUser(IAccountOptions options) {
 
             //throw new NYI();
             var accountAddress = options.AccountAddress.Value;
@@ -236,7 +236,7 @@ namespace Goedel.Mesh.Shell {
 
             // here need to pull the account details and the contact catalogs from each account?
             try {
-                var contextAccount = GetContextAccount(options);
+                var contextAccount = GetContextUser(options);
                 return contextAccount;
                 }
             catch {

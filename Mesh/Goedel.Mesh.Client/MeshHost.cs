@@ -254,11 +254,10 @@ namespace Goedel.Mesh.Client {
             var contextUserFinal = new ContextUser(this, catalogedMachine);
 
             // Add the catalog device under the new user context.
-            var transactRequest = new TransactRequest() {
-                };
-            var catalogDevice = contextUserFinal.GetCatalogDevice();
-            contextUserFinal.CatalogUpdate(transactRequest, catalogDevice, catalogedDevice);
-            contextUserFinal.Transact(transactRequest);
+            var transactRequest = contextUserFinal.TransactBegin();
+            var catalogDevice = transactRequest.GetCatalogDevice();
+            transactRequest.CatalogUpdate(catalogDevice, catalogedDevice);
+            transactRequest.Transact();
 
             // Register the mesh description on the local machine.
             Register(catalogedMachine, contextUserFinal);

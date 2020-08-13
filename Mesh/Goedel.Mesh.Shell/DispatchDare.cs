@@ -83,7 +83,7 @@ namespace Goedel.Mesh.Shell {
             var log = options.Log.Value;
             var recipient = options.Admin.Value;
 
-            using var keyLocate = GetContextAccount(options);
+            using var keyLocate = GetContextUser(options);
 
             var result = EARL.Encode(inputFile, out var outputFile, domain,
                 outputDirectory, log, recipient);

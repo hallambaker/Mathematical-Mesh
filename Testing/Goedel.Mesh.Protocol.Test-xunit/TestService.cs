@@ -105,7 +105,6 @@ namespace Goedel.XUnit {
 
 
             // Perform some offline operations on the account catalogs
-            var contactCatalog = contextAccountAlice_1_a.GetCatalogContact();
             contextAccountAlice_1_a.SetContactSelf(ContactAlice);
 
             // Check we can read the data from a second context
@@ -142,10 +141,12 @@ namespace Goedel.XUnit {
 
 
             // Do some catalog updates and check the results
-            var catalogCredential = contextAccountAlice_1_a.GetCatalogCredential();
-            catalogCredential.New(password1);
 
-
+            using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
+                var catalogCredential = transaction1.GetCatalogCredential();
+                transaction1.CatalogUpdate(catalogCredential, password1);
+                transaction1.Transact();
+                }
 
             // Connect a third device by approving a request
             var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
@@ -159,7 +160,11 @@ namespace Goedel.XUnit {
 
 
             // Do some catalog updates and check the results
-            catalogCredential.New(password2);
+            using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
+                var catalogCredential = transaction1.GetCatalogCredential();
+                transaction1.CatalogUpdate(catalogCredential, password2);
+                transaction1.Transact();
+                }
 
             // Check message handling - introduce Bob
             var contextAccountBob = machineAdminBob.MeshHost.CreateMesh(AccountBob, "personal");
@@ -541,7 +546,7 @@ namespace Goedel.XUnit {
         #region // helper routines
 
         void ReportDevices(ContextUser contextUser) {
-            var catalogDevice = contextUser.GetCatalogDevice();
+            var catalogDevice = contextUser.GetStore(CatalogDevice.Label) as CatalogDevice;
 
             Console.WriteLine();
             Console.WriteLine(catalogDevice.Report());

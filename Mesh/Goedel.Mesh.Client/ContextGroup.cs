@@ -14,7 +14,7 @@ namespace Goedel.Mesh.Client {
     /// <summary>
     /// Context binding for a Group account
     /// </summary>
-    public class ContextGroup : ContextAccount {
+    public partial class ContextGroup : ContextAccount {
         #region // Properties
 
         ///<summary>The enclosing mesh context.</summary>
@@ -89,8 +89,7 @@ namespace Goedel.Mesh.Client {
             // Prepoulate the catalogs
             Directory.CreateDirectory(result.StoresDirectory);
 
-            result.GetCatalogMember();
-            result.GetCatalogCapability();
+            result.MakeStores();
             result.SyncProgressUpload();
 
             return result;
@@ -98,12 +97,6 @@ namespace Goedel.Mesh.Client {
 
         #endregion
         #region // Class methods
-
-        ///<summary>Returns the network catalog for the account</summary>
-        public CatalogMember GetCatalogMember() => GetStore(CatalogMember.Label) as CatalogMember;
-
-        // ToDo: Implement Add member to group
-
         /// <summary>
         /// Add a member to the group.
         /// </summary>
@@ -112,11 +105,13 @@ namespace Goedel.Mesh.Client {
         /// <returns>The member catalog entry.</returns>
         public CatalogedMember Add(string memberAddress, string text=null) {
 
+            var transactInvitation = ContextAccount.TransactBegin();
+            var transactGroup = TransactBegin();
+
             // Bug: Should create an entry for the member
 
             // Pull the contact information from the user's contact catalog
-            var networkProtocolEntry = ContextAccount.GetCatalogContact().GetNetworkEntry(memberAddress);
-
+            var networkProtocolEntry = ContextAccount.GetNetworkEntry(memberAddress);
             var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
             var serviceEncryptionKey = ContextAccount.ProfileUser.ProfileService.KeyEncryption.CryptoKey;
 
@@ -134,8 +129,7 @@ namespace Goedel.Mesh.Client {
                 KeyDataEncryptionKey = userEncryptionKey
                 };
 
-
-            var keyGenerate = ContextAccount.GetCatalogCapability().TryFindKeyGenerate(
+            var keyGenerate = transactInvitation.GetCatalogCapability().TryFindKeyGenerate(
                             ProfileGroup.AccountEncryption.UDF);
             keyGenerate.CreateShares(capabilityService, capabilityMember);
 
@@ -163,19 +157,19 @@ namespace Goedel.Mesh.Client {
                 ServiceCapabilityId = capabilityService.Id,
                 };
 
-            var transactInvitation = new TransactRequest();
-            OutboundMessage(transactInvitation, networkProtocolEntry, groupInvitation);
 
-            var transactGroup= new TransactRequest();
-            
+            transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);
+
+
+
             // update the capabilities catalog to add the service capability
-            var catalogCapability = GetCatalogCapability();
+            var catalogCapability = transactGroup.GetCatalogCapability();
             var catalogedCapability = new CatalogedCapability(capabilityService);
-            CatalogUpdate(transactGroup,  catalogCapability, catalogedCapability);
+            transactGroup.CatalogUpdate(catalogCapability, catalogedCapability);
 
             // update the members catalog to add the member entry
-            var catalogMember = GetCatalogMember();
-            CatalogUpdate(transactGroup, catalogMember, catalogedMember);
+            var catalogMember = transactGroup.GetCatalogMember();
+            transactGroup.CatalogUpdate(catalogMember, catalogedMember);
 
             // commit the transactions
             Transact(transactGroup);
@@ -223,7 +217,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="id">The member to locate.</param>
         /// <returns>The member catalog entry.</returns>
         public CatalogedMember Locate(string id) {
-            var catalogMember = GetCatalogMember();
+            var catalogMember = GetStore(CatalogMember.Label) as CatalogMember;
             return catalogMember.Locate(id) as CatalogedMember;
 
             }
@@ -248,15 +242,18 @@ namespace Goedel.Mesh.Client {
         /// <param name="member">The member to delete.</param>
         /// <returns>The member catalog entry.</returns>
         public void Delete(CatalogedMember member) {
-            var catalogMember = GetCatalogMember();
-            var catalogCapability = GetCatalogCapability();
+            var transactGroup = TransactBegin();
+
+
+            var catalogMember = transactGroup.GetCatalogMember();
+            var catalogCapability = transactGroup.GetCatalogCapability();
 
             var capability = catalogCapability.Get(member.ServiceCapabilityId);
             // delete the capabilities of the member
 
-            var transactGroup = new TransactRequest();
-            CatalogDelete(transactGroup, catalogMember, member);
-            CatalogDelete(transactGroup, catalogCapability, capability);
+            
+            transactGroup.CatalogDelete(catalogMember, member);
+            transactGroup.CatalogDelete(catalogCapability, capability);
 
             Transact(transactGroup);
             }

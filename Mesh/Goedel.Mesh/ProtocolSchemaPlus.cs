@@ -188,11 +188,7 @@ namespace Goedel.Mesh {
 
 
     public partial class TransactRequest {
-        /// <summary>List of completion references to be added to the local spool</summary>
-        public List<Reference> LocalReferences;
 
-        /// <summary>List of completion references to be added to the inbound spool</summary>
-        public List<Reference> InboundReferences;
         }
 
     public partial class TransactResponse {

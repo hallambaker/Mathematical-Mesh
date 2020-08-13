@@ -144,7 +144,7 @@ namespace Goedel.XUnit {
             var encryptionKey = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Exportable,
                 KeyCollection);
 
-            var catalog = new CatalogCredential(directory, file, keyCollection: KeyCollection);
+            var catalog = new CatalogContact(directory, file, keyCollection: KeyCollection);
 
             // Alice
             var contactAlice = new ContactPerson("Alice", "Example");

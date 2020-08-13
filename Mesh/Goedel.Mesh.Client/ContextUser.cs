@@ -9,6 +9,7 @@ using System.IO;
 using Goedel.Protocol;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using Goedel.IO;
 
 namespace Goedel.Mesh.Client {
 
@@ -16,6 +17,7 @@ namespace Goedel.Mesh.Client {
     /// Context for interacting with a Mesh Account
     /// </summary>
     public partial class ContextUser : ContextAccount {
+
 
         #region // Public and private properties
 
@@ -411,7 +413,7 @@ namespace Goedel.Mesh.Client {
         public KeyData AddCapability(CryptoKey keyPair) {
             "**** MUST add keys to devices as shared capabilities".TaskFunctionality();
 
-            var catalogCapability = GetCatalogCapability();
+            //var catalogCapability = GetCatalogCapability();
 
             return new KeyData(keyPair, true);
             }
@@ -436,15 +438,18 @@ namespace Goedel.Mesh.Client {
 
             contact.Id = ProfileUser.UDF;
 
-
-            var catalog = GetCatalogContact();
+            var transact = TransactBegin();
+            var catalog = transact.GetCatalogContact();
 
             var (cataloged, success) = catalog.TryAdd(contact, true);
 
             if (!success) {
                 cataloged.Contact = contact;
-                catalog.Update(cataloged);
+                transact.CatalogUpdate(catalog, cataloged);
                 }
+
+            transact.Transact();
+
             return cataloged;
             }
 
@@ -545,33 +550,10 @@ namespace Goedel.Mesh.Client {
             {CatalogPublication.Label, CatalogPublication.Factory}
             };
 
-        ///<summary>Returns the application catalog for the account</summary>
-        public CatalogApplication GetCatalogApplication() => GetStore(CatalogApplication.Label) as CatalogApplication;
 
-        ///<summary>Returns the contacts catalog for the account</summary>
-        public CatalogDevice GetCatalogDevice() => GetStore(CatalogDevice.Label) as CatalogDevice;
-
-        ///<summary>Returns the contacts catalog for the account</summary>
-        public CatalogContact GetCatalogContact() => GetStore(CatalogContact.Label) as CatalogContact;
-
-        ///<summary>Returns the credential catalog for the account</summary>
-        public CatalogCredential GetCatalogCredential() => GetStore(CatalogCredential.Label) as CatalogCredential;
-
-        ///<summary>Returns the bookmark catalog for the account</summary>
-        public CatalogBookmark GetCatalogBookmark() => GetStore(CatalogBookmark.Label) as CatalogBookmark;
-
-        ///<summary>Returns the calendar catalog for the account</summary>
-        public CatalogCalendar GetCatalogCalendar() => GetStore(CatalogCalendar.Label) as CatalogCalendar;
-
-        ///<summary>Returns the network catalog for the account</summary>
-        public CatalogNetwork GetCatalogNetwork() => GetStore(CatalogNetwork.Label) as CatalogNetwork;
 
         ///<summary>Returns the inbound spool for the account</summary>
         public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;
-
-        ///<summary>Returns the outbound spool for the account</summary>
-        public SpoolOutbound GetSpoolOutbound() => GetStore(SpoolOutbound.Label) as SpoolOutbound;
-
 
         /// <summary>
         /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
@@ -585,7 +567,7 @@ namespace Goedel.Mesh.Client {
             if (key != null) {
                 return key;
                 }
-            return GetCatalogContact().GetByAccountEncrypt(keyId);
+            return GetByAccountEncrypt(keyId);
             }
 
 
@@ -617,7 +599,8 @@ namespace Goedel.Mesh.Client {
                 return key;
                 }
 
-            var catalogCapability = GetCatalogCapability();
+            var catalogCapability = GetStore(CatalogCapability.Label) as CatalogCapability;
+
             return catalogCapability.TryFindKeyDecryption(keyId);
             }
         #endregion
@@ -783,8 +766,9 @@ namespace Goedel.Mesh.Client {
                 KeyData = new KeyData(keyEncrypt, true)
                 };
 
-            GetCatalogCapability().Add(capabilityAdmin);
-            GetCatalogCapability().Add(capabilityDecrypt);
+            var catalogCapability = GetStore(CatalogCapability.Label) as CatalogCapability;
+            catalogCapability.Add(capabilityAdmin);
+            catalogCapability.Add(capabilityDecrypt);
 
 
 
@@ -792,11 +776,13 @@ namespace Goedel.Mesh.Client {
             //var envelopedCapabilityDecrypt = DareEnvelope.Encode(capabilityDecrypt.GetBytes(), encryptionKey: KeyDeviceEncryption);
 
 
+            var transaction = TransactBegin();
 
             var catalogedGroup = new CatalogedGroup(profileGroup) {
                 Key = groupName
                 };
-            GetCatalogApplication().New(catalogedGroup);
+            var catalogApplication = transaction.GetCatalogApplication();
+            transaction.CatalogUpdate(catalogApplication, catalogedGroup);
 
 
             var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
@@ -805,9 +791,11 @@ namespace Goedel.Mesh.Client {
             // Bug: Should also encrypt the relevant admin key to the admin encryption key.
 
 
-            var contactCatalog = GetCatalogContact();
-            contactCatalog.Add(contact);
+            var contactCatalog = transaction.GetCatalogContact();
+            var catalogedContact = new CatalogedContact(contact);
+            transaction.CatalogUpdate(contactCatalog, catalogedContact);
 
+            transaction.Transact();
 
             return contextGroup;
 
@@ -822,7 +810,7 @@ namespace Goedel.Mesh.Client {
         public ContextGroup GetContextGroup(string groupAddress) {
 
             // read through the entries in CatalogApplication
-            var catalog = GetCatalogApplication();
+            var catalog = GetStore(CatalogApplication.Label) as CatalogApplication;
             var entry = catalog.LocateGroup(groupAddress);
 
             // construct the group context
@@ -923,9 +911,9 @@ namespace Goedel.Mesh.Client {
 
 
             // commit the transaction
-            var transactPublication = new TransactRequest();
-            var catalogPublication = GetCatalogPublication();
-            CatalogUpdate(transactPublication, catalogPublication, catalogedPublication);
+            var transactPublication = TransactBegin();
+            var catalogPublication = transactPublication.GetCatalogPublication();
+            transactPublication.CatalogUpdate(catalogPublication, catalogedPublication);
             Transact(transactPublication);
 
 
@@ -966,8 +954,10 @@ namespace Goedel.Mesh.Client {
 
             // Transactional update.
             var transact = TransactBegin();
-            LocalMessage(transact, respondConnection);
-            CatalogUpdate(transact, GetCatalogDevice(), cataloguedDevice);
+            transact.LocalMessage(respondConnection);
+
+            var catalogDevice = transact.GetCatalogDevice();
+            transact.CatalogUpdate(catalogDevice, cataloguedDevice);
             Transact(transact);
 
             //SendMessage(respondConnection);
@@ -1085,12 +1075,12 @@ namespace Goedel.Mesh.Client {
                 return new ProcessResultError(request, ProcessingResult.ContactInvalid);
                 }
 
-            var catalog = GetCatalogContact();
-            var transactRequest = new TransactRequest();
+            var transactRequest = TransactBegin();
+            var catalogContact = transactRequest.GetCatalogContact();
 
-            GetCatalogContact().Add(request.Contact);  // Hack: make transactional
+            catalogContact.Add(request.Contact);  // Hack: make transactional
             if (request.Contact?.NetworkAddresses != null) {
-                var catalogCapability = GetCatalogCapability(); // Hack: make transactional
+                var catalogCapability = transactRequest.GetCatalogCapability(); // Hack: make transactional
                 foreach (var address in request.Contact.NetworkAddresses) {
                     if (address.Capabilities != null) {
                         foreach (var capability in address.Capabilities) {
@@ -1100,9 +1090,7 @@ namespace Goedel.Mesh.Client {
                     }
                 }
 
-            //CatalogUpdate(transactRequest, catalog, catalogedContact);
-            //InboundComplete(transactRequest, MessageStatus.Closed, request, null);
-            Transact(transactRequest);
+            transactRequest.Transact();
 
             return new ResultGroupInvitation (request);
             }
@@ -1137,14 +1125,15 @@ namespace Goedel.Mesh.Client {
                 return new InsufficientAuthorization(request);
                 }
 
-            var catalog = GetCatalogContact();
             var contact = Contact.Decode(request.AuthenticatedData);
+
+            var transactRequest = TransactBegin();
+            var catalog = transactRequest.GetCatalogContact();
             var catalogedContact = catalog.GetUpdated(contact);
 
-            var transactRequest = new TransactRequest();
-            CatalogUpdate(transactRequest, catalog, catalogedContact);
-            InboundComplete(transactRequest, MessageStatus.Closed, request, null);
-            Transact(transactRequest);
+            transactRequest.CatalogUpdate(catalog, catalogedContact);
+            transactRequest.InboundComplete(MessageStatus.Closed, request, null);
+            transactRequest.Transact();
 
             return new ResultReplyContact(request, messagePin);
             }
@@ -1179,7 +1168,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="request">The request to accept or reject.</param>
         /// <param name="accept">If true, accept the request. Otherwise, it is rejected.</param>
         ProcessResult Process(AcknowledgeConnection request, bool accept = true, MessagePIN messagePIN = null) {
-            var transactRequest = new TransactRequest();
+            var transactRequest = TransactBegin();
 
 
             var respondConnection = new RespondConnection() {
@@ -1190,20 +1179,20 @@ namespace Goedel.Mesh.Client {
                 var device = MakeCatalogedDevice(request.MessageConnectionRequest.ProfileDevice);
                 respondConnection.CatalogedDevice = device;
                 respondConnection.Result = Constants.TransactionResultAccept;
-
-                CatalogUpdate(transactRequest, GetCatalogDevice(), device);
+                var catalogDevice = transactRequest.GetCatalogDevice();
+                transactRequest.CatalogUpdate(catalogDevice, device);
 
                 }
             else {
                 respondConnection.Result = Constants.TransactionResultReject;
                 }
 
-            InboundComplete(transactRequest, MessageStatus.Closed, request, respondConnection);
-            LocalMessage(transactRequest, respondConnection);
+            transactRequest.InboundComplete(MessageStatus.Closed, request, respondConnection);
+            transactRequest.LocalMessage(respondConnection);
 
             // Mark the pin code as having been used.
             if (messagePIN != null) {
-                LocalComplete(transactRequest, MessageStatus.Closed, 
+                transactRequest.LocalComplete(MessageStatus.Closed, 
                     messagePIN, respondConnection);
                 }
 
@@ -1296,8 +1285,13 @@ namespace Goedel.Mesh.Client {
             // Add the requestContact.Self contact to the catalog
 
             if (requestContact.Self != null) {
-                var catalog = GetCatalogContact();
-                catalog.Add(requestContact.Self);
+                var cataloged = MeshItem.Decode(requestContact.Self) as CatalogedContact;
+
+                var transact = TransactBegin();
+                var catalog = transact.GetCatalogContact();
+
+                transact.CatalogUpdate(catalog, cataloged);
+                transact.Transact();
                 }
 
             var reply = SendReplyContact(requestContact.Sender, requestContact.PIN, localname);
@@ -1330,7 +1324,7 @@ namespace Goedel.Mesh.Client {
 
             // send it to the service
             var transact = TransactBegin();
-            OutboundMessage(transact, recipient,  message);
+            transact.OutboundMessage(recipient,  message);
             Transact(transact);
 
             //SendMessage(message, recipient);
@@ -1348,10 +1342,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="localName">Local name for the contact</param>
         /// <returns></returns>
         public DareEnvelope GetSelf(string localName) {
-            var catalog = GetCatalogContact();
-            var entry = catalog.PersistenceStore.Get(ProfileUser.UDF);
-
-            var self = entry.JsonObject as CatalogedContact;
+            var self = GetContact(ProfileUser.UDF);
 
             foreach (var tagged in self.Contact.Sources) {
                 if (tagged.EnvelopedSource == null) {
@@ -1405,10 +1396,10 @@ namespace Goedel.Mesh.Client {
 
 
             var transactRequest = TransactBegin();
-            LocalMessage(transactRequest, messageConnectionPIN);
+            transactRequest.LocalMessage(messageConnectionPIN);
 
-            var catalogPublication = GetCatalogPublication();
-            CatalogUpdate(transactRequest, catalogPublication, catalogedPublication);
+            var catalogPublication = transactRequest.GetCatalogPublication();
+            transactRequest.CatalogUpdate(catalogPublication, catalogedPublication);
 
             Transact(transactRequest);
 
@@ -1439,7 +1430,7 @@ namespace Goedel.Mesh.Client {
             RegisterPIN(pin, true, null, AccountAddress, "Contact");
 
             var transact = TransactBegin();
-            OutboundMessage(transact, recipientAddress, message);
+            transact.OutboundMessage(recipientAddress, message);
             Transact(transact);
 
             //SendMessage(message, recipientAddress);
@@ -1465,8 +1456,14 @@ namespace Goedel.Mesh.Client {
             var envelope = ClaimPublication(uri, out var _);
 
             // Add to the catalog
-            var catalog = GetCatalogContact();
-            var result = catalog.Add(envelope);
+
+            var cataloged = MeshItem.Decode(envelope) as CatalogedContact;
+
+            var transact = TransactBegin();
+            var catalog = transact.GetCatalogContact();
+            transact.CatalogUpdate(catalog, cataloged);
+            transact.Transact();
+
 
             if (reciprocate) {
                 (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
@@ -1476,7 +1473,7 @@ namespace Goedel.Mesh.Client {
                 message = null;
                 }
 
-            return result;
+            return cataloged;
             }
         #endregion
         #region // Confirmation Processing
@@ -1495,7 +1492,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             var transact = TransactBegin();
-            OutboundMessage(transact, recipientAddress,  message);
+            transact.OutboundMessage(recipientAddress, message);
             Transact(transact);
 
             // send it to the service
@@ -1521,13 +1518,125 @@ namespace Goedel.Mesh.Client {
                 };
 
             var transact = TransactBegin();
-            OutboundMessage(transact, recipientAddress, message);
+            transact.OutboundMessage(recipientAddress, message);
             Transact(transact);
 
             // send it to the service
             return null;
             }
 
+
+
+        #region // Convenience methods for Contacts catalog
+
+        /// <summary>
+        /// Return the application with identifier <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">specifies the identifier to return.</param>
+        /// <returns>The contact, if found. Otherwise null.</returns>
+        public CatalogedApplication GetApplication(string key) =>
+            (GetStore(CatalogApplication.Label) as CatalogApplication).Get(key);
+
+        /// <summary>
+        /// Return the device with identifier <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">specifies the identifier to return.</param>
+        /// <returns>The device, if found. Otherwise null.</returns>
+        public CatalogedDevice GetDevice(string key) =>
+            (GetStore(CatalogDevice.Label) as CatalogDevice).Get(key);
+
+        /// <summary>
+        /// Return the contact with identifier <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">specifies the identifier to return.</param>
+        /// <returns>The contact, if found. Otherwise null.</returns>
+        public CatalogedContact GetContact(string key) =>
+            (GetStore(CatalogContact.Label) as CatalogContact).Get(key);
+
+        /// <summary>
+        /// Return the credential with identifier <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">specifies the identifier to return.</param>
+        /// <returns>The credential, if found. Otherwise null.</returns>
+        public CatalogedCredential GetCredential(string key) =>
+            (GetStore(CatalogCredential.Label) as CatalogCredential).Get(key);
+
+        /// <summary>
+        /// Return the bookmark with identifier <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">specifies the identifier to return.</param>
+        /// <returns>The bookmark, if found. Otherwise null.</returns>
+        public CatalogedBookmark GetBookmark(string key) =>
+            (GetStore(CatalogBookmark.Label) as CatalogBookmark).Get(key);
+
+        /// <summary>
+        /// Return the task with identifier <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">specifies the identifier to return.</param>
+        /// <returns>The task, if found. Otherwise null.</returns>
+        public CatalogedTask GetCalendar(string key) =>
+            (GetStore(CatalogCalendar.Label) as CatalogCalendar).Get(key);
+
+        /// <summary>
+        /// Return the network entry with identifier <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">specifies the identifier to return.</param>
+        /// <returns>The network entry, if found. Otherwise null.</returns>
+        public CatalogedNetwork GetNetwork(string key) =>
+            (GetStore(CatalogNetwork.Label) as CatalogNetwork).Get(key);
+
+
+        /// <summary>
+        /// Add the contact data specified in the file <paramref name="fileName"/>. If 
+        /// <paramref name="self"/> is true, register this as the self contact. If
+        /// <paramref name="merge"/> is true, merge this contact information.
+        /// </summary>
+        /// <param name="fileName">The file to fetch the contact data from.</param>
+        /// <param name="self">If true, contact data corresponds to this user.</param>
+        /// <param name="localName">Short name for the contact to distinguish it from
+        /// others.</param>
+        /// <param name="merge">Add this data to the existing contact.</param>
+        /// <param name="format">The format the input is written in.</param>
+        /// <returns></returns>
+        public CatalogedContact AddFromFile(
+                    string fileName,
+                    bool self,
+                    CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
+                    bool merge = true,
+                    string localName = null) {
+            merge.Future();
+            localName.Future();
+
+            using var transaction = TransactBegin();
+            var catalog = transaction.GetCatalogContact();
+            using var stream = fileName.OpenFileReadShared();
+            var contact = catalog.ReadFromStream(stream, format);
+
+            contact.Self = self;
+            transaction.CatalogUpdate(catalog, contact);
+            transaction.Transact();
+
+            return contact;
+
+            }
+
+        /// <summary>
+        /// Return the network entry for the address <paramref name="networkAddress"/>
+        /// </summary>
+        /// <param name="networkAddress">The address to return the entry for.</param>
+        /// <returns>The network entry if found, otherwise, null.</returns>
+        public NetworkProtocolEntry GetNetworkEntry(string networkAddress) =>
+            (GetStore(CatalogContact.Label) as CatalogContact).GetNetworkEntry(networkAddress);
+
+        /// <summary>
+        /// Retuen the mesh account encryption key for the address <paramref name="networkAddress"/>
+        /// </summary>
+        /// <param name="networkAddress">The address to return the entry for.</param>
+        /// <returns>The mesh account encryption key if found, otherwise, null.</returns>
+        public CryptoKey GetByAccountEncrypt(string networkAddress) =>
+            (GetStore(CatalogContact.Label) as CatalogContact).GetByAccountEncrypt(networkAddress);
+
+        #endregion
 
         #endregion
         }

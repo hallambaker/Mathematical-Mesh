@@ -140,7 +140,7 @@ namespace Goedel.Mesh {
         /// in the dictionaries serving key discovery.
         /// </summary>
         /// <param name="catalogedEntry">The entry being added.</param>
-        public override void NewEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+        public override void NewEntry(CatalogedCapability catalogedEntry) => UpdateLocal(catalogedEntry);
 
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Goedel.Mesh {
         /// in the dictionaries serving key discovery.
         /// </summary>
         /// <param name="catalogedEntry">The entry being updated.</param>
-        public override void UpdateEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+        public override void UpdateEntry(CatalogedCapability catalogedEntry) => UpdateLocal(catalogedEntry);
 
         void UpdateLocal(CatalogedEntry catalogedEntry) {
             var catalogedCapability = catalogedEntry as CatalogedCapability;

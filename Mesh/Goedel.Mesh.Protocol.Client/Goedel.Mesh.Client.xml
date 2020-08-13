@@ -508,18 +508,6 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
             <summary>The Account Address</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetCatalogPublication">
-            <summary>Returns the network catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetCatalogCapability">
-            <summary>Returns the network catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolLocal">
-            <summary>Returns the local spool  for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolInbound">
-            <summary>Returns the local spool  for the account</summary>
-        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.DictionaryCatalogDelegates">
             <summary>List of catalogs</summary>
         </member>
@@ -721,98 +709,13 @@
             <param name="verify">It true, verify the signature first.</param>
             <returns>The plaintext payload data.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.OutboundMessage(Goedel.Mesh.TransactRequest,System.String,Goedel.Mesh.Message)">
-            <summary>
-            Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
-            outbound message of <paramref name="transactRequest"/>.
-            </summary>
-            <param name="transactRequest">The transaction request being built</param>
-            <param name="recipient">The message recipient</param>
-            <param name="message">The message to send</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.OutboundMessage(Goedel.Mesh.TransactRequest,Goedel.Mesh.NetworkProtocolEntry,Goedel.Mesh.Message)">
-            <summary>
-            Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
-            outbound message of <paramref name="transactRequest"/>.
-            </summary>
-            <param name="transactRequest">The transaction request being built</param>
-            <param name="recipient">The message recipient</param>
-            <param name="message">The message to send</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.OutboundMessage(Goedel.Mesh.TransactRequest,System.String,Goedel.Cryptography.CryptoKey,Goedel.Mesh.Message)">
-            <summary>
-            Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> 
-            encrypted under <paramref name="recipientEncryptionKey"/> as an
-            outbound message of <paramref name="transactRequest"/>.
-            </summary>
-            <param name="transactRequest">The transaction request being built</param>
-            <param name="recipientAddress">The message recipient address</param>
-            <param name="recipientEncryptionKey">The message recipient encryption key</param>
-            <param name="message">The message to send</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.InboundMessage(Goedel.Mesh.TransactRequest,Goedel.Mesh.Message)">
-            <summary>
-            Add the message <paramref name="message"/> as an
-            inbound message of <paramref name="transactRequest"/>.
-            </summary>
-            <param name="transactRequest">The transaction request being built</param>
-            <param name="message">The message to append to the inbound spool.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.LocalMessage(Goedel.Mesh.TransactRequest,Goedel.Mesh.Message)">
-            <summary>
-            Add the message <paramref name="message"/> as a
-            local message of <paramref name="transactRequest"/>.
-            </summary>
-            <param name="transactRequest">The transaction request being built</param>
-            <param name="message">The message to append to the local spool.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.InboundComplete(Goedel.Mesh.TransactRequest,Goedel.Mesh.MessageStatus,Goedel.Mesh.Message,Goedel.Mesh.Message)">
-            <summary>
-            Mark the message <paramref name="completed"/> on the inbound spool as having status 
-            <paramref name="messageStatus"/> on <paramref name="transactRequest"/>. If 
-            <paramref name="response"/> is not null, mark it as the response.
-            </summary>
-            <param name="transactRequest">The transaction request being built</param>
-            <param name="messageStatus">The new message status.</param>
-            <param name="completed">The message whose status is being changed.</param>
-            <param name="response">The message generated in response.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.LocalComplete(Goedel.Mesh.TransactRequest,Goedel.Mesh.MessageStatus,Goedel.Mesh.Message,Goedel.Mesh.Message)">
-            <summary>
-            Mark the message <paramref name="completed"/> on the local spool as having status 
-            <paramref name="messageStatus"/> on <paramref name="transactRequest"/>. If 
-            <paramref name="response"/> is not null, mark it as the response.
-            </summary>
-            <param name="transactRequest">The transaction request being built</param>
-            <param name="messageStatus">The new message status.</param>
-            <param name="completed">The message whose status is being changed.</param>
-            <param name="response">The message generated in response.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.CatalogUpdate``1(Goedel.Mesh.TransactRequest,Goedel.Mesh.Catalog{``0},``0)">
-            <summary>
-            Append a request to append <paramref name="catalogedEntry"/> to the catalog
-            <paramref name="catalog"/> to the transaction <paramref name="transactRequest"/>.
-            </summary>
-            <param name="transactRequest">The transaction request being built</param>
-            <param name="catalog">The catalog to be updated</param>
-            <param name="catalogedEntry">The entry to add as an update.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.CatalogDelete``1(Goedel.Mesh.TransactRequest,Goedel.Mesh.Catalog{``0},``0)">
-            <summary>
-            Append a request to delete <paramref name="catalogedEntry"/> from the catalog
-            <paramref name="catalog"/> to the transaction <paramref name="transactRequest"/>.
-            </summary>
-            <param name="transactRequest">The transaction request being built</param>
-            <param name="catalog">The catalog to be updated</param>
-            <param name="catalogedEntry">The entry to add as an update.</param>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TransactBegin">
             <summary>
             Begin a transaction.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.Transact(Goedel.Mesh.TransactRequest)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.Transact``1(Goedel.Mesh.Client.Transaction{``0})">
             <summary>
             Perform the transaction described by <paramref name="transactRequest"/>. If the
             remote operation succeeds, apply the changes to the local stores.
@@ -871,9 +774,6 @@
             <param name="catalogedGroup">Description of the group to create.</param>
             <returns>The group context.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.GetCatalogMember">
-            <summary>Returns the network catalog for the account</summary>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.Add(System.String,System.String)">
             <summary>
             Add a member to the group.
@@ -909,6 +809,12 @@
             </summary>
             <param name="member">The member to delete.</param>
             <returns>The member catalog entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.TransactBegin">
+            <summary>
+            Begin a transaction.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextMeshPending">
             <summary>
@@ -1035,6 +941,12 @@
             <summary>
             Context for interacting with a Mesh Account
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.TransactBegin">
+            <summary>
+            Begin a transaction.
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
@@ -1208,32 +1120,8 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.DictionaryCatalogDelegates">
             <summary>Dictionarry used to create stores</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetCatalogApplication">
-            <summary>Returns the application catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetCatalogDevice">
-            <summary>Returns the contacts catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetCatalogContact">
-            <summary>Returns the contacts catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetCatalogCredential">
-            <summary>Returns the credential catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetCatalogBookmark">
-            <summary>Returns the bookmark catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetCatalogCalendar">
-            <summary>Returns the calendar catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetCatalogNetwork">
-            <summary>Returns the network catalog for the account</summary>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetSpoolInbound">
             <summary>Returns the inbound spool for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetSpoolOutbound">
-            <summary>Returns the outbound spool for the account</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeyEncryption(System.String)">
             <summary>
@@ -1480,6 +1368,218 @@
             </summary>
             <param name="requestConfirmation">The request received.</param>
             <param name="response">If true, accept the confirmation request, otherwise reject.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetApplication(System.String)">
+            <summary>
+            Return the application with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The contact, if found. Otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetDevice(System.String)">
+            <summary>
+            Return the device with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The device, if found. Otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetContact(System.String)">
+            <summary>
+            Return the contact with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The contact, if found. Otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetCredential(System.String)">
+            <summary>
+            Return the credential with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The credential, if found. Otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetBookmark(System.String)">
+            <summary>
+            Return the bookmark with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The bookmark, if found. Otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetCalendar(System.String)">
+            <summary>
+            Return the task with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The task, if found. Otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetNetwork(System.String)">
+            <summary>
+            Return the network entry with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The network entry, if found. Otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddFromFile(System.String,System.Boolean,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
+            <summary>
+            Add the contact data specified in the file <paramref name="fileName"/>. If 
+            <paramref name="self"/> is true, register this as the self contact. If
+            <paramref name="merge"/> is true, merge this contact information.
+            </summary>
+            <param name="fileName">The file to fetch the contact data from.</param>
+            <param name="self">If true, contact data corresponds to this user.</param>
+            <param name="localName">Short name for the contact to distinguish it from
+            others.</param>
+            <param name="merge">Add this data to the existing contact.</param>
+            <param name="format">The format the input is written in.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetNetworkEntry(System.String)">
+            <summary>
+            Return the network entry for the address <paramref name="networkAddress"/>
+            </summary>
+            <param name="networkAddress">The address to return the entry for.</param>
+            <returns>The network entry if found, otherwise, null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetByAccountEncrypt(System.String)">
+            <summary>
+            Retuen the mesh account encryption key for the address <paramref name="networkAddress"/>
+            </summary>
+            <param name="networkAddress">The address to return the entry for.</param>
+            <returns>The mesh account encryption key if found, otherwise, null.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.Client.TransactAccount.ContextAccount">
+            <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.TransactUser.ContextAccount">
+            <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.TransactUser.ContextUser">
+            <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogApplication">
+            <summary>Returns the application catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogDevice">
+            <summary>Returns the contacts catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogContact">
+            <summary>Returns the contacts catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogCredential">
+            <summary>Returns the credential catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogBookmark">
+            <summary>Returns the bookmark catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogCalendar">
+            <summary>Returns the calendar catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogNetwork">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetSpoolInbound">
+            <summary>Returns the inbound spool for the account</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.TransactGroup.ContextAccount">
+            <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.TransactGroup.ContextGroup">
+            <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactGroup.GetCatalogMember">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.Transaction`1.ContextAccount">
+            <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Transaction`1.TransactRequest">
+            <summary>The transaction request message being assembled</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Transaction`1.LocalReferences">
+            <summary>List of completion references to be added to the local spool</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Transaction`1.InboundReferences">
+            <summary>List of completion references to be added to the inbound spool</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.GetCatalogPublication">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.GetCatalogCapability">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(System.String,Goedel.Mesh.Message)">
+            <summary>
+            Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> as an
+            outbound message.
+            </summary>
+            <param name="recipientAddress">The message recipient</param>
+            <param name="message">The message to send</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(Goedel.Mesh.NetworkProtocolEntry,Goedel.Mesh.Message)">
+            <summary>
+            Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
+            outbound message of <paramref name="transactRequest"/>.
+            </summary>
+            <param name="recipient">The message recipient</param>
+            <param name="message">The message to send</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(System.String,Goedel.Cryptography.CryptoKey,Goedel.Mesh.Message)">
+            <summary>
+            Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> 
+            encrypted under <paramref name="recipientEncryptionKey"/> as an
+            outbound message.
+            </summary>
+            <param name="recipientAddress">The message recipient address</param>
+            <param name="recipientEncryptionKey">The message recipient encryption key</param>
+            <param name="message">The message to send</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.InboundMessage(Goedel.Mesh.Message)">
+            <summary>
+            Add the message <paramref name="message"/> as an inbound message.
+            </summary>
+            <param name="message">The message to append to the inbound spool.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.LocalMessage(Goedel.Mesh.Message)">
+            <summary>
+            Add the message <paramref name="message"/> as a
+            local message.
+            </summary>
+            <param name="message">The message to append to the local spool.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.InboundComplete(Goedel.Mesh.MessageStatus,Goedel.Mesh.Message,Goedel.Mesh.Message)">
+            <summary>
+            Mark the message <paramref name="completed"/> on the inbound spool as having status 
+            <paramref name="messageStatus"/>. If 
+            <paramref name="response"/> is not null, mark it as the response.
+            </summary>
+            <param name="messageStatus">The new message status.</param>
+            <param name="completed">The message whose status is being changed.</param>
+            <param name="response">The message generated in response.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.LocalComplete(Goedel.Mesh.MessageStatus,Goedel.Mesh.Message,Goedel.Mesh.Message)">
+            <summary>
+            Mark the message <paramref name="completed"/> on the local spool as having status 
+            <paramref name="messageStatus"/>. If 
+            <paramref name="response"/> is not null, mark it as the response.
+            </summary>
+            <param name="messageStatus">The new message status.</param>
+            <param name="completed">The message whose status is being changed.</param>
+            <param name="response">The message generated in response.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.CatalogUpdate``1(Goedel.Mesh.Catalog{``0},``0)">
+            <summary>
+            Append a request to append <paramref name="catalogedEntry"/> to the catalog
+            <paramref name="catalog"/> to the transaction.
+            </summary>
+            <param name="catalog">The catalog to be updated</param>
+            <param name="catalogedEntry">The entry to add as an update.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.CatalogDelete``1(Goedel.Mesh.Catalog{``0},``0)">
+            <summary>
+            Append a request to delete <paramref name="catalogedEntry"/> from the catalog
+            <paramref name="catalog"/> to the transaction.
+            </summary>
+            <param name="catalog">The catalog to be updated</param>
+            <param name="catalogedEntry">The entry to add as an update.</param>
         </member>
         <member name="T:Goedel.Mesh.Client.Internal">
             <summary>

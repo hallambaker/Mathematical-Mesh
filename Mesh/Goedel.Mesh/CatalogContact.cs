@@ -80,14 +80,14 @@ namespace Goedel.Mesh {
         /// in <see cref="DictionaryByNetworkAddress"/>.
         /// </summary>
         /// <param name="catalogedEntry">The entry being added.</param>
-        public override void NewEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+        public override void NewEntry(CatalogedContact catalogedEntry) => UpdateLocal(catalogedEntry);
 
         /// <summary>
         /// Callback called before updating an entry in the catalog. Overriden to update the values
         /// in <see cref="DictionaryByNetworkAddress"/>.
         /// </summary>
         /// <param name="catalogedEntry">The entry being added.</param>
-        public override void UpdateEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+        public override void UpdateEntry(CatalogedContact catalogedEntry) => UpdateLocal(catalogedEntry);
 
         #endregion
         #region // Class methods
@@ -177,39 +177,6 @@ namespace Goedel.Mesh {
                 }
             return null;
             }
-
-        /// <summary>
-        /// Add the contact data specified in the file <paramref name="fileName"/>. If 
-        /// <paramref name="self"/> is true, register this as the self contact. If
-        /// <paramref name="merge"/> is true, merge this contact information.
-        /// </summary>
-        /// <param name="fileName">The file to fetch the contact data from.</param>
-        /// <param name="self">If true, contact data corresponds to this user.</param>
-        /// <param name="localName">Short name for the contact to distinguish it from
-        /// others.</param>
-        /// <param name="merge">Add this data to the existing contact.</param>
-        /// <param name="format">The format the input is written in.</param>
-        /// <returns></returns>
-        public CatalogedContact AddFromFile(
-                    string fileName,
-                    bool self,
-                    CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
-                    bool merge = true,
-                    string localName = null) {
-            merge.Future();
-            localName.Future();
-
-
-            using var stream = fileName.OpenFileReadShared();
-            var contact = ReadFromStream(stream, format);
-
-            Add(contact.Contact, self);
-
-            return contact;
-
-            }
-
-
 
         /// <summary>
         /// Return the network entry for the address <paramref name="networkAddress"/>

@@ -14,19 +14,19 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
 
         public override ShellResult CalendarAdd(CalendarAdd Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             var title = Options.Title.Value;
             var identifier = Options.Identifier.Value ?? UDF.Nonce();
-
-
 
             var entry = new CatalogedTask() {
                 Key = identifier,
                 Title = title
                 };
-            var catalog = contextAccount.GetCatalogCalendar();
-            catalog.Update(entry);
 
+            var transaction = contextAccount.TransactBegin();
+            var catalog = transaction.GetCatalogCalendar();
+            transaction.CatalogUpdate(catalog, entry);
+            transaction.Transact();
 
             return new ResultEntry() {
                 Success = true,
@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarImport(CalendarImport Options) {
-            var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextUser(Options);
             "Implement file import functionality".TaskFunctionality(true);
 
             var identifier = Options.Identifier.Value ?? UDF.Nonce();
@@ -50,8 +50,10 @@ namespace Goedel.Mesh.Shell {
                 Key = identifier
                 };
 
-            var catalog = contextAccount.GetCatalogCalendar();
-            catalog.Update(entry);
+            var transaction = contextAccount.TransactBegin();
+            var catalog = transaction.GetCatalogCalendar();
+            transaction.CatalogUpdate(catalog, entry);
+            transaction.Transact();
 
             return new ResultEntry() {
                 Success = true,
@@ -65,13 +67,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarDelete(CalendarDelete Options) {
-            var contextAccount = GetContextAccount(Options);
-            var identifier = Options.Identifier.Value;
+            var contextAccount = GetContextUser(Options);
+            var key = Options.Identifier.Value;
 
-            var catalog = contextAccount.GetCatalogCalendar();
-            var result = catalog.Locate(identifier);
-            result.AssertNotNull(EntryNotFound.Throw, identifier);
-            catalog.Delete(result);
+            var transaction = contextAccount.TransactBegin();
+            var catalog = transaction.GetCatalogCalendar();
+            var result = catalog.Locate(key);
+            result.AssertNotNull(EntryNotFound.Throw, key);
+            transaction.CatalogDelete(catalog, result);
+            transaction.Transact();
 
             return new ResultEntry() {
                 Success = true,
@@ -85,8 +89,8 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarGet(CalendarGet Options) {
-            var contextAccount = GetContextAccount(Options);
-            var catalog = contextAccount.GetCatalogCalendar();
+            var contextAccount = GetContextUser(Options);
+            var catalog = contextAccount.GetStore(CatalogCalendar.Label) as CatalogCalendar;
             var identifier = Options.Identifier.Value;
 
             var result = catalog.Locate(identifier);
@@ -103,13 +107,12 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarDump(CalendarDump Options) {
-            using var contextAccount = GetContextAccount(Options);
+            using var contextAccount = GetContextUser(Options);
             var catalogedEntries = new List<CatalogedEntry>();
 
-            using (var catalog = contextAccount.GetCatalogCalendar()) {
-                foreach (var entry in catalog) {
-                    catalogedEntries.Add(entry);
-                    }
+            var catalog = contextAccount.GetStore(CatalogCalendar.Label) as CatalogCalendar;
+            foreach (var entry in catalog) {
+                catalogedEntries.Add(entry);
                 }
 
             var result = new ResultDump() {
