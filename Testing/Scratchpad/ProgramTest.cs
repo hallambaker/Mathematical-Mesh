@@ -37,29 +37,42 @@ namespace Scratchpad {
             // PINs are not being marked as being used
             // need test to see how many messages are processed...
 
+            // 4 tests
+            //TestService.Test().MeshGrantAdmin();
+            //TestService.Test().MeshGrantExternal();
+            //TestService.Test().MeshGrantSuperAdmin();
+            //TestService.Test().MeshGrantRevokeExternal();
 
-            //TestService.Test().MeshCatalogGroup();
-
-            //ShellTests.Test().TestProfileConnectDynamicQR();
-            //ShellTests.Test().TestProfileConnectStaticQR();
-
-
-
-            // Also need to return full description of results from ResultSync
-
-            //ShellTests.Test().TestProfileConnectPinInvalid();
-            ShellTests.Test().TestProfileConnectPinReused();
-
-
-            //ShellTests.Test().TestEscrowChangeService();
+            // 5 tests
+            ShellTests.Test().TestProfileBookmark();
+            //ShellTests.Test().TestProfileCalendar();
             //ShellTests.Test().TestProfileContact();
+            //ShellTests.Test().TestProfileNetwork();
+            //ShellTests.Test().TestProfilePassword();
+
+            // 7 tests
+            //ShellTests.Test().TestMessageConfirmationAccept();
+            //ShellTests.Test().TestMessageConfirmationReject();
+            //ShellTests.Test().TestMessageContactBusinessCardFetch();
+            //ShellTests.Test().TestMessageContactBusinessCardExchange();
+            //ShellTests.Test().TestMessageContactBusinessCardReject();
+            //ShellTests.Test().TestMessageContactInPerson();
+            //ShellTests.Test().TestMessageContactRemote();
 
 
+
+            // 4 tests
             // The App bundle:
             //ShellTests.Test().TestMessageGroup();
             //ShellTests.Test().TestProfileMail();
             //ShellTests.Test().TestProfileSSHPrivate();
             //ShellTests.Test().TestProfileSSHPublic();
+
+            // 3 tests
+            // The Auth bundle:
+            //ShellTests.Test().TestProfileConnectAuth();
+            //ShellTests.Test().TestProfileConnectAuthAll();
+            //ShellTests.Test().TestProfileConnectAuthAdmin();
 
 
 

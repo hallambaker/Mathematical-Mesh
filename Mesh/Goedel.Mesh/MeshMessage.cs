@@ -208,7 +208,7 @@ namespace Goedel.Mesh {
             if (messagePin == null )  {
                 return ProcessingResult.PinInvalid;
                 }
-            if (messagePin.Closed == true) {
+            if ((messagePin.MessageStatus & MessageStatus.Closed )== MessageStatus.Closed) {
                 return ProcessingResult.PinUsed;
                 }
             if (messagePin.Expires != null && messagePin.Expires < DateTime.Now) {

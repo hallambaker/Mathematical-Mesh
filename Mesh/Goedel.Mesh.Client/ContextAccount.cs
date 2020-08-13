@@ -207,6 +207,12 @@ namespace Goedel.Mesh.Client {
             var spoolLocal = GetSpoolLocal();
 
             var pinCreate = spoolLocal.CheckPIN(PinUDF);
+
+            if (pinCreate == null) {
+                return null;
+                }
+            //pinCreate.Message.Status = pinCreate.MessageStatus;
+
             return pinCreate?.Message as MessagePIN;
             }
 

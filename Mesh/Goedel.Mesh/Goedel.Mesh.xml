@@ -9984,12 +9984,6 @@
         <member name="F:Goedel.Mesh.MeshItem.Status">
             <summary>Reports the status of the item. </summary>
         </member>
-        <member name="P:Goedel.Mesh.MeshItem.Open">
-            <summary>Reports true if the item status is open </summary>
-        </member>
-        <member name="P:Goedel.Mesh.MeshItem.Closed">
-            <summary>Reports true if the item status is closed </summary>
-        </member>
         <member name="M:Goedel.Mesh.MeshItem.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream

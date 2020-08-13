@@ -166,8 +166,8 @@ namespace Goedel.XUnit {
             device1.Dispatch($"account sync /auto");
 
             // This connection MUST be accepted.
-            device2.Dispatch($"device complete", fail: true);
-            device2.Dispatch($"account sync", fail: true);
+            device2.Dispatch($"device complete");
+            device2.Dispatch($"account sync");
 
             // The connection MUST be rejected as the PIN was already used.
             device3.Dispatch($"device request {accountA} /pin {pin}");

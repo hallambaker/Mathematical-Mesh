@@ -26,14 +26,7 @@ namespace Goedel.Mesh {
         public static object Initialize => null;
 
         ///<summary>Reports the status of the item. </summary>
-        public bool? Status = null;
-
-        ///<summary>Reports true if the item status is open </summary>
-        public bool Open => Status == true;
-
-
-        ///<summary>Reports true if the item status is closed </summary>
-        public bool Closed => Status == true;
+        public MessageStatus Status = MessageStatus.None;
 
         static MeshItem() => AddDictionary(ref _TagDictionary);
 

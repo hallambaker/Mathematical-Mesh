@@ -1036,7 +1036,7 @@ namespace Goedel.Mesh.Client {
                 // Must enforce this from now on. 
                 //spoolEntry.Open.AssertTrue(Internal.Throw);
 
-                Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageID}: Status {meshMessage.Status}");
+                Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageID}: Status {spoolEntry.MessageStatus}");
 
                 if (!spoolEntry.Closed) {
                     switch (meshMessage) {

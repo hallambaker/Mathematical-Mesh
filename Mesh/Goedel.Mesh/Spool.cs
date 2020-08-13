@@ -109,6 +109,7 @@ namespace Goedel.Mesh {
                 References ??= new List<Reference>();
                 References.Insert(0, reference);
                 MessageStatus = reference.MessageStatus;
+                Message.MessageStatus = MessageStatus;
                 }
             else {
                 References.Add(reference);
