@@ -1883,6 +1883,13 @@
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Contact.CatalogedContact(System.Boolean)">
+            <summary>
+            Convenience constructor, wrap a cataloged contact arround this contact.
+            </summary>
+            <param name="self">If true, the contact is for the owner of the account.</param>
+            <returns>The cataloged contact.</returns>
+        </member>
         <member name="P:Goedel.Mesh.Contact.Id">
              <summary>
             The globally unique contact identifier.
@@ -2308,7 +2315,7 @@
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCredential.LocateByService(System.String)">
+        <member name="M:Goedel.Mesh.CatalogCredential.GetCredentialByService(System.String)">
             <summary>
             Locate credential matching the specified service name, ignoring the protocol value.
             </summary>

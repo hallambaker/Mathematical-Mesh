@@ -33,7 +33,8 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
-            TestService.Test().MeshCatalogGroup();
+
+
 
             // 4 tests
             //TestService.Test().MeshGrantAdmin();
@@ -41,52 +42,19 @@ namespace Scratchpad {
             //TestService.Test().MeshGrantSuperAdmin();
             //TestService.Test().MeshGrantRevokeExternal();
 
-            // 5 tests
-            //ShellTests.Test().TestProfileBookmark();
-            //ShellTests.Test().TestProfileCalendar();
-            //ShellTests.Test().TestProfileContact();
-            //ShellTests.Test().TestProfileNetwork();
-            //ShellTests.Test().TestProfilePassword();
-
-            // 7 tests
-            //ShellTests.Test().TestMessageConfirmationAccept();
-            //ShellTests.Test().TestMessageConfirmationReject();
-            //ShellTests.Test().TestMessageContactBusinessCardFetch();
-            //ShellTests.Test().TestMessageContactBusinessCardExchange();
-            //ShellTests.Test().TestMessageContactBusinessCardReject();
-            //ShellTests.Test().TestMessageContactInPerson();
-            //ShellTests.Test().TestMessageContactRemote();
-
-
-
-            // 4 tests
-            // The App bundle:
-            //ShellTests.Test().TestMessageGroup();
-            //ShellTests.Test().TestProfileMail();
-            //ShellTests.Test().TestProfileSSHPrivate();
-            //ShellTests.Test().TestProfileSSHPublic();
-
             // 3 tests
             // The Auth bundle:
             //ShellTests.Test().TestProfileConnectAuth();
             //ShellTests.Test().TestProfileConnectAuthAll();
             //ShellTests.Test().TestProfileConnectAuthAdmin();
 
+            // 3 tests
+            // The App bundle:
+            //ShellTests.Test().TestProfileMail();
+            //ShellTests.Test().TestProfileSSHPrivate();
+            //ShellTests.Test().TestProfileSSHPublic();
 
 
-            // The Auth bundle:
-
-            //TestService.Test().MeshRevokeExternal();
-            //TestService.Test().MeshGrantExternal();
-            //TestService.Test().MeshGrantAdmin();
-            //TestService.Test().MeshGrantSuperAdmin();
-
-
-            //TestService.Test().MeshGrantPrivs();
-            //[Tests will likely need a rewrite here...]
-            //   ShellTests.Test().TestProfileConnectAuth();
-            //   ShellTests.Test().TestProfileConnectAuthAll();
-            //   ShellTests.Test().TestProfileConnectAuthAdmin();
 
 
             // **** Tests yet to be written

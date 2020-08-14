@@ -766,7 +766,10 @@ namespace Goedel.Mesh.Client {
                 KeyData = new KeyData(keyEncrypt, true)
                 };
 
-            var catalogCapability = GetStore(CatalogCapability.Label) as CatalogCapability;
+
+            var transaction = TransactBegin();
+
+            var catalogCapability = transaction.GetCatalogCapability();
             catalogCapability.Add(capabilityAdmin);
             catalogCapability.Add(capabilityDecrypt);
 
@@ -776,7 +779,7 @@ namespace Goedel.Mesh.Client {
             //var envelopedCapabilityDecrypt = DareEnvelope.Encode(capabilityDecrypt.GetBytes(), encryptionKey: KeyDeviceEncryption);
 
 
-            var transaction = TransactBegin();
+
 
             var catalogedGroup = new CatalogedGroup(profileGroup) {
                 Key = groupName
@@ -788,7 +791,6 @@ namespace Goedel.Mesh.Client {
             var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
 
             var contact = contextGroup.CreateContact();
-            // Bug: Should also encrypt the relevant admin key to the admin encryption key.
 
 
             var contactCatalog = transaction.GetCatalogContact();
@@ -1285,7 +1287,8 @@ namespace Goedel.Mesh.Client {
             // Add the requestContact.Self contact to the catalog
 
             if (requestContact.Self != null) {
-                var cataloged = MeshItem.Decode(requestContact.Self) as CatalogedContact;
+                var contact = MeshItem.Decode(requestContact.Self) as Contact;
+                var cataloged = contact.CatalogedContact();
 
                 var transact = TransactBegin();
                 var catalog = transact.GetCatalogContact();
@@ -1457,7 +1460,8 @@ namespace Goedel.Mesh.Client {
 
             // Add to the catalog
 
-            var cataloged = MeshItem.Decode(envelope) as CatalogedContact;
+            var contact = MeshItem.Decode(envelope) as Contact;
+            var cataloged = contact.CatalogedContact();
 
             var transact = TransactBegin();
             var catalog = transact.GetCatalogContact();
@@ -1562,6 +1566,15 @@ namespace Goedel.Mesh.Client {
             (GetStore(CatalogCredential.Label) as CatalogCredential).Get(key);
 
         /// <summary>
+        /// Return the credential with identifier <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">specifies the identifier to return.</param>
+        /// <returns>The credential, if found. Otherwise null.</returns>
+        public CatalogedCredential GetCredentialByService(string key) =>
+            (GetStore(CatalogCredential.Label) as CatalogCredential).GetCredentialByService(key);
+
+
+        /// <summary>
         /// Return the bookmark with identifier <paramref name="key"/>.
         /// </summary>
         /// <param name="key">specifies the identifier to return.</param>
@@ -1584,6 +1597,7 @@ namespace Goedel.Mesh.Client {
         /// <returns>The network entry, if found. Otherwise null.</returns>
         public CatalogedNetwork GetNetwork(string key) =>
             (GetStore(CatalogNetwork.Label) as CatalogNetwork).Get(key);
+
 
 
         /// <summary>

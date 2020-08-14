@@ -313,6 +313,14 @@ namespace Goedel.Mesh {
                         MeshItem.Decode(envelope, keyCollection) as Contact;
 
 
+        /// <summary>
+        /// Convenience constructor, wrap a cataloged contact arround this contact.
+        /// </summary>
+        /// <param name="self">If true, the contact is for the owner of the account.</param>
+        /// <returns>The cataloged contact.</returns>
+        public CatalogedContact CatalogedContact(bool self = false) =>
+            new CatalogedContact(this, self);
+
         }
 
 

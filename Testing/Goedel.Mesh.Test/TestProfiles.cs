@@ -92,10 +92,10 @@ namespace Goedel.Mesh.Test {
             catalog.Delete(entry4);
             CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry3, entry5 });
 
-            CheckCatalogEntry(entry1, catalog.LocateByService(entry1.Service));
-            CheckCatalogEntry(entry3, catalog.LocateByService(entry3.Service));
-            CheckCatalogEntry(null, catalog.LocateByService(entry4.Service));
-            CheckCatalogEntry(entry5, catalog.LocateByService(entry5.Service));
+            CheckCatalogEntry(entry1, catalog.GetCredentialByService(entry1.Service));
+            CheckCatalogEntry(entry3, catalog.GetCredentialByService(entry3.Service));
+            CheckCatalogEntry(null, catalog.GetCredentialByService(entry4.Service));
+            CheckCatalogEntry(entry5, catalog.GetCredentialByService(entry5.Service));
 
 
             CheckCatalogEntry(entry1, catalog.Locate(entry1._PrimaryKey));

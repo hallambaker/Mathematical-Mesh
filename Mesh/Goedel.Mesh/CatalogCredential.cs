@@ -73,7 +73,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="key">The service to be matched.</param>
         /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
-        public CatalogedCredential LocateByService(string key) {
+        public CatalogedCredential GetCredentialByService(string key) {
             foreach (var credential in AsCatalogedType) {
                 if (credential.Service == key) {
                     return credential;

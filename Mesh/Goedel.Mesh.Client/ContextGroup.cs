@@ -50,11 +50,6 @@ namespace Goedel.Mesh.Client {
         ///<summary>Dictionarry used to create stores</summary>
         public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => stores;
         Dictionary<string, StoreFactoryDelegate> stores = new Dictionary<string, StoreFactoryDelegate>() {
-            {SpoolInbound.Label, SpoolInbound.Factory},
-            {SpoolOutbound.Label, SpoolOutbound.Factory},
-            {SpoolLocal.Label, SpoolLocal.Factory},
-            {SpoolArchive.Label, SpoolArchive.Factory},
-
             {CatalogMember.Label, CatalogMember.Factory},
 
             // All contexts have a capability catalog:
@@ -86,7 +81,7 @@ namespace Goedel.Mesh.Client {
         public static ContextGroup CreateGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) {
             var result = new ContextGroup(contextAccount, catalogedGroup);
 
-            // Prepoulate the catalogs
+            // Prepopulate the catalogs
             Directory.CreateDirectory(result.StoresDirectory);
 
             result.MakeStores();

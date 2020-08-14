@@ -164,7 +164,7 @@ namespace Goedel.Mesh.Shell {
 
             var transaction = contextUser.TransactBegin();
             var catalog = transaction.GetCatalogContact();
-            var result = catalog.Locate(key);
+            var result = catalog.Get(key);
             result.AssertNotNull(EntryNotFound.Throw, key);
             transaction.CatalogDelete(catalog, result);
             transaction.Transact();

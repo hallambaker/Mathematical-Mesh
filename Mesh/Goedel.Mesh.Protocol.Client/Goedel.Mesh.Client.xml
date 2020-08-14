@@ -1397,6 +1397,13 @@
             <param name="key">specifies the identifier to return.</param>
             <returns>The credential, if found. Otherwise null.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetCredentialByService(System.String)">
+            <summary>
+            Return the credential with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The credential, if found. Otherwise null.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetBookmark(System.String)">
             <summary>
             Return the bookmark with identifier <paramref name="key"/>.

@@ -12,7 +12,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordAdd(PasswordAdd Options) {
-            var contextAccount = GetContextUser(Options);
+            var contextUser = GetContextUser(Options);
             var site = Options.Site.Value;
             var username = Options.Username.Value;
             var password = Options.Password.Value;
@@ -23,7 +23,7 @@ namespace Goedel.Mesh.Shell {
                 Password = password
                 };
 
-            var transaction = contextAccount.TransactBegin();
+            var transaction = contextUser.TransactBegin();
             var catalog = transaction.GetCatalogCredential();
             transaction.CatalogUpdate(catalog, entry);
             transaction.Transact();
@@ -40,12 +40,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordGet(PasswordGet Options) {
-            var contextAccount = GetContextUser(Options);
+            var contextUser = GetContextUser(Options);
             var site = Options.Site.Value;
 
-            var catalog = contextAccount.GetStore(CatalogCredential.Label) as CatalogCredential;
-            var result = catalog.LocateByService(site);
-
+            var result = contextUser.GetCredentialByService(site);
 
             return new ResultEntry() {
                 Success = result != null,
@@ -64,7 +62,7 @@ namespace Goedel.Mesh.Shell {
 
             var transaction = contextAccount.TransactBegin();
             var catalog = transaction.GetCatalogCredential();
-            var result = catalog.Locate(site);
+            var result = catalog.GetCredentialByService(site);
             result.AssertNotNull(EntryNotFound.Throw, site);
             transaction.CatalogDelete(catalog, result);
             transaction.Transact();
