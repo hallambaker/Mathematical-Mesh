@@ -8,14 +8,14 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult HashUDF(HashUDF Options) {
-            var inputFile = Options.Input.Value;
-            var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
-            var bits = Options.Bits.ValueDefaulted(140);
+        public override ShellResult HashUDF(HashUDF options) {
+            var inputFile = options.Input.Value;
+            var contentType = options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
+            var bits = options.Bits.ValueDefaulted(140);
             var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
-            var expect = Options.Expect.Value;
+            var expect = options.Expect.Value;
 
 
             var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
@@ -43,10 +43,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult HashDigest(HashDigest Options) {
-            var inputFile = Options.Input.Value;
+        public override ShellResult HashDigest(HashDigest options) {
+            var inputFile = options.Input.Value;
             var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
 
             return new ResultDigest() {
@@ -59,16 +59,16 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult HashMac(HashMac Options) {
-            var inputFile = Options.Input.Value;
-            var bits = Options.Bits.ValueDefaulted(140);
-            var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
+        public override ShellResult HashMac(HashMac options) {
+            var inputFile = options.Input.Value;
+            var bits = options.Bits.ValueDefaulted(140);
+            var contentType = options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
             var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
-            var expect = Options.Expect.Value;
+            var expect = options.Expect.Value;
 
-            var key = Options.DigestKey.Value ?? Cryptography.UDF.Nonce();
+            var key = options.DigestKey.Value ?? Cryptography.UDF.Nonce();
 
             var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
             var digest = Cryptography.UDF.ContentDigestOfDigestString(

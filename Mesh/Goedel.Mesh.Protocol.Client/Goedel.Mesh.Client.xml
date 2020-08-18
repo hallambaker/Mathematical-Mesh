@@ -846,7 +846,7 @@
             <param name="meshHost">The Mesh host</param>
             <param name="catalogedMachine">The pending connection description.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextMeshPending.ConnectService(Goedel.Mesh.Client.MeshHost,System.String,System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32)">
+        <member name="M:Goedel.Mesh.Client.ContextMeshPending.ConnectService(Goedel.Mesh.Client.MeshHost,System.String,System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32,System.Collections.Generic.List{System.String})">
             <summary>
             Initiate a connection request.
             </summary>
@@ -860,7 +860,7 @@
             <returns>The <see cref="T:Goedel.Mesh.Client.ContextMeshPending"/> record describing the state of the 
             pending connection.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextMeshPending.ConnectService(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileDevice,System.String,System.String,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextMeshPending.ConnectService(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileDevice,System.String,System.String,System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Initiate a connection request.
             </summary>
@@ -2400,7 +2400,7 @@
             <param name="localName"></param>
             <returns>Context for the newly bound account.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.Connect(System.String,System.String,System.String)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.Connect(System.String,System.String,System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Begin connection to a service.
             </summary>
@@ -2503,6 +2503,192 @@
             Commit a Delete transaction to memory
             </summary>
             <param name="containerStoreEntry">The container store entry representing the transaction</param>
+        </member>
+        <member name="T:Goedel.Mesh.Client.Degree">
+            <summary>
+            Desribes the means by which a right is granted.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Degree.Direct">
+            <summary>The holder has direct access to the cryptographic key required
+            to perform the operation.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Degree.Service">
+            <summary>The cryptographic key required for the right are divided 
+            between the device and the Mesh service.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Degree.MultiParty">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.ProfileRoot">
+            <summary>Profile root signature key.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.ProfileAdmin">
+            <summary>Profile administrative signature key.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.CatalogCredential">
+            <summary>The credential catalog. Access limited to the service and
+            administrative devices.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.CatalogDevice">
+            <summary>The device catalog</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.CatalogContact">
+            <summary>The contacts catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.CatalogCalendar">
+            <summary>The calendar/task catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.CatalogBookmark">
+            <summary>The bookmark catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.CatalogNetwork">
+            <summary>The network catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.CatalogApplication">
+            <summary>The device catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.CatalogCapability">
+            <summary>The capability catalog catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.CatalogPublication">
+            <summary>The publications catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.SpoolInbound">
+            <summary>The inbound spool. Read access is restricted
+            to External devices. Write access is limited to the Mesh Service and
+            to External devices posting completion messages.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.SpoolOutbound">
+            <summary>The outbound spool. Read/write access is restricted
+            to External devices.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.SpoolLocal">
+            <summary>The local spool. Write access is limited to administration 
+            devices. Read access is limited to the specific device to which a message
+            is directed.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.SshClient">
+            <summary>Service right: Holder is credentialed as an SSH client.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.SshService">
+            <summary>Service right: Holder is credentialed as an SSH service.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.Pgp">
+            <summary>Data right: Holder is  able to Sign/Decrypt OpenPgp messages.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.Smime">
+            <summary>Data right: Holder is  able to Sign/Decrypt S/MIME messages.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.User">
+            <summary>Data right: Holder is able to Sign/Decrypt mesh messages under
+            the account key.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.CatalogMember">
+            <summary>Group membership catalog (restricted to GroupAdministrator)</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Resource.GroupMember">
+            <summary>Ability to read data controlled under the group.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.Client.Access">
+            <summary>
+            Access rights. These are principally Decrypt (read), Sign (write) and Authenticate
+            (login) plus the ability grant these rights. Rights to a specific resource are
+            limited to either data rights (read/write) or service rights (login).
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Access.Decrypt">
+            <summary>Decrypt (read) access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Access.Sign">
+            <summary>Sign (write) access, i.e. ability to sign updates to the catalog</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Access.Authenticate">
+            <summary>Read/decrypt access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Access.Grant">
+            <summary>Ability togrant read/decrypt access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Access.GrantDecrypt">
+            <summary>Ability togrant read/decrypt access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Access.GrantSign">
+            <summary>Ability to grant write/sign access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Access.GrantAuthenticate">
+            <summary>Read/decrypt access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Access.ReadWrite">
+            <summary>Shorthand for Read + Write</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Access.GrantReadWrite">
+            <summary>Shorthand for GrantDecrypt + GrantSign</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Access.All">
+            <summary>Shorthand for all rights</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.DictionaryRights">
+            <summary>Dictionary mapping rights identifier to rights description.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsSuperAdministrator">
+            <summary>Super administrator rights.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsAdministrator">
+            <summary>Device admninistrator rights</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsGrantUser">
+            <summary>Account access administration rights</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsDevce">
+            <summary>Rights granted to every device connected to a Mesh. These are currently
+            limited to the ability to read the network and application catalogs, both of
+            which will require additional grants to be of use.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsMessage">
+            <summary>Rights granted to a device afforded external messaging capabilities in
+            addition to those of a connected device.
+            These add the right to read/update the contacts and publications catalogs, to read 
+            the inbound spool and read/write to the outbound spool and to sign and decrypt
+            messages under the public credentials for the account.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsWeb">
+            <summary>Rights granted a device afforded Web access in addition to external
+            messaging. These add the right to read/update the credential, calendar and 
+            bookmark catalogs.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsSSH">
+            <summary>Rights granted an SSH client device. This is limited to access to an
+            SSH authenticator under the account. Which may be a device specific key plus
+            a credential or the account key.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsPgp">
+            <summary>Rights granted to a PGP enabled device. This requires external messaging and
+            the ability to sign/decrypt messages under the PGP keying.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsSmime">
+            <summary>Rights granted to an S/MIME enabled device. This requires external messaging and
+            the ability to sign/decrypt messages under the S/MIME keying.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsGroupAdministrator">
+            <summary>Rights granted to a group administrator. An administrator can add users to 
+            the group but does not automatically gain the ability to access group materials
+            themselves.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.Rights.RightsGroupMember">
+            <summary>Rights granted to a group member. A group member can read/update the group
+            publications catalog and decrypt data encrypted under the group key.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Client.Rights.Concat(System.Collections.Generic.Dictionary{Goedel.Mesh.Client.Resource,Goedel.Mesh.Client.Access},System.Collections.Generic.Dictionary{Goedel.Mesh.Client.Resource,Goedel.Mesh.Client.Access})">
+            <summary>
+            Concatenate the rights specified in <paramref name="append"/> to the dictionary
+            <paramref name="dictionary"/> and return <paramref name="dictionary"/>. If the
+            entry already exists, the access rights are combined to specify the union 
+            of the source access rights.
+            </summary>
+            <param name="dictionary">The dictionary to merge entries from 
+            <paramref name="append"/> into.</param>
+            <param name="append">The entries to add.</param>
+            <returns>The parameter <paramref name="dictionary"/>.</returns>
         </member>
     </members>
 </doc>

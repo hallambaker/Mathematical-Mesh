@@ -79,7 +79,8 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                int bits = 256) {
+                int bits = 256,
+                List<string> rights =null) {
 
 
             // If accountAddress is a Mesh Connect URI, replace account, pin with the parsed values.
@@ -95,7 +96,7 @@ namespace Goedel.Mesh.Client {
             var profileDevice = new ProfileDevice(secretSeed:secretSeed);
             profileDevice.PersistSeed(meshHost.KeyCollection);
 
-            return ConnectService(meshHost, profileDevice, accountAddress, localName, pin);
+            return ConnectService(meshHost, profileDevice, accountAddress, localName, pin, rights: rights);
             }
 
 
@@ -114,9 +115,11 @@ namespace Goedel.Mesh.Client {
                 ProfileDevice profileDevice,
                 string accountAddress,
                 string localName = null,
-                string pin = null) {
+                string pin = null,
+                List<string> rights = null) {
 
             localName.Future();
+
 
             // generate MessageConnectionRequestClient
             var messageConnectionRequestClient = new RequestConnection(profileDevice,
@@ -133,7 +136,8 @@ namespace Goedel.Mesh.Client {
             var meshClient = meshHost.MeshMachine.GetMeshClient(accountAddress, keyAuthentication, null);
 
             var connectRequest = new ConnectRequest() {
-                MessageConnectionRequestClient = messageConnectionRequestClientEncoded
+                MessageConnectionRequestClient = messageConnectionRequestClientEncoded,
+                Rights = rights
                 };
 
             var response = meshClient.Connect(connectRequest);
@@ -147,7 +151,8 @@ namespace Goedel.Mesh.Client {
                 EnvelopedMessageConnectionResponse = response.EnvelopedConnectionResponse,
                 EnvelopedProfileUser = response.EnvelopedProfileMaster,
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
-                EnvelopedAccountAssertion = response.EnvelopedAccountAssertion
+                EnvelopedAccountAssertion = response.EnvelopedAccountAssertion,
+                Local = localName
                 };
 
             var context = new ContextMeshPending(meshHost, catalogedPending);

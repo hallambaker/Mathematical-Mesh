@@ -12,14 +12,14 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountHello(AccountHello Options) {
+        public override ShellResult AccountHello(AccountHello options) {
 
             // This dispatch uses a unique approach because it can be issued before the account
             // or service is created.
 
-            var meshClient = GetMeshClient(Options);
+            var meshClient = GetMeshClient(options);
 
             var helloRequest = new HelloRequest();
             var response = meshClient.Hello(helloRequest);
@@ -34,11 +34,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountCreate(AccountCreate Options) {
-            var accountID = Options.NewAccountID.Value;
-            var localname = Options.Localname.Value;
+        public override ShellResult AccountCreate(AccountCreate options) {
+            var accountID = options.NewAccountID.Value;
+            var localname = options.Localname.Value;
 
             var contextUser = MeshHost.CreateMesh(accountID, localname);
             return new ResultCreateAccount() {
@@ -53,10 +53,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountDelete(AccountDelete Options) {
-            var profileUdf = Options.ProfileUdf.Value;
+        public override ShellResult AccountDelete(AccountDelete options) {
+            var profileUdf = options.ProfileUdf.Value;
 
             var contextUser = MeshHost.LocateMesh(profileUdf, false);
             contextUser.AssertNotNull(ProfileFingerprintInvalid.Throw);
@@ -75,10 +75,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Register a profile to a new service. This is not currently supported.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountStatus(AccountStatus Options) {
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult AccountStatus(AccountStatus options) {
+            var contextAccount = GetContextUser(options);
             var result = contextAccount.Status();
 
             return new ResultStatus() {
@@ -91,16 +91,16 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Register a profile to a new service. This is not currently supported.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountSync(AccountSync Options) {
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult AccountSync(AccountSync options) {
+            var contextAccount = GetContextUser(options);
             var result = contextAccount.Sync();
 
 
             int ProcessedResults = 0;
 
-            if (Options.AutoApprove.Value) {
+            if (options.AutoApprove.Value) {
                 var process = contextAccount.ProcessAutomatics();
                 ProcessedResults = process.Count;
                 }
@@ -118,12 +118,12 @@ namespace Goedel.Mesh.Shell {
         /// Dispatch method, returns a connection PIN code for the account.
         /// Requires administrative privileges.
         /// </summary>
-        /// <param name="Options">The dispatch options.</param>
+        /// <param name="options">The dispatch options.</param>
         /// <returns>The result of the operation.</returns>
-        public override ShellResult AccountGetPIN(AccountGetPIN Options) {
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult AccountGetPIN(AccountGetPIN options) {
+            var contextAccount = GetContextUser(options);
 
-            var expire = TimeSpan.Parse(Options.Expire.Value);
+            var expire = TimeSpan.Parse(options.Expire.Value);
 
             var messageConnectionPIN = contextAccount.GetPIN(Constants.MessagePINActionDevice,
                         validity: expire.Ticks);
@@ -140,12 +140,12 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountConnect(AccountConnect Options) {
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult AccountConnect(AccountConnect options) {
+            var contextAccount = GetContextUser(options);
 
-            var catalogedDevice = contextAccount.Connect(Options.Uri.Value);
+            var catalogedDevice = contextAccount.Connect(options.Uri.Value);
 
 
             var result = new ResultAccountConnect() {
@@ -160,10 +160,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountEscrow(AccountEscrow Options) {
-            var contextMesh = GetContextUser(Options);
+        public override ShellResult AccountEscrow(AccountEscrow options) {
+            var contextMesh = GetContextUser(options);
             var shares = contextMesh.Escrow(3, 2);
 
             var textShares = new List<string>();
@@ -182,10 +182,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountPurge(AccountPurge Options) {
-            var contextMesh = GetContextUser(Options);
+        public override ShellResult AccountPurge(AccountPurge options) {
+            var contextMesh = GetContextUser(options);
 
             throw new NYI();
             }
@@ -201,23 +201,23 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountRecover(AccountRecover Options) {
+        public override ShellResult AccountRecover(AccountRecover options) {
 
             // ToDo: this is going to need refactoring so that the localname and account tabs are filled.
 
 
             var recoverShares = new List<string>();
-            AddIfPresent(recoverShares, Options.Share1);
-            AddIfPresent(recoverShares, Options.Share2);
-            AddIfPresent(recoverShares, Options.Share3);
-            AddIfPresent(recoverShares, Options.Share4);
+            AddIfPresent(recoverShares, options.Share1);
+            AddIfPresent(recoverShares, options.Share2);
+            AddIfPresent(recoverShares, options.Share3);
+            AddIfPresent(recoverShares, options.Share4);
 
-            AddIfPresent(recoverShares, Options.Share5);
-            AddIfPresent(recoverShares, Options.Share6);
-            AddIfPresent(recoverShares, Options.Share7);
-            AddIfPresent(recoverShares, Options.Share8);
+            AddIfPresent(recoverShares, options.Share5);
+            AddIfPresent(recoverShares, options.Share6);
+            AddIfPresent(recoverShares, options.Share7);
+            AddIfPresent(recoverShares, options.Share8);
 
             var secret = new SharedSecret(recoverShares);
 
@@ -243,9 +243,9 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountList(AccountList Options) {
+        public override ShellResult AccountList(AccountList options) {
             var catalogedMachines = new List<CatalogedMachine>();
             "extract hosts from machine".TaskFunctionality();
 
@@ -258,9 +258,9 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountGet(AccountGet Options) {
+        public override ShellResult AccountGet(AccountGet options) {
             var catalogedMachines = new List<CatalogedMachine>();
 
             "select default host".TaskFunctionality();
@@ -274,9 +274,9 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountExport(AccountExport Options) {
+        public override ShellResult AccountExport(AccountExport options) {
             var catalogedMachines = new List<CatalogedMachine>();
 
             "export host data".TaskFunctionality();
@@ -290,9 +290,9 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountImport(AccountImport Options) {
+        public override ShellResult AccountImport(AccountImport options) {
             var catalogedMachines = new List<CatalogedMachine>();
 
             "import host data".TaskFunctionality();

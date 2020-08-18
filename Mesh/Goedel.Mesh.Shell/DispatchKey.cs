@@ -11,22 +11,22 @@ namespace Goedel.Mesh.Shell {
         /// Dispatch method to return a randomized string suitable for use as
         /// a password.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult KeyNonce(KeyNonce Options) => new ResultKey() {
+        public override ShellResult KeyNonce(KeyNonce options) => new ResultKey() {
             Success = true,
-            Key = Cryptography.UDF.Nonce(Options.Bits.ValueDefaulted(128))
+            Key = Cryptography.UDF.Nonce(options.Bits.ValueDefaulted(128))
             };
 
         /// <summary>
         /// Dispatch method to return a randomized string suitable for use as
         /// a password.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult KeySecret(KeySecret Options) => new ResultKey() {
+        public override ShellResult KeySecret(KeySecret options) => new ResultKey() {
             Success = true,
-            Key = Cryptography.UDF.SymmetricKey(Options.Bits.ValueDefaulted(128))
+            Key = Cryptography.UDF.SymmetricKey(options.Bits.ValueDefaulted(128))
             };
 
 
@@ -34,10 +34,10 @@ namespace Goedel.Mesh.Shell {
         /// Dispatch method to return a randomized string suitable for use as
         /// a password.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult KeyEarl(KeyEarl Options) {
-            var bits = Options.Bits.ValueDefaulted(140);
+        public override ShellResult KeyEarl(KeyEarl options) {
+            var bits = options.Bits.ValueDefaulted(140);
             var bitsid = Math.Min(bits * 2, 440);
 
             var key = Cryptography.UDF.SymmetricKey(bits);
@@ -56,13 +56,13 @@ namespace Goedel.Mesh.Shell {
         /// Dispatch method to return a randomized string suitable for use as
         /// a password.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult KeyShare(KeyShare Options) {
-            var quorum = Options.Quorum.Value;
-            var shares = Options.Shares.Value;
-            var bits = Options.Bits.ValueDefaulted(128);
-            var secretUDF = Options.Secret.Value;
+        public override ShellResult KeyShare(KeyShare options) {
+            var quorum = options.Quorum.Value;
+            var shares = options.Shares.Value;
+            var bits = options.Bits.ValueDefaulted(128);
+            var secretUDF = options.Secret.Value;
 
             var secret = secretUDF == null ? new SharedSecret(bits) : new SharedSecret(secretUDF);
 
@@ -94,19 +94,19 @@ namespace Goedel.Mesh.Shell {
             }
 
         /// <summary>
-        /// Recover key from <paramref name="Options"/>
+        /// Recover key from <paramref name="options"/>
         /// </summary>
-        /// <param name="Options">Options containing shares.</param>
+        /// <param name="options">Options containing shares.</param>
         /// <returns>The recovered key.</returns>
-        public override ShellResult KeyRecover(KeyRecover Options) {
-            var s1 = Options.Share1.Value;
-            var s2 = Options.Share2.Value;
-            var s3 = Options.Share3.Value;
-            var s4 = Options.Share4.Value;
-            var s5 = Options.Share5.Value;
-            var s6 = Options.Share6.Value;
-            var s7 = Options.Share7.Value;
-            var s8 = Options.Share8.Value;
+        public override ShellResult KeyRecover(KeyRecover options) {
+            var s1 = options.Share1.Value;
+            var s2 = options.Share2.Value;
+            var s3 = options.Share3.Value;
+            var s4 = options.Share4.Value;
+            var s5 = options.Share5.Value;
+            var s6 = options.Share6.Value;
+            var s7 = options.Share7.Value;
+            var s8 = options.Share8.Value;
 
             var shares = MakeList(s1, s2, s3, s4, s5, s6, s7, s8);
             var secret = new SharedSecret(shares);

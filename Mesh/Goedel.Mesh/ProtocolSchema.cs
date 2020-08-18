@@ -4151,6 +4151,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual DareEnvelope						MessageConnectionRequestClient  {get; set;}
+        /// <summary>
+        ///List of named access rights.
+        /// </summary>
+
+		public virtual List<string>				Rights  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4200,6 +4205,18 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("MessageConnectionRequestClient", 1);
 					MessageConnectionRequestClient.Serialize (_writer, false);
 				}
+			if (Rights != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Rights", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Rights) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -4238,6 +4255,17 @@ namespace Goedel.Mesh {
 					MessageConnectionRequestClient = new DareEnvelope ();
 					MessageConnectionRequestClient.Deserialize (jsonReader);
  
+					break;
+					}
+				case "Rights" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Rights = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Rights.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
 					break;
 					}
 				default : {

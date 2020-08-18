@@ -10,10 +10,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerCreate(ContainerCreate Options) {
-            var outputFile = Options.Container.Value;
+        public override ShellResult ContainerCreate(ContainerCreate options) {
+            var outputFile = options.Container.Value;
 
             var CryptoParameters = new CryptoParameters();
             using (var Writer = new FileContainerWriter(
@@ -28,11 +28,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerArchive(ContainerArchive Options) {
-            var inputFile = Options.Input.Value;
-            var outputFile = Options.Container.Value;
+        public override ShellResult ContainerArchive(ContainerArchive options) {
+            var inputFile = options.Input.Value;
+            var outputFile = options.Container.Value;
 
             var CryptoParameters = new CryptoParameters();
 
@@ -63,11 +63,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerAppend(ContainerAppend Options) {
-            var inputFile = Options.File.Value;
-            var outputFile = Options.Container.Value;
+        public override ShellResult ContainerAppend(ContainerAppend options) {
+            var inputFile = options.File.Value;
+            var outputFile = options.Container.Value;
 
             var CryptoParameters = new CryptoParameters();
             using (var Writer = new FileContainerWriter(
@@ -84,11 +84,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerDelete(ContainerDelete Options) {
-            var inputFile = Options.Filename.Value;
-            var outputFile = Options.Container.Value;
+        public override ShellResult ContainerDelete(ContainerDelete options) {
+            var inputFile = options.Filename.Value;
+            var outputFile = options.Container.Value;
 
             var CryptoParameters = new CryptoParameters();
             using (var Writer = new FileContainerWriter(
@@ -104,10 +104,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerIndex(ContainerIndex Options) {
-            var inputFile = Options.Container.Value;
+        public override ShellResult ContainerIndex(ContainerIndex options) {
+            var inputFile = options.Container.Value;
 
             using (var container = Cryptography.Dare.Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
@@ -122,11 +122,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerExtract(ContainerExtract Options) {
-            var inputFile = Options.Container.Value;
-            var outputFile = Options.Output.Value;
+        public override ShellResult ContainerExtract(ContainerExtract options) {
+            var inputFile = options.Container.Value;
+            var outputFile = options.Output.Value;
 
             Directory.CreateDirectory(outputFile);
 
@@ -152,11 +152,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerCopy(ContainerCopy Options) {
-            var inputFile = Options.Input.Value;
-            var outputFile = Options.Output.Value;
+        public override ShellResult ContainerCopy(ContainerCopy options) {
+            var inputFile = options.Input.Value;
+            var outputFile = options.Output.Value;
 
             using (var container = Cryptography.Dare.Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
@@ -171,10 +171,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerVerify(ContainerVerify Options) {
-            var inputFile = Options.Container.Value;
+        public override ShellResult ContainerVerify(ContainerVerify options) {
+            var inputFile = options.Container.Value;
 
             using (var container = Cryptography.Dare.Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {

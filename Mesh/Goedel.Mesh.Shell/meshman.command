@@ -62,36 +62,33 @@
 
 	OptionSet DeviceAuthOptions
 		Option Auth "auth" String
-			Brief "Authorize the specified function"
+			Brief "(De)Authorize the specified function on the device"
+		Option AuthSuper "super" Flag
+			Brief "Device as super administration device"
+			Default "false"
 		Option AuthAdmin "admin" Flag
-			Brief "Authorize device as administration device"
+			Brief "Device as administration device"
 			Default "false"
-		Option AuthAll "all" Flag
-			Brief "Authorize device for all application catalogs"
+		Option AuthDevice "device" Flag
+			Brief "Device restrictive access"
 			Default "false"
-		Option AuthBookmark "bookmark" Flag
-			Brief "Authorize response to confirmation requests"
+		Option AuthMessage "message" Flag
+			Brief "Authorize rights for Mesh messaging"
 			Default "false"
-		Option AuthCalendar "calendar" Flag
-			Brief "Authorize access to calendar catalog"
+		Option AuthWeb "web" Flag
+			Brief "Authorize rights for Mesh messaging and Web."
 			Default "false"
-		Option AuthContacts "contact" Flag
-			Brief "Authorize access to contacts catalog"
+		Option AuthSSH "ssh" String
+			Brief "Authorize rights for specified SSH account"
 			Default "false"
-		Option AuthConfirm "confirm" Flag
-			Brief "Authorize response to confirmation requests"
+		Option AuthEmail "email" String
+			Brief "Authorize rights for specified smtp email account"
 			Default "false"
-		Option AuthMail "mail" Flag
-			Brief "Authorize access to configure SMTP mail services."
+		Option AuthGroupMember "member" String
+			Brief "Authorize member rights for specified Mesh group"
 			Default "false"
-		Option AuthNetwork "network" Flag
-			Brief "Authorize access to the network catalog"
-			Default "false"
-		Option AuthPassword "password" Flag
-			Brief "Authorize access to the password catalog"
-			Default "false"
-		Option AuthSSH "ssh" Flag
-			Brief "Authorize use of SSH"
+		Option AuthGroupAdmin "group" String
+			Brief "Authorize group administrator rights for specified Mesh group"
 			Default "false"
 
 	OptionSet MailOptions
@@ -476,140 +473,12 @@
 			Parameter GroupID "group" String
 				Brief "Recryption group name in user@example.com format"
 
-	// Mail
-	CommandSet Mail "mail"
-		Brief "Manage mail profiles connected to a personal profile"
-
-		Command MailAdd "add"
-			Brief "Add a mail application profile to a personal profile"
-			Parameter Address "address" String
-				Brief "Mail account to create profile from"
-
-			Include AccountOptions
-			Include Reporting
-			Include MailOptions
-			Include CryptoOptions
-
-		Command MailUpdate "update"
-			Brief "Update an existing mail application profile"
-			Parameter Address "address" String
-				Brief "Mail account to update"
-			Include AccountOptions
-			Include Reporting
-
-		CommandSet SMIME "smime"
-			Command SMIMEPrivate "private"
-				Brief "Extract the private key for the specified account"
-				Include AccountOptions
-				Include Reporting
-				Include PrivateKeyOptions
-				Parameter Address "address" String
-					Brief "Mail account to update"
-
-			Command SMIMEPublic "public"
-				Brief "Extract the public key/certificate for the specified account"
-				Include AccountOptions
-				Include Reporting
-				Include PublicKeyOptions
-				Parameter Address "address" String
-					Brief "Mail account identifier"
-
-		CommandSet PGP "openpgp"
-			Command PGPPrivate "private"
-				Brief "Extract the private key for the specified account"
-				Include AccountOptions
-				Include Reporting
-				Include PrivateKeyOptions
-				Parameter Address "address" String
-					Brief "Mail account to update"
-
-			Command PGPPublic "public"
-				Brief "Extract the public key/certificate for the specified account"
-				Include AccountOptions
-				Include Reporting
-				Include PublicKeyOptions
-				Parameter Address "address" String
-					Brief "Mail account identifier"
-
-		Command MailList "list"
-			Brief "List mail account information"
-			Include AccountOptions
-			Include Reporting
-			Parameter Address "address" String
-				Brief "Mail account identifier"
 
 	OptionSet SSHOptions
 		Option Application "application" String
 			Brief "The application format"
 
-	// SSH
-	CommandSet SSH "ssh"
-		Brief "Manage SSH profiles connected to a personal profile"
 
-
-		// Management of client key pairs
-		Command SSHCreate "create"
-			Brief "Generate a new SSH public keypair for the current machine and add to the personal profile"
-			Include AccountOptions
-			Include Reporting
-			Include SSHOptions
-			Include CryptoOptions
-			Option ID "id" String
-				Brief "Key identifier"
-
-		Command SSHPrivate "private"
-			Brief "Extract the private key for this device"
-			Include AccountOptions
-			Include Reporting
-			Include PrivateKeyOptions
-
-		Command SSHPublic "public"
-			Brief "Extract the public key for this device"
-			Include AccountOptions
-			Include Reporting
-			Include PublicKeyOptions
-		
-		CommandSet SSHMerge "merge"
-			Command SSHMergeKnown "host"
-				Brief "Add one or more hosts to the known_hosts file"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-				Parameter File "file" ExistingFile
-			
-			Command SSHMergeClient "client"
-				Brief "Add one or more hosts to the known_hosts file"
-
-		// Add public keys to profile
-		CommandSet SSHAdd "add"
-			Command SSHAddHost "host"
-				Brief "Add one or more hosts to the known_hosts file"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-
-
-			
-			Command SSHAddClient "client"
-				Brief "Add one or more keys to the authorized_keys file"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-				Parameter File "file" ExistingFile
-
-
-		CommandSet SSHShow "show"
-			Command SSHKnown "host"
-				Brief "List the known SSH sites (aka known hosts)"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-
-			Command SSHAuth "client"
-				Brief "List the authorized device keys (aka authorized_keys)"
-				Include AccountOptions
-				Include Reporting	
-				Include SSHOptions
 
 
 
@@ -1064,3 +933,133 @@
 			Parameter Container "in" ExistingFile
 				Brief "Container to read"
 
+	// Mail
+	CommandSet Mail "mail"
+		Brief "Manage mail profiles connected to a personal profile"
+
+		Command MailAdd "add"
+			Brief "Add a mail application profile to a personal profile"
+			Parameter Address "address" String
+				Brief "Mail account to create profile from"
+
+			Include AccountOptions
+			Include Reporting
+			Include MailOptions
+			Include CryptoOptions
+
+		Command MailUpdate "update"
+			Brief "Update an existing mail application profile"
+			Parameter Address "address" String
+				Brief "Mail account to update"
+			Include AccountOptions
+			Include Reporting
+
+		CommandSet SMIME "smime"
+			Command SMIMEPrivate "private"
+				Brief "Extract the private key for the specified account"
+				Include AccountOptions
+				Include Reporting
+				Include PrivateKeyOptions
+				Parameter Address "address" String
+					Brief "Mail account to update"
+
+			Command SMIMEPublic "public"
+				Brief "Extract the public key/certificate for the specified account"
+				Include AccountOptions
+				Include Reporting
+				Include PublicKeyOptions
+				Parameter Address "address" String
+					Brief "Mail account identifier"
+
+		CommandSet PGP "openpgp"
+			Command PGPPrivate "private"
+				Brief "Extract the private key for the specified account"
+				Include AccountOptions
+				Include Reporting
+				Include PrivateKeyOptions
+				Parameter Address "address" String
+					Brief "Mail account to update"
+
+			Command PGPPublic "public"
+				Brief "Extract the public key/certificate for the specified account"
+				Include AccountOptions
+				Include Reporting
+				Include PublicKeyOptions
+				Parameter Address "address" String
+					Brief "Mail account identifier"
+
+		Command MailList "list"
+			Brief "List mail account information"
+			Include AccountOptions
+			Include Reporting
+			Parameter Address "address" String
+				Brief "Mail account identifier"
+
+	// SSH
+	CommandSet SSH "ssh"
+		Brief "Manage SSH profiles connected to a personal profile"
+
+
+		// Management of client key pairs
+		Command SSHCreate "create"
+			Brief "Generate a new SSH public keypair for the current machine and add to the personal profile"
+			Include AccountOptions
+			Include Reporting
+			Include SSHOptions
+			Include CryptoOptions
+			Option ID "id" String
+				Brief "Key identifier"
+
+		Command SSHPrivate "private"
+			Brief "Extract the private key for this device"
+			Include AccountOptions
+			Include Reporting
+			Include PrivateKeyOptions
+
+		Command SSHPublic "public"
+			Brief "Extract the public key for this device"
+			Include AccountOptions
+			Include Reporting
+			Include PublicKeyOptions
+		
+		CommandSet SSHMerge "merge"
+			Command SSHMergeKnown "host"
+				Brief "Add one or more hosts to the known_hosts file"
+				Include AccountOptions
+				Include Reporting
+				Include SSHOptions
+				Parameter File "file" ExistingFile
+			
+			Command SSHMergeClient "client"
+				Brief "Add one or more hosts to the known_hosts file"
+
+		// Add public keys to profile
+		CommandSet SSHAdd "add"
+			Command SSHAddHost "host"
+				Brief "Add one or more hosts to the known_hosts file"
+				Include AccountOptions
+				Include Reporting
+				Include SSHOptions
+
+
+			
+			Command SSHAddClient "client"
+				Brief "Add one or more keys to the authorized_keys file"
+				Include AccountOptions
+				Include Reporting
+				Include SSHOptions
+				Parameter File "file" ExistingFile
+
+
+		CommandSet SSHShow "show"
+			Command SSHKnown "host"
+				Brief "List the known SSH sites (aka known hosts)"
+				Include AccountOptions
+				Include Reporting
+				Include SSHOptions
+
+			Command SSHAuth "client"
+				Brief "List the authorized device keys (aka authorized_keys)"
+				Include AccountOptions
+				Include Reporting	
+				Include SSHOptions

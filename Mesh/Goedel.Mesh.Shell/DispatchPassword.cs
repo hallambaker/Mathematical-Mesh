@@ -9,13 +9,13 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method to add a credential entry to the credential catalog.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult PasswordAdd(PasswordAdd Options) {
-            var contextUser = GetContextUser(Options);
-            var site = Options.Site.Value;
-            var username = Options.Username.Value;
-            var password = Options.Password.Value;
+        public override ShellResult PasswordAdd(PasswordAdd options) {
+            var contextUser = GetContextUser(options);
+            var site = options.Site.Value;
+            var username = options.Username.Value;
+            var password = options.Password.Value;
 
             var entry = new CatalogedCredential() {
                 Service = site,
@@ -37,11 +37,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method to fetch a credential entry from the credential catalog.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult PasswordGet(PasswordGet Options) {
-            var contextUser = GetContextUser(Options);
-            var site = Options.Site.Value;
+        public override ShellResult PasswordGet(PasswordGet options) {
+            var contextUser = GetContextUser(options);
+            var site = options.Site.Value;
 
             var result = contextUser.GetCredentialByService(site);
 
@@ -54,11 +54,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method to delete a credential entry from the catalog.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult PasswordDelete(PasswordDelete Options) {
-            var contextAccount = GetContextUser(Options);
-            var site = Options.Site.Value;
+        public override ShellResult PasswordDelete(PasswordDelete options) {
+            var contextAccount = GetContextUser(options);
+            var site = options.Site.Value;
 
             var transaction = contextAccount.TransactBegin();
             var catalog = transaction.GetCatalogCredential();
@@ -75,10 +75,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method to dump the credential catalog. 
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult PasswordDump(PasswordDump Options) {
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult PasswordDump(PasswordDump options) {
+            var contextAccount = GetContextUser(options);
             var result = new ResultDump() {
                 Success = true,
                 CatalogedEntries = new List<CatalogedEntry>()

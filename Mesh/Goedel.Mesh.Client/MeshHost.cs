@@ -314,7 +314,9 @@ namespace Goedel.Mesh.Client {
         public ContextMeshPending Connect(
                 string accountAddress,
                 string localName = null,
-                string pin = null) => ContextMeshPending.ConnectService(this, accountAddress, localName, pin);
+                string pin = null,
+                List<string> rights=null) => ContextMeshPending.ConnectService(this, accountAddress, localName, pin,
+                    rights:rights);
 
         /// <summary>
         /// Begin connection to a service.

@@ -6,30 +6,30 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult MailAdd(MailAdd Options) {
-            using var contextDevice = GetContextDevice(Options);
+        public override ShellResult MailAdd(MailAdd options) {
+            using var contextDevice = GetContextDevice(options);
             throw new NYI();
             }
 
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult MailUpdate(MailUpdate Options) {
-            using var contextDevice = GetContextDevice(Options);
+        public override ShellResult MailUpdate(MailUpdate options) {
+            using var contextDevice = GetContextDevice(options);
             throw new NYI();
             }
 
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult MailList(MailList Options) {
-            using var contextDevice = GetContextDevice(Options);
+        public override ShellResult MailList(MailList options) {
+            using var contextDevice = GetContextDevice(options);
             throw new NYI();
             }
 
@@ -37,39 +37,39 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult SMIMEPrivate(SMIMEPrivate Options) {
-            using var contextDevice = GetContextDevice(Options);
+        public override ShellResult SMIMEPrivate(SMIMEPrivate options) {
+            using var contextDevice = GetContextDevice(options);
             throw new NYI();
             }
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult SMIMEPublic(SMIMEPublic Options) {
-            using var contextDevice = GetContextDevice(Options);
-            throw new NYI();
-            }
-
-        /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="Options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult PGPPrivate(PGPPrivate Options) {
-            using var contextDevice = GetContextDevice(Options);
+        public override ShellResult SMIMEPublic(SMIMEPublic options) {
+            using var contextDevice = GetContextDevice(options);
             throw new NYI();
             }
 
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult PGPPublic(PGPPublic Options) {
-            using var contextDevice = GetContextDevice(Options);
+        public override ShellResult PGPPrivate(PGPPrivate options) {
+            using var contextDevice = GetContextDevice(options);
+            throw new NYI();
+            }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult PGPPublic(PGPPublic options) {
+            using var contextDevice = GetContextDevice(options);
             throw new NYI();
             }
         }

@@ -9,12 +9,12 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method to create a new group.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult GroupCreate(GroupCreate Options) {
-            var groupID = Options.GroupID.Value;
+        public override ShellResult GroupCreate(GroupCreate options) {
+            var groupID = options.GroupID.Value;
 
-            var contextAccount = GetContextUser(Options);
+            var contextAccount = GetContextUser(options);
             var contextGroup = contextAccount.CreateGroup(groupID);
 
             var result = new ResultEntry() {
@@ -26,12 +26,12 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method to add a member to the group.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult GroupAdd(GroupAdd Options) {
-            var groupID = Options.GroupID.Value;
-            var memberID = Options.MemberID.Value;
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult GroupAdd(GroupAdd options) {
+            var groupID = options.GroupID.Value;
+            var memberID = options.MemberID.Value;
+            var contextAccount = GetContextUser(options);
             var contextGroup = contextAccount.GetContextGroup(groupID);
 
             var entryMember = contextGroup.Add(memberID);
@@ -45,12 +45,12 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method to fetch a group member's record.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult GroupGet(GroupGet Options) {
-            var groupID = Options.GroupID.Value;
-            var memberID = Options.MemberID.Value;
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult GroupGet(GroupGet options) {
+            var groupID = options.GroupID.Value;
+            var memberID = options.MemberID.Value;
+            var contextAccount = GetContextUser(options);
             var contextGroup = contextAccount.GetContextGroup(groupID);
             var member = contextGroup.Locate(memberID);
 
@@ -64,12 +64,12 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method to remove a member from the group.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult GroupDelete(GroupDelete Options) {
-            var groupID = Options.GroupID.Value;
-            var memberID = Options.MemberID.Value;
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult GroupDelete(GroupDelete options) {
+            var groupID = options.GroupID.Value;
+            var memberID = options.MemberID.Value;
+            var contextAccount = GetContextUser(options);
             var contextGroup = contextAccount.GetContextGroup(groupID);
             var member = contextGroup.Locate(memberID);
             member.AssertNotNull(EntryNotFound.Throw, memberID);
@@ -86,12 +86,12 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method to list the members of a group.
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult GroupList(GroupList Options) {
-            var groupID = Options.GroupID.Value;
+        public override ShellResult GroupList(GroupList options) {
+            var groupID = options.GroupID.Value;
 
-            var contextAccount = GetContextUser(Options);
+            var contextAccount = GetContextUser(options);
             var catalog = contextAccount.GetContextGroup(groupID);
             var catalogedEntries = new List<CatalogedEntry>();
 

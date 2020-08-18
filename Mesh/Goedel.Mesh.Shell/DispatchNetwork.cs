@@ -10,12 +10,12 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult NetworkAdd(NetworkAdd Options) {
-            var contextUser = GetContextUser(Options);
-            var identifier = Options.Identifier.Value;
-            var password = Options.Password.Value;
+        public override ShellResult NetworkAdd(NetworkAdd options) {
+            var contextUser = GetContextUser(options);
+            var identifier = options.Identifier.Value;
+            var password = options.Password.Value;
 
             var entry = new CatalogedNetwork() {
                 Service = identifier,
@@ -36,11 +36,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult NetworkDelete(NetworkDelete Options) {
-            var contextUser = GetContextUser(Options);
-            var identifier = Options.Identifier.Value;
+        public override ShellResult NetworkDelete(NetworkDelete options) {
+            var contextUser = GetContextUser(options);
+            var identifier = options.Identifier.Value;
             var key = CatalogedNetwork.PrimaryKey(null, identifier);
             
             var transaction = contextUser.TransactBegin();
@@ -59,12 +59,12 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult NetworkGet(NetworkGet Options) {
-            var contextUser = GetContextUser(Options);
+        public override ShellResult NetworkGet(NetworkGet options) {
+            var contextUser = GetContextUser(options);
             var catalog = contextUser.GetStore(CatalogContact.Label) as CatalogContact;
-            var identifier = Options.Identifier.Value;
+            var identifier = options.Identifier.Value;
             var key = CatalogedNetwork.PrimaryKey(null, identifier);
 
             var result = contextUser.GetNetwork(key);
@@ -78,10 +78,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult NetworkDump(NetworkDump Options) {
-            var contextUser = GetContextUser(Options);
+        public override ShellResult NetworkDump(NetworkDump options) {
+            var contextUser = GetContextUser(options);
             var result = new ResultDump() {
                 Success = true,
                 CatalogedEntries = new List<CatalogedEntry>()

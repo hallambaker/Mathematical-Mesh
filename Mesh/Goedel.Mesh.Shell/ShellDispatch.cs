@@ -245,6 +245,50 @@ namespace Goedel.Mesh.Shell {
             }
 
 
+        /// <summary>
+        /// Return a list of rights being requested by or to be applied to a device.
+        /// </summary>
+        /// <param name="deviceAuthOptions">The set of options.</param>
+        /// <returns>If any of the rights flag values are present, returns a list of rights
+        /// specifiers. Otherwise returns null.</returns>
+        public List<string> GetRights(IDeviceAuthOptions deviceAuthOptions) {
+            var result = new List<string>();
+
+            if (deviceAuthOptions.Auth.Value != null) {
+                result.Add(deviceAuthOptions.Auth.Value);
+                }
+            if (deviceAuthOptions.AuthSuper.Value) {
+                result.Add("super");
+                }
+            if (deviceAuthOptions.AuthAdmin.Value) {
+                result.Add("super");
+                }
+            if (deviceAuthOptions.AuthDevice.Value) {
+                result.Add("super");
+                }
+            if (deviceAuthOptions.AuthMessage.Value) {
+                result.Add("super");
+                }
+            if (deviceAuthOptions.AuthWeb.Value) {
+                result.Add("super");
+                }
+            if (deviceAuthOptions.AuthSSH.Value != null) {
+                result.Add($"ssh:{deviceAuthOptions.AuthSSH.Value}");
+                }
+            if (deviceAuthOptions.AuthEmail.Value != null) {
+                result.Add($"ssh:{deviceAuthOptions.AuthEmail.Value}");
+                }
+            if (deviceAuthOptions.AuthGroupMember.Value != null) {
+                result.Add($"member:{deviceAuthOptions.AuthGroupMember.Value}");
+                }
+            if (deviceAuthOptions.AuthGroupAdmin.Value != null) {
+                result.Add($"group:{deviceAuthOptions.AuthGroupAdmin.Value}");
+                }
+
+            return result.Count > 0 ? result : null;
+            
+            }
+
 
         /// <summary>
         /// Generate the CryptoParameters from a set of specified options. Encryption and 

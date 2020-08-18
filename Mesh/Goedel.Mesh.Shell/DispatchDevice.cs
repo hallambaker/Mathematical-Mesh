@@ -11,12 +11,16 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DeviceRequestConnect(DeviceRequestConnect Options) {
-            var accountAddress = Options.AccountAddress.Value;
-            var pin = Options.PIN.Value;
-            var contextMeshPending = MeshHost.Connect(accountAddress, pin: pin);
+        public override ShellResult DeviceRequestConnect(DeviceRequestConnect options) {
+            var accountAddress = options.AccountAddress.Value;
+            var pin = options.PIN.Value;
+
+
+            var rights = GetRights(options);
+
+            var contextMeshPending = MeshHost.Connect(accountAddress, pin: pin, rights: rights);
 
             var result = new ResultConnect() {
                 CatalogedMachine = contextMeshPending.CatalogedMachine
@@ -29,10 +33,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DeviceJoin(DeviceJoin Options) {
-            var uri = Options.Uri.Value;
+        public override ShellResult DeviceJoin(DeviceJoin options) {
+            var uri = options.Uri.Value;
 
             var contextMeshPending = MeshHost.Join(uri);
             var result = new ResultConnect() {
@@ -45,10 +49,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DeviceInstall(DeviceInstall Options) {
-            var filename = Options.Profile.Value;
+        public override ShellResult DeviceInstall(DeviceInstall options) {
+            var filename = options.Profile.Value;
 
             var contextMeshPending = MeshHost.Install(filename);
 
@@ -64,10 +68,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DeviceComplete(DeviceComplete Options) {
-            var accountAddress = Options.AccountAddress .Value;
+        public override ShellResult DeviceComplete(DeviceComplete options) {
+            var accountAddress = options.AccountAddress .Value;
 
             // here need to pull up an account context for the pending connection.
 
@@ -82,10 +86,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DevicePending(DevicePending Options) {
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult DevicePending(DevicePending options) {
+            var contextAccount = GetContextUser(options);
             contextAccount.Sync();
 
             // get the inbound spool
@@ -125,22 +129,25 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DeviceAccept(DeviceAccept Options) =>
-            ProcessRequest(Options, Options.CompletionCode.Value, true);
-
+        public override ShellResult DeviceAccept(DeviceAccept options) {
+            var rights = GetRights(options);
+            return ProcessRequest(options, options.CompletionCode.Value, true, rights);
+            }
 
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DeviceReject(DeviceReject Options) =>
-            ProcessRequest(Options, Options.CompletionCode.Value, false);
+        public override ShellResult DeviceReject(DeviceReject options) =>
+            ProcessRequest(options, options.CompletionCode.Value, false);
 
-        ShellResult ProcessRequest(IAccountOptions Options, string messageID, bool accept) {
-            var contextAccount = GetContextUser(Options);
+        ShellResult ProcessRequest(IAccountOptions options, string messageID, bool accept,
+                List<string> rights=null) {
+            var contextAccount = GetContextUser(options);
+
 
             // Hack: should be able to accept, reject specific requests, not just
             // the last one.
@@ -173,10 +180,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DevicePreconfigure(DevicePreconfigure Options) {
-            using var contextAccount = GetContextUser(Options);
+        public override ShellResult DevicePreconfigure(DevicePreconfigure options) {
+            using var contextAccount = GetContextUser(options);
 
             contextAccount.Preconfigure(out var filename, out var profileDevice, out var connectUri);
 
@@ -193,10 +200,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DeviceDelete(DeviceDelete Options) {
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult DeviceDelete(DeviceDelete options) {
+            var contextAccount = GetContextUser(options);
             var result = new Result() {
 
                 };
@@ -206,10 +213,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DeviceList(DeviceList Options) {
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult DeviceList(DeviceList options) {
+            var contextAccount = GetContextUser(options);
             var result = new Result() {
 
                 };
@@ -220,14 +227,15 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DeviceAuthorize(DeviceAuthorize Options) {
-            var contextAccount = GetContextUser(Options);
+        public override ShellResult DeviceAuthorize(DeviceAuthorize options) {
+            var contextAccount = GetContextUser(options);
+            var rights = GetRights(options);
             var result = new ResultAuthorize() {
 
                 };
-            "".TaskFunctionality();
+            "Modify rights of existing device".TaskFunctionality();
             return result;
             }
 
