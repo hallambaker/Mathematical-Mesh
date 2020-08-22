@@ -44,7 +44,7 @@ namespace Goedel.Mesh.Shell {
             return new ResultCreateAccount() {
                 Success = true,
                 ProfileUser = contextUser.ProfileUser,
-                ActivationUser = contextUser.ActivationUser
+                ActivationDevice = contextUser.ActivationUser
                 };
             }
 
@@ -144,8 +144,9 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountConnect(AccountConnect options) {
             var contextAccount = GetContextUser(options);
+            var rights = GetRights(options);
 
-            var catalogedDevice = contextAccount.Connect(options.Uri.Value);
+            var catalogedDevice = contextAccount.Connect(options.Uri.Value, rights);
 
 
             var result = new ResultAccountConnect() {
@@ -236,7 +237,7 @@ namespace Goedel.Mesh.Shell {
             return new ResultCreateAccount() {
                 Success = true,
                 ProfileUser = contextUser.ProfileUser,
-                ActivationUser = contextUser.ActivationUser
+                ActivationDevice = contextUser.ActivationUser
                 };
             }
 

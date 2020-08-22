@@ -12,6 +12,11 @@ using System.Text;
 namespace Goedel.Mesh {
     public partial class ActivationAccount {
 
+        /////<summary>Used to build cryptographic capabilities</summary> 
+        //public List<CryptographicCapability> CryptographicCapabilities;
+
+        IKeyCollection KeyCollection;
+
         // Properties providing access to account-wide keys.
 
         ///<summary>The account offline signature key</summary>
@@ -33,7 +38,7 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Construct a new <see cref="ActivationUser"/> instance for the profile
+        /// Construct a new <see cref="ActivationDevice"/> instance for the profile
         /// <paramref name="profileDevice"/>. The property <see cref="Activation.ActivationKey"/> is
         /// calculated from the values specified for the activation type.
         /// If the value <paramref name="masterSecret"/> is
@@ -56,15 +61,182 @@ namespace Goedel.Mesh {
             }
 
 
+
+
+
+        public ActivationAccount(
+                    IKeyCollection keyCollection,
+                    ProfileDevice profileDevice, 
+                    KeyPair keyPairOnlineSignature,
+                    List<string> roles,
+                    PrivateKeyUDF secretSeed=null) : base(
+                        profileDevice, UdfAlgorithmIdentifier.MeshActivationUser) {
+
+            if (secretSeed != null) {
+                // Generate the private keys
+                PrivateAccountOfflineSignature = secretSeed.BasePrivate(
+                    MeshKeyType.UserSign, keyCollection, KeySecurity.Exportable);
+                PrivateAccountEncryption = secretSeed.BasePrivate(
+                    MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Exportable);
+                PrivateAccountAuthentication = secretSeed.BasePrivate(
+                    MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Exportable);
+                PrivateAccountOnlineSignature = keyPairOnlineSignature;
+                }
+            else {
+                // Attempt to pull private keys from storage
+                Activate();
+                }
+
+            if (keyPairOnlineSignature != null) {
+                AccountOnlineSignature = AddCapability(keyPairOnlineSignature, profileDevice);
+                }
+
+
+            var access = new List<Right>();
+
+            if (roles == null) {
+                }
+            else {
+                foreach (var role in roles) {
+                    var rights = Rights.GetRights(role, out var subresource);
+                    access.Concat(rights);
+                    }
+                }
+
+            foreach (var right in access) {
+                Grant(profileDevice, right, keyPairOnlineSignature);
+                }
+
+            }
+
+
+
+
+
+        /// <summary>
+        /// Create a key pair bound to the private key <paramref name="profileDevice.KeyEncryption"/>
+        /// The public parameters of the returned key represent the combined parameters, the 
+        /// private parameters represent the offset from the device key.
+        /// </summary>
+        /// <param name="profileDevice">Profile providing the base key.</param>
+        /// <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
+        /// <returns>The bound key pair.</returns>
+        public static KeyPair DeviceBindEncryption(
+                    ProfileDevice profileDevice,
+                    IKeyCollection keyCollection) {
+            return KeyPair.FactorySignature(profileDevice.KeyEncryption.CryptoKey.CryptoAlgorithmId,
+                            KeySecurity.ExportableStored, keyCollection);
+            }
+
+        /// <summary>
+        /// Create a key pair bound to the private key <paramref name="profileDevice.OfflineSignature"/>
+        /// The public parameters of the returned key represent the combined parameters, the 
+        /// private parameters represent the offset from the device key.
+        /// </summary>
+        /// <param name="profileDevice">Profile providing the base key.</param>
+        /// <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
+        /// <returns>The bound key pair.</returns>
+        public static KeyPair DeviceBindSignature(
+                    ProfileDevice profileDevice,
+                    IKeyCollection keyCollection) {
+            return KeyPair.FactorySignature(profileDevice.OfflineSignature.CryptoKey.CryptoAlgorithmId,
+                            KeySecurity.ExportableStored, keyCollection);
+            }
+
+        /// <summary>
+        /// Create a key pair bound to the private key <paramref name="profileDevice.KeyAuthentication"/>
+        /// The public parameters of the returned key represent the combined parameters, the 
+        /// private parameters represent the offset from the device key.
+        /// </summary>
+        /// <param name="profileDevice">Profile providing the base key.</param>
+        /// <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
+        /// <returns>The bound key pair.</returns>
+        public static KeyPair DeviceBindAuthentication(
+                    ProfileDevice profileDevice,
+                    IKeyCollection keyCollection) {
+            return KeyPair.FactorySignature(profileDevice.KeyAuthentication.CryptoKey.CryptoAlgorithmId,
+                            KeySecurity.ExportableStored, keyCollection);
+            }
+
+
+
+
+        /// <summary>
+        /// Generate a capability for the key <paramref name="keyPair"/>.
+        /// add the service portion to the capabilities catalog.
+        /// </summary>
+        /// <param name="keyPair">Keypair from which the capability is to be derrived.</param>
+        /// 
+        public KeyData AddCapability(CryptoKey keyPair, ProfileDevice profileDevice) {
+            "**** MUST add keys to devices as shared capabilities".TaskFunctionality();
+
+            //var catalogCapability = GetCatalogCapability();
+
+            return new KeyData(keyPair, true);
+            }
+
+
+        void Grant(ProfileDevice profileDevice, Right right,
+            KeyPair keyPairOnlineSignature) {
+
+            switch (right.Resource) {
+                case Resource.ProfileRoot: {
+                    GrantProfileRoot(profileDevice, right);
+                    break;
+                    }
+                case Resource.ProfileAdmin: {
+                    GrantProfileAdmin(profileDevice, right, keyPairOnlineSignature);
+                    break;
+                    }
+                case Resource.Store: {
+                    GrantStore(profileDevice, right);
+                    break;
+                    }
+                case Resource.Account: {
+                    GrantAccount(profileDevice, right);
+                    break;
+                    }
+                }
+
+            }
+
+        /// <summary>
+        /// Grant super administrator access.
+        /// </summary>
+        /// <param name="activationAccount"></param>
+        /// <param name="profileDevice"></param>
+        /// <param name="right"></param>
+        void GrantProfileRoot( ProfileDevice profileDevice, Right right) {
+            AccountOfflineSignature = AddCapability(
+                        PrivateAccountOfflineSignature, profileDevice);
+            }
+
+
+        void GrantProfileAdmin(
+                            ProfileDevice profileDevice,
+                            Right right,
+                            KeyPair keyPairOnlineSignature) {
+
+            keyPairOnlineSignature ??= DeviceBindSignature(profileDevice, KeyCollection);
+            AccountOnlineSignature = AddCapability(
+                        keyPairOnlineSignature, profileDevice);
+            }
+
+        void GrantStore(ProfileDevice profileDevice, Right right) {
+            }
+
+
+        void GrantAccount(ProfileDevice profileDevice, Right right) {
+            }
+
+
         /// <summary>
         /// Activate the keys bound to this activation record using keys derived from 
         /// <paramref name="deviceKeySeed"/>.
         /// </summary>
         /// <param name="keyCollection">Key collection to register keys in.</param>
         /// <param name="deviceKeySeed">Generator for the private key contributions.</param>
-        public void Activate(
-                IKeyCollection keyCollection, 
-                IActivate deviceKeySeed) {
+        public void Activate() {
 
             PrivateAccountOfflineSignature = AccountOnlineSignature?.GetKeyPair(KeySecurity.Exportable);
             PrivateAccountOnlineSignature = AccountOfflineSignature?.GetKeyPair(KeySecurity.Exportable);
@@ -76,7 +248,7 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationUser"/>
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationDevice"/>
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>

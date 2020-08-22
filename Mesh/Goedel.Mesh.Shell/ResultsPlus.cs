@@ -354,7 +354,7 @@ namespace Goedel.Mesh.Shell {
         //CatalogEntryDevice.EnvelopedDevicePrivate.;
 
         ///<summary>The account UDF.</summary>
-        public string Account => ActivationUser?.AccountUDF;
+        public string Account => ActivationDevice?.AccountUDF;
 
         /// <summary>
         /// Converts the value of this instance to a <see langword="String"/>.

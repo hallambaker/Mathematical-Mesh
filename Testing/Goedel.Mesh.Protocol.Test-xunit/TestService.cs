@@ -583,7 +583,7 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        bool Verify(ActivationUser first, ActivationUser second) {
+        bool Verify(ActivationDevice first, ActivationDevice second) {
             //Verify(first.ConnectionAccount, second.ConnectionAccount);
             (first.AccountUDF == second.AccountUDF).TestTrue();
             return true;

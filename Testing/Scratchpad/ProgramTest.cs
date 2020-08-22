@@ -33,8 +33,8 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
-
-
+            TestService.Test().MeshCatalogAccount();
+            //ShellTests.Test().TestProfileConnectStaticQR();
 
             // 4 tests
             //TestService.Test().MeshGrantAdmin();

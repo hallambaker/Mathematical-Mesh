@@ -163,7 +163,7 @@ namespace Goedel.Mesh.Shell {
                     throw new NYI();
                     }
                 }
-            var processResult = contextAccount.Process(message, accept);
+            var processResult = contextAccount.Process(message, accept, rights: rights);
 
             // Hack: need to obtain the actual result.
             var result = new ResultProcess() {
@@ -232,6 +232,10 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult DeviceAuthorize(DeviceAuthorize options) {
             var contextAccount = GetContextUser(options);
             var rights = GetRights(options);
+
+
+
+
             var result = new ResultAuthorize() {
 
                 };

@@ -10,7 +10,7 @@ using Goedel.Protocol;
 using System.Text;
 
 namespace Goedel.Mesh {
-    public partial class ActivationUser {
+    public partial class ActivationDevice {
 
         ///<summary>The UDF profile constant used for key derrivation 
         ///<see cref="Constants.UDFActivationAccount"/></summary>
@@ -40,11 +40,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Constructor for use by deserializers.
         /// </summary>
-        public ActivationUser() {
+        public ActivationDevice() {
             }
 
         /// <summary>
-        /// Construct a new <see cref="ActivationUser"/> instance for the profile
+        /// Construct a new <see cref="ActivationDevice"/> instance for the profile
         /// <paramref name="profileDevice"/>. The property <see cref="Activation.ActivationKey"/> is
         /// calculated from the values specified for the activation type.
         /// If the value <paramref name="masterSecret"/> is
@@ -58,7 +58,7 @@ namespace Goedel.Mesh {
         /// a seed value of <paramref name="bits"/> length is generated.</param>
         /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
         /// is null.</param>
-        public ActivationUser(
+        public ActivationDevice(
                     ProfileDevice profileDevice,
                     byte[] masterSecret = null,
                     int bits = 256) : base(
@@ -104,14 +104,14 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationUser"/>
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationDevice"/>
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
-        public static new ActivationUser Decode(DareEnvelope envelope,
+        public static new ActivationDevice Decode(DareEnvelope envelope,
                     IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ActivationUser;
+                        MeshItem.Decode(envelope, keyCollection) as ActivationDevice;
 
 
         /// <summary>

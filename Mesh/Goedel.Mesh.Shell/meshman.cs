@@ -2551,7 +2551,8 @@ namespace Goedel.Mesh.Shell {
 
     public class _AccountConnect : Goedel.Command.Dispatch ,
 							IAccountOptions,
-							IReporting {
+							IReporting,
+							IDeviceAuthOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
@@ -2560,7 +2561,17 @@ namespace Goedel.Mesh.Shell {
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
-			new Flag ()			} ;
+			new Flag (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String (),
+			new String (),
+			new String ()			} ;
 
 
 
@@ -2629,6 +2640,96 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[6].Parameter (value);
 			}
+		/// <summary>Field accessor for option [auth]</summary>
+		public virtual String Auth {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Auth {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [super]</summary>
+		public virtual Flag AuthSuper {
+			get => _Data[8] as Flag;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _AuthSuper {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [admin]</summary>
+		public virtual Flag AuthAdmin {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _AuthAdmin {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [device]</summary>
+		public virtual Flag AuthDevice {
+			get => _Data[10] as Flag;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _AuthDevice {
+			set => _Data[10].Parameter (value);
+			}
+		/// <summary>Field accessor for option [message]</summary>
+		public virtual Flag AuthMessage {
+			get => _Data[11] as Flag;
+			set => _Data[11]  = value;
+			}
+
+		public virtual string _AuthMessage {
+			set => _Data[11].Parameter (value);
+			}
+		/// <summary>Field accessor for option [web]</summary>
+		public virtual Flag AuthWeb {
+			get => _Data[12] as Flag;
+			set => _Data[12]  = value;
+			}
+
+		public virtual string _AuthWeb {
+			set => _Data[12].Parameter (value);
+			}
+		/// <summary>Field accessor for option [ssh]</summary>
+		public virtual String AuthSSH {
+			get => _Data[13] as String;
+			set => _Data[13]  = value;
+			}
+
+		public virtual string _AuthSSH {
+			set => _Data[13].Parameter (value);
+			}
+		/// <summary>Field accessor for option [email]</summary>
+		public virtual String AuthEmail {
+			get => _Data[14] as String;
+			set => _Data[14]  = value;
+			}
+
+		public virtual string _AuthEmail {
+			set => _Data[14].Parameter (value);
+			}
+		/// <summary>Field accessor for option [member]</summary>
+		public virtual String AuthGroupMember {
+			get => _Data[15] as String;
+			set => _Data[15]  = value;
+			}
+
+		public virtual string _AuthGroupMember {
+			set => _Data[15].Parameter (value);
+			}
+		/// <summary>Field accessor for option [group]</summary>
+		public virtual String AuthGroupAdmin {
+			get => _Data[16] as String;
+			set => _Data[16]  = value;
+			}
+
+		public virtual string _AuthGroupAdmin {
+			set => _Data[16].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -2685,6 +2786,76 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Report output in JSON format",
 					Index = 6,
 					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Auth", 
+					Default = null, // null if null
+					Brief = "(De)Authorize the specified function on the device",
+					Index = 7,
+					Key = "auth"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthSuper", 
+					Default = "false", // null if null
+					Brief = "Device as super administration device",
+					Index = 8,
+					Key = "super"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthAdmin", 
+					Default = "false", // null if null
+					Brief = "Device as administration device",
+					Index = 9,
+					Key = "admin"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthDevice", 
+					Default = "false", // null if null
+					Brief = "Device restrictive access",
+					Index = 10,
+					Key = "device"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthMessage", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for Mesh messaging",
+					Index = 11,
+					Key = "message"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthWeb", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for Mesh messaging and Web.",
+					Index = 12,
+					Key = "web"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthSSH", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for specified SSH account",
+					Index = 13,
+					Key = "ssh"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthEmail", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for specified smtp email account",
+					Index = 14,
+					Key = "email"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthGroupMember", 
+					Default = "false", // null if null
+					Brief = "Authorize member rights for specified Mesh group",
+					Index = 15,
+					Key = "member"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthGroupAdmin", 
+					Default = "false", // null if null
+					Brief = "Authorize group administrator rights for specified Mesh group",
+					Index = 16,
+					Key = "group"
 					}
 				}
 			};

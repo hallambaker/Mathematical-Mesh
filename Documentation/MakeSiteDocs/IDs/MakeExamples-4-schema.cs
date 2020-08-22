@@ -92,9 +92,9 @@ namespace ExampleGenerator {
 
 				 var resultCreateAccount = CommandsAddAcountAlice[0].Result as ResultCreateAccount;
 				 var profileUser = resultCreateAccount.ProfileUser;
-				 var activationUser = resultCreateAccount.ActivationUser;
+				 var activationUser = resultCreateAccount.ActivationDevice;
 				 var catalogedDevice = AliceProfiles?.CatalogedDevice;
-				 var connectionUser = catalogedDevice?.ConnectionUser;
+				 var connectionUser = catalogedDevice?.ConnectionDevice;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The account profile specifies the online and offline signature keys used to maintain the\n{0}", _Indent);

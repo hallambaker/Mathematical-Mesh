@@ -125,7 +125,7 @@
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.#ctor(Goedel.Mesh.ProfileDevice,System.Byte[],System.Int32)">
             <summary>
-            Construct a new <see cref="T:Goedel.Mesh.ActivationUser"/> instance for the profile
+            Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
             <paramref name="profileDevice"/>. The property <see cref="P:Goedel.Mesh.Activation.ActivationKey"/> is
             calculated from the values specified for the activation type.
             If the value <paramref name="masterSecret"/> is
@@ -140,7 +140,53 @@
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
             is null.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.Activate(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.IActivate)">
+        <member name="M:Goedel.Mesh.ActivationAccount.DeviceBindEncryption(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>
+            Create a key pair bound to the private key <paramref name="profileDevice.KeyEncryption.KeyEncryption"/>
+            The public parameters of the returned key represent the combined parameters, the 
+            private parameters represent the offset from the device key.
+            </summary>
+            <param name="profileDevice">Profile providing the base key.</param>
+            <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
+            <returns>The bound key pair.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.DeviceBindSignature(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>
+            Create a key pair bound to the private key <paramref name="profileDevice.OfflineSignature.OfflineSignature"/>
+            The public parameters of the returned key represent the combined parameters, the 
+            private parameters represent the offset from the device key.
+            </summary>
+            <param name="profileDevice">Profile providing the base key.</param>
+            <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
+            <returns>The bound key pair.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.DeviceBindAuthentication(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>
+            Create a key pair bound to the private key <paramref name="profileDevice.KeyAuthentication.KeyAuthentication"/>
+            The public parameters of the returned key represent the combined parameters, the 
+            private parameters represent the offset from the device key.
+            </summary>
+            <param name="profileDevice">Profile providing the base key.</param>
+            <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
+            <returns>The bound key pair.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.AddCapability(Goedel.Cryptography.CryptoKey,Goedel.Mesh.ProfileDevice)">
+            <summary>
+            Generate a capability for the key <paramref name="keyPair"/>.
+            add the service portion to the capabilities catalog.
+            </summary>
+            <param name="keyPair">Keypair from which the capability is to be derrived.</param>
+            
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.GrantProfileRoot(Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right)">
+            <summary>
+            Grant super administrator access.
+            </summary>
+            <param name="activationAccount"></param>
+            <param name="profileDevice"></param>
+            <param name="right"></param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.Activate">
             <summary>
             Activate the keys bound to this activation record using keys derived from 
             <paramref name="deviceKeySeed"/>.
@@ -150,7 +196,7 @@
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
-            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ActivationUser"/>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ActivationDevice"/>
             </summary>
             <param name="envelope">The envelope to decode.</param>
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
@@ -237,45 +283,48 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.ActivationUser">
-            <summary>
-            </summary>
+        <member name="T:Goedel.Mesh.ActivationDevice">
+             <summary>
+            
+             Contains activation data for device specific keys used in the context of a 
+             Mesh account.
+             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationUser.UDFKeyDerrivation">
+        <member name="P:Goedel.Mesh.ActivationDevice.UDFKeyDerrivation">
             <summary>The UDF profile constant used for key derrivation 
             <see cref="F:Goedel.Mesh.Constants.UDFActivationAccount"/></summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationUser.Connection">
+        <member name="P:Goedel.Mesh.ActivationDevice.Connection">
             <summary>The connection value.</summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationUser.ConnectionUser">
-            <summary>The <see cref="P:Goedel.Mesh.ActivationUser.ConnectionUser"/> instance binding the activated device
+        <member name="P:Goedel.Mesh.ActivationDevice.ConnectionUser">
+            <summary>The <see cref="P:Goedel.Mesh.ActivationDevice.ConnectionUser"/> instance binding the activated device
             to a MeshProfile.</summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationUser.PrivateDeviceSignature">
+        <member name="P:Goedel.Mesh.ActivationDevice.PrivateDeviceSignature">
             <summary>The device signature key for use under the profile</summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationUser.PrivateDeviceEncryption">
+        <member name="P:Goedel.Mesh.ActivationDevice.PrivateDeviceEncryption">
             <summary>The device encryption key for use under the profile</summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationUser.PrivateDeviceAuthentication">
+        <member name="P:Goedel.Mesh.ActivationDevice.PrivateDeviceAuthentication">
             <summary>The device authentication key for use under the profile</summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationUser.#ctor">
+        <member name="M:Goedel.Mesh.ActivationDevice.#ctor">
             <summary>
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationUser.#ctor(Goedel.Mesh.ProfileDevice,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Mesh.ActivationDevice.#ctor(Goedel.Mesh.ProfileDevice,System.Byte[],System.Int32)">
             <summary>
-            Construct a new <see cref="T:Goedel.Mesh.ActivationUser"/> instance for the profile
+            Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
             <paramref name="profileDevice"/>. The property <see cref="P:Goedel.Mesh.Activation.ActivationKey"/> is
             calculated from the values specified for the activation type.
             If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
             The public key value is calculated for the public key pairs and the corresponding
-            <see cref="P:Goedel.Mesh.ActivationUser.ConnectionUser"/> generated for the public values.
+            <see cref="P:Goedel.Mesh.ActivationDevice.ConnectionUser"/> generated for the public values.
             </summary>
             <param name="profileDevice">The base profile that the activation activates.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
@@ -283,7 +332,7 @@
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
             is null.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationUser.Activate(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.IActivate)">
+        <member name="M:Goedel.Mesh.ActivationDevice.Activate(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.IActivate)">
             <summary>
             Activate the keys bound to this activation record using keys derived from 
             <paramref name="deviceKeySeed"/>.
@@ -291,15 +340,15 @@
             <param name="keyCollection">Key collection to register keys in.</param>
             <param name="deviceKeySeed">Generator for the private key contributions.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationUser.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
+        <member name="M:Goedel.Mesh.ActivationDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
-            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ActivationUser"/>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ActivationDevice"/>
             </summary>
             <param name="envelope">The envelope to decode.</param>
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationUser.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.ActivationDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The key collection 
@@ -309,28 +358,28 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The Key collection.</param>
         </member>
-        <member name="P:Goedel.Mesh.ActivationUser.AccountUDF">
+        <member name="P:Goedel.Mesh.ActivationDevice.AccountUDF">
              <summary>
             The UDF of the account
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationUser._Tag">
+        <member name="P:Goedel.Mesh.ActivationDevice._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.ActivationUser.__Tag">
+        <member name="F:Goedel.Mesh.ActivationDevice.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationUser._Factory">
+        <member name="M:Goedel.Mesh.ActivationDevice._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationUser.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.ActivationDevice.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -339,7 +388,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationUser.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.ActivationDevice.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -350,7 +399,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationUser.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ActivationDevice.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -358,7 +407,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ActivationUser.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.ActivationDevice.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -2454,7 +2503,7 @@
             The primary key used to catalog the entry. This is the UDF of the authentication key.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.ConnectionUser">
+        <member name="P:Goedel.Mesh.CatalogedDevice.ConnectionDevice">
             <summary>
             The device connection assertion. This is set by either a new assertion being generated
             for a newly added device or by decoding the SignedDeviceConnection entry after 
@@ -2469,9 +2518,9 @@
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileDevice"/>
             to return the <see cref="P:Goedel.Mesh.CatalogedDevice.ProfileDevice"/> value.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedDevice.GetActivationUser(Goedel.Cryptography.Dare.IKeyCollection)">
-            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationUser"/>
-            to return the <see cref="T:Goedel.Mesh.ActivationUser"/> value.</summary>
+        <member name="M:Goedel.Mesh.CatalogedDevice.GetActivationDevice(Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationDevice"/>
+            to return the <see cref="T:Goedel.Mesh.ActivationDevice"/> value.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.GetActivationAccount(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationAccount"/>
@@ -2538,12 +2587,12 @@
             The device profile
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedConnectionUser">
+        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedConnectionDevice">
              <summary>
             The public assertion demonstrating connection of the Device to the Mesh
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationUser">
+        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationDevice">
              <summary>
             The activation of the device within the Mesh account
              </summary>
@@ -4072,6 +4121,37 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.UnknownRight">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.UnknownRight.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.UnknownRight.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.UnknownRight.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.UnknownRight._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.UnknownRight.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.InvalidUriMethod">
             <summary>
             </summary>
@@ -4338,103 +4418,6 @@
             <param name="keyCollection">The key collection to register the private key to
             (the key is always generated as ephemeral.)</param>
             <returns>The derrived key.</returns>
-        </member>
-        <member name="T:Goedel.Mesh.KeyComposite">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyComposite.UDF">
-            <summary>Convenience accessor for the composite UDF.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyComposite.KeyPair">
-            <summary>The composite key pair.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.KeyComposite.#ctor">
-            <summary>
-            Default constructor for deserialization.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.KeyComposite.#ctor(Goedel.Mesh.KeyData,System.String)">
-            <summary>
-            Constructor from base key <paramref name="baseKey"/> with decryption service 
-            <paramref name="service"/>.
-            </summary>
-            <param name="baseKey">The base key.</param>
-            <param name="service">The decryption service.</param>
-        </member>
-        <member name="M:Goedel.Mesh.KeyComposite.#ctor(Goedel.Cryptography.KeyPairAdvanced,System.String)">
-            <summary>
-            Constructor from base key <paramref name="baseKey"/> with decryption service 
-            <paramref name="service"/>.
-            </summary>
-            <param name="baseKey">The base key.</param>
-            <param name="service">The decryption service.</param>
-        </member>
-        <member name="P:Goedel.Mesh.KeyComposite.Public">
-             <summary>
-            The composite key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyComposite.Part">
-             <summary>
-            The overlay key contribution.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyComposite.Service">
-             <summary>
-            Service holding the additional contribution
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyComposite._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.KeyComposite.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.KeyComposite._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.KeyComposite.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.KeyComposite.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.KeyComposite.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.KeyComposite.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.GetMachineDelegate">
             <summary>
@@ -6268,84 +6251,11 @@
             <summary>
             Remove and replace with activation/connection records.
             </summary>
-            <summary>
-            </summary>
         </member>
         <member name="M:Goedel.Mesh.DeviceRecryptionKey.#ctor">
             <summary>
             Constructor for use by deserializers.
             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.DeviceRecryptionKey.UDF">
-             <summary>
-            The fingerprint of the encryption key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.DeviceRecryptionKey.Contact">
-             <summary>
-            The User's Mesh contact information
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.DeviceRecryptionKey.RecryptionKey">
-             <summary>
-            The recryption key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.DeviceRecryptionKey.EnvelopedRecryptionKeyDevice">
-             <summary>
-            The decryption key encrypted under the user's device key.	
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.DeviceRecryptionKey._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.DeviceRecryptionKey.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.DeviceRecryptionKey._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.DeviceRecryptionKey.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.DeviceRecryptionKey.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.DeviceRecryptionKey.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.DeviceRecryptionKey.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ProfileHost">
             <summary>
@@ -6558,9 +6468,6 @@
              Account assertion. This is signed by the service hosting the account.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ProfileUser.ServiceDefault">
-            <summary>The identifier of the default service.</summary>
-        </member>
         <member name="P:Goedel.Mesh.ProfileUser.ProfileService">
             <summary>Cached convenience accessor. Returns the corresponding 
             <see cref="P:Goedel.Mesh.ProfileUser.ProfileService"/> .</summary>
@@ -6570,15 +6477,12 @@
             Blank constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileUser.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Mesh.ProfileUser.#ctor(Goedel.Mesh.ActivationAccount)">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
             </summary>
-            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
-            <param name="secretSeed">The secret seed value.</param>
-            <param name="keyPairOnlineSignature">The intial online signature key.
-            <paramref name="keyCollection"/>.</param>
+            <param name="activationAccount">An activation account with full administrative privileges.</param>
         </member>
         <member name="M:Goedel.Mesh.ProfileUser.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
@@ -9826,7 +9730,7 @@
         </member>
         <member name="P:Goedel.Mesh.KeyData.UDF">
              <summary>
-            UDF fingerprint of the public key parameters/
+            UDF fingerprint of the public key parameters
              </summary>
         </member>
         <member name="P:Goedel.Mesh.KeyData.X509Certificate">
@@ -9917,6 +9821,299 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.Degree">
+            <summary>
+            Desribes the means by which a right is granted.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Degree.Direct">
+            <summary>The holder has direct access to the cryptographic key required
+            to perform the operation.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Degree.Service">
+            <summary>The cryptographic key required for the right are divided 
+            between the device and the Mesh service.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Degree.MultiParty">
+            <summary></summary>
+        </member>
+        <member name="T:Goedel.Mesh.Resource">
+            <summary>
+            Describes the resources to which access rights are granted.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.ProfileRoot">
+            <summary>Profile root signature key.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.ProfileAdmin">
+            <summary>Profile administrative signature key.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.Store">
+            <summary>The named store</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.Account">
+            <summary>Data right: Holder is able to Sign/Decrypt mesh messages under
+            the account key.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.Server">
+            <summary>Service right: Holder is credentialed to offer services under (name)</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.Ssh">
+            <summary>Service right: Holder may access SSH services as a client.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.Pgp">
+            <summary>Data right: Holder is  able to Sign/Decrypt OpenPgp messages.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.Smime">
+            <summary>Data right: Holder is  able to Sign/Decrypt S/MIME messages.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.CatalogCredential">
+            <summary>The credential catalog. Access limited to the service and
+            administrative devices.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.CatalogDevice">
+            <summary>The device catalog</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.CatalogContact">
+            <summary>The contacts catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.CatalogCalendar">
+            <summary>The calendar/task catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.CatalogBookmark">
+            <summary>The bookmark catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.CatalogNetwork">
+            <summary>The network catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.CatalogApplication">
+            <summary>The device catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.CatalogCapability">
+            <summary>The capability catalog catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.CatalogPublication">
+            <summary>The publications catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.SpoolInbound">
+            <summary>The inbound spool. Read access is restricted
+            to External devices. Write access is limited to the Mesh Service and
+            to External devices posting completion messages.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Resource.SpoolOutbound">
+            <summary>The outbound spool. Read/write access is restricted
+            to External devices.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.SpoolLocal">
+            <summary>The local spool. Write access is limited to administration 
+            devices. Read access is limited to the specific device to which a message
+            is directed.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.SshClient">
+            <summary>Service right: Holder is credentialed as an SSH client.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.SshService">
+            <summary>Service right: Holder is credentialed as an SSH service.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.User">
+            <summary>Data right: Holder is able to Sign/Decrypt mesh messages under
+            the account key.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.CatalogMember">
+            <summary>Group membership catalog (restricted to GroupAdministrator)</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Resource.GroupMember">
+            <summary>Ability to read data controlled under the group.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.Access">
+            <summary>
+            Access rights. These are principally Decrypt (read), Sign (write) and Authenticate
+            (login) plus the ability grant these rights. Rights to a specific resource are
+            limited to either data rights (read/write) or service rights (login).
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Access.Decrypt">
+            <summary>Decrypt (read) access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Access.Sign">
+            <summary>Sign (write) access, i.e. ability to sign updates to the catalog</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Access.Authenticate">
+            <summary>Read/decrypt access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Access.Grant">
+            <summary>Ability togrant read/decrypt access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Access.GrantDecrypt">
+            <summary>Ability togrant read/decrypt access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Access.GrantSign">
+            <summary>Ability to grant write/sign access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Access.GrantAuthenticate">
+            <summary>Read/decrypt access.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Access.ReadWrite">
+            <summary>Shorthand for Read + Write</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Access.GrantReadWrite">
+            <summary>Shorthand for GrantDecrypt + GrantSign</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Access.All">
+            <summary>Shorthand for all rights</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.Right">
+            <summary>
+            An access right.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Right.Resource">
+            <summary>The type of resource to which access rights are granted.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Right.Name">
+            <summary>The named sub-resource (e.g. account).</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Right.Access">
+            <summary>The access granted.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Right.Degree">
+            <summary>The form of access (direct, service mediated, etc.)</summary> 
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.Right.#ctor(Goedel.Mesh.Resource,Goedel.Mesh.Access,System.String,Goedel.Mesh.Degree)" -->
+        <member name="P:Goedel.Mesh.Right.Sign">
+            <summary>Sign (write) access.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Right.GrantSign">
+            <summary>Grant sign (write) access.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Right.Decrypt">
+            <summary>Sign (write) access.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Right.GrantDecrypt">
+            <summary>Grant sign (write) access.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Right.Authenticate">
+            <summary>Sign (write) access.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Right.GrantAuthenticate">
+            <summary>Grant sign (write) access.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.Rights">
+            <summary>
+            Class containing static identifiers describing rights.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsSuper">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsAdmin">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsDevice">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsMessage">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsWeb">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsSsh">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsPgp">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsSmime">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsGroupadmin">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsGroupmember">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsStore">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsGrantUser">
+            <summary>Account access administration rights</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsSuperAdministrator">
+            <summary>Super administrator rights.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsAdministrator">
+            <summary>Device admninistrator rights</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsDevce">
+            <summary>Rights granted to every device connected to a Mesh. These are currently
+            limited to the ability to read the network and application catalogs, both of
+            which will require additional grants to be of use.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsService">
+            <summary>Rights granted to a named service device</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsMessage">
+            <summary>Rights granted to a device afforded external messaging capabilities in
+            addition to those of a connected device.
+            These add the right to read/update the contacts and publications catalogs, to read 
+            the inbound spool and read/write to the outbound spool and to sign and decrypt
+            messages under the public credentials for the account.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsWeb">
+            <summary>Rights granted a device afforded Web access in addition to external
+            messaging. These add the right to read/update the credential, calendar and 
+            bookmark catalogs.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsSSH">
+            <summary>Rights granted an SSH client device. This is limited to access to an
+            SSH authenticator under the account. Which may be a device specific key plus
+            a credential or the account key.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsPgp">
+            <summary>Rights granted to a PGP enabled device. This requires external messaging and
+            the ability to sign/decrypt messages under the PGP keying.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsSmime">
+            <summary>Rights granted to an S/MIME enabled device. This requires external messaging and
+            the ability to sign/decrypt messages under the S/MIME keying.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsGroupAdministrator">
+            <summary>Rights granted to a group administrator. An administrator can add users to 
+            the group but does not automatically gain the ability to access group materials
+            themselves.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsGroupMember">
+            <summary>Rights granted to a group member. A group member can read/update the group
+            publications catalog and decrypt data encrypted under the group key.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.DictionaryRights">
+            <summary>Dictionary mapping rights identifier to rights description.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Rights.Concat(System.Collections.Generic.List{Goedel.Mesh.Right},System.Collections.Generic.List{Goedel.Mesh.Right})">
+            <summary>
+            Concatenate the rights specified in <paramref name="append"/> to the dictionary
+            <paramref name="dictionary"/> and return <paramref name="dictionary"/>. If the
+            entry already exists, the access rights are combined to specify the union 
+            of the source access rights.
+            </summary>
+            <param name="dictionary">The dictionary to merge entries from 
+            <paramref name="append"/> into.</param>
+            <param name="append">The entries to add.</param>
+            <returns>The parameter <paramref name="dictionary"/>.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Rights.Concat(System.Collections.Generic.Dictionary{Goedel.Mesh.Resource,Goedel.Mesh.Access},System.Collections.Generic.Dictionary{Goedel.Mesh.Resource,Goedel.Mesh.Access})">
+            <summary>
+            Concatenate the rights specified in <paramref name="append"/> to the dictionary
+            <paramref name="dictionary"/> and return <paramref name="dictionary"/>. If the
+            entry already exists, the access rights are combined to specify the union 
+            of the source access rights.
+            </summary>
+            <param name="dictionary">The dictionary to merge entries from 
+            <paramref name="append"/> into.</param>
+            <param name="append">The entries to add.</param>
+            <returns>The parameter <paramref name="dictionary"/>.</returns>
+        </member>
         <member name="T:Goedel.Mesh.MeshItem">
              <summary>
             
@@ -9993,6 +10190,76 @@
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
+        </member>
+        <member name="T:Goedel.Mesh.CompositePrivate">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CompositePrivate.DeviceKeyUDF">
+             <summary>
+            UDF fingerprint of the bound device key (if used).
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CompositePrivate.PrivateSalt">
+             <summary>
+            Private parameters of additive key
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CompositePrivate.ServiceShare">
+             <summary>
+            Private parameters of serviced share
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CompositePrivate._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CompositePrivate.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CompositePrivate._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CompositePrivate.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CompositePrivate.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CompositePrivate.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.CompositePrivate.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Condition">
              <summary>
@@ -10563,11 +10830,6 @@
              <summary>
             
              Describes the connection of a member to a group.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ConnectionGroup.KeyEncryption">
-             <summary>
-            The decryption key for the user within the group
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ConnectionGroup._Tag">

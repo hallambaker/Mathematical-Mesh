@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
+using Goedel.Cryptography.Jose;
 
 using System.Collections.Generic;
 
@@ -200,6 +201,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="secretSeed">Secret seed used to generate private keys.</param>
         /// <param name="profileDevice">Specify the device profile. This allows use of a device 
         /// profile bound to the machine hardware.</param>
+        /// <param name="rights">The rights to be granted to the initial connected device.</param>
         /// <returns>Context for administering the Mesh</returns>
         public ContextUser CreateMesh(
                 string accountAddress,
@@ -208,31 +210,50 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
                 string secretSeed = null,
-                ProfileDevice profileDevice = null) {
+                ProfileDevice profileDevice = null,
+                List<string> rights=null) {
+
+            // First create the initial profile device. This allows us to bind the online
+            // signature key to it
+            var persistDevice = profileDevice == null;
+            profileDevice ??= new ProfileDevice(algorithmSign: algorithmSign,
+                algorithmEncrypt: algorithmEncrypt,
+                algorithmAuthenticate: algorithmAuthenticate);
+
+
+            // use this as the master seed 
+            var privateKeyUDF = new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileUser, secretSeed);
+            Screen.WriteLine($"***** Secret Seed = {privateKeyUDF.PrivateValue}");
 
             // create the initial online signature key bound to this device
-            var keyPairOnlineSignature = 
-                KeyPair.FactorySignature(algorithmSign, KeySecurity.ExportableStored, KeyCollection);
+            var keyPairOnlineSignature = ContextUser.DeviceBindSignature(
+                        profileDevice, KeyCollection);
+
+            // Create the set of cryptographic keys to initialize the account.
+            // [move keyPairOnlineSignature here]
+            var activationAccount = new ActivationAccount(
+                KeyCollection,
+                profileDevice, keyPairOnlineSignature, rights, privateKeyUDF);
 
             // Create the Mesh for the user
             var contextUser = ContextUser.CreateAccountUser(
                     this,
-                    keyPairOnlineSignature,
-                    localName,
-                    algorithmSign: algorithmSign, 
-                    algorithmEncrypt: algorithmEncrypt, 
-                    algorithmAuthenticate: algorithmAuthenticate,
-                    secretSeed: secretSeed);
+                    activationAccount,
+                    localName);
 
             // Set the service 
             contextUser.SetService(accountAddress);
 
             // Create a device and catalog entry.
-            var persistDevice = profileDevice == null;
-            profileDevice ??= new ProfileDevice(algorithmSign: algorithmSign,
-                algorithmEncrypt: algorithmEncrypt, 
-                algorithmAuthenticate: algorithmAuthenticate);
-            var catalogedDevice = contextUser.MakeCatalogedDevice(profileDevice, keyPairOnlineSignature, true);
+            rights ??= new List<string> { 
+                    Rights.IdRightsSuper,   // Can add administrators
+                    Rights.IdRightsAdmin,   // Can add devices
+                    Rights.IdRightsWeb};    // Can act as a Web + Messaging device
+
+
+
+            var catalogedDevice = contextUser.MakeCatalogedDevice(profileDevice, keyPairOnlineSignature, 
+                rights);
 
             // now create the host catalog entry and apply to the context user.
             var catalogedMachine = new CatalogedStandard() {

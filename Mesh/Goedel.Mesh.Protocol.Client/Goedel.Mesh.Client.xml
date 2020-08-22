@@ -941,6 +941,9 @@
             <summary>
             Context for interacting with a Mesh Account
             </summary>
+            <summary>
+            Context for interacting with a Mesh Account
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.TransactBegin">
             <summary>
@@ -989,7 +992,7 @@
             <param name="catalogedMachine">Description of the device profile.</param>
             <param name="meshHost">The Mesh host to add the admin context to.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateAccountUser(Goedel.Mesh.Client.MeshHost,Goedel.Cryptography.KeyPair,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateAccountUser(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ActivationAccount,System.String)">
             <summary>
             Create a new personal mesh and return an administration context for it.
             </summary>
@@ -1028,17 +1031,6 @@
             <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The encrypted escrow entry and the key shares.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GrantAdministrator(Goedel.Mesh.CatalogedDevice,Goedel.Cryptography.KeyPair,System.Boolean)">
-            <summary>
-            Grant administrative privileges to the device <paramref name="targetDevice"/> using
-            the online signing key <paramref name="keyPairOnlineSignature"/>. If 
-            <paramref name="superAdmin"/> is true, also grant super-administration
-            privilege.
-            </summary>
-            <param name="targetDevice">Device to grant administrative privilege to.</param>
-            <param name="keyPairOnlineSignature">The online signature capability.</param>
-            <param name="superAdmin">The offline signature capability.</param>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetService(System.String)">
             <summary>
             Set the initial Mesh Service. This MUST be called before devices are added to the 
@@ -1046,7 +1038,7 @@
             </summary>
             <param name="accountAddress">The account address</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationUser,Goedel.Mesh.ActivationAccount)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount)">
             <summary>
             Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
             and activation <paramref name="activationDevice"/>.
@@ -1057,7 +1049,7 @@
             <param name="activationAccount">The account key overlay.</param>
             <returns>The CatalogedDevice entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyPair,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
             <summary>
             Add the device specified by <paramref name="profileDevice"/> to the account granting administration
             privileges if <paramref name="keyPairOnlineSignature"/> is not null and super administration 
@@ -1067,16 +1059,8 @@
             <param name="profileDevice">Profile of the device to add.</param>
             <param name="keyPairOnlineSignature">If not null, specifies an online signature key that is to be used
             to sign administrator functions.</param>
-            <param name="superAdmin">It true specifies that super administrator privileges are to be granted.</param>
+            <param name="rights">The initial rights to be assigned to the device.</param>
             <returns>The catalog entry.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddCapability(Goedel.Cryptography.CryptoKey)">
-            <summary>
-            Generate a capability for the key <paramref name="keyPair"/>.
-            add the service portion to the capabilities catalog.
-            </summary>
-            <param name="keyPair">Keypair from which the capability is to be derrived.</param>
-            
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelf(Goedel.Mesh.Contact,System.String)">
             <summary>
@@ -1239,7 +1223,7 @@
             <param name="bits">The size of secret to generate in bits/</param>
             <returns>Response from the server.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Connect(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.Connect(System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Attempt device connection by means of the static URI <paramref name="uri"/>.
             </summary>
@@ -1285,7 +1269,7 @@
             <param name="request">Connection request to be processed.</param>
             <returns>The result of requesting the connection.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Process(Goedel.Mesh.AcknowledgeConnection,System.Boolean,Goedel.Mesh.MessagePIN)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.Process(Goedel.Mesh.AcknowledgeConnection,System.Boolean,Goedel.Mesh.MessagePIN,System.Collections.Generic.List{System.String})">
             <summary>
             Accept or reject a connection request.
             </summary>
@@ -1302,7 +1286,7 @@
             contact information in response to an initial contact request.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Process(Goedel.Mesh.Message,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.Process(Goedel.Mesh.Message,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String})">
             <summary>
             Generalized processing loop for messages
             </summary>
@@ -1452,6 +1436,52 @@
             </summary>
             <param name="networkAddress">The address to return the entry for.</param>
             <returns>The mesh account encryption key if found, otherwise, null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.DeviceBindEncryption(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>
+            Create a key pair bound to the private key <paramref name="profileDevice.KeyEncryption.KeyEncryption"/>
+            The public parameters of the returned key represent the combined parameters, the 
+            private parameters represent the offset from the device key.
+            </summary>
+            <param name="profileDevice">Profile providing the base key.</param>
+            <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
+            <returns>The bound key pair.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.DeviceBindSignature(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>
+            Create a key pair bound to the private key <paramref name="profileDevice.OfflineSignature.OfflineSignature"/>
+            The public parameters of the returned key represent the combined parameters, the 
+            private parameters represent the offset from the device key.
+            </summary>
+            <param name="profileDevice">Profile providing the base key.</param>
+            <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
+            <returns>The bound key pair.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.DeviceBindAuthentication(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>
+            Create a key pair bound to the private key <paramref name="profileDevice.KeyAuthentication.KeyAuthentication"/>
+            The public parameters of the returned key represent the combined parameters, the 
+            private parameters represent the offset from the device key.
+            </summary>
+            <param name="profileDevice">Profile providing the base key.</param>
+            <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
+            <returns>The bound key pair.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddCapability(Goedel.Cryptography.CryptoKey,Goedel.Mesh.ProfileDevice)">
+            <summary>
+            Generate a capability for the key <paramref name="keyPair"/>.
+            add the service portion to the capabilities catalog.
+            </summary>
+            <param name="keyPair">Keypair from which the capability is to be derrived.</param>
+            
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GrantProfileRoot(Goedel.Mesh.ActivationAccount,Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right)">
+            <summary>
+            Grant super administrator access.
+            </summary>
+            <param name="activationAccount"></param>
+            <param name="profileDevice"></param>
+            <param name="right"></param>
         </member>
         <member name="P:Goedel.Mesh.Client.TransactAccount.ContextAccount">
             <summary>The account context in which this transaction takes place.</summary>
@@ -2370,7 +2400,7 @@
             </summary>
             <param name="key">The profile to delete</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.CreateMesh(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.String,Goedel.Mesh.ProfileDevice)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.CreateMesh(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.String,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String})">
              <summary>
              Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
              </summary>
@@ -2382,6 +2412,7 @@
              <param name="secretSeed">Secret seed used to generate private keys.</param>
              <param name="profileDevice">Specify the device profile. This allows use of a device 
              profile bound to the machine hardware.</param>
+             <param name="rights">The rights to be granted to the initial connected device.</param>
              <returns>Context for administering the Mesh</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.GetContextMesh(System.String,System.Boolean)">
@@ -2503,192 +2534,6 @@
             Commit a Delete transaction to memory
             </summary>
             <param name="containerStoreEntry">The container store entry representing the transaction</param>
-        </member>
-        <member name="T:Goedel.Mesh.Client.Degree">
-            <summary>
-            Desribes the means by which a right is granted.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Degree.Direct">
-            <summary>The holder has direct access to the cryptographic key required
-            to perform the operation.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Degree.Service">
-            <summary>The cryptographic key required for the right are divided 
-            between the device and the Mesh service.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Degree.MultiParty">
-            <summary></summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.ProfileRoot">
-            <summary>Profile root signature key.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.ProfileAdmin">
-            <summary>Profile administrative signature key.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.CatalogCredential">
-            <summary>The credential catalog. Access limited to the service and
-            administrative devices.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.CatalogDevice">
-            <summary>The device catalog</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.CatalogContact">
-            <summary>The contacts catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.CatalogCalendar">
-            <summary>The calendar/task catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.CatalogBookmark">
-            <summary>The bookmark catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.CatalogNetwork">
-            <summary>The network catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.CatalogApplication">
-            <summary>The device catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.CatalogCapability">
-            <summary>The capability catalog catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.CatalogPublication">
-            <summary>The publications catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.SpoolInbound">
-            <summary>The inbound spool. Read access is restricted
-            to External devices. Write access is limited to the Mesh Service and
-            to External devices posting completion messages.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.SpoolOutbound">
-            <summary>The outbound spool. Read/write access is restricted
-            to External devices.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.SpoolLocal">
-            <summary>The local spool. Write access is limited to administration 
-            devices. Read access is limited to the specific device to which a message
-            is directed.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.SshClient">
-            <summary>Service right: Holder is credentialed as an SSH client.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.SshService">
-            <summary>Service right: Holder is credentialed as an SSH service.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.Pgp">
-            <summary>Data right: Holder is  able to Sign/Decrypt OpenPgp messages.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.Smime">
-            <summary>Data right: Holder is  able to Sign/Decrypt S/MIME messages.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.User">
-            <summary>Data right: Holder is able to Sign/Decrypt mesh messages under
-            the account key.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.CatalogMember">
-            <summary>Group membership catalog (restricted to GroupAdministrator)</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Resource.GroupMember">
-            <summary>Ability to read data controlled under the group.</summary> 
-        </member>
-        <member name="T:Goedel.Mesh.Client.Access">
-            <summary>
-            Access rights. These are principally Decrypt (read), Sign (write) and Authenticate
-            (login) plus the ability grant these rights. Rights to a specific resource are
-            limited to either data rights (read/write) or service rights (login).
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Access.Decrypt">
-            <summary>Decrypt (read) access.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Access.Sign">
-            <summary>Sign (write) access, i.e. ability to sign updates to the catalog</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Access.Authenticate">
-            <summary>Read/decrypt access.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Access.Grant">
-            <summary>Ability togrant read/decrypt access.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Access.GrantDecrypt">
-            <summary>Ability togrant read/decrypt access.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Access.GrantSign">
-            <summary>Ability to grant write/sign access.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Access.GrantAuthenticate">
-            <summary>Read/decrypt access.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Access.ReadWrite">
-            <summary>Shorthand for Read + Write</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Access.GrantReadWrite">
-            <summary>Shorthand for GrantDecrypt + GrantSign</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Access.All">
-            <summary>Shorthand for all rights</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.DictionaryRights">
-            <summary>Dictionary mapping rights identifier to rights description.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsSuperAdministrator">
-            <summary>Super administrator rights.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsAdministrator">
-            <summary>Device admninistrator rights</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsGrantUser">
-            <summary>Account access administration rights</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsDevce">
-            <summary>Rights granted to every device connected to a Mesh. These are currently
-            limited to the ability to read the network and application catalogs, both of
-            which will require additional grants to be of use.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsMessage">
-            <summary>Rights granted to a device afforded external messaging capabilities in
-            addition to those of a connected device.
-            These add the right to read/update the contacts and publications catalogs, to read 
-            the inbound spool and read/write to the outbound spool and to sign and decrypt
-            messages under the public credentials for the account.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsWeb">
-            <summary>Rights granted a device afforded Web access in addition to external
-            messaging. These add the right to read/update the credential, calendar and 
-            bookmark catalogs.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsSSH">
-            <summary>Rights granted an SSH client device. This is limited to access to an
-            SSH authenticator under the account. Which may be a device specific key plus
-            a credential or the account key.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsPgp">
-            <summary>Rights granted to a PGP enabled device. This requires external messaging and
-            the ability to sign/decrypt messages under the PGP keying.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsSmime">
-            <summary>Rights granted to an S/MIME enabled device. This requires external messaging and
-            the ability to sign/decrypt messages under the S/MIME keying.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsGroupAdministrator">
-            <summary>Rights granted to a group administrator. An administrator can add users to 
-            the group but does not automatically gain the ability to access group materials
-            themselves.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.Rights.RightsGroupMember">
-            <summary>Rights granted to a group member. A group member can read/update the group
-            publications catalog and decrypt data encrypted under the group key.</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.Client.Rights.Concat(System.Collections.Generic.Dictionary{Goedel.Mesh.Client.Resource,Goedel.Mesh.Client.Access},System.Collections.Generic.Dictionary{Goedel.Mesh.Client.Resource,Goedel.Mesh.Client.Access})">
-            <summary>
-            Concatenate the rights specified in <paramref name="append"/> to the dictionary
-            <paramref name="dictionary"/> and return <paramref name="dictionary"/>. If the
-            entry already exists, the access rights are combined to specify the union 
-            of the source access rights.
-            </summary>
-            <param name="dictionary">The dictionary to merge entries from 
-            <paramref name="append"/> into.</param>
-            <param name="append">The entries to add.</param>
-            <returns>The parameter <paramref name="dictionary"/>.</returns>
         </member>
     </members>
 </doc>

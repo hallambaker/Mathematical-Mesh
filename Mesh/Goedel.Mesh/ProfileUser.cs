@@ -12,33 +12,12 @@ namespace Goedel.Mesh {
     public partial class ProfileUser {
 
 
-        ///<summary>The identifier of the default service.</summary>
-        public string ServiceDefault => AccountAddresses?[0];
-
-        /////<summary>The private encryption key generated from the secret seed.</summary>
-        //public KeyPair PrivateEncryption;
-
-        /////<summary>The private signature key generated from the secret seed.</summary>
-        //public KeyPair PrivateOfflineSignature;
-
-        /////<summary>The private authentication key generated from the secret seed.</summary>
-        //public KeyPair PrivateAuthentication;
-
-        //KeyPair keySignOffline;
-        CryptoKey keySignOnline;
 
         ///<summary>Cached convenience accessor. Returns the corresponding 
         ///<see cref="ProfileService"/> .</summary>
         public ProfileService ProfileService => profileService ??
             ProfileService.Decode(EnvelopedProfileService).CacheValue(out profileService);
         ProfileService profileService = null;
-
-
-        // account key accessors
-        public KeyPair PrivateAccountOfflineSignature { get; set; }
-        public KeyPair PrivateAccountEncryption { get; set; }
-        public KeyPair PrivateAccountAuthentication { get; set; }
-
 
         /// <summary>
         /// Blank constructor for use by deserializers.
@@ -50,86 +29,26 @@ namespace Goedel.Mesh {
         /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
         /// seed.
         /// </summary>
-        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
-        /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="keyPairOnlineSignature">The intial online signature key.
-        /// <paramref name="keyCollection"/>.</param>
+        /// <param name="activationAccount">An activation account with full administrative privileges.</param>
         public ProfileUser(
-                    IKeyCollection keyCollection,
-                    PrivateKeyUDF secretSeed,
-                    KeyPair keyPairOnlineSignature) {
-            //Console.WriteLine($"Created seed {secretSeed.PrivateValue}");
+                    ActivationAccount activationAccount) {
 
-            // Generate the private keys
-            PrivateAccountOfflineSignature = secretSeed.BasePrivate(
-                MeshKeyType.UserSign, keyCollection, KeySecurity.Exportable);
-            PrivateAccountEncryption = secretSeed.BasePrivate(
-                MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Exportable);
-            PrivateAccountAuthentication = secretSeed.BasePrivate(
-                MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Exportable);
+            var privateAccountOfflineSignature = activationAccount.PrivateAccountOfflineSignature;
+            var privateAccountEncryption = activationAccount.PrivateAccountEncryption;
+            var privateAccountAuthentication = activationAccount.PrivateAccountAuthentication;
 
             //Set the public key parameters
-            OfflineSignature = new KeyData(PrivateAccountOfflineSignature.KeyPairPublic());
-            AccountEncryption = new KeyData(PrivateAccountEncryption.KeyPairPublic());
-            KeyAuthentication = new KeyData(PrivateAccountAuthentication.KeyPairPublic());
+            OfflineSignature = new KeyData(privateAccountOfflineSignature.KeyPairPublic());
+            AccountEncryption = new KeyData(privateAccountEncryption.KeyPairPublic());
+            KeyAuthentication = new KeyData(privateAccountAuthentication.KeyPairPublic());
 
             OnlineSignature = new List<KeyData> {
-                new KeyData(keyPairOnlineSignature.KeyPairPublic())
+                new KeyData(activationAccount.PrivateAccountOnlineSignature.KeyPairPublic())
                 };
 
-            Sign(PrivateAccountOfflineSignature);
+            Sign(privateAccountOfflineSignature);
             }
 
-        ///// <summary>
-        ///// Connect the device described by <paramref name="catalogedDevice"/> with 
-        ///// the set of permissions <paramref name="permissions"/>> to the account
-        ///// described by this profile using the account administration key acquired from
-        ///// <paramref name="catalogedDevice"/>.
-        ///// </summary>
-        ///// <param name="keyCollection">Key collection from which to fetch the key to sign
-        ///// the corresponding Activation and Connection.</param>
-        ///// <param name="catalogedDevice">The device to connect. The catalog entry will
-        ///// be updated to reflect the connection to the account.</param>
-        ///// <param name="permissions">The set of permissions to grant to the device
-        ///// within the account.</param>
-        ///// <param name="accountEncryptionKey">Key or key share used to decrypt the
-        ///// data encrypted to the account key.</param>
-        ///// <returns>The account description.</returns>
-        //public AccountEntry ConnectDevice(
-        //                IKeyCollection keyCollection,
-        //                CatalogedDevice catalogedDevice,
-        //                KeyData accountEncryptionKey,
-        //                List<Permission> permissions
-        //                ) {
-
-        //    permissions.Future(); // Mark permissions as required parameter for future use.
-
-        //    // Get an online signature key if not already found
-        //    keySignOnline ??= keyCollection.LocatePrivate(KeysOnlineSignature);
-
-        //    // Grant the device access to data encrypted under the account key.
-        //    // Note that this cannot be granted through the capabilities catalog because that
-        //    // is also encrypted under the account key.
-        //    var activationAccount = new ActivationUser(catalogedDevice.ProfileDevice) {
-        //        KeyAccountEncryption = accountEncryptionKey 
-        //        };
-
-        //    // Sign and encrypt the activation
-        //    activationAccount.Package(keySignOnline);
-
-        //    // Encrypt to the device
-        //    var accountEntry = new AccountEntry() {
-        //        AccountUDF = UDF,
-        //        EnvelopedProfileAccount = DareEnvelope,
-        //        EnvelopedConnectionAccount = activationAccount.ConnectionAccount.DareEnvelope,
-        //        EnvelopedActivationAccount = activationAccount.DareEnvelope
-        //        };
-
-        //    //catalogedDevice.Accounts ??= new List<AccountEntry>();
-        //    //catalogedDevice.Accounts.Add(accountEntry);
-
-        //    return accountEntry;
-        //    }
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with

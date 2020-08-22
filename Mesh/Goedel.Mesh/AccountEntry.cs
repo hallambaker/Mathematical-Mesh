@@ -19,10 +19,10 @@ namespace Goedel.Mesh {
 
         ///<summary>Cached convenience accessor. Returns the corresponding 
         ///<see cref="GetActivationAccount"/> .</summary>
-        public ActivationUser GetActivationAccount(IKeyCollection keyCollection) =>
+        public ActivationDevice GetActivationAccount(IKeyCollection keyCollection) =>
             activationAccount ?? (keyCollection == null ? null :
-            ActivationUser.Decode(EnvelopedActivationAccount, keyCollection).CacheValue(out activationAccount));
-        ActivationUser activationAccount;
+            ActivationDevice.Decode(EnvelopedActivationAccount, keyCollection).CacheValue(out activationAccount));
+        ActivationDevice activationAccount;
 
         /// <summary>
         /// Verify the AccountEntry contains all the required fields and their contents 

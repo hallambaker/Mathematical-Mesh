@@ -1656,7 +1656,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual ActivationUser						ActivationUser  {get; set;}
+		public virtual ActivationDevice						ActivationDevice  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1706,10 +1706,10 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteToken ("ProfileUser", 1);
 					ProfileUser.Serialize (_writer, false);
 				}
-			if (ActivationUser != null) {
+			if (ActivationDevice != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ActivationUser", 1);
-					ActivationUser.Serialize (_writer, false);
+				_writer.WriteToken ("ActivationDevice", 1);
+					ActivationDevice.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -1751,10 +1751,10 @@ namespace Goedel.Mesh.Shell {
  
 					break;
 					}
-				case "ActivationUser" : {
+				case "ActivationDevice" : {
 					// An untagged structure
-					ActivationUser = new ActivationUser ();
-					ActivationUser.Deserialize (jsonReader);
+					ActivationDevice = new ActivationDevice ();
+					ActivationDevice.Deserialize (jsonReader);
  
 					break;
 					}

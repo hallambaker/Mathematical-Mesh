@@ -20,7 +20,7 @@
 			|trust assertions associated with a public key.
 		String UDF
 			Description
-				|UDF fingerprint of the public key parameters/
+				|UDF fingerprint of the public key parameters
 		Binary X509Certificate
 			Description
 				|List of X.509 Certificates
@@ -46,34 +46,18 @@
 			Description
 				|The private key parameters as defined in the JOSE specification.
 		
-
-
-
-	Structure KeyComposite
-		TStruct Key Public
+	
+	Structure CompositePrivate
+		Inherits Key
+		String DeviceKeyUDF
 			Description
-				|The composite key
-		TStruct Key Part
+				|UDF fingerprint of the bound device key (if used).
+		TStruct Key PrivateSalt
 			Description
-				|The overlay key contribution.
-		String Service
+				|Private parameters of additive key
+		TStruct Key ServiceShare
 			Description
-				|Service holding the additional contribution
-
-	Structure DeviceRecryptionKey
-		String UDF
-			Description
-				|The fingerprint of the encryption key
-		TStruct Contact Contact
-			Description
-				|The User's Mesh contact information
-		Struct KeyData RecryptionKey
-			Description
-				|The recryption key
-		Struct DareEnvelope EnvelopedRecryptionKeyDevice
-			Description
-				|The decryption key encrypted under the user's device key.	
-
+				|Private parameters of serviced share
 
 
 
@@ -205,11 +189,10 @@
 		Struct DareEnvelope EnvelopedProfileDevice
 			Description
 				|The device profile
-		Struct DareEnvelope EnvelopedConnectionUser
+		Struct DareEnvelope EnvelopedConnectionDevice
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
-		
-		Struct DareEnvelope EnvelopedActivationUser
+		Struct DareEnvelope EnvelopedActivationDevice
 			Description
 				|The activation of the device within the Mesh account
 		Struct DareEnvelope EnvelopedActivationAccount
@@ -268,7 +251,10 @@
 
 
 
-	Structure ActivationUser
+	Structure ActivationDevice
+		Description
+			|Contains activation data for device specific keys used in the context of a 
+			|Mesh account.
 		Inherits Activation
 		String AccountUDF
 			Description
@@ -380,9 +366,7 @@
 		Description
 			|Describes the connection of a member to a group.
 		Inherits Connection
-		Struct KeyComposite KeyEncryption
-			Description
-				|The decryption key for the user within the group
+
 
 
 

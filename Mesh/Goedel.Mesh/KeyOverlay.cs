@@ -8,51 +8,51 @@ using System.Runtime.CompilerServices;
 
 namespace Goedel.Mesh {
 
-    public partial class KeyComposite {
+    //public partial class KeyComposite {
 
-        ///<summary>Convenience accessor for the composite UDF.</summary>
-        public string UDF => KeyPair.KeyIdentifier;
+    //    ///<summary>Convenience accessor for the composite UDF.</summary>
+    //    public string UDF => KeyPair.KeyIdentifier;
 
-        ///<summary>The composite key pair.</summary>
-        public KeyPairAdvanced KeyPair => keyPair ?? (Public.KeyPair as KeyPairAdvanced).CacheValue(out keyPair);
-        KeyPairAdvanced keyPair = null;
+    //    ///<summary>The composite key pair.</summary>
+    //    public KeyPairAdvanced KeyPair => keyPair ?? (Public.KeyPair as KeyPairAdvanced).CacheValue(out keyPair);
+    //    KeyPairAdvanced keyPair = null;
 
-        /// <summary>
-        /// Default constructor for deserialization.
-        /// </summary>
-        public KeyComposite() {
+    //    /// <summary>
+    //    /// Default constructor for deserialization.
+    //    /// </summary>
+    //    public KeyComposite() {
 
-            }
+    //        }
 
-        /// <summary>
-        /// Constructor from base key <paramref name="baseKey"/> with decryption service 
-        /// <paramref name="service"/>.
-        /// </summary>
-        /// <param name="baseKey">The base key.</param>
-        /// <param name="service">The decryption service.</param>
-        public KeyComposite(KeyData baseKey, string service) :
-                    this(baseKey.CryptoKey as KeyPairAdvanced, service) {
-            }
+    //    /// <summary>
+    //    /// Constructor from base key <paramref name="baseKey"/> with decryption service 
+    //    /// <paramref name="service"/>.
+    //    /// </summary>
+    //    /// <param name="baseKey">The base key.</param>
+    //    /// <param name="service">The decryption service.</param>
+    //    public KeyComposite(KeyData baseKey, string service) :
+    //                this(baseKey.CryptoKey as KeyPairAdvanced, service) {
+    //        }
 
-        /// <summary>
-        /// Constructor from base key <paramref name="baseKey"/> with decryption service 
-        /// <paramref name="service"/>.
-        /// </summary>
-        /// <param name="baseKey">The base key.</param>
-        /// <param name="service">The decryption service.</param>
-        public KeyComposite(KeyPairAdvanced baseKey, string service = null) {
-            Public = Cryptography.Jose.Key.GetPublic(baseKey);
-            if (service == null) {
-                Part = Cryptography.Jose.Key.GetPrivate(baseKey);
+    //    /// <summary>
+    //    /// Constructor from base key <paramref name="baseKey"/> with decryption service 
+    //    /// <paramref name="service"/>.
+    //    /// </summary>
+    //    /// <param name="baseKey">The base key.</param>
+    //    /// <param name="service">The decryption service.</param>
+    //    public KeyComposite(KeyPairAdvanced baseKey, string service = null) {
+    //        Public = Cryptography.Jose.Key.GetPublic(baseKey);
+    //        if (service == null) {
+    //            Part = Cryptography.Jose.Key.GetPrivate(baseKey);
 
-                }
-            else {
-                throw new NYI(); // ToDo: implement service for split keys
-                }
-            }
+    //            }
+    //        else {
+    //            throw new NYI(); // ToDo: implement service for split keys
+    //            }
+    //        }
 
 
-        }
+    //    }
 
 
 

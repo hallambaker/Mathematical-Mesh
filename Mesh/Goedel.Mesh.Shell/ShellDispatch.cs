@@ -261,29 +261,29 @@ namespace Goedel.Mesh.Shell {
                 result.Add("super");
                 }
             if (deviceAuthOptions.AuthAdmin.Value) {
-                result.Add("super");
+                result.Add("admin");
                 }
             if (deviceAuthOptions.AuthDevice.Value) {
-                result.Add("super");
+                result.Add("device");
                 }
             if (deviceAuthOptions.AuthMessage.Value) {
-                result.Add("super");
+                result.Add("message");
                 }
             if (deviceAuthOptions.AuthWeb.Value) {
-                result.Add("super");
+                result.Add("web");
                 }
-            if (deviceAuthOptions.AuthSSH.Value != null) {
-                result.Add($"ssh:{deviceAuthOptions.AuthSSH.Value}");
-                }
-            if (deviceAuthOptions.AuthEmail.Value != null) {
-                result.Add($"ssh:{deviceAuthOptions.AuthEmail.Value}");
-                }
-            if (deviceAuthOptions.AuthGroupMember.Value != null) {
-                result.Add($"member:{deviceAuthOptions.AuthGroupMember.Value}");
-                }
-            if (deviceAuthOptions.AuthGroupAdmin.Value != null) {
-                result.Add($"group:{deviceAuthOptions.AuthGroupAdmin.Value}");
-                }
+            //if (deviceAuthOptions.AuthSSH.Value != null) {
+            //    result.Add($"ssh:{deviceAuthOptions.AuthSSH.Value}");
+            //    }
+            //if (deviceAuthOptions.AuthEmail.Value != null) {
+            //    result.Add($"ssh:{deviceAuthOptions.AuthEmail.Value}");
+            //    }
+            //if (deviceAuthOptions.AuthGroupMember.Value != null) {
+            //    result.Add($"member:{deviceAuthOptions.AuthGroupMember.Value}");
+            //    }
+            //if (deviceAuthOptions.AuthGroupAdmin.Value != null) {
+            //    result.Add($"group:{deviceAuthOptions.AuthGroupAdmin.Value}");
+            //    }
 
             return result.Count > 0 ? result : null;
             

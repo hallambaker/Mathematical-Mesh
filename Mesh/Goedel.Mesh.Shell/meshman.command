@@ -225,6 +225,7 @@
 				Brief "The device location URI"			
 			Include AccountOptions
 			Include Reporting
+			Include DeviceAuthOptions
 
 
 

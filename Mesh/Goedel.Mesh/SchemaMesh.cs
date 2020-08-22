@@ -60,8 +60,7 @@ namespace Goedel.Mesh {
 				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"KeyData", KeyData._Factory},
-			{"KeyComposite", KeyComposite._Factory},
-			{"DeviceRecryptionKey", DeviceRecryptionKey._Factory},
+			{"CompositePrivate", CompositePrivate._Factory},
 			{"Assertion", Assertion._Factory},
 			{"Condition", Condition._Factory},
 			{"Profile", Profile._Factory},
@@ -73,7 +72,7 @@ namespace Goedel.Mesh {
 			{"CatalogedPublication", CatalogedPublication._Factory},
 			{"ProfileAccount", ProfileAccount._Factory},
 			{"ProfileUser", ProfileUser._Factory},
-			{"ActivationUser", ActivationUser._Factory},
+			{"ActivationDevice", ActivationDevice._Factory},
 			{"ActivationAccount", ActivationAccount._Factory},
 			{"ActivationApplication", ActivationApplication._Factory},
 			{"ActivationApplicationEmail", ActivationApplicationEmail._Factory},
@@ -166,7 +165,7 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class KeyData : MeshItem {
         /// <summary>
-        ///UDF fingerprint of the public key parameters/
+        ///UDF fingerprint of the public key parameters
         /// </summary>
 
 		public virtual string						UDF  {get; set;}
@@ -397,22 +396,22 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class KeyComposite : MeshItem {
+	public partial class CompositePrivate : Key {
         /// <summary>
-        ///The composite key
+        ///UDF fingerprint of the bound device key (if used).
         /// </summary>
 
-		public virtual Key						Public  {get; set;}
+		public virtual string						DeviceKeyUDF  {get; set;}
         /// <summary>
-        ///The overlay key contribution.
+        ///Private parameters of additive key
         /// </summary>
 
-		public virtual Key						Part  {get; set;}
+		public virtual Key						PrivateSalt  {get; set;}
         /// <summary>
-        ///Service holding the additional contribution
+        ///Private parameters of serviced share
         /// </summary>
 
-		public virtual string						Service  {get; set;}
+		public virtual Key						ServiceShare  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -422,13 +421,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "KeyComposite";
+		public new const string __Tag = "CompositePrivate";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new KeyComposite();
+		public static new JsonObject _Factory () => new CompositePrivate();
 
 
         /// <summary>
@@ -456,36 +455,37 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			if (Public != null) {
+			((Key)this).SerializeX(_writer, false, ref _first);
+			if (DeviceKeyUDF != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Public", 1);
+				_writer.WriteToken ("DeviceKeyUDF", 1);
+					_writer.WriteString (DeviceKeyUDF);
+				}
+			if (PrivateSalt != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("PrivateSalt", 1);
 					// expand this to a tagged structure
-					//Public.Serialize (_writer, false);
+					//PrivateSalt.Serialize (_writer, false);
 					{
 						_writer.WriteObjectStart();
-						_writer.WriteToken(Public._Tag, 1);
+						_writer.WriteToken(PrivateSalt._Tag, 1);
 						bool firstinner = true;
-						Public.Serialize (_writer, true, ref firstinner);
+						PrivateSalt.Serialize (_writer, true, ref firstinner);
 						_writer.WriteObjectEnd();
 						}
 				}
-			if (Part != null) {
+			if (ServiceShare != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Part", 1);
+				_writer.WriteToken ("ServiceShare", 1);
 					// expand this to a tagged structure
-					//Part.Serialize (_writer, false);
+					//ServiceShare.Serialize (_writer, false);
 					{
 						_writer.WriteObjectStart();
-						_writer.WriteToken(Part._Tag, 1);
+						_writer.WriteToken(ServiceShare._Tag, 1);
 						bool firstinner = true;
-						Part.Serialize (_writer, true, ref firstinner);
+						ServiceShare.Serialize (_writer, true, ref firstinner);
 						_writer.WriteObjectEnd();
 						}
-				}
-			if (Service != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Service", 1);
-					_writer.WriteString (Service);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -498,15 +498,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyComposite FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new CompositePrivate FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as KeyComposite;
+				return Out as CompositePrivate;
 				}
-		    var Result = new KeyComposite ();
+		    var Result = new CompositePrivate ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -520,178 +520,20 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Public" : {
-					Public = Key.FromJson (jsonReader, true) ;  // A tagged structure
+				case "DeviceKeyUDF" : {
+					DeviceKeyUDF = jsonReader.ReadString ();
 					break;
 					}
-				case "Part" : {
-					Part = Key.FromJson (jsonReader, true) ;  // A tagged structure
+				case "PrivateSalt" : {
+					PrivateSalt = Key.FromJson (jsonReader, true) ;  // A tagged structure
 					break;
 					}
-				case "Service" : {
-					Service = jsonReader.ReadString ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class DeviceRecryptionKey : MeshItem {
-        /// <summary>
-        ///The fingerprint of the encryption key
-        /// </summary>
-
-		public virtual string						UDF  {get; set;}
-        /// <summary>
-        ///The User's Mesh contact information
-        /// </summary>
-
-		public virtual Contact						Contact  {get; set;}
-        /// <summary>
-        ///The recryption key
-        /// </summary>
-
-		public virtual KeyData						RecryptionKey  {get; set;}
-        /// <summary>
-        ///The decryption key encrypted under the user's device key.	
-        /// </summary>
-
-		public virtual DareEnvelope						EnvelopedRecryptionKeyDevice  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "DeviceRecryptionKey";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new DeviceRecryptionKey();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (UDF != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("UDF", 1);
-					_writer.WriteString (UDF);
-				}
-			if (Contact != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Contact", 1);
-					// expand this to a tagged structure
-					//Contact.Serialize (_writer, false);
-					{
-						_writer.WriteObjectStart();
-						_writer.WriteToken(Contact._Tag, 1);
-						bool firstinner = true;
-						Contact.Serialize (_writer, true, ref firstinner);
-						_writer.WriteObjectEnd();
-						}
-				}
-			if (RecryptionKey != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("RecryptionKey", 1);
-					RecryptionKey.Serialize (_writer, false);
-				}
-			if (EnvelopedRecryptionKeyDevice != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedRecryptionKeyDevice", 1);
-					EnvelopedRecryptionKeyDevice.Serialize (_writer, false);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new DeviceRecryptionKey FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as DeviceRecryptionKey;
-				}
-		    var Result = new DeviceRecryptionKey ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "UDF" : {
-					UDF = jsonReader.ReadString ();
-					break;
-					}
-				case "Contact" : {
-					Contact = Contact.FromJson (jsonReader, true) ;  // A tagged structure
-					break;
-					}
-				case "RecryptionKey" : {
-					// An untagged structure
-					RecryptionKey = new KeyData ();
-					RecryptionKey.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "EnvelopedRecryptionKeyDevice" : {
-					// An untagged structure
-					EnvelopedRecryptionKeyDevice = new DareEnvelope ();
-					EnvelopedRecryptionKeyDevice.Deserialize (jsonReader);
- 
+				case "ServiceShare" : {
+					ServiceShare = Key.FromJson (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}
@@ -1641,12 +1483,12 @@ namespace Goedel.Mesh {
         ///The public assertion demonstrating connection of the Device to the Mesh
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedConnectionUser  {get; set;}
+		public virtual DareEnvelope						EnvelopedConnectionDevice  {get; set;}
         /// <summary>
         ///The activation of the device within the Mesh account
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedActivationUser  {get; set;}
+		public virtual DareEnvelope						EnvelopedActivationDevice  {get; set;}
         /// <summary>
         ///The activation of the device within the Mesh account
         /// </summary>
@@ -1726,15 +1568,15 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("EnvelopedProfileDevice", 1);
 					EnvelopedProfileDevice.Serialize (_writer, false);
 				}
-			if (EnvelopedConnectionUser != null) {
+			if (EnvelopedConnectionDevice != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedConnectionUser", 1);
-					EnvelopedConnectionUser.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedConnectionDevice", 1);
+					EnvelopedConnectionDevice.Serialize (_writer, false);
 				}
-			if (EnvelopedActivationUser != null) {
+			if (EnvelopedActivationDevice != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedActivationUser", 1);
-					EnvelopedActivationUser.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedActivationDevice", 1);
+					EnvelopedActivationDevice.Serialize (_writer, false);
 				}
 			if (EnvelopedActivationAccount != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -1817,17 +1659,17 @@ namespace Goedel.Mesh {
  
 					break;
 					}
-				case "EnvelopedConnectionUser" : {
+				case "EnvelopedConnectionDevice" : {
 					// An untagged structure
-					EnvelopedConnectionUser = new DareEnvelope ();
-					EnvelopedConnectionUser.Deserialize (jsonReader);
+					EnvelopedConnectionDevice = new DareEnvelope ();
+					EnvelopedConnectionDevice.Deserialize (jsonReader);
  
 					break;
 					}
-				case "EnvelopedActivationUser" : {
+				case "EnvelopedActivationDevice" : {
 					// An untagged structure
-					EnvelopedActivationUser = new DareEnvelope ();
-					EnvelopedActivationUser.Deserialize (jsonReader);
+					EnvelopedActivationDevice = new DareEnvelope ();
+					EnvelopedActivationDevice.Deserialize (jsonReader);
  
 					break;
 					}
@@ -2279,8 +2121,11 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Contains activation data for device specific keys used in the context of a 
+	/// Mesh account.
 	/// </summary>
-	public partial class ActivationUser : Activation {
+	public partial class ActivationDevice : Activation {
         /// <summary>
         ///The UDF of the account
         /// </summary>
@@ -2295,13 +2140,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ActivationUser";
+		public new const string __Tag = "ActivationDevice";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ActivationUser();
+		public static new JsonObject _Factory () => new ActivationDevice();
 
 
         /// <summary>
@@ -2346,15 +2191,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ActivationUser FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new ActivationDevice FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ActivationUser;
+				return Out as ActivationDevice;
 				}
-		    var Result = new ActivationUser ();
+		    var Result = new ActivationDevice ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -3552,11 +3397,6 @@ namespace Goedel.Mesh {
 	/// Describes the connection of a member to a group.
 	/// </summary>
 	public partial class ConnectionGroup : Connection {
-        /// <summary>
-        ///The decryption key for the user within the group
-        /// </summary>
-
-		public virtual KeyComposite						KeyEncryption  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3601,11 +3441,6 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((Connection)this).SerializeX(_writer, false, ref _first);
-			if (KeyEncryption != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("KeyEncryption", 1);
-					KeyEncryption.Serialize (_writer, false);
-				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -3639,13 +3474,6 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "KeyEncryption" : {
-					// An untagged structure
-					KeyEncryption = new KeyComposite ();
-					KeyEncryption.Deserialize (jsonReader);
- 
-					break;
-					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;

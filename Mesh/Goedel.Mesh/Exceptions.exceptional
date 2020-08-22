@@ -53,6 +53,8 @@ Namespace Goedel.Mesh
 		Console "The attempt to perform threshold key activation failed"
 
 
+	Exception UnknownRight
+		Console "The right {0} is not known."
 
 	Exception InvalidUriMethod
 		Console "The specified URI method is invalid"

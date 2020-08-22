@@ -1330,6 +1330,36 @@
         <member name="P:Goedel.Mesh.Shell._AccountConnect.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.Auth">
+            <summary>Field accessor for option [auth]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthSuper">
+            <summary>Field accessor for option [super]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthAdmin">
+            <summary>Field accessor for option [admin]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthDevice">
+            <summary>Field accessor for option [device]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthMessage">
+            <summary>Field accessor for option [message]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthWeb">
+            <summary>Field accessor for option [web]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthSSH">
+            <summary>Field accessor for option [ssh]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthEmail">
+            <summary>Field accessor for option [email]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthGroupMember">
+            <summary>Field accessor for option [member]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthGroupAdmin">
+            <summary>Field accessor for option [group]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountEscrow.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
@@ -4564,7 +4594,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount.ActivationUser">
+        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount.ActivationDevice">
             <summary>
             </summary>
         </member>

@@ -110,9 +110,9 @@ namespace Goedel.Mesh {
         /// for a newly added device or by decoding the SignedDeviceConnection entry after 
         /// deserialization.
         /// </summary>
-        public ConnectionUser ConnectionUser => connectionUser ??
-            ConnectionUser.Decode(EnvelopedConnectionUser).CacheValue(out connectionUser);
-        ConnectionUser connectionUser = null;
+        public ConnectionUser ConnectionDevice => connectionDevice ??
+            ConnectionUser.Decode(EnvelopedConnectionDevice).CacheValue(out connectionDevice);
+        ConnectionUser connectionDevice = null;
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
         ///to return the <see cref="ProfileUser"/> value.</summary>
@@ -126,12 +126,13 @@ namespace Goedel.Mesh {
                 ProfileDevice.Decode(EnvelopedProfileDevice).CacheValue(out profileDevice);
         ProfileDevice profileDevice;
 
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationUser"/>
-        ///to return the <see cref="ActivationUser"/> value.</summary>
-        public ActivationUser GetActivationUser(IKeyCollection keyCollection) =>
-            activationUser ?? (keyCollection == null ? null :
-                ActivationUser.Decode(EnvelopedActivationUser, keyCollection).CacheValue(out activationUser));
-        ActivationUser activationUser;
+
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationDevice"/>
+        ///to return the <see cref="ActivationDevice"/> value.</summary>
+        public ActivationDevice GetActivationDevice(IKeyCollection keyCollection) =>
+            activationDevice ?? (keyCollection == null ? null :
+                ActivationDevice.Decode(EnvelopedActivationDevice, keyCollection).CacheValue(out activationDevice));
+        ActivationDevice activationDevice;
 
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationAccount"/>
@@ -184,8 +185,8 @@ namespace Goedel.Mesh {
 
             ProfileUser.ToBuilder(builder, indent, "[Profile Mesh Missing]");
             ProfileDevice.ToBuilder(builder, indent, "[Profile Device Missing]");
-            ConnectionUser.ToBuilder(builder, indent, "[Connection Device Missing]");
-            GetActivationUser(keyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
+            ConnectionDevice.ToBuilder(builder, indent, "[Connection Device Missing]");
+            GetActivationDevice(keyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
 
             }
 
@@ -217,8 +218,8 @@ namespace Goedel.Mesh {
             ProfileDevice.Validate();
 
             // Verify that the connection and activation entries are signed under the master profile
-            ProfileUser.Verify(EnvelopedConnectionUser);
-            ProfileUser.Verify(EnvelopedActivationUser);
+            ProfileUser.Verify(EnvelopedConnectionDevice);
+            ProfileUser.Verify(EnvelopedActivationDevice);
 
             return true; // this will probably turn into exception return.
             }
