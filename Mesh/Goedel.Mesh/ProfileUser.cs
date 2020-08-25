@@ -11,6 +11,21 @@ using System.Text;
 namespace Goedel.Mesh {
     public partial class ProfileUser {
 
+        ///<summary>The signed profile</summary> 
+        public EnvelopedProfileUser EnvelopedProfileUser { get; protected set; }
+
+        /// <summary>
+        /// Sign the profile under <paramref name="SignatureKey"/>.
+        /// </summary>
+        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+        /// <returns>Envelope containing the signed profile. Also updates the property
+        /// <see cref="EnvelopedProfileUser"/></returns>
+        public override DareEnvelope Sign(CryptoKey SignatureKey) {
+            EnvelopedProfileUser = EnvelopedProfileUser.Encode(this, signingKey: SignatureKey);
+            DareEnvelope = EnvelopedProfileUser;
+            return DareEnvelope;
+            }
+
 
 
         ///<summary>Cached convenience accessor. Returns the corresponding 
@@ -42,9 +57,9 @@ namespace Goedel.Mesh {
             AccountEncryption = new KeyData(privateAccountEncryption.KeyPairPublic());
             KeyAuthentication = new KeyData(privateAccountAuthentication.KeyPairPublic());
 
-            OnlineSignature = new List<KeyData> {
-                new KeyData(activationAccount.PrivateAccountOnlineSignature.KeyPairPublic())
-                };
+            //OnlineSignature = new List<KeyData> {
+            //    new KeyData(activationAccount.PrivateAccountOnlineSignature.KeyPairPublic())
+            //    };
 
             Sign(privateAccountOfflineSignature);
             }

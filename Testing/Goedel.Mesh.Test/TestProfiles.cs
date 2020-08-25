@@ -154,7 +154,7 @@ namespace Goedel.Mesh.Test {
 
             var catalogEntryDevice = new CatalogedDevice() {
                 UDF = profileDevice.UDF,
-                EnvelopedConnectionDevice = Sign(profileMeshDevicePublic, keySign),
+                EnvelopedConnectionUser = Sign(profileMeshDevicePublic, keySign),
                 EnvelopedActivationDevice = Sign(ProfileMeshDevicePrivate, keySign)
                 };
 

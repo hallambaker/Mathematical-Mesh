@@ -156,6 +156,7 @@ namespace Goedel.Cryptography.Dare {
         /// be stupid.
         /// </summary>
         public override void Close() {
+
             }
 
         /// <summary>
@@ -212,16 +213,18 @@ namespace Goedel.Cryptography.Dare {
     public class CryptoStackStreamReader : CryptoStackStream {
 
         /// <summary>
-        /// Gets a value indicating whether the current stream supports reading (is always false).
+        /// Gets a value indicating whether the current stream supports reading (is always true).
         /// </summary>
         public override bool CanRead => true;
 
         /// <summary>
-        /// Gets a value indicating whether the current stream supports writing(is always true).
+        /// Gets a value indicating whether the current stream supports writing (is always false).
         /// </summary>
         public override bool CanWrite => false;
 
         JsonBcdReader jbcdReader;
+        CryptoStream streamMac;
+        CryptoStream streamDigest;
 
         /// <summary>
         /// Create a CryptoStack
@@ -235,6 +238,13 @@ namespace Goedel.Cryptography.Dare {
                     HashAlgorithm digest) : base(mac, digest) {
             this.jbcdReader = stream;
             stream.ReadBinaryToken();
+
+            if (Mac != null) {
+                streamMac = new CryptoStream(Stream.Null, Mac, CryptoStreamMode.Write);
+                }
+            if (Digest != null) {
+                streamDigest = new CryptoStream(Stream.Null, Digest, CryptoStreamMode.Write);
+                }
             }
 
 
@@ -251,21 +261,45 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The total number of bytes read into the buffer. This can be less than the number of bytes 
         /// requested if that many bytes are not currently available, or zero (0) if the end of the stream 
         /// has been reached.</returns>
-        public override int Read(byte[] buffer, int offset, int count) =>
-            jbcdReader.ReadBinaryData(buffer, offset, count);
+        public override int Read(byte[] buffer, int offset, int count) {
+            var length = jbcdReader.ReadBinaryData(buffer, offset, count);
+
+            streamMac?.Write(buffer, offset, length);
+            streamDigest?.Write(buffer, offset, length);
+
+            //Console.WriteLine($"Read {buffer} bytes");
+            return length;
+            }
 
 
+
+    /// <summary>
+    /// Write data to the output stream.(not supported).
+    /// </summary>
+    /// <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from 
+    /// <paramref name="buffer"/> to the current stream.</param>
+    /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+    /// at which to begin copying bytes to the current stream.</param>
+    /// <param name="count">The number of bytes to be written to the current stream.</param>
+    public override void Write(byte[] buffer, int offset, int count) => throw new NotImplementedException();
 
 
         /// <summary>
-        /// Write data to the output stream.(not supported).
+        /// Closes the current stream, completes calculation of cryptographic values (MAC/Digest)
+        /// associated with the current stream. Does not close the target stream because that would
+        /// be stupid.
         /// </summary>
-        /// <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from 
-        /// <paramref name="buffer"/> to the current stream.</param>
-        /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
-        /// at which to begin copying bytes to the current stream.</param>
-        /// <param name="count">The number of bytes to be written to the current stream.</param>
-        public override void Write(byte[] buffer, int offset, int count) => throw new NotImplementedException();
+        public override void Close() {
+            if (streamMac != null) {
+                streamMac.FlushFinalBlock();
+                MacValue = Mac?.Hash;
+                }
+            if (streamDigest != null) {
+                streamDigest.FlushFinalBlock();
+                DigestValue = Digest?.Hash;
+                }
+            }
+
 
         }
 
@@ -286,6 +320,9 @@ namespace Goedel.Cryptography.Dare {
         public override bool CanWrite => false;
 
         Stream inputStream;
+        CryptoStream streamMac;
+        CryptoStream streamDigest;
+
 
         /// <summary>
         /// Create a CryptoStack
@@ -296,7 +333,16 @@ namespace Goedel.Cryptography.Dare {
         public CryptoStackJBCDStreamReader(
                     Stream inputStream,
                     HashAlgorithm Mac,
-                    HashAlgorithm Digest) : base(Mac, Digest) => this.inputStream = inputStream;
+                    HashAlgorithm Digest) : base(Mac, Digest) {
+            this.inputStream = inputStream;
+
+            if (Mac != null) {
+                streamMac = new CryptoStream(Stream.Null, Mac, CryptoStreamMode.Write);
+                }
+            if (Digest != null) {
+                streamDigest = new CryptoStream(Stream.Null, Digest, CryptoStreamMode.Write);
+                }
+            }
 
 
         /// <summary>
@@ -315,6 +361,9 @@ namespace Goedel.Cryptography.Dare {
         public override int Read(byte[] buffer, int offset, int count) {
             var length = inputStream.Read(buffer, offset, count);
 
+            streamMac?.Write(buffer, offset, length);
+            streamDigest?.Write(buffer, offset, length);
+
             //Console.WriteLine($"Read {buffer} bytes");
             return length;
             }
@@ -330,7 +379,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
         /// at which to begin copying bytes to the current stream.</param>
         /// <param name="count">The number of bytes to be written to the current stream.</param>
-        public override void Write(byte[] buffer, int offset, int count) => throw new NotImplementedException();
+        public override void Write(byte[] buffer, int offset, int count) => 
+            throw new NotImplementedException();
 
         }
 
@@ -508,21 +558,5 @@ namespace Goedel.Cryptography.Dare {
         }
     #endregion
 
-    #region JsonDecryptingReader
 
-    //public class JsonDecryptingReader : JsonBcdReader {
-
-
-    //    public JsonDecryptingReader(CryptoStackStreamReader input) : base(input) {
-    //        }
-
-
-    //    public bool Close() {
-
-    //        throw new NYI();
-    //        }
-
-    //    }
-
-    #endregion
     }

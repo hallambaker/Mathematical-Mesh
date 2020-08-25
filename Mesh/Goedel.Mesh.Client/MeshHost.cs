@@ -2,7 +2,7 @@
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
-
+using System.IO;
 using System.Collections.Generic;
 
 namespace Goedel.Mesh.Client {
@@ -230,60 +230,52 @@ namespace Goedel.Mesh.Client {
                         profileDevice, KeyCollection);
 
             // Create the set of cryptographic keys to initialize the account.
-            // [move keyPairOnlineSignature here]
-            var activationAccount = new ActivationAccount(
-                KeyCollection,
-                profileDevice, keyPairOnlineSignature, rights, privateKeyUDF);
+            // create the root activation.
+            var activationRoot = new ActivationAccount(
+                    KeyCollection, privateKeyUDF);
 
-            // Create the Mesh for the user
-            var contextUser = ContextUser.CreateAccountUser(
-                    this,
-                    activationAccount,
-                    localName);
+            // create the initial profile
+            var profileUser = new ProfileUser(activationRoot);
 
-            // Set the service 
-            contextUser.SetService(accountAddress);
-
-            // Create a device and catalog entry.
-            rights ??= new List<string> { 
-                    Rights.IdRightsSuper,   // Can add administrators
-                    Rights.IdRightsAdmin,   // Can add devices
-                    Rights.IdRightsWeb};    // Can act as a Web + Messaging device
-
-
-
-            var catalogedDevice = contextUser.MakeCatalogedDevice(profileDevice, keyPairOnlineSignature, 
-                rights);
+            // create a Cataloged Device entry for the admin device
+            var catalogedDevice = activationRoot.MakeCatalogedDevice(profileDevice, profileUser,
+                keyPairOnlineSignature, rights);
 
             // now create the host catalog entry and apply to the context user.
             var catalogedMachine = new CatalogedStandard() {
                 Id = profileDevice.UDF,
                 Local = localName,
                 CatalogedDevice = catalogedDevice,
-                EnvelopedProfileUser = contextUser.ProfileUser.DareEnvelope
+                EnvelopedProfileUser = profileUser.DareEnvelope
                 };
+
+            // Create the account directory.
+            var StoresDirectory = ContextUser.GetStoresDirectory(this, profileUser);
+            Directory.CreateDirectory(StoresDirectory);
 
             //Persist the results.
             if (persistDevice) {
                 profileDevice.PersistSeed(KeyCollection);
                 }
-            //contextUser.Persist(catalogedDevice);
-            contextUser.PersistSeed();
-            contextUser.Dispose();
+            KeyCollection.Persist(profileUser.UDF, privateKeyUDF, false);
 
-            // Now abandon the original context and create a new one
-            var contextUserFinal = new ContextUser(this, catalogedMachine);
+            var contextUser = new ContextUser(this, catalogedMachine);
+            contextUser.ActivationAccount.PrivateAccountOfflineSignature =
+                activationRoot.PrivateAccountOfflineSignature;
+
+            // Set the service 
+            contextUser.SetService(accountAddress);
 
             // Add the catalog device under the new user context.
-            var transactRequest = contextUserFinal.TransactBegin();
+            var transactRequest = contextUser.TransactBegin();
             var catalogDevice = transactRequest.GetCatalogDevice();
             transactRequest.CatalogUpdate(catalogDevice, catalogedDevice);
             transactRequest.Transact();
 
             // Register the mesh description on the local machine.
-            Register(catalogedMachine, contextUserFinal);
+            Register(catalogedMachine, contextUser);
 
-            return contextUserFinal;
+            return contextUser;
             }
 
 

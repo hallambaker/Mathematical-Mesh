@@ -23,8 +23,12 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
         public override string StoresDirectory => directoryAccount ??
-            Path.Combine(MeshMachine.DirectoryMesh, ProfileUser.UDF).CacheValue(out directoryAccount);
+            GetStoresDirectory(MeshHost, ProfileUser).CacheValue(out directoryAccount);
         string directoryAccount;
+
+
+
+
 
         ///<summary>The account profile</summary>
         public override Profile Profile => ProfileUser;
@@ -114,47 +118,49 @@ namespace Goedel.Mesh.Client {
         #endregion
         #region // Account creation 
 
-        /// <summary>
-        /// Create a new personal mesh and return an administration context for it.
-        /// </summary>
-        /// <param name="meshHost">The mesh host context that the mesh is going to be created on.</param>
-        /// <param name="localName">Optional local name to be associated with the account.</param>
-        /// <param name="onlineSignature">The key to be used for initial administration operations.</param>
-        /// <param name="algorithmSign">The signature algorithm.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <param name="algorithmAuthenticate">The authentication algorithm.</param>
-        /// <param name="secretSeed">A UDF secret seed</param>
-        /// <returns>An administration context instance for the created profile.</returns>
-        public static ContextUser CreateAccountUser(
-                MeshHost meshHost,
-                ActivationAccount activationAccount,
-                string localName = null){
-            //string secretSeed = null) {
 
-            // Create the master profile.
 
-            var profileUser = new ProfileUser(activationAccount);
+        ///// <summary>
+        ///// Create a new personal mesh and return an administration context for it.
+        ///// </summary>
+        ///// <param name="meshHost">The mesh host context that the mesh is going to be created on.</param>
+        ///// <param name="localName">Optional local name to be associated with the account.</param>
+        ///// <param name="onlineSignature">The key to be used for initial administration operations.</param>
+        ///// <param name="algorithmSign">The signature algorithm.</param>
+        ///// <param name="algorithmEncrypt">The encryption algorithm.</param>
+        ///// <param name="algorithmAuthenticate">The authentication algorithm.</param>
+        ///// <param name="secretSeed">A UDF secret seed</param>
+        ///// <returns>An administration context instance for the created profile.</returns>
+        //public static ContextUser CreateAccountUser(
+        //        MeshHost meshHost,
+        //        ActivationAccount activationAccount,
+        //        string localName = null){
+        //    //string secretSeed = null) {
 
-            var catalogedMachine = new CatalogedStandard() {
-                EnvelopedProfileUser = profileUser.DareEnvelope,
-                Local = localName,
-                Id = profileUser.UDF
-                };
+        //    // Create the master profile.
 
-            var contextUser = new ContextUser(meshHost, catalogedMachine) {
-                //MeshSecretSeed = privateKeyUDF, // temporary access
-                ProfileUser = profileUser,
-                ActivationAccount = activationAccount
-                //PrivateAccountOnlineSignature = onlineSignature,
-                //PrivateAccountOfflineSignature = profileUser.PrivateAccountOfflineSignature,
-                //PrivateAccountEncryption = profileUser.PrivateAccountEncryption,
-                //PrivateAccountAuthentication = profileUser.PrivateAccountAuthentication
-                };
+        //    var profileUser = new ProfileUser(activationAccount);
 
-            Directory.CreateDirectory(contextUser.StoresDirectory);
+        //    var catalogedMachine = new CatalogedStandard() {
+        //        EnvelopedProfileUser = profileUser.DareEnvelope,
+        //        Local = localName,
+        //        Id = profileUser.UDF
+        //        };
 
-            return contextUser;
-            }
+        //    var contextUser = new ContextUser(meshHost, catalogedMachine) {
+        //        //MeshSecretSeed = privateKeyUDF, // temporary access
+        //        ProfileUser = profileUser,
+        //        ActivationAccount = activationAccount
+        //        //PrivateAccountOnlineSignature = onlineSignature,
+        //        //PrivateAccountOfflineSignature = profileUser.PrivateAccountOfflineSignature,
+        //        //PrivateAccountEncryption = profileUser.PrivateAccountEncryption,
+        //        //PrivateAccountAuthentication = profileUser.PrivateAccountAuthentication
+        //        };
+
+        //    Directory.CreateDirectory(contextUser.StoresDirectory);
+
+        //    return contextUser;
+        //    }
 
 
         #endregion
@@ -179,15 +185,6 @@ namespace Goedel.Mesh.Client {
             }
 
         /// <summary>
-        /// Persist the Mesh Secret to the persistence store of this machine.
-        /// </summary>
-        public void PersistSeed() {
-            MeshSecretSeed.AssertNotNull(NoMeshSecret.Throw);
-            KeyCollection.Persist(Profile.OfflineSignature.UDF, MeshSecretSeed, false);
-            }
-
-
-        /// <summary>
         /// Erase the Mesh Secret from the persistence store of this machine.
         /// </summary>
         public void EraseMeshSecret() => KeyCollection.ErasePrivateKey(ProfileUser.OfflineSignature.UDF);
@@ -210,33 +207,6 @@ namespace Goedel.Mesh.Client {
         #endregion
         #region // Operations requiring OfflineSignatureKey - GrantAdmin, SetService
 
-        ///// <summary>
-        ///// Grant administrative privileges to the device <paramref name="targetDevice"/> using
-        ///// the online signing key <paramref name="keyPairOnlineSignature"/>. If 
-        ///// <paramref name="superAdmin"/> is true, also grant super-administration
-        ///// privilege.
-        ///// </summary>
-        ///// <param name="targetDevice">Device to grant administrative privilege to.</param>
-        ///// <param name="keyPairOnlineSignature">The online signature capability.</param>
-        ///// <param name="superAdmin">The offline signature capability.</param>
-        //public void GrantAdministrator(
-        //        CatalogedDevice targetDevice, 
-        //        KeyPair keyPairOnlineSignature, 
-        //        bool superAdmin = false) {
-        //    PrivateAccountOfflineSignature.AssertNotNull(NotSuperAdministrator.Throw);
-        //    PrivateAccountOnlineSignature.AssertNotNull(NotAdministrator.Throw);
-
-        //    // Activations are atomic. It is only possible to grant user/super privilege by
-        //    // writing a completely new ActivationAccount
-
-        //    var activationAccount = MakeActivationAccount(targetDevice.ProfileDevice, keyPairOnlineSignature, superAdmin);
-        //    activationAccount.Sign(PrivateAccountOnlineSignature);
-
-        //    targetDevice.EnvelopedActivationAccount = activationAccount.DareEnvelope;
-
-        //    ProfileUser.OnlineSignature.Add(new KeyData(keyPairOnlineSignature));
-        //    ProfileUser.Sign(PrivateAccountOfflineSignature);
-        //    }
 
 
         /// <summary>
@@ -263,7 +233,7 @@ namespace Goedel.Mesh.Client {
 
             var createRequest = new CreateRequest() {
                 AccountAddress = accountAddress,
-                SignedProfileAccount = ProfileUser.DareEnvelope,
+                EnvelopedProfileUser = ProfileUser.EnvelopedProfileUser,
                 };
 
             // Attempt to register with service in question
@@ -279,92 +249,102 @@ namespace Goedel.Mesh.Client {
             SyncProgressUpload();
             }
 
+        public static string GetStoresDirectory(
+        MeshHost MeshHost, ProfileUser profileUser) =>
+            Path.Combine(MeshHost.MeshMachine.DirectoryMesh, profileUser.UDF);
+
+
 
         #endregion
         #region // Operations requiring AdminSignatureKey - AddDevice, GrantPermission, GrantCapability
 
-        /// <summary>
-        /// Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
-        /// and activation <paramref name="activationDevice"/>.
-        /// </summary>
-        /// <param name="profileAccount">The mesh profile.</param>
-        /// <param name="profileDevice">Profile of the device to be added.</param>
-        /// <param name="activationDevice">The device key overlay.</param>
-        /// <param name="activationAccount">The account key overlay.</param>
-        /// <returns>The CatalogedDevice entry.</returns>
-        CatalogedDevice CreateCataloguedDevice(
-                    ProfileUser profileAccount,
-                    ProfileDevice profileDevice,
-                    ActivationDevice activationDevice,
-                    ActivationAccount activationAccount) {
-
-            PrivateAccountOnlineSignature.AssertNotNull(NotSuperAdministrator.Throw);
 
 
-            profileAccount.AssertNotNull(Internal.Throw);
-            profileAccount.DareEnvelope.AssertNotNull(Internal.Throw);
-            profileDevice.AssertNotNull(Internal.Throw);
-            profileDevice.DareEnvelope.AssertNotNull(Internal.Throw);
-
-            activationDevice.AssertNotNull(Internal.Throw);
-            activationDevice.Package(PrivateAccountOfflineSignature);
-            activationDevice.DareEnvelope.AssertNotNull(Internal.Throw);
-
-            activationAccount.AssertNotNull(Internal.Throw);
-            activationAccount.Package(PrivateAccountOfflineSignature);
-            activationAccount.DareEnvelope.AssertNotNull(Internal.Throw);
 
 
-            var connectionDevice = activationDevice.ConnectionUser;
-            connectionDevice.AssertNotNull(Internal.Throw);
-            connectionDevice.Sign(PrivateAccountOnlineSignature);
-            connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
-            // Wrap the connectionDevice and activationDevice in envelopes
+        ///// <summary>
+        ///// Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
+        ///// and activation <paramref name="activationDevice"/>.
+        ///// </summary>
+        ///// <param name="profileAccount">The mesh profile.</param>
+        ///// <param name="profileDevice">Profile of the device to be added.</param>
+        ///// <param name="activationDevice">The device key overlay.</param>
+        ///// <param name="activationAccount">The account key overlay.</param>
+        ///// <returns>The CatalogedDevice entry.</returns>
+        //CatalogedDevice CreateCataloguedDevice(
+        //            ProfileUser profileAccount,
+        //            ProfileDevice profileDevice,
+        //            ActivationDevice activationDevice,
+        //            ActivationAccount activationAccount) {
 
-            var catalogEntryDevice = new CatalogedDevice() {
-                UDF = activationDevice.UDF,
-                EnvelopedProfileUser = profileAccount.DareEnvelope,
-                EnvelopedProfileDevice = profileDevice.DareEnvelope,
-                EnvelopedConnectionDevice = connectionDevice.DareEnvelope,
-                EnvelopedActivationDevice = activationDevice.DareEnvelope,
-                EnvelopedActivationAccount = activationAccount.DareEnvelope,
-                DeviceUDF = profileDevice.UDF
-                };
+        //    PrivateAccountOnlineSignature.AssertNotNull(NotSuperAdministrator.Throw);
 
-            return catalogEntryDevice;
-            }
 
-        /// <summary>
-        /// Add the device specified by <paramref name="profileDevice"/> to the account granting administration
-        /// privileges if <paramref name="keyPairOnlineSignature"/> is not null and super administration 
-        /// privilege if <paramref name="superAdmin"/> is true. Note that it is possible for a device to 
-        /// be a super administrator without also being an administrator.
-        /// </summary>
-        /// <param name="profileDevice">Profile of the device to add.</param>
-        /// <param name="keyPairOnlineSignature">If not null, specifies an online signature key that is to be used
-        /// to sign administrator functions.</param>
-        /// <param name="rights">The initial rights to be assigned to the device.</param>
-        /// <returns>The catalog entry.</returns>
-        public CatalogedDevice MakeCatalogedDevice(
-                        ProfileDevice profileDevice, 
-                        KeyPair keyPairOnlineSignature = null,
-                        List<string> rights = null) {
+        //    profileAccount.AssertNotNull(Internal.Throw);
+        //    profileAccount.DareEnvelope.AssertNotNull(Internal.Throw);
+        //    profileDevice.AssertNotNull(Internal.Throw);
+        //    profileDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
-            // Grant the device access to data encrypted under the account key.
-            // Note that this cannot be granted through the capabilities catalog because that
-            // is also encrypted under the account key.
-            var activationUser = new ActivationDevice(profileDevice);
+        //    activationDevice.AssertNotNull(Internal.Throw);
+        //    activationDevice.Package(PrivateAccountOfflineSignature);
+        //    activationDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
-            var activationAccount = MakeActivationAccount(profileDevice, keyPairOnlineSignature, rights);
+        //    activationAccount.AssertNotNull(Internal.Throw);
+        //    activationAccount.Package(PrivateAccountOfflineSignature);
+        //    activationAccount.DareEnvelope.AssertNotNull(Internal.Throw);
 
-            var catalogedDevice = CreateCataloguedDevice(
-                    ProfileUser, profileDevice, activationUser, activationAccount);
 
-            catalogedDevice.SignatureUDF = keyPairOnlineSignature?.KeyIdentifier;
+        //    var connectionDevice = activationDevice.ConnectionUser;
+        //    connectionDevice.AssertNotNull(Internal.Throw);
+        //    connectionDevice.Sign(PrivateAccountOnlineSignature);
+        //    connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
-            return catalogedDevice;
-            }
+        //    // Wrap the connectionDevice and activationDevice in envelopes
+
+        //    var catalogEntryDevice = new CatalogedDevice() {
+        //        UDF = activationDevice.UDF,
+        //        EnvelopedProfileUser = profileAccount.DareEnvelope,
+        //        EnvelopedProfileDevice = profileDevice.DareEnvelope,
+        //        EnvelopedConnectionUser = connectionDevice.DareEnvelope,
+        //        EnvelopedActivationDevice = activationDevice.DareEnvelope,
+        //        EnvelopedActivationAccount = activationAccount.DareEnvelope,
+        //        DeviceUDF = profileDevice.UDF
+        //        };
+
+        //    return catalogEntryDevice;
+        //    }
+
+        ///// <summary>
+        ///// Add the device specified by <paramref name="profileDevice"/> to the account granting administration
+        ///// privileges if <paramref name="keyPairOnlineSignature"/> is not null and super administration 
+        ///// privilege if <paramref name="superAdmin"/> is true. Note that it is possible for a device to 
+        ///// be a super administrator without also being an administrator.
+        ///// </summary>
+        ///// <param name="profileDevice">Profile of the device to add.</param>
+        ///// <param name="keyPairOnlineSignature">If not null, specifies an online signature key that is to be used
+        ///// to sign administrator functions.</param>
+        ///// <param name="rights">The initial rights to be assigned to the device.</param>
+        ///// <returns>The catalog entry.</returns>
+        //public CatalogedDevice MakeCatalogedDevice(
+        //                ProfileDevice profileDevice, 
+        //                KeyPair keyPairOnlineSignature = null,
+        //                List<string> rights = null) {
+
+        //    // Grant the device access to data encrypted under the account key.
+        //    // Note that this cannot be granted through the capabilities catalog because that
+        //    // is also encrypted under the account key.
+        //    var activationUser = new ActivationDevice(profileDevice);
+
+        //    var activationAccount = MakeActivationAccount(profileDevice, keyPairOnlineSignature, rights);
+
+        //    var catalogedDevice = CreateCataloguedDevice(
+        //            ProfileUser, profileDevice, activationUser, activationAccount);
+
+        //    catalogedDevice.SignatureUDF = keyPairOnlineSignature?.KeyIdentifier;
+
+        //    return catalogedDevice;
+        //    }
 
 
 
@@ -376,7 +356,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="contact">The contact parameters.</param>
         /// <param name="localname">Short name to apply to the signed contact info</param>
         public CatalogedContact SetContactSelf(Contact contact, string localname = null) {
-            PrivateAccountOnlineSignature.AssertNotNull(NotSuperAdministrator.Throw);
+            PrivateAccountOnlineSignature.AssertNotNull(NotAdministrator.Throw);
             contact.Sign(PrivateAccountOnlineSignature);
 
             contact.Sources ??= new List<TaggedSource>() { };
@@ -697,7 +677,7 @@ namespace Goedel.Mesh.Client {
 
             var createRequest = new CreateGroupRequest() {
                 AccountAddress = groupName,
-                SignedProfileGroup = profileGroup.DareEnvelope
+                EnvelopedProfileGroup = profileGroup.EnvelopedProfileGroup
                 };
 
             var createResponse = MeshClient.CreateGroup(createRequest, MeshClient.JpcSession);
@@ -896,7 +876,7 @@ namespace Goedel.Mesh.Client {
             // Approve the request
             // Have to add in the Mesh profile here and Account Assertion
 
-            var cataloguedDevice = MakeCatalogedDevice(profileDevice, rights: rights);
+            var cataloguedDevice = ActivationAccount.MakeCatalogedDevice(profileDevice, ProfileUser, rights: rights);
 
             //Console.WriteLine($"Accept connection ID is {responseId}");
             var respondConnection = new RespondConnection() {
@@ -933,11 +913,11 @@ namespace Goedel.Mesh.Client {
             var key = new CryptoKeySymmetricSigner(pin);
             var messageClaim = new MessageClaim(targetAccountAddress, AccountAddress, pin);
 
-            var envelopedMessageClaim = messageClaim.Encode(KeySignature);
+            messageClaim.Sign(KeySignature);
 
             // make claim request to service managing the device
             var claimRequest = new ClaimRequest {
-                EnvelopedMessageClaim = envelopedMessageClaim
+                EnvelopedMessageClaim = messageClaim.EnvelopedMessageClaim
                 };
 
             var claimResponse = MeshClient.Claim(claimRequest);
@@ -1130,7 +1110,9 @@ namespace Goedel.Mesh.Client {
                 };
             if (accept) {
                 // Connect the device to the Mesh
-                var device = MakeCatalogedDevice(request.MessageConnectionRequest.ProfileDevice, rights: rights);
+                var device = ActivationAccount.MakeCatalogedDevice(
+                        request.MessageConnectionRequest.ProfileDevice, ProfileUser, rights: rights);
+
                 respondConnection.CatalogedDevice = device;
                 respondConnection.Result = Constants.TransactionResultAccept;
                 var catalogDevice = transactRequest.GetCatalogDevice();
@@ -1297,7 +1279,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="localName">Local name for the contact</param>
         /// <returns></returns>
-        public DareEnvelope GetSelf(string localName) {
+        public EnvelopedContact GetSelf(string localName) {
             var self = GetContact(ProfileUser.UDF);
 
             foreach (var tagged in self.Contact.Sources) {
@@ -1471,7 +1453,7 @@ namespace Goedel.Mesh.Client {
                 MessageID = requestConfirmation.GetResponseId(),
                 Recipient = recipientAddress,
                 Accept = response,
-                Request = requestConfirmation.DareEnvelope
+                Request = requestConfirmation.En
                 };
 
             var transact = TransactBegin();

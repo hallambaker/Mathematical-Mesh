@@ -133,12 +133,12 @@
 			Description
 				|Secret seed used to derive keys unless explicitly specified.
 
-	Structure Permission
-		String Name
-		String Role
-		Struct DareEnvelope Capabilities
-			Description
-				|Keys or key contributions enabling the operation to be performed
+	//Structure Permission
+	//	String Name
+	//	String Role
+	//	Struct DareEnvelope Capabilities
+	//		Description
+	//			|Keys or key contributions enabling the operation to be performed
 
 
 
@@ -183,22 +183,22 @@
 		String SignatureUDF
 			Description
 				|UDF of the account online signature key
-		Struct DareEnvelope EnvelopedProfileUser
+		Struct EnvelopedProfileUser EnvelopedProfileUser
 			Description
 				|The Mesh profile
-		Struct DareEnvelope EnvelopedProfileDevice
+		Struct EnvelopedProfileDevice EnvelopedProfileDevice
 			Description
 				|The device profile
-		Struct DareEnvelope EnvelopedConnectionDevice
+		Struct EnvelopedConnectionUser EnvelopedConnectionUser
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
-		Struct DareEnvelope EnvelopedActivationDevice
+		Struct EnvelopedActivationDevice EnvelopedActivationDevice
 			Description
 				|The activation of the device within the Mesh account
-		Struct DareEnvelope EnvelopedActivationAccount
+		Struct EnvelopedActivationAccount EnvelopedActivationAccount
 			Description
 				|The activation of the device within the Mesh account
-		Struct DareEnvelope EnvelopedActivationApplication
+		Struct EnvelopedActivationApplication EnvelopedActivationApplication
 			Multiple
 			Description
 				|Application activations granted to the device.
@@ -236,7 +236,7 @@
 		Struct KeyData AccountEncryption
 			Description
 				|Key currently used to encrypt data under this profile
-		Struct DareEnvelope EnvelopedProfileService
+		Struct EnvelopedProfileService EnvelopedProfileService
 			Description
 				|The service profile
 
@@ -307,10 +307,10 @@
 		String AccountAddress
 			Description
 				|The account address
-		Struct Permission Permissions
-			Multiple
-			Description
-				|List of the permissions that the device has been granted.
+		//Struct Permission Permissions
+		//	Multiple
+		//	Description
+		//		|List of the permissions that the device has been granted.
 		Struct KeyData DeviceSignature
 			Description
 				|The signature key for use of the device under the profile
@@ -322,22 +322,6 @@
 				|The authentication key for use of the device under the profile
 
 
-
-	Structure AccountEntry
-		Description
-			|Contains the Account information for an account with a CatalogedDevice.
-		String AccountUDF
-			Description
-				|UDF of the account profile
-		Struct DareEnvelope EnvelopedProfileAccount
-			Description
-				|The account profile
-		Struct DareEnvelope EnvelopedConnectionAccount	
-			Description
-				|The connection of this device to the account
-		Struct DareEnvelope EnvelopedActivationAccount	
-			Description
-				|The activation data for this device to the account	
 
 	Structure ConnectionApplication
 		Inherits Connection
@@ -558,9 +542,12 @@
 			Multiple
 			Description
 				|The capabilities bound to this address.
-		Struct DareEnvelope EnvelopedProfileAccount
+		Struct EnvelopedProfileUser EnvelopedProfileUser
 			Description
-				|Optional enveloped profile for the Address
+				|The account profile
+		Struct EnvelopedProfileGroup EnvelopedProfileGroup
+			Description
+				|The account profile
 		Struct NetworkProtocol Protocols
 			Multiple
 			Description
@@ -676,10 +663,10 @@
 		Boolean Self
 			Description
 				|If true, this catalog entry is for the user who created the catalog.
-		Struct Permission Permissions
-			Multiple
-			Description
-				|List of the permissions that the contact has been granted.
+		//Struct Permission Permissions
+		//	Multiple
+		//	Description
+		//		|List of the permissions that the contact has been granted.
 		TStruct Contact Contact
 			Description
 				|The contact information as edited by the catalog owner.
@@ -714,7 +701,7 @@
 		Struct KeyData KeyData 
 			Description
 				|The key that enables the capability
-		Struct DareEnvelope EnvelopedKeyShares
+		Struct EnvelopedKeyShares EnvelopedKeyShares
 			Multiple
 			Description
 				|One or more enveloped key shares.
@@ -833,7 +820,7 @@
 	Structure DevicePreconfiguration
 		Description
 			|A data structure that is passed 
-		Struct DareEnvelope EnvelopedProfileDevice
+		Struct EnvelopedProfileDevice EnvelopedProfileDevice
 			Description
 				|The device profile
 		TStruct Key PrivateKey
@@ -942,7 +929,7 @@
 		String PIN
 			Description
 				|One time authentication code.
-		Struct DareEnvelope Self
+		Struct EnvelopedContact Self
 			Description
 				|The contact data.
 	
@@ -968,7 +955,7 @@
 
 	Structure ResponseConfirmation
 		Inherits Message
-		Struct DareEnvelope Request
+		Struct EnvelopedRequestConfirmation Request
 		Boolean Accept
 
 	Structure RequestTask

@@ -47,6 +47,12 @@ Namespace Goedel.Mesh
 		Exception InvalidDate
 			Console "The specified date was invalid."
 
+
+	Exception NotAdministrator
+		Console "This device does not have administration capability"
+	Exception NotSuperAdministrator
+		Console "This device does not have administration capability"
+
 	Exception KeyRecoveryFailed
 		Console "The attempt to perform threshold key recovery failed"
 	Exception KeyActivationFailed

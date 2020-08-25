@@ -141,6 +141,8 @@ namespace Goedel.Cryptography.Dare {
 
             if (cryptoParameters.SignerKeys != null) {
                 SignerKeys = cryptoParameters.SignerKeys;
+                }
+            if (DigestID != CryptoAlgorithmId.NULL) {
                 DigestAlgorithm = DigestID.ToJoseID();
                 }
             }
@@ -479,6 +481,14 @@ namespace Goedel.Cryptography.Dare {
                 out var TransformMac, out var TransformDigest);
 
             var Result = new CryptoStackStreamReader(jsonbcdReader, TransformMac, TransformDigest);
+
+            //// Create the stack.
+            //reader = TransformDigest == null ? (Stream)Result :
+            //    new CryptoStream(Result, TransformDigest, CryptoStreamMode.Read);
+            //reader = TransformMac == null ? reader :
+            //    new CryptoStream(Result, TransformMac, CryptoStreamMode.Read);
+            
+            
             reader = TransformEncrypt == null ? (Stream)Result :
                 new CryptoStream(Result, TransformEncrypt, CryptoStreamMode.Read);
 

@@ -11,12 +11,20 @@ namespace Goedel.Mesh {
     public partial class ProfileGroup {
 
 
-        //public byte[] UDFBytes => ProfileMaster.UDFBytes;
+        ///<summary>The signed profile</summary> 
+        public EnvelopedProfileGroup EnvelopedProfileGroup { get; protected set; }
 
-
-        //public ProfileMaster ProfileMaster => profileMaster ??
-        //    ProfileMaster.Decode(MasterProfile).CacheValue(out profileMaster);
-        //ProfileMaster profileMaster = null;
+        /// <summary>
+        /// Sign the profile under <paramref name="SignatureKey"/>.
+        /// </summary>
+        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+        /// <returns>Envelope containing the signed profile. Also updates the property
+        /// <see cref="EnvelopedProfileGroup"/></returns>
+        public override DareEnvelope Sign(CryptoKey SignatureKey) {
+            EnvelopedProfileGroup = EnvelopedProfileGroup.Encode(this, signingKey: SignatureKey);
+            DareEnvelope = EnvelopedProfileGroup;
+            return DareEnvelope;
+            }
 
 
 

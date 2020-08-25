@@ -4,104 +4,6 @@
         <name>Goedel.Mesh</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Mesh.AccountEntry">
-             <summary>
-            
-             Contains the Account information for an account with a CatalogedDevice.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.AccountEntry.ProfileAccount">
-            <summary>Cached convenience accessor. Returns the corresponding 
-            <see cref="P:Goedel.Mesh.AccountEntry.ProfileAccount"/> .</summary>
-        </member>
-        <member name="P:Goedel.Mesh.AccountEntry.ConnectionAccount">
-            <summary>Cached convenience accessor. Returns the corresponding 
-            <see cref="P:Goedel.Mesh.AccountEntry.ConnectionAccount"/> .</summary>
-        </member>
-        <member name="M:Goedel.Mesh.AccountEntry.GetActivationAccount(Goedel.Cryptography.Dare.IKeyCollection)">
-            <summary>Cached convenience accessor. Returns the corresponding 
-            <see cref="M:Goedel.Mesh.AccountEntry.GetActivationAccount(Goedel.Cryptography.Dare.IKeyCollection)"/> .</summary>
-        </member>
-        <member name="M:Goedel.Mesh.AccountEntry.Validate">
-            <summary>
-            Verify the AccountEntry contains all the required fields and their contents 
-            are valid in the context of the corresponding <see cref="!:ProfileMesh"/> and
-            <see cref="P:Goedel.Mesh.AccountEntry.ProfileAccount"/>.
-            </summary>
-            <returns><see langword="true"/> if the validation succeeds, otherwise 
-            <see langword="false"/></returns>
-        </member>
-        <member name="P:Goedel.Mesh.AccountEntry.AccountUDF">
-             <summary>
-            UDF of the account profile
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.AccountEntry.EnvelopedProfileAccount">
-             <summary>
-            The account profile
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.AccountEntry.EnvelopedConnectionAccount">
-             <summary>
-            The connection of this device to the account
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.AccountEntry.EnvelopedActivationAccount">
-             <summary>
-            The activation data for this device to the account	
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.AccountEntry._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.AccountEntry.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AccountEntry._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.AccountEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AccountEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AccountEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.AccountEntry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.ActivationAccount">
             <summary>
             </summary>
@@ -117,6 +19,17 @@
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount.PrivateAccountAuthentication">
             <summary>The account authentication key</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.EnvelopedActivationAccount">
+            <summary>The signed profile</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.Sign(Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Sign the profile under <paramref name="SignatureKey"/>.
+            </summary>
+            <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="P:Goedel.Mesh.ActivationAccount.EnvelopedActivationAccount"/></returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.#ctor">
             <summary>
@@ -139,6 +52,30 @@
             a seed value of <paramref name="bits"/> length is generated.</param>
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
             is null.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
+            <summary>
+            Add the device specified by <paramref name="profileDevice"/> to the account granting administration
+            privileges if <paramref name="keyPairOnlineSignature"/> is not null and super administration 
+            privilege if <paramref name="superAdmin"/> is true. Note that it is possible for a device to 
+            be a super administrator without also being an administrator.
+            </summary>
+            <param name="profileDevice">Profile of the device to add.</param>
+            <param name="keyPairOnlineSignature">If not null, specifies an online signature key that is to be used
+            to sign administrator functions.</param>
+            <param name="rights">The initial rights to be assigned to the device.</param>
+            <returns>The catalog entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount)">
+            <summary>
+            Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
+            and activation <paramref name="activationDevice"/>.
+            </summary>
+            <param name="profileUser">The mesh profile.</param>
+            <param name="profileDevice">Profile of the device to be added.</param>
+            <param name="activationDevice">The device key overlay.</param>
+            <param name="activationAccount">The account key overlay.</param>
+            <returns>The CatalogedDevice entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.DeviceBindEncryption(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
@@ -309,6 +246,17 @@
         </member>
         <member name="P:Goedel.Mesh.ActivationDevice.PrivateDeviceAuthentication">
             <summary>The device authentication key for use under the profile</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationDevice.EnvelopedActivationDevice">
+            <summary>The signed profile</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ActivationDevice.Sign(Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Sign the profile under <paramref name="SignatureKey"/>.
+            </summary>
+            <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="P:Goedel.Mesh.ActivationDevice.EnvelopedActivationDevice"/></returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationDevice.#ctor">
             <summary>
@@ -1857,11 +1805,6 @@
             If true, this catalog entry is for the user who created the catalog.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedContact.Permissions">
-             <summary>
-            List of the permissions that the contact has been granted.
-             </summary>
-        </member>
         <member name="P:Goedel.Mesh.CatalogedContact.Contact">
              <summary>
             The contact information as edited by the catalog owner.
@@ -2134,9 +2077,14 @@
             The capabilities bound to this address.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.NetworkAddress.EnvelopedProfileAccount">
+        <member name="P:Goedel.Mesh.NetworkAddress.EnvelopedProfileUser">
              <summary>
-            Optional enveloped profile for the Address
+            The account profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress.EnvelopedProfileGroup">
+             <summary>
+            The account profile
              </summary>
         </member>
         <member name="P:Goedel.Mesh.NetworkAddress.Protocols">
@@ -2587,7 +2535,7 @@
             The device profile
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedConnectionDevice">
+        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedConnectionUser">
              <summary>
             The public assertion demonstrating connection of the Device to the Mesh
              </summary>
@@ -3219,6 +3167,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.ConnectionUser.EnvelopedConnectionUser">
+            <summary>The signed profile</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ConnectionUser.Sign(Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Sign the profile under <paramref name="SignatureKey"/>.
+            </summary>
+            <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="P:Goedel.Mesh.ConnectionUser.EnvelopedConnectionUser"/></returns>
+        </member>
         <member name="M:Goedel.Mesh.ConnectionUser.#ctor">
             <summary>
             Constructor for use by deserializers.
@@ -3245,11 +3204,6 @@
         <member name="P:Goedel.Mesh.ConnectionUser.AccountAddress">
              <summary>
             The account address
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ConnectionUser.Permissions">
-             <summary>
-            List of the permissions that the device has been granted.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ConnectionUser.DeviceSignature">
@@ -3743,6 +3697,488 @@
             </summary>
             <param name="persistenceStore">The persistence store to enumerate.</param>
         </member>
+        <member name="M:Goedel.Mesh.EnvelopedData`1.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.EnvelopedData`1.#ctor(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]})" -->
+        <member name="T:Goedel.Mesh.EnvelopedProfileUser">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.ProfileUser"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileUser.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileUser.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.ProfileUser)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="profileUser">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileUser.Encode(Goedel.Mesh.ProfileUser,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="profileUser">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedProfileDevice">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.ProfileDevice"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileDevice.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileDevice.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.ProfileDevice)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="profileDevice">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileDevice.Encode(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="profileDevice">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedProfileService">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.ProfileService"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileService.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileService.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.ProfileService)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="profileService">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileService.Encode(Goedel.Mesh.ProfileService,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="profileService">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedProfileGroup">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.ProfileGroup"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileGroup.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileGroup.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.ProfileGroup)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="profileGroup">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileGroup.Encode(Goedel.Mesh.ProfileGroup,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="profileGroup">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedProfileAccount">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.ProfileAccount"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileAccount.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileAccount.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.ProfileAccount)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="profileAccount">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileAccount.Encode(Goedel.Mesh.ProfileAccount,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="profileAccount">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedProfileHost">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.ProfileAccount"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileHost.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileHost.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.ProfileHost)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="profileHost">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedProfileHost.Encode(Goedel.Mesh.ProfileHost,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="profileHost">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedConnectionUser">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.ConnectionUser"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedConnectionUser.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedConnectionUser.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.ConnectionUser)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="connectionUser">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedConnectionUser.Encode(Goedel.Mesh.ConnectionUser,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="connectionUser">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedActivationDevice">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.ProfileUser"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedActivationDevice.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedActivationDevice.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.ActivationDevice)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="activationDevice">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedActivationDevice.Encode(Goedel.Mesh.ActivationDevice,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="activationDevice">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedActivationAccount">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.ActivationAccount"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedActivationAccount.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedActivationAccount.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.ActivationAccount)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="activationAccount">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedActivationAccount.Encode(Goedel.Mesh.ActivationAccount,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="activationAccount">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedActivationApplication">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.ActivationApplication"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedActivationApplication.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedActivationApplication.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.ActivationApplication)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="activationApplication">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedActivationApplication.Encode(Goedel.Mesh.ActivationApplication,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="activationApplication">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedKeyShares">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.KeyData"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedKeyShares.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedKeyShares.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.KeyData)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="keyData">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedKeyShares.Encode(Goedel.Mesh.KeyData,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="keyData">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedContact">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.Contact"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedContact.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedContact.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.Contact)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="contact">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedContact.Encode(Goedel.Mesh.Contact,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="Contact">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedRequestConnection">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.RequestConnection"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedRequestConnection.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedRequestConnection.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.RequestConnection)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="requestConnection">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedRequestConnection.Encode(Goedel.Mesh.RequestConnection,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="requestConnection">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedMessageClaim">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.RequestConfirmation"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedMessageClaim.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedMessageClaim.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.MessageClaim)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="messageClaim">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedMessageClaim.Encode(Goedel.Mesh.MessageClaim,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="messageClaim">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedRespondConnection">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.RequestConfirmation"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedRespondConnection.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedRespondConnection.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.RespondConnection)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="respondConnection">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedRespondConnection.Encode(Goedel.Mesh.RespondConnection,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="respondConnection">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedCatalogedDevice">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.RequestConfirmation"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedCatalogedDevice.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedCatalogedDevice.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.CatalogedDevice)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="catalogedDevice">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedCatalogedDevice.Encode(Goedel.Mesh.CatalogedDevice,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="catalogedDevice">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnvelopedRequestConfirmation">
+            <summary>
+            Envelope containing a <see cref="T:Goedel.Mesh.RequestConfirmation"/>. Encode and Decode methods
+            automatically cause signature creation and verification.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedRequestConfirmation.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedRequestConfirmation.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Mesh.RequestConfirmation)">
+            <summary>
+            Create a EnvelopedProfileUser instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="requestConfirmation">The payload data, a profile user.</param>
+        </member>
+        <member name="M:Goedel.Mesh.EnvelopedRequestConfirmation.Encode(Goedel.Mesh.RequestConfirmation,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="requestConfirmation">The payload data, a profile user.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <returns>The signed profile.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Internal">
             <summary>
             An internal assertion check failed.
@@ -4055,6 +4491,68 @@
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.InvalidDate.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.NotAdministrator">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NotAdministrator.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.NotAdministrator.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.NotAdministrator.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.NotAdministrator._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.NotAdministrator.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.NotSuperAdministrator">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NotSuperAdministrator.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.NotSuperAdministrator.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.NotSuperAdministrator.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.NotSuperAdministrator._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.NotSuperAdministrator.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4570,6 +5068,14 @@
             identifer of</param>
             <returns>The envelope identifier.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Message.Sign(Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Sign the profile under <paramref name="SignatureKey"/>.
+            </summary>
+            <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="T:Goedel.Mesh.EnvelopedRequestConnection"/></returns>
+        </member>
         <member name="P:Goedel.Mesh.Message.MessageID">
              <summary>
             Unique per-message ID. When encapsulating a Mesh Message in a DARE envelope,
@@ -4983,6 +5489,17 @@
             
              Connection request message. This message contains the information
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.RequestConnection.EnvelopedRequestConnection">
+            <summary>The signed profile</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.RequestConnection.Sign(Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Sign the profile under <paramref name="SignatureKey"/>.
+            </summary>
+            <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="P:Goedel.Mesh.RequestConnection.EnvelopedRequestConnection"/></returns>
         </member>
         <member name="M:Goedel.Mesh.RequestConnection.#ctor">
             <summary>
@@ -5816,14 +6333,6 @@
             <param name="SignatureKey">The key to sign the assertion under.</param>
             <returns>The signed assertion.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Assertion.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
-            <summary>
-            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.Assertion"/>
-            </summary>
-            <param name="envelope">The envelope to decode.</param>
-            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-            <returns>The decoded profile.</returns>
-        </member>
         <member name="T:Goedel.Mesh.Profile">
              <summary>
             
@@ -6043,6 +6552,17 @@
             <summary>The UDF profile constant used for key derrivation 
             <see cref="F:Goedel.Mesh.Constants.UDFActivationDevice"/></summary>
         </member>
+        <member name="P:Goedel.Mesh.ProfileDevice.EnvelopedProfileDevice">
+            <summary>The signed profile</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ProfileDevice.Sign(Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Sign the profile under <paramref name="SignatureKey"/>.
+            </summary>
+            <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="P:Goedel.Mesh.ProfileDevice.EnvelopedProfileDevice"/></returns>
+        </member>
         <member name="P:Goedel.Mesh.ProfileDevice.SecretSeed">
             <summary>The secret seed value used to derrive the private keys.</summary>
         </member>
@@ -6151,6 +6671,17 @@
              becomes its first administrator, control of the group may pass to other
              administrators over time.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileGroup.EnvelopedProfileGroup">
+            <summary>The signed profile</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ProfileGroup.Sign(Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Sign the profile under <paramref name="SignatureKey"/>.
+            </summary>
+            <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="P:Goedel.Mesh.ProfileGroup.EnvelopedProfileGroup"/></returns>
         </member>
         <member name="M:Goedel.Mesh.ProfileGroup.#ctor">
             <summary>
@@ -6467,6 +6998,17 @@
             
              Account assertion. This is signed by the service hosting the account.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileUser.EnvelopedProfileUser">
+            <summary>The signed profile</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ProfileUser.Sign(Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Sign the profile under <paramref name="SignatureKey"/>.
+            </summary>
+            <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="P:Goedel.Mesh.ProfileUser.EnvelopedProfileUser"/></returns>
         </member>
         <member name="P:Goedel.Mesh.ProfileUser.ProfileService">
             <summary>Cached convenience accessor. Returns the corresponding 
@@ -6816,7 +7358,7 @@
             request is directed.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.MeshRequestUser.DeviceProfile">
+        <member name="P:Goedel.Mesh.MeshRequestUser.EnvelopedProfileDevice">
              <summary>
             Device profile of the device making the request.
              </summary>
@@ -7518,7 +8060,7 @@
             The service account to bind to.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CreateRequest.SignedProfileAccount">
+        <member name="P:Goedel.Mesh.CreateRequest.EnvelopedProfileUser">
              <summary>
             The signed assertion describing the account.
              </summary>
@@ -7837,7 +8379,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CompleteResponse.SignedResponse">
+        <member name="P:Goedel.Mesh.CompleteResponse.EnvelopedRespondConnection">
              <summary>
             The signed assertion describing the result of the connect request
              </summary>
@@ -7979,7 +8521,7 @@
             The account profile providing the root of trust for this account.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.StatusResponse.EnvelopedCatalogEntryDevice">
+        <member name="P:Goedel.Mesh.StatusResponse.EnvelopedCatalogedDevice">
              <summary>
             The catalog device entry
              </summary>
@@ -8571,7 +9113,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectRequest.MessageConnectionRequestClient">
+        <member name="P:Goedel.Mesh.ConnectRequest.EnvelopedRequestConnection">
              <summary>
             The connection request generated by the client 
              </summary>
@@ -8636,19 +9178,14 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectResponse.EnvelopedConnectionResponse">
+        <member name="P:Goedel.Mesh.ConnectResponse.EnvelopedRespondConnection">
              <summary>
             The connection request generated by the client
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectResponse.EnvelopedProfileMaster">
+        <member name="P:Goedel.Mesh.ConnectResponse.EnvelopedProfileUser">
              <summary>
-            The master profile that provides the root of trust for this Mesh
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ConnectResponse.EnvelopedAccountAssertion">
-             <summary>
-            The current account assertion
+            The user profile that provides the root of trust for this Mesh
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ConnectResponse._Tag">
@@ -8962,7 +9499,7 @@
             The service account to bind to.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CreateGroupRequest.SignedProfileGroup">
+        <member name="P:Goedel.Mesh.CreateGroupRequest.EnvelopedProfileGroup">
              <summary>
             The persistent profile that will be used to validate changes to the
             account assertion.
@@ -10377,74 +10914,6 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Connection.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.Permission">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Permission.Name">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Permission.Role">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Permission.Capabilities">
-             <summary>
-            Keys or key contributions enabling the operation to be performed
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Permission._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Permission.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Permission._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Permission.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Permission.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Permission.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Permission.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

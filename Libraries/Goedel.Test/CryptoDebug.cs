@@ -10,6 +10,71 @@ using System.Collections.Generic;
 
 namespace Goedel.Test.Core {
 
+    public enum DataValidity {
+        ///<summary>The data is valid.</summary>
+        Valid = 0b_0000_0000,
+
+        ///<summary>The public key is invalid.</summary>
+        CorruptPublicKey = 0b_0000_0001,
+
+        ///<summary>The signature data is modified.</summary>
+        CorruptSignature = 0b_0000_0010,
+
+        ///<summary>The digest data is modified.</summary>
+        CorruptDigest = 0b_0000_0100,
+
+        ///<summary>The body is modified.</summary>
+        CorruptPayload = 0b_0000_1000,
+
+        ///<summary>An Attribute is modified.</summary>
+        CorruptAttributes = 0b_0001_0000,
+        }
+
+    public static class Extension {
+
+
+        public static void Corrupt(
+                this DareEnvelope envelope,
+                DataValidity dataValidity = DataValidity.CorruptPayload) {
+
+            switch (dataValidity) {
+                case DataValidity.CorruptPayload: {
+                    envelope.Body = envelope.Body.Corrupt();
+                    return;
+                    }
+                case DataValidity.CorruptDigest: {
+                    envelope.Trailer.PayloadDigest = envelope.Trailer.PayloadDigest.Corrupt();
+                    return;
+                    }
+                case DataValidity.CorruptSignature: {
+                    var signature = envelope.Trailer.Signatures[0];
+                    signature.SignatureValue = signature.SignatureValue.Corrupt();
+                    return;
+                    }
+                case DataValidity.CorruptPublicKey: {
+                    throw new NYI();
+                    }
+                case DataValidity.CorruptAttributes: {
+                    throw new NYI();
+                    }
+                }
+            }
+
+        public static void Corrupt(
+                ref byte[] data) => data = Corrupt(data);
+
+
+        public static byte[] Corrupt(
+                this byte[] data) {
+            if ((data == null) || (data.Length == 0)) {
+                return new byte[1];
+                }
+            else {
+                data[0] ^= 1;
+                return data;
+                }
+            }
+        }
     public class CryptoStackDebug : CryptoStack {
         public byte[] KeyEncrypt;
         public byte[] KeyMac;
@@ -75,6 +140,5 @@ namespace Goedel.Test.Core {
             WrappedMasterKey = exchange;
             }
         }
-
 
     }

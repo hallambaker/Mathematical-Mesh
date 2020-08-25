@@ -7,6 +7,23 @@ using System.Text;
 namespace Goedel.Mesh {
     public partial class ConnectionUser {
 
+        ///<summary>The signed profile</summary> 
+        public EnvelopedConnectionUser EnvelopedConnectionUser { get; protected set; }
+
+        /// <summary>
+        /// Sign the profile under <paramref name="SignatureKey"/>.
+        /// </summary>
+        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+        /// <returns>Envelope containing the signed profile. Also updates the property
+        /// <see cref="EnvelopedConnectionUser"/></returns>
+        public override DareEnvelope Sign(CryptoKey SignatureKey) {
+            EnvelopedConnectionUser = EnvelopedConnectionUser.Encode(this, signingKey: SignatureKey);
+            DareEnvelope = EnvelopedConnectionUser;
+            return DareEnvelope;
+            }
+
+
+
         /// <summary>
         /// Constructor for use by deserializers.
         /// </summary>

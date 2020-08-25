@@ -19,13 +19,13 @@ namespace Goedel.Mesh {
         ///as a <see cref="MessageStatus"/> property.</summary>
         public MessageStatus MessageStatus {
             get => Relationship switch
-                    {
-                        "Open" => MessageStatus.Open,
-                        "Closed" => MessageStatus.Closed,
-                        "Read" => MessageStatus.Read,
-                        "Unread" => MessageStatus.Unread,
-                        _ => MessageStatus.None
-                        };
+                {
+                    "Open" => MessageStatus.Open,
+                    "Closed" => MessageStatus.Closed,
+                    "Read" => MessageStatus.Read,
+                    "Unread" => MessageStatus.Unread,
+                    _ => MessageStatus.None
+                    };
             set => Relationship = value switch
                 {
                     MessageStatus.Open => "Open",
@@ -52,7 +52,7 @@ namespace Goedel.Mesh {
         /// <param name="signingKey">The signature key.</param>
         /// <param name="encryptionKey">The encryption key.</param>
         /// <returns>The enveloped, signed message.</returns>
-        public override DareEnvelope Encode(CryptoKey signingKey = null, CryptoKey encryptionKey =null) {
+        public override DareEnvelope Encode(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
 
             MessageID ??= UDF.Nonce(); // Add a message ID unless one is already defined.
 
@@ -64,7 +64,7 @@ namespace Goedel.Mesh {
                 MessageType = _Tag
                 };
 
-            DareEnvelope = DareEnvelope.Encode(data, contentMeta: contentMeta, 
+            DareEnvelope = DareEnvelope.Encode(data, contentMeta: contentMeta,
                 signingKey: signingKey, encryptionKey: encryptionKey);
 
             DareEnvelope.Header.EnvelopeID = GetEnvelopeId(MessageID);
@@ -89,8 +89,23 @@ namespace Goedel.Mesh {
         /// <param name="messageID">The message identifier to calculate the envelope 
         /// identifer of</param>
         /// <returns>The envelope identifier.</returns>
-        public static string GetEnvelopeId (string messageID) =>
+        public static string GetEnvelopeId(string messageID) =>
                     UDF.ContentDigestOfUDF(messageID);
+
+
+        /// <summary>
+        /// Sign the profile under <paramref name="SignatureKey"/>.
+        /// </summary>
+        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+        /// <returns>Envelope containing the signed profile. Also updates the property
+        /// <see cref="EnvelopedRequestConnection"/></returns>
+        public virtual DareEnvelope Sign(CryptoKey SignatureKey) {
+            DareEnvelope = DareEnvelope.Encode(this.GetBytes(true), signingKey: SignatureKey);
+            return DareEnvelope;
+            }
+
+
+
         }
 
     public partial class MessageComplete {
@@ -185,7 +200,7 @@ namespace Goedel.Mesh {
         /// <param name="pin">The pin code presented to the user.</param>
         /// <param name="action">The action to which the pin code is bound.</param>
         /// <returns>UDF presentation of the salted PIN.</returns>
-        public static string SaltPIN (string pin, string action) =>
+        public static string SaltPIN(string pin, string action) =>
             UDF.SymmetricKeyMac(action.ToUTF8(), pin);
 
 
@@ -205,17 +220,17 @@ namespace Goedel.Mesh {
                     byte[] nonce,
                     byte[] witness) {
 
-            if (messagePin == null )  {
+            if (messagePin == null) {
                 return ProcessingResult.PinInvalid;
                 }
-            if ((messagePin.MessageStatus & MessageStatus.Closed )== MessageStatus.Closed) {
+            if ((messagePin.MessageStatus & MessageStatus.Closed) == MessageStatus.Closed) {
                 return ProcessingResult.PinUsed;
                 }
             if (messagePin.Expires != null && messagePin.Expires < DateTime.Now) {
                 return ProcessingResult.PinExpired;
                 }
             var pinWitness = MessagePIN.GetPinWitness(
-                        messagePin.SaltedPIN, 
+                        messagePin.SaltedPIN,
                         accountAddress,
                         envelope,
                         nonce);
@@ -244,7 +259,7 @@ namespace Goedel.Mesh {
                     string accountAddress) {
             var result = UDF.PinWitnessString(pin, accountAddress.ToUTF8());
 
-            Console.WriteLine($"{pin} + {accountAddress}  -> PinUDF = {result}" );
+            Console.WriteLine($"{pin} + {accountAddress}  -> PinUDF = {result}");
 
             return result;
             }
@@ -309,6 +324,22 @@ namespace Goedel.Mesh {
 
     public partial class RequestConnection {
 
+        ///<summary>The signed profile</summary> 
+        public EnvelopedRequestConnection EnvelopedRequestConnection { get; protected set; }
+
+        /// <summary>
+        /// Sign the profile under <paramref name="SignatureKey"/>.
+        /// </summary>
+        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+        /// <returns>Envelope containing the signed profile. Also updates the property
+        /// <see cref="EnvelopedRequestConnection"/></returns>
+        public override DareEnvelope Sign(CryptoKey SignatureKey) {
+            EnvelopedRequestConnection = EnvelopedRequestConnection.Encode(this, signingKey: SignatureKey);
+            DareEnvelope = EnvelopedRequestConnection;
+            return DareEnvelope;
+            }
+
+
 
         /// <summary>
         /// Default constructor used for deserialization.
@@ -330,7 +361,7 @@ namespace Goedel.Mesh {
         public RequestConnection(
                 ProfileDevice profileDevice,
             string accountAddress,
-            string pin=null,
+            string pin = null,
             byte[] clientNonce = null) {
             AccountAddress = accountAddress;
             AuthenticatedData = profileDevice.DareEnvelope;
@@ -419,7 +450,7 @@ namespace Goedel.Mesh {
             profileDevice.Future();
             keyCollection ??= this.KeyCollection;
             keyCollection.Future();
-            
+
             // Validate the chain for the device to master
 
             // Profile Master is self Signed
@@ -438,4 +469,25 @@ namespace Goedel.Mesh {
             }
 
         }
+
+
+    public partial class RequestConfirmation {
+
+        ///<summary>The signed profile</summary> 
+        public EnvelopedRequestConfirmation EnvelopedRequestConfirmation { get; protected set; }
+
+        /// <summary>
+        /// Sign the profile under <paramref name="SignatureKey"/>.
+        /// </summary>
+        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+        /// <returns>Envelope containing the signed profile. Also updates the property
+        /// <see cref="EnvelopedRequestConfirmation"/></returns>
+        public override DareEnvelope Sign(CryptoKey SignatureKey) {
+            EnvelopedRequestConfirmation = EnvelopedRequestConfirmation.Encode(this, signingKey: SignatureKey);
+            DareEnvelope = EnvelopedRequestConfirmation;
+            return DareEnvelope;
+            }
+
+        }
+
     }

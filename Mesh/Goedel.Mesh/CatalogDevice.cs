@@ -111,7 +111,7 @@ namespace Goedel.Mesh {
         /// deserialization.
         /// </summary>
         public ConnectionUser ConnectionDevice => connectionDevice ??
-            ConnectionUser.Decode(EnvelopedConnectionDevice).CacheValue(out connectionDevice);
+            ConnectionUser.Decode(EnvelopedConnectionUser).CacheValue(out connectionDevice);
         ConnectionUser connectionDevice = null;
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
@@ -218,7 +218,7 @@ namespace Goedel.Mesh {
             ProfileDevice.Validate();
 
             // Verify that the connection and activation entries are signed under the master profile
-            ProfileUser.Verify(EnvelopedConnectionDevice);
+            ProfileUser.Verify(EnvelopedConnectionUser);
             ProfileUser.Verify(EnvelopedActivationDevice);
 
             return true; // this will probably turn into exception return.

@@ -215,7 +215,7 @@ namespace Goedel.Mesh.Shell {
 
                 if (StatusResponse.EnvelopedProfileAccount != null) {
                     }
-                if (StatusResponse.EnvelopedCatalogEntryDevice != null) {
+                if (StatusResponse.EnvelopedCatalogedDevice != null) {
                     }
                 if (StatusResponse.ContainerStatus != null) {
                     foreach (var containerStatus in StatusResponse.ContainerStatus) {

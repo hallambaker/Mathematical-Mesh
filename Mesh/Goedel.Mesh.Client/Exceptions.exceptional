@@ -28,10 +28,7 @@ Namespace Goedel.Mesh.Client
 		Description
 			|The action cannot be performed because connection of this device to the account is still pending.
 
-	Exception NotAdministrator
-		Console "This device does not have administration capability"
-	Exception NotSuperAdministrator
-		Console "This device does not have administration capability"
+
 
 	
 	Exception SyncFailed

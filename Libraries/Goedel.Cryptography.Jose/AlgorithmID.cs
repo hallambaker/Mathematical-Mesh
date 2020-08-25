@@ -16,6 +16,8 @@ namespace Goedel.Cryptography.Jose {
                 {"AES",     CryptoAlgorithmId.AES256 },
                 {"AES256",  CryptoAlgorithmId.AES256 },
                 {"AES128",  CryptoAlgorithmId.AES128 },
+                {"S512",    CryptoAlgorithmId.SHA_2_512 },
+                {"S256",    CryptoAlgorithmId.SHA_2_256 },
                 {"SHA2",    CryptoAlgorithmId.SHA_2_512 },
                 {"SHA256",  CryptoAlgorithmId.SHA_2_256 },
                 //{"SHA128",  CryptoAlgorithmID.SHA_2_512T128 },

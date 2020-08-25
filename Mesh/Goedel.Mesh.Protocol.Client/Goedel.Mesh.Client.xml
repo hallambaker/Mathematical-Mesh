@@ -992,30 +992,12 @@
             <param name="catalogedMachine">Description of the device profile.</param>
             <param name="meshHost">The Mesh host to add the admin context to.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateAccountUser(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ActivationAccount,System.String)">
-            <summary>
-            Create a new personal mesh and return an administration context for it.
-            </summary>
-            <param name="meshHost">The mesh host context that the mesh is going to be created on.</param>
-            <param name="localName">Optional local name to be associated with the account.</param>
-            <param name="onlineSignature">The key to be used for initial administration operations.</param>
-            <param name="algorithmSign">The signature algorithm.</param>
-            <param name="algorithmEncrypt">The encryption algorithm.</param>
-            <param name="algorithmAuthenticate">The authentication algorithm.</param>
-            <param name="secretSeed">A UDF secret seed</param>
-            <returns>An administration context instance for the created profile.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetMeshSecret">
             <summary>
             Get the MeshSecret.
             </summary>
             <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The Mesh secret bytes.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.PersistSeed">
-            <summary>
-            Persist the Mesh Secret to the persistence store of this machine.
-            </summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.EraseMeshSecret">
             <summary>
@@ -1835,68 +1817,6 @@
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionStillPending.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Mesh.Client.NotAdministrator">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.NotAdministrator.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.NotAdministrator.Templates">
-            <summary></summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.NotAdministrator.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.NotAdministrator._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="F:Goedel.Mesh.Client.NotAdministrator.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Mesh.Client.NotSuperAdministrator">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.NotSuperAdministrator.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.NotSuperAdministrator.Templates">
-            <summary></summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.NotSuperAdministrator.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.NotSuperAdministrator._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="F:Goedel.Mesh.Client.NotSuperAdministrator.Throw">
             <summary>
             The public fatory delegate
             </summary>

@@ -137,15 +137,18 @@ namespace Goedel.Mesh.Server {
             Console.WriteLine($"The AcknowledgeConnection Response ID = {messageConnectionRequest.GetResponseId()}");
 
 
+            // This is all a big mess, the names don't bear any relationship to function.
+
+
             // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.
 
-            var envelope = messageConnectionRequest.Encode();
+            var envelope = messageConnectionRequest.Sign(null); // Hack: ???
             accountHandle.PostInbound(envelope);
 
 
             var connectResponse = new ConnectResponse() {
-                EnvelopedConnectionResponse = envelope,
-                EnvelopedAccountAssertion = accountHandle.ProfileUser.DareEnvelope
+                EnvelopedRespondConnection = envelope,
+                EnvelopedProfileUser = accountHandle.ProfileUser.EnvelopedProfileUser
                 };
 
             return connectResponse;
@@ -175,7 +178,7 @@ namespace Goedel.Mesh.Server {
                 }
 
             return new CompleteResponse() {
-                SignedResponse = envelope
+                EnvelopedRespondConnection = envelope
                 };
             }
 
@@ -198,7 +201,7 @@ namespace Goedel.Mesh.Server {
             var statusResponse = new StatusResponse() {
                 ContainerStatus = containerStatus,
                 EnvelopedProfileAccount = accountHandle.ProfileUser?.DareEnvelope,
-                EnvelopedCatalogEntryDevice = null
+                EnvelopedCatalogedDevice = null
                 };
 
             // summarize the status here.
@@ -699,7 +702,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="request">The account creation request.</param>
         public AccountUser(CreateRequest request) {
             AccountAddress = request.AccountAddress;
-            SignedProfileUser = request.SignedProfileAccount;
+            SignedProfileUser = request.EnvelopedProfileUser;
             Verify();
             Directory = AccountAddress;
             }
@@ -718,7 +721,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="request">The account creation request.</param>
         public AccountGroup(CreateGroupRequest request) {
             AccountAddress = request.AccountAddress;
-            SignedProfileGroup = request.SignedProfileGroup;
+            SignedProfileGroup = request.EnvelopedProfileGroup;
             Verify();
             Directory = AccountAddress;
             }

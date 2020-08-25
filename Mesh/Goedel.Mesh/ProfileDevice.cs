@@ -15,6 +15,24 @@ namespace Goedel.Mesh {
         ///<see cref="Constants.UDFActivationDevice"/></summary>
         public override string UDFKeyDerrivation => Constants.UDFActivationDevice;
 
+        ///<summary>The signed profile</summary> 
+        public EnvelopedProfileDevice EnvelopedProfileDevice { get; protected set; }
+
+        /// <summary>
+        /// Sign the profile under <paramref name="SignatureKey"/>.
+        /// </summary>
+        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+        /// <returns>Envelope containing the signed profile. Also updates the property
+        /// <see cref="EnvelopedProfileDevice"/></returns>
+        public override DareEnvelope Sign(CryptoKey SignatureKey) {
+            EnvelopedProfileDevice = EnvelopedProfileDevice.Encode(this, signingKey: SignatureKey);
+            DareEnvelope = EnvelopedProfileDevice;
+            return DareEnvelope;
+            }
+
+
+
+
         ///<summary>The secret seed value used to derrive the private keys.</summary>
         PrivateKeyUDF SecretSeed { get; }
 
@@ -129,8 +147,9 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.UDF} ");
 
             }
-        }
 
+
+        }
 
     //public partial class ActivationDevice {
 

@@ -51,6 +51,9 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>Convenience accessor for the envelope id.</summary>
         public string EnvelopeID => Header.EnvelopeID;
 
+        public byte[] PayloadDigest;
+        public byte[] PayloadMac;
+
 
         #endregion
         #region IDisposable boilerplate code.
@@ -356,7 +359,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>		
         public static DareEnvelope FromJSON(JsonBcdReader jsonReader, bool tagged = true,
-                bool decrypt = false, IKeyLocate keyCollection = null) {
+                bool decrypt = false, IKeyLocate keyCollection = null, bool verify =true) {
             Assert.AssertFalse(tagged, TaggingNotSupported.Throw);
 
 
@@ -371,8 +374,23 @@ namespace Goedel.Cryptography.Dare {
                             keyCollection: keyCollection);
                 reader.CopyTo(buffer);
                 decoder.Close();
+                message.PayloadDigest = decoder.DigestValue;
+                message.PayloadMac = decoder.MacValue;
                 message.Body = buffer.ToArray();
                 }
+
+            if (jsonReader.NextArray()) {
+                message.Trailer = DareTrailer.FromJson(jsonReader, false);
+                }
+
+            // Verify that the specified payload digest matches that calculated.
+            if (verify & message.Header.DigestAlgorithm != null) {
+                //message.PayloadDigest.AssertNotNull();
+
+
+                }
+
+
             return message;
             }
 

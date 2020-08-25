@@ -122,21 +122,19 @@ namespace Goedel.Mesh.Client {
 
 
             // generate MessageConnectionRequestClient
-            var messageConnectionRequestClient = new RequestConnection(profileDevice,
+            var requestConnection = new RequestConnection(profileDevice,
                 accountAddress, pin);
 
-
             var keyAuthentication = meshHost.KeyCollection.LocatePrivateKeyPair(
-                        profileDevice.KeyAuthentication.UDF);
+                            profileDevice.KeyAuthentication.UDF);
 
-            var messageConnectionRequestClientEncoded =
-                messageConnectionRequestClient.Encode(keyAuthentication);
+            requestConnection.Sign(keyAuthentication);
 
             // Acquire ephemeral client. This will only be used for the Connect and Complete methods.
             var meshClient = meshHost.MeshMachine.GetMeshClient(accountAddress, keyAuthentication, null);
 
             var connectRequest = new ConnectRequest() {
-                MessageConnectionRequestClient = messageConnectionRequestClientEncoded,
+                EnvelopedRequestConnection = requestConnection.EnvelopedRequestConnection,
                 Rights = rights
                 };
 
@@ -148,10 +146,10 @@ namespace Goedel.Mesh.Client {
                 Id = profileDevice.UDF,
                 DeviceUDF = profileDevice.UDF,
                 AccountAddress = accountAddress,
-                EnvelopedMessageConnectionResponse = response.EnvelopedConnectionResponse,
-                EnvelopedProfileUser = response.EnvelopedProfileMaster,
+                EnvelopedMessageConnectionResponse = response.EnvelopedRespondConnection,
+                EnvelopedProfileUser = response.EnvelopedProfileUser,
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
-                EnvelopedAccountAssertion = response.EnvelopedAccountAssertion,
+                EnvelopedAccountAssertion = response.EnvelopedProfileUser,
                 Local = localName
                 };
 
@@ -182,7 +180,7 @@ namespace Goedel.Mesh.Client {
 
             //// OK so here we need to unpack the profile etc.
             var respondConnection = RespondConnection.Decode(
-                    completeResponse.SignedResponse, KeyCollection);
+                    completeResponse.EnvelopedRespondConnection, KeyCollection);
 
             respondConnection.Validate(ProfileDevice, KeyCollection);
 

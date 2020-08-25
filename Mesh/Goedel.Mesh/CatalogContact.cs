@@ -381,7 +381,18 @@ namespace Goedel.Mesh {
 
             List<CryptographicCapability> keyList = null;
 
-            EnvelopedProfileAccount = profile.DareEnvelope;
+            switch (profile) {
+                case ProfileUser profileUser: {
+                    EnvelopedProfileUser = profileUser.EnvelopedProfileUser;
+                    break;
+                    }
+                case ProfileGroup profileGroup: {
+                    EnvelopedProfileGroup = profileGroup.EnvelopedProfileGroup;
+                    break;
+                    }
+                }
+
+            
             Address = address;
             Protocols = new List<NetworkProtocol>() {
                     new NetworkProtocol() {
@@ -480,20 +491,15 @@ namespace Goedel.Mesh {
             }
 
         CryptoKey SetKeys(ref CryptoKey keyPair) {
-            if (NetworkAddress.EnvelopedProfileAccount != null) {
-                var meshItem = MeshItem.Decode(NetworkAddress.EnvelopedProfileAccount);
-
-                switch (meshItem) {
-                    case ProfileUser profileAccount:
-                    meshKeyEncryption = profileAccount.AccountEncryption.CryptoKey;
-                    meshKeyAdministrator = profileAccount.OfflineSignature.CryptoKey;
-                    break;
-                    case ProfileGroup profileGroup:
-                    meshKeyEncryption = profileGroup.AccountEncryption.CryptoKey;
-                    meshKeyAdministrator = profileGroup.OfflineSignature.CryptoKey;
-                    break;
-
-                    }
+            if (NetworkAddress.EnvelopedProfileGroup != null) {
+                var profileGroup = NetworkAddress.EnvelopedProfileGroup.Decode ();
+                meshKeyEncryption = profileGroup.AccountEncryption.CryptoKey;
+                meshKeyAdministrator = profileGroup.OfflineSignature.CryptoKey;
+                }
+            if (NetworkAddress.EnvelopedProfileUser != null) {
+                var ProfileUser = NetworkAddress.EnvelopedProfileUser.Decode();
+                meshKeyEncryption = ProfileUser.AccountEncryption.CryptoKey;
+                meshKeyAdministrator = ProfileUser.OfflineSignature.CryptoKey;
                 }
             return keyPair;
             }

@@ -49,6 +49,9 @@ namespace Goedel.XUnit {
             }
 
 
+
+
+
         [Fact]
         public void MessageDigestAtomic() {
             var Recipients = new List<string> { "Alice@example.com" };
@@ -59,7 +62,23 @@ namespace Goedel.XUnit {
             var Test1 = Platform.GetRandomBytes(100);
 
             TestMessageAtomic(Test1, CryptoParameters);
+
+            TestCorruptedAtomic(Test1, CryptoParameters);
+
+
             }
+
+        [Fact]
+        public void MessageDigestAtomicCorrupted() {
+            var Recipients = new List<string> { "Alice@example.com" };
+            var CryptoParameters = new CryptoParametersTest(
+                        recipients: Recipients,
+                        digestID: CryptoAlgorithmId.SHA_2_512);
+
+            var Test1 = Platform.GetRandomBytes(100);
+            TestCorruptedAtomic(Test1, CryptoParameters);
+            }
+
 
         [Fact]
         public void MessageSignAtomic() {
@@ -202,6 +221,31 @@ namespace Goedel.XUnit {
             CheckDecodeDirect(CryptoParameters, MessageBytesB, Plaintext, DataSequences, ContentType);
             }
 
+        void TestCorruptedAtomic(byte[] Plaintext,
+            CryptoParameters CryptoParameters = null,
+            int Stride = -1,
+            List<byte[]> DataSequences = null,
+            string ContentType = null) {
+
+            CryptoParameters ??= CryptoParametersNull;
+
+            var message = new DareEnvelope(CryptoParameters, Plaintext, dataSequences: DataSequences);
+
+            message.Corrupt();
+
+            var MessageBytes = message.GetJson(false);
+
+            //Console.WriteLine(MessageBytes.ToUTF8());
+            CheckDecodeCorrupted(CryptoParameters, MessageBytes, Plaintext, DataSequences, ContentType);
+
+            var MessageBytesB = message.GetJsonB(false);
+            CheckDecodeCorrupted(CryptoParameters, MessageBytesB, Plaintext, DataSequences, ContentType);
+            }
+
+
+
+
+
 
         void TestMessageFixed(byte[] Plaintext,
                     CryptoParameters CryptoParameters = null,
@@ -213,7 +257,7 @@ namespace Goedel.XUnit {
             using var InputStream = new MemoryStream(Plaintext);
             using var OutputStream = new MemoryStream();
             DareEnvelope.Encode(CryptoParameters, InputStream, OutputStream,
-Plaintext.Length, contentInfo, dataSequences: DataSequences);
+                    Plaintext.Length, contentInfo, dataSequences: DataSequences);
 
             var MessageBytes = OutputStream.ToArray();
             CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, contentType);
@@ -250,6 +294,21 @@ contentMeta: contentInfo, dataSequences: DataSequences);
 
             Plaintext.IsEqualTo(Message.Body).TestTrue();
             }
+
+        static void CheckDecodeCorrupted(
+                CryptoParameters CryptoParameters,
+                byte[] Serialization,
+                byte[] Plaintext,
+                List<byte[]> DataSequences = null,
+                string ContentType = null) {
+
+            var Message = DareEnvelope.FromJSON(Serialization, false,
+                    decrypt: CryptoParameters.Encrypt, keyCollection: CryptoParameters.KeyLocate);
+            CheckDecodeResult(Message, DataSequences, ContentType);
+
+            //Plaintext.IsEqualTo(Message.Body).TestTrue();
+            }
+
 
         static void CheckDecode(
                     DareEnvelope envelope,

@@ -240,8 +240,9 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The created CryptoStack</returns>
         public CryptoStack GetCryptoStack(IKeyLocate keyCollection, bool decrypt = true) {
             var EncryptID = EncryptionAlgorithm.FromJoseID();
+            var DigestID = DigestAlgorithm.FromJoseID();
 
-            var CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmId.NULL,
+            var CryptoStack = new CryptoStack(EncryptID, DigestID,
                 Recipients, Signatures, keyCollection, decrypt: decrypt) {
                 Salt = Salt
 
@@ -261,8 +262,6 @@ namespace Goedel.Cryptography.Dare {
                         JsonBcdReader jsonBcdReader,
                         out Stream reader,
                        IKeyLocate keyCollection = null) {
-
-            var EncryptID = EncryptionAlgorithm.FromJoseID();
             CryptoStack = GetCryptoStack(keyCollection);
 
             return CryptoStack.GetDecoder(jsonBcdReader, out reader);

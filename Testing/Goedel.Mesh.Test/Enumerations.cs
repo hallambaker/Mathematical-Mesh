@@ -73,25 +73,7 @@ namespace Goedel.Mesh.Test {
         }
 
 
-    public enum DataValidity {
-        ///<summary>The data is valid.</summary>
-        Valid = 0b_0000_0000,
 
-        ///<summary>The public key is invalid.</summary>
-        CorruptPublicKey = 0b_0000_0001,
-
-        ///<summary>The signature data is modified.</summary>
-        CorruptSignature = 0b_0000_0010,
-
-        ///<summary>The digest data is modified.</summary>
-        CorruptDigest = 0b_0000_0100,
-
-        ///<summary>The body is modified.</summary>
-        CorruptPayload = 0b_0000_1000,
-
-        ///<summary>An Attribute is modified.</summary>
-        CorruptAttributes = 0b_0001_0000,
-        }
 
 
     }

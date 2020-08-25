@@ -35,6 +35,20 @@ namespace Goedel.Mesh {
         ///<summary>The device authentication key for use under the profile</summary>
         public KeyPair PrivateDeviceAuthentication { get; private set; }
 
+        ///<summary>The signed profile</summary> 
+        public EnvelopedActivationDevice EnvelopedActivationDevice { get; protected set; }
+
+        /// <summary>
+        /// Sign the profile under <paramref name="SignatureKey"/>.
+        /// </summary>
+        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+        /// <returns>Envelope containing the signed profile. Also updates the property
+        /// <see cref="EnvelopedActivationDevice"/></returns>
+        public override DareEnvelope Sign(CryptoKey SignatureKey) {
+            EnvelopedActivationDevice = EnvelopedActivationDevice.Encode(this, signingKey: SignatureKey);
+            DareEnvelope = EnvelopedActivationDevice;
+            return DareEnvelope;
+            }
 
 
         /// <summary>

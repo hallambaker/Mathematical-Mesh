@@ -20,7 +20,7 @@ namespace Goedel.Mesh {
         // Properties providing access to account-wide keys.
 
         ///<summary>The account offline signature key</summary>
-        public KeyPair PrivateAccountOfflineSignature { get; private set; }
+        public KeyPair PrivateAccountOfflineSignature { get; set; }
 
         ///<summary>The account online signature key</summary>
         public KeyPair PrivateAccountOnlineSignature { get; private set; }
@@ -30,6 +30,22 @@ namespace Goedel.Mesh {
 
         ///<summary>The account authentication key</summary>
         public KeyPair PrivateAccountAuthentication { get; private set; }
+
+        ///<summary>The signed profile</summary> 
+        public EnvelopedActivationAccount EnvelopedActivationAccount { get; protected set; }
+
+        /// <summary>
+        /// Sign the profile under <paramref name="SignatureKey"/>.
+        /// </summary>
+        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
+        /// <returns>Envelope containing the signed profile. Also updates the property
+        /// <see cref="EnvelopedActivationAccount"/></returns>
+        public override DareEnvelope Sign(CryptoKey SignatureKey) {
+            EnvelopedActivationAccount = EnvelopedActivationAccount.Encode(this, signingKey: SignatureKey);
+            DareEnvelope = EnvelopedActivationAccount;
+            return DareEnvelope;
+            }
+
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -61,8 +77,16 @@ namespace Goedel.Mesh {
             }
 
 
-
-
+        public ActivationAccount(
+                    IKeyCollection keyCollection,
+                    PrivateKeyUDF secretSeed = null) {
+            PrivateAccountOfflineSignature = secretSeed.BasePrivate(
+                MeshKeyType.UserSign, keyCollection, KeySecurity.Exportable);
+            PrivateAccountEncryption = secretSeed.BasePrivate(
+                MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Exportable);
+            PrivateAccountAuthentication = secretSeed.BasePrivate(
+                MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Exportable);
+            }
 
         public ActivationAccount(
                     IKeyCollection keyCollection,
@@ -71,6 +95,8 @@ namespace Goedel.Mesh {
                     List<string> roles,
                     PrivateKeyUDF secretSeed=null) : base(
                         profileDevice, UdfAlgorithmIdentifier.MeshActivationUser) {
+            ProfileDevice = profileDevice;
+
 
             if (secretSeed != null) {
                 // Generate the private keys
@@ -89,6 +115,7 @@ namespace Goedel.Mesh {
 
             if (keyPairOnlineSignature != null) {
                 AccountOnlineSignature = AddCapability(keyPairOnlineSignature, profileDevice);
+
                 }
 
 
@@ -108,6 +135,108 @@ namespace Goedel.Mesh {
                 }
 
             }
+
+
+        /// <summary>
+        /// Add the device specified by <paramref name="profileDevice"/> to the account granting administration
+        /// privileges if <paramref name="keyPairOnlineSignature"/> is not null and super administration 
+        /// privilege if <paramref name="superAdmin"/> is true. Note that it is possible for a device to 
+        /// be a super administrator without also being an administrator.
+        /// </summary>
+        /// <param name="profileDevice">Profile of the device to add.</param>
+        /// <param name="keyPairOnlineSignature">If not null, specifies an online signature key that is to be used
+        /// to sign administrator functions.</param>
+        /// <param name="rights">The initial rights to be assigned to the device.</param>
+        /// <returns>The catalog entry.</returns>
+        public CatalogedDevice MakeCatalogedDevice(
+                        ProfileDevice profileDevice,
+                        ProfileUser profileUser,
+                        KeyPair keyPairOnlineSignature = null, // hack. 
+                        List<string> rights = null) {
+
+            // Grant the device access to data encrypted under the account key.
+            // Note that this cannot be granted through the capabilities catalog because that
+            // is also encrypted under the account key.
+            var activationUser = new ActivationDevice(profileDevice);
+
+            var activationAccount = new ActivationAccount(KeyCollection, profileDevice,
+                        keyPairOnlineSignature, rights);
+
+            PrivateAccountOnlineSignature ??= keyPairOnlineSignature;
+
+            var catalogedDevice = CreateCataloguedDevice(
+                    profileUser, profileDevice, activationUser, activationAccount);
+
+            // this will need fixup after the rights adjustment.
+            if (keyPairOnlineSignature != null) {
+                profileUser.OnlineSignature ??= new List<KeyData>();
+                profileUser.OnlineSignature.Add(new KeyData(keyPairOnlineSignature.KeyPairPublic()));
+
+                profileUser.Sign(PrivateAccountOfflineSignature);
+
+
+                }
+
+
+            catalogedDevice.SignatureUDF = keyPairOnlineSignature?.KeyIdentifier;
+
+            return catalogedDevice;
+            }
+
+
+        /// <summary>
+        /// Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
+        /// and activation <paramref name="activationDevice"/>.
+        /// </summary>
+        /// <param name="profileUser">The mesh profile.</param>
+        /// <param name="profileDevice">Profile of the device to be added.</param>
+        /// <param name="activationDevice">The device key overlay.</param>
+        /// <param name="activationAccount">The account key overlay.</param>
+        /// <returns>The CatalogedDevice entry.</returns>
+        CatalogedDevice CreateCataloguedDevice(
+                    ProfileUser profileUser,
+                    ProfileDevice profileDevice,
+                    ActivationDevice activationDevice,
+                    ActivationAccount activationAccount) {
+
+            //PrivateAccountOnlineSignature.AssertNotNull(NotAdministrator.Throw);
+
+
+            profileUser.AssertNotNull(Internal.Throw);
+            profileUser.DareEnvelope.AssertNotNull(Internal.Throw);
+            profileDevice.AssertNotNull(Internal.Throw);
+            profileDevice.DareEnvelope.AssertNotNull(Internal.Throw);
+
+            activationDevice.AssertNotNull(Internal.Throw);
+            activationDevice.Package(PrivateAccountOnlineSignature);
+            activationDevice.DareEnvelope.AssertNotNull(Internal.Throw);
+
+            activationAccount.AssertNotNull(Internal.Throw);
+            activationAccount.Package(PrivateAccountOnlineSignature);
+            activationAccount.DareEnvelope.AssertNotNull(Internal.Throw);
+
+
+            var connectionDevice = activationDevice.ConnectionUser;
+            connectionDevice.AssertNotNull(Internal.Throw);
+            connectionDevice.Sign(PrivateAccountOnlineSignature);
+            connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
+
+            // Wrap the connectionDevice and activationDevice in envelopes
+
+            var catalogEntryDevice = new CatalogedDevice() {
+                UDF = activationDevice.UDF,
+                EnvelopedProfileUser = profileUser.EnvelopedProfileUser,
+                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
+                EnvelopedConnectionUser = connectionDevice.EnvelopedConnectionUser,
+                EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
+                EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
+                DeviceUDF = profileDevice.UDF
+                };
+
+            return catalogEntryDevice;
+            }
+
+
 
 
 
@@ -238,8 +367,8 @@ namespace Goedel.Mesh {
         /// <param name="deviceKeySeed">Generator for the private key contributions.</param>
         public void Activate() {
 
-            PrivateAccountOfflineSignature = AccountOnlineSignature?.GetKeyPair(KeySecurity.Exportable);
-            PrivateAccountOnlineSignature = AccountOfflineSignature?.GetKeyPair(KeySecurity.Exportable);
+            PrivateAccountOfflineSignature = AccountOfflineSignature?.GetKeyPair(KeySecurity.Exportable);
+            PrivateAccountOnlineSignature = AccountOnlineSignature?.GetKeyPair(KeySecurity.Exportable);
             PrivateAccountEncryption = AccountEncryption?.GetKeyPair(KeySecurity.Exportable);
             PrivateAccountAuthentication = AccountAuthentication?.GetKeyPair(KeySecurity.Exportable);
 

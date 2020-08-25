@@ -128,20 +128,20 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="SignatureKey">The key to sign the assertion under.</param>
         /// <returns>The signed assertion.</returns>
-        public DareEnvelope Sign(CryptoKey SignatureKey) {
+        public virtual DareEnvelope Sign(CryptoKey SignatureKey) {
             DareEnvelope = DareEnvelope.Encode(GetBytes(true), signingKey: SignatureKey);
             return DareEnvelope;
             }
 
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="Assertion"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new Assertion Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as Assertion;
+        ///// <summary>
+        ///// Decode <paramref name="envelope"/> and return the inner <see cref="Assertion"/>
+        ///// </summary>
+        ///// <param name="envelope">The envelope to decode.</param>
+        ///// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+        ///// <returns>The decoded profile.</returns>
+        //public static new Assertion Decode(DareEnvelope envelope,
+        //            IKeyLocate keyCollection = null) =>
+        //                MeshItem.Decode(envelope, keyCollection) as Assertion;
 
         }
 
