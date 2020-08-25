@@ -43,7 +43,7 @@ namespace Goedel.Cryptography.Dare {
         public int DataSequences => Header.EDSS.Count;
 
         ///<summary>The inner enveloped content.</summary>
-        public JsonObject JSONObject { get; set; }
+        public JsonObject JsonObject { get; set; }
 
         ///<summary>Convenience accessor for the frame index.</summary>
         public long Index => Header.Index;

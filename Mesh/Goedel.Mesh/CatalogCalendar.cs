@@ -83,18 +83,6 @@ namespace Goedel.Mesh {
         /// </summary>
         public CatalogedTask() => Key = UDF.Nonce();
 
-        /// <summary>
-        /// Constructor creating a task from the enveloped task <paramref name="task"/>.
-        /// </summary>
-        /// <param name="task">The task to create.</param>
-        public CatalogedTask(DareEnvelope task) : this() => EnvelopedTask = task;
-
-        /// <summary>
-        /// Constructor creating a task from the task <paramref name="task"/>.
-        /// </summary>
-        /// <param name="task">The task to create.</param>
-        public CatalogedTask(Task task) : this() => EnvelopedTask = DareEnvelope.Encode(task.GetBytes(tag: true),
-                    contentType: "application/mmm");
         #endregion
 
         }

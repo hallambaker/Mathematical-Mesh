@@ -229,8 +229,12 @@ namespace Goedel.Mesh {
 
         public override string _PrimaryKey => Key;
 
-        // ///<summary>Returns the inner contact value.</summary>
-        //public Contact Contact => Contact.Decode(EnvelopedContact);
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<CatalogedContact> EnvelopedCatalogedContact =>
+            envelopedCatalogedContact ?? new Enveloped<CatalogedContact>(Enveloped).
+                    CacheValue(out envelopedCatalogedContact);
+        Enveloped<CatalogedContact> envelopedCatalogedContact;
+
 
 
         #endregion
@@ -302,16 +306,23 @@ namespace Goedel.Mesh {
 
     public partial class Contact {
 
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<Contact> EnvelopedContact =>
+            envelopedContact ?? new Enveloped<Contact>(Enveloped).
+                    CacheValue(out envelopedContact);
+        Enveloped<Contact> envelopedContact;
+
         /// <summary>
         /// Decode <paramref name="envelope"/> and return the inner <see cref="Contact"/>
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
+        /// <remarks>Keep this convenience decoder because it is necessary to decode contacts
+        /// from EARL envelopes.</remarks>
         public static new Contact Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
+                    IKeyCollection keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as Contact;
-
 
         /// <summary>
         /// Convenience constructor, wrap a cataloged contact arround this contact.
@@ -377,20 +388,11 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="address">The Mesh account address (account@domain)</param>
         /// <param name="profile">The Mesh profile to obtain public keys from.</param>
-        public NetworkAddress(string address, Profile profile) {
+        public NetworkAddress(string address, ProfileAccount profile) {
 
             List<CryptographicCapability> keyList = null;
 
-            switch (profile) {
-                case ProfileUser profileUser: {
-                    EnvelopedProfileUser = profileUser.EnvelopedProfileUser;
-                    break;
-                    }
-                case ProfileGroup profileGroup: {
-                    EnvelopedProfileGroup = profileGroup.EnvelopedProfileGroup;
-                    break;
-                    }
-                }
+            EnvelopedProfileAccount = profile.EnvelopedProfileAccount;
 
             
             Address = address;
@@ -491,15 +493,10 @@ namespace Goedel.Mesh {
             }
 
         CryptoKey SetKeys(ref CryptoKey keyPair) {
-            if (NetworkAddress.EnvelopedProfileGroup != null) {
-                var profileGroup = NetworkAddress.EnvelopedProfileGroup.Decode ();
-                meshKeyEncryption = profileGroup.AccountEncryption.CryptoKey;
-                meshKeyAdministrator = profileGroup.OfflineSignature.CryptoKey;
-                }
-            if (NetworkAddress.EnvelopedProfileUser != null) {
-                var ProfileUser = NetworkAddress.EnvelopedProfileUser.Decode();
-                meshKeyEncryption = ProfileUser.AccountEncryption.CryptoKey;
-                meshKeyAdministrator = ProfileUser.OfflineSignature.CryptoKey;
+            if (NetworkAddress.EnvelopedProfileAccount != null) {
+                var profileAccount = NetworkAddress.EnvelopedProfileAccount.Decode();
+                meshKeyEncryption = profileAccount.AccountEncryption.CryptoKey;
+                meshKeyAdministrator = profileAccount.OfflineSignature.CryptoKey;
                 }
             return keyPair;
             }

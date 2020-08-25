@@ -10,22 +10,11 @@ namespace Goedel.Mesh {
 
     public partial class ProfileGroup {
 
-
-        ///<summary>The signed profile</summary> 
-        public EnvelopedProfileGroup EnvelopedProfileGroup { get; protected set; }
-
-        /// <summary>
-        /// Sign the profile under <paramref name="SignatureKey"/>.
-        /// </summary>
-        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
-        /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="EnvelopedProfileGroup"/></returns>
-        public override DareEnvelope Sign(CryptoKey SignatureKey) {
-            EnvelopedProfileGroup = EnvelopedProfileGroup.Encode(this, signingKey: SignatureKey);
-            DareEnvelope = EnvelopedProfileGroup;
-            return DareEnvelope;
-            }
-
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ProfileGroup> EnvelopedProfileGroup =>
+            envelopedProfileGroup ?? new Enveloped<ProfileGroup>(Enveloped).
+                    CacheValue(out envelopedProfileGroup);
+        Enveloped<ProfileGroup> envelopedProfileGroup;
 
 
         /// <summary>

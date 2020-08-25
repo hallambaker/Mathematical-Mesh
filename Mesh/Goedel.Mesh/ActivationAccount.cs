@@ -12,11 +12,6 @@ using System.Text;
 namespace Goedel.Mesh {
     public partial class ActivationAccount {
 
-        /////<summary>Used to build cryptographic capabilities</summary> 
-        //public List<CryptographicCapability> CryptographicCapabilities;
-
-        IKeyCollection KeyCollection;
-
         // Properties providing access to account-wide keys.
 
         ///<summary>The account offline signature key</summary>
@@ -31,20 +26,11 @@ namespace Goedel.Mesh {
         ///<summary>The account authentication key</summary>
         public KeyPair PrivateAccountAuthentication { get; private set; }
 
-        ///<summary>The signed profile</summary> 
-        public EnvelopedActivationAccount EnvelopedActivationAccount { get; protected set; }
-
-        /// <summary>
-        /// Sign the profile under <paramref name="SignatureKey"/>.
-        /// </summary>
-        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
-        /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="EnvelopedActivationAccount"/></returns>
-        public override DareEnvelope Sign(CryptoKey SignatureKey) {
-            EnvelopedActivationAccount = EnvelopedActivationAccount.Encode(this, signingKey: SignatureKey);
-            DareEnvelope = EnvelopedActivationAccount;
-            return DareEnvelope;
-            }
+        ///<summary>The enveloped object</summary> 
+        public Enveloped<ActivationAccount> EnvelopedActivationAccount =>
+            envelopedProfileUser ?? new Enveloped<ActivationAccount>(Enveloped).
+                    CacheValue(out envelopedProfileUser);
+        Enveloped<ActivationAccount> envelopedProfileUser;
 
 
         /// <summary>
@@ -373,18 +359,6 @@ namespace Goedel.Mesh {
             PrivateAccountAuthentication = AccountAuthentication?.GetKeyPair(KeySecurity.Exportable);
 
             }
-
-
-
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationDevice"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new ActivationAccount Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ActivationAccount;
 
 
         /// <summary>

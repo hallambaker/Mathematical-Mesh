@@ -39,7 +39,11 @@ namespace Goedel.Mesh {
         }
 
     public partial class Message {
-
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<Message> EnvelopedMessage =>
+            envelopedMessage ?? new Enveloped<Message>(Enveloped).
+                    CacheValue(out envelopedMessage);
+        Enveloped<Message> envelopedMessage;
 
         ///<summary>The message status.</summary>
         public MessageStatus MessageStatus;
@@ -79,7 +83,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new Message Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
+                    IKeyCollection keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as Message;
 
 
@@ -92,23 +96,22 @@ namespace Goedel.Mesh {
         public static string GetEnvelopeId(string messageID) =>
                     UDF.ContentDigestOfUDF(messageID);
 
-
-        /// <summary>
-        /// Sign the profile under <paramref name="SignatureKey"/>.
-        /// </summary>
-        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
-        /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="EnvelopedRequestConnection"/></returns>
-        public virtual DareEnvelope Sign(CryptoKey SignatureKey) {
-            DareEnvelope = DareEnvelope.Encode(this.GetBytes(true), signingKey: SignatureKey);
-            return DareEnvelope;
-            }
-
-
+        }
+    public partial class MessageError {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<MessageError> EnvelopedMessageError =>
+            envelopedMessageError ?? new Enveloped<MessageError>(Enveloped).
+                    CacheValue(out envelopedMessageError);
+        Enveloped<MessageError> envelopedMessageError;
 
         }
-
     public partial class MessageComplete {
+
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<MessageComplete> EnvelopedMessageComplete =>
+            envelopedMessageComplete ?? new Enveloped<MessageComplete>(Enveloped).
+                    CacheValue(out envelopedMessageComplete);
+        Enveloped<MessageComplete> envelopedMessageComplete;
 
         ///<summary>Constant for the response Accept.</summary>
         public const string Accept = "Accept";
@@ -145,21 +148,21 @@ namespace Goedel.Mesh {
 
             }
 
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="MessageComplete"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new MessageComplete Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as MessageComplete;
-
-
-
         }
-
+    public partial class MessagePinValidated {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<MessagePinValidated> EnvelopedMessagePinValidated =>
+            envelopedMessagePinValidated ?? new Enveloped<MessagePinValidated>(Enveloped).
+                    CacheValue(out envelopedMessagePinValidated);
+        Enveloped<MessagePinValidated> envelopedMessagePinValidated;
+        }
     public partial class MessagePIN {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<MessagePIN> EnvelopedMessagePIN =>
+            envelopedMessagePIN ?? new Enveloped<MessagePIN>(Enveloped).
+                    CacheValue(out envelopedMessagePIN);
+        Enveloped<MessagePIN> envelopedMessagePIN;
+
 
         ///<summary>The unbound PIN code.</summary>
         public string PIN { get; }
@@ -264,23 +267,6 @@ namespace Goedel.Mesh {
             return result;
             }
 
-
-
-        ///// <summary>
-        ///// Witness value calculated as KDF (Device.UDF + AccountAddress+ClientNonce, pin)
-        ///// </summary>
-        ///// <param name="pin">The salted one time code</param>
-        ///// <param name="accountAddress">The account address of the issuer of the PIN</param>
-        ///// <param name="deviceUDF">The data being witnessed.</param>
-        ///// <param name="clientNonce">Nonce value to bind to the exchange.</param>
-        ///// <returns>The binary witness value.</returns>
-        //static byte[] GetPinWitness(
-        //            string pin,
-        //            string accountAddress,
-        //            string deviceUDF,
-        //            byte[] clientNonce) => UDF.PinWitness(pin, accountAddress.ToUTF8(),
-        //                clientNonce, deviceUDF.ToUTF8());
-
         /// <summary>
         /// Witness value calculated as KDF (envelope + AccountAddress+ClientNonce, pin)
         /// </summary>
@@ -298,48 +284,12 @@ namespace Goedel.Mesh {
             return UDF.PinWitness(pin, accountAddress.ToUTF8(), clientNonce, digest);
             }
         }
-
-    public partial class AcknowledgeConnection {
-
-
-
-        ///<summary>Convenience accessor for the inner <see cref="AcknowledgeConnection"/></summary>
-        public RequestConnection MessageConnectionRequest => messageConnectionRequest ??
-            RequestConnection.Decode(EnvelopedRequestConnection).CacheValue(out messageConnectionRequest);
-        RequestConnection messageConnectionRequest;
-
-
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="RespondConnection"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new AcknowledgeConnection Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as AcknowledgeConnection;
-
-        }
-
-
     public partial class RequestConnection {
-
-        ///<summary>The signed profile</summary> 
-        public EnvelopedRequestConnection EnvelopedRequestConnection { get; protected set; }
-
-        /// <summary>
-        /// Sign the profile under <paramref name="SignatureKey"/>.
-        /// </summary>
-        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
-        /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="EnvelopedRequestConnection"/></returns>
-        public override DareEnvelope Sign(CryptoKey SignatureKey) {
-            EnvelopedRequestConnection = EnvelopedRequestConnection.Encode(this, signingKey: SignatureKey);
-            DareEnvelope = EnvelopedRequestConnection;
-            return DareEnvelope;
-            }
-
-
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<RequestConnection> EnvelopedRequestConnection =>
+            envelopedRequestConnection ?? new Enveloped<RequestConnection>(Enveloped).
+                    CacheValue(out envelopedRequestConnection);
+        Enveloped<RequestConnection> envelopedRequestConnection;
 
         /// <summary>
         /// Default constructor used for deserialization.
@@ -391,54 +341,27 @@ namespace Goedel.Mesh {
             ProfileDevice.Decode(AuthenticatedData).CacheValue(out profileDevice);
         ProfileDevice profileDevice;
 
+        }
+    public partial class AcknowledgeConnection {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<AcknowledgeConnection> EnvelopedAcknowledgeConnection =>
+            envelopedAcknowledgeConnection ?? new Enveloped<AcknowledgeConnection>(Enveloped).
+                    CacheValue(out envelopedAcknowledgeConnection);
+        Enveloped<AcknowledgeConnection> envelopedAcknowledgeConnection;
 
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="RequestConnection"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new RequestConnection Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as RequestConnection;
-
-
-
-        //public void Authenticate (string pin) => throw new NYI();
-
-
-        /// <summary>
-        /// Verified decoding of the enveloped request <paramref name="envelope"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <returns>The decoded profile (if signature verification succeeds).</returns>
-        public static RequestConnection Verify(DareEnvelope envelope) {
-            var result = Decode(envelope) as RequestConnection;
-
-            // ToDo: put the verification code in here.
-
-
-            return result;
-            }
-
-
-
+        ///<summary>Convenience accessor for the inner <see cref="AcknowledgeConnection"/></summary>
+        public RequestConnection MessageConnectionRequest =>
+                    EnvelopedRequestConnection.Decode(KeyCollection);
 
         }
-
     public partial class RespondConnection {
 
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<RespondConnection> EnvelopedRespondConnection =>
+            envelopedRespondConnection ?? new Enveloped<RespondConnection>(Enveloped).
+                    CacheValue(out envelopedRespondConnection);
+        Enveloped<RespondConnection> envelopedRespondConnection;
 
-
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="RespondConnection"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new RespondConnection Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as RespondConnection;
 
         /// <summary>
         /// Validate the RespondConnection message in the context of <paramref name="profileDevice"/>
@@ -469,25 +392,55 @@ namespace Goedel.Mesh {
             }
 
         }
-
-
+    public partial class RequestContact {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<RequestContact> EnvelopedRequestContact =>
+            envelopedRequestContact ?? new Enveloped<RequestContact>(Enveloped).
+                    CacheValue(out envelopedRequestContact);
+        Enveloped<RequestContact> envelopedRequestContact;
+        }
+    public partial class ReplyContact {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ReplyContact> EnvelopedReplyContact =>
+            envelopedReplyContact ?? new Enveloped<ReplyContact>(Enveloped).
+                    CacheValue(out envelopedReplyContact);
+        Enveloped<ReplyContact> envelopedReplyContact;
+        }
+    public partial class GroupInvitation {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<GroupInvitation> EnvelopedGroupInvitation =>
+            envelopedGroupInvitation ?? new Enveloped<GroupInvitation>(Enveloped).
+                    CacheValue(out envelopedGroupInvitation);
+        Enveloped<GroupInvitation> envelopedGroupInvitation;
+        }
     public partial class RequestConfirmation {
 
-        ///<summary>The signed profile</summary> 
-        public EnvelopedRequestConfirmation EnvelopedRequestConfirmation { get; protected set; }
-
-        /// <summary>
-        /// Sign the profile under <paramref name="SignatureKey"/>.
-        /// </summary>
-        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
-        /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="EnvelopedRequestConfirmation"/></returns>
-        public override DareEnvelope Sign(CryptoKey SignatureKey) {
-            EnvelopedRequestConfirmation = EnvelopedRequestConfirmation.Encode(this, signingKey: SignatureKey);
-            DareEnvelope = EnvelopedRequestConfirmation;
-            return DareEnvelope;
-            }
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<RequestConfirmation> EnvelopedRequestConfirmation =>
+            envelopedRequestConfirmation ?? new Enveloped<RequestConfirmation>(Enveloped).
+                    CacheValue(out envelopedRequestConfirmation);
+        Enveloped<RequestConfirmation> envelopedRequestConfirmation;
 
         }
-
+    public partial class ResponseConfirmation {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ResponseConfirmation> EnvelopedResponseConfirmation =>
+            envelopedResponseConfirmation ?? new Enveloped<ResponseConfirmation>(Enveloped).
+                    CacheValue(out envelopedResponseConfirmation);
+        Enveloped<ResponseConfirmation> envelopedResponseConfirmation;
+        }
+    public partial class RequestTask {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<RequestTask> EnvelopedRequestTask =>
+            envelopedRequestTask ?? new Enveloped<RequestTask>(Enveloped).
+                    CacheValue(out envelopedRequestTask);
+        Enveloped<RequestTask> envelopedRequestTask;
+        }
+    public partial class ProcessResult {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ProcessResult> EnvelopedProcessResult =>
+            envelopedProcessResult ?? new Enveloped<ProcessResult>(Enveloped).
+                    CacheValue(out envelopedProcessResult);
+        Enveloped<ProcessResult> envelopedProcessResult;
+        }
     }

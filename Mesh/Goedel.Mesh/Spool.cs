@@ -123,12 +123,12 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>The decoded message</returns>
         Message Decode() {
-            if (DareEnvelope.JSONObject != null) {
-                return DareEnvelope.JSONObject as Message;
+            if (DareEnvelope.JsonObject != null) {
+                return DareEnvelope.JsonObject as Message;
                 }
 
-            DareEnvelope.JSONObject = Message.Decode(DareEnvelope, Spool.KeyCollection);
-            return DareEnvelope.JSONObject as Message;
+            DareEnvelope.JsonObject = Message.Decode(DareEnvelope, Spool.KeyCollection);
+            return DareEnvelope.JsonObject as Message;
             }
 
 

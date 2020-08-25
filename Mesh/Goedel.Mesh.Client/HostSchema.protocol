@@ -21,7 +21,7 @@
 		Boolean Default
 			Description
 				|If true, this is the default for the profile type (master, account)
-		Struct DareEnvelope EnvelopedProfileUser
+		Struct Enveloped<ProfileUser> EnvelopedProfileUser
 			Description
 				|The master profile that provides the root of trust for this Mesh
 		Struct CatalogedDevice CatalogedDevice
@@ -53,15 +53,12 @@
 		String DeviceUDF
 			Description
 				|UDF of the connected device
-		Struct DareEnvelope EnvelopedProfileDevice
+		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile presented to the service.
-		Struct DareEnvelope EnvelopedMessageConnectionResponse
+		Struct Enveloped<AcknowledgeConnection> EnvelopedAcknowledgeConnection
 			Description
 				|The response returned by the service when the registration was requested.
-		Struct DareEnvelope EnvelopedAccountAssertion
-			Description
-				|The current account assertion
 		String AccountAddress
 			Description
 				|The account at which the request is pending.
@@ -72,7 +69,7 @@
 		Description
 			|Describes a preconfigured Device Profile bound to a remote 
 			|manufacturer profile.
-		Struct DareEnvelope EnvelopedProfileDevice
+		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile presented to the service.
 		String AccountAddress

@@ -214,7 +214,7 @@ namespace Goedel.Cryptography.Dare {
         public virtual void Apply(DareEnvelope dareMessage) {
             var frameIndex = Container.Append(dareMessage);
 
-            CommitTransaction(frameIndex, dareMessage.JSONObject);
+            CommitTransaction(frameIndex, dareMessage.JsonObject);
             }
 
         #region Commit transaction to memory

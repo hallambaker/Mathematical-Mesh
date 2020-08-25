@@ -732,7 +732,7 @@ namespace Goedel.Mesh {
         ///Device profile of the device making the request.
         /// </summary>
 
-		public virtual EnvelopedProfileDevice						EnvelopedProfileDevice  {get; set;}
+		public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -826,7 +826,7 @@ namespace Goedel.Mesh {
 					}
 				case "EnvelopedProfileDevice" : {
 					// An untagged structure
-					EnvelopedProfileDevice = new EnvelopedProfileDevice ();
+					EnvelopedProfileDevice = new Enveloped<ProfileDevice> ();
 					EnvelopedProfileDevice.Deserialize (jsonReader);
  
 					break;
@@ -1886,12 +1886,12 @@ namespace Goedel.Mesh {
         ///The enveloped master profile of the service.
         /// </summary>
 
-		public virtual EnvelopedProfileService						EnvelopedProfileService  {get; set;}
+		public virtual Enveloped<ProfileService>						EnvelopedProfileService  {get; set;}
         /// <summary>
         ///The enveloped profile of the host.
         /// </summary>
 
-		public virtual EnvelopedProfileHost						EnvelopedProfileHost  {get; set;}
+		public virtual Enveloped<ProfileHost>						EnvelopedProfileHost  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2017,14 +2017,14 @@ namespace Goedel.Mesh {
 					}
 				case "EnvelopedProfileService" : {
 					// An untagged structure
-					EnvelopedProfileService = new EnvelopedProfileService ();
+					EnvelopedProfileService = new Enveloped<ProfileService> ();
 					EnvelopedProfileService.Deserialize (jsonReader);
  
 					break;
 					}
 				case "EnvelopedProfileHost" : {
 					// An untagged structure
-					EnvelopedProfileHost = new EnvelopedProfileHost ();
+					EnvelopedProfileHost = new Enveloped<ProfileHost> ();
 					EnvelopedProfileHost.Deserialize (jsonReader);
  
 					break;
@@ -2054,7 +2054,7 @@ namespace Goedel.Mesh {
         ///The signed assertion describing the account.
         /// </summary>
 
-		public virtual EnvelopedProfileUser						EnvelopedProfileUser  {get; set;}
+		public virtual Enveloped<ProfileUser>						EnvelopedProfileUser  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2148,7 +2148,7 @@ namespace Goedel.Mesh {
 					}
 				case "EnvelopedProfileUser" : {
 					// An untagged structure
-					EnvelopedProfileUser = new EnvelopedProfileUser ();
+					EnvelopedProfileUser = new Enveloped<ProfileUser> ();
 					EnvelopedProfileUser.Deserialize (jsonReader);
  
 					break;
@@ -2598,7 +2598,7 @@ namespace Goedel.Mesh {
         ///The signed assertion describing the result of the connect request
         /// </summary>
 
-		public virtual EnvelopedRespondConnection						EnvelopedRespondConnection  {get; set;}
+		public virtual Enveloped<RespondConnection>						EnvelopedRespondConnection  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2683,7 +2683,7 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "EnvelopedRespondConnection" : {
 					// An untagged structure
-					EnvelopedRespondConnection = new EnvelopedRespondConnection ();
+					EnvelopedRespondConnection = new Enveloped<RespondConnection> ();
 					EnvelopedRespondConnection.Deserialize (jsonReader);
  
 					break;
@@ -2877,12 +2877,12 @@ namespace Goedel.Mesh {
         ///The account profile providing the root of trust for this account.
         /// </summary>
 
-		public virtual EnvelopedProfileAccount						EnvelopedProfileAccount  {get; set;}
+		public virtual Enveloped<ProfileAccount>						EnvelopedProfileAccount  {get; set;}
         /// <summary>
         ///The catalog device entry
         /// </summary>
 
-		public virtual EnvelopedCatalogedDevice						EnvelopedCatalogedDevice  {get; set;}
+		public virtual Enveloped<CatalogedDevice>						EnvelopedCatalogedDevice  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -2993,14 +2993,14 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "EnvelopedProfileAccount" : {
 					// An untagged structure
-					EnvelopedProfileAccount = new EnvelopedProfileAccount ();
+					EnvelopedProfileAccount = new Enveloped<ProfileAccount> ();
 					EnvelopedProfileAccount.Deserialize (jsonReader);
  
 					break;
 					}
 				case "EnvelopedCatalogedDevice" : {
 					// An untagged structure
-					EnvelopedCatalogedDevice = new EnvelopedCatalogedDevice ();
+					EnvelopedCatalogedDevice = new Enveloped<CatalogedDevice> ();
 					EnvelopedCatalogedDevice.Deserialize (jsonReader);
  
 					break;
@@ -3334,20 +3334,20 @@ namespace Goedel.Mesh {
         ///The messages to be sent to other accounts  
         /// </summary>
 
-		public virtual List<DareEnvelope>				Outbound  {get; set;}
+		public virtual List<Enveloped<Message>>				Outbound  {get; set;}
         /// <summary>
         ///Messages to be appended to the user's inbound spool. this is
         ///typically used to post notifications to the user to mark messages as having been
         ///read or responded to.
         /// </summary>
 
-		public virtual List<DareEnvelope>				Inbound  {get; set;}
+		public virtual List<Enveloped<Message>>				Inbound  {get; set;}
         /// <summary>
         ///Messages to be appended to the user's local spool. This is used to allow connecting
         ///devices to collect activation messages before they have connected to the mesh.
         /// </summary>
 
-		public virtual List<DareEnvelope>				Local  {get; set;}
+		public virtual List<Enveloped<Message>>				Local  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3533,12 +3533,12 @@ namespace Goedel.Mesh {
 				case "Outbound" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					Outbound = new List <DareEnvelope> ();
+					Outbound = new List <Enveloped<Message>> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  DareEnvelope ();
+						var _Item = new  Enveloped<Message> ();
 						_Item.Deserialize (jsonReader);
-						// var _Item = new DareEnvelope (jsonReader);
+						// var _Item = new Enveloped<Message> (jsonReader);
 						Outbound.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
@@ -3547,12 +3547,12 @@ namespace Goedel.Mesh {
 				case "Inbound" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					Inbound = new List <DareEnvelope> ();
+					Inbound = new List <Enveloped<Message>> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  DareEnvelope ();
+						var _Item = new  Enveloped<Message> ();
 						_Item.Deserialize (jsonReader);
-						// var _Item = new DareEnvelope (jsonReader);
+						// var _Item = new Enveloped<Message> (jsonReader);
 						Inbound.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
@@ -3561,12 +3561,12 @@ namespace Goedel.Mesh {
 				case "Local" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					Local = new List <DareEnvelope> ();
+					Local = new List <Enveloped<Message>> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  DareEnvelope ();
+						var _Item = new  Enveloped<Message> ();
 						_Item.Deserialize (jsonReader);
-						// var _Item = new DareEnvelope (jsonReader);
+						// var _Item = new Enveloped<Message> (jsonReader);
 						Local.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
@@ -3907,7 +3907,7 @@ namespace Goedel.Mesh {
         ///The messages to be sent to the addresses specified in Accounts. 
         /// </summary>
 
-		public virtual List<DareEnvelope>				Messages  {get; set;}
+		public virtual List<Enveloped<Message>>				Messages  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4028,12 +4028,12 @@ namespace Goedel.Mesh {
 				case "Messages" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					Messages = new List <DareEnvelope> ();
+					Messages = new List <Enveloped<Message>> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  DareEnvelope ();
+						var _Item = new  Enveloped<Message> ();
 						_Item.Deserialize (jsonReader);
-						// var _Item = new DareEnvelope (jsonReader);
+						// var _Item = new Enveloped<Message> (jsonReader);
 						Messages.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
@@ -4150,7 +4150,7 @@ namespace Goedel.Mesh {
         ///The connection request generated by the client 
         /// </summary>
 
-		public virtual EnvelopedRequestConnection						EnvelopedRequestConnection  {get; set;}
+		public virtual Enveloped<RequestConnection>						EnvelopedRequestConnection  {get; set;}
         /// <summary>
         ///List of named access rights.
         /// </summary>
@@ -4252,7 +4252,7 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "EnvelopedRequestConnection" : {
 					// An untagged structure
-					EnvelopedRequestConnection = new EnvelopedRequestConnection ();
+					EnvelopedRequestConnection = new Enveloped<RequestConnection> ();
 					EnvelopedRequestConnection.Deserialize (jsonReader);
  
 					break;
@@ -4286,12 +4286,12 @@ namespace Goedel.Mesh {
         ///The connection request generated by the client
         /// </summary>
 
-		public virtual EnvelopedRespondConnection						EnvelopedRespondConnection  {get; set;}
+		public virtual Enveloped<AcknowledgeConnection>						EnvelopedAcknowledgeConnection  {get; set;}
         /// <summary>
         ///The user profile that provides the root of trust for this Mesh
         /// </summary>
 
-		public virtual EnvelopedProfileUser						EnvelopedProfileUser  {get; set;}
+		public virtual Enveloped<ProfileUser>						EnvelopedProfileUser  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4336,10 +4336,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((MeshResponse)this).SerializeX(_writer, false, ref _first);
-			if (EnvelopedRespondConnection != null) {
+			if (EnvelopedAcknowledgeConnection != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedRespondConnection", 1);
-					EnvelopedRespondConnection.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedAcknowledgeConnection", 1);
+					EnvelopedAcknowledgeConnection.Serialize (_writer, false);
 				}
 			if (EnvelopedProfileUser != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -4379,16 +4379,16 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "EnvelopedRespondConnection" : {
+				case "EnvelopedAcknowledgeConnection" : {
 					// An untagged structure
-					EnvelopedRespondConnection = new EnvelopedRespondConnection ();
-					EnvelopedRespondConnection.Deserialize (jsonReader);
+					EnvelopedAcknowledgeConnection = new Enveloped<AcknowledgeConnection> ();
+					EnvelopedAcknowledgeConnection.Deserialize (jsonReader);
  
 					break;
 					}
 				case "EnvelopedProfileUser" : {
 					// An untagged structure
-					EnvelopedProfileUser = new EnvelopedProfileUser ();
+					EnvelopedProfileUser = new Enveloped<ProfileUser> ();
 					EnvelopedProfileUser.Deserialize (jsonReader);
  
 					break;
@@ -4411,7 +4411,7 @@ namespace Goedel.Mesh {
         ///The claim message
         /// </summary>
 
-		public virtual EnvelopedMessageClaim						EnvelopedMessageClaim  {get; set;}
+		public virtual Enveloped<MessageClaim>						EnvelopedMessageClaim  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4496,7 +4496,7 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "EnvelopedMessageClaim" : {
 					// An untagged structure
-					EnvelopedMessageClaim = new EnvelopedMessageClaim ();
+					EnvelopedMessageClaim = new Enveloped<MessageClaim> ();
 					EnvelopedMessageClaim.Deserialize (jsonReader);
  
 					break;
@@ -4746,7 +4746,7 @@ namespace Goedel.Mesh {
         ///The claim message
         /// </summary>
 
-		public virtual EnvelopedMessageClaim						EnvelopedMessageClaim  {get; set;}
+		public virtual Enveloped<Message>						EnvelopedMessage  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4791,10 +4791,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((MeshResponse)this).SerializeX(_writer, false, ref _first);
-			if (EnvelopedMessageClaim != null) {
+			if (EnvelopedMessage != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedMessageClaim", 1);
-					EnvelopedMessageClaim.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedMessage", 1);
+					EnvelopedMessage.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -4829,10 +4829,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "EnvelopedMessageClaim" : {
+				case "EnvelopedMessage" : {
 					// An untagged structure
-					EnvelopedMessageClaim = new EnvelopedMessageClaim ();
-					EnvelopedMessageClaim.Deserialize (jsonReader);
+					EnvelopedMessage = new Enveloped<Message> ();
+					EnvelopedMessage.Deserialize (jsonReader);
  
 					break;
 					}
@@ -4860,7 +4860,7 @@ namespace Goedel.Mesh {
         ///account assertion.
         /// </summary>
 
-		public virtual EnvelopedProfileGroup						EnvelopedProfileGroup  {get; set;}
+		public virtual Enveloped<ProfileGroup>						EnvelopedProfileGroup  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4954,7 +4954,7 @@ namespace Goedel.Mesh {
 					}
 				case "EnvelopedProfileGroup" : {
 					// An untagged structure
-					EnvelopedProfileGroup = new EnvelopedProfileGroup ();
+					EnvelopedProfileGroup = new Enveloped<ProfileGroup> ();
 					EnvelopedProfileGroup.Deserialize (jsonReader);
  
 					break;

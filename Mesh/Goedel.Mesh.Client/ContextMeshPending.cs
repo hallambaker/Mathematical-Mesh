@@ -128,7 +128,7 @@ namespace Goedel.Mesh.Client {
             var keyAuthentication = meshHost.KeyCollection.LocatePrivateKeyPair(
                             profileDevice.KeyAuthentication.UDF);
 
-            requestConnection.Sign(keyAuthentication);
+            requestConnection.Envelope(keyAuthentication);
 
             // Acquire ephemeral client. This will only be used for the Connect and Complete methods.
             var meshClient = meshHost.MeshMachine.GetMeshClient(accountAddress, keyAuthentication, null);
@@ -146,10 +146,9 @@ namespace Goedel.Mesh.Client {
                 Id = profileDevice.UDF,
                 DeviceUDF = profileDevice.UDF,
                 AccountAddress = accountAddress,
-                EnvelopedMessageConnectionResponse = response.EnvelopedRespondConnection,
+                EnvelopedAcknowledgeConnection = response.EnvelopedAcknowledgeConnection,
                 EnvelopedProfileUser = response.EnvelopedProfileUser,
-                EnvelopedProfileDevice = profileDevice.DareEnvelope,
-                EnvelopedAccountAssertion = response.EnvelopedProfileUser,
+                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
                 Local = localName
                 };
 
@@ -179,8 +178,7 @@ namespace Goedel.Mesh.Client {
             completeResponse.Success().AssertTrue(ConnectionAccountUnknown.Throw);
 
             //// OK so here we need to unpack the profile etc.
-            var respondConnection = RespondConnection.Decode(
-                    completeResponse.EnvelopedRespondConnection, KeyCollection);
+            var respondConnection = completeResponse.EnvelopedRespondConnection.Decode(KeyCollection);
 
             respondConnection.Validate(ProfileDevice, KeyCollection);
 
@@ -204,7 +202,7 @@ namespace Goedel.Mesh.Client {
             var catalogedStandard = new CatalogedStandard() {
                 Id = ProfileDevice.UDF,
                 CatalogedDevice = catalogedEntry,
-                EnvelopedProfileUser = profileUser.DareEnvelope
+                EnvelopedProfileUser = profileUser.EnvelopedProfileUser
                 };
 
             // create the context mesh

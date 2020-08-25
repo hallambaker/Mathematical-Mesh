@@ -53,6 +53,9 @@ namespace Goedel.Mesh.Server {
         ///<summary>The root directory in which the files are stored.</summary>
         public string DirectoryRoot;
 
+        public CryptoKey ServiceEncryptionKey => null;
+        public CryptoKey ServiceSignatureKey => null;
+
         static MeshPersist() {
             _ = MeshItem.Initialize;
             _ = CatalogItem.Initialize;
@@ -108,46 +111,41 @@ namespace Goedel.Mesh.Server {
         /// Process a connection request.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="messageConnectionRequestClient">TThe message connection request.</param>
+        /// <param name="requestConnection">TThe message connection request.</param>
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(JpcSession jpcSession,
-                        RequestConnection messageConnectionRequestClient) {
+                        RequestConnection requestConnection) {
             jpcSession.Future();
 
-            using var accountHandle = GetAccountUnverified(messageConnectionRequestClient.AccountAddress);
+            using var accountHandle = GetAccountUnverified(requestConnection.AccountAddress);
             var serviceNonce = CryptoCatalog.GetBits(128);
 
             var MeshUDF = accountHandle.ProfileUser.OfflineSignature.CryptoKey.UDFBytes;
-            var DeviceUDF = messageConnectionRequestClient.ProfileDevice.OfflineSignature.CryptoKey.UDFBytes;
+            var DeviceUDF = requestConnection.ProfileDevice.OfflineSignature.CryptoKey.UDFBytes;
 
             var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
-                messageConnectionRequestClient.ClientNonce);
+                requestConnection.ClientNonce);
 
             var messageID = UDF.Nonce();
             //Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageID}");
 
-            var messageConnectionRequest = new AcknowledgeConnection() {
-                EnvelopedRequestConnection = messageConnectionRequestClient.DareEnvelope,
+            var acknowledgeConnection = new AcknowledgeConnection() {
+                EnvelopedRequestConnection = requestConnection.EnvelopedRequestConnection,
                 ServerNonce = serviceNonce,
                 Witness = witness,
                 MessageID = witness
                 };
 
-            Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageConnectionRequest.MessageID}");
-            Console.WriteLine($"The AcknowledgeConnection Response ID = {messageConnectionRequest.GetResponseId()}");
+            Console.WriteLine($"The AcknowledgeConnection.MessageID = {acknowledgeConnection.MessageID}");
+            Console.WriteLine($"The AcknowledgeConnection Response ID = {acknowledgeConnection.GetResponseId()}");
 
-
-            // This is all a big mess, the names don't bear any relationship to function.
-
-
-            // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.
-
-            var envelope = messageConnectionRequest.Sign(null); // Hack: ???
-            accountHandle.PostInbound(envelope);
-
+            // Sign the envelope under the service key.
+            // Encrypt: We should probably encrypt here to the device key and the account key.
+            acknowledgeConnection.Envelope(ServiceSignatureKey); 
+            accountHandle.PostInbound(acknowledgeConnection.DareEnvelope);
 
             var connectResponse = new ConnectResponse() {
-                EnvelopedRespondConnection = envelope,
+                EnvelopedAcknowledgeConnection = acknowledgeConnection.EnvelopedAcknowledgeConnection,
                 EnvelopedProfileUser = accountHandle.ProfileUser.EnvelopedProfileUser
                 };
 
@@ -178,7 +176,7 @@ namespace Goedel.Mesh.Server {
                 }
 
             return new CompleteResponse() {
-                EnvelopedRespondConnection = envelope
+                EnvelopedRespondConnection = new Enveloped<RespondConnection>(envelope)
                 };
             }
 
@@ -200,7 +198,7 @@ namespace Goedel.Mesh.Server {
 
             var statusResponse = new StatusResponse() {
                 ContainerStatus = containerStatus,
-                EnvelopedProfileAccount = accountHandle.ProfileUser?.DareEnvelope,
+                EnvelopedProfileAccount = accountHandle.ProfileUser?.EnvelopedProfileAccount,
                 EnvelopedCatalogedDevice = null
                 };
 
@@ -261,9 +259,9 @@ namespace Goedel.Mesh.Server {
                     JpcSession jpcSession,
                     VerifiedAccount account,
                     List<ContainerUpdate> updates,
-                    List<DareEnvelope> inbound,
-                    List<DareEnvelope> outbound,
-                    List<DareEnvelope> local,
+                    List<Enveloped<Message>> inbound,
+                    List<Enveloped<Message>> outbound,
+                    List<Enveloped<Message>> local,
                     List<string> accounts) {
             //AccountHandleVerified accountEntry = null;
 
@@ -417,19 +415,14 @@ namespace Goedel.Mesh.Server {
                     JpcSession jpcSession,
                     string targetAccount,
                     string id) {
-
             using var accountEntry = GetAccountUnverified(targetAccount);
             var message = accountEntry.GetLocal(id);
 
             // return the message if found (otherwise null)
-            var response = new PollClaimResponse() {
-                EnvelopedMessageClaim = message
+            var response = message == null ? null : new PollClaimResponse() {
+                EnvelopedMessage = new Enveloped<Message>(message)
                 };
-
-
             return response;
-
-
             }
 
 
@@ -686,9 +679,8 @@ namespace Goedel.Mesh.Server {
 
 
         ///<summary>Cached convenience accessor for <see cref="ProfileUser"/></summary>
-        public ProfileUser ProfileUser => profileUser ??
-            ProfileUser.Decode(SignedProfileUser).CacheValue(out profileUser);
-        ProfileUser profileUser;
+        public ProfileUser ProfileUser => EnvelopedProfileUser.Decode();
+
 
         /// <summary>
         /// Default constructor for serialization.
@@ -702,7 +694,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="request">The account creation request.</param>
         public AccountUser(CreateRequest request) {
             AccountAddress = request.AccountAddress;
-            SignedProfileUser = request.EnvelopedProfileUser;
+            EnvelopedProfileUser = request.EnvelopedProfileUser;
             Verify();
             Directory = AccountAddress;
             }
@@ -721,7 +713,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="request">The account creation request.</param>
         public AccountGroup(CreateGroupRequest request) {
             AccountAddress = request.AccountAddress;
-            SignedProfileGroup = request.EnvelopedProfileGroup;
+            EnvelopedProfileGroup = request.EnvelopedProfileGroup;
             Verify();
             Directory = AccountAddress;
             }

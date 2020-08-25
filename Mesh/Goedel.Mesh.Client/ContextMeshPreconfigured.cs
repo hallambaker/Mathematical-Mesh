@@ -62,7 +62,7 @@ namespace Goedel.Mesh.Client {
                 return null;
                 }
 
-            var messageClaim = MeshItem.Decode(claimResponse.EnvelopedMessageClaim, KeyCollection) as MessageClaim;
+            var messageClaim = MeshItem.Decode(claimResponse.EnvelopedMessage, KeyCollection) as MessageClaim;
             messageClaim.AssertNotNull(InvalidServiceResponse.Throw); // should never be null
 
 
@@ -80,10 +80,9 @@ namespace Goedel.Mesh.Client {
                 Id = profileDevice.UDF,
                 DeviceUDF = profileDevice.UDF,
                 AccountAddress = messageClaim.Sender,
-                EnvelopedProfileDevice = profileDevice.DareEnvelope,
-                EnvelopedMessageConnectionResponse = claimResponse.EnvelopedMessageClaim
-                //EnvelopedProfileMaster = response.EnvelopedProfileMaster,
-                //EnvelopedAccountAssertion = response.EnvelopedAccountAssertion
+                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
+                EnvelopedAcknowledgeConnection = 
+                        new Enveloped<AcknowledgeConnection>(claimResponse.EnvelopedMessage)
                 };
 
             var context = new ContextMeshPending(MeshHost, catalogedPending);
@@ -140,7 +139,7 @@ namespace Goedel.Mesh.Client {
             // create a Mesh Host entry.
 
             var catalogedPreconfig = new CatalogedPreconfigured() {
-                EnvelopedProfileDevice = profileDevice.DareEnvelope,
+                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
                 Id = profileDevice.UDF,
                 ServiceAuthenticator = serviceAuthenticator,
                 DeviceAuthenticator = deviceAuthenticator,

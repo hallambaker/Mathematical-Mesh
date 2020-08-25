@@ -111,7 +111,7 @@ namespace Goedel.Mesh.Client {
         ///The master profile that provides the root of trust for this Mesh
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedProfileUser  {get; set;}
+		public virtual Enveloped<ProfileUser>						EnvelopedProfileUser  {get; set;}
         /// <summary>
         ///The cataloged device profile
         /// </summary>
@@ -232,7 +232,7 @@ namespace Goedel.Mesh.Client {
 					}
 				case "EnvelopedProfileUser" : {
 					// An untagged structure
-					EnvelopedProfileUser = new DareEnvelope ();
+					EnvelopedProfileUser = new Enveloped<ProfileUser> ();
 					EnvelopedProfileUser.Deserialize (jsonReader);
  
 					break;
@@ -492,17 +492,12 @@ namespace Goedel.Mesh.Client {
         ///The device profile presented to the service.
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedProfileDevice  {get; set;}
+		public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
         /// <summary>
         ///The response returned by the service when the registration was requested.
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedMessageConnectionResponse  {get; set;}
-        /// <summary>
-        ///The current account assertion
-        /// </summary>
-
-		public virtual DareEnvelope						EnvelopedAccountAssertion  {get; set;}
+		public virtual Enveloped<AcknowledgeConnection>						EnvelopedAcknowledgeConnection  {get; set;}
         /// <summary>
         ///The account at which the request is pending.
         /// </summary>
@@ -562,15 +557,10 @@ namespace Goedel.Mesh.Client {
 				_writer.WriteToken ("EnvelopedProfileDevice", 1);
 					EnvelopedProfileDevice.Serialize (_writer, false);
 				}
-			if (EnvelopedMessageConnectionResponse != null) {
+			if (EnvelopedAcknowledgeConnection != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedMessageConnectionResponse", 1);
-					EnvelopedMessageConnectionResponse.Serialize (_writer, false);
-				}
-			if (EnvelopedAccountAssertion != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedAccountAssertion", 1);
-					EnvelopedAccountAssertion.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedAcknowledgeConnection", 1);
+					EnvelopedAcknowledgeConnection.Serialize (_writer, false);
 				}
 			if (AccountAddress != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -616,22 +606,15 @@ namespace Goedel.Mesh.Client {
 					}
 				case "EnvelopedProfileDevice" : {
 					// An untagged structure
-					EnvelopedProfileDevice = new DareEnvelope ();
+					EnvelopedProfileDevice = new Enveloped<ProfileDevice> ();
 					EnvelopedProfileDevice.Deserialize (jsonReader);
  
 					break;
 					}
-				case "EnvelopedMessageConnectionResponse" : {
+				case "EnvelopedAcknowledgeConnection" : {
 					// An untagged structure
-					EnvelopedMessageConnectionResponse = new DareEnvelope ();
-					EnvelopedMessageConnectionResponse.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "EnvelopedAccountAssertion" : {
-					// An untagged structure
-					EnvelopedAccountAssertion = new DareEnvelope ();
-					EnvelopedAccountAssertion.Deserialize (jsonReader);
+					EnvelopedAcknowledgeConnection = new Enveloped<AcknowledgeConnection> ();
+					EnvelopedAcknowledgeConnection.Deserialize (jsonReader);
  
 					break;
 					}
@@ -660,7 +643,7 @@ namespace Goedel.Mesh.Client {
         ///The device profile presented to the service.
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedProfileDevice  {get; set;}
+		public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
         /// <summary>
         ///The account to which claims will be posted
         /// </summary>
@@ -785,7 +768,7 @@ namespace Goedel.Mesh.Client {
 			switch (tag) {
 				case "EnvelopedProfileDevice" : {
 					// An untagged structure
-					EnvelopedProfileDevice = new DareEnvelope ();
+					EnvelopedProfileDevice = new Enveloped<ProfileDevice> ();
 					EnvelopedProfileDevice.Deserialize (jsonReader);
  
 					break;

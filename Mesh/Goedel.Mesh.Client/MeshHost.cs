@@ -246,7 +246,7 @@ namespace Goedel.Mesh.Client {
                 Id = profileDevice.UDF,
                 Local = localName,
                 CatalogedDevice = catalogedDevice,
-                EnvelopedProfileUser = profileUser.DareEnvelope
+                EnvelopedProfileUser = profileUser.EnvelopedProfileUser
                 };
 
             // Create the account directory.

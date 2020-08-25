@@ -105,42 +105,40 @@ namespace Goedel.Mesh {
         /// </summary>
         public override string _PrimaryKey => DeviceUDF;
 
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice =>
+            envelopedCatalogedDevice ?? new Enveloped<CatalogedDevice>(Enveloped).
+                    CacheValue(out envelopedCatalogedDevice);
+        Enveloped<CatalogedDevice> envelopedCatalogedDevice;
+
+
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
+        ///to return the <see cref="ProfileUser"/> value.</summary>
+        public ProfileUser ProfileUser => 
+                    EnvelopedProfileUser.Decode(KeyCollection);
+
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileDevice"/>
+        ///to return the <see cref="ProfileDevice"/> value.</summary>
+        public ProfileDevice ProfileDevice => 
+                    EnvelopedProfileDevice.Decode(KeyCollection);
+
         /// <summary>
         /// The device connection assertion. This is set by either a new assertion being generated
         /// for a newly added device or by decoding the SignedDeviceConnection entry after 
         /// deserialization.
         /// </summary>
-        public ConnectionUser ConnectionDevice => connectionDevice ??
-            ConnectionUser.Decode(EnvelopedConnectionUser).CacheValue(out connectionDevice);
-        ConnectionUser connectionDevice = null;
-
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
-        ///to return the <see cref="ProfileUser"/> value.</summary>
-        public ProfileUser ProfileUser => profileUser ??
-            ProfileUser.Decode(EnvelopedProfileUser).CacheValue(out profileUser);
-        ProfileUser profileUser;
-
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileDevice"/>
-        ///to return the <see cref="ProfileDevice"/> value.</summary>
-        public ProfileDevice ProfileDevice => profileDevice ??
-                ProfileDevice.Decode(EnvelopedProfileDevice).CacheValue(out profileDevice);
-        ProfileDevice profileDevice;
-
+        public ConnectionUser ConnectionUser =>
+                    EnvelopedConnectionUser.Decode(KeyCollection);
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationDevice"/>
         ///to return the <see cref="ActivationDevice"/> value.</summary>
         public ActivationDevice GetActivationDevice(IKeyCollection keyCollection) =>
-            activationDevice ?? (keyCollection == null ? null :
-                ActivationDevice.Decode(EnvelopedActivationDevice, keyCollection).CacheValue(out activationDevice));
-        ActivationDevice activationDevice;
-
+                    EnvelopedActivationDevice.Decode(keyCollection);
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationAccount"/>
         ///to return the <see cref="ActivationAccount"/> value.</summary>
         public ActivationAccount GetActivationAccount(IKeyCollection keyCollection) =>
-            activationAccount ?? (keyCollection == null ? null :
-                ActivationAccount.Decode(EnvelopedActivationAccount, keyCollection).CacheValue(out activationAccount));
-        ActivationAccount activationAccount;
+                    EnvelopedActivationAccount.Decode(keyCollection);
 
 
         #endregion
@@ -185,24 +183,13 @@ namespace Goedel.Mesh {
 
             ProfileUser.ToBuilder(builder, indent, "[Profile Mesh Missing]");
             ProfileDevice.ToBuilder(builder, indent, "[Profile Device Missing]");
-            ConnectionDevice.ToBuilder(builder, indent, "[Connection Device Missing]");
+            ConnectionUser.ToBuilder(builder, indent, "[Connection Device Missing]");
             GetActivationDevice(keyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
 
             }
 
         #endregion
         #region // Class methods
-
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="CatalogedDevice"/>
-        /// using keys from <paramref name="keyCollection"/>.
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new CatalogedDevice Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as CatalogedDevice;
 
 
         /// <summary>

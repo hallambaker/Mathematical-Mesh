@@ -96,16 +96,6 @@ namespace Goedel.Mesh {
             byte[] context = null) => throw new OperationNotSupported();
 
 
-        //byte[] Signature(
-        //    string accountAddress,
-        //    string keyId,
-        //    byte[] data,
-        //    byte[] partialR,
-        //    BigInteger? lagrange = null
-        //    ) {
-        //    throw new NYI();
-        //    }
-
         }
 
     public partial class CapabilityDecrypt : IKeyDecrypt {

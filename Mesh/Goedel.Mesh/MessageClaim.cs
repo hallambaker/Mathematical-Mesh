@@ -11,22 +11,11 @@ using System.IO;
 namespace Goedel.Mesh {
     public partial class MessageClaim {
 
-        ///<summary>The signed profile</summary> 
-        public EnvelopedMessageClaim EnvelopedMessageClaim { get; protected set; }
-
-        /// <summary>
-        /// Sign the profile under <paramref name="SignatureKey"/>.
-        /// </summary>
-        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
-        /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="EnvelopedMessageClaim"/></returns>
-        public override DareEnvelope Sign(CryptoKey SignatureKey) {
-            EnvelopedMessageClaim = EnvelopedMessageClaim.Encode(this, signingKey: SignatureKey);
-            DareEnvelope = EnvelopedMessageClaim;
-            return DareEnvelope;
-            }
-
-
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<MessageClaim> EnvelopedMessageClaim =>
+            envelopedProfileUser ?? new Enveloped<MessageClaim>(Enveloped).
+                    CacheValue(out envelopedProfileUser);
+        Enveloped<MessageClaim> envelopedProfileUser;
 
 
         ///<summary>Base constructor used for deserialization.</summary>

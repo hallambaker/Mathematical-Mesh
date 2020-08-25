@@ -139,9 +139,6 @@ namespace Goedel.Mesh.Test {
             //CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
             }
 
-        protected DareEnvelope Sign(JsonObject data, KeyPair keySign) =>
-                    DareEnvelope.Encode(data.GetBytes(tag: true),
-                        signingKey: keySign);
 
         public CatalogedDevice MakeCatalogEntryDevice(ProfileDevice profileDevice, KeyPair keySign) {
 
@@ -152,10 +149,13 @@ namespace Goedel.Mesh.Test {
             var ProfileMeshDevicePrivate = new ActivationDevice() {
                 };
 
+            profileMeshDevicePublic.Envelope(keySign);
+            ProfileMeshDevicePrivate.Envelope(keySign);
+
             var catalogEntryDevice = new CatalogedDevice() {
                 UDF = profileDevice.UDF,
-                EnvelopedConnectionUser = Sign(profileMeshDevicePublic, keySign),
-                EnvelopedActivationDevice = Sign(ProfileMeshDevicePrivate, keySign)
+                EnvelopedConnectionUser = profileMeshDevicePublic.EnvelopedConnectionUser,
+                EnvelopedActivationDevice = ProfileMeshDevicePrivate.EnvelopedActivationDevice
                 };
 
 

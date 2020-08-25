@@ -794,13 +794,7 @@
              Represents a Mesh Acco
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser.SignedProfileMesh">
-             <summary>
-            The persistent profile that will be used to validate changes to the
-            account assertion.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser.SignedProfileUser">
+        <member name="P:Goedel.Mesh.Server.AccountUser.EnvelopedProfileUser">
              <summary>
             The signed assertion describing the account.
              </summary>
@@ -876,7 +870,7 @@
              Represents a Mesh Acco
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountGroup.SignedProfileGroup">
+        <member name="P:Goedel.Mesh.Server.AccountGroup.EnvelopedProfileGroup">
              <summary>
             The persistent profile that will be used to validate changes to the
             account assertion.
@@ -1124,7 +1118,7 @@
             Process a connection request.
             </summary>
             <param name="jpcSession">The session connection data.</param>
-            <param name="messageConnectionRequestClient">TThe message connection request.</param>
+            <param name="requestConnection">TThe message connection request.</param>
             <returns>The connection response.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountComplete(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,Goedel.Mesh.CompleteRequest)">
@@ -1152,7 +1146,7 @@
             <param name="account">The account for which the status is requested..</param>
             <param name="selections">The selection criteria.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountUpdate(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{Goedel.Mesh.ContainerUpdate},System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountUpdate(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{Goedel.Mesh.ContainerUpdate},System.Collections.Generic.List{Goedel.Mesh.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{Goedel.Mesh.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{Goedel.Mesh.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{System.String})">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.

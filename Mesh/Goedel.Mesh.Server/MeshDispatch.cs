@@ -113,8 +113,8 @@ namespace Goedel.Mesh.Server {
                     Minor = 0,
                     Encodings = new List<Goedel.Protocol.Encoding>(),
                     },
-                EnvelopedProfileService = provider.ProfileService.DareEnvelope,
-                EnvelopedProfileHost = provider.ProfileHost.DareEnvelope,
+                EnvelopedProfileService = provider.ProfileService.EnvelopedProfileService,
+                EnvelopedProfileHost = provider.ProfileHost.EnvelopedProfileHost,
                 Status = 201 // Must specify this explicitly since not derrived from MeshResponse.
                 };
 
@@ -321,10 +321,10 @@ namespace Goedel.Mesh.Server {
 
 
             // decode MessageConnectionRequestClient with verification
-            var messageConnectionRequestClient = RequestConnection.Verify(
-                    request.MessageConnectionRequestClient);
+            var requestConnection = request.EnvelopedRequestConnection.Decode();
+
             try {
-                var connectResponse = Mesh.Connect(jpcSession, messageConnectionRequestClient);
+                var connectResponse = Mesh.Connect(jpcSession, requestConnection);
                 return connectResponse;
                 }
             catch (System.Exception exception) {
@@ -335,20 +335,6 @@ namespace Goedel.Mesh.Server {
             throw new NYI();
             }
 
-  //      /// <summary>
-		///// Server method implementing the transaction  Publish.
-  //      /// </summary>
-  //      /// <param name="request">The request object to send to the host.</param>
-		///// <param name="session">The authentication binding.</param>
-		///// <returns>The response object from the service</returns>
-  //      public override PublishResponse Publish(PublishRequest request, JpcSession session = null) {
-
-  //          Mesh.Publish(session, session.VerifiedAccount, request.Publications);
-  //          var response = new PublishResponse() {
-  //              };
-
-  //          return response;
-  //          }
 
         /// <summary>
 		/// Server method implementing the transaction  Claim.

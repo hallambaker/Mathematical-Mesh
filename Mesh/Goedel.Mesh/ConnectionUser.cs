@@ -7,21 +7,11 @@ using System.Text;
 namespace Goedel.Mesh {
     public partial class ConnectionUser {
 
-        ///<summary>The signed profile</summary> 
-        public EnvelopedConnectionUser EnvelopedConnectionUser { get; protected set; }
-
-        /// <summary>
-        /// Sign the profile under <paramref name="SignatureKey"/>.
-        /// </summary>
-        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
-        /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="EnvelopedConnectionUser"/></returns>
-        public override DareEnvelope Sign(CryptoKey SignatureKey) {
-            EnvelopedConnectionUser = EnvelopedConnectionUser.Encode(this, signingKey: SignatureKey);
-            DareEnvelope = EnvelopedConnectionUser;
-            return DareEnvelope;
-            }
-
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ConnectionUser> EnvelopedConnectionUser =>
+            envelopedConnectionUser ?? new Enveloped<ConnectionUser>(Enveloped).
+                    CacheValue(out envelopedConnectionUser);
+        Enveloped<ConnectionUser> envelopedConnectionUser;
 
 
         /// <summary>
@@ -29,7 +19,6 @@ namespace Goedel.Mesh {
         /// </summary>
         public ConnectionUser() {
             }
-
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
@@ -56,18 +45,6 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"KeyAuthentication:   {DeviceAuthentication.UDF} ");
 
             }
-
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ConnectionUser"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new ConnectionUser Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ConnectionUser;
-
-
         }
 
     }

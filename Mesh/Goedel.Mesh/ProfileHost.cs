@@ -1,10 +1,20 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
     public partial class ProfileHost {
+
+
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ProfileHost> EnvelopedProfileHost =>
+            envelopedProfileHost ?? new Enveloped<ProfileHost>(Enveloped).
+                    CacheValue(out envelopedProfileHost);
+        Enveloped<ProfileHost> envelopedProfileHost;
+
+
         /// <summary>
         /// Blank constructor for use by deserializers.
         /// </summary>
@@ -45,16 +55,6 @@ namespace Goedel.Mesh {
             return result;
             }
 
-
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ProfileHost"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new ProfileHost Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ProfileHost;
 
         }
     }

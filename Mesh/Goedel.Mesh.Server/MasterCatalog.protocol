@@ -30,11 +30,7 @@
 		Inherits AccountEntry
 		Description
 			|Represents a Mesh Acco
-		Struct DareEnvelope SignedProfileMesh
-			Description
-				|The persistent profile that will be used to validate changes to the
-				|account assertion.
-		Struct DareEnvelope SignedProfileUser
+		Struct Enveloped<ProfileUser> EnvelopedProfileUser
 			Description
 				|The signed assertion describing the account.
 
@@ -42,7 +38,7 @@
 		Inherits AccountEntry
 		Description
 			|Represents a Mesh Acco
-		Struct DareEnvelope SignedProfileGroup
+		Struct Enveloped<ProfileGroup> EnvelopedProfileGroup
 			Description
 				|The persistent profile that will be used to validate changes to the
 				|account assertion.

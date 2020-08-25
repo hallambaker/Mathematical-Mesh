@@ -56,7 +56,7 @@ namespace Goedel.Mesh.Client {
         /// Cached convenience accessor returning the decoded <see cref="MessageConnectionResponse"/>.
         /// </summary>
         public Message MessageConnectionResponse => messageConnectionResponse ??
-            Message.Decode(EnvelopedMessageConnectionResponse).
+            Message.Decode(EnvelopedAcknowledgeConnection).
                 CacheValue(out messageConnectionResponse);
         Message messageConnectionResponse;
 

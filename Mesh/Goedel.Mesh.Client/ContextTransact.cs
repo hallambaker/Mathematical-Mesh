@@ -47,11 +47,11 @@ namespace Goedel.Mesh.Client {
                 // update in memory structure
                 switch (action) {
                     case PersistenceStore.EventNew: {
-                        Catalog.NewEntry(envelope.JSONObject as T);
+                        Catalog.NewEntry(envelope.JsonObject as T);
                         break;
                         }
                     case PersistenceStore.EventUpdate: {
-                        Catalog.UpdateEntry(envelope.JSONObject as T);
+                        Catalog.UpdateEntry(envelope.JsonObject as T);
                         break;
                         }
                     case PersistenceStore.EventDelete: {
@@ -67,7 +67,7 @@ namespace Goedel.Mesh.Client {
 
             // ToDo: need to seriously revise this to get the interlock stuff right.
             var envelope = Catalog.PersistenceStore.PrepareUpdate(out _, catalogedEntry);
-            envelope.JSONObject = catalogedEntry;
+            envelope.JsonObject = catalogedEntry;
             Envelopes.Add(envelope);
 
             return envelope;
@@ -327,7 +327,7 @@ namespace Goedel.Mesh.Client {
                 string recipientAddress,
                 CryptoKey recipientEncryptionKey,
                 Message message) {
-            TransactRequest.Outbound ??= new List<Cryptography.Dare.DareEnvelope>();
+            TransactRequest.Outbound ??= new List<Enveloped<Message>>();
             TransactRequest.Accounts ??= new List<string>();
 
             message.Sender ??= ContextAccount.AccountAddress;
@@ -336,9 +336,9 @@ namespace Goedel.Mesh.Client {
             //        encryptionKey: recipientEncryptionKey); // Todo: Sign, encrypt
 
             var envelope = message.Encode(); // Todo: Sign, encrypt
-            envelope.JSONObject = message;
+            envelope.JsonObject = message;
 
-            TransactRequest.Outbound.Add(envelope);
+            TransactRequest.Outbound.Add(new Enveloped<Message>(envelope));
             if (recipientAddress != null) {
                 TransactRequest.Accounts.Add(recipientAddress);
                 }
@@ -351,10 +351,10 @@ namespace Goedel.Mesh.Client {
         /// <param name="message">The message to append to the inbound spool.</param>
         public void InboundMessage(
                 Message message) {
-            TransactRequest.Inbound ??= new List<Cryptography.Dare.DareEnvelope>();
+            TransactRequest.Inbound ??= new List<Enveloped<Message>>();
             var envelope = message.Encode(); // Todo: Sign, encrypt
-            envelope.JSONObject = message;
-            TransactRequest.Inbound.Add(envelope);
+            envelope.JsonObject = message;
+            TransactRequest.Inbound.Add(new Enveloped<Message>(envelope));
             }
 
         /// <summary>
@@ -364,10 +364,10 @@ namespace Goedel.Mesh.Client {
         /// <param name="message">The message to append to the local spool.</param>
         public void LocalMessage(
                 Message message) {
-            TransactRequest.Local ??= new List<Cryptography.Dare.DareEnvelope>();
+            TransactRequest.Local ??= new List<Enveloped<Message>>();
             var envelope = message.Encode(); // Todo: Sign, encrypt
-            envelope.JSONObject = message;
-            TransactRequest.Local.Add(envelope);
+            envelope.JsonObject = message;
+            TransactRequest.Local.Add(new Enveloped<Message>(envelope));
             }
 
         /// <summary>

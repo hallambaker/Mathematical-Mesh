@@ -9,30 +9,30 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Goedel.Mesh {
-    public partial class ProfileUser {
 
-        ///<summary>The signed profile</summary> 
-        public EnvelopedProfileUser EnvelopedProfileUser { get; protected set; }
-
-        /// <summary>
-        /// Sign the profile under <paramref name="SignatureKey"/>.
-        /// </summary>
-        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
-        /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="EnvelopedProfileUser"/></returns>
-        public override DareEnvelope Sign(CryptoKey SignatureKey) {
-            EnvelopedProfileUser = EnvelopedProfileUser.Encode(this, signingKey: SignatureKey);
-            DareEnvelope = EnvelopedProfileUser;
-            return DareEnvelope;
-            }
-
-
+    public partial class ProfileAccount {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ProfileAccount> EnvelopedProfileAccount =>
+            envelopedProfileAccount ?? new Enveloped<ProfileAccount>(Enveloped).
+                    CacheValue(out envelopedProfileAccount);
+        Enveloped<ProfileAccount> envelopedProfileAccount;
 
         ///<summary>Cached convenience accessor. Returns the corresponding 
-        ///<see cref="ProfileService"/> .</summary>
-        public ProfileService ProfileService => profileService ??
-            ProfileService.Decode(EnvelopedProfileService).CacheValue(out profileService);
-        ProfileService profileService = null;
+        ///<see cref="ProfileService"/>.</summary>
+        public ProfileService ProfileService => EnvelopedProfileService.Decode(KeyCollection);
+        }
+
+
+    public partial class ProfileUser {
+
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ProfileUser> EnvelopedProfileUser =>
+            envelopedProfileUser ?? new Enveloped<ProfileUser>(Enveloped).
+                    CacheValue(out envelopedProfileUser);
+        Enveloped<ProfileUser> envelopedProfileUser;
+
+
+
 
         /// <summary>
         /// Blank constructor for use by deserializers.
@@ -96,17 +96,6 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"KeyEncryption:       {AccountEncryption.UDF} ");
 
             }
-
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ProfileService"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new ProfileUser Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ProfileUser;
-
 
 
         /// <summary>

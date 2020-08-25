@@ -16,9 +16,30 @@ namespace Goedel.Mesh {
         /// </summary>
         public virtual DareEnvelope DareEnvelope { get; protected set; }
 
+        /// <summary>
+        /// The DareEnvelope encapsulation of this object instance.
+        /// </summary>
+        public virtual Enveloped<MeshItem> Enveloped { get; set; }
+
+
+        /// <summary>
+        /// Sign the profile under <paramref name="signingKey"/>.
+        /// </summary>
+        /// <param name="signingKey">Optional signature key.</param>
+        /// <param name="encryptionKey">Optional encryption key.</param>
+        /// <returns>Envelope containing the signed profile. Also updates the property
+        /// <see cref="Enveloped"/></returns>
+        public virtual DareEnvelope Envelope(
+                    CryptoKey signingKey = null,
+                    CryptoKey encryptionKey = null) {
+            Enveloped = new Enveloped<MeshItem>(this,
+                        signingKey: signingKey, encryptionKey: encryptionKey);
+            DareEnvelope = Enveloped;
+            return DareEnvelope;
+            }
 
         ///<summary>The key collection that was used to decode this object instance.</summary>
-        public IKeyLocate KeyCollection;
+        public IKeyCollection KeyCollection;
 
 
         ///<summary>Initialization property, used to force initialization of the 
@@ -65,7 +86,7 @@ namespace Goedel.Mesh {
         /// <param name="envelope">The enveloped data.</param>
         /// <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
         /// <returns>The decoded data item</returns>
-        public static MeshItem Decode(DareEnvelope envelope, IKeyLocate keyCollection =null) {
+        public static MeshItem Decode(DareEnvelope envelope, IKeyCollection keyCollection =null) {
 
             if (envelope == null) {
                 return null;

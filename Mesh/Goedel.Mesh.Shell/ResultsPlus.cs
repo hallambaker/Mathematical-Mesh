@@ -126,11 +126,11 @@ namespace Goedel.Mesh.Shell {
                     Builder.AppendLine($"MeshService {Response.Version.Major}.{Response.Version.Minor}");
                     }
                 if (Response.EnvelopedProfileService != null) {
-                    var profileService = ProfileService.Decode(Response.EnvelopedProfileService);
+                    var profileService = Response.EnvelopedProfileService.Decode();
                     Builder.AppendLine($"   Service UDF = {profileService.UDF}");
                     }
                 if (Response.EnvelopedProfileHost != null) {
-                    var profileHost = ProfileHost.Decode(Response.EnvelopedProfileHost);
+                    var profileHost = Response.EnvelopedProfileHost.Decode();
                     Builder.AppendLine($"   Host UDF = {profileHost.UDF}");
                     }
                 }
@@ -154,10 +154,10 @@ namespace Goedel.Mesh.Shell {
             switch (CatalogedMachine) {
 
                 case CatalogedPending catalogedPending: {
-                    var messageConnectionResponse = AcknowledgeConnection.Decode(
-                                catalogedPending.EnvelopedMessageConnectionResponse);
+                    var acknowledgeConnection = 
+                            catalogedPending.EnvelopedAcknowledgeConnection.Decode();
                     Builder.AppendLine($"   Device UDF = {catalogedPending.DeviceUDF}");
-                    Builder.AppendLine($"   Witness value = {messageConnectionResponse.Witness}");
+                    Builder.AppendLine($"   Witness value = {acknowledgeConnection.Witness}");
 
                     break;
                     }

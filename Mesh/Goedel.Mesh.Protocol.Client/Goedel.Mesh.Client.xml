@@ -287,14 +287,9 @@
             The device profile presented to the service.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPending.EnvelopedMessageConnectionResponse">
+        <member name="P:Goedel.Mesh.Client.CatalogedPending.EnvelopedAcknowledgeConnection">
              <summary>
             The response returned by the service when the registration was requested.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPending.EnvelopedAccountAssertion">
-             <summary>
-            The current account assertion
              </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPending.AccountAddress">
@@ -1019,30 +1014,6 @@
             personal mesh. This method does not support transfer of the Mesh Service.
             </summary>
             <param name="accountAddress">The account address</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount)">
-            <summary>
-            Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
-            and activation <paramref name="activationDevice"/>.
-            </summary>
-            <param name="profileAccount">The mesh profile.</param>
-            <param name="profileDevice">Profile of the device to be added.</param>
-            <param name="activationDevice">The device key overlay.</param>
-            <param name="activationAccount">The account key overlay.</param>
-            <returns>The CatalogedDevice entry.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
-            <summary>
-            Add the device specified by <paramref name="profileDevice"/> to the account granting administration
-            privileges if <paramref name="keyPairOnlineSignature"/> is not null and super administration 
-            privilege if <paramref name="superAdmin"/> is true. Note that it is possible for a device to 
-            be a super administrator without also being an administrator.
-            </summary>
-            <param name="profileDevice">Profile of the device to add.</param>
-            <param name="keyPairOnlineSignature">If not null, specifies an online signature key that is to be used
-            to sign administrator functions.</param>
-            <param name="rights">The initial rights to be assigned to the device.</param>
-            <returns>The catalog entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelf(Goedel.Mesh.Contact,System.String)">
             <summary>

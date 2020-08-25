@@ -12,6 +12,13 @@ using System.Text;
 namespace Goedel.Mesh {
     public partial class ActivationDevice {
 
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ActivationDevice> EnvelopedActivationDevice =>
+            envelopedActivationDevice ?? new Enveloped<ActivationDevice>(Enveloped).
+                    CacheValue(out envelopedActivationDevice);
+        Enveloped<ActivationDevice> envelopedActivationDevice;
+
+
         ///<summary>The UDF profile constant used for key derrivation 
         ///<see cref="Constants.UDFActivationAccount"/></summary>
         public override string UDFKeyDerrivation => Constants.UDFActivationAccount;
@@ -34,21 +41,6 @@ namespace Goedel.Mesh {
 
         ///<summary>The device authentication key for use under the profile</summary>
         public KeyPair PrivateDeviceAuthentication { get; private set; }
-
-        ///<summary>The signed profile</summary> 
-        public EnvelopedActivationDevice EnvelopedActivationDevice { get; protected set; }
-
-        /// <summary>
-        /// Sign the profile under <paramref name="SignatureKey"/>.
-        /// </summary>
-        /// <param name="SignatureKey">The signature key (MUST match the offline key).</param>
-        /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="EnvelopedActivationDevice"/></returns>
-        public override DareEnvelope Sign(CryptoKey SignatureKey) {
-            EnvelopedActivationDevice = EnvelopedActivationDevice.Encode(this, signingKey: SignatureKey);
-            DareEnvelope = EnvelopedActivationDevice;
-            return DareEnvelope;
-            }
 
 
         /// <summary>
@@ -114,19 +106,6 @@ namespace Goedel.Mesh {
                 ActivationKey, MeshKeyType.DeviceAuthenticate, keyCollection);
 
             }
-
-
-
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationDevice"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new ActivationDevice Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ActivationDevice;
-
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with

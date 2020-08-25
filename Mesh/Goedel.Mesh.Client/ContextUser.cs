@@ -48,7 +48,7 @@ namespace Goedel.Mesh.Client {
         public ProfileUser ProfileUser { get; private set; }
 
         ///<summary>The connection device</summary>
-        public ConnectionUser ConnectionUser => CatalogedDevice?.ConnectionDevice;
+        public ConnectionUser ConnectionUser => CatalogedDevice?.ConnectionUser;
 
         ///<summary>The device activation</summary>
         public ActivationDevice ActivationUser { get; private set; }
@@ -363,7 +363,7 @@ namespace Goedel.Mesh.Client {
             var tagged = new TaggedSource() {
                 LocalName = localname,
                 Validation = "Self",
-                EnvelopedSource = contact.DareEnvelope
+                EnvelopedSource = contact.EnvelopedContact
                 };
             contact.Sources.Add(tagged);
 
@@ -704,14 +704,6 @@ namespace Goedel.Mesh.Client {
             catalogCapability.Add(capabilityAdmin);
             catalogCapability.Add(capabilityDecrypt);
 
-
-
-            //var envelopedCapabilityAdmin = DareEnvelope.Encode(capabilityAdmin.GetBytes(), encryptionKey: KeyDeviceEncryption);
-            //var envelopedCapabilityDecrypt = DareEnvelope.Encode(capabilityDecrypt.GetBytes(), encryptionKey: KeyDeviceEncryption);
-
-
-
-
             var catalogedGroup = new CatalogedGroup(profileGroup) {
                 Key = groupName
                 };
@@ -832,12 +824,13 @@ namespace Goedel.Mesh.Client {
 
             connectURI = MeshUri.ConnectUri(AccountAddress, pin);
 
-            // Create a device profile and encrypt under pin
+            // Create a device profile 
             profileDevice = new ProfileDevice(secretSeed: secretSeed);
+
+            // Convert the enveloped profile device to a binary field and take the envelope
+            // of that.
             var plaintext = profileDevice.DareEnvelope.GetBytes();
-
             var encryptedProfileDevice = DareEnvelope.Encode(plaintext, encryptionKey: key);
-
             var catalogedPublication = new CatalogedPublication(pin) {
                 EnvelopedData = encryptedProfileDevice,
                 };
@@ -848,14 +841,6 @@ namespace Goedel.Mesh.Client {
             var catalogPublication = transactPublication.GetCatalogPublication();
             transactPublication.CatalogUpdate(catalogPublication, catalogedPublication);
             Transact(transactPublication);
-
-
-            //var publishRequest = new PublishRequest() {
-            //    Publications = new List<CatalogedPublication>() { catalogedPublication }
-            //    };
-
-            //var publishResponse = MeshClient.Publish(publishRequest);
-
 
             return true;
             }
@@ -871,7 +856,7 @@ namespace Goedel.Mesh.Client {
             var envelopedProfileDevice = ClaimPublication(uri, out var responseId);
 
             // Decode the Profile Device
-            var profileDevice = ProfileDevice.Decode(envelopedProfileDevice) as ProfileDevice;
+            var profileDevice = ProfileDevice.Decode(envelopedProfileDevice);
 
             // Approve the request
             // Have to add in the Mesh profile here and Account Assertion
@@ -913,7 +898,7 @@ namespace Goedel.Mesh.Client {
             var key = new CryptoKeySymmetricSigner(pin);
             var messageClaim = new MessageClaim(targetAccountAddress, AccountAddress, pin);
 
-            messageClaim.Sign(KeySignature);
+            messageClaim.Envelope(KeySignature);
 
             // make claim request to service managing the device
             var claimRequest = new ClaimRequest {
@@ -1279,7 +1264,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="localName">Local name for the contact</param>
         /// <returns></returns>
-        public EnvelopedContact GetSelf(string localName) {
+        public Enveloped<Contact> GetSelf(string localName) {
             var self = GetContact(ProfileUser.UDF);
 
             foreach (var tagged in self.Contact.Sources) {
@@ -1320,25 +1305,13 @@ namespace Goedel.Mesh.Client {
                 NotOnOrAfter = expire
                 };
 
-            //var publishRequest = new PublishRequest() {
-            //    Publications = new List<CatalogedPublication>() { catalogedPublication },
-            //    };
-
-            //var publishResponse = MeshClient.Publish(publishRequest);
-            //publishResponse.AssertSuccess();
-
             // Register the pin
             var messageConnectionPIN = new MessagePIN(pin, automatic, expire, AccountAddress, "Contact");
-            //SendMessageAdmin(messageConnectionPIN);
-            // Spec - maybe should enforce type check here.
-
 
             var transactRequest = TransactBegin();
             transactRequest.LocalMessage(messageConnectionPIN);
-
             var catalogPublication = transactRequest.GetCatalogPublication();
             transactRequest.CatalogUpdate(catalogPublication, catalogedPublication);
-
             Transact(transactRequest);
 
             // return the contact address
@@ -1453,7 +1426,7 @@ namespace Goedel.Mesh.Client {
                 MessageID = requestConfirmation.GetResponseId(),
                 Recipient = recipientAddress,
                 Accept = response,
-                Request = requestConfirmation.En
+                Request = requestConfirmation.EnvelopedRequestConfirmation
                 };
 
             var transact = TransactBegin();

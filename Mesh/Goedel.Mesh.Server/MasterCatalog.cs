@@ -216,16 +216,10 @@ namespace Goedel.Mesh.Server {
 	/// </summary>
 	public partial class AccountUser : AccountEntry {
         /// <summary>
-        ///The persistent profile that will be used to validate changes to the
-        ///account assertion.
-        /// </summary>
-
-		public virtual DareEnvelope						SignedProfileMesh  {get; set;}
-        /// <summary>
         ///The signed assertion describing the account.
         /// </summary>
 
-		public virtual DareEnvelope						SignedProfileUser  {get; set;}
+		public virtual Enveloped<ProfileUser>						EnvelopedProfileUser  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -270,15 +264,10 @@ namespace Goedel.Mesh.Server {
 				_writer.WriteObjectStart ();
 				}
 			((AccountEntry)this).SerializeX(_writer, false, ref _first);
-			if (SignedProfileMesh != null) {
+			if (EnvelopedProfileUser != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SignedProfileMesh", 1);
-					SignedProfileMesh.Serialize (_writer, false);
-				}
-			if (SignedProfileUser != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SignedProfileUser", 1);
-					SignedProfileUser.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedProfileUser", 1);
+					EnvelopedProfileUser.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -313,17 +302,10 @@ namespace Goedel.Mesh.Server {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "SignedProfileMesh" : {
+				case "EnvelopedProfileUser" : {
 					// An untagged structure
-					SignedProfileMesh = new DareEnvelope ();
-					SignedProfileMesh.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "SignedProfileUser" : {
-					// An untagged structure
-					SignedProfileUser = new DareEnvelope ();
-					SignedProfileUser.Deserialize (jsonReader);
+					EnvelopedProfileUser = new Enveloped<ProfileUser> ();
+					EnvelopedProfileUser.Deserialize (jsonReader);
  
 					break;
 					}
@@ -348,7 +330,7 @@ namespace Goedel.Mesh.Server {
         ///account assertion.
         /// </summary>
 
-		public virtual DareEnvelope						SignedProfileGroup  {get; set;}
+		public virtual Enveloped<ProfileGroup>						EnvelopedProfileGroup  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -393,10 +375,10 @@ namespace Goedel.Mesh.Server {
 				_writer.WriteObjectStart ();
 				}
 			((AccountEntry)this).SerializeX(_writer, false, ref _first);
-			if (SignedProfileGroup != null) {
+			if (EnvelopedProfileGroup != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SignedProfileGroup", 1);
-					SignedProfileGroup.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedProfileGroup", 1);
+					EnvelopedProfileGroup.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -431,10 +413,10 @@ namespace Goedel.Mesh.Server {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "SignedProfileGroup" : {
+				case "EnvelopedProfileGroup" : {
 					// An untagged structure
-					SignedProfileGroup = new DareEnvelope ();
-					SignedProfileGroup.Deserialize (jsonReader);
+					EnvelopedProfileGroup = new Enveloped<ProfileGroup> ();
+					EnvelopedProfileGroup.Deserialize (jsonReader);
  
 					break;
 					}

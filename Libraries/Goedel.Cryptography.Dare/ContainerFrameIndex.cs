@@ -72,7 +72,7 @@ namespace Goedel.Cryptography.Dare {
         public ContainerFrameIndex(DareEnvelope envelope) {
             Header = envelope.Header;
             Trailer = envelope.Trailer;
-            JSONObject = envelope.JSONObject;
+            JSONObject = envelope.JsonObject;
             if (envelope.Body != null) {
                 DataLength = envelope.Body.Length;
                 }
