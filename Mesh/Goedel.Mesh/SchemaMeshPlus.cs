@@ -144,15 +144,15 @@ namespace Goedel.Mesh {
 
     public partial class Assertion {
 
-        /// <summary>
-        /// Create an envelope with the signed assertion.
-        /// </summary>
-        /// <param name="SignatureKey">The key to sign the assertion under.</param>
-        /// <returns>The signed assertion.</returns>
-        public virtual DareEnvelope Sign(CryptoKey SignatureKey) {
-            DareEnvelope = DareEnvelope.Encode(GetBytes(true), signingKey: SignatureKey);
-            return DareEnvelope;
-            }
+        ///// <summary>
+        ///// Create an envelope with the signed assertion.
+        ///// </summary>
+        ///// <param name="SignatureKey">The key to sign the assertion under.</param>
+        ///// <returns>The signed assertion.</returns>
+        //public virtual DareEnvelope Envelope(CryptoKey SignatureKey) {
+        //    DareEnvelope = DareEnvelope.Encode(GetBytes(true), signingKey: SignatureKey);
+        //    return DareEnvelope;
+        //    }
 
         ///// <summary>
         ///// Decode <paramref name="envelope"/> and return the inner <see cref="Assertion"/>

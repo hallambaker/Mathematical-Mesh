@@ -81,7 +81,7 @@ namespace Goedel.Mesh {
 
 
             var result = new ProfileService(keySign, keyEncrypt);
-            result.Sign(keySign);
+            result.Envelope(keySign);
             return result;
             }
 

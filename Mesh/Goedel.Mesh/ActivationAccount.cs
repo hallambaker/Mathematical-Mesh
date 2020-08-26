@@ -158,7 +158,7 @@ namespace Goedel.Mesh {
                 profileUser.OnlineSignature ??= new List<KeyData>();
                 profileUser.OnlineSignature.Add(new KeyData(keyPairOnlineSignature.KeyPairPublic()));
 
-                profileUser.Sign(PrivateAccountOfflineSignature);
+                profileUser.Envelope(PrivateAccountOfflineSignature);
 
 
                 }
@@ -204,7 +204,7 @@ namespace Goedel.Mesh {
 
             var connectionDevice = activationDevice.ConnectionUser;
             connectionDevice.AssertNotNull(Internal.Throw);
-            connectionDevice.Sign(PrivateAccountOnlineSignature);
+            connectionDevice.Envelope(PrivateAccountOnlineSignature);
             connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
             // Wrap the connectionDevice and activationDevice in envelopes

@@ -36,9 +36,12 @@ namespace Scratchpad {
             //TestDare.Test().MessagePlaintextJSON();
             //TestDare.Test().MessageDigestAtomicCorrupted();
             //TestDare.Test().MessagePlaintextFixed();
-            TestDare.Test().MessagePlaintextAtomic();
-            //TestService.Test().MeshCatalogAccount();
+            //TestDare.Test().MessagePlaintextAtomic();
+            TestService.Test().MeshCatalogGroup();
             //ShellTests.Test().TestProfileConnectStaticQR();
+
+
+
 
             // 4 tests
             //TestService.Test().MeshGrantAdmin();

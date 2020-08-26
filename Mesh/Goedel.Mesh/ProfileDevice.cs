@@ -66,7 +66,7 @@ namespace Goedel.Mesh {
             KeyAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
 
 
-            Sign(keySign);
+            Envelope(keySign);
             }
 
         /// <summary>

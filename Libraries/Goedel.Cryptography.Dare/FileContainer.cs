@@ -327,8 +327,10 @@ namespace Goedel.Cryptography.Dare {
                 out ContentMeta ContentMeta) {
 
             using var Reader = new FileContainerReader(FileName, KeyCollection);
-            var ContainerDataReader = Reader.container.GetContainerFrameIndex(
-                        position: Reader.container.PositionFinalFrameStart);
+
+            var container = Reader.container;
+            var ContainerDataReader = container.GetContainerFrameIndex(
+                        position: container.PositionFinalFrameStart);
             Data = ContainerDataReader.GetPayload(KeyCollection);
             ContentMeta = ContainerDataReader?.Header.ContentMeta;
             }

@@ -229,7 +229,7 @@ namespace Goedel.Mesh.Client {
             ProfileUser.AccountAddresses.Add(accountAddress);
             ProfileUser.EnvelopedProfileService = helloResponse.EnvelopedProfileService;
 
-            ProfileUser.Sign(PrivateAccountOfflineSignature);
+            ProfileUser.Envelope(PrivateAccountOfflineSignature);
 
             var createRequest = new CreateRequest() {
                 AccountAddress = accountAddress,
@@ -357,7 +357,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="localname">Short name to apply to the signed contact info</param>
         public CatalogedContact SetContactSelf(Contact contact, string localname = null) {
             PrivateAccountOnlineSignature.AssertNotNull(NotAdministrator.Throw);
-            contact.Sign(PrivateAccountOnlineSignature);
+            contact.Envelope(PrivateAccountOnlineSignature);
 
             contact.Sources ??= new List<TaggedSource>() { };
             var tagged = new TaggedSource() {

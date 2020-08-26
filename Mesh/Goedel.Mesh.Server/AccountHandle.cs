@@ -84,6 +84,9 @@ namespace Goedel.Mesh.Server {
         public ProfileUser ProfileUser => AccountUser.ProfileUser;
 
 
+        public Enveloped<ProfileAccount> EnvelopedProfileAccount =>
+                new Enveloped<ProfileAccount>(AccountUser.EnvelopedProfileUser);
+
         /// <summary>
         /// Constructor.
         /// </summary>

@@ -46,7 +46,7 @@ namespace Goedel.Cryptography.Dare {
         public bool HasPayload => throw new NYI();
 
         ///<summary>The decoded JSONObject</summary>
-        public JsonObject JSONObject;
+        public JsonObject JsonObject;
 
 
         JbcdStream jbcdStream;
@@ -72,7 +72,7 @@ namespace Goedel.Cryptography.Dare {
         public ContainerFrameIndex(DareEnvelope envelope) {
             Header = envelope.Header;
             Trailer = envelope.Trailer;
-            JSONObject = envelope.JsonObject;
+            JsonObject = envelope.JsonObject;
             if (envelope.Body != null) {
                 DataLength = envelope.Body.Length;
                 }
@@ -112,7 +112,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container">The container that was indexed.</param>
         /// <returns>The deserialized object.</returns>
-        public JsonObject GetJSONObject(Container container) => JSONObject ??
+        public JsonObject GetJSONObject(Container container) => JsonObject ??
             GetPayload(container.KeyLocate).JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="container">The indexed container.</param>
         /// <returns>The frame payload</returns>
         public byte[] GetBody(Container container) {
-            using var input = container.JBCDStream.FramerGetReader(dataPosition, DataLength);
+            using var input = container.JbcdStream.FramerGetReader(dataPosition, DataLength);
             using var output = new MemoryStream();
             input.CopyTo(output);
             return output.ToArray();

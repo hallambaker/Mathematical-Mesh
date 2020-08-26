@@ -51,7 +51,7 @@ namespace Goedel.Mesh {
             var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
 
             var result = new ProfileHost(keySign, keyAuth);
-            result.Sign(keySign);
+            result.Envelope(keySign);
             return result;
             }
 

@@ -53,7 +53,7 @@ namespace Goedel.Cryptography.Dare {
                 };
 
             var container = new ContainerDigest(keyLocate) {
-                JBCDStream = JBCDStream,
+                JbcdStream = JBCDStream,
                 ContainerHeaderFirst = containerHeader
                 };
 

@@ -145,7 +145,7 @@ namespace Goedel.Cryptography.Dare {
         public PersistenceStore(Container container, IKeyLocate keyLocate, bool readContainer = true) {
             Container = container;
 
-            if (readContainer & container.JBCDStream.Length > 0) {
+            if (readContainer & container.JbcdStream.Length > 0) {
                 ReadContainer(keyLocate);
                 }
             }
@@ -191,7 +191,7 @@ namespace Goedel.Cryptography.Dare {
 
             foreach (var frameIndex in Container) {
 
-                var item = frameIndex.JSONObject;
+                var item = frameIndex.JsonObject;
 
                 // This is failing because ContentMetaData is not being written to envelopes...
                 CommitTransaction(frameIndex, item);
@@ -334,8 +334,9 @@ namespace Goedel.Cryptography.Dare {
             var contextWrite = new ContainerWriterDeferred(Container);
 
             var data = jsonObject?.GetBytes();
-            return Container.Defer(contextWrite, contentInfo, data);
-
+            var envelope = Container.Defer(contextWrite, contentInfo, data);
+            envelope.JsonObject = jsonObject;
+            return envelope;
             }
 
 

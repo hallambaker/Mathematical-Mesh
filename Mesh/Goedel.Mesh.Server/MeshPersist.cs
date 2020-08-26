@@ -198,7 +198,7 @@ namespace Goedel.Mesh.Server {
 
             var statusResponse = new StatusResponse() {
                 ContainerStatus = containerStatus,
-                EnvelopedProfileAccount = accountHandle.ProfileUser?.EnvelopedProfileAccount,
+                EnvelopedProfileAccount = accountHandle.EnvelopedProfileAccount,
                 EnvelopedCatalogedDevice = null
                 };
 

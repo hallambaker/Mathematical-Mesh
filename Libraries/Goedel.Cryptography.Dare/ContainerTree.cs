@@ -50,7 +50,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var container = new ContainerTree(keyLocate) {
-                JBCDStream = jbcdStream,
+                JbcdStream = jbcdStream,
                 ContainerHeaderFirst = containerHeader
                 };
 
@@ -127,8 +127,8 @@ namespace Goedel.Cryptography.Dare {
                 index = (int)PreviousFrame(index);
 
                 // 
-                JBCDStream.PositionRead = treePosition;
-                containerInfo = JBCDStream.ReadFrameHeader().ContainerInfo;
+                JbcdStream.PositionRead = treePosition;
+                containerInfo = JbcdStream.ReadFrameHeader().ContainerInfo;
 
                 if (index != containerInfo.Index) {
 
@@ -178,12 +178,12 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>If success, the frame index.</returns>
         public override bool MoveToIndex(long index) {
             if (index == FrameCount) {
-                JBCDStream.PositionRead = JBCDStream.Length;
+                JbcdStream.PositionRead = JbcdStream.Length;
                 return false;
                 }
 
             if (FrameIndexToPositionDictionary.TryGetValue(index, out var Position)) {
-                JBCDStream.PositionRead = Position;
+                JbcdStream.PositionRead = Position;
                 return true;
                 //return Next();
                 }
@@ -214,16 +214,16 @@ namespace Goedel.Cryptography.Dare {
                     if (!FrameIndexToPositionDictionary.TryGetValue(nextRecord, out nextPosition)) {
                         // we do not know the position of the next frame
                         if (!found) {
-                            JBCDStream.PositionRead = Position;
-                            frameHeader = JBCDStream.ReadFrameHeader();
+                            JbcdStream.PositionRead = Position;
+                            frameHeader = JbcdStream.ReadFrameHeader();
                             RegisterFrame(frameHeader.ContainerInfo, Position);
                             }
 
                         PositionRead = Position;
-                        JBCDStream.Previous();
-                        nextPosition = JBCDStream.PositionRead;
+                        JbcdStream.Previous();
+                        nextPosition = JbcdStream.PositionRead;
 
-                        frameHeader = JBCDStream.ReadFrameHeader();
+                        frameHeader = JbcdStream.ReadFrameHeader();
                         Assert.AssertTrue(frameHeader.ContainerInfo.Index == nextRecord, ContainerDataCorrupt.Throw);
 
                         found = false;
@@ -239,7 +239,7 @@ namespace Goedel.Cryptography.Dare {
                         // we do not know the position of the next frame
 
                         PositionRead = Position;
-                        frameHeader = JBCDStream.ReadFrameHeader();
+                        frameHeader = JbcdStream.ReadFrameHeader();
                         nextPosition = frameHeader.ContainerInfo.TreePosition;
 
                         if (!found) {
@@ -345,16 +345,16 @@ namespace Goedel.Cryptography.Dare {
             SortedDictionary<long, DareHeader> headerDictionary = new SortedDictionary<long, DareHeader>();
 
             // Check the first frame
-            JBCDStream.PositionRead = 0;
-            var header = JBCDStream.ReadFirstFrameHeader();
+            JbcdStream.PositionRead = 0;
+            var header = JbcdStream.ReadFirstFrameHeader();
             Assert.AssertTrue(header.ContainerInfo.Index == 0, ContainerDataCorrupt.Throw);
             headerDictionary.Add(0, header);
 
             // Check subsequent frames
             int index = 1;
-            while (!JBCDStream.EOF) {
-                var Position = JBCDStream.PositionRead;
-                header = JBCDStream.ReadFrameHeader();
+            while (!JbcdStream.EOF) {
+                var Position = JbcdStream.PositionRead;
+                header = JbcdStream.ReadFrameHeader();
                 headerDictionary.Add(Position, header);
 
                 Assert.AssertTrue(header.ContainerInfo.Index == index, ContainerDataCorrupt.Throw);

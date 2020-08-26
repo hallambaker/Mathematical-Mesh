@@ -95,7 +95,7 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope FrameZero;
 
         /// <summary>The underlying file stream</summary>
-        public JbcdStream JBCDStream { get; set; }
+        public JbcdStream JbcdStream { get; set; }
 
         /// <summary>The byte offset from the start of the file for Record 1</summary>
         public virtual long StartOfData { get; protected set; }
@@ -352,7 +352,7 @@ namespace Goedel.Cryptography.Dare {
             switch (containerInfo.ContainerType) {
                 case ContainerList.Label: {
                     container = new ContainerList(keyCollection) {
-                        JBCDStream = jbcdStream,
+                        JbcdStream = jbcdStream,
                         ContainerHeaderFirst = containerHeaderFirst,
                         StartOfData = position1,
                         FrameCount = frameCount,
@@ -363,7 +363,7 @@ namespace Goedel.Cryptography.Dare {
                 case ContainerDigest.Label: {
                     cryptoStack.Digest = true;
                     container = new ContainerDigest(keyCollection) {
-                        JBCDStream = jbcdStream,
+                        JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = containerHeaderFirst,
                         StartOfData = position1,
@@ -375,7 +375,7 @@ namespace Goedel.Cryptography.Dare {
                 case ContainerChain.Label: {
                     cryptoStack.Digest = true;
                     container = new ContainerChain(keyCollection) {
-                        JBCDStream = jbcdStream,
+                        JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = containerHeaderFirst,
                         StartOfData = position1,
@@ -386,7 +386,7 @@ namespace Goedel.Cryptography.Dare {
                     }
                 case ContainerTree.Label: {
                     container = new ContainerTree(keyCollection) {
-                        JBCDStream = jbcdStream,
+                        JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = containerHeaderFirst,
                         StartOfData = position1,
@@ -398,7 +398,7 @@ namespace Goedel.Cryptography.Dare {
                 case ContainerMerkleTree.Label: {
                     cryptoStack.Digest = true;
                     container = new ContainerMerkleTree(keyCollection) {
-                        JBCDStream = jbcdStream,
+                        JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = containerHeaderFirst,
                         StartOfData = position1,
@@ -611,7 +611,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var container = new ContainerMerkleTree(keyLocate) {
-                JBCDStream = jbcdStream,
+                JbcdStream = jbcdStream,
                 ContainerHeaderFirst = envelopes[0].Header
                 };
 
@@ -684,7 +684,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The number of bytes written.</returns>
         void AppendFrame(byte[] header, byte[] payload = null, byte[] trailer = null) {
             // Write the frame ensuring the results get written out.
-            var length = JBCDStream.WriteWrappedFrame(header, payload, trailer);
+            var length = JbcdStream.WriteWrappedFrame(header, payload, trailer);
             //FrameCount++;
             return;
             }
@@ -761,7 +761,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             PrepareFrame(header.ContainerInfo);
-            var contextWrite = new ContainerWriterFile(this, header, JBCDStream);
+            var contextWrite = new ContainerWriterFile(this, header, JbcdStream);
             contextWrite.CommitFrame(trailer);
 
             //Console.WriteLine($"   {header.ContainerInfo.TreePosition} ");
@@ -941,7 +941,7 @@ namespace Goedel.Cryptography.Dare {
                 };
             appendContainerHeader.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
 
-            contextWrite = new ContainerWriterFile(this, appendContainerHeader, JBCDStream);
+            contextWrite = new ContainerWriterFile(this, appendContainerHeader, JbcdStream);
 
             PrepareFrame(contextWrite); // Perform container type specific processing.
 
@@ -949,8 +949,8 @@ namespace Goedel.Cryptography.Dare {
             var dummyTrailer = FillDummyTrailer(cryptoStack);
             var lengthTrailer = dummyTrailer == null ? -1 : dummyTrailer.GetBytes(false).Length;
             var dataPayload = appendContainerHeader.GetBytes(false);
-            JBCDStream.WriteWrappedFrameBegin(dataPayload, payloadLength, lengthTrailer);
-            bodyWrite = appendContainerHeader.BodyWriter(JBCDStream.StreamWrite);
+            JbcdStream.WriteWrappedFrameBegin(dataPayload, payloadLength, lengthTrailer);
+            bodyWrite = appendContainerHeader.BodyWriter(JbcdStream.StreamWrite);
 
             return index;
             }
@@ -973,7 +973,7 @@ namespace Goedel.Cryptography.Dare {
             contextWrite.ContainerHeader.CloseBodyWriter(out var trailer);
             MakeTrailer(ref trailer);
             var trailerData = trailer?.GetBytes(false);
-            JBCDStream.WriteWrappedFrameEnd(trailerData);
+            JbcdStream.WriteWrappedFrameEnd(trailerData);
             contextWrite.CommitFrame(trailer);
             }
 
@@ -1094,8 +1094,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns>True if a next frame exists, otherwise false</returns>
         public virtual bool Start() {
-            JBCDStream.Begin();
-            return JBCDStream.EOF;
+            JbcdStream.Begin();
+            return JbcdStream.EOF;
             }
 
         ///// <summary>
@@ -1140,8 +1140,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns></returns>
         public bool MoveToLast() {
-            JBCDStream.End();
-            return JBCDStream.PositionRead > 0;
+            JbcdStream.End();
+            return JbcdStream.PositionRead > 0;
             }
 
         /// <summary>
@@ -1166,7 +1166,7 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope ReadDirectReverse() {
             //Console.WriteLine($"Position Read {JBCDStream.PositionRead}");
 
-            var position = JBCDStream.MoveFrameReverse();
+            var position = JbcdStream.MoveFrameReverse();
             if (position <= 0) {
                 return null; // Exclude the first frame from reverse enumeration.
                 }
@@ -1174,7 +1174,7 @@ namespace Goedel.Cryptography.Dare {
             //Console.WriteLine($"Position ReadII {position}");
 
             var message = ReadDirect();
-            JBCDStream.PositionRead = position;
+            JbcdStream.PositionRead = position;
             return message;
             }
 
@@ -1182,7 +1182,7 @@ namespace Goedel.Cryptography.Dare {
         /// Return the current container frame as a DareEnvelope.
         /// </summary>
         /// <returns>The container data.</returns>
-        public DareEnvelope ReadDirect() => JBCDStream.ReadDareEnvelope();
+        public DareEnvelope ReadDirect() => JbcdStream.ReadDareEnvelope();
 
 
         /// <summary>

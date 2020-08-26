@@ -6349,13 +6349,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Assertion.Sign(Goedel.Cryptography.CryptoKey)">
-            <summary>
-            Create an envelope with the signed assertion.
-            </summary>
-            <param name="SignatureKey">The key to sign the assertion under.</param>
-            <returns>The signed assertion.</returns>
-        </member>
         <member name="T:Goedel.Mesh.Profile">
              <summary>
             

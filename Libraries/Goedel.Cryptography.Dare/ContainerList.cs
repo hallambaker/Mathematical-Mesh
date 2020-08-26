@@ -56,7 +56,7 @@ namespace Goedel.Cryptography.Dare {
                 };
 
             var container = new ContainerList(keyLocate) {
-                JBCDStream = JBCDStream,
+                JbcdStream = JBCDStream,
                 ContainerHeaderFirst = containerHeader
                 };
 
@@ -131,16 +131,16 @@ namespace Goedel.Cryptography.Dare {
         /// Get or set the read position in the stream.
         /// </summary>
         protected long PositionRead {
-            get => JBCDStream.PositionRead;
+            get => JbcdStream.PositionRead;
             set {
                 FrameReadStartPosition = -1;
-                JBCDStream.PositionRead = value;
+                JbcdStream.PositionRead = value;
                 }
             }
 
         void PositionStream() {
             if (FrameReadStartPosition >= 0) {
-                JBCDStream.PositionRead = FrameReadStartPosition;
+                JbcdStream.PositionRead = FrameReadStartPosition;
                 FrameReadStartPosition = -1;
                 }
             }
@@ -163,7 +163,7 @@ namespace Goedel.Cryptography.Dare {
                 MoveToIndex(index);
                 position = PositionRead;
                 }
-            return new ContainerFrameIndex(JBCDStream, KeyCollection, Position: position);
+            return new ContainerFrameIndex(JbcdStream, KeyCollection, Position: position);
 
 
             }
@@ -174,13 +174,13 @@ namespace Goedel.Cryptography.Dare {
         /// Read the next frame in the file.
         /// </summary>
         /// <returns>True if a next frame exists, otherwise false</returns>
-        public override bool NextFrame() => JBCDStream.FramerNext();
+        public override bool NextFrame() => JbcdStream.FramerNext();
 
         /// <summary>
         /// Read the next frame in the file.
         /// </summary>
         /// <returns>True if a next frame exists, otherwise false</returns>
-        public override bool PreviousFrame() => JBCDStream.FramerPrevious();
+        public override bool PreviousFrame() => JbcdStream.FramerPrevious();
 
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Goedel.Cryptography.Dare {
             var RecordStart = PositionRead;
 
             //_FrameData = null;
-            FrameRemaining = JBCDStream.ReadFrame(out var FrameHeader);
+            FrameRemaining = JbcdStream.ReadFrame(out var FrameHeader);
             FrameReadStartPosition = PositionRead;
 
             this.FrameHeader = FrameHeader;
@@ -218,7 +218,7 @@ namespace Goedel.Cryptography.Dare {
         public override bool Previous() {
             PositionStream();
 
-            FrameRemaining = JBCDStream.ReadFrameReverse(out var FrameHeader);
+            FrameRemaining = JbcdStream.ReadFrameReverse(out var FrameHeader);
             FrameReadStartPosition = PositionRead;
 
             this.FrameHeader = FrameHeader;

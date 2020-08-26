@@ -61,7 +61,7 @@ namespace Goedel.Mesh {
             //    new KeyData(activationAccount.PrivateAccountOnlineSignature.KeyPairPublic())
             //    };
 
-            Sign(privateAccountOfflineSignature);
+            Envelope(privateAccountOfflineSignature);
             }
 
 

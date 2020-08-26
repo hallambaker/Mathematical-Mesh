@@ -48,7 +48,7 @@ namespace Goedel.Mesh {
                 keyCollection.Persist(OfflineSignature.UDF, secretSeed, false);
                 }
 
-            Sign(keySign);
+            Envelope(keySign);
             }
 
 
