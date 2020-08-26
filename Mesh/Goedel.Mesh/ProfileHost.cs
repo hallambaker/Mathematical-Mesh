@@ -10,7 +10,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ProfileHost> EnvelopedProfileHost =>
-            envelopedProfileHost ?? new Enveloped<ProfileHost>(Enveloped).
+            envelopedProfileHost ?? new Enveloped<ProfileHost>(DareEnvelope).
                     CacheValue(out envelopedProfileHost);
         Enveloped<ProfileHost> envelopedProfileHost;
 

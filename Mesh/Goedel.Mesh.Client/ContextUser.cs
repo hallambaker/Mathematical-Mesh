@@ -830,7 +830,7 @@ namespace Goedel.Mesh.Client {
             // Convert the enveloped profile device to a binary field and take the envelope
             // of that.
             var plaintext = profileDevice.DareEnvelope.GetBytes();
-            var encryptedProfileDevice = DareEnvelope.Encode(plaintext, encryptionKey: key);
+            var encryptedProfileDevice = DareEnvelope.Encode((byte[])plaintext, encryptionKey: key);
             var catalogedPublication = new CatalogedPublication(pin) {
                 EnvelopedData = encryptedProfileDevice,
                 };

@@ -28,7 +28,7 @@ namespace Goedel.Mesh {
 
         ///<summary>The enveloped object</summary> 
         public Enveloped<ActivationAccount> EnvelopedActivationAccount =>
-            envelopedProfileUser ?? new Enveloped<ActivationAccount>(Enveloped).
+            envelopedProfileUser ?? new Enveloped<ActivationAccount>(DareEnvelope).
                     CacheValue(out envelopedProfileUser);
         Enveloped<ActivationAccount> envelopedProfileUser;
 

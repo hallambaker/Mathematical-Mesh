@@ -107,7 +107,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice =>
-            envelopedCatalogedDevice ?? new Enveloped<CatalogedDevice>(Enveloped).
+            envelopedCatalogedDevice ?? new Enveloped<CatalogedDevice>(DareEnvelope).
                     CacheValue(out envelopedCatalogedDevice);
         Enveloped<CatalogedDevice> envelopedCatalogedDevice;
 

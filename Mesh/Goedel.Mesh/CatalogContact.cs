@@ -231,7 +231,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<CatalogedContact> EnvelopedCatalogedContact =>
-            envelopedCatalogedContact ?? new Enveloped<CatalogedContact>(Enveloped).
+            envelopedCatalogedContact ?? new Enveloped<CatalogedContact>(DareEnvelope).
                     CacheValue(out envelopedCatalogedContact);
         Enveloped<CatalogedContact> envelopedCatalogedContact;
 
@@ -308,7 +308,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<Contact> EnvelopedContact =>
-            envelopedContact ?? new Enveloped<Contact>(Enveloped).
+            envelopedContact ?? new Enveloped<Contact>(DareEnvelope).
                     CacheValue(out envelopedContact);
         Enveloped<Contact> envelopedContact;
 

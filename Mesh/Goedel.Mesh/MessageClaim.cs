@@ -13,7 +13,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<MessageClaim> EnvelopedMessageClaim =>
-            envelopedProfileUser ?? new Enveloped<MessageClaim>(Enveloped).
+            envelopedProfileUser ?? new Enveloped<MessageClaim>(DareEnvelope).
                     CacheValue(out envelopedProfileUser);
         Enveloped<MessageClaim> envelopedProfileUser;
 

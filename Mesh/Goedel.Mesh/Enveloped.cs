@@ -78,7 +78,7 @@ namespace Goedel.Mesh {
         /// Constructor returining an envelope containing the object <paramref name="data"/>
         /// optionally encrypted under <paramref name="encryptionKey"/> and signed under
         /// <paramref name="signingKey"/>. The constructor does not update the field
-        /// <see cref="MeshItem.Enveloped"/>.
+        /// <see cref="MeshItem.DareEnvelope"/>.
         /// </summary>
         /// <param name="data">The object to be enveloped.</param>
         /// <param name="signingKey">The signature key.</param>
@@ -101,7 +101,7 @@ namespace Goedel.Mesh {
 
         /// <summary>
         /// Decrypt and deserialize the envelope to obtain the typed contents and set the value of 
-        /// <see cref="MeshItem.Enveloped"/> to this.
+        /// <see cref="MeshItem.DareEnvelope"/> to this.
         /// </summary>
         /// <param name="keyCollection">Key collection to be used to find decryption keys and
         /// roots of trust for verification keys.</param>
@@ -113,7 +113,7 @@ namespace Goedel.Mesh {
                 }
 
             var result = MeshItem.Decode(this, keyCollection);
-            result.Enveloped = this as Enveloped<MeshItem>;
+            result.DareEnvelope = this;
 
             return result as T;
             }

@@ -9,7 +9,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ConnectionUser> EnvelopedConnectionUser =>
-            envelopedConnectionUser ?? new Enveloped<ConnectionUser>(Enveloped).
+            envelopedConnectionUser ?? new Enveloped<ConnectionUser>(DareEnvelope).
                     CacheValue(out envelopedConnectionUser);
         Enveloped<ConnectionUser> envelopedConnectionUser;
 

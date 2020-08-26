@@ -14,7 +14,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ActivationDevice> EnvelopedActivationDevice =>
-            envelopedActivationDevice ?? new Enveloped<ActivationDevice>(Enveloped).
+            envelopedActivationDevice ?? new Enveloped<ActivationDevice>(DareEnvelope).
                     CacheValue(out envelopedActivationDevice);
         Enveloped<ActivationDevice> envelopedActivationDevice;
 

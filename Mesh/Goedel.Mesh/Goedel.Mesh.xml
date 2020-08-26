@@ -3677,7 +3677,7 @@
             Constructor returining an envelope containing the object <paramref name="data"/>
             optionally encrypted under <paramref name="encryptionKey"/> and signed under
             <paramref name="signingKey"/>. The constructor does not update the field
-            <see cref="P:Goedel.Mesh.MeshItem.Enveloped"/>.
+            <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/>.
             </summary>
             <param name="data">The object to be enveloped.</param>
             <param name="signingKey">The signature key.</param>
@@ -3693,7 +3693,7 @@
         <member name="M:Goedel.Mesh.Enveloped`1.Decode(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.EnvelopeValidation)">
             <summary>
             Decrypt and deserialize the envelope to obtain the typed contents and set the value of 
-            <see cref="P:Goedel.Mesh.MeshItem.Enveloped"/> to this.
+            <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/> to this.
             </summary>
             <param name="keyCollection">Key collection to be used to find decryption keys and
             roots of trust for verification keys.</param>
@@ -10733,11 +10733,6 @@
             The DareEnvelope encapsulation of this object instance.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.MeshItem.Enveloped">
-            <summary>
-            The DareEnvelope encapsulation of this object instance.
-            </summary>
-        </member>
         <member name="M:Goedel.Mesh.MeshItem.Envelope(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
             <summary>
             Sign the profile under <paramref name="signingKey"/>.
@@ -10745,7 +10740,7 @@
             <param name="signingKey">Optional signature key.</param>
             <param name="encryptionKey">Optional encryption key.</param>
             <returns>Envelope containing the signed profile. Also updates the property
-            <see cref="P:Goedel.Mesh.MeshItem.Enveloped"/></returns>
+            <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/></returns>
         </member>
         <member name="F:Goedel.Mesh.MeshItem.KeyCollection">
             <summary>The key collection that was used to decode this object instance.</summary>

@@ -12,7 +12,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ProfileGroup> EnvelopedProfileGroup =>
-            envelopedProfileGroup ?? new Enveloped<ProfileGroup>(Enveloped).
+            envelopedProfileGroup ?? new Enveloped<ProfileGroup>(DareEnvelope).
                     CacheValue(out envelopedProfileGroup);
         Enveloped<ProfileGroup> envelopedProfileGroup;
 

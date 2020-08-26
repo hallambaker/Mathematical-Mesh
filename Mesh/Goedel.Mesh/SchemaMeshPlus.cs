@@ -14,13 +14,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The DareEnvelope encapsulation of this object instance.
         /// </summary>
-        public virtual DareEnvelope DareEnvelope { get; protected set; }
-
-        /// <summary>
-        /// The DareEnvelope encapsulation of this object instance.
-        /// </summary>
-        public virtual Enveloped<MeshItem> Enveloped { get; set; }
-
+        public virtual DareEnvelope DareEnvelope { get; set; }
 
         /// <summary>
         /// Sign the profile under <paramref name="signingKey"/>.
@@ -28,13 +22,12 @@ namespace Goedel.Mesh {
         /// <param name="signingKey">Optional signature key.</param>
         /// <param name="encryptionKey">Optional encryption key.</param>
         /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="Enveloped"/></returns>
+        /// <see cref="DareEnvelope"/></returns>
         public virtual DareEnvelope Envelope(
                     CryptoKey signingKey = null,
                     CryptoKey encryptionKey = null) {
-            Enveloped = new Enveloped<MeshItem>(this,
+            DareEnvelope = new Enveloped<MeshItem>(this,
                         signingKey: signingKey, encryptionKey: encryptionKey);
-            DareEnvelope = Enveloped;
             return DareEnvelope;
             }
 

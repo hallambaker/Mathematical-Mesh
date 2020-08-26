@@ -13,7 +13,7 @@ namespace Goedel.Mesh {
     public partial class ProfileAccount {
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ProfileAccount> EnvelopedProfileAccount =>
-            envelopedProfileAccount ?? new Enveloped<ProfileAccount>(Enveloped).
+            envelopedProfileAccount ?? new Enveloped<ProfileAccount>(DareEnvelope).
                     CacheValue(out envelopedProfileAccount);
         Enveloped<ProfileAccount> envelopedProfileAccount;
 
@@ -27,7 +27,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ProfileUser> EnvelopedProfileUser =>
-            envelopedProfileUser ?? new Enveloped<ProfileUser>(Enveloped).
+            envelopedProfileUser ?? new Enveloped<ProfileUser>(DareEnvelope).
                     CacheValue(out envelopedProfileUser);
         Enveloped<ProfileUser> envelopedProfileUser;
 
