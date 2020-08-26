@@ -5,6 +5,13 @@ using System.IO;
 
 namespace Goedel.Cryptography.Dare {
     class DareEnvelopeWriter : Stream {
+        #region // Fields and properties
+        JSONWriter outputStream;
+        CryptoStackStreamWriter cryptoStackStreamWriter;
+        Stream writer;
+        CryptoStack CryptoStack;
+        #endregion
+
         #region // Boilerplate implementations
         /// <summary>
         /// Gets a value indicating whether the current stream supports reading.
@@ -90,17 +97,12 @@ namespace Goedel.Cryptography.Dare {
         ~DareEnvelopeWriter() {
             Dispose(false);
             }
-        #endregion
-
 
         /// <summary>
         /// The class specific disposal routine.
         /// </summary>
         protected virtual void Disposing() => Close();
-
-        JSONWriter outputStream;
-        CryptoStackStreamWriter cryptoStackStreamWriter;
-
+        #endregion
         #region // Convenience constructors
         /// <summary>
         /// Create a writer to output a DARE Message to a stream.
@@ -148,7 +150,7 @@ namespace Goedel.Cryptography.Dare {
                     List<byte[]> dataSequences = null) {
             this.outputStream = outputStream;
 
-            var CryptoStack = cryptoParameters.GetCryptoStack();
+            CryptoStack = cryptoParameters.GetCryptoStack();
             var Header = new DareHeader(CryptoStack, contentMeta, cloaked, dataSequences);
 
             outputStream.WriteArrayStart();
@@ -156,13 +158,9 @@ namespace Goedel.Cryptography.Dare {
             outputStream.WriteArraySeparator();
 
             cryptoStackStreamWriter = Header.CryptoStack.GetEncoder(
-                    outputStream.Output, PackagingFormat.EDS, contentLength);
+                    outputStream.Output, PackagingFormat.Body, contentLength);
             writer = cryptoStackStreamWriter.Writer;
             }
-
-        Stream writer;
-
-
 
         /// <summary>
         /// Write data to the output stream.
@@ -185,6 +183,14 @@ namespace Goedel.Cryptography.Dare {
 
             // write out the trailer
             cryptoStackStreamWriter.Close();
+
+
+            var trailer = CryptoStack.GetTrailer(cryptoStackStreamWriter);
+
+            if (trailer != null) {
+                outputStream.WriteArraySeparator();
+                trailer.Serialize(outputStream, false);
+                }
 
             // Close the message sequence.
             outputStream.WriteArrayEnd();

@@ -34,9 +34,9 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
             //TestDare.Test().MessagePlaintextJSON();
-            TestDare.Test().MessageDigestAtomicCorrupted();
-
-            
+            //TestDare.Test().MessageDigestAtomicCorrupted();
+            //TestDare.Test().MessagePlaintextFixed();
+            TestDare.Test().MessagePlaintextAtomic();
             //TestService.Test().MeshCatalogAccount();
             //ShellTests.Test().TestProfileConnectStaticQR();
 

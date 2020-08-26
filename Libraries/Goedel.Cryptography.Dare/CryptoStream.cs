@@ -21,9 +21,9 @@ namespace Goedel.Cryptography.Dare {
         EDS,
 
         /// <summary>
-        /// Package as a container payload entry.
+        /// Package as an envelope body.
         /// </summary>
-        Container
+        Body
 
         }
 
@@ -402,11 +402,18 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public override bool CanWrite => true;
 
+        /////<summary>The trailer object (if required)</summary> 
+        //public DareTrailer Trailer = null;
+
+
         CryptoStream streamMac;
         CryptoStream streamDigest;
         Stream output;
         PackagingFormat packagingFormat;
         long payloadLength;
+
+        bool specifiedLength;
+
         CryptoStream CryptoStream { get; set; }
 
 
@@ -447,8 +454,13 @@ namespace Goedel.Cryptography.Dare {
             this.payloadLength = payloadLength;
             if (payloadLength >= 0 & packagingFormat != PackagingFormat.Direct) {
                 JSONBWriter.WriteTag(output, JSONBCD.DataTerm, payloadLength);
+                specifiedLength = true;
                 //Console.Write($"Written tag for {PayloadLength}");
                 }
+            else {
+                specifiedLength = false;
+                }
+
 
             streamMac = mac == null ? null : new CryptoStream(new CryptoStackStream(), mac, CryptoStreamMode.Write);
 
@@ -528,13 +540,15 @@ namespace Goedel.Cryptography.Dare {
             closed = true;
 
             final = true;
-            if (CryptoStream == null) {
+
+            // flush the final blocks of data and write end of stream.
+            if (CryptoStream != null) {
+                CryptoStream.FlushFinalBlock(); 
+                }
+            else if (!specifiedLength) {
                 Writer.Write(Empty, 0, 0);
-                //Console.Write($"  Written end marker");
                 }
-            else {
-                CryptoStream.FlushFinalBlock();
-                }
+
 
             if (Digest != null) {
                 streamDigest?.Dispose();

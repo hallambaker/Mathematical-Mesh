@@ -38,6 +38,26 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
+        public void MessagePlaintextAtomic() {
+            var Test1 = Platform.GetRandomBytes(1000);
+            TestMessageAtomic(Test1);
+            }
+
+        [Fact]
+        public void MessagePlaintextFixed() {
+            var Test1 = Platform.GetRandomBytes(1000);
+            TestMessageFixed(Test1);
+            }
+
+        [Fact]
+        public void MessagePlaintextVariable() {
+            var Test1 = Platform.GetRandomBytes(1000);
+            TestMessageVariable(Test1);
+            }
+
+
+
+        [Fact]
         public void MessageEncryptedAtomic() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
@@ -273,7 +293,7 @@ namespace Goedel.XUnit {
             using var InputStream = new MemoryStream(Plaintext);
             using var OutputStream = new MemoryStream();
             DareEnvelope.Encode(CryptoParameters, InputStream, OutputStream,
-contentMeta: contentInfo, dataSequences: DataSequences);
+                        contentMeta: contentInfo, dataSequences: DataSequences);
 
             var MessageBytes = OutputStream.ToArray();
             CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, contentType);

@@ -401,6 +401,7 @@ namespace Goedel.Cryptography.Dare {
             Output.Flush();
             trailer = GetTrailer(EncoderData);
 
+
             return Output.ToArray();
             }
 
