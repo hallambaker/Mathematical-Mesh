@@ -586,7 +586,7 @@ namespace Goedel.Mesh.Client {
                 var contentMeta = message.Header.ContentMeta;
 
                 if (!completed.ContainsKey(contentMeta.UniqueID)) {
-                    var meshMessage = Message.FromJson(message.GetBodyReader());
+                    var meshMessage = Message.Decode(message, KeyCollection);
                     //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
                     if (contentMeta.MessageType == tag) {
                         return meshMessage;

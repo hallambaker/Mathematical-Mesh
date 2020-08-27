@@ -108,6 +108,7 @@ namespace Goedel.XUnit {
             contextAccountAlice_1_a.SetContactSelf(ContactAlice);
 
             // Check we can read the data from a second context
+            // Bug: This is failing because of the re-engineering of rights.
             var contextAccountAlice_1_b = machineAdminAlice.GetContextAccount();
 
 

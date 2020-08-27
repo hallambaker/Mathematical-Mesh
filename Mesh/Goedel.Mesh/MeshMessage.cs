@@ -48,7 +48,7 @@ namespace Goedel.Mesh {
         ///<summary>The message status.</summary>
         public MessageStatus MessageStatus;
 
-
+        public override string EnvelopeID => GetEnvelopeId(MessageID);
 
         /// <summary>
         /// Encode the message using the signature key <paramref name="signingKey"/>.
@@ -59,21 +59,23 @@ namespace Goedel.Mesh {
         public override DareEnvelope Envelope(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
 
             MessageID ??= UDF.Nonce(); // Add a message ID unless one is already defined.
+            return base.Envelope(signingKey, encryptionKey);
 
-            var data = this.GetBytes();
-            var contentMeta = new ContentMeta() {
-                UniqueID = MessageID,
-                Created = DateTime.Now,
-                ContentType = Constants.IanaTypeMeshMessage,
-                MessageType = _Tag
-                };
 
-            DareEnvelope = DareEnvelope.Encode(data, contentMeta: contentMeta,
-                signingKey: signingKey, encryptionKey: encryptionKey);
+            //var data = this.GetBytes();
+            //var contentMeta = new ContentMeta() {
+            //    UniqueID = MessageID,
+            //    Created = DateTime.Now,
+            //    ContentType = Constants.IanaTypeMeshMessage,
+            //    MessageType = _Tag
+            //    };
 
-            DareEnvelope.Header.EnvelopeID = GetEnvelopeId(MessageID);
+            //DareEnvelope = DareEnvelope.Encode(data, contentMeta: contentMeta,
+            //    signingKey: signingKey, encryptionKey: encryptionKey);
 
-            return DareEnvelope;
+            //DareEnvelope.Header.EnvelopeID = GetEnvelopeId(MessageID);
+
+            //return DareEnvelope;
             }
 
         /// <summary>

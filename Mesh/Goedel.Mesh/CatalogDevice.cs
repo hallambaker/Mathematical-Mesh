@@ -184,7 +184,9 @@ namespace Goedel.Mesh {
             ProfileUser.ToBuilder(builder, indent, "[Profile Mesh Missing]");
             ProfileDevice.ToBuilder(builder, indent, "[Profile Device Missing]");
             ConnectionUser.ToBuilder(builder, indent, "[Connection Device Missing]");
-            GetActivationDevice(keyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
+
+            // Can't write this out to the console because it is encrypted under the device key!
+            //GetActivationDevice(keyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
 
             }
 

@@ -16,6 +16,8 @@ namespace Goedel.Mesh {
         /// </summary>
         public virtual DareEnvelope DareEnvelope { get; set; }
 
+        public virtual string EnvelopeID => _PrimaryKey;
+
         /// <summary>
         /// Sign the profile under <paramref name="signingKey"/>.
         /// </summary>
@@ -36,14 +38,13 @@ namespace Goedel.Mesh {
 
             DareEnvelope = new Enveloped<MeshItem>(this,
                         signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta);
-            DareEnvelope.Header.EnvelopeID = _PrimaryKey;
+            DareEnvelope.Header.EnvelopeID = EnvelopeID;
 
             return DareEnvelope;
             }
 
         ///<summary>The key collection that was used to decode this object instance.</summary>
         public IKeyCollection KeyCollection;
-
 
         ///<summary>Initialization property, used to force initialization of the 
         ///Json parser dictionaries.</summary>
