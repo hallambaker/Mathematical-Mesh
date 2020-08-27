@@ -56,7 +56,7 @@ namespace Goedel.Mesh {
         /// <param name="signingKey">The signature key.</param>
         /// <param name="encryptionKey">The encryption key.</param>
         /// <returns>The enveloped, signed message.</returns>
-        public override DareEnvelope Encode(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
+        public override DareEnvelope Envelope(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
 
             MessageID ??= UDF.Nonce(); // Add a message ID unless one is already defined.
 

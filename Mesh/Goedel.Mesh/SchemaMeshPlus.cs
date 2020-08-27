@@ -26,8 +26,18 @@ namespace Goedel.Mesh {
         public virtual DareEnvelope Envelope(
                     CryptoKey signingKey = null,
                     CryptoKey encryptionKey = null) {
+
+            var contentMeta = new ContentMeta() {
+                UniqueID = _PrimaryKey,
+                Created = DateTime.Now,
+                ContentType = Constants.IanaTypeMeshObject,
+                MessageType = _Tag
+                };
+
             DareEnvelope = new Enveloped<MeshItem>(this,
-                        signingKey: signingKey, encryptionKey: encryptionKey);
+                        signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta);
+            DareEnvelope.Header.EnvelopeID = _PrimaryKey;
+
             return DareEnvelope;
             }
 
@@ -95,29 +105,29 @@ namespace Goedel.Mesh {
 
             }
 
-        /// <summary>
-        /// Encode the message using the signature key <paramref name="signingKey"/>.
-        /// </summary>
-        /// <param name="signingKey">The signature key.</param>
-        /// <param name="encryptionKey">The encryption key.</param>
-        /// <returns>The enveloped, signed message.</returns>
-        public virtual DareEnvelope Encode(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
+        ///// <summary>
+        ///// Encode the message using the signature key <paramref name="signingKey"/>.
+        ///// </summary>
+        ///// <param name="signingKey">The signature key.</param>
+        ///// <param name="encryptionKey">The encryption key.</param>
+        ///// <returns>The enveloped, signed message.</returns>
+        //public virtual DareEnvelope Envelope(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
 
-            var data = this.GetBytes();
-            var contentMeta = new ContentMeta() {
-                UniqueID = _PrimaryKey,
-                Created = DateTime.Now,
-                ContentType = Constants.IanaTypeMeshObject,
-                MessageType = _Tag
-                };
+        //    var data = this.GetBytes();
+        //    var contentMeta = new ContentMeta() {
+        //        UniqueID = _PrimaryKey,
+        //        Created = DateTime.Now,
+        //        ContentType = Constants.IanaTypeMeshObject,
+        //        MessageType = _Tag
+        //        };
 
-            DareEnvelope = DareEnvelope.Encode(data, contentMeta: contentMeta,
-                signingKey: signingKey, encryptionKey: encryptionKey);
+        //    DareEnvelope = DareEnvelope.Encode(data, contentMeta: contentMeta,
+        //        signingKey: signingKey, encryptionKey: encryptionKey);
 
-            DareEnvelope.Header.EnvelopeID = _PrimaryKey;
+        //    DareEnvelope.Header.EnvelopeID = _PrimaryKey;
 
-            return DareEnvelope;
-            }
+        //    return DareEnvelope;
+        //    }
 
 
         /// <summary>
@@ -160,7 +170,7 @@ namespace Goedel.Mesh {
         }
 
     public partial class Message{
-
+        public override string _PrimaryKey => MessageID;
 
         ///<summary>Always false for an error result.</summary>
         public virtual bool Success => true;

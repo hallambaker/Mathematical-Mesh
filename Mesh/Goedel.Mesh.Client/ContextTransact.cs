@@ -335,7 +335,7 @@ namespace Goedel.Mesh.Client {
             //var envelope = message.Encode(signingKey: SignOutboundMessage,
             //        encryptionKey: recipientEncryptionKey); // Todo: Sign, encrypt
 
-            var envelope = message.Encode(); // Todo: Sign, encrypt
+            var envelope = message.Envelope(); // Todo: Sign, encrypt
             envelope.JsonObject = message;
 
             TransactRequest.Outbound.Add(new Enveloped<Message>(envelope));
@@ -352,7 +352,7 @@ namespace Goedel.Mesh.Client {
         public void InboundMessage(
                 Message message) {
             TransactRequest.Inbound ??= new List<Enveloped<Message>>();
-            var envelope = message.Encode(); // Todo: Sign, encrypt
+            var envelope = message.Envelope(); // Todo: Sign, encrypt
             envelope.JsonObject = message;
             TransactRequest.Inbound.Add(new Enveloped<Message>(envelope));
             }
@@ -365,7 +365,7 @@ namespace Goedel.Mesh.Client {
         public void LocalMessage(
                 Message message) {
             TransactRequest.Local ??= new List<Enveloped<Message>>();
-            var envelope = message.Encode(); // Todo: Sign, encrypt
+            var envelope = message.Envelope(); // Todo: Sign, encrypt
             envelope.JsonObject = message;
             TransactRequest.Local.Add(new Enveloped<Message>(envelope));
             }

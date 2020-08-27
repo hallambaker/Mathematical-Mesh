@@ -80,7 +80,7 @@ namespace Goedel.XUnit {
             var message = new Message() {
                 MessageID = id
                 };
-            return message.Encode(signingKey);
+            return message.Envelope(signingKey);
             }
 
         MessageComplete SetStatus(Spool spool, string id, MessageStatus messageStatus, KeyPair signingKey) {
@@ -94,7 +94,7 @@ namespace Goedel.XUnit {
                         }
                     }
                 };
-            var envelope = message.Encode(signingKey);
+            var envelope = message.Envelope(signingKey);
             spool.Add(envelope);
 
             return message;

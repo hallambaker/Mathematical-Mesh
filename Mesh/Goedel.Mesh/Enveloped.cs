@@ -86,9 +86,10 @@ namespace Goedel.Mesh {
         public Enveloped(
                     T data,
                     CryptoKey signingKey = null,
-                    CryptoKey encryptionKey = null) : base(
+                    CryptoKey encryptionKey = null,
+                    ContentMeta contentMeta = null) : base(
                         new CryptoParameters(signer: signingKey, recipient: encryptionKey), 
-                        data.GetBytes()) {
+                        data.GetBytes(), contentMeta: contentMeta) {
             }
 
         /// <summary>

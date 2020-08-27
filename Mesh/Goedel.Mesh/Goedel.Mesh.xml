@@ -3672,7 +3672,7 @@
             <param name="enveloped">The envelope to copy.</param>
         </member>
         <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.Enveloped`1.#ctor(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]})" -->
-        <member name="M:Goedel.Mesh.Enveloped`1.#ctor(`0,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.Enveloped`1.#ctor(`0,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.Dare.ContentMeta)">
             <summary>
             Constructor returining an envelope containing the object <paramref name="data"/>
             optionally encrypted under <paramref name="encryptionKey"/> and signed under
@@ -4567,7 +4567,7 @@
         <member name="F:Goedel.Mesh.Message.MessageStatus">
             <summary>The message status.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Message.Encode(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.Message.Envelope(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
             <summary>
             Encode the message using the signature key <paramref name="signingKey"/>.
             </summary>
@@ -10767,14 +10767,6 @@
             <param name="envelope">The enveloped data.</param>
             <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
             <returns>The decoded data item</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshItem.Encode(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
-            <summary>
-            Encode the message using the signature key <paramref name="signingKey"/>.
-            </summary>
-            <param name="signingKey">The signature key.</param>
-            <param name="encryptionKey">The encryption key.</param>
-            <returns>The enveloped, signed message.</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshItem.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>

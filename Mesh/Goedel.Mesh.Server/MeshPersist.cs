@@ -141,6 +141,8 @@ namespace Goedel.Mesh.Server {
 
             // Sign the envelope under the service key.
             // Encrypt: We should probably encrypt here to the device key and the account key.
+
+            // the key isn't being filled in on the envelope ???
             acknowledgeConnection.Envelope(ServiceSignatureKey); 
             accountHandle.PostInbound(acknowledgeConnection.DareEnvelope);
 
