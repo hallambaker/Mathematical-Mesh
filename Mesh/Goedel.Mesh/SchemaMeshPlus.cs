@@ -16,7 +16,8 @@ namespace Goedel.Mesh {
         /// </summary>
         public virtual DareEnvelope DareEnvelope { get; set; }
 
-        public virtual string EnvelopeID => _PrimaryKey;
+        ///<summary>The envelope Identifier.</summary> 
+        public virtual string EnvelopeId => _PrimaryKey;
 
         /// <summary>
         /// Sign the profile under <paramref name="signingKey"/>.
@@ -38,7 +39,7 @@ namespace Goedel.Mesh {
 
             DareEnvelope = new Enveloped<MeshItem>(this,
                         signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta);
-            DareEnvelope.Header.EnvelopeID = EnvelopeID;
+            DareEnvelope.Header.EnvelopeID = EnvelopeId;
 
             return DareEnvelope;
             }
@@ -171,20 +172,21 @@ namespace Goedel.Mesh {
         }
 
     public partial class Message{
-        public override string _PrimaryKey => MessageID;
+        ///<summary>The primary key is <see cref="MessageId"/></summary> 
+        public override string _PrimaryKey => MessageId;
 
-        ///<summary>Always false for an error result.</summary>
-        public virtual bool Success => true;
+        /////<summary>Always false for an error result.</summary>
+        //public virtual bool Success => true;
 
-        ///<summary>The error report code</summary>
-        public virtual string ErrorReport => null;
+        /////<summary>The error report code</summary>
+        //public virtual string ErrorReport => null;
 
 
         /// <summary>
         /// Return the identifier for a response to this message.
         /// </summary>
         /// <returns>The response identifier.</returns>
-        public string GetResponseId() => MakeResponseID(MessageID);
+        public string GetResponseId() => MakeResponseID(MessageId);
 
         /// <summary>
         /// Generate the response identifier as a deterministic function of the request
@@ -210,10 +212,10 @@ namespace Goedel.Mesh {
 
         }
     public partial class MessageError {
-        ///<summary>Always false for an error result.</summary>
-        public override bool Success => false;
+        /////<summary>Always false for an error result.</summary>
+        //public override bool Success => false;
 
-        ///<summary>The error report code</summary>
-        public override string ErrorReport => ErrorCode;
+        /////<summary>The error report code</summary>
+        //public override string ErrorReport => ErrorCode;
         }
     }

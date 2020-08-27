@@ -704,6 +704,49 @@
             <param name="verify">It true, verify the signature first.</param>
             <returns>The plaintext payload data.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ValidateTrustPath(Goedel.Cryptography.Dare.DareSignature,System.String)">
+            <summary>
+            Attempt to form a trust path for the key used to sign <paramref name="dareSignature"/>.
+            </summary>
+            <param name="dareSignature">The signature to validate.</param>
+            <param name="anchor">If present specifies the fingerprint of a key that MUST anchor
+            the trust path.</param>
+            <returns>The result of the trust path analysis.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ErasePrivateKey(System.String)">
+            <summary>
+            Attempt to erase the private key with fingerprint <paramref name="udf"/> from the
+            associated persistence store.
+            </summary>
+            <param name="udf"></param>
+            <returns>True if the key was found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.LocatePrivateKey(System.String)">
+            <summary>
+            Locate the private key with fingerprint <paramref name="udf"/> and return
+            the corresponding JSON description.
+            </summary>
+            <param name="udf">Key to locate</param>
+            <returns>The JSON description (if found).</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.Persist(System.String,Goedel.Cryptography.PKIX.IPKIXPrivateKey,System.Boolean)">
+            <summary>
+            Persist the key pair specified by <paramref name="privateKey"/> and mark as exportable
+            or non-exportable according to the value of <paramref name="Exportable"/>.
+            </summary>
+            <param name="udf">The UDF of the key</param>
+            <param name="privateKey">The private key parameters.</param>
+            <param name="Exportable">If true, the key is exportable.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.Persist(System.String,Goedel.Cryptography.IJson,System.Boolean)">
+            <summary>
+            Persist the key pair specified by <paramref name="joseKey"/> and mark as exportable
+            or non-exportable according to the value of <paramref name="exportable"/>.
+            </summary>
+            <param name="udf">The UDF of the key</param>
+            <param name="joseKey">The private key parameters.</param>
+            <param name="exportable">If true, the key is exportable.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TransactBegin">
             <summary>
             Begin a transaction.
@@ -712,10 +755,10 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Transact``1(Goedel.Mesh.Client.Transaction{``0})">
             <summary>
-            Perform the transaction described by <paramref name="transactRequest"/>. If the
+            Perform the transaction described by <paramref name="transact"/>. If the
             remote operation succeeds, apply the changes to the local stores.
             </summary>
-            <param name="transactRequest">The transaction to perform.</param>
+            <param name="transact">The transaction to perform.</param>
             <returns>Response from the Mesh service.</returns>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextGroup">
@@ -809,7 +852,7 @@
             <summary>
             Begin a transaction.
             </summary>
-            <returns></returns>
+            <returns>The transaction handle</returns>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextMeshPending">
             <summary>
@@ -852,6 +895,8 @@
             <param name="algorithmEncrypt">The encryption algorithm to use.</param>
             <param name="algorithmSign">The signature algorithm to use.</param>
             <param name="algorithmAuthenticate">The authentication algorithm to use.</param>
+            <param name="rights">The list of rights being requested by the device.</param>
+            <param name="bits">Work factor of the secret seed.</param>
             <returns>The <see cref="T:Goedel.Mesh.Client.ContextMeshPending"/> record describing the state of the 
             pending connection.</returns>
         </member>
@@ -864,6 +909,7 @@
             <param name="localName">Local friendly name for the account.</param>
             <param name="pin">Pin code value (if supplied).</param>
             <param name="profileDevice">The device profile.</param>
+            <param name="rights">The list of rights being requested by the device.</param>
             <returns>The <see cref="T:Goedel.Mesh.Client.ContextMeshPending"/> record describing the state of the 
             pending connection.</returns>
         </member>
@@ -926,11 +972,47 @@
             Untyped transaction update.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.TransactionUpdate.Commit">
+            <summary>
+            Commit the transaction to the remote and local copies of the catalog.
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Client.TransactionUpdate`1">
             <summary>
             Typed transaction update
             </summary>
-            <typeparam name="T"></typeparam>
+            <typeparam name="TEntry">A type inheriting from <see cref="T:Goedel.Mesh.CatalogedEntry"/> which
+            specifies the type of the contents of the catalog.</typeparam>
+        </member>
+        <member name="F:Goedel.Mesh.Client.TransactionUpdate`1.Catalog">
+            <summary>Catalog of type </summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactionUpdate`1.#ctor(Goedel.Mesh.Catalog{`0})">
+            <summary>
+            Constructor, return a new update transaction for the catalog <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog on which the transaction is to be performed.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactionUpdate`1.Commit">
+            <summary>
+            Commit the transaction to the remote and local copies of the catalog.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactionUpdate`1.Update(`0)">
+            <summary>
+            Add a task to update to the entry <paramref name="catalogedEntry"/> to the transaction
+            update.
+            </summary>
+            <param name="catalogedEntry">The new value of the catalog entry.</param>
+            <returns>The enveloped update value.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactionUpdate`1.Delete(`0)">
+            <summary>
+            Add a task to delete the entry <paramref name="catalogedEntry"/> to the transaction
+            update.
+            </summary>
+            <param name="catalogedEntry">The catalog entry to delete.</param>
+            <returns>The enveloped update value.</returns>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextUser">
             <summary>
@@ -944,7 +1026,7 @@
             <summary>
             Begin a transaction.
             </summary>
-            <returns></returns>
+            <returns>The transaction handle</returns>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
@@ -1014,6 +1096,15 @@
             personal mesh. This method does not support transfer of the Mesh Service.
             </summary>
             <param name="accountAddress">The account address</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetStoresDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser)">
+            <summary>
+            Returns the stores directory on <paramref name="MeshHost"/> for the profile 
+            <paramref name="profileUser"/>.
+            </summary>
+            <param name="MeshHost">The host.</param>
+            <param name="profileUser">The profile.</param>
+            <returns>Path to the directory containing the profile stores.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelf(Goedel.Mesh.Contact,System.String)">
             <summary>
@@ -1181,6 +1272,7 @@
             Attempt device connection by means of the static URI <paramref name="uri"/>.
             </summary>
             <param name="uri">The connection URI</param>
+            <param name="rights">The list of rights being requested by the device.</param>
             <returns>The </returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ClaimPublication(System.String,System.String@)">
@@ -1228,6 +1320,9 @@
             </summary>
             <param name="request">The request to accept or reject.</param>
             <param name="accept">If true, accept the request. Otherwise, it is rejected.</param>
+            <param name="rights">The list of rights to be granted to the device.</param>
+            <param name="messagePin">The PIN value to be used to authenticate the regquest.</param>
+            <returns>The result of processing.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Process(System.String,System.Boolean,System.Boolean)">
             <summary>
@@ -1247,7 +1342,8 @@
             <param name="accept">If true, accept the request, otherwise reject it.</param>
             <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
             contact information in response to an initial contact request.</param>
-            <returns></returns>
+            <param name="rights">The list of rights to be granted to the device.</param>
+            <returns>The result of processing.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ContactReply(Goedel.Mesh.RequestContact,System.String)">
             <summary>
@@ -1426,7 +1522,8 @@
             add the service portion to the capabilities catalog.
             </summary>
             <param name="keyPair">Keypair from which the capability is to be derrived.</param>
-            
+            <param name="profileDevice">The profile of the device to which the capability
+            is being granted.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GrantProfileRoot(Goedel.Mesh.ActivationAccount,Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right)">
             <summary>
@@ -1436,14 +1533,40 @@
             <param name="profileDevice"></param>
             <param name="right"></param>
         </member>
+        <member name="T:Goedel.Mesh.Client.TransactAccount">
+            <summary>
+            Transaction on a Mesh account. Provides access to the account catalogs and spools.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.TransactAccount.ContextAccount">
             <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactAccount.#ctor(Goedel.Mesh.Client.ContextAccount)">
+            <summary>
+            Constructor creating transaction instance under the account context
+            <paramref name="contextAccount"/>
+            </summary>
+            <param name="contextAccount">The account context in which the update
+            is to be applied.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Client.TransactUser">
+            <summary>
+            Transaction on a Mesh user account.Provides access to the account catalogs and spools.
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.TransactUser.ContextAccount">
             <summary>The account context in which this transaction takes place.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.TransactUser.ContextUser">
             <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.#ctor(Goedel.Mesh.Client.ContextUser)">
+            <summary>
+            Constructor creating transaction instance under the account context
+            <paramref name="contextUser"/>
+            </summary>
+            <param name="contextUser">The account context in which the update
+            is to be applied.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogApplication">
             <summary>Returns the application catalog for the account</summary>
@@ -1469,17 +1592,47 @@
         <member name="M:Goedel.Mesh.Client.TransactUser.GetSpoolInbound">
             <summary>Returns the inbound spool for the account</summary>
         </member>
+        <member name="T:Goedel.Mesh.Client.TransactGroup">
+            <summary>
+            Transaction on a Mesh group account. Provides access to the account catalogs and spools.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.TransactGroup.ContextAccount">
             <summary>The account context in which this transaction takes place.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.TransactGroup.ContextGroup">
             <summary>The account context in which this transaction takes place.</summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.TransactGroup.#ctor(Goedel.Mesh.Client.ContextGroup)">
+            <summary>
+            Constructor creating transaction instance under the account context
+            <paramref name="contextGroup"/>
+            </summary>
+            <param name="contextGroup">The account context in which the update
+            is to be applied.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.TransactGroup.GetCatalogMember">
             <summary>Returns the network catalog for the account</summary>
         </member>
+        <member name="T:Goedel.Mesh.Client.Transaction`1">
+            <summary>
+            Transaction on a context of type <typeparamref name="TAccount"/>.
+            </summary>
+            <typeparam name="TAccount">The type of the context on which the transaction is to
+            be performed.</typeparam>
+        </member>
         <member name="P:Goedel.Mesh.Client.Transaction`1.ContextAccount">
             <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.Transaction`1.SignOutboundMessage">
+            <summary>Outbound message signature key, the global account signature key</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.Transaction`1.SignInboundMessage">
+            <summary>Inbound message signature key, the device account signature key.
+            This is only used to update message status.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.Transaction`1.SignLocalMessage">
+            <summary>Inbound message signature key, the device admin signature key</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.Transaction`1.TransactRequest">
             <summary>The transaction request message being assembled</summary>
@@ -1507,7 +1660,7 @@
         <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(Goedel.Mesh.NetworkProtocolEntry,Goedel.Mesh.Message)">
             <summary>
             Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
-            outbound message of <paramref name="transactRequest"/>.
+            outbound message the transaction request.
             </summary>
             <param name="recipient">The message recipient</param>
             <param name="message">The message to send</param>
@@ -1530,7 +1683,7 @@
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.LocalMessage(Goedel.Mesh.Message)">
             <summary>
-            Add the message <paramref name="message"/> as a
+            Add the message <paramref name="message"/> to the local pickup spool.
             local message.
             </summary>
             <param name="message">The message to append to the local spool.</param>
@@ -1562,6 +1715,7 @@
             </summary>
             <param name="catalog">The catalog to be updated</param>
             <param name="catalogedEntry">The entry to add as an update.</param>
+            <typeparam name="TEntry">The entry type.</typeparam>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.CatalogDelete``1(Goedel.Mesh.Catalog{``0},``0)">
             <summary>
@@ -1570,6 +1724,13 @@
             </summary>
             <param name="catalog">The catalog to be updated</param>
             <param name="catalogedEntry">The entry to add as an update.</param>
+            <typeparam name="TEntry">The entry type.</typeparam>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.Transact">
+            <summary>
+            Apply the transaction and return the response.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Mesh.Client.Internal">
             <summary>
@@ -2268,12 +2429,20 @@
         <member name="F:Goedel.Mesh.Client.MeshHost.DictionaryLocalContextMesh">
             <summary>Dictionary mapping mesh local name to Context.</summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.Deregister(Goedel.Mesh.Client.ContextAccount)">
+            <summary>
+            Unregister the mesh <paramref name="contextMesh"/>.
+            </summary>
+            <param name="contextMesh">The mesh to be deleted.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.LocateMesh(System.String,System.Boolean)">
             <summary>
             Locate context by UDF or localname. The context acquired is owned by the MeshHost instance
             and MUST NOT be disposed of by the caller.
             </summary>
             <param name="key">The UDF or name to resolve.</param>
+            <param name="useLocal">If true, match against UDF or local name. Otherwise
+            match on UDF alone.</param>
             <returns>The context, if a matching context is found. Otherwise null.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.Register(Goedel.Mesh.Client.HostCatalogItem,Goedel.Mesh.Client.ContextAccount,System.Boolean)">
@@ -2287,7 +2456,7 @@
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.Delete(System.String)">
             <summary>
-            Delete <paramref name="profile"/> from the host catalog.
+            Delete <paramref name="key"/> from the host catalog.
             </summary>
             <param name="key">The profile to delete</param>
         </member>

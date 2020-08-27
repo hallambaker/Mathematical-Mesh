@@ -29,9 +29,11 @@ namespace Goedel.Mesh {
         Trusted
         }
 
-
+    /// <summary>
+    /// Typed DareEnvelope.
+    /// </summary>
+    /// <typeparam name="T">The type of the wrapped data item.</typeparam>
     public partial class Enveloped<T> : DareEnvelope where T : MeshItem {
-
 
         T EnvelopedObject => JsonObject as T;
 
@@ -55,7 +57,7 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Create a < 
+        /// Constructor returning a typed envelope. 
         /// </summary>
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
@@ -83,6 +85,7 @@ namespace Goedel.Mesh {
         /// <param name="data">The object to be enveloped.</param>
         /// <param name="signingKey">The signature key.</param>
         /// <param name="encryptionKey">The encryption key.</param>
+        /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
         public Enveloped(
                     T data,
                     CryptoKey signingKey = null,
@@ -106,6 +109,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="keyCollection">Key collection to be used to find decryption keys and
         /// roots of trust for verification keys.</param>
+        /// <param name="validation">Validation to be performed after decoding.</param>
         /// <returns>The decoded data.</returns>
         public T Decode(IKeyCollection keyCollection = null, 
                     EnvelopeValidation validation = EnvelopeValidation.None) {

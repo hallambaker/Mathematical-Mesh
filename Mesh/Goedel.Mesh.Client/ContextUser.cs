@@ -249,9 +249,16 @@ namespace Goedel.Mesh.Client {
             SyncProgressUpload();
             }
 
+        /// <summary>
+        /// Returns the stores directory on <paramref name="MeshHost"/> for the profile 
+        /// <paramref name="profileUser"/>.
+        /// </summary>
+        /// <param name="MeshHost">The host.</param>
+        /// <param name="profileUser">The profile.</param>
+        /// <returns>Path to the directory containing the profile stores.</returns>
         public static string GetStoresDirectory(
-        MeshHost MeshHost, ProfileUser profileUser) =>
-            Path.Combine(MeshHost.MeshMachine.DirectoryMesh, profileUser.UDF);
+                MeshHost MeshHost, ProfileUser profileUser) =>
+                    Path.Combine(MeshHost.MeshMachine.DirectoryMesh, profileUser.UDF);
 
 
 
@@ -594,7 +601,7 @@ namespace Goedel.Mesh.Client {
                     switch (meshMessage) {
                         case MessageComplete meshMessageComplete: {
                             foreach (var reference in meshMessageComplete.References) {
-                                completed.Add(reference.MessageID, meshMessageComplete);
+                                completed.Add(reference.MessageId, meshMessageComplete);
                                 // Hack: This should make actual use of the relationship
                                 //   (Accept, Reject, Read)
                                 }
@@ -625,14 +632,14 @@ namespace Goedel.Mesh.Client {
                 //meshMessage.DareEnvelope = envelope;
                 //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
 
-                if (meshMessage.MessageID == messageID) {
+                if (meshMessage.MessageId == messageID) {
                     read = true;
                     return meshMessage;
                     }
                 switch (meshMessage) {
                     case MessageComplete meshMessageComplete: {
                         foreach (var reference in meshMessageComplete.References) {
-                            if (reference.MessageID == messageID) {
+                            if (reference.MessageId == messageID) {
                                 read = true;
                                 return null;
                                 }
@@ -850,6 +857,7 @@ namespace Goedel.Mesh.Client {
         /// Attempt device connection by means of the static URI <paramref name="uri"/>.
         /// </summary>
         /// <param name="uri">The connection URI</param>
+        /// <param name="rights">The list of rights being requested by the device.</param>
         /// <returns>The </returns>
         public CatalogedDevice Connect(string uri, List<string> rights=null) {
 
@@ -865,7 +873,7 @@ namespace Goedel.Mesh.Client {
 
             //Console.WriteLine($"Accept connection ID is {responseId}");
             var respondConnection = new RespondConnection() {
-                MessageID = responseId,
+                MessageId = responseId,
                 CatalogedDevice = cataloguedDevice,
                 Result = Constants.TransactionResultAccept
                 };
@@ -944,7 +952,7 @@ namespace Goedel.Mesh.Client {
                 // Must enforce this from now on. 
                 //spoolEntry.Open.AssertTrue(Internal.Throw);
 
-                Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageID}: Status {spoolEntry.MessageStatus}");
+                Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageId}: Status {spoolEntry.MessageStatus}");
 
                 if (!spoolEntry.Closed) {
                     switch (meshMessage) {
@@ -1085,13 +1093,16 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="request">The request to accept or reject.</param>
         /// <param name="accept">If true, accept the request. Otherwise, it is rejected.</param>
-        ProcessResult Process(AcknowledgeConnection request, bool accept = true, MessagePIN messagePIN = null,
+        /// <param name="rights">The list of rights to be granted to the device.</param>
+        /// <param name="messagePin">The PIN value to be used to authenticate the regquest.</param>
+        /// <returns>The result of processing.</returns>
+        ProcessResult Process(AcknowledgeConnection request, bool accept = true, MessagePIN messagePin = null,
                List<string> rights=null) {
             var transactRequest = TransactBegin();
             rights.Future();
 
             var respondConnection = new RespondConnection() {
-                MessageID = request.GetResponseId()
+                MessageId = request.GetResponseId()
                 };
             if (accept) {
                 // Connect the device to the Mesh
@@ -1112,15 +1123,15 @@ namespace Goedel.Mesh.Client {
             transactRequest.LocalMessage(respondConnection);
 
             // Mark the pin code as having been used.
-            if (messagePIN != null) {
+            if (messagePin != null) {
                 transactRequest.LocalComplete(MessageStatus.Closed, 
-                    messagePIN, respondConnection);
+                    messagePin, respondConnection);
                 }
 
             // Perform the transaction
             var responseTransaction = Transact(transactRequest);
 
-            return new ResultAcknowledgeConnection(request, messagePIN, responseTransaction);
+            return new ResultAcknowledgeConnection(request, messagePin, responseTransaction);
             }
 
 
@@ -1154,7 +1165,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="accept">If true, accept the request, otherwise reject it.</param>
         /// <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
         /// contact information in response to an initial contact request.</param>
-        /// <returns></returns>
+        /// <param name="rights">The list of rights to be granted to the device.</param>
+        /// <returns>The result of processing.</returns>
         public ProcessResult Process(Message meshMessage, bool accept = true, bool reciprocate = true,
                     List<string> rights = null) {
             "Merge this processing loop with the other processing loop".TaskFunctionality();
@@ -1423,7 +1435,7 @@ namespace Goedel.Mesh.Client {
             var recipientAddress = requestConfirmation.Sender;
 
             var message = new ResponseConfirmation() {
-                MessageID = requestConfirmation.GetResponseId(),
+                MessageId = requestConfirmation.GetResponseId(),
                 Recipient = recipientAddress,
                 Accept = response,
                 Request = requestConfirmation.EnvelopedRequestConfirmation

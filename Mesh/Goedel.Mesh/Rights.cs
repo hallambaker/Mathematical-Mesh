@@ -178,7 +178,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="resource">The type of resource to which access rights are granted.<</param>
+        /// <param name="resource">The type of resource to which access rights are granted.</param>
         /// <param name="access">The access granted.</param>
         /// <param name="degree">The form of access (direct, service mediated, etc.)</param>
         /// <param name="name">The named sub-resource (e.g. account).</param>
@@ -374,11 +374,16 @@ namespace Goedel.Mesh {
                 [IdRightsStore] = RightsGroupMember,
                 };
 
-
-        public static List<Right> GetRights(string id, out string subresource) {
+        /// <summary>
+        /// Expand the set of rights described by the role <paramref name="role"/>.
+        /// </summary>
+        /// <param name="role">The role to expand.</param>
+        /// <param name="subresource">Optional sub-respource.</param>
+        /// <returns>The list of rights.</returns>
+        public static List<Right> GetRights(string role, out string subresource) {
             subresource = null; // NYI: handling of account based rights.
 
-            DictionaryRights.TryGetValue(id, out var dictionary).AssertTrue(UnknownRight.Throw, id);
+            DictionaryRights.TryGetValue(role, out var dictionary).AssertTrue(UnknownRight.Throw, role);
 
             return dictionary;
 

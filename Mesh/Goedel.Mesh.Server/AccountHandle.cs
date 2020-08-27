@@ -83,7 +83,7 @@ namespace Goedel.Mesh.Server {
         ///<summary>Convenience accessor to the Account assertion.</summary>
         public ProfileUser ProfileUser => AccountUser.ProfileUser;
 
-
+        ///<summary>Convenience accessor for DareEnvelope returning a typed envelope.</summary> 
         public Enveloped<ProfileAccount> EnvelopedProfileAccount =>
                 new Enveloped<ProfileAccount>(AccountUser.EnvelopedProfileUser);
 

@@ -46,12 +46,12 @@ namespace Goedel.Mesh {
                     bool create = true) =>
             new CatalogDevice(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
-        string Directory;
-        protected override void Disposing() {
-            Screen.WriteLine($"^^^^^^^Free Device Catalog {Directory}");
-            base.Disposing();
+        //string directory;
 
-            }
+        /// <summary>
+        /// Disposing method.
+        /// </summary>
+        protected override void Disposing() => base.Disposing();
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -73,8 +73,8 @@ namespace Goedel.Mesh {
                     bool create = true) :
             base(directory, storeName ?? Label,
                         cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
-            Directory = directory;
-            Screen.WriteLine($"^^^^^^^^Create Device Catalog {Directory}");
+            //this.directory = directory;
+            //Screen.WriteLine($"^^^^^^^^Create Device Catalog {this.directory}");
 
             }
 

@@ -114,7 +114,10 @@ namespace Goedel.Mesh.Client {
                 }
             }
 
-
+        /// <summary>
+        /// Unregister the mesh <paramref name="contextMesh"/>.
+        /// </summary>
+        /// <param name="contextMesh">The mesh to be deleted.</param>
         public void Deregister(ContextAccount contextMesh) {
             var machine = contextMesh.CatalogedMachine;
             DictionaryUDFContextMesh.Remove(machine.Id);
@@ -137,6 +140,8 @@ namespace Goedel.Mesh.Client {
         /// and MUST NOT be disposed of by the caller.
         /// </summary>
         /// <param name="key">The UDF or name to resolve.</param>
+        /// <param name="useLocal">If true, match against UDF or local name. Otherwise
+        /// match on UDF alone.</param>
         /// <returns>The context, if a matching context is found. Otherwise null.</returns>
         public ContextAccount LocateMesh(string key, bool useLocal=true) {
             key.AssertNotNull(MeshNotFound.Throw);
@@ -164,7 +169,7 @@ namespace Goedel.Mesh.Client {
         public void Register(HostCatalogItem catalogItem, ContextAccount context, bool create = true) {
             
             // persist the permanent record.
-            var machine = ContainerHost.Update(catalogItem, create);
+            ContainerHost.Update(catalogItem, create);
             if (context!=null) {
                 Register(context);
                 }
@@ -179,7 +184,7 @@ namespace Goedel.Mesh.Client {
 
 
         /// <summary>
-        /// Delete <paramref name="profile"/> from the host catalog.
+        /// Delete <paramref name="key"/> from the host catalog.
         /// </summary>
         /// <param name="key">The profile to delete</param>
         public virtual void Delete(string key) =>

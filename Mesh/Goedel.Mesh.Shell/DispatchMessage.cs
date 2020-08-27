@@ -64,13 +64,13 @@ namespace Goedel.Mesh.Shell {
             var messages = new List<Message>();
             var completed = new Dictionary<string, Message>();
 
-            foreach (var message in inbound.Select(1, true)) {
-                var meshMessage = Message.FromJson(message.GetBodyReader());
-                if (!completed.ContainsKey(message.Header.ContentMeta.UniqueID)) {
+            foreach (var envelope in inbound.Select(1, true)) {
+                var meshMessage = Message.Decode (envelope, contextAccount);
+                if (!completed.ContainsKey(envelope.Header.ContentMeta.UniqueID)) {
                     switch (meshMessage) {
                         case MessageComplete meshMessageComplete: {
                             foreach (var reference in meshMessageComplete.References) {
-                                completed.Add(reference.MessageID, meshMessageComplete);
+                                completed.Add(reference.MessageId, meshMessageComplete);
                                 }
                             break;
                             }

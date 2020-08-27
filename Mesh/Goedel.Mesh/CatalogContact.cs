@@ -128,7 +128,13 @@ namespace Goedel.Mesh {
             return (cataloged, true);
             }
 
-
+        /// <summary>
+        /// Fetch the existing contact from the catalog and merge with values from
+        /// <paramref name="contact"/>. 
+        /// </summary>
+        /// <param name="contact">The contact whose values are to be merged.</param>
+        /// <param name="self">If true set the self marker.</param>
+        /// <returns>The updated contact.</returns>
         public CatalogedContact GetUpdated(Contact contact, bool self = false) {
             var cataloged = new CatalogedContact(contact, self);
 

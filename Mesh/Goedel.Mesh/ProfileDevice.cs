@@ -38,12 +38,10 @@ namespace Goedel.Mesh {
         /// seed.
         /// </summary>
         /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
         /// <param name="algorithmEncrypt">The encryption algorithm.</param>
         /// <param name="algorithmSign">The signature algorithm</param>
         /// <param name="algorithmAuthenticate">The signature algorithm</param>
         /// <param name="bits">The size of key to generate in bits/</param>
-        /// <paramref name="keyCollection"/>.</param>
         public ProfileDevice(
                     CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,

@@ -57,7 +57,7 @@ namespace Goedel.XUnit {
             var result6 = deviceA.Dispatch($"account sync /auto");
             ValidContact(deviceA, AccountA);
 
-            var messageId = resultfetch.Message.MessageID;
+            var messageId = resultfetch.Message.MessageId;
 
             // reject the contact request.
             var result7 = ProcessMessage(deviceA, true, messageId);
@@ -84,7 +84,7 @@ namespace Goedel.XUnit {
             ValidContact(deviceB, AccountB, AccountA);
 
 
-            var messageId = resultfetch.Message.MessageID;
+            var messageId = resultfetch.Message.MessageId;
 
             // reject the contact request.
             var result6 = ProcessMessage(deviceA, false, messageId);
@@ -164,7 +164,7 @@ namespace Goedel.XUnit {
             (resultPending.Messages.Count == length).TestTrue();
 
             // extract message id
-            var messageId = resultPending.Messages[0].MessageID;
+            var messageId = resultPending.Messages[0].MessageId;
 
             var response = accept ? "accept" : "reject";
             return device.Dispatch($"message {response} {messageId}");
@@ -261,7 +261,7 @@ namespace Goedel.XUnit {
                 return null;
                 }
             foreach (var message in resultPending.Messages) {
-                if (message.MessageID == id) {
+                if (message.MessageId == id) {
                     return message;
                     }
                 }
@@ -296,7 +296,7 @@ namespace Goedel.XUnit {
             CreateAliceBob(out var deviceA, out var deviceB);
 
             var resultRequest = deviceB.Dispatch($"message confirm {AccountA} start") as ResultSent;
-            var messageId = resultRequest.Message.MessageID;
+            var messageId = resultRequest.Message.MessageId;
 
             var resultHandle = ProcessMessage(deviceA, true, messageId); // Hack - lets start using MessageID eh?
 
@@ -310,7 +310,7 @@ namespace Goedel.XUnit {
             CreateAliceBob(out var deviceA, out var deviceB);
 
             var resultRequest = deviceB.Dispatch($"message confirm {AccountA} start") as ResultSent;
-            var messageId = resultRequest.Message.MessageID;
+            var messageId = resultRequest.Message.MessageId;
 
             var resultHandle = ProcessMessage(deviceA, false, messageId);
             var responseId = resultRequest.Message.GetResponseId();

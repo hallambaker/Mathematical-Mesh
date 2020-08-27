@@ -549,35 +549,32 @@ namespace Goedel.Cryptography.Dare {
         /// a tree index is to be created or not and if so, whether </param>
         /// <param name="cryptoParameters">Cryptographic parameters specifying algorithms and keys
         /// for encoding and authentication of data.</param>
-        /// <param name="digestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
         /// <returns>The newly constructed container.</returns>
         public static Container MakeNewContainer(
                         JbcdStream jbcdStream,
                         CryptoParameters cryptoParameters,
-                        ContainerType containerType = ContainerType.Chain,
-                        CryptoAlgorithmId digestAlgorithm = CryptoAlgorithmId.Default) {
+                        ContainerType containerType = ContainerType.MerkleTree) {
             Container result;
 
-            var keyLocate = cryptoParameters.KeyLocate;
             switch (containerType) {
                 case ContainerType.List: {
-                    result = ContainerList.MakeNewContainer(jbcdStream, keyLocate);
+                    result = ContainerList.MakeNewContainer(jbcdStream, cryptoParameters);
                     break;
                     }
                 case ContainerType.Digest: {
-                    result = ContainerDigest.MakeNewContainer(jbcdStream, keyLocate);
+                    result = ContainerDigest.MakeNewContainer(jbcdStream, cryptoParameters);
                     break;
                     }
                 case ContainerType.Chain: {
-                    result = ContainerChain.MakeNewContainer(jbcdStream, keyLocate);
+                    result = ContainerChain.MakeNewContainer(jbcdStream, cryptoParameters);
                     break;
                     }
                 case ContainerType.Tree: {
-                    result = ContainerTree.MakeNewContainer(jbcdStream, keyLocate);
+                    result = ContainerTree.MakeNewContainer(jbcdStream, cryptoParameters);
                     break;
                     }
                 case ContainerType.MerkleTree: {
-                    result = ContainerMerkleTree.MakeNewContainer(jbcdStream, keyLocate);
+                    result = ContainerMerkleTree.MakeNewContainer(jbcdStream, cryptoParameters);
                     break;
                     }
 
@@ -682,12 +679,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="header">The frame header value.</param>
         /// <param name="trailer">The frame trailer value.</param>
         /// <returns>The number of bytes written.</returns>
-        void AppendFrame(byte[] header, byte[] payload = null, byte[] trailer = null) {
-            // Write the frame ensuring the results get written out.
-            var length = JbcdStream.WriteWrappedFrame(header, payload, trailer);
-            //FrameCount++;
-            return;
-            }
+        void AppendFrame(byte[] header, byte[] payload = null, byte[] trailer = null) =>
+                JbcdStream.WriteWrappedFrame(header, payload, trailer);
+
 
         /// <summary>
         /// Append the envelopes <paramref name="envelopes"/> to the container starting
@@ -698,9 +692,6 @@ namespace Goedel.Cryptography.Dare {
         public void Append(List<DareEnvelope> envelopes, int index = 0) {
 
             for (var i = index; i < envelopes.Count; i++) {
-                //Console.WriteLine($"Container Append #{i}  Write:{JBCDStream.PositionWrite} ");
-
-
                 Append(envelopes[i]);
                 }
             }
@@ -719,7 +710,9 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Write a previously prepared or validated Dare Envelope to the container directly.
         /// </summary>
-        /// <param name="envelope"></param>
+        /// <param name="envelope">The envelope to append to the container</param>
+        /// <param name="updateEnvelope">If true, update the header and trailer of 
+        /// <paramref name="envelope"/> to the computed values.</param>
         public virtual ContainerFrameIndex Append(DareEnvelope envelope, bool updateEnvelope = false) {
 
             var ContainerFrameIndex = new ContainerFrameIndex(envelope);
@@ -741,7 +734,7 @@ namespace Goedel.Cryptography.Dare {
                 ContentMeta = headerIn.ContentMeta,
                 ContentMetaData = headerIn.ContentMetaData,
                 Received = headerIn.Received ?? DateTime.Now,
-                
+
                 Signatures = trailerIn?.Signatures ?? headerIn.Signatures,
                 SignedData = trailerIn?.SignedData ?? headerIn.SignedData,
                 PayloadDigest = trailerIn?.PayloadDigest ?? headerIn.PayloadDigest,
@@ -750,8 +743,6 @@ namespace Goedel.Cryptography.Dare {
                 };
 
             // we need to recompute the PayloadDigest under the container DigestAlgorithm
-
-
             var trailer = new DareTrailer() {
                 };
 
@@ -778,7 +769,7 @@ namespace Goedel.Cryptography.Dare {
 
             //ContainerFrameIndex.dataPosition = JBCDStream.PositionWrite + 
 
-                return ContainerFrameIndex;
+            return ContainerFrameIndex;
 
             }
 
@@ -1060,7 +1051,10 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="frame">The index of the frame to be returned.</param>
         /// <returns>The requested header.</returns>
-        public DareHeader GetHeader(int frame) => throw new NYI();
+        public DareHeader GetHeader(int frame) {
+            frame.Future(); // NYI: Code does not support incremental encryption yet.
+            throw new NYI();
+            }
 
 
         /// <summary>

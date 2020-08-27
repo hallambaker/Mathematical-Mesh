@@ -10,7 +10,13 @@ namespace Goedel.Mesh {
     ///<summary>Static class for manipulating Mesh Uris</summary>
     public class MeshUri {
 
-
+        /// <summary>
+        /// Attempt to process <paramref name="account"/> as an EARL URI with embedded pin.
+        /// If successfull replace the values <paramref name="account"/> and 
+        /// <paramref name="pin"/>. Otherwise leave unchanged.
+        /// </summary>
+        /// <param name="account">The account address.</param>
+        /// <param name="pin">The pin value.</param>
         public static void ParseUri(ref string account, ref string pin) {
             try {
                 (account, pin) = ParseConnectUri(account);

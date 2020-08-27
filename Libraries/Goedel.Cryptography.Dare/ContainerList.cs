@@ -38,18 +38,19 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="keyLocate">Key collection to be used to resolve keys</param>
+        /// <param name="cryptoParameters">Cryptographic parameters specifying algorithms and keys
+        /// for encoding and authentication of data.</param>
         /// <returns>The newly constructed container.</returns>
 
         public static Container MakeNewContainer(
                         JbcdStream JBCDStream,
-                        IKeyLocate keyLocate) {
+                        CryptoParameters cryptoParameters) {
 
+            var keyLocate = cryptoParameters.KeyLocate;
             var containerInfo = new ContainerInfo() {
                 ContainerType = Label,
                 Index = 0
                 };
-
 
             var containerHeader = new DareHeader() {
                 ContainerInfo = containerInfo
@@ -67,8 +68,8 @@ namespace Goedel.Cryptography.Dare {
 
 
         // The high and low boundaries of the unknown region.
-        long FrameLowUnknown = 0;
-        long FrameHighUnknown = 0;
+        long frameLowUnknown = 0;
+        long frameHighUnknown = 0;
 
         /// <summary>
         /// Initialize the dictionaries used to manage the tree by registering the set
@@ -82,20 +83,20 @@ namespace Goedel.Cryptography.Dare {
 
             FrameIndexToPositionDictionary.Add(0, 0);
             if (containerInfo.Index == 0) {
-                FrameLowUnknown = 0;
-                FrameHighUnknown = 0;
+                frameLowUnknown = 0;
+                frameHighUnknown = 0;
                 return;
                 }
 
             FrameIndexToPositionDictionary.Add(1, firstPosition);
-            FrameLowUnknown = 1;
+            frameLowUnknown = 1;
 
             if (containerInfo.Index == 1) {
-                FrameHighUnknown = 1;
+                frameHighUnknown = 1;
                 return;
                 }
 
-            FrameHighUnknown = containerInfo.Index;
+            frameHighUnknown = containerInfo.Index;
             RegisterFrame(containerInfo, positionLast);
             }
 
@@ -125,7 +126,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>If positive, specifies the file position of the next frame.
         /// This is used to store an index to be applied to the file pointer before 
         /// a Next or Previous method operates on the stream.</summary>
-        long FrameReadStartPosition = -1;
+        long frameReadStartPosition = -1;
 
         /// <summary>
         /// Get or set the read position in the stream.
@@ -133,19 +134,19 @@ namespace Goedel.Cryptography.Dare {
         protected long PositionRead {
             get => JbcdStream.PositionRead;
             set {
-                FrameReadStartPosition = -1;
+                frameReadStartPosition = -1;
                 JbcdStream.PositionRead = value;
                 }
             }
 
         void PositionStream() {
-            if (FrameReadStartPosition >= 0) {
-                JbcdStream.PositionRead = FrameReadStartPosition;
-                FrameReadStartPosition = -1;
+            if (frameReadStartPosition >= 0) {
+                JbcdStream.PositionRead = frameReadStartPosition;
+                frameReadStartPosition = -1;
                 }
             }
 
-        long FrameRemaining;
+        long frameRemaining;
 
         #region // Container navigation
 
@@ -163,7 +164,7 @@ namespace Goedel.Cryptography.Dare {
                 MoveToIndex(index);
                 position = PositionRead;
                 }
-            return new ContainerFrameIndex(JbcdStream, KeyCollection, Position: position);
+            return new ContainerFrameIndex(JbcdStream, Position: position);
 
 
             }
@@ -193,8 +194,8 @@ namespace Goedel.Cryptography.Dare {
             var RecordStart = PositionRead;
 
             //_FrameData = null;
-            FrameRemaining = JbcdStream.ReadFrame(out var FrameHeader);
-            FrameReadStartPosition = PositionRead;
+            frameRemaining = JbcdStream.ReadFrame(out var FrameHeader);
+            frameReadStartPosition = PositionRead;
 
             this.FrameHeader = FrameHeader;
 
@@ -207,7 +208,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
 
-            return FrameRemaining >= 0;
+            return frameRemaining >= 0;
             }
 
         /// <summary>
@@ -218,18 +219,18 @@ namespace Goedel.Cryptography.Dare {
         public override bool Previous() {
             PositionStream();
 
-            FrameRemaining = JbcdStream.ReadFrameReverse(out var FrameHeader);
-            FrameReadStartPosition = PositionRead;
+            frameRemaining = JbcdStream.ReadFrameReverse(out var FrameHeader);
+            frameReadStartPosition = PositionRead;
 
             this.FrameHeader = FrameHeader;
             if (FrameHeader != null) {
                 var Index = ContainerHeader.ContainerInfo.Index;
                 if (!FrameIndexToPositionDictionary.TryGetValue(Index, out _)) {
-                    FrameIndexToPositionDictionary.Add(Index, FrameReadStartPosition);
+                    FrameIndexToPositionDictionary.Add(Index, frameReadStartPosition);
                     }
                 }
 
-            return FrameRemaining >= 0;
+            return frameRemaining >= 0;
             }
 
         /// <summary>
@@ -244,11 +245,11 @@ namespace Goedel.Cryptography.Dare {
                 PositionRead = Position;
                 }
             else {
-                Assert.AssertTrue(index > FrameLowUnknown & index < FrameHighUnknown, ContainerDataCorrupt.Throw);
+                Assert.AssertTrue(index > frameLowUnknown & index < frameHighUnknown, ContainerDataCorrupt.Throw);
 
-                if (index - FrameLowUnknown <= FrameHighUnknown - index) {
+                if (index - frameLowUnknown <= frameHighUnknown - index) {
                     Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(
-                        FrameLowUnknown, out Position), ContainerDataCorrupt.Throw);
+                        frameLowUnknown, out Position), ContainerDataCorrupt.Throw);
                     PositionRead = Position;
                     var Last = PositionRead;
                     Next();
@@ -257,13 +258,13 @@ namespace Goedel.Cryptography.Dare {
                         Next();
                         }
                     PositionRead = Last;
-                    FrameLowUnknown = ContainerInfo.Index;
+                    frameLowUnknown = ContainerInfo.Index;
                     return ContainerInfo.Index == index;
                     }
 
                 else {
                     Assert.AssertTrue(
-                        FrameIndexToPositionDictionary.TryGetValue(FrameHighUnknown, out Position), 
+                        FrameIndexToPositionDictionary.TryGetValue(frameHighUnknown, out Position), 
                         ContainerDataCorrupt.Throw);
                     PositionRead = Position;
 
@@ -272,7 +273,7 @@ namespace Goedel.Cryptography.Dare {
                         Previous();
                         }
 
-                    FrameHighUnknown = ContainerInfo.Index;
+                    frameHighUnknown = ContainerInfo.Index;
                     return ContainerInfo.Index == index;
                     }
                 }

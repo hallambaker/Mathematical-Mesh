@@ -63,6 +63,11 @@ namespace Goedel.Mesh {
             }
 
 
+        /// <summary>
+        /// Constructor returning an activation account for the seed <paramref name="secretSeed"/>.
+        /// </summary>
+        /// <param name="keyCollection">The key collection to use.</param>
+        /// <param name="secretSeed">The secret seed value.</param>
         public ActivationAccount(
                     IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed = null) {
@@ -74,6 +79,15 @@ namespace Goedel.Mesh {
                 MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Exportable);
             }
 
+
+        /// <summary>
+        /// Constructor returning an activation account for the seed <paramref name="secretSeed"/>.
+        /// </summary>
+        /// <param name="keyCollection">The key collection to use.</param>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="profileDevice">The profile of the device being activated.</param>
+        /// <param name="keyPairOnlineSignature">To delete.</param>
+        /// <param name="roles">Roles to be granted.</param>
         public ActivationAccount(
                     IKeyCollection keyCollection,
                     ProfileDevice profileDevice, 
@@ -124,12 +138,11 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Add the device specified by <paramref name="profileDevice"/> to the account granting administration
-        /// privileges if <paramref name="keyPairOnlineSignature"/> is not null and super administration 
-        /// privilege if <paramref name="superAdmin"/> is true. Note that it is possible for a device to 
-        /// be a super administrator without also being an administrator.
+        /// Add the device specified by <paramref name="profileDevice"/> to the account granting 
+        /// the set of privileged specified in <paramref name="rights"/>.
         /// </summary>
         /// <param name="profileDevice">Profile of the device to add.</param>
+        /// <param name="profileUser">User profile to which the device is added.</param>
         /// <param name="keyPairOnlineSignature">If not null, specifies an online signature key that is to be used
         /// to sign administrator functions.</param>
         /// <param name="rights">The initial rights to be assigned to the device.</param>
@@ -281,7 +294,8 @@ namespace Goedel.Mesh {
         /// add the service portion to the capabilities catalog.
         /// </summary>
         /// <param name="keyPair">Keypair from which the capability is to be derrived.</param>
-        /// 
+        /// <param name="profileDevice">The device to which the capability is to be added.</param>
+        /// <returns>The key data for the added capability.</returns>
         public KeyData AddCapability(CryptoKey keyPair, ProfileDevice profileDevice) {
             "**** MUST add keys to devices as shared capabilities".TaskFunctionality();
 
@@ -318,15 +332,19 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Grant super administrator access.
         /// </summary>
-        /// <param name="activationAccount"></param>
-        /// <param name="profileDevice"></param>
-        /// <param name="right"></param>
+        /// <param name="profileDevice">Device to which the access right is granted.</param>
+        /// <param name="right">The right granted.</param>
         void GrantProfileRoot( ProfileDevice profileDevice, Right right) {
             AccountOfflineSignature = AddCapability(
                         PrivateAccountOfflineSignature, profileDevice);
             }
 
-
+        /// <summary>
+        /// Grant device administrator access.
+        /// </summary>
+        /// <param name="profileDevice">Device to which the access right is granted.</param>
+        /// <param name="right">The right granted.</param>
+        /// <param name="keyPairOnlineSignature">To be removed.</param>
         void GrantProfileAdmin(
                             ProfileDevice profileDevice,
                             Right right,
@@ -337,20 +355,27 @@ namespace Goedel.Mesh {
                         keyPairOnlineSignature, profileDevice);
             }
 
+        /// <summary>
+        /// Grant access to the store X.
+        /// </summary>
+        /// <param name="profileDevice">Device to which the access right is granted.</param>
+        /// <param name="right">The right granted.</param>
         void GrantStore(ProfileDevice profileDevice, Right right) {
             }
 
-
+        /// <summary>
+        /// Grant access to global account.
+        /// </summary>
+        /// <param name="profileDevice">Device to which the access right is granted.</param>
+        /// <param name="right">The right granted.</param>
         void GrantAccount(ProfileDevice profileDevice, Right right) {
             }
 
 
         /// <summary>
-        /// Activate the keys bound to this activation record using keys derived from 
-        /// <paramref name="deviceKeySeed"/>.
+        /// Activate the keys bound to this activation record.
         /// </summary>
-        /// <param name="keyCollection">Key collection to register keys in.</param>
-        /// <param name="deviceKeySeed">Generator for the private key contributions.</param>
+
         public void Activate() {
 
             PrivateAccountOfflineSignature = AccountOfflineSignature?.GetKeyPair(KeySecurity.Exportable);

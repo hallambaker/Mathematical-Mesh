@@ -53,7 +53,10 @@ namespace Goedel.Mesh.Server {
         ///<summary>The root directory in which the files are stored.</summary>
         public string DirectoryRoot;
 
+        ///<summary>The service encryption key.</summary>  
         public CryptoKey ServiceEncryptionKey => null;
+
+        ///<summary>The service signature key.</summary> 
         public CryptoKey ServiceSignatureKey => null;
 
         static MeshPersist() {
@@ -133,10 +136,10 @@ namespace Goedel.Mesh.Server {
                 EnvelopedRequestConnection = requestConnection.EnvelopedRequestConnection,
                 ServerNonce = serviceNonce,
                 Witness = witness,
-                MessageID = witness
+                MessageId = witness
                 };
 
-            Console.WriteLine($"The AcknowledgeConnection.MessageID = {acknowledgeConnection.MessageID}");
+            Console.WriteLine($"The AcknowledgeConnection.MessageID = {acknowledgeConnection.MessageId}");
             Console.WriteLine($"The AcknowledgeConnection Response ID = {acknowledgeConnection.GetResponseId()}");
 
             // Sign the envelope under the service key.

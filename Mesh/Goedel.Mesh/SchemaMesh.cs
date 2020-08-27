@@ -5344,12 +5344,12 @@ namespace Goedel.Mesh {
         ///The received message to which this is a response
         /// </summary>
 
-		public virtual string						MessageID  {get; set;}
+		public virtual string						MessageId  {get; set;}
         /// <summary>
         ///Message that was generated in response to the original (optional).
         /// </summary>
 
-		public virtual string						ResponseID  {get; set;}
+		public virtual string						ResponseId  {get; set;}
         /// <summary>
         ///The relationship type. This can be Read, Unread, Accept, Reject.
         /// </summary>
@@ -5398,15 +5398,15 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			if (MessageID != null) {
+			if (MessageId != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("MessageID", 1);
-					_writer.WriteString (MessageID);
+				_writer.WriteToken ("MessageId", 1);
+					_writer.WriteString (MessageId);
 				}
-			if (ResponseID != null) {
+			if (ResponseId != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ResponseID", 1);
-					_writer.WriteString (ResponseID);
+				_writer.WriteToken ("ResponseId", 1);
+					_writer.WriteString (ResponseId);
 				}
 			if (Relationship != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -5446,12 +5446,12 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "MessageID" : {
-					MessageID = jsonReader.ReadString ();
+				case "MessageId" : {
+					MessageId = jsonReader.ReadString ();
 					break;
 					}
-				case "ResponseID" : {
-					ResponseID = jsonReader.ReadString ();
+				case "ResponseId" : {
+					ResponseId = jsonReader.ReadString ();
 					break;
 					}
 				case "Relationship" : {
@@ -6141,7 +6141,7 @@ namespace Goedel.Mesh {
         ///Unique identifier code
         /// </summary>
 
-		public virtual string						ID  {get; set;}
+		public virtual string						Id  {get; set;}
         /// <summary>
         ///The witness key value to use to request access to the record.	
         /// </summary>
@@ -6202,10 +6202,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((CatalogedEntry)this).SerializeX(_writer, false, ref _first);
-			if (ID != null) {
+			if (Id != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ID", 1);
-					_writer.WriteString (ID);
+				_writer.WriteToken ("Id", 1);
+					_writer.WriteString (Id);
 				}
 			if (Authenticator != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -6255,8 +6255,8 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ID" : {
-					ID = jsonReader.ReadString ();
+				case "Id" : {
+					Id = jsonReader.ReadString ();
 					break;
 					}
 				case "Authenticator" : {
@@ -8684,11 +8684,11 @@ namespace Goedel.Mesh {
 	public partial class Message : MeshItem {
         /// <summary>
         ///Unique per-message ID. When encapsulating a Mesh Message in a DARE envelope,
-        ///the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageID
+        ///the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageId
         ///value. 
         /// </summary>
 
-		public virtual string						MessageID  {get; set;}
+		public virtual string						MessageId  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -8740,10 +8740,10 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			if (MessageID != null) {
+			if (MessageId != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("MessageID", 1);
-					_writer.WriteString (MessageID);
+				_writer.WriteToken ("MessageId", 1);
+					_writer.WriteString (MessageId);
 				}
 			if (Sender != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -8788,8 +8788,8 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "MessageID" : {
-					MessageID = jsonReader.ReadString ();
+				case "MessageId" : {
+					MessageId = jsonReader.ReadString ();
 					break;
 					}
 				case "Sender" : {

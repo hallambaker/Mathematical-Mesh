@@ -244,7 +244,7 @@ namespace Goedel.Mesh.Shell {
 
             foreach (var message in Messages) {
 
-                builder.AppendLine($"MessageID: {message.MessageID}");
+                builder.AppendLine($"MessageID: {message.MessageId}");
 
                 switch (message) {
                     case AcknowledgeConnection acknowledgeConnection: {
@@ -297,7 +297,7 @@ namespace Goedel.Mesh.Shell {
 
         void ToBuilder(StringBuilder builder, Message message, string tag) {
             builder.AppendLine($"    {tag}:");
-            builder.AppendLine($"        MessageID: {message.MessageID}");
+            builder.AppendLine($"        MessageID: {message.MessageId}");
             builder.AppendLine($"        To: {message.Recipient} From: {message.Sender}");
             }
 

@@ -166,7 +166,8 @@ namespace Goedel.Mesh.Client {
         /// add the service portion to the capabilities catalog.
         /// </summary>
         /// <param name="keyPair">Keypair from which the capability is to be derrived.</param>
-        /// 
+        /// <param name="profileDevice">The profile of the device to which the capability
+        /// is being granted.</param>
         public KeyData AddCapability(CryptoKey keyPair, ProfileDevice profileDevice) {
             "**** MUST add keys to devices as shared capabilities".TaskFunctionality();
 

@@ -48,7 +48,7 @@ namespace Goedel.Mesh {
         public virtual Message RequestMessage { get; }
 
         /// <summary>The message that caused this result</summary>
-        public virtual string InboundMessageId => RequestMessage.MessageID;
+        public virtual string InboundMessageId => RequestMessage.MessageId;
 
         /// <summary>The new message status (<see cref="MessageStatus.None"/> if unchanged)</summary>
         public virtual MessageStatus InboundMessageStatus { get; set; } = MessageStatus.None;
@@ -57,7 +57,7 @@ namespace Goedel.Mesh {
         public virtual MessagePIN MessagePin { get;}
 
         /// <summary>The message that caused this result</summary>
-        public virtual string MessagePinId => MessagePin?.MessageID;
+        public virtual string MessagePinId => MessagePin?.MessageId;
 
         /// <summary>
         /// Deserialization constructor.
@@ -70,6 +70,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="message">The request message that led to this result.</param>
         /// <param name="messagePIN">The registration of the PIN code that supported this request.</param>
+        /// <param name="success">If true, the processing was successful.</param>
         public ProcessResult(Message message, MessagePIN messagePIN, bool success=true) {
             RequestMessage = message;
             MessagePin = messagePIN;
@@ -83,17 +84,12 @@ namespace Goedel.Mesh {
 
         /// <summary>
         /// Constructor, report that the request <paramref name="request"/> could not be performed 
-        /// because the specified pin code did not match the record <paramref name="messagePIN"/>
-        /// resulting in the error report <paramref name="pinValidation"/>.
+        /// because it was not sufficientlyh authorized.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="messagePIN"></param>
-        /// <param name="pinValidation"></param>
+        /// <param name="request">The request that failed.</param>
         public InsufficientAuthorization(Message request):
                     base (request, null, false) {
             }
-
-
         }
 
 
@@ -105,9 +101,9 @@ namespace Goedel.Mesh {
         /// because the specified pin code did not match the record <paramref name="messagePIN"/>
         /// resulting in the error report <paramref name="processingResult"/>.
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="processingResult"></param>
-        /// <param name="messagePIN"></param>
+        /// <param name="request">The request that failed.</param>
+        /// <param name="processingResult">The result of processing.</param>
+        /// <param name="messagePIN">PIN code registration, to be marked as used</param>
         public ProcessResultError(Message request, ProcessingResult processingResult, MessagePIN messagePIN = null) :
                     base(request, messagePIN, false) => ErrorReport = processingResult.ToString();
 
@@ -124,7 +120,7 @@ namespace Goedel.Mesh {
         /// Constructor, return an instance reporting the successful processing of 
         /// <paramref name="request"/>.
         /// </summary>
-        /// <param name="request">The request message.</param>
+        /// <param name="request">The request that failed.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
         public ResultInvalid(Message request, MessagePIN messagePIN = null) :
                     base(request, messagePIN, false) => ErrorReport = "InvalidContact";
@@ -142,7 +138,7 @@ namespace Goedel.Mesh {
         /// Constructor, return an instance reporting the successful processing of 
         /// <paramref name="request"/>.
         /// </summary>
-        /// <param name="request">The request message.</param>
+        /// <param name="request">The request that failed.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
         public ResultRefused(Message request, MessagePIN messagePIN = null) :
                     base(request, messagePIN) {  }

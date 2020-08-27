@@ -15,19 +15,26 @@ namespace Goedel.Mesh.Client {
     /// </summary>
     public abstract class TransactionUpdate : ContainerUpdate {
 
-
+        /// <summary>
+        /// Commit the transaction to the remote and local copies of the catalog.
+        /// </summary>
         public abstract void Commit();
         }
 
     /// <summary>
     /// Typed transaction update
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class TransactionUpdate<T> : TransactionUpdate where T : CatalogedEntry {
+    /// <typeparam name="TEntry">A type inheriting from <see cref="CatalogedEntry"/> which
+    /// specifies the type of the contents of the catalog.</typeparam>
+    public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : CatalogedEntry {
+        ///<summary>Catalog of type </summary> 
+        public Catalog<TEntry> Catalog;
 
-        public Catalog<T> Catalog;
-
-        public TransactionUpdate(Catalog<T> catalog) {
+        /// <summary>
+        /// Constructor, return a new update transaction for the catalog <paramref name="catalog"/>.
+        /// </summary>
+        /// <param name="catalog">The catalog on which the transaction is to be performed.</param>
+        public TransactionUpdate(Catalog<TEntry> catalog) {
             Container = catalog.ContainerName;
             Envelopes = new List<DareEnvelope>();
             Catalog = catalog;
@@ -35,7 +42,9 @@ namespace Goedel.Mesh.Client {
             // ToDo: fill in the fields Index and Digest here
             }
 
-
+        /// <summary>
+        /// Commit the transaction to the remote and local copies of the catalog.
+        /// </summary>
         public override void Commit() {
 
             foreach (var envelope in Envelopes) {
@@ -47,11 +56,11 @@ namespace Goedel.Mesh.Client {
                 // update in memory structure
                 switch (action) {
                     case PersistenceStore.EventNew: {
-                        Catalog.NewEntry(envelope.JsonObject as T);
+                        Catalog.NewEntry(envelope.JsonObject as TEntry);
                         break;
                         }
                     case PersistenceStore.EventUpdate: {
-                        Catalog.UpdateEntry(envelope.JsonObject as T);
+                        Catalog.UpdateEntry(envelope.JsonObject as TEntry);
                         break;
                         }
                     case PersistenceStore.EventDelete: {
@@ -62,8 +71,13 @@ namespace Goedel.Mesh.Client {
                 }
             }
 
-
-        public DareEnvelope Update(T catalogedEntry) {
+        /// <summary>
+        /// Add a task to update to the entry <paramref name="catalogedEntry"/> to the transaction
+        /// update.
+        /// </summary>
+        /// <param name="catalogedEntry">The new value of the catalog entry.</param>
+        /// <returns>The enveloped update value.</returns>
+        public DareEnvelope Update(TEntry catalogedEntry) {
 
             // ToDo: need to seriously revise this to get the interlock stuff right.
             var envelope = Catalog.PersistenceStore.PrepareUpdate(out _, catalogedEntry);
@@ -74,8 +88,13 @@ namespace Goedel.Mesh.Client {
 
             }
 
-
-        public DareEnvelope Delete(T catalogedEntry) {
+        /// <summary>
+        /// Add a task to delete the entry <paramref name="catalogedEntry"/> to the transaction
+        /// update.
+        /// </summary>
+        /// <param name="catalogedEntry">The catalog entry to delete.</param>
+        /// <returns>The enveloped update value.</returns>
+        public DareEnvelope Delete(TEntry catalogedEntry) {
 
             // ToDo: need to seriously revise this to get the interlock stuff right.
             var envelope = Catalog.PersistenceStore.PrepareDelete(out _, catalogedEntry._PrimaryKey);
@@ -93,16 +112,16 @@ namespace Goedel.Mesh.Client {
         /// Begin a transaction.
         /// </summary>
         /// <returns></returns>
-        public new TransactAccount TransactBegin() => new TransactAccount(this);
+        public TransactAccount TransactBegin() => new TransactAccount(this);
 
         /// <summary>
-        /// Perform the transaction described by <paramref name="transactRequest"/>. If the
+        /// Perform the transaction described by <paramref name="transact"/>. If the
         /// remote operation succeeds, apply the changes to the local stores.
         /// </summary>
-        /// <param name="transactRequest">The transaction to perform.</param>
+        /// <param name="transact">The transaction to perform.</param>
         /// <returns>Response from the Mesh service.</returns>
-        public TransactResponse Transact<T>(
-                Transaction<T> transact) where T : ContextAccount {
+        public TransactResponse Transact<TContext>(
+                Transaction<TContext> transact) where TContext : ContextAccount {
 
             var transactRequest = transact.TransactRequest;
             Connect();
@@ -153,12 +172,13 @@ namespace Goedel.Mesh.Client {
 
         }
 
+
     public partial class ContextUser {
 
         /// <summary>
         /// Begin a transaction.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The transaction handle</returns>
         public new TransactUser TransactBegin() => new TransactUser(this);
         }
 
@@ -168,28 +188,41 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Begin a transaction.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The transaction handle</returns>
         public new TransactGroup TransactBegin() => new TransactGroup(this);
         }
 
+    /// <summary>
+    /// Transaction on a Mesh account. Provides access to the account catalogs and spools.
+    /// </summary>
     public partial class TransactAccount : Transaction<ContextAccount> {
         /// <summary>The account context in which this transaction takes place.</summary>
         public override ContextAccount ContextAccount  { get; }
 
+        /// <summary>
+        /// Constructor creating transaction instance under the account context
+        /// <paramref name="contextAccount"/>
+        /// </summary>
+        /// <param name="contextAccount">The account context in which the update
+        /// is to be applied.</param>
         public TransactAccount(ContextAccount contextAccount) => ContextAccount = contextAccount;
-
-
-
-
         }
 
-
+    /// <summary>
+    /// Transaction on a Mesh user account.Provides access to the account catalogs and spools.
+    /// </summary>
     public partial class TransactUser : Transaction<ContextUser> {
         /// <summary>The account context in which this transaction takes place.</summary>
         public override ContextUser ContextAccount => ContextUser;
         /// <summary>The account context in which this transaction takes place.</summary>
         public ContextUser ContextUser { get; }
 
+        /// <summary>
+        /// Constructor creating transaction instance under the account context
+        /// <paramref name="contextUser"/>
+        /// </summary>
+        /// <param name="contextUser">The account context in which the update
+        /// is to be applied.</param>
         public TransactUser(ContextUser contextUser) => ContextUser = contextUser;
 
 
@@ -221,7 +254,9 @@ namespace Goedel.Mesh.Client {
 
         }
 
-
+    /// <summary>
+    /// Transaction on a Mesh group account. Provides access to the account catalogs and spools.
+    /// </summary>
     public partial class TransactGroup : Transaction<ContextGroup> {
 
         /// <summary>The account context in which this transaction takes place.</summary>
@@ -230,6 +265,12 @@ namespace Goedel.Mesh.Client {
         /// <summary>The account context in which this transaction takes place.</summary>
         public ContextGroup ContextGroup { get; }
 
+        /// <summary>
+        /// Constructor creating transaction instance under the account context
+        /// <paramref name="contextGroup"/>
+        /// </summary>
+        /// <param name="contextGroup">The account context in which the update
+        /// is to be applied.</param>
         public TransactGroup(ContextGroup contextGroup) => ContextGroup = contextGroup;
 
         ///<summary>Returns the network catalog for the account</summary>
@@ -237,18 +278,28 @@ namespace Goedel.Mesh.Client {
 
         }
 
-    public abstract class Transaction<T> : Disposable where T : ContextAccount {
+    /// <summary>
+    /// Transaction on a context of type <typeparamref name="TAccount"/>.
+    /// </summary>
+    /// <typeparam name="TAccount">The type of the context on which the transaction is to
+    /// be performed.</typeparam>
+    public abstract class Transaction<TAccount> : Disposable where TAccount : ContextAccount {
         #region // Properties
 
         /// <summary>The account context in which this transaction takes place.</summary>
-        public abstract T ContextAccount { get; }
+        public abstract TAccount ContextAccount { get; }
 
-        KeyPair SignOutboundMessage => null;
-        KeyPair SignInboundMessage => null;
-        KeyPair SignLocalMessage => null;
+        ///<summary>Outbound message signature key, the global account signature key</summary> 
+        KeyPair SignOutboundMessage => null; // ToDo: set signing key to the account signature key.
+
+        ///<summary>Inbound message signature key, the device account signature key.
+        ///This is only used to update message status.</summary> 
+        KeyPair SignInboundMessage => null; // ToDo: set signing key to the device account key.
+
+        ///<summary>Inbound message signature key, the device admin signature key</summary> 
+        KeyPair SignLocalMessage => null; // ToDo: set signing key to the device admin key.
 
         CryptoKey TryFindKeyEncryption(string recipient) => ContextAccount.TryFindKeyEncryption(recipient);
-
 
         /// <summary>The transaction request message being assembled</summary>
         public TransactRequest TransactRequest = new TransactRequest();
@@ -259,9 +310,6 @@ namespace Goedel.Mesh.Client {
         /// <summary>List of completion references to be added to the inbound spool</summary>
         public List<Reference> InboundReferences;
 
-
-        //public Transaction<T>() {
-        //    }
 
         #endregion
         #region // Operations
@@ -293,14 +341,13 @@ namespace Goedel.Mesh.Client {
                 string recipientAddress,
                 Message message) {
             var recipientEncryptionKey = TryFindKeyEncryption(recipientAddress);
-            OutboundMessage(recipientAddress, recipientEncryptionKey,
-                message);
+            OutboundMessage(recipientAddress, recipientEncryptionKey, message);
             }
 
 
         /// <summary>
         /// Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
-        /// outbound message of <paramref name="transactRequest"/>.
+        /// outbound message the transaction request.
         /// </summary>
         /// <param name="recipient">The message recipient</param>
         /// <param name="message">The message to send</param>
@@ -311,8 +358,7 @@ namespace Goedel.Mesh.Client {
             var recipientAddress = recipient.NetworkAddress.Address;
             var recipientEncryptionKey = recipient.MeshKeyEncryption;
 
-            OutboundMessage(recipientAddress, recipientEncryptionKey,
-                message);
+            OutboundMessage(recipientAddress, recipientEncryptionKey, message);
             }
 
         /// <summary>
@@ -332,10 +378,7 @@ namespace Goedel.Mesh.Client {
 
             message.Sender ??= ContextAccount.AccountAddress;
 
-            //var envelope = message.Encode(signingKey: SignOutboundMessage,
-            //        encryptionKey: recipientEncryptionKey); // Todo: Sign, encrypt
-
-            var envelope = message.Envelope(); // Todo: Sign, encrypt
+            var envelope = message.Envelope(SignOutboundMessage, recipientEncryptionKey);
             envelope.JsonObject = message;
 
             TransactRequest.Outbound.Add(new Enveloped<Message>(envelope));
@@ -352,20 +395,20 @@ namespace Goedel.Mesh.Client {
         public void InboundMessage(
                 Message message) {
             TransactRequest.Inbound ??= new List<Enveloped<Message>>();
-            var envelope = message.Envelope(); // Todo: Sign, encrypt
+            var envelope = message.Envelope(SignInboundMessage); // Todo: Sign, encrypt
             envelope.JsonObject = message;
             TransactRequest.Inbound.Add(new Enveloped<Message>(envelope));
             }
 
         /// <summary>
-        /// Add the message <paramref name="message"/> as a
+        /// Add the message <paramref name="message"/> to the local pickup spool.
         /// local message.
         /// </summary>
         /// <param name="message">The message to append to the local spool.</param>
         public void LocalMessage(
                 Message message) {
             TransactRequest.Local ??= new List<Enveloped<Message>>();
-            var envelope = message.Envelope(); // Todo: Sign, encrypt
+            var envelope = message.Envelope(SignLocalMessage); 
             envelope.JsonObject = message;
             TransactRequest.Local.Add(new Enveloped<Message>(envelope));
             }
@@ -387,8 +430,8 @@ namespace Goedel.Mesh.Client {
             InboundReferences ??= new List<Reference>();
             var reference = new Reference() {
                 MessageStatus =messageStatus,
-                MessageID = completed.MessageID,
-                ResponseID = response?.MessageID
+                MessageId = completed.MessageId,
+                ResponseId = response?.MessageId
                 };
             InboundReferences.Add(reference);
             }
@@ -410,27 +453,27 @@ namespace Goedel.Mesh.Client {
             LocalReferences ??= new List<Reference>();
             var reference = new Reference() {
                 MessageStatus = messageStatus,
-                MessageID = completed.MessageID,
-                ResponseID = response?.MessageID
+                MessageId = completed.MessageId,
+                ResponseId = response?.MessageId
                 };
             LocalReferences.Add(reference);
 
             }
 
 
-        TransactionUpdate<T> GetContainerUpdate<T>(
+        TransactionUpdate<TEntry> GetContainerUpdate<TEntry>(
                 List<ContainerUpdate> containerUpdates,
-                Catalog<T> catalog
-                ) where T : CatalogedEntry {
+                Catalog<TEntry> catalog
+                ) where TEntry : CatalogedEntry {
 
             foreach (var update in containerUpdates) {
                 if (update.Container == catalog.ContainerName) {
-                    return update as TransactionUpdate<T>;
+                    return update as TransactionUpdate<TEntry>;
                     }
                 }
 
             
-            var result = new TransactionUpdate<T>(catalog);
+            var result = new TransactionUpdate<TEntry>(catalog);
 
             return result;
             }
@@ -441,9 +484,10 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="catalog">The catalog to be updated</param>
         /// <param name="catalogedEntry">The entry to add as an update.</param>
-        public void CatalogUpdate<T>(
-                Catalog<T> catalog,
-                T catalogedEntry) where T : CatalogedEntry {
+        /// <typeparam name="TEntry">The entry type.</typeparam>
+        public void CatalogUpdate<TEntry>(
+                Catalog<TEntry> catalog,
+                TEntry catalogedEntry) where TEntry : CatalogedEntry {
             TransactRequest.Updates ??= new List<ContainerUpdate>();
             var update = GetContainerUpdate(TransactRequest.Updates, catalog);
             update.Update(catalogedEntry);
@@ -456,9 +500,10 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="catalog">The catalog to be updated</param>
         /// <param name="catalogedEntry">The entry to add as an update.</param>
-        public void CatalogDelete<T>(
-                Catalog<T> catalog,
-                T catalogedEntry) where T : CatalogedEntry {
+        /// <typeparam name="TEntry">The entry type.</typeparam>
+        public void CatalogDelete<TEntry>(
+                Catalog<TEntry> catalog,
+                TEntry catalogedEntry) where TEntry : CatalogedEntry {
             TransactRequest.Updates ??= new List<ContainerUpdate>();
             var update = GetContainerUpdate(TransactRequest.Updates, catalog);
             update.Delete(catalogedEntry);
@@ -466,6 +511,10 @@ namespace Goedel.Mesh.Client {
             }
         #endregion
 
+        /// <summary>
+        /// Apply the transaction and return the response.
+        /// </summary>
+        /// <returns></returns>
         public TransactResponse Transact() => ContextAccount.Transact(this);
         }
     }

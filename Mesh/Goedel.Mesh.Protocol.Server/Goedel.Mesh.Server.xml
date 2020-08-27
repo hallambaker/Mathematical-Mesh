@@ -51,6 +51,9 @@
         <member name="P:Goedel.Mesh.Server.AccountHandleUnverified.ProfileUser">
             <summary>Convenience accessor to the Account assertion.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandleUnverified.EnvelopedProfileAccount">
+            <summary>Convenience accessor for DareEnvelope returning a typed envelope.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.#ctor(Goedel.Mesh.Server.AccountEntry)">
             <summary>
             Constructor.
@@ -1100,6 +1103,12 @@
         </member>
         <member name="F:Goedel.Mesh.Server.MeshPersist.DirectoryRoot">
             <summary>The root directory in which the files are stored.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshPersist.ServiceEncryptionKey">
+            <summary>The service encryption key.</summary>  
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshPersist.ServiceSignatureKey">
+            <summary>The service signature key.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(Goedel.Mesh.Server.PublicMeshServiceProvider,System.String)">
             <summary>

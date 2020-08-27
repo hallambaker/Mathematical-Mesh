@@ -4,7 +4,7 @@
     public static partial class Extension {
 
         /// <summary>
-        /// Tell compiler that an object is reserved for future use.
+        /// Tell compiler that an object is reserved.
         /// </summary>
         /// <param name="o">Object to reserve.</param>
         /// <returns>true if the object is not null, false otherwise.</returns>
@@ -16,6 +16,7 @@
         /// <param name="o">Object to reserve.</param>
         /// <returns>true if the object is not null, false otherwise.</returns>
         public static bool Future(this object o) => o != null;
+
 
         /// <summary>
         /// You might think this code is unnecessary but it is actually very 

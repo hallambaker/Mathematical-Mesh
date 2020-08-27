@@ -509,10 +509,10 @@
 			Multiple
 
 	Structure Reference
-		String MessageID
+		String MessageId
 			Description
 				|The received message to which this is a response
-		String ResponseID
+		String ResponseId
 			Description
 				|Message that was generated in response to the original (optional).
 		String Relationship
@@ -588,7 +588,7 @@
 		Inherits CatalogedEntry
 		Description
 			|A publication.
-		String ID
+		String Id
 			Description
 				|Unique identifier code
 		String Authenticator
@@ -786,10 +786,10 @@
 	Section 2 "Messages"
 
 	Structure Message
-		String MessageID
+		String MessageId
 			Description
 				|Unique per-message ID. When encapsulating a Mesh Message in a DARE envelope,
-				|the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageID
+				|the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageId
 				|value. 
 		String Sender
 		String Recipient

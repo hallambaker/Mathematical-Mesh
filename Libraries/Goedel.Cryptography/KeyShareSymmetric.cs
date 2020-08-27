@@ -313,6 +313,8 @@ namespace Goedel.Cryptography {
             75,
             };
 
+        ///<summary>The set of prime offset values to be added to 8^(n) to give the
+        ///discrete modulus for secrets of up to 8n bits.</summary>
         public readonly static int[] PrimeOffsetNext = new int[] {
             1,            1,         43,          15,
             15,          21,         81,          13,
@@ -332,6 +334,8 @@ namespace Goedel.Cryptography {
             777,        583,        133,          75
             };
 
+        ///<summary>The set of prime offset values to be subtracted from to 8^(n+1) 
+        ///to give the discrete modulus for secrets of up to 8n bits.</summary>
         public readonly static int[] PrimeOffsetPrevious = new int[] {
             5,           15,          3,           5,
             87,          59,          5,          59,
@@ -504,9 +508,6 @@ namespace Goedel.Cryptography {
 
         ///<summary>The value of the first byte specifying the threshold and index values</summary>
         public int First;
-
-        ///<summary>The number of bytes of the constructed share.</summary>
-        public int ShareBytes;
 
         /// <summary>
         /// Quorum required to recombine the key shares to recover the secret.

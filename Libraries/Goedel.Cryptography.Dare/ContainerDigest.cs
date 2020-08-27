@@ -34,14 +34,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="keyLocate">Key collection to be used to resolve keys</param>
+        /// <param name="cryptoParameters">Cryptographic parameters specifying algorithms and keys
+        /// for encoding and authentication of data.</param>
         /// <returns>The newly constructed container.</returns>
 
         public static new Container MakeNewContainer(
                         JbcdStream JBCDStream,
-                        IKeyLocate keyLocate) {
+                        CryptoParameters cryptoParameters) {
 
-
+            var keyLocate = cryptoParameters.KeyLocate;
             var containerInfo = new ContainerInfo() {
                 ContainerType = Label,
                 Index = 0

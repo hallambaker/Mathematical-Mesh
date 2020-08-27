@@ -69,6 +69,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="algorithmEncrypt">The encryption algorithm to use.</param>
         /// <param name="algorithmSign">The signature algorithm to use.</param>
         /// <param name="algorithmAuthenticate">The authentication algorithm to use.</param>
+        /// <param name="rights">The list of rights being requested by the device.</param>
+        /// <param name="bits">Work factor of the secret seed.</param>
         /// <returns>The <see cref="ContextMeshPending"/> record describing the state of the 
         /// pending connection.</returns>
         public static ContextMeshPending ConnectService(
@@ -85,7 +87,6 @@ namespace Goedel.Mesh.Client {
 
             // If accountAddress is a Mesh Connect URI, replace account, pin with the parsed values.
             MeshUri.ParseUri(ref accountAddress, ref pin);
-
 
             var secretSeed = new PrivateKeyUDF(
                 UdfAlgorithmIdentifier.MeshProfileDevice, null, null,
@@ -108,6 +109,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="localName">Local friendly name for the account.</param>
         /// <param name="pin">Pin code value (if supplied).</param>
         /// <param name="profileDevice">The device profile.</param>
+        /// <param name="rights">The list of rights being requested by the device.</param>
         /// <returns>The <see cref="ContextMeshPending"/> record describing the state of the 
         /// pending connection.</returns>
         public static ContextMeshPending ConnectService(

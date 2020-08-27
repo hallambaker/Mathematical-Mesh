@@ -68,14 +68,14 @@ namespace ExampleGenerator {
 
 
             var resultPending = (ConnectPending[0].Result as ResultPending);
-            var id1 = resultPending.Messages[0].MessageID;
+            var id1 = resultPending.Messages[0].MessageId;
 
 
             ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
 
 
 
-            var id2 = resultPending.Messages[1].MessageID;
+            var id2 = resultPending.Messages[1].MessageId;
 
             ConnectSync = testCLIAlice2.Example($"device complete", $"account sync");
 

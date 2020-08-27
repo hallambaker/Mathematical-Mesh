@@ -78,7 +78,7 @@ namespace Goedel.XUnit {
 
         DareEnvelope MakeMessage(string id, KeyPair signingKey) {
             var message = new Message() {
-                MessageID = id
+                MessageId = id
                 };
             return message.Envelope(signingKey);
             }
@@ -89,7 +89,7 @@ namespace Goedel.XUnit {
                 
                 References = new List<Reference> {
                     new Reference () {
-                        MessageID = id,
+                        MessageId = id,
                         MessageStatus = messageStatus
                         }
                     }

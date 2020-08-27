@@ -74,7 +74,7 @@ namespace Goedel.Mesh {
     public partial class CatalogedPublication {
 
         ///<summary>The primary key.</summary>
-        public override string _PrimaryKey => ID;
+        public override string _PrimaryKey => Id;
 
         ///<summary>Base constructor for deserialization.</summary>
         public CatalogedPublication() { }
@@ -84,7 +84,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="pin">The pin value as a UDF.</param>
         public CatalogedPublication(string pin) {
-            ID = UDF.SymetricKeyId(pin);
+            Id = UDF.SymetricKeyId(pin);
             Authenticator = GetServiceAuthenticator(pin);
             }
 

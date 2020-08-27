@@ -45,14 +45,30 @@
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
             is null.</param>
         </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF)">
+            <summary>
+            Constructor returning an activation account for the seed <paramref name="secretSeed"/>.
+            </summary>
+            <param name="keyCollection">The key collection to use.</param>
+            <param name="secretSeed">The secret seed value.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String},Goedel.Cryptography.Jose.PrivateKeyUDF)">
+            <summary>
+            Constructor returning an activation account for the seed <paramref name="secretSeed"/>.
+            </summary>
+            <param name="keyCollection">The key collection to use.</param>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="profileDevice">The profile of the device being activated.</param>
+            <param name="keyPairOnlineSignature">To delete.</param>
+            <param name="roles">Roles to be granted.</param>
+        </member>
         <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
             <summary>
-            Add the device specified by <paramref name="profileDevice"/> to the account granting administration
-            privileges if <paramref name="keyPairOnlineSignature"/> is not null and super administration 
-            privilege if <paramref name="superAdmin"/> is true. Note that it is possible for a device to 
-            be a super administrator without also being an administrator.
+            Add the device specified by <paramref name="profileDevice"/> to the account granting 
+            the set of privileged specified in <paramref name="rights"/>.
             </summary>
             <param name="profileDevice">Profile of the device to add.</param>
+            <param name="profileUser">User profile to which the device is added.</param>
             <param name="keyPairOnlineSignature">If not null, specifies an online signature key that is to be used
             to sign administrator functions.</param>
             <param name="rights">The initial rights to be assigned to the device.</param>
@@ -105,23 +121,42 @@
             add the service portion to the capabilities catalog.
             </summary>
             <param name="keyPair">Keypair from which the capability is to be derrived.</param>
-            
+            <param name="profileDevice">The device to which the capability is to be added.</param>
+            <returns>The key data for the added capability.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.GrantProfileRoot(Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right)">
             <summary>
             Grant super administrator access.
             </summary>
-            <param name="activationAccount"></param>
-            <param name="profileDevice"></param>
-            <param name="right"></param>
+            <param name="profileDevice">Device to which the access right is granted.</param>
+            <param name="right">The right granted.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.GrantProfileAdmin(Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right,Goedel.Cryptography.KeyPair)">
+            <summary>
+            Grant device administrator access.
+            </summary>
+            <param name="profileDevice">Device to which the access right is granted.</param>
+            <param name="right">The right granted.</param>
+            <param name="keyPairOnlineSignature">To be removed.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.GrantStore(Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right)">
+            <summary>
+            Grant access to the store X.
+            </summary>
+            <param name="profileDevice">Device to which the access right is granted.</param>
+            <param name="right">The right granted.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.GrantAccount(Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right)">
+            <summary>
+            Grant access to global account.
+            </summary>
+            <param name="profileDevice">Device to which the access right is granted.</param>
+            <param name="right">The right granted.</param>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.Activate">
             <summary>
-            Activate the keys bound to this activation record using keys derived from 
-            <paramref name="deviceKeySeed"/>.
+            Activate the keys bound to this activation record.
             </summary>
-            <param name="keyCollection">Key collection to register keys in.</param>
-            <param name="deviceKeySeed">Generator for the private key contributions.</param>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
@@ -1679,6 +1714,15 @@
             <param name="self">If true, mark as the user's own contact.</param>
             <returns>The CatalogedContact entry.</returns>
         </member>
+        <member name="M:Goedel.Mesh.CatalogContact.GetUpdated(Goedel.Mesh.Contact,System.Boolean)">
+            <summary>
+            Fetch the existing contact from the catalog and merge with values from
+            <paramref name="contact"/>. 
+            </summary>
+            <param name="contact">The contact whose values are to be merged.</param>
+            <param name="self">If true set the self marker.</param>
+            <returns>The updated contact.</returns>
+        </member>
         <member name="M:Goedel.Mesh.CatalogContact.Add(Goedel.Mesh.Contact,System.Boolean)">
             <summary>
             Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
@@ -2380,6 +2424,11 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
         </member>
+        <member name="M:Goedel.Mesh.CatalogDevice.Disposing">
+            <summary>
+            Disposing method.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.CatalogDevice.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -3045,7 +3094,7 @@
             <param name="length">The minimum match length (default is 125 bits)</param>
             <returns>The authenticator value</returns>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedPublication.ID">
+        <member name="P:Goedel.Mesh.CatalogedPublication.Id">
              <summary>
             Unique identifier code
              </summary>
@@ -3659,6 +3708,12 @@
             public key parameters and that there is a valid chain of trust under a 
             specified root of trust.</summary> 
         </member>
+        <member name="T:Goedel.Mesh.Enveloped`1">
+            <summary>
+            Typed DareEnvelope.
+            </summary>
+            <typeparam name="T">The type of the wrapped data item.</typeparam>
+        </member>
         <member name="M:Goedel.Mesh.Enveloped`1.#ctor">
             <summary>
             Constructor for use by deserializers.
@@ -3671,7 +3726,19 @@
             </summary>
             <param name="enveloped">The envelope to copy.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.Enveloped`1.#ctor(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]})" -->
+        <member name="M:Goedel.Mesh.Enveloped`1.#ctor(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
+            <summary>
+            Constructor returning a typed envelope. 
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
+            create the message body. Otherwise the body is specified by calls to the Process method.</param>
+            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+                as an EDSS header entry.</param>
+        </member>
         <member name="M:Goedel.Mesh.Enveloped`1.#ctor(`0,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.Dare.ContentMeta)">
             <summary>
             Constructor returining an envelope containing the object <paramref name="data"/>
@@ -3682,6 +3749,7 @@
             <param name="data">The object to be enveloped.</param>
             <param name="signingKey">The signature key.</param>
             <param name="encryptionKey">The encryption key.</param>
+            <param name="contentMeta">The value of the ContentMeta Header tag.</param>
         </member>
         <member name="M:Goedel.Mesh.Enveloped`1.Envelope(`0)">
             <summary>
@@ -3697,6 +3765,7 @@
             </summary>
             <param name="keyCollection">Key collection to be used to find decryption keys and
             roots of trust for verification keys.</param>
+            <param name="validation">Validation to be performed after decoding.</param>
             <returns>The decoded data.</returns>
         </member>
         <member name="T:Goedel.Mesh.Internal">
@@ -4484,19 +4553,19 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Reference.EnvelopeID">
+        <member name="P:Goedel.Mesh.Reference.EnvelopeId">
             <summary>Returns the envelope ID corresponding to the MessageID</summary>
         </member>
         <member name="P:Goedel.Mesh.Reference.MessageStatus">
             <summary>Accessor for the <see cref="P:Goedel.Mesh.Reference.Relationship"/> property
             as a <see cref="P:Goedel.Mesh.Reference.MessageStatus"/> property.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Reference.MessageID">
+        <member name="P:Goedel.Mesh.Reference.MessageId">
              <summary>
             The received message to which this is a response
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Reference.ResponseID">
+        <member name="P:Goedel.Mesh.Reference.ResponseId">
              <summary>
             Message that was generated in response to the original (optional).
              </summary>
@@ -4567,6 +4636,9 @@
         <member name="F:Goedel.Mesh.Message.MessageStatus">
             <summary>The message status.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Message.EnvelopeId">
+            <summary>Returns the envelope ID corresponding to the MessageID</summary>
+        </member>
         <member name="M:Goedel.Mesh.Message.Envelope(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
             <summary>
             Encode the message using the signature key <paramref name="signingKey"/>.
@@ -4591,10 +4663,10 @@
             identifer of</param>
             <returns>The envelope identifier.</returns>
         </member>
-        <member name="P:Goedel.Mesh.Message.MessageID">
+        <member name="P:Goedel.Mesh.Message.MessageId">
              <summary>
             Unique per-message ID. When encapsulating a Mesh Message in a DARE envelope,
-            the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageID
+            the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageId
             value. 
              </summary>
         </member>
@@ -4657,11 +4729,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="P:Goedel.Mesh.Message.Success">
-            <summary>Always false for an error result.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Message.ErrorReport">
-            <summary>The error report code</summary>
+        <member name="P:Goedel.Mesh.Message._PrimaryKey">
+            <summary>The primary key is <see cref="P:Goedel.Mesh.Message.MessageId"/></summary> 
         </member>
         <member name="M:Goedel.Mesh.Message.GetResponseId">
             <summary>
@@ -4740,12 +4809,6 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="P:Goedel.Mesh.MessageError.Success">
-            <summary>Always false for an error result.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.MessageError.ErrorReport">
-            <summary>The error report code</summary>
         </member>
         <member name="T:Goedel.Mesh.MessageComplete">
             <summary>
@@ -5085,14 +5148,6 @@
             <param name="pin">Optional PIN value</param>
             <param name="clientNonce">Optional client nonce (if null, a nonce will be
             generated.</param>
-        </member>
-        <member name="M:Goedel.Mesh.RequestConnection.Verify(System.String)">
-            <summary>
-            Verify that the witness value is correct for the specified <paramref name="pin"/> and
-            values of Device UDF and Account Address.
-            </summary>
-            <param name="pin"></param>
-            <returns></returns>
         </member>
         <member name="P:Goedel.Mesh.RequestConnection.ProfileDevice">
             <summary>Convenience accessor for the inner <see cref="P:Goedel.Mesh.RequestConnection.ProfileDevice"/></summary>
@@ -5738,6 +5793,7 @@
             </summary>
             <param name="message">The request message that led to this result.</param>
             <param name="messagePIN">The registration of the PIN code that supported this request.</param>
+            <param name="success">If true, the processing was successful.</param>
         </member>
         <member name="P:Goedel.Mesh.ProcessResult.Success">
             <summary>
@@ -6123,12 +6179,9 @@
         <member name="M:Goedel.Mesh.InsufficientAuthorization.#ctor(Goedel.Mesh.Message)">
             <summary>
             Constructor, report that the request <paramref name="request"/> could not be performed 
-            because the specified pin code did not match the record <paramref name="messagePIN"/>
-            resulting in the error report <paramref name="pinValidation"/>.
+            because it was not sufficientlyh authorized.
             </summary>
-            <param name="request"></param>
-            <param name="messagePIN"></param>
-            <param name="pinValidation"></param>
+            <param name="request">The request that failed.</param>
         </member>
         <member name="T:Goedel.Mesh.ProcessResultError">
             <summary>Invalid PIN result.</summary>
@@ -6139,9 +6192,9 @@
             because the specified pin code did not match the record <paramref name="messagePIN"/>
             resulting in the error report <paramref name="processingResult"/>.
             </summary>
-            <param name="request"></param>
-            <param name="processingResult"></param>
-            <param name="messagePIN"></param>
+            <param name="request">The request that failed.</param>
+            <param name="processingResult">The result of processing.</param>
+            <param name="messagePIN">PIN code registration, to be marked as used</param>
         </member>
         <member name="T:Goedel.Mesh.ResultInvalid">
             <summary>
@@ -6154,7 +6207,7 @@
             Constructor, return an instance reporting the successful processing of 
             <paramref name="request"/>.
             </summary>
-            <param name="request">The request message.</param>
+            <param name="request">The request that failed.</param>
             <param name="messagePIN">PIN code registration, to be marked as used</param>
         </member>
         <member name="T:Goedel.Mesh.ResultRefused">
@@ -6168,7 +6221,7 @@
             Constructor, return an instance reporting the successful processing of 
             <paramref name="request"/>.
             </summary>
-            <param name="request">The request message.</param>
+            <param name="request">The request that failed.</param>
             <param name="messagePIN">PIN code registration, to be marked as used</param>
         </member>
         <member name="T:Goedel.Mesh.ResultGroupInvitation">
@@ -6579,7 +6632,17 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Int32)" -->
+        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Int32)">
+            <summary>
+            Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
+            seed.
+            </summary>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="algorithmEncrypt">The encryption algorithm.</param>
+            <param name="algorithmSign">The signature algorithm</param>
+            <param name="algorithmAuthenticate">The signature algorithm</param>
+            <param name="bits">The size of key to generate in bits/</param>
+        </member>
         <member name="M:Goedel.Mesh.ProfileDevice.PersistSeed(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Persist the secret seed used to generate a profile to the local machine as a non-exportable
@@ -10565,7 +10628,15 @@
         <member name="F:Goedel.Mesh.Right.Degree">
             <summary>The form of access (direct, service mediated, etc.)</summary> 
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.Right.#ctor(Goedel.Mesh.Resource,Goedel.Mesh.Access,System.String,Goedel.Mesh.Degree)" -->
+        <member name="M:Goedel.Mesh.Right.#ctor(Goedel.Mesh.Resource,Goedel.Mesh.Access,System.String,Goedel.Mesh.Degree)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="resource">The type of resource to which access rights are granted.</param>
+            <param name="access">The access granted.</param>
+            <param name="degree">The form of access (direct, service mediated, etc.)</param>
+            <param name="name">The named sub-resource (e.g. account).</param>
+        </member>
         <member name="P:Goedel.Mesh.Right.Sign">
             <summary>Sign (write) access.</summary> 
         </member>
@@ -10676,6 +10747,14 @@
         <member name="F:Goedel.Mesh.Rights.DictionaryRights">
             <summary>Dictionary mapping rights identifier to rights description.</summary> 
         </member>
+        <member name="M:Goedel.Mesh.Rights.GetRights(System.String,System.String@)">
+            <summary>
+            Expand the set of rights described by the role <paramref name="role"/>.
+            </summary>
+            <param name="role">The role to expand.</param>
+            <param name="subresource">Optional sub-respource.</param>
+            <returns>The list of rights.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Rights.Concat(System.Collections.Generic.List{Goedel.Mesh.Right},System.Collections.Generic.List{Goedel.Mesh.Right})">
             <summary>
             Concatenate the rights specified in <paramref name="append"/> to the dictionary
@@ -10732,6 +10811,9 @@
             <summary>
             The DareEnvelope encapsulation of this object instance.
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshItem.EnvelopeId">
+            <summary>The envelope Identifier.</summary> 
         </member>
         <member name="M:Goedel.Mesh.MeshItem.Envelope(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
             <summary>
@@ -12883,6 +12965,15 @@
         </member>
         <member name="T:Goedel.Mesh.MeshUri">
             <summary>Static class for manipulating Mesh Uris</summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshUri.ParseUri(System.String@,System.String@)">
+            <summary>
+            Attempt to process <paramref name="account"/> as an EARL URI with embedded pin.
+            If successfull replace the values <paramref name="account"/> and 
+            <paramref name="pin"/>. Otherwise leave unchanged.
+            </summary>
+            <param name="account">The account address.</param>
+            <param name="pin">The pin value.</param>
         </member>
         <member name="M:Goedel.Mesh.MeshUri.ConnectUri(System.String,System.String)">
             <summary>

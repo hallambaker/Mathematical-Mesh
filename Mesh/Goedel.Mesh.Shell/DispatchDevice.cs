@@ -100,11 +100,11 @@ namespace Goedel.Mesh.Shell {
 
             foreach (var message in inbound.Select(1, true)) {
                 var meshMessage = Message.FromJson(message.GetBodyReader());
-                if (!completed.ContainsKey(meshMessage.MessageID)) {
+                if (!completed.ContainsKey(meshMessage.MessageId)) {
                     switch (meshMessage) {
                         case MessageComplete meshMessageComplete: {
                             foreach (var reference in meshMessageComplete.References) {
-                                completed.Add(reference.MessageID, meshMessageComplete);
+                                completed.Add(reference.MessageId, meshMessageComplete);
                                 }
                             break;
                             }

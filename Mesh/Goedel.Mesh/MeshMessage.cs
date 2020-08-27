@@ -13,7 +13,7 @@ namespace Goedel.Mesh {
     public partial class Reference {
 
         ///<summary>Returns the envelope ID corresponding to the MessageID</summary>
-        public string EnvelopeID => Message.GetEnvelopeId(MessageID);
+        public override string EnvelopeId => Message.GetEnvelopeId(MessageId);
 
         ///<summary>Accessor for the <see cref="Relationship"/> property
         ///as a <see cref="MessageStatus"/> property.</summary>
@@ -48,7 +48,8 @@ namespace Goedel.Mesh {
         ///<summary>The message status.</summary>
         public MessageStatus MessageStatus;
 
-        public override string EnvelopeID => GetEnvelopeId(MessageID);
+        ///<summary>Returns the envelope ID corresponding to the MessageID</summary>
+        public override string EnvelopeId => GetEnvelopeId(MessageId);
 
         /// <summary>
         /// Encode the message using the signature key <paramref name="signingKey"/>.
@@ -58,24 +59,8 @@ namespace Goedel.Mesh {
         /// <returns>The enveloped, signed message.</returns>
         public override DareEnvelope Envelope(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
 
-            MessageID ??= UDF.Nonce(); // Add a message ID unless one is already defined.
+            MessageId ??= UDF.Nonce(); // Add a message ID unless one is already defined.
             return base.Envelope(signingKey, encryptionKey);
-
-
-            //var data = this.GetBytes();
-            //var contentMeta = new ContentMeta() {
-            //    UniqueID = MessageID,
-            //    Created = DateTime.Now,
-            //    ContentType = Constants.IanaTypeMeshMessage,
-            //    MessageType = _Tag
-            //    };
-
-            //DareEnvelope = DareEnvelope.Encode(data, contentMeta: contentMeta,
-            //    signingKey: signingKey, encryptionKey: encryptionKey);
-
-            //DareEnvelope.Header.EnvelopeID = GetEnvelopeId(MessageID);
-
-            //return DareEnvelope;
             }
 
         /// <summary>
@@ -142,9 +127,9 @@ namespace Goedel.Mesh {
         public MessageComplete(
                     string messageID, string relationship, string responseID = null) {
             var reference = new Reference() {
-                MessageID = messageID,
+                MessageId = messageID,
                 Relationship = relationship,
-                ResponseID = responseID
+                ResponseId = responseID
                 };
             References = new List<Reference>() { reference };
 
@@ -192,9 +177,9 @@ namespace Goedel.Mesh {
             PIN = pin;
             SaltedPIN = SaltPIN(pin, action);
             Action = action;
-            MessageID = GetPinUDF(SaltedPIN, accountAddress);
+            MessageId = GetPinUDF(SaltedPIN, accountAddress);
 
-            Console.WriteLine($"Created Pin: {Account} / {SaltedPIN} => {MessageID}");
+            Console.WriteLine($"Created Pin: {Account} / {SaltedPIN} => {MessageId}");
             }
 
 
@@ -328,15 +313,6 @@ namespace Goedel.Mesh {
                 }
             }
 
-
-
-        /// <summary>
-        /// Verify that the witness value is correct for the specified <paramref name="pin"/> and
-        /// values of Device UDF and Account Address.
-        /// </summary>
-        /// <param name="pin"></param>
-        /// <returns></returns>
-        public bool Verify(string pin) => throw new NYI();
 
         ///<summary>Convenience accessor for the inner <see cref="ProfileDevice"/></summary>
         public ProfileDevice ProfileDevice => profileDevice ??

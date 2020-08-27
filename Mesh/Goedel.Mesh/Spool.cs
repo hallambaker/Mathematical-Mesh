@@ -68,7 +68,7 @@ namespace Goedel.Mesh {
         /// <param name="reference">The reference.</param>
         public SpoolEntry(Spool spool, Reference reference) {
             Spool = spool;
-            EnvelopeID = reference.MessageID;
+            EnvelopeID = reference.MessageId;
             }
 
 
@@ -334,7 +334,7 @@ namespace Goedel.Mesh {
                 message.AssertNotNull(InvalidMessage.Throw);  // Hack - need to collect up the errors 
                 foreach (var reference in message.References) {
                     // Do we already have an entry?
-                    var envelopeID = reference.EnvelopeID;
+                    var envelopeID = reference.EnvelopeId;
                     if (SpoolEntryById.TryGetValue(envelopeID, out var referenceEntry)) {
                         referenceEntry.AddReference(reference, next==null);
                         }

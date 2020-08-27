@@ -147,13 +147,13 @@ namespace Goedel.XUnit {
 
 
             var resultPending = (ConnectPending[0].Result as ResultPending);
-            var id1 = resultPending.Messages[1].MessageID;
+            var id1 = resultPending.Messages[1].MessageId;
 
 
             var ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
 
 
-            var id2 = resultPending.Messages[0].MessageID;
+            var id2 = resultPending.Messages[0].MessageId;
 
 
             var ConnectReject = testCLIAlice1.Example($"device reject {id2}");
