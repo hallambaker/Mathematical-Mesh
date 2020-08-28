@@ -21,22 +21,25 @@ namespace Goedel.Mesh {
 
         // ** Key uses
         ///<summary>offline signature</summary>
-        Sign = 0x00,
+        RootSign = 0x00,
 
         ///<summary>Master profile online signature</summary>
-        OnlineSign = 0x01,
+        AdminSign = 0x01,
+
+        ///<summary>Master profile online signature</summary>
+        Sign = 0x03,
 
         ///<summary>Encryption</summary>
-        Encrypt = 0x02,
+        Encrypt = 0x04,
 
         ///<summary>Master profile authentication</summary>
-        Authenticate = 0x03,
+        Authenticate = 0x05,
 
         ///<summary>Master profile authentication</summary>
-        PartialUser = 0x04,
+        PartialUser = 0x06,
 
         ///<summary>Master profile authentication</summary>
-        PartialService = 0x05,
+        PartialService = 0x07,
 
 
 
@@ -46,7 +49,7 @@ namespace Goedel.Mesh {
         DeviceProfile = IndexSeedType * 2,
 
         ///<summary>Master profile offline signature</summary>
-        DeviceSign = DeviceProfile + Sign,
+        DeviceSign = DeviceProfile + RootSign,
 
 
         ///<summary>Master profile encryption</summary>
@@ -60,6 +63,12 @@ namespace Goedel.Mesh {
         ///<summary>Master profile offline signature</summary>
         UserProfile = IndexSeedType * 3,
 
+        ///<summary>Master profile offline signature</summary>
+        UserRootSign = UserProfile + RootSign,
+
+        ///<summary>Master profile offline signature</summary>
+        UserAdminSign = UserProfile + AdminSign,
+        
         ///<summary>Master profile offline signature</summary>
         UserSign = UserProfile + Sign,
 
@@ -75,7 +84,7 @@ namespace Goedel.Mesh {
         GroupProfile = IndexSeedType * 4,
 
         ///<summary>Master profile offline signature</summary>
-        GroupSign = GroupProfile + Sign,
+        GroupSign = GroupProfile + RootSign,
 
         ///<summary>Master profile encryption</summary>
         GroupEncrypt = GroupProfile + Encrypt,
@@ -95,7 +104,7 @@ namespace Goedel.Mesh {
         ServiceProfile = IndexSeedType * 5,
 
         ///<summary>Master profile offline signature</summary>
-        ServiceSign = ServiceProfile + Sign,
+        ServiceSign = ServiceProfile + RootSign,
 
         ///<summary>Master profile encryption</summary>
         ServiceEncrypt = ServiceProfile + Encrypt,

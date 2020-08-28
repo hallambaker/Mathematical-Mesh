@@ -38,7 +38,7 @@ namespace Goedel.Mesh {
                     bool? persist = false) {
 
             var meshKeyType = MeshKeyType.GroupProfile;
-            var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign);
+            var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.RootSign);
             var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
 
             OfflineSignature = new KeyData(keySign.KeyPairPublic());

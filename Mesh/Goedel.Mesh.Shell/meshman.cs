@@ -1550,9 +1550,9 @@ namespace Goedel.Mesh.Shell {
 		String			Auth{get; set;}
 		Flag			AuthSuper{get; set;}
 		Flag			AuthAdmin{get; set;}
-		Flag			AuthDevice{get; set;}
 		Flag			AuthMessage{get; set;}
 		Flag			AuthWeb{get; set;}
+		Flag			AuthDevice{get; set;}
 		String			AuthSSH{get; set;}
 		String			AuthEmail{get; set;}
 		String			AuthGroupMember{get; set;}
@@ -2649,7 +2649,7 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Auth {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [super]</summary>
+		/// <summary>Field accessor for option [root]</summary>
 		public virtual Flag AuthSuper {
 			get => _Data[8] as Flag;
 			set => _Data[8]  = value;
@@ -2667,31 +2667,31 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AuthAdmin {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [device]</summary>
-		public virtual Flag AuthDevice {
+		/// <summary>Field accessor for option [message]</summary>
+		public virtual Flag AuthMessage {
 			get => _Data[10] as Flag;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _AuthDevice {
+		public virtual string _AuthMessage {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for option [message]</summary>
-		public virtual Flag AuthMessage {
+		/// <summary>Field accessor for option [web]</summary>
+		public virtual Flag AuthWeb {
 			get => _Data[11] as Flag;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _AuthMessage {
+		public virtual string _AuthWeb {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [web]</summary>
-		public virtual Flag AuthWeb {
+		/// <summary>Field accessor for option [device]</summary>
+		public virtual Flag AuthDevice {
 			get => _Data[12] as Flag;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _AuthWeb {
+		public virtual string _AuthDevice {
 			set => _Data[12].Parameter (value);
 			}
 		/// <summary>Field accessor for option [ssh]</summary>
@@ -2799,7 +2799,7 @@ namespace Goedel.Mesh.Shell {
 					Default = "false", // null if null
 					Brief = "Device as super administration device",
 					Index = 8,
-					Key = "super"
+					Key = "root"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthAdmin", 
@@ -2809,25 +2809,25 @@ namespace Goedel.Mesh.Shell {
 					Key = "admin"
 					},
 				new DescribeEntryOption () {
-					Identifier = "AuthDevice", 
-					Default = "false", // null if null
-					Brief = "Device restrictive access",
-					Index = 10,
-					Key = "device"
-					},
-				new DescribeEntryOption () {
 					Identifier = "AuthMessage", 
 					Default = "false", // null if null
 					Brief = "Authorize rights for Mesh messaging",
-					Index = 11,
+					Index = 10,
 					Key = "message"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthWeb", 
 					Default = "false", // null if null
 					Brief = "Authorize rights for Mesh messaging and Web.",
-					Index = 12,
+					Index = 11,
 					Key = "web"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthDevice", 
+					Default = "false", // null if null
+					Brief = "Device restrictive access",
+					Index = 12,
+					Key = "device"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthSSH", 
@@ -4147,7 +4147,7 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Auth {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for option [super]</summary>
+		/// <summary>Field accessor for option [root]</summary>
 		public virtual Flag AuthSuper {
 			get => _Data[11] as Flag;
 			set => _Data[11]  = value;
@@ -4165,31 +4165,31 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AuthAdmin {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for option [device]</summary>
-		public virtual Flag AuthDevice {
+		/// <summary>Field accessor for option [message]</summary>
+		public virtual Flag AuthMessage {
 			get => _Data[13] as Flag;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _AuthDevice {
+		public virtual string _AuthMessage {
 			set => _Data[13].Parameter (value);
 			}
-		/// <summary>Field accessor for option [message]</summary>
-		public virtual Flag AuthMessage {
+		/// <summary>Field accessor for option [web]</summary>
+		public virtual Flag AuthWeb {
 			get => _Data[14] as Flag;
 			set => _Data[14]  = value;
 			}
 
-		public virtual string _AuthMessage {
+		public virtual string _AuthWeb {
 			set => _Data[14].Parameter (value);
 			}
-		/// <summary>Field accessor for option [web]</summary>
-		public virtual Flag AuthWeb {
+		/// <summary>Field accessor for option [device]</summary>
+		public virtual Flag AuthDevice {
 			get => _Data[15] as Flag;
 			set => _Data[15]  = value;
 			}
 
-		public virtual string _AuthWeb {
+		public virtual string _AuthDevice {
 			set => _Data[15].Parameter (value);
 			}
 		/// <summary>Field accessor for option [ssh]</summary>
@@ -4318,7 +4318,7 @@ namespace Goedel.Mesh.Shell {
 					Default = "false", // null if null
 					Brief = "Device as super administration device",
 					Index = 11,
-					Key = "super"
+					Key = "root"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthAdmin", 
@@ -4328,25 +4328,25 @@ namespace Goedel.Mesh.Shell {
 					Key = "admin"
 					},
 				new DescribeEntryOption () {
-					Identifier = "AuthDevice", 
-					Default = "false", // null if null
-					Brief = "Device restrictive access",
-					Index = 13,
-					Key = "device"
-					},
-				new DescribeEntryOption () {
 					Identifier = "AuthMessage", 
 					Default = "false", // null if null
 					Brief = "Authorize rights for Mesh messaging",
-					Index = 14,
+					Index = 13,
 					Key = "message"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthWeb", 
 					Default = "false", // null if null
 					Brief = "Authorize rights for Mesh messaging and Web.",
-					Index = 15,
+					Index = 14,
 					Key = "web"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthDevice", 
+					Default = "false", // null if null
+					Brief = "Device restrictive access",
+					Index = 15,
+					Key = "device"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthSSH", 
@@ -4696,7 +4696,7 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Auth {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [super]</summary>
+		/// <summary>Field accessor for option [root]</summary>
 		public virtual Flag AuthSuper {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
@@ -4714,31 +4714,31 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AuthAdmin {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [device]</summary>
-		public virtual Flag AuthDevice {
+		/// <summary>Field accessor for option [message]</summary>
+		public virtual Flag AuthMessage {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _AuthDevice {
+		public virtual string _AuthMessage {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [message]</summary>
-		public virtual Flag AuthMessage {
+		/// <summary>Field accessor for option [web]</summary>
+		public virtual Flag AuthWeb {
 			get => _Data[6] as Flag;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _AuthMessage {
+		public virtual string _AuthWeb {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [web]</summary>
-		public virtual Flag AuthWeb {
+		/// <summary>Field accessor for option [device]</summary>
+		public virtual Flag AuthDevice {
 			get => _Data[7] as Flag;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _AuthWeb {
+		public virtual string _AuthDevice {
 			set => _Data[7].Parameter (value);
 			}
 		/// <summary>Field accessor for option [ssh]</summary>
@@ -4865,7 +4865,7 @@ namespace Goedel.Mesh.Shell {
 					Default = "false", // null if null
 					Brief = "Device as super administration device",
 					Index = 3,
-					Key = "super"
+					Key = "root"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthAdmin", 
@@ -4875,25 +4875,25 @@ namespace Goedel.Mesh.Shell {
 					Key = "admin"
 					},
 				new DescribeEntryOption () {
-					Identifier = "AuthDevice", 
-					Default = "false", // null if null
-					Brief = "Device restrictive access",
-					Index = 5,
-					Key = "device"
-					},
-				new DescribeEntryOption () {
 					Identifier = "AuthMessage", 
 					Default = "false", // null if null
 					Brief = "Authorize rights for Mesh messaging",
-					Index = 6,
+					Index = 5,
 					Key = "message"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthWeb", 
 					Default = "false", // null if null
 					Brief = "Authorize rights for Mesh messaging and Web.",
-					Index = 7,
+					Index = 6,
 					Key = "web"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthDevice", 
+					Default = "false", // null if null
+					Brief = "Device restrictive access",
+					Index = 7,
+					Key = "device"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthSSH", 
@@ -5454,7 +5454,7 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Auth {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [super]</summary>
+		/// <summary>Field accessor for option [root]</summary>
 		public virtual Flag AuthSuper {
 			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
@@ -5472,31 +5472,31 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AuthAdmin {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [device]</summary>
-		public virtual Flag AuthDevice {
+		/// <summary>Field accessor for option [message]</summary>
+		public virtual Flag AuthMessage {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _AuthDevice {
+		public virtual string _AuthMessage {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [message]</summary>
-		public virtual Flag AuthMessage {
+		/// <summary>Field accessor for option [web]</summary>
+		public virtual Flag AuthWeb {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _AuthMessage {
+		public virtual string _AuthWeb {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [web]</summary>
-		public virtual Flag AuthWeb {
+		/// <summary>Field accessor for option [device]</summary>
+		public virtual Flag AuthDevice {
 			get => _Data[6] as Flag;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _AuthWeb {
+		public virtual string _AuthDevice {
 			set => _Data[6].Parameter (value);
 			}
 		/// <summary>Field accessor for option [ssh]</summary>
@@ -5616,7 +5616,7 @@ namespace Goedel.Mesh.Shell {
 					Default = "false", // null if null
 					Brief = "Device as super administration device",
 					Index = 2,
-					Key = "super"
+					Key = "root"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthAdmin", 
@@ -5626,25 +5626,25 @@ namespace Goedel.Mesh.Shell {
 					Key = "admin"
 					},
 				new DescribeEntryOption () {
-					Identifier = "AuthDevice", 
-					Default = "false", // null if null
-					Brief = "Device restrictive access",
-					Index = 4,
-					Key = "device"
-					},
-				new DescribeEntryOption () {
 					Identifier = "AuthMessage", 
 					Default = "false", // null if null
 					Brief = "Authorize rights for Mesh messaging",
-					Index = 5,
+					Index = 4,
 					Key = "message"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthWeb", 
 					Default = "false", // null if null
 					Brief = "Authorize rights for Mesh messaging and Web.",
-					Index = 6,
+					Index = 5,
 					Key = "web"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthDevice", 
+					Default = "false", // null if null
+					Brief = "Device restrictive access",
+					Index = 6,
+					Key = "device"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AuthSSH", 

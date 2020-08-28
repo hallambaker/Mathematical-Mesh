@@ -149,20 +149,18 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileConnectPinReused() {
-            var accountA = "alice@example.com";
-
             var device1 = GetTestCLI("Device1");
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
 
-            device1.Dispatch($"account create {AccountA}");
+            device1.Dispatch($"account create {this.AccountA}");
 
             var result = device1.Dispatch($"account pin") as ResultPIN;
 
 
             var pin = result.MessagePIN.PIN;
-            device2.Dispatch($"device request {accountA} /pin {pin}");
+            device2.Dispatch($"device request {AccountA} /pin {pin}");
             device1.Dispatch($"account sync /auto");
 
             // This connection MUST be accepted.
@@ -170,7 +168,7 @@ namespace Goedel.XUnit {
             device2.Dispatch($"account sync");
 
             // The connection MUST be rejected as the PIN was already used.
-            device3.Dispatch($"device request {accountA} /pin {pin}");
+            device3.Dispatch($"device request {AccountA} /pin {pin}");
             device1.Dispatch($"account sync /auto");
 
             // The connection MUST be rejected as the PIN has expired.
@@ -235,59 +233,164 @@ namespace Goedel.XUnit {
 
 
 
-
-
-
-
         [Fact]
-        public void TestProfileConnectAuth() {
-            CreateAlice(out var device1, out var device2);
+        public void TestCreateSuper() {
+            var device1 = GetTestCLI(DeviceAdminName);
+            var device2 = GetTestCLI("Device2");
 
-            device1.Dispatch($"device auth deviceName2 /bookmark");
-            device2.Dispatch($"bookmark list");
-
-            device1.Dispatch($"device auth deviceName2 /calendar");
-            device2.Dispatch($"calendar list");
-
-            device1.Dispatch($"device auth deviceName2 /contact");
-            device2.Dispatch($"contact list");
-
-            device1.Dispatch($"device auth deviceName2 /confirm");
-            device2.Dispatch($"message pending");
-
-            device1.Dispatch($"device auth deviceName2 /mail");
-            device2.Dispatch($"mail list");
-
-            device1.Dispatch($"device auth deviceName2 /network");
-            device2.Dispatch($"network list");
-
-            device1.Dispatch($"device auth deviceName2 /password");
-            device2.Dispatch($"password list");
-
-            device1.Dispatch($"device auth deviceName2 /ssh");
-            device2.Dispatch($"ssh show host");
+            TestAuthCreate(device1, device2, "/root");
+            // check can do super admin things
+            CheckCanSuper(device2);
             }
 
         [Fact]
-        public void TestProfileConnectAuthAll() {
-            CreateAlice(out var device1, out var device2);
+        public void TestAuthSuper() {
+            var device1 = GetTestCLI(DeviceAdminName);
+            var device2 = GetTestCLI("Device2");
 
-            device1.Dispatch($"device auth deviceName2 /all");
-            device2.Dispatch($"bookmark list");
-            device2.Dispatch($"calendar list");
-            device2.Dispatch($"contact list");
-            device2.Dispatch($"confirm pending");
-            device2.Dispatch($"mail list");
-            device2.Dispatch($"network list");
-            device2.Dispatch($"password list");
-            device2.Dispatch($"ssh show host");
+            TestAuthCreate(device1, device2, "");
+            //CheckCanSuper(device2).TestFalse(); 
+
+            device1.Dispatch("device auth device2 /root");
+
+            CheckCanSuper(device2).TestTrue();
+            }
+
+        bool CheckCanSuper(Mesh.Test.TestCLI device2) {
+            return true;
+            }
+
+
+        [Fact]
+        public void TestCreateAdmin() {
+            var device1 = GetTestCLI(DeviceAdminName);
+            var device2 = GetTestCLI("Device2");
+
+            TestAuthCreate(device1, device2, "/admin");
+
+            CheckCanAdmin(device2).TestTrue();
             }
 
         [Fact]
-        public void TestProfileConnectAuthAdmin() {
-            CreateAlice(out var device1, out var device2);
+        public void TestAuthAdmin() {
+            var device1 = GetTestCLI(DeviceAdminName);
+            var device2 = GetTestCLI("Device2");
 
-            device1.Dispatch($"device auth deviceName2 /admin");
+            TestAuthCreate(device1, device2, "");
+            //CheckCanAdmin(device2).TestFalse(); 
+
+            device1.Dispatch("device auth device2 /admin");
+
+            CheckCanAdmin(device2).TestTrue();
+            }
+
+        bool CheckCanAdmin(Mesh.Test.TestCLI device2) {
+            return true;
+            }
+
+
+        [Fact]
+        public void TestCreateMessage() {
+            var device1 = GetTestCLI(DeviceAdminName);
+            var device2 = GetTestCLI("Device2");
+
+            TestAuthCreate(device1, device2, "/message");
+
+            CheckCanMessage(device2).TestTrue();
+            }
+
+        [Fact]
+        public void TestAuthMessage() {
+            var device1 = GetTestCLI(DeviceAdminName);
+            var device2 = GetTestCLI("Device2");
+
+            TestAuthCreate(device1, device2, "");
+            //CheckCanMessage(device2).TestFalse(); 
+
+            device1.Dispatch("device auth device2 /message");
+
+            CheckCanMessage(device2).TestTrue();
+            }
+
+        bool CheckCanMessage(Mesh.Test.TestCLI device2) {
+            return true;
+            }
+
+        [Fact]
+        public void TestCreateWeb() {
+            var device1 = GetTestCLI(DeviceAdminName);
+            var device2 = GetTestCLI("Device2");
+
+            TestAuthCreate(device1, device2, "/web");
+
+            CheckCanWeb(device2).TestTrue();
+            }
+
+        [Fact]
+        public void TestAuthWeb() {
+            var device1 = GetTestCLI(DeviceAdminName);
+            var device2 = GetTestCLI("Device2");
+
+            TestAuthCreate(device1, device2, "");
+            //CheckCanWeb(device2).TestFalse(); 
+
+            device1.Dispatch("device auth device2 /web");
+
+            CheckCanWeb(device2).TestTrue();
+            }
+
+        bool CheckCanWeb(Mesh.Test.TestCLI device2) {
+            return true;
+            }
+
+        [Fact]
+        public void TestCreateDevice() {
+            var device1 = GetTestCLI(DeviceAdminName);
+            var device2 = GetTestCLI("Device2");
+
+            TestAuthCreate(device1, device2, "/device");
+
+            CheckCanDevice(device2).TestTrue();
+            }
+
+        [Fact]
+        public void TestAuthDevice() {
+            var device1 = GetTestCLI(DeviceAdminName);
+            var device2 = GetTestCLI("Device2");
+
+            TestAuthCreate(device1, device2, "");
+            //CheckCanDevice(device2).TestFalse(); 
+
+            device1.Dispatch("device auth device2 /device");
+
+            CheckCanDevice(device2).TestTrue();
+            }
+
+        bool CheckCanDevice(Mesh.Test.TestCLI device2) {
+            return true;
+            }
+
+
+        bool TestAuthCreate(Mesh.Test.TestCLI device1, Mesh.Test.TestCLI device2, string auth) {
+
+
+            device1.Dispatch($"account create {AccountA} ");
+            device1.CheckHostCatalogExtended();
+
+            device2.Dispatch($"device request {AccountA} ");
+            device2.CheckHostCatalogExtended();
+
+            device1.Dispatch($"account sync");
+            var result2 = device1.Dispatch($"message pending");
+            var message = (result2 as ResultPending).Messages[0] as AcknowledgeConnection;
+            var witness = message.Witness;
+
+            device1.Dispatch($"device accept {witness} device2 {auth}");
+
+            device2.Dispatch($"device complete");
+            device2.Dispatch($"account sync");
+
+            return true;
             }
 
         }

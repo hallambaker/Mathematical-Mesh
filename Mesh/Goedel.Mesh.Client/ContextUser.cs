@@ -225,8 +225,8 @@ namespace Goedel.Mesh.Client {
             var helloResponse = MeshClient.Hello(helloRequest);
 
             // Add to assertion
-            ProfileUser.AccountAddresses = ProfileUser.AccountAddresses ?? new List<string>();
-            ProfileUser.AccountAddresses.Add(accountAddress);
+            //ProfileUser.AccountAddresses = ProfileUser.AccountAddresses ?? new List<string>();
+            //ProfileUser.AccountAddresses.Add(accountAddress);
             ProfileUser.EnvelopedProfileService = helloResponse.EnvelopedProfileService;
 
             ProfileUser.Envelope(PrivateAccountOfflineSignature);
@@ -675,7 +675,7 @@ namespace Goedel.Mesh.Client {
             var meshKeyType = MeshKeyType.GroupProfile;
             (var profileGroup, var secretSeed) = ProfileGroup.Generate(
                         MeshMachine, algorithmSign, algorithmEncrypt);
-            var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign,
+            var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.RootSign,
                         keySecurity: KeySecurity.Exportable);
             var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt,
                         keySecurity: KeySecurity.Exportable);

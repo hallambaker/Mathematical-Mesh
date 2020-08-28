@@ -45,8 +45,10 @@ namespace Goedel.Mesh {
         /// seed.
         /// </summary>
         /// <param name="activationAccount">An activation account with full administrative privileges.</param>
+        /// <param name="accountAddress">The account address</param>
         public ProfileUser(
-                    ActivationAccount activationAccount) {
+                    ActivationAccount activationAccount,
+                    string accountAddress) {
 
             var privateAccountOfflineSignature = activationAccount.PrivateProfileSignature;
             var privateAccountEncryption = activationAccount.PrivateAccountEncryption;
@@ -60,6 +62,8 @@ namespace Goedel.Mesh {
             //OnlineSignature = new List<KeyData> {
             //    new KeyData(activationAccount.PrivateAccountOnlineSignature.KeyPairPublic())
             //    };
+
+            AccountAddresses = new List<string> { accountAddress };
 
             Envelope(privateAccountOfflineSignature);
             }

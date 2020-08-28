@@ -55,7 +55,7 @@ namespace Goedel.Mesh {
                 bits: bits);
 
             var meshKeyType = MeshKeyType.DeviceProfile;
-            var keySign = SecretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign);
+            var keySign = SecretSeed.BasePrivate(meshKeyType | MeshKeyType.RootSign);
             var keyEncrypt = SecretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
             var keyAuthenticate = SecretSeed.BasePrivate(meshKeyType | MeshKeyType.Authenticate);
 

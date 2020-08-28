@@ -27,6 +27,7 @@ namespace Scratchpad {
 
             Cryptography.Initialize();
 
+
             var _ = Goedel.Mesh.Client.HostCatalogItem.Initialize;
             _ = Goedel.Mesh.MeshProtocol.Initialize;
             _ = Goedel.Mesh.MeshItem.Initialize;
@@ -34,10 +35,10 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
 
-            ShellTests.Test().TestMessageConfirmationAccept();
-            //TestService.Test().MeshDeviceConnectApprove();
+            //ShellTests.Test().TestMessageConfirmationAccept();
+            //ShellTests.Test().TestAuthWeb();
             //ShellTests.Test().MeshDeviceConnectDynamicQR();
-            //TestService.Test().MeshServiceFull();
+            TestService.Test().MeshCatalogGroup();
 
 
 

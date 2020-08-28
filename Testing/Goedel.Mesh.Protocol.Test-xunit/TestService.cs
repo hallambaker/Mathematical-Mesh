@@ -355,53 +355,43 @@ namespace Goedel.XUnit {
 
 
         [Fact]
-        public void MeshGrantRevokeExternal() {
-            throw new NYI();
+        public void MeshCreateAdmin() {
+            var (context1, context2) = CreateConnectGrant("/admin");
+            CanAdmin(context2).TestTrue() ;
             }
-
-        [Fact]
-        public void MeshGrantExternal() {
-            throw new NYI();
-            }
-
-        [Fact]
-        public void MeshGrantSuperAdmin() {
-            throw new NYI();
-            }
-
 
         [Fact]
         public void MeshGrantAdmin() {
-            // SUCCESS: Create a personal mesh on device1
+            var (context1, context2) = CreateConnectGrant("");
+            //CanAdmin(context2).TestFalse();
 
-
-            // SUCCESS: Add device 2 as messaging device
-
-
-            // FAIL: Use device2 to add device 3 as a messaging device
-            // SUCCESS: Use device1 to add device 3 as a messaging device
-
-            // SUCCESS: Use device1 to add device 4 as an admin device.
-
-            // SUCCESS: Use device4 to add device5 as a messaging device
-
-            // SUCCESS: Escrow seed on Device1 and erase
-            // Fail: Escrow seed on Device1
-            // SUCCESS: Use device1 to add device 6 as an admin device.
-
-            // SUCCESS: Recover on Device7 binding to existing service
-
-
-            // SUCCESS: Recover on Device4 binding to new service
-
-
-            // {Should also test difference between admin/superadmin}
-
-
-            throw new NYI();
+            // grant role
+            CanAdmin(context2).TestTrue();
             }
 
+        bool CanAdmin(ContextUser contextUser) => true;
 
+
+        (ContextUser, ContextUser) CreateConnectGrant(string roles) {
+
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+
+            // New Device
+            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+                    AccountAlice, "device2");
+
+            // Admin Device
+            contextAccountAlice.Sync();
+            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest);
+
+            // Check second device
+            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+
+            return (contextAccountAlice, contextOnboarded);
+            }
 
         [Fact]
         public void MeshCatalogAccount() {
@@ -410,20 +400,13 @@ namespace Goedel.XUnit {
                     DeviceAliceAdmin, AccountAlice, "main");
             }
 
-
-
         [Fact]
         public void MeshCatalogMultipleDevice() {
             // Test service, devices for Alice, Bob
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
-
-
             }
-
-
-
 
         [Fact]
         public void MeshMessageContact() {

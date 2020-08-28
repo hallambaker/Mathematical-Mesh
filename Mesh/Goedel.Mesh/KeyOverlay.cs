@@ -86,8 +86,8 @@ namespace Goedel.Mesh {
         public static CryptoAlgorithmId GetCryptoAlgorithmID(this MeshKeyType meshKeyType,
                             IActivate secretSeed) => (meshKeyType & MeshKeyType.MaskKeyUse) switch
                 {
-                    MeshKeyType.Sign => secretSeed.AlgorithmSignID,
-                    MeshKeyType.OnlineSign => secretSeed.AlgorithmSignID,
+                    MeshKeyType.RootSign => secretSeed.AlgorithmSignID,
+                    MeshKeyType.AdminSign => secretSeed.AlgorithmSignID,
                     MeshKeyType.Authenticate => secretSeed.AlgorithmAuthenticateID,
                     _ => secretSeed.AlgorithmEncryptID
                     };
@@ -108,9 +108,9 @@ namespace Goedel.Mesh {
             suffix = meshKeyUse.ToString();
             keyUses = meshKeyUse switch
                 {
-                    MeshKeyType.OnlineSign => KeyUses.Sign,
+                    MeshKeyType.AdminSign => KeyUses.Sign,
+                    MeshKeyType.RootSign => KeyUses.Sign,
                     MeshKeyType.Sign => KeyUses.Sign,
-
                     _ => KeyUses.Encrypt
                     };
             }

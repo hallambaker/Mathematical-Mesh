@@ -63,21 +63,23 @@
 	OptionSet DeviceAuthOptions
 		Option Auth "auth" String
 			Brief "(De)Authorize the specified function on the device"
-		Option AuthSuper "super" Flag
+		Option AuthSuper "root" Flag
 			Brief "Device as super administration device"
 			Default "false"
 		Option AuthAdmin "admin" Flag
 			Brief "Device as administration device"
 			Default "false"
-		Option AuthDevice "device" Flag
-			Brief "Device restrictive access"
-			Default "false"
+
 		Option AuthMessage "message" Flag
 			Brief "Authorize rights for Mesh messaging"
 			Default "false"
 		Option AuthWeb "web" Flag
 			Brief "Authorize rights for Mesh messaging and Web."
 			Default "false"
+		Option AuthDevice "device" Flag
+			Brief "Device restrictive access"
+			Default "false"		
+		
 		Option AuthSSH "ssh" String
 			Brief "Authorize rights for specified SSH account"
 			Default "false"
@@ -322,6 +324,7 @@
 				Brief "Fingerprint of connection to accept"
 			Parameter DeviceID "id" String
 				Brief "Device identifier"
+
 			Include DeviceAuthOptions
 			Include AccountOptions
 			Include Reporting

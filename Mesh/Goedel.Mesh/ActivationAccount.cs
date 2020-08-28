@@ -87,7 +87,7 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed) {
             PrivateProfileSignature = secretSeed.BasePrivate(
-                MeshKeyType.UserSign, keyCollection, KeySecurity.Exportable);
+                MeshKeyType.UserRootSign, keyCollection, KeySecurity.Exportable);
             PrivateAccountEncryption = secretSeed.BasePrivate(
                 MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Exportable);
             PrivateAccountAuthentication = secretSeed.BasePrivate(
@@ -437,7 +437,7 @@ namespace Goedel.Mesh {
             PrivateAdministratorSignature = AdministratorSignature?.GetKeyPair(KeySecurity.Exportable);
             PrivateAccountEncryption = AccountEncryption?.GetKeyPair(KeySecurity.Exportable);
             PrivateAccountAuthentication = AccountAuthentication?.GetKeyPair(KeySecurity.Exportable);
-
+            PrivateAccountSignature = AccountSignature?.GetKeyPair(KeySecurity.Exportable);
             if (PrivateAccountEncryption != null) {
                 keyCollection.Add(PrivateAccountEncryption);
                 }

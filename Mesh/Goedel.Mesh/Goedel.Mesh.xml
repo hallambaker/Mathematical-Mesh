@@ -3285,10 +3285,13 @@
         <member name="F:Goedel.Mesh.MeshKeyType.MaskKeyUse">
             <summary>Mask to recover seed type</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshKeyType.Sign">
+        <member name="F:Goedel.Mesh.MeshKeyType.RootSign">
             <summary>offline signature</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshKeyType.OnlineSign">
+        <member name="F:Goedel.Mesh.MeshKeyType.AdminSign">
+            <summary>Master profile online signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.Sign">
             <summary>Master profile online signature</summary>
         </member>
         <member name="F:Goedel.Mesh.MeshKeyType.Encrypt">
@@ -3316,6 +3319,12 @@
             <summary>Master profile authentication</summary>
         </member>
         <member name="F:Goedel.Mesh.MeshKeyType.UserProfile">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.UserRootSign">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.UserAdminSign">
             <summary>Master profile offline signature</summary>
         </member>
         <member name="F:Goedel.Mesh.MeshKeyType.UserSign">
@@ -7165,12 +7174,13 @@
             Blank constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileUser.#ctor(Goedel.Mesh.ActivationAccount)">
+        <member name="M:Goedel.Mesh.ProfileUser.#ctor(Goedel.Mesh.ActivationAccount,System.String)">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
             </summary>
             <param name="activationAccount">An activation account with full administrative privileges.</param>
+            <param name="accountAddress">The account address</param>
         </member>
         <member name="M:Goedel.Mesh.ProfileUser.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>

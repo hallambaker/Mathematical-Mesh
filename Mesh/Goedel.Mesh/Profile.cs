@@ -152,7 +152,7 @@ namespace Goedel.Mesh {
             ActivationKey = Cryptography.UDF.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
 
             KeySignature = profile.OfflineSignature.ActivatePublic(ActivationKey,
-               MeshKeyType | MeshKeyType.Sign);
+               MeshKeyType | MeshKeyType.RootSign);
             }
 
 

@@ -1334,19 +1334,19 @@
             <summary>Field accessor for option [auth]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthSuper">
-            <summary>Field accessor for option [super]</summary>
+            <summary>Field accessor for option [root]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthAdmin">
             <summary>Field accessor for option [admin]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthDevice">
-            <summary>Field accessor for option [device]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthMessage">
             <summary>Field accessor for option [message]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthWeb">
             <summary>Field accessor for option [web]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthDevice">
+            <summary>Field accessor for option [device]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
@@ -1565,19 +1565,19 @@
             <summary>Field accessor for option [auth]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthSuper">
-            <summary>Field accessor for option [super]</summary>
+            <summary>Field accessor for option [root]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthAdmin">
             <summary>Field accessor for option [admin]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthDevice">
-            <summary>Field accessor for option [device]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthMessage">
             <summary>Field accessor for option [message]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthWeb">
             <summary>Field accessor for option [web]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthDevice">
+            <summary>Field accessor for option [device]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
@@ -1637,19 +1637,19 @@
             <summary>Field accessor for option [auth]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthSuper">
-            <summary>Field accessor for option [super]</summary>
+            <summary>Field accessor for option [root]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthAdmin">
             <summary>Field accessor for option [admin]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthDevice">
-            <summary>Field accessor for option [device]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthMessage">
             <summary>Field accessor for option [message]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthWeb">
             <summary>Field accessor for option [web]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthDevice">
+            <summary>Field accessor for option [device]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
@@ -1751,19 +1751,19 @@
             <summary>Field accessor for option [auth]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthSuper">
-            <summary>Field accessor for option [super]</summary>
+            <summary>Field accessor for option [root]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthAdmin">
             <summary>Field accessor for option [admin]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthDevice">
-            <summary>Field accessor for option [device]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthMessage">
             <summary>Field accessor for option [message]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthWeb">
             <summary>Field accessor for option [web]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthDevice">
+            <summary>Field accessor for option [device]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>

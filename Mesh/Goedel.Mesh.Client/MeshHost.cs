@@ -240,7 +240,7 @@ namespace Goedel.Mesh.Client {
                     KeyCollection, privateKeyUDF);
 
             // create the initial profile
-            var profileUser = new ProfileUser(activationRoot);
+            var profileUser = new ProfileUser(activationRoot, accountAddress);
 
             rights ??= new List<string> {
                 Rights.IdRightsSuper,
