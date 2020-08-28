@@ -2546,15 +2546,17 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ActivationAccount : Activation {
         /// <summary>
-        ///Grant access to ProfileUser online signing key
+        ///Grant access to profile online signing key used to sign updates
+        ///to the profile.
         /// </summary>
 
-		public virtual KeyData						AccountOnlineSignature  {get; set;}
+		public virtual KeyData						ProfileSignature  {get; set;}
         /// <summary>
-        ///Grant access to ProfileUser offline signing key
+        ///Grant access to Profile administration key used to make changes to
+        ///administrator catalogs.
         /// </summary>
 
-		public virtual KeyData						AccountOfflineSignature  {get; set;}
+		public virtual KeyData						AdministratorSignature  {get; set;}
         /// <summary>
         ///Grant access to ProfileUser account encryption key
         /// </summary>
@@ -2565,6 +2567,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual KeyData						AccountAuthentication  {get; set;}
+        /// <summary>
+        ///Grant access to ProfileUser account signature key
+        /// </summary>
+
+		public virtual KeyData						AccountSignature  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2609,15 +2616,15 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((Activation)this).SerializeX(_writer, false, ref _first);
-			if (AccountOnlineSignature != null) {
+			if (ProfileSignature != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("AccountOnlineSignature", 1);
-					AccountOnlineSignature.Serialize (_writer, false);
+				_writer.WriteToken ("ProfileSignature", 1);
+					ProfileSignature.Serialize (_writer, false);
 				}
-			if (AccountOfflineSignature != null) {
+			if (AdministratorSignature != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("AccountOfflineSignature", 1);
-					AccountOfflineSignature.Serialize (_writer, false);
+				_writer.WriteToken ("AdministratorSignature", 1);
+					AdministratorSignature.Serialize (_writer, false);
 				}
 			if (AccountEncryption != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -2628,6 +2635,11 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("AccountAuthentication", 1);
 					AccountAuthentication.Serialize (_writer, false);
+				}
+			if (AccountSignature != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AccountSignature", 1);
+					AccountSignature.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -2662,17 +2674,17 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "AccountOnlineSignature" : {
+				case "ProfileSignature" : {
 					// An untagged structure
-					AccountOnlineSignature = new KeyData ();
-					AccountOnlineSignature.Deserialize (jsonReader);
+					ProfileSignature = new KeyData ();
+					ProfileSignature.Deserialize (jsonReader);
  
 					break;
 					}
-				case "AccountOfflineSignature" : {
+				case "AdministratorSignature" : {
 					// An untagged structure
-					AccountOfflineSignature = new KeyData ();
-					AccountOfflineSignature.Deserialize (jsonReader);
+					AdministratorSignature = new KeyData ();
+					AdministratorSignature.Deserialize (jsonReader);
  
 					break;
 					}
@@ -2687,6 +2699,13 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					AccountAuthentication = new KeyData ();
 					AccountAuthentication.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "AccountSignature" : {
+					// An untagged structure
+					AccountSignature = new KeyData ();
+					AccountSignature.Deserialize (jsonReader);
  
 					break;
 					}

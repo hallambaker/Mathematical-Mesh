@@ -48,7 +48,7 @@ namespace Goedel.Mesh {
         public ProfileUser(
                     ActivationAccount activationAccount) {
 
-            var privateAccountOfflineSignature = activationAccount.PrivateAccountOfflineSignature;
+            var privateAccountOfflineSignature = activationAccount.PrivateProfileSignature;
             var privateAccountEncryption = activationAccount.PrivateAccountEncryption;
             var privateAccountAuthentication = activationAccount.PrivateAccountAuthentication;
 

@@ -4,21 +4,53 @@
         <name>Goedel.Mesh</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Mesh.ITransactContextAccount">
+            <summary>
+            Interface providing access to the capabilities and publications catalog of an open transaction.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ITransactContextAccount.GetCatalogPublication">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ITransactContextAccount.GetCatalogCapability">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ITransactContextAccount.CatalogUpdate``1(Goedel.Mesh.Catalog{``0},``0)">
+            <summary>
+            Append a request to append <paramref name="catalogedEntry"/> to the catalog
+            <paramref name="catalog"/> to the transaction.
+            </summary>
+            <param name="catalog">The catalog to be updated</param>
+            <param name="catalogedEntry">The entry to add as an update.</param>
+            <typeparam name="TEntry">The entry type.</typeparam>
+        </member>
+        <member name="M:Goedel.Mesh.ITransactContextAccount.CatalogDelete``1(Goedel.Mesh.Catalog{``0},``0)">
+            <summary>
+            Append a request to delete <paramref name="catalogedEntry"/> from the catalog
+            <paramref name="catalog"/> to the transaction.
+            </summary>
+            <param name="catalog">The catalog to be updated</param>
+            <param name="catalogedEntry">The entry to add as an update.</param>
+            <typeparam name="TEntry">The entry type.</typeparam>
+        </member>
         <member name="T:Goedel.Mesh.ActivationAccount">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationAccount.PrivateAccountOfflineSignature">
-            <summary>The account offline signature key</summary>
+        <member name="P:Goedel.Mesh.ActivationAccount.PrivateProfileSignature">
+            <summary>The account profile signature key.</summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationAccount.PrivateAccountOnlineSignature">
-            <summary>The account online signature key</summary>
+        <member name="P:Goedel.Mesh.ActivationAccount.PrivateAdministratorSignature">
+            <summary>The account administrator signature key bound to an administrator device.</summary>
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount.PrivateAccountEncryption">
-            <summary>The account encryption key</summary>
+            <summary>The account encryption key under which inbound messages are encrypted.</summary>
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount.PrivateAccountAuthentication">
-            <summary>The account authentication key</summary>
+            <summary>The account authentication key used to authenticate under the account.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.PrivateAccountSignature">
+            <summary>The account signature key under which outbound messages are signed.</summary>
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount.EnvelopedActivationAccount">
             <summary>The enveloped object</summary> 
@@ -28,50 +60,23 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.#ctor(Goedel.Mesh.ProfileDevice,System.Byte[],System.Int32)">
-            <summary>
-            Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
-            <paramref name="profileDevice"/>. The property <see cref="P:Goedel.Mesh.Activation.ActivationKey"/> is
-            calculated from the values specified for the activation type.
-            If the value <paramref name="masterSecret"/> is
-            specified, it is used as the seed value. Otherwise, a seed value of
-            length <paramref name="bits"/> is generated.
-            The public key value is calculated for the public key pairs and the corresponding
-            <see cref="T:Goedel.Mesh.ConnectionUser"/> generated for the public values.
-            </summary>
-            <param name="profileDevice">The base profile that the activation activates.</param>
-            <param name="masterSecret">If not null, specifies the seed value. Otherwise,
-            a seed value of <paramref name="bits"/> length is generated.</param>
-            <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
-            is null.</param>
-        </member>
         <member name="M:Goedel.Mesh.ActivationAccount.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF)">
             <summary>
             Constructor returning an activation account for the seed <paramref name="secretSeed"/>.
+            This constructor is used for generation of the initial account keys.
             </summary>
             <param name="keyCollection">The key collection to use.</param>
             <param name="secretSeed">The secret seed value.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String},Goedel.Cryptography.Jose.PrivateKeyUDF)">
-            <summary>
-            Constructor returning an activation account for the seed <paramref name="secretSeed"/>.
-            </summary>
-            <param name="keyCollection">The key collection to use.</param>
-            <param name="secretSeed">The secret seed value.</param>
-            <param name="profileDevice">The profile of the device being activated.</param>
-            <param name="keyPairOnlineSignature">To delete.</param>
-            <param name="roles">Roles to be granted.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,System.Collections.Generic.List{System.String})">
             <summary>
             Add the device specified by <paramref name="profileDevice"/> to the account granting 
-            the set of privileged specified in <paramref name="rights"/>.
+            the set of privileged specified in <paramref name="roles"/>.
             </summary>
             <param name="profileDevice">Profile of the device to add.</param>
             <param name="profileUser">User profile to which the device is added.</param>
-            <param name="keyPairOnlineSignature">If not null, specifies an online signature key that is to be used
-            to sign administrator functions.</param>
-            <param name="rights">The initial rights to be assigned to the device.</param>
+            <param name="roles">The initial roles to be assigned to the device. These will be expanded
+            to a rights list.</param>
             <returns>The catalog entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount)">
@@ -124,36 +129,35 @@
             <param name="profileDevice">The device to which the capability is to be added.</param>
             <returns>The key data for the added capability.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.GrantProfileRoot(Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right)">
+        <member name="M:Goedel.Mesh.ActivationAccount.GrantProfileRoot(Goedel.Mesh.ActivationAccount,Goedel.Mesh.Right)">
             <summary>
             Grant super administrator access.
             </summary>
-            <param name="profileDevice">Device to which the access right is granted.</param>
+            <param name="activationAccount">Device to which the access right is granted.</param>
             <param name="right">The right granted.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.GrantProfileAdmin(Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right,Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Mesh.ActivationAccount.GrantProfileAdmin(Goedel.Mesh.ActivationAccount,Goedel.Mesh.Right)">
             <summary>
             Grant device administrator access.
             </summary>
-            <param name="profileDevice">Device to which the access right is granted.</param>
-            <param name="right">The right granted.</param>
-            <param name="keyPairOnlineSignature">To be removed.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.GrantStore(Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right)">
-            <summary>
-            Grant access to the store X.
-            </summary>
-            <param name="profileDevice">Device to which the access right is granted.</param>
+            <param name="activationAccount">Device to which the access right is granted.</param>
             <param name="right">The right granted.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.GrantAccount(Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right)">
+        <member name="M:Goedel.Mesh.ActivationAccount.GrantAccount(Goedel.Mesh.ActivationAccount,Goedel.Mesh.Right)">
             <summary>
             Grant access to global account.
             </summary>
-            <param name="profileDevice">Device to which the access right is granted.</param>
+            <param name="activationAccount">Device to which the access right is granted.</param>
             <param name="right">The right granted.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.Activate">
+        <member name="M:Goedel.Mesh.ActivationAccount.GrantStore(Goedel.Mesh.ActivationAccount,Goedel.Mesh.Right)">
+            <summary>
+            Grant access to the store X.
+            </summary>
+            <param name="activationAccount">Device to which the access right is granted.</param>
+            <param name="right">The right granted.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.Activate(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Activate the keys bound to this activation record.
             </summary>
@@ -168,14 +172,16 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The Key collection.</param>
         </member>
-        <member name="P:Goedel.Mesh.ActivationAccount.AccountOnlineSignature">
+        <member name="P:Goedel.Mesh.ActivationAccount.ProfileSignature">
              <summary>
-            Grant access to ProfileUser online signing key
+            Grant access to profile online signing key used to sign updates
+            to the profile.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationAccount.AccountOfflineSignature">
+        <member name="P:Goedel.Mesh.ActivationAccount.AdministratorSignature">
              <summary>
-            Grant access to ProfileUser offline signing key
+            Grant access to Profile administration key used to make changes to
+            administrator catalogs.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount.AccountEncryption">
@@ -186,6 +192,11 @@
         <member name="P:Goedel.Mesh.ActivationAccount.AccountAuthentication">
              <summary>
             Grant access to ProfileUser account authentication key
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.AccountSignature">
+             <summary>
+            Grant access to ProfileUser account signature key
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount._Tag">
@@ -4452,6 +4463,21 @@
             <param name="meshKeyType">The mesh key type.</param>
             <param name="keyCollection">The key collection to register the private key to
             (the key is always generated as ephemeral.)</param>
+            <param name="keySecurity">The key security model of the derrived key.</param>
+            <returns>The derrived key.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.BasePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,System.String,Goedel.Cryptography.KeyUses,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.KeySecurity)">
+            <summary>
+            Derive a base private key of type <paramref name="meshKeyType"/> from the 
+            secret seed value <paramref name="secretSeed"/> and register the private component
+            in <paramref name="keyCollection"/>.
+            </summary>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="meshKeyType">The mesh key type.</param>
+            <param name="keyName">The mesh key name.</param>
+            <param name="keyUses">The key uses.</param>
+            <param name="keyCollection">The key collection to register the private key to
+            (the key is always generated as ephemeral.)</param> 
             <param name="keySecurity">The key security model of the derrived key.</param>
             <returns>The derrived key.</returns>
         </member>

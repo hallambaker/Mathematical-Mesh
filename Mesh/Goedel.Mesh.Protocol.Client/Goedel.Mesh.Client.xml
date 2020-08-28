@@ -1018,9 +1018,6 @@
             <summary>
             Context for interacting with a Mesh Account
             </summary>
-            <summary>
-            Context for interacting with a Mesh Account
-            </summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.TransactBegin">
             <summary>
@@ -1486,53 +1483,6 @@
             <param name="networkAddress">The address to return the entry for.</param>
             <returns>The mesh account encryption key if found, otherwise, null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.DeviceBindEncryption(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
-            <summary>
-            Create a key pair bound to the private key <paramref name="profileDevice.KeyEncryption.KeyEncryption"/>
-            The public parameters of the returned key represent the combined parameters, the 
-            private parameters represent the offset from the device key.
-            </summary>
-            <param name="profileDevice">Profile providing the base key.</param>
-            <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
-            <returns>The bound key pair.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.DeviceBindSignature(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
-            <summary>
-            Create a key pair bound to the private key <paramref name="profileDevice.OfflineSignature.OfflineSignature"/>
-            The public parameters of the returned key represent the combined parameters, the 
-            private parameters represent the offset from the device key.
-            </summary>
-            <param name="profileDevice">Profile providing the base key.</param>
-            <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
-            <returns>The bound key pair.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.DeviceBindAuthentication(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
-            <summary>
-            Create a key pair bound to the private key <paramref name="profileDevice.KeyAuthentication.KeyAuthentication"/>
-            The public parameters of the returned key represent the combined parameters, the 
-            private parameters represent the offset from the device key.
-            </summary>
-            <param name="profileDevice">Profile providing the base key.</param>
-            <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
-            <returns>The bound key pair.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddCapability(Goedel.Cryptography.CryptoKey,Goedel.Mesh.ProfileDevice)">
-            <summary>
-            Generate a capability for the key <paramref name="keyPair"/>.
-            add the service portion to the capabilities catalog.
-            </summary>
-            <param name="keyPair">Keypair from which the capability is to be derrived.</param>
-            <param name="profileDevice">The profile of the device to which the capability
-            is being granted.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GrantProfileRoot(Goedel.Mesh.ActivationAccount,Goedel.Mesh.ProfileDevice,Goedel.Mesh.Right)">
-            <summary>
-            Grant super administrator access.
-            </summary>
-            <param name="activationAccount"></param>
-            <param name="profileDevice"></param>
-            <param name="right"></param>
-        </member>
         <member name="T:Goedel.Mesh.Client.TransactAccount">
             <summary>
             Transaction on a Mesh account. Provides access to the account catalogs and spools.
@@ -1644,10 +1594,10 @@
             <summary>List of completion references to be added to the inbound spool</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.GetCatalogPublication">
-            <summary>Returns the network catalog for the account</summary>
+            <summary>Returns the publication catalog for the account</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.GetCatalogCapability">
-            <summary>Returns the network catalog for the account</summary>
+            <summary>Returns the capability catalog for the account</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(System.String,Goedel.Mesh.Message)">
             <summary>

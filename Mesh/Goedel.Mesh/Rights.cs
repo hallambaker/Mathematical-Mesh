@@ -301,7 +301,7 @@ namespace Goedel.Mesh {
         ///messages under the public credentials for the account.</summary> 
         public readonly static List<Right> RightsMessage =
                     new List<Right>() {
-                        new Right (Resource.Account, Access.ReadWrite),
+                        new Right (Resource.Account, Access.ReadWrite|Access.Authenticate),
                         new Right(Resource.Store, Access.ReadWrite, CatalogContact.Label),
                         new Right (Resource.Store, Access.ReadWrite, CatalogPublication.Label),
                         new Right (Resource.Store, Access.ReadWrite, SpoolInbound.Label),

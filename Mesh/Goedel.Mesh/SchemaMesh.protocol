@@ -265,18 +265,23 @@
 
 	Structure ActivationAccount
 		Inherits Activation
-		Struct KeyData AccountOnlineSignature
+		Struct KeyData ProfileSignature
 			Description
-				|Grant access to ProfileUser online signing key
-		Struct KeyData AccountOfflineSignature
+				|Grant access to profile online signing key used to sign updates
+				|to the profile.
+		Struct KeyData AdministratorSignature
 			Description
-				|Grant access to ProfileUser offline signing key
+				|Grant access to Profile administration key used to make changes to
+				|administrator catalogs.
 		Struct KeyData AccountEncryption
 			Description
 				|Grant access to ProfileUser account encryption key
 		Struct KeyData AccountAuthentication
 			Description
 				|Grant access to ProfileUser account authentication key
+		Struct KeyData AccountSignature
+			Description
+				|Grant access to ProfileUser account signature key
 
 	Structure ActivationGroup
 		Inherits Activation

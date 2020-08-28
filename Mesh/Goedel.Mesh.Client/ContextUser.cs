@@ -70,8 +70,8 @@ namespace Goedel.Mesh.Client {
         KeyPair PrivateDeviceAuthentication => ActivationUser.PrivateDeviceAuthentication;
 
         // account key accessors
-        KeyPair PrivateAccountOfflineSignature => ActivationAccount.PrivateAccountOfflineSignature;
-        KeyPair PrivateAccountOnlineSignature => ActivationAccount.PrivateAccountOnlineSignature;
+        KeyPair PrivateAccountOfflineSignature => ActivationAccount.PrivateProfileSignature;
+        KeyPair PrivateAccountOnlineSignature => ActivationAccount.PrivateAdministratorSignature;
         KeyPair PrivateAccountEncryption => ActivationAccount.PrivateAccountEncryption;
         KeyPair PrivateAccountAuthentication => ActivationAccount.PrivateAccountAuthentication;
 
@@ -103,7 +103,7 @@ namespace Goedel.Mesh.Client {
             ActivationUser.Activate(KeyCollection, deviceKeySeed);
 
             ActivationAccount = CatalogedDevice?.GetActivationAccount(KeyCollection);
-            ActivationAccount.Activate();
+            ActivationAccount.Activate(KeyCollection);
 
 
             // Some validation checks
@@ -626,7 +626,7 @@ namespace Goedel.Mesh.Client {
         public Message GetPendingMessageByID(string messageID, out bool read) {
             foreach (var envelope in GetSpoolInbound().Select(1, true)) {
                 var contentMeta = envelope.Header.ContentMeta;
-                var meshMessage = Message.Decode(envelope);
+                var meshMessage = Message.Decode(envelope, KeyCollection);
 
                 // Message.FromJson(envelope.GetBodyReader());
                 //meshMessage.DareEnvelope = envelope;
@@ -869,7 +869,7 @@ namespace Goedel.Mesh.Client {
             // Approve the request
             // Have to add in the Mesh profile here and Account Assertion
 
-            var cataloguedDevice = ActivationAccount.MakeCatalogedDevice(profileDevice, ProfileUser, rights: rights);
+            var cataloguedDevice = ActivationAccount.MakeCatalogedDevice(profileDevice, ProfileUser, roles: rights);
 
             //Console.WriteLine($"Accept connection ID is {responseId}");
             var respondConnection = new RespondConnection() {
@@ -1107,7 +1107,7 @@ namespace Goedel.Mesh.Client {
             if (accept) {
                 // Connect the device to the Mesh
                 var device = ActivationAccount.MakeCatalogedDevice(
-                        request.MessageConnectionRequest.ProfileDevice, ProfileUser, rights: rights);
+                        request.MessageConnectionRequest.ProfileDevice, ProfileUser, roles: rights);
 
                 respondConnection.CatalogedDevice = device;
                 respondConnection.Result = Constants.TransactionResultAccept;

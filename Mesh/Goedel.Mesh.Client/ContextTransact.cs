@@ -10,6 +10,7 @@ using System.Transactions;
 
 namespace Goedel.Mesh.Client {
 
+
     /// <summary>
     /// Untyped transaction update.
     /// </summary>
@@ -283,7 +284,8 @@ namespace Goedel.Mesh.Client {
     /// </summary>
     /// <typeparam name="TAccount">The type of the context on which the transaction is to
     /// be performed.</typeparam>
-    public abstract class Transaction<TAccount> : Disposable where TAccount : ContextAccount {
+    public abstract class Transaction<TAccount> : Disposable, ITransactContextAccount
+                where TAccount : ContextAccount {
         #region // Properties
 
         /// <summary>The account context in which this transaction takes place.</summary>
@@ -313,12 +315,12 @@ namespace Goedel.Mesh.Client {
 
         #endregion
         #region // Operations
-        ///<summary>Returns the network catalog for the account</summary>
+        ///<summary>Returns the publication catalog for the account</summary>
         public CatalogPublication GetCatalogPublication() => 
             ContextAccount.GetStore(CatalogPublication.Label) as CatalogPublication;
 
 
-        ///<summary>Returns the network catalog for the account</summary>
+        ///<summary>Returns the capability catalog for the account</summary>
         public CatalogCapability GetCatalogCapability() => 
             ContextAccount.GetStore(CatalogCapability.Label) as CatalogCapability;
 

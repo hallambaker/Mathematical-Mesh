@@ -34,10 +34,10 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
 
-            //TestService.Test().MeshDeviceConnectPIN();
+            ShellTests.Test().TestMessageConfirmationAccept();
             //TestService.Test().MeshDeviceConnectApprove();
             //ShellTests.Test().MeshDeviceConnectDynamicQR();
-            TestService.Test().MeshServiceFull();
+            //TestService.Test().MeshServiceFull();
 
 
 

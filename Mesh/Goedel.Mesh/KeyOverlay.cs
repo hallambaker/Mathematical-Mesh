@@ -131,11 +131,34 @@ namespace Goedel.Mesh {
                     KeySecurity keySecurity= KeySecurity.Ephemeral) {
 
             meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
+            return BasePrivate(secretSeed, meshKeyType, saltSuffix, keyUses, keyCollection, keySecurity);
+            }
+
+        /// <summary>
+        /// Derive a base private key of type <paramref name="meshKeyType"/> from the 
+        /// secret seed value <paramref name="secretSeed"/> and register the private component
+        /// in <paramref name="keyCollection"/>.
+        /// </summary>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="meshKeyType">The mesh key type.</param>
+        /// <param name="keyName">The mesh key name.</param>
+        /// <param name="keyUses">The key uses.</param>
+        /// <param name="keyCollection">The key collection to register the private key to
+        /// (the key is always generated as ephemeral.)</param> 
+        /// <param name="keySecurity">The key security model of the derrived key.</param>
+        /// <returns>The derrived key.</returns>
+        public static KeyPair BasePrivate(this PrivateKeyUDF secretSeed,
+                    MeshKeyType meshKeyType, string keyName, KeyUses keyUses, IKeyCollection keyCollection = null,
+                    KeySecurity keySecurity = KeySecurity.Ephemeral) {
+
+            //meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
             var cryptoAlgorithmID = GetCryptoAlgorithmID(meshKeyType, secretSeed);
 
             return UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,
-                    keySecurity, keyUses: keyUses, cryptoAlgorithmID, saltSuffix);
+                    keySecurity, keyUses: keyUses, cryptoAlgorithmID, keyName);
             }
+
+
 
         /// <summary>
         /// Derive an activation private key of type <paramref name="meshKeyType"/> from the 

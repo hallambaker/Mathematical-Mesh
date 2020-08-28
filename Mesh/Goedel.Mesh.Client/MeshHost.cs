@@ -230,9 +230,9 @@ namespace Goedel.Mesh.Client {
             var privateKeyUDF = new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileUser, secretSeed);
             Screen.WriteLine($"***** Secret Seed = {privateKeyUDF.PrivateValue}");
 
-            // create the initial online signature key bound to this device
-            var keyPairOnlineSignature = ContextUser.DeviceBindSignature(
-                        profileDevice, KeyCollection);
+            //// create the initial online signature key bound to this device
+            //var keyPairOnlineSignature = ContextUser.DeviceBindSignature(
+            //            profileDevice, KeyCollection);
 
             // Create the set of cryptographic keys to initialize the account.
             // create the root activation.
@@ -242,9 +242,14 @@ namespace Goedel.Mesh.Client {
             // create the initial profile
             var profileUser = new ProfileUser(activationRoot);
 
+            rights ??= new List<string> {
+                Rights.IdRightsSuper,
+                Rights.IdRightsAdmin,
+                Rights.IdRightsWeb
+                };
+
             // create a Cataloged Device entry for the admin device
-            var catalogedDevice = activationRoot.MakeCatalogedDevice(profileDevice, profileUser,
-                keyPairOnlineSignature, rights);
+            var catalogedDevice = activationRoot.MakeCatalogedDevice(profileDevice, profileUser,rights);
 
             // now create the host catalog entry and apply to the context user.
             var catalogedMachine = new CatalogedStandard() {
@@ -265,8 +270,8 @@ namespace Goedel.Mesh.Client {
             KeyCollection.Persist(profileUser.UDF, privateKeyUDF, false);
 
             var contextUser = new ContextUser(this, catalogedMachine);
-            contextUser.ActivationAccount.PrivateAccountOfflineSignature =
-                activationRoot.PrivateAccountOfflineSignature;
+            contextUser.ActivationAccount.PrivateProfileSignature =
+                activationRoot.PrivateProfileSignature;
 
             // Set the service 
             contextUser.SetService(accountAddress);
