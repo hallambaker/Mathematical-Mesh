@@ -185,7 +185,7 @@ namespace Goedel.Cryptography {
         /// Returns a new KeyPair instance which only has the public values.
         /// </summary>
         /// <returns>The new keypair that contains only the public values.</returns>
-        public override KeyPair KeyPairPublic() => new KeyPairEd25519(PublicKey) {
+        public override KeyPair KeyPairPublic() => new KeyPairEd25519(PublicKey, keyUses: KeyUses) {
             Locator = Locator
             };
 

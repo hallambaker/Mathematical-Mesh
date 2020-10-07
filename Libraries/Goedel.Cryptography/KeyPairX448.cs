@@ -191,7 +191,7 @@ namespace Goedel.Cryptography {
         /// Returns a new KeyPair instance which only has the public values.
         /// </summary>
         /// <returns>The new keypair that contains only the public values.</returns>
-        public override KeyPair KeyPairPublic() => new KeyPairX448(PublicKey);
+        public override KeyPair KeyPairPublic() => new KeyPairX448(PublicKey, keyUses: KeyUses);
 
         /// <summary>
         /// Persist the key to a key collection. Note that it is only possible to store a 

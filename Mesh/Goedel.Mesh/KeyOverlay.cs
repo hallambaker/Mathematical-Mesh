@@ -148,7 +148,7 @@ namespace Goedel.Mesh {
                 MeshKeyOperation operation) {
             var activationKey = activationSeed.GenerateContributionKeyPair(
                         MeshKeyType.Activation, actor, operation) as KeyPairAdvanced;
-            var combinedKey = activationKey.CombinePublic(baseKey as KeyPairAdvanced);
+            var combinedKey = activationKey.CombinePublic(baseKey as KeyPairAdvanced, keyUses: baseKey.KeyUses);
             return combinedKey;
             }
 
@@ -172,7 +172,7 @@ namespace Goedel.Mesh {
                 MeshKeyOperation operation) {
             var activationKey = activationSeed.GenerateContributionKeyPair(
                         MeshKeyType.Activation, actor, operation) as KeyPairAdvanced;
-            var combinedKey = activationKey.Combine(baseKey as KeyPairAdvanced);
+            var combinedKey = activationKey.Combine(baseKey as KeyPairAdvanced, keyUses: baseKey.KeyUses);
             return combinedKey;
             }
 

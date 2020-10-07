@@ -34,6 +34,16 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
+            //TestGoedelCryptography.Test().UDFMultipleKeyTest(100, UdfAlgorithmIdentifier.MeshProfileDevice);
+            //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST1);
+            //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST2);
+            //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST3);
+            //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST4);
+            //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST_KG_Device);
+            //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST_KG_User);
+            //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST_KG_Service);
+
+
 
             //ShellTests.Test().TestMessageConfirmationAccept();
             //ShellTests.Test().TestAuthWeb();

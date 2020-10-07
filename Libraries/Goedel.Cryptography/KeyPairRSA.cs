@@ -193,7 +193,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns></returns>
         public override KeyPair KeyPairPublic() {
-            var result = new KeyPairRSA(provider.ExportParameters(false), KeySecurity.Public, KeyUses.Sign);
+            var result = new KeyPairRSA(provider.ExportParameters(false), KeySecurity.Public, KeyUses);
             Assert.AssertTrue(result.PublicOnly, CryptographicException.Throw);
             return result;
             }

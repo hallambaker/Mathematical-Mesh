@@ -736,51 +736,6 @@ namespace ExampleGenerator {
             }
         }
 
-
-    public partial class KeyPairPartialTest : KeyPairPartial {
-
-        public string IdGroup;
-        public string IdMember;
-        public KeyPair PrivateKey;
-        public KeyPairAdvanced KeyPairService;
-        public KeyAgreementResult PartialService;
-        public byte[] PartialServiceEncoded => (PartialService as CurveEdwards25519Result).AgreementEd25519.Encode();
-        public KeyAgreementResult PartialDevice;
-        public byte[] PartialDeviceEncoded => (PartialDevice as CurveEdwards25519Result).AgreementEd25519.Encode();
-        public byte[] Result;
-
-        public KeyPairPartialTest(KeyPairAdvanced keyPairGroup,
-                KeyPairAdvanced keyPairPart, KeyPairAdvanced keyPairService) : base(keyPairGroup, keyPairPart) => KeyPairService = keyPairService;
-
-        /// <summary>
-        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
-        /// </summary>
-        /// <param name="encryptedKey">The encrypted session</param>
-        /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
-        /// <param name="algorithmID">The algorithm to use.</param>
-        /// <param name="partial">Partial key agreement carry in (for recryption)</param>
-        /// <param name="salt">Optional salt value for use in key derivation. If specified
-        /// must match the salt used to encrypt.</param>        
-        /// <returns>The decoded data instance</returns>
-        public override byte[] Decrypt(
-                    byte[] encryptedKey,
-                    KeyPair ephemeral = null,
-                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                    KeyAgreementResult partial = null,
-                    byte[] salt = null) {
-
-            PartialService = KeyPairService.Agreement(ephemeral);
-            PartialDevice = KeyPartial.Agreement(ephemeral);
-
-            var keyPartial = KeyPartial as KeyPairEd25519;
-
-
-            Result = keyPartial.Agreement(
-                ephemeral as KeyPairEd25519, PartialService as CurveEdwards25519Result).AgreementEd25519.Encode();
-            return KeyPartial.Decrypt(encryptedKey, ephemeral, algorithmID, PartialService, salt); ;
-            }
-
-        }
     public class CryptoGroup {
 
         public readonly string PlaintextText = "This is a test";
@@ -805,7 +760,7 @@ namespace ExampleGenerator {
 
 
         public DareEnvelope Envelope;
-        public KeyPairPartialTest KeyPairDeviceWrapped;
+        //public KeyPairPartialTest KeyPairDeviceWrapped;
 
         public string GroupName = "GroupW@example.com";
         public string UserName = "Bob@example.com";
@@ -834,17 +789,17 @@ namespace ExampleGenerator {
 
 
 
-            KeyPairDeviceWrapped = new KeyPairPartialTest(KeyPairGroup, KeyPairDevice, KeyPairService) {
-                IdGroup = GroupName,
-                IdMember = UserName
-                };
+            //KeyPairDeviceWrapped = new KeyPairPartialTest(KeyPairGroup, KeyPairDevice, KeyPairService) {
+            //    IdGroup = GroupName,
+            //    IdMember = UserName
+            //    };
 
-            var keyCollectionDevice = new KeyCollectionCore();
-            keyCollectionDevice.Add(KeyPairDeviceWrapped);
+            //var keyCollectionDevice = new KeyCollectionCore();
+            //keyCollectionDevice.Add(KeyPairDeviceWrapped);
 
 
 
-            CheckDecode(Envelope, Plaintext, keyCollectionDevice);
+            //CheckDecode(Envelope, Plaintext, keyCollectionDevice);
 
             }
 

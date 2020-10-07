@@ -242,12 +242,12 @@ namespace Goedel.Cryptography {
                     break;
                     }
                 case CryptoAlgorithmId.X448: {
-                    var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
+                    var binaryData = KeySeed(448, ikm, keySpecifier, keyName);
                     keyPair = new KeyPairX448(binaryData, keySecurity, keyUses);
                     break;
                     }
                 case CryptoAlgorithmId.Ed448: {
-                    var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
+                    var binaryData = KeySeed(448, ikm, keySpecifier, keyName);
                     keyPair = new KeyPairEd448(binaryData, keySecurity, keyUses);
                     break;
                     }
@@ -266,7 +266,10 @@ namespace Goedel.Cryptography {
                 string keyName,
                 string parameter = null) {
 
-            var suffix = (parameter == null ? keyName : keyName + parameter).ToBytes();
+            keyName ??= "";
+            parameter ??= "";
+
+            var suffix = ( keyName + parameter).ToBytes();
             var info = keySpecifier.Concatenate(suffix);
 
             return KeyDeriveHKDF.Derive(ikm, null, info, bits, CryptoAlgorithmId.HMAC_SHA_2_512);

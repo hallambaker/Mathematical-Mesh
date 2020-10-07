@@ -290,10 +290,10 @@ namespace Goedel.XUnit {
 
         public override void Test() {
             var udf = UDF.DerivedKey(UdfAlgorithmIdentifier, data: Seed.ToUTF8());
-            var privatekeyUDF = new PrivateKeyUDF(UdfAlgorithmIdentifier);
+            var privatekeyUDF = new PrivateKeyUDF(udf);
 
             var udfa = UDF.DerivedKey(UdfAlgorithmIdentifier, data: SeedA.ToUTF8());
-            var privatekeyUDFa = new PrivateKeyUDF(UdfAlgorithmIdentifier);
+            var privatekeyUDFa = new PrivateKeyUDF(udfa);
 
 
             (var actor, var _) = UdfAlgorithmIdentifier.GetMeshKeyType();
@@ -310,19 +310,22 @@ namespace Goedel.XUnit {
             var basePublicAuthenticate = baseAuthenticate.KeyPairPublic();
 
             // The activated keys
-            var privateSign = privatekeyUDFa.ActivatePrivate(basePublicSign, actor, MeshKeyOperation.Sign);
-            var privateEncrypt = privatekeyUDFa.ActivatePrivate(basePublicSign, actor, MeshKeyOperation.Encrypt);
-            var privateAuthenticate = privatekeyUDFa.ActivatePrivate(basePublicSign, actor, MeshKeyOperation.Authenticate);
+            var privateSign = privatekeyUDFa.ActivatePrivate(baseSign, actor, MeshKeyOperation.Sign);
+            var privateEncrypt = privatekeyUDFa.ActivatePrivate(baseEncrypt, actor, MeshKeyOperation.Encrypt);
+            var privateAuthenticate = privatekeyUDFa.ActivatePrivate(baseAuthenticate, actor, MeshKeyOperation.Authenticate);
 
             var publicSign = privatekeyUDFa.ActivatePublic(basePublicSign, actor, MeshKeyOperation.Sign);
-            var publicEncrypt = privatekeyUDFa.ActivatePublic(basePublicSign, actor, MeshKeyOperation.Encrypt);
-            var publicAuthenticate = privatekeyUDFa.ActivatePublic(basePublicSign, actor, MeshKeyOperation.Authenticate);
+            var publicEncrypt = privatekeyUDFa.ActivatePublic(basePublicEncrypt, actor, MeshKeyOperation.Encrypt);
+            var publicAuthenticate = privatekeyUDFa.ActivatePublic(basePublicAuthenticate, actor, MeshKeyOperation.Authenticate);
 
             Test(KeyUses.Sign, privateSign, publicSign);
             Test(KeyUses.Encrypt, privateEncrypt, publicEncrypt);
             Test(KeyUses.Encrypt, privateAuthenticate, publicAuthenticate);
 
-            Console.WriteLine($"{UdfAlgorithmIdentifier}:");
+            Console.WriteLine($"{UdfAlgorithmIdentifier}:  {udf} {udfa}");
+            //Console.WriteLine($" BaseSign= \"{basePublicSign.KeyIdentifier}\" ");
+
+
             Console.WriteLine($" ResultSign = \"{publicSign.KeyIdentifier}\",");
             Console.WriteLine($" ResultEncrypt = \"{publicEncrypt.KeyIdentifier}\",");
             Console.WriteLine($" ResultAuthenticate = \"{publicAuthenticate.KeyIdentifier}\"");
@@ -356,28 +359,28 @@ namespace Goedel.XUnit {
             Seed = "test1",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.Ed25519,
             KeyUses = KeyUses.Sign,
-            ResultUDF = "MC4S-LNRM-GNHQ-242E-7756-2BZP-YAAH"
+            ResultUDF = "MB2W-MYKD-RT2Q-VZD4-76ER-ER5O-3WH2"
             };
 
         public static TestVectorUDFKeyGen TEST2 = new TestVectorUDFKeyGen() {
             Seed = "test2",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.Ed448,
             KeyUses = KeyUses.Sign,
-            ResultUDF = "MBPN-IO4E-XBGU-VO6I-G5WR-TADX-LRIA"
+            ResultUDF = "MAHJ-HXR2-YQVB-J5BB-6JFA-A4NF-XX65"
             };
 
         public static TestVectorUDFKeyGen TEST3 = new TestVectorUDFKeyGen() {
             Seed = "test3",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.X25519,
             KeyUses = KeyUses.Encrypt,
-            ResultUDF = "MCHO-66GD-NNJU-M4QH-RAVG-NYQ7-LQZZ"
+            ResultUDF = "MDID-WXVE-4ZC7-JJYZ-CEWP-DN3W-BIFG"
             };
 
         public static TestVectorUDFKeyGen TEST4 = new TestVectorUDFKeyGen() {
             Seed = "test4",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.X448,
             KeyUses = KeyUses.Encrypt,
-            ResultUDF = "MDXP-FV36-Z5DS-5YRG-5YVU-FOE5-46FJ"
+            ResultUDF = "MDIQ-NMGG-GYIS-T3VB-2JMI-ROED-ESTP"
             };
 
         #endregion
@@ -391,9 +394,10 @@ namespace Goedel.XUnit {
             SeedA = "test1a",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileDevice,
             KeyUses = KeyUses.KeyAgreement,
-            //ResultSign = "MCXN-ECWE-YDNI-RZHA-D2D4-EAJ3-WD2N",
-            //ResultEncrypt = "MCIR-4KBH-4WMF-DCZA-K4CH-IQKG-EE7V",
-            //ResultAuthenticate = "MAVJ-733B-OLW5-O5VC-B7ST-ZZPG-VTVD"
+
+            ResultSign = "MDBL-SQGO-72WK-SRJ6-TSRL-Y4N6-WMJZ",
+            ResultEncrypt = "MDAU-46LN-F4C6-HQNC-PKDQ-WZZV-UDMG",
+            ResultAuthenticate = "MAND-U3TZ-TOP3-BDIJ-GHRV-G7EM-4XLN"
             };
 
         // will fail as 
@@ -402,7 +406,9 @@ namespace Goedel.XUnit {
             SeedA = "test1a",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileAccount,
             KeyUses = KeyUses.KeyAgreement,
-
+            ResultSign = "MCOA-BVPL-XFLW-TPNH-NY4Z-OM3U-TQ3N",
+            ResultEncrypt = "MD4Z-OX5B-Y7R6-CVBB-CMZB-4GSG-VC72",
+            ResultAuthenticate = "MBDI-ARCO-T3DZ-GV5W-PXSK-CPBQ-H6AV"
             };
 
 
@@ -411,7 +417,9 @@ namespace Goedel.XUnit {
             SeedA = "test1a",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileService,
             KeyUses = KeyUses.KeyAgreement,
-
+            ResultSign = "MCVI-EA6S-DURR-SM3Z-UF7H-LLJE-5EQS",
+            ResultEncrypt = "MAOU-ARVS-SHGW-BFEZ-CHTN-3UNJ-OC4S",
+            ResultAuthenticate = "MAIN-5RVA-LYL2-3QZF-BVLF-HAI6-EOOM"
             };
 
         #endregion
