@@ -1145,16 +1145,24 @@ namespace Goedel.Mesh {
 
 		public virtual string						Description  {get; set;}
         /// <summary>
-        ///Key used to pass encrypted data to the device such as a
-        ///DeviceUseEntry
+        ///Base key contribution for encryption keys. 
+        ///Also used to decrypt activation data sent to the device
+        ///during connection to an account.
         /// </summary>
 
-		public virtual KeyData						KeyEncryption  {get; set;}
+		public virtual KeyData						BaseEncryption  {get; set;}
         /// <summary>
-        ///Key used to authenticate requests made by the device.
+        ///Base key contribution for authentication keys. 
+        ///Also used to authenticate the device
+        ///during connection to an account.
         /// </summary>
 
-		public virtual KeyData						KeyAuthentication  {get; set;}
+		public virtual KeyData						BaseAuthentication  {get; set;}
+        /// <summary>
+        ///Base key contribution for signature keys. 
+        /// </summary>
+
+		public virtual KeyData						BaseSignature  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1204,15 +1212,20 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Description", 1);
 					_writer.WriteString (Description);
 				}
-			if (KeyEncryption != null) {
+			if (BaseEncryption != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("KeyEncryption", 1);
-					KeyEncryption.Serialize (_writer, false);
+				_writer.WriteToken ("BaseEncryption", 1);
+					BaseEncryption.Serialize (_writer, false);
 				}
-			if (KeyAuthentication != null) {
+			if (BaseAuthentication != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("KeyAuthentication", 1);
-					KeyAuthentication.Serialize (_writer, false);
+				_writer.WriteToken ("BaseAuthentication", 1);
+					BaseAuthentication.Serialize (_writer, false);
+				}
+			if (BaseSignature != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("BaseSignature", 1);
+					BaseSignature.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -1251,17 +1264,24 @@ namespace Goedel.Mesh {
 					Description = jsonReader.ReadString ();
 					break;
 					}
-				case "KeyEncryption" : {
+				case "BaseEncryption" : {
 					// An untagged structure
-					KeyEncryption = new KeyData ();
-					KeyEncryption.Deserialize (jsonReader);
+					BaseEncryption = new KeyData ();
+					BaseEncryption.Deserialize (jsonReader);
  
 					break;
 					}
-				case "KeyAuthentication" : {
+				case "BaseAuthentication" : {
 					// An untagged structure
-					KeyAuthentication = new KeyData ();
-					KeyAuthentication.Deserialize (jsonReader);
+					BaseAuthentication = new KeyData ();
+					BaseAuthentication.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "BaseSignature" : {
+					// An untagged structure
+					BaseSignature = new KeyData ();
+					BaseSignature.Deserialize (jsonReader);
  
 					break;
 					}
@@ -1277,15 +1297,20 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Base class for the account profiles ProfileUser and ProfileGroup.
+	/// These subclasses may be merged at some future date.
 	/// </summary>
 	public partial class ProfileAccount : Profile {
         /// <summary>
-        ///Service address
+        ///The account address. This is either a DNS service address 
+        ///(e.g. alice@example.com) or a Mesh Name (@alice).
         /// </summary>
 
 		public virtual string						AccountAddress  {get; set;}
         /// <summary>
-        ///The service fingerprint.
+        ///The fingerprint of the service profile to which the account is
+        ///currently bound.
         /// </summary>
 
 		public virtual string						ServiceUdf  {get; set;}
@@ -9047,12 +9072,12 @@ namespace Goedel.Mesh {
 
 		public virtual DareEnvelope						AuthenticatedData  {get; set;}
         /// <summary>
-        ///
+        ///Nonce provided by the client to validate the PIN
         /// </summary>
 
 		public virtual byte[]						ClientNonce  {get; set;}
         /// <summary>
-        ///Fingerprint of the PIN value used to authenticate the request.
+        ///Pin identifier value calculated from the PIN code, action and account address.
         /// </summary>
 
 		public virtual string						PinId  {get; set;}

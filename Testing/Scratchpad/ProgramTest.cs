@@ -43,12 +43,12 @@ namespace Scratchpad {
             //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST_KG_User);
             //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST_KG_Service);
 
-
+            TestService.Test().MeshServiceFull();
 
             //ShellTests.Test().TestMessageConfirmationAccept();
             //ShellTests.Test().TestAuthWeb();
             //ShellTests.Test().MeshDeviceConnectDynamicQR();
-            TestService.Test().MeshCatalogGroup();
+            //TestService.Test().MeshCatalogGroup();
 
 
 

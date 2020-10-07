@@ -200,8 +200,6 @@ namespace Goedel.Mesh {
         /// <param name="action">The action to which the pin code is bound.</param>
         /// <returns>UDF presentation of the salted PIN.</returns>
         public static string SaltPIN(string pin, string action) {
-            "Convert PIN to binary form.".TaskFunctionality(true);
-            
             return UDF.SymmetricKeyMac(action.ToUTF8(), pin);
             }
 
@@ -259,7 +257,7 @@ namespace Goedel.Mesh {
         public static string GetPinUDF(
                     string pin,
                     string accountAddress) {
-            var result = UDF.PinWitnessString(pin, accountAddress.ToUTF8());
+            var result = UDF.SymmetricKeyMac(accountAddress.ToUTF8(), pin);
 
             Console.WriteLine($"{pin} + {accountAddress}  -> PinUDF = {result}");
 

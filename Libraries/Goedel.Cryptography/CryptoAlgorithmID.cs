@@ -253,10 +253,7 @@ namespace Goedel.Cryptography {
         /// <summary>Elliptic Curve DSA with curve Ed448</summary>
         Ed448ph = Ed448 + 1,
 
-        ///<summary>Default signature algorithm for the Mesh</summary>
-        MeshDefaultSign = Ed448,
-        ///<summary>Default encryption algorithm for the Mesh (will change to X488)</summary>
-        MeshDefaultEncrypt = Ed448,
+
 
         /// <summary>RSA Signature using PKCS#1.5 padding and SHA-2 256 digest</summary>
         RSASign_SHA_2_256 = RSASign | SHA_2_256,
@@ -299,7 +296,10 @@ namespace Goedel.Cryptography {
         XEd448 = ECDH + Meta * 12,
 
 
-
+        /////<summary>Default signature algorithm for the Mesh</summary>
+        //MeshDefaultSign = Ed448,
+        /////<summary>Default encryption algorithm for the Mesh (will change to X488)</summary>
+        //MeshDefaultEncrypt = X448,
 
 
         // Key Wrap

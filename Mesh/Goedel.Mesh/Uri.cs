@@ -76,7 +76,7 @@ namespace Goedel.Mesh {
                     CryptoAlgorithmId algorithm = CryptoAlgorithmId.HMAC_SHA_2_512) {
             var keyDerive = new KeyDeriveHKDF(privateKeyUDF.PrivateValue.ToBytes(), "", algorithm);
 
-            return UDF.SymmetricKey(keyDerive.Derive(accountAddress.ToBytes(), length));
+            return UDF.EncryptionKey(keyDerive.Derive(accountAddress.ToBytes(), length));
             }
 
         /// <summary>

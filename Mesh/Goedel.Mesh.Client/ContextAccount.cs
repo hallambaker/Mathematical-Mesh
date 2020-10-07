@@ -187,7 +187,7 @@ namespace Goedel.Mesh.Client {
         /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
         public MessagePin GetPIN(string action, bool automatic = true, 
                             int length = 80, long validity = MeshConstants.DayInTicks) {
-            var pin = UDF.SymmetricKey(length);
+            var pin = UDF.AuthenticationKey(length);
             var expires = DateTime.Now.AddTicks(validity);
 
             return RegisterPIN(pin, automatic, expires, AccountAddress, action);

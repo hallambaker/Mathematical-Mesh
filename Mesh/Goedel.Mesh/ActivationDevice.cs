@@ -86,13 +86,13 @@ namespace Goedel.Mesh {
             AccountUDF = profileDevice.Udf;
 
             var deviceEncryption = ActivationSeed.ActivatePublic(
-                    profileDevice.ProfileSignature.GetKeyPairAdvanced(), 
+                    profileDevice.BaseEncryption.GetKeyPairAdvanced(), 
                             MeshActor.Device, MeshKeyOperation.Encrypt);
             var deviceSignature = ActivationSeed.ActivatePublic(
-                    profileDevice.ProfileSignature.GetKeyPairAdvanced(), 
+                    profileDevice.BaseSignature.GetKeyPairAdvanced(), 
                             MeshActor.Device, MeshKeyOperation.Sign);
             var deviceAuthentication = ActivationSeed.ActivatePublic(
-                    profileDevice.ProfileSignature.GetKeyPairAdvanced(), 
+                    profileDevice.BaseAuthentication.GetKeyPairAdvanced(), 
                             MeshActor.Device, MeshKeyOperation.Authenticate);
 
             // Create the (unsigned) ConnectionUser
@@ -111,7 +111,7 @@ namespace Goedel.Mesh {
         /// <param name="deviceKeySeed">Generator for the private key contributions.</param>
         public void Activate(
                 PrivateKeyUDF deviceKeySeed) {
-
+            ActivationSeed = new PrivateKeyUDF(ActivationKey);
             DeviceEncryption = ActivationSeed.ActivatePrivate(
                 deviceKeySeed, MeshActor.Device, MeshKeyOperation.Encrypt);
             DeviceSignature = ActivationSeed.ActivatePrivate(

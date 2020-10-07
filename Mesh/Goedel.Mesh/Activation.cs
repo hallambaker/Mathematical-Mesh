@@ -26,8 +26,6 @@ using Goedel.Cryptography.Jose;
 namespace Goedel.Mesh {
     public partial class Activation {
 
-        ///<summary>The actor type</summary> 
-        public virtual MeshActor MeshActor => throw new NYI();
 
         ///<summary>The key contribution type</summary> 
         public virtual MeshKeyType MeshKeyType => Goedel.Mesh.MeshKeyType.Activation;
@@ -81,8 +79,8 @@ namespace Goedel.Mesh {
                 byte[] masterSecret = null,
                 int bits = 256) {
             (var actor, var keytype) = udfAlgorithmIdentifier.GetMeshKeyType();
-            var activationUdf = Cryptography.UDF.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
-            ActivationSeed = new PrivateKeyUDF(activationUdf);
+            ActivationKey = Cryptography.UDF.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
+            ActivationSeed = new PrivateKeyUDF(ActivationKey);
 
             ProfileSignature = ActivationSeed.ActivatePublic(
                     profile.ProfileSignature.GetKeyPairAdvanced(), actor, MeshKeyOperation.Profile);
@@ -95,7 +93,7 @@ namespace Goedel.Mesh {
         /// <returns>The actrivation profile encrypted under the encryption key of
         /// the corresponding <see cref="ProfileDevice"/>.</returns>
         public DareEnvelope Package(CryptoKey SignatureKey) => 
-                Envelope(SignatureKey, ProfileDevice.KeyEncryption.CryptoKey);
+                Envelope(SignatureKey, ProfileDevice.BaseEncryption.CryptoKey);
 
         }
     }

@@ -153,22 +153,33 @@
 		String Description
 			Description
 				|Description of the device
-		Struct KeyData KeyEncryption
+		Struct KeyData BaseEncryption
 			Description
-				|Key used to pass encrypted data to the device such as a
-				|DeviceUseEntry
-		Struct KeyData KeyAuthentication
+				|Base key contribution for encryption keys. 
+				|Also used to decrypt activation data sent to the device
+				|during connection to an account.
+		Struct KeyData BaseAuthentication
 			Description
-				|Key used to authenticate requests made by the device.
+				|Base key contribution for authentication keys. 
+				|Also used to authenticate the device
+				|during connection to an account.
+		Struct KeyData BaseSignature
+			Description
+				|Base key contribution for signature keys. 
 
 	Structure ProfileAccount
+		Description
+			|Base class for the account profiles ProfileUser and ProfileGroup.
+			|These subclasses may be merged at some future date.
 		Inherits Profile
 		String AccountAddress
 			Description
-				|Service address
+				|The account address. This is either a DNS service address 
+				|(e.g. alice@example.com) or a Mesh Name (@alice).
 		String ServiceUdf
 			Description
-				|The service fingerprint.
+				|The fingerprint of the service profile to which the account is
+				|currently bound.
 		Struct KeyData AccountEncryption
 			Description
 				|Key currently used to encrypt data under this profile
@@ -817,10 +828,10 @@
 				|Enveloped data that is authenticated by means of the PIN
 		Binary ClientNonce
 			Description
-				|
+				|Nonce provided by the client to validate the PIN
 		String PinId
 			Description
-				|Fingerprint of the PIN value used to authenticate the request.
+				|Pin identifier value calculated from the PIN code, action and account address.
 		Binary PinWitness
 			Description
 				|Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)

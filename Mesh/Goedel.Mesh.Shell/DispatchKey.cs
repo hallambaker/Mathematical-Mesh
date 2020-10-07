@@ -26,7 +26,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult KeySecret(KeySecret options) => new ResultKey() {
             Success = true,
-            Key = Cryptography.UDF.SymmetricKey(options.Bits.ValueDefaulted(128))
+            Key = Cryptography.UDF.EncryptionKey(options.Bits.ValueDefaulted(128))
             };
 
 
@@ -40,7 +40,7 @@ namespace Goedel.Mesh.Shell {
             var bits = options.Bits.ValueDefaulted(140);
             var bitsid = Math.Min(bits * 2, 440);
 
-            var key = Cryptography.UDF.SymmetricKey(bits);
+            var key = Cryptography.UDF.EncryptionKey(bits);
             var identifier = Cryptography.UDF.ContentDigestOfDataString(key.ToUTF8(),
                     UDFConstants.UDFEncryption, bits = bitsid);
 

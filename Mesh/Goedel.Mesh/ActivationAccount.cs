@@ -106,16 +106,16 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed) {
             ProfileSignatureKey = secretSeed.GenerateContributionKeyPair(
-                MeshKeyType.Activation, MeshActor, MeshKeyOperation.Sign,
+                MeshKeyType.Activation, MeshActor.Account, MeshKeyOperation.Sign,
                 keyCollection, KeySecurity.Exportable);
             AccountEncryptionKey = secretSeed.GenerateContributionKeyPair(
-                MeshKeyType.Activation, MeshActor, MeshKeyOperation.Encrypt, 
+                MeshKeyType.Activation, MeshActor.Account, MeshKeyOperation.Encrypt, 
                 keyCollection, KeySecurity.Exportable);
             AccountAuthenticationKey = secretSeed.GenerateContributionKeyPair(
-                MeshKeyType.Activation, MeshActor, MeshKeyOperation.Authenticate,
+                MeshKeyType.Activation, MeshActor.Account, MeshKeyOperation.Authenticate,
                 keyCollection, KeySecurity.Exportable);
             AccountSignatureKey = secretSeed.GenerateContributionKeyPair(
-                MeshKeyType.Activation, MeshActor, MeshKeyOperation.Profile,
+                MeshKeyType.Activation, MeshActor.Account, MeshKeyOperation.Profile,
                 keyCollection, KeySecurity.Exportable);
             }
 
@@ -244,7 +244,7 @@ namespace Goedel.Mesh {
         public static KeyPair DeviceBindEncryption(
                     ProfileDevice profileDevice,
                     IKeyCollection keyCollection) {
-            return KeyPair.FactorySignature(profileDevice.KeyEncryption.CryptoKey.CryptoAlgorithmId,
+            return KeyPair.FactorySignature(profileDevice.BaseEncryption.CryptoKey.CryptoAlgorithmId,
                             KeySecurity.ExportableStored, keyCollection);
             }
 
@@ -274,7 +274,7 @@ namespace Goedel.Mesh {
         public static KeyPair DeviceBindAuthentication(
                     ProfileDevice profileDevice,
                     IKeyCollection keyCollection) {
-            return KeyPair.FactorySignature(profileDevice.KeyAuthentication.CryptoKey.CryptoAlgorithmId,
+            return KeyPair.FactorySignature(profileDevice.BaseAuthentication.CryptoKey.CryptoAlgorithmId,
                             KeySecurity.ExportableStored, keyCollection);
             }
 

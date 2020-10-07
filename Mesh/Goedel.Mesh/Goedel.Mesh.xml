@@ -11,9 +11,6 @@
              a specific device
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Activation.MeshActor">
-            <summary>The actor type</summary> 
-        </member>
         <member name="P:Goedel.Mesh.Activation.MeshKeyType">
             <summary>The key contribution type</summary> 
         </member>
@@ -5129,12 +5126,12 @@
         </member>
         <member name="P:Goedel.Mesh.MessagePinValidated.ClientNonce">
              <summary>
-            
+            Nonce provided by the client to validate the PIN
              </summary>
         </member>
         <member name="P:Goedel.Mesh.MessagePinValidated.PinId">
              <summary>
-            Fingerprint of the PIN value used to authenticate the request.
+            Pin identifier value calculated from the PIN code, action and account address.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.MessagePinValidated.PinWitness">
@@ -6725,15 +6722,23 @@
             Description of the device
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ProfileDevice.KeyEncryption">
+        <member name="P:Goedel.Mesh.ProfileDevice.BaseEncryption">
              <summary>
-            Key used to pass encrypted data to the device such as a
-            DeviceUseEntry
+            Base key contribution for encryption keys. 
+            Also used to decrypt activation data sent to the device
+            during connection to an account.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ProfileDevice.KeyAuthentication">
+        <member name="P:Goedel.Mesh.ProfileDevice.BaseAuthentication">
              <summary>
-            Key used to authenticate requests made by the device.
+            Base key contribution for authentication keys. 
+            Also used to authenticate the device
+            during connection to an account.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileDevice.BaseSignature">
+             <summary>
+            Base key contribution for signature keys. 
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileDevice._Tag">
@@ -7102,8 +7107,11 @@
             <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ProfileAccount">
-            <summary>
-            </summary>
+             <summary>
+            
+             Base class for the account profiles ProfileUser and ProfileGroup.
+             These subclasses may be merged at some future date.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.MeshActor">
             <summary>The actor type</summary> 
@@ -7124,12 +7132,14 @@
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.AccountAddress">
              <summary>
-            Service address
+            The account address. This is either a DNS service address 
+            (e.g. alice@example.com) or a Mesh Name (@alice).
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.ServiceUdf">
              <summary>
-            The service fingerprint.
+            The fingerprint of the service profile to which the account is
+            currently bound.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.AccountEncryption">

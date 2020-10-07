@@ -60,10 +60,12 @@ namespace Goedel.Mesh {
         /// Generate profile specific keys.
         /// </summary>
         protected override void Generate() {
-            KeyAuthentication = SecretSeed.GenerateContributionKeyData(
+            BaseAuthentication = SecretSeed.GenerateContributionKeyData(
                     MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
-            KeyEncryption = SecretSeed.GenerateContributionKeyData(
+            BaseEncryption = SecretSeed.GenerateContributionKeyData(
                     MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
+            BaseSignature = SecretSeed.GenerateContributionKeyData(
+                    MeshKeyType, MeshActor, MeshKeyOperation.Sign);
             }
 
         /// <summary>
@@ -128,8 +130,9 @@ namespace Goedel.Mesh {
             indent++;
             builder.AppendIndent(indent, $"ProfileSignature: {ProfileSignature.Udf} ");
 
-            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.Udf} ");
-            builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.Udf} ");
+            builder.AppendIndent(indent, $"KeySignature:        {BaseSignature.Udf} ");
+            builder.AppendIndent(indent, $"KeyEncryption:       {BaseEncryption.Udf} ");
+            builder.AppendIndent(indent, $"KeyAuthentication:   {BaseAuthentication.Udf} ");
 
             }
         }

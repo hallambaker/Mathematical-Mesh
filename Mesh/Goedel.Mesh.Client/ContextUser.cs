@@ -1263,7 +1263,7 @@ namespace Goedel.Mesh.Client {
             // prepare the contact request
 
             var contactSelf = GetSelf(localName);
-            var pin = UDF.SymmetricKey();
+            var pin = UDF.EncryptionKey();
 
             var message = new MessageContact() {
                 Recipient = recipientAddress,
