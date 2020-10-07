@@ -1,0 +1,102 @@
+﻿Namespace Goedel.Cryptography UDFConstants
+	|Constants specified in hallambaker-mesh-udf
+
+
+File TypeIdentifier
+
+	Enum UdfTypeIdentifier "UDF type identifier codes"
+		UDF 0 Authenticator 
+			Algorithm HMAC_SHA_2_512 
+		UDF 1 Authenticator 
+			Algorithm  HMAC_SHA_3_512 
+		UDF 32 Encryption 
+			Algorithm  HKDF_AES_512 
+		UDF 33 EncryptionSignature 
+			Algorithm  HKDF_AES_512 
+		UDF 80 Digest 
+			Algorithm  SHA_3_512
+			Compress 0
+		UDF 81 Digest 
+			Algorithm  SHA_3_512 
+			Compress 20
+		UDF 82 Digest 
+			Algorithm  SHA_3_512 
+			Compress 30
+		UDF 83 Digest 
+			Algorithm  SHA_3_512 
+			Compress 40
+		UDF 84 Digest 
+			Algorithm  SHA_3_512 
+			Compress 50
+		UDF 96 Digest 
+			Algorithm  SHA_2_512 
+			Compress 0
+		UDF 97 Digest 
+			Algorithm  SHA_2_512 
+			Compress 20
+		UDF 98 Digest 
+			Algorithm  SHA_2_512 
+			Compress 30
+		UDF 99 Digest 
+			Algorithm  SHA_2_512 
+			Compress 40
+		UDF 100 Digest 
+			Algorithm  SHA_2_512
+			Compress 50
+		UDF 104 Nonce
+			Note "Nonce Data"
+		UDF 112 OID
+			Note "OID distinguished sequence (DER encoded)"
+		UDF 144 ShamirSecret
+			Note "Shamir Secret Share"
+		UDF 200 DerivedKey
+			Note "Secret seed"
+
+File TypeIdentifier
+	Enum UdfAlgorithmIdentifier "UDF key derevation algorithm identifier codes"
+		Integer Any			0	"Seed MAY be used to generate keypairs for any algorithm"
+        Integer X25519		1	"X25519 keypair as described in RFC7748"
+		Integer X448		2	"X448 keypair as described in RFC7748"
+        Integer Ed25519		3	"Ed25519 keypair as described in RFC8032"
+        Integer Ed448		4	"Ed448 keypair as described in RFC8032"
+        Integer P256		5	"NIST curve P-256"
+        Integer P384		6	"NIST curve P-384"
+        Integer P521		7   "NIST curve P-521"
+        Integer RSA2048		8	"2048 bit RSA keypair"
+        Integer RSA3072		9	"3072 bit RSA keypair"
+        Integer RSA4096		10	"4096 bit RSA keypair"
+        Integer Reserved 11  "Reserved for IETF recommended algorithms"
+			Reserve 255
+		Integer MeshProfileDevice		256 "Mesh device profile"
+		Integer MeshActivationDevice	257 "Mesh device activation"
+		Integer MeshProfileAccount		258 "Mesh account account"
+		Integer MeshActivationAccount	259 "Mesh account activation"
+		Integer MeshProfileService		260 "Mesh service profile"
+		Integer MeshActivationService	261 "Mesh host activation"
+		Integer Reserved 262  "Reserved for future Mesh use"
+			Reserve 511
+        
+File ContentTypeValues
+	Code PKIXCert  "application/pkix-cert"    
+		Description
+			|A PKIX Certificate	
+	Code PKIXCRL  "application/pkix-crl"    
+		Description
+			|A PKIX CRL
+	Code PKIXKey  "application/pkix-keyinfo"    
+		Description
+			|Content type identifier for PKIX KeyInfo data type
+    Code OpenPGPKey  "application/pgp-keys"
+		Description
+			| Content type identifier for OpenPGP Key
+    Code DNS "application/dns"
+		Description
+			|A DNS resource record in binary format
+    Code UDFEncryption  "application/udf-encryption"
+		Description
+			| UDF Fingerprint list
+    Code UDFLock  "application/udf-lock"
+		Description
+			|UDF Fingerprint list
+
+

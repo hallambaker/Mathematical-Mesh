@@ -65,26 +65,26 @@ The response payload:
 
 The request payload:
 
-#%  DescribeRequestBinding (Example.CommandsAddServiceAlice[0].Traces[0]);
+#%  DescribeRequestBinding (Example.ProfileCreateAlice[0].Traces[0]);
 
 The response payload:
 
-#%  DescribeResponseBinding (Example.CommandsAddServiceAlice[0].Traces[0]);
+#%  DescribeResponseBinding (Example.ProfileCreateAlice[0].Traces[0]);
 
 #end zfile
 
 
 #zfile CreateExamples ProtocolAccountDelete "Examples\\ProtocolAccountDelete.md" Example
-#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
+#% if (ExampleInvalid (Example.ProfileAliceDelete, 0)) {return;}
 
 
 The request payload:
 
-#%  DescribeRequestBinding (Example.CommandsDeleteServiceAlice[0].Traces[0]);
+#%  DescribeRequestBinding (Example.ProfileAliceDelete[0].Traces[0]);
 
 The response payload:
 
-#%  DescribeResponseBinding (Example.CommandsDeleteServiceAlice[0].Traces[0]);
+#%  DescribeResponseBinding (Example.ProfileAliceDelete[0].Traces[0]);
 
 #end zfile
 
@@ -177,7 +177,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolPostClientService "Examples\\ProtocolPostClientService.md" Example
-#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
+#% if (ExampleInvalid (Example.ConnectRequest, 0)) {return;}
 
 
 The request payload:
@@ -192,7 +192,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolPostServiceService "Examples\\ProtocolPostServiceService.md" Example
-#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
+#!% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
 
 [Not Yet Implemented]
 

@@ -18,7 +18,7 @@ The `key nonce` command is used to generate a new random nonce value:
 ~~~~
 <div="terminal">
 <cmd>Alice> key nonce
-<rsp>NC6S-4P32-DN6X-X5XT-7FGG-R6ZJ-FPFA
+<rsp>NBSW-6AVA-SHGU-KHOQ-YEEB-RBFE-JFBA
 </div>
 ~~~~
 
@@ -31,7 +31,7 @@ generated using the `/bits` option:
 ~~~~
 <div="terminal">
 <cmd>Alice> key nonce /bits=256
-<rsp>NAYG-H57P-E4LH-C3BL-5BB2-VAVR-5TA7-OPNR-RHDF-DIIU-QBKS-6OD4-5DCP-S
+<rsp>NANY-UJDS-IB4T-EX3M-CIZ4-WHIH-BDOP-EO5X-KI5G-FQYQ-FMIA-GFNO-YY53-S
 </div>
 ~~~~
 
@@ -41,7 +41,7 @@ Secrets are generated in the same way using the command `key secret`:
 ~~~~
 <div="terminal">
 <cmd>Alice> key secret
-<rsp>ECBV-NNU4-LJVA-PZM3-J66J-EMQR-PRBQ
+<rsp>EBD7-YCVZ-NHXT-5LF7-KQXU-MK4I-LRQA
 </div>
 ~~~~
 
@@ -52,7 +52,7 @@ Again, any output length can be requested up to the platform limit:
 ~~~~
 <div="terminal">
 <cmd>Alice> key secret /bits=256
-<rsp>ECSF-3JCD-BHOT-YNR2-W37O-ERWG-MKVK-55DY-BH5W-FHMJ-SNHJ-4XPD-IC6O-G
+<rsp>EDBI-2ZSJ-Z27I-M6DD-3OPS-C4IA-VLIH-ASAN-B5IH-NXVX-6L3A-IXY5-2NLH-2
 </div>
 ~~~~
 
@@ -71,20 +71,14 @@ a new secret/digest pair which are then used to process the content data:
 ~~~~
 <div="terminal">
 <cmd>Alice> key earl
-<rsp>EBEW-QNOT-6ACF-6KW3-4DRD-HTZW-G3ZD-JS
-MCYP-CCPS-7JOG-NCPS-OQNC-6YXS-IJFK-VQ4S-F7KY-BPHI-FHEX-MDAU-SGD3-FUEH
+<rsp>EACI-XSFI-YHE7-QNBC-YLUT-O6FS-BZSJ-TK
+MBGP-XDQZ-WKIH-OJV6-6PER-HP4Q-3YKX-ZYEY-LI2O-NFBJ-Q37C-VEZR-HQBR-RYGZ
 </div>
 ~~~~
 
 Alternatively, the `dare earl` command may be used to perform both operations:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare earl TestFile1.txt example.net
-<rsp>ERROR - Unspecified error
-</div>
-~~~~
+**Missing Example***
 
 ## Sharing and recovering secrets
 
@@ -99,11 +93,11 @@ bit secret is created and three shares are created with a quorum of two:
 ~~~~
 <div="terminal">
 <cmd>Alice> key share
-<rsp>EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
-MDNS-WI5Q-NX3W-TG3O-RPX6-QVJ4-MMVT-D6PL-ZZZV-SPWG-N4C7-OM2F-VZZH
-SAQO-6O6Z-A6YD-PMHO-TPUZ-ZLPQ-VSA7-K
-SAQ7-IDPP-QX4A-PBA3-JBPZ-K2OW-6HJ4-2
-SARP-RYAG-AQ75-OV2H-6TKY-4JN5-G4S2-K
+<rsp>TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
+MD75-RC34-OYKD-ECLM-75EZ-BGFL-O4WA-WMWH-MEDP-7JC4-QTL6-WIOC-TXCJ
+SAQN-754U-LQ66-ICAW-WELA-PPC2-LEV2-6
+SAQS-GXHK-7KUM-E3AR-FIKK-4UWB-7VVE-Q
+SARG-NQSB-TEJ2-BUAL-UMJV-J2JJ-UGUR-I
 </div>
 ~~~~
 
@@ -119,11 +113,11 @@ obtain the result as a JSON structure:
 <rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ",
-    "Identifier": "MDNS-WI5Q-NX3W-TG3O-RPX6-QVJ4-MMVT-D6PL-ZZZV-SPWG-N4C7-OM2F-VZZH",
-    "Shares": ["SAQO-6O6Z-A6YD-PMHO-TPUZ-ZLPQ-VSA7-K",
-      "SAQ7-IDPP-QX4A-PBA3-JBPZ-K2OW-6HJ4-2",
-      "SARP-RYAG-AQ75-OV2H-6TKY-4JN5-G4S2-K"]}}
+    "Key": "TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M",
+    "Identifier": "MD75-RC34-OYKD-ECLM-75EZ-BGFL-O4WA-WMWH-MEDP-7JC4-QTL6-WIOC-TXCJ",
+    "Shares": ["SAQN-754U-LQ66-ICAW-WELA-PPC2-LEV2-6",
+      "SAQS-GXHK-7KUM-E3AR-FIKK-4UWB-7VVE-Q",
+      "SARG-NQSB-TEJ2-BUAL-UMJV-J2JJ-UGUR-I"]}}
 </div>
 ~~~~
 
@@ -133,8 +127,8 @@ meet the quorum using the `key recover`:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key recover SAQO-6O6Z-A6YD-PMHO-TPUZ-ZLPQ-VSA7-K SARP-RYAG-AQ75-OV2H-6TKY-4JN5-G4S2-K
-<rsp>EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<cmd>Alice> key recover SAQN-754U-LQ66-ICAW-WELA-PPC2-LEV2-6 SARG-NQSB-TEJ2-BUAL-UMJV-J2JJ-UGUR-I
+<rsp>TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
 </div>
 ~~~~
 
@@ -150,13 +144,13 @@ of three:
 ~~~~
 <div="terminal">
 <cmd>Alice> key share /quorum=3 /shares=5
-<rsp>ED35-3FZD-2HSY-L5F4-UQNW-QBMV-E46A
-MBAD-PHQZ-PNOY-VKL5-HQKR-S56S-IXV2-5EJN-TQZ7-YUIC-4A7U-G4M3-RIKZ
-SAYE-XVZO-DCKF-T2AZ-TNRV-WL24-4NFE-O
-SAYQ-6L63-EAPK-YP5J-4LSD-UBXA-IWXY-O
-SAZE-DZ46-HJYN-ZDFF-SMTL-P3UP-XRLP-Y
-SAZ6-H7TX-M6FO-VTYM-VQVN-JZTL-I5AK-M
-SA2P-K5DG-U5WN-OBW7-FXYJ-B3TS-4ZWF-E
+<rsp>VLCN-AA2P-QDIG-NTSD-ERVU-UTWT-54
+MDRV-Z6NK-FZUM-3TLB-7AYP-BPCR-N5FC-YK3R-O42N-RGLG-O36B-PWXC-EIH6
+SAYH-MSPJ-ZR4B-NKYH-VQXU-T46F-7AAT-I
+SAYR-L2KV-G6RJ-7KVT-5GCR-ZHA7-W7CX-K
+SAZI-TIYS-ITHR-XT3L-QZCJ-YZCX-RYQO-K
+SAZ5-C5ZA-6P6Y-WGJO-QJW4-STDN-PMJV-C
+SA2O-2ZMB-IUW6-3B74-3YAK-GVDB-P2OL-S
 </div>
 ~~~~
 
@@ -168,7 +162,7 @@ be different:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key share EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<cmd>Alice> key share TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
 <rsp>ERROR - Attempted to divide by zero.
 </div>
 ~~~~

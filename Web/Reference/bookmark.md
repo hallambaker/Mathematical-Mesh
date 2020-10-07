@@ -26,6 +26,7 @@ add   Add bookmark
        <Unspecified>
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -68,6 +69,7 @@ delete   Delete bookmark entry
        Contact entry identifier
     /path   <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -103,6 +105,7 @@ Specifying the /json option returns a result of type Result:
 get   Lookup bookmark entry
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -143,6 +146,7 @@ Specifying the /json option returns a result of type ResultEntry:
 <over>
 list   List bookmark entries
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

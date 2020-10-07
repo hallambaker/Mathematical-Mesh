@@ -21,6 +21,7 @@ ssh    Manage SSH profiles connected to a personal profile
 <over>
 create   Generate a new SSH public keypair for the current machine and add to the personal profile
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -34,18 +35,19 @@ create   Generate a new SSH public keypair for the current machine and add to th
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list
-<rsp></div>
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultMachine:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list /json
 <rsp>{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
+  "Result": {
+    "Success": false,
+    "Reason": "The command System.Object[] is not known."}}
 </div>
 ~~~~
 
@@ -57,6 +59,7 @@ Specifying the /json option returns a result of type ResultMachine:
 <over>
 private   Extract the private key for this device
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -70,18 +73,19 @@ private   Extract the private key for this device
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list
-<rsp></div>
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultMachine:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list /json
 <rsp>{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
+  "Result": {
+    "Success": false,
+    "Reason": "The command System.Object[] is not known."}}
 </div>
 ~~~~
 
@@ -93,6 +97,7 @@ Specifying the /json option returns a result of type ResultMachine:
 <over>
 public   Extract the public key for this device
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -105,18 +110,19 @@ public   Extract the public key for this device
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list
-<rsp></div>
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultMachine:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list /json
 <rsp>{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
+  "Result": {
+    "Success": false,
+    "Reason": "The command System.Object[] is not known."}}
 </div>
 ~~~~
 
@@ -128,6 +134,7 @@ Specifying the /json option returns a result of type ResultMachine:
 <over>
 host   Add one or more hosts to the known_hosts file
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -139,18 +146,19 @@ host   Add one or more hosts to the known_hosts file
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list
-<rsp></div>
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultMachine:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list /json
 <rsp>{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
+  "Result": {
+    "Success": false,
+    "Reason": "The command System.Object[] is not known."}}
 </div>
 ~~~~
 
@@ -163,6 +171,7 @@ Specifying the /json option returns a result of type ResultMachine:
 host   Add one or more hosts to the known_hosts file
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -174,18 +183,19 @@ host   Add one or more hosts to the known_hosts file
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list
-<rsp></div>
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultMachine:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list /json
 <rsp>{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
+  "Result": {
+    "Success": false,
+    "Reason": "The command System.Object[] is not known."}}
 </div>
 ~~~~
 
@@ -198,6 +208,7 @@ Specifying the /json option returns a result of type ResultMachine:
 client   Add one or more keys to the authorized_keys file
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -209,18 +220,19 @@ client   Add one or more keys to the authorized_keys file
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list
-<rsp></div>
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultMachine:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list /json
 <rsp>{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
+  "Result": {
+    "Success": false,
+    "Reason": "The command System.Object[] is not known."}}
 </div>
 ~~~~
 
@@ -232,6 +244,7 @@ Specifying the /json option returns a result of type ResultMachine:
 <over>
 host   List the known SSH sites (aka known hosts)
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -243,18 +256,19 @@ host   List the known SSH sites (aka known hosts)
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list
-<rsp></div>
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultMachine:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list /json
 <rsp>{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
+  "Result": {
+    "Success": false,
+    "Reason": "The command System.Object[] is not known."}}
 </div>
 ~~~~
 
@@ -266,6 +280,7 @@ Specifying the /json option returns a result of type ResultMachine:
 <over>
 client   List the authorized device keys (aka authorized_keys)
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -277,18 +292,19 @@ client   List the authorized device keys (aka authorized_keys)
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list
-<rsp></div>
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultMachine:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list /json
 <rsp>{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
+  "Result": {
+    "Success": false,
+    "Reason": "The command System.Object[] is not known."}}
 </div>
 ~~~~
 

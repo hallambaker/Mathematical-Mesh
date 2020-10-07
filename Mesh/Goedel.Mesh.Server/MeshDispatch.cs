@@ -132,8 +132,8 @@ namespace Goedel.Mesh.Server {
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
 		/// <returns>The response object from the service</returns>
-        public override CreateResponse CreateAccount(
-                CreateRequest request, JpcSession jpcSession = null) {
+        public override BindResponse BindAccount(
+                BindRequest request, JpcSession jpcSession = null) {
 
             jpcSession ??= JpcSession;
 
@@ -141,36 +141,36 @@ namespace Goedel.Mesh.Server {
             try {
                 var accountEntry = new AccountUser(request);
                 Mesh.AccountAdd(jpcSession, accountEntry);
-                return new CreateResponse();
+                return new BindResponse();
                 }
             catch (System.Exception exception) {
-                return new CreateResponse(exception);
+                return new BindResponse(exception);
                 }
             }
 
 
 
-        /// <summary>
-        /// Server method implementing the transaction CreateGroup.
-        /// </summary>
-        /// <param name="request">The request object to send to the host.</param>
-        /// <param name="jpcSession">The connection authentication context.</param>
-        /// <returns>The response object from the service</returns>
-        public override CreateGroupResponse CreateGroup(CreateGroupRequest request, 
-                    JpcSession jpcSession = null) {
+        ///// <summary>
+        ///// Server method implementing the transaction CreateGroup.
+        ///// </summary>
+        ///// <param name="request">The request object to send to the host.</param>
+        ///// <param name="jpcSession">The connection authentication context.</param>
+        ///// <returns>The response object from the service</returns>
+        //public override CreateGroupResponse CreateGroup(CreateGroupRequest request, 
+        //            JpcSession jpcSession = null) {
 
-            jpcSession ??= JpcSession;
+        //    jpcSession ??= JpcSession;
 
 
-            try {
-                var accountEntry = new AccountGroup(request);
-                Mesh.AccountAdd(jpcSession, accountEntry);
-                return new CreateGroupResponse();
-                }
-            catch (System.Exception exception) {
-                return new CreateGroupResponse(exception);
-                }
-            }
+        //    try {
+        //        var accountEntry = new AccountGroup(request);
+        //        Mesh.AccountAdd(jpcSession, accountEntry);
+        //        return new CreateGroupResponse();
+        //        }
+        //    catch (System.Exception exception) {
+        //        return new CreateGroupResponse(exception);
+        //        }
+        //    }
 
 
         /// <summary>
@@ -218,15 +218,15 @@ namespace Goedel.Mesh.Server {
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
         /// <returns>The response object from the service</returns>
-        public override DeleteResponse DeleteAccount(
-                DeleteRequest request, JpcSession jpcSession) {
+        public override UnbindResponse UnbindAccount(
+                UnbindRequest request, JpcSession jpcSession) {
             jpcSession ??= JpcSession;
             try {
                 Mesh.AccountDelete(jpcSession, account: jpcSession.VerifiedAccount);
-                return new DeleteResponse();
+                return new UnbindResponse();
                 }
             catch (System.Exception exception) {
-                return new DeleteResponse(exception);
+                return new UnbindResponse(exception);
 
                 }
 

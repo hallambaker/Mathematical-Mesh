@@ -1,12 +1,29 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-using Goedel.Mesh;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Goedel.Protocol;
+
 using System.Text;
 
 namespace Goedel.Mesh {
@@ -17,11 +34,6 @@ namespace Goedel.Mesh {
             envelopedActivationDevice ?? new Enveloped<ActivationDevice>(DareEnvelope).
                     CacheValue(out envelopedActivationDevice);
         Enveloped<ActivationDevice> envelopedActivationDevice;
-
-
-        ///<summary>The UDF profile constant used for key derrivation 
-        ///<see cref="Constants.UDFActivationAccount"/></summary>
-        public override string UDFKeyDerrivation => Constants.UDFActivationAccount;
 
         ///<summary>The connection value.</summary>
         public override Connection Connection => ConnectionUser;
@@ -34,13 +46,13 @@ namespace Goedel.Mesh {
         // Properties giving access to device specific keys
 
         ///<summary>The device signature key for use under the profile</summary>
-        public KeyPair PrivateDeviceSignature { get; private set; }
+        public KeyPair DeviceSignature { get; private set; }
 
         ///<summary>The device encryption key for use under the profile</summary>
-        public KeyPair PrivateDeviceEncryption { get; private set; }
+        public KeyPair DeviceEncryption { get; private set; }
 
         ///<summary>The device authentication key for use under the profile</summary>
-        public KeyPair PrivateDeviceAuthentication { get; private set; }
+        public KeyPair DeviceAuthentication { get; private set; }
 
 
         /// <summary>
@@ -51,7 +63,7 @@ namespace Goedel.Mesh {
 
         /// <summary>
         /// Construct a new <see cref="ActivationDevice"/> instance for the profile
-        /// <paramref name="profileDevice"/>. The property <see cref="Activation.ActivationKey"/> is
+        /// <paramref name="profileDevice"/>. The property <see cref="Activation.ActivationUdf"/> is
         /// calculated from the values specified for the activation type.
         /// If the value <paramref name="masterSecret"/> is
         /// specified, it is used as the seed value. Otherwise, a seed value of
@@ -68,21 +80,26 @@ namespace Goedel.Mesh {
                     ProfileDevice profileDevice,
                     byte[] masterSecret = null,
                     int bits = 256) : base(
-                        profileDevice, UdfAlgorithmIdentifier.MeshActivationUser, masterSecret, bits) {
+                        profileDevice, UdfAlgorithmIdentifier.MeshActivationAccount, masterSecret, bits) {
             ProfileDevice = profileDevice;
 
-            AccountUDF = profileDevice.UDF;
+            AccountUDF = profileDevice.Udf;
 
-            var keyEncryption = profileDevice.KeyEncryption.ActivatePublic(ActivationKey,
-                    MeshKeyType | MeshKeyType.Encrypt);
-            var keyAuthentication = profileDevice.KeyAuthentication.ActivatePublic(ActivationKey,
-                    MeshKeyType | MeshKeyType.Authenticate);
+            var deviceEncryption = ActivationSeed.ActivatePublic(
+                    profileDevice.ProfileSignature.GetKeyPairAdvanced(), 
+                            MeshActor.Device, MeshKeyOperation.Encrypt);
+            var deviceSignature = ActivationSeed.ActivatePublic(
+                    profileDevice.ProfileSignature.GetKeyPairAdvanced(), 
+                            MeshActor.Device, MeshKeyOperation.Sign);
+            var deviceAuthentication = ActivationSeed.ActivatePublic(
+                    profileDevice.ProfileSignature.GetKeyPairAdvanced(), 
+                            MeshActor.Device, MeshKeyOperation.Authenticate);
 
-            // Create the (unsigned) ConnectionDevice
+            // Create the (unsigned) ConnectionUser
             ConnectionUser = new ConnectionUser() {
-                DeviceEncryption = new KeyData(keyEncryption.KeyPairPublic()),
-                DeviceSignature = new KeyData(KeySignature.KeyPairPublic()),
-                DeviceAuthentication = new KeyData(keyAuthentication.KeyPairPublic())
+                DeviceEncryption = new KeyData(deviceEncryption),
+                DeviceSignature = new KeyData(deviceSignature),
+                DeviceAuthentication = new KeyData(deviceAuthentication)
                 };
             }
 
@@ -91,19 +108,16 @@ namespace Goedel.Mesh {
         /// Activate the keys bound to this activation record using keys derived from 
         /// <paramref name="deviceKeySeed"/>.
         /// </summary>
-        /// <param name="keyCollection">Key collection to register keys in.</param>
         /// <param name="deviceKeySeed">Generator for the private key contributions.</param>
         public void Activate(
-                IKeyCollection keyCollection, 
-                IActivate deviceKeySeed) {
+                PrivateKeyUDF deviceKeySeed) {
 
-
-            PrivateDeviceSignature = deviceKeySeed.ActivatePrivate(
-                ActivationKey, MeshKeyType.DeviceSign, keyCollection);
-            PrivateDeviceEncryption = deviceKeySeed.ActivatePrivate(
-                ActivationKey, MeshKeyType.DeviceEncrypt, keyCollection);
-            PrivateDeviceAuthentication = deviceKeySeed.ActivatePrivate(
-                ActivationKey, MeshKeyType.DeviceAuthenticate, keyCollection);
+            DeviceEncryption = ActivationSeed.ActivatePrivate(
+                deviceKeySeed, MeshActor.Device, MeshKeyOperation.Encrypt);
+            DeviceSignature = ActivationSeed.ActivatePrivate(
+                deviceKeySeed, MeshActor.Device, MeshKeyOperation.Sign);
+            DeviceAuthentication = ActivationSeed.ActivatePrivate(
+                deviceKeySeed, MeshActor.Device, MeshKeyOperation.Authenticate);
 
             }
 
@@ -122,8 +136,7 @@ namespace Goedel.Mesh {
             DareEnvelope.Report(builder, indent);
             indent++;
 
-            builder.AppendIndent(indent, $"Activation Key:   {ActivationKey} ");
-            builder.AppendIndent(indent, $"KeySignature:     {KeySignature} ");
+            builder.AppendIndent(indent, $"KeySignature:     {ProfileSignature} ");
             }
         }
 

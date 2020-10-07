@@ -243,7 +243,7 @@ namespace Goedel.Mesh.Client {
         public CatalogBookmark GetCatalogBookmark() => ContextUser.GetStore(CatalogBookmark.Label) as CatalogBookmark;
 
         ///<summary>Returns the calendar catalog for the account</summary>
-        public CatalogCalendar GetCatalogCalendar() => ContextUser.GetStore(CatalogCalendar.Label) as CatalogCalendar;
+        public CatalogTask GetCatalogCalendar() => ContextUser.GetStore(CatalogTask.Label) as CatalogTask;
 
         ///<summary>Returns the network catalog for the account</summary>
         public CatalogNetwork GetCatalogNetwork() => ContextUser.GetStore(CatalogNetwork.Label) as CatalogNetwork;
@@ -321,8 +321,8 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>Returns the capability catalog for the account</summary>
-        public CatalogCapability GetCatalogCapability() => 
-            ContextAccount.GetStore(CatalogCapability.Label) as CatalogCapability;
+        public CatalogAccess GetCatalogCapability() => 
+            ContextAccount.GetStore(CatalogAccess.Label) as CatalogAccess;
 
 
 

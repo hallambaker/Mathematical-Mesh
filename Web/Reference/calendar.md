@@ -25,6 +25,7 @@ add   Add calendar entry
        <Unspecified>
     /id   <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -37,7 +38,7 @@ add   Add calendar entry
 <cmd>Alice> calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NAJ7-J4HW-SHOJ-LW5C-QEXR-WFMX-KDCR"}</div>
+  "Key": "NAP7-FOLE-XNRS-EY2Y-GO5O-JC7A-SFHK"}</div>
 ~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
@@ -51,7 +52,7 @@ Specifying the /json option returns a result of type ResultEntry:
     "CatalogEntry": {
       "CatalogedTask": {
         "Title": "CalendarEntry1.json",
-        "Key": "NAJ7-J4HW-SHOJ-LW5C-QEXR-WFMX-KDCR"}}}}
+        "Key": "NAP7-FOLE-XNRS-EY2Y-GO5O-JC7A-SFHK"}}}}
 </div>
 ~~~~
 
@@ -64,6 +65,7 @@ Specifying the /json option returns a result of type ResultEntry:
 delete   Delete calendar entry
        Contact entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -99,6 +101,7 @@ Specifying the /json option returns a result of type Result:
 get   Lookup calendar entry
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -132,6 +135,7 @@ Specifying the /json option returns a result of type ResultEntry:
 <over>
 list   List calendar entries
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -160,11 +164,11 @@ Specifying the /json option returns a result of type ResultDump:
     "CatalogedEntries": [{
         "CatalogedTask": {
           "Title": "CalendarEntry1.json",
-          "Key": "NAJ7-J4HW-SHOJ-LW5C-QEXR-WFMX-KDCR"}},
+          "Key": "NAP7-FOLE-XNRS-EY2Y-GO5O-JC7A-SFHK"}},
       {
         "CatalogedTask": {
           "Title": "CalendarEntry2.json",
-          "Key": "NCBV-NRGL-BFXG-U7OF-3IBS-VAWY-TOS7"}}]}}
+          "Key": "NBYZ-3J4S-6A5Y-VPWL-PQ75-H44X-D4JS"}}]}}
 </div>
 ~~~~
 

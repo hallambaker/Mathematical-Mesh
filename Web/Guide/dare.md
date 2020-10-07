@@ -25,7 +25,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
 <rsp></div>
 ~~~~
 
@@ -35,7 +35,7 @@ encoded:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestDir1 /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<cmd>Alice> dare encode TestDir1 /encrypt=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
 <rsp>ERROR - No decryption key is available
 </div>
 ~~~~
@@ -83,7 +83,7 @@ level otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -114,7 +114,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -135,13 +135,7 @@ the necessary decryption key(s) automatically:
 
 The `dare earl` command is used to create an EARL:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare earl TestFile1.txt example.net
-<rsp>ERROR - Unspecified error
-</div>
-~~~~
+**Missing Example***
 
 A new secret is generated with the specified number of bits, this is then used
 to generate the key identifier and encrypt the input file to a file with the
@@ -150,24 +144,10 @@ name of the key identifier.
 The `/log` option causes the filename, encryption key and other details of
 the transaction to be written to a DARE Container Log.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare container create EarlLog.dlog /encrypt=alice@example.com
-<rsp>ERROR - The command System.Object[] is not known.
-<cmd>Alice> dare earl TestFile1.txt /log=EarlLog.dlog
-<rsp>ERROR - Unspecified error
-</div>
-~~~~
+**Missing Example***
 
 The `/new` option causes the file to be encoded if and only if it has not 
 been processed already.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare earl TestFile1.txt /new=EarlLog.dlog
-<rsp>ERROR - Flag value not recognizedEarlLog.dlog
-</div>
-~~~~
+**Missing Example***
 

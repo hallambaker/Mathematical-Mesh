@@ -20,10 +20,10 @@ The plaintext form of the equivalent DARE Message encoding is:
 
 ~~~~
 [{
-    "Annotations":["iAEBiBdGcm9tOiBBbGljZUBleGFtcGxlLmNvbYgA",
-      "iAECiBNUbzogYm9iQGV4YW1wbGUuY29tiAA",
+    "Annotations":["iAEBiBdGcm9tOiBBbGljZUBleGFtcGxlLmNvbQ",
+      "iAECiBNUbzogYm9iQGV4YW1wbGUuY29t",
       "iAEDiClTdWJqZWN0OiBUT1AtU0VDUkVUIFByb2R1Y3QgTGF1bmNoIFRvZGF5
-  IYgA"
+  IQ"
       ],
     "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24vZXhhbXBsZS1t
   YWlsIn0"},

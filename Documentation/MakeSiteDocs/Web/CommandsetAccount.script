@@ -19,19 +19,6 @@ Create a new Mesh profile
 
 #%  ConsoleExample (Examples.ProfileCreateAlice);
 
-Add an account to the profile
-
-#%  ConsoleExample (Examples.CommandsAddAcountAlice);
-
-The #{ToCommand("account service")} command registers a profile:
-
-#%  ConsoleExample (Examples.CommandsAddServiceAlice);
-
-Or we can perform all three tasks at once by creating an account and registering it with a 
-service when we create the profile:
-
-#%  ConsoleExample (Examples.ProfileCreateBob);
-
 
 
 #### Contacting a Mesh Service.

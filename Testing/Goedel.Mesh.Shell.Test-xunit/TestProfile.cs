@@ -114,7 +114,7 @@ namespace Goedel.XUnit {
             var result = device1.Dispatch($"account pin /expire 0") as ResultPIN;
             Thread.Sleep(1000); // make sure that the PIN expires
 
-            var pin = result.MessagePIN.PIN;
+            var pin = result.MessagePIN.Pin;
             device2.Dispatch($"device request {accountA} /pin {pin}");
             device1.Dispatch($"account sync /auto");
 
@@ -136,7 +136,7 @@ namespace Goedel.XUnit {
 
             var result = device1.Dispatch($"account pin") as ResultPIN;
 
-            var pin = result.MessagePIN.PIN.CorruptedPIN();
+            var pin = result.MessagePIN.Pin.CorruptedPIN();
 
 
             device2.Dispatch($"device request {accountA} /pin {pin}");
@@ -159,7 +159,7 @@ namespace Goedel.XUnit {
             var result = device1.Dispatch($"account pin") as ResultPIN;
 
 
-            var pin = result.MessagePIN.PIN;
+            var pin = result.MessagePIN.Pin;
             device2.Dispatch($"device request {AccountA} /pin {pin}");
             device1.Dispatch($"account sync /auto");
 

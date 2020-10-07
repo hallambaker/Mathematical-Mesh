@@ -861,7 +861,7 @@
             Default constructor for serialization.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.#ctor(Goedel.Mesh.CreateRequest)">
+        <member name="M:Goedel.Mesh.Server.AccountUser.#ctor(Goedel.Mesh.BindRequest)">
             <summary>
             Constructor creating an Account entry from the request <paramref name="request"/>.
             </summary>
@@ -935,7 +935,7 @@
             Default constructor for serialization.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountGroup.#ctor(Goedel.Mesh.CreateGroupRequest)">
+        <member name="M:Goedel.Mesh.Server.AccountGroup.#ctor(Goedel.Mesh.BindRequest)">
             <summary>
             Constructor creating an Account entry from the request <paramref name="request"/>.
             </summary>
@@ -994,17 +994,9 @@
             <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.CreateAccount(Goedel.Mesh.CreateRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.BindAccount(Goedel.Mesh.BindRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Server method implementing the transaction CreateAccount.
-            </summary>
-            <param name="request">The request object to send to the host.</param>
-            <param name="jpcSession">The connection authentication context.</param>
-            <returns>The response object from the service</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.CreateGroup(Goedel.Mesh.CreateGroupRequest,Goedel.Protocol.JpcSession)">
-            <summary>
-            Server method implementing the transaction CreateGroup.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
@@ -1026,7 +1018,7 @@
             <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.DeleteAccount(Goedel.Mesh.DeleteRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.UnbindAccount(Goedel.Mesh.UnbindRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Server method implementing the transaction  DeleteAccount.
             </summary>

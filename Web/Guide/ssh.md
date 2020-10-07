@@ -103,7 +103,8 @@ corresponding SSH device public keys added:
 ~~~~
 <div="terminal">
 <cmd>Alice> ssh merge client
-<rsp></div>
+<rsp>Empty
+</div>
 ~~~~
 
 The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
@@ -113,7 +114,8 @@ the listed hosts to the user's ssh catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> ssh merge host
-<rsp></div>
+<rsp>Empty
+</div>
 ~~~~
 
 ## Client Key management
@@ -126,7 +128,8 @@ SSH keys belonging to the user that are not part of the Mesh profile may be adde
 ~~~~
 <div="terminal">
 <cmd>Alice> ssh add client
-<rsp></div>
+<rsp>Empty
+</div>
 ~~~~
 
 The list of known clients may be returned in various formats using the `ssh show client`  command.
@@ -135,7 +138,8 @@ The list of known clients may be returned in various formats using the `ssh show
 ~~~~
 <div="terminal">
 <cmd>Alice> ssh show client
-<rsp></div>
+<rsp>Empty
+</div>
 ~~~~
 
 ## Host Key Management
@@ -146,7 +150,8 @@ The `ssh add host`  command adds specific host entries to the user's SSH profile
 ~~~~
 <div="terminal">
 <cmd>Alice> ssh add host
-<rsp></div>
+<rsp>Empty
+</div>
 ~~~~
 
 The current list of known hosts in the SSH catalog is returned by the `ssh show known` 
@@ -156,7 +161,8 @@ command.
 ~~~~
 <div="terminal">
 <cmd>Alice> ssh show host
-<rsp></div>
+<rsp>Empty
+</div>
 ~~~~
 
 ## Additional Devices

@@ -1,26 +1,4 @@
-~~~~
-{
-  "ProfileMesh":{
-    "KeyOfflineSignature":{
-      "UDF":"MCOZ-GIZ3-34VQ-GQ6J-FCS7-BJIU-JCOY",
-      "PublicParameters":{
-        "PublicKeyECDH":{
-          "crv":"Ed448",
-          "Public":"Q1UAkB-XN8gVJq_GMQtzdY7frvwUf-68_glEuopcpNU1J6n
-  SmKQ2d5dFFZ1TXm8hYCEpQWRNiX8A"}}},
-    "KeysOnlineSignature":[{
-        "UDF":"MDF4-YA2E-FVGJ-LAG5-IK5Y-FXBB-2I56",
-        "PublicParameters":{
-          "PublicKeyECDH":{
-            "crv":"Ed448",
-            "Public":"8GezL9glxq-CuHp4DPwgHZs2K5eXm_Pae43pp-o9nEgoL
-  tlMXT1TveX4VjRLmA0jQh1HetI5AmmA"}}}
-      ],
-    "KeyEncryption":{
-      "UDF":"MBLT-3BDA-SR4S-SRBA-JVFA-YCCG-DAG2",
-      "PublicParameters":{
-        "PublicKeyECDH":{
-          "crv":"X448",
-          "Public":"HKt8Fvp6AP4YoWjnCzMTfZy7TXYu360D98d7KvnhZaXWSH1
-  8Ojs5_ca33B5YwqxHIKuBI4-DnseA"}}}}}
-~~~~
+
+
+[This is to be eliminated]
+

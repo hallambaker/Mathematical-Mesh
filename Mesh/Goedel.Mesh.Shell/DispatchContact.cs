@@ -50,7 +50,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactDynamic(ContactDynamic options) {
             var contextUser = GetContextUser(options);
-            var expiry = DateTime.Now.AddTicks(Constants.DayInTicks);
+            var expiry = DateTime.Now.AddTicks(MeshConstants.DayInTicks);
 
             var uri = contextUser.ContactUri(true, expiry);
 

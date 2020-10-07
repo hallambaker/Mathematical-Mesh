@@ -219,7 +219,7 @@ namespace Goedel.Mesh.Server {
         ///The signed assertion describing the account.
         /// </summary>
 
-		public virtual Enveloped<ProfileUser>						EnvelopedProfileUser  {get; set;}
+		public virtual Enveloped<ProfileAccount>						EnvelopedProfileUser  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -304,7 +304,7 @@ namespace Goedel.Mesh.Server {
 			switch (tag) {
 				case "EnvelopedProfileUser" : {
 					// An untagged structure
-					EnvelopedProfileUser = new Enveloped<ProfileUser> ();
+					EnvelopedProfileUser = new Enveloped<ProfileAccount> ();
 					EnvelopedProfileUser.Deserialize (jsonReader);
  
 					break;
@@ -330,7 +330,7 @@ namespace Goedel.Mesh.Server {
         ///account assertion.
         /// </summary>
 
-		public virtual Enveloped<ProfileGroup>						EnvelopedProfileGroup  {get; set;}
+		public virtual Enveloped<ProfileAccount>						EnvelopedProfileGroup  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -415,7 +415,7 @@ namespace Goedel.Mesh.Server {
 			switch (tag) {
 				case "EnvelopedProfileGroup" : {
 					// An untagged structure
-					EnvelopedProfileGroup = new Enveloped<ProfileGroup> ();
+					EnvelopedProfileGroup = new Enveloped<ProfileAccount> ();
 					EnvelopedProfileGroup.Deserialize (jsonReader);
  
 					break;

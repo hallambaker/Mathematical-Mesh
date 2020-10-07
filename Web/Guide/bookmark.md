@@ -88,7 +88,8 @@ Devices are given authorization to access the bookmarks catalog using the
 ~~~~
 <div="terminal">
 <cmd>Alice> device auth Alice2 /bookmark
-<rsp></div>
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
 ~~~~
 
 The new device now has access to the Bookmarks catalog:
@@ -97,6 +98,11 @@ The new device now has access to the Bookmarks catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice2> bookmark list
-<rsp>ERROR - Unspecified error
+<rsp>CatalogedBookmark
+
+CatalogedBookmark
+
+CatalogedBookmark
+
 </div>
 ~~~~

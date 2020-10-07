@@ -1,4 +1,24 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
@@ -11,25 +31,36 @@ using System.Text;
 namespace Goedel.Mesh {
 
     public partial class ProfileAccount {
+
+        ///<summary>The actor type</summary> 
+        public override MeshActor MeshActor => MeshActor.Account;
+
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ProfileAccount> EnvelopedProfileAccount =>
             envelopedProfileAccount ?? new Enveloped<ProfileAccount>(DareEnvelope).
                     CacheValue(out envelopedProfileAccount);
         Enveloped<ProfileAccount> envelopedProfileAccount;
 
-        ///<summary>Cached convenience accessor. Returns the corresponding 
-        ///<see cref="ProfileService"/>.</summary>
-        public ProfileService ProfileService => EnvelopedProfileService.Decode(KeyCollection);
+        /// <summary>
+        /// Blank constructor for use by deserializers.
+        /// </summary>
+        public ProfileAccount() {
+            }
+
+        /// <summary>
+        /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
+        /// </summary>
+        /// <param name="secretSeed">The secret seed value.</param>
+        public ProfileAccount(
+                    PrivateKeyUDF secretSeed) : base(secretSeed) {
+            }
+
+
         }
 
 
     public partial class ProfileUser {
 
-        ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ProfileUser> EnvelopedProfileUser =>
-            envelopedProfileUser ?? new Enveloped<ProfileUser>(DareEnvelope).
-                    CacheValue(out envelopedProfileUser);
-        Enveloped<ProfileUser> envelopedProfileUser;
 
 
 
@@ -49,23 +80,16 @@ namespace Goedel.Mesh {
         public ProfileUser(
                     ActivationAccount activationAccount,
                     string accountAddress) {
-
-            var privateAccountOfflineSignature = activationAccount.PrivateProfileSignature;
-            var privateAccountEncryption = activationAccount.PrivateAccountEncryption;
-            var privateAccountAuthentication = activationAccount.PrivateAccountAuthentication;
+            AccountAddress = accountAddress;
 
             //Set the public key parameters
-            OfflineSignature = new KeyData(privateAccountOfflineSignature.KeyPairPublic());
-            AccountEncryption = new KeyData(privateAccountEncryption.KeyPairPublic());
-            KeyAuthentication = new KeyData(privateAccountAuthentication.KeyPairPublic());
+            ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
+            AccountEncryption = new KeyData(activationAccount.AccountEncryptionKey);
+            AccountAuthentication = new KeyData(activationAccount.AccountAuthenticationKey);
+            AccountSignature = new KeyData(activationAccount.AccountSignatureKey);
 
-            //OnlineSignature = new List<KeyData> {
-            //    new KeyData(activationAccount.PrivateAccountOnlineSignature.KeyPairPublic())
-            //    };
-
-            AccountAddresses = new List<string> { accountAddress };
-
-            Envelope(privateAccountOfflineSignature);
+            // Sign the profile
+            Envelope(activationAccount.ProfileSignatureKey);
             }
 
 
@@ -83,44 +107,10 @@ namespace Goedel.Mesh {
             indent++;
             DareEnvelope.Report(builder, indent);
             indent++;
-            builder.AppendIndent(indent, $"KeyOfflineSignature: {OfflineSignature.UDF} ");
-            if (OnlineSignature != null) {
-                foreach (var online in OnlineSignature) {
-                    builder.AppendIndent(indent, $"KeysOnlineSignature: {online.UDF} ");
-                    }
-                }
-            if (AccountAddresses != null) {
-                foreach (var accountAddress in AccountAddresses) {
-                    builder.AppendIndent(indent, $"AccountAddress : {accountAddress} ");
-                    }
-                }
-            else {
-                builder.AppendIndent(indent, $"AccountAddress : [None]");
-                }
-            builder.AppendIndent(indent, $"KeyEncryption:       {AccountEncryption.UDF} ");
+            builder.AppendIndent(indent, $"KeyOfflineSignature: {ProfileSignature.Udf} ");
+            builder.AppendIndent(indent, $"AccountAddress : {AccountAddress} ");
+            builder.AppendIndent(indent, $"KeyEncryption:       {AccountEncryption.Udf} ");
 
             }
-
-
-        /// <summary>
-        /// Convenience routine reporting if the profile is serviced by the specified provider.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns></returns>
-        public int MatchAccountAddress(string service) {
-            int id = 0;
-
-            foreach (var accountAddress in AccountAddresses) {
-
-                if (service == accountAddress) {
-                    return id;
-                    }
-                id++;
-                }
-            return -1;
-            }
-
-
         }
-
     }

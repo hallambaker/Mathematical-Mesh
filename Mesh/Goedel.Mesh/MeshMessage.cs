@@ -1,4 +1,24 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Protocol;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
@@ -100,17 +120,6 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedMessageComplete);
         Enveloped<MessageComplete> envelopedMessageComplete;
 
-        ///<summary>Constant for the response Accept.</summary>
-        public const string Accept = "Accept";
-
-        ///<summary>Constant for the response Reject.</summary>
-        public const string Reject = "Reject";
-
-        ///<summary>Constant for the response Read.</summary>
-        public const string Read = "Read";
-
-        ///<summary>Constant for the response Unread.</summary>
-        public const string Unread = "Unread";
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -143,24 +152,24 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedMessagePinValidated);
         Enveloped<MessagePinValidated> envelopedMessagePinValidated;
         }
-    public partial class MessagePIN {
+    public partial class MessagePin {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<MessagePIN> EnvelopedMessagePIN =>
-            envelopedMessagePIN ?? new Enveloped<MessagePIN>(DareEnvelope).
+        public Enveloped<MessagePin> EnvelopedMessagePIN =>
+            envelopedMessagePIN ?? new Enveloped<MessagePin>(DareEnvelope).
                     CacheValue(out envelopedMessagePIN);
-        Enveloped<MessagePIN> envelopedMessagePIN;
+        Enveloped<MessagePin> envelopedMessagePIN;
 
 
         ///<summary>The unbound PIN code.</summary>
-        public string PIN { get; }
+        public string Pin { get; }
         /// <summary>
         /// Default constructor used for deserialization.
         /// </summary>
-        public MessagePIN() {
+        public MessagePin() {
             }
 
         /// <summary>
-        /// Construct a <see cref="MessagePIN"/> instance for the PIN value
+        /// Construct a <see cref="MessagePin"/> instance for the PIN value
         /// <paramref name="pin"/> and account address <paramref name="accountAddress"/>
         /// with optional expiry value <paramref name="expires"/>.
         /// </summary>
@@ -170,16 +179,16 @@ namespace Goedel.Mesh {
         /// <param name="accountAddress">The account address the PIN is issued for.</param>
         /// <param name="automatic">If true, the actions authenticated with the PIN should be
         /// automatically authorized.</param>
-        public MessagePIN(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
+        public MessagePin(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
             Account = accountAddress;
             Automatic = automatic;
             Expires = expires;
-            PIN = pin;
-            SaltedPIN = SaltPIN(pin, action);
+            Pin = pin;
+            SaltedPin = SaltPIN(pin, action);
             Action = action;
-            MessageId = GetPinUDF(SaltedPIN, accountAddress);
+            MessageId = GetPinUDF(SaltedPin, accountAddress);
 
-            Console.WriteLine($"Created Pin: {Account} / {SaltedPIN} => {MessageId}");
+            Console.WriteLine($"Created Pin: {Account} / {SaltedPin} => {MessageId}");
             }
 
 
@@ -190,8 +199,11 @@ namespace Goedel.Mesh {
         /// <param name="pin">The pin code presented to the user.</param>
         /// <param name="action">The action to which the pin code is bound.</param>
         /// <returns>UDF presentation of the salted PIN.</returns>
-        public static string SaltPIN(string pin, string action) =>
-            UDF.SymmetricKeyMac(action.ToUTF8(), pin);
+        public static string SaltPIN(string pin, string action) {
+            "Convert PIN to binary form.".TaskFunctionality(true);
+            
+            return UDF.SymmetricKeyMac(action.ToUTF8(), pin);
+            }
 
 
         /// <summary>
@@ -204,7 +216,7 @@ namespace Goedel.Mesh {
         /// <param name="witness">The witness value being tested.</param>
         /// <returns></returns>
         public static ProcessingResult ValidatePin(
-                    MessagePIN messagePin,
+                    MessagePin messagePin,
                     string accountAddress,
                     DareEnvelope envelope,
                     byte[] nonce,
@@ -219,8 +231,8 @@ namespace Goedel.Mesh {
             if (messagePin.Expires != null && messagePin.Expires < DateTime.Now) {
                 return ProcessingResult.PinExpired;
                 }
-            var pinWitness = MessagePIN.GetPinWitness(
-                        messagePin.SaltedPIN,
+            var pinWitness = MessagePin.GetPinWitness(
+                        messagePin.SaltedPin,
                         accountAddress,
                         envelope,
                         nonce);
@@ -236,7 +248,7 @@ namespace Goedel.Mesh {
         /// Get the 
         /// </summary>
         /// <returns></returns>
-        public string GetURI() => MeshUri.ConnectUri(Account, PIN);
+        public string GetURI() => MeshUri.ConnectUri(Account, Pin);
 
         /// <summary>
         /// PIN code identifier 
@@ -305,10 +317,10 @@ namespace Goedel.Mesh {
             ClientNonce = clientNonce ?? CryptoCatalog.GetBits(128);
 
             if (pin != null) {
-                var saltedPin = MessagePIN.SaltPIN(pin, Constants.MessagePINActionDevice);
+                var saltedPin = MessagePin.SaltPIN(pin, MeshConstants.MessagePINActionDevice);
 
-                PinUDF = MessagePIN.GetPinUDF(saltedPin, accountAddress);
-                PinWitness = MessagePIN.GetPinWitness(
+                PinId = MessagePin.GetPinUDF(saltedPin, accountAddress);
+                PinWitness = MessagePin.GetPinWitness(
                         saltedPin, accountAddress, profileDevice.DareEnvelope, ClientNonce);
                 }
             }
@@ -370,20 +382,14 @@ namespace Goedel.Mesh {
             }
 
         }
-    public partial class RequestContact {
+    public partial class MessageContact {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<RequestContact> EnvelopedRequestContact =>
-            envelopedRequestContact ?? new Enveloped<RequestContact>(DareEnvelope).
+        public Enveloped<MessageContact> EnvelopedRequestContact =>
+            envelopedRequestContact ?? new Enveloped<MessageContact>(DareEnvelope).
                     CacheValue(out envelopedRequestContact);
-        Enveloped<RequestContact> envelopedRequestContact;
+        Enveloped<MessageContact> envelopedRequestContact;
         }
-    public partial class ReplyContact {
-        ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ReplyContact> EnvelopedReplyContact =>
-            envelopedReplyContact ?? new Enveloped<ReplyContact>(DareEnvelope).
-                    CacheValue(out envelopedReplyContact);
-        Enveloped<ReplyContact> envelopedReplyContact;
-        }
+
     public partial class GroupInvitation {
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<GroupInvitation> EnvelopedGroupInvitation =>

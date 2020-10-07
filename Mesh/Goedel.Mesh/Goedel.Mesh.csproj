@@ -39,6 +39,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="MeshConstants.cs">
+      <DependentUpon>MeshConstants.Constant</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>    
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +54,10 @@
     <None Update="ProtocolSchema.Protocol">
       <Generator>Protogen</Generator>
     </None>
+    <None Update="MeshConstants.Constant">
+      <Generator>Constant</Generator>
+      <LastGenOutput>MeshConstants.cs</LastGenOutput>         
+    </None>    
     <None Update="SchemaMesh.protocol">
       <LastGenOutput>SchemaMesh.cs</LastGenOutput>
       <Generator>Protogen</Generator>

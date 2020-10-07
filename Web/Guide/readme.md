@@ -23,8 +23,6 @@
 <dd>Key operations.
 <dt><a href="mail.html">mail</a>
 <dd>Manage mail profiles connected to a personal profile
-<dt><a href="mesh.html">mesh</a>
-<dd>Commands for creating and managing a personal Mesh
 <dt><a href="message.html">message</a>
 <dd>Contact and confirmation message options
 <dt><a href="network.html">network</a>

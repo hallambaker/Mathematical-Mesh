@@ -22,6 +22,7 @@ mail    Manage mail profiles connected to a personal profile
 add   Add a mail application profile to a personal profile
        Mail account to create profile from
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -43,6 +44,7 @@ add   Add a mail application profile to a personal profile
 update   Update an existing mail application profile
        Mail account to update
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -57,6 +59,7 @@ update   Update an existing mail application profile
 private   Extract the private key for the specified account
        Mail account to update
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -74,6 +77,7 @@ private   Extract the private key for the specified account
 public   Extract the public key/certificate for the specified account
        Mail account identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -90,6 +94,7 @@ public   Extract the public key/certificate for the specified account
 private   Extract the private key for the specified account
        Mail account to update
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -107,6 +112,7 @@ private   Extract the private key for the specified account
 public   Extract the public key/certificate for the specified account
        Mail account identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

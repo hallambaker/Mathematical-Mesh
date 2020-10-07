@@ -2,7 +2,7 @@ setlocal
 cd %~dp0
 set Root=../../..
 set DocSource=../Word
-set DocSource=O:\Documents\Mesh
+rem set DocSource=O:\Documents\Mesh
 
 echo Generate schemas etc.
 cd Generated 
@@ -43,7 +43,7 @@ rfctool %DocSource%\hallambaker-mesh-10-quantum.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-11-services.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-12-presence.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-13-ceremony.docx  /auto /cache=bib.xml
-
+rfctool %DocSource%\hallambaker-mesh-14-name.docx  /auto /cache=bib.xml
 
 rfctool %DocSource%\hallambaker-jsonbcd.docx /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-developer.docx  /auto /cache=bib.xml

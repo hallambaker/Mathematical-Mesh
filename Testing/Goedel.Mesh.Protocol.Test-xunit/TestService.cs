@@ -126,8 +126,8 @@ namespace Goedel.XUnit {
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
             machineAlice2.CheckHostCatalogExtended(); // initial
 
-            var boundPin = contextAccountAlice_1_a.GetPIN(Constants.MessagePINActionDevice);
-            var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.PIN);
+            var boundPin = contextAccountAlice_1_a.GetPIN(MeshConstants.MessagePINActionDevice);
+            var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.Pin);
             machineAlice2.CheckHostCatalogExtended(); // Connect pending
 
             // Still have to process of course to get the data
@@ -183,7 +183,7 @@ namespace Goedel.XUnit {
 
             // Get the response back
             sync = contextAccountBob.Sync();
-            var contactResponseBob = contextAccountBob.GetPendingMessageContactReply();
+            var contactResponseBob = contextAccountBob.GetPendingMessageContactRequest();
 
             contextAccountBob.Process(contactResponseBob);
 
@@ -238,12 +238,12 @@ namespace Goedel.XUnit {
                 testEnvironmentCommon, DeviceAliceAdmin, AccountAlice, "main");
 
             // Admin Device
-            var boundPin = contextAdmin.GetPIN(Constants.MessagePINActionDevice);
+            var boundPin = contextAdmin.GetPIN(MeshConstants.MessagePINActionDevice);
             ReportDevices(contextAdmin);
 
             // New Device
             var contextOnboarding = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
-                AccountAlice, PIN: boundPin.PIN);
+                AccountAlice, PIN: boundPin.Pin);
 
             // Admin Device
             ProcessAutomatics(contextAdmin);
@@ -265,8 +265,8 @@ namespace Goedel.XUnit {
                 "main");
 
             // Create the QR Code with PIN
-            var boundPin = contextAdmin.GetPIN(Constants.MessagePINActionDevice);
-            var connectUri = MeshUri.ConnectUri(contextAdmin.AccountAddress, boundPin.PIN);
+            var boundPin = contextAdmin.GetPIN(MeshConstants.MessagePINActionDevice);
+            var connectUri = MeshUri.ConnectUri(contextAdmin.AccountAddress, boundPin.Pin);
 
             ReportDevices(contextAdmin);
 
@@ -348,7 +348,7 @@ namespace Goedel.XUnit {
             // Recover to new service
 
 
-            contextAliceOriginal.ProfileUser.UDF.TestEqual( recoveredAccount.ProfileUser.UDF);
+            contextAliceOriginal.ProfileUser.Udf.TestEqual( recoveredAccount.ProfileUser.Udf);
 
 
             }
@@ -431,7 +431,7 @@ namespace Goedel.XUnit {
             // Bob
             var syncBob = contextAccountBob.Sync();
 
-            var fromAlice = contextAccountBob.GetPendingMessageContactReply();
+            var fromAlice = contextAccountBob.GetPendingMessageContactRequest();
             contextAccountBob.Process(fromAlice);
             }
 
@@ -468,7 +468,7 @@ namespace Goedel.XUnit {
             contextAccountAlice.Process(fromBob);
             var syncBob = contextAccountBob.Sync();
 
-            var fromAlice = contextAccountBob.GetPendingMessageContactReply();
+            var fromAlice = contextAccountBob.GetPendingMessageContactRequest();
             contextAccountBob.Process(fromAlice);
 
             return true;
@@ -574,15 +574,15 @@ namespace Goedel.XUnit {
             }
 
         bool Verify(ProfileUser first, ProfileUser second) {
-            (first.AccountEncryption.UDF == second.AccountEncryption.UDF).TestTrue();
-            (first.UDF == second.UDF).TestTrue();
+            (first.AccountEncryption.Udf == second.AccountEncryption.Udf).TestTrue();
+            (first.Udf == second.Udf).TestTrue();
             return true;
             }
 
         public bool Verify(ConnectionUser first, ConnectionUser second) {
-            (first.DeviceSignature.UDF == second.DeviceSignature.UDF).TestTrue();
-            (first.DeviceEncryption.UDF == second.DeviceEncryption.UDF).TestTrue();
-            (first.DeviceAuthentication.UDF == second.DeviceAuthentication.UDF).TestTrue();
+            (first.DeviceSignature.Udf == second.DeviceSignature.Udf).TestTrue();
+            (first.DeviceEncryption.Udf == second.DeviceEncryption.Udf).TestTrue();
+            (first.DeviceAuthentication.Udf == second.DeviceAuthentication.Udf).TestTrue();
             return true;
             }
 

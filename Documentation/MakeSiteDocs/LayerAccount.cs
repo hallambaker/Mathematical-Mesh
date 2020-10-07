@@ -9,7 +9,6 @@ namespace ExampleGenerator {
 
         public void LayerAccount() {
             DoCommandsCreateAcount();
-
             DoCommandsContact();
             DoCommandsBookmark();
             DoCommandsCalendar();
@@ -22,10 +21,7 @@ namespace ExampleGenerator {
 
         #region // Tests
 
-        public List<ExampleResult> CommandsAddAcountAlice;
-
-
-        public void DoCommandsCreateAcount() => CommandsAddAcountAlice = testCLIAlice1.Example($"account create {AliceAccount1}");
+        public void DoCommandsCreateAcount() => ProfileCreateAlice = testCLIAlice1.Example($"account create {AliceService1}");
 
         public List<ExampleResult> ContactAdd;
         public List<ExampleResult> ContactAddSelf;

@@ -1,4 +1,24 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
@@ -16,7 +36,7 @@ namespace Goedel.Mesh {
     public class CatalogPublication : Catalog<CatalogedPublication> {
 
         ///<summary>The canonical label for the catalog</summary>
-        public const string Label = "mmm_Publication";
+        public const string Label = MeshConstants.MMM_Publication;
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
@@ -94,7 +114,7 @@ namespace Goedel.Mesh {
         /// <param name="key">A UDF symmetric key value</param>
         /// <returns>The authenticator key</returns>
         public static string GetServiceAuthenticator(
-                    string key) => UDF.SymmetricKeyHkdf(key, Constants.ServiceAuthenticatorInfo);
+                    string key) => UDF.SymmetricKeyHkdf(key, MeshConstants.ServiceAuthenticatorInfo);
 
         /// <summary>
         /// Get the device authenticator key using a HKDF function on <paramref name="key"/>.
@@ -102,7 +122,7 @@ namespace Goedel.Mesh {
         /// <param name="key">A UDF symmetric key value</param>
         /// <returns>The authenticator key</returns>
         public static string GetDeviceAuthenticator(
-            string key) => UDF.SymmetricKeyHkdf(key, Constants.DeviceAuthenticatorInfo);
+            string key) => UDF.SymmetricKeyHkdf(key, MeshConstants.DeviceAuthenticatorInfo);
 
 
         /// <summary>

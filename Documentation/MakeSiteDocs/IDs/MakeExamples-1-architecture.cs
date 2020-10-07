@@ -25,13 +25,15 @@ namespace ExampleGenerator {
 			 Colophon(Example);
 			 ArchVariousUDF(Example);
 			 ArchitectureCreateMesh(Example);
-			 ArchitectureAddAccount(Example);
-			 ArchitectureAddService(Example);
 			 ArchitectureCredential(Example);
+			 ArchitectureEncryptDecrypt(Example);
 			 ArchitectureConnectDirect(Example);
+			 ArchitectureConnectDisconnect(Example);
+			 ArchitectureConnectSSH(Example);
 			 ArchitectureConnectPIN(Example);
 			 ArchitectureConnectQR(Example);
 			 ArchitectureContactRequest(Example);
+			 ArchitectureConfirm(Example);
 			 ArchitectureConnectEARL(Example);
 			 ArchitectureRecrypt(Example);
 			 ArchitectureEscrow(Example);
@@ -115,10 +117,6 @@ namespace ExampleGenerator {
 				_Output.Write ("The examples in this document were created on {1}. \n{0}", _Indent, DateTime.Now.ToString());
 				_Output.Write ("Out of {1} examples, {2} were not functional.\n{0}", _Indent, TestCLI.CountTotal, TestCLI.ErrorCountTotal);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[Note: Example data is now being produced using the mesh command line tool which is currently\n{0}", _Indent);
-				_Output.Write ("substantially less complete than the Mesh reference code it is intended to provide an interface\n{0}", _Indent);
-				_Output.Write ("to. As a result, the documentation currently lags the code by more than is usual.]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -132,35 +130,32 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureCreateMesh(CreateExamples Example) {
 
+				_Output.Write ("The user specifies the initial account address to be used ({1}). Use of this address\n{0}", _Indent, AliceService1);
+				_Output.Write ("is of course dependent on authorization by the Mesh Service Provider ({1})\n{0}", _Indent, MeshServiceProvider1);
+				_Output.Write ("and is likely to require authentication and possibly payment.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.ProfileCreateAlice);
 					}
 		
 
 		//
-		// ArchitectureAddAccount
+		// ArchitectureEncryptDecrypt
 		//
-		public static void ArchitectureAddAccount(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\ArchitectureAddAccount.md");
+		public static void ArchitectureEncryptDecrypt(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ArchitectureEncryptDecrypt.md");
 			Example._Output = _Output;
-			Example._ArchitectureAddAccount(Example);
+			Example._ArchitectureEncryptDecrypt(Example);
 			}
-		public void _ArchitectureAddAccount(CreateExamples Example) {
+		public void _ArchitectureEncryptDecrypt(CreateExamples Example) {
 
-				  ConsoleExample (Example.CommandsAddAcountAlice);
-					}
-		
-
-		//
-		// ArchitectureAddService
-		//
-		public static void ArchitectureAddService(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\ArchitectureAddService.md");
-			Example._Output = _Output;
-			Example._ArchitectureAddService(Example);
-			}
-		public void _ArchitectureAddService(CreateExamples Example) {
-
-				  ConsoleExample (Example.CommandsAddServiceAlice);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (null);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[NYI Disconnect]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Can't access the data any more.]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -202,6 +197,48 @@ namespace ExampleGenerator {
 				_Output.Write ("listing the password catalog:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.PasswordList2);
+					}
+		
+
+		//
+		// ArchitectureConnectDisconnect
+		//
+		public static void ArchitectureConnectDisconnect(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ArchitectureConnectDisconnect.md");
+			Example._Output = _Output;
+			Example._ArchitectureConnectDisconnect(Example);
+			}
+		public void _ArchitectureConnectDisconnect(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (null);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[NYI Disconnect]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Can't access the data any more.]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// ArchitectureConnectSSH
+		//
+		public static void ArchitectureConnectSSH(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ArchitectureConnectSSH.md");
+			Example._Output = _Output;
+			Example._ArchitectureConnectSSH(Example);
+			}
+		public void _ArchitectureConnectSSH(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice creates an SSH profile within her Mesh on the administrative device.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (null);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("After configuring an SSH server to accept her new SSH credential, she can use any of her devices \n{0}", _Indent);
+				_Output.Write ("that has been granted the SSH right to connect to it.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -314,15 +351,44 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureContactRequest(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Bob requests Alice add him to her contacts catalog:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.ContactRequest);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("When Alice next checks her messages, she sees the pending contact request from Bob and accepts\n{0}", _Indent);
-				_Output.Write ("it. Bob's contact details are added to her catalog and Bob receives a response containing\n{0}", _Indent);
-				_Output.Write ("Alice's credentials:\n{0}", _Indent);
+				_Output.Write ("it without further validation. Bob's contact details are added to her catalog and Bob receives \n{0}", _Indent);
+				_Output.Write ("a response containing Alice's credentials:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Concat (Example.ContactPending, Example.ContactAccept));
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// ArchitectureConfirm
+		//
+		public static void ArchitectureConfirm(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ArchitectureConfirm.md");
+			Example._Output = _Output;
+			Example._ArchitectureConfirm(Example);
+			}
+		public void _ArchitectureConfirm(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice attempts to log into a secure console in the control room. The secure console recognizes \n{0}", _Indent);
+				_Output.Write ("Alice but a second factor is required. The console issues a challenge to Alice at her\n{0}", _Indent);
+				_Output.Write ("registered account asking if she would like to log into the secure console:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (null);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice checks her pending messages and accepts the request:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (null);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The secure console verifies the response and grants access:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (null);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		

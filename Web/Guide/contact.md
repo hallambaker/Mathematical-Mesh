@@ -74,7 +74,12 @@ A complete list of contacts is obtained using the  `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact list
-<rsp></div>
+<rsp>Entry<CatalogedContact>: MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Person MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Anchor MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Address alice@example.com
+
+</div>
 ~~~~
 
 ## Deleting contacts

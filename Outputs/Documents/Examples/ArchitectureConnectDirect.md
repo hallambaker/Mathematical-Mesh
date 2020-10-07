@@ -4,9 +4,8 @@ The connection request is initiated on the device being connected:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
-   Witness value = 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-   Personal Mesh = MCOZ-GIZ3-34VQ-GQ6J-FCS7-BJIU-JCOY
+<rsp>   Device UDF = MDYN-U7RH-NCK4-NLPY-VMMT-OIRY-BHH4
+   Witness value = AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
 </div>
 ~~~~
 
@@ -18,21 +17,20 @@ accepts it:
 ~~~~
 <div="terminal">
 <cmd>Alice> device pending
-<rsp>MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
+<rsp>MessageID: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
         Connection Request::
-        MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
+        MessageID: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
         To:  From: 
-        Device:  MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
-        Witness: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
+        Device:  MAWT-SA4U-LLRU-GJ26-BYRC-ZUBL-YYI3
+        Witness: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
+MessageID: AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
         Connection Request::
-        MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
+        MessageID: AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
         To:  From: 
-        Device:  MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
-        Witness: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-<cmd>Alice> device accept 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-<rsp>Result: Accept
-Added device: MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
+        Device:  MDYN-U7RH-NCK4-NLPY-VMMT-OIRY-BHH4
+        Witness: AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
+<cmd>Alice> device accept AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
+<rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
 
@@ -43,6 +41,6 @@ listing the password catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice2> password list
-<rsp>ERROR - Unspecified error
+<rsp>ERROR - The entry already exists in the store.
 </div>
 ~~~~

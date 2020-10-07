@@ -1,4 +1,24 @@
-﻿using Goedel.Utilities;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
@@ -7,10 +27,6 @@ namespace Goedel.Mesh {
 
 
     public partial class Assertion {
-
-        ///<summary>The UDF profile constant used for key derrivation</summary>
-        public virtual string UDFKeyDerrivation => throw new NYI();
-
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -18,59 +34,80 @@ namespace Goedel.Mesh {
             }
 
 
-
-        /// <summary>
-        /// Derrive a key pair contribution to an aggregate key pair.
-        /// </summary>
-        /// <param name="keyCollection">The keyCollection to manage and persist 
-        /// the generated keys. This should be null for an activation key.</param>
-        /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="saltSuffix">The salt suffix specifying the particular key
-        /// type.</param>
-        /// <returns>The derrived key pair.</returns>
-        public KeyPair Derive (
-                IKeyCollection keyCollection,
-                PrivateKeyUDF secretSeed,
-                string saltSuffix) {
-
-            var keyUses = KeyUses.Sign;
-            var cryptoAlgorithmID = CryptoAlgorithmId.NULL;
-            switch (saltSuffix) {
-                case Constants.UDFMeshKeySufixEncrypt: {
-                    keyUses = KeyUses.Encrypt;
-                    cryptoAlgorithmID = secretSeed.AlgorithmEncryptID;
-                    break;
-                    }
-                case Constants.UDFMeshKeySufixSign: {
-                    keyUses = KeyUses.Sign;
-                    cryptoAlgorithmID = secretSeed.AlgorithmSignID;
-                    break;
-                    }
-                case Constants.UDFMeshKeySufixAuthenticate: {
-                    keyUses = KeyUses.KeyAgreement;
-                    cryptoAlgorithmID = secretSeed.AlgorithmAuthenticateID;
-                    break;
-                    }
-
-                default:
-                    break;
-                }
-
-            return Cryptography.UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,
-               KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix);
-            }
-
-
-
         }
 
     public partial class Profile {
 
+
+        ///<summary>The key contribution type</summary> 
+        public virtual MeshKeyType MeshKeyType => Goedel.Mesh.MeshKeyType.Base;
+
+        ///<summary>The actor type</summary> 
+        public virtual MeshActor MeshActor => throw new NYI();
+
+        ///<summary>The key identifier</summary> 
+        public virtual UdfAlgorithmIdentifier UdfAlgorithmIdentifier =>
+            MeshActor switch
+                {
+                    MeshActor.Device => UdfAlgorithmIdentifier.MeshProfileDevice,
+                    MeshActor.Host => UdfAlgorithmIdentifier.MeshProfileDevice,
+                    MeshActor.Account => UdfAlgorithmIdentifier.MeshProfileAccount,
+                    MeshActor.Service => UdfAlgorithmIdentifier.MeshProfileService,
+                    //MeshActor.Host => UdfAlgorithmIdentifier.MeshProfileHost,
+                    _ => throw new NYI()
+                    };
+
+
         ///<summary>The primary key value.</summary>
-        public override string _PrimaryKey => UDF;
+        public override string _PrimaryKey => Udf;
 
         ///<summary>The UDF of the profile, that is the UDF of the offline signature.</summary>
-        public string UDF => OfflineSignature.UDF;
+        public string Udf => ProfileSignature.Udf;
+
+        ///<summary>The secret seed value used to derrive the private keys.</summary>
+        public PrivateKeyUDF SecretSeed { get; }
+
+        /// <summary>
+        /// Base constructor used for deserialization
+        /// </summary>
+        public Profile() {
+            }
+
+        /// <summary>
+        /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
+        /// </summary>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        /// <paramref name="keyCollection"/>.</param>
+        public Profile(
+                    PrivateKeyUDF secretSeed,
+                    IKeyCollection keyCollection=null,
+                    bool persist = false) {
+            SecretSeed = secretSeed ?? new PrivateKeyUDF(UdfAlgorithmIdentifier);
+
+            // We always have a profile signature key in a profile.
+            var profileSign = SecretSeed.GenerateContributionKeyPair(
+                MeshKeyType, MeshActor, MeshKeyOperation.Profile);
+            ProfileSignature = new KeyData(profileSign.KeyPairPublic());
+
+            if (persist) {
+                keyCollection.Persist(ProfileSignature.Udf, secretSeed, false);
+                }
+
+            // Generate profile specific keys
+            Generate();
+
+            // sign the profile.
+            Envelope(profileSign);
+
+            }
+
+        /// <summary>
+        /// Generate profile specific keys, is overriden in child classes.
+        /// </summary>
+        protected virtual void Generate() {
+            }
 
         /// <summary>
         /// Verify the profile to check that it is correctly signed and consistent.
@@ -90,79 +127,5 @@ namespace Goedel.Mesh {
             "Need to implement pathmath".TaskValidate();
             return false;
             }
-
-        /// <summary>
-        /// Return a UDF private key seed. This may be used to derrive multiple private key pairs.
-        /// </summary>
-        /// <param name="meshMachine">The mesh cryptographic storage.</param>
-        /// <returns>The private key data if found, otherwise null.</returns>
-        public PrivateKeyUDF GetPrivateKeyUDF(IMeshMachine meshMachine) =>
-            meshMachine.KeyCollection.LocatePrivateKey(UDF) as PrivateKeyUDF;
-
-
-        }
-
-    public partial class Activation {
-
-        ///<summary>The <see cref="ProfileDevice"/> that this activation activates.</summary>
-        public ProfileDevice ProfileDevice { get; set; }
-
-        ///<summary>The aggregate signature key</summary>
-        protected KeyPairAdvanced KeySignature { get; set; }
-
-        ///<summary>The UDF identifier</summary>
-        public string UDF => KeySignature.KeyIdentifier;
-
-        ///<summary>The connection value.</summary>
-        public virtual Connection Connection => throw new NYI();
-
-        /// <summary>
-        /// Base constructor.
-        /// </summary>
-        public Activation() {
-            }
-
-        /// <summary>
-        /// The Mech Key Type.
-        /// </summary>
-        protected MeshKeyType MeshKeyType;
-
-        /// <summary>
-        /// Constructor creating a new <see cref="Activation"/> for a profile of type
-        /// <paramref name="profile"/>. The property <see cref="ActivationKey"/> is
-        /// calculated from the values <paramref name="udfAlgorithmIdentifier"/>. 
-        /// If the value <paramref name="masterSecret"/> is
-        /// specified, it is used as the seed value. Otherwise, a seed value of
-        /// length <paramref name="bits"/> is generated.
-        /// The <see cref="KeySignature"/> public key value is calculated for the specified 
-        /// parameters. Other key pair properties should be populated by the caller.
-        /// </summary>
-        /// <param name="profile">The base profile that the activation activates.</param>
-        /// <param name="udfAlgorithmIdentifier">The UDF key derivation specifier.</param>
-        /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
-        /// a seed value of <paramref name="bits"/> length is generated.</param>
-        /// <param name="bits">The size of the seed to be generated if 
-        /// <paramref name="masterSecret"/> is null.</param>
-        protected Activation(
-                Profile profile,
-                UdfAlgorithmIdentifier udfAlgorithmIdentifier,
-                byte[] masterSecret = null,
-                int bits = 256) {
-            MeshKeyType = udfAlgorithmIdentifier.GetMeshKeyType();
-            ActivationKey = Cryptography.UDF.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
-
-            KeySignature = profile.OfflineSignature.ActivatePublic(ActivationKey,
-               MeshKeyType | MeshKeyType.RootSign);
-            }
-
-
-        /// <summary>
-        /// Encrypt this activation under the ProfileDevice encryption key.
-        /// </summary>
-        /// <returns>The actrivation profile encrypted under the encryption key of
-        /// the corresponding <see cref="ProfileDevice"/>.</returns>
-        public DareEnvelope Package(CryptoKey SignatureKey) => 
-                Envelope(SignatureKey, ProfileDevice.KeyEncryption.CryptoKey);
-
         }
     }

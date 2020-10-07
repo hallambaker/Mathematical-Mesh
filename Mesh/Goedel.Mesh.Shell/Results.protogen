@@ -123,7 +123,7 @@
 	// Account
 	Structure ResultPIN
 		Inherits					Result
-		Struct MessagePIN			MessagePIN
+		Struct MessagePin			MessagePIN
 		String						Uri
 
 	Structure ResultHello

@@ -25,6 +25,7 @@ add   Add password entry
        <Unspecified>
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -35,23 +36,19 @@ add   Add password entry
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 password
-<rsp>alice1@ftp.example.com = [password]
+<rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 password /json
 <rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "CatalogedCredential": {
-        "Service": "ftp.example.com",
-        "Username": "alice1",
-        "Password": "password"}}}}
+  "Result": {
+    "Success": false,
+    "Reason": "Cannot access a closed file."}}
 </div>
 ~~~~
 
@@ -64,6 +61,7 @@ Specifying the /json option returns a result of type ResultEntry:
 get   Lookup password entry
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -74,7 +72,8 @@ get   Lookup password entry
 ~~~~
 <div="terminal">
 <cmd>Alice> password delete www.example.com
-<rsp></div>
+<rsp>ERROR - The entry could not be found in the store.
+</div>
 ~~~~
 
 Specifying the /json option returns a result of type Result:
@@ -84,7 +83,8 @@ Specifying the /json option returns a result of type Result:
 <cmd>Alice> password delete www.example.com /json
 <rsp>{
   "Result": {
-    "Success": true}}
+    "Success": false,
+    "Reason": "The entry could not be found in the store."}}
 </div>
 ~~~~
 
@@ -97,6 +97,7 @@ Specifying the /json option returns a result of type Result:
 delete   Delete password entry
        Domain name of Web site
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -107,18 +108,19 @@ delete   Delete password entry
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list
-<rsp></div>
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultMachine:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh list /json
 <rsp>{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
+  "Result": {
+    "Success": false,
+    "Reason": "The command System.Object[] is not known."}}
 </div>
 ~~~~
 
@@ -131,6 +133,7 @@ Specifying the /json option returns a result of type ResultMachine:
 list   List password entries
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -141,11 +144,7 @@ list   List password entries
 ~~~~
 <div="terminal">
 <cmd>Alice> password list
-<rsp>CatalogedCredential
-
-CatalogedCredential
-
-</div>
+<rsp></div>
 ~~~~
 
 Specifying the /json option returns a result of type ResultDump:
@@ -156,16 +155,7 @@ Specifying the /json option returns a result of type ResultDump:
 <rsp>{
   "ResultDump": {
     "Success": true,
-    "CatalogedEntries": [{
-        "CatalogedCredential": {
-          "Service": "ftp.example.com",
-          "Username": "alice1",
-          "Password": "password"}},
-      {
-        "CatalogedCredential": {
-          "Service": "www.example.com",
-          "Username": "alice@example.com",
-          "Password": "newpassword"}}]}}
+    "CatalogedEntries": []}}
 </div>
 ~~~~
 

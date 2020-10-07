@@ -1,4 +1,24 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
@@ -13,10 +33,10 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Capability catalog. Contains keys used to perform capabilities.
     /// </summary>
-    public class CatalogCapability : Catalog<CatalogedCapability> {
+    public class CatalogAccess : Catalog<CatalogedAccess> {
         #region // Properties
         ///<summary>The canonical label for the catalog</summary>
-        public const string Label = "mmm_Capability";
+        public const string Label = MeshConstants.MMM_Access;
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
@@ -56,7 +76,7 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new CatalogCapability(directory, storeId, cryptoParameters, keyCollection, decrypt:decrypt, create:create);
+            new CatalogAccess(directory, storeId, cryptoParameters, keyCollection, decrypt:decrypt, create:create);
 
 
         /// <summary>
@@ -71,7 +91,7 @@ namespace Goedel.Mesh {
         /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        public CatalogCapability(
+        public CatalogAccess(
                     string directory,
                     string storeName = null,
                     CryptoParameters cryptoParameters = null,
@@ -131,7 +151,7 @@ namespace Goedel.Mesh {
                     CryptographicCapability capability,
                     CryptoKey encryptionKey = null
                     ) {
-            var catalogedCapability = new CatalogedCapability(capability);
+            var catalogedCapability = new CatalogedAccess(capability);
             New(catalogedCapability, encryptionKey);
             }
 
@@ -140,7 +160,7 @@ namespace Goedel.Mesh {
         /// in the dictionaries serving key discovery.
         /// </summary>
         /// <param name="catalogedEntry">The entry being added.</param>
-        public override void NewEntry(CatalogedCapability catalogedEntry) => UpdateLocal(catalogedEntry);
+        public override void NewEntry(CatalogedAccess catalogedEntry) => UpdateLocal(catalogedEntry);
 
 
         /// <summary>
@@ -148,10 +168,10 @@ namespace Goedel.Mesh {
         /// in the dictionaries serving key discovery.
         /// </summary>
         /// <param name="catalogedEntry">The entry being updated.</param>
-        public override void UpdateEntry(CatalogedCapability catalogedEntry) => UpdateLocal(catalogedEntry);
+        public override void UpdateEntry(CatalogedAccess catalogedEntry) => UpdateLocal(catalogedEntry);
 
         void UpdateLocal(CatalogedEntry catalogedEntry) {
-            var catalogedCapability = catalogedEntry as CatalogedCapability;
+            var catalogedCapability = catalogedEntry as CatalogedAccess;
             switch (catalogedCapability.Capability) {
                 case CapabilityDecrypt capabilityDecryption: {
                     DictionaryDecryptByKeyId.Add(capabilityDecryption.SubjectId,
@@ -184,7 +204,7 @@ namespace Goedel.Mesh {
         }
 
     // NYI should all be DareMessages to allow them to be signed.
-    public partial class CatalogedCapability {
+    public partial class CatalogedAccess {
         #region // Properties
         /// <summary>
         /// The primary key used to catalog the entry, this is the identifier of the key.
@@ -195,12 +215,12 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>
-        public CatalogedCapability() { }
+        public CatalogedAccess() { }
 
         /// <summary>
         /// Create a cataloged capability for <paramref name="capability"/>.
         /// </summary>
-        public CatalogedCapability(CryptographicCapability capability) => Capability = capability;
+        public CatalogedAccess(CryptographicCapability capability) => Capability = capability;
         #endregion
         }
 

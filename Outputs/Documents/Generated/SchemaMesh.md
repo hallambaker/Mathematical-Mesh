@@ -14,7 +14,7 @@ trust assertions associated with a public key.
 
 <dl>
 <dt>UDF: String (Optional)
-<dd>UDF fingerprint of the public key parameters/
+<dd>UDF fingerprint of the public key parameters
 <dt>X509Certificate: Binary (Optional)
 <dd>List of X.509 Certificates
 <dt>X509Chain: Binary [0..Many]
@@ -28,28 +28,16 @@ is not valid before.
 <dd>If present specifies a time instant that use of the private key
 is not valid on or after.
 </dl>
-###Structure: KeyComposite
+###Structure: CompositePrivate
 
 <dl>
-<dt>Service: String (Optional)
-<dd>Service holding the additional contribution
+<dt>Inherits:  Key
 </dl>
-###Structure: DeviceRecryptionKey
 
 <dl>
-<dt>UDF: String (Optional)
-<dd>The fingerprint of the encryption key
-<dt>RecryptionKey: KeyData (Optional)
-<dd>The recryption key
-<dt>EnvelopedRecryptionKeyDevice: DareEnvelope (Optional)
-<dd>The decryption key encrypted under the user's device key.	
+<dt>DeviceKeyUDF: String (Optional)
+<dd>UDF fingerprint of the bound device key (if used).
 </dl>
-###Structure: EscrowedKeySet
-
-A set of escrowed keys. 
-
-[No fields]
-
 ##Assertion classes
 
 Classes that are derived from an assertion.
@@ -80,24 +68,6 @@ Parent class from which all condition classes are derived.
 Abstract classes from which the Profile, Activation and Connection classes
 are derrived.
 
-###Structure: Profile
-
-<dl>
-<dt>Inherits:  Assertion
-</dl>
-
-Parent class from which all profile classes are derived
-
-<dl>
-<dt>KeyOfflineSignature: KeyData (Optional)
-<dd>The permanent signature key used to sign the profile itself. The UDF of
-the key is used as the permanent object identifier of the profile. Thus,
-by definition, the KeySignature value of a Profile does not change under
-any circumstance. The only case in which a 
-<dt>KeysOnlineSignature: KeyData [0..Many]
-<dd>A Personal profile contains at least one OSK which is used to sign 
-device administration application profiles.
-</dl>
 ###Structure: Connection
 
 <dl>
@@ -120,46 +90,32 @@ Contains the private activation information for a Mesh application running on
 a specific device
 
 <dl>
-<dt>EnvelopedConnection: DareEnvelope (Optional)
-<dd>The signed AssertionDeviceConnection.
 <dt>ActivationKey: String (Optional)
-<dd>The master secret from which all the key contributions are derrived.
-</dl>
-###Structure: Permission
-
-<dl>
-<dt>Name: String (Optional)
-<dt>Role: String (Optional)
-<dt>Capabilities: DareEnvelope (Optional)
-<dd>Keys or key contributions enabling the operation to be performed
+<dd>Secret seed used to derive keys unless explicitly specified.
 </dl>
 ###Mesh Profile Classes
 
-A Mesh profile does not have activation or connection classes associated with it.
+Classes describing Mesh Profiles. All Profiles are Assertions
+derrived from Assertion.
 
-It might be more consistent to represent administation devices as activations
-on the ProfileMesh class though.
-
-###Structure: ProfileMesh
+###Structure: Profile
 
 <dl>
-<dt>Inherits:  Profile
+<dt>Inherits:  Assertion
 </dl>
 
-Describes the long term parameters associated with a personal profile.
+Parent class from which all profile classes are derived
 
 <dl>
-<dt>KeysMasterEscrow: KeyData [0..Many]
-<dd>A Personal Profile MAY contain one or more PMEK keys to enable escrow 
-of private keys used for stored data. 
-<dt>KeyEncryption: KeyData (Optional)
-<dd>Key used to pass encrypted data to the device such as a
-DeviceUseEntry
+<dt>OfflineSignature: KeyData (Optional)
+<dd>The permanent signature key used to sign the profile itself. The UDF of
+the key is used as the permanent object identifier of the profile. Thus,
+by definition, the KeySignature value of a Profile does not change under
+any circumstance.
+<dt>OnlineSignature: KeyData [0..Many]
+<dd>A Personal profile contains at least one OSK which is used to sign 
+device administration application profiles.
 </dl>
-###Mesh Device Classes
-
-
-
 ###Structure: ProfileDevice
 
 <dl>
@@ -177,195 +133,43 @@ DeviceUseEntry
 <dt>KeyAuthentication: KeyData (Optional)
 <dd>Key used to authenticate requests made by the device.
 </dl>
-###Structure: ActivationDevice
-
-<dl>
-<dt>Inherits:  Activation
-</dl>
-
-[No fields]
-
-###Structure: ConnectionDevice
-
-<dl>
-<dt>Inherits:  Connection
-</dl>
-
-<dl>
-<dt>Permissions: Permission [0..Many]
-<dd>List of the permissions that the device has been granted.
-<dt>KeySignature: KeyData (Optional)
-<dd>The signature key for use of the device under the profile
-<dt>KeyEncryption: KeyData (Optional)
-<dd>The encryption key for use of the device under the profile
-<dt>KeyAuthentication: KeyData (Optional)
-<dd>The authentication key for use of the device under the profile
-</dl>
-###Structure: CatalogedDevice
-
-<dl>
-<dt>Inherits:  CatalogedEntry
-</dl>
-
-Public device entry, indexed under the device ID
-
-<dl>
-<dt>UDF: String (Optional)
-<dd>UDF of the signature key of the device in the Mesh
-<dt>EnvelopedProfileMesh: DareEnvelope (Optional)
-<dd>The Mesh profile
-<dt>DeviceUDF: String (Optional)
-<dd>UDF of the signature key of the device
-<dt>EnvelopedProfileDevice: DareEnvelope (Optional)
-<dd>The device profile
-<dt>EnvelopedConnectionDevice: DareEnvelope (Optional)
-<dd>The public assertion demonstrating connection of the Device to the Mesh
-<dt>EnvelopedActivationDevice: DareEnvelope (Optional)
-<dd>The activations of the device within the Mesh
-<dt>Accounts: AccountEntry [0..Many]
-<dd>The accounts that this device is connected to
-</dl>
-###Structure: CatalogedPublication
-
-<dl>
-<dt>Inherits:  CatalogedEntry
-</dl>
-
-A publication.
-
-<dl>
-<dt>ID: String (Optional)
-<dd>Unique identifier code
-<dt>Authenticator: String (Optional)
-<dd>The witness key value to use to request access to the record.	
-<dt>EnvelopedData: DareEnvelope (Optional)
-<dd>Dare Envelope containing the entry data
-<dt>NotOnOrAfter: DateTime (Optional)
-<dd>Epiration time (inclusive)
-</dl>
-###Mesh Account Classes
-
-
-
 ###Structure: ProfileAccount
 
 <dl>
 <dt>Inherits:  Profile
 </dl>
 
-Account assertion. This is signed by the service hosting the account.
-
 <dl>
 <dt>AccountAddresses: String [0..Many]
 <dd>Service address(es).
-<dt>MeshProfileUDF: String (Optional)
-<dd>Master profile of the account being registered.
-<dt>KeyEncryption: KeyData (Optional)
-<dd>Key used to encrypt data under this profile
-<dt>KeyAuthentication: KeyData (Optional)
-<dd>Key used to authenticate requests made by the device.
-<dt>EnvelopedProfileService: DareEnvelope (Optional)
+<dt>AccountEncryption: KeyData (Optional)
+<dd>Key currently used to encrypt data under this profile
+<dt>EnvelopedProfileService: Enveloped<ProfileService> (Optional)
 <dd>The service profile
 </dl>
-###Structure: ActivationAccount
+###Structure: ProfileUser
 
 <dl>
-<dt>Inherits:  Activation
+<dt>Inherits:  ProfileAccount
 </dl>
 
-<dl>
-<dt>AccountUDF: String (Optional)
-<dd>The UDF of the account
-<dt>KeyAccountEncryption: KeyData (Optional)
-<dd>Key used to encrypt data under this profile
-<dt>KeyAccountSignature: KeyData (Optional)
-<dd>Key used to encrypt data under this profile
-</dl>
-###Structure: ConnectionAccount
+Account assertion. This is signed by the service hosting the account.
 
 <dl>
-<dt>Inherits:  Connection
-</dl>
-
-<dl>
-<dt>AccountAddresses: String [0..Many]
-<dd>The list of service identifiers.
-<dt>Permissions: Permission [0..Many]
-<dd>List of the permissions that the device has been granted.
-<dt>KeySignature: KeyData (Optional)
-<dd>The signature key for use of the device under the profile
-<dt>KeyEncryption: KeyData (Optional)
-<dd>The encryption key for use of the device under the profile
 <dt>KeyAuthentication: KeyData (Optional)
-<dd>The authentication key for use of the device under the profile
+<dd>Key used to authenticate requests made under this user account.
 </dl>
-###Structure: AccountEntry
-
-Contains the Account information for an account with a CatalogedDevice.
-
-<dl>
-<dt>AccountUDF: String (Optional)
-<dd>UDF of the account profile
-<dt>EnvelopedProfileAccount: DareEnvelope (Optional)
-<dd>The account profile
-<dt>EnvelopedConnectionAccount: DareEnvelope (Optional)
-<dd>The connection of this device to the account
-<dt>EnvelopedActivationAccount: DareEnvelope (Optional)
-<dd>The activation data for this device to the account	
-</dl>
-###Structure: ConnectionApplication
-
-<dl>
-<dt>Inherits:  Connection
-</dl>
-
-[No fields]
-
-###Mesh Group Classes
-
-
-
 ###Structure: ProfileGroup
 
 <dl>
-<dt>Inherits:  Profile
+<dt>Inherits:  ProfileAccount
 </dl>
 
 Describes a group. Note that while a group is created by one person who
 becomes its first administrator, control of the group may pass to other
 administrators over time.
 
-<dl>
-<dt>AccountAddresses: String [0..Many]
-<dd>Service address(es).
-<dt>KeyEncryption: KeyData (Optional)
-<dd>Key currently used to encrypt data under this profile
-</dl>
-###Structure: ActivationGroup
-
-<dl>
-<dt>Inherits:  Activation
-</dl>
-
-<dl>
-<dt>GroupUDF: String (Optional)
-<dd>The UDF of the group
-</dl>
-###Structure: ConnectionGroup
-
-Describes the connection of a member to a group.
-
-<dl>
-<dt>Inherits:  Connection
-</dl>
-
-<dl>
-<dt>KeyEncryption: KeyComposite (Optional)
-<dd>The decryption key for the user within the group
-</dl>
-###Mesh Service Classes
-
-
+[No fields]
 
 ###Structure: ProfileService
 
@@ -381,18 +185,6 @@ Profile of a Mesh Service
 <dt>KeyEncryption: KeyData (Optional)
 <dd>Key used to encrypt data under this profile
 </dl>
-###Structure: ConnectionService
-
-<dl>
-<dt>Inherits:  Connection
-</dl>
-
-[No fields]
-
-###Mesh Host Classes
-
-
-
 ###Structure: ProfileHost
 
 <dl>
@@ -403,6 +195,59 @@ Profile of a Mesh Service
 <dt>KeyAuthentication: KeyData (Optional)
 <dd>Key used to authenticate service connections.
 </dl>
+###Connection Assertions
+
+Connection assertions are used to authenticate and authorize
+interactions between devices and the service currently servicing
+the account. They SHOULD NOT be visible to external parties.
+
+###Structure: ConnectionUser
+
+<dl>
+<dt>Inherits:  Connection
+</dl>
+
+Connection assertion used to authenticate service requests made
+by a device.
+
+<dl>
+<dt>AccountAddress: String (Optional)
+<dd>The account address
+<dt>DeviceSignature: KeyData (Optional)
+<dd>The signature key for use of the device under the profile
+<dt>DeviceEncryption: KeyData (Optional)
+<dd>The encryption key for use of the device under the profile
+<dt>DeviceAuthentication: KeyData (Optional)
+<dd>The authentication key for use of the device under the profile
+</dl>
+###Structure: ConnectionApplication
+
+<dl>
+<dt>Inherits:  Connection
+</dl>
+
+Connection assertion stating that a particular device is 
+
+[No fields]
+
+###Structure: ConnectionGroup
+
+Describes the connection of a member to a group.
+
+<dl>
+<dt>Inherits:  Connection
+</dl>
+
+[No fields]
+
+###Structure: ConnectionService
+
+<dl>
+<dt>Inherits:  Connection
+</dl>
+
+[No fields]
+
 ###Structure: ConnectionHost
 
 <dl>
@@ -411,11 +256,90 @@ Profile of a Mesh Service
 
 [No fields]
 
-##Cataloged items
+###Activation Assertions
 
-###Data Structures
 
-Classes describing data used in cataloged data.
+
+###Structure: ActivationDevice
+
+Contains activation data for device specific keys used in the context of a 
+Mesh account.
+
+<dl>
+<dt>Inherits:  Activation
+</dl>
+
+<dl>
+<dt>AccountUDF: String (Optional)
+<dd>The UDF of the account
+</dl>
+###Structure: ActivationAccount
+
+<dl>
+<dt>Inherits:  Activation
+</dl>
+
+<dl>
+<dt>ProfileSignature: KeyData (Optional)
+<dd>Grant access to profile online signing key used to sign updates
+to the profile.
+<dt>AdministratorSignature: KeyData (Optional)
+<dd>Grant access to Profile administration key used to make changes to
+administrator catalogs.
+<dt>AccountEncryption: KeyData (Optional)
+<dd>Grant access to ProfileUser account encryption key
+<dt>AccountAuthentication: KeyData (Optional)
+<dd>Grant access to ProfileUser account authentication key
+<dt>AccountSignature: KeyData (Optional)
+<dd>Grant access to ProfileUser account signature key
+</dl>
+###Structure: ActivationGroup
+
+<dl>
+<dt>Inherits:  Activation
+</dl>
+
+<dl>
+<dt>GroupUDF: String (Optional)
+<dd>The UDF of the group
+</dl>
+###Structure: ActivationApplication
+
+<dl>
+<dt>Inherits:  Activation
+</dl>
+
+[No fields]
+
+###Structure: ActivationApplicationEmail
+
+<dl>
+<dt>Inherits:  Activation
+</dl>
+
+<dl>
+<dt>Account: String (Optional)
+<dd>The email account for which the credential is valid
+<dt>Protocol: String [0..Many]
+<dd>S/MIME or OpenPGP
+<dt>Encryption: KeyData (Optional)
+<dd>Explicit specification of decryption key
+<dt>Signature: KeyData (Optional)
+<dd>Explicit specification of signature key
+</dl>
+###Structure: ActivationApplicationSsh
+
+<dl>
+<dt>Inherits:  Activation
+</dl>
+
+<dl>
+<dt>Authentication: KeyData (Optional)
+<dd>Explicit specification of authentication key
+</dl>
+##Data Structures
+
+Classes describing data used in cataloged data.	
 
 ###Structure: Contact
 
@@ -462,7 +386,7 @@ Source from which contact information was obtained.
 <dd>The means of validation.		
 <dt>BinarySource: Binary (Optional)
 <dd>The contact data in binary form.
-<dt>EnvelopedSource: DareEnvelope (Optional)
+<dt>EnvelopedSource: Enveloped<Contact> (Optional)
 <dd>The contact data in enveloped form. If present, the BinarySource property
 is ignored.
 </dl>
@@ -547,8 +471,8 @@ particular network address
 <dd>The network address, e.g. alice@example.com
 <dt>NetworkCapability: String [0..Many]
 <dd>The capabilities bound to this address.
-<dt>EnvelopedProfileAccount: DareEnvelope (Optional)
-<dd>Optional enveloped profile for the Address
+<dt>EnvelopedProfileAccount: Enveloped<ProfileAccount> (Optional)
+<dd>The account profile
 <dt>Protocols: NetworkProtocol [0..Many]
 <dd>Public keys associated with the network address
 </dl>
@@ -590,9 +514,9 @@ the contact may be reached using the specified Address.
 ###Structure: Reference
 
 <dl>
-<dt>MessageID: String (Optional)
+<dt>MessageId: String (Optional)
 <dd>The received message to which this is a response
-<dt>ResponseID: String (Optional)
+<dt>ResponseId: String (Optional)
 <dd>Message that was generated in response to the original (optional).
 <dt>Relationship: String (Optional)
 <dd>The relationship type. This can be Read, Unread, Accept, Reject.
@@ -624,6 +548,53 @@ Base class for cataloged Mesh data.
 <dl>
 <dt>Labels: String [0..Many]
 <dd>The set of labels describing the entry
+</dl>
+###Structure: CatalogedDevice
+
+<dl>
+<dt>Inherits:  CatalogedEntry
+</dl>
+
+Public device entry, indexed under the device ID Hello
+
+<dl>
+<dt>UDF: String (Optional)
+<dd>UDF of the signature key of the device in the Mesh
+<dt>DeviceUDF: String (Optional)
+<dd>UDF of the offline signature key of the device
+<dt>SignatureUDF: String (Optional)
+<dd>UDF of the account online signature key
+<dt>EnvelopedProfileUser: Enveloped<ProfileUser> (Optional)
+<dd>The Mesh profile
+<dt>EnvelopedProfileDevice: Enveloped<ProfileDevice> (Optional)
+<dd>The device profile
+<dt>EnvelopedConnectionUser: Enveloped<ConnectionUser> (Optional)
+<dd>The public assertion demonstrating connection of the Device to the Mesh
+<dt>EnvelopedActivationDevice: Enveloped<ActivationDevice> (Optional)
+<dd>The activation of the device within the Mesh account
+<dt>EnvelopedActivationAccount: Enveloped<ActivationAccount> (Optional)
+<dd>The activation of the device within the Mesh account
+<dt>EnvelopedActivationApplication: Enveloped<ActivationApplication> [0..Many]
+<dd>Application activations granted to the device.
+</dl>
+###Structure: CatalogedPublication
+
+<dl>
+<dt>Inherits:  CatalogedEntry
+</dl>
+
+A publication.
+
+<dl>
+<dt>Id: String (Optional)
+<dd>Unique identifier code
+<dt>Authenticator: String (Optional)
+<dd>The witness key value to use to request access to the record.	
+<dt>EnvelopedData: DareEnvelope (Optional)
+<dd>Dare Envelope containing the entry data. The data type is specified
+by the envelope metadata.
+<dt>NotOnOrAfter: DateTime (Optional)
+<dd>Epiration time (inclusive)
 </dl>
 ###Structure: CatalogedCredential
 
@@ -660,17 +631,7 @@ Base class for cataloged Mesh data.
 <dd>Unique key. 
 <dt>Self: Boolean (Optional)
 <dd>If true, this catalog entry is for the user who created the catalog.
-<dt>Permissions: Permission [0..Many]
-<dd>List of the permissions that the contact has been granted.
 </dl>
-###Structure: CatalogedContactRecryption
-
-<dl>
-<dt>Inherits:  CatalogedContact
-</dl>
-
-[No fields]
-
 ###Structure: CatalogedCapability
 
 <dl>
@@ -690,7 +651,7 @@ KeyData identifier. If this is a serviced capability, MUST match the value of
 ServiceId on the corresponding service capability.
 <dt>KeyData: KeyData (Optional)
 <dd>The key that enables the capability
-<dt>EnvelopedKeyShares: DareEnvelope [0..Many]
+<dt>EnvelopedKeyShares: Enveloped<KeyData> [0..Many]
 <dd>One or more enveloped key shares.
 <dt>SubjectId: String (Optional)
 <dd>The identifier of the resource that is controlled using the key.
@@ -786,7 +747,7 @@ protocol.
 </dl>
 
 <dl>
-<dt>EnvelopedTask: DareEnvelope (Optional)
+<dt>EnvelopedTask: Enveloped<Task> (Optional)
 <dt>Title: String (Optional)
 <dt>Key: String (Optional)
 <dd>Unique key.
@@ -853,7 +814,7 @@ protocol.
 A data structure that is passed 
 
 <dl>
-<dt>EnvelopedProfileDevice: DareEnvelope (Optional)
+<dt>EnvelopedProfileDevice: Enveloped<ProfileDevice> (Optional)
 <dd>The device profile
 <dt>ConnectUri: String (Optional)
 <dd>The connection URI. This would normally be printed on the device as a 
@@ -864,13 +825,12 @@ QR code.
 ###Structure: Message
 
 <dl>
-<dt>MessageID: String (Optional)
+<dt>MessageId: String (Optional)
 <dd>Unique per-message ID. When encapsulating a Mesh Message in a DARE envelope,
-the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageID
+the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageId
 value. 
 <dt>Sender: String (Optional)
 <dt>Recipient: String (Optional)
-<dt>References: Reference [0..Many]
 </dl>
 ###Structure: MessageError
 
@@ -887,8 +847,9 @@ value.
 <dt>Inherits:  Message
 </dl>
 
-[No fields]
-
+<dl>
+<dt>References: Reference [0..Many]
+</dl>
 ###Structure: MessagePinValidated
 
 <dl>
@@ -944,7 +905,7 @@ MessageConnectionRequestClient
 </dl>
 
 <dl>
-<dt>EnvelopedRequestConnection: DareEnvelope (Optional)
+<dt>EnvelopedRequestConnection: Enveloped<RequestConnection> (Optional)
 <dd>The client connection request.
 <dt>ServerNonce: Binary (Optional)
 <dd>
@@ -978,7 +939,7 @@ request.
 <dt>Subject: String (Optional)
 <dt>PIN: String (Optional)
 <dd>One time authentication code.
-<dt>Self: DareEnvelope (Optional)
+<dt>Self: Enveloped<Contact> (Optional)
 <dd>The contact data.
 </dl>
 ###Structure: ReplyContact
@@ -1015,7 +976,7 @@ request.
 </dl>
 
 <dl>
-<dt>Request: DareEnvelope (Optional)
+<dt>Request: Enveloped<RequestConfirmation> (Optional)
 <dt>Accept: Boolean (Optional)
 </dl>
 ###Structure: RequestTask
@@ -1037,4 +998,17 @@ request.
 <dt>ServiceAuthenticate: String (Optional)
 <dt>DeviceAuthenticate: String (Optional)
 <dt>Expires: DateTime (Optional)
+</dl>
+###Structure: ProcessResult
+
+For future use, allows logging of operations and results	
+
+<dl>
+<dt>Inherits:  Message
+</dl>
+
+<dl>
+<dt>Success: Boolean (Optional)
+<dt>ErrorReport: String (Optional)
+<dd>The error report code.
 </dl>

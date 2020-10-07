@@ -117,7 +117,7 @@ namespace Goedel.XUnit {
         public void TestAccountDelete() {
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
             var account = testCLIAlice1.Dispatch($"account create {AccountA}") as ResultCreateAccount;
-            var profileUdf = account.ProfileUser.UDF;
+            var profileUdf = account.ProfileUser.Udf;
             var ProfileAliceDelete = testCLIAlice1.Example($"account delete {profileUdf}");
 
             // Failing because the device catalog is keypt open.
@@ -162,6 +162,7 @@ namespace Goedel.XUnit {
             // Test ability to synchronize
 
             var AliceDevice2Sync = testCLIAlice2.ExampleNoCatch($"device complete");
+            var AliceDevice2Sync2 = testCLIAlice2.ExampleNoCatch($"account sync");
             var MalletDevice2Sync = testCLIMallet1.Example($"device complete");
             MalletDevice2Sync[0].Result.Success.TestFalse();
 

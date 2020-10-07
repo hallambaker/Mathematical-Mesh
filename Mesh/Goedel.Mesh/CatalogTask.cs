@@ -1,4 +1,24 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 
 using System;
@@ -14,10 +34,10 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Calendar catalog. Describes the tasks in a Mesh account.
     /// </summary>
-    public class CatalogCalendar : Catalog<CatalogedTask> {
+    public class CatalogTask : Catalog<CatalogedTask> {
         #region // Properties
         ///<summary>The canonical label for the catalog</summary>
-        public const string Label = "mmm_Calendar";
+        public const string Label = MeshConstants.MMM_Task;
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
@@ -40,7 +60,7 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new CatalogCalendar(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+            new CatalogTask(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
 
         /// <summary>
@@ -54,7 +74,7 @@ namespace Goedel.Mesh {
         /// <param name="storeName">The catalog persistence container file name.</param>
         /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
-        public CatalogCalendar(
+        public CatalogTask(
                     string directory,
                     string storeName = null,
                     CryptoParameters cryptoParameters = null,

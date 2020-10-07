@@ -18,7 +18,7 @@
 		Description
 			|The KeyData class is used to describe public key pairs and 
 			|trust assertions associated with a public key.
-		String UDF
+		String Udf
 			Description
 				|UDF fingerprint of the public key parameters
 		Binary X509Certificate
@@ -138,17 +138,13 @@
 		Inherits Assertion
 		Description 
 			|Parent class from which all profile classes are derived
-		Struct KeyData OfflineSignature
+		Struct KeyData ProfileSignature
 			Description
 				|The permanent signature key used to sign the profile itself. The UDF of
 				|the key is used as the permanent object identifier of the profile. Thus,
 				|by definition, the KeySignature value of a Profile does not change under
 				|any circumstance.
-		Struct KeyData OnlineSignature
-			Multiple
-			Description
-				|A Personal profile contains at least one OSK which is used to sign 
-				|device administration application profiles.
+
 
 	Structure ProfileDevice
 		Inherits Profile
@@ -167,24 +163,26 @@
 
 	Structure ProfileAccount
 		Inherits Profile
-		String AccountAddresses
-			Multiple
+		String AccountAddress
 			Description
-				|Service address(es).
+				|Service address
+		String ServiceUdf
+			Description
+				|The service fingerprint.
 		Struct KeyData AccountEncryption
 			Description
 				|Key currently used to encrypt data under this profile
-		Struct Enveloped<ProfileService> EnvelopedProfileService
-			Description
-				|The service profile
 
 	Structure ProfileUser
 		Inherits ProfileAccount
 		Description 
 			|Account assertion. This is signed by the service hosting the account.
-		Struct KeyData KeyAuthentication
+		Struct KeyData AccountAuthentication
 			Description
 				|Key used to authenticate requests made under this user account.
+		Struct KeyData AccountSignature
+			Description
+				|Key used to sign data under the account.
 
 	Structure ProfileGroup
 		Inherits ProfileAccount
@@ -209,6 +207,10 @@
 		Struct KeyData KeyAuthentication
 			Description
 				|Key used to authenticate service connections.
+		Struct KeyData KeyEncryption
+			Description
+				|Key used to pass encrypted data to the device such as a
+
 
 	Section 3 "Connection Assertions"
 		Description
@@ -569,7 +571,7 @@
 		String SignatureUDF
 			Description
 				|UDF of the account online signature key
-		Struct Enveloped<ProfileUser> EnvelopedProfileUser
+		Struct Enveloped<ProfileAccount> EnvelopedProfileUser
 			Description
 				|The Mesh profile
 		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
@@ -635,7 +637,7 @@
 				|The contact information as edited by the catalog owner.
 
 
-	Structure CatalogedCapability
+	Structure CatalogedAccess
 		Inherits CatalogedEntry
 		Description
 			|
@@ -816,7 +818,7 @@
 		Binary ClientNonce
 			Description
 				|
-		String PinUDF
+		String PinId
 			Description
 				|Fingerprint of the PIN value used to authenticate the request.
 		Binary PinWitness
@@ -824,7 +826,7 @@
 				|Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
 
 
-	Structure MessagePIN
+	Structure MessagePin
 		String Account
 
 		Inherits Message
@@ -833,7 +835,7 @@
 			Description
 				|If true, authentication against the PIN code is sufficient to complete
 				|the associated action without further authorization.
-		String SaltedPIN
+		String SaltedPin
 			Description
 				|PIN code bound to the specified action.
 		String Action
@@ -878,8 +880,8 @@
 				|"Accept". MUST be absent or null otherwise.
 
 
-	Structure RequestContact
-		Inherits Message
+	Structure MessageContact
+		Inherits MessagePinValidated
 		Boolean Reply
 		String Subject
 		String PIN
@@ -888,10 +890,6 @@
 		Struct Enveloped<Contact> Self
 			Description
 				|The contact data.
-	
-	Structure ReplyContact
-		Inherits MessagePinValidated
-		String Subject
 
 
 	Structure GroupInvitation

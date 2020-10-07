@@ -41,7 +41,7 @@ Base class for all request messages made by a user.
 <dt>Account: String (Optional)
 <dd>The fully qualified account name (including DNS address) to which the
 request is directed.
-<dt>DeviceProfile: DareEnvelope (Optional)
+<dt>EnvelopedProfileDevice: Enveloped<ProfileDevice> (Optional)
 <dd>Device profile of the device making the request.
 </dl>
 ##Response Messages
@@ -187,9 +187,9 @@ size of payload that MAY be sent in an initial Post request.
 <dd>Specifies the default data constraints for message senders.
 <dt>PolicyAccount: PolicyAccount (Optional)
 <dd>Specifies the account creation policy
-<dt>EnvelopedProfileService: DareEnvelope (Optional)
+<dt>EnvelopedProfileService: Enveloped<ProfileService> (Optional)
 <dd>The enveloped master profile of the service.
-<dt>EnvelopedProfileHost: DareEnvelope (Optional)
+<dt>EnvelopedProfileHost: Enveloped<ProfileHost> (Optional)
 <dd>The enveloped profile of the host.
 </dl>
 ##Transaction: CreateAccount
@@ -214,10 +214,7 @@ Request binding of an account to a service address.
 <dl>
 <dt>AccountAddress: String (Optional)
 <dd>The service account to bind to.
-<dt>SignedProfileMesh: DareEnvelope (Optional)
-<dd>The persistent profile that will be used to validate changes to the
-account assertion.
-<dt>SignedAssertionAccount: DareEnvelope (Optional)
+<dt>EnvelopedProfileUser: Enveloped<ProfileUser> (Optional)
 <dd>The signed assertion describing the account.
 </dl>
 ###Message: CreateResponse
@@ -290,7 +287,7 @@ Reports the success or failure of a Delete transaction.
 </dl>
 
 <dl>
-<dt>SignedResponse: DareEnvelope (Optional)
+<dt>EnvelopedRespondConnection: Enveloped<RespondConnection> (Optional)
 <dd>The signed assertion describing the result of the connect request
 </dl>
 ##Transaction: Status
@@ -319,9 +316,9 @@ Reports the success or failure of a Delete transaction.
 </dl>
 
 <dl>
-<dt>EnvelopedProfileMaster: DareEnvelope (Optional)
-<dd>The master profile that provides the root of trust for this Mesh
-<dt>EnvelopedCatalogEntryDevice: DareEnvelope (Optional)
+<dt>EnvelopedProfileAccount: Enveloped<ProfileAccount> (Optional)
+<dd>The account profile providing the root of trust for this account.
+<dt>EnvelopedCatalogedDevice: Enveloped<CatalogedDevice> (Optional)
 <dd>The catalog device entry
 <dt>ContainerStatus: ContainerStatus [0..Many]
 </dl>
@@ -372,17 +369,16 @@ objects returned. A service MAY limit the scope of each response.
 <dt>Updates: ContainerUpdate [0..Many]
 <dd>The updated data
 </dl>
-##Transaction: Upload
+##Transaction: Transact
 
 <dl>
-<dt>Request:  UploadRequest
-<dt>Response:  UploadResponse
+<dt>Request:  TransactRequest
+<dt>Response:  TransactResponse
 </dl>
 
-Request objects from the specified container with the specified search
-criteria.
+Attempt an atomic transaction on the containers and spools associated with an account.
 
-###Message: UploadRequest
+###Message: TransactRequest
 
 <dl>
 <dt>Inherits:  MeshRequestUser
@@ -394,11 +390,19 @@ by the owner of the account
 <dl>
 <dt>Updates: ContainerUpdate [0..Many]
 <dd>The data to be updated
-<dt>Self: DareEnvelope [0..Many]
-<dd>Entries to be added to the inbound spool on the account, e.g. completion
-messages.
+<dt>Accounts: String [0..Many]
+<dd>The account(s) to which the request is directed.
+<dt>Outbound: Enveloped<Message> [0..Many]
+<dd>The messages to be sent to other accounts  
+<dt>Inbound: Enveloped<Message> [0..Many]
+<dd>Messages to be appended to the user's inbound spool. this is
+typically used to post notifications to the user to mark messages as having been
+read or responded to.
+<dt>Local: Enveloped<Message> [0..Many]
+<dd>Messages to be appended to the user's local spool. This is used to allow connecting
+devices to collect activation messages before they have connected to the mesh.
 </dl>
-###Message: UploadResponse
+###Message: TransactResponse
 
 <dl>
 <dt>Inherits:  MeshResponse
@@ -430,40 +434,6 @@ values for an entry are 'Accept', 'Reject' and 'Conflict'.
 that apply to the redacted entries as a group. Thus the total payloads
 of all the messages must not exceed the specified value.	
 </dl>
-##Transaction: Publish
-
-<dl>
-<dt>Request:  PublishRequest
-<dt>Response:  PublishResponse
-</dl>
-
-Request to post to a spool from an external party. The request and response
-messages are extensions of the corresponding messages for the Upload transaction.
-It is expected that additional fields will be added as the need arises.
-
-###Message: PublishRequest
-
-<dl>
-<dt>Inherits:  MeshRequest
-</dl>
-
-
-
-<dl>
-<dt>Publications: CatalogedPublication [0..Many]
-<dd>The entries to be published. These may contain the full data
-or just the identifier, length and fingerprint.
-</dl>
-###Message: PublishResponse
-
-<dl>
-<dt>Inherits:  MeshResponse
-</dl>
-
-
-
-[No fields]
-
 ##Transaction: Post
 
 <dl>
@@ -486,19 +456,13 @@ It is expected that additional fields will be added as the need arises.
 <dl>
 <dt>Accounts: String [0..Many]
 <dd>The account(s) to which the request is directed.
-<dt>Message: DareEnvelope [0..Many]
-<dd>The entries to be uploaded. These MAY be either complete messages or redacted messages.
-In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
-service 
-<dt>Self: DareEnvelope [0..Many]
-<dd>Messages to be appended to the user's self spool. this is
-typically used to post notifications to the user to mark messages as having been
-read or responded to.
+<dt>Messages: Enveloped<Message> [0..Many]
+<dd>The messages to be sent to the addresses specified in Accounts. 
 </dl>
 ###Message: PostResponse
 
 <dl>
-<dt>Inherits:  UploadResponse
+<dt>Inherits:  TransactResponse
 </dl>
 
 
@@ -521,8 +485,10 @@ Request information necessary to begin making a connection request.
 </dl>
 
 <dl>
-<dt>MessageConnectionRequestClient: DareEnvelope (Optional)
+<dt>EnvelopedRequestConnection: Enveloped<RequestConnection> (Optional)
 <dd>The connection request generated by the client 
+<dt>Rights: String [0..Many]
+<dd>List of named access rights.
 </dl>
 ###Message: ConnectResponse
 
@@ -531,12 +497,10 @@ Request information necessary to begin making a connection request.
 </dl>
 
 <dl>
-<dt>EnvelopedConnectionResponse: DareEnvelope (Optional)
+<dt>EnvelopedAcknowledgeConnection: Enveloped<AcknowledgeConnection> (Optional)
 <dd>The connection request generated by the client
-<dt>EnvelopedProfileMaster: DareEnvelope (Optional)
-<dd>The master profile that provides the root of trust for this Mesh
-<dt>EnvelopedAccountAssertion: DareEnvelope (Optional)
-<dd>The current account assertion
+<dt>EnvelopedProfileUser: Enveloped<ProfileUser> (Optional)
+<dd>The user profile that provides the root of trust for this Mesh
 </dl>
 ##Transaction: Claim
 
@@ -554,7 +518,7 @@ Claim a publication
 </dl>
 
 <dl>
-<dt>EnvelopedMessageClaim: DareEnvelope (Optional)
+<dt>EnvelopedMessageClaim: Enveloped<MessageClaim> (Optional)
 <dd>The claim message
 </dl>
 ###Message: ClaimResponse
@@ -595,7 +559,7 @@ Check party making claim
 </dl>
 
 <dl>
-<dt>EnvelopedMessageClaim: DareEnvelope (Optional)
+<dt>EnvelopedMessage: Enveloped<Message> (Optional)
 <dd>The claim message
 </dl>
 ##Transaction: CreateGroup
@@ -616,7 +580,7 @@ Check party making claim
 <dl>
 <dt>AccountAddress: String (Optional)
 <dd>The service account to bind to.
-<dt>SignedProfileGroup: DareEnvelope (Optional)
+<dt>EnvelopedProfileGroup: Enveloped<ProfileGroup> (Optional)
 <dd>The persistent profile that will be used to validate changes to the
 account assertion.
 </dl>

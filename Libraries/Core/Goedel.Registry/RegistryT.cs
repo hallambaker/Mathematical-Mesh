@@ -61,6 +61,13 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="NameIn">The source name</param>
         public Source(string NameIn) => Name = NameIn;
+
+
+        /// <summary>
+        /// Convert position to text.
+        /// </summary>
+        /// <returns>The string value</returns>
+        public override string ToString() => Name;
         }
 
     /// <summary>Track position in a source file.</summary>

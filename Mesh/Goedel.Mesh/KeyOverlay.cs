@@ -1,4 +1,24 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
@@ -8,53 +28,6 @@ using System.Runtime.CompilerServices;
 
 namespace Goedel.Mesh {
 
-    //public partial class KeyComposite {
-
-    //    ///<summary>Convenience accessor for the composite UDF.</summary>
-    //    public string UDF => KeyPair.KeyIdentifier;
-
-    //    ///<summary>The composite key pair.</summary>
-    //    public KeyPairAdvanced KeyPair => keyPair ?? (Public.KeyPair as KeyPairAdvanced).CacheValue(out keyPair);
-    //    KeyPairAdvanced keyPair = null;
-
-    //    /// <summary>
-    //    /// Default constructor for deserialization.
-    //    /// </summary>
-    //    public KeyComposite() {
-
-    //        }
-
-    //    /// <summary>
-    //    /// Constructor from base key <paramref name="baseKey"/> with decryption service 
-    //    /// <paramref name="service"/>.
-    //    /// </summary>
-    //    /// <param name="baseKey">The base key.</param>
-    //    /// <param name="service">The decryption service.</param>
-    //    public KeyComposite(KeyData baseKey, string service) :
-    //                this(baseKey.CryptoKey as KeyPairAdvanced, service) {
-    //        }
-
-    //    /// <summary>
-    //    /// Constructor from base key <paramref name="baseKey"/> with decryption service 
-    //    /// <paramref name="service"/>.
-    //    /// </summary>
-    //    /// <param name="baseKey">The base key.</param>
-    //    /// <param name="service">The decryption service.</param>
-    //    public KeyComposite(KeyPairAdvanced baseKey, string service = null) {
-    //        Public = Cryptography.Jose.Key.GetPublic(baseKey);
-    //        if (service == null) {
-    //            Part = Cryptography.Jose.Key.GetPrivate(baseKey);
-
-    //            }
-    //        else {
-    //            throw new NYI(); // ToDo: implement service for split keys
-    //            }
-    //        }
-
-
-    //    }
-
-
 
     public static partial class Extensions {
 
@@ -63,182 +36,146 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="udfAlgorithmIdentifier">The UDF key type identifier.</param>
         /// <returns>The Mesh key group identifier.</returns>
-        public static MeshKeyType GetMeshKeyType(this UdfAlgorithmIdentifier udfAlgorithmIdentifier) =>
-            udfAlgorithmIdentifier switch {
-                UdfAlgorithmIdentifier.MeshProfileDevice => MeshKeyType.DeviceProfile,
-                UdfAlgorithmIdentifier.MeshProfileUser => MeshKeyType.UserProfile,
-                UdfAlgorithmIdentifier.MeshProfileGroup => MeshKeyType.GroupProfile,
-                UdfAlgorithmIdentifier.MeshProfileService => MeshKeyType.ServiceProfile,
-                UdfAlgorithmIdentifier.MeshActivationDevice => MeshKeyType.DeviceProfile,
-                UdfAlgorithmIdentifier.MeshActivationUser => MeshKeyType.UserProfile,
-                UdfAlgorithmIdentifier.MeshActivationGroup => MeshKeyType.GroupProfile,
-                UdfAlgorithmIdentifier.MeshActivationService => MeshKeyType.ServiceProfile,
-                _ => throw new NYI()
-                };
+        public static (MeshActor, MeshKeyType) GetMeshKeyType(this UdfAlgorithmIdentifier udfAlgorithmIdentifier) =>
+            udfAlgorithmIdentifier switch
+                {
+                    UdfAlgorithmIdentifier.MeshProfileDevice => (MeshActor.Device, MeshKeyType.Base),
+                    UdfAlgorithmIdentifier.MeshActivationDevice => (MeshActor.Device, MeshKeyType.Activation),
+                    UdfAlgorithmIdentifier.MeshProfileAccount => (MeshActor.Account, MeshKeyType.Complete),
+                    UdfAlgorithmIdentifier.MeshActivationAccount => (MeshActor.Account, MeshKeyType.Activation),
+                    UdfAlgorithmIdentifier.MeshProfileService => (MeshActor.Service, MeshKeyType.Base),
+                    UdfAlgorithmIdentifier.MeshActivationService => (MeshActor.Service, MeshKeyType.Activation),
+
+                    _ => throw new NYI()
+                    };
 
         /// <summary>
         /// Return the <see cref="CryptoAlgorithmId"/> identifier for the mesh key type
-        /// <paramref name="meshKeyType"/> derrived from the seed <paramref name="secretSeed"/>.
+        /// <paramref name="operation"/> derrived from the seed <paramref name="secretSeed"/>.
         /// </summary>
-        /// <param name="meshKeyType">The Mesh Key identifier.</param>
+        /// <param name="operation">The Mesh Key identifier.</param>
         /// <param name="secretSeed">The secret seed.</param>
         /// <returns>The  <see cref="CryptoAlgorithmId"/> identifier.</returns>
-        public static CryptoAlgorithmId GetCryptoAlgorithmID(this MeshKeyType meshKeyType,
-                            IActivate secretSeed) => (meshKeyType & MeshKeyType.MaskKeyUse) switch
-                {
-                    MeshKeyType.RootSign => secretSeed.AlgorithmSignID,
-                    MeshKeyType.AdminSign => secretSeed.AlgorithmSignID,
-                    MeshKeyType.Authenticate => secretSeed.AlgorithmAuthenticateID,
-                    _ => secretSeed.AlgorithmEncryptID
-                    };
+        public static CryptoAlgorithmId GetCryptoAlgorithmID(this MeshKeyOperation operation,
+                            IActivate secretSeed) => operation switch
+                                {
+                                    MeshKeyOperation.Authenticate => secretSeed.AlgorithmAuthenticateID,
+                                    MeshKeyOperation.Encrypt => secretSeed.AlgorithmEncryptID,
+                                    MeshKeyOperation.Escrow => secretSeed.AlgorithmEncryptID,
+                                    MeshKeyOperation.Sign => secretSeed.AlgorithmSignID,
+                                    MeshKeyOperation.Profile => secretSeed.AlgorithmSignID,
+                                    _ => secretSeed.AlgorithmSignID
+                                    };
+
 
         /// <summary>
-        /// Return the <see cref="KeyUses"/> and salt suffix values for the Mesh key type 
-        /// <paramref name="meshKeyType"/>.
+        /// Return the <see cref="KeyUses"/> for the Mesh key operation <paramref name="operation"/>.
         /// </summary>
-        /// <param name="meshKeyType">The Mesh Key identifier.</param>
-        /// <param name="keyUses">The PKIX key uses.</param>
-        /// <param name="suffix">The salt suffix to apply.</param>
-        public static void ParseMeshKeyType(this MeshKeyType meshKeyType,
-                out KeyUses keyUses,
-                out string suffix) {
+        /// <param name="operation">The Mesh Key operation.</param>
+        public static KeyUses GetMeshKeyType(this MeshKeyOperation operation) =>
 
-            var meshKeyUse = meshKeyType & MeshKeyType.MaskKeyUse;
-
-            suffix = meshKeyUse.ToString();
-            keyUses = meshKeyUse switch
-                {
-                    MeshKeyType.AdminSign => KeyUses.Sign,
-                    MeshKeyType.RootSign => KeyUses.Sign,
-                    MeshKeyType.Sign => KeyUses.Sign,
-                    _ => KeyUses.Encrypt
-                    };
-            }
+            operation switch {
+                MeshKeyOperation.Authenticate => KeyUses.KeyAgreement,
+                MeshKeyOperation.Encrypt => KeyUses.Encrypt,
+                MeshKeyOperation.Escrow => KeyUses.Encrypt,
+                MeshKeyOperation.Sign => KeyUses.Sign,
+                MeshKeyOperation.Profile => KeyUses.Sign,
+                _ => KeyUses.Any
+                };
 
         /// <summary>
-        /// Derive a base private key of type <paramref name="meshKeyType"/> from the 
+        /// Derive a base private key of type <paramref name="type"/> for the
+        /// actor <paramref name="actor"/> for the key use <paramref name="operation"/> from the 
         /// secret seed value <paramref name="secretSeed"/> and register the private component
-        /// in <paramref name="keyCollection"/>.
+        /// in <paramref name="keyCollection"/> under the key security model
+        /// <paramref name="keySecurity"/>. 
         /// </summary>
         /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="meshKeyType">The mesh key type.</param>
+        /// <param name="actor">The actor that will use the key</param>
+        /// <param name="operation">The operation for which the key will be used.</param>
+        /// <param name="type">The contribuition type</param>
+        /// <param name="keyCollection">The key collection to register the private key to
+        /// (the key is always generated as ephemeral.)</param>
+        /// <param name="keySecurity">The key security model of the derrived key.</param>
+        /// <returns>KeyData for the public parameters of the derrived key.</returns>
+        public static KeyData GenerateContributionKeyData(
+                    this PrivateKeyUDF secretSeed,
+                    MeshKeyType type,
+                    MeshActor actor,
+                    MeshKeyOperation operation,
+                    IKeyCollection keyCollection = null,
+                    KeySecurity keySecurity = KeySecurity.Ephemeral) =>
+            new KeyData(GenerateContributionKeyPair(secretSeed, type, actor, operation,
+                keyCollection, keySecurity));
+
+        /// <summary>
+        /// Derive a base private key of type <paramref name="type"/> for the
+        /// actor <paramref name="actor"/> for the key use <paramref name="operation"/> from the 
+        /// secret seed value <paramref name="secretSeed"/> and register the private component
+        /// in <paramref name="keyCollection"/> under the key security model
+        /// <paramref name="keySecurity"/>. 
+        /// </summary>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="actor">The actor that will use the key</param>
+        /// <param name="operation">The operation for which the key will be used.</param>
+        /// <param name="type">The contribuition type</param>
         /// <param name="keyCollection">The key collection to register the private key to
         /// (the key is always generated as ephemeral.)</param>
         /// <param name="keySecurity">The key security model of the derrived key.</param>
         /// <returns>The derrived key.</returns>
-        public static KeyPair BasePrivate(this PrivateKeyUDF secretSeed,
-                    MeshKeyType meshKeyType, IKeyCollection keyCollection = null,
-                    KeySecurity keySecurity= KeySecurity.Ephemeral) {
+        public static KeyPair GenerateContributionKeyPair(
 
-            meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
-            return BasePrivate(secretSeed, meshKeyType, saltSuffix, keyUses, keyCollection, keySecurity);
-            }
+                this PrivateKeyUDF secretSeed,
+                MeshKeyType type,
+                MeshActor actor,
+                MeshKeyOperation operation,
+                IKeyCollection keyCollection = null,
+                KeySecurity keySecurity = KeySecurity.Ephemeral) {
 
-        /// <summary>
-        /// Derive a base private key of type <paramref name="meshKeyType"/> from the 
-        /// secret seed value <paramref name="secretSeed"/> and register the private component
-        /// in <paramref name="keyCollection"/>.
-        /// </summary>
-        /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="meshKeyType">The mesh key type.</param>
-        /// <param name="keyName">The mesh key name.</param>
-        /// <param name="keyUses">The key uses.</param>
-        /// <param name="keyCollection">The key collection to register the private key to
-        /// (the key is always generated as ephemeral.)</param> 
-        /// <param name="keySecurity">The key security model of the derrived key.</param>
-        /// <returns>The derrived key.</returns>
-        public static KeyPair BasePrivate(this PrivateKeyUDF secretSeed,
-                    MeshKeyType meshKeyType, string keyName, KeyUses keyUses, IKeyCollection keyCollection = null,
-                    KeySecurity keySecurity = KeySecurity.Ephemeral) {
-
-            //meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
-            var cryptoAlgorithmID = GetCryptoAlgorithmID(meshKeyType, secretSeed);
+            var keyName = type.ToLabel() + actor.ToLabel() + operation.ToLabel();
+            var keyUses = GetMeshKeyType(operation);
+            var cryptoAlgorithmID = GetCryptoAlgorithmID(operation, secretSeed);
 
             return UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,
                     keySecurity, keyUses: keyUses, cryptoAlgorithmID, keyName);
             }
 
 
-
-        /// <summary>
-        /// Derive an activation private key of type <paramref name="meshKeyType"/> from the 
-        /// secret seed value <paramref name="baseSeed"/>, activation value 
-        /// <paramref name="activationSeed"/> and register the private component
-        /// in <paramref name="keyCollection"/>.
-        /// </summary>
-        /// <param name="activationSeed">The activation seed value.</param>
-        /// <param name="baseSeed">The secret seed value.</param>
-        /// <param name="meshKeyType">The mesh key type.</param>
-        /// <param name="keyCollection">The key collection to register the private key to
-        /// (the key is always generated as ephemeral.)</param>
-        /// <returns>The derrived key.</returns>
-        public static KeyPair ActivatePrivate(this PrivateKeyUDF activationSeed,
-            IActivate baseSeed, MeshKeyType meshKeyType, IKeyCollection keyCollection = null) =>
-                ActivatePrivate(baseSeed, activationSeed.PrivateValue, meshKeyType, keyCollection);
-
-
-
-        /// <summary>
-        /// Derive an activation private key of type <paramref name="meshKeyType"/> from the 
-        /// secret seed value <paramref name="baseSeed"/>, activation value 
-        /// <paramref name="activationSeed"/> and register the private component
-        /// in <paramref name="keyCollection"/>.
-        /// </summary>
-        /// <param name="activationSeed">The activation seed value.</param>
-        /// <param name="baseSeed">The secret seed value.</param>
-        /// <param name="meshKeyType">The mesh key type.</param>
-        /// <param name="keyCollection">The key collection to register the private key to</param>
-        /// <returns>The derrived key.</returns>
-        public static KeyPair ActivatePrivate(this IActivate baseSeed,
-            string activationSeed, MeshKeyType meshKeyType, IKeyCollection keyCollection = null) {
-
-            meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
-            var cryptoAlgorithmID = GetCryptoAlgorithmID(meshKeyType, baseSeed);
-
-            return baseSeed.ActivatePrivate(activationSeed, keyCollection, keyUses, saltSuffix, cryptoAlgorithmID);
-            }
-
-
-        /// <summary>
-        /// Derive an activation public key of type <paramref name="meshKeyType"/> 
-        /// activation value <paramref name="activationSeed"/> and base key 
-        /// <paramref name="baseKey"/>.
-        /// </summary>
-        /// <param name="baseKey">The base public key</param>
-        /// <param name="activationSeed">The activation seed value.</param>
-        /// <param name="meshKeyType">The mesh key type.</param>
-        /// <returns>The derrived key.</returns>
-        public static KeyPairAdvanced ActivatePublic(this KeyData baseKey,
-                string activationSeed, MeshKeyType meshKeyType) =>
-            ActivatePublic(baseKey.CryptoKey as KeyPairAdvanced, activationSeed, meshKeyType);
-
-
-
-        /// <summary>
-        /// Derive an activation public key of type <paramref name="meshKeyType"/> 
-        /// activation value <paramref name="activationSeed"/> and base key 
-        /// <paramref name="baseKey"/>.
-        /// </summary>
-        /// <param name="baseKey">The base public key</param>
-        /// <param name="activationSeed">The activation seed value.</param>
-        /// <param name="meshKeyType">The mesh key type.</param>
-        /// <param name="keyCollection">The key collection to register the private key to
-        /// (the key is always generated as ephemeral.)</param>
-        /// <returns>The derrived key.</returns>
-        public static KeyPairAdvanced ActivatePublic(this KeyPair baseKey,
-            string activationSeed, MeshKeyType meshKeyType, KeyCollection keyCollection = null) {
-            //Console.WriteLine($"Public: Base-{baseKey.UDF} Seed-{activationSeed} Type-{meshKeyType}");
-
-            meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
-            var activationKey = UDF.DeriveKey(activationSeed, keyCollection,
-                    KeySecurity.Ephemeral, keyUses: keyUses, baseKey.CryptoAlgorithmId, saltSuffix) as KeyPairAdvanced;
-
-            var combinedKey = activationKey.CombinePublic(baseKey as KeyPairAdvanced, keyUses: keyUses);
-            //Console.WriteLine($"   result {combinedKey}");
-
+         public static KeyPairAdvanced ActivatePublic(
+                this PrivateKeyUDF activationSeed,
+                KeyPair baseKey,
+                MeshActor actor, 
+                MeshKeyOperation operation) {
+            var activationKey = activationSeed.GenerateContributionKeyPair(
+                        MeshKeyType.Activation, actor, operation) as KeyPairAdvanced;
+            var combinedKey = activationKey.CombinePublic(baseKey as KeyPairAdvanced);
             return combinedKey;
+            }
+
+        public static KeyPairAdvanced ActivatePrivate(
+                this PrivateKeyUDF activationSeed,
+                PrivateKeyUDF baseSeed,
+                MeshActor actor,
+                MeshKeyOperation operation) {
+
+            var baseKey = baseSeed.GenerateContributionKeyPair(
+                MeshKeyType.Base, actor, operation) as KeyPairAdvanced;
+            return activationSeed.ActivatePrivate(baseKey, actor, operation);
+
 
             }
+
+        public static KeyPairAdvanced ActivatePrivate(
+                this PrivateKeyUDF activationSeed,
+                KeyPair baseKey,
+                MeshActor actor, 
+                MeshKeyOperation operation) {
+            var activationKey = activationSeed.GenerateContributionKeyPair(
+                        MeshKeyType.Activation, actor, operation) as KeyPairAdvanced;
+            var combinedKey = activationKey.Combine(baseKey as KeyPairAdvanced);
+            return combinedKey;
+            }
+
 
         }
 

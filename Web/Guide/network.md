@@ -12,8 +12,10 @@ The `network add` command adds a network entry to a catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice> network add NetworkEntry1.json NetID1
-<rsp>{Username}@{Service} = [{Password}]<cmd>Alice> network add NetworkEntry2.json NetID2
-<rsp>{Username}@{Service} = [{Password}]</div>
+<rsp>ERROR - Cannot access a closed file.
+<cmd>Alice> network add NetworkEntry2.json NetID2
+<rsp>ERROR - Cannot access a closed file.
+</div>
 ~~~~
 
 
@@ -39,9 +41,10 @@ Network entries may be deleted using the  `network delete` command:
 <cmd>Alice> network delete NetID2
 <rsp>ERROR - The entry could not be found in the store.
 <cmd>Alice> network list
-<rsp>CatalogedNetwork
-
-CatalogedNetwork
+<rsp>Entry<CatalogedContact>: MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Person MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Anchor MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Address alice@example.com
 
 </div>
 ~~~~
@@ -54,9 +57,10 @@ A complete list of networks is obtained using the  `network list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> network list
-<rsp>CatalogedNetwork
-
-CatalogedNetwork
+<rsp>Entry<CatalogedContact>: MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Person MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Anchor MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Address alice@example.com
 
 </div>
 ~~~~

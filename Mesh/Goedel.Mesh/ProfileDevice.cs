@@ -1,19 +1,37 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
 using Goedel.Utilities;
 
-using System;
 using System.Text;
 namespace Goedel.Mesh {
 
 
     public partial class ProfileDevice {
 
-        ///<summary>The UDF profile constant used for key derrivation 
-        ///<see cref="Constants.UDFActivationDevice"/></summary>
-        public override string UDFKeyDerrivation => Constants.UDFActivationDevice;
+        ///<summary>The actor type</summary> 
+        public override MeshActor MeshActor => MeshActor.Device;
+
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ProfileDevice> EnvelopedProfileDevice =>
@@ -23,14 +41,29 @@ namespace Goedel.Mesh {
 
 
 
-        ///<summary>The secret seed value used to derrive the private keys.</summary>
-        PrivateKeyUDF SecretSeed { get; }
-
-
         /// <summary>
         /// Constructor for use by deserializers.
         /// </summary>
         public ProfileDevice() {
+            }
+
+        /// <summary>
+        /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
+        /// </summary>
+        /// <param name="secretSeed">The secret seed value.</param>
+        public ProfileDevice(
+                    PrivateKeyUDF secretSeed) : base(secretSeed) {
+            }
+
+
+        /// <summary>
+        /// Generate profile specific keys.
+        /// </summary>
+        protected override void Generate() {
+            KeyAuthentication = SecretSeed.GenerateContributionKeyData(
+                    MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
+            KeyEncryption = SecretSeed.GenerateContributionKeyData(
+                    MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
             }
 
         /// <summary>
@@ -42,30 +75,19 @@ namespace Goedel.Mesh {
         /// <param name="algorithmSign">The signature algorithm</param>
         /// <param name="algorithmAuthenticate">The signature algorithm</param>
         /// <param name="bits">The size of key to generate in bits/</param>
-        public ProfileDevice(
+        /// <returns>The created profile.</returns>
+        public static ProfileDevice Generate(
                     CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                     CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                    PrivateKeyUDF secretSeed = null,
-                    int bits = 256) {
-
-            SecretSeed = secretSeed ?? new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileDevice, null, null,
-                algorithmEncrypt, algorithmSign, algorithmAuthenticate,
-                bits: bits);
-
-            var meshKeyType = MeshKeyType.DeviceProfile;
-            var keySign = SecretSeed.BasePrivate(meshKeyType | MeshKeyType.RootSign);
-            var keyEncrypt = SecretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
-            var keyAuthenticate = SecretSeed.BasePrivate(meshKeyType | MeshKeyType.Authenticate);
-
-            OfflineSignature = new KeyData(keySign.KeyPairPublic());
-            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
-            KeyAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
-
-
-            Envelope(keySign);
+                    int bits = 256,
+                    PrivateKeyUDF secretSeed = null) {
+            secretSeed ??= new PrivateKeyUDF(
+                UdfAlgorithmIdentifier.MeshProfileDevice, null, algorithmEncrypt,
+                algorithmSign, algorithmAuthenticate, bits: bits);
+            return new ProfileDevice(secretSeed);
             }
+
 
         /// <summary>
         /// Persist the secret seed used to generate a profile to the local machine as a non-exportable
@@ -74,7 +96,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection"></param>
         public void PersistSeed(IKeyCollection keyCollection = null) {
             SecretSeed.AssertNotNull(NoDeviceSecret.Throw);
-            keyCollection.Persist(OfflineSignature.UDF, SecretSeed, false);
+            keyCollection.Persist(ProfileSignature.Udf, SecretSeed, false);
             }
 
         /// <summary>
@@ -104,15 +126,10 @@ namespace Goedel.Mesh {
             indent++;
             DareEnvelope.Report(builder, indent);
             indent++;
-            builder.AppendIndent(indent, $"KeyOfflineSignature: {OfflineSignature.UDF} ");
+            builder.AppendIndent(indent, $"ProfileSignature: {ProfileSignature.Udf} ");
 
-            if (OnlineSignature != null) {
-                foreach (var online in OnlineSignature) {
-                    builder.AppendIndent(indent, $"   KeysOnlineSignature: {online.UDF} ");
-                    }
-                }
-            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
-            builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.UDF} ");
+            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.Udf} ");
+            builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.Udf} ");
 
             }
         }

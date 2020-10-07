@@ -60,15 +60,16 @@ namespace ExampleGenerator {
 
         public string DareLogEarl = "EarlLog.dlog";
 
-        public string AliceAccount1 = "personal";
-        public string AliceAccount2 = "business";
-        public string AliceService1 = "alice@example.com";
-        public string AliceService2 = "alice@example.net";
+        public string MeshServiceProvider1 = "example.com";
+        public string MeshServiceProvider2 = "example.net";
+
+
+        public string AliceService1 => "alice@" + MeshServiceProvider1;
+        public string AliceService2 => "alice@" + MeshServiceProvider2;
 
         public string AliceAccount2Outbound = "smtp:submit.example.net:587";
         public string AliceAccount2Inbound = "imap4:imap.example.net:993";
 
-        public string BobAccount = "personal";
         public string BobService = "bob@example.com";
         public string CarolService = "carol@example.com";
         public string DougService = "doug@example.com";
@@ -118,12 +119,13 @@ namespace ExampleGenerator {
 
             PlatformUDF();
             PlatformCrypto();
-            PlatformDare();
 
-            LayerDevice();
             LayerAccount();
             LayerService();
             LayerMessage();
+
+            // Dare uses the keys from the contacts catalog.
+            PlatformDare();
 
 
             Directory.SetCurrentDirectory(outputPath);

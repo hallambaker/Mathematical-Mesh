@@ -1,4 +1,24 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 using Goedel.Utilities;
@@ -10,18 +30,6 @@ using System.IO;
 using System.Text.Json;
 
 namespace Goedel.Mesh {
-    /// <summary>
-    /// Enumeration describing the actions that catalogs support.
-    /// </summary>
-    public enum CatalogAction {
-        ///<summary>Create a new entry.</summary>
-        New,
-        ///<summary>Update an existing entry</summary>
-        Update,
-        ///<summary>Delete an entry.</summary>
-        Delete
-        }
-
 
     #region // The data classes Catalog, CatalogedEntry
 
@@ -245,38 +253,6 @@ namespace Goedel.Mesh {
 
             throw new NYI();
             }
-
-
-
-
-        ///// <summary>
-        ///// Write the catalog entry data speficied in the file <paramref name="stream"/>.
-        ///// </summary>
-        ///// <param name="stream">The stream to write the entry data to.</param>
-        ///// <param name="format">The file format to write the output in.</param>
-        ///// <param name="data">The data to write.</param>
-        //public virtual void WriteToStream(
-        //            Stream stream,
-        //            T data,
-        //            CatalogedEntryFormat format = CatalogedEntryFormat.Default) =>
-        //    data.WriteToStream(stream, format);
-
-        ///// <summary>
-        ///// Write the catalog entry data speficied in the file <paramref name="stream"/>.
-        ///// </summary>
-        ///// <param name="stream">The stream to write the entry data to.</param>
-        ///// <param name="format">The file format to write the output in.</param>
-        ///// <param name="data">The list of entries to write.</param>
-        //public virtual void WriteToStream(
-        //            Stream stream,
-        //            List<T> data,
-        //            CatalogedEntryFormat format = CatalogedEntryFormat.Default) {
-        //    stream.Future();
-        //    data.Future();
-        //    format.Future();
-
-        //    throw new NYI();
-        //    }
 
 
         /// <summary>

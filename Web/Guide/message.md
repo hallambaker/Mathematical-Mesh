@@ -39,23 +39,7 @@ Alice reviews her pending messages using the `message pending` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: NDU7-QGJX-ICCX-UGCO-4CW2-5DLV-64YH
-        Contact Request::
-        MessageID: NDU7-QGJX-ICCX-UGCO-4CW2-5DLV-64YH
-        To: alice@example.com From: bob@example.com
-        PIN: ECAW-VTSJ-FYOI-TAQ6-U2JH-4JM3-UDEF
-MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-        Connection Request::
-        MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-        To:  From: 
-        Device:  MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
-        Witness: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-        Connection Request::
-        MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-        To:  From: 
-        Device:  MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
-        Witness: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
+<rsp>ERROR - An item with the same key has already been added. Key: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
 </div>
 ~~~~
 
@@ -75,9 +59,9 @@ Bob's contact information has been added to Alice's address book:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MBEA-67YL-KUQ7-LFXL-BDVK-WA6H-SV7Q
-  Person MBEA-67YL-KUQ7-LFXL-BDVK-WA6H-SV7Q
-  Anchor MBEA-67YL-KUQ7-LFXL-BDVK-WA6H-SV7Q
+<rsp>Entry<CatalogedContact>: MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Person MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+  Anchor MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
   Address alice@example.com
 
 </div>
@@ -156,28 +140,7 @@ Alice reviews her pending messages using the using the `message pending` command
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: NBA6-OH3N-VXAK-MLLK-BU2B-SLJ7-MHOM
-        Confirmation Request::
-        MessageID: NBA6-OH3N-VXAK-MLLK-BU2B-SLJ7-MHOM
-        To: alice@example.com From: bob@example.com
-        Text: "Purchase
-MessageID: NDU7-QGJX-ICCX-UGCO-4CW2-5DLV-64YH
-        Contact Request::
-        MessageID: NDU7-QGJX-ICCX-UGCO-4CW2-5DLV-64YH
-        To: alice@example.com From: bob@example.com
-        PIN: ECAW-VTSJ-FYOI-TAQ6-U2JH-4JM3-UDEF
-MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-        Connection Request::
-        MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-        To:  From: 
-        Device:  MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
-        Witness: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-        Connection Request::
-        MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-        To:  From: 
-        Device:  MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
-        Witness: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
+<rsp>ERROR - An item with the same key has already been added. Key: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
 </div>
 ~~~~
 
@@ -228,12 +191,6 @@ As with all Mesh messages, confirmation requests are subject to access control.
 When Mallet attempts to make a request of Alice, it is rejected because Alice
 hasn't accepted his credentials or authorized him to send confirmation requests:
 
-
-~~~~
-<div="terminal">
-<cmd>Mallet> message confirm alice@example.com "Purchase equipment for $6,000?"
-<rsp>ERROR - Unspecified error
-</div>
-~~~~
+**Missing Example***
 
 

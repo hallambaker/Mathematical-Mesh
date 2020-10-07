@@ -14,9 +14,8 @@ the mesh service account alice@example.com to which connection is requested:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
-   Witness value = 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-   Personal Mesh = MCOZ-GIZ3-34VQ-GQ6J-FCS7-BJIU-JCOY
+<rsp>   Device UDF = MDYN-U7RH-NCK4-NLPY-VMMT-OIRY-BHH4
+   Witness value = AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
 </div>
 ~~~~
 
@@ -37,18 +36,18 @@ messages.
 ~~~~
 <div="terminal">
 <cmd>Alice> device pending
-<rsp>MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
+<rsp>MessageID: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
         Connection Request::
-        MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
+        MessageID: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
         To:  From: 
-        Device:  MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
-        Witness: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
+        Device:  MAWT-SA4U-LLRU-GJ26-BYRC-ZUBL-YYI3
+        Witness: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
+MessageID: AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
         Connection Request::
-        MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
+        MessageID: AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
         To:  From: 
-        Device:  MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
-        Witness: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
+        Device:  MDYN-U7RH-NCK4-NLPY-VMMT-OIRY-BHH4
+        Witness: AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
 </div>
 ~~~~
 
@@ -58,9 +57,8 @@ Alice sees the request that she posted and approves it with the connect
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device accept 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-<rsp>Result: Accept
-Added device: MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
+<cmd>Alice> device accept AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
+<rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
 
@@ -70,9 +68,8 @@ request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device reject 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-<rsp>Result: Reject
-</div>
+<cmd>Alice> device reject DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
+<rsp></div>
 ~~~~
 
 The connection process is completed by synchronizing the new device. At this point,
@@ -83,10 +80,7 @@ second:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device complete
-<rsp>ERROR - The connection request is still pending
-<cmd>Alice2> account sync
-<rsp>ERROR - Unspecified error
-</div>
+<rsp></div>
 ~~~~
 
 ##Managing connected devices
@@ -106,7 +100,7 @@ The `device delete` command removes a device from the catalog:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device delete 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
+<cmd>Alice> device delete AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
 <rsp>ERROR - The feature has not been implemented
 <cmd>Alice> device list
 <rsp></div>
@@ -129,7 +123,7 @@ a new PIN code:
 ~~~~
 <div="terminal">
 <cmd>Alice> account pin
-<rsp>PIN=ABR4-YOVV-74YV-FW3W-G4MB-H4YZ-QEFP (Expires=2020-07-29T15:49:05Z)
+<rsp>PIN=ABC6-I3XB-KBEG-CEW2-XZOH-VSFH-KGNQ (Expires=2020-09-23T13:13:00Z)
 </div>
 ~~~~
 
@@ -138,7 +132,7 @@ The pin code can now be used to authenticate the connection request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice3> device request alice@example.com /pin=ABR4-YOVV-74YV-FW3W-G4MB-H4YZ-QEFP
+<cmd>Alice3> device request alice@example.com /pin=ABC6-I3XB-KBEG-CEW2-XZOH-VSFH-KGNQ
 <rsp>ERROR - The requested cryptographic operation is not supported
 </div>
 ~~~~
@@ -147,24 +141,7 @@ Since the PIN code that was issued was set to be self-authorizing, the device
 is connected automatically when the user synchronizes their account from an 
 administrator device:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device pending
-<rsp>MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-        Connection Request::
-        MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-        To:  From: 
-        Device:  MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
-        Witness: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
-MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-        Connection Request::
-        MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-        To:  From: 
-        Device:  MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
-        Witness: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
-</div>
-~~~~
+**Missing Example***
 
 
 ### Requesting a connection using an EARL

@@ -15,9 +15,9 @@ Alice adds the username and password for an ftp service to her catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 password
-<rsp>alice1@ftp.example.com = [password]
+<rsp>ERROR - Cannot access a closed file.
 <cmd>Alice> password add www.example.com alice@example.com newpassword
-<rsp>alice@example.com@www.example.com = [newpassword]
+<rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
 
@@ -29,11 +29,7 @@ The `password list` command lists all the passwords in the catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice> password list
-<rsp>CatalogedCredential
-
-CatalogedCredential
-
-</div>
+<rsp></div>
 ~~~~
 
 The output of the list command may be used to configure a user application 
@@ -49,7 +45,7 @@ values for a specified service:
 ~~~~
 <div="terminal">
 <cmd>Alice> password get ftp.example.com
-<rsp>alice1@ftp.example.com = [newpassword]
+<rsp>Empty
 </div>
 ~~~~
 
@@ -86,7 +82,7 @@ password that is randomly generated:
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 newpassword
-<rsp>alice1@ftp.example.com = [newpassword]
+<rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
 
@@ -99,7 +95,8 @@ Password entries may be deleted using the  `password delete` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> password delete www.example.com
-<rsp></div>
+<rsp>ERROR - The entry could not be found in the store.
+</div>
 ~~~~
 
 ## Adding a Device.
@@ -110,7 +107,8 @@ When a device is added, it gets a copy of the password file:
 ~~~~
 <div="terminal">
 <cmd>Alice> device auth Alice2 /password
-<rsp></div>
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
 ~~~~
 
 

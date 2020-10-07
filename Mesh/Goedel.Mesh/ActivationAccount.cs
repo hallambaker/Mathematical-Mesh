@@ -1,12 +1,29 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-using Goedel.Mesh;
-using System;
+
 using System.Collections.Generic;
-using System.IO;
-using Goedel.Protocol;
 using System.Text;
 
 namespace Goedel.Mesh {
@@ -19,7 +36,7 @@ namespace Goedel.Mesh {
         CatalogPublication GetCatalogPublication();
 
         ///<summary>Returns the network catalog for the account</summary>
-        CatalogCapability GetCatalogCapability();
+        CatalogAccess GetCatalogCapability();
 
         /// <summary>
         /// Append a request to append <paramref name="catalogedEntry"/> to the catalog
@@ -46,22 +63,24 @@ namespace Goedel.Mesh {
 
     public partial class ActivationAccount {
 
+
+
         // Properties providing access to account-wide keys.
 
         ///<summary>The account profile signature key.</summary>
-        public KeyPair PrivateProfileSignature { get; set; }
+        public KeyPair ProfileSignatureKey { get; set; }
 
         ///<summary>The account administrator signature key bound to an administrator device.</summary>
         public KeyPair PrivateAdministratorSignature { get; private set; }
 
         ///<summary>The account encryption key under which inbound messages are encrypted.</summary>
-        public KeyPair PrivateAccountEncryption { get; private set; }
+        public KeyPair AccountEncryptionKey { get; private set; }
 
         ///<summary>The account authentication key used to authenticate under the account.</summary>
-        public KeyPair PrivateAccountAuthentication { get; private set; }
+        public KeyPair AccountAuthenticationKey { get; private set; }
 
         ///<summary>The account signature key under which outbound messages are signed.</summary>
-        public KeyPair PrivateAccountSignature { get; private set; }
+        public KeyPair AccountSignatureKey { get; private set; }
 
 
         ///<summary>The enveloped object</summary> 
@@ -86,69 +105,19 @@ namespace Goedel.Mesh {
         public ActivationAccount(
                     IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed) {
-            PrivateProfileSignature = secretSeed.BasePrivate(
-                MeshKeyType.UserRootSign, keyCollection, KeySecurity.Exportable);
-            PrivateAccountEncryption = secretSeed.BasePrivate(
-                MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Exportable);
-            PrivateAccountAuthentication = secretSeed.BasePrivate(
-                MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Exportable);
-            PrivateAccountSignature = secretSeed.BasePrivate(
-                MeshKeyType.UserSign, keyCollection, KeySecurity.Exportable);
+            ProfileSignatureKey = secretSeed.GenerateContributionKeyPair(
+                MeshKeyType.Activation, MeshActor, MeshKeyOperation.Sign,
+                keyCollection, KeySecurity.Exportable);
+            AccountEncryptionKey = secretSeed.GenerateContributionKeyPair(
+                MeshKeyType.Activation, MeshActor, MeshKeyOperation.Encrypt, 
+                keyCollection, KeySecurity.Exportable);
+            AccountAuthenticationKey = secretSeed.GenerateContributionKeyPair(
+                MeshKeyType.Activation, MeshActor, MeshKeyOperation.Authenticate,
+                keyCollection, KeySecurity.Exportable);
+            AccountSignatureKey = secretSeed.GenerateContributionKeyPair(
+                MeshKeyType.Activation, MeshActor, MeshKeyOperation.Profile,
+                keyCollection, KeySecurity.Exportable);
             }
-
-
-        ///// <summary>
-        ///// Constructor returning an activation account for the devive
-        ///// <paramref name="profileDevice"/> with the roles <paramref name="roles"/>.
-        ///// </summary>
-        ///// <param name="keyCollection">The key collection to use.</param>
-        ///// <param name="profileDevice">The profile of the device being activated.</param>
-        ///// <param name="roles">Roles to be granted.</param>
-        //private ActivationAccount(
-        //            IKeyCollection keyCollection,
-        //            ProfileDevice profileDevice, 
-        //            List<string> roles) : base(
-        //                profileDevice, UdfAlgorithmIdentifier.MeshActivationUser) {
-        //    ProfileDevice = profileDevice;
-
-
-        //    //if (secretSeed != null) {
-        //    //    // Generate the private keys
-        //    //    PrivateAccountOfflineSignature = secretSeed.BasePrivate(
-        //    //        MeshKeyType.UserSign, keyCollection, KeySecurity.Exportable);
-        //    //    PrivateAccountEncryption = secretSeed.BasePrivate(
-        //    //        MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Exportable);
-        //    //    PrivateAccountAuthentication = secretSeed.BasePrivate(
-        //    //        MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Exportable);
-        //    //    PrivateAccountOnlineSignature = keyPairOnlineSignature;
-        //    //    }
-        //    //else {
-        //    //    // Attempt to pull private keys from storage
-        //    //    Activate();
-        //    //    }
-
-        //    //if (keyPairOnlineSignature != null) {
-        //    //    AccountOnlineSignature = AddCapability(keyPairOnlineSignature, profileDevice);
-
-        //    //    }
-
-
-        //    var access = new List<Right>();
-
-        //    if (roles == null) {
-        //        }
-        //    else {
-        //        foreach (var role in roles) {
-        //            var rights = Rights.GetRights(role, out var subresource);
-        //            access.Concat(rights);
-        //            }
-        //        }
-
-        //    foreach (var right in access) {
-        //        Grant(profileDevice, right);
-        //        }
-
-        //    }
 
 
         /// <summary>
@@ -194,11 +163,8 @@ namespace Goedel.Mesh {
 
             //PrivateAccountOnlineSignature.AssertNotNull(NotAdministrator.Throw);
 
-
-            profileUser.AssertNotNull(Internal.Throw);
-            profileUser.DareEnvelope.AssertNotNull(Internal.Throw);
-            profileDevice.AssertNotNull(Internal.Throw);
-            profileDevice.DareEnvelope.AssertNotNull(Internal.Throw);
+            profileUser?.DareEnvelope.AssertNotNull(Internal.Throw);
+            profileDevice?.DareEnvelope.AssertNotNull(Internal.Throw);
 
             activationDevice.AssertNotNull(Internal.Throw);
             activationDevice.Package(PrivateAdministratorSignature);
@@ -218,12 +184,12 @@ namespace Goedel.Mesh {
 
             var catalogEntryDevice = new CatalogedDevice() {
                 UDF = activationDevice.UDF,
-                EnvelopedProfileUser = profileUser.EnvelopedProfileUser,
+                EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
                 EnvelopedConnectionUser = connectionDevice.EnvelopedConnectionUser,
                 EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
                 EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
-                DeviceUDF = profileDevice.UDF
+                DeviceUDF = profileDevice.Udf
                 };
 
             return catalogEntryDevice;
@@ -293,7 +259,7 @@ namespace Goedel.Mesh {
         public static KeyPair DeviceBindSignature(
                     ProfileDevice profileDevice,
                     IKeyCollection keyCollection) {
-            return KeyPair.FactorySignature(profileDevice.OfflineSignature.CryptoKey.CryptoAlgorithmId,
+            return KeyPair.FactorySignature(profileDevice.ProfileSignature.CryptoKey.CryptoAlgorithmId,
                             KeySecurity.ExportableStored, keyCollection);
             }
 
@@ -362,7 +328,7 @@ namespace Goedel.Mesh {
         void GrantProfileRoot(ActivationAccount activationAccount, Right right) {
             right.Future();
             activationAccount.ProfileSignature = AddCapability(
-                        PrivateProfileSignature, activationAccount.ProfileDevice);
+                        ProfileSignatureKey, activationAccount.ProfileDevice);
             }
 
         /// <summary>
@@ -388,15 +354,15 @@ namespace Goedel.Mesh {
         void GrantAccount(ActivationAccount activationAccount, Right right) {
             if (right.Decrypt) {
                 activationAccount.AccountEncryption = AddCapability(
-                            PrivateAccountEncryption, activationAccount.ProfileDevice);
+                            AccountEncryptionKey, activationAccount.ProfileDevice);
                 }
             if (right.Authenticate) {
                 activationAccount.AccountAuthentication = AddCapability(
-                            PrivateAccountAuthentication, activationAccount.ProfileDevice);
+                            AccountAuthenticationKey, activationAccount.ProfileDevice);
                 }
             if (right.Sign) {
                 activationAccount.AccountSignature = AddCapability(
-                            PrivateAccountSignature, activationAccount.ProfileDevice);
+                            AccountSignatureKey, activationAccount.ProfileDevice);
                 }
 
             }
@@ -433,13 +399,13 @@ namespace Goedel.Mesh {
             // Need to work out how to add these into the relevant key collections.
 
 
-            PrivateProfileSignature = ProfileSignature?.GetKeyPair(KeySecurity.Exportable);
+            ProfileSignatureKey = ProfileSignature?.GetKeyPair(KeySecurity.Exportable);
             PrivateAdministratorSignature = AdministratorSignature?.GetKeyPair(KeySecurity.Exportable);
-            PrivateAccountEncryption = AccountEncryption?.GetKeyPair(KeySecurity.Exportable);
-            PrivateAccountAuthentication = AccountAuthentication?.GetKeyPair(KeySecurity.Exportable);
-            PrivateAccountSignature = AccountSignature?.GetKeyPair(KeySecurity.Exportable);
-            if (PrivateAccountEncryption != null) {
-                keyCollection.Add(PrivateAccountEncryption);
+            AccountEncryptionKey = AccountEncryption?.GetKeyPair(KeySecurity.Exportable);
+            AccountAuthenticationKey = AccountAuthentication?.GetKeyPair(KeySecurity.Exportable);
+            AccountSignatureKey = AccountSignature?.GetKeyPair(KeySecurity.Exportable);
+            if (AccountEncryptionKey != null) {
+                keyCollection.Add(AccountEncryptionKey);
                 }
             }
 
@@ -457,8 +423,6 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"Activation Account");
             indent++;
             DareEnvelope.Report(builder, indent);
-            indent++;
-
 
             }
         }

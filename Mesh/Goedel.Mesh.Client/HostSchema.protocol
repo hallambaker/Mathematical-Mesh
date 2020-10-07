@@ -21,7 +21,7 @@
 		Boolean Default
 			Description
 				|If true, this is the default for the profile type (master, account)
-		Struct Enveloped<ProfileUser> EnvelopedProfileUser
+		Struct Enveloped<ProfileAccount> EnvelopedProfileAccount
 			Description
 				|The master profile that provides the root of trust for this Mesh
 		Struct CatalogedDevice CatalogedDevice

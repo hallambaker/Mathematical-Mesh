@@ -90,7 +90,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaAccount(CreateExamples Example) {
 
-				 var resultCreateAccount = CommandsAddAcountAlice[0].Result as ResultCreateAccount;
+				 var resultCreateAccount = ProfileCreateAlice[0].Result as ResultCreateAccount;
 				 var profileUser = resultCreateAccount.ProfileUser;
 				 var activationUser = resultCreateAccount.ActivationDevice;
 				 var catalogedDevice = AliceProfiles?.CatalogedDevice;

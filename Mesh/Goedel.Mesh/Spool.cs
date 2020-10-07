@@ -1,4 +1,24 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using System;
@@ -109,7 +129,8 @@ namespace Goedel.Mesh {
                 References ??= new List<Reference>();
                 References.Insert(0, reference);
                 MessageStatus = reference.MessageStatus;
-                Message.MessageStatus = MessageStatus;
+                // Message.MessageStatus = MessageStatus;
+                "Handle the message status properly".TaskFunctionality();
                 }
             else {
                 References.Add(reference);
@@ -123,6 +144,9 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>The decoded message</returns>
         Message Decode() {
+
+
+
             if (DareEnvelope.JsonObject != null) {
                 return DareEnvelope.JsonObject as Message;
                 }
@@ -525,7 +549,7 @@ namespace Goedel.Mesh {
         #region // Properties
 
         ///<summary>Canonical name for local spool</summary>
-        public const string Label = "mmm_Local";
+        public const string Label = MeshConstants.MMM_Local;
         #endregion
         #region // Factory methods and constructors
 
@@ -597,7 +621,7 @@ namespace Goedel.Mesh {
     public class SpoolInbound: Spool {
         #region // Properties
         ///<summary>Canonical name for inbound spool</summary>
-        public const string Label = "mmm_Inbound";
+        public const string Label = MeshConstants.MMM_Inbound;
         #endregion
         #region // Factory methods and constructors
 
@@ -648,7 +672,7 @@ namespace Goedel.Mesh {
     public class SpoolOutbound : Spool {
         #region // Properties
         ///<summary>Canonical name for outbound spool</summary>
-        public const string Label = "mmm_Outbound";
+        public const string Label = MeshConstants.MMM_Outbound;
         #endregion
         #region // Factory methods and constructors
         /// <summary>

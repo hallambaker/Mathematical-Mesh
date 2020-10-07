@@ -2596,7 +2596,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual MessagePIN						MessagePIN  {get; set;}
+		public virtual MessagePin						MessagePIN  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -2690,7 +2690,7 @@ namespace Goedel.Mesh.Shell {
 			switch (tag) {
 				case "MessagePIN" : {
 					// An untagged structure
-					MessagePIN = new MessagePIN ();
+					MessagePIN = new MessagePin ();
 					MessagePIN.Deserialize (jsonReader);
  
 					break;

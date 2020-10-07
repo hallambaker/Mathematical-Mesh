@@ -33,6 +33,7 @@ create   Create a new DARE Container
     /alg   List of algorithm specifiers
     /type   The container type, plain/tree/digest/chain/tree
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -76,6 +77,7 @@ archive   Create a new DARE Container and archive the specified files
     /hash   Compute hash of content
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -117,6 +119,7 @@ Specifying the /json option returns a result of type Result:
 verify   Verify signatures and digests on container.
        Container to read
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -160,6 +163,7 @@ extract   Extract the specified record from the container
     /file   Name of file to extract
     /key   <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -205,6 +209,7 @@ append   Append the specified file as an entry to the specified container
     /hash   Compute hash of content
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -287,6 +292,7 @@ index   Compile an index for the specified container and append to the end.
     /hash   Compute hash of content
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -331,6 +337,7 @@ copy   Copy container contents to create a new container
     /alg   List of algorithm specifiers
     /type   The container type, plain/tree/digest/chain/tree
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

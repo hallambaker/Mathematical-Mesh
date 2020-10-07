@@ -127,11 +127,11 @@ namespace Goedel.Mesh.Shell {
                     }
                 if (Response.EnvelopedProfileService != null) {
                     var profileService = Response.EnvelopedProfileService.Decode();
-                    Builder.AppendLine($"   Service UDF = {profileService.UDF}");
+                    Builder.AppendLine($"   Service UDF = {profileService.Udf}");
                     }
                 if (Response.EnvelopedProfileHost != null) {
                     var profileHost = Response.EnvelopedProfileHost.Decode();
-                    Builder.AppendLine($"   Host UDF = {profileHost.UDF}");
+                    Builder.AppendLine($"   Host UDF = {profileHost.Udf}");
                     }
                 }
 
@@ -188,7 +188,7 @@ namespace Goedel.Mesh.Shell {
             switch (ProcessResult) {
                 case RespondConnection respondConnection: {
                     Builder.AppendLine($"Result: {respondConnection.Result}");
-                    if (respondConnection.Result == Constants.TransactionResultAccept) {
+                    if (respondConnection.Result == MeshConstants.TransactionResultAccept) {
                         Builder.AppendLine($"Added device: {respondConnection.CatalogedDevice.DeviceUDF}");
                         }
                     break;
@@ -248,40 +248,40 @@ namespace Goedel.Mesh.Shell {
 
                 switch (message) {
                     case AcknowledgeConnection acknowledgeConnection: {
-                        ToBuilder(builder, message, $"    Connection Request:");
-                        builder.AppendLine($"        Device:  {acknowledgeConnection.MessageConnectionRequest.ProfileDevice.UDF}");
+                            ToBuilder(builder, message, $"    Connection Request:");
+                        builder.AppendLine($"        Device:  {acknowledgeConnection.MessageConnectionRequest.ProfileDevice.Udf}");
                         builder.AppendLine($"        Witness: {acknowledgeConnection.Witness}");
                         break;
                         }
                     case RequestConfirmation requestConfirmation: {
-                        ToBuilder(builder, message, $"    Confirmation Request:");
+                            ToBuilder(builder, message, $"    Confirmation Request:");
                         builder.AppendLine($"        Text: {requestConfirmation.Text}");
                         break;
                         }
                     case ResponseConfirmation responseConfirmation: {
-                        ToBuilder(builder, message, $"    Confirmation Reply:");
+                            ToBuilder(builder, message, $"    Confirmation Reply:");
                         builder.AppendLine($"        RequestID: {responseConfirmation.Request.Header.EnvelopeID}");
                         builder.AppendLine($"        Accept: {responseConfirmation.Accept}");
                         break;
                         }
                     case RequestTask requestTask: {
-                        ToBuilder(builder, message, $"    Task Request:");
+                            ToBuilder(builder, message, $"    Task Request:");
                         requestTask.Future();
                         break;
                         }
-                    case ReplyContact replyContact: {
-                        ToBuilder(builder, message, $"    Contact Reply:");
-                        builder.AppendLine($"        Witness: {replyContact.PinWitness}->{replyContact.PinUDF}");
-                        builder.AppendLine($"        Nonce: {replyContact.ClientNonce}");
-                        break;
-                        }
-                    case RequestContact requestContact: {
-                        ToBuilder(builder, message, $"    Contact Request:");
+                    //case ReplyContact replyContact: {
+                    //        ToBuilder(builder, message, $"    Contact Reply:");
+                    //    builder.AppendLine($"        Witness: {replyContact.PinWitness}->{replyContact.PinId}");
+                    //    builder.AppendLine($"        Nonce: {replyContact.ClientNonce}");
+                    //    break;
+                    //    }
+                    case Mesh.MessageContact requestContact: {
+                            ToBuilder(builder, message, $"    Contact Request:");
                         builder.AppendLine($"        PIN: {requestContact.PIN}");
                         break;
                         }
                     case GroupInvitation groupInvitation: {
-                        ToBuilder(builder, message, $"    Group invitation:");
+                            ToBuilder(builder, message, $"    Group invitation:");
                         groupInvitation.Future();
                         break;
                         }
@@ -318,7 +318,7 @@ namespace Goedel.Mesh.Shell {
                 }
 
             else if (MessagePIN != null) {
-                Builder.Append($"PIN={MessagePIN.SaltedPIN}");
+                Builder.Append($"PIN={MessagePIN.SaltedPin}");
 
                 if (MessagePIN.Expires != null) {
                     Builder.Append($" (Expires={MessagePIN.Expires.ToRFC3339()})");

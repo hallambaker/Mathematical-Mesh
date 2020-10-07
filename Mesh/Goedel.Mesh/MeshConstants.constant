@@ -1,0 +1,159 @@
+﻿Namespace Goedel.Mesh MeshConstants
+	|Constants specified in hallambaker-mesh-schema
+
+File CatalogLabels
+
+	Code MMM_Access "Access Catalog"
+		Description
+			|Access control policy and keys used to perform threshold enforcement of policy
+	Code MMM_Application "Application Catalog"
+		Description
+			|Configuration information for applications including mail (SMTP, IMAP, OpenPGP, 
+			|S/MIME, etc) and SSH and for the MeshAccount application itself.
+	Code MMM_Bookmark "Bookmark Catalog"
+		Description
+			|Web bookmarks and other citations allowing them to be shared between devices 
+			|connected to the profile.
+	Code MMM_Contact "Contact Catalog"
+		Description
+			|Logical and physical contact information for people and organizations.
+	Code MMM_Credential "Credential Catalog"
+		Description
+			|Credentials used to access network resources.
+	Code MMM_Device "Device Catalog"
+		Description
+			|Descriptions of devices connected to the account and the permissions assigned to them
+	Code MMM_Member "Member Catalog"
+		Description
+			|Group membership.
+	Code MMM_Network "Network Catalog"
+		Description
+			|Network settings such as WiFi access points, IPSEC and TLS VPN configurations, etc.
+	Code MMM_Publication "Publication Catalog"
+		Description
+			|Documents published to the account.
+	Code MMM_Task "Task Catalog"
+		Description
+			|Tasks and appointments assigned to the user including calendar entries and to do lists.
+
+File SpoolLabels
+	Code MMM_Local "Local Spool"
+		Description
+			|Messages sent to the account. 
+		Description
+			|Messages are encrypted under the account encryption keys of the sender and receiver 
+			|that were current at the time the message was sent.
+	Code MMM_Inbound "Inbound Spool"
+		Description
+			|Messages sent from the account.. 
+		Description
+			|Messages are encrypted under the account encryption keys of the sender and receiver 
+			|that were current at the time the message was sent. 
+	Code MMM_Outbound "Outbound Spool"
+		Description
+			|Messages sent from the account for internal use. 
+		Description
+			|Messages are encrypted under the encryption key of the intended recipient alone. 
+			|This is either the account administration encryption key or a device encryption key.
+
+
+
+File MessageStateInbound
+	Enum StateSpoolInbound "Inbound spool message state"
+		Code Initial "Initial state (unread)"
+		Code Read "Message was read"
+
+File MessageStateOutbound
+	Enum StateSpoolOutbound "Outbound spool message state"
+		Code Initial "Initial state (not sent)"
+		Code Sent "Message was sent"
+		Code Received "Message was sent and receipt acknowledged"
+		Code Refused "Message was refused"
+
+File MessageStateLocal
+	Enum StateSpoolLocal "Local spool message state"
+		Code Initial "Initial state (unread)"
+		Code Closed "Transaction associated with the message was completed"
+
+
+
+File MiscUnsorted
+	String MessagePINActionDevice "Device"
+		Description
+			|Action info for device PIN
+	String MessagePINActionContact "Contact"
+		Description
+			|Action info for contact PIN
+	String IanaTypeMeshMessage "application/mmm/message"
+		Description
+			|The proposed IANA content identifier for the Mesh message type.
+	String IanaTypeMeshObject "application/mmm/object"
+		Description
+			|The proposed IANA content identifier for the Mesh message type.
+	String IanaTypeMeshNonce "application/mmm/nonce"
+		Description
+			|The proposed IANA content identifier for the Mesh message type.
+	String IanaTypeMeshAuthenticator "application/mmm/authenticator"
+		Description
+			|The proposed IANA content identifier for the Mesh message type.
+	String MeshConnectURI "mcu"
+		Description
+			|The proposed IANA URI scheme.
+	String ServiceAuthenticatorInfo "mmm/key/authenticate/service"
+		Description
+			|HKDF info tag for deriving Service Authenticator from IKM
+	String DeviceAuthenticatorInfo "mmm/key/authenticate/device"
+		Description
+			|HKDF info tag for deriving Device Authenticator from IKM
+	String PrefixCatalogedGroup "mmm/CatalogedGroup/"
+		Description
+			|Prefix to be applied to form the ID of a mesh group in the catalog.
+
+
+	Function KeyDerivationKeyName "Key Derivation Key Name" "string" KeyName
+		Description
+			|Derivation of the key name from the context in which it is to be used.
+		Parameter type MeshKeyType  "The type of key to create."
+			Conv ".ToLabel()"
+		Parameter actor MeshActor	 "The actor to create the key for."			
+			Conv ".ToLabel()"
+		Parameter operation MeshKeyOperation	 "The operation for which the key is to be used."
+			Conv ".ToLabel()"
+		Formula KeyName "string"
+			|KeyName = type + "_" + actor + "_" + operation
+
+
+	Enum MeshKeyType "Types of cryptographic key that may be created"
+		Code Complete "Complete Key"
+		Code Base  "Base Key Contribution"
+		Code Activation "Activation Key Contribution"
+
+	Enum MeshActor "Actors for which a cryptographic key may be created"
+		Code Account "Account"
+		Code Member "Group Member"
+		Code Device "Device Profile"
+		Code Service "Service Profile"
+		Code Host "Host Profile"
+
+	Enum MeshKeyOperation "Operations for which a cryptographic key may be created"
+		Code Encrypt		"Encryption key"
+		Code Sign			"Signature key"
+		Code Authenticate	"Authentication key"
+		Code Profile		"Profile Signature key"
+		Code Escrow			"Escrow Encryption key"
+
+
+
+
+	String TransactionResultAccept "Accept"
+		Description
+			|Transaction result tag Accept
+	String TransactionResultReject "Reject"
+		Description
+			|Transaction result tag Reject
+	String TransactionResultPending "Pending"
+		Description
+			|Transaction result tag Pending
+	String TransactionResultExpired "Expired"
+		Description
+			|Transaction result tag Expired

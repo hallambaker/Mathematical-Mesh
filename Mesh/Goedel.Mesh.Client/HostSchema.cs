@@ -111,7 +111,7 @@ namespace Goedel.Mesh.Client {
         ///The master profile that provides the root of trust for this Mesh
         /// </summary>
 
-		public virtual Enveloped<ProfileUser>						EnvelopedProfileUser  {get; set;}
+		public virtual Enveloped<ProfileAccount>						EnvelopedProfileAccount  {get; set;}
         /// <summary>
         ///The cataloged device profile
         /// </summary>
@@ -175,10 +175,10 @@ namespace Goedel.Mesh.Client {
 				_writer.WriteToken ("Default", 1);
 					_writer.WriteBoolean (Default);
 				}
-			if (EnvelopedProfileUser != null) {
+			if (EnvelopedProfileAccount != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedProfileUser", 1);
-					EnvelopedProfileUser.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedProfileAccount", 1);
+					EnvelopedProfileAccount.Serialize (_writer, false);
 				}
 			if (CatalogedDevice != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -230,10 +230,10 @@ namespace Goedel.Mesh.Client {
 					Default = jsonReader.ReadBoolean ();
 					break;
 					}
-				case "EnvelopedProfileUser" : {
+				case "EnvelopedProfileAccount" : {
 					// An untagged structure
-					EnvelopedProfileUser = new Enveloped<ProfileUser> ();
-					EnvelopedProfileUser.Deserialize (jsonReader);
+					EnvelopedProfileAccount = new Enveloped<ProfileAccount> ();
+					EnvelopedProfileAccount.Deserialize (jsonReader);
  
 					break;
 					}

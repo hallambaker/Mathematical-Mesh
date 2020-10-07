@@ -121,12 +121,12 @@ namespace Goedel.Cryptography {
         /// then use it to generate an output value od <paramref name="length"/> bits
         /// with additional input <paramref name="info"/>.
         /// </summary>
-        /// <param name="ikm"></param>
-        /// <param name="salt"></param>
-        /// <param name="info"></param>
-        /// <param name="length"></param>
-        /// <param name="algorithm"></param>
-        /// <returns></returns>
+        /// <param name="ikm">The initial keying material</param>
+        /// <param name="salt">The salt value.</param>
+        /// <param name="info">The info tag.</param>
+        /// <param name="length">Number of bits to generate</param>
+        /// <param name="algorithm">HMAC algorithm to use</param>
+        /// <returns>The generated bits.</returns>
         public static byte[] Derive(
                 byte[] ikm, byte[] salt = null, byte[] info = null, int length = 0,
                 CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) {

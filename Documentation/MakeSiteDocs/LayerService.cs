@@ -41,20 +41,27 @@ namespace ExampleGenerator {
         public string DeviceCreateUDF;
         public string DeviceCreateHTTP;
 
-        public List<ExampleResult> CommandsAddServiceAlice;
-        public List<ExampleResult> CommandsDeleteServiceAlice;
-
         public void DoCommandsService() {
 
+            // check connection to service
             ProfileHello = testCLIAlice1.Example($"account hello {AliceService1}");
             ResultHello = ProfileHello[0].Result as ResultHello;
 
+            // Shortcut to existing profile
+            AliceProfiles = ProfileCreateAlice[0].Result as ResultCreatePersonal;
 
-            //JSONReader.Trace = true;
 
-            // here add the service
-            CommandsAddServiceAlice = testCLIAlice1.ExampleNoCatch($"account register {AliceService1}");
-            ProfileSync = testCLIAlice1.Example($"account sync");
+            // Create a Bob Account
+            ProfileCreateBob = testCLIBob1.Example($"account create {BobService} ");
+
+            // Basic get information tests.
+            ProfileList = testCLIAlice1.Example($"mesh list");
+            ProfileDump = testCLIAlice1.Example($"mesh get");
+
+
+            // Import and export test
+            ProfileExport = testCLIAlice1.Example($"mesh export {TestExport}");
+            ProfileImport = testCLIAlice4.Example($"mesh import {TestExport}"); // do on another device (to be created
 
 
 
@@ -68,16 +75,17 @@ namespace ExampleGenerator {
 
 
             var resultPending = (ConnectPending[0].Result as ResultPending);
-            var id1 = resultPending.Messages[0].MessageId;
+            var id1 = resultPending.Messages[1].MessageId;
 
 
             ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
 
 
 
-            var id2 = resultPending.Messages[1].MessageId;
+            var id2 = resultPending.Messages[0].MessageId;
 
-            ConnectSync = testCLIAlice2.Example($"device complete", $"account sync");
+            ConnectSync = testCLIAlice2.Example($"device complete");
+            testCLIAlice2.Example($"account sync");
 
             ConnectReject = testCLIAlice1.Example($"device reject {id2}");
 
@@ -88,10 +96,12 @@ namespace ExampleGenerator {
             // Connect Device 3 using a PIN
             ConnectGetPin = testCLIAlice1.Example($"account pin");
             var resultPin = (ConnectGetPin[0].Result as ResultPIN);
-            var pin = resultPin.MessagePIN.SaltedPIN;
+            var pin = resultPin.MessagePIN.SaltedPin;
             ConnectPin = testCLIAlice3.Example($"device request {AliceService1} /pin={pin}");
-            ConnectPending3 = testCLIAlice1.Example($"device pending");
-            ConnectSyncPIN = testCLIAlice3.Example($"account sync");
+
+            // Bug: fails because of spool not having envelope written to it and this causes closed message to crash
+            //ConnectPending3 = testCLIAlice1.Example($"device pending");
+            //ConnectSyncPIN = testCLIAlice3.Example($"account sync");
 
 
             ConnectEarlPrep = testCLIAlice4.Example("key earl");

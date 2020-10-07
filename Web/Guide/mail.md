@@ -74,7 +74,8 @@ formats to allow installation in a key service:
 ~~~~
 <div="terminal">
 <cmd>Alice> mail openpgp private alice@example.com pgp.private
-<rsp></div>
+<rsp>Empty
+</div>
 ~~~~
 
 The public key may be exported likewise:
@@ -83,7 +84,8 @@ The public key may be exported likewise:
 ~~~~
 <div="terminal">
 <cmd>Alice> mail openpgp public alice@example.com pgp.public
-<rsp></div>
+<rsp>Empty
+</div>
 ~~~~
 
 ## Creating an S/MIME Key Set
@@ -122,7 +124,8 @@ formats to allow installation in a key service:
 ~~~~
 <div="terminal">
 <cmd>Alice> mail smime private alice@example.com smime.private
-<rsp></div>
+<rsp>Empty
+</div>
 ~~~~
 
 The public key may be exported likewise:
@@ -131,6 +134,7 @@ The public key may be exported likewise:
 ~~~~
 <div="terminal">
 <cmd>Alice> mail smime public alice@example.com smime.public
-<rsp></div>
+<rsp>Empty
+</div>
 ~~~~
 

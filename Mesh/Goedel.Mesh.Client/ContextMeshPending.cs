@@ -49,12 +49,10 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogedMachine">The pending connection description.</param>
         public ContextMeshPending(MeshHost meshHost, CatalogedMachine catalogedMachine) :
                     base(meshHost, catalogedMachine) {
-
-
-            keyAuthentication = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceAuthenticate);
-            keyEncryption = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceEncrypt);
-            //keySignature = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceSign);
-
+            keyEncryption = DeviceKeySeed?.GenerateContributionKeyPair(
+                        MeshKeyType.Base, MeshActor.Device, MeshKeyOperation.Authenticate);
+            keyAuthentication = DeviceKeySeed?.GenerateContributionKeyPair(
+                        MeshKeyType.Base, MeshActor.Device, MeshKeyOperation.Encrypt);
             KeyCollection.Add(keyEncryption);
             }
 
@@ -84,17 +82,12 @@ namespace Goedel.Mesh.Client {
                 int bits = 256,
                 List<string> rights =null) {
 
-
             // If accountAddress is a Mesh Connect URI, replace account, pin with the parsed values.
             MeshUri.ParseUri(ref accountAddress, ref pin);
 
-            var secretSeed = new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileDevice, null, null,
-                algorithmEncrypt, algorithmSign, algorithmAuthenticate,
-                bits: bits);
-
-
-            var profileDevice = new ProfileDevice(secretSeed:secretSeed);
+            var profileDevice = ProfileDevice.Generate(
+                        algorithmEncrypt, algorithmSign, algorithmAuthenticate, bits);
+            
             profileDevice.PersistSeed(meshHost.KeyCollection);
 
             return ConnectService(meshHost, profileDevice, accountAddress, localName, pin, rights: rights);
@@ -128,7 +121,7 @@ namespace Goedel.Mesh.Client {
                 accountAddress, pin);
 
             var keyAuthentication = meshHost.KeyCollection.LocatePrivateKeyPair(
-                            profileDevice.KeyAuthentication.UDF);
+                            profileDevice.KeyAuthentication.Udf);
 
             requestConnection.Envelope(keyAuthentication);
 
@@ -145,11 +138,11 @@ namespace Goedel.Mesh.Client {
             // create the pending connection here
 
             var catalogedPending = new CatalogedPending() {
-                Id = profileDevice.UDF,
-                DeviceUDF = profileDevice.UDF,
+                Id = profileDevice.Udf,
+                DeviceUDF = profileDevice.Udf,
                 AccountAddress = accountAddress,
                 EnvelopedAcknowledgeConnection = response.EnvelopedAcknowledgeConnection,
-                EnvelopedProfileUser = response.EnvelopedProfileUser,
+                EnvelopedProfileAccount = response.EnvelopedProfileAccount,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
                 Local = localName
                 };
@@ -185,15 +178,15 @@ namespace Goedel.Mesh.Client {
             respondConnection.Validate(ProfileDevice, KeyCollection);
 
             switch (respondConnection.Result) {
-                case Constants.TransactionResultReject: throw new ConnectionRefused();
-                case Constants.TransactionResultPending: throw new ConnectionPending();
-                case Constants.TransactionResultExpired: throw new ConnectionExpired();
+                case MeshConstants.TransactionResultReject: throw new ConnectionRefused();
+                case MeshConstants.TransactionResultPending: throw new ConnectionPending();
+                case MeshConstants.TransactionResultExpired: throw new ConnectionExpired();
                 }
 
 
             // Check the return result here!
 
-            respondConnection.Result.AssertEqual(Constants.TransactionResultAccept,
+            respondConnection.Result.AssertEqual(MeshConstants.TransactionResultAccept,
                     ConnectionException.Throw);
 
 
@@ -202,9 +195,9 @@ namespace Goedel.Mesh.Client {
 
             // now create the host catalog entry
             var catalogedStandard = new CatalogedStandard() {
-                Id = ProfileDevice.UDF,
+                Id = ProfileDevice.Udf,
                 CatalogedDevice = catalogedEntry,
-                EnvelopedProfileUser = profileUser.EnvelopedProfileUser
+                EnvelopedProfileAccount = profileUser.EnvelopedProfileAccount
                 };
 
             // create the context mesh

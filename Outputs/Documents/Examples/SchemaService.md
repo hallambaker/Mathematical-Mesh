@@ -4,20 +4,20 @@ The service profile
 ~~~~
 {
   "ProfileService":{
-    "KeyOfflineSignature":{
-      "UDF":"MD3E-TZGL-T2KW-XPUT-NLED-JPRG-AGLU",
+    "OfflineSignature":{
+      "UDF":"MDGZ-ESGM-MCSE-3BXY-B4ME-BOOX-FFYA",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"8xQPuniRNzPNmRHmSeyZrb9ScqsSCp4pErZ_Hzg6YWjl9MQ
-  EKnMNq3rMM81Fyn_NJAccdlmLHLGA"}}},
+          "Public":"MCI1XsfgCLf--xJnl9PfzMViO79QbaR1mJbtJ6_1CG4hUFD
+  _NAB4qcoMYEQQ2cJB7w9NBtbmm3GA"}}},
     "KeyEncryption":{
-      "UDF":"MBAO-VKFM-7MLV-XBNE-TRPY-QAGS-WR63",
+      "UDF":"MBHR-3K5E-U3AX-ITPL-TCMP-VUPB-TCXY",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"UVTQoLTObuSA9UH1JIArIaLFgky8_mzGaPNLaxXYRUe1qoX
-  Q_Ozaeg2B6NqKiJZAlS5k_-PXAs8A"}}}}}
+          "Public":"5UZGsrfuLySAER_UDoBTOsuiD8VbTMKLnOLfi4QuLr94ZXu
+  tlVyuX_t1v35V95L2bWcIf3m9nNaA"}}}}}
 ~~~~
 
 The host also has a profile
@@ -25,20 +25,20 @@ The host also has a profile
 ~~~~
 {
   "ProfileHost":{
-    "KeyOfflineSignature":{
-      "UDF":"MCBZ-6BPF-XG3U-DPBF-5CUW-ERYV-EDYS",
+    "OfflineSignature":{
+      "UDF":"MCWA-J6LU-5XPO-WRCA-6Z7E-CH6K-BYM7",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"gJhMP-nkJ4L4cIYSK3KPnGgVcpUFI4UOFaDTYp0qUC7loWV
-  2nkBem9vVFbjbAMlc6v1p5xzL0tMA"}}},
+          "Public":"1nIS6ozRIRAXyWm_6C8-vL4BEus_ThjMgmKGheotjFxYKAp
+  lREV9U2KrKr4C7UF2Vq4Q41mkyT8A"}}},
     "KeyAuthentication":{
-      "UDF":"MDHQ-D6GD-T2WP-IGGV-23HS-EPGE-TX6K",
+      "UDF":"MBS2-GYS3-VFS2-3VKD-EF5G-MTAV-SCR6",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"sY8DKs05Nv4elEcUf4rjTkoTMAwXn8jkst2N6-thywUnuNK
-  my_xw-O3ztQAz4YQz9fluWt8iqnKA"}}}}}
+          "Public":"nzWpY1OyP6yPoWhF0jyWzdNdT6-m35ZWk6sxML-_BkjPdic
+  Pz6SVkc1xYpDK_nGBxjHDG8W2qcMA"}}}}}
 ~~~~
 
 And there should be a connection of the host to the service but this isn't implemented yet:

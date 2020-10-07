@@ -1,4 +1,24 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
@@ -249,7 +269,7 @@ namespace Goedel.Mesh {
                         // Needed to create and publish device connection
                         new Right (Resource.Store, Access.GrantReadWrite, CatalogDevice.Label),
                         new Right (Resource.Store, Access.GrantReadWrite, CatalogContact.Label),
-                        new Right (Resource.Store, Access.GrantReadWrite, CatalogCalendar.Label),
+                        new Right (Resource.Store, Access.GrantReadWrite, CatalogTask.Label),
                         new Right (Resource.Store, Access.GrantReadWrite, CatalogBookmark.Label),
                         new Right (Resource.Store, Access.GrantReadWrite, CatalogDevice.Label),
                         new Right (Resource.Store, Access.GrantReadWrite, CatalogNetwork.Label),
@@ -315,7 +335,7 @@ namespace Goedel.Mesh {
         public readonly static List<Right> RightsWeb =
                     new List<Right>() {
                         new Right(Resource.Store, Access.ReadWrite, CatalogCredential.Label),
-                        new Right(Resource.Store, Access.ReadWrite, CatalogCalendar.Label),
+                        new Right(Resource.Store, Access.ReadWrite, CatalogTask.Label),
                         new Right(Resource.Store, Access.ReadWrite, CatalogBookmark.Label)
                         }.Concat(RightsMessage);
 

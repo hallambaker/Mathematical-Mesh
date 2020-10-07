@@ -111,8 +111,8 @@ namespace Goedel.Mesh.Server {
         /// read access to. Not clear that the clients need access though.
         /// </summary>
         /// <returns></returns>
-        public CatalogCapability GetCatalogCapability() =>
-            new CatalogCapability(AccountEntry.Directory);
+        public CatalogAccess GetCatalogCapability() =>
+            new CatalogAccess(AccountEntry.Directory);
 
         /// <summary>
         /// Post a message to the spool associated with the account. This is the only operation
@@ -227,7 +227,7 @@ namespace Goedel.Mesh.Server {
                     GetStatusStore (SpoolInbound.Label),
                     GetStatusStore (SpoolOutbound.Label),
                     GetStatusStore (SpoolLocal.Label),
-                    GetStatusStore (CatalogCapability.Label)
+                    GetStatusStore (CatalogAccess.Label)
 
                 };
 
@@ -243,7 +243,7 @@ namespace Goedel.Mesh.Server {
                     result.Add(GetStatusStore(CatalogContact.Label));
                     result.Add(GetStatusStore(CatalogApplication.Label));
                     result.Add(GetStatusStore(CatalogBookmark.Label));
-                    result.Add(GetStatusStore(CatalogCalendar.Label));
+                    result.Add(GetStatusStore(CatalogTask.Label));
                     break;
                     }
                 }

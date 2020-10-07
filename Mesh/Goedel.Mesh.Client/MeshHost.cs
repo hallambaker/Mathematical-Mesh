@@ -106,7 +106,7 @@ namespace Goedel.Mesh.Client {
                 DictionaryLocalContextMesh.AddSafe(contextMesh.AccountAddress, contextMesh);
                 }
             if (contextMesh.Profile != null) {
-                DictionaryUDFContextMesh.AddSafe(contextMesh.Profile.UDF, contextMesh);
+                DictionaryUDFContextMesh.AddSafe(contextMesh.Profile.Udf, contextMesh);
                 }
 
             if (machine.Local != null) {
@@ -126,7 +126,7 @@ namespace Goedel.Mesh.Client {
                 DictionaryLocalContextMesh.Remove(contextMesh.AccountAddress);
                 }
             if (contextMesh.Profile != null) {
-                DictionaryUDFContextMesh.Remove(contextMesh.Profile.UDF);
+                DictionaryUDFContextMesh.Remove(contextMesh.Profile.Udf);
                 }
 
             if (machine.Local != null) {
@@ -221,23 +221,20 @@ namespace Goedel.Mesh.Client {
             // First create the initial profile device. This allows us to bind the online
             // signature key to it
             var persistDevice = profileDevice == null;
-            profileDevice ??= new ProfileDevice(algorithmSign: algorithmSign,
+            profileDevice ??= ProfileDevice.Generate(
+                algorithmSign: algorithmSign,
                 algorithmEncrypt: algorithmEncrypt,
                 algorithmAuthenticate: algorithmAuthenticate);
 
 
             // use this as the master seed 
-            var privateKeyUDF = new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileUser, secretSeed);
+            var privateKeyUDF = new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileAccount);
             Screen.WriteLine($"***** Secret Seed = {privateKeyUDF.PrivateValue}");
 
-            //// create the initial online signature key bound to this device
-            //var keyPairOnlineSignature = ContextUser.DeviceBindSignature(
-            //            profileDevice, KeyCollection);
 
             // Create the set of cryptographic keys to initialize the account.
             // create the root activation.
-            var activationRoot = new ActivationAccount(
-                    KeyCollection, privateKeyUDF);
+            var activationRoot = new ActivationAccount(KeyCollection, privateKeyUDF);
 
             // create the initial profile
             var profileUser = new ProfileUser(activationRoot, accountAddress);
@@ -253,10 +250,10 @@ namespace Goedel.Mesh.Client {
 
             // now create the host catalog entry and apply to the context user.
             var catalogedMachine = new CatalogedStandard() {
-                Id = profileDevice.UDF,
+                Id = profileDevice.Udf,
                 Local = localName,
                 CatalogedDevice = catalogedDevice,
-                EnvelopedProfileUser = profileUser.EnvelopedProfileUser
+                EnvelopedProfileAccount = profileUser.EnvelopedProfileAccount
                 };
 
             // Create the account directory.
@@ -267,11 +264,11 @@ namespace Goedel.Mesh.Client {
             if (persistDevice) {
                 profileDevice.PersistSeed(KeyCollection);
                 }
-            KeyCollection.Persist(profileUser.UDF, privateKeyUDF, false);
+            KeyCollection.Persist(profileUser.Udf, privateKeyUDF, false);
 
             var contextUser = new ContextUser(this, catalogedMachine);
-            contextUser.ActivationAccount.PrivateProfileSignature =
-                activationRoot.PrivateProfileSignature;
+            contextUser.ActivationAccount.ProfileSignatureKey =
+                activationRoot.ProfileSignatureKey;
 
             // Set the service 
             contextUser.SetService(accountAddress);

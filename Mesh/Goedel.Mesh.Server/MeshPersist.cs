@@ -123,8 +123,8 @@ namespace Goedel.Mesh.Server {
             using var accountHandle = GetAccountUnverified(requestConnection.AccountAddress);
             var serviceNonce = CryptoCatalog.GetBits(128);
 
-            var MeshUDF = accountHandle.ProfileUser.OfflineSignature.CryptoKey.UDFBytes;
-            var DeviceUDF = requestConnection.ProfileDevice.OfflineSignature.CryptoKey.UDFBytes;
+            var MeshUDF = accountHandle.ProfileUser.ProfileSignature.CryptoKey.UDFBytes;
+            var DeviceUDF = requestConnection.ProfileDevice.ProfileSignature.CryptoKey.UDFBytes;
 
             var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
                 requestConnection.ClientNonce);
@@ -151,7 +151,7 @@ namespace Goedel.Mesh.Server {
 
             var connectResponse = new ConnectResponse() {
                 EnvelopedAcknowledgeConnection = acknowledgeConnection.EnvelopedAcknowledgeConnection,
-                EnvelopedProfileUser = accountHandle.ProfileUser.EnvelopedProfileUser
+                EnvelopedProfileAccount = accountHandle.ProfileUser.EnvelopedProfileAccount
                 };
 
             return connectResponse;
@@ -464,7 +464,7 @@ namespace Goedel.Mesh.Server {
 
 
         CryptographicResult Operate(
-                        CatalogCapability catalogCapability,
+                        CatalogAccess catalogCapability,
                         CryptographicOperation cryptographicOperation) {
 
             switch (cryptographicOperation) {
@@ -478,7 +478,7 @@ namespace Goedel.Mesh.Server {
             }
 
         CryptographicResult Operate(
-                CatalogCapability catalogCapability,
+                CatalogAccess catalogCapability,
                 CryptographicOperationKeyAgreement cryptographicOperation) {
 
             var capability = catalogCapability.TryFindKeyDecryption(cryptographicOperation.KeyId);
@@ -684,7 +684,7 @@ namespace Goedel.Mesh.Server {
 
 
         ///<summary>Cached convenience accessor for <see cref="ProfileUser"/></summary>
-        public ProfileUser ProfileUser => EnvelopedProfileUser.Decode();
+        public ProfileUser ProfileUser => EnvelopedProfileUser.Decode() as ProfileUser;
 
 
         /// <summary>
@@ -697,9 +697,9 @@ namespace Goedel.Mesh.Server {
         /// Constructor creating an Account entry from the request <paramref name="request"/>.
         /// </summary>
         /// <param name="request">The account creation request.</param>
-        public AccountUser(CreateRequest request) {
+        public AccountUser(BindRequest request) {
             AccountAddress = request.AccountAddress;
-            EnvelopedProfileUser = request.EnvelopedProfileUser;
+            EnvelopedProfileUser = request.EnvelopedProfileAccount;
             Verify();
             Directory = AccountAddress;
             }
@@ -716,9 +716,9 @@ namespace Goedel.Mesh.Server {
         /// Constructor creating an Account entry from the request <paramref name="request"/>.
         /// </summary>
         /// <param name="request">The account creation request.</param>
-        public AccountGroup(CreateGroupRequest request) {
+        public AccountGroup(BindRequest request) {
             AccountAddress = request.AccountAddress;
-            EnvelopedProfileGroup = request.EnvelopedProfileGroup;
+            EnvelopedProfileGroup = request.EnvelopedProfileAccount;
             Verify();
             Directory = AccountAddress;
             }

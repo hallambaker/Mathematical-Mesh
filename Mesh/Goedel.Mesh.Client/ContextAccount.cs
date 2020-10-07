@@ -1,6 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Standard;
+using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
 
 using System;
@@ -52,7 +52,8 @@ namespace Goedel.Mesh.Client {
         ///<summary>The device profile</summary>
         public ProfileDevice ProfileDevice => CatalogedMachine?.ProfileDevice;
 
-
+        ///<summary>The current service profile</summary> 
+        public ProfileService ProfileService;
 
         ///<summary>The Machine context.</summary>
         protected IMeshMachineClient MeshMachine=> MeshHost.MeshMachine;
@@ -65,8 +66,11 @@ namespace Goedel.Mesh.Client {
 
 
 
-        ///<summary>The member's device signature key</summary>
-        protected virtual KeyPair KeySignature => throw new NYI();
+        ///<summary>The account profile key</summary>
+        protected virtual KeyPair KeyProfileSignature { get; set; }
+
+        ///<summary>The account encryption key </summary>
+        protected virtual KeyPair KeyAccountSignature { get; set; }
 
         ///<summary>The account encryption key </summary>
         protected virtual KeyPair KeyAccountEncryption { get; set; }
@@ -96,7 +100,7 @@ namespace Goedel.Mesh.Client {
         public virtual Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;
         Dictionary<string, StoreFactoryDelegate> catalogDelegates = new Dictionary<string, StoreFactoryDelegate>() {
              // All contexts have a capability catalog:
-            {CatalogCapability.Label, CatalogCapability.Factory},
+            {CatalogAccess.Label, CatalogAccess.Factory},
             {CatalogPublication.Label, CatalogPublication.Factory}
             };
         ///<summary>List of spools, these are the same for each type of account.</summary>
@@ -138,8 +142,37 @@ namespace Goedel.Mesh.Client {
             CatalogedMachine = catalogedMachine;
             }
 
+
+        public ContextAccount() {
+            }
         #endregion
 
+        #region // Activation of the context
+
+        /// <summary>
+        /// Activate the context using the account seed giving access to the complete keys.
+        /// </summary>
+        /// <param name="accountSeed"></param>
+        public void ActivateAccount(PrivateKeyUDF accountSeed) {
+            KeyProfileSignature = accountSeed.GenerateContributionKeyPair(
+                        MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Profile);
+            KeyAccountSignature = accountSeed.GenerateContributionKeyPair(
+                        MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Sign);
+            KeyAccountEncryption = accountSeed.GenerateContributionKeyPair(
+                        MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Encrypt);
+            KeyDeviceAuthentication = accountSeed.GenerateContributionKeyPair(
+                        MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Authenticate);
+            }
+
+        /// <summary>
+        /// Activate the context using an activation to a threshold contribution
+        /// </summary>
+        /// <param name="activation"></param>
+        public void ActivateAccount(ActivationAccount activation) {
+            throw new NYI();
+            }
+
+        #endregion
         #region // PIN code generation and use
         /// <summary>
         /// Create a PIN value of length <paramref name="length"/> bits valid for 
@@ -151,9 +184,9 @@ namespace Goedel.Mesh.Client {
         /// <param name="action">The action to which this pin is bound.</param>
         /// <param name="automatic">If true, presentation of the pin code is sufficient
         /// to authenticate and authorize the action.</param>
-        /// <returns>A <see cref="MessagePIN"/> instance describing the created parameters.</returns>
-        public MessagePIN GetPIN(string action, bool automatic = true, 
-                            int length = 80, long validity = Constants.DayInTicks) {
+        /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
+        public MessagePin GetPIN(string action, bool automatic = true, 
+                            int length = 80, long validity = MeshConstants.DayInTicks) {
             var pin = UDF.SymmetricKey(length);
             var expires = DateTime.Now.AddTicks(validity);
 
@@ -170,8 +203,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="accountAddress">The account to which the pin is bound.</param>
         /// <param name="action">The action to which the pin is bound.</param>
         /// <returns>The message registered on the Admin spool.</returns>
-        protected MessagePIN RegisterPIN(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
-            var messageConnectionPIN = new MessagePIN(pin, automatic, expires, accountAddress, action);
+        protected MessagePin RegisterPIN(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
+            var messageConnectionPIN = new MessagePin(pin, automatic, expires, accountAddress, action);
 
 
             var transactRequest = TransactBegin();
@@ -183,11 +216,11 @@ namespace Goedel.Mesh.Client {
             }
 
         /// <summary>
-        /// Fetch the <see cref="MessagePIN"/> with the identifier <paramref name="PinUDF"/>.
+        /// Fetch the <see cref="MessagePin"/> with the identifier <paramref name="PinUDF"/>.
         /// </summary>
         /// <param name="PinUDF">The identifier of the PIN</param>
         /// <returns>The message (if found), otherwise null.</returns>
-        public MessagePIN GetMessagePIN(string PinUDF) {
+        public MessagePin GetMessagePIN(string PinUDF) {
             var spoolLocal = GetStore(SpoolLocal.Label) as SpoolLocal;
 
             var pinCreate = spoolLocal.CheckPIN(PinUDF);
@@ -197,11 +230,10 @@ namespace Goedel.Mesh.Client {
                 }
             //pinCreate.Message.Status = pinCreate.MessageStatus;
 
-            return pinCreate?.Message as MessagePIN;
+            return pinCreate?.Message as MessagePin;
             }
 
         #endregion
-
         #region // Account operations sync, send message
 
         /// <summary>
@@ -222,7 +254,7 @@ namespace Goedel.Mesh.Client {
 
             // Erase from the registry
             MeshHost.Deregister(this);
-            MeshHost.Delete(Profile.UDF);
+            MeshHost.Delete(Profile.Udf);
             }
 
 
@@ -365,14 +397,10 @@ namespace Goedel.Mesh.Client {
                     envelopes.Add(container.FrameZero);
                     start++;
                     }
-
-
                 for (var i = start; i < last; i++) {
                     container.MoveToIndex(i);
                     envelopes.Add(container.ReadDirect());
                     }
-
-
                 containerUpdates.Add(containerUpdate);
                 }
 
@@ -391,7 +419,6 @@ namespace Goedel.Mesh.Client {
 
 
         #endregion
-
         #region // Contact management
 
         /// <summary>
@@ -403,7 +430,6 @@ namespace Goedel.Mesh.Client {
                 List<CryptographicCapability> capabilities = null) => throw new NYI();
 
         #endregion
-
         #region // Store management
 
         /// <summary>
@@ -506,7 +532,7 @@ namespace Goedel.Mesh.Client {
 
             // special case this for now
             switch (name) {
-                case CatalogCapability.Label : return new CatalogCapability(StoresDirectory,
+                case CatalogAccess.Label : return new CatalogAccess(StoresDirectory,
                         name, ContainerCryptoParameters, KeyCollection, meshClient: (this as IMeshClient));
                 }
 
@@ -533,9 +559,6 @@ namespace Goedel.Mesh.Client {
             }
 
         #endregion
-
-
-
         #region Implement IKeyLocate
 
 
@@ -588,10 +611,6 @@ namespace Goedel.Mesh.Client {
         /// <param name="keyPair">The key to persist.</param>
         public void Persist(KeyPair keyPair) => KeyCollection.Persist(keyPair);
 
-
-        // Hack: This is just trying to resolve any known key. Should revise the implementation
-        #endregion
-
         /// <summary>
         /// Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
@@ -601,8 +620,7 @@ namespace Goedel.Mesh.Client {
         public virtual bool ValidateTrustAnchor(CryptoKey cryptoKey) {
             throw new NYI();
             }
-
-
+        #endregion
         #region Implement IDare
 
         /// <summary>
@@ -626,9 +644,8 @@ namespace Goedel.Mesh.Client {
                     List<string> recipients = null,
                     bool sign = false) {
 
-            KeyPair signingKey = sign ? KeySignature : null;
+            KeyPair signingKey = sign ? KeyAccountSignature : null;
             List<CryptoKey> encryptionKeys;
-
 
             // probably going to fail here unless we have a way to pull keys out of the contacts catalog 
             // for the group.

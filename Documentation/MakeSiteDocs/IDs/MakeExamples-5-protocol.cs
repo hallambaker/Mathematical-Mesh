@@ -110,11 +110,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequestBinding (Example.CommandsAddServiceAlice[0].Traces[0]);
+				  DescribeRequestBinding (Example.ProfileCreateAlice[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponseBinding (Example.CommandsAddServiceAlice[0].Traces[0]);
+				  DescribeResponseBinding (Example.ProfileCreateAlice[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -129,16 +129,16 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolAccountDelete(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
+				 if (ExampleInvalid (Example.ProfileAliceDelete, 0)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequestBinding (Example.CommandsDeleteServiceAlice[0].Traces[0]);
+				  DescribeRequestBinding (Example.ProfileAliceDelete[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponseBinding (Example.CommandsDeleteServiceAlice[0].Traces[0]);
+				  DescribeResponseBinding (Example.ProfileAliceDelete[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -293,7 +293,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolPostClientService(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
+				 if (ExampleInvalid (Example.ConnectRequest, 0)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
@@ -317,7 +317,6 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolPostServiceService(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("[Not Yet Implemented]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

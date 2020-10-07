@@ -125,7 +125,7 @@ namespace Goedel.Mesh.Shell {
 
             var expire = TimeSpan.Parse(options.Expire.Value);
 
-            var messageConnectionPIN = contextAccount.GetPIN(Constants.MessagePINActionDevice,
+            var messageConnectionPIN = contextAccount.GetPIN(MeshConstants.MessagePINActionDevice,
                         validity: expire.Ticks);
 
             var result = new ResultPIN() {
@@ -228,8 +228,8 @@ namespace Goedel.Mesh.Shell {
             // should switch on algorithm so we can recover different types of profile!!!
 
 
-            (algorithm == UdfAlgorithmIdentifier.MeshProfileUser |
-                algorithm == UdfAlgorithmIdentifier.MeshProfileGroup).AssertTrue(InvalidRecoverySecret.Throw);
+            (algorithm == UdfAlgorithmIdentifier.MeshProfileAccount |
+                algorithm == UdfAlgorithmIdentifier.MeshProfileService).AssertTrue(InvalidRecoverySecret.Throw);
 
             var contextUser = MeshHost.CreateMesh("main", secretSeed: secret.UDFKey);
 

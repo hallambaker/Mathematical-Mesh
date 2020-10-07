@@ -26,12 +26,12 @@ namespace Goedel.XUnit {
 
 
         [Theory]
-        [InlineData(100, MeshKeyType.DeviceProfile)]
-        public void UDFMultipleKeyTest(int iterations, MeshKeyType baseType) {
+        [InlineData(100, UdfAlgorithmIdentifier.MeshProfileDevice)]
+        public void UDFMultipleKeyTest(int iterations, UdfAlgorithmIdentifier udfAlgorithmIdentifier) {
             int fail = 0;
             for (var i = 0; i < iterations; i++) {
                 //Test(UdfAlgorithmIdentifier.MeshProfileDevice, baseType, MeshKeyType.Sign);
-                if (!Test(UdfAlgorithmIdentifier.MeshProfileDevice, baseType, MeshKeyType.Encrypt)) {
+                if (!Test(udfAlgorithmIdentifier, MeshKeyOperation.Encrypt)) {
                     fail++;
                     }
 
@@ -42,38 +42,81 @@ namespace Goedel.XUnit {
 
         // Make test with fixed value so as to be repeatable.
 
-        public bool Test(UdfAlgorithmIdentifier udfAlgorithmIdentifier, MeshKeyType baseType, MeshKeyType keyType) {
+        public bool Test(UdfAlgorithmIdentifier udfAlgorithmIdentifier, MeshKeyOperation operation, int bits = 256) {
 
-            var bits = 256;
-            var baseSeed = new PrivateKeyUDF(udfAlgorithmIdentifier, bits: bits);
-            var activationSeed = UDF.DerivedKey(udfAlgorithmIdentifier + 1, data: Platform.GetRandomBits(bits));
-            keyType |= baseType;
+            (var actor, var keytype) = udfAlgorithmIdentifier.GetMeshKeyType();
 
-            var baseKey = baseSeed.BasePrivate(keyType);
+            var primeUDF = UDF.DerivedKey(udfAlgorithmIdentifier, data: Platform.GetRandomBits(bits));
+            var primeSeed = new PrivateKeyUDF(primeUDF);
+            var primeKey = primeSeed.GenerateContributionKeyPair(keytype, actor, operation);
 
+            var activationUDF = UDF.DerivedKey(udfAlgorithmIdentifier + 1, data: Platform.GetRandomBits(bits));
+            var activationSeed = new PrivateKeyUDF(activationUDF);
+            var activationKey = activationSeed.GenerateContributionKeyPair(MeshKeyType.Activation, actor, operation);
 
-            var basePublic = baseKey.ActivatePublic(activationSeed, keyType);
-
-
-            var basePrivate = baseSeed.ActivatePrivate(activationSeed, keyType);
-
-
-            //basePublic.UDF.AssertEqual(basePrivate.UDF);
-
-            if (basePublic.KeyIdentifier != basePrivate.KeyIdentifier) {
-                var baseKeyX = (baseKey as KeyPairX448).PublicKey.Public;
-                var basePublicX = (basePublic as KeyPairX448).PublicKey.Public;
-                var basePrivateX = (basePrivate as KeyPairX448).PublicKey.Public;
-
-
-                Console.WriteLine("Fail");
-
+            switch (keytype)  {
+                case MeshKeyType.Complete: {
+                    // test splitting the key and recombing it
+                    return TestBase(primeKey as KeyPairAdvanced, activationKey as KeyPairAdvanced, activationUDF, actor, operation);
+                    }
+                case MeshKeyType.Base: {
+                    // test activating the key and recombing it
+                    return TestComplete(primeKey as KeyPairAdvanced, activationKey as KeyPairAdvanced, activationUDF, actor, operation);
+                    }
                 }
 
-
-            return basePublic.KeyIdentifier == basePrivate.KeyIdentifier;
-
+            throw new NYI();
             }
+
+
+        bool TestBase(KeyPairAdvanced baseKey, KeyPairAdvanced activationKey, string activationUDF,
+                    MeshActor actor, MeshKeyOperation operation) {
+            // Check these are both the same kind
+            (baseKey.CryptoAlgorithmId == activationKey.CryptoAlgorithmId).TestTrue();
+
+
+            var activationSeed = new PrivateKeyUDF(activationUDF);
+            var basePublic = baseKey.KeyPairPublic();
+
+            var completeKey = baseKey.Combine(activationKey);
+
+            // view from the admin device creating the activation
+            var completePublic = activationSeed.ActivatePublic(basePublic, actor, operation);
+
+            // view from the connected device using the activation
+            var completePrivate = activationSeed.ActivatePrivate(baseKey, actor, operation);
+
+            // Check that we end up with the same key each way
+            (completePublic.CryptoAlgorithmId == completePrivate.CryptoAlgorithmId).TestTrue();
+            (completeKey.CryptoAlgorithmId == completePrivate.CryptoAlgorithmId).TestTrue();
+
+            (completePublic.KeyIdentifier == completePrivate.KeyIdentifier).TestTrue();
+            (completeKey.KeyIdentifier == completePrivate.KeyIdentifier).TestTrue();
+
+            return true;
+            }
+
+        bool TestComplete(KeyPairAdvanced completeKey, KeyPairAdvanced activationKey, string activationUDF,
+                    MeshActor actor, MeshKeyOperation operation) {
+            // Check these are both the same kind
+            (completeKey.CryptoAlgorithmId == activationKey.CryptoAlgorithmId).TestTrue();
+
+            var activationSeed = new PrivateKeyUDF(activationUDF);
+
+            // Admin device part
+            var thresholdKey = completeKey.GetThresholdKey(activationKey);
+
+            // view from the connected device using the activation
+            var completePrivate = activationSeed.ActivatePrivate(thresholdKey, actor, operation);
+
+            // Check that we end up with the same key each way
+
+            (completeKey.CryptoAlgorithmId == completePrivate.CryptoAlgorithmId).TestTrue();
+            (completeKey.KeyIdentifier == completePrivate.KeyIdentifier).TestTrue();
+
+            return true;
+            }
+
 
 
         [Theory]
@@ -247,32 +290,33 @@ namespace Goedel.XUnit {
 
         public override void Test() {
             var udf = UDF.DerivedKey(UdfAlgorithmIdentifier, data: Seed.ToUTF8());
-            var privatekeyUDF = new PrivateKeyUDF(UdfAlgorithmIdentifier, udf);
+            var privatekeyUDF = new PrivateKeyUDF(UdfAlgorithmIdentifier);
 
             var udfa = UDF.DerivedKey(UdfAlgorithmIdentifier, data: SeedA.ToUTF8());
-            var privatekeyUDFa = new PrivateKeyUDF(UdfAlgorithmIdentifier, udf);
+            var privatekeyUDFa = new PrivateKeyUDF(UdfAlgorithmIdentifier);
 
 
+            (var actor, var _) = UdfAlgorithmIdentifier.GetMeshKeyType();
 
-            var meshKeyType = UdfAlgorithmIdentifier.GetMeshKeyType();
             
             // The base keys
-            var baseSign = privatekeyUDF.BasePrivate(meshKeyType | MeshKeyType.Sign);
-            var baseEncrypt = privatekeyUDF.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
-            var baseAuthenticate = privatekeyUDF.BasePrivate(meshKeyType | MeshKeyType.Authenticate);
+            var baseSign = privatekeyUDF.GenerateContributionKeyPair(MeshKeyType.Base, actor, MeshKeyOperation.Sign);
+            var baseEncrypt = privatekeyUDF.GenerateContributionKeyPair(MeshKeyType.Base, actor, MeshKeyOperation.Encrypt);
+            var baseAuthenticate = privatekeyUDF.GenerateContributionKeyPair(MeshKeyType.Base, actor, MeshKeyOperation.Authenticate);
+
 
             var basePublicSign = baseSign.KeyPairPublic();
             var basePublicEncrypt = baseEncrypt.KeyPairPublic();
             var basePublicAuthenticate = baseAuthenticate.KeyPairPublic();
 
             // The activated keys
-            var privateSign = privatekeyUDFa.ActivatePrivate(privatekeyUDF, meshKeyType | MeshKeyType.Sign);
-            var privateEncrypt = privatekeyUDFa.ActivatePrivate(privatekeyUDF, meshKeyType | MeshKeyType.Encrypt);
-            var privateAuthenticate = privatekeyUDFa.ActivatePrivate(privatekeyUDF, meshKeyType | MeshKeyType.Authenticate);
+            var privateSign = privatekeyUDFa.ActivatePrivate(basePublicSign, actor, MeshKeyOperation.Sign);
+            var privateEncrypt = privatekeyUDFa.ActivatePrivate(basePublicSign, actor, MeshKeyOperation.Encrypt);
+            var privateAuthenticate = privatekeyUDFa.ActivatePrivate(basePublicSign, actor, MeshKeyOperation.Authenticate);
 
-            var publicSign = basePublicSign.ActivatePublic(privatekeyUDFa.PrivateValue, meshKeyType | MeshKeyType.Sign);
-            var publicEncrypt = basePublicEncrypt.ActivatePublic(privatekeyUDFa.PrivateValue, meshKeyType | MeshKeyType.Encrypt);
-            var publicAuthenticate = basePublicAuthenticate.ActivatePublic(privatekeyUDFa.PrivateValue, meshKeyType | MeshKeyType.Authenticate);
+            var publicSign = privatekeyUDFa.ActivatePublic(basePublicSign, actor, MeshKeyOperation.Sign);
+            var publicEncrypt = privatekeyUDFa.ActivatePublic(basePublicSign, actor, MeshKeyOperation.Encrypt);
+            var publicAuthenticate = privatekeyUDFa.ActivatePublic(basePublicSign, actor, MeshKeyOperation.Authenticate);
 
             Test(KeyUses.Sign, privateSign, publicSign);
             Test(KeyUses.Encrypt, privateEncrypt, publicEncrypt);
@@ -300,7 +344,6 @@ namespace Goedel.XUnit {
             yield return new object[] { TEST4 };
             yield return new object[] { TEST_KG_Device };
             yield return new object[] { TEST_KG_User };
-            yield return new object[] { TEST_KG_Group };
             yield return new object[] { TEST_KG_Service };
             }
 
@@ -348,40 +391,27 @@ namespace Goedel.XUnit {
             SeedA = "test1a",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileDevice,
             KeyUses = KeyUses.KeyAgreement,
-            ResultSign = "MCXN-ECWE-YDNI-RZHA-D2D4-EAJ3-WD2N",
-            ResultEncrypt = "MCIR-4KBH-4WMF-DCZA-K4CH-IQKG-EE7V",
-            ResultAuthenticate = "MAVJ-733B-OLW5-O5VC-B7ST-ZZPG-VTVD"
+            //ResultSign = "MCXN-ECWE-YDNI-RZHA-D2D4-EAJ3-WD2N",
+            //ResultEncrypt = "MCIR-4KBH-4WMF-DCZA-K4CH-IQKG-EE7V",
+            //ResultAuthenticate = "MAVJ-733B-OLW5-O5VC-B7ST-ZZPG-VTVD"
             };
 
         // will fail as 
         public static TestVectorUDFKeyGenUdfKey TEST_KG_User = new TestVectorUDFKeyGenUdfKey() {
             Seed = "test1",
             SeedA = "test1a",
-            UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileUser,
+            UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileAccount,
             KeyUses = KeyUses.KeyAgreement,
-            ResultSign = "MCSQ-NZPS-DMRT-QT4A-V2MG-CWFK-AJB7",
-            ResultEncrypt = "MC3T-U35K-KRAR-7OWK-ECWG-KJ4O-MUX4",
-            ResultAuthenticate = "MBN6-L5RR-72N5-GPFD-6SS5-34PZ-RY5J"
+
             };
 
-        public static TestVectorUDFKeyGenUdfKey TEST_KG_Group= new TestVectorUDFKeyGenUdfKey() {
-            Seed = "test1",
-            SeedA = "test1a",
-            UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileGroup,
-            KeyUses = KeyUses.KeyAgreement,
-            ResultSign = "MDPH-JVTG-JIHO-42QY-TI76-L2NH-LWQ2",
-            ResultEncrypt = "MAI5-PA4K-VLIB-6B6Q-J4UC-QCLO-6FAV",
-            ResultAuthenticate = "MA4B-XZCN-NKZG-MD3P-YXCD-QCMN-ZTAB"
-            };
 
         public static TestVectorUDFKeyGenUdfKey TEST_KG_Service = new TestVectorUDFKeyGenUdfKey() {
             Seed = "test1",
             SeedA = "test1a",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileService,
             KeyUses = KeyUses.KeyAgreement,
-            ResultSign = "MATV-XM2M-QQPF-OCIR-XNHQ-HX6E-IWCX",
-            ResultEncrypt = "MDOI-HEQF-4G3S-HQ7F-LA2L-UOE3-6HQM",
-            ResultAuthenticate = "MBFE-EQFQ-O6UD-H3DQ-TMT2-ZD7J-6G2K"
+
             };
 
         #endregion

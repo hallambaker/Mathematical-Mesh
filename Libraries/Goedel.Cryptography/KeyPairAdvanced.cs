@@ -165,8 +165,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="partialKey">The existing key part.</param>
         /// <returns>The computed key</returns>
-        public virtual KeyPairAdvanced GenerateRecryptionKey(KeyPair partialKey) =>
-            GenerateRecryptionKey(new List<KeyPair> { partialKey });
+        public virtual KeyPairAdvanced GetThresholdKey(KeyPair partialKey) =>
+            GetThresholdKey(new List<KeyPair> { partialKey });
 
         /// <summary>
         /// Calculate and return the partial private key such that its value plus the value of 
@@ -174,7 +174,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="partialKeys">The existing key parts.</param>
         /// <returns>The computed key</returns>
-        public virtual KeyPairAdvanced GenerateRecryptionKey(IEnumerable<KeyPair> partialKeys) {
+        public virtual KeyPairAdvanced GetThresholdKey(IEnumerable<KeyPair> partialKeys) {
             var Private = IKeyAdvancedPrivate.CompleteRecryptionKeySet(partialKeys);
             return KeyPair(Private);
             }

@@ -39,12 +39,10 @@ namespace Goedel.Mesh.Client {
         public override Connection Connection => ConnectionGroup;
 
 
-        ///<summary>The member's device signature key</summary>
-        protected override KeyPair KeySignature => null;
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
         public override string StoresDirectory => storesDirectory ??
-            Path.Combine(MeshMachine.DirectoryMesh, ProfileGroup.UDF).CacheValue(out storesDirectory);
+            Path.Combine(MeshMachine.DirectoryMesh, ProfileGroup.Udf).CacheValue(out storesDirectory);
         string storesDirectory;
 
         ///<summary>Dictionarry used to create stores</summary>
@@ -53,7 +51,7 @@ namespace Goedel.Mesh.Client {
             {CatalogMember.Label, CatalogMember.Factory},
 
             // All contexts have a capability catalog:
-            {CatalogCapability.Label, CatalogCapability.Factory},
+            {CatalogAccess.Label, CatalogAccess.Factory},
             {CatalogPublication.Label, CatalogPublication.Factory}
             };
 
@@ -71,6 +69,30 @@ namespace Goedel.Mesh.Client {
             CatalogedGroup = catalogedGroup;
             ContextAccount = contextAccount;
             }
+
+
+        public ContextGroup(ContextUser contextAccount, PrivateKeyUDF secretSeed) {
+            ActivateAccount(secretSeed);
+            }
+
+        public CapabilitySign GetCapabilitySign() {
+            return new CapabilitySign() {
+                Id = UDF.Nonce(),
+                SubjectAddress = AccountAddress,
+                SubjectId = KeyAccountSignature.KeyIdentifier,
+                KeyData = new KeyData(KeyAccountSignature, true),
+                };
+            }
+        public CapabilityKeyGenerate GetCapabilityKeyGenerate() {
+            return new CapabilityKeyGenerate() {
+                Id = UDF.Nonce(),
+                SubjectAddress = AccountAddress,
+                SubjectId = KeyAccountEncryption.KeyIdentifier,
+                KeyData = new KeyData(KeyAccountEncryption, true)
+                };
+
+            }
+
 
         /// <summary>
         /// Create a new group.
@@ -108,28 +130,29 @@ namespace Goedel.Mesh.Client {
             // Pull the contact information from the user's contact catalog
             var networkProtocolEntry = ContextAccount.GetNetworkEntry(memberAddress);
             var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
-            var serviceEncryptionKey = ContextAccount.ProfileUser.ProfileService.KeyEncryption.CryptoKey;
 
+            // will fail because the ProfileService is not set.
+            var serviceEncryptionKey = ContextAccount.ProfileService.KeyEncryption.CryptoKey;
 
             // Create the capability 
             var capabilityService = new CapabilityDecryptServiced() {
-                AuthenticationId = ContextAccount.ProfileUser.UDF,
+                AuthenticationId = ContextAccount.ProfileUser.Udf,
                 KeyDataEncryptionKey = serviceEncryptionKey
                 };
 
             var capabilityMember = new CapabilityDecryptPartial() {
-                Id = ProfileGroup.AccountEncryption.UDF,
-                SubjectId = ProfileGroup.AccountEncryption.UDF,
+                Id = ProfileGroup.AccountEncryption.Udf,
+                SubjectId = ProfileGroup.AccountEncryption.Udf,
                 ServiceAddress = AccountAddress,
                 KeyDataEncryptionKey = userEncryptionKey
                 };
 
             var keyGenerate = transactInvitation.GetCatalogCapability().TryFindKeyGenerate(
-                            ProfileGroup.AccountEncryption.UDF);
+                            ProfileGroup.AccountEncryption.Udf);
             keyGenerate.CreateShares(capabilityService, capabilityMember);
 
             // Fix up the identifiers.
-            capabilityMember.ServiceId = capabilityMember.KeyData.UDF;
+            capabilityMember.ServiceId = capabilityMember.KeyData.Udf;
             capabilityService.Id = capabilityMember.ServiceId;
             capabilityService.SubjectId = capabilityMember.ServiceId;
 
@@ -152,14 +175,11 @@ namespace Goedel.Mesh.Client {
                 ServiceCapabilityId = capabilityService.Id,
                 };
 
-
             transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);
-
-
 
             // update the capabilities catalog to add the service capability
             var catalogCapability = transactGroup.GetCatalogCapability();
-            var catalogedCapability = new CatalogedCapability(capabilityService);
+            var catalogedCapability = new CatalogedAccess(capabilityService);
             transactGroup.CatalogUpdate(catalogCapability, catalogedCapability);
 
             // update the members catalog to add the member entry
@@ -189,7 +209,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             var anchorAccount = new Anchor() {
-                UDF = ProfileGroup.UDF,
+                UDF = ProfileGroup.Udf,
                 Validation = "Self"
                 };
             // ContextMesh.ProfileMesh.UDF 

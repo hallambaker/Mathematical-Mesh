@@ -827,7 +827,7 @@ namespace ExampleGenerator {
 
             KeyPairDevice = UDF.DeriveKey(KeyUDFDevice, keySecurity: KeySecurity.Exportable) as KeyPairEd25519;
 
-            KeyPairService = KeyPairGroup.GenerateRecryptionKey(KeyPairDevice) as KeyPairEd25519;
+            KeyPairService = KeyPairGroup.GetThresholdKey(KeyPairDevice) as KeyPairEd25519;
 
 
             Envelope = new DareEnvelope(CryptoParametersGroup, Plaintext);

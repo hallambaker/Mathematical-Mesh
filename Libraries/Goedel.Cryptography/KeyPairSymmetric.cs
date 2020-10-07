@@ -28,10 +28,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="secretValue">The secret value.</param>
         /// <param name="udfTypeIdentifier">The UDF type identifier to create. This
-        /// is either <see cref="UdfTypeIdentifier.Encryption"/> or
-        /// <see cref="UdfTypeIdentifier.EncryptionSignature"/></param>
+        /// is either <see cref="UdfTypeIdentifier.Encryption_HKDF_AES_512"/> or
+        /// <see cref="UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512"/></param>
         public CryptoKeySymmetric(byte[] secretValue, 
-                    UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption) {
+                    UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_512) {
 
             // Create the presentation of the secret value.
             SecretValue = secretValue;
@@ -167,7 +167,7 @@ namespace Goedel.Cryptography {
                 int bits = 0,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Ed448,
                 CryptoAlgorithmId algorithmDigest = CryptoAlgorithmId.SHA_2_512) :
-                    base (CreateKey (out var keyPair, keySecurity, bits, algorithmSign, algorithmDigest), UdfTypeIdentifier.EncryptionSignature) {
+                    base (CreateKey (out var keyPair, keySecurity, bits, algorithmSign, algorithmDigest), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
             SigningKey = keyPair;
 
 
@@ -196,10 +196,10 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Constructor creating an instance from the key identifier <paramref name="keyIdentifier"/>.
         /// </summary>
-        /// <param name="keyIdentifier">The decryption/ferification key.</param>
+        /// <param name="keyIdentifier">The decryption/verification key.</param>
         public CryptoKeySymmetricSigner(
                 string keyIdentifier) : 
-                    base (UDF.SymmetricKeyData(keyIdentifier), UdfTypeIdentifier.EncryptionSignature) {
+                    base (UDF.SymmetricKeyData(keyIdentifier), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
 
             }
 

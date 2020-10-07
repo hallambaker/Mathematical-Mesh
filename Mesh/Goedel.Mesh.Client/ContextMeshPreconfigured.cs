@@ -77,8 +77,8 @@ namespace Goedel.Mesh.Client {
             // Create a pending connection entry.
             var profileDevice = CatalogedPreconfigured.ProfileDevice;
             var catalogedPending = new CatalogedPending() {
-                Id = profileDevice.UDF,
-                DeviceUDF = profileDevice.UDF,
+                Id = profileDevice.Udf,
+                DeviceUDF = profileDevice.Udf,
                 AccountAddress = messageClaim.Sender,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
                 EnvelopedAcknowledgeConnection = 
@@ -133,14 +133,14 @@ namespace Goedel.Mesh.Client {
             var serviceAuthenticator = CatalogedPublication.GetServiceAuthenticator(key);
             var deviceAuthenticator = CatalogedPublication.GetDeviceAuthenticator(key);
 
-            var profileDevice = new ProfileDevice(secretSeed: privateKeyUDF);
+            var profileDevice = new ProfileDevice(privateKeyUDF);
             profileDevice.PersistSeed(meshHost.KeyCollection);
 
             // create a Mesh Host entry.
 
             var catalogedPreconfig = new CatalogedPreconfigured() {
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
-                Id = profileDevice.UDF,
+                Id = profileDevice.Udf,
                 ServiceAuthenticator = serviceAuthenticator,
                 DeviceAuthenticator = deviceAuthenticator,
                 PublicationId = publicationID,

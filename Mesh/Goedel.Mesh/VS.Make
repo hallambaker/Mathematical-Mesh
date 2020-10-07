@@ -25,12 +25,16 @@ LinkFiles = \
 ToolTargets = \
 	Exceptions.cs\
 	ProtocolSchema.cs\
+	MeshConstants.cs\
 	SchemaMesh.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 ProtocolSchema.cs : ProtocolSchema.Protocol 
 	protogen ProtocolSchema.Protocol  /cs  ProtocolSchema.cs
+
+MeshConstants.cs : MeshConstants.Constant 
+	constant MeshConstants.Constant  
 
 SchemaMesh.cs : SchemaMesh.protocol 
 	protogen SchemaMesh.protocol  /cs  SchemaMesh.cs

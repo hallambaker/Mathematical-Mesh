@@ -39,6 +39,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="UDFConstants.cs">
+      <DependentUpon>UDFConstants.Constant</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="PKIX\PKIX.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -55,7 +60,11 @@
       <Generator>ASN2CS</Generator>
       <LastGenOutput>PKIX.cs</LastGenOutput>
     </None>
-  </ItemGroup>
+      <None Update="UDFConstants.Constant">
+      <Generator>Constant</Generator>
+        <LastGenOutput>UDFConstants.cs</LastGenOutput>
+    </None>  
+</ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="VSPostBuild" />

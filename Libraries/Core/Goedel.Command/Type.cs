@@ -251,7 +251,7 @@ namespace Goedel.Command {
             if (!ByDefault) {
                 return Value;
                 }
-            return Path.ChangeExtension(input, Value);
+            return Path.ChangeExtension(input, Extension);
 
             }
 

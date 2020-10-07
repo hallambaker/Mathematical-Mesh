@@ -90,7 +90,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarGet(CalendarGet options) {
             var contextAccount = GetContextUser(options);
-            var catalog = contextAccount.GetStore(CatalogCalendar.Label) as CatalogCalendar;
+            var catalog = contextAccount.GetStore(CatalogTask.Label) as CatalogTask;
             var identifier = options.Identifier.Value;
 
             var result = catalog.Locate(identifier);
@@ -110,7 +110,7 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextUser(options);
             var catalogedEntries = new List<CatalogedEntry>();
 
-            var catalog = contextAccount.GetStore(CatalogCalendar.Label) as CatalogCalendar;
+            var catalog = contextAccount.GetStore(CatalogTask.Label) as CatalogTask;
             foreach (var entry in catalog) {
                 catalogedEntries.Add(entry);
                 }

@@ -1,5 +1,6 @@
-﻿//   Copyright © 2015 by Comodo Group Inc.
-//  
+﻿//  Copyright © 2015 by Comodo Group Inc.
+//  Copyright © 2019,2020 by Threshold Secrets LLc.
+
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -26,148 +27,12 @@ using System.Text;
 
 namespace Goedel.Cryptography {
 
-    #region // Constants and enumerations
-
-    /// <summary>
-    /// UDF type identifier codes
-    /// </summary>
-    public enum UdfTypeIdentifier {
-        ///<summary>Authenticator using HMAC-SHA-2-512</summary>
-        AuthenticatorHMAC_SHA_2_512 = 0,
-
-        ///<summary>Authenticator using HMAC-SHA-3-512</summary>
-        AuthenticatorHMAC_SHA_3_512 = 1,
-
-        ///<summary>Encryption/Authentication key</summary>
-        Encryption = 32,
-
-        ///<summary>Encryption/Signature key</summary>
-        EncryptionSignature = 33,
-
-        ///<summary>Content Digest using SHA-2-512</summary>
-        DigestAlgSHA_2_512 = 96,
-
-        ///<summary>Content Digest using SHA-3-512</summary>
-        DigestSHA_3_512 = 80,
-
-        ///<summary>Type code for random nonce</summary>
-        Nonce = 104,
-
-        ///<summary>Type code for OID Sequence</summary>
-        OID = 112,
-
-        ///<summary>Type code for Shamir secret</summary>
-        ShamirSecret = 144,
-
-        ///<summary>Type code for derived key</summary>
-        DerivedKey = 200,
-
-        ///<summary>Undefined value</summary>
-        Unknown = -1
-        }
-
-    ///<summary>Algorithm identifier codes for Derived keys</summary>
-    public enum UdfAlgorithmIdentifier {
-
-        ///<summary>X25519 keypair as described in RFC7748</summary>
-        X25519 = 1,
-        ///<summary>X448 keypair as described in RFC7748</summary>
-        X448 = 2,
-        ///<summary>Ed25519 keypair as described in RFC8032</summary>
-        Ed25519 = 3,
-        ///<summary>Ed448 keypair as described in RFC8032</summary>
-        Ed448 = 4,
-        ///<summary>NIST curve P-256</summary>
-        P256 = 5,
-        ///<summary>NIST curve P-384</summary>
-        P384 = 6,
-        ///<summary>NIST curve P-521</summary>
-        P521 = 7,
-        ///<summary>2048 bit RSA keypair</summary>
-        RSA2048 = 8,
-        ///<summary>3072 bit RSA keypair</summary>
-        RSA3072 = 9,
-        ///<summary>4096 bit RSA keypair</summary>
-        RSA4096 = 10,
-
-
-        ///<summary>Mesh device profile</summary>
-        MeshProfileDevice = 258,
-
-        ///<summary>Mesh device profile</summary>
-        MeshActivationDevice = 259,
-
-        ///<summary>Mesh device profile</summary>
-        MeshProfileUser = 250,
-
-
-        ///<summary>Mesh device profile</summary>
-        MeshActivationUser = 261,
-
-        ///<summary>Mesh device profile</summary>
-        MeshProfileGroup = 262,
-
-        ///<summary>Mesh device profile</summary>
-        MeshActivationGroup = 263,
-
-        ///<summary>Mesh device profile</summary>
-        MeshProfileService = 264,
-
-        ///<summary>Mesh device profile</summary>
-        MeshActivationService = 265,
-
-
-
-        ///<summary>Seed MAY be used to generate keypairs for any algorithm</summary>
-        Any = 0
-        }
-
-
-
-
-    /// <summary>
-    /// Constants used in building UDF values.
-    /// </summary>
-    public partial class UDFConstants {
-
-        /// <summary>
-        /// Content type identifier for PKIX KeyInfo data type
-        /// </summary>
-        public const string PKIXKey = "application/x509-keyinfo";
-
-        /// <summary>
-        /// Content type identifier for OpenPGP Key
-        /// </summary>
-        public const string OpenPGPKey = "application/openpgp-keys";
-
-        /// <summary>
-        /// Content type for mesh escrowed key
-        /// </summary>
-        public const string EscrowedKey = "application/mmm-escrowed";
-
-        /// <summary>
-        /// UDF Fingerprint list
-        /// </summary>
-        public const string UDFEncryption = "application/udf-encryption";
-
-        /// <summary>
-        /// UDF Fingerprint list
-        /// </summary>
-        public const string UDFSecret = "application/udf-secret";
-
-        /// <summary>
-        /// UDF Fingerprint list
-        /// </summary>
-        public const string UDFLock = "application/udf-lock";
-
-        }
-
-    #endregion
-
     /// <summary>
     /// Class implementing the Uniform Data Fingerprint spec.
     /// </summary>
     public static class UDF {
+        
+        #region // Constants
 
         // Test: Matching UDF values against strings.
         // Goal: Eliminate all UDF string values in profiles and use binary blobs for comparison
@@ -195,10 +60,10 @@ namespace Goedel.Cryptography {
         public static CryptoAlgorithmId GetCryptoAlgorithmId(UdfTypeIdentifier typeIdentifier) =>
             typeIdentifier switch
                 {
-                    UdfTypeIdentifier.AuthenticatorHMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
-                    UdfTypeIdentifier.AuthenticatorHMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
-                    UdfTypeIdentifier.DigestAlgSHA_2_512 => CryptoAlgorithmId.SHA_2_512,
-                    UdfTypeIdentifier.DigestSHA_3_512 => CryptoAlgorithmId.SHA_3_512,
+                    UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+                    UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
+                    UdfTypeIdentifier.Digest_SHA_2_512 => CryptoAlgorithmId.SHA_2_512,
+                    UdfTypeIdentifier.Digest_SHA_3_512 => CryptoAlgorithmId.SHA_3_512,
                     _ => CryptoAlgorithmId.Unknown
                     };
 
@@ -208,16 +73,16 @@ namespace Goedel.Cryptography {
         /// <param name="typeIdentifier">The cryptographic algorithm identifier.</param>
         /// <returns>The UDF type identifier.</returns>
         public static UdfTypeIdentifier GetUDFTypeIdentifier(CryptoAlgorithmId typeIdentifier) =>
-    typeIdentifier switch
-        {
-            CryptoAlgorithmId.HMAC_SHA_2_512=>UdfTypeIdentifier.AuthenticatorHMAC_SHA_2_512 ,
-            CryptoAlgorithmId.HMAC_SHA_3_512=> UdfTypeIdentifier.AuthenticatorHMAC_SHA_3_512 ,
-            CryptoAlgorithmId.SHA_2_512=>UdfTypeIdentifier.DigestAlgSHA_2_512 ,
-            CryptoAlgorithmId.SHA_3_512=>UdfTypeIdentifier.DigestSHA_3_512 ,
-            _ => UdfTypeIdentifier.Unknown
-            };
+            typeIdentifier switch
+                {
+                    CryptoAlgorithmId.HMAC_SHA_2_512=>UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 ,
+                    CryptoAlgorithmId.HMAC_SHA_3_512=> UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 ,
+                    CryptoAlgorithmId.SHA_2_512=>UdfTypeIdentifier.Digest_SHA_2_512 ,
+                    CryptoAlgorithmId.SHA_3_512=>UdfTypeIdentifier.Digest_SHA_3_512 ,
+                    _ => UdfTypeIdentifier.Unknown
+                    };
 
-
+        #endregion
         #region // Conversions to binary UDF value
         /// <summary>
         /// Calculate a UDF fingerprint from the content data with specified precision.
@@ -291,11 +156,11 @@ namespace Goedel.Cryptography {
             UdfTypeIdentifier versionID;
             switch (cryptoAlgorithmID) {
                 case CryptoAlgorithmId.SHA_2_512: {
-                    versionID = UdfTypeIdentifier.DigestAlgSHA_2_512;
+                    versionID = UdfTypeIdentifier.Digest_SHA_2_512;
                     break;
                     }
                 case CryptoAlgorithmId.SHA_3_512: {
-                    versionID = UdfTypeIdentifier.DigestSHA_3_512;
+                    versionID = UdfTypeIdentifier.Digest_SHA_3_512;
                     break;
                     }
                 default: {
@@ -362,7 +227,7 @@ namespace Goedel.Cryptography {
                 case CryptoAlgorithmId.SHA_2_512: {
                     var macKey = KeyStringToKey(key, 512);
                     UDFData = buffer.GetMAC(macKey, CryptoAlgorithmId.HMAC_SHA_2_512);
-                    versionID = UdfTypeIdentifier.AuthenticatorHMAC_SHA_2_512;
+                    versionID = UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512;
                     return TypeBDSToBinary(versionID, UDFData, bits);
                     }
                 default: {
@@ -516,11 +381,8 @@ namespace Goedel.Cryptography {
             return t1 == t2;
             }
         #endregion
-
-
-
         #region // Conversions to string UDF value
-
+        #region // Presentation methods
         /// <summary>
         /// convert a UDF fingerprint from binary to string form.
         /// </summary>
@@ -538,7 +400,8 @@ namespace Goedel.Cryptography {
             var Length = (bits + 4) / 5;
             return buffer.ToStringBase32(format: ConversionFormat.Dash4, outputMax: Length);
             }
-
+        #endregion
+        #region // Content Digest
 
 
         /// <summary>
@@ -641,7 +504,7 @@ namespace Goedel.Cryptography {
                     byte[] key,
                     int bits = 0,
                     CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512,
-                    UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption) =>
+                    UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_512) =>
             TypeBDSToString(udfTypeIdentifier, 
                 SymetricKeyIdBytes(key, bits, cryptoAlgorithmID));
 
@@ -670,14 +533,14 @@ namespace Goedel.Cryptography {
         public static byte[] SymmetricKeyData(string udf) {
 
             var result = Parse(udf, out var code);
-            (code == (byte)UdfTypeIdentifier.Encryption |
-                code == (byte)UdfTypeIdentifier.EncryptionSignature
+            (code == (byte)UdfTypeIdentifier.Encryption_HKDF_AES_512 |
+                code == (byte)UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512
                 ).AssertTrue(OperationNotSupported.Throw);
 
             return result;
             }
-
-
+        #endregion
+        #region // HKDF
         /// <summary>
         /// Generate a UDF key by means of a HKDF on the initial keying material 
         /// <paramref name="ikm"/> with info tag <paramref name="info"/>.
@@ -779,9 +642,7 @@ namespace Goedel.Cryptography {
 
 
         #endregion
-
-
-
+        #region // UDF Lock file name
         /// <summary>
         /// Calculate the UDF lock identifier for a local file.
         /// </summary>
@@ -799,7 +660,8 @@ namespace Goedel.Cryptography {
             return PresentationBase32(buffer, bits);
             }
 
-
+        #endregion
+        #region // Nonce
         /// <summary>
         /// Return a random sequence as a UDF 
         /// </summary>
@@ -812,6 +674,8 @@ namespace Goedel.Cryptography {
             return TypeBDSToString(UdfTypeIdentifier.Nonce, Data, bits + 8);
             }
 
+        #endregion
+        #region // OID
         /// <summary>
         /// Return the OID Sequence describing the public key <paramref name="keyPair"/>.
         /// </summary>
@@ -823,7 +687,8 @@ namespace Goedel.Cryptography {
             return TypeBDSToString(UdfTypeIdentifier.OID, Data, bits + 8);
             }
 
-
+        #endregion
+        #region // Symmetric
 
         /// <summary>
         /// Return a random sequence as a UDF 
@@ -834,7 +699,7 @@ namespace Goedel.Cryptography {
             bits = bits <= 0 ? DefaultBits - 8 : bits;
 
             var Data = CryptoCatalog.GetBits(bits);
-            return TypeBDSToString(UdfTypeIdentifier.Encryption, Data, bits + 8);
+            return TypeBDSToString(UdfTypeIdentifier.Encryption_HKDF_AES_512, Data, bits + 8);
             }
 
         /// <summary>
@@ -844,8 +709,11 @@ namespace Goedel.Cryptography {
         /// <returns>A randomly generated UDF string.</returns>
         public static string SymmetricKey(byte[] Data) {
             var bits = Data.Length * 8;
-            return TypeBDSToString(UdfTypeIdentifier.Encryption, Data, bits + 8);
+            return TypeBDSToString(UdfTypeIdentifier.Encryption_HKDF_AES_512, Data, bits + 8);
             }
+
+        #endregion
+        #region // Key Share
 
         /// <summary>
         /// Return the key value <paramref name="Data"/> in UDF form.
@@ -866,7 +734,8 @@ namespace Goedel.Cryptography {
         public static string SymmetricKeyUDF(byte[] data) => ContentDigestOfUDF(SymmetricKey(data));
 
 
-
+        #endregion
+        #region // Convert KeyInfo
 
         /// <summary>
         /// Calculate a UDF fingerprint from a PKIX KeyInfo blob with specified precision.
@@ -881,7 +750,9 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) =>
             DataToUDFBinary(data, UDFConstants.PKIXKey, bits, cryptoAlgorithmID);
 
-
+        #endregion
+        #endregion
+        #region // Parse string to get value
 
         /// <summary>
         /// Parse a UDF to obtain the type identifier and Binary Data Sequence.
@@ -916,7 +787,7 @@ namespace Goedel.Cryptography {
         /// <returns>The key value.</returns>
         public static byte[] SymmetricKey(string udf) {
             var result = Parse(udf, out var code);
-            return code == (byte)UdfTypeIdentifier.Encryption ? result : null;
+            return code == (byte)UdfTypeIdentifier.Encryption_HKDF_AES_512 ? result : null;
             }
 
         /// <summary>
@@ -929,7 +800,7 @@ namespace Goedel.Cryptography {
             var result = Parse(udf, out var code);
             return code == (byte)UdfTypeIdentifier.ShamirSecret ? result : null;
             }
-
+        #endregion
         #region // Convenience functions
         /// <summary>
         /// Check that a UDF fingerprint satisfies a test value. At present
@@ -988,7 +859,6 @@ namespace Goedel.Cryptography {
             address = Builder.ToString();
             }
         #endregion
-
         #region // Witness values
         /// <summary>
         /// Make a witness value from two input fingerprints and nonces.
@@ -1073,6 +943,9 @@ namespace Goedel.Cryptography {
 
             var provider = Platform.HMAC_SHA2_512.CryptoProviderAuthentication();
 
+
+            "Convert PINs to binary form".TaskFunctionality(true);
+
             var encoder = provider.MakeAuthenticator(pin.ToUTF8());
 
             encoder.InputStream.Write(p1, 0, p1.Length);
@@ -1102,12 +975,12 @@ namespace Goedel.Cryptography {
                     byte[] p2 = null,
                     byte[] p3 = null,
                     int bits = 0) =>
-             TypeBDSToString(UdfTypeIdentifier.AuthenticatorHMAC_SHA_2_512, PinWitness(pin, p1, p2, p3), bits);
+             TypeBDSToString(UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512, PinWitness(pin, p1, p2, p3), bits);
 
 
 
         #endregion
-
+        #region // Key Derrivation
 
         /// <summary>
         /// Construct a key specifier for the specified algorithm.
@@ -1121,8 +994,6 @@ namespace Goedel.Cryptography {
             result[1] = (byte)((int)algorithmIdentifier & 0xff);
             result[0] = (byte)((int)algorithmIdentifier >> 8 & 0xff);
             return result;
-
-
             }
 
 
@@ -1172,31 +1043,7 @@ namespace Goedel.Cryptography {
         /// <returns></returns>
         public static KeyPair DeriveKey(string udf,
                     KeySecurity keySecurity = KeySecurity.Public,
-                    KeyUses keyUses = KeyUses.Any) {
-
-            var binaryData = Parse(udf, out var code);
-            (code == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(OperationNotSupported.Throw);
-
-            var algorithm = (UdfAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
-            var salt = KeySpecifier(algorithm);
-
-
-            switch (algorithm) {
-                case UdfAlgorithmIdentifier.Ed25519: {
-                    return new KeyPairEd25519(binaryData, salt, keySecurity, keyUses);
-                    }
-                case UdfAlgorithmIdentifier.Ed448: {
-                    return new KeyPairEd448(binaryData, salt, keySecurity, keyUses);
-                    }
-                case UdfAlgorithmIdentifier.X25519: {
-                    return new KeyPairX25519(binaryData, salt, keySecurity, keyUses);
-                    }
-                case UdfAlgorithmIdentifier.X448: {
-                    return new KeyPairX448(binaryData, salt, keySecurity, keyUses);
-                    }
-                }
-            throw new NYI();
-            }
+                    KeyUses keyUses = KeyUses.Any) => DeriveKey(udf, null, keySecurity, keyUses);
 
 
         /// <summary>
@@ -1208,22 +1055,20 @@ namespace Goedel.Cryptography {
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <param name="keySecurity">The key security model.</param>
         /// <param name="keyUses">The allowed key uses.</param>
-        /// <param name="saltSuffix">Optional salt suffix used to differentiate the key.</param>
+        /// <param name="keyName">Optional key name used to specify generation of multiple keys from 
+        /// a single seed.</param>
         /// <returns>The derrived key pair.</returns>
         public static KeyPair DeriveKey(string udf,
                     IKeyLocate keyCollection,
                     KeySecurity keySecurity = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmId cryptoAlgorithmIDin = CryptoAlgorithmId.Default,
-                    string saltSuffix=null) {
+                    string keyName = null) {
 
-            var binaryData = Parse(udf, out var code);
+            var ikm = Parse(udf, out var code);
             (code == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(OperationNotSupported.Throw);
 
-            var algorithm = (UdfAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
-            var salt = saltSuffix == null ? KeySpecifier(algorithm) :
-                KeySpecifier(algorithm).Concatenate(saltSuffix.ToBytes());
-
+            var algorithm = (UdfAlgorithmIdentifier)(256 * ikm[0] + ikm[1]);
 
 
             int keySize = 0;
@@ -1245,13 +1090,11 @@ namespace Goedel.Cryptography {
                     cryptoAlgorithmID = CryptoAlgorithmId.X448;
                     break;
                     }
-
+                case UdfAlgorithmIdentifier.Any:
                 case UdfAlgorithmIdentifier.MeshProfileDevice:
                 case UdfAlgorithmIdentifier.MeshActivationDevice:
-                case UdfAlgorithmIdentifier.MeshProfileUser:
-                case UdfAlgorithmIdentifier.MeshActivationUser:
-                case UdfAlgorithmIdentifier.MeshProfileGroup:
-                case UdfAlgorithmIdentifier.MeshActivationGroup:
+                case UdfAlgorithmIdentifier.MeshProfileAccount:
+                case UdfAlgorithmIdentifier.MeshActivationAccount:
                 case UdfAlgorithmIdentifier.MeshProfileService:
                 case UdfAlgorithmIdentifier.MeshActivationService: {
                     cryptoAlgorithmID = cryptoAlgorithmIDin.DefaultMeta (keyUses, CryptoAlgorithmId.X448,
@@ -1262,10 +1105,11 @@ namespace Goedel.Cryptography {
                     throw new NYI();
                     }
                 }
-
-            return KeyPair.Factory(cryptoAlgorithmID, keySecurity, binaryData, salt,
+            var keySpecifier = KeySpecifier(algorithm);
+            return KeyPair.Factory(cryptoAlgorithmID, keySecurity, 
+                ikm,
+                keySpecifier, keyName,
                 keyCollection, keySize, keyUses);
-
             }
 
         /// <summary>
@@ -1304,7 +1148,8 @@ namespace Goedel.Cryptography {
             return builder.ToString();
             }
         }
-
+    #endregion
+    #region // Extension  methods with convenience functions
     /// <summary>Static class containing static extension methods providing convenience functions.</summary>
     public static partial class Extension {
         /// <summary>
@@ -1337,4 +1182,7 @@ namespace Goedel.Cryptography {
             UDF.ContentDigestOfDataString(Data, ContentType, Bits);
 
         }
+
+    #endregion
+    
     }

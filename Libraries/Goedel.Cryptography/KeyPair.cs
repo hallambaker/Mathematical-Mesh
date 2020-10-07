@@ -179,69 +179,98 @@ namespace Goedel.Cryptography {
 
         /// <summary>
         /// Factory creating a key pair of the type specified by <paramref name="algorithmID"/>
-        /// using the data <paramref name="binaryData"/> as the seed for the KDF and optional
-        /// salt valu <paramref name="salt"/>. 
+        /// using the data provided by a UDF identifier. 
         /// </summary>
         /// <param name="algorithmID">The type of key to create.</param>
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <param name="keySecurity">The key security model.</param>
         /// <param name="keyUses">The allowed key uses.</param>
-        /// <param name="binaryData">Seed data for the key.</param>
-        /// <param name="salt">Optional salt value.</param>
+        /// <param name="ikm">Initial keying material for the key.</param>
+        /// <param name="keySpecifier">Key specifier material for the key.</param>
+        /// <param name="keyName">Optional key name used to specify generation of multiple keys from 
+        /// a single seed.</param>
         /// <param name="keySize">The size of the key in bits.</param>
         /// <returns>the derrived key.</returns>
         public static KeyPair Factory(
             CryptoAlgorithmId algorithmID,
             KeySecurity keySecurity,
-            byte[] binaryData,
-            byte[] salt,
+            byte[] ikm,
+            byte[] keySpecifier,
+            string keyName,
             IKeyLocate keyCollection = null,
             int keySize = 0,
             KeyUses keyUses = KeyUses.Any) {
-
 
             KeyPair keyPair;
 
             switch (algorithmID) {
                 case CryptoAlgorithmId.RSAExch: {
+                    var bits = keySize / 2;
+                    var seedp = KeySeed(bits, ikm, keySpecifier, keyName, "p");
+                    var seedq = KeySeed(bits, ikm, keySpecifier, keyName, "q");
+                    "Implement RSA generation from seed".TaskFunctionality(true);
+
                     keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
                     break;
                     }
                 case CryptoAlgorithmId.RSASign: {
+                    var bits = keySize / 2;
+                    var seedp = KeySeed(bits, ikm, keySpecifier, keyName, "p");
+                    var seedq = KeySeed(bits, ikm, keySpecifier, keyName, "q");
+                    "Implement RSA generation from seed".TaskFunctionality(true);
+
                     keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
                     break;
                     }
                 case CryptoAlgorithmId.DH: {
+                    var bits = keySize ;
+                    var binaryData = KeySeed(bits, ikm, keySpecifier, keyName);
+                    "Implement DH generation from seed".TaskFunctionality(true);
+
                     keyPair = KeyPairFactoryDH(keySize, keySecurity, keyUses, algorithmID);
                     break;
                     }
                 case CryptoAlgorithmId.X25519: {
-                    keyPair = new KeyPairX25519(binaryData, salt, keySecurity, keyUses);
+
+                    var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
+                    keyPair = new KeyPairX25519(binaryData, keySecurity, keyUses);
                     break;
                     }
                 case CryptoAlgorithmId.Ed25519: {
-                    keyPair = new KeyPairEd25519(binaryData, salt, keySecurity, keyUses);
+                    var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
+                    keyPair = new KeyPairEd25519(binaryData, keySecurity, keyUses);
                     break;
                     }
                 case CryptoAlgorithmId.X448: {
-                    keyPair = new KeyPairX448(binaryData, salt, keySecurity, keyUses);
+                    var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
+                    keyPair = new KeyPairX448(binaryData, keySecurity, keyUses);
                     break;
                     }
                 case CryptoAlgorithmId.Ed448: {
-                    keyPair = new KeyPairEd448(binaryData, salt, keySecurity, keyUses);
+                    var binaryData = KeySeed(256, ikm, keySpecifier, keyName);
+                    keyPair = new KeyPairEd448(binaryData, keySecurity, keyUses);
                     break;
                     }
                 default: {
                     throw new NYI();
                     }
                 }
-
-
             Register(keyPair, keySecurity, keyCollection);
             return keyPair;
-
             }
 
+        static byte[] KeySeed(
+                int bits,
+                byte[] ikm,
+                byte[] keySpecifier,
+                string keyName,
+                string parameter = null) {
+
+            var suffix = (parameter == null ? keyName : keyName + parameter).ToBytes();
+            var info = keySpecifier.Concatenate(suffix);
+
+            return KeyDeriveHKDF.Derive(ikm, null, info, bits, CryptoAlgorithmId.HMAC_SHA_2_512);
+            }
 
         /// <summary>
         /// Register the key pair <paramref name="keyPair"/> in the collection 

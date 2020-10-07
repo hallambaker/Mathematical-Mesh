@@ -14,13 +14,15 @@
 #% Colophon(Example);
 #% ArchVariousUDF(Example);
 #% ArchitectureCreateMesh(Example);
-#% ArchitectureAddAccount(Example);
-#% ArchitectureAddService(Example);
 #% ArchitectureCredential(Example);
+#% ArchitectureEncryptDecrypt(Example);
 #% ArchitectureConnectDirect(Example);
+#% ArchitectureConnectDisconnect(Example);
+#% ArchitectureConnectSSH(Example);
 #% ArchitectureConnectPIN(Example);
 #% ArchitectureConnectQR(Example);
 #% ArchitectureContactRequest(Example);
+#% ArchitectureConfirm(Example);
 #% ArchitectureConnectEARL(Example);
 #% ArchitectureRecrypt(Example);
 #% ArchitectureEscrow(Example);
@@ -64,24 +66,28 @@
 The examples in this document were created on #{DateTime.Now.ToString()}. 
 Out of #{TestCLI.CountTotal} examples, #{TestCLI.ErrorCountTotal} were not functional.
 
-[Note: Example data is now being produced using the mesh command line tool which is currently
-substantially less complete than the Mesh reference code it is intended to provide an interface
-to. As a result, the documentation currently lags the code by more than is usual.]
-
 #end zfile
 
 
 #zfile CreateExamples ArchitectureCreateMesh "Examples\\ArchitectureCreateMesh.md" Example
+The user specifies the initial account address to be used (#{AliceService1}). Use of this address
+is of course dependent on authorization by the Mesh Service Provider (#{MeshServiceProvider1})
+and is likely to require authentication and possibly payment.
+
 #%  ConsoleExample (Example.ProfileCreateAlice);
 #end zfile
 
-#zfile CreateExamples ArchitectureAddAccount "Examples\\ArchitectureAddAccount.md" Example
-#%  ConsoleExample (Example.CommandsAddAcountAlice);
+#zfile CreateExamples ArchitectureEncryptDecrypt "Examples\\ArchitectureEncryptDecrypt.md" Example
+
+#%  ConsoleExample (null);
+
+[NYI Disconnect]
+
+[Can't access the data any more.]
+
+
 #end zfile
 
-#zfile CreateExamples ArchitectureAddService "Examples\\ArchitectureAddService.md" Example
-#%  ConsoleExample (Example.CommandsAddServiceAlice);
-#end zfile
 
 #zfile CreateExamples ArchitectureCredential "Examples\\ArchitectureCredential.md" Example
 #%  ConsoleExample (Example.PasswordSequence);
@@ -107,6 +113,28 @@ The new device will now synchronize automatically in response to any Mesh comman
 listing the password catalog:
 
 #%  ConsoleExample (Example.PasswordList2);
+#end zfile
+
+#zfile CreateExamples ArchitectureConnectDisconnect "Examples\\ArchitectureConnectDisconnect.md" Example
+
+#%  ConsoleExample (null);
+
+[NYI Disconnect]
+
+[Can't access the data any more.]
+
+
+#end zfile
+
+#zfile CreateExamples ArchitectureConnectSSH "Examples\\ArchitectureConnectSSH.md" Example
+
+Alice creates an SSH profile within her Mesh on the administrative device.
+
+#%  ConsoleExample (null);
+
+After configuring an SSH server to accept her new SSH credential, she can use any of her devices 
+that has been granted the SSH right to connect to it.
+
 #end zfile
 
 
@@ -182,17 +210,38 @@ Alice creates a contact entry for herself:
 
 
 #zfile CreateExamples ArchitectureContactRequest "Examples\\ArchitectureContactRequest.md" Example
+
 Bob requests Alice add him to her contacts catalog:
 
 #%  ConsoleExample (Example.ContactRequest);
 
 When Alice next checks her messages, she sees the pending contact request from Bob and accepts
-it. Bob's contact details are added to her catalog and Bob receives a response containing
-Alice's credentials:
+it without further validation. Bob's contact details are added to her catalog and Bob receives 
+a response containing Alice's credentials:
 
 #%  ConsoleExample (Concat (Example.ContactPending, Example.ContactAccept));
 
 #end zfile
+
+
+#zfile CreateExamples ArchitectureConfirm "Examples\\ArchitectureConfirm.md" Example
+
+Alice attempts to log into a secure console in the control room. The secure console recognizes 
+Alice but a second factor is required. The console issues a challenge to Alice at her
+registered account asking if she would like to log into the secure console:
+
+#%  ConsoleExample (null);
+
+Alice checks her pending messages and accepts the request:
+
+#%  ConsoleExample (null);
+
+The secure console verifies the response and grants access:
+
+#%  ConsoleExample (null);
+
+#end zfile
+
 
 
 #zfile CreateExamples ArchitectureRecrypt "Examples\\ArchitectureRecrypt.md" Example

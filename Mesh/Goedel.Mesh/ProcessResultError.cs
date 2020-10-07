@@ -1,4 +1,24 @@
-﻿using Goedel.Cryptography;
+﻿//  Copyright © 2020 Threshold Secrets llc
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 using Goedel.Utilities;
@@ -54,7 +74,7 @@ namespace Goedel.Mesh {
         public virtual MessageStatus InboundMessageStatus { get; set; } = MessageStatus.None;
 
         /// <summary>The message that caused this result</summary>
-        public virtual MessagePIN MessagePin { get;}
+        public virtual MessagePin MessagePin { get;}
 
         /// <summary>The message that caused this result</summary>
         public virtual string MessagePinId => MessagePin?.MessageId;
@@ -71,7 +91,7 @@ namespace Goedel.Mesh {
         /// <param name="message">The request message that led to this result.</param>
         /// <param name="messagePIN">The registration of the PIN code that supported this request.</param>
         /// <param name="success">If true, the processing was successful.</param>
-        public ProcessResult(Message message, MessagePIN messagePIN, bool success=true) {
+        public ProcessResult(Message message, MessagePin messagePIN, bool success=true) {
             RequestMessage = message;
             MessagePin = messagePIN;
             Success = success;
@@ -104,7 +124,7 @@ namespace Goedel.Mesh {
         /// <param name="request">The request that failed.</param>
         /// <param name="processingResult">The result of processing.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
-        public ProcessResultError(Message request, ProcessingResult processingResult, MessagePIN messagePIN = null) :
+        public ProcessResultError(Message request, ProcessingResult processingResult, MessagePin messagePIN = null) :
                     base(request, messagePIN, false) => ErrorReport = processingResult.ToString();
 
 
@@ -122,7 +142,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="request">The request that failed.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
-        public ResultInvalid(Message request, MessagePIN messagePIN = null) :
+        public ResultInvalid(Message request, MessagePin messagePIN = null) :
                     base(request, messagePIN, false) => ErrorReport = "InvalidContact";
 
         }
@@ -140,7 +160,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="request">The request that failed.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
-        public ResultRefused(Message request, MessagePIN messagePIN = null) :
+        public ResultRefused(Message request, MessagePin messagePIN = null) :
                     base(request, messagePIN) {  }
 
         }
@@ -172,7 +192,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="request">The request message.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
-        public ResultGroupInvitation(GroupInvitation request, MessagePIN messagePIN = null) :
+        public ResultGroupInvitation(GroupInvitation request, MessagePin messagePIN = null) :
                     base(request, messagePIN) { }
 
         }
@@ -199,7 +219,7 @@ namespace Goedel.Mesh {
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
         /// <param name="transactResponse">The transaction response</param>
         public ResultAcknowledgeConnection(
-                AcknowledgeConnection request, MessagePIN messagePIN,
+                AcknowledgeConnection request, MessagePin messagePIN,
                 TransactResponse transactResponse) :
                     base(request, messagePIN) { }
 
@@ -212,7 +232,7 @@ namespace Goedel.Mesh {
     public class ResultReplyContact : ProcessResult {
 
         /// <summary>The message that caused this result</summary>
-        public ReplyContact ReplyContact => RequestMessage as ReplyContact;
+        public MessageContact ReplyContact => RequestMessage as MessageContact;
 
         /// <summary>
         /// Constructor, return an instance reporting the successful processing of 
@@ -220,7 +240,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="request">The request message.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
-        public ResultReplyContact(ReplyContact request, MessagePIN messagePIN = null) :
+        public ResultReplyContact(MessageContact request, MessagePin messagePIN = null) :
                     base(request, messagePIN) { }
 
         }
@@ -231,10 +251,10 @@ namespace Goedel.Mesh {
     public class ResultRequestContact : ProcessResult {
 
         /// <summary>The message that caused this result</summary>
-        public RequestContact RequestContact => RequestMessage as RequestContact;
+        public MessageContact RequestContact => RequestMessage as MessageContact;
 
         /// <summary>The response to the request.</summary>     
-        public ReplyContact ReplyContact { get; }
+        public MessageContact ReplyContact { get; }
 
 
         /// <summary>
@@ -245,9 +265,9 @@ namespace Goedel.Mesh {
         /// <param name="replyContact">The message sent in reply.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
         public ResultRequestContact(
-                            RequestContact request,
-                            ReplyContact replyContact,
-                            MessagePIN messagePIN = null) :
+                            MessageContact request,
+                            MessageContact replyContact,
+                            MessagePin messagePIN = null) :
                     base(request, messagePIN) => ReplyContact = replyContact;
 
         }

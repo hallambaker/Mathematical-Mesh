@@ -28,6 +28,7 @@ encode   Encode data as DARE Message.
     /hash   Compute hash of content
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -72,7 +73,7 @@ file name is the input file name with the additional extension `.dare`.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
 <rsp></div>
 ~~~~
 
@@ -80,7 +81,7 @@ Specifying the /json option returns a result of type ResultFile:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ /json
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M /json
 <rsp>{
   "ResultFile": {
     "Success": true,
@@ -100,6 +101,7 @@ decode   Decode a DARE Message.
        Encrypted File
        Decrypted File
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -120,7 +122,7 @@ with the extension `.undare` otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -129,7 +131,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ /json
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -146,6 +148,7 @@ Specifying the /json option returns a result of type Result:
 verify   Verify a DARE Message.
        Encrypted File
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -163,7 +166,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -172,7 +175,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ /json
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -195,6 +198,7 @@ earl   Create an Encrypted Authenticated Resource Locator (EARL)
     /log   Write transaction report to DARE Container Log.
     /admin   Identifier of administrator authorized to read the log.
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -221,24 +225,5 @@ the container using the active key collection.
 
 The active key collection may be overriden using the `/mesh` option.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare earl TestFile1.txt example.net
-<rsp>ERROR - Unspecified error
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare earl TestFile1.txt example.net /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Unspecified error"}}
-</div>
-~~~~
-
+**Missing Example***
 
