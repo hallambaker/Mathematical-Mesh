@@ -60,12 +60,12 @@ namespace Goedel.Mesh {
         /// Generate profile specific keys.
         /// </summary>
         protected override void Generate() {
-            BaseAuthentication = SecretSeed.GenerateContributionKeyData(
-                    MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
-            BaseEncryption = SecretSeed.GenerateContributionKeyData(
-                    MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
             BaseSignature = SecretSeed.GenerateContributionKeyData(
                     MeshKeyType, MeshActor, MeshKeyOperation.Sign);
+            BaseEncryption = SecretSeed.GenerateContributionKeyData(
+                    MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
+            BaseAuthentication = SecretSeed.GenerateContributionKeyData(
+                    MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
             }
 
         /// <summary>
@@ -85,8 +85,8 @@ namespace Goedel.Mesh {
                     int bits = 256,
                     PrivateKeyUDF secretSeed = null) {
             secretSeed ??= new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileDevice, null, algorithmEncrypt,
-                algorithmSign, algorithmAuthenticate, bits: bits);
+                udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileDevice, secret: null, algorithmEncrypt: algorithmEncrypt,
+                algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
             return new ProfileDevice(secretSeed);
             }
 
@@ -100,6 +100,19 @@ namespace Goedel.Mesh {
             SecretSeed.AssertNotNull(NoDeviceSecret.Throw);
             keyCollection.Persist(ProfileSignature.Udf, SecretSeed, false);
             }
+
+        /// <summary>
+        /// Verify the profile to check that it is correctly signed and consistent.
+        /// </summary>
+        /// <returns></returns>
+        public override void Validate() {
+            base.Validate();
+            BaseSignature.GetKeyPair().PublicOnly.AssertTrue(InvalidProfile.Throw);
+            BaseEncryption.GetKeyPair().PublicOnly.AssertTrue(InvalidProfile.Throw);
+            BaseAuthentication.GetKeyPair().PublicOnly.AssertTrue(InvalidProfile.Throw);
+            }
+
+
 
         /// <summary>
         /// Decode <paramref name="envelope"/> and return the inner <see cref="RespondConnection"/>

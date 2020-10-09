@@ -140,6 +140,7 @@ File MiscUnsorted
 		Code Sign			"Signature key"
 		Code Authenticate	"Authentication key"
 		Code Profile		"Profile Signature key"
+		Code Administrator	"Administrator Signature key"
 		Code Escrow			"Escrow Encryption key"
 
 

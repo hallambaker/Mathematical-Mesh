@@ -78,6 +78,8 @@ namespace Goedel.Mesh {
         Authenticate,
         ///<summary>Profile Signature key</summary>
         Profile,
+        ///<summary>Administrator Signature key</summary>
+        Administrator,
         ///<summary>Escrow Encryption key</summary>
         Escrow        }
 
@@ -369,6 +371,7 @@ namespace Goedel.Mesh {
                 "Sign" => MeshKeyOperation.Sign,
                 "Authenticate" => MeshKeyOperation.Authenticate,
                 "Profile" => MeshKeyOperation.Profile,
+                "Administrator" => MeshKeyOperation.Administrator,
                 "Escrow" => MeshKeyOperation.Escrow,
                 _ => MeshKeyOperation.Unknown
                 };
@@ -385,6 +388,7 @@ namespace Goedel.Mesh {
                 MeshKeyOperation.Sign => "Sign",
                 MeshKeyOperation.Authenticate => "Authenticate",
                 MeshKeyOperation.Profile => "Profile",
+                MeshKeyOperation.Administrator => "Administrator",
                 MeshKeyOperation.Escrow => "Escrow",
                 _ => null
                 };

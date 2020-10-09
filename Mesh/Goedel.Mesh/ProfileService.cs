@@ -85,8 +85,8 @@ namespace Goedel.Mesh {
                     PrivateKeyUDF secretSeed = null,
                     bool persist = false) {
             secretSeed ??= new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileAccount, null, algorithmEncrypt,
-                algorithmSign, algorithmAuthenticate, bits: bits);
+                udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
+                algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
             return new ProfileService(keyCollection, secretSeed, persist);
             }
 

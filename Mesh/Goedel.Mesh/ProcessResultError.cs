@@ -226,29 +226,12 @@ namespace Goedel.Mesh {
 
         }
 
-    /// <summary>
-    /// Report successful handling of a <see cref="ReplyContact"/> message.
-    /// </summary>
-    public class ResultReplyContact : ProcessResult {
 
-        /// <summary>The message that caused this result</summary>
-        public MessageContact ReplyContact => RequestMessage as MessageContact;
-
-        /// <summary>
-        /// Constructor, return an instance reporting the successful processing of 
-        /// <paramref name="request"/>.
-        /// </summary>
-        /// <param name="request">The request message.</param>
-        /// <param name="messagePIN">PIN code registration, to be marked as used</param>
-        public ResultReplyContact(MessageContact request, MessagePin messagePIN = null) :
-                    base(request, messagePIN) { }
-
-        }
 
     /// <summary>
     /// Report successful handling of a <see cref="ReplyContact"/> message.
     /// </summary>
-    public class ResultRequestContact : ProcessResult {
+    public class ResultMessageContact : ProcessResult {
 
         /// <summary>The message that caused this result</summary>
         public MessageContact RequestContact => RequestMessage as MessageContact;
@@ -264,7 +247,7 @@ namespace Goedel.Mesh {
         /// <param name="request">The request message.</param>
         /// <param name="replyContact">The message sent in reply.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
-        public ResultRequestContact(
+        public ResultMessageContact(
                             MessageContact request,
                             MessageContact replyContact,
                             MessagePin messagePIN = null) :

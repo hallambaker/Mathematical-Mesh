@@ -153,6 +153,19 @@ namespace Goedel.Cryptography {
 
         #endregion
 
+        /// <summary>
+        /// Check to see if <paramref name="keyId"/> is a valid name for this key using the
+        /// extended value from the public key parameters if known;
+        /// </summary>
+        /// <param name="keyId">The key identifier to check.</param>
+        /// <returns>True if keyId is sufficiently long and matches the leading characters of the
+        /// key identifier.</returns>
+        public bool MatchKeyIdentifier(string keyId) {
+            // Hack: should do a proper check on shorter key ids.
+            
+            return keyId == KeyIdentifier;
+
+            }
 
 
         /// <summary>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Goedel.Cryptography;
 using Goedel.Mesh.Client;
+using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -44,7 +45,7 @@ namespace Goedel.Mesh.Shell {
             return new ResultCreateAccount() {
                 Success = true,
                 ProfileUser = contextUser.ProfileUser,
-                ActivationDevice = contextUser.ActivationUser
+                ActivationDevice = contextUser.ActivationDevice
                 };
             }
 
@@ -226,18 +227,18 @@ namespace Goedel.Mesh.Shell {
             var (algorithm, meshSecret) = secret.ParseKey();
 
             // should switch on algorithm so we can recover different types of profile!!!
-
-
             (algorithm == UdfAlgorithmIdentifier.MeshProfileAccount |
                 algorithm == UdfAlgorithmIdentifier.MeshProfileService).AssertTrue(InvalidRecoverySecret.Throw);
 
-            var contextUser = MeshHost.CreateMesh("main", secretSeed: secret.UDFKey);
+
+            var accountSeed = new PrivateKeyUDF(secret.UDFKey);
+            var contextUser = MeshHost.CreateMesh("main", accountSeed: accountSeed);
 
 
             return new ResultCreateAccount() {
                 Success = true,
                 ProfileUser = contextUser.ProfileUser,
-                ActivationDevice = contextUser.ActivationUser
+                ActivationDevice = contextUser.ActivationDevice
                 };
             }
 

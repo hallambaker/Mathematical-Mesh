@@ -338,6 +338,45 @@ namespace Goedel.Cryptography.Dare {
             return outputStream.ToArray();
             }
 
+        /// <summary>
+        /// Verify that the 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool Verify(KeyPair key) {
+
+            var signature = FindSignature(key);
+            if (signature == null) {
+                return false;
+                }
+
+            "Recalculate the payload digest".TaskFunctionality();
+
+            return key.VerifyHash(Trailer.PayloadDigest, signature.SignatureValue);
+            }
+
+        public DareSignature FindSignature (CryptoKey key) {
+
+            if (Trailer.Signatures != null) {
+                foreach (var signature in Trailer.Signatures) {
+                    if (key.MatchKeyIdentifier(signature.KeyIdentifier)) {
+                        return signature;
+                        }
+                    }
+                }
+            if (Header.Signatures != null) {
+                foreach (var signature in Header.Signatures) {
+                    if (key.MatchKeyIdentifier(signature.KeyIdentifier)) {
+                        return signature;
+                        }
+                    }
+                }
+
+
+            return null;
+            }
+
+
 
         /// <summary>
         /// Deserialize 

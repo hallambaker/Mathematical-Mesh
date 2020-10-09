@@ -47,26 +47,26 @@ namespace Goedel.Mesh.Client {
         public ConnectionUser ConnectionUser => CatalogedDevice?.ConnectionUser;
 
         ///<summary>The device activation</summary>
-        public ActivationDevice ActivationUser { get; private set; }
+        public ActivationDevice ActivationDevice { get; private set; }
 
-        ///<summary>The device activation</summary>
-        public ActivationAccount ActivationAccount { get; private set; }
 
         ///<summary>The device key generation seed</summary>
         protected PrivateKeyUDF MeshSecretSeed;
 
 
+        ///<summary>Returns the MeshClient and caches the result for future use.</summary>
+        public override MeshService MeshClient => meshClient ?? GetMeshClient(AccountAddress).CacheValue(out meshClient);
+        MeshService meshClient;
+
+
+
         // device key accessors
         KeyPair DeviceDecrypt { get; }
-        KeyPair DeviceSignature => ActivationUser.DeviceSignature;
-        KeyPair DeviceEncryption => ActivationUser.DeviceEncryption;
-        KeyPair DeviceAuthentication => ActivationUser.DeviceAuthentication;
+        KeyPair DeviceSignature => ActivationDevice.DeviceSignature;
+        KeyPair DeviceEncryption => ActivationDevice.DeviceEncryption;
+        KeyPair DeviceAuthentication => ActivationDevice.DeviceAuthentication;
 
-        // account key accessors
-        KeyPair AccountProfileSignature => ActivationAccount.ProfileSignatureKey;
-        KeyPair AccountSignature => ActivationAccount.AccountSignatureKey;
-        KeyPair AccountEncryption => ActivationAccount.AccountEncryptionKey;
-        KeyPair AccountAuthentication => ActivationAccount.AccountAuthenticationKey;
+        
 
         #endregion
         #region // Constructors
@@ -91,15 +91,21 @@ namespace Goedel.Mesh.Client {
             var deviceKeySeed = KeyCollection.LocatePrivateKey(ProfileDevice.Udf) as PrivateKeyUDF;
             DeviceDecrypt = deviceKeySeed.GenerateContributionKeyPair(MeshKeyType.Base,
                 MeshActor.Device, MeshKeyOperation.Encrypt);
+            
             KeyCollection.Add(DeviceDecrypt);
 
             // Activate the device within the account.
-            ActivationUser = CatalogedDevice?.GetActivationDevice(KeyCollection);
-            ActivationUser.Activate(deviceKeySeed);
+            ActivationDevice = CatalogedDevice?.GetActivationDevice(KeyCollection);
+            ActivationDevice.Activate(deviceKeySeed);
 
             // Activate the device to communicate as the account (via threshold)
             ActivationAccount = CatalogedDevice?.GetActivationAccount(KeyCollection);
             ActivationAccount.Activate(KeyCollection);
+
+            if (KeyAccountEncryption != null) {
+                KeyCollection.Add(KeyAccountEncryption);
+                }
+
 
 
             // Some validation checks
@@ -164,7 +170,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="accountAddress">The account address</param>
         public void SetService(
                 string accountAddress) {
-            AccountProfileSignature.AssertNotNull(NotSuperAdministrator.Throw);
+            KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
 
             // Query the service capabilities
             var helloRequest = new HelloRequest();
@@ -174,7 +180,7 @@ namespace Goedel.Mesh.Client {
             // Update the profile
             ProfileUser.ServiceUdf = ProfileService.Udf;
             ProfileUser.AccountAddress = accountAddress;
-            ProfileUser.Envelope(AccountProfileSignature);
+            ProfileUser.Envelope(KeyProfile);
 
             // Request binding
             var createRequest = new BindRequest() {
@@ -185,6 +191,8 @@ namespace Goedel.Mesh.Client {
             // Attempt to register with service in question
             var response = MeshClient.BindAccount(createRequest, MeshClient.JpcSession);
             response.AssertSuccess(ServerOperationFailed.Throw);
+
+            ActivationAccount.BindService(ProfileService);
 
             // Generate a contact and self-sign
             var contact = CreateContact();
@@ -197,16 +205,20 @@ namespace Goedel.Mesh.Client {
             }
 
         /// <summary>
-        /// Returns the stores directory on <paramref name="MeshHost"/> for the profile 
+        /// Returns the stores directory on <paramref name="meshHost"/> for the profile 
         /// <paramref name="profileUser"/>.
         /// </summary>
-        /// <param name="MeshHost">The host.</param>
+        /// <param name="meshHost">The host.</param>
         /// <param name="profileUser">The profile.</param>
         /// <returns>Path to the directory containing the profile stores.</returns>
         public static string GetStoresDirectory(
-                MeshHost MeshHost, ProfileUser profileUser) =>
-                    Path.Combine(MeshHost.MeshMachine.DirectoryMesh, profileUser.Udf);
+                MeshHost meshHost, ProfileUser profileUser) =>
+                    Path.Combine(meshHost.MeshMachine.DirectoryMesh, profileUser.Udf);
 
+        public static void CreateDirectory(MeshHost meshHost, ProfileUser profileUser) {
+            var StoresDirectory = ContextUser.GetStoresDirectory(meshHost, profileUser);
+            Directory.CreateDirectory(StoresDirectory);
+            }
 
 
         #endregion
@@ -310,8 +322,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="contact">The contact parameters.</param>
         /// <param name="localname">Short name to apply to the signed contact info</param>
         public CatalogedContact SetContactSelf(Contact contact, string localname = null) {
-            AccountSignature.AssertNotNull(NotAdministrator.Throw);
-            contact.Envelope(AccountSignature);
+            KeyAccountSignature.AssertNotNull(NotAdministrator.Throw);
+            contact.Envelope(KeyAccountSignature);
 
             contact.Sources ??= new List<TaggedSource>() { };
             var tagged = new TaggedSource() {
@@ -576,7 +588,6 @@ namespace Goedel.Mesh.Client {
                     default:
                     break;
                     }
-
                 }
 
             read = false;
@@ -590,22 +601,33 @@ namespace Goedel.Mesh.Client {
         /// Create a threshold encryption group.
         /// </summary>
         /// <param name="groupName">Name of the group to create.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm</param>
-        /// <param name="algorithmSign">The signature algorithm.</param>
+        /// <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
+        /// <param name="rights">List of rights to be granted.</param>
         /// <returns></returns>
 
         public ContextGroup CreateGroup(string groupName,
-                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
+                        PrivateKeyUDF accountSeed = null,
+                        List<string> rights = null
+                        ) {
+
+            // create the cataloged group
+            accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
+            var activationAccount = new ActivationAccount(KeyCollection, accountSeed);
+            var profileGroup = new ProfileGroup(groupName, activationAccount);
+
+            // Check that the profile is valid before using it.
+            profileGroup.Validate();
 
 
-            var profileGroup = ProfileGroup.Generate(algorithmSign, algorithmEncrypt);
-            var secretSeed = profileGroup.SecretSeed;
+            // When we move to using thresholded keys, this needs to be modified
+            // so that the activation for the cataloged group is saved under the 
+            // account escrow key.
 
-
+            rights.Future();
+            var catalogedGroup = activationAccount.MakeCatalogedGroup(profileGroup,
+                activationAccount, KeyAccountEncryption);
 
             // here we request creation of the group at the service.
-
             var createRequest = new BindRequest() {
                 AccountAddress = groupName,
                 EnvelopedProfileAccount = profileGroup.EnvelopedProfileAccount
@@ -614,36 +636,23 @@ namespace Goedel.Mesh.Client {
             var createResponse = MeshClient.BindAccount(createRequest, MeshClient.JpcSession);
             createResponse.AssertSuccess();
 
-            var contextGroup = new ContextGroup(this, secretSeed);
-
-            var capabilityAdmin = contextGroup.GetCapabilitySign();
-
-            var capabilityDecrypt = contextGroup.GetCapabilityKeyGenerate();
-
-
-            var transaction = TransactBegin();
-
-            var catalogCapability = transaction.GetCatalogCapability();
-            catalogCapability.Add(capabilityAdmin);
-            catalogCapability.Add(capabilityDecrypt);
-
-            var catalogedGroup = new CatalogedGroup(profileGroup) {
-                Key = groupName
-                };
-            var catalogApplication = transaction.GetCatalogApplication();
-            transaction.CatalogUpdate(catalogApplication, catalogedGroup);
-
-
-            contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
-
+            // create the group context
+            var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
             var contact = contextGroup.CreateContact();
 
+            // Commit all changes in a single transaction.
+            using (var transaction = TransactBegin()) {
+                // Add the group to the application catalog
+                var catalogApplication = transaction.GetCatalogApplication();
+                transaction.CatalogUpdate(catalogApplication, catalogedGroup);
 
-            var contactCatalog = transaction.GetCatalogContact();
-            var catalogedContact = new CatalogedContact(contact);
-            transaction.CatalogUpdate(contactCatalog, catalogedContact);
+                // Create a contact for the group and add to the contact catalog
+                var contactCatalog = transaction.GetCatalogContact();
+                var catalogedContact = new CatalogedContact(contact);
+                transaction.CatalogUpdate(contactCatalog, catalogedContact);
 
-            transaction.Transact();
+                transaction.Transact();
+                }
 
             return contextGroup;
 
@@ -670,6 +679,11 @@ namespace Goedel.Mesh.Client {
 
         #endregion
         #region // Device connection
+
+
+
+
+
 
         /// <summary>
         /// Convenience wrapper for <see cref="CreateDeviceEarl"/>. Generates a device profile
@@ -736,8 +750,8 @@ namespace Goedel.Mesh.Client {
 
 
             secretSeed = new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileDevice, secret, algorithmEncrypt,
-                algorithmSign, algorithmAuthenticate, bits: bits);
+                udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileDevice, secret: secret, algorithmEncrypt: algorithmEncrypt,
+                algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
 
 
             pin = MeshUri.GetConnectPin(secretSeed, AccountAddress);
@@ -879,7 +893,7 @@ namespace Goedel.Mesh.Client {
                             break;
                             }
                         case MessageContact replyContact: {
-                            results.Add(ProcessAutomatic(replyContact, false));
+                            results.Add(ProcessAutomatic(replyContact));
                             break;
                             }
                         case GroupInvitation groupInvitation: {
@@ -936,48 +950,7 @@ namespace Goedel.Mesh.Client {
             return new ResultGroupInvitation (request);
             }
 
-        /// <summary>
-        /// Perform automatic processing of the message <paramref name="request"/>.
-        /// </summary>
-        /// <param name="request">Reply to contact request to be processed.</param>
-        /// <param name="accept">Accept the requested action.</param>
-        /// <param name="authorize">If true, the action is explicitly authorized.</param>
-        /// <returns>The result of requesting the connection.</returns>
-        public ProcessResult ProcessAutomatic(
-                    MessageContact request, 
-                    bool accept = true,
-                    bool authorize = false) {
-            
-            authorize.Future();
 
-            // check response pin here 
-            var messagePin = GetMessagePIN(request.PinId);
-
-            var pinStatus = MessagePin.ValidatePin(messagePin,
-                    AccountAddress,
-                    request.AuthenticatedData,
-                    request.ClientNonce,
-                    request.PinWitness);
-
-            if (pinStatus != ProcessingResult.Success) {
-                return new ProcessResultError(request, pinStatus, messagePin);
-                }
-            if (!(messagePin.Automatic | accept)) {
-                return new InsufficientAuthorization(request);
-                }
-
-            var contact = Contact.Decode(request.AuthenticatedData);
-
-            var transactRequest = TransactBegin();
-            var catalog = transactRequest.GetCatalogContact();
-            var catalogedContact = catalog.GetUpdated(contact);
-
-            transactRequest.CatalogUpdate(catalog, catalogedContact);
-            transactRequest.InboundComplete(MessageStatus.Closed, request, null);
-            transactRequest.Transact();
-
-            return new ResultReplyContact(request, messagePin);
-            }
 
         /// <summary>
         /// Perform automatic processing of the message <paramref name="request"/>.
@@ -1091,20 +1064,12 @@ namespace Goedel.Mesh.Client {
                 case AcknowledgeConnection connection: {
                     return Process(connection, accept, rights: rights);
                     }
-                //case MessageContact replyContact: {
-                //    return ProcessAutomatic(replyContact, accept, true);
-                //    }
                 case MessageContact requestContact: {
-                    "Need to rework the contact request/reply thing here now there is only one type of message".TaskFunctionality(true);
-
-
-                    return ContactReply(requestContact);
-
+                    return ContactReply(requestContact, accept);
                     }
 
                 case RequestConfirmation requestConfirmation: {
                     return ConfirmationResponse(requestConfirmation, accept);
-
                     }
                 case ResponseConfirmation responseConfirmation: {
                     responseConfirmation.Future();
@@ -1130,14 +1095,23 @@ namespace Goedel.Mesh.Client {
         /// Make a contact reply.
         /// </summary>
         /// <param name="requestContact">The contact request.</param>
+        /// <param name="accept">If true, enter the contact data from <paramref name="requestContact.Self"/>
+        /// in the contact catalog.</param>
         /// <param name="localname">Local name to be used to identify the contact recorded in
         /// the catalog.</param>
-        public ProcessResult ContactReply(MessageContact requestContact, string localname = null) {
+        public ProcessResult ContactReply(
+                MessageContact requestContact,
+                bool accept,
+                string localname = null) {
+
+            // Do nothing if the request is rejected.
+            if (!accept) {
+                return new ResultMessageContact(requestContact, null);
+                }
 
             // Add the requestContact.Self contact to the catalog
-
-            if (requestContact.Self != null) {
-                var contact = MeshItem.Decode(requestContact.Self) as Contact;
+            if (requestContact.AuthenticatedData != null) {
+                var contact = MeshItem.Decode(requestContact.AuthenticatedData) as Contact;
                 var cataloged = contact.CatalogedContact();
 
                 var transact = TransactBegin();
@@ -1147,47 +1121,47 @@ namespace Goedel.Mesh.Client {
                 transact.Transact();
                 }
 
-            var reply = SendReplyContact(requestContact.Sender, requestContact.PIN, localname);
+            // Get the reply (if required)
+            var reply = requestContact.Reply ?
+                ContactRequest(requestContact.Sender, requestContact.PIN, localname, false) : null;
 
-
-            return new ResultRequestContact(requestContact, reply);
+            return new ResultMessageContact(requestContact, reply);
             }
 
-        MessageContact SendReplyContact(string recipient, string pin, string localname) {
+        /// <summary>
+        /// Perform automatic processing of the message <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request">Reply to contact request to be processed.</param>
+        /// <param name="authorize">If true, the action is explicitly authorized.</param>
+        /// <returns>The result of requesting the connection.</returns>
+        public ProcessResult ProcessAutomatic(
+                    MessageContact request,
+                    bool authorize = false) {
 
+            // No pin specified? Request is not automatic.
+            if (request.PinId == null) {
+                return new InsufficientAuthorization(request);
+                }
 
+            // check response pin here 
+            var messagePin = GetMessagePIN(request.PinId);
 
+            // check the pin value
+            var pinStatus = request.ValidatePin(messagePin, AccountAddress);
+            if (pinStatus != ProcessingResult.Success) {
+                return new ProcessResultError(request, pinStatus, messagePin);
+                }
 
-            // prepare the reply
-            var contactSelf = GetSelf(localname);
+            // check that the pin is automatic or request is explicitly authorized.
+            if (!(messagePin.Automatic | authorize)) {
+                return new InsufficientAuthorization(request);
+                }
 
-            // calculate the witness value over contactSelf and PIN
-
-            var saltedPin = MessagePin.SaltPIN(pin, MeshConstants.MessagePINActionContact);
-
-            var nonce = CryptoCatalog.GetBits(128);
-
-            var witness = MessagePin.GetPinWitness(saltedPin, recipient, contactSelf, nonce);
-            var pinUdf = MessagePin.GetPinUDF(saltedPin, recipient);
-
-            var message = new MessageContact() {
-                Recipient = recipient,
-                Subject = recipient,
-                AuthenticatedData = contactSelf,
-                ClientNonce = nonce,
-                PinWitness = witness,
-                PinId = pinUdf
-                };
-
-            // send it to the service
-            var transact = TransactBegin();
-            transact.OutboundMessage(recipient,  message);
-            Transact(transact);
-
-            //SendMessage(message, recipient);
-
-            return message;
+            return ContactReply(request, true);
             }
+
+
+
 
         #endregion
         #region // ContactManagement
@@ -1253,34 +1227,33 @@ namespace Goedel.Mesh.Client {
             }
 
 
-
         /// <summary>
         /// Construct a contact request.
         /// </summary>
-        /// <param name="recipientAddress">The contact to request.</param>
-        /// <param name="localName">Local name for the contact</param>
-        public MessageContact ContactRequest(string recipientAddress, string localName = null) {
-            // prepare the contact request
-
-            var contactSelf = GetSelf(localName);
-            var pin = UDF.EncryptionKey();
-
+        /// <param name="recipient">The contact to request.</param>
+        /// <param name="pin">Optional pin value used to authenticate a response.</param>
+        /// <param name="localname">Local name for the contact</param>
+        /// <param name="reply">if true, request return of the recpients contact info in reply.</param>
+        public MessageContact ContactRequest(string recipient, 
+                        string pin = null, 
+                        string localname = null,
+                        bool reply=true) {
+            // prepare the reply
+            var contactSelf = GetSelf(localname);
             var message = new MessageContact() {
-                Recipient = recipientAddress,
-                Subject = recipientAddress,
-                Self = contactSelf,
-                PIN = pin
+                Recipient = recipient,
+                Subject = recipient,
+                AuthenticatedData = contactSelf,
+                Reply = reply
                 };
 
-            RegisterPIN(pin, true, null, AccountAddress, "Contact");
-
-            var transact = TransactBegin();
-            transact.OutboundMessage(recipientAddress, message);
-            Transact(transact);
-
-            //SendMessage(message, recipientAddress);
+            // If a PIN value was specified in the request, use it to authenticate the response.
+            message.Authenticate(pin);
 
             // send it to the service
+            var transact = TransactBegin();
+            transact.OutboundMessage(recipient, message);
+            Transact(transact);
 
             return message;
             }
@@ -1295,7 +1268,11 @@ namespace Goedel.Mesh.Client {
         /// <param name="localname">Local name for the contact to send in exchange</param>
         /// <param name="message">The reciprocation message (if sent), otherwise null.</param>
         /// <returns>The cataloged contact information.</returns>
-        public CatalogedContact ContactExchange(string uri, bool reciprocate, out Message message, string localname = null) {
+        public CatalogedContact ContactExchange(
+                    string uri, 
+                    bool reciprocate, 
+                    out Message message, 
+                    string localname = null) {
             // Fetch, verify and decrypt the corresponding data.
 
             var envelope = ClaimPublication(uri, out var _);
@@ -1310,10 +1287,9 @@ namespace Goedel.Mesh.Client {
             transact.CatalogUpdate(catalog, cataloged);
             transact.Transact();
 
-
             if (reciprocate) {
                 (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
-                message = SendReplyContact(targetAccountAddress, pin, localname) as Message;
+                message = ContactRequest(targetAccountAddress, pin, localname) as Message;
                 }
             else {
                 message = null;

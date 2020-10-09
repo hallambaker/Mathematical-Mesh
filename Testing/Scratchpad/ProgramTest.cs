@@ -43,7 +43,15 @@ namespace Scratchpad {
             //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST_KG_User);
             //TestGoedelCryptography.Test().UDFKeyGen(UDFKeyGen.TEST_KG_Service);
 
-            TestService.Test().MeshServiceFull();
+
+            // Currently failing on these main tests
+            // Likely more now because CatalogAccess has been changed.
+            TestService.Test().MeshDeviceConnectApprove();
+            TestService.Test().MeshCreateAdmin();
+            TestService.Test().MeshCatalogGroup();
+            ShellTests.Test().TestMessageConfirmationAccept();
+
+            
 
             //ShellTests.Test().TestMessageConfirmationAccept();
             //ShellTests.Test().TestAuthWeb();

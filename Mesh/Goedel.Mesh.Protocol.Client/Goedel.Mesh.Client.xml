@@ -482,7 +482,19 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.Connection">
             <summary>The connection binding the calling context to the account.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyProfileSignature">
+        <member name="P:Goedel.Mesh.Client.ContextAccount.MeshClient">
+            <summary>Returns the MeshClient and caches the result for future use.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
+            <summary>The Account Address</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.ActivationAccount">
+            <summary>The account activation</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyProfile">
+            <summary>The account profile key</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAdministrator">
             <summary>The account profile key</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAccountSignature">
@@ -491,8 +503,8 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAccountEncryption">
             <summary>The account encryption key </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyDeviceAuthentication">
-            <summary>The authentication key used by this device to authenticate</summary>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAccountAuthentication">
+            <summary>The authentication key used to authenticate as the account.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
@@ -501,13 +513,8 @@
             <summary>Dictionary locating the stores connected to the context.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextAccount.ContainerCryptoParameters">
-            <summary>The cryptographic parameters for reading/writing to account containers</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.MeshClient">
-            <summary>Returns the MeshClient and caches the result for future use.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
-            <summary>The Account Address</summary>
+            <summary>The cryptographic parameters for reading/writing to account containers.
+            This needs to be replaced with a new context for each container.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.DictionaryCatalogDelegates">
             <summary>List of catalogs</summary>
@@ -528,19 +535,7 @@
             <param name="catalogedMachine">Description of the device profile.</param>
             <param name="meshHost">The Mesh host to add the admin context to.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.ActivateAccount(Goedel.Cryptography.Jose.PrivateKeyUDF)">
-            <summary>
-            Activate the context using the account seed giving access to the complete keys.
-            </summary>
-            <param name="accountSeed"></param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.ActivateAccount(Goedel.Mesh.ActivationAccount)">
-            <summary>
-            Activate the context using an activation to a threshold contribution
-            </summary>
-            <param name="activation"></param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean)">
             <summary>
             Create a PIN value of length <paramref name="length"/> bits valid for 
             <paramref name="validity"/> minutes.
@@ -551,19 +546,8 @@
             <param name="action">The action to which this pin is bound.</param>
             <param name="automatic">If true, presentation of the pin code is sufficient
             to authenticate and authorize the action.</param>
+            <param name="register">If true, register the pin at the service.</param>
             <returns>A <see cref="T:Goedel.Mesh.MessagePin"/> instance describing the created parameters.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.RegisterPIN(System.String,System.Boolean,System.Nullable{System.DateTime},System.String,System.String)">
-            <summary>
-            Register the pin code <paramref name="pin"/> to the account <paramref name="accountAddress"/>
-            bound to the action <paramref name="action"/>.
-            </summary>
-            <param name="pin">The PIN code</param>
-            <param name="automatic">If true, proof of knowledge of the pin is sufficient authorization.</param>
-            <param name="expires">Expiry time.</param>
-            <param name="accountAddress">The account to which the pin is bound.</param>
-            <param name="action">The action to which the pin is bound.</param>
-            <returns>The message registered on the Admin spool.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetMessagePIN(System.String)">
             <summary>
@@ -784,8 +768,12 @@
             Context binding for a Group account
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ContextGroup.ContextAccount">
+        <member name="F:Goedel.Mesh.Client.ContextGroup.ContextUser">
             <summary>The enclosing mesh context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextGroup.MeshClient">
+            <summary>Returns the MeshClient of the user account under which the account is managed.
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextGroup.CatalogedGroup">
             <summary>The catalogued group description.</summary>
@@ -818,6 +806,14 @@
             <param name="contextAccount">The enclosing account context.</param>
             <param name="catalogedGroup">Description of the group to return the
             context for.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.ActivationAccount)">
+            <summary>
+            Generation constructor: create a group using the seed value <paramref name="activationAccount"/>
+            and return a client context under <paramref name="contextuser"/>
+            </summary>
+            <param name="contextuser"></param>
+            <param name="activationAccount"></param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.CreateGroup(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup)">
             <summary>
@@ -1061,14 +1057,14 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionUser">
             <summary>The connection device</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ActivationUser">
-            <summary>The device activation</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ActivationAccount">
+        <member name="P:Goedel.Mesh.Client.ContextUser.ActivationDevice">
             <summary>The device activation</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextUser.MeshSecretSeed">
             <summary>The device key generation seed</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.MeshClient">
+            <summary>Returns the MeshClient and caches the result for future use.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
@@ -1108,10 +1104,10 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetStoresDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser)">
             <summary>
-            Returns the stores directory on <paramref name="MeshHost"/> for the profile 
+            Returns the stores directory on <paramref name="meshHost"/> for the profile 
             <paramref name="profileUser"/>.
             </summary>
-            <param name="MeshHost">The host.</param>
+            <param name="meshHost">The host.</param>
             <param name="profileUser">The profile.</param>
             <returns>Path to the directory containing the profile stores.</returns>
         </member>
@@ -1217,13 +1213,13 @@
             <param name="read">If true, the message has already been read.</param>
             <returns>The message value (if unread).</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateGroup(System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateGroup(System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
             <summary>
             Create a threshold encryption group.
             </summary>
             <param name="groupName">Name of the group to create.</param>
-            <param name="algorithmEncrypt">The encryption algorithm</param>
-            <param name="algorithmSign">The signature algorithm.</param>
+            <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
+            <param name="rights">List of rights to be granted.</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetContextGroup(System.String)">
@@ -1294,15 +1290,6 @@
             <param name="authorize">If true, the action is explicitly authorized.</param>
             <returns>The result of requesting the connection.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomatic(Goedel.Mesh.MessageContact,System.Boolean,System.Boolean)">
-            <summary>
-            Perform automatic processing of the message <paramref name="request"/>.
-            </summary>
-            <param name="request">Reply to contact request to be processed.</param>
-            <param name="accept">Accept the requested action.</param>
-            <param name="authorize">If true, the action is explicitly authorized.</param>
-            <returns>The result of requesting the connection.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomatic(Goedel.Mesh.AcknowledgeConnection)">
             <summary>
             Perform automatic processing of the message <paramref name="request"/>.
@@ -1341,13 +1328,23 @@
             <param name="rights">The list of rights to be granted to the device.</param>
             <returns>The result of processing.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ContactReply(Goedel.Mesh.MessageContact,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ContactReply(Goedel.Mesh.MessageContact,System.Boolean,System.String)">
             <summary>
             Make a contact reply.
             </summary>
             <param name="requestContact">The contact request.</param>
+            <param name="accept">If true, enter the contact data from <paramref name="requestContact.Self.Self"/>
+            in the contact catalog.</param>
             <param name="localname">Local name to be used to identify the contact recorded in
             the catalog.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAutomatic(Goedel.Mesh.MessageContact,System.Boolean)">
+            <summary>
+            Perform automatic processing of the message <paramref name="request"/>.
+            </summary>
+            <param name="request">Reply to contact request to be processed.</param>
+            <param name="authorize">If true, the action is explicitly authorized.</param>
+            <returns>The result of requesting the connection.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetSelf(System.String)">
             <summary>
@@ -1366,12 +1363,14 @@
             <param name="automatic">If true, presentation of the pin code is sufficient
             to authenticate and authorize the action.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ContactRequest(System.String,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ContactRequest(System.String,System.String,System.String,System.Boolean)">
             <summary>
             Construct a contact request.
             </summary>
-            <param name="recipientAddress">The contact to request.</param>
-            <param name="localName">Local name for the contact</param>
+            <param name="recipient">The contact to request.</param>
+            <param name="pin">Optional pin value used to authenticate a response.</param>
+            <param name="localname">Local name for the contact</param>
+            <param name="reply">if true, request return of the recpients contact info in reply.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ContactExchange(System.String,System.Boolean,Goedel.Mesh.Message@,System.String)">
             <summary>
@@ -2409,16 +2408,13 @@
             </summary>
             <param name="key">The profile to delete</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.CreateMesh(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.String,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Client.MeshHost.CreateMesh(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String})">
              <summary>
              Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
              </summary>
             <param name="accountAddress">Account address to bind to.</param>
              <param name="localName">Local name for easy reference.</param>
-             <param name="algorithmSign">Signature algorithm.</param>
-             <param name="algorithmEncrypt">Encryption algorithm</param>
-             <param name="algorithmAuthenticate">Authentication algorithm</param>
-             <param name="secretSeed">Secret seed used to generate private keys.</param>
+             <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
              <param name="profileDevice">Specify the device profile. This allows use of a device 
              profile bound to the machine hardware.</param>
              <param name="rights">The rights to be granted to the initial connected device.</param>

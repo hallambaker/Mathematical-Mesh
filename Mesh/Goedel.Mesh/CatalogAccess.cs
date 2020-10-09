@@ -101,6 +101,12 @@ namespace Goedel.Mesh {
                     bool create = true) :
                     base(directory, storeName ?? Label,
                         cryptoParameters, keyCollection, meshClient: meshClient, decrypt: decrypt, create: create) {
+
+            // Hack: likely to have issues here because the CatalogAccess needs to be readable by the service
+            // Should treat this like any other account except that the service is granted access when it
+            // connects.
+
+
             }
         #endregion
         #region // Class methods

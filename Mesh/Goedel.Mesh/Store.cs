@@ -64,8 +64,8 @@ namespace Goedel.Mesh {
 
         //protected override void Disposing() => Container?.Dispose();
 
-        ///<summary>The cryptographic parameters</summary>
-        protected CryptoParameters CryptoParameters { get; set; }
+        /////<summary>The cryptographic parameters</summary>
+        //protected CryptoParameters CryptoParameters { get; set; }
 
         ///<summary>The key collection used for decryption</summary>
         public IKeyCollection KeyCollection { get; set; }
@@ -115,8 +115,6 @@ namespace Goedel.Mesh {
             ContainerName = storeId ?? ContainerDefault;
             var fileName = FileName(directory, ContainerName);
 
-
-
             Container = Container.Open(
                 fileName,
                 FileStatus.ConcurrentLocked,
@@ -129,7 +127,7 @@ namespace Goedel.Mesh {
                 );
 
             KeyCollection = keyCollection;
-            CryptoParameters = cryptoParameters;
+            //CryptoParameters = cryptoParameters;
             }
 
 

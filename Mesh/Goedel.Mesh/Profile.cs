@@ -67,6 +67,11 @@ namespace Goedel.Mesh {
         ///<summary>The secret seed value used to derrive the private keys.</summary>
         public PrivateKeyUDF SecretSeed { get; }
 
+        ///<summary>The signature key of the profile</summary> 
+        public KeyPair ProfileSignatureKey => profileSignatureKey ??
+            ProfileSignature.GetKeyPair().CacheValue(out profileSignatureKey);
+        KeyPair profileSignatureKey;
+
         /// <summary>
         /// Base constructor used for deserialization
         /// </summary>
@@ -84,7 +89,7 @@ namespace Goedel.Mesh {
                     PrivateKeyUDF secretSeed,
                     IKeyCollection keyCollection=null,
                     bool persist = false) {
-            SecretSeed = secretSeed ?? new PrivateKeyUDF(UdfAlgorithmIdentifier);
+            SecretSeed = secretSeed ?? new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier);
 
             // We always have a profile signature key in a profile.
             var profileSign = SecretSeed.GenerateContributionKeyPair(
@@ -113,7 +118,12 @@ namespace Goedel.Mesh {
         /// Verify the profile to check that it is correctly signed and consistent.
         /// </summary>
         /// <returns></returns>
-        public virtual bool Validate() => Verify(DareEnvelope);
+        public virtual void Validate() {
+            Verify(DareEnvelope).AssertTrue (InvalidProfile.Throw);
+            ProfileSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+
+
+            }
 
         /// <summary>
         /// Verify that the assertion contained in <paramref name="envelopedAssertion"/>
@@ -122,10 +132,7 @@ namespace Goedel.Mesh {
         /// <param name="envelopedAssertion">Envelope containing the assertion 
         /// to be verified.</param>
         /// <returns>True if there is a valid signature under this profile, otherwise false.</returns>
-        public bool Verify(DareEnvelope envelopedAssertion) {
-            envelopedAssertion.Future();
-            "Need to implement pathmath".TaskValidate();
-            return false;
-            }
+        public bool Verify(DareEnvelope envelopedAssertion) => 
+                    envelopedAssertion.Verify(ProfileSignatureKey);
         }
     }

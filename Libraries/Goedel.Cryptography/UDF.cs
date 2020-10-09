@@ -606,6 +606,8 @@ namespace Goedel.Cryptography {
             var (code,key) = Parse(udf);
             var algorithm = code switch {
                 UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+                UdfTypeIdentifier.Encryption_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+                UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
                 UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
                 _ => throw new InvalidAlgorithm()
                 };
@@ -639,6 +641,8 @@ namespace Goedel.Cryptography {
             var algorithm = code switch
                 {
                     UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+                    UdfTypeIdentifier.Encryption_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+                    UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
                     UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
                     _ => throw new InvalidAlgorithm()
                     };
@@ -1094,6 +1098,15 @@ namespace Goedel.Cryptography {
             return code == (byte)UdfTypeIdentifier.DerivedKey ? result : null;
             }
 
+
+        public static (UdfAlgorithmIdentifier, byte[]) ParseUdfAlgorithmIdentifier(string udf) {
+            var ikm = Parse(udf, out var code);
+            (code == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(OperationNotSupported.Throw);
+            var algorithm = (UdfAlgorithmIdentifier)(256 * ikm[0] + ikm[1]);
+
+            return (algorithm, ikm);
+            }
+
         /// <summary>
         /// Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
         /// <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
@@ -1105,7 +1118,6 @@ namespace Goedel.Cryptography {
         public static KeyPair DeriveKey(string udf,
                     KeySecurity keySecurity = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any) => DeriveKey(udf, null, keySecurity, keyUses);
-
 
         /// <summary>
         /// Derive a key pair from the UDF key <paramref name="udf"/> with Key security model

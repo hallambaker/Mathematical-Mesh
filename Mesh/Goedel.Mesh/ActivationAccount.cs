@@ -62,16 +62,13 @@ namespace Goedel.Mesh {
         }
 
     public partial class ActivationAccount {
-
-
-
         // Properties providing access to account-wide keys.
 
         ///<summary>The account profile signature key.</summary>
         public KeyPair ProfileSignatureKey { get; set; }
 
         ///<summary>The account administrator signature key bound to an administrator device.</summary>
-        public KeyPair PrivateAdministratorSignature { get; private set; }
+        public KeyPair AdministratorSignatureKey { get; private set; }
 
         ///<summary>The account encryption key under which inbound messages are encrypted.</summary>
         public KeyPair AccountEncryptionKey { get; private set; }
@@ -82,6 +79,11 @@ namespace Goedel.Mesh {
         ///<summary>The account signature key under which outbound messages are signed.</summary>
         public KeyPair AccountSignatureKey { get; private set; }
 
+        ///<summary>The service profile</summary> 
+        public ProfileService ProfileService;
+
+        ///<summary>The account signature key under which outbound messages are signed.</summary>
+        public KeyPair ServiceEncryptionKey { get; private set; }
 
         ///<summary>The enveloped object</summary> 
         public Enveloped<ActivationAccount> EnvelopedActivationAccount =>
@@ -89,6 +91,9 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedProfileUser);
         Enveloped<ActivationAccount> envelopedProfileUser;
 
+        ///<summary>Dictionary mapping store names to encryption keys.</summary> 
+        public Dictionary<string, KeyPair> DictionaryStoreEncryptionKey =
+            new Dictionary<string, KeyPair>();
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -104,21 +109,67 @@ namespace Goedel.Mesh {
         /// <param name="secretSeed">The secret seed value.</param>
         public ActivationAccount(
                     IKeyCollection keyCollection,
+                    PrivateKeyUDF secretSeed) => ActivateFromSeed(keyCollection, secretSeed);
+
+        void ActivateFromSeed(
+                    IKeyCollection keyCollection, 
                     PrivateKeyUDF secretSeed) {
             ProfileSignatureKey = secretSeed.GenerateContributionKeyPair(
-                MeshKeyType.Activation, MeshActor.Account, MeshKeyOperation.Sign,
+                MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Profile,
+                keyCollection, KeySecurity.Exportable);
+            AdministratorSignatureKey = secretSeed.GenerateContributionKeyPair(
+                MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Profile,
                 keyCollection, KeySecurity.Exportable);
             AccountEncryptionKey = secretSeed.GenerateContributionKeyPair(
-                MeshKeyType.Activation, MeshActor.Account, MeshKeyOperation.Encrypt, 
+                MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Encrypt,
                 keyCollection, KeySecurity.Exportable);
             AccountAuthenticationKey = secretSeed.GenerateContributionKeyPair(
-                MeshKeyType.Activation, MeshActor.Account, MeshKeyOperation.Authenticate,
+                MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Authenticate,
                 keyCollection, KeySecurity.Exportable);
             AccountSignatureKey = secretSeed.GenerateContributionKeyPair(
-                MeshKeyType.Activation, MeshActor.Account, MeshKeyOperation.Profile,
+                MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Sign,
                 keyCollection, KeySecurity.Exportable);
             }
 
+
+        /// <summary>
+        /// Activate the keys bound to this activation record.
+        /// </summary>
+
+        public void Activate(IKeyCollection keyCollection) {
+
+            if (ActivationKey != null) {
+                var secretSeed = new PrivateKeyUDF(ActivationKey);
+                ActivateFromSeed(keyCollection, secretSeed);
+                return;
+                }
+
+            ProfileSignatureKey = ProfileSignature?.GetKeyPair(KeySecurity.Exportable);
+            AdministratorSignatureKey = AdministratorSignature?.GetKeyPair(KeySecurity.Exportable);
+            AccountEncryptionKey = AccountEncryption?.GetKeyPair(KeySecurity.Exportable);
+            AccountAuthenticationKey = AccountAuthentication?.GetKeyPair(KeySecurity.Exportable);
+            AccountSignatureKey = AccountSignature?.GetKeyPair(KeySecurity.Exportable);
+
+            if (AccountEncryptionKey != null) {
+                keyCollection.Add(AccountEncryptionKey);
+                }
+            }
+
+
+
+        /// <summary>
+        /// Bind this activation to the service <paramref name="profileService"/>
+        /// </summary>
+        /// <param name="profileService">Description of the service to bind to.</param>
+        public void BindService(ProfileService profileService) {
+            ProfileService = profileService;
+            ServiceEncryptionKey = ProfileService.KeyEncryption.GetKeyPair();
+            }
+
+
+        #region // MakeCatalogedDevice
+        // This method is attached to the activation record because the CatalogedDevice or
+        // CatalogedGroup is required to create an context.
 
         /// <summary>
         /// Add the device specified by <paramref name="profileDevice"/> to the account granting 
@@ -140,8 +191,6 @@ namespace Goedel.Mesh {
 
             var catalogedDevice = CreateCataloguedDevice(
                     profileUser, profileDevice, activationUser, activationAccount);
-
-
 
             return catalogedDevice;
             }
@@ -166,18 +215,20 @@ namespace Goedel.Mesh {
             profileUser?.DareEnvelope.AssertNotNull(Internal.Throw);
             profileDevice?.DareEnvelope.AssertNotNull(Internal.Throw);
 
+            // encrypt the activationAccount under the base encryption key.
             activationDevice.AssertNotNull(Internal.Throw);
-            activationDevice.Package(PrivateAdministratorSignature);
+            activationDevice.Envelope(AdministratorSignatureKey, profileDevice.BaseEncryption.CryptoKey);
             activationDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
+            // encrypt the activationAccount under the device encryption key.
             activationAccount.AssertNotNull(Internal.Throw);
-            activationAccount.Package(PrivateAdministratorSignature);
+            activationAccount.Envelope(AdministratorSignatureKey, activationDevice.DeviceEncryption);
             activationAccount.DareEnvelope.AssertNotNull(Internal.Throw);
 
 
             var connectionDevice = activationDevice.ConnectionUser;
             connectionDevice.AssertNotNull(Internal.Throw);
-            connectionDevice.Envelope(PrivateAdministratorSignature);
+            connectionDevice.Envelope(AdministratorSignatureKey);
             connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
             // Wrap the connectionDevice and activationDevice in envelopes
@@ -193,10 +244,35 @@ namespace Goedel.Mesh {
                 };
 
             return catalogEntryDevice;
+            
+            }
+
+        #endregion
+
+        public CatalogedGroup MakeCatalogedGroup(
+                        ProfileGroup profileGroup,
+                        ActivationAccount activationAccount,
+                        CryptoKey capability
+                        ) {
+
+            profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
+            
+            // encrypt the activationAccount under the device encryption key.
+            activationAccount.AssertNotNull(Internal.Throw);
+            activationAccount.Envelope(AdministratorSignatureKey, capability);
+            activationAccount.DareEnvelope.AssertNotNull(Internal.Throw);
+
+            var catalogedGroup = new CatalogedGroup() {
+                EnvelopedProfileGroup = profileGroup.EnvelopedProfileAccount,
+                EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
+                };
+
+            return catalogedGroup;
+
             }
 
 
-        ActivationAccount MakeActivationAccount(
+        public ActivationAccount MakeActivationAccount(
                 ProfileDevice profileDevice,
                 List<string> roles = null,
                 ITransactContextAccount transactContextAccount=null
@@ -227,27 +303,6 @@ namespace Goedel.Mesh {
 
             }
 
-
-
-
-
-
-
-        /// <summary>
-        /// Create a key pair bound to the private key <paramref name="profileDevice.KeyEncryption"/>
-        /// The public parameters of the returned key represent the combined parameters, the 
-        /// private parameters represent the offset from the device key.
-        /// </summary>
-        /// <param name="profileDevice">Profile providing the base key.</param>
-        /// <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
-        /// <returns>The bound key pair.</returns>
-        public static KeyPair DeviceBindEncryption(
-                    ProfileDevice profileDevice,
-                    IKeyCollection keyCollection) {
-            return KeyPair.FactorySignature(profileDevice.BaseEncryption.CryptoKey.CryptoAlgorithmId,
-                            KeySecurity.ExportableStored, keyCollection);
-            }
-
         /// <summary>
         /// Create a key pair bound to the private key <paramref name="profileDevice.OfflineSignature"/>
         /// The public parameters of the returned key represent the combined parameters, the 
@@ -262,23 +317,6 @@ namespace Goedel.Mesh {
             return KeyPair.FactorySignature(profileDevice.ProfileSignature.CryptoKey.CryptoAlgorithmId,
                             KeySecurity.ExportableStored, keyCollection);
             }
-
-        /// <summary>
-        /// Create a key pair bound to the private key <paramref name="profileDevice.KeyAuthentication"/>
-        /// The public parameters of the returned key represent the combined parameters, the 
-        /// private parameters represent the offset from the device key.
-        /// </summary>
-        /// <param name="profileDevice">Profile providing the base key.</param>
-        /// <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
-        /// <returns>The bound key pair.</returns>
-        public static KeyPair DeviceBindAuthentication(
-                    ProfileDevice profileDevice,
-                    IKeyCollection keyCollection) {
-            return KeyPair.FactorySignature(profileDevice.BaseAuthentication.CryptoKey.CryptoAlgorithmId,
-                            KeySecurity.ExportableStored, keyCollection);
-            }
-
-
 
 
         /// <summary>
@@ -388,26 +426,19 @@ namespace Goedel.Mesh {
             }
 
 
+        public CryptoParameters GetCryptoParameters(string containerName) {
+            if (DictionaryStoreEncryptionKey.TryGetValue(containerName, out var encryptionKey)) {
+                encryptionKey = KeyPair.FactoryExchange(CryptoAlgorithmId.Default,
+                        KeySecurity.Exportable, KeyCollection);
 
+                // should add this to the activated capabilities here!
 
-        /// <summary>
-        /// Activate the keys bound to this activation record.
-        /// </summary>
-
-        public void Activate(IKeyCollection keyCollection) {
-
-            // Need to work out how to add these into the relevant key collections.
-
-
-            ProfileSignatureKey = ProfileSignature?.GetKeyPair(KeySecurity.Exportable);
-            PrivateAdministratorSignature = AdministratorSignature?.GetKeyPair(KeySecurity.Exportable);
-            AccountEncryptionKey = AccountEncryption?.GetKeyPair(KeySecurity.Exportable);
-            AccountAuthenticationKey = AccountAuthentication?.GetKeyPair(KeySecurity.Exportable);
-            AccountSignatureKey = AccountSignature?.GetKeyPair(KeySecurity.Exportable);
-            if (AccountEncryptionKey != null) {
-                keyCollection.Add(AccountEncryptionKey);
+                DictionaryStoreEncryptionKey.Add(containerName, encryptionKey);
                 }
+            return new CryptoParameters(KeyCollection, recipient: encryptionKey);
             }
+
+
 
 
         /// <summary>

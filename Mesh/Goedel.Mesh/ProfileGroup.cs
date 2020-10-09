@@ -37,45 +37,17 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
+        /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
         /// </summary>
-        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="accountAddress">The account address</param>
+        /// <param name="activationAccount">The activation used to create the account data.</param>
         public ProfileGroup(
-                    PrivateKeyUDF secretSeed) : base(secretSeed) {
+                    string accountAddress,
+                    ActivationAccount activationAccount): base (accountAddress, activationAccount) {
+
+            // Sign the profile
+            Envelope(activationAccount.ProfileSignatureKey);
             }
-
-
-        /// <summary>
-        /// Generate profile specific keys.
-        /// </summary>
-        protected override void Generate() {
-            base.Generate();
-            AccountEncryption = SecretSeed.GenerateContributionKeyData(
-                    MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
-            }
-
-        /// <summary>
-        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
-        /// seed.
-        /// </summary>
-        /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <param name="algorithmSign">The authentication algorithm</param>
-        /// <param name="algorithmAuthenticate">The signature algorithm</param>
-        /// <param name="bits">The size of key to generate in bits/</param>
-        /// <returns>The created profile.</returns>
-        public static ProfileGroup Generate(
-                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                    CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                    int bits = 256,
-                    PrivateKeyUDF secretSeed = null) {
-            secretSeed ??= new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileAccount, null, algorithmEncrypt,
-                algorithmSign, algorithmAuthenticate, bits: bits);
-            return new ProfileGroup(secretSeed);
-            }
-
 
 
         }

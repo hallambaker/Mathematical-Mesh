@@ -40,6 +40,7 @@ namespace Goedel.Mesh.Client {
 
         #region // Properties
 
+        #region // Machine and context properties
         ///<summary>The Mesh host</summary>
         public MeshHost MeshHost { get; }
 
@@ -47,7 +48,7 @@ namespace Goedel.Mesh.Client {
         public CatalogedMachine CatalogedMachine;
 
         ///<summary>The account profile</summary>
-        public abstract Profile Profile{ get; }
+        public abstract Profile Profile { get; }
 
         ///<summary>The device profile</summary>
         public ProfileDevice ProfileDevice => CatalogedMachine?.ProfileDevice;
@@ -56,45 +57,40 @@ namespace Goedel.Mesh.Client {
         public ProfileService ProfileService;
 
         ///<summary>The Machine context.</summary>
-        protected IMeshMachineClient MeshMachine=> MeshHost.MeshMachine;
+        protected IMeshMachineClient MeshMachine => MeshHost.MeshMachine;
 
         ///<summary>The key collection for use with the context.</summary>
-        protected IKeyCollection KeyCollection => MeshMachine.KeyCollection;
+        public IKeyCollection KeyCollection => MeshMachine.KeyCollection;
 
         ///<summary>The connection binding the calling context to the account.</summary>
         public abstract Connection Connection { get; }
 
+        ///<summary>Returns the MeshClient and caches the result for future use.</summary>
+        public abstract MeshService MeshClient { get; }
 
-
+        ///<summary>The Account Address</summary>
+        public abstract string AccountAddress { get; } 
+        #endregion
+        #region // Activated account keys
+        ///<summary>The account activation</summary>
+        public ActivationAccount ActivationAccount { get; protected set; }
         ///<summary>The account profile key</summary>
-        protected virtual KeyPair KeyProfileSignature { get; set; }
-
+        protected KeyPair KeyProfile => ActivationAccount.ProfileSignatureKey;
+        ///<summary>The account profile key</summary>
+        protected KeyPair KeyAdministrator => ActivationAccount.AdministratorSignatureKey;
         ///<summary>The account encryption key </summary>
-        protected virtual KeyPair KeyAccountSignature { get; set; }
-
+        protected KeyPair KeyAccountSignature => ActivationAccount.AccountSignatureKey;
         ///<summary>The account encryption key </summary>
-        protected virtual KeyPair KeyAccountEncryption { get; set; }
-
-        ///<summary>The authentication key used by this device to authenticate</summary>
-        protected virtual KeyPair KeyDeviceAuthentication { get; set; }
-
-
+        protected KeyPair KeyAccountEncryption => ActivationAccount.AccountEncryptionKey;
+        ///<summary>The authentication key used to authenticate as the account.</summary>
+        protected KeyPair KeyAccountAuthentication => ActivationAccount.AccountAuthenticationKey; 
+        #endregion
+        #region // Store definitions
         ///<summary>The directory containing the catalogs related to the account.</summary>
         public virtual string StoresDirectory { get; set; }
 
         ///<summary>Dictionary locating the stores connected to the context.</summary>
         protected Dictionary<string, SyncStatus> DictionaryStores = new Dictionary<string, SyncStatus>();
-
-        ///<summary>The cryptographic parameters for reading/writing to account containers</summary>
-        protected CryptoParameters ContainerCryptoParameters;
-
-
-        ///<summary>Returns the MeshClient and caches the result for future use.</summary>
-        public MeshService MeshClient => meshClient ?? GetMeshClient(AccountAddress).CacheValue(out meshClient);
-        MeshService meshClient;
-
-        ///<summary>The Account Address</summary>
-        public abstract string AccountAddress { get; }
 
         ///<summary>List of catalogs</summary>
         public virtual Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;
@@ -110,9 +106,8 @@ namespace Goedel.Mesh.Client {
             {SpoolOutbound.Label, SpoolOutbound.Factory},
             {SpoolLocal.Label, SpoolLocal.Factory},
             {SpoolArchive.Label, SpoolArchive.Factory},
-            };
-
-
+            }; 
+        #endregion
         #endregion
 
         /// <summary>
@@ -145,32 +140,20 @@ namespace Goedel.Mesh.Client {
 
         public ContextAccount() {
             }
+
+
+        public ContextAccount(ActivationAccount activationAccount) {
+            ActivationAccount = activationAccount;
+            }
+
+
         #endregion
 
         #region // Activation of the context
 
-        /// <summary>
-        /// Activate the context using the account seed giving access to the complete keys.
-        /// </summary>
-        /// <param name="accountSeed"></param>
-        public void ActivateAccount(PrivateKeyUDF accountSeed) {
-            KeyProfileSignature = accountSeed.GenerateContributionKeyPair(
-                        MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Profile);
-            KeyAccountSignature = accountSeed.GenerateContributionKeyPair(
-                        MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Sign);
-            KeyAccountEncryption = accountSeed.GenerateContributionKeyPair(
-                        MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Encrypt);
-            KeyDeviceAuthentication = accountSeed.GenerateContributionKeyPair(
-                        MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Authenticate);
-            }
 
-        /// <summary>
-        /// Activate the context using an activation to a threshold contribution
-        /// </summary>
-        /// <param name="activation"></param>
-        public void ActivateAccount(ActivationAccount activation) {
-            throw new NYI();
-            }
+
+            
 
         #endregion
         #region // PIN code generation and use
@@ -184,36 +167,24 @@ namespace Goedel.Mesh.Client {
         /// <param name="action">The action to which this pin is bound.</param>
         /// <param name="automatic">If true, presentation of the pin code is sufficient
         /// to authenticate and authorize the action.</param>
+        /// <param name="register">If true, register the pin at the service.</param>
         /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
         public MessagePin GetPIN(string action, bool automatic = true, 
-                            int length = 80, long validity = MeshConstants.DayInTicks) {
+                            int length = 80, long validity = MeshConstants.DayInTicks,
+                            bool register = true) {
             var pin = UDF.AuthenticationKey(length);
             var expires = DateTime.Now.AddTicks(validity);
 
-            return RegisterPIN(pin, automatic, expires, AccountAddress, action);
+            var messagePin = new MessagePin(pin, automatic, expires, AccountAddress, action);
+
+            if (register) {
+                var transactRequest = TransactBegin();
+                transactRequest.LocalMessage(messagePin);
+                transactRequest.Transact();
+                }
+            return messagePin;
             }
 
-        /// <summary>
-        /// Register the pin code <paramref name="pin"/> to the account <paramref name="accountAddress"/>
-        /// bound to the action <paramref name="action"/>.
-        /// </summary>
-        /// <param name="pin">The PIN code</param>
-        /// <param name="automatic">If true, proof of knowledge of the pin is sufficient authorization.</param>
-        /// <param name="expires">Expiry time.</param>
-        /// <param name="accountAddress">The account to which the pin is bound.</param>
-        /// <param name="action">The action to which the pin is bound.</param>
-        /// <returns>The message registered on the Admin spool.</returns>
-        protected MessagePin RegisterPIN(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
-            var messageConnectionPIN = new MessagePin(pin, automatic, expires, accountAddress, action);
-
-
-            var transactRequest = TransactBegin();
-            transactRequest.LocalMessage(messageConnectionPIN);
-            transactRequest.Transact();
-
-            //SendMessageAdmin(messageConnectionPIN);
-            return messageConnectionPIN;
-            }
 
         /// <summary>
         /// Fetch the <see cref="MessagePin"/> with the identifier <paramref name="PinUDF"/>.
@@ -223,14 +194,12 @@ namespace Goedel.Mesh.Client {
         public MessagePin GetMessagePIN(string PinUDF) {
             var spoolLocal = GetStore(SpoolLocal.Label) as SpoolLocal;
 
-            var pinCreate = spoolLocal.CheckPIN(PinUDF);
-
-            if (pinCreate == null) {
+            var spooledPin = spoolLocal.CheckPIN(PinUDF);
+            if (spooledPin == null) {
                 return null;
                 }
-            //pinCreate.Message.Status = pinCreate.MessageStatus;
 
-            return pinCreate?.Message as MessagePin;
+            return spooledPin?.Message as MessagePin;
             }
 
         #endregion
@@ -264,7 +233,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="accountAddress">The account service identifier.</param>
         /// <returns>The Mesh service client</returns>
         public MeshService GetMeshClient(string accountAddress) =>
-                    MeshMachine.GetMeshClient(accountAddress, KeyDeviceAuthentication,
+                    MeshMachine.GetMeshClient(accountAddress, KeyAccountAuthentication,
                             Connection, Profile);
 
 
@@ -409,15 +378,6 @@ namespace Goedel.Mesh.Client {
 
             }
 
-        void Connect() {
-            if (MeshClient != null) {
-                return;
-                }
-
-            meshClient = GetMeshClient(AccountAddress);
-            }
-
-
         #endregion
         #region // Contact management
 
@@ -530,19 +490,19 @@ namespace Goedel.Mesh.Client {
         /// <returns>The store instance.</returns>
         protected Store MakeStore(string name) {
 
-            // special case this for now
-            switch (name) {
-                case CatalogAccess.Label : return new CatalogAccess(StoresDirectory,
-                        name, ContainerCryptoParameters, KeyCollection, meshClient: (this as IMeshClient));
-                }
+            //// special case this for now
+            //switch (name) {
+            //    case CatalogAccess.Label : return new CatalogAccess(StoresDirectory,
+            //            name, ContainerCryptoParameters, KeyCollection, meshClient: (this as IMeshClient));
+            //    }
 
             if (DictionaryCatalogDelegates.TryGetValue(name, out var factory)) {
-                return factory(StoresDirectory,
-                    name, ContainerCryptoParameters, KeyCollection);
+                var cryptoParameters = ActivationAccount.GetCryptoParameters(name);
+                return factory(StoresDirectory, name, cryptoParameters, KeyCollection);
                 }
             if (DictionarySpoolDelegates.TryGetValue(name, out factory)) {
                 return factory(StoresDirectory,
-                    name, ContainerCryptoParameters, KeyCollection);
+                    name, null, KeyCollection);
                 }
 
 

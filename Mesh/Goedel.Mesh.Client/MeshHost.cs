@@ -200,10 +200,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         ///<param name="accountAddress">Account address to bind to.</param>
         /// <param name="localName">Local name for easy reference.</param>
-        /// <param name="algorithmSign">Signature algorithm.</param>
-        /// <param name="algorithmEncrypt">Encryption algorithm</param>
-        /// <param name="algorithmAuthenticate">Authentication algorithm</param>
-        /// <param name="secretSeed">Secret seed used to generate private keys.</param>
+        /// <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
         /// <param name="profileDevice">Specify the device profile. This allows use of a device 
         /// profile bound to the machine hardware.</param>
         /// <param name="rights">The rights to be granted to the initial connected device.</param>
@@ -211,33 +208,34 @@ namespace Goedel.Mesh.Client {
         public ContextUser CreateMesh(
                 string accountAddress,
                 string localName=null,
-                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                string secretSeed = null,
+                PrivateKeyUDF accountSeed = null,
                 ProfileDevice profileDevice = null,
                 List<string> rights=null) {
 
-            // First create the initial profile device. This allows us to bind the online
-            // signature key to it
+            // Generate the initial seed for the account if not already specified.
+            accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
+            Screen.WriteLine($"***** Secret Seed = {accountSeed.PrivateValue}");
+
+            // Generate a device profile if needed
             var persistDevice = profileDevice == null;
             profileDevice ??= ProfileDevice.Generate(
-                algorithmSign: algorithmSign,
-                algorithmEncrypt: algorithmEncrypt,
-                algorithmAuthenticate: algorithmAuthenticate);
+                algorithmSign: accountSeed.AlgorithmSignID,
+                algorithmEncrypt: accountSeed.AlgorithmEncryptID,
+                algorithmAuthenticate: accountSeed.AlgorithmAuthenticateID);
 
-
-            // use this as the master seed 
-            var privateKeyUDF = new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileAccount);
-            Screen.WriteLine($"***** Secret Seed = {privateKeyUDF.PrivateValue}");
-
+            // Check that the profile is valid before using it.
+            profileDevice.Validate();
 
             // Create the set of cryptographic keys to initialize the account.
             // create the root activation.
-            var activationRoot = new ActivationAccount(KeyCollection, privateKeyUDF);
+            var activationRoot = new ActivationAccount(KeyCollection, accountSeed);
 
             // create the initial profile
-            var profileUser = new ProfileUser(activationRoot, accountAddress);
+            var profileUser = new ProfileUser(accountAddress, activationRoot);
+
+            // Check that the profile is valid before using it.
+            profileDevice.Validate();
+
 
             rights ??= new List<string> {
                 Rights.IdRightsSuper,
@@ -246,7 +244,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             // create a Cataloged Device entry for the admin device
-            var catalogedDevice = activationRoot.MakeCatalogedDevice(profileDevice, profileUser,rights);
+            var catalogedDevice = activationRoot.MakeCatalogedDevice(profileDevice, profileUser, rights);
 
             // now create the host catalog entry and apply to the context user.
             var catalogedMachine = new CatalogedStandard() {
@@ -257,14 +255,13 @@ namespace Goedel.Mesh.Client {
                 };
 
             // Create the account directory.
-            var StoresDirectory = ContextUser.GetStoresDirectory(this, profileUser);
-            Directory.CreateDirectory(StoresDirectory);
+            ContextUser.CreateDirectory(this, profileUser);
 
             //Persist the results.
             if (persistDevice) {
                 profileDevice.PersistSeed(KeyCollection);
                 }
-            KeyCollection.Persist(profileUser.Udf, privateKeyUDF, false);
+            KeyCollection.Persist(profileUser.Udf, accountSeed, false);
 
             var contextUser = new ContextUser(this, catalogedMachine);
             contextUser.ActivationAccount.ProfileSignatureKey =

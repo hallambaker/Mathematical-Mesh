@@ -1319,6 +1319,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual KeyData						AccountEncryption  {get; set;}
+        /// <summary>
+        ///Key used to sign connection assertions to the account.
+        /// </summary>
+
+		public virtual KeyData						AdministratorSignature  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1378,6 +1383,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("AccountEncryption", 1);
 					AccountEncryption.Serialize (_writer, false);
 				}
+			if (AdministratorSignature != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AdministratorSignature", 1);
+					AdministratorSignature.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -1423,6 +1433,13 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					AccountEncryption = new KeyData ();
 					AccountEncryption.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "AdministratorSignature" : {
+					// An untagged structure
+					AdministratorSignature = new KeyData ();
+					AdministratorSignature.Deserialize (jsonReader);
  
 					break;
 					}
@@ -8181,9 +8198,15 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class CatalogedGroup : CatalogedApplication {
         /// <summary>
+        ///The Mesh profile
         /// </summary>
 
-		public virtual ProfileGroup						Profile  {get; set;}
+		public virtual Enveloped<ProfileAccount>						EnvelopedProfileGroup  {get; set;}
+        /// <summary>
+        ///The activation of the device within the Mesh account
+        /// </summary>
+
+		public virtual Enveloped<ActivationAccount>						EnvelopedActivationAccount  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -8228,10 +8251,15 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((CatalogedApplication)this).SerializeX(_writer, false, ref _first);
-			if (Profile != null) {
+			if (EnvelopedProfileGroup != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Profile", 1);
-					Profile.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedProfileGroup", 1);
+					EnvelopedProfileGroup.Serialize (_writer, false);
+				}
+			if (EnvelopedActivationAccount != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedActivationAccount", 1);
+					EnvelopedActivationAccount.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -8266,10 +8294,17 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Profile" : {
+				case "EnvelopedProfileGroup" : {
 					// An untagged structure
-					Profile = new ProfileGroup ();
-					Profile.Deserialize (jsonReader);
+					EnvelopedProfileGroup = new Enveloped<ProfileAccount> ();
+					EnvelopedProfileGroup.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "EnvelopedActivationAccount" : {
+					// An untagged structure
+					EnvelopedActivationAccount = new Enveloped<ActivationAccount> ();
+					EnvelopedActivationAccount.Deserialize (jsonReader);
  
 					break;
 					}
@@ -9756,6 +9791,8 @@ namespace Goedel.Mesh {
 		bool								__Reply = false;
 		private bool						_Reply;
         /// <summary>
+        ///If true, requests that the recipient return their own contact information
+        ///in reply.
         /// </summary>
 
 		public virtual bool						Reply {
@@ -9763,19 +9800,16 @@ namespace Goedel.Mesh {
 			set {_Reply = value; __Reply = true; }
 			}
         /// <summary>
+        ///Optional explanation of the reason for the request.
         /// </summary>
 
 		public virtual string						Subject  {get; set;}
         /// <summary>
-        ///One time authentication code.
+        ///One time authentication code supplied to a recipient to allow authentication
+        ///of the response.
         /// </summary>
 
 		public virtual string						PIN  {get; set;}
-        /// <summary>
-        ///The contact data.
-        /// </summary>
-
-		public virtual Enveloped<Contact>						Self  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -9835,11 +9869,6 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("PIN", 1);
 					_writer.WriteString (PIN);
 				}
-			if (Self != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Self", 1);
-					Self.Serialize (_writer, false);
-				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -9883,13 +9912,6 @@ namespace Goedel.Mesh {
 					}
 				case "PIN" : {
 					PIN = jsonReader.ReadString ();
-					break;
-					}
-				case "Self" : {
-					// An untagged structure
-					Self = new Enveloped<Contact> ();
-					Self.Deserialize (jsonReader);
- 
 					break;
 					}
 				default : {

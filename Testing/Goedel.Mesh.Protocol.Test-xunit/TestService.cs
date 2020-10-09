@@ -1,4 +1,5 @@
 using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Protocol;
@@ -334,8 +335,9 @@ namespace Goedel.XUnit {
             var recoveryShares = new List<string> { shares[0].UDFKey, shares[1].UDFKey };
             var secret = new SharedSecret(recoveryShares);
 
-            var recoveredAccount = recoveryMachine.MeshHost.CreateMesh("recover", 
-                        secretSeed:secret.UDFKey);
+            var accountSeed = new PrivateKeyUDF(secret.UDFKey);
+            var recoveredAccount = recoveryMachine.MeshHost.CreateMesh("recover",
+                        accountSeed: accountSeed);
 
             // delete seed
             contextAliceOriginal.EraseMeshSecret();
@@ -432,7 +434,14 @@ namespace Goedel.XUnit {
             var syncBob = contextAccountBob.Sync();
 
             var fromAlice = contextAccountBob.GetPendingMessageContactRequest();
+
+
             contextAccountBob.Process(fromAlice);
+
+            (fromBob as MessageContact).Reply.TestTrue();
+            (fromAlice as MessageContact).Reply.TestFalse();
+
+            "Add checks to see that each has the contact info of the other in their catalog".TaskTest();
             }
 
         [Fact]
@@ -561,7 +570,7 @@ namespace Goedel.XUnit {
         bool Verify(ContextUser first, ContextUser second) {
             //(first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();
 
-            Verify(first.ActivationUser, second.ActivationUser);
+            Verify(first.ActivationDevice, second.ActivationDevice);
             Verify(first.ProfileUser, second.ProfileUser);
             (first.StoresDirectory == second.StoresDirectory).TestTrue();
             return true;

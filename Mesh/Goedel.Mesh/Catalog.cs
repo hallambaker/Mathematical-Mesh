@@ -79,6 +79,7 @@ namespace Goedel.Mesh {
                     bool decrypt = true,
                     bool create = true) :
                 base(directory, containerName, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+
             if (!create & Container == null) {
                 return;
                 }

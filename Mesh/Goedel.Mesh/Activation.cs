@@ -25,14 +25,7 @@ using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
     public partial class Activation {
-
-
-        ///<summary>The key contribution type</summary> 
-        public virtual MeshKeyType MeshKeyType => Goedel.Mesh.MeshKeyType.Activation;
-
-        ///<summary>The key identifier</summary> 
-        public virtual UdfAlgorithmIdentifier UdfAlgorithmIdentifier =>
-            throw new NYI();
+        #region // Properties
 
 
         ///<summary>The <see cref="ProfileDevice"/> that this activation activates.</summary>
@@ -49,7 +42,8 @@ namespace Goedel.Mesh {
 
         ///<summary>The activation seed key.</summary> 
         public PrivateKeyUDF ActivationSeed { get; set; }
-
+        #endregion
+        #region // Constructors
         /// <summary>
         /// Base constructor.
         /// </summary>
@@ -59,7 +53,7 @@ namespace Goedel.Mesh {
 
         /// <summary>
         /// Constructor creating a new <see cref="Activation"/> for a profile of type
-        /// <paramref name="profile"/>. The property <see cref="ActivationUdf"/> is
+        /// <paramref name="profile"/>. The property <see cref="ActivationSeed"/> is
         /// calculated from the values <paramref name="udfAlgorithmIdentifier"/>. 
         /// If the value <paramref name="masterSecret"/> is
         /// specified, it is used as the seed value. Otherwise, a seed value of
@@ -84,16 +78,7 @@ namespace Goedel.Mesh {
 
             ProfileSignature = ActivationSeed.ActivatePublic(
                     profile.ProfileSignature.GetKeyPairAdvanced(), actor, MeshKeyOperation.Profile);
-            }
-
-
-        /// <summary>
-        /// Encrypt this activation under the ProfileDevice encryption key.
-        /// </summary>
-        /// <returns>The actrivation profile encrypted under the encryption key of
-        /// the corresponding <see cref="ProfileDevice"/>.</returns>
-        public DareEnvelope Package(CryptoKey SignatureKey) => 
-                Envelope(SignatureKey, ProfileDevice.BaseEncryption.CryptoKey);
-
+            } 
+        #endregion
         }
     }

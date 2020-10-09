@@ -151,6 +151,49 @@ namespace Goedel.Mesh {
             envelopedMessagePinValidated ?? new Enveloped<MessagePinValidated>(DareEnvelope).
                     CacheValue(out envelopedMessagePinValidated);
         Enveloped<MessagePinValidated> envelopedMessagePinValidated;
+
+        public virtual string Action { get; }
+
+
+        public void Authenticate(
+                    string pin) {
+            if (pin == null) {
+                return;
+                }
+
+            var saltedPin = MessagePin.SaltPIN(pin, MeshConstants.MessagePINActionContact);
+
+            ClientNonce = CryptoCatalog.GetBits(128);
+            PinWitness = MessagePin.GetPinWitness(saltedPin, Recipient, AuthenticatedData, ClientNonce);
+            PinId = MessagePin.GetPinId(saltedPin, Recipient);
+            }
+
+        public ProcessingResult ValidatePin(
+                MessagePin messagePin,
+                string accountAddress) {
+
+            if (messagePin == null) {
+                return ProcessingResult.PinInvalid;
+                }
+            if ((messagePin.MessageStatus & MessageStatus.Closed) == MessageStatus.Closed) {
+                return ProcessingResult.PinUsed;
+                }
+            if (messagePin.Expires != null && messagePin.Expires < DateTime.Now) {
+                return ProcessingResult.PinExpired;
+                }
+            var pinWitness = MessagePin.GetPinWitness(
+                        messagePin.SaltedPin,
+                        accountAddress,
+                        DareEnvelope,
+                        ClientNonce);
+            if (!pinWitness.IsEqualTo(PinWitness)) {
+                return ProcessingResult.PinInvalid;
+                }
+
+            return ProcessingResult.Success;
+            }
+
+
         }
     public partial class MessagePin {
         ///<summary>Typed enveloped data</summary> 
@@ -186,7 +229,7 @@ namespace Goedel.Mesh {
             Pin = pin;
             SaltedPin = SaltPIN(pin, action);
             Action = action;
-            MessageId = GetPinUDF(SaltedPin, accountAddress);
+            MessageId = GetPinId(SaltedPin, accountAddress);
 
             Console.WriteLine($"Created Pin: {Account} / {SaltedPin} => {MessageId}");
             }
@@ -254,7 +297,7 @@ namespace Goedel.Mesh {
         /// <param name="pin">The salted one time code</param>
         /// <param name="accountAddress">The account address of the issuer of the PIN</param>
         /// <returns>The PIN Code identifier.</returns>
-        public static string GetPinUDF(
+        public static string GetPinId(
                     string pin,
                     string accountAddress) {
             var result = UDF.SymmetricKeyMac(accountAddress.ToUTF8(), pin);
@@ -288,6 +331,8 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedRequestConnection);
         Enveloped<RequestConnection> envelopedRequestConnection;
 
+        public override string Action => MeshConstants.MessagePINActionDevice;
+
         /// <summary>
         /// Default constructor used for deserialization.
         /// </summary>
@@ -316,8 +361,7 @@ namespace Goedel.Mesh {
 
             if (pin != null) {
                 var saltedPin = MessagePin.SaltPIN(pin, MeshConstants.MessagePINActionDevice);
-
-                PinId = MessagePin.GetPinUDF(saltedPin, accountAddress);
+                PinId = MessagePin.GetPinId(saltedPin, accountAddress);
                 PinWitness = MessagePin.GetPinWitness(
                         saltedPin, accountAddress, profileDevice.DareEnvelope, ClientNonce);
                 }
@@ -386,6 +430,9 @@ namespace Goedel.Mesh {
             envelopedRequestContact ?? new Enveloped<MessageContact>(DareEnvelope).
                     CacheValue(out envelopedRequestContact);
         Enveloped<MessageContact> envelopedRequestContact;
+
+        public override string Action => MeshConstants.MessagePINActionContact;
+
         }
 
     public partial class GroupInvitation {

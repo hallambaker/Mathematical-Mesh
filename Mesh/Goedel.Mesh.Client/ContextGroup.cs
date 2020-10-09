@@ -18,7 +18,12 @@ namespace Goedel.Mesh.Client {
         #region // Properties
 
         ///<summary>The enclosing mesh context.</summary>
-        public ContextUser ContextAccount;
+        public ContextUser ContextUser;
+
+        ///<summary>Returns the MeshClient of the user account under which the account is managed.
+        ///</summary>
+        public override MeshService MeshClient => ContextUser.MeshClient;
+
 
         ///<summary>The catalogued group description.</summary>
         public CatalogedGroup CatalogedGroup;
@@ -28,10 +33,10 @@ namespace Goedel.Mesh.Client {
         public override Profile Profile => ProfileGroup;
 
         ///<summary>The account address.</summary>
-        public override string AccountAddress => CatalogedGroup.Key;
+        public override string AccountAddress => ProfileGroup.AccountAddress;
 
         ///<summary>The group profile.</summary>
-        public ProfileGroup ProfileGroup => CatalogedGroup.Profile;
+        public ProfileGroup ProfileGroup => CatalogedGroup.ProfileGroup;
 
         ///<summary>The group connection under which this context is formed.</summary>
         public ConnectionGroup ConnectionGroup;
@@ -67,30 +72,19 @@ namespace Goedel.Mesh.Client {
         public ContextGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) :
                     base(contextAccount.MeshHost, null) { 
             CatalogedGroup = catalogedGroup;
-            ContextAccount = contextAccount;
+            ContextUser = contextAccount;
             }
 
 
-        public ContextGroup(ContextUser contextAccount, PrivateKeyUDF secretSeed) {
-            ActivateAccount(secretSeed);
-            }
-
-        public CapabilitySign GetCapabilitySign() {
-            return new CapabilitySign() {
-                Id = UDF.Nonce(),
-                SubjectAddress = AccountAddress,
-                SubjectId = KeyAccountSignature.KeyIdentifier,
-                KeyData = new KeyData(KeyAccountSignature, true),
-                };
-            }
-        public CapabilityKeyGenerate GetCapabilityKeyGenerate() {
-            return new CapabilityKeyGenerate() {
-                Id = UDF.Nonce(),
-                SubjectAddress = AccountAddress,
-                SubjectId = KeyAccountEncryption.KeyIdentifier,
-                KeyData = new KeyData(KeyAccountEncryption, true)
-                };
-
+        /// <summary>
+        /// Generation constructor: create a group using the seed value <paramref name="activationAccount"/>
+        /// and return a client context under <paramref name="contextuser"/>
+        /// </summary>
+        /// <param name="contextuser"></param>
+        /// <param name="activationAccount"></param>
+        public ContextGroup(ContextUser contextuser, ActivationAccount activationAccount) :
+                    base (activationAccount) {
+            ContextUser = contextuser;
             }
 
 
@@ -122,21 +116,21 @@ namespace Goedel.Mesh.Client {
         /// <returns>The member catalog entry.</returns>
         public CatalogedMember Add(string memberAddress, string text=null) {
 
-            var transactInvitation = ContextAccount.TransactBegin();
+            var transactInvitation = ContextUser.TransactBegin();
             var transactGroup = TransactBegin();
 
             // Bug: Should create an entry for the member
 
             // Pull the contact information from the user's contact catalog
-            var networkProtocolEntry = ContextAccount.GetNetworkEntry(memberAddress);
+            var networkProtocolEntry = ContextUser.GetNetworkEntry(memberAddress);
             var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
 
             // will fail because the ProfileService is not set.
-            var serviceEncryptionKey = ContextAccount.ProfileService.KeyEncryption.CryptoKey;
+            var serviceEncryptionKey = ContextUser.ProfileService.KeyEncryption.CryptoKey;
 
             // Create the capability 
             var capabilityService = new CapabilityDecryptServiced() {
-                AuthenticationId = ContextAccount.ProfileUser.Udf,
+                AuthenticationId = ContextUser.ProfileUser.Udf,
                 KeyDataEncryptionKey = serviceEncryptionKey
                 };
 
@@ -163,7 +157,7 @@ namespace Goedel.Mesh.Client {
             var contact = CreateContact(listCapability);
 
             var groupInvitation = new GroupInvitation() {
-                Sender = ContextAccount.AccountAddress,
+                Sender = ContextUser.AccountAddress,
                 Recipient = memberAddress,
                 Text = text,
                 Contact = contact

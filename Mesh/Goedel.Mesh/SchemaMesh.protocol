@@ -118,16 +118,6 @@
 			Description
 				|Secret seed used to derive keys unless explicitly specified.
 
-	//Structure Permission
-	//	String Name
-	//	String Role
-	//	Struct DareEnvelope Capabilities
-	//		Description
-	//			|Keys or key contributions enabling the operation to be performed
-
-
-
-
 	Section 3 "Mesh Profile Classes"
 		Description
 			|Classes describing Mesh Profiles. All Profiles are Assertions
@@ -183,6 +173,9 @@
 		Struct KeyData AccountEncryption
 			Description
 				|Key currently used to encrypt data under this profile
+		Struct KeyData AdministratorSignature
+			Description
+				|Key used to sign connection assertions to the account.
 
 	Structure ProfileUser
 		Inherits ProfileAccount
@@ -769,9 +762,13 @@
 
 	Structure CatalogedGroup
 		Inherits CatalogedApplication
-		Struct ProfileGroup Profile
+		Struct Enveloped<ProfileAccount> EnvelopedProfileGroup
+			Description
+				|The Mesh profile
+		Struct Enveloped<ActivationAccount> EnvelopedActivationAccount
+			Description
+				|The activation of the device within the Mesh account
 
-		// The recryption key
 
 	Structure CatalogedApplicationSSH
 		Inherits CatalogedApplication
@@ -894,13 +891,17 @@
 	Structure MessageContact
 		Inherits MessagePinValidated
 		Boolean Reply
+			Description
+				|If true, requests that the recipient return their own contact information
+				|in reply.
 		String Subject
+			Description
+				|Optional explanation of the reason for the request.
 		String PIN
 			Description
-				|One time authentication code.
-		Struct Enveloped<Contact> Self
-			Description
-				|The contact data.
+				|One time authentication code supplied to a recipient to allow authentication
+				|of the response.
+
 
 
 	Structure GroupInvitation

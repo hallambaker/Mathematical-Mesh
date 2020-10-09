@@ -125,7 +125,6 @@ namespace Goedel.Mesh.Client {
                 Transaction<TContext> transact) where TContext : ContextAccount {
 
             var transactRequest = transact.TransactRequest;
-            Connect();
 
             if (transact.InboundReferences != null) {
                 var message = new MessageComplete() {

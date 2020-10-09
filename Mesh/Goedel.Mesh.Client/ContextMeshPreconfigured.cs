@@ -26,6 +26,10 @@ namespace Goedel.Mesh.Client {
         ///<summary>The account address. This binds to the manufacturer account.</summary>
         public override string AccountAddress => CatalogedPreconfigured.AccountAddress;
 
+        public override MeshService MeshClient => meshClient ??
+             MeshMachine.GetMeshClient(CatalogedPreconfigured.AccountAddress, null, null).
+                    CacheValue(out meshClient);
+        MeshService meshClient;
 
         /// <summary>
         /// Constructor.
@@ -45,18 +49,15 @@ namespace Goedel.Mesh.Client {
         /// to the connected account. Otherwise, a null value is returned.</returns>
         public ContextMeshPending Poll() {
 
-            // attempt to connect to service specified in DevicePreconfiguration
+            // Check that we can connect to the service.
+            MeshClient.AssertNotNull(InvalidServiceResponse.Throw);
 
-            var meshClient = MeshMachine.GetMeshClient(
-                    CatalogedPreconfigured.AccountAddress, null, null);
-
-            //var envelopeID = Message.GetEnvelopeId(CatalogedPreconfigured.PublicationId);
             var claimRequest = new PollClaimRequest() {
                 TargetAccountAddress = CatalogedPreconfigured.AccountAddress,
                 PublicationId = CatalogedPreconfigured.PublicationId
                 };
 
-            var claimResponse = meshClient.PollClaim(claimRequest);
+            var claimResponse = MeshClient.PollClaim(claimRequest);
 
             if (claimResponse == null) {
                 return null;

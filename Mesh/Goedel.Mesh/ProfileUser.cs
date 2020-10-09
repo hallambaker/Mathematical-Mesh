@@ -41,6 +41,16 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedProfileAccount);
         Enveloped<ProfileAccount> envelopedProfileAccount;
 
+        ///<summary>The account encryption key</summary> 
+        public KeyPair AccountEncryptionKey => accountEncryptionKey ??
+            AccountEncryption.GetKeyPair().CacheValue(out accountEncryptionKey);
+        KeyPair accountEncryptionKey;
+
+        ///<summary>The account administrator signature key</summary> 
+        public KeyPair AdministratorSignatureKey => administratorSignatureKey ??
+            ProfileSignature.GetKeyPair().CacheValue(out administratorSignatureKey);
+        KeyPair administratorSignatureKey;
+
         /// <summary>
         /// Blank constructor for use by deserializers.
         /// </summary>
@@ -55,15 +65,50 @@ namespace Goedel.Mesh {
                     PrivateKeyUDF secretSeed) : base(secretSeed) {
             }
 
+        /// <summary>
+        /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+        /// </summary>
+        /// <param name="accountAddress">The account address</param>
+        /// <param name="activationAccount">The activation used to create the account data.</param>
+        public ProfileAccount(
+                    string accountAddress,
+                    ActivationAccount activationAccount)  {
+            AccountAddress = accountAddress;
+
+            ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
+            AdministratorSignature = new KeyData(activationAccount.AdministratorSignatureKey);
+            AccountEncryption = new KeyData(activationAccount.AccountEncryptionKey);
+            }
+
+
+
+        /// <summary>
+        /// Verify the profile to check that it is correctly signed and consistent.
+        /// </summary>
+        /// <returns></returns>
+        public override void Validate() {
+            base.Validate();
+
+            AccountEncryptionKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+            AdministratorSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+
+            }
+
 
         }
 
 
     public partial class ProfileUser {
 
+        ///<summary>The account authentication key</summary> 
+        public KeyPair AccountAuthenticationKey => accountAuthenticationKey ??
+            AccountEncryption.GetKeyPair().CacheValue(out accountAuthenticationKey);
+        KeyPair accountAuthenticationKey;
 
-
-
+        ///<summary>The account signature key</summary> 
+        public KeyPair AccountSignatureKey => accountSignatureKey ??
+            ProfileSignature.GetKeyPair().CacheValue(out accountSignatureKey);
+        KeyPair accountSignatureKey;
 
         /// <summary>
         /// Blank constructor for use by deserializers.
@@ -72,24 +117,31 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
-        /// seed.
+        /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
         /// </summary>
-        /// <param name="activationAccount">An activation account with full administrative privileges.</param>
         /// <param name="accountAddress">The account address</param>
-        public ProfileUser(
-                    ActivationAccount activationAccount,
-                    string accountAddress) {
-            AccountAddress = accountAddress;
+        /// <param name="activationAccount">The activation used to create the account data.</param>        
+        public ProfileUser(string accountAddress,
+                    ActivationAccount activationAccount) : base(accountAddress, activationAccount) {
 
             //Set the public key parameters
-            ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
-            AccountEncryption = new KeyData(activationAccount.AccountEncryptionKey);
             AccountAuthentication = new KeyData(activationAccount.AccountAuthenticationKey);
             AccountSignature = new KeyData(activationAccount.AccountSignatureKey);
 
             // Sign the profile
             Envelope(activationAccount.ProfileSignatureKey);
+            }
+
+        /// <summary>
+        /// Verify the profile to check that it is correctly signed and consistent.
+        /// </summary>
+        /// <returns></returns>
+        public override void Validate() {
+            base.Validate();
+
+            AccountAuthenticationKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+            AccountSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+
             }
 
 

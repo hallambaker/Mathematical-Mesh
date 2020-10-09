@@ -119,6 +119,12 @@ namespace Goedel.Mesh {
         /// </summary>
         public override string _PrimaryKey => GetGroupID(Key);
 
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
+        ///to return the <see cref="ProfileUser"/> value.</summary>
+        public ProfileGroup ProfileGroup =>
+                    EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup;
+
+
         #endregion
         #region // Factory methods and constructors
         /// <summary>
@@ -126,12 +132,6 @@ namespace Goedel.Mesh {
         /// </summary>     
         public CatalogedGroup() {
             }
-
-        /// <summary>
-        /// Construct a group entry from <paramref name="profileGroup"/>.
-        /// </summary>
-        /// <param name="profileGroup">The profile of the group to create an entry for.</param>
-        public CatalogedGroup(ProfileGroup profileGroup) => Profile = profileGroup;
 
         #endregion
 

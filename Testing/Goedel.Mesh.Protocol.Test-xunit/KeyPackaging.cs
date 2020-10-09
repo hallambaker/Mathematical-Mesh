@@ -160,8 +160,7 @@ namespace Goedel.XUnit {
             var testKey = UDF.TestKey (cryptoAlgorithmId, $"{seed}-{round}-{count}");
 
 
-            throw new NYI();
-            //return UDF.DeriveKey(testKey, null, KeySecurity.Exportable) as KeyPairAdvanced;
+            return UDF.DeriveKey(testKey, null, KeySecurity.Exportable) as KeyPairAdvanced;
             }
 
 
