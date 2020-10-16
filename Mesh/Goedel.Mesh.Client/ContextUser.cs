@@ -44,7 +44,7 @@ namespace Goedel.Mesh.Client {
         public ProfileUser ProfileUser { get; private set; }
 
         ///<summary>The connection device</summary>
-        public ConnectionUser ConnectionUser => CatalogedDevice?.ConnectionUser;
+        public ConnectionDevice ConnectionUser => CatalogedDevice?.ConnectionUser;
 
         ///<summary>The device activation</summary>
         public ActivationDevice ActivationDevice { get; private set; }
@@ -54,9 +54,7 @@ namespace Goedel.Mesh.Client {
         protected PrivateKeyUDF MeshSecretSeed;
 
 
-        ///<summary>Returns the MeshClient and caches the result for future use.</summary>
-        public override MeshService MeshClient => meshClient ?? GetMeshClient(AccountAddress).CacheValue(out meshClient);
-        MeshService meshClient;
+
 
 
 
@@ -363,7 +361,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             var anchorAccount = new Anchor() {
-                UDF = ProfileUser.Udf,
+                Udf = ProfileUser.Udf,
                 Validation = "Self"
                 };
             // ContextMesh.ProfileMesh.UDF 
@@ -704,12 +702,18 @@ namespace Goedel.Mesh.Client {
             var response = CreateDeviceEarl(
                     out var secretSeed,
                     out profileDevice,
+                    out var connectionDevice,
                     out var connectKey,
                     out connectUri);
 
             filename = Path.Combine(path, connectKey + ".medk");
 
-            var devicePreconfiguration = new DevicePreconfiguration(secretSeed, connectUri);
+            var devicePreconfiguration = new DevicePreconfiguration() {
+                PrivateKey = secretSeed,
+                ConnectUri = connectUri,
+                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
+                EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice
+                };
             devicePreconfiguration.ToFile(filename, tagged: true);
 
             return response;
@@ -723,7 +727,8 @@ namespace Goedel.Mesh.Client {
         /// <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
         /// </summary>
         /// <param name="secretSeed">The computed secret seed value.</param>
-        /// <param name="profileDevice">The computed device profile</param>
+        /// <param name="profileDevice">The computed device profile.</param>
+        /// <param name="connectionDevice">The computed device connection.</param>
         /// <param name="pin">The computed PIN code.</param>
         /// <param name="connectURI">The connection URI to be used for pickup.</param>
         /// <param name="algorithmEncrypt">The encryption algorithm.</param>
@@ -735,6 +740,7 @@ namespace Goedel.Mesh.Client {
         public bool CreateDeviceEarl(
                     out PrivateKeyUDF secretSeed,
                     out ProfileDevice profileDevice,
+                    out ConnectionDevice connectionDevice,
                     out string pin,
                     out string connectURI,
 
@@ -762,6 +768,15 @@ namespace Goedel.Mesh.Client {
 
             // Create a device profile 
             profileDevice = new ProfileDevice(secretSeed);
+
+            // Create and sign the connection
+            connectionDevice = new ConnectionDevice() {
+                DeviceSignature = profileDevice.BaseSignature,
+                DeviceEncryption = profileDevice.BaseEncryption,
+                DeviceAuthentication = profileDevice.BaseEncryption
+                };
+            connectionDevice.Envelope(KeyAdministrator);
+
 
             // Convert the enveloped profile device to a binary field and take the envelope
             // of that.

@@ -4578,7 +4578,7 @@
             <param name="tag">The tag</param>
         </member>
         <member name="F:Goedel.Mesh.Shell.ResultCreatePersonal.ConnectionUser">
-            <summary>The <see cref="T:Goedel.Mesh.ConnectionUser"/> instance.</summary>
+            <summary>The <see cref="T:Goedel.Mesh.ConnectionDevice"/> instance.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.ResultCreatePersonal.ToString">
             <summary>

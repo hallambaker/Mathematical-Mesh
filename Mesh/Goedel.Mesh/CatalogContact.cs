@@ -316,7 +316,7 @@ namespace Goedel.Mesh {
                     }
                 }
             foreach (var anchor in Contact.Anchors) {
-                builder.AppendLine($"  Anchor {anchor.UDF}");
+                builder.AppendLine($"  Anchor {anchor.Udf}");
                 }
             foreach (var address in Contact.NetworkAddresses) {
                 builder.AppendLine($"  Address {address.Address}");

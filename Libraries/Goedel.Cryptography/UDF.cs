@@ -90,7 +90,7 @@ namespace Goedel.Cryptography {
         /// <param name="contentType">MIME media type of data being fingerprinted.</param>
         /// <param name="data">Data to be fingerprinted.</param>
         /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// <param name="cryptoAlgorithmId">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <param name="key">Optional key used to create a keyed fingerprint.</param>
         /// <returns>The binary UDF fingerprint.</returns>
@@ -98,16 +98,16 @@ namespace Goedel.Cryptography {
                 byte[] data,
                 string contentType,
                 int bits = 0,
-                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512,
+                CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512,
                 string key = null) {
-            switch (cryptoAlgorithmID) {
+            switch (cryptoAlgorithmId) {
                 case CryptoAlgorithmId.SHA_2_512: {
                     return DigestToUDFBinary(Platform.SHA2_512.Process(data),
-                        contentType, bits, cryptoAlgorithmID, key);
+                        contentType, bits, cryptoAlgorithmId, key);
                     }
                 case CryptoAlgorithmId.SHA_3_512: {
                     return DigestToUDFBinary(Platform.SHA3_512.Process(data),
-                        contentType, bits, cryptoAlgorithmID, key);
+                        contentType, bits, cryptoAlgorithmId, key);
                     }
 
                 default:
@@ -122,7 +122,7 @@ namespace Goedel.Cryptography {
         /// <param name="contentType">MIME media type of data being fingerprinted.</param>
         /// <param name="digest">Digest of the data to be fingerprinted.</param>
         /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// <param name="cryptoAlgorithmId">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <param name="key">Optional key used to create a keyed fingerprint.</param>
         /// <returns>The binary UDF fingerprint.</returns>
@@ -130,11 +130,11 @@ namespace Goedel.Cryptography {
                 byte[] digest,
                 string contentType,
                 int bits = 0,
-                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512,
+                CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512,
                 string key = null) {
             var buffer = UDFBuffer(digest, contentType);
-            return key == null ? BufferDigestToUDF(buffer, bits, cryptoAlgorithmID) :
-                BufferDigestToUDF(buffer, key, bits, cryptoAlgorithmID);
+            return key == null ? BufferDigestToUDF(buffer, bits, cryptoAlgorithmId) :
+                BufferDigestToUDF(buffer, key, bits, cryptoAlgorithmId);
             }
 
 
@@ -143,18 +143,18 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="buffer">The prepared data buffer.</param>
         /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// <param name="cryptoAlgorithmId">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] BufferDigestToUDF(
                     byte[] buffer,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) {
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512) {
 
-            var UDFData = buffer.GetDigest(cryptoAlgorithmID);
+            var UDFData = buffer.GetDigest(cryptoAlgorithmId);
 
             UdfTypeIdentifier versionID;
-            switch (cryptoAlgorithmID) {
+            switch (cryptoAlgorithmId) {
                 case CryptoAlgorithmId.SHA_2_512: {
                     versionID = UdfTypeIdentifier.Digest_SHA_2_512;
                     break;
@@ -209,7 +209,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="buffer">The prepared data buffer.</param>
         /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// <param name="cryptoAlgorithmId">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <param name="key">Key used to create a keyed fingerprint.</param>
         /// <returns>The binary UDF fingerprint.</returns>
@@ -217,13 +217,13 @@ namespace Goedel.Cryptography {
                     byte[] buffer,
                     string key,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512
                     ) {
             byte[] UDFData;
 
             UdfTypeIdentifier versionID;
 
-            switch (cryptoAlgorithmID) {
+            switch (cryptoAlgorithmId) {
                 case CryptoAlgorithmId.SHA_2_512: {
                     var macKey = KeyStringToKey(key, 512);
                     UDFData = buffer.GetMAC(macKey, CryptoAlgorithmId.HMAC_SHA_2_512);
@@ -410,7 +410,7 @@ namespace Goedel.Cryptography {
         /// <param name="contentType">MIME media type of data being fingerprinted.</param>
         /// <param name="data">Data to be fingerprinted.</param>
         /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// <param name="cryptoAlgorithmId">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <param name="key">Optional key used to create a keyed fingerprint.</param>
         /// <returns>The binary UDF fingerprint.</returns>
@@ -418,9 +418,9 @@ namespace Goedel.Cryptography {
                     byte[] data,
                     string contentType,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512,
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512,
                     string key = null) {
-            var buffer = DataToUDFBinary(data, contentType, bits, cryptoAlgorithmID, key);
+            var buffer = DataToUDFBinary(data, contentType, bits, cryptoAlgorithmId, key);
             return PresentationBase32(buffer, bits);
             }
 
@@ -430,7 +430,7 @@ namespace Goedel.Cryptography {
         /// <param name="contentType">MIME media type of data being fingerprinted.</param>
         /// <param name="data">Data to be fingerprinted.</param>
         /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// <param name="cryptoAlgorithmId">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <param name="key">Optional key used to create a keyed fingerprint.</param>
         /// <returns>The binary UDF fingerprint.</returns>
@@ -438,9 +438,9 @@ namespace Goedel.Cryptography {
                     byte[] data,
                     string contentType,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512,
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512,
                     string key = null) {
-            var buffer = DigestToUDFBinary(data, contentType, bits, cryptoAlgorithmID, key);
+            var buffer = DigestToUDFBinary(data, contentType, bits, cryptoAlgorithmId, key);
             return PresentationBase32(buffer, bits);
             }
 
@@ -450,14 +450,14 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="data"></param>
         /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// <param name="cryptoAlgorithmId">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <returns>The Base32 presentation of the UDF value truncated to 
         /// <paramref name="bits"/> precision.</returns>
         public static string ContentDigestOfUDF(
                     string data,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) {
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512) {
             bits = bits == 0 ? DefaultBits * 2 : bits;
 
             //// Calculate the output precision, this is twice the input precision to a
@@ -465,7 +465,7 @@ namespace Goedel.Cryptography {
             //var bits = 10 * ((data.Length + 1) / 4);
             //bits = bits > MaximumBits ? MaximumBits : bits;
 
-            var buffer = DigestToUDFBinary(data.ToUTF8(), UDFConstants.UDFEncryption, bits, cryptoAlgorithmID, null);
+            var buffer = DigestToUDFBinary(data.ToUTF8(), UDFConstants.UDFEncryption, bits, cryptoAlgorithmId, null);
             return PresentationBase32(buffer, bits);
             }
 
@@ -476,53 +476,53 @@ namespace Goedel.Cryptography {
 
         /// <summary>
         /// Return the UDF fingerprint of the encryption key <paramref name="key"/> to
-        /// the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmID"/>.
+        /// the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmId"/>.
         /// </summary>
         /// <param name="key">The key to calculate the fingerprint of.</param>
         /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// <param name="cryptoAlgorithmId">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <returns>The fingerprint value</returns>
         public static byte[] SymetricKeyIdBytes(
                     byte[] key,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) =>
-            DigestToUDFBinary(key, UDFConstants.UDFEncryption, bits, cryptoAlgorithmID, null);
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512) =>
+            DigestToUDFBinary(key, UDFConstants.UDFEncryption, bits, cryptoAlgorithmId, null);
 
 
         /// <summary>
         /// Return the UDF fingerprint of the encryption key <paramref name="key"/> to
-        /// the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmID"/>.
+        /// the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmId"/>.
         /// </summary>
         /// <param name="key">The key to calculate the fingerprint of.</param>
         /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// <param name="cryptoAlgorithmId">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <param name="udfTypeIdentifier">The UDF type identifier.</param>
         /// <returns>The fingerprint value</returns>
         public static string SymetricKeyId(
                     byte[] key,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512,
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512,
                     UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_512) =>
             TypeBDSToString(udfTypeIdentifier, 
-                SymetricKeyIdBytes(key, bits, cryptoAlgorithmID));
+                SymetricKeyIdBytes(key, bits, cryptoAlgorithmId));
 
 
         /// <summary>
         /// Return the UDF fingerprint of the encryption key data specified by <paramref name="udf"/> to
-        /// the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmID"/>.
+        /// the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmId"/>.
         /// </summary>
         /// <param name="udf">The key to calculate the fingerprint of.</param>
         /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// <param name="cryptoAlgorithmId">The cryptographic digest to use to compute
         /// the hash value.</param>
         /// <returns>The fingerprint value</returns>
         public static string SymetricKeyId(
                     string udf,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) => 
-                SymetricKeyId(SymmetricKeyData(udf), bits, cryptoAlgorithmID);
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512) => 
+                SymetricKeyId(SymmetricKeyData(udf), bits, cryptoAlgorithmId);
 
 
         /// <summary>
@@ -661,16 +661,16 @@ namespace Goedel.Cryptography {
         /// Calculate the UDF lock identifier for a local file.
         /// </summary>
         /// <param name="data"></param>
-        /// <param name="cryptoAlgorithmID"></param>
+        /// <param name="cryptoAlgorithmId"></param>
         /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
         /// <returns>The Base32 presentation of the UDF value truncated to 
         /// <paramref name="bits"/> precision.</returns>
         public static string LockName(
                     string data,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) {
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512) {
             bits = bits == 0 ? DefaultBits * 2 : bits;
-            var buffer = DigestToUDFBinary(data.ToUTF8(), UDFConstants.UDFLock, bits, cryptoAlgorithmID, null);
+            var buffer = DigestToUDFBinary(data.ToUTF8(), UDFConstants.UDFLock, bits, cryptoAlgorithmId, null);
             return PresentationBase32(buffer, bits);
             }
 
@@ -791,13 +791,13 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="data">Data to be fingerprinted.</param>
         /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
-        /// <param name="cryptoAlgorithmID">The digest algorithm to use.</param>
+        /// <param name="cryptoAlgorithmId">The digest algorithm to use.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] FromKeyInfo(
                     byte[] data,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) =>
-            DataToUDFBinary(data, UDFConstants.PKIXKey, bits, cryptoAlgorithmID);
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512) =>
+            DataToUDFBinary(data, UDFConstants.PKIXKey, bits, cryptoAlgorithmId);
 
         #endregion
         #endregion
@@ -1123,7 +1123,7 @@ namespace Goedel.Cryptography {
         /// Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
         /// <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
         /// </summary>
-        /// <param name="cryptoAlgorithmIDin">Additional algorithm identifier.</param>
+        /// <param name="cryptoAlgorithmIdin">Additional algorithm identifier.</param>
         /// <param name="udf">The UDF to derrive the key from.</param>
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <param name="keySecurity">The key security model.</param>
@@ -1135,7 +1135,7 @@ namespace Goedel.Cryptography {
                     IKeyLocate keyCollection,
                     KeySecurity keySecurity = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmId cryptoAlgorithmIDin = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId cryptoAlgorithmIdin = CryptoAlgorithmId.Default,
                     string keyName = null) {
 
             var ikm = Parse(udf, out var code);
@@ -1145,22 +1145,22 @@ namespace Goedel.Cryptography {
 
 
             int keySize = 0;
-            CryptoAlgorithmId cryptoAlgorithmID;
+            CryptoAlgorithmId cryptoAlgorithmId;
             switch (algorithm) {
                 case UdfAlgorithmIdentifier.Ed25519: {
-                    cryptoAlgorithmID = CryptoAlgorithmId.Ed25519;
+                    cryptoAlgorithmId = CryptoAlgorithmId.Ed25519;
                     break;
                     }
                 case UdfAlgorithmIdentifier.Ed448: {
-                    cryptoAlgorithmID = CryptoAlgorithmId.Ed448;
+                    cryptoAlgorithmId = CryptoAlgorithmId.Ed448;
                     break;
                     }
                 case UdfAlgorithmIdentifier.X25519: {
-                    cryptoAlgorithmID = CryptoAlgorithmId.X25519;
+                    cryptoAlgorithmId = CryptoAlgorithmId.X25519;
                     break;
                     }
                 case UdfAlgorithmIdentifier.X448: {
-                    cryptoAlgorithmID = CryptoAlgorithmId.X448;
+                    cryptoAlgorithmId = CryptoAlgorithmId.X448;
                     break;
                     }
                 case UdfAlgorithmIdentifier.Any:
@@ -1170,7 +1170,7 @@ namespace Goedel.Cryptography {
                 case UdfAlgorithmIdentifier.MeshActivationAccount:
                 case UdfAlgorithmIdentifier.MeshProfileService:
                 case UdfAlgorithmIdentifier.MeshActivationService: {
-                    cryptoAlgorithmID = cryptoAlgorithmIDin.DefaultMeta (keyUses, CryptoAlgorithmId.X448,
+                    cryptoAlgorithmId = cryptoAlgorithmIdin.DefaultMeta (keyUses, CryptoAlgorithmId.X448,
                         CryptoAlgorithmId.Ed448, CryptoAlgorithmId.X448);
                     break;
                     }
@@ -1179,21 +1179,21 @@ namespace Goedel.Cryptography {
                     }
                 }
             var keySpecifier = KeySpecifier(algorithm);
-            return KeyPair.Factory(cryptoAlgorithmID, keySecurity, 
+            return KeyPair.Factory(cryptoAlgorithmId, keySecurity, 
                 ikm,
                 keySpecifier, keyName,
                 keyCollection, keySize, keyUses);
             }
 
         /// <summary>
-        /// Generate a UDF for a test key for the algorithm <paramref name="cryptoAlgorithmID"/>
+        /// Generate a UDF for a test key for the algorithm <paramref name="cryptoAlgorithmId"/>
         /// using the seed string <paramref name="text"/>.
         /// </summary>
-        /// <param name="cryptoAlgorithmID">The type of key to generate.</param>
+        /// <param name="cryptoAlgorithmId">The type of key to generate.</param>
         /// <param name="text">The seed text.</param>
         /// <returns>The computed UDF.</returns>
-        public static string TestKey(CryptoAlgorithmId cryptoAlgorithmID, string text) =>
-                TestKey(cryptoAlgorithmID.ToUDFID(), text);
+        public static string TestKey(CryptoAlgorithmId cryptoAlgorithmId, string text) =>
+                TestKey(cryptoAlgorithmId.ToUDFID(), text);
 
         /// <summary>
         /// Generate a UDF for a test key for the algorithm <paramref name="algorithmIdentifier"/>

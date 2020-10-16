@@ -40,7 +40,7 @@ namespace Goedel.Mesh {
 
         ///<summary>The <see cref="ConnectionUser"/> instance binding the activated device
         ///to a MeshProfile.</summary>
-        public ConnectionUser ConnectionUser { get; set; }
+        public ConnectionDevice ConnectionUser { get; set; }
 
 
         // Properties giving access to device specific keys
@@ -83,7 +83,7 @@ namespace Goedel.Mesh {
                         profileDevice, UdfAlgorithmIdentifier.MeshActivationAccount, masterSecret, bits) {
             ProfileDevice = profileDevice;
 
-            AccountUDF = profileDevice.Udf;
+            AccountUdf = profileDevice.Udf;
 
             var deviceEncryption = ActivationSeed.ActivatePublic(
                     profileDevice.BaseEncryption.GetKeyPairAdvanced(), 
@@ -96,7 +96,7 @@ namespace Goedel.Mesh {
                             MeshActor.Device, MeshKeyOperation.Authenticate);
 
             // Create the (unsigned) ConnectionUser
-            ConnectionUser = new ConnectionUser() {
+            ConnectionUser = new ConnectionDevice() {
                 DeviceEncryption = new KeyData(deviceEncryption),
                 DeviceSignature = new KeyData(deviceSignature),
                 DeviceAuthentication = new KeyData(deviceAuthentication)

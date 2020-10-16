@@ -251,7 +251,7 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        Message GetResponse(TestCLI deviceA, string id) => GetMessage(deviceA, Message.MakeResponseID(id));
+        Message GetResponse(TestCLI deviceA, Message message) => GetMessage(deviceA, message.GetResponseId());
 
 
         Message GetMessage(TestCLI deviceA, string id) {
@@ -300,7 +300,7 @@ namespace Goedel.XUnit {
 
             var resultHandle = ProcessMessage(deviceA, true, messageId); // Hack - lets start using MessageID eh?
 
-            var resultResponse = GetResponse(deviceB, messageId) as ResponseConfirmation;
+            var resultResponse = GetResponse(deviceB, resultRequest.Message) as ResponseConfirmation;
 
             resultResponse.Accept.TestTrue();
             }
@@ -314,7 +314,7 @@ namespace Goedel.XUnit {
 
             var resultHandle = ProcessMessage(deviceA, false, messageId);
             var responseId = resultRequest.Message.GetResponseId();
-            var resultResponse = GetResponse(deviceB, messageId) as ResponseConfirmation;
+            var resultResponse = GetResponse(deviceB, resultRequest.Message) as ResponseConfirmation;
 
             resultResponse.Accept.TestFalse();
 

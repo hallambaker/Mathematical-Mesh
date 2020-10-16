@@ -358,9 +358,17 @@
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.ProfileDevice">
             <summary>The decoded device profile (from <see cref="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedProfileDevice"/>)</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.ConnectionDevice">
+            <summary>The decoded connection device</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedProfileDevice">
              <summary>
             The device profile presented to the service.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedConnectionDevice">
+             <summary>
+            The device connection used to authenticate to the service.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.AccountAddress">
@@ -511,10 +519,6 @@
         </member>
         <member name="F:Goedel.Mesh.Client.ContextAccount.DictionaryStores">
             <summary>Dictionary locating the stores connected to the context.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.ContextAccount.ContainerCryptoParameters">
-            <summary>The cryptographic parameters for reading/writing to account containers.
-            This needs to be replaced with a new context for each container.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.DictionaryCatalogDelegates">
             <summary>List of catalogs</summary>
@@ -770,10 +774,6 @@
         </member>
         <member name="F:Goedel.Mesh.Client.ContextGroup.ContextUser">
             <summary>The enclosing mesh context.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextGroup.MeshClient">
-            <summary>Returns the MeshClient of the user account under which the account is managed.
-            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextGroup.CatalogedGroup">
             <summary>The catalogued group description.</summary>
@@ -1063,9 +1063,6 @@
         <member name="F:Goedel.Mesh.Client.ContextUser.MeshSecretSeed">
             <summary>The device key generation seed</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.MeshClient">
-            <summary>Returns the MeshClient and caches the result for future use.</summary>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
             Constructor, creates a <see cref="T:Goedel.Mesh.Client.ContextUser"/> instance for the catalog entry 
@@ -1231,7 +1228,7 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String@,Goedel.Mesh.ProfileDevice@,System.String@,System.String)">
             <summary>
-            Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)"/>. Generates a device profile
+            Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)"/>. Generates a device profile
             and writes the <see cref="T:Goedel.Mesh.DevicePreconfiguration"/> data to a file in the directory
             specified by <paramref name="path"/>.
             </summary>
@@ -1241,7 +1238,7 @@
             <param name="path"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)">
             <summary>
             Create an EARL for a device, publish the result to the Mesh service and return 
             the device profile <paramref name="profileDevice"/>, secret seed value 
@@ -1249,7 +1246,8 @@
             <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
             </summary>
             <param name="secretSeed">The computed secret seed value.</param>
-            <param name="profileDevice">The computed device profile</param>
+            <param name="profileDevice">The computed device profile.</param>
+            <param name="connectionDevice">The computed device connection.</param>
             <param name="pin">The computed PIN code.</param>
             <param name="connectURI">The connection URI to be used for pickup.</param>
             <param name="algorithmEncrypt">The encryption algorithm.</param>

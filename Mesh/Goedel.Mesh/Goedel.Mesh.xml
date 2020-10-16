@@ -51,7 +51,12 @@
         </member>
         <member name="P:Goedel.Mesh.Activation.ActivationKey">
              <summary>
-            Secret seed used to derive keys unless explicitly specified.
+            Secret seed used to derive keys that are not explicitly specified.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Activation.Entries">
+             <summary>
+            Activation of named resources.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.Activation._Tag">
@@ -153,8 +158,17 @@
         <member name="P:Goedel.Mesh.ActivationAccount.AccountSignatureKey">
             <summary>The account signature key under which outbound messages are signed.</summary>
         </member>
+        <member name="F:Goedel.Mesh.ActivationAccount.ProfileService">
+            <summary>The service profile</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.ServiceEncryptionKey">
+            <summary>The account signature key under which outbound messages are signed.</summary>
+        </member>
         <member name="P:Goedel.Mesh.ActivationAccount.EnvelopedActivationAccount">
             <summary>The enveloped object</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ActivationAccount.DictionaryStoreEncryptionKey">
+            <summary>Dictionary mapping store names to encryption keys.</summary> 
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.#ctor">
             <summary>
@@ -173,6 +187,12 @@
             <summary>
             Activate the keys bound to this activation record.
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.BindService(Goedel.Mesh.ProfileService)">
+            <summary>
+            Bind this activation to the service <paramref name="profileService"/>
+            </summary>
+            <param name="profileService">Description of the service to bind to.</param>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,System.Collections.Generic.List{System.String})">
             <summary>
@@ -396,7 +416,7 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The Key collection.</param>
         </member>
-        <member name="P:Goedel.Mesh.ActivationDevice.AccountUDF">
+        <member name="P:Goedel.Mesh.ActivationDevice.AccountUdf">
              <summary>
             The UDF of the account
              </summary>
@@ -1416,8 +1436,12 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedGroup.ProfileGroup">
-            <summary>Cached convenience accessor that unpacks the value of <see cref="!:EnvelopedProfileUser"/>
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedGroup.EnvelopedProfileGroup"/>
             to return the <see cref="T:Goedel.Mesh.ProfileUser"/> value.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedGroup.GetActivationAccount(Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedGroup.EnvelopedActivationAccount"/>
+            to return the <see cref="T:Goedel.Mesh.ActivationAccount"/> value.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogedGroup.#ctor">
             <summary>
@@ -2476,17 +2500,17 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.UDF">
+        <member name="P:Goedel.Mesh.CatalogedDevice.Udf">
              <summary>
             UDF of the signature key of the device in the Mesh
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.DeviceUDF">
+        <member name="P:Goedel.Mesh.CatalogedDevice.DeviceUdf">
              <summary>
             UDF of the offline signature key of the device
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.SignatureUDF">
+        <member name="P:Goedel.Mesh.CatalogedDevice.SignatureUdf">
              <summary>
             UDF of the account online signature key
              </summary>
@@ -3243,22 +3267,22 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.ConnectionUser">
+        <member name="T:Goedel.Mesh.ConnectionDevice">
              <summary>
             
              Connection assertion used to authenticate service requests made
              by a device.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionUser.EnvelopedConnectionUser">
+        <member name="P:Goedel.Mesh.ConnectionDevice.EnvelopedConnectionDevice">
             <summary>Typed enveloped data</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConnectionUser.#ctor">
+        <member name="M:Goedel.Mesh.ConnectionDevice.#ctor">
             <summary>
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionUser.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -3268,43 +3292,43 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionUser.AccountAddress">
+        <member name="P:Goedel.Mesh.ConnectionDevice.AccountAddress">
              <summary>
             The account address
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionUser.DeviceSignature">
+        <member name="P:Goedel.Mesh.ConnectionDevice.DeviceSignature">
              <summary>
             The signature key for use of the device under the profile
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionUser.DeviceEncryption">
+        <member name="P:Goedel.Mesh.ConnectionDevice.DeviceEncryption">
              <summary>
             The encryption key for use of the device under the profile
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionUser.DeviceAuthentication">
+        <member name="P:Goedel.Mesh.ConnectionDevice.DeviceAuthentication">
              <summary>
             The authentication key for use of the device under the profile
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionUser._Tag">
+        <member name="P:Goedel.Mesh.ConnectionDevice._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.ConnectionUser.__Tag">
+        <member name="F:Goedel.Mesh.ConnectionDevice.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionUser._Factory">
+        <member name="M:Goedel.Mesh.ConnectionDevice._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionUser.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -3313,7 +3337,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionUser.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -3324,7 +3348,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionUser.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -3332,7 +3356,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConnectionUser.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -3560,6 +3584,16 @@
             The proposed IANA content identifier for the Mesh message type.
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshEnvelopeId">
+            <summary>
+            The proposed IANA content identifier for the Mesh message type.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshResponseId">
+            <summary>
+            The proposed IANA content identifier for the Mesh message type.
+            </summary>
+        </member>
         <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshAuthenticator">
             <summary>
             The proposed IANA content identifier for the Mesh message type.
@@ -3671,14 +3705,6 @@
         <member name="M:Goedel.Mesh.DevicePreconfiguration.#ctor">
             <summary>Base constructor for deserialization.</summary>
         </member>
-        <member name="M:Goedel.Mesh.DevicePreconfiguration.#ctor(Goedel.Cryptography.Jose.Key,System.String)">
-            <summary>
-            Constructor to generate and populate the assertion using values derrived
-            from <paramref name="privateKey"/> and <paramref name="connectUri"/>.
-            </summary>
-            <param name="privateKey"></param>
-            <param name="connectUri"></param>
-        </member>
         <member name="M:Goedel.Mesh.DevicePreconfiguration.FromFile(System.String)">
             <summary>
             Read device preconfiguration data from a file.
@@ -3689,6 +3715,11 @@
         <member name="P:Goedel.Mesh.DevicePreconfiguration.EnvelopedProfileDevice">
              <summary>
             The device profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfiguration.EnvelopedConnectionDevice">
+             <summary>
+            The device connection
              </summary>
         </member>
         <member name="P:Goedel.Mesh.DevicePreconfiguration.PrivateKey">
@@ -4831,14 +4862,14 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Message._PrimaryKey">
+            <summary>The primary key is <see cref="P:Goedel.Mesh.Message.MessageId"/></summary> 
+        </member>
         <member name="P:Goedel.Mesh.Message.EnvelopedMessage">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="F:Goedel.Mesh.Message.MessageStatus">
             <summary>The message status.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Message.EnvelopeId">
-            <summary>Returns the envelope ID corresponding to the MessageID</summary>
         </member>
         <member name="M:Goedel.Mesh.Message.Envelope(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
             <summary>
@@ -4855,6 +4886,15 @@
             <param name="envelope">The envelope to decode.</param>
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.Message.EnvelopeId">
+            <summary>Returns the envelope ID corresponding to the MessageID</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Message.GetResponseId">
+            <summary>
+            Return the identifier for a response to this message.
+            </summary>
+            <returns>The response identifier.</returns>
         </member>
         <member name="M:Goedel.Mesh.Message.GetEnvelopeId(System.String)">
             <summary>
@@ -4929,25 +4969,6 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="P:Goedel.Mesh.Message._PrimaryKey">
-            <summary>The primary key is <see cref="P:Goedel.Mesh.Message.MessageId"/></summary> 
-        </member>
-        <member name="M:Goedel.Mesh.Message.GetResponseId">
-            <summary>
-            Return the identifier for a response to this message.
-            </summary>
-            <returns>The response identifier.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Message.MakeResponseID(System.String)">
-            <summary>
-            Generate the response identifier as a deterministic function of the request
-            identifier <paramref name="udf"/>
-             using the digest algorithm specified in the request identifier (if known
-            and supported), otherwise using SHA_3_512.
-            </summary>
-            <param name="udf">The request identifier to construct the response from.</param>
-            <returns>The response identifier.</returns>
         </member>
         <member name="T:Goedel.Mesh.MessageError">
             <summary>
@@ -5110,7 +5131,7 @@
         </member>
         <member name="P:Goedel.Mesh.MessagePinValidated.PinWitness">
              <summary>
-            Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
+            Witness value calculated as KDF (Device.Udf + AccountAddress, ClientNonce)
              </summary>
         </member>
         <member name="P:Goedel.Mesh.MessagePinValidated._Tag">
@@ -6995,14 +7016,19 @@
             <param name="algorithmSign">The signature algorithm.</param>
             <returns>The host profile.</returns>
         </member>
-        <member name="P:Goedel.Mesh.ProfileService.KeyAuthentication">
+        <member name="P:Goedel.Mesh.ProfileService.ServiceAuthentication">
              <summary>
             Key used to authenticate service connections.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ProfileService.KeyEncryption">
+        <member name="P:Goedel.Mesh.ProfileService.ServiceEncryption">
              <summary>
             Key used to encrypt data under this profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileService.ServiceSignature">
+             <summary>
+            Key used to sign data under the account.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileService._Tag">
@@ -10838,7 +10864,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CompositePrivate.DeviceKeyUDF">
+        <member name="P:Goedel.Mesh.CompositePrivate.DeviceKeyUdf">
              <summary>
             UDF fingerprint of the bound device key (if used).
              </summary>
@@ -10965,12 +10991,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Connection.SubjectUDF">
+        <member name="P:Goedel.Mesh.Connection.SubjectUdf">
              <summary>
             UDF of the connection target.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Connection.AuthorityUDF">
+        <member name="P:Goedel.Mesh.Connection.AuthorityUdf">
              <summary>
             UDF of the connection source.
              </summary>
@@ -11020,6 +11046,71 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Connection.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.ActivationEntry">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationEntry.Resource">
+             <summary>
+            Name of the activated resource
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationEntry.Key">
+             <summary>
+            The activation key or key share
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationEntry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ActivationEntry.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationEntry._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ActivationEntry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11250,66 +11341,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.ActivationGroup">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationGroup.GroupUDF">
-             <summary>
-            The UDF of the group
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationGroup._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.ActivationGroup.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationGroup._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationGroup.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationGroup.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.ActivationGroup.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.ActivationApplication">
             <summary>
             </summary>
@@ -11365,148 +11396,13 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.ActivationApplicationEmail">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationEmail.Account">
-             <summary>
-            The email account for which the credential is valid
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationEmail.Protocol">
-             <summary>
-            S/MIME or OpenPGP
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationEmail.Encryption">
-             <summary>
-            Explicit specification of decryption key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationEmail.Signature">
-             <summary>
-            Explicit specification of signature key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationEmail._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.ActivationApplicationEmail.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationEmail._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationEmail.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationEmail.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationEmail.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationEmail.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.ActivationApplicationSsh">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationSsh.Authentication">
-             <summary>
-            Explicit specification of authentication key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationSsh._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.ActivationApplicationSsh.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationSsh._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationSsh.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationSsh.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationSsh.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.ActivationApplicationSsh.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.Anchor">
              <summary>
             
              Trust anchor
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Anchor.UDF">
+        <member name="P:Goedel.Mesh.Anchor.Udf">
              <summary>
             The trust anchor.
              </summary>
@@ -12855,9 +12751,6 @@
         </member>
         <member name="P:Goedel.Mesh.Store.FrameCount">
             <summary>The frame count (returns -1 if no container has been created)</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Store.CryptoParameters">
-            <summary>The cryptographic parameters</summary>
         </member>
         <member name="P:Goedel.Mesh.Store.KeyCollection">
             <summary>The key collection used for decryption</summary>

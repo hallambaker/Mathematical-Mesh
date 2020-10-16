@@ -21,15 +21,15 @@ namespace Goedel.Mesh.Client {
         public override Profile Profile => CatalogedPreconfigured.ProfileDevice;
 
         ///<summary>Preconfigured devices have a connection to the manufacturer profile.</summary>
-        public override Connection Connection => throw new NotImplementedException();
+        public override Connection Connection => CatalogedPreconfigured.ConnectionDevice;
 
         ///<summary>The account address. This binds to the manufacturer account.</summary>
         public override string AccountAddress => CatalogedPreconfigured.AccountAddress;
 
-        public override MeshService MeshClient => meshClient ??
-             MeshMachine.GetMeshClient(CatalogedPreconfigured.AccountAddress, null, null).
-                    CacheValue(out meshClient);
-        MeshService meshClient;
+        //public override MeshService MeshClient => meshClient ??
+        //     MeshMachine.GetMeshClient(CatalogedPreconfigured.AccountAddress, null, null).
+        //            CacheValue(out meshClient);
+        //MeshService meshClient;
 
         /// <summary>
         /// Constructor.
@@ -135,12 +135,27 @@ namespace Goedel.Mesh.Client {
             var deviceAuthenticator = CatalogedPublication.GetDeviceAuthenticator(key);
 
             var profileDevice = new ProfileDevice(privateKeyUDF);
+
+
+            // check for sanity here
+            var profileDeviceRecovered = devicePreconfiguration.EnvelopedProfileDevice.Decode();
+            profileDeviceRecovered.Validate();
+            (profileDeviceRecovered.Udf == profileDevice.Udf).AssertTrue(InvalidProfile.Throw);
+            (profileDeviceRecovered.BaseAuthentication.Udf == 
+                    profileDevice.BaseAuthentication.Udf).AssertTrue(InvalidProfile.Throw);
+            (profileDeviceRecovered.BaseEncryption.Udf ==
+                    profileDevice.BaseEncryption.Udf).AssertTrue(InvalidProfile.Throw);
+            (profileDeviceRecovered.BaseSignature.Udf ==
+                    profileDevice.BaseSignature.Udf).AssertTrue(InvalidProfile.Throw);
+
+
+            // Persist the seed to the platform protected key store.
             profileDevice.PersistSeed(meshHost.KeyCollection);
 
             // create a Mesh Host entry.
-
             var catalogedPreconfig = new CatalogedPreconfigured() {
-                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
+                EnvelopedProfileDevice = devicePreconfiguration.EnvelopedProfileDevice,
+                EnvelopedConnectionDevice = devicePreconfiguration.EnvelopedConnectionDevice,
                 Id = profileDevice.Udf,
                 ServiceAuthenticator = serviceAuthenticator,
                 DeviceAuthenticator = deviceAuthenticator,

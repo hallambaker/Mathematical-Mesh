@@ -20,7 +20,7 @@ namespace Goedel.Mesh.Shell {
 
             var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
             var digest = Cryptography.UDF.ContentDigestOfDigestString(
-                contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm, bits: bits);
+                contentDigest, contentType, cryptoAlgorithmId: hashAlgorithm, bits: bits);
 
             if (expect == null) {
 
@@ -72,7 +72,7 @@ namespace Goedel.Mesh.Shell {
 
             var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
             var digest = Cryptography.UDF.ContentDigestOfDigestString(
-                contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm, key: key, bits: bits);
+                contentDigest, contentType, cryptoAlgorithmId: hashAlgorithm, key: key, bits: bits);
 
             if (expect == null) {
 

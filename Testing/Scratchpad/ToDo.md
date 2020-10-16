@@ -1,91 +1,100 @@
 ﻿# ToDo
 
-## Merge Post with Update
+## Clear the unit tests
+
+These are failing due to the upgrades.
+
+## New Activation scheme. 
+
+Activations are simply a list of name-keydata pairs. each pair activates a specific key.
+
+Can add an activation to the CatalogApplication as a Right. 
+
+Activations to a device appear in the CatalogDevice.
 
 
-[Have renames Post to PostOld to identify issues.]
+## Detached client/server
+
+Can be run from the console.
+
+Provide simple service + restart capability
 
 
-1) Check all the envelopes meet the catalog/spool security policy and size constraint. 
+### Issue of connection PIN codes.
 
-2) lock all the required catalogs (probably lock the account)
-
-3) Check that all the updates are consistent with the state of the catalog
-
-4) Perform all the updates
-
-5) Append all the messages to the relevant spools
-
-6) Release all the locks.
+Service admin tool generates PIN codes and adds them to the service log. Hmm... seems this is a user thang???
 
 
-## Need structure to specify security policy for stores
-
-Encrypted under this key
-Signed under that key
-
-Routine to check that a store is consistent with the security policy
+# Delivery chunks
 
 
+## 1) File encrypt/decrypt tool
 
-## Define Rights Structure
+Check complete DARE Envelope encrypt/decrypt capability.
 
-A Rights structure specifies a set of keys that a device is to be granted.
+Check DARE Archive encrypt/decrypt capability:
 
-<dt>Genesis Rights
+* Create from directory
+* Add files
+* Delete files
+* Re-index
+* Purge.
 
-<dd>Device has the genesis seed for the account and can grant any other privs.
+## 2) Device management
 
+Connect via comparison
 
-<dt>SuperAdmin Rights
+Connect via PIN
 
-<dd>Device has 
+Connect via dynamic URI
+[Simulate for demo]
 
+Connect via static URI
+[Simulate for demo]
 
+## 3) Bookmarks/ Contacts/ Passwords/ Tasks
 
+Check complete line mode capability.
 
+This isn't going to be pleasant to use until there is a GUI.
 
-## Enable the grant of admin privs to another device
+Can still make it useful from scripts:
 
-The admin keys for each device should be unique
+* what are the next n appointments?
+* pull password from vault for use in script.
 
-The devices need to be able to sign a master profile
+## 4) Contact Exchange
 
-So threshold share the signature keys for the Mesh/Account and put one share on the device and the other as a capability 
+Remote connect
 
-## Deleting stuff from catalogs isn't really there yet
+Dynamic PIN
 
+Static PIN
 
-## Implement Mail unit tests
+TTP accredited
 
-[Need to implement the glue logic]
+## 5) Messaging Protocols
 
-## Implement SSH unit tests
+Confirmation application
 
+Group Encryption
 
+Add User
+Remove User
+Fetch account log.
 
-## Think through the escrow/recovery scheme
+## 6) Mesh Notary Service
 
-Has to be AFTER the applications are defined.
+Local Notary Service
 
-* All escrow entries are recorded as device entries encrypted under the Mesh profile encryption key
+Notarize
+Verify
 
-## Recover Mesh master signature/decryption capability
+Inter-notary accreditation
 
-* Present 2/3 shares
-* Get Mesh master key
+## 7) Mesh Name Service
 
-Can sign account profiles
-Can sign device profiles
-Can grant admin privs to a device
+Register name
+Synchronize log
 
-Can recover escrow records for all accounts
-
-## Recover Account master signature capability
-
-From the escrow record in the device catalog using Mesh master decrypt key
-
-Is used to transfer account to a different service.
-
-
-
+Business Model

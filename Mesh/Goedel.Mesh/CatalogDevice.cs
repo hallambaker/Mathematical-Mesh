@@ -123,7 +123,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The primary key used to catalog the entry. This is the UDF of the authentication key.
         /// </summary>
-        public override string _PrimaryKey => DeviceUDF;
+        public override string _PrimaryKey => DeviceUdf;
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice =>
@@ -147,7 +147,7 @@ namespace Goedel.Mesh {
         /// for a newly added device or by decoding the SignedDeviceConnection entry after 
         /// deserialization.
         /// </summary>
-        public ConnectionUser ConnectionUser =>
+        public ConnectionDevice ConnectionUser =>
                     EnvelopedConnectionUser.Decode(KeyCollection);
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationDevice"/>
@@ -197,8 +197,8 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"ContextDevice");
 
             indent++;
-            builder.AppendIndent(indent, $"Base UDF {DeviceUDF}");
-            builder.AppendIndent(indent, $"Mesh UDF {UDF}");
+            builder.AppendIndent(indent, $"Base UDF {DeviceUdf}");
+            builder.AppendIndent(indent, $"Mesh UDF {Udf}");
             DareEnvelope.Report(builder);
 
             ProfileUser.ToBuilder(builder, indent, "[Profile Mesh Missing]");

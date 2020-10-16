@@ -72,6 +72,9 @@
 		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile presented to the service.
+		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
+			Description
+				|The device connection used to authenticate to the service.
 		String AccountAddress
 			Description
 				|The account to which claims will be posted

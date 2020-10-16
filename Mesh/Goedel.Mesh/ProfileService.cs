@@ -57,9 +57,11 @@ namespace Goedel.Mesh {
         /// Generate profile specific keys.
         /// </summary>
         protected override void Generate() {
-            KeyAuthentication = SecretSeed.GenerateContributionKeyData(
+            ServiceSignature = SecretSeed.GenerateContributionKeyData(
+                    MeshKeyType, MeshActor, MeshKeyOperation.Sign);
+            ServiceAuthentication = SecretSeed.GenerateContributionKeyData(
                     MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
-            KeyEncryption = SecretSeed.GenerateContributionKeyData(
+            ServiceEncryption = SecretSeed.GenerateContributionKeyData(
                     MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
             }
 
@@ -99,7 +101,7 @@ namespace Goedel.Mesh {
         /// <param name="keyEncrypt">The service encryption key.</param>
         public ProfileService(KeyPair keySign, KeyPair keyEncrypt) {
             ProfileSignature = new KeyData(keySign.KeyPairPublic());
-            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
+            ServiceEncryption = new KeyData(keyEncrypt.KeyPairPublic());
             }
 
 

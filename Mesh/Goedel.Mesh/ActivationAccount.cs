@@ -163,7 +163,7 @@ namespace Goedel.Mesh {
         /// <param name="profileService">Description of the service to bind to.</param>
         public void BindService(ProfileService profileService) {
             ProfileService = profileService;
-            ServiceEncryptionKey = ProfileService.KeyEncryption.GetKeyPair();
+            ServiceEncryptionKey = ProfileService.ServiceEncryption.GetKeyPair();
             }
 
 
@@ -234,13 +234,13 @@ namespace Goedel.Mesh {
             // Wrap the connectionDevice and activationDevice in envelopes
 
             var catalogEntryDevice = new CatalogedDevice() {
-                UDF = activationDevice.UDF,
+                Udf = activationDevice.UDF,
                 EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
-                EnvelopedConnectionUser = connectionDevice.EnvelopedConnectionUser,
+                EnvelopedConnectionUser = connectionDevice.EnvelopedConnectionDevice,
                 EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
                 EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
-                DeviceUDF = profileDevice.Udf
+                DeviceUdf = profileDevice.Udf
                 };
 
             return catalogEntryDevice;

@@ -578,7 +578,7 @@ namespace Goedel.XUnit {
 
         bool Verify(ActivationDevice first, ActivationDevice second) {
             //Verify(first.ConnectionAccount, second.ConnectionAccount);
-            (first.AccountUDF == second.AccountUDF).TestTrue();
+            (first.AccountUdf == second.AccountUdf).TestTrue();
             return true;
             }
 
@@ -588,7 +588,7 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        public bool Verify(ConnectionUser first, ConnectionUser second) {
+        public bool Verify(ConnectionDevice first, ConnectionDevice second) {
             (first.DeviceSignature.Udf == second.DeviceSignature.Udf).TestTrue();
             (first.DeviceEncryption.Udf == second.DeviceEncryption.Udf).TestTrue();
             (first.DeviceAuthentication.Udf == second.DeviceAuthentication.Udf).TestTrue();

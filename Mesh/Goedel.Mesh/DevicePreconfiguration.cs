@@ -33,20 +33,6 @@ namespace Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Constructor to generate and populate the assertion using values derrived
-        /// from <paramref name="privateKey"/> and <paramref name="connectUri"/>.
-        /// </summary>
-        /// <param name="privateKey"></param>
-        /// <param name="connectUri"></param>
-        public DevicePreconfiguration(
-                    Key privateKey, 
-                    string connectUri) {
-            
-            PrivateKey = privateKey;
-            ConnectUri = connectUri;
-            }
-
 
         /// <summary>
         /// Read device preconfiguration data from a file.

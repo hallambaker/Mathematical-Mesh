@@ -645,6 +645,11 @@ namespace Goedel.Mesh.Client {
 
 		public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
         /// <summary>
+        ///The device connection used to authenticate to the service.
+        /// </summary>
+
+		public virtual Enveloped<ConnectionDevice>						EnvelopedConnectionDevice  {get; set;}
+        /// <summary>
         ///The account to which claims will be posted
         /// </summary>
 
@@ -713,6 +718,11 @@ namespace Goedel.Mesh.Client {
 				_writer.WriteToken ("EnvelopedProfileDevice", 1);
 					EnvelopedProfileDevice.Serialize (_writer, false);
 				}
+			if (EnvelopedConnectionDevice != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedConnectionDevice", 1);
+					EnvelopedConnectionDevice.Serialize (_writer, false);
+				}
 			if (AccountAddress != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("AccountAddress", 1);
@@ -770,6 +780,13 @@ namespace Goedel.Mesh.Client {
 					// An untagged structure
 					EnvelopedProfileDevice = new Enveloped<ProfileDevice> ();
 					EnvelopedProfileDevice.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "EnvelopedConnectionDevice" : {
+					// An untagged structure
+					EnvelopedConnectionDevice = new Enveloped<ConnectionDevice> ();
+					EnvelopedConnectionDevice.Deserialize (jsonReader);
  
 					break;
 					}

@@ -34,8 +34,6 @@ namespace Goedel.Mesh.Client {
         ///since a device in the state Mesh Pending does not have a connection by definition.</summary>
         public override Connection Connection =>null;
 
-        public override MeshService MeshClient => throw new NotImplementedException();
-
 
         /////<summary>Convenience accessor for the Account Service ID</summary>
         //public string AccountAddress => CatalogedPending?.AccountAddress;

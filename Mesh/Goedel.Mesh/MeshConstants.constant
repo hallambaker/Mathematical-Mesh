@@ -93,6 +93,15 @@ File MiscUnsorted
 	String IanaTypeMeshNonce "application/mmm/nonce"
 		Description
 			|The proposed IANA content identifier for the Mesh message type.
+
+	String IanaTypeMeshEnvelopeId "application/mmm/envelopeid"
+		Description
+			|The proposed IANA content identifier for the Mesh message type.
+	String IanaTypeMeshResponseId "application/mmm/response"
+		Description
+			|The proposed IANA content identifier for the Mesh message type.
+
+
 	String IanaTypeMeshAuthenticator "application/mmm/authenticator"
 		Description
 			|The proposed IANA content identifier for the Mesh message type.

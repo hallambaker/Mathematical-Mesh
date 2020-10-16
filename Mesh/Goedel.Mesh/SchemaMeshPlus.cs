@@ -94,16 +94,6 @@ namespace Goedel.Mesh {
             throw new CannotCreateAbstract();
             }
 
-        ///// <summary>
-        ///// Decode the specified <paramref name="dareEnvelope"/>>
-        ///// </summary>
-        ///// <param name="dareEnvelope">The envelope to decode.</param>
-        ///// <returns>The decoded <see cref="MeshItem"/></returns>
-        //public static MeshItem Decode(DareEnvelope dareEnvelope) {
-        //    var result = FromJSON(dareEnvelope.GetBodyReader(), true);
-        //    result.DareEnvelope = dareEnvelope;
-        //    return result;
-        //    }
 
         /// <summary>
         /// Decode and parse the data 
@@ -127,30 +117,6 @@ namespace Goedel.Mesh {
 
             }
 
-        ///// <summary>
-        ///// Encode the message using the signature key <paramref name="signingKey"/>.
-        ///// </summary>
-        ///// <param name="signingKey">The signature key.</param>
-        ///// <param name="encryptionKey">The encryption key.</param>
-        ///// <returns>The enveloped, signed message.</returns>
-        //public virtual DareEnvelope Envelope(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
-
-        //    var data = this.GetBytes();
-        //    var contentMeta = new ContentMeta() {
-        //        UniqueID = _PrimaryKey,
-        //        Created = DateTime.Now,
-        //        ContentType = Constants.IanaTypeMeshObject,
-        //        MessageType = _Tag
-        //        };
-
-        //    DareEnvelope = DareEnvelope.Encode(data, contentMeta: contentMeta,
-        //        signingKey: signingKey, encryptionKey: encryptionKey);
-
-        //    DareEnvelope.Header.EnvelopeID = _PrimaryKey;
-
-        //    return DareEnvelope;
-        //    }
-
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
@@ -167,70 +133,6 @@ namespace Goedel.Mesh {
         }
 
 
-    public partial class Assertion {
-
-        ///// <summary>
-        ///// Create an envelope with the signed assertion.
-        ///// </summary>
-        ///// <param name="SignatureKey">The key to sign the assertion under.</param>
-        ///// <returns>The signed assertion.</returns>
-        //public virtual DareEnvelope Envelope(CryptoKey SignatureKey) {
-        //    DareEnvelope = DareEnvelope.Encode(GetBytes(true), signingKey: SignatureKey);
-        //    return DareEnvelope;
-        //    }
-
-        ///// <summary>
-        ///// Decode <paramref name="envelope"/> and return the inner <see cref="Assertion"/>
-        ///// </summary>
-        ///// <param name="envelope">The envelope to decode.</param>
-        ///// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        ///// <returns>The decoded profile.</returns>
-        //public static new Assertion Decode(DareEnvelope envelope,
-        //            IKeyLocate keyCollection = null) =>
-        //                MeshItem.Decode(envelope, keyCollection) as Assertion;
-
-        }
-
-    public partial class Message{
-        ///<summary>The primary key is <see cref="MessageId"/></summary> 
-        public override string _PrimaryKey => MessageId;
-
-        /////<summary>Always false for an error result.</summary>
-        //public virtual bool Success => true;
-
-        /////<summary>The error report code</summary>
-        //public virtual string ErrorReport => null;
-
-
-        /// <summary>
-        /// Return the identifier for a response to this message.
-        /// </summary>
-        /// <returns>The response identifier.</returns>
-        public string GetResponseId() => MakeResponseID(MessageId);
-
-        /// <summary>
-        /// Generate the response identifier as a deterministic function of the request
-        /// identifier <paramref name="udf"/>
-        ///  using the digest algorithm specified in the request identifier (if known
-        /// and supported), otherwise using SHA_3_512.
-        /// </summary>
-        /// <param name="udf">The request identifier to construct the response from.</param>
-        /// <returns>The response identifier.</returns>
-        public static string MakeResponseID(string udf) {
-            var buffer = udf.FromBase32();
-            var length = (buffer.Length).Minimum(128);
-            switch ((UdfTypeIdentifier)buffer[0]) {
-                case (UdfTypeIdentifier.Digest_SHA_3_512): {
-                    return UDF.ContentDigestOfUDF(udf, length, CryptoAlgorithmId.SHA_3_512);
-                    }
-
-                default: {
-                    return UDF.ContentDigestOfUDF(udf, length);
-                    }
-                }
-            }
-
-        }
     public partial class MessageError {
         /////<summary>Always false for an error result.</summary>
         //public override bool Success => false;

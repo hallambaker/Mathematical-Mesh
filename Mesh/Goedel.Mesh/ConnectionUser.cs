@@ -25,19 +25,19 @@ using Goedel.Utilities;
 using System.Text;
 
 namespace Goedel.Mesh {
-    public partial class ConnectionUser {
+    public partial class ConnectionDevice {
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ConnectionUser> EnvelopedConnectionUser =>
-            envelopedConnectionUser ?? new Enveloped<ConnectionUser>(DareEnvelope).
-                    CacheValue(out envelopedConnectionUser);
-        Enveloped<ConnectionUser> envelopedConnectionUser;
+        public Enveloped<ConnectionDevice> EnvelopedConnectionDevice =>
+            envelopedConnectionDevice ?? new Enveloped<ConnectionDevice>(DareEnvelope).
+                    CacheValue(out envelopedConnectionDevice);
+        Enveloped<ConnectionDevice> envelopedConnectionDevice;
 
 
         /// <summary>
         /// Constructor for use by deserializers.
         /// </summary>
-        public ConnectionUser() {
+        public ConnectionDevice() {
             }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
-            builder.AppendIndent(indent, $"Connection User");
+            builder.AppendIndent(indent, $"Connection Device");
             indent++;
             DareEnvelope.Report(builder, indent);
             indent++;

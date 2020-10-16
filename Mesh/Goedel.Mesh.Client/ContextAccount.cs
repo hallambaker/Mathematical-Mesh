@@ -66,7 +66,8 @@ namespace Goedel.Mesh.Client {
         public abstract Connection Connection { get; }
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
-        public abstract MeshService MeshClient { get; }
+        public virtual MeshService MeshClient => meshClient ?? GetMeshClient(AccountAddress).CacheValue(out meshClient);
+        MeshService meshClient;
 
         ///<summary>The Account Address</summary>
         public abstract string AccountAddress { get; } 
@@ -83,7 +84,7 @@ namespace Goedel.Mesh.Client {
         ///<summary>The account encryption key </summary>
         protected KeyPair KeyAccountEncryption => ActivationAccount.AccountEncryptionKey;
         ///<summary>The authentication key used to authenticate as the account.</summary>
-        protected KeyPair KeyAccountAuthentication => ActivationAccount.AccountAuthenticationKey; 
+        protected KeyPair KeyAccountAuthentication => ActivationAccount?.AccountAuthenticationKey; 
         #endregion
         #region // Store definitions
         ///<summary>The directory containing the catalogs related to the account.</summary>

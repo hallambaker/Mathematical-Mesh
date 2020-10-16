@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
+using Goedel.Utilities;
 using Goedel.Cryptography.Dare;
 
 using System;
@@ -119,11 +119,16 @@ namespace Goedel.Mesh {
         /// </summary>
         public override string _PrimaryKey => GetGroupID(Key);
 
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileGroup"/>
         ///to return the <see cref="ProfileUser"/> value.</summary>
-        public ProfileGroup ProfileGroup =>
-                    EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup;
+        public ProfileGroup ProfileGroup => profileGroup ??
+                    (EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup).CacheValue(out profileGroup);
+        ProfileGroup profileGroup;
 
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationAccount"/>
+        ///to return the <see cref="ActivationAccount"/> value.</summary>
+        public ActivationAccount GetActivationAccount(IKeyCollection keyCollection) =>
+                    EnvelopedActivationAccount.Decode(keyCollection);
 
         #endregion
         #region // Factory methods and constructors

@@ -20,9 +20,9 @@ namespace Goedel.Mesh.Client {
         ///<summary>The enclosing mesh context.</summary>
         public ContextUser ContextUser;
 
-        ///<summary>Returns the MeshClient of the user account under which the account is managed.
-        ///</summary>
-        public override MeshService MeshClient => ContextUser.MeshClient;
+        /////<summary>Returns the MeshClient of the user account under which the account is managed.
+        /////</summary>
+        //public override MeshService MeshClient => ContextUser.MeshClient;
 
 
         ///<summary>The catalogued group description.</summary>
@@ -73,6 +73,11 @@ namespace Goedel.Mesh.Client {
                     base(contextAccount.MeshHost, null) { 
             CatalogedGroup = catalogedGroup;
             ContextUser = contextAccount;
+
+            // Activate the device to communicate as the account (via threshold)
+            ActivationAccount = CatalogedGroup?.GetActivationAccount(KeyCollection);
+            ActivationAccount.Activate(KeyCollection);
+
             }
 
 
@@ -126,7 +131,7 @@ namespace Goedel.Mesh.Client {
             var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
 
             // will fail because the ProfileService is not set.
-            var serviceEncryptionKey = ContextUser.ProfileService.KeyEncryption.CryptoKey;
+            var serviceEncryptionKey = ContextUser.ProfileService.ServiceEncryption.CryptoKey;
 
             // Create the capability 
             var capabilityService = new CapabilityDecryptServiced() {
@@ -203,7 +208,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             var anchorAccount = new Anchor() {
-                UDF = ProfileGroup.Udf,
+                Udf = ProfileGroup.Udf,
                 Validation = "Self"
                 };
             // ContextMesh.ProfileMesh.UDF 

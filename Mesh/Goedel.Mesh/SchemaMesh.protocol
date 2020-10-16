@@ -49,7 +49,7 @@
 	
 	Structure CompositePrivate
 		Inherits Key
-		String DeviceKeyUDF
+		String DeviceKeyUdf
 			Description
 				|UDF fingerprint of the bound device key (if used).
 		TStruct Key PrivateSalt
@@ -102,10 +102,10 @@
 
 	Structure Connection
 		Inherits Assertion
-		String SubjectUDF
+		String SubjectUdf
 			Description
 				|UDF of the connection target.
-		String AuthorityUDF
+		String AuthorityUdf
 			Description
 				|UDF of the connection source.
 
@@ -116,7 +116,20 @@
 			|a specific device
 		String ActivationKey
 			Description
-				|Secret seed used to derive keys unless explicitly specified.
+				|Secret seed used to derive keys that are not explicitly specified.
+		Struct ActivationEntry Entries
+			Multiple
+			Description
+				|Activation of named resources.
+	
+	Structure ActivationEntry
+		String Resource
+			Description
+				|Name of the activated resource
+		Struct KeyData Key
+			Description
+				|The activation key or key share
+
 
 	Section 3 "Mesh Profile Classes"
 		Description
@@ -199,12 +212,15 @@
 		Inherits Profile
 		Description 
 			|Profile of a Mesh Service
-		Struct KeyData KeyAuthentication
+		Struct KeyData ServiceAuthentication
 			Description
 				|Key used to authenticate service connections.
-		Struct KeyData KeyEncryption
+		Struct KeyData ServiceEncryption
 			Description
 				|Key used to encrypt data under this profile
+		Struct KeyData ServiceSignature
+			Description
+				|Key used to sign data under the account.
 
 	Structure ProfileHost
 		Inherits Profile
@@ -222,7 +238,7 @@
 			|interactions between devices and the service currently servicing
 			|the account. They SHOULD NOT be visible to external parties.
 
-	Structure ConnectionUser
+	Structure ConnectionDevice
 		Inherits Connection
 		Description
 			|Connection assertion used to authenticate service requests made
@@ -264,7 +280,7 @@
 			|Contains activation data for device specific keys used in the context of a 
 			|Mesh account.
 		Inherits Activation
-		String AccountUDF
+		String AccountUdf
 			Description
 				|The UDF of the account
 
@@ -289,36 +305,8 @@
 			Description
 				|Grant access to ProfileUser account signature key
 
-	Structure ActivationGroup
-		Inherits Activation
-		String GroupUDF
-			Description
-				|The UDF of the group
-
 	Structure ActivationApplication
 		Inherits Activation
-
-	Structure ActivationApplicationEmail
-		Inherits Activation
-		String Account
-			Description
-				|The email account for which the credential is valid
-		String Protocol
-			Multiple
-			Description
-				|S/MIME or OpenPGP
-		Struct KeyData Encryption
-			Description
-				|Explicit specification of decryption key
-		Struct KeyData Signature
-			Description
-				|Explicit specification of signature key
-
-	Structure ActivationApplicationSsh
-		Inherits Activation
-		Struct KeyData Authentication
-			Description
-				|Explicit specification of authentication key
 
 
 	Section 2 "Data Structures"
@@ -361,7 +349,7 @@
 	Structure Anchor
 		Description
 			|Trust anchor
-		String UDF
+		String Udf
 			Description
 				|The trust anchor.
 		String Validation
@@ -566,13 +554,13 @@
 		Inherits CatalogedEntry
 		Description
 			|Public device entry, indexed under the device ID Hello
-		String UDF
+		String Udf
 			Description
 				|UDF of the signature key of the device in the Mesh
-		String DeviceUDF
+		String DeviceUdf
 			Description
 				|UDF of the offline signature key of the device
-		String SignatureUDF
+		String SignatureUdf
 			Description
 				|UDF of the account online signature key
 		Struct Enveloped<ProfileAccount> EnvelopedProfileUser
@@ -581,7 +569,7 @@
 		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile
-		Struct Enveloped<ConnectionUser> EnvelopedConnectionUser
+		Struct Enveloped<ConnectionDevice> EnvelopedConnectionUser
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
 		Struct Enveloped<ActivationDevice> EnvelopedActivationDevice
@@ -789,6 +777,9 @@
 		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile
+		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
+			Description
+				|The device connection
 		TStruct Key PrivateKey
 			Description
 				|The device private key
@@ -831,7 +822,7 @@
 				|Pin identifier value calculated from the PIN code, action and account address.
 		Binary PinWitness
 			Description
-				|Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
+				|Witness value calculated as KDF (Device.Udf + AccountAddress, ClientNonce)
 
 
 	Structure MessagePin

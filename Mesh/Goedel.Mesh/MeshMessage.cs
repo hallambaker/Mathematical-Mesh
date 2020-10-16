@@ -59,6 +59,10 @@ namespace Goedel.Mesh {
         }
 
     public partial class Message {
+
+        ///<summary>The primary key is <see cref="MessageId"/></summary> 
+        public override string _PrimaryKey => MessageId;
+
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<Message> EnvelopedMessage =>
             envelopedMessage ?? new Enveloped<Message>(DareEnvelope).
@@ -68,8 +72,7 @@ namespace Goedel.Mesh {
         ///<summary>The message status.</summary>
         public MessageStatus MessageStatus;
 
-        ///<summary>Returns the envelope ID corresponding to the MessageID</summary>
-        public override string EnvelopeId => GetEnvelopeId(MessageId);
+
 
         /// <summary>
         /// Encode the message using the signature key <paramref name="signingKey"/>.
@@ -94,6 +97,17 @@ namespace Goedel.Mesh {
                         MeshItem.Decode(envelope, keyCollection) as Message;
 
 
+
+        ///<summary>Returns the envelope ID corresponding to the MessageID</summary>
+        public override string EnvelopeId => GetEnvelopeId(MessageId);
+
+
+        /// <summary>
+        /// Return the identifier for a response to this message.
+        /// </summary>
+        /// <returns>The response identifier.</returns>
+        public string GetResponseId() => MakeID(MessageId, MeshConstants.IanaTypeMeshResponseId);
+
         /// <summary>
         /// Compute the EnvelopeID for <paramref name="messageID"/>.
         /// </summary>
@@ -101,7 +115,21 @@ namespace Goedel.Mesh {
         /// identifer of</param>
         /// <returns>The envelope identifier.</returns>
         public static string GetEnvelopeId(string messageID) =>
-                    UDF.ContentDigestOfUDF(messageID);
+                    MakeID(messageID, MeshConstants.IanaTypeMeshEnvelopeId);
+
+
+        static string MakeID(string udf, string content) {
+            var (code, bds) = UDF.Parse(udf);
+            return code switch
+                {
+                    UdfTypeIdentifier.Digest_SHA_3_512 => UDF.ContentDigestOfDataString(
+                        bds, content, cryptoAlgorithmId: CryptoAlgorithmId.SHA_3_512),
+                    _ => UDF.ContentDigestOfDataString(
+                    bds, content, cryptoAlgorithmId: CryptoAlgorithmId.SHA_2_512),
+                    };
+            }
+
+
 
         }
     public partial class MessageError {

@@ -189,7 +189,7 @@ namespace Goedel.Mesh.Shell {
                 case RespondConnection respondConnection: {
                     Builder.AppendLine($"Result: {respondConnection.Result}");
                     if (respondConnection.Result == MeshConstants.TransactionResultAccept) {
-                        Builder.AppendLine($"Added device: {respondConnection.CatalogedDevice.DeviceUDF}");
+                        Builder.AppendLine($"Added device: {respondConnection.CatalogedDevice.DeviceUdf}");
                         }
                     break;
                     }
@@ -354,7 +354,7 @@ namespace Goedel.Mesh.Shell {
         //CatalogEntryDevice.EnvelopedDevicePrivate.;
 
         ///<summary>The account UDF.</summary>
-        public string Account => ActivationDevice?.AccountUDF;
+        public string Account => ActivationDevice?.AccountUdf;
 
         /// <summary>
         /// Converts the value of this instance to a <see langword="String"/>.
@@ -383,8 +383,8 @@ namespace Goedel.Mesh.Shell {
 
     public partial class ResultCreatePersonal {
 
-        ///<summary>The <see cref="Mesh.ConnectionUser"/> instance.</summary>
-        public ConnectionUser ConnectionUser = null;
+        ///<summary>The <see cref="Mesh.ConnectionDevice"/> instance.</summary>
+        public ConnectionDevice ConnectionUser = null;
 
 
         /// <summary>
