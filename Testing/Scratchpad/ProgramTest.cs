@@ -48,9 +48,13 @@ namespace Scratchpad {
             // Likely more now because CatalogAccess has been changed.
             //TestService.Test().MeshDeviceConnectApprove();
             //TestService.Test().MeshDeviceConnectStaticQR();
-            TestService.Test().MeshCatalogGroup();
-            //ShellTests.Test().TestMessageConfirmationAccept();
 
+
+
+            //TestService.Test().MeshCatalogGroup();
+            //ShellTests.Test().TestMessageConfirmationAccept();
+            //ShellTests.Test().TestMessageContactInPerson();
+            ShellTests.Test().TestProfileConnectPinReused();
 
 
             //ShellTests.Test().TestMessageConfirmationAccept();

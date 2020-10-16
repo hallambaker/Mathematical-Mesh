@@ -200,7 +200,10 @@ namespace Goedel.Mesh.Client {
                 return null;
                 }
 
-            return spooledPin?.Message as MessagePin;
+            var result = spooledPin?.Message as MessagePin;
+            result.MessageStatus = spooledPin.MessageStatus;
+
+            return result;
             }
 
         #endregion
