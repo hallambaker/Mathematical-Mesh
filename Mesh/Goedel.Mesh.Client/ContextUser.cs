@@ -610,7 +610,9 @@ namespace Goedel.Mesh.Client {
 
             // create the cataloged group
             accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
-            var activationAccount = new ActivationAccount(KeyCollection, accountSeed);
+
+            var keyCollectionGroup = new KeyCollectionEphemeral();
+            var activationAccount = new ActivationAccount(keyCollectionGroup, accountSeed);
             var profileGroup = new ProfileGroup(groupName, activationAccount);
 
             // Check that the profile is valid before using it.
