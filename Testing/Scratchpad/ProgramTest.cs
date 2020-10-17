@@ -53,8 +53,10 @@ namespace Scratchpad {
 
             //TestService.Test().MeshCatalogGroup();
             //ShellTests.Test().TestMessageConfirmationAccept();
-            //ShellTests.Test().TestMessageContactInPerson();
-            ShellTests.Test().TestProfileConnectPinReused();
+            ShellTests.Test().TestMessageContactRemote();
+
+
+            //ShellTests.Test().TestProfileConnectPinReused();
 
 
             //ShellTests.Test().TestMessageConfirmationAccept();

@@ -1215,7 +1215,6 @@ namespace Goedel.Mesh.Client {
         /// to authenticate and authorize the action.</param>
         public string ContactUri(bool automatic, DateTime? expire, string localName = null) {
             var envelope = GetSelf(localName);
-
             var combinedKey = new CryptoKeySymmetricSigner();
 
             var pin = combinedKey.SecretKey;
@@ -1231,13 +1230,15 @@ namespace Goedel.Mesh.Client {
                 };
 
             // Register the pin
-            var messageConnectionPIN = new MessagePin(pin, automatic, expire, AccountAddress, "Contact");
+            var messageConnectionPIN = new MessagePin(
+                pin, automatic, expire, AccountAddress, MeshConstants.MessagePINActionContact);
 
-            var transactRequest = TransactBegin();
-            transactRequest.LocalMessage(messageConnectionPIN);
-            var catalogPublication = transactRequest.GetCatalogPublication();
-            transactRequest.CatalogUpdate(catalogPublication, catalogedPublication);
-            Transact(transactRequest);
+            using (var transactRequest = TransactBegin()) {
+                transactRequest.LocalMessage(messageConnectionPIN);
+                var catalogPublication = transactRequest.GetCatalogPublication();
+                transactRequest.CatalogUpdate(catalogPublication, catalogedPublication);
+                Transact(transactRequest);
+                }
 
             // return the contact address
             return MeshUri.ConnectUri(AccountAddress, pin);
@@ -1251,26 +1252,40 @@ namespace Goedel.Mesh.Client {
         /// <param name="pin">Optional pin value used to authenticate a response.</param>
         /// <param name="localname">Local name for the contact</param>
         /// <param name="reply">if true, request return of the recpients contact info in reply.</param>
-        public MessageContact ContactRequest(string recipient, 
-                        string pin = null, 
+        public MessageContact ContactRequest(string recipient,
+                        string pin = null,
                         string localname = null,
-                        bool reply=true) {
+                        bool reply = true) {
             // prepare the reply
             var contactSelf = GetSelf(localname);
+
+            //"agh... not creating the pin code for the response here.".TaskFunctionality(true);
+
             var message = new MessageContact() {
                 Recipient = recipient,
                 Subject = recipient,
                 AuthenticatedData = contactSelf,
                 Reply = reply
+                
                 };
 
-            // If a PIN value was specified in the request, use it to authenticate the response.
-            message.Authenticate(pin);
+            using (var transact = TransactBegin()) {
 
-            // send it to the service
-            var transact = TransactBegin();
-            transact.OutboundMessage(recipient, message);
-            Transact(transact);
+                // If we are requesting a reply, add a PIN code.
+                if (reply) {
+                    var messagePin = GetPIN(MeshConstants.MessagePINActionContact, true,
+                        128, register: false);
+                    message.PIN = messagePin.Pin;
+                    transact.LocalMessage(messagePin);
+                    }
+
+                // If a PIN value was specified in the request, use it to authenticate the response.
+                message.Authenticate(pin);
+
+                // send it to the service
+                transact.OutboundMessage(recipient, message);                
+                Transact(transact);
+                }
 
             return message;
             }

@@ -212,7 +212,7 @@ namespace Goedel.Mesh {
             var pinWitness = MessagePin.GetPinWitness(
                         messagePin.SaltedPin,
                         accountAddress,
-                        DareEnvelope,
+                        AuthenticatedData,
                         ClientNonce);
             if (!pinWitness.IsEqualTo(PinWitness)) {
                 return ProcessingResult.PinInvalid;
@@ -348,7 +348,13 @@ namespace Goedel.Mesh {
                     string accountAddress,
                     DareEnvelope envelope,
                     byte[] clientNonce) {
+
+            Screen.WriteLine($"PIN Witness {pin} on {accountAddress}");
+
+            Screen.WriteLine($"clientNonce {clientNonce.ToStringBase16FormatHex()}");
             var digest = envelope.Trailer.PayloadDigest;
+
+            Screen.WriteLine($"clientNonce {digest.ToStringBase16FormatHex()}");
             return UDF.PinWitness(pin, accountAddress.ToUTF8(), clientNonce, digest);
             }
         }

@@ -284,6 +284,7 @@ namespace Goedel.XUnit {
             (dictionary.Count == accountAddress.Length).TestTrue();
             foreach (var address in accountAddress) {
                 dictionary.ContainsKey (address).TestTrue();
+                Screen.WriteLine($"Found contact: {address}");
                 }
 
             return true;
