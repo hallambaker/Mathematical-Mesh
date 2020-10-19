@@ -283,6 +283,59 @@ namespace Goedel.Mesh {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();
 
+
+        /// <summary>
+        /// Write the 
+        /// </summary>
+        public void Dump(TextWriter output=null) {
+
+            output ??= Console.Out;
+
+
+            // Dump the title
+            output.WriteLine($"Catalog: {ContainerDefault}");
+            
+            foreach (var envelope in Container) {
+                var header = envelope.Header;
+                var trailer = envelope.Trailer;
+                var signatures = trailer?.Signatures ?? header?.Signatures;
+
+                // give the status
+                if (header?.ContainerInfo is var containerInfo) {
+                    output.WriteLine($"   Index: {containerInfo.Index} Tree: {containerInfo.TreePosition}");
+                    }
+                else {
+                    output.WriteLine("    ############ Invalid");
+                    }
+                
+                if (header?.EncryptionAlgorithm != null) {
+                    output.WriteLine($"       Encrypted: {header?.EncryptionAlgorithm}");
+
+                    if (header?.Recipients != null) {
+                        foreach (var recipient in header?.Recipients) {
+                            output.WriteLine($"       Recipient: {recipient.KeyIdentifier}");
+                            }
+
+                        }
+                    }
+                if (header?.DigestAlgorithm != null) {
+                    output.WriteLine($"       Digest: {header?.DigestAlgorithm}");
+
+                    if (signatures != null) {
+                        foreach (var recipient in signatures) {
+                            output.WriteLine($"       Signer: {recipient.KeyIdentifier}");
+                            }
+
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+
         }
 
 

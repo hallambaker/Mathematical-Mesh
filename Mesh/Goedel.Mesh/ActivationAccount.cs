@@ -36,7 +36,7 @@ namespace Goedel.Mesh {
         CatalogPublication GetCatalogPublication();
 
         ///<summary>Returns the network catalog for the account</summary>
-        CatalogAccess GetCatalogCapability();
+        CatalogAccess GetCatalogAccess();
 
         /// <summary>
         /// Append a request to append <paramref name="catalogedEntry"/> to the catalog
@@ -263,6 +263,7 @@ namespace Goedel.Mesh {
             activationAccount.DareEnvelope.AssertNotNull(Internal.Throw);
 
             var catalogedGroup = new CatalogedGroup() {
+                Key = profileGroup.AccountAddress,
                 EnvelopedProfileGroup = profileGroup.EnvelopedProfileAccount,
                 EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
                 };

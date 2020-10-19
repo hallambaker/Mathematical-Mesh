@@ -1592,7 +1592,7 @@
         <member name="M:Goedel.Mesh.Client.Transaction`1.GetCatalogPublication">
             <summary>Returns the publication catalog for the account</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.Transaction`1.GetCatalogCapability">
+        <member name="M:Goedel.Mesh.Client.Transaction`1.GetCatalogAccess">
             <summary>Returns the capability catalog for the account</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(System.String,Goedel.Mesh.Message)">

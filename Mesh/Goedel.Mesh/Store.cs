@@ -39,9 +39,11 @@ namespace Goedel.Mesh {
     /// <param name="keyCollection">Key collection to be used to resolve keys</param>
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
+    /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
     public delegate Store StoreFactoryDelegate(
                     string directory,
                     string storeId,
+                    IMeshClient meshClient,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
@@ -86,14 +88,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public static Store Factory(
                     string directory, 
                     string storeId,
+                    IMeshClient meshClient,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new Store(directory, storeId, cryptoParameters, keyCollection);
+            new Store(directory, storeId, cryptoParameters, keyCollection, meshClient);
 
 
         /// <summary>
@@ -105,10 +109,12 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public Store(string directory, 
                     string storeId = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
+                    IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) {
 

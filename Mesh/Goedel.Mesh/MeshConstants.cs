@@ -263,6 +263,11 @@ namespace Goedel.Mesh {
         ///<summary>
         ///The proposed IANA content identifier for the Mesh message type.
         ///</summary>
+        public const string IanaTypeMeshCapabilityId = "application/mmm/capability/";
+
+        ///<summary>
+        ///The proposed IANA content identifier for the Mesh message type.
+        ///</summary>
         public const string IanaTypeMeshAuthenticator = "application/mmm/authenticator";
 
         ///<summary>

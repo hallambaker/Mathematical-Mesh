@@ -56,6 +56,7 @@ namespace Goedel.Mesh {
         public static new Store Factory(
                 string directory,
                     string storeId,
+                    IMeshClient meshClient = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,

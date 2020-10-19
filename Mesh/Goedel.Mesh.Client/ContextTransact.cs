@@ -320,7 +320,7 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>Returns the capability catalog for the account</summary>
-        public CatalogAccess GetCatalogCapability() => 
+        public CatalogAccess GetCatalogAccess() => 
             ContextAccount.GetStore(CatalogAccess.Label) as CatalogAccess;
 
 

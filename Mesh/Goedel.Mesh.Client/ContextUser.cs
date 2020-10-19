@@ -612,8 +612,8 @@ namespace Goedel.Mesh.Client {
             accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
 
             var keyCollectionGroup = new KeyCollectionEphemeral();
-            var activationAccount = new ActivationAccount(keyCollectionGroup, accountSeed);
-            var profileGroup = new ProfileGroup(groupName, activationAccount);
+            var activationGroup = new ActivationAccount(keyCollectionGroup, accountSeed);
+            var profileGroup = new ProfileGroup(groupName, activationGroup);
 
             // Check that the profile is valid before using it.
             profileGroup.Validate();
@@ -624,8 +624,8 @@ namespace Goedel.Mesh.Client {
             // account escrow key.
 
             rights.Future();
-            var catalogedGroup = activationAccount.MakeCatalogedGroup(profileGroup,
-                activationAccount, KeyAccountEncryption);
+            var catalogedGroup = activationGroup.MakeCatalogedGroup(profileGroup,
+                activationGroup, KeyAccountEncryption);
 
             // here we request creation of the group at the service.
             var createRequest = new BindRequest() {
@@ -640,11 +640,20 @@ namespace Goedel.Mesh.Client {
             var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
             var contact = contextGroup.CreateContact();
 
+
+            // create key generation capabilities
+            var capabilityGroupEncrypt = CapabilityKeyGenerate.CreateThreshold(activationGroup.AccountEncryptionKey);
+            var capabilityGroupSign = CapabilityKeyGenerate.CreateThreshold(activationGroup.AccountSignatureKey);
+
             // Commit all changes in a single transaction.
             using (var transaction = TransactBegin()) {
                 // Add the group to the application catalog
                 var catalogApplication = transaction.GetCatalogApplication();
                 transaction.CatalogUpdate(catalogApplication, catalogedGroup);
+
+                var catalogAccess = transaction.GetCatalogAccess();
+                catalogAccess.Add(capabilityGroupEncrypt);
+                catalogAccess.Add(capabilityGroupSign);
 
                 // Create a contact for the group and add to the contact catalog
                 var contactCatalog = transaction.GetCatalogContact();
@@ -952,7 +961,7 @@ namespace Goedel.Mesh.Client {
 
             catalogContact.Add(request.Contact);  // Hack: make transactional
             if (request.Contact?.NetworkAddresses != null) {
-                var catalogCapability = transactRequest.GetCatalogCapability(); // Hack: make transactional
+                var catalogCapability = transactRequest.GetCatalogAccess(); // Hack: make transactional
                 foreach (var address in request.Contact.NetworkAddresses) {
                     if (address.Capabilities != null) {
                         foreach (var capability in address.Capabilities) {

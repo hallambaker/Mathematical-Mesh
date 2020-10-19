@@ -69,14 +69,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public static new Store Factory(
                 string directory,
                     string storeId,
+                    IMeshClient meshClient,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new CatalogAccess(directory, storeId, cryptoParameters, keyCollection, decrypt:decrypt, create:create);
+            new CatalogAccess(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt:decrypt, create:create);
 
 
         /// <summary>

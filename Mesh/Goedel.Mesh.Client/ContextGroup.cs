@@ -146,7 +146,7 @@ namespace Goedel.Mesh.Client {
                 KeyDataEncryptionKey = userEncryptionKey
                 };
 
-            var keyGenerate = transactInvitation.GetCatalogCapability().TryFindKeyGenerate(
+            var keyGenerate = transactInvitation.GetCatalogAccess().TryFindKeyGenerate(
                             ProfileGroup.AccountEncryption.Udf);
             keyGenerate.CreateShares(capabilityService, capabilityMember);
 
@@ -177,9 +177,9 @@ namespace Goedel.Mesh.Client {
             transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);
 
             // update the capabilities catalog to add the service capability
-            var catalogCapability = transactGroup.GetCatalogCapability();
+            var catalogAccess = transactGroup.GetCatalogAccess();
             var catalogedCapability = new CatalogedAccess(capabilityService);
-            transactGroup.CatalogUpdate(catalogCapability, catalogedCapability);
+            transactGroup.CatalogUpdate(catalogAccess, catalogedCapability);
 
             // update the members catalog to add the member entry
             var catalogMember = transactGroup.GetCatalogMember();
@@ -190,6 +190,9 @@ namespace Goedel.Mesh.Client {
             Transact(transactInvitation);
 
             // ToDo: Handle error return properly if the group transaction fails (need retry race);
+
+            catalogAccess.Dump();
+            catalogMember.Dump();
 
             return catalogedMember;
             }
@@ -260,7 +263,7 @@ namespace Goedel.Mesh.Client {
 
 
             var catalogMember = transactGroup.GetCatalogMember();
-            var catalogCapability = transactGroup.GetCatalogCapability();
+            var catalogCapability = transactGroup.GetCatalogAccess();
 
             var capability = catalogCapability.Get(member.ServiceCapabilityId);
             // delete the capabilities of the member

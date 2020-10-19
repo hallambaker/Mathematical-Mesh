@@ -100,7 +100,9 @@ File MiscUnsorted
 	String IanaTypeMeshResponseId "application/mmm/response"
 		Description
 			|The proposed IANA content identifier for the Mesh message type.
-
+	String IanaTypeMeshCapabilityId "application/mmm/capability/"
+		Description
+			|The proposed IANA content identifier for the Mesh message type.
 
 	String IanaTypeMeshAuthenticator "application/mmm/authenticator"
 		Description

@@ -54,14 +54,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public static new Store Factory(
                 string directory,
                     string storeId,
+                    IMeshClient meshClient,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new CatalogApplication(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+            new CatalogApplication(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
 
         /// <summary>
@@ -75,12 +77,13 @@ namespace Goedel.Mesh {
         /// <param name="storeName">The catalog persistence container file name.</param>
         /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
-
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public CatalogApplication(
                     string directory, 
                     string storeName = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
+                    IMeshClient meshClient = null,
                     bool decrypt = true, bool create = true) :
             base(directory, storeName, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }

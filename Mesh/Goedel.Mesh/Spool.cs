@@ -179,14 +179,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public Spool(
                     string directory, 
                     string storeId,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
+                    IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, storeId, cryptoParameters, keyCollection, decrypt, create) {
+                base(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create) {
 
             }
 
@@ -562,14 +564,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public static new Store Factory(
                 string directory,
                     string storeId,
+                    IMeshClient meshClient,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new SpoolLocal(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+            new SpoolLocal(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
         /// <summary>
         /// Constructor.
@@ -580,14 +584,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public SpoolLocal(
                     string directory,
                     string storeId,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
+                    IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, storeId, cryptoParameters, keyCollection, decrypt, create) {
+                base(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create) {
             }
 
         #endregion
@@ -634,14 +640,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public static new Store Factory(
                 string directory,
                     string storeId,
+                    IMeshClient meshClient,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new SpoolInbound(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+            new SpoolInbound(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
         /// <summary>
         /// Constructor.
@@ -652,14 +660,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public SpoolInbound(
                     string directory, 
                     string storeId,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
+                    IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, storeId, cryptoParameters, keyCollection, decrypt, create) {
+                base(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create) {
 
             }
 
@@ -684,14 +694,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public static new Store Factory(
                 string directory,
                     string storeId,
+                    IMeshClient meshClient,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new SpoolOutbound(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+            new SpoolOutbound(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
 
         /// <summary>
@@ -703,12 +715,14 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public SpoolOutbound(string directory, string storeName,
             CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
+                    IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, storeName, cryptoParameters, keyCollection, decrypt, create) {
+                base(directory, storeName, cryptoParameters, keyCollection, meshClient, decrypt, create) {
 
             }
         #endregion
@@ -732,14 +746,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public static new Store Factory(
                 string directory,
                     string storeId,
+                    IMeshClient meshClient,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new SpoolArchive(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+            new SpoolArchive(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
         /// <summary>
         /// Constructor.
@@ -750,14 +766,16 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public SpoolArchive(
                     string directory,
                     string storeId,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
+                    IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, storeId, cryptoParameters, keyCollection, decrypt, create) {
+                base(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create) {
 
             }
         #endregion

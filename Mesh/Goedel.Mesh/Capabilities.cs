@@ -92,6 +92,19 @@ namespace Goedel.Mesh {
         ///<summary>The primary key is the value of the <see cref="Id"/> property.</summary>
         public override string _PrimaryKey => Id;
 
+
+        public CryptographicCapability() {
+            }
+        public CryptographicCapability(string subjectId, string capability) {
+            SubjectId = subjectId;
+
+            var contentType = MeshConstants.IanaTypeMeshCapabilityId + capability;
+            Id = UDF.ContentDigestOfDataString(subjectId.ToUTF8(), contentType);
+                
+
+            }
+
+
         }
 
 
@@ -222,6 +235,35 @@ namespace Goedel.Mesh {
 
 
     public partial class CapabilityKeyGenerate {
+
+        public CapabilityKeyGenerate() {
+            }
+
+        public CapabilityKeyGenerate(string subjectId, string capability) :
+                    base(subjectId, capability) {
+            }
+
+
+        public static CapabilityKeyGenerate CreateThreshold(KeyPair keyPair, 
+                        KeyPair encrypt=null) {
+            if (encrypt == null) {
+                return CreateDirect(keyPair);
+                }
+
+            return null;
+            }
+
+
+        public static CapabilityKeyGenerate CreateDirect(KeyPair keyPair) {
+            var result = new CapabilityKeyGenerate(keyPair.KeyIdentifier, "CapabilityKeyGenerate") {
+
+                KeyData = new KeyData(keyPair, export: true)
+                };
+
+            return result;
+            }
+
+
 
         /// <summary>
         /// Create key shares to augment the array of capabilities <paramref name="capabilities"/>
