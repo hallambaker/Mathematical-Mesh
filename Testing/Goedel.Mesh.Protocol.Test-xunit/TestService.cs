@@ -89,6 +89,59 @@ namespace Goedel.XUnit {
             }
 
 
+        [Fact]
+        public void MeshServiceEncryptCredential() {
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+            var machineAdminBob = new MeshMachineTest(testEnvironmentCommon, DeviceBobAdmin);
+
+            // first device
+            var contextAccountAlice_1_a = machineAdminAlice.MeshHost.CreateMesh(AccountAlice, "personal");
+            contextAccountAlice_1_a.SetContactSelf(ContactAlice);
+
+            var profileAlice = contextAccountAlice_1_a.Profile as ProfileUser;
+
+            using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
+                var catalogCredential = transaction1.GetCatalogCredential();
+                transaction1.CatalogUpdate(catalogCredential, password1);
+                transaction1.Transact();
+
+
+                VerifyContainerEncrypted(catalogCredential, profileAlice.AccountEncryptionKey);
+                catalogCredential.Dump();
+                }
+
+
+            //// second device
+            //var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+            //var boundPin = contextAccountAlice_1_a.GetPIN(MeshConstants.MessagePINActionDevice);
+            //var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.Pin);
+            //var sync = contextAccountAlice_1_a.Sync();
+            //var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+            //contextAccountAlice_1_a.Process(connectRequest);
+            //contextAccountAlice_2.Complete();
+
+
+
+            }
+
+        bool VerifyContainerEncrypted(Store container,
+            KeyPair encryptionKey) => VerifyContainerEncrypted(container.Container, encryptionKey);
+
+
+        bool VerifyContainerEncrypted(Goedel.Cryptography.Dare.Container container,
+                    KeyPair encryptionKey) {
+
+
+            foreach (var envelope in container) {
+                (envelope.Header?.EncryptionAlgorithm).TestNotNull(); // envelope must be encrypted.
+
+                }
+
+
+            return true;
+            }
+
 
         [Fact]
         public void MeshServiceFull() {
@@ -101,7 +154,6 @@ namespace Goedel.XUnit {
 
             // Create a presonal mesh 
             var contextAccountAlice_1_a = machineAdminAlice.MeshHost.CreateMesh(AccountAlice, "personal");
-
             machineAdminAlice.CheckHostCatalogExtended();
 
 
@@ -109,11 +161,7 @@ namespace Goedel.XUnit {
             contextAccountAlice_1_a.SetContactSelf(ContactAlice);
 
             // Check we can read the data from a second context
-            // Bug: This is failing because of the re-engineering of rights.
             var contextAccountAlice_1_b = machineAdminAlice.GetContextAccount();
-
-
-            // fails because the contextAccountAlice_1_b is null because the profile didn't get written out.
             Verify(contextAccountAlice_1_a, contextAccountAlice_1_b);
 
             // Check that we can read back from the data stored on disk.
@@ -148,6 +196,9 @@ namespace Goedel.XUnit {
                 var catalogCredential = transaction1.GetCatalogCredential();
                 transaction1.CatalogUpdate(catalogCredential, password1);
                 transaction1.Transact();
+
+
+                catalogCredential.Dump();
                 }
 
             // Connect a third device by approving a request

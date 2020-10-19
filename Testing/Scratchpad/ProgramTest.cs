@@ -51,9 +51,9 @@ namespace Scratchpad {
 
 
 
-            //TestService.Test().MeshCatalogGroup();
+            TestService.Test().MeshServiceEncryptCredential();
 
-            ShellTests.Test().TestMessageGroup();
+            //ShellTests.Test().TestMessageGroup();
 
             //ShellTests.Test().TestMessageConfirmationAccept();
             //ShellTests.Test().TestMessageContactRemote();
