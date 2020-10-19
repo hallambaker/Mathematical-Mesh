@@ -195,7 +195,7 @@ namespace Goedel.Mesh.Client {
             // Generate a contact and self-sign
             var contact = CreateContact();
             SetContactSelf(contact);
-            MakeStores();
+            LoadStores(); // Load all stores so that these are created on the service.
 
             SyncProgressUpload();
 
@@ -213,9 +213,28 @@ namespace Goedel.Mesh.Client {
                 MeshHost meshHost, ProfileUser profileUser) =>
                     Path.Combine(meshHost.MeshMachine.DirectoryMesh, profileUser.Udf);
 
-        public static void CreateDirectory(MeshHost meshHost, ProfileUser profileUser) {
+        public static void CreateDirectory(
+                    MeshHost meshHost, 
+                    ProfileUser profileUser,
+                    ActivationAccount activationAccount) {
             var StoresDirectory = ContextUser.GetStoresDirectory(meshHost, profileUser);
             Directory.CreateDirectory(StoresDirectory);
+
+
+            // Create each of the stores and add the activation to the record.
+            foreach (var entry in StaticCatalogDelegates) {
+                var storeName = entry.Key;
+                var factory = entry.Value;
+
+
+                using (var store = factory(StoresDirectory, storeName, null)) {
+
+
+                    }
+
+                }
+
+
             }
 
 
@@ -415,8 +434,8 @@ namespace Goedel.Mesh.Client {
         #region // Store management and convenience accessors
 
         ///<summary>Dictionarry used to create stores</summary>
-        public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;
-        Dictionary<string, StoreFactoryDelegate> catalogDelegates = new Dictionary<string, StoreFactoryDelegate>() {
+        public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => StaticCatalogDelegates;
+        static Dictionary<string, StoreFactoryDelegate> StaticCatalogDelegates = new Dictionary<string, StoreFactoryDelegate>() {
             {CatalogCredential.Label, CatalogCredential.Factory},
             {CatalogContact.Label, CatalogContact.Factory},
             {CatalogTask.Label, CatalogTask.Factory},

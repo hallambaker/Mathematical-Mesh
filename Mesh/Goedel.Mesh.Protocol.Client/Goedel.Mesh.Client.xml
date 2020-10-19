@@ -632,7 +632,7 @@
             <param name="name">The name of the store to bind.</param>
             <returns>The store instance.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStores">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.LoadStores">
             <summary>
             Force generation of all stores.
             </summary>

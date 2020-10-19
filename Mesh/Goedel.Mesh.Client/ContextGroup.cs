@@ -105,7 +105,7 @@ namespace Goedel.Mesh.Client {
             // Prepopulate the catalogs
             Directory.CreateDirectory(result.StoresDirectory);
 
-            result.MakeStores();
+            result.LoadStores();
             result.SyncProgressUpload();
 
             return result;

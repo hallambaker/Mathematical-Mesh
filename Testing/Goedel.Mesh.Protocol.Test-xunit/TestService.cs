@@ -99,7 +99,7 @@ namespace Goedel.XUnit {
             var contextAccountAlice_1_a = machineAdminAlice.MeshHost.CreateMesh(AccountAlice, "personal");
             contextAccountAlice_1_a.SetContactSelf(ContactAlice);
 
-            var profileAlice = contextAccountAlice_1_a.Profile as ProfileUser;
+            var profileAlice = contextAccountAlice_1_a.ProfileUser;
 
             using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
                 var catalogCredential = transaction1.GetCatalogCredential();
@@ -125,22 +125,7 @@ namespace Goedel.XUnit {
 
             }
 
-        bool VerifyContainerEncrypted(Store container,
-            KeyPair encryptionKey) => VerifyContainerEncrypted(container.Container, encryptionKey);
 
-
-        bool VerifyContainerEncrypted(Goedel.Cryptography.Dare.Container container,
-                    KeyPair encryptionKey) {
-
-
-            foreach (var envelope in container) {
-                (envelope.Header?.EncryptionAlgorithm).TestNotNull(); // envelope must be encrypted.
-
-                }
-
-
-            return true;
-            }
 
 
         [Fact]
@@ -617,6 +602,49 @@ namespace Goedel.XUnit {
             }
 
 
+
+        bool VerifyContainers(ContextUser contextUser) {
+
+            var profileuser = contextUser.ProfileUser;
+            using (var transaction1 = contextUser.TransactBegin()) {
+                VerifyContainerEncrypted(transaction1.GetCatalogApplication(), 
+                                profileuser.AccountEncryptionKey);
+                VerifyContainerEncrypted(transaction1.GetCatalogDevice(),
+                                profileuser.AccountEncryptionKey);
+                VerifyContainerEncrypted(transaction1.GetCatalogContact(),
+                                profileuser.AccountEncryptionKey);
+                VerifyContainerEncrypted(transaction1.GetCatalogCredential(),
+                                profileuser.AccountEncryptionKey);
+                VerifyContainerEncrypted(transaction1.GetCatalogBookmark(),
+                                profileuser.AccountEncryptionKey); 
+                VerifyContainerEncrypted(transaction1.GetCatalogCalendar(),
+                                profileuser.AccountEncryptionKey);
+                VerifyContainerEncrypted(transaction1.GetCatalogNetwork(),
+                                profileuser.AccountEncryptionKey);
+                }
+
+
+            return true;
+            }
+
+        bool VerifyContainerEncrypted(
+                    Store container,
+                    KeyPair encryptionKey) => 
+            VerifyContainerEncrypted(container.Container, encryptionKey);
+
+
+        bool VerifyContainerEncrypted(Goedel.Cryptography.Dare.Container container,
+                    KeyPair encryptionKey) {
+
+
+            foreach (var envelope in container) {
+                (envelope.Header?.EncryptionAlgorithm).TestNotNull(); // envelope must be encrypted.
+
+                }
+
+
+            return true;
+            }
 
         bool Verify(ContextUser first, ContextUser second) {
             //(first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();

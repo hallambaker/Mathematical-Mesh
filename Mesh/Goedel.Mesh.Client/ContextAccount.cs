@@ -515,7 +515,7 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Force generation of all stores.
         /// </summary>
-        protected void MakeStores() {
+        protected void LoadStores() {
             foreach (var entry in DictionaryCatalogDelegates) {
                 GetStore(entry.Key, false);
                 }

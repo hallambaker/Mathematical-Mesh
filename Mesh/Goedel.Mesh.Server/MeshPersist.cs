@@ -268,8 +268,6 @@ namespace Goedel.Mesh.Server {
                     List<Enveloped<Message>> outbound,
                     List<Enveloped<Message>> local,
                     List<string> accounts) {
-            //AccountHandleVerified accountEntry = null;
-
             // ToDo: This should be subject to a full multi stage commit process.
 
             /*
@@ -295,19 +293,15 @@ namespace Goedel.Mesh.Server {
 
             if (updates != null) {
                 foreach (var update in updates) {
-                    update.ToConsole();
+                    //update.ToConsole();
                     accountEntry.StoreAppend(update.Container, update.Envelopes);
                     }
                 }
-
             if (inbound != null) {
                 foreach (var envelope in inbound) {
                     accountEntry.PostInbound(envelope);
                     }
                 }
-
-
-
             if (local != null) {
                 foreach (var envelope in local) {
                     accountEntry.PostLocal(envelope);

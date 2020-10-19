@@ -236,6 +236,9 @@ namespace Goedel.Mesh.Client {
             // Check that the profile is valid before using it.
             profileDevice.Validate();
 
+            // Create the account directory.
+            ContextUser.CreateDirectory(this, profileUser, activationRoot);
+
 
             rights ??= new List<string> {
                 Rights.IdRightsSuper,
@@ -254,8 +257,7 @@ namespace Goedel.Mesh.Client {
                 EnvelopedProfileAccount = profileUser.EnvelopedProfileAccount
                 };
 
-            // Create the account directory.
-            ContextUser.CreateDirectory(this, profileUser);
+
 
             //Persist the results.
             if (persistDevice) {
