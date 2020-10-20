@@ -239,6 +239,9 @@ namespace Goedel.Cryptography.Dare {
                 }
             var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
+            cryptoParameters = cryptoParameters ?? new CryptoParameters(keyCollection);
+
+
             keyCollection ??= cryptoParameters?.KeyLocate;
 
 

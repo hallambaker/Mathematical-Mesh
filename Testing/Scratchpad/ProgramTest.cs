@@ -47,8 +47,11 @@ namespace Scratchpad {
             // Currently failing on these main tests
             // Likely more now because CatalogAccess has been changed.
             //TestService.Test().MeshDeviceConnectApprove();
-            TestService.Test().MeshDeviceConnectStaticQR();
-
+            //TestService.Test().MeshDeviceConnectStaticQR();
+            
+            
+            //StoreTests.Test().TestSpoolSingle();
+            StoreTests.Test().TestCatalog();
 
 
             //TestService.Test().MeshServiceEncryptCredential();
