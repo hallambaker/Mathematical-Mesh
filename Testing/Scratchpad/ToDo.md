@@ -4,14 +4,6 @@
 
 These are failing due to the upgrades.
 
-## New Activation scheme. 
-
-Activations are simply a list of name-keydata pairs. each pair activates a specific key.
-
-Can add an activation to the CatalogApplication as a Right. 
-
-Activations to a device appear in the CatalogDevice.
-
 
 ## Detached client/server
 
