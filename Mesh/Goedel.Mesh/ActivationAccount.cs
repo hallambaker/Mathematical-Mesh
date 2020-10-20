@@ -95,6 +95,9 @@ namespace Goedel.Mesh {
         public Dictionary<string, KeyPair> DictionaryStoreEncryptionKey =
             new Dictionary<string, KeyPair>();
 
+        PrivateKeyUDF secretSeed;
+
+
         /// <summary>
         /// Constructor for use by deserializers.
         /// </summary>
@@ -114,6 +117,7 @@ namespace Goedel.Mesh {
         void ActivateFromSeed(
                     IKeyCollection keyCollection, 
                     PrivateKeyUDF secretSeed) {
+            this.secretSeed = secretSeed;
             ProfileSignatureKey = secretSeed.GenerateContributionKeyPair(
                 MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Profile,
                 keyCollection, KeySecurity.Exportable);
@@ -153,6 +157,14 @@ namespace Goedel.Mesh {
             if (AccountEncryptionKey != null) {
                 keyCollection.Add(AccountEncryptionKey);
                 }
+
+            if (Entries != null) {
+                foreach (var entry in Entries) {
+                    var key = entry.Key.GetKeyPair();
+                    keyCollection.Add(key);
+                    }
+                }
+
             }
 
 
@@ -414,16 +426,32 @@ namespace Goedel.Mesh {
         void GrantStore(ActivationAccount activationAccount, Right right) {
             right.Future();
             activationAccount.Future();
-
+            Screen.WriteLine($"Grant right {right.Name}/{right.Resource}");
 
             // which store do we need?
+            if (!DictionaryStoreEncryptionKey.TryGetValue(right.Name, out var keyPair)) {
+                return;
+                }
+            //.AssertTrue(UnknownRight.Throw);
 
+            var activationEntry = new ActivationEntry() {
+                Resource = right.Name,
+                Key = new KeyData(keyPair, true)
+                };
 
-            // pull the decryption key
+            Entries ??= new List<ActivationEntry>();
+            Entries.Add(activationEntry);
+            }
 
+        public CryptoParameters InitializeStore(string storeName) {
+            var encryptionKey = secretSeed.GenerateContributionKeyPair(MeshKeyType.Complete,
+                MeshActor.Account, MeshKeyOperation.Encrypt, keySecurity: KeySecurity.Exportable);
 
-            // grant the decryption key.
+            DictionaryStoreEncryptionKey.Add(storeName, encryptionKey);
 
+            var cryptoParameters = new CryptoParameters(recipient: encryptionKey);
+
+            return cryptoParameters;
             }
 
 

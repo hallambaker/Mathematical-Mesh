@@ -526,6 +526,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.DictionarySpoolDelegates">
             <summary>List of spools, these are the same for each type of account.</summary>
         </member>
+        <member name="F:Goedel.Mesh.Client.ContextAccount.StaticSpoolDelegates">
+            <summary>List of spools, these are the same for each type of account.</summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Disposing">
             <summary>
             Disposal method called on exit.

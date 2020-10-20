@@ -734,7 +734,7 @@ namespace Goedel.Mesh {
     public class SpoolArchive : Spool {
         #region // Properties
         ///<summary>Canonical name for outbound spool</summary>
-        public const string Label = "mmm_Archive";
+        public const string Label = MeshConstants.MMM_Archive;
         #endregion
         #region // Factory methods and constructors
         /// <summary>

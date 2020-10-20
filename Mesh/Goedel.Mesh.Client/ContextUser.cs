@@ -223,17 +223,23 @@ namespace Goedel.Mesh.Client {
 
             // Create each of the stores and add the activation to the record.
             foreach (var entry in StaticCatalogDelegates) {
+                
+                var storeName = entry.Key;
+                if (!ServiceCatalogs.Contains(storeName)) {
+
+                    var factory = entry.Value;
+                    var cryptoParameters = activationAccount.InitializeStore(storeName);
+
+                    using var store = factory(StoresDirectory, storeName, null, cryptoParameters);
+                    }
+                }
+            foreach (var entry in StaticSpoolDelegates) {
                 var storeName = entry.Key;
                 var factory = entry.Value;
+                var cryptoParameters = activationAccount.InitializeStore(storeName);
 
-
-                using (var store = factory(StoresDirectory, storeName, null)) {
-
-
-                    }
-
+                using var store = factory(StoresDirectory, storeName, null, cryptoParameters);
                 }
-
 
             }
 
@@ -449,7 +455,10 @@ namespace Goedel.Mesh.Client {
             {CatalogPublication.Label, CatalogPublication.Factory}
             };
 
-
+        static SortedSet<string> ServiceCatalogs = new SortedSet<string>() {
+            CatalogAccess.Label,
+            CatalogPublication.Label
+            };
 
         ///<summary>Returns the inbound spool for the account</summary>
         public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;

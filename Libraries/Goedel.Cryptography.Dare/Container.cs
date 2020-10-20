@@ -239,6 +239,9 @@ namespace Goedel.Cryptography.Dare {
                 }
             var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
+            keyCollection ??= cryptoParameters?.KeyLocate;
+
+
             try {
 
                 //Console.WriteLine($"Open Stream {fileName}");
@@ -251,10 +254,13 @@ namespace Goedel.Cryptography.Dare {
                         containerType, contentType: contentType);
                     }
                 else {
-                    keyCollection ??= cryptoParameters?.KeyLocate;
+                    
                     Container = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt);
 
                     }
+
+                (Container.KeyCollection == keyCollection).AssertTrue(NYI.Throw);
+
                 Container.DisposeJBCDStream = jbcdStream;
                 return Container;
                 }

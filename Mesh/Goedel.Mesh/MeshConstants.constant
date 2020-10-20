@@ -55,7 +55,9 @@ File SpoolLabels
 		Description
 			|Messages are encrypted under the encryption key of the intended recipient alone. 
 			|This is either the account administration encryption key or a device encryption key.
-
+	Code MMM_Archive "Archive Spool"
+		Description
+			|Archival spool. 
 
 
 File MessageStateInbound

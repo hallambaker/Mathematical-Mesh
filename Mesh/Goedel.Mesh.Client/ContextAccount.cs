@@ -101,8 +101,10 @@ namespace Goedel.Mesh.Client {
             {CatalogPublication.Label, CatalogPublication.Factory}
             };
         ///<summary>List of spools, these are the same for each type of account.</summary>
-        public virtual Dictionary<string, StoreFactoryDelegate> DictionarySpoolDelegates => spoolDelegates;
-        Dictionary<string, StoreFactoryDelegate> spoolDelegates = new Dictionary<string, StoreFactoryDelegate>() {
+        public virtual Dictionary<string, StoreFactoryDelegate> DictionarySpoolDelegates => StaticSpoolDelegates;
+
+        ///<summary>List of spools, these are the same for each type of account.</summary>
+        protected static Dictionary<string, StoreFactoryDelegate> StaticSpoolDelegates = new Dictionary<string, StoreFactoryDelegate>() {
             {SpoolInbound.Label, SpoolInbound.Factory},
             {SpoolOutbound.Label, SpoolOutbound.Factory},
             {SpoolLocal.Label, SpoolLocal.Factory},

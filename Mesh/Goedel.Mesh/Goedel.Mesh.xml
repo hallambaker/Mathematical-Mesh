@@ -3523,6 +3523,9 @@
         <member name="F:Goedel.Mesh.MeshConstants.MMM_Outbound">
             <summary>Outbound Spool</summary>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MMM_Archive">
+            <summary>Archive Spool</summary>
+        </member>
         <member name="M:Goedel.Mesh.MeshConstants.ToStateSpoolInbound(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration

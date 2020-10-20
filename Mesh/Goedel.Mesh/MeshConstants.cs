@@ -132,6 +132,9 @@ namespace Goedel.Mesh {
         ///<summary>Outbound Spool</summary>
         public const string MMM_Outbound = "MMM_Outbound";
 
+        ///<summary>Archive Spool</summary>
+        public const string MMM_Archive = "MMM_Archive";
+
         // File: MessageStateInbound
 
 
