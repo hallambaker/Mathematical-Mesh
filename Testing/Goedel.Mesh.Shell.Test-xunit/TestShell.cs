@@ -4,28 +4,48 @@ using Goedel.Test.Core;
 using Goedel.Utilities;
 
 namespace Goedel.XUnit {
+
+
+    public partial class ShellTestsHTTP : ShellTests {
+        // Use the new test environment (when defined.)
+        public override TestEnvironmentCommon GetTestEnvironment() => new TestEnvironmentCommon();
+
+        public override TestCLI GetTestCLI(string MachineName = null) {
+            var testShell = new TestShell(TestEnvironment, MachineName);
+            return new TestCLI(testShell);
+            }
+
+
+        }
+
     public partial class ShellTests {
         string ServiceName { get; set; } = "example.com";
         TestCLI DefaultDevice => defaultDevice ?? GetTestCLI().CacheValue(out defaultDevice);
         TestCLI defaultDevice;
 
+
+        #region // The test environment specific calls
+        public virtual TestEnvironmentCommon GetTestEnvironment() => new TestEnvironmentCommon();
+
+        public virtual TestCLI GetTestCLI(string MachineName = null) {
+            var testShell = new TestShell(TestEnvironment, MachineName);
+            return new TestCLI(testShell);
+            } 
+        #endregion
+
+
+
         ///<summary>The test environment, base for all </summary>
         public TestEnvironmentCommon TestEnvironment => testEnvironment ??
-            new TestEnvironmentCommon().CacheValue(out testEnvironment);
+            GetTestEnvironment().CacheValue(out testEnvironment);
         TestEnvironmentCommon testEnvironment;
 
         public ShellTests(string serviceName = null) =>
                     ServiceName = serviceName ?? ServiceName;
 
 
-        public TestCLI GetTestCLI(string MachineName = null) {
-            var testShell = new TestShell(TestEnvironment, MachineName);
-            return new TestCLI(testShell);
-            }
-
         public Result Dispatch(string command, bool fail = false) =>
             DefaultDevice.Dispatch(command, fail);
-
 
         public Result CreateAccount(string account) =>
             Dispatch($"account create {account}");
