@@ -24,16 +24,181 @@ namespace ExampleGenerator {
 			 ProtocolHelloResponse(Example);
 			 ProtocolHello(Example);
 			 ProtocolAccountCreate(Example);
+			 ProtocolCreateGroup(Example);
 			 ProtocolAccountDelete(Example);
 			 ProtocolStatus(Example);
 			 ProtocolDownload(Example);
 			 ProtocolUpload(Example);
+			 ProtocolPostClientService(Example);
+			 ProtocolPostServiceService(Example);
+			 ProtocolClaim(Example);
+			 ProtocolPollClaim(Example);
+			 ProtocolCryptoKeyShare(Example);
+			 ProtocolCryptoKeyAgree(Example);
+			 ProtocolMessagePIN(Example);
+			 ProtocolContactRemote(Example);
+			 ProtocolContactQR(Example);
+			 ProtocolContactStatic(Example);
+			 ProtocolGroupInvite(Example);
+			 ProtocolConfirmation(Example);
 			 ProtocolConnect(Example);
 			 ProtocolConnectPIN(Example);
 			 ProtocolConnectEARL(Example);
-			 ProtocolPostClientService(Example);
-			 ProtocolPostServiceService(Example);
 			}
+		
+
+		//
+		// ProtocolCreateGroup
+		//
+		public static void ProtocolCreateGroup(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolCreateGroup.md");
+			Example._Output = _Output;
+			Example._ProtocolCreateGroup(Example);
+			}
+		public void _ProtocolCreateGroup(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolClaim
+		//
+		public static void ProtocolClaim(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolClaim.md");
+			Example._Output = _Output;
+			Example._ProtocolClaim(Example);
+			}
+		public void _ProtocolClaim(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolPollClaim
+		//
+		public static void ProtocolPollClaim(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolPollClaim.md");
+			Example._Output = _Output;
+			Example._ProtocolPollClaim(Example);
+			}
+		public void _ProtocolPollClaim(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolCryptoKeyShare
+		//
+		public static void ProtocolCryptoKeyShare(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolCryptoKeyShare.md");
+			Example._Output = _Output;
+			Example._ProtocolCryptoKeyShare(Example);
+			}
+		public void _ProtocolCryptoKeyShare(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolCryptoKeyAgree
+		//
+		public static void ProtocolCryptoKeyAgree(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolCryptoKeyAgree.md");
+			Example._Output = _Output;
+			Example._ProtocolCryptoKeyAgree(Example);
+			}
+		public void _ProtocolCryptoKeyAgree(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolMessagePIN
+		//
+		public static void ProtocolMessagePIN(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolMessagePIN.md");
+			Example._Output = _Output;
+			Example._ProtocolMessagePIN(Example);
+			}
+		public void _ProtocolMessagePIN(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolContactRemote
+		//
+		public static void ProtocolContactRemote(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolContactRemote.md");
+			Example._Output = _Output;
+			Example._ProtocolContactRemote(Example);
+			}
+		public void _ProtocolContactRemote(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolContactQR
+		//
+		public static void ProtocolContactQR(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolContactQR.md");
+			Example._Output = _Output;
+			Example._ProtocolContactQR(Example);
+			}
+		public void _ProtocolContactQR(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolContactStatic
+		//
+		public static void ProtocolContactStatic(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolContactStatic.md");
+			Example._Output = _Output;
+			Example._ProtocolContactStatic(Example);
+			}
+		public void _ProtocolContactStatic(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolGroupInvite
+		//
+		public static void ProtocolGroupInvite(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolGroupInvite.md");
+			Example._Output = _Output;
+			Example._ProtocolGroupInvite(Example);
+			}
+		public void _ProtocolGroupInvite(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolConfirmation
+		//
+		public static void ProtocolConfirmation(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolConfirmation.md");
+			Example._Output = _Output;
+			Example._ProtocolConfirmation(Example);
+			}
+		public void _ProtocolConfirmation(CreateExamples Example) {
+
+				_Output.Write ("[Example to be provided]\n{0}", _Indent);
+					}
 		
 
 		//

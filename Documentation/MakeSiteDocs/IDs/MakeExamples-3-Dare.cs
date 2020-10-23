@@ -20,12 +20,40 @@ namespace ExampleGenerator {
 		// MakeDareExamples
 		//
 		public void MakeDareExamples (CreateExamples Example) {
-			 MeshExamplesContainer(Example);
 			 MeshExamplesMessageMail(Example);
 			 MeshExamplesMessageEDS(Example);
 			 MeshExamplesMessageEncrypted(Example);
-			 MeshExamplesMessage(Example);
+			 DareSchemaCatalog(Example);
+			 DareSchemaSpool(Example);
+			 ExamplesDAREMessage(Example);
+			 MeshExamplesContainer(Example);
 			}
+		
+
+		//
+		// DareSchemaCatalog
+		//
+		public static void DareSchemaCatalog(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\DareSchemaCatalog.md");
+			Example._Output = _Output;
+			Example._DareSchemaCatalog(Example);
+			}
+		public void _DareSchemaCatalog(CreateExamples Example) {
+
+					}
+		
+
+		//
+		// DareSchemaSpool
+		//
+		public static void DareSchemaSpool(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\DareSchemaSpool.md");
+			Example._Output = _Output;
+			Example._DareSchemaSpool(Example);
+			}
+		public void _DareSchemaSpool(CreateExamples Example) {
+
+					}
 		
 
 		//
@@ -216,9 +244,9 @@ namespace ExampleGenerator {
 		
 
 		//
-		// MeshExamplesMessage
+		// ExamplesDAREMessage
 		//
-		public static void MeshExamplesMessage (CreateExamples Example) { /* File  */
+		public static void ExamplesDAREMessage (CreateExamples Example) { /* File  */
 			using var _Output = new StreamWriter ("Examples\\ExamplesDAREMessage.md");
 				var _Indent = ""; 
 				_Output.Write ("\n{0}", _Indent);

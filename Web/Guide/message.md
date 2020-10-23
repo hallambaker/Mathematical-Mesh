@@ -26,57 +26,24 @@ perform access control on inbound messages.
 Having created a Mesh profile, Bob asks Alice to add him to her contacts catalog
 using the `message contact` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Bob> message contact alice@example.com
-<rsp></div>
-~~~~
+**Missing Example***
 
 Alice reviews her pending messages using the `message pending` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> message pending
-<rsp>ERROR - An item with the same key has already been added. Key: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
-</div>
-~~~~
+**Missing Example***
 
 Alice sees the request from Bob and accepts it with the `message accept` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> message accept tbs
-<rsp>ERROR - The specified message could not be found.
-</div>
-~~~~
+**Missing Example***
 
 Bob's contact information has been added to Alice's address book:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
-  Person MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
-  Anchor MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
-  Address alice@example.com
-
-</div>
-~~~~
+**Missing Example***
 
 Bob can find out if Alice has accepted his contact request using the 
 `message status` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Bob> message status tbs
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
+**Missing Example***
 
 Alice has accepted Bob's request and added him to her contacts list. She has also sent
 Bob a contact request which for the sake of convenience, is accepted automatically.
@@ -84,22 +51,11 @@ Bob a contact request which for the sake of convenience, is accepted automatical
 Alice isn't required to accept contact requests. She rejects the request from Mallet 
 using the `message reject` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> message reject tbs
-<rsp>ERROR - The specified message could not be found.
-</div>
-~~~~
+**Missing Example***
 
 For good measure, she decides to block further requests:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> message block mallet@example.com
-<rsp></div>
-~~~~
+**Missing Example***
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
 question. If the user chooses to respond, the sender receives back a non-repudiable 
@@ -127,65 +83,30 @@ is a significant sum, Bob needs an authorization for the purchase. He sends Alic
 a confirmation request `Purchase equipment for $6,000?` using the  
 `message confirm` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Bob> message confirm alice@example.com "Purchase equipment for $6,000?"
-<rsp></div>
-~~~~
+**Missing Example***
 
 Alice reviews her pending messages using the using the `message pending` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> message pending
-<rsp>ERROR - An item with the same key has already been added. Key: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
-</div>
-~~~~
+**Missing Example***
 
 Alice she accepts Bob's request using the `message pending` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> message accept tbs
-<rsp>ERROR - The specified message could not be found.
-</div>
-~~~~
+**Missing Example***
 
 Bob receives Alice's approval using the `message status` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Bob> message status tbs
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
+**Missing Example***
 
 In a full workflow system, Bob might include the response from Alice in a message to
 the accounts department asking them to place the order.
 
 Alice can also reject requests using the `message reject` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> message reject tbs
-<rsp>ERROR - The specified message could not be found.
-</div>
-~~~~
+**Missing Example***
 
 Bob receives a reply telling him the request was rejected:
 
-
-~~~~
-<div="terminal">
-<cmd>Bob> message status tbs
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
+**Missing Example***
 
 As with all Mesh messages, confirmation requests are subject to access control.
 When Mallet attempts to make a request of Alice, it is rejected because Alice

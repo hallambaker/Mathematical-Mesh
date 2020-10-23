@@ -10,13 +10,20 @@
 #xclass ExampleGenerator CreateExamples
 
 #method MakeDareExamples CreateExamples Example
-#% MeshExamplesContainer(Example);
 #% MeshExamplesMessageMail(Example);
 #% MeshExamplesMessageEDS(Example);
 #% MeshExamplesMessageEncrypted(Example);
-#% MeshExamplesMessage(Example);
+#% DareSchemaCatalog(Example);
+#% DareSchemaSpool(Example);
+#% ExamplesDAREMessage(Example);
+#% MeshExamplesContainer(Example);
 #end method
 
+
+#zfile CreateExamples DareSchemaCatalog "Examples\\DareSchemaCatalog.md" Example
+#end zfile
+#zfile CreateExamples DareSchemaSpool "Examples\\DareSchemaSpool.md" Example
+#end zfile
 
 #xfile CreateExamples MeshExamplesContainer "Examples\\ExamplesContainer.md" CreateExamples Example
 The data payloads in all the following examples are identical, only the
@@ -169,7 +176,7 @@ includes Recipients and Salt fields to enable the content to be decoded.
 #end file 
 
 
-#file MeshExamplesMessage "Examples\\ExamplesDAREMessage.md" CreateExamples Example
+#file ExamplesDAREMessage "Examples\\ExamplesDAREMessage.md" CreateExamples Example
 
 ##Test Examples
 

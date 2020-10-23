@@ -9,7 +9,7 @@ namespace ExampleGenerator {
     public partial class CreateExamples {
         public void LayerService() {
             DoCommandsService();
-            DoCommandsServicedAccount();
+            //DoCommandsServicedAccount();
             }
 
 
@@ -140,6 +140,9 @@ namespace ExampleGenerator {
 
             // These are all failing because the container is being initialized before it is 
             // synchronized on the device.
+
+
+            // Failing: Because the key collection is not being populated with the activated keys as it should be.
 
             ContactList2 = testCLIAlice2.Example($"contact list");
             BookmarkList2 = testCLIAlice2.Example($"bookmark list");

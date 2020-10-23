@@ -103,13 +103,7 @@ Password entries may be deleted using the  `password delete` command:
 
 When a device is added, it gets a copy of the password file:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device auth Alice2 /password
-<rsp>ERROR - The option System.Object[] is not known.
-</div>
-~~~~
+**Missing Example***
 
 
 

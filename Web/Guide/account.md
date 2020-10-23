@@ -13,7 +13,7 @@ Create a new Mesh profile
 ~~~~
 <div="terminal">
 <cmd>Alice> account create alice@example.com
-<rsp>Account=MBRF-SATS-3Q6Q-CAS7-5Y26-J7LX-XH6P
+<rsp>Account=MBCL-G5JV-3LSL-2PK5-CCOQ-KWTN-MWAF
 </div>
 ~~~~
 

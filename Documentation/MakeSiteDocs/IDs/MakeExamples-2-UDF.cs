@@ -22,29 +22,27 @@ namespace ExampleGenerator {
 		public void MakeUDFExamples (CreateExamples Example) {
 			 UDFVariousUDF(Example);
 			 UDFNonce(Example);
-			 UDFOID(Example);
 			 UDFEncrypt(Example);
 			 UDFShare(Example);
 			 UDFDigest(Example);
+			 UDFAuthenticator(Example);
 			 UDFDigestURI(Example);
 			 UDFDigestLocator(Example);
+			 UDFDigestEARL(Example);
 			 UDFDigestEARLRAW(Example);
 			 UDFDigestEARLLocator(Example);
-			 UDFDigestEARL(Example);
 			 UDFsin(Example);
-			 UDFURIEBNF(Example);
-			 UDFTableReservedId(Example);
-			 UDFShamirRecovery(Example);
-			 UDFSplit(Example);
-			 UDFDigestLong(Example);
-			 UDFAuthenticatorLong(Example);
-			 UDFDigestResolution(Example);
-			 UDFEncryptedResolution(Example);
-			 UDFAuthenticator(Example);
+			 UDFOID(Example);
 			 UDFDeriveCFRG(Example);
 			 UDFDeriveNIST(Example);
 			 UDFDeriveRSA(Example);
 			 UDFDeriveAny(Example);
+			 UDFSplit(Example);
+			 UDFDigestLong(Example);
+			 UDFAuthenticatorLong(Example);
+			 UDFURIEBNF(Example);
+			 UDFTableReservedId(Example);
+			 UDFShamirRecovery(Example);
 			}
 		
 

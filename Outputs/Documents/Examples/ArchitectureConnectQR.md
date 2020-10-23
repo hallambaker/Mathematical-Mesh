@@ -6,7 +6,7 @@ To begin the process we generate a new random key and combine it with the servic
 to create an EARL:
 
 ~~~~
-udf://example.com/ECIM-PY67-TQ7Q-G6HT-OU5Y-B4GE-7SP3-W6
+udf://example.com/EDZ7-PSMQ-Z3Q2-Q5PO-VYJ3-BOBD-JDFL-6X
 ~~~~
 
 Next a device profile is created and preregistered on with the Mesh Service that will
@@ -17,7 +17,7 @@ be performed offline in bulk.
 
 ~~~~
 <div="terminal">
-<cmd>Alice4> device pre devices@example.com /key=udf://example.com/ECIM-PY67-TQ7Q-G6HT-OU5Y-B4GE-7SP3-W6
+<cmd>Alice4> device pre devices@example.com /key=udf://example.com/EDZ7-PSMQ-Z3Q2-Q5PO-VYJ3-BOBD-JDFL-6X
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -43,7 +43,7 @@ complete the process:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device earl udf://example.com/ECIM-PY67-TQ7Q-G6HT-OU5Y-B4GE-7SP3-W6
+<cmd>Alice> device earl udf://example.com/EDZ7-PSMQ-Z3Q2-Q5PO-VYJ3-BOBD-JDFL-6X
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~

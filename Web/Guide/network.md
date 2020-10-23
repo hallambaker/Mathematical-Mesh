@@ -41,9 +41,9 @@ Network entries may be deleted using the  `network delete` command:
 <cmd>Alice> network delete NetID2
 <rsp>ERROR - The entry could not be found in the store.
 <cmd>Alice> network list
-<rsp>Entry<CatalogedContact>: MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
-  Person MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
-  Anchor MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+<rsp>Entry<CatalogedContact>: MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
+  Person MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
+  Anchor MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
   Address alice@example.com
 
 </div>
@@ -57,9 +57,9 @@ A complete list of networks is obtained using the  `network list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> network list
-<rsp>Entry<CatalogedContact>: MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
-  Person MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
-  Anchor MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+<rsp>Entry<CatalogedContact>: MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
+  Person MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
+  Anchor MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
   Address alice@example.com
 
 </div>

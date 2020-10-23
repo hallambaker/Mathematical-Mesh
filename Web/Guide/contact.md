@@ -45,13 +45,7 @@ details:
 Contacts may also be added by accepting contact request messages using the 
 `message accept` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> message accept tbs
-<rsp>ERROR - The specified message could not be found.
-</div>
-~~~~
+**Missing Example***
 
 ## Finding contacts
 
@@ -74,9 +68,9 @@ A complete list of contacts is obtained using the  `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
-  Person MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
-  Anchor MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4
+<rsp>Entry<CatalogedContact>: MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
+  Person MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
+  Anchor MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
   Address alice@example.com
 
 </div>

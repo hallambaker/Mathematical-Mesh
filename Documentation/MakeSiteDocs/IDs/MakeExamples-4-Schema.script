@@ -11,25 +11,67 @@
 #xclass ExampleGenerator CreateExamples
 
 #method MakeSchemaExamples CreateExamples Example
-#% SchemaMaster(Example);
-#% SchemaDevice(Example);
-#% SchemaAccount(Example);
-#% SchemaDevicePrivate(Example);
-#% SchemaDeviceConnection(Example);
-#% SchemaService(Example);
-#% SchemaEntryDevice(Example);
+#% SchemaAliceProfile(Example);
+#% SchemaAliceDeviceCoffee(Example);
+#% SchemaAliceActivationCoffee(Example);
+#% SchemaAliceActivationWatch(Example);
+#% SchemaConnectionHost(Example);
+#% SchemaEntrySSH(Example);
+#% SchemaEntryMail(Example);
 #% SchemaEntryContact(Example);
 #% SchemaEntryCredential(Example);
 #% SchemaEntryNetwork(Example);
-#% SchemaEntryBookmark(Example);
 #% SchemaEntryTask(Example);
-#% SchemaEntrySSH(Example);
-#% SchemaEntryMail(Example);
+#% SchemaDeriveTables(Example);
+#% SchemaMessageIds(Example);
+#% SchemaPINWitness(Example);
+#% SchemaMaster(Example);
+#% SchemaDevice(Example);
+#% SchemaAccount(Example);
+#% SchemaService(Example);
+#% SchemaMessageCompletion(Example);
 #% SchemaMessageConnection(Example);
 #% SchemaMessageContact(Example);
 #% SchemaMessageConfirmation(Example);
-#% SchemaMessageCompletion(Example);
 #end method
+
+#zfile CreateExamples SchemaAliceProfile "Examples\\SchemaAliceProfile.md" Example
+[To be specified]
+#end zfile
+
+#zfile CreateExamples SchemaAliceDeviceCoffee "Examples\\SchemaAliceDeviceCoffee.md" Example
+[To be specified]
+#end zfile
+
+#zfile CreateExamples SchemaAliceActivationCoffee "Examples\\SchemaAliceActivationCoffee.md" Example
+[To be specified]
+#end zfile
+
+#zfile CreateExamples SchemaAliceActivationWatch "Examples\\SchemaAliceActivationWatch.md" Example
+[To be specified]
+#end zfile
+
+#zfile CreateExamples SchemaConnectionHost "Examples\\SchemaConnectionHost.md" Example
+[To be specified]
+#end zfile
+
+#zfile CreateExamples SchemaDeriveTables "Examples\\SchemaDeriveTables.md" Example
+[To be specified]
+#end zfile
+
+#zfile CreateExamples SchemaMessageIds "Examples\\SchemaMessageIds.md" Example
+[To be specified]
+#end zfile
+
+#zfile CreateExamples SchemaPINWitness "Examples\\SchemaPINWitness.md" Example
+[To be specified]
+#end zfile
+
+
+
+
+
+
 
 #zfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" Example
 #!% Format(AliceProfiles?.ProfileMesh);
@@ -159,18 +201,18 @@ The connection process begins with the assignment of a time-limited PIN value. T
 described in a Message sent by the administration device to allow other admin devices
 to accept the request made.
 
-#% DescribeMessage (ConnectPending[0]);
+#% DescribeMessage (ConnectPending?[0]);
 
 
 The initial request is sent to the service
 
-#% DescribeMessage (ConnectPending[0]);
+#% DescribeMessage (ConnectPending?[0]);
 
 The service returns an acknowledgement giving the Witness value. Note that this is not a 'reply'
 since it comes from the service, not the user.
 
 
-#% DescribeMessage (ConnectPending[0]);
+#% DescribeMessage (ConnectPending?[0]);
 
 [Note, this mechanism should be revised to ensure that there is perfect forward secrecy. The 
 device should provide a nonce key as a mixin]
@@ -182,11 +224,11 @@ device should provide a nonce key as a mixin]
 
 Bob asks Alice to send her contact details and sends his.
 
-#% DescribeMessage (ContactPending[0]);
+#% DescribeMessage (ContactPending?[0]);
 
 Alice responds with her details:
 
-#% DescribeMessage (ContactPending[0]);
+#% DescribeMessage (ContactPending?[0]);
 
 [Note that this exchange could be performed automatically on Alice's behalf by the service if she 
 delegates this action to it.]
@@ -198,11 +240,11 @@ delegates this action to it.]
 
 The confirmation request
 
-#% DescribeMessage (ConfirmPending[0]);
+#% DescribeMessage (ConfirmPending?[0]);
 
 The confirmation response
 
-#% DescribeMessage (ConfirmPending[0]);
+#% DescribeMessage (ConfirmPending?[0]);
 
 #end zfile
 
@@ -211,7 +253,7 @@ The confirmation response
 Having processed a message, a completion message is added to the spool so that other devices 
 can see that it has been read:
 
-#% DescribeMessage (ConfirmGetReject[0]);
+#% DescribeMessage (ConfirmGetReject?[0]);
 
 
 #end zfile

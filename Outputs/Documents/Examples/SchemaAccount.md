@@ -6,59 +6,43 @@ profile and the encryption key to be used by the account.
 ~~~~
 {
   "ProfileUser":{
-    "OfflineSignature":{
-      "UDF":"MAQJ-32QZ-HFDM-M2MZ-PR57-3FSO-4CH4",
+    "ProfileSignature":{
+      "Udf":"MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"-iC8hrqmyhDGim-0oopft45Kkcben6LV9ad5W9C0in7sH2B
-  5m8Z6AK1WL0aRmJvk_T7RoJfChs-A"}}},
-    "AccountAddresses":["alice@example.com"
-      ],
+          "Public":"UQ7CJMaG5HGRpZiO6TnaeztTOISMVLo7A3MQNuXVUC6XPlO
+  o1nIw3jDWMJgzs41y-hlXCy11bL2A"}}},
+    "AccountAddress":"alice@example.com",
+    "ServiceUdf":"MCQN-XSQB-BFSH-DUIO-75QR-OO6H-VQDU",
     "AccountEncryption":{
-      "UDF":"MATQ-SWCI-66AW-3WH7-T5IM-HQHR-2JGC",
+      "Udf":"MADQ-3NW6-SHXF-L6X6-NI2O-CF7A-X5Y7",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"2nmt99fWQgPYwD4jRCbq_lsiLOcXtFumg0BN2694Bkw93YQ
-  PIgOHh67_TgBXmhSk5YUB6wmu-jeA"}}},
-    "EnvelopedProfileService":[{
-        "EnvelopeID":"MDGZ-ESGM-MCSE-3BXY-B4ME-BOOX-FFYA",
-        "dig":"S512",
-        "ContentMetaData":"ewogICJVbmlxdWVJRCI6ICJNREdaLUVTR00tTUNT
-  RS0zQlhZLUI0TUUtQk9PWC1GRllBIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZmlsZ
-  VNlcnZpY2UiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIk
-  NyZWF0ZWQiOiAiMjAyMC0wOS0yMlQxMzoxMjo1N1oifQ"},
-      "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJPZmZsaW5lU2lnbmF0dXJl
-  IjogewogICAgICAiVURGIjogIk1ER1otRVNHTS1NQ1NFLTNCWFktQjRNRS1CT09YL
-  UZGWUEiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibG
-  ljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICA
-  gIlB1YmxpYyI6ICJNQ0kxWHNmZ0NMZi0teEpubDlQZnpNVmlPNzlRYmFSMW1KYnRK
-  Nl8xQ0c0aFVGRF9OQUI0CiAgcWNvTVlFUVEyY0pCN3c5TkJ0Ym1tM0dBIn19fSwKI
-  CAgICJLZXlFbmNyeXB0aW9uIjogewogICAgICAiVURGIjogIk1CSFItM0s1RS1VM0
-  FYLUlUUEwtVENNUC1WVVBCLVRDWFkiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI
-  6IHsKICAgICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAi
-  WDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogIjVVWkdzcmZ1THlTQUVSX1VEb0JUT
-  3N1aUQ4VmJUTUtMbk9MZmk0UXVMcjk0Wlh1dGxWeXUKICBYX3QxdjM1Vjk1TDJiV2
-  NJZjNtOW5OYUEifX19fX0",
-      {
-        "signatures":[{
-            "alg":"S512",
-            "kid":"MDGZ-ESGM-MCSE-3BXY-B4ME-BOOX-FFYA",
-            "signature":"0sBNsSpvT39eV3_WElcs_wTRVQyj8MTBE2B5SlqCHk
-  BMq74M7Hj89OTB_OO1X_aFslBzeCyGrA4Ab6DipZuJ1H9gg0MdLpwjPKaHkQ9_Emp
-  jBn7_TiuiLbUpLYDveTiUGQdsEkGwVYlr5vb4_R8GASMA"}
-          ],
-        "PayloadDigest":"_H4qy5lt1j851SEfkWMeouHF-OjiM08E9yHlNbt7r8
-  xmV5aUzPTmYEuwKlftD9LYF4_Rlf9RGjleX4jik1a68w"}
-      ],
-    "KeyAuthentication":{
-      "UDF":"MATA-BCSV-PNYH-6WOF-EROB-O75B-O3NJ",
+          "Public":"074FM_JEfFlHPtMSdYtrWuvJ6-2E5-LmCaucL1rivit3173
+  nc96nSMNv1xIOog0SZp15ba8apOIA"}}},
+    "AdministratorSignature":{
+      "Udf":"MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"Ed448",
+          "Public":"UQ7CJMaG5HGRpZiO6TnaeztTOISMVLo7A3MQNuXVUC6XPlO
+  o1nIw3jDWMJgzs41y-hlXCy11bL2A"}}},
+    "AccountAuthentication":{
+      "Udf":"MC5O-LURE-5J5U-SANY-LBHI-RPQN-6675",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"YNPwc91pzLQfps17Kbhtrs0-uCeXKoaMgz8pg5N_6QSWfTQ
-  0RDIB-LAvwGs3_EmyjGX5IamKVw0A"}}}}}
+          "Public":"Av1aQAIrvbO73VhoniH-ImPZfNA6xiOOHwZ1XDxD2CAPdJs
+  gDVuv7NwINTDB_g6XlMaNq0eS9RsA"}}},
+    "AccountSignature":{
+      "Udf":"MBGN-XQJ6-UJNE-5HVX-6RCA-CPNL-UE4E",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"Ed448",
+          "Public":"uR1--x4L5hLJMyKVkCsS01gq1SdtbLraMbSsiCQGQSLSaRL
+  yg0HzNggQHSjVAAHhyi09CT49JosA"}}}}}
 ~~~~
 
 Each device connected to the account requires an activation record. This specifies the 
@@ -67,8 +51,8 @@ key contribtions added to the manufacturer device profile keys:
 ~~~~
 {
   "ActivationDevice":{
-    "ActivationKey":"ZAAQ-LB7J-HMRM-ZCHA-GPGU-Q74B-QISK-KJ4D-5D7W-XAXF-7RV7-B6KW-3V3H-Q6EV",
-    "AccountUDF":"MBRF-SATS-3Q6Q-CAS7-5Y26-J7LX-XH6P"}}
+    "ActivationKey":"ZAAQ-HZYF-DUTD-GLBD-SL63-CLCU-2EPM-YWRB-WAHG-ZJNX-TXWK-7MAR-PJ5U-WPV5",
+    "AccountUdf":"MBCL-G5JV-3LSL-2PK5-CCOQ-KWTN-MWAF"}}
 ~~~~
 
 The resulting key set is specified in the device connection:

@@ -153,8 +153,8 @@ service configuration if successful.
 <div="terminal">
 <cmd>Alice> account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MDGZ-ESGM-MCSE-3BXY-B4ME-BOOX-FFYA
-   Host UDF = MCWA-J6LU-5XPO-WRCA-6Z7E-CH6K-BYM7
+   Service UDF = MCQN-XSQB-BFSH-DUIO-75QR-OO6H-VQDU
+   Host UDF = MBYN-LOYK-3DRV-PNZA-ZOCT-5GHE-4L4Z
 </div>
 ~~~~
 
@@ -174,63 +174,63 @@ Specifying the /json option returns a result of type ResultHello:
         "Encodings": [{
             "ID": ["application/json"]}]},
       "EnvelopedProfileService": [{
-          "EnvelopeID": "MDGZ-ESGM-MCSE-3BXY-B4ME-BOOX-FFYA",
+          "EnvelopeID": "MCQN-XSQB-BFSH-DUIO-75QR-OO6H-VQDU",
           "dig": "S512",
-          "ContentMetaData": "ewogICJVbmlxdWVJRCI6ICJNREdaLUVTR00tTUNTRS0
-  zQlhZLUI0TUUtQk9PWC1GRllBIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZmlsZ
+          "ContentMetaData": "ewogICJVbmlxdWVJRCI6ICJNQ1FOLVhTUUItQkZTSC1
+  EVUlPLTc1UVItT082SC1WUURVIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZmlsZ
   VNlcnZpY2UiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiA
-  gIkNyZWF0ZWQiOiAiMjAyMC0wOS0yMlQxMzoxMjo1N1oifQ"},
-        "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJPZmZ
-  saW5lU2lnbmF0dXJlIjogewogICAgICAiVURGIjogIk1ER1otRVNHTS1NQ1NFL
-  TNCWFktQjRNRS1CT09YLUZGWUEiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI
+  gIkNyZWF0ZWQiOiAiMjAyMC0xMC0yMVQxNDoyODoyOVoifQ"},
+        "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJQcm9
+  maWxlU2lnbmF0dXJlIjogewogICAgICAiVWRmIjogIk1DUU4tWFNRQi1CRlNIL
+  URVSU8tNzVRUi1PTzZILVZRRFUiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI
   6IHsKICAgICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiO
-  iAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJNQ0kxWHNmZ0NMZi0teEp
-  ubDlQZnpNVmlPNzlRYmFSMW1KYnRKNl8xQ0c0aFVGRF9OQUI0CiAgcWNvTVlFU
-  VEyY0pCN3c5TkJ0Ym1tM0dBIn19fSwKICAgICJLZXlFbmNyeXB0aW9uIjogewo
-  gICAgICAiVURGIjogIk1CSFItM0s1RS1VM0FYLUlUUEwtVENNUC1WVVBCLVRDW
-  FkiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGl
-  jS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiWDQ0OCIsCiAgICAgICAgI
-  CAiUHVibGljIjogIjVVWkdzcmZ1THlTQUVSX1VEb0JUT3N1aUQ4VmJUTUtMbk9
-  MZmk0UXVMcjk0Wlh1dGxWeXUKICBYX3QxdjM1Vjk1TDJiV2NJZjNtOW5OYUEif
-  X19fX0",
+  iAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJ3VTBWZzVaM2pLNUFpTDV
+  McTdZaDF6Qm1MX3BaYng3dHFLUnlldG1zczNUemIxV0ZHYzd4CiAgbC1KNDFtV
+  25TWVJyanBVY1FObXNwd1lBIn19fSwKICAgICJTZXJ2aWNlRW5jcnlwdGlvbiI
+  6IHsKICAgICAgIlVkZiI6ICJNRElPLTVSRzItNVJRSy1PVUhZLVRVWTYtR080T
+  C1USFRFIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB
+  1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgI
+  CAgICAgIlB1YmxpYyI6ICJqR185cWtSMWVXVGFlYmkxM1kwUnlKY2VudXhpR28
+  wSm0zNVVNYzk5OWZEOXNsT1dHdVUwCiAgSXlXVzVjaDlQSkdjRkYzTnIzVUdNZ
+  WVBIn19fX19",
         {
           "signatures": [{
               "alg": "S512",
-              "kid": "MDGZ-ESGM-MCSE-3BXY-B4ME-BOOX-FFYA",
-              "signature": "0sBNsSpvT39eV3_WElcs_wTRVQyj8MTBE2B5SlqCHkBMq74M7
-  Hj89OTB_OO1X_aFslBzeCyGrA4Ab6DipZuJ1H9gg0MdLpwjPKaHkQ9_EmpjBn7
-  _TiuiLbUpLYDveTiUGQdsEkGwVYlr5vb4_R8GASMA"}],
-          "PayloadDigest": "_H4qy5lt1j851SEfkWMeouHF-OjiM08E9yHlNbt7r8xmV
-  5aUzPTmYEuwKlftD9LYF4_Rlf9RGjleX4jik1a68w"}],
+              "kid": "MCQN-XSQB-BFSH-DUIO-75QR-OO6H-VQDU",
+              "signature": "p54KOEWodlL-iyyBphontGqnMK7UuW8QXvEpL9g6tx31-g41K
+  8tqtQKWUcS6W0o2K01XVL4OP3wAj1R9Bdl13FH85KbsMH4NgrELme-136pR05d
+  CPyIP4Qt2DgqddZxK0uKGZQd84hwKazs-PdunhAoA"}],
+          "PayloadDigest": "V35cql-rhpnJYHK3_U0uARPIKPVrnj4CVJLzodLUdTLTl
+  0PAnhOerZ4vGZ4wE392JiaD_-_Fi3xUwejLHTNyvQ"}],
       "EnvelopedProfileHost": [{
-          "EnvelopeID": "MCWA-J6LU-5XPO-WRCA-6Z7E-CH6K-BYM7",
+          "EnvelopeID": "MBYN-LOYK-3DRV-PNZA-ZOCT-5GHE-4L4Z",
           "dig": "S512",
-          "ContentMetaData": "ewogICJVbmlxdWVJRCI6ICJNQ1dBLUo2TFUtNVhQTy1
-  XUkNBLTZaN0UtQ0g2Sy1CWU03IiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZmlsZ
+          "ContentMetaData": "ewogICJVbmlxdWVJRCI6ICJNQllOLUxPWUstM0RSVi1
+  QTlpBLVpPQ1QtNUdIRS00TDRaIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZmlsZ
   Uhvc3QiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIkN
-  yZWF0ZWQiOiAiMjAyMC0wOS0yMlQxMzoxMjo1N1oifQ"},
-        "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJPZmZsaW5
-  lU2lnbmF0dXJlIjogewogICAgICAiVURGIjogIk1DV0EtSjZMVS01WFBPLVdSQ
-  0EtNlo3RS1DSDZLLUJZTTciLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHs
+  yZWF0ZWQiOiAiMjAyMC0xMC0yMVQxNDoyODoyOVoifQ"},
+        "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJQcm9maWx
+  lU2lnbmF0dXJlIjogewogICAgICAiVWRmIjogIk1CWU4tTE9ZSy0zRFJWLVBOW
+  kEtWk9DVC01R0hFLTRMNFoiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHs
   KICAgICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiR
-  WQ0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICIxbklTNm96UklSQVh5V21fNkM
-  4LXZMNEJFdXNfVGhqTWdtS0doZW90akZ4WUtBcGxSRVY5CiAgVTJLcktyNEM3V
-  UYyVnE0UTQxbWt5VDhBIn19fSwKICAgICJLZXlBdXRoZW50aWNhdGlvbiI6IHs
-  KICAgICAgIlVERiI6ICJNQlMyLUdZUzMtVkZTMi0zVktELUVGNUctTVRBVi1TQ
-  1I2IiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1Ymx
+  WQ0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJmQXJjNTZ1WUhNcThUMk5pbDF
+  TaG14c2hidjJwc25ndGhpY1pYYjVlelhHM2FEQlBPeWxpCiAgcUZOWGpNVW9aU
+  3FoSk8zWXUxN202TXFBIn19fSwKICAgICJLZXlBdXRoZW50aWNhdGlvbiI6IHs
+  KICAgICAgIlVkZiI6ICJNQkRNLUdVQ0ktTE5OSS1HRkpFLUNFV0YtRkRBSC0zW
+  TM1IiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1Ymx
   pY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgI
-  CAgIlB1YmxpYyI6ICJueldwWTFPeVA2eVBvV2hGMGp5V3pkTmRUNi1tMzVaV2s
-  2c3hNTC1fQmtqUGRpY1B6NlNWCiAga2MxeFlwREtfbkdCeGpIREc4VzJxY01BI
+  CAgIlB1YmxpYyI6ICJsa1RyQzAtTjBaMVYyeFNFMHhlSWxQTWp0MnZxcXozZ19
+  5Q2Rzd1hRcUd0eERCeFhzUzFLCiAgbk9xNkhxRmstblJ6Z2NPMVNpNVNwa1NBI
   n19fX19",
         {
           "signatures": [{
               "alg": "S512",
-              "kid": "MCWA-J6LU-5XPO-WRCA-6Z7E-CH6K-BYM7",
-              "signature": "SmE2edXA18at4Qc7YJM2ch--qFYQpiY1aek7A_PGtM5IcyNUm
-  A_REdDylHc6dXRRDCIy-2ySBdqAs7J4J0BBjx_dK39OIDtKgyDd2t3nODd0lAc
-  WtscWKtsQLtESkyFTXfsKAWh2U93Oi4ksvwHfJBkA"}],
-          "PayloadDigest": "lXorM000QuRsLkECkFwJMwaOwK86iy-nqJnk2ANUfEd7s
-  Ztijf2k3a2IEntOA7XuVFGzrV7Ayw67tNKX5-f9Jg"}]}}}
+              "kid": "MBYN-LOYK-3DRV-PNZA-ZOCT-5GHE-4L4Z",
+              "signature": "KGWOG_XWe4frUbzET9usnuTNCESL_ukbcdApZbrSoX9K4y9fZ
+  Th75Z_sE4Mhr4JY3DoxPLaOOk4A-RRLcj6DE5Ugb7CtpLCmfik7aVEinH9M8d3
+  Cdb6kW3HINfLoLtaWoKLI2bUu1NWqLvg2FBlpmA8A"}],
+          "PayloadDigest": "qct-ZHCH9av8qRBsoTdimooS_V9-GCcaEGPqSg-B-mqp-
+  douxcvFB0X2XupzwIvayYtxUezN0Y8mJ_iemOy5YQ"}]}}}
 </div>
 ~~~~
 
@@ -283,7 +283,7 @@ followed by the letter m, h or d for minutes, hours and days respectively.
 ~~~~
 <div="terminal">
 <cmd>Alice> account pin
-<rsp>PIN=ABC6-I3XB-KBEG-CEW2-XZOH-VSFH-KGNQ (Expires=2020-09-23T13:13:00Z)
+<rsp>PIN=ABZJ-RFSV-Y2C3-6RDI-5OCU-E47Q-QU4Y (Expires=2020-10-22T14:28:35Z)
 </div>
 ~~~~
 
@@ -296,11 +296,11 @@ Specifying the /json option returns a result of type ResultPIN:
   "ResultPIN": {
     "Success": true,
     "MessagePIN": {
-      "MessageId": "AB7I-7ULE-WADH-SSQ6-YMIY-IVGY-5CWK",
+      "MessageId": "ABEU-NVUM-MSYY-5VBY-STZG-RGKA-NAFW",
       "Account": "alice@example.com",
-      "Expires": "2020-09-23T13:13:00Z",
+      "Expires": "2020-10-22T14:28:35Z",
       "Automatic": true,
-      "SaltedPIN": "ABC6-I3XB-KBEG-CEW2-XZOH-VSFH-KGNQ",
+      "SaltedPin": "ABZJ-RFSV-Y2C3-6RDI-5OCU-E47Q-QU4Y",
       "Action": "Device"}}}
 </div>
 ~~~~

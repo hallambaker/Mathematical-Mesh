@@ -122,7 +122,7 @@ namespace ExampleGenerator {
 
             LayerAccount();
             LayerService();
-            LayerMessage();
+            //LayerMessage();
 
             // Dare uses the keys from the contacts catalog.
             PlatformDare();
@@ -191,8 +191,10 @@ namespace ExampleGenerator {
             var result = new List<T>();
 
             foreach (var list in lists) {
-                foreach (var entry in list) {
-                    result.Add(entry);
+                if (list != null) {
+                    foreach (var entry in list) {
+                        result.Add(entry);
+                        }
                     }
                 }
 

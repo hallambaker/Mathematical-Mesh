@@ -25,7 +25,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=3YTJ-GOAO-ZX2I-U5GK-U44P-DZUO-IM
 <rsp></div>
 ~~~~
 
@@ -35,7 +35,7 @@ encoded:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestDir1 /encrypt=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
+<cmd>Alice> dare encode TestDir1 /encrypt=3YTJ-GOAO-ZX2I-U5GK-U44P-DZUO-IM
 <rsp>ERROR - No decryption key is available
 </div>
 ~~~~
@@ -83,7 +83,7 @@ level otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=3YTJ-GOAO-ZX2I-U5GK-U44P-DZUO-IM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -114,7 +114,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=TSJD-3POT-AWSB-YOAX-MES7-FNHM-4M
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=3YTJ-GOAO-ZX2I-U5GK-U44P-DZUO-IM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~

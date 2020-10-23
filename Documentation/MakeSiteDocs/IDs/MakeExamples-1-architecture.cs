@@ -23,25 +23,34 @@ namespace ExampleGenerator {
 		//
 		public void MakeArchitectureExamples (CreateExamples Example) {
 			 Colophon(Example);
-			 ArchVariousUDF(Example);
 			 ArchitectureCreateMesh(Example);
-			 ArchitectureCredential(Example);
 			 ArchitectureEncryptDecrypt(Example);
+			 ArchitectureEscrow(Example);
+			 ArchitectureRecovery(Example);
+			 ArchitectureCredential(Example);
 			 ArchitectureConnectDirect(Example);
 			 ArchitectureConnectDisconnect(Example);
 			 ArchitectureConnectSSH(Example);
-			 ArchitectureConnectPIN(Example);
-			 ArchitectureConnectQR(Example);
-			 ArchitectureContactRequest(Example);
+			 ArchitectureContactRemote(Example);
 			 ArchitectureConfirm(Example);
-			 ArchitectureConnectEARL(Example);
 			 ArchitectureRecrypt(Example);
-			 ArchitectureEscrow(Example);
-			 ArchitectureRecovery(Example);
+			 ArchVariousUDF(Example);
 			 ArchitectureConnectEARL(Example);
 			 ArchSIN(Example);
-			 ArchitectureContactDefinition(Example);
 			}
+		
+
+		//
+		// ArchitectureContactRemote
+		//
+		public static void ArchitectureContactRemote(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ArchitectureContactRemote.md");
+			Example._Output = _Output;
+			Example._ArchitectureContactRemote(Example);
+			}
+		public void _ArchitectureContactRemote(CreateExamples Example) {
+
+					}
 		
 
 		//

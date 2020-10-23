@@ -27,24 +27,20 @@ copy ..\favicon.png .
 
 rfctool %DocSource%\hallambaker-threshold.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-threshold-signature.docx  /auto /cache=bib.xml
-
 rfctool %DocSource%\hallambaker-mesh-1-architecture.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-2-udf.docx /auto /cache=bib.xml
-
 rfctool %DocSource%\hallambaker-mesh-3-dare.docx /auto /cache=bib.xml
-
 rfctool %DocSource%\hallambaker-mesh-4-schema.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-5-protocol.docx  /auto /cache=bib.xml
-rfctool %DocSource%\hallambaker-mesh-6-trust.docx  /auto /cache=bib.xml
+rfctool %DocSource%\hallambaker-mesh-6-discovery.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-7-security.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-8-cryptography.docx  /auto /cache=bib.xml
-rfctool %DocSource%\hallambaker-mesh-9-constrained.docx  /auto /cache=bib.xml
+rfctool %DocSource%\hallambaker-mesh-9-trust.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-10-quantum.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-11-services.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-12-presence.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-13-ceremony.docx  /auto /cache=bib.xml
-rfctool %DocSource%\hallambaker-mesh-14-name.docx  /auto /cache=bib.xml
-
+rfctool %DocSource%\hallambaker-mesh-14-constrained.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-jsonbcd.docx /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-developer.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-platform.docx  /auto /cache=bib.xml

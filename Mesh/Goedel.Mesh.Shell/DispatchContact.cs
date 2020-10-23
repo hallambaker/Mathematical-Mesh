@@ -186,6 +186,8 @@ namespace Goedel.Mesh.Shell {
                 Success = true,
                 CatalogedEntries = new List<CatalogedEntry>()
                 };
+
+            // Failing: Because the key collection is not being populated with the activated keys as it should be.
             var catalog = contextUser.GetStore(CatalogContact.Label) as CatalogContact;
             foreach (var entry in catalog) {
                 result.CatalogedEntries.Add(entry);

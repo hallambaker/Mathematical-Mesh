@@ -8,9 +8,17 @@
 #xclass ExampleGenerator CreateExamples
 
 #method MakeCryptographyExamples CreateExamples Example
+#% ExamplesAdvancedCoGeneration(Example);
+#% ExamplesAdvancedRecryption(Example);
 #% ExamplesThreshold(Example);
 #% ExamplesThresholdSig(Example);
 #end method
+
+
+#zfile CreateExamples ExamplesAdvancedCoGeneration "Examples\\ExamplesAdvancedCoGeneration.md" Example
+#end zfile
+#zfile CreateExamples ExamplesAdvancedRecryption "Examples\\ExamplesAdvancedRecryption.md" Example
+#end zfile
 
 
 #xfile CreateExamples ExamplesThreshold "Examples\\ExamplesThreshold.md" CreateExamples Example

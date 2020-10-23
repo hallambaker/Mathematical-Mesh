@@ -4,20 +4,20 @@ The service profile
 ~~~~
 {
   "ProfileService":{
-    "OfflineSignature":{
-      "UDF":"MDGZ-ESGM-MCSE-3BXY-B4ME-BOOX-FFYA",
+    "ProfileSignature":{
+      "Udf":"MCQN-XSQB-BFSH-DUIO-75QR-OO6H-VQDU",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"MCI1XsfgCLf--xJnl9PfzMViO79QbaR1mJbtJ6_1CG4hUFD
-  _NAB4qcoMYEQQ2cJB7w9NBtbmm3GA"}}},
-    "KeyEncryption":{
-      "UDF":"MBHR-3K5E-U3AX-ITPL-TCMP-VUPB-TCXY",
+          "Public":"wU0Vg5Z3jK5AiL5Lq7Yh1zBmL_pZbx7tqKRyetmss3Tzb1W
+  FGc7xl-J41mWnSYRrjpUcQNmspwYA"}}},
+    "ServiceEncryption":{
+      "Udf":"MDIO-5RG2-5RQK-OUHY-TUY6-GO4L-THTE",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"5UZGsrfuLySAER_UDoBTOsuiD8VbTMKLnOLfi4QuLr94ZXu
-  tlVyuX_t1v35V95L2bWcIf3m9nNaA"}}}}}
+          "Public":"jG_9qkR1eWTaebi13Y0RyJcenuxiGo0Jm35UMc999fD9slO
+  WGuU0IyWW5ch9PJGcFF3Nr3UGMeeA"}}}}}
 ~~~~
 
 The host also has a profile
@@ -25,20 +25,20 @@ The host also has a profile
 ~~~~
 {
   "ProfileHost":{
-    "OfflineSignature":{
-      "UDF":"MCWA-J6LU-5XPO-WRCA-6Z7E-CH6K-BYM7",
+    "ProfileSignature":{
+      "Udf":"MBYN-LOYK-3DRV-PNZA-ZOCT-5GHE-4L4Z",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"1nIS6ozRIRAXyWm_6C8-vL4BEus_ThjMgmKGheotjFxYKAp
-  lREV9U2KrKr4C7UF2Vq4Q41mkyT8A"}}},
+          "Public":"fArc56uYHMq8T2Nil1Shmxshbv2psngthicZXb5ezXG3aDB
+  POyliqFNXjMUoZSqhJO3Yu17m6MqA"}}},
     "KeyAuthentication":{
-      "UDF":"MBS2-GYS3-VFS2-3VKD-EF5G-MTAV-SCR6",
+      "Udf":"MBDM-GUCI-LNNI-GFJE-CEWF-FDAH-3Y35",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"nzWpY1OyP6yPoWhF0jyWzdNdT6-m35ZWk6sxML-_BkjPdic
-  Pz6SVkc1xYpDK_nGBxjHDG8W2qcMA"}}}}}
+          "Public":"lkTrC0-N0Z1V2xSE0xeIlPMjt2vqqz3g_yCdswXQqGtxDBx
+  XsS1KnOq6HqFk-nRzgcO1Si5SpkSA"}}}}}
 ~~~~
 
 And there should be a connection of the host to the service but this isn't implemented yet:

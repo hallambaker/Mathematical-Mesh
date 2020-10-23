@@ -84,25 +84,8 @@ CatalogedBookmark
 Devices are given authorization to access the bookmarks catalog using the 
  `device auth` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device auth Alice2 /bookmark
-<rsp>ERROR - The option System.Object[] is not known.
-</div>
-~~~~
+**Missing Example***
 
 The new device now has access to the Bookmarks catalog:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice2> bookmark list
-<rsp>CatalogedBookmark
-
-CatalogedBookmark
-
-CatalogedBookmark
-
-</div>
-~~~~
+**Missing Example***

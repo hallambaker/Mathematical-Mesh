@@ -18,9 +18,37 @@ namespace ExampleGenerator {
 		// MakeCryptographyExamples
 		//
 		public void MakeCryptographyExamples (CreateExamples Example) {
+			 ExamplesAdvancedCoGeneration(Example);
+			 ExamplesAdvancedRecryption(Example);
 			 ExamplesThreshold(Example);
 			 ExamplesThresholdSig(Example);
 			}
+		
+
+		//
+		// ExamplesAdvancedCoGeneration
+		//
+		public static void ExamplesAdvancedCoGeneration(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ExamplesAdvancedCoGeneration.md");
+			Example._Output = _Output;
+			Example._ExamplesAdvancedCoGeneration(Example);
+			}
+		public void _ExamplesAdvancedCoGeneration(CreateExamples Example) {
+
+					}
+		
+
+		//
+		// ExamplesAdvancedRecryption
+		//
+		public static void ExamplesAdvancedRecryption(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ExamplesAdvancedRecryption.md");
+			Example._Output = _Output;
+			Example._ExamplesAdvancedRecryption(Example);
+			}
+		public void _ExamplesAdvancedRecryption(CreateExamples Example) {
+
+					}
 		
 
 		//

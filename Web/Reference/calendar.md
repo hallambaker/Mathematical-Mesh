@@ -38,7 +38,7 @@ add   Add calendar entry
 <cmd>Alice> calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NAP7-FOLE-XNRS-EY2Y-GO5O-JC7A-SFHK"}</div>
+  "Key": "NBQL-NIQB-EKWT-QBOX-VINY-KAII-FE7D"}</div>
 ~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
@@ -52,7 +52,7 @@ Specifying the /json option returns a result of type ResultEntry:
     "CatalogEntry": {
       "CatalogedTask": {
         "Title": "CalendarEntry1.json",
-        "Key": "NAP7-FOLE-XNRS-EY2Y-GO5O-JC7A-SFHK"}}}}
+        "Key": "NBQL-NIQB-EKWT-QBOX-VINY-KAII-FE7D"}}}}
 </div>
 ~~~~
 
@@ -164,11 +164,11 @@ Specifying the /json option returns a result of type ResultDump:
     "CatalogedEntries": [{
         "CatalogedTask": {
           "Title": "CalendarEntry1.json",
-          "Key": "NAP7-FOLE-XNRS-EY2Y-GO5O-JC7A-SFHK"}},
+          "Key": "NBQL-NIQB-EKWT-QBOX-VINY-KAII-FE7D"}},
       {
         "CatalogedTask": {
           "Title": "CalendarEntry2.json",
-          "Key": "NBYZ-3J4S-6A5Y-VPWL-PQ75-H44X-D4JS"}}]}}
+          "Key": "NBDF-KTUJ-6CIC-LEIT-4K3N-I5NY-MSVT"}}]}}
 </div>
 ~~~~
 

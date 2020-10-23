@@ -14,17 +14,61 @@
 #% ProtocolHelloResponse(Example);
 #% ProtocolHello(Example);
 #% ProtocolAccountCreate(Example);
+#% ProtocolCreateGroup(Example);
 #% ProtocolAccountDelete(Example);
 #% ProtocolStatus(Example);
 #% ProtocolDownload(Example);
 #% ProtocolUpload(Example);
+#% ProtocolPostClientService(Example);
+#% ProtocolPostServiceService(Example);
+#% ProtocolClaim(Example);
+#% ProtocolPollClaim(Example);
+#% ProtocolCryptoKeyShare(Example);
+#% ProtocolCryptoKeyAgree(Example);
+#% ProtocolMessagePIN(Example);
+#% ProtocolContactRemote(Example);
+#% ProtocolContactQR(Example);
+#% ProtocolContactStatic(Example);
+#% ProtocolGroupInvite(Example);
+#% ProtocolConfirmation(Example);
 #% ProtocolConnect(Example);
 #% ProtocolConnectPIN(Example);
 #% ProtocolConnectEARL(Example);
-#% ProtocolPostClientService(Example);
-#% ProtocolPostServiceService(Example);
 #end method
 
+#zfile CreateExamples ProtocolCreateGroup "Examples\\ProtocolCreateGroup.md" Example
+[Example to be provided]
+#end zfile
+#zfile CreateExamples ProtocolClaim "Examples\\ProtocolClaim.md" Example
+[Example to be provided]
+#end zfile
+#zfile CreateExamples ProtocolPollClaim "Examples\\ProtocolPollClaim.md" Example
+[Example to be provided]
+#end zfile
+#zfile CreateExamples ProtocolCryptoKeyShare "Examples\\ProtocolCryptoKeyShare.md" Example
+[Example to be provided]
+#end zfile
+#zfile CreateExamples ProtocolCryptoKeyAgree "Examples\\ProtocolCryptoKeyAgree.md" Example
+[Example to be provided]
+#end zfile
+#zfile CreateExamples ProtocolMessagePIN "Examples\\ProtocolMessagePIN.md" Example
+[Example to be provided]
+#end zfile
+#zfile CreateExamples ProtocolContactRemote "Examples\\ProtocolContactRemote.md" Example
+[Example to be provided]
+#end zfile
+#zfile CreateExamples ProtocolContactQR "Examples\\ProtocolContactQR.md" Example
+[Example to be provided]
+#end zfile
+#zfile CreateExamples ProtocolContactStatic "Examples\\ProtocolContactStatic.md" Example
+[Example to be provided]
+#end zfile
+#zfile CreateExamples ProtocolGroupInvite "Examples\\ProtocolGroupInvite.md" Example
+[Example to be provided]
+#end zfile
+#zfile CreateExamples ProtocolConfirmation "Examples\\ProtocolConfirmation.md" Example
+[Example to be provided]
+#end zfile
 
 #zfile CreateExamples ProtocolHelloRequest "Examples\\ProtocolHelloRequest.md" Example
 

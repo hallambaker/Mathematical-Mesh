@@ -1,0 +1,28 @@
+ .---------------.                .---------------.
+| Device Profile  |              |    Activated    |
+|                 |              |                 |
+|      Base       +------------->|     Device      | 
+|   Encryption    |    +-------->|   Encryption    | 
+|                 |    |         |                 | 
+|      Base       +------------->|     Device      | 
+|   Signature     |    | +------>|   Signature     | 
+|                 |    | |       |                 | 
+|      Base       +------------->|     Device      | 
+| Authentication  |    | | +---->| Authentication  | 
+|                 |    | | |     |                 | 
+ '---------------'     | | |      '---------------'
+                       | | |
+ .---------------.     | | |
+|   Activation    |    | | |
+|                 |    | | |
+|    Overlay      +----+ | |
+|   Encryption    |      | |
+|                 |      | |
+|    Overlay      +------+ |
+|   Signature     |        |
+|                 |        |
+|    Overlay      +--------+
+| Authentication  |
+|                 |
+ '---------------'  
+

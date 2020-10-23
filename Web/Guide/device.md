@@ -14,8 +14,8 @@ the mesh service account alice@example.com to which connection is requested:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MDYN-U7RH-NCK4-NLPY-VMMT-OIRY-BHH4
-   Witness value = AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
+<rsp>   Device UDF = MBSW-5TDC-4JNH-DP7U-YRYH-336S-XS7X
+   Witness value = JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
 </div>
 ~~~~
 
@@ -36,18 +36,18 @@ messages.
 ~~~~
 <div="terminal">
 <cmd>Alice> device pending
-<rsp>MessageID: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
+<rsp>MessageID: PF33-UK76-TZDH-UBFZ-4JSM-YRZB-YKPS
         Connection Request::
-        MessageID: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
+        MessageID: PF33-UK76-TZDH-UBFZ-4JSM-YRZB-YKPS
         To:  From: 
-        Device:  MAWT-SA4U-LLRU-GJ26-BYRC-ZUBL-YYI3
-        Witness: DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
-MessageID: AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
+        Device:  MCIA-7IZ5-KGO3-U3CW-Y6Q2-5NMS-ZPXG
+        Witness: PF33-UK76-TZDH-UBFZ-4JSM-YRZB-YKPS
+MessageID: JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
         Connection Request::
-        MessageID: AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
+        MessageID: JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
         To:  From: 
-        Device:  MDYN-U7RH-NCK4-NLPY-VMMT-OIRY-BHH4
-        Witness: AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
+        Device:  MBSW-5TDC-4JNH-DP7U-YRYH-336S-XS7X
+        Witness: JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
 </div>
 ~~~~
 
@@ -57,7 +57,7 @@ Alice sees the request that she posted and approves it with the connect
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device accept AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
+<cmd>Alice> device accept JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
 <rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
@@ -68,7 +68,7 @@ request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device reject DVHM-4XCL-BA55-ZW2F-GYO2-JWYN-OGH5
+<cmd>Alice> device reject PF33-UK76-TZDH-UBFZ-4JSM-YRZB-YKPS
 <rsp></div>
 ~~~~
 
@@ -100,7 +100,7 @@ The `device delete` command removes a device from the catalog:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device delete AMLN-OTR2-SYCF-KZGL-IOIZ-SPQL-TJX6
+<cmd>Alice> device delete JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
 <rsp>ERROR - The feature has not been implemented
 <cmd>Alice> device list
 <rsp></div>
@@ -123,7 +123,7 @@ a new PIN code:
 ~~~~
 <div="terminal">
 <cmd>Alice> account pin
-<rsp>PIN=ABC6-I3XB-KBEG-CEW2-XZOH-VSFH-KGNQ (Expires=2020-09-23T13:13:00Z)
+<rsp>PIN=ABZJ-RFSV-Y2C3-6RDI-5OCU-E47Q-QU4Y (Expires=2020-10-22T14:28:35Z)
 </div>
 ~~~~
 
@@ -132,8 +132,9 @@ The pin code can now be used to authenticate the connection request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice3> device request alice@example.com /pin=ABC6-I3XB-KBEG-CEW2-XZOH-VSFH-KGNQ
-<rsp>ERROR - The requested cryptographic operation is not supported
+<cmd>Alice3> device request alice@example.com /pin=ABZJ-RFSV-Y2C3-6RDI-5OCU-E47Q-QU4Y
+<rsp>   Device UDF = MAVK-PMAI-ARA2-X4OH-OVAM-CYM4-C3VS
+   Witness value = ZZCY-3ZKS-DJ46-RCWT-UHYJ-AUYC-S4ZF
 </div>
 ~~~~
 
