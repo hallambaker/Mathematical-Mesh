@@ -71,26 +71,6 @@ file name is the input file name with the additional extension `.dare`.
 
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y
-<rsp></div>
-~~~~
-
-Specifying the /json option returns a result of type ResultFile:
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y /json
-<rsp>{
-  "ResultFile": {
-    "Success": true,
-    "Filename": "TestFile1.dare",
-    "TotalBytes": 14}}
-</div>
-~~~~
-
-
 
 # dare decode
 
@@ -120,26 +100,6 @@ file name is the input file name stripped of the extension `.dare` if present or
 with the extension `.undare` otherwise.
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y
-<rsp>ERROR - The option System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The option System.Object[] is not known."}}
-</div>
-~~~~
-
-
 # dare verify
 
 ~~~~
@@ -162,26 +122,6 @@ currently active key collection and reports success or failure.
 
 The active key collection may be overriden using the `/mesh` option.
 
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y
-<rsp>ERROR - The option System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The option System.Object[] is not known."}}
-</div>
-~~~~
 
 
 # dare earl
@@ -225,5 +165,4 @@ the container using the active key collection.
 
 The active key collection may be overriden using the `/mesh` option.
 
-**Missing Example***
 

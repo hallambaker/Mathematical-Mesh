@@ -32,26 +32,6 @@ create   Generate a new SSH public keypair for the current machine and add to th
 </div>
 ~~~~
 
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
-</div>
-~~~~
-
-
 # ssh private
 
 ~~~~
@@ -70,26 +50,6 @@ private   Extract the private key for this device
 </div>
 ~~~~
 
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
-</div>
-~~~~
-
-
 # ssh public
 
 ~~~~
@@ -107,26 +67,6 @@ public   Extract the public key for this device
 </div>
 ~~~~
 
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
-</div>
-~~~~
-
-
 # ssh host
 
 ~~~~
@@ -142,26 +82,6 @@ host   Add one or more hosts to the known_hosts file
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
-</div>
-~~~~
-
 
 # ssh host
 
@@ -179,26 +99,6 @@ host   Add one or more hosts to the known_hosts file
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
-</div>
-~~~~
-
 
 # ssh client
 
@@ -217,26 +117,6 @@ client   Add one or more keys to the authorized_keys file
 </div>
 ~~~~
 
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
-</div>
-~~~~
-
-
 # ssh host
 
 ~~~~
@@ -253,26 +133,6 @@ host   List the known SSH sites (aka known hosts)
 </div>
 ~~~~
 
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
-</div>
-~~~~
-
-
 # ssh client
 
 ~~~~
@@ -288,25 +148,5 @@ client   List the authorized device keys (aka authorized_keys)
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
-</div>
-~~~~
-
 
 

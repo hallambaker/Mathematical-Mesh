@@ -41,7 +41,7 @@
 [Note, this is showing the payload, not the binding as is intended because the current code 
 doesn't implement it as intended yet]
 
-#%  DescribeRequestBinding (Service.Hello[0].Traces[0]);
+#%  DescribeRequestBinding (Service.Hello?[0].Traces[0]);
 
 #end zfile
 
@@ -50,7 +50,7 @@ doesn't implement it as intended yet]
 [Note, this is showing the payload, not the binding as is intended because the current code 
 doesn't implement it as intended yet]
 
-#%  DescribeResponseBinding (Service.Hello[0].Traces[0]);
+#%  DescribeResponseBinding (Service.Hello?[0].Traces[0]);
 
 #end zfile
 
@@ -62,11 +62,11 @@ doesn't implement it as intended yet]
 
 The request payload:
 
-#%  DescribeRequest(Service?.Hello[0].Traces[0]);
+#%  DescribeRequest(Service?.Hello?[0].Traces[0]);
 
 The response payload:
 
-#%  DescribeResponse(Service?.Hello[0].Traces[0]);
+#%  DescribeResponse(Service?.Hello?[0].Traces[0]);
 
 
 #end zfile
@@ -75,11 +75,11 @@ The response payload:
 
 The request payload:
 
-#%  DescribeRequest (Account?.CreateAlice[0].Traces[0]);
+#%  DescribeRequest (Account?.CreateAlice?[0].Traces?[0]);
 
 The response payload:
 
-#%  DescribeResponse (Account?.CreateAlice[0].Traces[0]);
+#%  DescribeResponse (Account?.CreateAlice?[0].Traces?[0]);
 
 #end zfile
 
@@ -87,11 +87,11 @@ The response payload:
 
 The request payload:
 
-#%  DescribeRequest (Group?.GroupCreate[0].Traces[0]);
+#%  DescribeRequest (Group?.GroupCreate?[0].Traces?[0]);
 
 The response payload:
 
-#%  DescribeResponse (Group?.GroupCreate[0].Traces[0]);
+#%  DescribeResponse (Group?.GroupCreate?[0].Traces?[0]);
 
 #end zfile
 
@@ -103,11 +103,11 @@ The response payload:
 
 The request payload:
 
-#%  DescribeRequest (Account?.DeleteAlice[0].Traces[0]);
+#%  DescribeRequest (Account?.DeleteAlice?[0].Traces?[0]);
 
 The response payload:
 
-#%  DescribeResponse (Account?.DeleteAlice[0].Traces[0]);
+#%  DescribeResponse (Account?.DeleteAlice?[0].Traces?[0]);
 
 #end zfile
 
@@ -118,11 +118,11 @@ The response payload:
 
 The request payload:
 
-#%  DescribeRequest (Account?.SyncAlice[0].Traces[0]);
+#%  DescribeRequest (Account?.SyncAlice?[0].Traces?[0]);
 
 The response payload:
 
-#%  DescribeResponse (Account?.SyncAlice[0].Traces[0]);
+#%  DescribeResponse (Account?.SyncAlice?[0].Traces?[0]);
 
 #end zfile
 
@@ -132,11 +132,11 @@ The response payload:
 
 The request payload:
 
-#%  DescribeRequest (Account?.SyncAlice[0].Traces[1]);
+#%  DescribeRequest (Account?.SyncAlice?[0].Traces?[1]);
 
 The response payload:
 
-#%  DescribeResponse (Account?.SyncAlice[0].Traces[1]);
+#%  DescribeResponse (Account?.SyncAlice?[0].Traces?[1]);
 
 #end zfile
 
@@ -146,11 +146,11 @@ The response payload:
 
 The request payload:
 
-#%  DescribeRequest (Account?.SyncAlice[0].Traces[2]);
+#%  DescribeRequest (Account?.SyncAlice?[0].Traces?[2]);
 
 The response payload:
 
-#%  DescribeResponse (Account?.SyncAlice[0].Traces[2]);
+#%  DescribeResponse (Account?.SyncAlice?[0].Traces?[2]);
 
 #end zfile
 
@@ -160,11 +160,11 @@ The response payload:
 
 The request payload:
 
-#%  DescribeRequest (Connect?.ConnectRequest[0].Traces[0]);
+#%  DescribeRequest (Connect?.ConnectRequest?[0].Traces?[0]);
 
 The response payload:
 
-#%  DescribeResponse (Connect?.ConnectRequest[0].Traces[0]);
+#%  DescribeResponse (Connect?.ConnectRequest?[0].Traces?[0]);
 
 #end zfile
 
@@ -190,11 +190,11 @@ The response payload:
 
 The request payload:
 
-#%  DescribeRequest (Connect?.ConnectStaticPollFail[0].Traces?[1]);
+#%  DescribeRequest (Connect?.ConnectStaticPollFail?[0].Traces?[1]);
 
 The response payload:
 
-#%  DescribeResponse (Connect?.ConnectStaticPollFail[0].Traces?[1]);
+#%  DescribeResponse (Connect?.ConnectStaticPollFail?[0].Traces?[1]);
 
 #end zfile
 
@@ -202,11 +202,11 @@ The response payload:
 
 The request payload:
 
-#%  DescribeRequest (Connect?.ConnectStaticClaim[0].Traces?[1]);
+#%  DescribeRequest (Connect?.ConnectStaticClaim?[0].Traces?[1]);
 
 The response payload:
 
-#%  DescribeResponse (Connect?.ConnectStaticClaim[0].Traces?[1]);
+#%  DescribeResponse (Connect?.ConnectStaticClaim?[0].Traces?[1]);
 
 
 #end zfile
@@ -216,22 +216,22 @@ The response payload:
 #zfile CreateExamples ProtocolCryptoKeyShare "Examples\\ProtocolCryptoKeyShare.md" Example
 The request payload:
 
-#%  DescribeRequest (Group?.GroupAddBob[0].Traces?[1]);
+#%  DescribeRequest (Group?.GroupAddBob?[0].Traces?[1]);
 
 The response payload:
 
-#%  DescribeResponse (Group?.GroupAddBob[0].Traces?[1]);
+#%  DescribeResponse (Group?.GroupAddBob?[0].Traces?[1]);
 #end zfile
 
 
 #zfile CreateExamples ProtocolCryptoKeyAgree "Examples\\ProtocolCryptoKeyAgree.md" Example
 The request payload:
 
-#%  DescribeRequest (Group?.GroupDecryptBobSuccess[0].Traces?[1]);
+#%  DescribeRequest (Group?.GroupDecryptBobSuccess?[0].Traces?[1]);
 
 The response payload:
 
-#%  DescribeResponse (Group?.GroupDecryptBobSuccess[0].Traces?[1]);
+#%  DescribeResponse (Group?.GroupDecryptBobSuccess?[0].Traces?[1]);
 #end zfile
 
 

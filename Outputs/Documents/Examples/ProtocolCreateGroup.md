@@ -1,1 +1,7 @@
-[Example to be provided]
+
+The request payload:
+
+
+The response payload:
+
+

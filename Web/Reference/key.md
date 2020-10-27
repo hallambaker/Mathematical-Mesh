@@ -40,26 +40,6 @@ does not need to be kept secret. For example, the challenge in a challenge/respo
 protocol.
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> key nonce
-<rsp>NBAV-LLAC-XS4U-RGGE-GCBX-2A4W-BAFA
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultKey:
-
-~~~~
-<div="terminal">
-<cmd>Alice> key nonce /json
-<rsp>{
-  "ResultKey": {
-    "Success": true,
-    "Key": "NBAV-LLAC-XS4U-RGGE-GCBX-2A4W-BAFA"}}
-</div>
-~~~~
-
-
 # key secret
 
 ~~~~
@@ -76,26 +56,6 @@ secret   Return a randomized secret value formatted as a UDF Encryption Key Type
 
 The `key secret` command returns a randomized secret value formatted as a UDF Encryption 
 key type.
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> key secret
-<rsp>ED4P-M4GZ-KASC-ANRZ-7API-LVX6-LBFA
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultKey:
-
-~~~~
-<div="terminal">
-<cmd>Alice> key secret /json
-<rsp>{
-  "ResultKey": {
-    "Success": true,
-    "Key": "ED4P-M4GZ-KASC-ANRZ-7API-LVX6-LBFA"}}
-</div>
-~~~~
 
 
 
@@ -118,28 +78,6 @@ The `key earl` command returns a randomized secret value and a fingerprint of th
 value, formatted as a UDF Encryption key type and Content Digest Type
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> key earl
-<rsp>EBIT-X2HF-JOD7-CGDL-IYO2-TMXT-7PS5-MF
-MDLU-OIR4-DHR6-YEHI-LMIC-YVHL-BVO4-M75V-MDQ4-ORIT-TNGT-IA3N-BTJC-FIL7
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultKey:
-
-~~~~
-<div="terminal">
-<cmd>Alice> key earl /json
-<rsp>{
-  "ResultKey": {
-    "Success": true,
-    "Key": "EBIT-X2HF-JOD7-CGDL-IYO2-TMXT-7PS5-MF",
-    "Identifier": "MDLU-OIR4-DHR6-YEHI-LMIC-YVHL-BVO4-M75V-MDQ4-ORIT-TNGT-IA3N-BTJC-FIL7"}}
-</div>
-~~~~
-
-
 # key share
 
 ~~~~
@@ -160,34 +98,6 @@ share   Split a secret value according to the specified shares and quorum
 
 The `key share` command returns a randomized secret value and a set of shares for the secret
 formatted as a UDF Encryption key type and Share types
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> key share
-<rsp>DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y
-MDO7-KVIF-IIU3-IE6L-5UEN-576Z-WNK4-Z4LV-L4AG-I2UG-NOOW-RUCH-4QVI
-SAQF-PXGN-MGQK-5422-O4V5-4KW4-7EAA-W
-SAQZ-G73G-V4ZV-M6SZ-FJOV-T4HZ-5BED-Q
-SARM-6IP7-7TC7-4AKX-3WHN-LNYW-26IG-K
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultKey:
-
-~~~~
-<div="terminal">
-<cmd>Alice> key share /json
-<rsp>{
-  "ResultKey": {
-    "Success": true,
-    "Key": "DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y",
-    "Identifier": "MDO7-KVIF-IIU3-IE6L-5UEN-576Z-WNK4-Z4LV-L4AG-I2UG-NOOW-RUCH-4QVI",
-    "Shares": ["SAQF-PXGN-MGQK-5422-O4V5-4KW4-7EAA-W",
-      "SAQZ-G73G-V4ZV-M6SZ-FJOV-T4HZ-5BED-Q",
-      "SARM-6IP7-7TC7-4AKX-3WHN-LNYW-26IG-K"]}}
-</div>
-~~~~
 
 
 
@@ -214,26 +124,6 @@ recover   Recover a secret value from the shares provided
 
 The `key recover` command combines the specified set of share to recover the original secret 
 value as a UDF Encryption key type.
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> key recover SAQF-PXGN-MGQK-5422-O4V5-4KW4-7EAA-W SARM-6IP7-7TC7-4AKX-3WHN-LNYW-26IG-K
-<rsp>DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultKey:
-
-~~~~
-<div="terminal">
-<cmd>Alice> key recover SAQF-PXGN-MGQK-5422-O4V5-4KW4-7EAA-W SARM-6IP7-7TC7-4AKX-3WHN-LNYW-26IG-K /json
-<rsp>{
-  "ResultKey": {
-    "Success": true,
-    "Key": "DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y"}}
-</div>
-~~~~
 
 
 

@@ -11,14 +11,6 @@ to request connection to the user's profile. Alice need only specify
 the mesh service account alice@example.com to which connection is requested:
 
 
-~~~~
-<div="terminal">
-<cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MCRS-WMA4-QV32-HPLQ-4L3R-MSYA-UJXZ
-   Witness value = AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
-</div>
-~~~~
-
 In this case there is no existing device profile and so a new profile is
 created and used to create a registration request which is posted to the user's 
 account.
@@ -33,55 +25,18 @@ The `device pending` command gives a list of pending connection
 messages.
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> device pending
-<rsp>MessageID: HCG4-XSEY-PC7D-KLDI-OP6X-MEBD-TLWT
-        Connection Request::
-        MessageID: HCG4-XSEY-PC7D-KLDI-OP6X-MEBD-TLWT
-        To:  From: 
-        Device:  MARV-3CT2-H7RW-CPGM-ILRK-4C6V-QIYK
-        Witness: HCG4-XSEY-PC7D-KLDI-OP6X-MEBD-TLWT
-MessageID: AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
-        Connection Request::
-        MessageID: AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
-        To:  From: 
-        Device:  MCRS-WMA4-QV32-HPLQ-4L3R-MSYA-UJXZ
-        Witness: AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
-</div>
-~~~~
-
 Alice sees the request that she posted and approves it with the connect
 `device accept` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device accept AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
-<rsp>ERROR - Cannot access a closed file.
-</div>
-~~~~
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
 request:
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> device reject HCG4-XSEY-PC7D-KLDI-OP6X-MEBD-TLWT
-<rsp></div>
-~~~~
-
 The connection process is completed by synchronizing the new device. At this point,
 all the applications that were available to the first device are available to the
 second:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice2> device complete
-<rsp></div>
-~~~~
 
 ##Managing connected devices
 
@@ -89,22 +44,8 @@ The `device list` command gives a list of devices in the device
 catalog:
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> device list
-<rsp></div>
-~~~~
-
 The `device delete` command removes a device from the catalog:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device delete AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
-<rsp>ERROR - The feature has not been implemented
-<cmd>Alice> device list
-<rsp></div>
-~~~~
 
 
 ## Requesting a connection using a PIN
@@ -120,29 +61,13 @@ administration device. The `device pin` command generates
 a new PIN code:
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> account pin
-<rsp>PIN=ACST-XYBV-X2WN-ZPJA-T54M-A42R-M36O (Expires=2020-10-24T15:18:55Z)
-</div>
-~~~~
-
 The pin code can now be used to authenticate the connection request:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice3> device request alice@example.com /pin=ACST-XYBV-X2WN-ZPJA-T54M-A42R-M36O
-<rsp>   Device UDF = MBKV-OELR-CWSM-V3PQ-QMKV-YMIV-BDKJ
-   Witness value = ZWZR-NOJQ-CE6U-4WG4-CFA5-5JO4-6KBL
-</div>
-~~~~
 
 Since the PIN code that was issued was set to be self-authorizing, the device
 is connected automatically when the user synchronizes their account from an 
 administrator device:
 
-**Missing Example***
 
 
 ### Requesting a connection using an EARL

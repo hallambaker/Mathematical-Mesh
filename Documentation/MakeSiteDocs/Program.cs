@@ -140,12 +140,10 @@ namespace ExampleGenerator {
             Group = new LayerGroup(this);
             NYI = new LayerNYI(this);
 
-
-            //LayerService();
-            //LayerMessage();
-
             // Dare uses the keys from the contacts catalog.
-            PlatformDare();
+            //PlatformDare();
+
+
 
 
             Directory.SetCurrentDirectory(outputPath);

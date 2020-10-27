@@ -150,6 +150,7 @@ namespace ExampleGenerator {
 		// DumpHeaders
 		//
 		public void DumpHeaders (List<ContainerFrame> Frames) {
+			 if (Frames == null) {ReportMissing(); return;}
 			foreach  (var Frame in Frames) {
 				 DumpHeader (Frame);
 				}
@@ -160,6 +161,8 @@ namespace ExampleGenerator {
 		// DumpHeader
 		//
 		public void DumpHeader (ContainerFrame Frame) {
+			 if (Frame == null) {ReportMissing(); return;}
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Frame {1}\n{0}", _Indent, Frame.Header.ContainerInfo.Index);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
@@ -296,14 +299,14 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Encrypted Message\n{0}", _Indent);
 				 var CryptoStackEncrypt = Example.CryptoStackEncrypt;
-				 var Recipient = CryptoStackEncrypt.Recipients[0] as Goedel.Test.Core.DareRecipientDebug;
+				 var Recipient = CryptoStackEncrypt?.Recipients?[0] as Goedel.Test.Core.DareRecipientDebug;
 				 var MessageEnc = Example.MessageEnc;
-				 var Salt = MessageEnc.Header.Salt;
+				 var Salt = MessageEnc?.Header?.Salt;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The creator generates a master session key:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, CryptoStackEncrypt.MasterSecret.ToStringBase16FormatHex());
+				_Output.Write ("{1}\n{0}", _Indent, CryptoStackEncrypt?.MasterSecret.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("For each recipient of the message:\n{0}", _Indent);
@@ -311,13 +314,13 @@ namespace ExampleGenerator {
 				_Output.Write ("The creator generates an ephemeral key:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Recipient.EphemeralPrivate));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Recipient?.EphemeralPrivate));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The key agreement value is calculated:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Recipient.KeyAgreement.ToStringBase16FormatHex());
+				_Output.Write ("{1}\n{0}", _Indent, Recipient?.KeyAgreement.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The key agreement value is used as the input to a HKDF key\n{0}", _Indent);
@@ -325,13 +328,13 @@ namespace ExampleGenerator {
 				_Output.Write ("{1} to create the key used to wrap the master key:\n{0}", _Indent, DareRecipient.KDFInfo.ToUTF8());
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Recipient.EncryptionKey.ToStringBase16FormatHex());
+				_Output.Write ("{1}\n{0}", _Indent, Recipient?.EncryptionKey.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The wrapped master key is:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Recipient.WrappedMasterKey.ToStringBase16FormatHex());
+				_Output.Write ("{1}\n{0}", _Indent, Recipient?.WrappedMasterKey.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("This information is used to calculate the Recipient information\n{0}", _Indent);
@@ -341,26 +344,26 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Salt.ToStringBase16FormatHex());
+				_Output.Write ("{1}\n{0}", _Indent, Salt?.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The salt value and master key are used to generate the payload encryption\n{0}", _Indent);
 				_Output.Write ("key:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, CryptoStackEncrypt.KeyEncrypt.ToStringBase16FormatHex());
+				_Output.Write ("{1}\n{0}", _Indent, CryptoStackEncrypt?.KeyEncrypt.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Since AES is a block cipher, we also require an initializarion vector:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, CryptoStackEncrypt.IV.ToStringBase16FormatHex());
+				_Output.Write ("{1}\n{0}", _Indent, CryptoStackEncrypt?.IV.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The output sequence is the encrypted bytes:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.MessageEnc.Body.ToStringBase16FormatHex());
+				_Output.Write ("{1}\n{0}", _Indent, Example.MessageEnc?.Body.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Since the message is not signed, there is no need for a trailer.\n{0}", _Indent);

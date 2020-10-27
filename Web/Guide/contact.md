@@ -17,13 +17,6 @@ The `contact add` command adds a contact entry to a catalog from
 a file. 
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> contact add email carol@example.com
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\email'.
-</div>
-~~~~
-
 The file carol-contact.json contains Carol's contact information in
 JSON format:
 
@@ -35,17 +28,9 @@ The `/self` option is used to mark the contact as being the user's own contact
 details:
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> contact self email alice@example.com
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
-
 Contacts may also be added by accepting contact request messages using the 
 `message accept` command:
 
-**Missing Example***
 
 ## Finding contacts
 
@@ -53,40 +38,15 @@ The `contact get` command retreives a contact by the contact's
 email address or label:
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> contact get carol@example.com
-<rsp>Empty
-</div>
-~~~~
-
 ## Listing contacts
 
 A complete list of contacts is obtained using the  `contact list` command:
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MCAP-Q4KN-WUUZ-PAAK-AB6K-5JVV-AKRD
-  Person MCAP-Q4KN-WUUZ-PAAK-AB6K-5JVV-AKRD
-  Anchor MCAP-Q4KN-WUUZ-PAAK-AB6K-5JVV-AKRD
-  Address alice@example.com
-
-</div>
-~~~~
-
 ## Deleting contacts
 
 Contact entries may be deleted using the  `contact delete` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> contact delete carol@example.com
-<rsp>ERROR - The entry could not be found in the store.
-</div>
-~~~~
 
 
 

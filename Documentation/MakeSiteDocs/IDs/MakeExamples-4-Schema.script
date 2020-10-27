@@ -177,9 +177,9 @@ Title 2
 
 
 #zfile CreateExamples SchemaAccount "Examples\\SchemaAccount.md" Example
-#% var resultCreateAccount = ProfileCreateAlice[0].Result as ResultCreateAccount;
-#% var profileUser = resultCreateAccount.ProfileUser;
-#% var activationUser = resultCreateAccount.ActivationDevice;
+#% var resultCreateAccount = ProfileCreateAlice?[0].Result as ResultCreateAccount;
+#% var profileUser = resultCreateAccount?.ProfileUser;
+#% var activationUser = resultCreateAccount?.ActivationDevice;
 #% var catalogedDevice = AliceProfiles?.CatalogedDevice;
 #% var connectionUser = catalogedDevice?.ConnectionUser;
 
@@ -210,8 +210,8 @@ All the above plus the ProfileDevice are combined to form the CatalogedDevice en
 
 #zfile CreateExamples SchemaService "Examples\\SchemaService.md" Example
 #% var response = ResultHello?.Response;
-#% var profileService = response.EnvelopedProfileService.Decode();
-#% var profileHost = response.EnvelopedProfileHost.Decode();
+#% var profileService = response?.EnvelopedProfileService.Decode();
+#% var profileHost = response?.EnvelopedProfileHost.Decode();
 
 The service profile
 

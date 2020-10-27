@@ -108,12 +108,15 @@ under separate key agreements specified in the payload frames.
 
 
 #method DumpHeaders List<ContainerFrame> Frames
+#% if (Frames == null) {ReportMissing(); return;}
 #foreach (var Frame in Frames)
 #% DumpHeader (Frame);
 #end foreach
 #end method
 
 #method DumpHeader ContainerFrame Frame
+#% if (Frame == null) {ReportMissing(); return;}
+
 Frame #{Frame.Header.ContainerInfo.Index}
 
 ~~~~
@@ -224,14 +227,14 @@ If a plaintext message contains EDS sequences, these are also in plaintext:
 
 #### Encrypted Message
 #% var CryptoStackEncrypt = Example.CryptoStackEncrypt;
-#% var Recipient = CryptoStackEncrypt.Recipients[0] as Goedel.Test.Core.DareRecipientDebug;
+#% var Recipient = CryptoStackEncrypt?.Recipients?[0] as Goedel.Test.Core.DareRecipientDebug;
 #% var MessageEnc = Example.MessageEnc;
-#% var Salt = MessageEnc.Header.Salt;
+#% var Salt = MessageEnc?.Header?.Salt;
 
 The creator generates a master session key:
 
 ~~~~
-#{CryptoStackEncrypt.MasterSecret.ToStringBase16FormatHex()}
+#{CryptoStackEncrypt?.MasterSecret.ToStringBase16FormatHex()}
 ~~~~
 
 For each recipient of the message:
@@ -239,13 +242,13 @@ For each recipient of the message:
 The creator generates an ephemeral key:
 
 ~~~~
-#{JSONDebugWriter.Write (Recipient.EphemeralPrivate)}
+#{JSONDebugWriter.Write (Recipient?.EphemeralPrivate)}
 ~~~~
 
 The key agreement value is calculated:
 
 ~~~~
-#{Recipient.KeyAgreement.ToStringBase16FormatHex()}
+#{Recipient?.KeyAgreement.ToStringBase16FormatHex()}
 ~~~~
 
 The key agreement value is used as the input to a HKDF key
@@ -253,13 +256,13 @@ derivation function with the info parameter
 #{DareRecipient.KDFInfo.ToUTF8()} to create the key used to wrap the master key:
 
 ~~~~
-#{Recipient.EncryptionKey.ToStringBase16FormatHex()}
+#{Recipient?.EncryptionKey.ToStringBase16FormatHex()}
 ~~~~
 
 The wrapped master key is:
 
 ~~~~
-#{Recipient.WrappedMasterKey.ToStringBase16FormatHex()}
+#{Recipient?.WrappedMasterKey.ToStringBase16FormatHex()}
 ~~~~
 
 This information is used to calculate the Recipient information
@@ -269,26 +272,26 @@ To encrypt a message, we first generate a unique salt value:
 
 
 ~~~~
-#{Salt.ToStringBase16FormatHex()}
+#{Salt?.ToStringBase16FormatHex()}
 ~~~~
 
 The salt value and master key are used to generate the payload encryption
 key:
 
 ~~~~
-#{CryptoStackEncrypt.KeyEncrypt.ToStringBase16FormatHex()}
+#{CryptoStackEncrypt?.KeyEncrypt.ToStringBase16FormatHex()}
 ~~~~
 
 Since AES is a block cipher, we also require an initializarion vector:
 
 ~~~~
-#{CryptoStackEncrypt.IV.ToStringBase16FormatHex()}
+#{CryptoStackEncrypt?.IV.ToStringBase16FormatHex()}
 ~~~~
 
 The output sequence is the encrypted bytes:
 
 ~~~~
-#{Example.MessageEnc.Body.ToStringBase16FormatHex()}
+#{Example.MessageEnc?.Body.ToStringBase16FormatHex()}
 ~~~~
 
 Since the message is not signed, there is no need for a trailer.

@@ -33,7 +33,6 @@ contact   Post a conection request to a user
 <over>
 </div>
 ~~~~
-**Missing Example***
 
 # message confirm
 
@@ -51,7 +50,6 @@ confirm   Post a confirmation request to a user
 <over>
 </div>
 ~~~~
-**Missing Example***
 
 
 # message pending
@@ -68,7 +66,6 @@ pending   List pending requests
 <over>
 </div>
 ~~~~
-**Missing Example***
 
 
 # message status
@@ -86,7 +83,6 @@ status   Request status of pending requests
 <over>
 </div>
 ~~~~
-**Missing Example***
 
 # message accept
 
@@ -103,7 +99,6 @@ accept   Accept a pending request
 <over>
 </div>
 ~~~~
-**Missing Example***
 
 # message reject
 
@@ -120,7 +115,6 @@ reject   Reject a pending request
 <over>
 </div>
 ~~~~
-**Missing Example***
 
 # message block
 
@@ -137,5 +131,4 @@ block   Reject a pending request and block requests from that source
 <over>
 </div>
 ~~~~
-**Missing Example***
 

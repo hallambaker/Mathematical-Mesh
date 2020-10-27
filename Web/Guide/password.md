@@ -12,25 +12,10 @@ credentials catalog associated with a profile:
 Alice adds the username and password for an ftp service to her catalog:
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> password add ftp.example.com alice1 password
-<rsp>ERROR - Cannot access a closed file.
-<cmd>Alice> password add www.example.com alice@example.com newpassword
-<rsp>ERROR - Cannot access a closed file.
-</div>
-~~~~
-
 ## Synchronizing passwords to an application.
 
 The `password list` command lists all the passwords in the catalog:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> password list
-<rsp></div>
-~~~~
 
 The output of the list command may be used to configure a user application 
 such as a Web browser that supports password management. But care is obviously
@@ -41,13 +26,6 @@ required as the passwords will only be as secure as the other application.
 The `password get`  command retreives the username and password 
 values for a specified service:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> password get ftp.example.com
-<rsp>Empty
-</div>
-~~~~
 
 ### Using Credentials in scripts
 
@@ -79,31 +57,16 @@ memorable or conveniently short. She decides to replace her bad password with a 
 password that is randomly generated:
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> password add ftp.example.com alice1 newpassword
-<rsp>ERROR - Cannot access a closed file.
-</div>
-~~~~
-
 
 ## Deleting passwords
 
 Password entries may be deleted using the  `password delete` command:
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> password delete www.example.com
-<rsp>ERROR - The entry could not be found in the store.
-</div>
-~~~~
-
 ## Adding a Device.
 
 When a device is added, it gets a copy of the password file:
 
-**Missing Example***
 
 
 

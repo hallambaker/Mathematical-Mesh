@@ -48,7 +48,6 @@ restrictions of this form do not appear to be frequently realized in practice.
 
 Recryption groups are created using the `group create` command:
 
-**Missing Example***
 
 This command creates the group groupw@example.com. Since Alice created the
 account she is the administrator.
@@ -56,12 +55,10 @@ account she is the administrator.
 At this point, the group has no members. Bob can encrypt a file under the group
 public key but he is unable to read it:
 
-**Missing Example***
 
 Since Alice is the group administrator, she can decrypt the file using her 
 administrator key:
 
-**Missing Example***
 
 
 ## Adding users
@@ -70,17 +67,14 @@ The `group add` command is used to add users to the group:
 
 Alice adds Bob as a member of the group:
 
-**Missing Example***
 
 Bob can now decrypt the file.
 
-**Missing Example***
 
 ## Reporting users
 
 The `connect ` command returns a list of group members:
 
-**Missing Example***
 
 The group currently has one administrator and one member.
 
@@ -88,10 +82,8 @@ The group currently has one administrator and one member.
 
 Users may be removed from a recryption group using the `group delete` command:
 
-**Missing Example***
 
 Bob is no longer a member of the group and his decryption request now fails:
 
-**Missing Example***
 
 

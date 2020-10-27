@@ -33,26 +33,6 @@ add   Add password entry
 </div>
 ~~~~
 
-~~~~
-<div="terminal">
-<cmd>Alice> password add ftp.example.com alice1 password
-<rsp>ERROR - Cannot access a closed file.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> password add ftp.example.com alice1 password /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Cannot access a closed file."}}
-</div>
-~~~~
-
-
 # password get
 
 ~~~~
@@ -68,26 +48,6 @@ get   Lookup password entry
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> password delete www.example.com
-<rsp>ERROR - The entry could not be found in the store.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> password delete www.example.com /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The entry could not be found in the store."}}
-</div>
-~~~~
-
 
 # password delete
 
@@ -105,26 +65,6 @@ delete   Delete password entry
 </div>
 ~~~~
 
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
-</div>
-~~~~
-
-
 # password list
 
 ~~~~
@@ -140,24 +80,5 @@ list   List password entries
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> password list
-<rsp></div>
-~~~~
-
-Specifying the /json option returns a result of type ResultDump:
-
-~~~~
-<div="terminal">
-<cmd>Alice> password list /json
-<rsp>{
-  "ResultDump": {
-    "Success": true,
-    "CatalogedEntries": []}}
-</div>
-~~~~
-
 
 

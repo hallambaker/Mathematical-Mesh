@@ -392,9 +392,9 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaAccount(CreateExamples Example) {
 
-				 var resultCreateAccount = ProfileCreateAlice[0].Result as ResultCreateAccount;
-				 var profileUser = resultCreateAccount.ProfileUser;
-				 var activationUser = resultCreateAccount.ActivationDevice;
+				 var resultCreateAccount = ProfileCreateAlice?[0].Result as ResultCreateAccount;
+				 var profileUser = resultCreateAccount?.ProfileUser;
+				 var activationUser = resultCreateAccount?.ActivationDevice;
 				 var catalogedDevice = AliceProfiles?.CatalogedDevice;
 				 var connectionUser = catalogedDevice?.ConnectionUser;
 				_Output.Write ("\n{0}", _Indent);
@@ -432,8 +432,8 @@ namespace ExampleGenerator {
 		public void _SchemaService(CreateExamples Example) {
 
 				 var response = ResultHello?.Response;
-				 var profileService = response.EnvelopedProfileService.Decode();
-				 var profileHost = response.EnvelopedProfileHost.Decode();
+				 var profileService = response?.EnvelopedProfileService.Decode();
+				 var profileHost = response?.EnvelopedProfileHost.Decode();
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The service profile\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

@@ -1,8 +1,8 @@
 
-**Missing Example***
+Alice disconnects the new device:
 
-[NYI Disconnect]
 
-[Can't access the data any more.]
+The device can no longer access the password catalog:
+
 
 

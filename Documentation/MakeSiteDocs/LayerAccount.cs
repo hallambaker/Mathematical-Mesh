@@ -9,7 +9,7 @@ namespace ExampleGenerator {
 
     public partial class CreateExamples {
         public string AliceService  = "example.com";
-        public string AliceFingerprint => TBS<string>() ;
+        public string AliceFingerprint;
         public string AliceAccount = "alice@example.com";
         public string BobAccount = "bob@example.com";
         public string MeshServiceProvider = "example.com";
@@ -35,7 +35,7 @@ namespace ExampleGenerator {
 
         }
     public partial class LayerAccount {
-        static public T TBS<T>() => CreateExamples.TBS<T>();
+
 
 
         public string EncryptSourceFile = "plaintext.txt";
@@ -59,7 +59,6 @@ namespace ExampleGenerator {
 
     public partial class LayerConnect {
 
-        static public T TBS<T>() => CreateExamples.TBS<T>();
 
         public List<ExampleResult> ConnectRequest;
         public List<ExampleResult> ConnectPending;
@@ -69,10 +68,10 @@ namespace ExampleGenerator {
         public List<ExampleResult> Disconnect;
         public List<ExampleResult> PasswordList2Disconnect;
 
-        public ProfileDevice AliceProfileDeviceCoffee => TBS<ProfileDevice>();
-        public ActivationDevice AliceActivationDeviceCoffee => TBS<ActivationDevice>();
-        public ConnectionDevice AliceConnectionDeviceCoffee => TBS<ConnectionDevice>();
-        public ActivationDevice AliceActivationDeviceWatch => TBS<ActivationDevice>();
+        public ProfileDevice AliceProfileDeviceCoffee;
+        public ActivationDevice AliceActivationDeviceCoffee;
+        public ConnectionDevice AliceConnectionDeviceCoffee;
+        public ActivationDevice AliceActivationDeviceWatch;
 
         public List<ExampleResult> ConnectStaticPrepare;
         public List<ExampleResult> ConnectStaticPollFail;

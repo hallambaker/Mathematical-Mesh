@@ -10,13 +10,6 @@ Mesh accounts.
 Create a new Mesh profile
 
 
-~~~~
-<div="terminal">
-<cmd>Alice> account create alice@example.com
-<rsp>Account=MDBM-S4YO-CEAO-POM5-EGOS-INZO-P24W
-</div>
-~~~~
-
 
 
 ## Contacting a Mesh Service.

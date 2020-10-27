@@ -2,11 +2,6 @@
 For example, consider the following mail message:
 
 ~~~~
-From: Alice@example.com
-To: bob@example.com
-Subject: TOP-SECRET Product Launch Today!
-
-The CEO told me the product launch is today. Tell no-one!
 ~~~~
 
 Existing encryption approaches require that header fields such as the subject line be encrypted 
@@ -19,17 +14,7 @@ message body, a mail client must retrieve at least part of the message body to p
 The plaintext form of the equivalent DARE Message encoding is:
 
 ~~~~
-[{
-    "Annotations":["iAEBiBdGcm9tOiBBbGljZUBleGFtcGxlLmNvbQ",
-      "iAECiBNUbzogYm9iQGV4YW1wbGUuY29t",
-      "iAEDiClTdWJqZWN0OiBUT1AtU0VDUkVUIFByb2R1Y3QgTGF1bmNoIFRvZGF5
-  IQ"
-      ],
-    "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24vZXhhbXBsZS1t
-  YWlsIn0"},
-  "VGhlIENFTyB0b2xkIG1lIHRoZSBwcm9kdWN0IGxhdW5jaCBpcyB0b2RheS4gVGVs
-  bCBuby1vbmUh"
-  ]
+$$$$ Empty $$$$
 ~~~~
 
 This contains the same information as before but the mail message headers are 

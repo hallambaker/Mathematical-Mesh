@@ -32,7 +32,6 @@ create   Create recryption group
 <over>
 </div>
 ~~~~
-**Missing Example***
 
 # group add
 
@@ -50,7 +49,6 @@ add   Add user to recryption group
 <over>
 </div>
 ~~~~
-**Missing Example***
 
 # group delete
 
@@ -68,7 +66,6 @@ delete   Remove user from recryption group
 <over>
 </div>
 ~~~~
-**Missing Example***
 
 # group list
 
@@ -85,5 +82,4 @@ list   List members of a recryption group
 <over>
 </div>
 ~~~~
-**Missing Example***
 

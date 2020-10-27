@@ -61,7 +61,7 @@ namespace ExampleGenerator {
 				_Output.Write ("[Note, this is showing the payload, not the binding as is intended because the current code \n{0}", _Indent);
 				_Output.Write ("doesn't implement it as intended yet]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequestBinding (Service.Hello[0].Traces[0]);
+				  DescribeRequestBinding (Service.Hello?[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -80,7 +80,7 @@ namespace ExampleGenerator {
 				_Output.Write ("[Note, this is showing the payload, not the binding as is intended because the current code \n{0}", _Indent);
 				_Output.Write ("doesn't implement it as intended yet]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponseBinding (Service.Hello[0].Traces[0]);
+				  DescribeResponseBinding (Service.Hello?[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -98,11 +98,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest(Service?.Hello[0].Traces[0]);
+				  DescribeRequest(Service?.Hello?[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse(Service?.Hello[0].Traces[0]);
+				  DescribeResponse(Service?.Hello?[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -121,11 +121,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Account?.CreateAlice[0].Traces[0]);
+				  DescribeRequest (Account?.CreateAlice?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Account?.CreateAlice[0].Traces[0]);
+				  DescribeResponse (Account?.CreateAlice?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -143,11 +143,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Group?.GroupCreate[0].Traces[0]);
+				  DescribeRequest (Group?.GroupCreate?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Group?.GroupCreate[0].Traces[0]);
+				  DescribeResponse (Group?.GroupCreate?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -167,11 +167,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Account?.DeleteAlice[0].Traces[0]);
+				  DescribeRequest (Account?.DeleteAlice?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Account?.DeleteAlice[0].Traces[0]);
+				  DescribeResponse (Account?.DeleteAlice?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -190,11 +190,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Account?.SyncAlice[0].Traces[0]);
+				  DescribeRequest (Account?.SyncAlice?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Account?.SyncAlice[0].Traces[0]);
+				  DescribeResponse (Account?.SyncAlice?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -213,11 +213,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Account?.SyncAlice[0].Traces[1]);
+				  DescribeRequest (Account?.SyncAlice?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Account?.SyncAlice[0].Traces[1]);
+				  DescribeResponse (Account?.SyncAlice?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -236,11 +236,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Account?.SyncAlice[0].Traces[2]);
+				  DescribeRequest (Account?.SyncAlice?[0].Traces?[2]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Account?.SyncAlice[0].Traces[2]);
+				  DescribeResponse (Account?.SyncAlice?[0].Traces?[2]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -260,11 +260,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Connect?.ConnectRequest[0].Traces[0]);
+				  DescribeRequest (Connect?.ConnectRequest?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Connect?.ConnectRequest[0].Traces[0]);
+				  DescribeResponse (Connect?.ConnectRequest?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -305,11 +305,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Connect?.ConnectStaticPollFail[0].Traces?[1]);
+				  DescribeRequest (Connect?.ConnectStaticPollFail?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Connect?.ConnectStaticPollFail[0].Traces?[1]);
+				  DescribeResponse (Connect?.ConnectStaticPollFail?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -327,11 +327,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Connect?.ConnectStaticClaim[0].Traces?[1]);
+				  DescribeRequest (Connect?.ConnectStaticClaim?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Connect?.ConnectStaticClaim[0].Traces?[1]);
+				  DescribeResponse (Connect?.ConnectStaticClaim?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -349,11 +349,11 @@ namespace ExampleGenerator {
 
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Group?.GroupAddBob[0].Traces?[1]);
+				  DescribeRequest (Group?.GroupAddBob?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Group?.GroupAddBob[0].Traces?[1]);
+				  DescribeResponse (Group?.GroupAddBob?[0].Traces?[1]);
 					}
 		
 
@@ -369,11 +369,11 @@ namespace ExampleGenerator {
 
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Group?.GroupDecryptBobSuccess[0].Traces?[1]);
+				  DescribeRequest (Group?.GroupDecryptBobSuccess?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Group?.GroupDecryptBobSuccess[0].Traces?[1]);
+				  DescribeResponse (Group?.GroupDecryptBobSuccess?[0].Traces?[1]);
 					}
 		
 
