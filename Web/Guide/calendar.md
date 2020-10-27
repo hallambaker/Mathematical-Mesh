@@ -17,10 +17,10 @@ The `password add` command adds a calendar entry to a catalog:
 <cmd>Alice> calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NBQL-NIQB-EKWT-QBOX-VINY-KAII-FE7D"}<cmd>Alice> calendar add CalendarEntry2.json CalID2
+  "Key": "NDKW-XIVW-OCDK-64IL-EV4O-TR3Y-3ZLA"}<cmd>Alice> calendar add CalendarEntry2.json CalID2
 <rsp>{
   "Title": "CalendarEntry2.json",
-  "Key": "NBDF-KTUJ-6CIC-LEIT-4K3N-I5NY-MSVT"}</div>
+  "Key": "NBWZ-KT72-YVTO-3XH6-BHDY-4XVY-K3FR"}</div>
 ~~~~
 
 

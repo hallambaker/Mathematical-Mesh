@@ -89,6 +89,16 @@ namespace ExampleGenerator {
 
         string outputPath;
 
+
+        public LayerAccount Account;
+        public LayerConnect Connect;
+        public LayerApps Apps;
+        public LayerService Service;
+        public LayerContact Contact;
+        public LayerConfirm Confirm;
+        public LayerGroup Group;
+        public LayerNYI NYI;
+
         public void Examples() {
 
             outputPath = Directory.GetCurrentDirectory();
@@ -120,8 +130,18 @@ namespace ExampleGenerator {
             PlatformUDF();
             PlatformCrypto();
 
-            LayerAccount();
-            LayerService();
+            Service = new LayerService(this);
+            Account = new LayerAccount(this);
+            Connect = new LayerConnect(this);
+
+            Apps = new LayerApps(this);
+            Contact = new LayerContact(this);
+            Confirm = new LayerConfirm(this);
+            Group = new LayerGroup(this);
+            NYI = new LayerNYI(this);
+
+
+            //LayerService();
             //LayerMessage();
 
             // Dare uses the keys from the contacts catalog.

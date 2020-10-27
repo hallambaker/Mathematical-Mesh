@@ -73,7 +73,7 @@ file name is the input file name with the additional extension `.dare`.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=3YTJ-GOAO-ZX2I-U5GK-U44P-DZUO-IM
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y
 <rsp></div>
 ~~~~
 
@@ -81,7 +81,7 @@ Specifying the /json option returns a result of type ResultFile:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=3YTJ-GOAO-ZX2I-U5GK-U44P-DZUO-IM /json
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y /json
 <rsp>{
   "ResultFile": {
     "Success": true,
@@ -122,7 +122,7 @@ with the extension `.undare` otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=3YTJ-GOAO-ZX2I-U5GK-U44P-DZUO-IM
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -131,7 +131,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=3YTJ-GOAO-ZX2I-U5GK-U44P-DZUO-IM /json
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -166,7 +166,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=3YTJ-GOAO-ZX2I-U5GK-U44P-DZUO-IM
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -175,7 +175,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=3YTJ-GOAO-ZX2I-U5GK-U44P-DZUO-IM /json
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=DQ5D-IFAO-A5WF-XQ72-MJSM-ACNX-3Y /json
 <rsp>{
   "Result": {
     "Success": false,

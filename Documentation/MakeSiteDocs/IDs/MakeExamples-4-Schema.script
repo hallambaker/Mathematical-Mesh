@@ -14,7 +14,9 @@
 #% SchemaAliceProfile(Example);
 #% SchemaAliceDeviceCoffee(Example);
 #% SchemaAliceActivationCoffee(Example);
+#% SchemaConnectionCoffee(Example);
 #% SchemaAliceActivationWatch(Example);
+#% SchemaProfileService(Example);
 #% SchemaConnectionHost(Example);
 #% SchemaEntrySSH(Example);
 #% SchemaEntryMail(Example);
@@ -24,8 +26,9 @@
 #% SchemaEntryTask(Example);
 #% SchemaDeriveTables(Example);
 #% SchemaMessageIds(Example);
+#% SchemaPINFunction(Example);
 #% SchemaPINWitness(Example);
-#% SchemaMaster(Example);
+#% SchemaClientAuthKeyAgreement(Example);
 #% SchemaDevice(Example);
 #% SchemaAccount(Example);
 #% SchemaService(Example);
@@ -35,31 +38,119 @@
 #% SchemaMessageConfirmation(Example);
 #end method
 
+
+#method DescribeMessage Goedel.Mesh.Message message
+~~~~
+<div="helptext">
+<over>
+[NYI]
+<over>
+</div>
+~~~~
+#end method
+
+
+
 #zfile CreateExamples SchemaAliceProfile "Examples\\SchemaAliceProfile.md" Example
-[To be specified]
+
+For example, the personal account profile Alice created is:
+
+#%  Format (AliceProfileAccount);
+
 #end zfile
 
 #zfile CreateExamples SchemaAliceDeviceCoffee "Examples\\SchemaAliceDeviceCoffee.md" Example
-[To be specified]
+
+#%  Format (Connect.AliceProfileDeviceCoffee);
+
 #end zfile
 
 #zfile CreateExamples SchemaAliceActivationCoffee "Examples\\SchemaAliceActivationCoffee.md" Example
-[To be specified]
+
+#%  Format (Connect.AliceActivationDeviceCoffee);
+
+#end zfile
+
+#zfile CreateExamples SchemaConnectionCoffee "Examples\\SchemaConnectionCoffee.md" Example
+#%  Format (Connect.AliceConnectionDeviceCoffee);
 #end zfile
 
 #zfile CreateExamples SchemaAliceActivationWatch "Examples\\SchemaAliceActivationWatch.md" Example
-[To be specified]
+#%  Format (Connect.AliceActivationDeviceWatch);
+#end zfile
+
+#zfile CreateExamples SchemaProfileService "Examples\\SchemaProfileService.md" Example
+#%  Format (Service.ProfileService);
 #end zfile
 
 #zfile CreateExamples SchemaConnectionHost "Examples\\SchemaConnectionHost.md" Example
-[To be specified]
+#%  Format (Service.ConnectionHost);
 #end zfile
 
+#zfile CreateExamples SchemaEntrySSH "Examples\\SchemaEntrySSH.md" Example
+#% Format(Apps.SSHCatalogEntry);
+#end zfile
+
+
+#zfile CreateExamples SchemaEntryMail "Examples\\SchemaEntryMail.md" Example
+#% Format(Apps.MailCatalogEntry);
+#end zfile
+
+#zfile CreateExamples SchemaEntryBookmark "Examples\\SchemaEntryBookmark.md" Example
+#% Format(Apps.BookmarkCatalogEntry);
+#end zfile
+
+#zfile CreateExamples SchemaEntryContact "Examples\\SchemaEntryContact.md" Example
+#% Format(Apps.ContactCatalogEntry);
+#end zfile
+
+#zfile CreateExamples SchemaEntryCredential "Examples\\SchemaEntryCredential.md" Example
+#% Format(Apps.CredentialCatalogEntry);
+#end zfile
+
+#zfile CreateExamples SchemaEntryNetwork "Examples\\SchemaEntryNetwork.md" Example
+#% Format(Apps.CredentialNetworkEntry);
+#end zfile
+
+#zfile CreateExamples SchemaEntryTask "Examples\\SchemaEntryTask.md" Example
+#% Format(Apps.TaskCatalogEntry);
+#end zfile
+
+
+
+
+
+
+
+
 #zfile CreateExamples SchemaDeriveTables "Examples\\SchemaDeriveTables.md" Example
-[To be specified]
+
+<table>
+<tr>
+<td>
+Title 1
+</td>
+<td>
+Title 2
+</td>
+</tr>
+#!foreach (var whatever in Goedel.Mesh.Wherever) 
+<tr>
+<td>
+</td>
+<td>
+</td>
+</tr>
+#!end foreach
+<table>
+
 #end zfile
 
 #zfile CreateExamples SchemaMessageIds "Examples\\SchemaMessageIds.md" Example
+[To be specified]
+#end zfile
+
+#zfile CreateExamples SchemaPINFunction "Examples\\SchemaPINFunction.md" Example
 [To be specified]
 #end zfile
 
@@ -67,7 +158,9 @@
 [To be specified]
 #end zfile
 
-
+#zfile CreateExamples SchemaClientAuthKeyAgreement "Examples\\SchemaClientAuthKeyAgreement.md" Example
+[To be specified]
+#end zfile
 
 
 
@@ -146,54 +239,19 @@ And there should be a connection of the host to the service but this isn't imple
 
 #end zfile
 
+#zfile CreateExamples SchemaMessageCompletion "Examples\\SchemaMessageCompletion.md" Example
 
-#zfile CreateExamples SchemaDevicePrivate "Examples\\SchemaDevicePrivate.md" Example
+Having processed a message, a completion message is added to the spool so that other devices 
+can see that it has been read.
 
-*****************Remove
+For example, when Alice reads the connection request from the device in the architecture 
+examples, a completion message is added to Alice's inbound spool so that the device is not 
+activated a second time by mistake:
+
+#% DescribeMessage (Connect.ConnectPINCompleteWitness);
+
 
 #end zfile
-
-#zfile CreateExamples SchemaDeviceConnection "Examples\\SchemaDeviceConnection.md" Example
-*****************Remove
-#end zfile
-
-
-#zfile CreateExamples SchemaEntryDevice "Examples\\SchemaEntryDevice.md" Example
-#{"SchemaEntryDevice".Task("SchemaEntryDevice")}
-#end zfile
-
-#zfile CreateExamples SchemaEntryContact "Examples\\SchemaEntryContact.md" Example
-#% Format(ContactGet[0].ResultEntry?.CatalogEntry);
-#end zfile
-
-#zfile CreateExamples SchemaEntryCredential "Examples\\SchemaEntryCredential.md" Example
-#% Format(PasswordGet[0].ResultEntry?.CatalogEntry);
-#end zfile
-
-#zfile CreateExamples SchemaEntryNetwork "Examples\\SchemaEntryNetwork.md" Example
-#% Format(NetworkGet[0].ResultEntry?.CatalogEntry);
-#end zfile
-
-#zfile CreateExamples SchemaEntryBookmark "Examples\\SchemaEntryBookmark.md" Example
-#% Format(BookmarkGet[0].ResultEntry?.CatalogEntry);
-#end zfile
-
-#zfile CreateExamples SchemaEntryTask "Examples\\SchemaEntryTask.md" Example
-#% Format(CalendarGet[0].ResultEntry?.CatalogEntry);
-#end zfile
-
-
-
-
-#zfile CreateExamples SchemaEntrySSH "Examples\\SchemaEntrySSH.md" Example
-#% Format(SSHCreate[0].ResultSSH?.CatalogEntry);
-#end zfile
-
-#zfile CreateExamples SchemaEntryMail "Examples\\SchemaEntryMail.md" Example
-#% Format(MailAdd[0].ResultMail?.CatalogEntry);
-#end zfile
-
-
 
 #zfile CreateExamples SchemaMessageConnection "Examples\\SchemaMessageConnection.md" Example
 
@@ -201,21 +259,18 @@ The connection process begins with the assignment of a time-limited PIN value. T
 described in a Message sent by the administration device to allow other admin devices
 to accept the request made.
 
-#% DescribeMessage (ConnectPending?[0]);
+#% DescribeMessage (Connect.ConnectPINMessagePin);
 
 
 The initial request is sent to the service
 
-#% DescribeMessage (ConnectPending?[0]);
+#% DescribeMessage (Connect.ConnectRequestWitness);
 
 The service returns an acknowledgement giving the Witness value. Note that this is not a 'reply'
 since it comes from the service, not the user.
 
+#% DescribeMessage (Connect.AcknowledgeConnectionWitness);
 
-#% DescribeMessage (ConnectPending?[0]);
-
-[Note, this mechanism should be revised to ensure that there is perfect forward secrecy. The 
-device should provide a nonce key as a mixin]
 
 
 #end zfile
@@ -224,11 +279,11 @@ device should provide a nonce key as a mixin]
 
 Bob asks Alice to send her contact details and sends his.
 
-#% DescribeMessage (ContactPending?[0]);
+#% DescribeMessage (Contact.BobRequest);
 
 Alice responds with her details:
 
-#% DescribeMessage (ContactPending?[0]);
+#% DescribeMessage (Contact.AliceResponse);
 
 [Note that this exchange could be performed automatically on Alice's behalf by the service if she 
 delegates this action to it.]
@@ -240,22 +295,14 @@ delegates this action to it.]
 
 The confirmation request
 
-#% DescribeMessage (ConfirmPending?[0]);
+#% DescribeMessage (Confirm.RequestConfirmation);
 
 The confirmation response
 
-#% DescribeMessage (ConfirmPending?[0]);
+#% DescribeMessage (Confirm.ResponseConfirmation);
 
 #end zfile
 
-#zfile CreateExamples SchemaMessageCompletion "Examples\\SchemaMessageCompletion.md" Example
 
-Having processed a message, a completion message is added to the spool so that other devices 
-can see that it has been read:
-
-#% DescribeMessage (ConfirmGetReject?[0]);
-
-
-#end zfile
 
 #end xclass

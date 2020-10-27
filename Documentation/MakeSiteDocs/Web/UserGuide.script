@@ -177,15 +177,7 @@ executed without any output being made to the console.
 
 #end xfile
 
-#method DescribeMessage ExampleResult Result
-~~~~
-<div="helptext">
-<over>
-[NYI]
-<over>
-</div>
-~~~~
-#end method
+
 
 #method Describe DescribeCommandSet CommandSet
 ## #{CommandSet.Identifier}
@@ -268,11 +260,17 @@ executed without any output being made to the console.
 #end method
 
 
-#method DescribeRequest List<ExampleResult> exampleResults
+#method DescribeRequest Trace trace
+~~~~
+#{trace.GetRequest()}
+~~~~
 #end method
 
 
-#method DescribeResponse List<ExampleResult> exampleResults
+#method DescribeResponse Trace trace
+~~~~
+#{trace.GetResponse()}
+~~~~
 #end method
 
 

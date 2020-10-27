@@ -1,7 +1,7 @@
 ~~~~
 KeyValue:
-  5A E7 17 9C  47 3A 0B FE  3F C0 0E 95  E9 9E 2D
+  30 30 27 B7  9E 8D 5C D2  C0 17 EB 21  86 00 E7
 
 Encryption/Authenticator UDF:
-  JVNO-OF44-I45A-X7R7-YAHJ-L2M6-FU
+  E4YD-AJ5X-T2GV-ZUWA-C7VS-DBQA-44
 ~~~~

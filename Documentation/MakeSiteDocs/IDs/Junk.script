@@ -1,0 +1,96 @@
+﻿
+
+
+#!------------------------------------- All junk???
+
+
+
+#zfile CreateExamples ArchitectureConnectPIN "Examples\\ArchitectureConnectPIN.md" Example
+The PIN connection mechanism begins with the issue of the PIN:
+
+#%  ConsoleExample (Example.ConnectGetPin);
+
+The PIN code is transmitted out of band to the device being connected:
+
+#%  ConsoleExample (Example.ConnectPin);
+
+Since the request was pre-authorized, it is not necessary for Alice to explicitly
+accept the connection request but the administration device is needed to create
+the connection assertion:
+
+#%  ConsoleExample (Example.ConnectPending3);
+
+We can check the device connection by attempting to synchronize to the profile account:
+
+#%  ConsoleExample (Example.ConnectSyncPIN);
+
+Note that this connection mechanism could be adapted to allow a device with a 
+camera affordance to connect by scanning a QR code on the administration device.
+#end zfile
+
+#zfile CreateExamples ArchitectureConnectQR "Examples\\ArchitectureConnectQR.md" Example
+To use the device QR code connection mechanism, we require a Web service that will host
+the connection document #{EARLService} and a MeshService account that the device will attempt to 
+complete the connection by requesting synchronization #{PollService}.
+
+To begin the process we generate a new random key and combine it with the service
+to create an EARL:
+
+~~~~
+#{DeviceCreateUDF}
+~~~~
+
+Next a device profile is created and preregistered on with the Mesh Service that will
+provide the hailing service. Since we are only preparing one device it is convenient to
+do this on the device itself. In a manufacturing scenario, these steps would typically 
+be performed offline in bulk.
+
+#%  ConsoleExample (Example.DeviceEarl1);
+
+Once initialized the device attempts to poll the service for a connection each time it
+is powered on, when a connection button affordance on the device is pressed or at
+other times as agreed with the Mesh Service Provider:
+
+#%  ConsoleExample (Example.DeviceEarl2);
+
+To connect the device to her profile, Alice scans the device with her administration 
+device to obtain the UDF. The administration device retrieves the connection description, 
+decrypts it and then uses the information in the description to create the necessary
+Device Connection Assertion and connect to the device hailing Mesh Service Account to 
+complete the process:
+
+#%  ConsoleExample (Example.DeviceEarl3);
+
+When the device next attempts to connect to the hailing service, it receives the Device 
+Connection Assertion:
+
+#%  ConsoleExample (Example.DeviceEarl4);
+#end zfile
+
+
+#zfile CreateExamples ArchitectureContactDefinition "Examples\\ArchitectureContactDefinition.md" Example
+Alice creates a contact entry for herself:
+
+#%  ConsoleExample (Example.ContactAddSelf);
+
+#end zfile
+
+
+#zfile CreateExamples ArchitectureContactRequest "Examples\\ArchitectureContactRequest.md" Example
+
+Bob requests Alice add him to her contacts catalog:
+
+#%  ConsoleExample (Example.ContactRequest);
+
+When Alice next checks her messages, she sees the pending contact request from Bob and accepts
+it without further validation. Bob's contact details are added to her catalog and Bob receives 
+a response containing Alice's credentials:
+
+#%  ConsoleExample (Concat (Example.ContactPending, Example.ContactAccept));
+
+#end zfile
+
+
+
+
+

@@ -12,6 +12,7 @@
 #% public static CreateExamples Instance (StreamWriter output) => new CreateExamples () {_Output = output};
 #method MakeArchitectureExamples CreateExamples Example
 #% Colophon(Example);
+#% ArchitectureConnectPassword(Example);
 #% ArchitectureCreateMesh(Example);
 #% ArchitectureEncryptDecrypt(Example);
 #% ArchitectureEscrow(Example);
@@ -28,8 +29,203 @@
 #% ArchSIN(Example);
 #end method
 
-#zfile CreateExamples ArchitectureContactRemote "Examples\\ArchitectureContactRemote.md" Example
+#zfile CreateExamples Colophon "Examples\\Colophon.md" Example
+
+The examples in this document were created on #{DateTime.Now.ToString()}. 
+Out of #{TestCLI.CountTotal} examples,
+#if (TestCLI.ErrorCountTotal ==0)
+all passed.
+#else
+#{TestCLI.ErrorCountTotal} failed.
+#end if
+
 #end zfile
+
+#zfile CreateExamples ArchitectureCreateMesh "Examples\\ArchitectureCreateMesh.md" Example
+The user specifies the initial account address to be used (#{AliceAccount}). Use of this address
+is of course dependent on authorization by the Mesh Service Provider (#{MeshServiceProvider})
+and is likely to require authentication and possibly payment.
+
+#%  ConsoleExample (Account.CreateAlice);
+
+The command returns the value of Alice's Mesh Account fingerprint #{AliceFingerprint}. 
+This value is used as a unique identifier that is cryptographically bound to the signature key used
+to authenticate the account profile.
+
+#end zfile
+
+#zfile CreateExamples ArchitectureEncryptDecrypt "Examples\\ArchitectureEncryptDecrypt.md" Example
+
+Alice encrypts the text file #{Account.EncryptSourceFile} to create an encrypted version
+readable only by Alice:
+
+#%  ConsoleExample (Account.ConsoleEncryptFile);
+
+Alice can recover the file at any time using the decryption command:
+
+#%  ConsoleExample (Account.ConsoleDecryptFile);
+
+Although the encrypted file can be accessed by Alice with precisely the same ease as the plaintext
+version, the contents of the encrypted file are not readable by any other user of the machine unless 
+Alice explicitly grants access. The encrypted file may be stored on a shared drive, cloud file system
+or removable storage without disclosing the contents.
+
+#end zfile
+
+#zfile CreateExamples ArchitectureEscrow "Examples\\ArchitectureEscrow.md" Example
+#%  ConsoleExample (Example.Account.ProfileEscrow);
+#end zfile
+
+#zfile CreateExamples ArchitectureRecovery "Examples\\ArchitectureRecovery.md" Example
+#%  ConsoleExample (Example.Account.ProfileRecover);
+#end zfile
+
+#zfile CreateExamples ArchitectureCredential "Examples\\ArchitectureCredential.md" Example
+
+Alice adds the username and password she uses to access her weather service account 
+to her credentials catalog:
+
+#%  ConsoleExample (Example.Account.PasswordAdd);
+
+As with all Mesh Catalogs, the catalog data is encrypted and cannot be accessed by any unauthorized
+party including the Mesh Service Provider.
+
+If needed, she can retrieve the credentials from the catalog by specifying the network
+resource to which access is required:
+
+#%  ConsoleExample (Example.Account.PasswordGet);
+
+This capability provides a means of preventing one of the most common causes of enterprise password
+breach in which a system administrator encodes the access credentials for a service into a 
+script used to access the service. A script containing a command to extract the credentials from
+a Mesh catalog will only work for a user authorized to access the credentials in the Mesh.
+
+#end zfile
+
+#zfile CreateExamples ArchitectureConnectDirect "Examples\\ArchitectureConnectDirect.md" Example
+The connection request is initiated on the device being connected:
+
+#%  ConsoleExample (Example.Connect.ConnectRequest);
+
+Using her administration device, Alice gets a list of pending requests. Seeing that
+there is a pending request matching the witness value presented by the device, Alice
+accepts it:
+
+#%  ConsoleExample (Concat (Example.Connect.ConnectPending, Example.Connect.ConnectAccept) );
+
+Alice can now synchronize her newly connected device to her account:
+
+#%  ConsoleExample (Example.Connect.ConnectComplete);
+
+
+#end zfile
+
+#zfile CreateExamples ArchitectureConnectPassword "Examples\\ArchitectureConnectPassword.md" Example
+
+For example, Alice can now access her credential catalog from the new device:
+
+#%  ConsoleExample (Example.Connect.PasswordList2);
+
+
+#end zfile
+
+
+#zfile CreateExamples ArchitectureConnectDisconnect "Examples\\ArchitectureConnectDisconnect.md" Example
+
+Alice disconnects the new device:
+
+#%  ConsoleExample (Example.Connect.Disconnect);
+
+The device can no longer access the password catalog:
+
+#%  ConsoleExample (Example.Connect.PasswordList2Disconnect);
+
+
+#end zfile
+
+
+#zfile CreateExamples ArchitectureConnectSSH "Examples\\ArchitectureConnectSSH.md" Example
+
+Alice creates an SSH profile within her Mesh on the administrative device.
+
+#%  ConsoleExample (Example.Apps.SSH);
+
+After configuring an SSH server to accept her new SSH credential, she can use any of her devices 
+that has been granted the SSH right to connect to it.
+
+#end zfile
+
+
+#zfile CreateExamples ArchitectureContactRemote "Examples\\ArchitectureContactRemote.md" Example
+
+Alice wants to exchange Mesh messages with Bob. Although Alice knows Bob's Mesh address 
+(#{Example.BobAccount}), she does not (yet) have permission to send any message to Bob
+excepting a request to exchange contact information.
+
+Bob sends Alice a contact exchange request:
+
+#%  ConsoleExample (Example.Contact.ContactBobRequest);
+
+Alice checks his Mesh messages and approves Bob's request:
+
+#%  ConsoleExample (Example.Contact.ContactAliceResponse);
+
+#end zfile
+
+
+#zfile CreateExamples ArchitectureConfirm "Examples\\ArchitectureConfirm.md" Example
+
+Alice attempts to log into a secure console in the control room. The secure console recognizes 
+Alice but a second factor is required. The console issues a challenge to Alice at her
+registered account asking if she would like to log into the secure console:
+
+#%  ConsoleExample (Example.Confirm.ConfirmRequest);
+
+Alice checks her pending messages and accepts the request:
+
+#%  ConsoleExample (Example.Confirm.ConfirmAliceResponse);
+
+The secure console verifies the response and grants access:
+
+#%  ConsoleExample (Example.Confirm.ConfirmVerify);
+
+#end zfile
+
+#zfile CreateExamples ArchitectureRecrypt "Examples\\ArchitectureRecrypt.md" Example
+Alice creates the recryption group #{GroupService} to share confidential information with
+her closest friends:
+
+#%  ConsoleExample (Example.Group.GroupCreate);
+
+Bob encrypts a test file but he can't decrypt it because he isn't in the group:
+
+#%  ConsoleExample (Example.Group.GroupEncrypt);
+
+Even though she is the group administrator, Alice can't decrypt the file either until
+she adds herself to the group.
+
+#%  ConsoleExample (Example.Group.GroupDecryptAlice);
+
+Alice adds Bob to the group:
+
+#%  ConsoleExample (Example.Group.GroupAddBob);
+
+Adding Bob to the group gives him immediate access to any file encrypted under
+the group key without making any change to the encrypted files:
+
+#%  ConsoleExample (Example.Group.GroupDecryptBobSuccess);
+
+Removing Bob from the group immediately withdraws his access.
+
+#%  ConsoleExample (Example.Group.GroupDeleteBob);
+
+Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
+earlier).
+
+#%  ConsoleExample (Example.Group.GroupDecryptBobRevoked);
+
+#end zfile
+
 
 #zfile CreateExamples ArchVariousUDF "Examples\\ArchVariousUDF.md" Example
 #{Preformat}
@@ -60,228 +256,9 @@
 </dl>
 #end zfile
 
-#zfile CreateExamples Colophon "Examples\\Colophon.md" Example
 
-The examples in this document were created on #{DateTime.Now.ToString()}. 
-Out of #{TestCLI.CountTotal} examples, #{TestCLI.ErrorCountTotal} were not functional.
 
-#end zfile
 
-
-#zfile CreateExamples ArchitectureCreateMesh "Examples\\ArchitectureCreateMesh.md" Example
-The user specifies the initial account address to be used (#{AliceService1}). Use of this address
-is of course dependent on authorization by the Mesh Service Provider (#{MeshServiceProvider1})
-and is likely to require authentication and possibly payment.
-
-#%  ConsoleExample (Example.ProfileCreateAlice);
-#end zfile
-
-#zfile CreateExamples ArchitectureEncryptDecrypt "Examples\\ArchitectureEncryptDecrypt.md" Example
-
-#%  ConsoleExample (null);
-
-[NYI Disconnect]
-
-[Can't access the data any more.]
-
-
-#end zfile
-
-
-#zfile CreateExamples ArchitectureCredential "Examples\\ArchitectureCredential.md" Example
-#%  ConsoleExample (Example.PasswordSequence);
-#end zfile
-
-
-
-
-
-
-#zfile CreateExamples ArchitectureConnectDirect "Examples\\ArchitectureConnectDirect.md" Example
-The connection request is initiated on the device being connected:
-
-#%  ConsoleExample (Example.ConnectRequest);
-
-Using her administration device, Alice gets a list of pending requests. Seeing that
-there is a pending request matching the witness value presented by the device, Alice
-accepts it:
-
-#%  ConsoleExample (Concat (Example.ConnectPending, Example.ConnectAccept) );
-
-The new device will now synchronize automatically in response to any Mesh commands. For example, 
-listing the password catalog:
-
-#%  ConsoleExample (Example.PasswordList2);
-#end zfile
-
-#zfile CreateExamples ArchitectureConnectDisconnect "Examples\\ArchitectureConnectDisconnect.md" Example
-
-#%  ConsoleExample (null);
-
-[NYI Disconnect]
-
-[Can't access the data any more.]
-
-
-#end zfile
-
-#zfile CreateExamples ArchitectureConnectSSH "Examples\\ArchitectureConnectSSH.md" Example
-
-Alice creates an SSH profile within her Mesh on the administrative device.
-
-#%  ConsoleExample (null);
-
-After configuring an SSH server to accept her new SSH credential, she can use any of her devices 
-that has been granted the SSH right to connect to it.
-
-#end zfile
-
-
-#zfile CreateExamples ArchitectureConnectPIN "Examples\\ArchitectureConnectPIN.md" Example
-The PIN connection mechanism begins with the issue of the PIN:
-
-#%  ConsoleExample (Example.ConnectGetPin);
-
-The PIN code is transmitted out of band to the device being connected:
-
-#%  ConsoleExample (Example.ConnectPin);
-
-Since the request was pre-authorized, it is not necessary for Alice to explicitly
-accept the connection request but the administration device is needed to create
-the connection assertion:
-
-#%  ConsoleExample (Example.ConnectPending3);
-
-We can check the device connection by attempting to synchronize to the profile account:
-
-#%  ConsoleExample (Example.ConnectSyncPIN);
-
-Note that this connection mechanism could be adapted to allow a device with a 
-camera affordance to connect by scanning a QR code on the administration device.
-#end zfile
-
-#zfile CreateExamples ArchitectureConnectQR "Examples\\ArchitectureConnectQR.md" Example
-To use the device QR code connection mechanism, we require a Web service that will host
-the connection document #{EARLService} and a MeshService account that the device will attempt to 
-complete the connection by requesting synchronization #{PollService}.
-
-To begin the process we generate a new random key and combine it with the service
-to create an EARL:
-
-~~~~
-#{DeviceCreateUDF}
-~~~~
-
-Next a device profile is created and preregistered on with the Mesh Service that will
-provide the hailing service. Since we are only preparing one device it is convenient to
-do this on the device itself. In a manufacturing scenario, these steps would typically 
-be performed offline in bulk.
-
-#%  ConsoleExample (Example.DeviceEarl1);
-
-Once initialized the device attempts to poll the service for a connection each time it
-is powered on, when a connection button affordance on the device is pressed or at
-other times as agreed with the Mesh Service Provider:
-
-#%  ConsoleExample (Example.DeviceEarl2);
-
-To connect the device to her profile, Alice scans the device with her administration 
-device to obtain the UDF. The administration device retrieves the connection description, 
-decrypts it and then uses the information in the description to create the necessary
-Device Connection Assertion and connect to the device hailing Mesh Service Account to 
-complete the process:
-
-#%  ConsoleExample (Example.DeviceEarl3);
-
-When the device next attempts to connect to the hailing service, it receives the Device 
-Connection Assertion:
-
-#%  ConsoleExample (Example.DeviceEarl4);
-#end zfile
-
-
-#zfile CreateExamples ArchitectureContactDefinition "Examples\\ArchitectureContactDefinition.md" Example
-Alice creates a contact entry for herself:
-
-#%  ConsoleExample (Example.ContactAddSelf);
-
-#end zfile
-
-
-#zfile CreateExamples ArchitectureContactRequest "Examples\\ArchitectureContactRequest.md" Example
-
-Bob requests Alice add him to her contacts catalog:
-
-#%  ConsoleExample (Example.ContactRequest);
-
-When Alice next checks her messages, she sees the pending contact request from Bob and accepts
-it without further validation. Bob's contact details are added to her catalog and Bob receives 
-a response containing Alice's credentials:
-
-#%  ConsoleExample (Concat (Example.ContactPending, Example.ContactAccept));
-
-#end zfile
-
-
-#zfile CreateExamples ArchitectureConfirm "Examples\\ArchitectureConfirm.md" Example
-
-Alice attempts to log into a secure console in the control room. The secure console recognizes 
-Alice but a second factor is required. The console issues a challenge to Alice at her
-registered account asking if she would like to log into the secure console:
-
-#%  ConsoleExample (null);
-
-Alice checks her pending messages and accepts the request:
-
-#%  ConsoleExample (null);
-
-The secure console verifies the response and grants access:
-
-#%  ConsoleExample (null);
-
-#end zfile
-
-
-
-#zfile CreateExamples ArchitectureRecrypt "Examples\\ArchitectureRecrypt.md" Example
-Alice creates the recryption group #{GroupService} to share confidential information with
-her closest friends:
-
-#%  ConsoleExample (Example.GroupCreate);
-
-Bob encrypts a test file but he can't decrypt it because he isn't in the group:
-
-#%  ConsoleExample (Example.GroupEncrypt);
-
-Since she is the group administrator, Alice can decrypt the
-test file using the group decryption key:
-
-#%  ConsoleExample (Example.GroupDecryptAlice);
-
-Adding Bob to the group gives him immediate access to any file encrypted under
-the group key without making any change to the encrypted files:
-
-#%  ConsoleExample (Example.GroupDecryptBob2);
-
-Removing Bob from the group immediately withdraws his access.
-
-#%  ConsoleExample (Example.GroupDelete);
-
-Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
-earlier).
-
-#%  ConsoleExample (Example.GroupDecryptBob3);
-
-#end zfile
-
-
-#zfile CreateExamples ArchitectureEscrow "Examples\\ArchitectureEscrow.md" Example
-#%  ConsoleExample (Example.ProfileEscrow);
-#end zfile
-
-#zfile CreateExamples ArchitectureRecovery "Examples\\ArchitectureRecovery.md" Example
-#%  ConsoleExample (Example.ProfileRecover);
-#end zfile
 
 
 #end xclass

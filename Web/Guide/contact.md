@@ -68,9 +68,9 @@ A complete list of contacts is obtained using the  `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
-  Person MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
-  Anchor MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5
+<rsp>Entry<CatalogedContact>: MCAP-Q4KN-WUUZ-PAAK-AB6K-5JVV-AKRD
+  Person MCAP-Q4KN-WUUZ-PAAK-AB6K-5JVV-AKRD
+  Anchor MCAP-Q4KN-WUUZ-PAAK-AB6K-5JVV-AKRD
   Address alice@example.com
 
 </div>

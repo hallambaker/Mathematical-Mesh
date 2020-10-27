@@ -183,6 +183,9 @@
 			Description
 				|The fingerprint of the service profile to which the account is
 				|currently bound.
+		Struct KeyData EscrowEncryption
+			Description
+				|Escrow key associated with the account.
 		Struct KeyData AccountEncryption
 			Description
 				|Key currently used to encrypt data under this profile

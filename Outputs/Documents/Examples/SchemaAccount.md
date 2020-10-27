@@ -7,42 +7,42 @@ profile and the encryption key to be used by the account.
 {
   "ProfileUser":{
     "ProfileSignature":{
-      "Udf":"MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5",
+      "Udf":"MCAP-Q4KN-WUUZ-PAAK-AB6K-5JVV-AKRD",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"UQ7CJMaG5HGRpZiO6TnaeztTOISMVLo7A3MQNuXVUC6XPlO
-  o1nIw3jDWMJgzs41y-hlXCy11bL2A"}}},
+          "Public":"BKWzxdJZGtaUcv-H6tDgpt9-lZ5s84SjsTKnMpqIZCY9t2a
+  00HPN1_r_rrua8aIshqBoKN3hUwcA"}}},
     "AccountAddress":"alice@example.com",
-    "ServiceUdf":"MCQN-XSQB-BFSH-DUIO-75QR-OO6H-VQDU",
+    "ServiceUdf":"MAC2-XY6M-MEV2-QFIM-43XQ-5M3B-NZSE",
     "AccountEncryption":{
-      "Udf":"MADQ-3NW6-SHXF-L6X6-NI2O-CF7A-X5Y7",
+      "Udf":"MBRX-NLXZ-KETC-U4P5-6V3F-K54Z-TWEA",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"074FM_JEfFlHPtMSdYtrWuvJ6-2E5-LmCaucL1rivit3173
-  nc96nSMNv1xIOog0SZp15ba8apOIA"}}},
+          "Public":"jrlfdLfurS0dZNsjvq4BjPqnSzqRM8uSFFyqNI-SwhvwFMx
+  6-0l86g9IrpsZUeOBLcIRWeUflB6A"}}},
     "AdministratorSignature":{
-      "Udf":"MDUR-4AKJ-GEI7-7NXU-HZMM-C2N3-34S5",
+      "Udf":"MCAP-Q4KN-WUUZ-PAAK-AB6K-5JVV-AKRD",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"UQ7CJMaG5HGRpZiO6TnaeztTOISMVLo7A3MQNuXVUC6XPlO
-  o1nIw3jDWMJgzs41y-hlXCy11bL2A"}}},
+          "Public":"BKWzxdJZGtaUcv-H6tDgpt9-lZ5s84SjsTKnMpqIZCY9t2a
+  00HPN1_r_rrua8aIshqBoKN3hUwcA"}}},
     "AccountAuthentication":{
-      "Udf":"MC5O-LURE-5J5U-SANY-LBHI-RPQN-6675",
+      "Udf":"MAJ5-B3P7-P3BZ-URXS-Y44W-X2JA-SOMM",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"Av1aQAIrvbO73VhoniH-ImPZfNA6xiOOHwZ1XDxD2CAPdJs
-  gDVuv7NwINTDB_g6XlMaNq0eS9RsA"}}},
+          "Public":"_HmC3ec0QxUv8-YXZN3NIjrNBK5FUQ5DsDKPlO0UgfdQgsf
+  O20RTMo49x1Key8Oi65wsE2WKJwuA"}}},
     "AccountSignature":{
-      "Udf":"MBGN-XQJ6-UJNE-5HVX-6RCA-CPNL-UE4E",
+      "Udf":"MBKV-CEFR-UTO2-W36K-M5AK-UXPK-CWNC",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"uR1--x4L5hLJMyKVkCsS01gq1SdtbLraMbSsiCQGQSLSaRL
-  yg0HzNggQHSjVAAHhyi09CT49JosA"}}}}}
+          "Public":"Bk1IcORYC15_dkwG5sWYDWwMVV0M_8cCVn8JSHWkahU4Vyq
+  38F2p84PcBdVcgLLPHYXKnmq_JY-A"}}}}}
 ~~~~
 
 Each device connected to the account requires an activation record. This specifies the 
@@ -51,8 +51,8 @@ key contribtions added to the manufacturer device profile keys:
 ~~~~
 {
   "ActivationDevice":{
-    "ActivationKey":"ZAAQ-HZYF-DUTD-GLBD-SL63-CLCU-2EPM-YWRB-WAHG-ZJNX-TXWK-7MAR-PJ5U-WPV5",
-    "AccountUdf":"MBCL-G5JV-3LSL-2PK5-CCOQ-KWTN-MWAF"}}
+    "ActivationKey":"ZAAQ-G5LM-HVPL-QAXJ-YGZA-WC44-ZI6J-PUCU-N7KW-6RQ2-5ERX-AH6Z-SWY7-N3BM",
+    "AccountUdf":"MDBM-S4YO-CEAO-POM5-EGOS-INZO-P24W"}}
 ~~~~
 
 The resulting key set is specified in the device connection:

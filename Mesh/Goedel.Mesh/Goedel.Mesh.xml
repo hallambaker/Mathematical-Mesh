@@ -7157,6 +7157,11 @@
             currently bound.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ProfileAccount.EscrowEncryption">
+             <summary>
+            Escrow key associated with the account.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.ProfileAccount.AccountEncryption">
              <summary>
             Key currently used to encrypt data under this profile

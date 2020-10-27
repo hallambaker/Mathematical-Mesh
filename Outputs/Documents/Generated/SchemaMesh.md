@@ -161,6 +161,8 @@ These subclasses may be merged at some future date.
 <dt>ServiceUdf: String (Optional)
 <dd>The fingerprint of the service profile to which the account is
 currently bound.
+<dt>EscrowEncryption: KeyData (Optional)
+<dd>Escrow key associated with the account.
 <dt>AccountEncryption: KeyData (Optional)
 <dd>Key currently used to encrypt data under this profile
 <dt>AdministratorSignature: KeyData (Optional)

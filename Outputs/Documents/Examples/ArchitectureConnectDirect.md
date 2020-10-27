@@ -4,8 +4,8 @@ The connection request is initiated on the device being connected:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MBSW-5TDC-4JNH-DP7U-YRYH-336S-XS7X
-   Witness value = JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
+<rsp>   Device UDF = MCRS-WMA4-QV32-HPLQ-4L3R-MSYA-UJXZ
+   Witness value = AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
 </div>
 ~~~~
 
@@ -17,19 +17,19 @@ accepts it:
 ~~~~
 <div="terminal">
 <cmd>Alice> device pending
-<rsp>MessageID: PF33-UK76-TZDH-UBFZ-4JSM-YRZB-YKPS
+<rsp>MessageID: HCG4-XSEY-PC7D-KLDI-OP6X-MEBD-TLWT
         Connection Request::
-        MessageID: PF33-UK76-TZDH-UBFZ-4JSM-YRZB-YKPS
+        MessageID: HCG4-XSEY-PC7D-KLDI-OP6X-MEBD-TLWT
         To:  From: 
-        Device:  MCIA-7IZ5-KGO3-U3CW-Y6Q2-5NMS-ZPXG
-        Witness: PF33-UK76-TZDH-UBFZ-4JSM-YRZB-YKPS
-MessageID: JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
+        Device:  MARV-3CT2-H7RW-CPGM-ILRK-4C6V-QIYK
+        Witness: HCG4-XSEY-PC7D-KLDI-OP6X-MEBD-TLWT
+MessageID: AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
         Connection Request::
-        MessageID: JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
+        MessageID: AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
         To:  From: 
-        Device:  MBSW-5TDC-4JNH-DP7U-YRYH-336S-XS7X
-        Witness: JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
-<cmd>Alice> device accept JAIU-EMU6-PRO7-DPWT-JWFX-NJE4-S6Y2
+        Device:  MCRS-WMA4-QV32-HPLQ-4L3R-MSYA-UJXZ
+        Witness: AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
+<cmd>Alice> device accept AZQV-NA3W-DTL6-6F6Z-Z2KX-UU4I-OPC4
 <rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~

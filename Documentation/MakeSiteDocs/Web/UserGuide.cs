@@ -222,20 +222,6 @@ namespace ExampleGenerator {
 		
 
 		//
-		// DescribeMessage
-		//
-		public void DescribeMessage (ExampleResult Result) {
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("<div=\"helptext\">\n{0}", _Indent);
-			_Output.Write ("<over>\n{0}", _Indent);
-			_Output.Write ("[NYI]\n{0}", _Indent);
-			_Output.Write ("<over>\n{0}", _Indent);
-			_Output.Write ("</div>\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			}
-		
-
-		//
 		// Describe
 		//
 		public void Describe (DescribeCommandSet CommandSet) {
@@ -344,14 +330,20 @@ namespace ExampleGenerator {
 		//
 		// DescribeRequest
 		//
-		public void DescribeRequest (List<ExampleResult> exampleResults) {
+		public void DescribeRequest (Trace trace) {
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, trace.GetRequest());
+			_Output.Write ("~~~~\n{0}", _Indent);
 			}
 		
 
 		//
 		// DescribeResponse
 		//
-		public void DescribeResponse (List<ExampleResult> exampleResults) {
+		public void DescribeResponse (Trace trace) {
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, trace.GetResponse());
+			_Output.Write ("~~~~\n{0}", _Indent);
 			}
 		
 

@@ -24,7 +24,9 @@ namespace ExampleGenerator {
 			 SchemaAliceProfile(Example);
 			 SchemaAliceDeviceCoffee(Example);
 			 SchemaAliceActivationCoffee(Example);
+			 SchemaConnectionCoffee(Example);
 			 SchemaAliceActivationWatch(Example);
+			 SchemaProfileService(Example);
 			 SchemaConnectionHost(Example);
 			 SchemaEntrySSH(Example);
 			 SchemaEntryMail(Example);
@@ -34,8 +36,9 @@ namespace ExampleGenerator {
 			 SchemaEntryTask(Example);
 			 SchemaDeriveTables(Example);
 			 SchemaMessageIds(Example);
+			 SchemaPINFunction(Example);
 			 SchemaPINWitness(Example);
-			 SchemaMaster(Example);
+			 SchemaClientAuthKeyAgreement(Example);
 			 SchemaDevice(Example);
 			 SchemaAccount(Example);
 			 SchemaService(Example);
@@ -43,6 +46,20 @@ namespace ExampleGenerator {
 			 SchemaMessageConnection(Example);
 			 SchemaMessageContact(Example);
 			 SchemaMessageConfirmation(Example);
+			}
+		
+
+		//
+		// DescribeMessage
+		//
+		public void DescribeMessage (Goedel.Mesh.Message message) {
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"helptext\">\n{0}", _Indent);
+			_Output.Write ("<over>\n{0}", _Indent);
+			_Output.Write ("[NYI]\n{0}", _Indent);
+			_Output.Write ("<over>\n{0}", _Indent);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
 			}
 		
 
@@ -56,7 +73,11 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaAliceProfile(CreateExamples Example) {
 
-				_Output.Write ("[To be specified]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("For example, the personal account profile Alice created is:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (AliceProfileAccount);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -70,7 +91,9 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaAliceDeviceCoffee(CreateExamples Example) {
 
-				_Output.Write ("[To be specified]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.AliceProfileDeviceCoffee);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -84,7 +107,23 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaAliceActivationCoffee(CreateExamples Example) {
 
-				_Output.Write ("[To be specified]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.AliceActivationDeviceCoffee);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// SchemaConnectionCoffee
+		//
+		public static void SchemaConnectionCoffee(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaConnectionCoffee.md");
+			Example._Output = _Output;
+			Example._SchemaConnectionCoffee(Example);
+			}
+		public void _SchemaConnectionCoffee(CreateExamples Example) {
+
+				  Format (Connect.AliceConnectionDeviceCoffee);
 					}
 		
 
@@ -98,7 +137,21 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaAliceActivationWatch(CreateExamples Example) {
 
-				_Output.Write ("[To be specified]\n{0}", _Indent);
+				  Format (Connect.AliceActivationDeviceWatch);
+					}
+		
+
+		//
+		// SchemaProfileService
+		//
+		public static void SchemaProfileService(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaProfileService.md");
+			Example._Output = _Output;
+			Example._SchemaProfileService(Example);
+			}
+		public void _SchemaProfileService(CreateExamples Example) {
+
+				  Format (Service.ProfileService);
 					}
 		
 
@@ -112,7 +165,105 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaConnectionHost(CreateExamples Example) {
 
-				_Output.Write ("[To be specified]\n{0}", _Indent);
+				  Format (Service.ConnectionHost);
+					}
+		
+
+		//
+		// SchemaEntrySSH
+		//
+		public static void SchemaEntrySSH(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaEntrySSH.md");
+			Example._Output = _Output;
+			Example._SchemaEntrySSH(Example);
+			}
+		public void _SchemaEntrySSH(CreateExamples Example) {
+
+				 Format(Apps.SSHCatalogEntry);
+					}
+		
+
+		//
+		// SchemaEntryMail
+		//
+		public static void SchemaEntryMail(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaEntryMail.md");
+			Example._Output = _Output;
+			Example._SchemaEntryMail(Example);
+			}
+		public void _SchemaEntryMail(CreateExamples Example) {
+
+				 Format(Apps.MailCatalogEntry);
+					}
+		
+
+		//
+		// SchemaEntryBookmark
+		//
+		public static void SchemaEntryBookmark(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaEntryBookmark.md");
+			Example._Output = _Output;
+			Example._SchemaEntryBookmark(Example);
+			}
+		public void _SchemaEntryBookmark(CreateExamples Example) {
+
+				 Format(Apps.BookmarkCatalogEntry);
+					}
+		
+
+		//
+		// SchemaEntryContact
+		//
+		public static void SchemaEntryContact(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaEntryContact.md");
+			Example._Output = _Output;
+			Example._SchemaEntryContact(Example);
+			}
+		public void _SchemaEntryContact(CreateExamples Example) {
+
+				 Format(Apps.ContactCatalogEntry);
+					}
+		
+
+		//
+		// SchemaEntryCredential
+		//
+		public static void SchemaEntryCredential(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaEntryCredential.md");
+			Example._Output = _Output;
+			Example._SchemaEntryCredential(Example);
+			}
+		public void _SchemaEntryCredential(CreateExamples Example) {
+
+				 Format(Apps.CredentialCatalogEntry);
+					}
+		
+
+		//
+		// SchemaEntryNetwork
+		//
+		public static void SchemaEntryNetwork(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaEntryNetwork.md");
+			Example._Output = _Output;
+			Example._SchemaEntryNetwork(Example);
+			}
+		public void _SchemaEntryNetwork(CreateExamples Example) {
+
+				 Format(Apps.CredentialNetworkEntry);
+					}
+		
+
+		//
+		// SchemaEntryTask
+		//
+		public static void SchemaEntryTask(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaEntryTask.md");
+			Example._Output = _Output;
+			Example._SchemaEntryTask(Example);
+			}
+		public void _SchemaEntryTask(CreateExamples Example) {
+
+				 Format(Apps.TaskCatalogEntry);
 					}
 		
 
@@ -126,7 +277,24 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDeriveTables(CreateExamples Example) {
 
-				_Output.Write ("[To be specified]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("<table>\n{0}", _Indent);
+				_Output.Write ("<tr>\n{0}", _Indent);
+				_Output.Write ("<td>\n{0}", _Indent);
+				_Output.Write ("Title 1\n{0}", _Indent);
+				_Output.Write ("</td>\n{0}", _Indent);
+				_Output.Write ("<td>\n{0}", _Indent);
+				_Output.Write ("Title 2\n{0}", _Indent);
+				_Output.Write ("</td>\n{0}", _Indent);
+				_Output.Write ("</tr>\n{0}", _Indent);
+				_Output.Write ("<tr>\n{0}", _Indent);
+				_Output.Write ("<td>\n{0}", _Indent);
+				_Output.Write ("</td>\n{0}", _Indent);
+				_Output.Write ("<td>\n{0}", _Indent);
+				_Output.Write ("</td>\n{0}", _Indent);
+				_Output.Write ("</tr>\n{0}", _Indent);
+				_Output.Write ("<table>\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -145,6 +313,20 @@ namespace ExampleGenerator {
 		
 
 		//
+		// SchemaPINFunction
+		//
+		public static void SchemaPINFunction(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaPINFunction.md");
+			Example._Output = _Output;
+			Example._SchemaPINFunction(Example);
+			}
+		public void _SchemaPINFunction(CreateExamples Example) {
+
+				_Output.Write ("[To be specified]\n{0}", _Indent);
+					}
+		
+
+		//
 		// SchemaPINWitness
 		//
 		public static void SchemaPINWitness(CreateExamples Example) { /* XFile  */
@@ -153,6 +335,20 @@ namespace ExampleGenerator {
 			Example._SchemaPINWitness(Example);
 			}
 		public void _SchemaPINWitness(CreateExamples Example) {
+
+				_Output.Write ("[To be specified]\n{0}", _Indent);
+					}
+		
+
+		//
+		// SchemaClientAuthKeyAgreement
+		//
+		public static void SchemaClientAuthKeyAgreement(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaClientAuthKeyAgreement.md");
+			Example._Output = _Output;
+			Example._SchemaClientAuthKeyAgreement(Example);
+			}
+		public void _SchemaClientAuthKeyAgreement(CreateExamples Example) {
 
 				_Output.Write ("[To be specified]\n{0}", _Indent);
 					}
@@ -266,144 +462,26 @@ namespace ExampleGenerator {
 		
 
 		//
-		// SchemaDevicePrivate
+		// SchemaMessageCompletion
 		//
-		public static void SchemaDevicePrivate(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaDevicePrivate.md");
+		public static void SchemaMessageCompletion(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaMessageCompletion.md");
 			Example._Output = _Output;
-			Example._SchemaDevicePrivate(Example);
+			Example._SchemaMessageCompletion(Example);
 			}
-		public void _SchemaDevicePrivate(CreateExamples Example) {
+		public void _SchemaMessageCompletion(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("*****************Remove\n{0}", _Indent);
+				_Output.Write ("Having processed a message, a completion message is added to the spool so that other devices \n{0}", _Indent);
+				_Output.Write ("can see that it has been read.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-					}
-		
-
-		//
-		// SchemaDeviceConnection
-		//
-		public static void SchemaDeviceConnection(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaDeviceConnection.md");
-			Example._Output = _Output;
-			Example._SchemaDeviceConnection(Example);
-			}
-		public void _SchemaDeviceConnection(CreateExamples Example) {
-
-				_Output.Write ("*****************Remove\n{0}", _Indent);
-					}
-		
-
-		//
-		// SchemaEntryDevice
-		//
-		public static void SchemaEntryDevice(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaEntryDevice.md");
-			Example._Output = _Output;
-			Example._SchemaEntryDevice(Example);
-			}
-		public void _SchemaEntryDevice(CreateExamples Example) {
-
-				_Output.Write ("{1}\n{0}", _Indent, "SchemaEntryDevice".Task("SchemaEntryDevice"));
-					}
-		
-
-		//
-		// SchemaEntryContact
-		//
-		public static void SchemaEntryContact(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaEntryContact.md");
-			Example._Output = _Output;
-			Example._SchemaEntryContact(Example);
-			}
-		public void _SchemaEntryContact(CreateExamples Example) {
-
-				 Format(ContactGet[0].ResultEntry?.CatalogEntry);
-					}
-		
-
-		//
-		// SchemaEntryCredential
-		//
-		public static void SchemaEntryCredential(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaEntryCredential.md");
-			Example._Output = _Output;
-			Example._SchemaEntryCredential(Example);
-			}
-		public void _SchemaEntryCredential(CreateExamples Example) {
-
-				 Format(PasswordGet[0].ResultEntry?.CatalogEntry);
-					}
-		
-
-		//
-		// SchemaEntryNetwork
-		//
-		public static void SchemaEntryNetwork(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaEntryNetwork.md");
-			Example._Output = _Output;
-			Example._SchemaEntryNetwork(Example);
-			}
-		public void _SchemaEntryNetwork(CreateExamples Example) {
-
-				 Format(NetworkGet[0].ResultEntry?.CatalogEntry);
-					}
-		
-
-		//
-		// SchemaEntryBookmark
-		//
-		public static void SchemaEntryBookmark(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaEntryBookmark.md");
-			Example._Output = _Output;
-			Example._SchemaEntryBookmark(Example);
-			}
-		public void _SchemaEntryBookmark(CreateExamples Example) {
-
-				 Format(BookmarkGet[0].ResultEntry?.CatalogEntry);
-					}
-		
-
-		//
-		// SchemaEntryTask
-		//
-		public static void SchemaEntryTask(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaEntryTask.md");
-			Example._Output = _Output;
-			Example._SchemaEntryTask(Example);
-			}
-		public void _SchemaEntryTask(CreateExamples Example) {
-
-				 Format(CalendarGet[0].ResultEntry?.CatalogEntry);
-					}
-		
-
-		//
-		// SchemaEntrySSH
-		//
-		public static void SchemaEntrySSH(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaEntrySSH.md");
-			Example._Output = _Output;
-			Example._SchemaEntrySSH(Example);
-			}
-		public void _SchemaEntrySSH(CreateExamples Example) {
-
-				 Format(SSHCreate[0].ResultSSH?.CatalogEntry);
-					}
-		
-
-		//
-		// SchemaEntryMail
-		//
-		public static void SchemaEntryMail(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaEntryMail.md");
-			Example._Output = _Output;
-			Example._SchemaEntryMail(Example);
-			}
-		public void _SchemaEntryMail(CreateExamples Example) {
-
-				 Format(MailAdd[0].ResultMail?.CatalogEntry);
+				_Output.Write ("For example, when Alice reads the connection request from the device in the architecture \n{0}", _Indent);
+				_Output.Write ("examples, a completion message is added to Alice's inbound spool so that the device is not \n{0}", _Indent);
+				_Output.Write ("activated a second time by mistake:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage (Connect.ConnectPINCompleteWitness);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -422,21 +500,18 @@ namespace ExampleGenerator {
 				_Output.Write ("described in a Message sent by the administration device to allow other admin devices\n{0}", _Indent);
 				_Output.Write ("to accept the request made.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (ConnectPending?[0]);
+				 DescribeMessage (Connect.ConnectPINMessagePin);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The initial request is sent to the service\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (ConnectPending?[0]);
+				 DescribeMessage (Connect.ConnectRequestWitness);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The service returns an acknowledgement giving the Witness value. Note that this is not a 'reply'\n{0}", _Indent);
 				_Output.Write ("since it comes from the service, not the user.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage (Connect.AcknowledgeConnectionWitness);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (ConnectPending?[0]);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[Note, this mechanism should be revised to ensure that there is perfect forward secrecy. The \n{0}", _Indent);
-				_Output.Write ("device should provide a nonce key as a mixin]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -455,11 +530,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Bob asks Alice to send her contact details and sends his.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (ContactPending?[0]);
+				 DescribeMessage (Contact.BobRequest);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice responds with her details:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (ContactPending?[0]);
+				 DescribeMessage (Contact.AliceResponse);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("[Note that this exchange could be performed automatically on Alice's behalf by the service if she \n{0}", _Indent);
 				_Output.Write ("delegates this action to it.]\n{0}", _Indent);
@@ -481,31 +556,11 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The confirmation request\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (ConfirmPending?[0]);
+				 DescribeMessage (Confirm.RequestConfirmation);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The confirmation response\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (ConfirmPending?[0]);
-				_Output.Write ("\n{0}", _Indent);
-					}
-		
-
-		//
-		// SchemaMessageCompletion
-		//
-		public static void SchemaMessageCompletion(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaMessageCompletion.md");
-			Example._Output = _Output;
-			Example._SchemaMessageCompletion(Example);
-			}
-		public void _SchemaMessageCompletion(CreateExamples Example) {
-
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Having processed a message, a completion message is added to the spool so that other devices \n{0}", _Indent);
-				_Output.Write ("can see that it has been read:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (ConfirmGetReject?[0]);
-				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage (Confirm.ResponseConfirmation);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		}

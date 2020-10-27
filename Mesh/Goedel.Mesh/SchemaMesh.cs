@@ -1469,6 +1469,11 @@ namespace Goedel.Mesh {
 
 		public virtual string						ServiceUdf  {get; set;}
         /// <summary>
+        ///Escrow key associated with the account.
+        /// </summary>
+
+		public virtual KeyData						EscrowEncryption  {get; set;}
+        /// <summary>
         ///Key currently used to encrypt data under this profile
         /// </summary>
 
@@ -1532,6 +1537,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("ServiceUdf", 1);
 					_writer.WriteString (ServiceUdf);
 				}
+			if (EscrowEncryption != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EscrowEncryption", 1);
+					EscrowEncryption.Serialize (_writer, false);
+				}
 			if (AccountEncryption != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("AccountEncryption", 1);
@@ -1581,6 +1591,13 @@ namespace Goedel.Mesh {
 					}
 				case "ServiceUdf" : {
 					ServiceUdf = jsonReader.ReadString ();
+					break;
+					}
+				case "EscrowEncryption" : {
+					// An untagged structure
+					EscrowEncryption = new KeyData ();
+					EscrowEncryption.Deserialize (jsonReader);
+ 
 					break;
 					}
 				case "AccountEncryption" : {
