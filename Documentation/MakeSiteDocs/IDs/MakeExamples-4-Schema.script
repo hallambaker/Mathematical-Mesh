@@ -167,22 +167,11 @@ Title 2
 
 
 #zfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" Example
-#!% Format(AliceProfiles?.ProfileMesh);
-
-
-[This is to be eliminated]
-
+#% Format(AliceProfileAccount);
 #end zfile
 
 #zfile CreateExamples SchemaDevice "Examples\\SchemaDevice.md" Example
-#% var catalogedDevice = AliceProfiles?.CatalogedDevice;
-#% var profileDevice = catalogedDevice?.ProfileDevice;
-
-Alice's Device Profile specifies keys for encryption, signature and exchange:
-
-#% Format(profileDevice);
-
-
+#% Format(AliceProfileDeviceCoffee);
 #end zfile
 
 

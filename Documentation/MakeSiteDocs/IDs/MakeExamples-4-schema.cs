@@ -364,10 +364,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaMaster(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[This is to be eliminated]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
+				 Format(AliceProfileAccount);
 					}
 		
 
@@ -381,14 +378,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDevice(CreateExamples Example) {
 
-				 var catalogedDevice = AliceProfiles?.CatalogedDevice;
-				 var profileDevice = catalogedDevice?.ProfileDevice;
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Alice's Device Profile specifies keys for encryption, signature and exchange:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Format(profileDevice);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
+				 Format(AliceProfileDeviceCoffee);
 					}
 		
 

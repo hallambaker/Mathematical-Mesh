@@ -396,7 +396,7 @@ namespace ExampleGenerator {
 		public void _ArchitectureConnectEARL(CreateExamples Example) {
 
 				_Output.Write ("{1}\n{0}", _Indent, Preformat);
-				_Output.Write ("{1}\n{0}", _Indent, Example.DeviceCreateUDF);
+				_Output.Write ("{1}\n{0}", _Indent, Connect.ConnectEARL);
 				_Output.Write ("{1}\n{0}", _Indent, Preformat);
 					}
 		

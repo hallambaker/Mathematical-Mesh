@@ -22,9 +22,9 @@ namespace ExampleGenerator {
             createWeb.Examples();
             }
 
-        TestCLI testCLIAlice1, testCLIAlice2, testCLIAlice3, testCLIAlice4;
-        TestCLI testCLIBob1;
-        TestCLI testCLIMallet1;
+        public TestCLI testCLIAlice1, testCLIAlice2, testCLIAlice3, testCLIAlice4;
+        public TestCLI testCLIBob1;
+        public TestCLI testCLIMallet1;
 
         public Dictionary<string, string> ToDoList = new Dictionary<string, string>();
 
@@ -207,7 +207,7 @@ namespace ExampleGenerator {
         #region // Application commands
 
 
-        List<T> Concat<T>(params List<T>[] lists) {
+        public List<T> Concat<T>(params List<T>[] lists) {
             var result = new List<T>();
 
             foreach (var list in lists) {

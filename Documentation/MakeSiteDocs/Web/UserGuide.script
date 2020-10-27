@@ -45,6 +45,105 @@
 #% CalendarReference (Index);
 #end method
 
+#method ConsoleExample List<ExampleResult> exampleResults
+#% if (exampleResults == null) {ReportMissing(); return;}
+
+~~~~
+<div="terminal">
+#foreach (var exampleResult in exampleResults)
+<cmd>#{exampleResult.MachineName}> #{exampleResult.Command}
+<rsp>#{exampleResult.ResultText}#!
+#end foreach
+</div>
+~~~~
+#end method
+
+#method DescribeRequest Trace trace
+#% if (trace == null) {ReportMissing(); return;}
+
+~~~~
+#{trace.GetRequest()}
+~~~~
+#end method
+
+
+#method DescribeResponse Trace trace
+#% if (trace == null) {ReportMissing(); return;}
+
+~~~~
+#{trace.GetResponse()}
+~~~~
+#end method
+
+#method DescribeRequestBinding Trace trace
+#% if (trace == null) {ReportMissing(); return;}
+~~~~
+
+[No dump of the binding yet]
+
+~~~~
+#% ReportMissing();
+#end method
+
+
+#method DescribeResponseBinding Trace trace
+#% if (trace == null) {ReportMissing(); return;}
+~~~~
+
+[No dump of the binding yet]
+
+~~~~
+#% ReportMissing();
+#end method
+
+
+#method Format JsonObject data
+#% if (data == null) {ReportMissing(); return;}
+#{Preformat}
+#{JSONDebugWriter.Write (data)}
+#{Preformat}
+#end method
+
+
+
+
+
+#method ConsoleJSON List<ExampleResult> exampleResults
+#% if (exampleResults == null) {ReportMissing(); return;}
+#% var exampleResult = exampleResults[0];
+
+~~~~
+<div="terminal">
+<cmd>#{exampleResult.MachineName}> #{exampleResult.Command} /json
+<rsp>#{exampleResult.ResultJSON}
+</div>
+~~~~
+#end method
+
+#method ConsoleReference List<ExampleResult> exampleResults
+#% if (exampleResults == null) {ReportMissing(); return;}
+#% var exampleResult = exampleResults[0];
+
+~~~~
+<div="terminal">
+<cmd>#{exampleResult.MachineName}> #{exampleResult.Command}
+<rsp>#{exampleResult.ResultText}#!
+</div>
+~~~~
+
+Specifying the /json option returns a result of type #{exampleResult.ResultType}:
+
+~~~~
+<div="terminal">
+<cmd>#{exampleResult.MachineName}> #{exampleResult.Command} /json
+<rsp>#{exampleResult.ResultJSON}
+</div>
+~~~~
+
+#end method
+
+
+
 #xfile CreateExamples Web "readme.md" CreateExamples Index
 
 ## meshman Documentation
@@ -204,132 +303,9 @@ executed without any output being made to the console.
 #end method2
 
 
-#method Format JsonObject data
-#{Preformat}
-#{JSONDebugWriter.Write (data)}
-#{Preformat}
-#end method
-
-
-#block "Check example"
-#% public bool ExampleInvalid(List<ExampleResult> examples, int item=0, int trace=0) {
-#% if (examples == null) {return true;}
-#% if (item >= examples.Count-1 ) {return true;}
-#% if (trace >= examples[item].Traces.Count-1 ) {return true;}
-
-~~~~
-[Example missing]
-~~~~
-
-#% return false;
-#% }
-#end block
-
-#method DescribeRequestBinding Trace trace
-
-~~~~
-#{trace.GetRequest()}
-~~~~
-
-#end method
-
-
-#method DescribeResponseBinding Trace trace
-
-~~~~
-#{trace.GetResponse()}
-~~~~
-
-#end method
 
 
 
-#method DescribeRequestBinding List<ExampleResult> exampleResults
-
-~~~~
-~~~~
-
-#end method
-
-
-#method DescribeResponseBinding List<ExampleResult> exampleResults
-
-~~~~
-~~~~
-
-#end method
-
-
-#method DescribeRequest Trace trace
-~~~~
-#{trace.GetRequest()}
-~~~~
-#end method
-
-
-#method DescribeResponse Trace trace
-~~~~
-#{trace.GetResponse()}
-~~~~
-#end method
-
-
-#method ConsoleExample List<ExampleResult> exampleResults
-#if (exampleResults == null) 
-**Missing Example***
-#% Console.WriteLine ($"Missing example!"); return;
-#end if
-
-~~~~
-<div="terminal">
-#foreach (var exampleResult in exampleResults)
-<cmd>#{exampleResult.MachineName}> #{exampleResult.Command}
-<rsp>#{exampleResult.ResultText}#!
-#end foreach
-</div>
-~~~~
-#end method
-
-
-#method ConsoleJSON List<ExampleResult> exampleResults
-#if (exampleResults == null) 
-**Missing Example***
-#% Console.WriteLine ($"Missing example!"); return;
-#end if
-#% var exampleResult = exampleResults[0];
-
-~~~~
-<div="terminal">
-<cmd>#{exampleResult.MachineName}> #{exampleResult.Command} /json
-<rsp>#{exampleResult.ResultJSON}
-</div>
-~~~~
-#end method
-
-#method ConsoleReference List<ExampleResult> exampleResults
-#if (exampleResults == null) 
-**Missing Example***
-#% Console.WriteLine ($"Missing example!"); return;
-#end if
-#% var exampleResult = exampleResults[0];
-
-~~~~
-<div="terminal">
-<cmd>#{exampleResult.MachineName}> #{exampleResult.Command}
-<rsp>#{exampleResult.ResultText}#!
-</div>
-~~~~
-
-Specifying the /json option returns a result of type #{exampleResult.ResultType}:
-
-~~~~
-<div="terminal">
-<cmd>#{exampleResult.MachineName}> #{exampleResult.Command} /json
-<rsp>#{exampleResult.ResultJSON}
-</div>
-~~~~
-
-#end method
 
 #method MakeTitle string title
 <title>#{title}

@@ -240,7 +240,7 @@ earlier).
 
 #zfile CreateExamples ArchitectureConnectEARL "Examples\\ArchitectureConnectEARL.md" Example
 #{Preformat}
-#{Example.DeviceCreateUDF}
+#{Connect.ConnectEARL}
 #{Preformat}
 #end zfile
 

@@ -56,6 +56,128 @@ namespace ExampleGenerator {
 		
 
 		//
+		// ConsoleExample
+		//
+		public void ConsoleExample (List<ExampleResult> exampleResults) {
+			 if (exampleResults == null) {ReportMissing(); return;}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
+			foreach  (var exampleResult in exampleResults) {
+				_Output.Write ("<cmd>{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
+				_Output.Write ("<rsp>{1}", _Indent, exampleResult.ResultText);
+				}
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			}
+		
+
+		//
+		// DescribeRequest
+		//
+		public void DescribeRequest (Trace trace) {
+			 if (trace == null) {ReportMissing(); return;}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, trace.GetRequest());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			}
+		
+
+		//
+		// DescribeResponse
+		//
+		public void DescribeResponse (Trace trace) {
+			 if (trace == null) {ReportMissing(); return;}
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, trace.GetResponse());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			}
+		
+
+		//
+		// DescribeRequestBinding
+		//
+		public void DescribeRequestBinding (Trace trace) {
+			 if (trace == null) {ReportMissing(); return;}
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("[No dump of the binding yet]\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			 ReportMissing();
+			}
+		
+
+		//
+		// DescribeResponseBinding
+		//
+		public void DescribeResponseBinding (Trace trace) {
+			 if (trace == null) {ReportMissing(); return;}
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("[No dump of the binding yet]\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			 ReportMissing();
+			}
+		
+
+		//
+		// Format
+		//
+		public void Format (JsonObject data) {
+			 if (data == null) {ReportMissing(); return;}
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (data));
+			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			}
+		
+
+		//
+		// ConsoleJSON
+		//
+		public void ConsoleJSON (List<ExampleResult> exampleResults) {
+			 if (exampleResults == null) {ReportMissing(); return;}
+			 var exampleResult = exampleResults[0];
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
+			_Output.Write ("<cmd>{1}> {2} /json\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
+			_Output.Write ("<rsp>{1}\n{0}", _Indent, exampleResult.ResultJSON);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			}
+		
+
+		//
+		// ConsoleReference
+		//
+		public void ConsoleReference (List<ExampleResult> exampleResults) {
+			 if (exampleResults == null) {ReportMissing(); return;}
+			 var exampleResult = exampleResults[0];
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
+			_Output.Write ("<cmd>{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
+			_Output.Write ("<rsp>{1}", _Indent, exampleResult.ResultText);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Specifying the /json option returns a result of type {1}:\n{0}", _Indent, exampleResult.ResultType);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
+			_Output.Write ("<cmd>{1}> {2} /json\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
+			_Output.Write ("<rsp>{1}\n{0}", _Indent, exampleResult.ResultJSON);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		
+
+		//
 		// Web
 		//
 		public static void Web(CreateExamples Index) { /* XFile  */
@@ -250,168 +372,6 @@ namespace ExampleGenerator {
 			_Output.Write ("<over>\n{0}", _Indent);
 			_Output.Write ("</div>\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			}
-		
-
-		//
-		// Format
-		//
-		public void Format (JsonObject data) {
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
-			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (data));
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
-			}
-		
-
-		//
-		//  "Check example"
-		//
-
-			 public bool ExampleInvalid(List<ExampleResult> examples, int item=0, int trace=0) {
-			 if (examples == null) {return true;}
-			 if (item >= examples.Count-1 ) {return true;}
-			 if (trace >= examples[item].Traces.Count-1 ) {return true;}
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("[Example missing]\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 return false;
-			 }
-		
-		
-
-		//
-		// DescribeRequestBinding
-		//
-		public void DescribeRequestBinding (Trace trace) {
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, trace.GetRequest());
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			}
-		
-
-		//
-		// DescribeResponseBinding
-		//
-		public void DescribeResponseBinding (Trace trace) {
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, trace.GetResponse());
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			}
-		
-
-		//
-		// DescribeRequestBinding
-		//
-		public void DescribeRequestBinding (List<ExampleResult> exampleResults) {
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			}
-		
-
-		//
-		// DescribeResponseBinding
-		//
-		public void DescribeResponseBinding (List<ExampleResult> exampleResults) {
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			}
-		
-
-		//
-		// DescribeRequest
-		//
-		public void DescribeRequest (Trace trace) {
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, trace.GetRequest());
-			_Output.Write ("~~~~\n{0}", _Indent);
-			}
-		
-
-		//
-		// DescribeResponse
-		//
-		public void DescribeResponse (Trace trace) {
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, trace.GetResponse());
-			_Output.Write ("~~~~\n{0}", _Indent);
-			}
-		
-
-		//
-		// ConsoleExample
-		//
-		public void ConsoleExample (List<ExampleResult> exampleResults) {
-			if (  (exampleResults == null)  ) {
-				_Output.Write ("**Missing Example***\n{0}", _Indent);
-				 Console.WriteLine ($"Missing example!"); return;
-				}
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
-			foreach  (var exampleResult in exampleResults) {
-				_Output.Write ("<cmd>{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
-				_Output.Write ("<rsp>{1}", _Indent, exampleResult.ResultText);
-				}
-			_Output.Write ("</div>\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			}
-		
-
-		//
-		// ConsoleJSON
-		//
-		public void ConsoleJSON (List<ExampleResult> exampleResults) {
-			if (  (exampleResults == null)  ) {
-				_Output.Write ("**Missing Example***\n{0}", _Indent);
-				 Console.WriteLine ($"Missing example!"); return;
-				}
-			 var exampleResult = exampleResults[0];
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
-			_Output.Write ("<cmd>{1}> {2} /json\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
-			_Output.Write ("<rsp>{1}\n{0}", _Indent, exampleResult.ResultJSON);
-			_Output.Write ("</div>\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			}
-		
-
-		//
-		// ConsoleReference
-		//
-		public void ConsoleReference (List<ExampleResult> exampleResults) {
-			if (  (exampleResults == null)  ) {
-				_Output.Write ("**Missing Example***\n{0}", _Indent);
-				 Console.WriteLine ($"Missing example!"); return;
-				}
-			 var exampleResult = exampleResults[0];
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
-			_Output.Write ("<cmd>{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
-			_Output.Write ("<rsp>{1}", _Indent, exampleResult.ResultText);
-			_Output.Write ("</div>\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Specifying the /json option returns a result of type {1}:\n{0}", _Indent, exampleResult.ResultType);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
-			_Output.Write ("<cmd>{1}> {2} /json\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
-			_Output.Write ("<rsp>{1}\n{0}", _Indent, exampleResult.ResultJSON);
-			_Output.Write ("</div>\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
 			}
 		
 
