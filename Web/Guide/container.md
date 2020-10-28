@@ -12,6 +12,10 @@ command additionally adds the specified file(s) to the container to create
 a container archive.
 
 
+~~~~
+Missing example 1
+~~~~
+
 *catalog* *spool* *archive* *log*
 
 
@@ -23,6 +27,10 @@ For example, Alice creates an encrypted container readable by anyone who is a
 member of the group groupw@example.com;
 
 
+~~~~
+Missing example 2
+~~~~
+
 Since it is rarely desirable to sign every entry in a container, signatures
 are typically added to a container when entries or indexes are added. 
 
@@ -30,8 +38,16 @@ The `container archive` creates a new container, adds the
 specified file(s) as entries and appends an index as the final record:
 
 
+~~~~
+Missing example 3
+~~~~
+
 An archive may be signed and encrypted:
 
+
+~~~~
+Missing example 4
+~~~~
 
 The signature on a signed archive is calculated over the final apex of the 
 Merkel tree. Thus a single signature verification may be used to validate
@@ -41,6 +57,10 @@ any or all entries in the container.
 
 The `container verify` command verifies the contents of a container: 
 
+
+~~~~
+Missing example 5
+~~~~
 
 The verification performed depends on the type of authentication applied to the
 container and whether the verifier can provide the necessary authentication or
@@ -54,14 +74,26 @@ One or more container entries may be extracted to a file using the
 the files are extracted by default:
 
 
+~~~~
+Missing example 6
+~~~~
+
 Alternatively, the `/file` option may be used to extract a specific file:
 
+
+~~~~
+Missing example 7
+~~~~
 
 
 ## Writing to Containers
 
 The `container append` command adds an entry to a container:
 
+
+~~~~
+Missing example 8
+~~~~
 
 If no security enhancements are specified, the default enhancements specified 
 in the index entry are applied.
@@ -71,6 +103,10 @@ The `container delete`
 The `container delete` command adds an entry to a container
 marking an entry as deleted:
 
+
+~~~~
+Missing example 9
+~~~~
 
 Marking an entry for deletion does not cause the entry itself to be modified.
 The entry is merely marked as having been deleted. To erase the entry contents,
@@ -82,6 +118,10 @@ option to reclaim the space used by deleted entries or to use the
 The `container index` command adds an index entry to the end of
 container:
 
+
+~~~~
+Missing example 10
+~~~~
 
 The index entry may be complete, providing an index of the entire file 
 or incremental, only indexing the items added since the last index was created.
@@ -95,11 +135,23 @@ collect tree index fields dispersed throughout the container with an index
 at the end:
 
 
+~~~~
+Missing example 11
+~~~~
+
 The copy command may be used to encrypt or decrypt the container contents during 
 the copy:
 
 
+~~~~
+Missing example 12
+~~~~
+
 The copy command may also be used to reclaim space used by deleted items:
 
+
+~~~~
+Missing example 13
+~~~~
 
 

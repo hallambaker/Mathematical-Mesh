@@ -59,7 +59,7 @@ namespace ExampleGenerator {
 		// ConsoleExample
 		//
 		public void ConsoleExample (List<ExampleResult> exampleResults) {
-			 if (exampleResults == null) {ReportMissing(); return;}
+			 if (exampleResults == null) { ReportMissingExample(); return;}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);

@@ -15,7 +15,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareEncode(DareEncode options) {
             var inputFile = options.Input.Value;
-            var outputFile = Path.ChangeExtension(inputFile, ".dare");
+            var outputFile = options.Output.Value ?? Path.ChangeExtension(inputFile, ".dare");
             var contentType = options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
 
             var keyLocate = GetKeyCollection(options);

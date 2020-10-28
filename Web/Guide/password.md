@@ -12,10 +12,18 @@ credentials catalog associated with a profile:
 Alice adds the username and password for an ftp service to her catalog:
 
 
+~~~~
+Missing example 1
+~~~~
+
 ## Synchronizing passwords to an application.
 
 The `password list` command lists all the passwords in the catalog:
 
+
+~~~~
+Missing example 2
+~~~~
 
 The output of the list command may be used to configure a user application 
 such as a Web browser that supports password management. But care is obviously
@@ -26,6 +34,10 @@ required as the passwords will only be as secure as the other application.
 The `password get`  command retreives the username and password 
 values for a specified service:
 
+
+~~~~
+Missing example 3
+~~~~
 
 ### Using Credentials in scripts
 
@@ -57,16 +69,28 @@ memorable or conveniently short. She decides to replace her bad password with a 
 password that is randomly generated:
 
 
+~~~~
+Missing example 4
+~~~~
+
 
 ## Deleting passwords
 
 Password entries may be deleted using the  `password delete` command:
 
 
+~~~~
+Missing example 5
+~~~~
+
 ## Adding a Device.
 
 When a device is added, it gets a copy of the password file:
 
+
+~~~~
+Missing example 6
+~~~~
 
 
 

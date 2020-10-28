@@ -9,21 +9,37 @@ a entries describing how to access particular networks.
 The `network add` command adds a network entry to a catalog:
 
 
+~~~~
+Missing example 1
+~~~~
+
 
 ## Finding networks
 
 The `network get`  command retreives a network entry by label:
 
 
+~~~~
+Missing example 2
+~~~~
+
 ## Deleting networks
 
 Network entries may be deleted using the  `network delete` command:
 
 
+~~~~
+Missing example 3
+~~~~
+
 ## Listing networks
 
 A complete list of networks is obtained using the  `network list` command:
 
+
+~~~~
+Missing example 4
+~~~~
 
 ## Adding devices
 

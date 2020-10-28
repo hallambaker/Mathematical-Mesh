@@ -38,8 +38,6 @@
 
 #zfile CreateExamples ProtocolHelloRequest "Examples\\ProtocolHelloRequest.md" Example
 
-[Note, this is showing the payload, not the binding as is intended because the current code 
-doesn't implement it as intended yet]
 
 #%  DescribeRequestBinding (Service.Hello?[0].Traces[0]);
 
@@ -47,8 +45,6 @@ doesn't implement it as intended yet]
 
 #zfile CreateExamples ProtocolHelloResponse "Examples\\ProtocolHelloResponse.md" Example
 
-[Note, this is showing the payload, not the binding as is intended because the current code 
-doesn't implement it as intended yet]
 
 #%  DescribeResponseBinding (Service.Hello?[0].Traces[0]);
 
@@ -128,29 +124,16 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolDownload "Examples\\ProtocolDownload.md" Example
+#% ReportObsoleteExample();
 
 
-The request payload:
-
-#%  DescribeRequest (Account?.SyncAlice?[0].Traces?[1]);
-
-The response payload:
-
-#%  DescribeResponse (Account?.SyncAlice?[0].Traces?[1]);
 
 #end zfile
 
 
 #zfile CreateExamples ProtocolUpload "Examples\\ProtocolUpload.md" Example
+#% ReportObsoleteExample();
 
-
-The request payload:
-
-#%  DescribeRequest (Account?.SyncAlice?[0].Traces?[2]);
-
-The response payload:
-
-#%  DescribeResponse (Account?.SyncAlice?[0].Traces?[2]);
 
 #end zfile
 
@@ -171,14 +154,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolPostServiceService "Examples\\ProtocolPostServiceService.md" Example
-
-The request payload:
-
-#%  DescribeRequest (Contact?.ContactBobRequest?[0].Traces?[1]);
-
-The response payload:
-
-#%  DescribeResponse (Contact?.ContactBobRequest?[0].Traces?[1]);
+#% ReportMissingExample();
 
 
 #end zfile

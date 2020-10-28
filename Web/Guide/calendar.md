@@ -12,21 +12,37 @@ implemented and a placeholder format is implemented instead.
 The `password add` command adds a calendar entry to a catalog:
 
 
+~~~~
+Missing example 1
+~~~~
+
 
 ## Finding calendars
 
 The `password get`  command retreives a calendar entry by label:
 
 
+~~~~
+Missing example 2
+~~~~
+
 ## Deleting calendars
 
 Calendar entries may be deleted using the  `calendar delete` command:
 
 
+~~~~
+Missing example 3
+~~~~
+
 ## Listing calendars
 
 A complete list of calendars is obtained using the  `calendar list` command:
 
+
+~~~~
+Missing example 4
+~~~~
 
 ## Adding devices
 

@@ -17,6 +17,10 @@ The `contact add` command adds a contact entry to a catalog from
 a file. 
 
 
+~~~~
+Missing example 1
+~~~~
+
 The file carol-contact.json contains Carol's contact information in
 JSON format:
 
@@ -28,9 +32,17 @@ The `/self` option is used to mark the contact as being the user's own contact
 details:
 
 
+~~~~
+Missing example 2
+~~~~
+
 Contacts may also be added by accepting contact request messages using the 
 `message accept` command:
 
+
+~~~~
+Missing example 3
+~~~~
 
 ## Finding contacts
 
@@ -38,15 +50,27 @@ The `contact get` command retreives a contact by the contact's
 email address or label:
 
 
+~~~~
+Missing example 4
+~~~~
+
 ## Listing contacts
 
 A complete list of contacts is obtained using the  `contact list` command:
 
 
+~~~~
+Missing example 5
+~~~~
+
 ## Deleting contacts
 
 Contact entries may be deleted using the  `contact delete` command:
 
+
+~~~~
+Missing example 6
+~~~~
 
 
 

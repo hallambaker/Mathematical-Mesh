@@ -1,0 +1,7 @@
+
+~~~~
+<div="terminal">
+<cmd>Alice2> account recover SAQB-IN25-TINS-YCHQ-K7BP-U7OS-FLZD-N3RW-W66O-2Z7V-KB36-R4CV-UQCC-7VJZ-UVDA SARK-ZJAU-FMIE-YUVR-RMGQ-DNRR-TOTA-H5JD-45MR-75JI-V4U5-6OIC-JVNZ-YBOK-WRMA /verify
+<rsp>ERROR - Expected {
+</div>
+~~~~

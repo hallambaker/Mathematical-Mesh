@@ -25,6 +25,7 @@ namespace ExampleGenerator {
         public TestCLI testCLIAlice1, testCLIAlice2, testCLIAlice3, testCLIAlice4;
         public TestCLI testCLIBob1;
         public TestCLI testCLIMallet1;
+        public TestCLI testCLIConsole1;
 
         public Dictionary<string, string> ToDoList = new Dictionary<string, string>();
 
@@ -35,7 +36,8 @@ namespace ExampleGenerator {
         public string TestFile3 = "TestFile3.txt";
         public string TestFile4 => Path.Combine(TestDir1, "TestFile4.txt");
         public string TestFile5 => Path.Combine(TestDir1, "TestFile5.txt");
-        public string TestText1 = "This is a test";
+        
+        public string TestText1 = "This is a test 1";
         public string TestText2 = "This is a test 2";
         public string TestText3 = "This is a test 3";
         public string TestText4 = "This is a test 4";
@@ -116,9 +118,11 @@ namespace ExampleGenerator {
             testCLIAlice4 = GetTestCLI(AliceDevice4);
             testCLIBob1 = GetTestCLI("Bob");
             testCLIMallet1 = GetTestCLI("Mallet");
+            testCLIConsole1 = GetTestCLI("Console");
+
 
             Directory.CreateDirectory(TestDir1);
-            TestFile1.WriteFileNew(TestText1.ToString());
+            TestFile1.WriteFileNew(TestFile1Text.ToString());
             TestFile2.WriteFileNew(TestText2.ToString());
             TestFile3.WriteFileNew(TestText3.ToString());
             TestFile4.WriteFileNew(TestText4.ToString());
@@ -139,6 +143,9 @@ namespace ExampleGenerator {
             Confirm = new LayerConfirm(this);
             Group = new LayerGroup(this);
             NYI = new LayerNYI(this);
+
+
+            PerformAll();
 
             // Dare uses the keys from the contacts catalog.
             //PlatformDare();

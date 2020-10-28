@@ -15,18 +15,34 @@ presentation aids application debugging and audit.
 The `key nonce` command is used to generate a new random nonce value:
 
 
+~~~~
+Missing example 1
+~~~~
+
 The Base32 presentation of a nonce value will always begin with the letter N.
 
 By default, a 128 bit nonce is generated but nonces of any length may be
 generated using the `/bits` option:
 
 
+~~~~
+Missing example 2
+~~~~
+
 Secrets are generated in the same way using the command `key secret`:
 
+
+~~~~
+Missing example 3
+~~~~
 
 The Base32 presentation of a secret value will always begin with the letter E.
 Again, any output length can be requested up to the platform limit:
 
+
+~~~~
+Missing example 4
+~~~~
 
 ## Generating EARL values
 
@@ -40,8 +56,16 @@ EARLs may be generated using the `key earl` command to generate
 a new secret/digest pair which are then used to process the content data:
 
 
+~~~~
+Missing example 5
+~~~~
+
 Alternatively, the `dare earl` command may be used to perform both operations:
 
+
+~~~~
+Missing example 6
+~~~~
 
 ## Sharing and recovering secrets
 
@@ -53,6 +77,10 @@ number of shares with the specified quorum for recovery. By default, a 128
 bit secret is created and three shares are created with a quorum of two:
 
 
+~~~~
+Missing example 7
+~~~~
+
 The first UDF output is the secret key, followed by the key identifier 
 two shares. The different outputs are easily distinguished by their first 
 letter. As with every meshman command, the `/json` option may be used to 
@@ -63,6 +91,10 @@ The original secret may be recovered from a sufficient number of shares to
 meet the quorum using the `key recover`:
 
 
+~~~~
+Missing example 9
+~~~~
+
 As with secret generation, larger or smaller secrets may be created but due
 to a limitation in the implementation of the key sharing algorithm, the secret 
 must be of length 512 bits or less and the number of bits is rounded up to
@@ -72,9 +104,17 @@ For example, we can create a 192 bit secret and share it five ways with a quorum
 of three:
 
 
+~~~~
+Missing example 10
+~~~~
+
 It is also possible to share a specified secret. This allows a secret to be 
 shared multiple times creating independent key sets. If we re-share the secret
 created earlier to create three shares with a quorum of two, the shares will
 be different:
 
+
+~~~~
+Missing example 11
+~~~~
 

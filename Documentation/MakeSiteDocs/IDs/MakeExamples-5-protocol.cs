@@ -58,8 +58,6 @@ namespace ExampleGenerator {
 		public void _ProtocolHelloRequest(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[Note, this is showing the payload, not the binding as is intended because the current code \n{0}", _Indent);
-				_Output.Write ("doesn't implement it as intended yet]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  DescribeRequestBinding (Service.Hello?[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
@@ -77,8 +75,6 @@ namespace ExampleGenerator {
 		public void _ProtocolHelloResponse(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[Note, this is showing the payload, not the binding as is intended because the current code \n{0}", _Indent);
-				_Output.Write ("doesn't implement it as intended yet]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  DescribeResponseBinding (Service.Hello?[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
@@ -209,15 +205,9 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolDownload(CreateExamples Example) {
 
+				 ReportObsoleteExample();
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The request payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Account?.SyncAlice?[0].Traces?[1]);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The response payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Account?.SyncAlice?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -232,15 +222,8 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolUpload(CreateExamples Example) {
 
+				 ReportObsoleteExample();
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The request payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Account?.SyncAlice?[0].Traces?[2]);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The response payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Account?.SyncAlice?[0].Traces?[2]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -279,14 +262,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolPostServiceService(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The request payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Contact?.ContactBobRequest?[0].Traces?[1]);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The response payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Contact?.ContactBobRequest?[0].Traces?[1]);
+				 ReportMissingExample();
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}

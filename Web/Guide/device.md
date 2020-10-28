@@ -11,6 +11,10 @@ to request connection to the user's profile. Alice need only specify
 the mesh service account alice@example.com to which connection is requested:
 
 
+~~~~
+Missing example 1
+~~~~
+
 In this case there is no existing device profile and so a new profile is
 created and used to create a registration request which is posted to the user's 
 account.
@@ -25,18 +29,34 @@ The `device pending` command gives a list of pending connection
 messages.
 
 
+~~~~
+Missing example 2
+~~~~
+
 Alice sees the request that she posted and approves it with the connect
 `device accept` command:
 
+
+~~~~
+Missing example 3
+~~~~
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
 request:
 
 
+~~~~
+Missing example 4
+~~~~
+
 The connection process is completed by synchronizing the new device. At this point,
 all the applications that were available to the first device are available to the
 second:
 
+
+~~~~
+Missing example 5
+~~~~
 
 ##Managing connected devices
 
@@ -44,8 +64,16 @@ The `device list` command gives a list of devices in the device
 catalog:
 
 
+~~~~
+Missing example 6
+~~~~
+
 The `device delete` command removes a device from the catalog:
 
+
+~~~~
+Missing example 7
+~~~~
 
 
 ## Requesting a connection using a PIN
@@ -61,13 +89,25 @@ administration device. The `device pin` command generates
 a new PIN code:
 
 
+~~~~
+Missing example 8
+~~~~
+
 The pin code can now be used to authenticate the connection request:
 
+
+~~~~
+Missing example 9
+~~~~
 
 Since the PIN code that was issued was set to be self-authorizing, the device
 is connected automatically when the user synchronizes their account from an 
 administrator device:
 
+
+~~~~
+Missing example 10
+~~~~
 
 
 ### Requesting a connection using an EARL

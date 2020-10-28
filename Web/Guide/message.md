@@ -27,18 +27,38 @@ Having created a Mesh profile, Bob asks Alice to add him to her contacts catalog
 using the `message contact` command:
 
 
+~~~~
+Missing example 1
+~~~~
+
 Alice reviews her pending messages using the `message pending` command:
 
+
+~~~~
+Missing example 2
+~~~~
 
 Alice sees the request from Bob and accepts it with the `message accept` command:
 
 
+~~~~
+Missing example 3
+~~~~
+
 Bob's contact information has been added to Alice's address book:
 
+
+~~~~
+Missing example 4
+~~~~
 
 Bob can find out if Alice has accepted his contact request using the 
 `message status` command:
 
+
+~~~~
+Missing example 5
+~~~~
 
 Alice has accepted Bob's request and added him to her contacts list. She has also sent
 Bob a contact request which for the sake of convenience, is accepted automatically.
@@ -47,8 +67,16 @@ Alice isn't required to accept contact requests. She rejects the request from Ma
 using the `message reject` command:
 
 
+~~~~
+Missing example 6
+~~~~
+
 For good measure, she decides to block further requests:
 
+
+~~~~
+Missing example 7
+~~~~
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
 question. If the user chooses to respond, the sender receives back a non-repudiable 
@@ -77,14 +105,30 @@ a confirmation request `Purchase equipment for $6,000?` using the
 `message confirm` command:
 
 
+~~~~
+Missing example 8
+~~~~
+
 Alice reviews her pending messages using the using the `message pending` command:
 
+
+~~~~
+Missing example 9
+~~~~
 
 Alice she accepts Bob's request using the `message pending` command:
 
 
+~~~~
+Missing example 10
+~~~~
+
 Bob receives Alice's approval using the `message status` command:
 
+
+~~~~
+Missing example 11
+~~~~
 
 In a full workflow system, Bob might include the response from Alice in a message to
 the accounts department asking them to place the order.
@@ -92,12 +136,24 @@ the accounts department asking them to place the order.
 Alice can also reject requests using the `message reject` command:
 
 
+~~~~
+Missing example 12
+~~~~
+
 Bob receives a reply telling him the request was rejected:
 
+
+~~~~
+Missing example 13
+~~~~
 
 As with all Mesh messages, confirmation requests are subject to access control.
 When Mallet attempts to make a request of Alice, it is rejected because Alice
 hasn't accepted his credentials or authorized him to send confirmation requests:
 
+
+~~~~
+Missing example 14
+~~~~
 
 

@@ -1,8 +1,6 @@
 
-
-The request payload:
-
-
-The response payload:
+~~~~
+Obsolete example 2
+~~~~
 
 

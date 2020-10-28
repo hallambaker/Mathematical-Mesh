@@ -46,7 +46,7 @@
 #end method
 
 #method ConsoleExample List<ExampleResult> exampleResults
-#% if (exampleResults == null) {ReportMissing(); return;}
+#% if (exampleResults == null) { ReportMissingExample(); return;}
 
 ~~~~
 <div="terminal">
