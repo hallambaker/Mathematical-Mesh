@@ -26,6 +26,7 @@ namespace ExampleGenerator {
         public TestCLI testCLIBob1;
         public TestCLI testCLIMallet1;
         public TestCLI testCLIConsole1;
+        public TestCLI testCLIMaker1;
 
         public Dictionary<string, string> ToDoList = new Dictionary<string, string>();
 
@@ -119,7 +120,7 @@ namespace ExampleGenerator {
             testCLIBob1 = GetTestCLI("Bob");
             testCLIMallet1 = GetTestCLI("Mallet");
             testCLIConsole1 = GetTestCLI("Console");
-
+            testCLIMaker1 = GetTestCLI("Maker");
 
             Directory.CreateDirectory(TestDir1);
             TestFile1.WriteFileNew(TestFile1Text.ToString());
@@ -174,8 +175,13 @@ namespace ExampleGenerator {
 
             MakeCryptographyExamples(this);
 
-            MakeDocs();
 
+
+
+            Console.WriteLine($"*****");
+            Console.WriteLine($"Missing {CountMissing} of which {CountObsolete} obsolete");
+
+            MakeDocs();
             }
 
         public bool All = true;

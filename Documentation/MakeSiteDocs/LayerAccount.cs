@@ -50,12 +50,19 @@ namespace ExampleGenerator {
         public ActivationDevice AliceActivationDeviceCoffee;
         public ConnectionDevice AliceConnectionDeviceCoffee;
         public ActivationDevice AliceActivationDeviceWatch;
+        public ProfileDevice AliceProfileDeviceWatch;
 
+        public List<ExampleResult> ConnectMakerCreate;
         public List<ExampleResult> ConnectStaticPrepare;
+        public List<ExampleResult> ConnectStaticInstall;
         public List<ExampleResult> ConnectStaticPollFail;
         public List<ExampleResult> ConnectStaticClaim;
         public List<ExampleResult> ConnectStaticPollSuccess;
 
+
+        public List<ExampleResult> ConnectPINCreate;
+        public List<ExampleResult> ConnectPINRequest;
+        public List<ExampleResult> ConnectPINComplete;
 
         public RequestConnection ConnectRequestWitness ;
         public AcknowledgeConnection AcknowledgeConnectionWitness;

@@ -15,6 +15,7 @@ namespace ExampleGenerator {
         public string BobAccount = "bob@example.com";
         public string MeshServiceProvider = "example.com";
         public string ConsoleAccount = "console@example.com";
+        public string MakerAccount = "maker@example.com";
         public string GroupAccount => Group.GroupAccount;
 
         public ProfileUser AliceProfileAccount;
@@ -48,17 +49,22 @@ namespace ExampleGenerator {
             }
 
 
+
+
         public void PerformAll() {
 
             Service.Hello = testCLIAlice1.Example(
                 $"account hello {AliceAccount}"
                 );
-
+            var hello = Service.Hello.GetResultHello();
 
             // create the alice account.
             Account.CreateAlice = testCLIAlice1.Example(
                 $"account create {AliceAccount}"
                 );
+            var aliceCreateAccount = Account.CreateAlice.GetResultCreateAccount();
+            AliceProfileAccount = aliceCreateAccount.ProfileUser;
+
 
             Account.EncryptSourceFile.WriteFileNew(TestFile1Text);
             Account.ConsoleEncryptFile = testCLIAlice1.Example(
@@ -87,7 +93,7 @@ namespace ExampleGenerator {
                 $"device pending"
                 );
 
-            var resultPending = (Connect.ConnectPending[0].Result as ResultPending);
+            var resultPending = Connect.ConnectPending.GetResultPending();
             var id1 = resultPending.Messages[0].MessageId;
 
             Connect.ConnectAccept = testCLIAlice1.Example(
@@ -154,7 +160,7 @@ namespace ExampleGenerator {
                 $"account sync",
                 $"message pending"
                  );
-            resultPending = Contact.ContactAliceResponse[1].Result as ResultPending;
+            resultPending = Contact.ContactAliceResponse.GetResultPending(1);
             var contactMessage = resultPending.Messages[0];
 
             var contactAccept = testCLIAlice1.Example(
@@ -170,7 +176,7 @@ namespace ExampleGenerator {
             Confirm.ConfirmRequest = testCLIConsole1.Example(
                 $"message confirm {AliceAccount} start"
                 );
-            var resultConfirmSent = Confirm.ConfirmRequest[0].Result as ResultSent;
+            var resultConfirmSent = Confirm.ConfirmRequest.GetResultSent();
             var messageId = resultConfirmSent.Message.MessageId;
 
             Confirm.ConfirmAliceResponse = testCLIAlice1.Example(
@@ -200,15 +206,72 @@ namespace ExampleGenerator {
             Group.GroupAddBob = testCLIAlice1.Example(
                 $"group add {GroupAccount} {BobAccount}"
                  );
-            Group.GroupDecryptBobSuccess = testCLIAlice1.Example(
+            Group.GroupDecryptBobSuccess = testCLIBob1.Example(
+                $"account sync",
                 $"dare decode {Group.EncryptTargetFile}"
                  );
             Group.GroupDeleteBob = testCLIAlice1.Example(
                 $"group delete {GroupAccount} {BobAccount}"
                  );
-            Group.GroupDecryptBobRevoked = testCLIAlice1.Example(
+            Group.GroupDecryptBobRevoked = testCLIBob1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
+
+
+
+            // Connect device using a PIN (which can be presented as a QR code)
+            Connect.ConnectPINCreate = testCLIAlice1.Example(
+                    $"account pin"
+                    );
+            var pinResult = Connect.ConnectPINCreate.GetResultPIN();
+            var pin = pinResult.MessagePIN.Pin;
+            Connect.ConnectPINMessagePin = pinResult.MessagePIN;
+            Connect.ConnectEARL = pinResult.MessagePIN.GetURI();
+
+            Connect.ConnectPINRequest = testCLIAlice3.Example(
+                $"device request {AliceAccount} /pin {pin}"
+                );
+
+            Connect.ConnectPending = testCLIAlice1.Example(
+                $"account sync /auto"
+                );
+
+            Connect.ConnectPINComplete = testCLIAlice3.Example(
+                $"device complete",
+                $"account sync"
+                );
+            var connectPINComplete = Connect.ConnectPINComplete.GetResultConnect();
+            var watchMachine = connectPINComplete.CatalogedMachine;
+            Connect.AliceProfileDeviceWatch = watchMachine.ProfileDevice;
+            //Connect.AliceActivationDeviceWatch = watchMachine.ProfileDevice;
+
+            // Connect the coffee pot using a static QR
+
+            Connect.ConnectMakerCreate = testCLIMaker1.Example(
+                $"account create {MakerAccount}"
+                );
+            Connect.ConnectStaticPrepare = testCLIMaker1.Example(
+                $"device preconfig"
+                );
+            var resultPublishDevice = Connect.ConnectStaticPrepare.GetResultPublishDevice();
+
+            Connect.ConnectStaticInstall = testCLIAlice4.Example(
+                $"device install {resultPublishDevice.FileName}"
+                );
+            //Connect.ConnectStaticPollFail = testCLIAlice4.Example(
+            //    $"device complete"
+            //    );
+            Connect.ConnectStaticClaim = testCLIMaker1.Example(
+                $"account connect {resultPublishDevice.Uri}"
+                );
+            Connect.ConnectStaticPollSuccess = testCLIAlice4.Example(
+                $"device complete"
+                );
+            var connectStaticPollSuccess = Connect.ConnectStaticPollSuccess.GetResultConnect();
+            var coffeePotMachine = connectStaticPollSuccess.CatalogedMachine;
+            Connect.AliceProfileDeviceCoffee = coffeePotMachine.ProfileDevice;
+            //Connect.AliceActivationDeviceCoffee = coffeePotMachine.
+            //Connect.AliceConnectionDeviceCoffee = coffeePotMachine.
 
 
 
@@ -216,7 +279,7 @@ namespace ExampleGenerator {
             Account.ProfileEscrow = testCLIAlice1.Example(
                 $"account escrow"
                 );
-            var resultEscrow = Account.ProfileEscrow[0].Result as ResultEscrow;
+            var resultEscrow = Account.ProfileEscrow.GetResultEscrow();
             var share1 = resultEscrow.Shares[0];
             var share2 = resultEscrow.Shares[2];
 
@@ -229,8 +292,8 @@ namespace ExampleGenerator {
                 );
 
 
-            Console.WriteLine($"*****");
-            Console.WriteLine($"Missing {CountMissing} of which {CountObsolete} obsolete");
+
+            
             }
 
 

@@ -277,24 +277,6 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDeriveTables(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("<table>\n{0}", _Indent);
-				_Output.Write ("<tr>\n{0}", _Indent);
-				_Output.Write ("<td>\n{0}", _Indent);
-				_Output.Write ("Title 1\n{0}", _Indent);
-				_Output.Write ("</td>\n{0}", _Indent);
-				_Output.Write ("<td>\n{0}", _Indent);
-				_Output.Write ("Title 2\n{0}", _Indent);
-				_Output.Write ("</td>\n{0}", _Indent);
-				_Output.Write ("</tr>\n{0}", _Indent);
-				_Output.Write ("<tr>\n{0}", _Indent);
-				_Output.Write ("<td>\n{0}", _Indent);
-				_Output.Write ("</td>\n{0}", _Indent);
-				_Output.Write ("<td>\n{0}", _Indent);
-				_Output.Write ("</td>\n{0}", _Indent);
-				_Output.Write ("</tr>\n{0}", _Indent);
-				_Output.Write ("<table>\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 					}
 		
 

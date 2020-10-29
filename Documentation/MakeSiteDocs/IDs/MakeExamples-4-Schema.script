@@ -124,26 +124,6 @@ For example, the personal account profile Alice created is:
 
 
 #zfile CreateExamples SchemaDeriveTables "Examples\\SchemaDeriveTables.md" Example
-
-<table>
-<tr>
-<td>
-Title 1
-</td>
-<td>
-Title 2
-</td>
-</tr>
-#!foreach (var whatever in Goedel.Mesh.Wherever) 
-<tr>
-<td>
-</td>
-<td>
-</td>
-</tr>
-#!end foreach
-<table>
-
 #end zfile
 
 #zfile CreateExamples SchemaMessageIds "Examples\\SchemaMessageIds.md" Example
