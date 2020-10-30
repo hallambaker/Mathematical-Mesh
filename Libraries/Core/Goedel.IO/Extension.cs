@@ -202,7 +202,8 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The file name</param>
         /// <returns>A file stream</returns>
-        public static FileStream OpenFileRead(this string filename) => new FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+        public static FileStream OpenFileRead(this string filename) => 
+                new FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
 
         /// <summary>
         /// Open a file for read access in shared mode, allowing concurrent 

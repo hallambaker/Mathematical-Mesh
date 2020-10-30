@@ -145,6 +145,8 @@ namespace Goedel.Cryptography.Dare {
         public PersistenceStore(Container container, IKeyLocate keyLocate, bool readContainer = true) {
             Container = container;
 
+            // Barfing in the docs because we do not have the key required to decrypt the container
+
             if (readContainer & container.JbcdStream.Length > 0) {
                 ReadContainer(keyLocate);
                 }

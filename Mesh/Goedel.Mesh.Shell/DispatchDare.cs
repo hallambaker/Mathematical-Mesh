@@ -22,6 +22,7 @@ namespace Goedel.Mesh.Shell {
 
             var cryptoParameters = GetCryptoParameters(keyLocate, options);
 
+            System.Console.WriteLine($"***Encrypt to {cryptoParameters.EncryptionKeys?[0].KeyIdentifier}");
             var ContentInfo = new ContentMeta() {
                 Filename = inputFile,
                 ContentType = contentType
@@ -45,9 +46,10 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareDecode(DareDecode options) {
             var inputFile = options.Input.Value;
+            var outputFile = options.Output.Value ?? Path.ChangeExtension(inputFile, ".xdare");
             var keyLocate = GetKeyCollection(options);
 
-            var Length = DareEnvelope.Decode(inputFile, keyCollection: keyLocate);
+            var Length = DareEnvelope.Decode(inputFile, outputFile, keyCollection: keyLocate);
 
             return new ResultFile() {
                 TotalBytes = (int)Length
@@ -65,9 +67,9 @@ namespace Goedel.Mesh.Shell {
 
             var result = DareEnvelope.Verify(inputFile, keyLocate);
 
-            return new ResultFile() {
+            return new ResultFileDare() {
                 Filename = inputFile,
-                Verified = result
+                Envelope = result
                 };
             }
 

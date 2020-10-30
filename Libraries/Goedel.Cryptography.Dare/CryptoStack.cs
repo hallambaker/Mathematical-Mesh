@@ -225,14 +225,12 @@ namespace Goedel.Cryptography.Dare
         /// <param name="keyCollection">The key collection to be used to resolve private keys.</param>
         /// <param name="decrypt">If true, prepare to decrypt the payload.</param>
         public CryptoStack(
-            CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
-            CryptoAlgorithmId digest = CryptoAlgorithmId.NULL,
-            List<DareRecipient> recipients = null,
-            List<DareSignature> signatures = null,
-            IKeyLocate keyCollection = null,
-            bool decrypt = true
-            )
-            {
+                CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
+                CryptoAlgorithmId digest = CryptoAlgorithmId.NULL,
+                List<DareRecipient> recipients = null,
+                List<DareSignature> signatures = null,
+                IKeyLocate keyCollection = null,
+                bool decrypt = true) {
             EncryptId = encryptID;
             DigestId = digest;
             (keySize, blockSize) = encryptID.GetKeySize();
@@ -241,7 +239,7 @@ namespace Goedel.Cryptography.Dare
 
             if (recipients != null & decrypt) {
                 MasterSecret = keyCollection.Decrypt(recipients, encryptID);
-            }
+                }
             }
 
 
@@ -486,12 +484,12 @@ namespace Goedel.Cryptography.Dare
         /// message salt to vary it</param>
         /// <returns>The decoder.</returns>
         public CryptoStackStream GetDecoder(
-            JsonBcdReader jsonbcdReader,
-            out Stream reader,
-            long contentLength = -1,
-            byte[] saltSuffix = null
-            )
-            {
+                JsonBcdReader jsonbcdReader,
+                out Stream reader,
+                long contentLength = -1,
+                byte[] saltSuffix = null,
+                bool decrypt = true) {
+
             CalculateParameters(
                 false, saltSuffix, out var TransformEncrypt,
                 out var TransformMac, out var TransformDigest);

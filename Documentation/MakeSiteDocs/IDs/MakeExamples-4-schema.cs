@@ -375,7 +375,7 @@ namespace ExampleGenerator {
 		public void _SchemaAccount(CreateExamples Example) {
 
 				 var resultCreateAccount = ProfileCreateAlice?[0].Result as ResultCreateAccount;
-				 var profileUser = resultCreateAccount?.ProfileUser;
+				 var profileUser = resultCreateAccount?.ProfileAccount;
 				 var activationUser = resultCreateAccount?.ActivationDevice;
 				 var catalogedDevice = AliceProfiles?.CatalogedDevice;
 				 var connectionUser = catalogedDevice?.ConnectionUser;

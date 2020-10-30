@@ -640,34 +640,38 @@
             Force generation of all stores.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyEncryption(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptoKey@)">
             <summary>
             Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
             </summary>
             <param name="keyId">The identifier to resolve.</param>
+            <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.LocatePrivateKeyPair(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptoKey@)">
             <summary>
             Attempt to obtain a private key with identifier <paramref name="keyId"/>.
             </summary>
             <param name="keyId">The key identifier to match.</param>
+            <param name="cryptoKey">The found key </param>
             <returns>The key pair if found.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyDecryption(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyDecryption(System.String,Goedel.Cryptography.IKeyDecrypt@)">
             <summary>
             Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
             </summary>
             <param name="keyId">The key identifier to match.</param>
+            <param name="cryptoKey">The found key </param>
             <returns>The key pair if found.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeySignature(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeySignature(System.String,Goedel.Cryptography.CryptoKey@)">
             <summary>
             Resolve a private key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
             </summary>
             <param name="signingKey">The identifier to resolve.</param>
+            <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Add(Goedel.Cryptography.KeyPair)">
@@ -1111,6 +1115,14 @@
             <param name="profileUser">The profile.</param>
             <returns>Path to the directory containing the profile stores.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser,Goedel.Mesh.ActivationAccount)">
+            <summary>
+            Create the stores directory and initialize catalogs.
+            </summary>
+            <param name="meshHost">The host context</param>
+            <param name="profileUser">The user profile</param>
+            <param name="activationAccount">The account activation</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelf(Goedel.Mesh.Contact,System.String)">
             <summary>
             Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
@@ -1149,27 +1161,30 @@
         <member name="M:Goedel.Mesh.Client.ContextUser.GetSpoolInbound">
             <summary>Returns the inbound spool for the account</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeyEncryption(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptoKey@)">
             <summary>
             Resolve a public key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
             </summary>
             <param name="keyId">The identifier to resolve.</param>
+            <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeySignature(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeySignature(System.String,Goedel.Cryptography.CryptoKey@)">
             <summary>
             Resolve a public key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
             </summary>
             <param name="keyId">The identifier to resolve.</param>
+            <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeyDecryption(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeyDecryption(System.String,Goedel.Cryptography.IKeyDecrypt@)">
             <summary>
             Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
             </summary>
             <param name="keyId">The key identifier to match.</param>
+            <param name="cryptoKey">The found key </param>
             <returns>The key pair if found.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessageConnectionRequest">

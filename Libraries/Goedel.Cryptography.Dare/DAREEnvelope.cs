@@ -646,7 +646,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="inputFile">File to be read as input</param>
         /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
-        public static bool Verify(
+        public static DareEnvelope Verify(
             string inputFile,
             IKeyLocate keyCollection = null) {
             using var inputStream = inputFile.OpenFileRead();
@@ -658,26 +658,33 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="inputStream">The input stream, must support reading.</param>
         /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
-        public static bool Verify(
+        public static DareEnvelope Verify(
             Stream inputStream,
             IKeyLocate keyCollection = null) {
-            // Hack: This routine should return a result structure showing how the data is signed and by whom
-            //[i.e. include the algorithm, digest method, scope, etc.
+
+            keyCollection ??= Cryptography.KeyCollection.Default;
+            var jsonBcdReader = new JsonBcdReader(inputStream);
+            using var message = DecodeHeader(jsonBcdReader);
+
+            return message;
+
+            //// Hack: This routine should return a result structure showing how the data is signed and by whom
+            ////[i.e. include the algorithm, digest method, scope, etc.
 
 
-            //keyCollection ??= KeyCollection.Default;
+            ////keyCollection ??= KeyCollection.Default;
 
-            using (var jsonBcdReader = new JsonBcdReader(inputStream)) {
-                //var Message = DecodeHeader(JSONBCDReader);
+            //using (var jsonBcdReader = new JsonBcdReader(inputStream)) {
+            //    //var Message = DecodeHeader(JSONBCDReader);
 
-                //var Decoder = Message.Header.GetDecoder(
-                //            JSONBCDReader, out var Reader,
-                //            KeyCollection: keyCollection);
+            //    //var Decoder = Message.Header.GetDecoder(
+            //    //            JSONBCDReader, out var Reader,
+            //    //            KeyCollection: keyCollection);
 
-                //Decoder.Close();
-                }
+            //    //Decoder.Close();
+            //    }
 
-            return true; // Hack: perform the actual check here and return a boolean.
+            //return true; // Hack: perform the actual check here and return a boolean.
             }
 
         #endregion

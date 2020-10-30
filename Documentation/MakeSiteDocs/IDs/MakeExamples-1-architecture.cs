@@ -213,7 +213,8 @@ namespace ExampleGenerator {
 		public void _ArchitectureConnectPassword(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("For example, Alice can now access her credential catalog from the new device:\n{0}", _Indent);
+				_Output.Write ("For example, Alice can now decrypt the file she encrypted on her first device and access her \n{0}", _Indent);
+				_Output.Write ("credential catalog from the new device:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Connect.PasswordList2);
 				_Output.Write ("\n{0}", _Indent);

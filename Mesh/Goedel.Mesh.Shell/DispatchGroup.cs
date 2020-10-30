@@ -17,10 +17,10 @@ namespace Goedel.Mesh.Shell {
             var contextAccount = GetContextUser(options);
             var contextGroup = contextAccount.CreateGroup(groupID);
 
-            var result = new ResultEntry() {
-                CatalogEntry = contextGroup.CatalogedGroup
+            return new ResultCreateAccount() {
+                Success = true,
+                ProfileAccount = contextGroup.ProfileGroup,
                 };
-            return result;
             }
 
         /// <summary>

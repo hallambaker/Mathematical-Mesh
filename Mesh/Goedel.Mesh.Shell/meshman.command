@@ -788,12 +788,12 @@
 			Return ResultFile
 			Parameter Input "in" ExistingFile
 				Brief "File or directory to encrypt"
+			Parameter Output "out" NewFile
+				Brief "Filename for encrypted output."
 			Include EncodeOptions
 			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
-			Option Output "out" NewFile
-				Brief "Filename for encrypted output."
 			Option Subdirectories "sub" Flag
 				Brief "Process subdirectories recursively."
 			Option SymmetrictKey "key" String

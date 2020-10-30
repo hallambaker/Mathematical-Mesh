@@ -1194,7 +1194,7 @@
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogAccess.TryFindKeyDecryption(System.String)">
+        <member name="M:Goedel.Mesh.CatalogAccess.TryFindKeyDecryption(System.String,Goedel.Cryptography.IKeyDecrypt@)">
             <summary>
             Resolve a decryption capability corresponding to the key <paramref name="keyId"/>.
             </summary>

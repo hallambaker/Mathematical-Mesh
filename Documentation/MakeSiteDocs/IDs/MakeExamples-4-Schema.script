@@ -158,7 +158,7 @@ For example, the personal account profile Alice created is:
 
 #zfile CreateExamples SchemaAccount "Examples\\SchemaAccount.md" Example
 #% var resultCreateAccount = ProfileCreateAlice?[0].Result as ResultCreateAccount;
-#% var profileUser = resultCreateAccount?.ProfileUser;
+#% var profileUser = resultCreateAccount?.ProfileAccount;
 #% var activationUser = resultCreateAccount?.ActivationDevice;
 #% var catalogedDevice = AliceProfiles?.CatalogedDevice;
 #% var connectionUser = catalogedDevice?.ConnectionUser;

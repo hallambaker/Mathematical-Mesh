@@ -213,6 +213,12 @@ namespace Goedel.Mesh.Client {
                 MeshHost meshHost, ProfileUser profileUser) =>
                     Path.Combine(meshHost.MeshMachine.DirectoryMesh, profileUser.Udf);
 
+        /// <summary>
+        /// Create the stores directory and initialize catalogs.
+        /// </summary>
+        /// <param name="meshHost">The host context</param>
+        /// <param name="profileUser">The user profile</param>
+        /// <param name="activationAccount">The account activation</param>
         public static void CreateDirectory(
                     MeshHost meshHost, 
                     ProfileUser profileUser,
@@ -468,14 +474,14 @@ namespace Goedel.Mesh.Client {
         /// an account identifier or strong account identifier.
         /// </summary>
         /// <param name="keyId">The identifier to resolve.</param>
+        /// <param name="cryptoKey">The found key </param>
         /// <returns>The identifier.</returns>
-        public override CryptoKey TryFindKeyEncryption(string keyId) {
-
-            var key = base.TryFindKeyEncryption(keyId);
-            if (key != null) {
-                return key;
+        public override bool TryFindKeyEncryption(string keyId, out CryptoKey cryptoKey) {
+            if (base.TryFindKeyEncryption(keyId, out cryptoKey)) {
+                return true;
                 }
-            return GetByAccountEncrypt(keyId);
+            cryptoKey = GetByAccountEncrypt(keyId);
+            return cryptoKey != null;
             }
 
 
@@ -484,15 +490,17 @@ namespace Goedel.Mesh.Client {
         /// an account identifier or strong account identifier.
         /// </summary>
         /// <param name="keyId">The identifier to resolve.</param>
+        /// <param name="cryptoKey">The found key </param>
         /// <returns>The identifier.</returns>
-        public override CryptoKey TryFindKeySignature(string keyId) {
+        public override bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
             if (keyId == AccountAddress) {
-                return KeyAccountSignature;
+                cryptoKey = KeyAccountSignature;
+                return true;
                 }
-            if (base.TryFindKeySignature(keyId).NotNull(out var key)) {
-                return key;
+            if (TryFindKeySignature(keyId, out cryptoKey)) {
+                return true;
                 }
-            return null;
+            return false;
             }
 
 
@@ -500,16 +508,20 @@ namespace Goedel.Mesh.Client {
         /// Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
         /// </summary>
         /// <param name="keyId">The key identifier to match.</param>
+        /// <param name="cryptoKey">The found key </param>
         /// <returns>The key pair if found.</returns>
-        public override IKeyDecrypt TryFindKeyDecryption(string keyId) {
-            var key = base.TryFindKeyDecryption(keyId);
-            if (key != null) {
-                return key;
+        public override bool TryFindKeyDecryption(string keyId, out IKeyDecrypt cryptoKey) {
+
+
+            if (KeyCollection.TryFindKeyDecryption(keyId, out cryptoKey)) {
+                return true;
+                }
+            if (ActivationAccount?.AccountEncryptionKey?.TryFindKeyDecryption(keyId, out cryptoKey) == true) {
+                return true;
                 }
 
             var catalogCapability = GetStore(CatalogAccess.Label) as CatalogAccess;
-
-            return catalogCapability.TryFindKeyDecryption(keyId);
+            return catalogCapability.TryFindKeyDecryption(keyId, out cryptoKey);
             }
         #endregion
         #region // Message Handling - Get/Process pending.

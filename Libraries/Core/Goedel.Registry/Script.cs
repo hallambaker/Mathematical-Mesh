@@ -40,6 +40,76 @@ namespace Goedel.Registry {
         /// <param name="Output">The output stream</param>
 		public Script(TextWriter Output) => _Output = Output;
 
+        public static string WrapConsole(string text, int position = 0, int cols = 70,
+            string continuation = null, int indent = 0) =>
+                        Wrap(text, position, cols-2, " ^", 4);
+
+
+        /// <summary>
+        /// Wrap the text <paramref name="text"/> to <paramref name="cols"/> inserting 
+        /// line breaks where necessary at spaces in the text.
+        /// </summary>
+        /// <param name="text">The text to wrap.</param>
+        /// <param name="position">The initial position on the line.</param>
+        /// <param name="cols">The column to wrap at.</param>
+        /// <param name="indent">Number of spaces to indent continuation lines</param>
+        /// <param name="continuation">Optional continuation character to be added to ends of lines</param>
+        /// <returns></returns>
+        public static string Wrap(string text, int position=0, int cols = 70,
+                string continuation=null, int indent =0) {
+            var split = text.Split(' ');
+            var builder = new StringBuilder();
+            var first = true;
+
+            foreach (var chunk in split) {
+                if (chunk.Length > cols) {
+
+
+                    }
+                else {
+
+
+                    if (position + chunk.Length > cols) {
+
+
+
+                        if (continuation != null) {
+                            builder.Append(continuation);
+                            }
+                        builder.Append("\n");
+                        first = true;
+                        position = 0;
+                        for (var i = 0; i < indent; i++) {
+                            builder.Append(" ");
+                            position++;
+                            }
+                        }
+
+                    if (first) {
+                        first = false;
+                        }
+                    else {
+                        builder.Append(" ");
+                        position++;
+                        }
+
+                    builder.Append(chunk);
+                    position += chunk.Length;
+                    }
+                }
+
+            return builder.ToString();
+
+
+            }
+
+        static void Wrap(StringBuilder builder, string text,
+            int position, int cols, string continuation, int indent) {
+
+            builder.Append(text);
+            }
+
+
         /// <summary>
         /// Set the output.
         /// </summary>

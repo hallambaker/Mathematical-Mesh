@@ -44,7 +44,7 @@ namespace Goedel.Mesh.Shell {
             var contextUser = MeshHost.CreateMesh(accountID, localname);
             return new ResultCreateAccount() {
                 Success = true,
-                ProfileUser = contextUser.ProfileUser,
+                ProfileAccount = contextUser.ProfileUser,
                 ActivationDevice = contextUser.ActivationDevice
                 };
             }
@@ -237,7 +237,7 @@ namespace Goedel.Mesh.Shell {
 
             return new ResultCreateAccount() {
                 Success = true,
-                ProfileUser = contextUser.ProfileUser,
+                ProfileAccount = contextUser.ProfileUser,
                 ActivationDevice = contextUser.ActivationDevice
                 };
             }

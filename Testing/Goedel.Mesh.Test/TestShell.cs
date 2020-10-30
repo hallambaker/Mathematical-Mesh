@@ -5,9 +5,10 @@ using Goedel.Protocol;
 using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
-
+using Goedel.IO;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 #pragma warning disable IDE0059
 
@@ -68,6 +69,10 @@ namespace Goedel.Mesh.Test {
 
 
         public string ResultText => Result.ToString();
+            //{ get {
+            //    var result = 
+            //    return result == "" ? "\n" : result;
+            //    } }
         public string ResultJSON => Result.GetJson(true).ToUTF8();
 
 
@@ -96,6 +101,14 @@ namespace Goedel.Mesh.Test {
 
         }
 
+    public partial class ResultDirect : Result {
+
+        public string Output;
+
+        public override string ToString() => Output;
+
+        }
+
     public partial class TestCLI : CommandLineInterpreter {
         public TestShell Shell;
 
@@ -112,6 +125,25 @@ namespace Goedel.Mesh.Test {
 
         public TestCLI(TestShell shell) : base() => Shell = shell;
         public string MachineName => Shell.MachineName;
+
+
+        public ExampleResult DumpFile(string filename) {
+            string output;
+            try {
+                output = filename.OpenReadToEnd();
+                }
+            catch {
+                output = "Error: File Not Found";
+                }
+
+            string cmd = $"type {filename}";
+            var result = new ResultDirect() {
+                Output = output + "\n"
+                };
+            return new ExampleResult(this, cmd, result);
+
+
+            }
 
 
         public List<ExampleResult> Example(params string[] commands) {

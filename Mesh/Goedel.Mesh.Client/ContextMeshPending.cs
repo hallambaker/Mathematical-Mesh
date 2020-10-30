@@ -120,8 +120,8 @@ namespace Goedel.Mesh.Client {
             var requestConnection = new RequestConnection(profileDevice,
                 accountAddress, pin);
 
-            var keyAuthentication = meshHost.KeyCollection.LocatePrivateKeyPair(
-                            profileDevice.BaseAuthentication.Udf);
+            meshHost.KeyCollection.LocatePrivateKeyPair(
+                            profileDevice.BaseAuthentication.Udf, out var keyAuthentication);
 
             requestConnection.Envelope(keyAuthentication);
 

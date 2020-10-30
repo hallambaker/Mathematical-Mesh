@@ -300,7 +300,8 @@ namespace Goedel.Mesh.Client {
         ///<summary>Inbound message signature key, the device admin signature key</summary> 
         KeyPair SignLocalMessage => null; // ToDo: set signing key to the device admin key.
 
-        CryptoKey TryFindKeyEncryption(string recipient) => ContextAccount.TryFindKeyEncryption(recipient);
+        bool TryFindKeyEncryption(string recipient, out CryptoKey cryptoKey) => 
+                ContextAccount.TryFindKeyEncryption(recipient, out cryptoKey);
 
         /// <summary>The transaction request message being assembled</summary>
         public TransactRequest TransactRequest = new TransactRequest();
@@ -341,7 +342,7 @@ namespace Goedel.Mesh.Client {
         public void OutboundMessage(
                 string recipientAddress,
                 Message message) {
-            var recipientEncryptionKey = TryFindKeyEncryption(recipientAddress);
+            TryFindKeyEncryption(recipientAddress, out var recipientEncryptionKey);
             OutboundMessage(recipientAddress, recipientEncryptionKey, message);
             }
 

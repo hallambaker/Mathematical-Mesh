@@ -261,8 +261,9 @@ namespace Goedel.Cryptography.Dare {
         public CryptoStackStream GetDecoder(
                         JsonBcdReader jsonBcdReader,
                         out Stream reader,
-                       IKeyLocate keyCollection = null) {
-            CryptoStack = GetCryptoStack(keyCollection);
+                       IKeyLocate keyCollection = null,
+                       bool decrypt = true) {
+            CryptoStack = GetCryptoStack(keyCollection, decrypt: decrypt);
 
             return CryptoStack.GetDecoder(jsonBcdReader, out reader);
             }
@@ -303,14 +304,13 @@ namespace Goedel.Cryptography.Dare {
                     CryptoAlgorithmId algorithmID) {
             foreach (var recipient in recipients) {
 
-                var decryptionKey = keyCollection.TryFindKeyDecryption(recipient.KeyIdentifier);
+                if ( keyCollection.TryFindKeyDecryption(recipient.KeyIdentifier, out var decryptionKey)) {
 
-                // Recipient has the following fields of interest
-                // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
-                // Recipient.Header.Epk  -- The ephemeral public key
-                // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
+                    // Recipient has the following fields of interest
+                    // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
+                    // Recipient.Header.Epk  -- The ephemeral public key
+                    // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
 
-                if (decryptionKey != null) {
                     return decryptionKey.Decrypt(
                             recipient.WrappedMasterKey, recipient.Epk?.KeyPair,
                             algorithmID: algorithmID, null);

@@ -64,8 +64,11 @@ namespace ExampleGenerator {
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
 			foreach  (var exampleResult in exampleResults) {
-				_Output.Write ("<cmd>{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
-				_Output.Write ("<rsp>{1}", _Indent, exampleResult.ResultText);
+				_Output.Write ("<cmd>{1}> ", _Indent, exampleResult.MachineName);
+				_Output.Write ("{1}\n{0}", _Indent, WrapConsole(exampleResult.Command, exampleResult.MachineName.Length));
+				if (  (exampleResult.ResultText != "") ) {
+					_Output.Write ("<rsp>{1}", _Indent, exampleResult.ResultText);
+					}
 				}
 			_Output.Write ("</div>\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);

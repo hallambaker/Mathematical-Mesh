@@ -468,14 +468,13 @@ namespace Goedel.Cryptography.Dare {
                 CryptoAlgorithmId algorithmID) {
             foreach (var Recipient in recipients) {
 
-                var DecryptionKey = KeyCollection.Default.TryFindKeyDecryption(Recipient.Header.Kid);
+                if (KeyCollection.Default.TryFindKeyDecryption(Recipient.Header.Kid.Trim(), out var DecryptionKey)) {
 
                 // Recipient has the following fields of interest
                 // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
                 // Recipient.Header.Epk  -- The ephemeral public key
                 // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
 
-                if (DecryptionKey != null) {
                     return DecryptionKey.Decrypt(Recipient.EncryptedKey, Recipient.Header.Epk.KeyPair, algorithmID: algorithmID);
                     }
                 }

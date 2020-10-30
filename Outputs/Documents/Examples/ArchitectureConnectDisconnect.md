@@ -13,7 +13,10 @@ The device can no longer access the password catalog:
 
 
 ~~~~
-Missing example 2
+<div="terminal">
+<cmd>Alice2> dare decode ciphertext.dare plaintext2.txt
+<rsp>ERROR - No decryption key is available
+</div>
 ~~~~
 
 

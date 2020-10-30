@@ -5,8 +5,18 @@ readable only by Alice:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode plaintext.txt /encrypt alice@example.com /out ciphertext.dare
-<rsp></div>
+<cmd>Alice> type plaintext.txt
+<rsp>This is a test
+<cmd>Alice> dare encode plaintext.txt ciphertext.dare /encrypt ^
+    alice@example.com 
+<cmd>Alice> dare verify ciphertext.dare
+<rsp>File: ciphertext.dare
+    Bytes: 0
+    Encryption Algorithm: A256CBC
+        Recipient: MCI2-LWOT-RMD4-775G-UBC3-BFDL-ZS7Q
+    Digest Algorithm: S512
+    Payload Digest: 
+</div>
 ~~~~
 
 Alice can recover the file at any time using the decryption command:
@@ -14,8 +24,10 @@ Alice can recover the file at any time using the decryption command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode ciphertext.dare
-<rsp></div>
+<cmd>Alice> dare decode ciphertext.dare plaintext1.txt
+<cmd>Alice> type plaintext1.txt
+<rsp>This is a test
+</div>
 ~~~~
 
 Although the encrypted file can be accessed by Alice with precisely the same ease as the plaintext

@@ -122,7 +122,8 @@ Alice can now synchronize her newly connected device to her account:
 
 #zfile CreateExamples ArchitectureConnectPassword "Examples\\ArchitectureConnectPassword.md" Example
 
-For example, Alice can now access her credential catalog from the new device:
+For example, Alice can now decrypt the file she encrypted on her first device and access her 
+credential catalog from the new device:
 
 #%  ConsoleExample (Example.Connect.PasswordList2);
 

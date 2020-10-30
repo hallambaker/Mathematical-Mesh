@@ -1,9 +1,15 @@
 
-For example, Alice can now access her credential catalog from the new device:
+For example, Alice can now decrypt the file she encrypted on her first device and access her 
+credential catalog from the new device:
 
 
 ~~~~
-Missing example 1
+<div="terminal">
+<cmd>Alice2> password get ftp.example.com
+<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice2> dare decode ciphertext.dare plaintext2.txt
+<rsp>ERROR - No decryption key is available
+</div>
 ~~~~
 
 

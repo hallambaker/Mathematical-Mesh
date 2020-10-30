@@ -13373,6 +13373,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new ExistingFile (),
+			new NewFile (),
 			new String (),
 			new String (),
 			new String (),
@@ -13384,7 +13385,6 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
-			new NewFile (),
 			new Flag (),
 			new String ()			} ;
 
@@ -13401,112 +13401,112 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Input {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [cty]</summary>
-		public virtual String ContentType {
-			get => _Data[1] as String;
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile Output {
+			get => _Data[1] as NewFile;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _ContentType {
+		public virtual string _Output {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [encrypt]</summary>
-		public virtual String Encrypt {
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Encrypt {
+		public virtual string _ContentType {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [sign]</summary>
-		public virtual String Sign {
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
 			get => _Data[3] as String;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Sign {
+		public virtual string _Encrypt {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [hash]</summary>
-		public virtual Flag Hash {
-			get => _Data[4] as Flag;
+		/// <summary>Field accessor for option [sign]</summary>
+		public virtual String Sign {
+			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Hash {
+		public virtual string _Sign {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [alg]</summary>
-		public virtual String Algorithms {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [hash]</summary>
+		public virtual Flag Hash {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Algorithms {
+		public virtual string _Hash {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String Algorithms {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _AccountAddress {
+		public virtual string _Algorithms {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [local]</summary>
-		public virtual String LocalName {
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
 			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _LocalName {
+		public virtual string _AccountAddress {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[8] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[9] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[9] as Enumeration<EnumReporting>;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[10] as Flag;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[11] as Flag;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [out]</summary>
-		public virtual NewFile Output {
-			get => _Data[12] as NewFile;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[12] as Flag;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Output {
+		public virtual string _Json {
 			set => _Data[12].Parameter (value);
 			}
 		/// <summary>Field accessor for option [sub]</summary>
@@ -13542,89 +13542,89 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = ""
 					},
+				new DescribeEntryParameter () {
+					Identifier = "Output", 
+					Default = null, // null if null
+					Brief = "Filename for encrypted output.",
+					Index = 1,
+					Key = ""
+					},
 				new DescribeEntryOption () {
 					Identifier = "ContentType", 
 					Default = null, // null if null
 					Brief = "Content Type",
-					Index = 1,
+					Index = 2,
 					Key = "cty"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Encrypt", 
 					Default = null, // null if null
 					Brief = "Encrypt data for specified recipient",
-					Index = 2,
+					Index = 3,
 					Key = "encrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Sign", 
 					Default = null, // null if null
 					Brief = "Sign data with specified key",
-					Index = 3,
+					Index = 4,
 					Key = "sign"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Hash", 
 					Default = "true", // null if null
 					Brief = "Compute hash of content",
-					Index = 4,
+					Index = 5,
 					Key = "hash"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Algorithms", 
 					Default = null, // null if null
 					Brief = "List of algorithm specifiers",
-					Index = 5,
+					Index = 6,
 					Key = "alg"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 6,
+					Index = 7,
 					Key = "account"
 					},
 				new DescribeEntryOption () {
 					Identifier = "LocalName", 
 					Default = null, // null if null
 					Brief = "Local name for account (e.g. personal)",
-					Index = 7,
+					Index = 8,
 					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 8,
+					Index = 9,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 9,
+					Index = 10,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 10,
+					Index = 11,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 11,
-					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Output", 
-					Default = null, // null if null
-					Brief = "Filename for encrypted output.",
 					Index = 12,
-					Key = "out"
+					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Subdirectories", 

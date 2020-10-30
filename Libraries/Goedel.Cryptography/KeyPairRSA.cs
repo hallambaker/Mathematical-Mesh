@@ -203,17 +203,19 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="UDF">Fingerprint of key to be located.</param>
         /// <returns>The located key (if found).</returns>
-        public static KeyPair Locate(string UDF) {
+        public static bool Locate(string UDF, out KeyPair keyPair) {
             var cspParameters = new CspParameters() {
                 Flags = CspProviderFlags.UseExistingKey,
                 KeyContainerName = UDF
                 };
             try {
                 var rsa = new RSACryptoServiceProvider(cspParameters);
-                return new KeyPairRSA(rsa);
+                keyPair = new KeyPairRSA(rsa);
+                return true;
                 }
             catch {
-                return null;
+                keyPair = null;
+                return false;
                 }
             }
 

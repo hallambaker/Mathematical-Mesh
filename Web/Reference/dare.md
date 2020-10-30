@@ -22,6 +22,7 @@ DARE messages.
 <over>
 encode   Encode data as DARE Message.
        File or directory to encrypt
+       Filename for encrypted output.
     /cty   Content Type
     /encrypt   Encrypt data for specified recipient
     /sign   Sign data with specified key
@@ -32,7 +33,6 @@ encode   Encode data as DARE Message.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-    /out   Filename for encrypted output.
     /sub   Process subdirectories recursively.
     /key   Specifies the value of the master key
 <over>

@@ -14,6 +14,7 @@ namespace ExampleGenerator {
 
         public string EncryptSourceFile = "plaintext.txt";
         public string EncryptTargetFile = "ciphertext.dare";
+        public string EncryptResultFile = "plaintext1.txt";
 
         public List<ExampleResult> CreateAlice;
         public List<ExampleResult> CreateBob;
@@ -36,7 +37,7 @@ namespace ExampleGenerator {
         }
 
     public partial class LayerConnect {
-
+        public string EncryptResultFile = "plaintext2.txt";
 
         public List<ExampleResult> ConnectRequest;
         public List<ExampleResult> ConnectPending;

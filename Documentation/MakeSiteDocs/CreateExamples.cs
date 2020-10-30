@@ -18,7 +18,7 @@ namespace ExampleGenerator {
         public string MakerAccount = "maker@example.com";
         public string GroupAccount => Group.GroupAccount;
 
-        public ProfileUser AliceProfileAccount;
+        public ProfileAccount AliceProfileAccount;
         public ProfileDevice AliceProfileDeviceCoffee;
 
         public string TestFile1Text = "This is a test";
@@ -48,7 +48,42 @@ namespace ExampleGenerator {
             Screen.WriteLine("Missing example!");
             }
 
+        /*
+         * Stuff needing to be fixed...
+         * 
+        Alice2> dare decode ciphertext.dare plaintext2.txt
+        ERROR - No decryption key is available
 
+        Alice> device delete TBS
+        ERROR - The feature has not been implemented
+
+        Alice2> dare decode ciphertext.dare plaintext2.txt
+        ERROR - No decryption key is available
+
+        Alice creates an SSH profile within her Mesh on the administrative device. 
+        Missing example 1
+
+        Alice> message accept NCYI-I2BW-RJ5F-UYEB-X47Y-UTJW-FUX3
+        ERROR - The specified message could not be found.
+
+        The secure console verifies the response and grants access: 
+        Missing example 2
+
+        Alice> dare encode grouptext.txt /encrypt groupw@example.com /out ^
+        groupsecret.dare
+        ERROR - The option System.Object[] is not known.
+
+        Alice> dare decode groupsecret.dare
+        ERROR - No decryption key is available
+
+        Bob> account sync
+        Bob> dare decode groupsecret.dare
+        ERROR - No decryption key is available
+
+        Alice2> account recover /verify
+        ERROR - Expected {
+         * 
+         */
 
 
         public void PerformAll() {
@@ -63,17 +98,29 @@ namespace ExampleGenerator {
                 $"account create {AliceAccount}"
                 );
             var aliceCreateAccount = Account.CreateAlice.GetResultCreateAccount();
-            AliceProfileAccount = aliceCreateAccount.ProfileUser;
+            AliceProfileAccount = aliceCreateAccount.ProfileAccount;
 
-
+            // Encrypt the file
             Account.EncryptSourceFile.WriteFileNew(TestFile1Text);
-            Account.ConsoleEncryptFile = testCLIAlice1.Example(
-                $"dare encode {Account.EncryptSourceFile} /encrypt {AliceAccount} /out {Account.EncryptTargetFile}");
-
-            Account.ConsoleDecryptFile = testCLIAlice1.Example(
-                $"dare decode {Account.EncryptTargetFile}"
+            var dump = testCLIAlice1.DumpFile(Account.EncryptSourceFile);
+            var encode = testCLIAlice1.Example(
+                $"dare encode {Account.EncryptSourceFile} {Account.EncryptTargetFile} /encrypt {AliceAccount} ");
+            var verify = testCLIAlice1.Example(
+                $"dare verify {Account.EncryptTargetFile}"
                 );
+            Account.ConsoleEncryptFile = new List<ExampleResult>() {
+                dump, encode[0], verify[0]
+                };
 
+            // Decrypt the file
+            var decode = testCLIAlice1.Example(
+                $"dare decode {Account.EncryptTargetFile} {Account.EncryptResultFile}"
+                );
+            var dump2 = testCLIAlice1.DumpFile(Account.EncryptResultFile);
+            Account.ConsoleDecryptFile = new List<ExampleResult>() {
+                decode[0], dump2
+                };
+            
             // Check the passwords work
 
             Account.PasswordAdd = testCLIAlice1.Example(
@@ -109,17 +156,20 @@ namespace ExampleGenerator {
                 $"account sync"
                 );
 
-
-            //Connect.PasswordList2 = testCLIAlice2.Example(
-            //    $"password get {PasswordSite}"
-            //    );
+            // Password catalog access broken on device 2
+            // Don't have the account decryption key either.
+            Connect.PasswordList2 = testCLIAlice2.Example(
+                $"password get {PasswordSite}",
+                $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
+                );
 
             Connect.Disconnect = testCLIAlice1.Example(
                 $"device delete {deviceId}"
                 );
-            //Connect.PasswordList2Disconnect = testCLIAlice2.Example(
-            //    $"password get {PasswordSite}"
-            //    );
+            Connect.PasswordList2Disconnect = testCLIAlice2.Example(
+                //$"password get {PasswordSite}",
+                $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
+                );
 
             // Static connection tests
             "Static connect".TaskFunctionality();
@@ -294,7 +344,7 @@ namespace ExampleGenerator {
 
 
             
-            }
+             }
 
 
         //public byte[] Enhance(

@@ -1,7 +1,7 @@
 
 ~~~~
 <div="terminal">
-<cmd>Alice2> account recover SAQF-E4D3-HAW5-WSAT-Z7LD-YOJR-FUSQ-OE2D-ELGO-R5XI-B2GJ-3DTV-6DMV-HDAK-JCXA SARG-OT3N-S4GJ-6XOP-Q4VQ-7LLZ-CRRW-CUQP-WZSN-JIRJ-YB2C-TMEU-GOIQ-WHE5-5RJQ /verify
+<cmd>Alice2> account recover /verify
 <rsp>ERROR - Expected {
 </div>
 ~~~~

@@ -9,7 +9,7 @@ Bob sends Alice a contact exchange request:
 ~~~~
 <div="terminal">
 <cmd>Bob> message contact alice@example.com
-<rsp></div>
+</div>
 ~~~~
 
 Alice checks his Mesh messages and approves Bob's request:
@@ -18,13 +18,13 @@ Alice checks his Mesh messages and approves Bob's request:
 ~~~~
 <div="terminal">
 <cmd>Alice> account sync
-<rsp><cmd>Alice> message pending
-<rsp>MessageID: NBIX-IJMA-JKJ4-JR7G-W2J4-72NU-2IPM
+<cmd>Alice> message pending
+<rsp>MessageID: NBFX-IA4R-ZISZ-6MWZ-KGO4-GZGB-32KL
         Contact Request::
-        MessageID: NBIX-IJMA-JKJ4-JR7G-W2J4-72NU-2IPM
+        MessageID: NBFX-IA4R-ZISZ-6MWZ-KGO4-GZGB-32KL
         To: alice@example.com From: bob@example.com
-        PIN: AASW-PCWN-HAUG-MSTC-ZLAI-JKJO-EGNA
-<cmd>Alice> message accept NBIX-IJMA-JKJ4-JR7G-W2J4-72NU-2IPM
-<rsp></div>
+        PIN: ACGU-5HGL-PNEN-QN2A-WIGY-6BBM-I3XA
+<cmd>Alice> message accept NBFX-IA4R-ZISZ-6MWZ-KGO4-GZGB-32KL
+</div>
 ~~~~
 

@@ -117,7 +117,7 @@ namespace Goedel.XUnit {
         public void TestAccountDelete() {
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
             var account = testCLIAlice1.Dispatch($"account create {AccountA}") as ResultCreateAccount;
-            var profileUdf = account.ProfileUser.Udf;
+            var profileUdf = account.ProfileAccount.Udf;
             var ProfileAliceDelete = testCLIAlice1.Example($"account delete {profileUdf}");
 
             // Failing because the device catalog is keypt open.

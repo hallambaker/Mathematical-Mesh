@@ -429,7 +429,45 @@ namespace Goedel.Mesh.Shell {
         }
 
 
+    public partial class ResultFileDare {
 
+        /// <summary>
+        /// Converts the value of this instance to a <see langword="String"/>.
+        /// </summary>
+        /// <returns>The current string.</returns>
+        public override string ToString() {
+            var builder = StringBuilder();
+            builder.Append($"File: {Filename}\n");
+            builder.Append($"    Bytes: {TotalBytes}\n");
+            if (Envelope == null) {
+                builder.Append($"    Error: Not a DARE envelope\n");
+                }
+            else {
+                ToString(builder);
+                }
+            return builder.ToString();
+            }
+
+        void ToString(StringBuilder builder) {
+            var header = Envelope?.Header;
+            var trailer = Envelope?.Trailer;
+            if (header?.Encrypt != null) {
+                builder.Append($"    Encryption Algorithm: {header.EncryptionAlgorithm}\n");
+                foreach (var recipient in header.Recipients) {
+                    builder.Append($"        Recipient: {recipient.KeyIdentifier}\n");
+                    }
+                }
+            if (header?.DigestAlgorithm != null) {
+                builder.Append($"    Digest Algorithm: {header.DigestAlgorithm}\n");
+                builder.Append($"    Payload Digest: {trailer?.PayloadDigest}\n");
+                if (trailer?.Signatures != null) {
+                    foreach (var signature in trailer?.Signatures) {
+                        builder.Append($"        Signer: {signature.KeyIdentifier}\n");
+                        }
+                    }
+                }
+            }
+        }
 
     public partial class ResultEscrow {
 

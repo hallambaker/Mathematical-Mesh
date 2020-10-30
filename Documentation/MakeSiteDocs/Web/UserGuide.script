@@ -51,8 +51,11 @@
 ~~~~
 <div="terminal">
 #foreach (var exampleResult in exampleResults)
-<cmd>#{exampleResult.MachineName}> #{exampleResult.Command}
+<cmd>#{exampleResult.MachineName}> #!
+#{WrapConsole(exampleResult.Command, exampleResult.MachineName.Length)}
+#if (exampleResult.ResultText != "")
 <rsp>#{exampleResult.ResultText}#!
+#end if
 #end foreach
 </div>
 ~~~~

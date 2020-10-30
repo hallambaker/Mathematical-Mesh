@@ -118,10 +118,10 @@ namespace Goedel.Mesh {
         /// <param name="keyId">The identifier of the public key to obtain a decryption 
         /// capability against.</param>
         /// <returns>The decryption capability if found, otherwise null.</returns>
-        public IKeyDecrypt TryFindKeyDecryption(string keyId) {
-            DictionaryDecryptByKeyId.TryGetValue(keyId, out var result);
-
-            return result;
+        public bool TryFindKeyDecryption(string keyId, out IKeyDecrypt keyDecrypt) {
+            var found = DictionaryDecryptByKeyId.TryGetValue(keyId, out var key);
+            keyDecrypt = key;
+            return found;
             }
 
         /// <summary>

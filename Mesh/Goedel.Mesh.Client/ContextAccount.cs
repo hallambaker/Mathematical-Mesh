@@ -532,9 +532,10 @@ namespace Goedel.Mesh.Client {
         /// an account identifier or strong account identifier.
         /// </summary>
         /// <param name="keyId">The identifier to resolve.</param>
+        /// <param name="cryptoKey">The found key </param>
         /// <returns>The identifier.</returns>
-        public virtual CryptoKey TryFindKeyEncryption(string keyId) =>
-                    KeyCollection.TryFindKeyEncryption(keyId);
+        public virtual bool TryFindKeyEncryption(string keyId, out CryptoKey cryptoKey) =>
+                    KeyCollection.TryFindKeyEncryption(keyId, out cryptoKey);
 
 
 
@@ -543,26 +544,29 @@ namespace Goedel.Mesh.Client {
         /// Attempt to obtain a private key with identifier <paramref name="keyId"/>.
         /// </summary>
         /// <param name="keyId">The key identifier to match.</param>
+        /// <param name="cryptoKey">The found key </param>
         /// <returns>The key pair if found.</returns>
-        public virtual CryptoKey LocatePrivateKeyPair(string keyId) => 
-                    KeyCollection.LocatePrivateKeyPair(keyId);
+        public virtual bool LocatePrivateKeyPair(string keyId, out CryptoKey cryptoKey) => 
+                    KeyCollection.LocatePrivateKeyPair(keyId, out cryptoKey);
 
         /// <summary>
         /// Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
         /// </summary>
         /// <param name="keyId">The key identifier to match.</param>
+        /// <param name="cryptoKey">The found key </param>
         /// <returns>The key pair if found.</returns>
-        public virtual IKeyDecrypt TryFindKeyDecryption(string keyId) =>
-                    KeyCollection.TryFindKeyDecryption(keyId);
+        public virtual bool TryFindKeyDecryption(string keyId, out IKeyDecrypt cryptoKey) =>
+                    KeyCollection.TryFindKeyDecryption(keyId, out cryptoKey);
 
         /// <summary>
         /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
         /// </summary>
         /// <param name="signingKey">The identifier to resolve.</param>
+        /// <param name="cryptoKey">The found key </param>
         /// <returns>The identifier.</returns>
-        public virtual CryptoKey TryFindKeySignature(string signingKey) => 
-                    KeyCollection.TryFindKeySignature(signingKey);
+        public virtual bool TryFindKeySignature(string signingKey, out CryptoKey cryptoKey) => 
+                    KeyCollection.TryFindKeySignature(signingKey, out cryptoKey);
 
         /// <summary>
         /// Add a keypair to the collection.
@@ -617,7 +621,7 @@ namespace Goedel.Mesh.Client {
             if (recipients != null) {
                 encryptionKeys = new List<CryptoKey>();
                 foreach (var recipient in recipients) {
-                    var key = TryFindKeyEncryption(recipient);
+                    TryFindKeyEncryption(recipient, out var key);
                     encryptionKeys.Add(key);
                     }
                 }

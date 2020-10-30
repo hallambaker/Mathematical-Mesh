@@ -111,18 +111,32 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Attempt to find a private key for the specified recipient entry.
         /// </summary>
-        /// <param name="keyID">The key identifier to match</param>
+        /// <param name="keyId">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        public virtual IKeyDecrypt TryFindKeyDecryption(string keyID) =>
-            keyID == KeyIdentifier ? this : null;
+        public virtual bool TryFindKeyDecryption(string keyId, out IKeyDecrypt cryptoKey) {
+            if (keyId == KeyIdentifier) {
+                cryptoKey = this;
+                return true;
+                }
+            cryptoKey = null;
+            return false;
+            }
 
         /// <summary>
         /// Resolve a public key by identifier. This always returns null because the collection
         /// cannot contain a <see cref="KeyPair"/>
         /// </summary>
         /// <param name="keyId">The identifier to resolve.</param>
+        /// <param name="cryptoKey">The found key </param>
         /// <returns>The identifier.</returns>
-        public CryptoKey TryFindKeyEncryption(string keyId) => this;
+        public bool TryFindKeyEncryption(string keyId, out CryptoKey cryptoKey) {
+            if (keyId == KeyIdentifier) {
+                cryptoKey = this;
+                return true;
+                }
+            cryptoKey = null;
+            return false;
+            }
 
         /// <summary>
         /// Resolve a private key by identifier.  This always returns null because the collection
@@ -130,14 +144,29 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyId">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public CryptoKey TryFindKeySignature(string keyId) => this;
+        public bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
+            if (keyId == KeyIdentifier) {
+                cryptoKey = this ;
+                return true;
+                }
+            cryptoKey = null;
+            return false;
+
+            }
 
         /// <summary>
         /// Locate the private key.
         /// </summary>
-        /// <param name="UDF">fingerprint of key to locate.</param>
+        /// <param name="keyId">fingerprint of key to locate.</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
-        public  CryptoKey LocatePrivateKeyPair(string UDF) => this;
+        public bool LocatePrivateKeyPair(string keyId, out CryptoKey cryptoKey) {
+            if (keyId == KeyIdentifier) {
+                cryptoKey = this;
+                return true;
+                }
+            cryptoKey = null;
+            return false;
+            }
 
         /// <summary>
         /// Add a keypair to the collection.

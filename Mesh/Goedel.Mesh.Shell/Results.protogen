@@ -1,6 +1,7 @@
 ﻿Protocol Goedel.Mesh.Shell ShellResult ShellResult
 	Using Goedel.Mesh
 	Using Goedel.Mesh.Client
+	Using Goedel.Cryptography.Dare
 
 	Description
 		|Classes to be used to test serialization an deserialization.
@@ -28,6 +29,11 @@
 		String			Filename
 		Integer			TotalBytes
 		Boolean			Verified
+
+	Structure ResultFileDare
+		Inherits		ResultFile
+		Struct DareEnvelope Envelope 
+
 
 	Structure ResultFileEARL
 		Inherits		Result
@@ -77,7 +83,7 @@
 
 	Structure ResultCreateAccount
 		Inherits							ResultCreateDevice
-		Struct ProfileUser					ProfileUser
+		Struct ProfileAccount				ProfileAccount
 		Struct ActivationDevice				ActivationDevice
 	
 
