@@ -453,8 +453,10 @@ namespace Goedel.Mesh.Shell {
             var trailer = Envelope?.Trailer;
             if (header?.Encrypt != null) {
                 builder.Append($"    Encryption Algorithm: {header.EncryptionAlgorithm}\n");
-                foreach (var recipient in header.Recipients) {
-                    builder.Append($"        Recipient: {recipient.KeyIdentifier}\n");
+                if (header.Recipients != null) {
+                    foreach (var recipient in header.Recipients) {
+                        builder.Append($"        Recipient: {recipient.KeyIdentifier}\n");
+                        }
                     }
                 }
             if (header?.DigestAlgorithm != null) {

@@ -67,7 +67,10 @@ namespace Goedel.Mesh.Shell {
 
             var result = DareEnvelope.Verify(inputFile, keyLocate);
 
+            "Should check that the signature value is correct".TaskFunctionality();
+
             return new ResultFileDare() {
+                Verified = true, // Hack: Should test here!!!!
                 Filename = inputFile,
                 Envelope = result
                 };

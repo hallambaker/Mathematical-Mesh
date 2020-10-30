@@ -60,7 +60,7 @@ namespace Goedel.XUnit {
 
             System.IO.File.Delete(filename);
 
-            Dispatch($"dare decode {result1.Filename}");
+            Dispatch($"dare decode {result1.Filename} {filename}");
             var file2UDF = GetFileUDF(filename);
             file1UDF.TestEqual(file2UDF);
 

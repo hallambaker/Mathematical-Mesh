@@ -34,11 +34,11 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
- 
+
 
             // Need to re-engineer shell tests so that they can be run as a monolithic process or detached. 
 
-
+            ShellTests.Test().TestFilePlain();
             }
 
 
