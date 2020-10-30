@@ -22,6 +22,7 @@
 #% SchemaEntryMail(Example);
 #% SchemaEntryContact(Example);
 #% SchemaEntryCredential(Example);
+#% SchemaEntryBookmark(Example);
 #% SchemaEntryNetwork(Example);
 #% SchemaEntryTask(Example);
 #% SchemaDeriveTables(Example);
@@ -40,13 +41,8 @@
 
 
 #method DescribeMessage Goedel.Mesh.Message message
-~~~~
-<div="helptext">
-<over>
-[NYI]
-<over>
-</div>
-~~~~
+#% if (message?.EnvelopedMessage?.JsonObject == null) { ReportMissingExample(); return;}
+#%Format(message.EnvelopedMessage.JsonObject);
 #end method
 
 
@@ -67,7 +63,9 @@ For example, the personal account profile Alice created is:
 
 #zfile CreateExamples SchemaAliceActivationCoffee "Examples\\SchemaAliceActivationCoffee.md" Example
 
+
 #%  Format (Connect.AliceActivationDeviceCoffee);
+
 
 #end zfile
 
@@ -109,7 +107,7 @@ For example, the personal account profile Alice created is:
 #end zfile
 
 #zfile CreateExamples SchemaEntryNetwork "Examples\\SchemaEntryNetwork.md" Example
-#% Format(Apps.CredentialNetworkEntry);
+#% Format(Apps.NetworkCatalogEntry);
 #end zfile
 
 #zfile CreateExamples SchemaEntryTask "Examples\\SchemaEntryTask.md" Example

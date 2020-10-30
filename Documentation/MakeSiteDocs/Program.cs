@@ -182,10 +182,8 @@ namespace ExampleGenerator {
             Console.WriteLine($"Missing {CountMissing} of which {CountObsolete} obsolete");
 
             MakeDocs();
-            }
 
-
-        public bool All = false;
+        public bool All = true;
 
 
         public void MakeClean() {

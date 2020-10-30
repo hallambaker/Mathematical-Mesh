@@ -35,6 +35,13 @@ namespace ExampleGenerator {
             int index = 0) => GetResult(Results, index) as ResultConnect;
 
 
+        public static ResultEntry GetResultEntry(
+            this List<ExampleResult> Results,
+            int index = 0) => GetResult(Results, index) as ResultEntry;
+
+        public static ResultDump GetResultDump(
+            this List<ExampleResult> Results,
+            int index = 0) => GetResult(Results, index) as ResultDump;
         public static Result GetResult (
             this List<ExampleResult> Results,
             int index = 0) {

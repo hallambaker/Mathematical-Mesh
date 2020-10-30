@@ -179,7 +179,8 @@
 	Structure ResultConnect
 		Inherits		Result
 		Struct CatalogedMachine			CatalogedMachine
-
+		Struct ActivationDevice			ActivationDevice
+		Struct ActivationAccount			ActivationAccount
 
 	Structure ResultTransactionRequest
 		Inherits		Result

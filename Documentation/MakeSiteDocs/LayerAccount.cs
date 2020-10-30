@@ -49,6 +49,7 @@ namespace ExampleGenerator {
 
         public ProfileDevice AliceProfileDeviceCoffee;
         public ActivationDevice AliceActivationDeviceCoffee;
+        public ActivationAccount AliceActivationAccountCoffee;
         public ConnectionDevice AliceConnectionDeviceCoffee;
         public ActivationDevice AliceActivationDeviceWatch;
         public ProfileDevice AliceProfileDeviceWatch;
@@ -107,15 +108,14 @@ namespace ExampleGenerator {
         public List<ExampleResult> SSH;
         public List<ExampleResult> Mail;
 
+        public CatalogedEntry BookmarkCatalogEntry;
+        public CatalogedEntry ContactCatalogEntry;
+        public CatalogedEntry CredentialCatalogEntry;
+        public CatalogedEntry NetworkCatalogEntry;
+        public CatalogedEntry TaskCatalogEntry;
 
-        public ProfileDevice MailCatalogEntry;
-        public ProfileDevice BookmarkCatalogEntry;
-        public ProfileDevice ContactCatalogEntry;
-        public ProfileDevice CredentialCatalogEntry;
-        public ProfileDevice CredentialNetworkEntry;
-        public ProfileDevice TaskCatalogEntry;
-
-        public ProfileDevice SSHCatalogEntry;
+        public CatalogedEntry MailCatalogEntry;
+        public CatalogedEntry SSHCatalogEntry;
 
         public LayerApps(CreateExamples CreateExamples) {
             }

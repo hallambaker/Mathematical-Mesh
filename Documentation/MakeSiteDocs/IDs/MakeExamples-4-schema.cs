@@ -32,6 +32,7 @@ namespace ExampleGenerator {
 			 SchemaEntryMail(Example);
 			 SchemaEntryContact(Example);
 			 SchemaEntryCredential(Example);
+			 SchemaEntryBookmark(Example);
 			 SchemaEntryNetwork(Example);
 			 SchemaEntryTask(Example);
 			 SchemaDeriveTables(Example);
@@ -53,13 +54,7 @@ namespace ExampleGenerator {
 		// DescribeMessage
 		//
 		public void DescribeMessage (Goedel.Mesh.Message message) {
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("<div=\"helptext\">\n{0}", _Indent);
-			_Output.Write ("<over>\n{0}", _Indent);
-			_Output.Write ("[NYI]\n{0}", _Indent);
-			_Output.Write ("<over>\n{0}", _Indent);
-			_Output.Write ("</div>\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
+			 if (message?.EnvelopedMessage?.JsonObject == null) { ReportMissingExample(); return;}
 			}
 		
 
@@ -108,7 +103,9 @@ namespace ExampleGenerator {
 		public void _SchemaAliceActivationCoffee(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				  Format (Connect.AliceActivationDeviceCoffee);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -249,7 +246,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaEntryNetwork(CreateExamples Example) {
 
-				 Format(Apps.CredentialNetworkEntry);
+				 Format(Apps.NetworkCatalogEntry);
 					}
 		
 

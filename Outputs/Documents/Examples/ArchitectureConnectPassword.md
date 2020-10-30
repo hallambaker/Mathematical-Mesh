@@ -6,7 +6,7 @@ credential catalog from the new device:
 ~~~~
 <div="terminal">
 <cmd>Alice2> password get ftp.example.com
-<rsp>ERROR - Object reference not set to an instance of an object.
+<rsp>ERROR - No decryption key is available
 <cmd>Alice2> dare decode ciphertext.dare plaintext2.txt
 <rsp>ERROR - No decryption key is available
 </div>

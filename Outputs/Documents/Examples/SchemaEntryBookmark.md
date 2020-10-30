@@ -1,7 +1,7 @@
 ~~~~
 {
   "CatalogedBookmark":{
-    "Uri":"http://example.net/Bananas",
-    "Title":"\"Banana",
-    "Path":"Folder1/2"}}
+    "Uri":"http://www.site1.com",
+    "Title":"site1",
+    "Path":"Sites.1"}}
 ~~~~

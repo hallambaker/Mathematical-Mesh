@@ -4,8 +4,8 @@ The connection request is initiated on the device being connected:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MALK-ULVB-SR7D-ZOYG-ESI6-RU66-P67T
-   Witness value = MXDW-JQRU-TDYN-AJHK-XHF7-XQCW-EWNJ
+<rsp>   Device UDF = MCXT-GUKN-732Q-H7M2-DMWR-TC7Q-MV5W
+   Witness value = VKKR-APMX-XGSX-GQYZ-MDK2-FG37-23YG
 </div>
 ~~~~
 
@@ -17,7 +17,9 @@ accepts it:
 ~~~~
 <div="terminal">
 <cmd>Alice> account sync /auto
-<cmd>Alice> device accept MXDW-JQRU-TDYN-AJHK-XHF7-XQCW-EWNJ
+<rsp>ERROR - Cannot access a closed file.
+<cmd>Alice> device accept VKKR-APMX-XGSX-GQYZ-MDK2-FG37-23YG
+<rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
 

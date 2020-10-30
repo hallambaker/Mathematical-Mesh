@@ -5,6 +5,7 @@ her closest friends:
 ~~~~
 <div="terminal">
 <cmd>Alice> group create groupw@example.com
+<rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
 
@@ -34,12 +35,7 @@ Alice adds Bob to the group:
 
 
 ~~~~
-<div="terminal">
-<cmd>Alice> group add groupw@example.com bob@example.com
-<rsp>{
-  "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MBUR-G5KX-7TZ3-PZNJ-WOHI-TVJA-E4TA",
-  "ServiceCapabilityId": "NBA4-H3GK-3Z4B-HWPM-EVMF-6HSZ-TGRM"}</div>
+Missing example 3
 ~~~~
 
 Adding Bob to the group gives him immediate access to any file encrypted under
@@ -47,23 +43,14 @@ the group key without making any change to the encrypted files:
 
 
 ~~~~
-<div="terminal">
-<cmd>Bob> account sync
-<cmd>Bob> dare decode groupsecret.dare
-<rsp>ERROR - No decryption key is available
-</div>
+Missing example 4
 ~~~~
 
 Removing Bob from the group immediately withdraws his access.
 
 
 ~~~~
-<div="terminal">
-<cmd>Alice> group delete groupw@example.com bob@example.com
-<rsp>{
-  "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MBUR-G5KX-7TZ3-PZNJ-WOHI-TVJA-E4TA",
-  "ServiceCapabilityId": "NBA4-H3GK-3Z4B-HWPM-EVMF-6HSZ-TGRM"}</div>
+Missing example 5
 ~~~~
 
 Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
@@ -71,9 +58,6 @@ earlier).
 
 
 ~~~~
-<div="terminal">
-<cmd>Bob> dare decode groupsecret.dare
-<rsp>ERROR - No decryption key is available
-</div>
+Missing example 6
 ~~~~
 

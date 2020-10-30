@@ -120,7 +120,7 @@ namespace ExampleGenerator {
             Account.ConsoleDecryptFile = new List<ExampleResult>() {
                 decode[0], dump2
                 };
-            
+
             // Check the passwords work
 
             Account.PasswordAdd = testCLIAlice1.Example(
@@ -130,6 +130,46 @@ namespace ExampleGenerator {
             Account.PasswordGet = testCLIAlice1.Example(
                 $"password get {PasswordSite}"
                 );
+
+            // Bookmark catalog
+            string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
+            var bookmark = testCLIAlice1.Example(
+                $"bookmark add {path1} {uri1} {title1}",
+                $"bookmark get {path1}"
+                );
+            var resultBookmark = bookmark.GetResultEntry(1);
+            Apps.BookmarkCatalogEntry = resultBookmark.CatalogEntry;
+
+            // Contact catalog
+            //string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
+            var contact = testCLIAlice1.Example(
+                $"contact list "
+                );
+            var resultContact = contact.GetResultDump();
+            Apps.ContactCatalogEntry = resultContact.CatalogedEntries[0];
+
+            // Password catalog
+            var resultPassword = Account.PasswordGet.GetResultEntry();
+            Apps.CredentialCatalogEntry = resultPassword.CatalogEntry;
+
+            // Network catalog
+            //string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
+            var network = testCLIAlice1.Example(
+                $"network add myWiFi securePassword",
+                $"network list"
+                );
+            var resultNetwork = network.GetResultDump(1);
+            Apps.NetworkCatalogEntry = resultNetwork.CatalogedEntries[0];
+
+            // Task catalog
+            //string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
+            var task = testCLIAlice1.Example(
+                $"calendar add SomeItem",
+                $"calendar list"
+                );
+            var resultTask = task.GetResultDump(1);
+            Apps.TaskCatalogEntry = resultTask.CatalogedEntries[0];
+
 
             // Connect the second device
 
@@ -253,19 +293,19 @@ namespace ExampleGenerator {
             Group.GroupDecryptBobFail = testCLIAlice1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
-            Group.GroupAddBob = testCLIAlice1.Example(
-                $"group add {GroupAccount} {BobAccount}"
-                 );
-            Group.GroupDecryptBobSuccess = testCLIBob1.Example(
-                $"account sync",
-                $"dare decode {Group.EncryptTargetFile}"
-                 );
-            Group.GroupDeleteBob = testCLIAlice1.Example(
-                $"group delete {GroupAccount} {BobAccount}"
-                 );
-            Group.GroupDecryptBobRevoked = testCLIBob1.Example(
-                $"dare decode {Group.EncryptTargetFile}"
-                 );
+            //Group.GroupAddBob = testCLIAlice1.Example(
+            //    $"group add {GroupAccount} {BobAccount}"
+            //     );
+            //Group.GroupDecryptBobSuccess = testCLIBob1.Example(
+            //    $"account sync",
+            //    $"dare decode {Group.EncryptTargetFile}"
+            //     );
+            //Group.GroupDeleteBob = testCLIAlice1.Example(
+            //    $"group delete {GroupAccount} {BobAccount}"
+            //     );
+            //Group.GroupDecryptBobRevoked = testCLIBob1.Example(
+            //    $"dare decode {Group.EncryptTargetFile}"
+            //     );
 
 
 
@@ -318,12 +358,12 @@ namespace ExampleGenerator {
                 $"device complete"
                 );
             var connectStaticPollSuccess = Connect.ConnectStaticPollSuccess.GetResultConnect();
-            var coffeePotMachine = connectStaticPollSuccess.CatalogedMachine;
+            var coffeePotMachine = connectStaticPollSuccess?.CatalogedMachine;
+            var coffeePotDevice = coffeePotMachine?.CatalogedDevice;
             Connect.AliceProfileDeviceCoffee = coffeePotMachine.ProfileDevice;
-            //Connect.AliceActivationDeviceCoffee = coffeePotMachine.
-            //Connect.AliceConnectionDeviceCoffee = coffeePotMachine.
-
-
+            Connect.AliceActivationDeviceCoffee = connectStaticPollSuccess.ActivationDevice;
+            //Connect.AliceActivationAccountCoffee = connectStaticPollSuccess.ActivationAccount;
+            Connect.AliceConnectionDeviceCoffee = coffeePotDevice.ConnectionUser;
 
 
             Account.ProfileEscrow = testCLIAlice1.Example(

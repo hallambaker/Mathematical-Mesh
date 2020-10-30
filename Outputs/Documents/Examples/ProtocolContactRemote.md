@@ -1,9 +1,6 @@
 
+
 ~~~~
-<div="helptext">
-<over>
-[NYI]
-<over>
-</div>
+Missing example 42
 ~~~~
 

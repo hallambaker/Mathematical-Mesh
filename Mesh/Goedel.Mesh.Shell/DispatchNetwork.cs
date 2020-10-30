@@ -63,7 +63,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkGet(NetworkGet options) {
             var contextUser = GetContextUser(options);
-            var catalog = contextUser.GetStore(CatalogContact.Label) as CatalogContact;
+            var catalog = contextUser.GetStore(CatalogNetwork.Label) as CatalogNetwork;
             var identifier = options.Identifier.Value;
             var key = CatalogedNetwork.PrimaryKey(null, identifier);
 
@@ -86,7 +86,7 @@ namespace Goedel.Mesh.Shell {
                 Success = true,
                 CatalogedEntries = new List<CatalogedEntry>()
                 };
-            var catalog = contextUser.GetStore(CatalogContact.Label) as CatalogContact;
+            var catalog = contextUser.GetStore(CatalogNetwork.Label) as CatalogNetwork;
             foreach (var entry in catalog) {
                 result.CatalogedEntries.Add(entry);
                 }

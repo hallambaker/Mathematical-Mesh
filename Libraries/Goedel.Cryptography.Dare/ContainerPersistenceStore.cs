@@ -143,6 +143,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="readContainer"></param>
         /// <param name="keyLocate">The key collection to be used to resolve keys</param>
         public PersistenceStore(Container container, IKeyLocate keyLocate, bool readContainer = true) {
+            container.AssertNotNull(NoAvailableDecryptionKey.Throw);
+
             Container = container;
 
             // Barfing in the docs because we do not have the key required to decrypt the container

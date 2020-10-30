@@ -1,0 +1,25 @@
+~~~~
+{
+  "ConnectionDevice":{
+    "DeviceSignature":{
+      "Udf":"MDT5-MABY-QC4W-N7QK-BJ2P-GOBL-QE6H",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"Ed448",
+          "Public":"rgE9BbEE-lEYyALZ81OkR6d7phG6CPrE_nsJbPktbfDgLVl
+  37Kd1ROEZRJofemNgL8IXBfHM_Z0A"}}},
+    "DeviceEncryption":{
+      "Udf":"MDH6-UOH6-7NMG-GVYY-BM4T-TWJD-3Y5C",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"sGW9OW3436rHOEC19BSxXv2Q3Il5Z-sW0OsMfrAB8tcNtjH
+  tKnaK8kpbnG1XN575rp7h2ZBYnSYA"}}},
+    "DeviceAuthentication":{
+      "Udf":"MA3Y-ECB6-WY5W-FU6H-PIS7-UZJ2-B2IA",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"cnV8bspSMJK5OG7WtFyiL172SvfpLekbSrVeOrnnhJIJLww
+  hfz4yT3QBa8ZRqEMQ1Apu9Rzo4OKA"}}}}}
+~~~~

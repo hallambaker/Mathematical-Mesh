@@ -3921,6 +3921,14 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
 
 		public virtual CatalogedMachine						CatalogedMachine  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual ActivationDevice						ActivationDevice  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual ActivationAccount						ActivationAccount  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3970,6 +3978,16 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteToken ("CatalogedMachine", 1);
 					CatalogedMachine.Serialize (_writer, false);
 				}
+			if (ActivationDevice != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ActivationDevice", 1);
+					ActivationDevice.Serialize (_writer, false);
+				}
+			if (ActivationAccount != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ActivationAccount", 1);
+					ActivationAccount.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -4007,6 +4025,20 @@ namespace Goedel.Mesh.Shell {
 					// An untagged structure
 					CatalogedMachine = new CatalogedMachine ();
 					CatalogedMachine.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "ActivationDevice" : {
+					// An untagged structure
+					ActivationDevice = new ActivationDevice ();
+					ActivationDevice.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "ActivationAccount" : {
+					// An untagged structure
+					ActivationAccount = new ActivationAccount ();
+					ActivationAccount.Deserialize (jsonReader);
  
 					break;
 					}

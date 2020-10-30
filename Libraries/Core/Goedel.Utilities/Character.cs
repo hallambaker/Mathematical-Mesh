@@ -213,9 +213,9 @@ namespace Goedel.Utilities {
                     case '\u2011': 
                         Result.Append("-"); break;
 
-                    case '<': Result.Append("&lt;"); break;
-                    case '>': Result.Append("&gt;"); break;
-                    case '&': Result.Append("&amp;"); break;
+                    //case '<': Result.Append("&lt;"); break;
+                    //case '>': Result.Append("&gt;"); break;
+                    //case '&': Result.Append("&amp;"); break;
                     case (char)160: Result.Append(" "); break;
                     default: Result.Append(c); break;
                     }

@@ -1,22 +1,16 @@
 
 Bob asks Alice to send her contact details and sends his.
 
+
 ~~~~
-<div="helptext">
-<over>
-[NYI]
-<over>
-</div>
+Missing example 23
 ~~~~
 
 Alice responds with her details:
 
+
 ~~~~
-<div="helptext">
-<over>
-[NYI]
-<over>
-</div>
+Missing example 24
 ~~~~
 
 [Note that this exchange could be performed automatically on Alice's behalf by the service if she 

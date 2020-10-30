@@ -5849,6 +5849,14 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultConnect.ActivationDevice">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultConnect.ActivationAccount">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultConnect._Tag">
             <summary>
             Tag identifying this class

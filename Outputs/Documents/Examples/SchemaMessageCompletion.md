@@ -6,12 +6,9 @@ For example, when Alice reads the connection request from the device in the arch
 examples, a completion message is added to Alice's inbound spool so that the device is not 
 activated a second time by mistake:
 
+
 ~~~~
-<div="helptext">
-<over>
-[NYI]
-<over>
-</div>
+Missing example 20
 ~~~~
 
 

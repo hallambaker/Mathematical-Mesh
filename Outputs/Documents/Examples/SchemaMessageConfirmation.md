@@ -1,21 +1,15 @@
 
 The confirmation request
 
+
 ~~~~
-<div="helptext">
-<over>
-[NYI]
-<over>
-</div>
+Missing example 25
 ~~~~
 
 The confirmation response
 
+
 ~~~~
-<div="helptext">
-<over>
-[NYI]
-<over>
-</div>
+Missing example 26
 ~~~~
 
