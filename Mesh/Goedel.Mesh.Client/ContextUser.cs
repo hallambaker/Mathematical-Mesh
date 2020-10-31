@@ -744,13 +744,13 @@ namespace Goedel.Mesh.Client {
         /// <param name="connectUri"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public bool Preconfigure(
+        public DevicePreconfiguration Preconfigure(
                     out string filename,
                     out ProfileDevice profileDevice,
                     out string connectUri, 
                     string path = "") {
 
-            var response = CreateDeviceEarl(
+            CreateDeviceEarl(
                     out var secretSeed,
                     out profileDevice,
                     out var connectionDevice,
@@ -767,7 +767,7 @@ namespace Goedel.Mesh.Client {
                 };
             devicePreconfiguration.ToFile(filename, tagged: true);
 
-            return response;
+            return devicePreconfiguration;
             }
 
 

@@ -66,17 +66,24 @@ namespace ExampleGenerator {
         public List<ExampleResult> ConnectPINRequest;
         public List<ExampleResult> ConnectPINComplete;
 
-        public RequestConnection ConnectRequestWitness ;
-        public AcknowledgeConnection AcknowledgeConnectionWitness;
-        public RespondConnection ConnectResponseWitness;
+
+        public DevicePreconfiguration ConnectStaticPreconfig;
+
 
 
         public MessagePin ConnectPINMessagePin;
         public AcknowledgeConnection ConnectPINAcknowledgeConnection;
         public RespondConnection ConnectPINConnectResponse;
-        public MessageComplete ConnectPINCompleteWitness;
+        
+        
+        public MessageComplete ConnectPINCompleteMessage;
+        public RequestConnection ConnectRequestPIN;
+        public AcknowledgeConnection AcknowledgeConnectionPIN;
+        public RespondConnection RespondConnectionPIN;
 
-        public ConnectRequest ConnectRequestPIN;
+        public RequestConnection ConnectRequestWitness;
+        public RespondConnection AcknowledgeConnectionWitness;
+        public RespondConnection RespondConnectionWitness;
 
         public string ConnectEARL;
 
@@ -128,9 +135,13 @@ namespace ExampleGenerator {
 
         public List<ExampleResult> ContactBobRequest;
         public List<ExampleResult> ContactAliceResponse;
-        public MessageContact BobRequest;
+
         public MessagePin MessagePin;
+
+        public MessageContact BobRequest;
         public MessageContact AliceResponse;
+
+
         public LayerContact(CreateExamples CreateExamples) {
             }
 

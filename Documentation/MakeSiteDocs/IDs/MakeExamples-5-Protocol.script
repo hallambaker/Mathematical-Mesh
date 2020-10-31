@@ -308,7 +308,7 @@ The response payload:
 Alice reads her pending messages, notes that the witness value matches the one displayed
 earlier and approves the connection request.
 
-#% DescribeMessage(Connect.ConnectResponseWitness);
+#% DescribeMessage(Connect.RespondConnectionWitness);
 
 
 This is then fetched...

@@ -1395,6 +1395,10 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
 
 		public virtual ProfileDevice						ProfileDevice  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual DevicePreconfiguration						DevicePreconfiguration  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1454,6 +1458,11 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteToken ("ProfileDevice", 1);
 					ProfileDevice.Serialize (_writer, false);
 				}
+			if (DevicePreconfiguration != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("DevicePreconfiguration", 1);
+					DevicePreconfiguration.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -1499,6 +1508,13 @@ namespace Goedel.Mesh.Shell {
 					// An untagged structure
 					ProfileDevice = new ProfileDevice ();
 					ProfileDevice.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "DevicePreconfiguration" : {
+					// An untagged structure
+					DevicePreconfiguration = new DevicePreconfiguration ();
+					DevicePreconfiguration.Deserialize (jsonReader);
  
 					break;
 					}

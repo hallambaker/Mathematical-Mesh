@@ -31,8 +31,10 @@
 #% SchemaPINWitness(Example);
 #% SchemaClientAuthKeyAgreement(Example);
 #% SchemaDevice(Example);
+#% DevicePreconfiguration(Example);
 #% SchemaAccount(Example);
 #% SchemaService(Example);
+#% SchemaMessagePIN(Example);
 #% SchemaMessageCompletion(Example);
 #% SchemaMessageConnection(Example);
 #% SchemaMessageContact(Example);
@@ -42,7 +44,7 @@
 
 #method DescribeMessage Goedel.Mesh.Message message
 #% if (message?.EnvelopedMessage?.JsonObject == null) { ReportMissingExample(); return;}
-#%Format(message.EnvelopedMessage.JsonObject);
+#% Format(message.EnvelopedMessage.JsonObject);
 #end method
 
 
@@ -152,7 +154,9 @@ For example, the personal account profile Alice created is:
 #% Format(AliceProfileDeviceCoffee);
 #end zfile
 
-
+#zfile CreateExamples DevicePreconfiguration "Examples\\DevicePreconfiguration.md" Example
+#% Format(Connect.ConnectStaticPreconfig);
+#end zfile
 
 #zfile CreateExamples SchemaAccount "Examples\\SchemaAccount.md" Example
 #% var resultCreateAccount = ProfileCreateAlice?[0].Result as ResultCreateAccount;
@@ -206,38 +210,68 @@ And there should be a connection of the host to the service but this isn't imple
 
 #end zfile
 
-#zfile CreateExamples SchemaMessageCompletion "Examples\\SchemaMessageCompletion.md" Example
 
-Having processed a message, a completion message is added to the spool so that other devices 
-can see that it has been read.
+#zfile CreateExamples SchemaMessagePIN "Examples\\SchemaMessagePIN.md" Example
 
 For example, when Alice reads the connection request from the device in the architecture 
 examples, a completion message is added to Alice's inbound spool so that the device is not 
 activated a second time by mistake:
 
-#% DescribeMessage (Connect.ConnectPINCompleteWitness);
+#% DescribeMessage (Connect.ConnectPINMessagePin);
+
+The details of the presentation and verification of the PIN code
+are further described in the section below.
+
+#end zfile
+
+#zfile CreateExamples SchemaMessageCompletion "Examples\\SchemaMessageCompletion.md" Example
+
+Having processed a message, a completion message is added to the spool so that other devices 
+can see that it has been read.
+
+For example, when Alice's administration device uses the PIN registered above to 
+authenticate a device connection request, a completion message is added to Alice's 
+inbound spool so that the PIN cannot be reused to authenticate a second device:
+
+#% DescribeMessage (Connect.ConnectPINCompleteMessage);
+
 
 
 #end zfile
 
 #zfile CreateExamples SchemaMessageConnection "Examples\\SchemaMessageConnection.md" Example
 
-The connection process begins with the assignment of a time-limited PIN value. This is
-described in a Message sent by the administration device to allow other admin devices
-to accept the request made.
+Alice connects a watch to her account. Since the watch has a camera (to allow for 
+video calls) she can use the dynamic QR code connection mechanism.
 
-#% DescribeMessage (Connect.ConnectPINMessagePin);
+The watch reads the QR code generated on Alice's watch. This contains
+the device connection URI.
 
+~~~~
+QR = {Connect.ConnectQRURI}
+~~~~
 
-The initial request is sent to the service
+The URI tells the device the Mesh account to connect to and the PIN Code to be
+used to authenticate the request. The device requesting the connection adds its
+Profile device to create a RequestConnection message that will be presented to
+the service as a Connect transaction request.
 
-#% DescribeMessage (Connect.ConnectRequestWitness);
+#% DescribeMessage (Connect.ConnectRequestPIN);
 
-The service returns an acknowledgement giving the Witness value. Note that this is not a 'reply'
-since it comes from the service, not the user.
+The service generates an AcknowledgeConnection message which is returned to the
+device requesting the connection (via the Connect transaction response) and
+adds it to the inbound spool of the account for Alice's approval (or not).
 
-#% DescribeMessage (Connect.AcknowledgeConnectionWitness);
+#% DescribeMessage (Connect.AcknowledgeConnectionPIN);
 
+Alice's administration device synchronizes to the service and receives the
+connection request acknowledgement from the service. Since the request is 
+authenticated by a PIN code that has been marked for automatic execution, the
+service can generate the assertions the device to participate in the account
+and appends the corresponding RespondConnection message to the local delivery 
+spool.
+
+#% DescribeMessage (Connect.RespondConnectionPIN);
 
 
 #end zfile
@@ -260,11 +294,12 @@ delegates this action to it.]
 
 #zfile CreateExamples SchemaMessageConfirmation "Examples\\SchemaMessageConfirmation.md" Example
 
-The confirmation request
+The console generates a confirmation request message:
 
 #% DescribeMessage (Confirm.RequestConfirmation);
 
-The confirmation response
+Alice accepts the request and returns a ResponseConfirmation confirmation
+containing both the request and the response:
 
 #% DescribeMessage (Confirm.ResponseConfirmation);
 

@@ -69,6 +69,7 @@
 		String								Uri
 		String								FileName
 		Struct ProfileDevice				ProfileDevice
+		Struct DevicePreconfiguration		DevicePreconfiguration
 
 	Structure ResultCreateDevice
 		Inherits							Result

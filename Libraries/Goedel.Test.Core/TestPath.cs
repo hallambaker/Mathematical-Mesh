@@ -18,6 +18,9 @@ namespace Goedel.Test.Core {
         public byte[] Response;
 
 
+        public string XMLRequest => GetRequest();
+        public string XMLResponse=> GetResponse();
+
         public string GetRequest() => Request.ToUTF8();
         public string GetResponse() => Response.ToUTF8();
         }

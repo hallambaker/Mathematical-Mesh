@@ -64,5 +64,12 @@ include the host profile.
 
 The Connected device field is not being populated.
 
-
-
+#% DescribeMessage (Connect.ConnectPINCompleteWitness);
+QR = {Connect.ConnectQRURI}
+#% DescribeMessage (Connect.ConnectRequestPIN);
+#% DescribeMessage (Connect.AcknowledgeConnectionPIN);
+#% DescribeMessage (Connect.RespondConnectionPIN);
+#% DescribeMessage (Contact.BobRequest);
+#% DescribeMessage (Contact.AliceResponse);
+#% DescribeMessage (Confirm.RequestConfirmation);
+#% DescribeMessage (Confirm.ResponseConfirmation);

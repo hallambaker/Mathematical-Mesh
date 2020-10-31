@@ -211,21 +211,6 @@ namespace ExampleGenerator {
                 $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
                 );
 
-            // Static connection tests
-            "Static connect".TaskFunctionality();
-
-            //Connect.ConnectStaticPrepare = testCLIAlice1.Example(
-            //    );
-
-            //Connect.ConnectStaticPollFail = testCLIAlice1.Example(
-            //     );
-
-            //Connect.ConnectStaticClaim = testCLIAlice1.Example(
-            //     );
-
-            //Connect.ConnectStaticPollSuccess = testCLIAlice1.Example(
-            //     );
-
             // Application tests
             //Apps.SSH = testCLIAlice1.Example(
             //     );
@@ -344,6 +329,8 @@ namespace ExampleGenerator {
                 $"device preconfig"
                 );
             var resultPublishDevice = Connect.ConnectStaticPrepare.GetResultPublishDevice();
+
+            Connect.ConnectStaticPreconfig = resultPublishDevice.DevicePreconfiguration;
 
             Connect.ConnectStaticInstall = testCLIAlice4.Example(
                 $"device install {resultPublishDevice.FileName}"

@@ -187,12 +187,14 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult DevicePreconfigure(DevicePreconfigure options) {
             using var contextAccount = GetContextUser(options);
 
-            contextAccount.Preconfigure(out var filename, out var profileDevice, out var connectUri);
+            var devicePreconfiguration = contextAccount.Preconfigure(
+                out var filename, out var profileDevice, out var connectUri);
 
             var result = new ResultPublishDevice() {
                 Uri = connectUri,
                 ProfileDevice = profileDevice,
                 FileName = filename,
+                DevicePreconfiguration = devicePreconfiguration
                 };
             "".TaskFunctionality();
             return result;

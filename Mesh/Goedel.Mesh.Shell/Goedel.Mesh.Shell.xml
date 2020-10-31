@@ -4459,6 +4459,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPublishDevice.DevicePreconfiguration">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultPublishDevice._Tag">
             <summary>
             Tag identifying this class

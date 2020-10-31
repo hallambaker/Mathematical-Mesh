@@ -41,8 +41,10 @@ namespace ExampleGenerator {
 			 SchemaPINWitness(Example);
 			 SchemaClientAuthKeyAgreement(Example);
 			 SchemaDevice(Example);
+			 DevicePreconfiguration(Example);
 			 SchemaAccount(Example);
 			 SchemaService(Example);
+			 SchemaMessagePIN(Example);
 			 SchemaMessageCompletion(Example);
 			 SchemaMessageConnection(Example);
 			 SchemaMessageContact(Example);
@@ -55,6 +57,7 @@ namespace ExampleGenerator {
 		//
 		public void DescribeMessage (Goedel.Mesh.Message message) {
 			 if (message?.EnvelopedMessage?.JsonObject == null) { ReportMissingExample(); return;}
+			 Format(message.EnvelopedMessage.JsonObject);
 			}
 		
 
@@ -362,6 +365,20 @@ namespace ExampleGenerator {
 		
 
 		//
+		// DevicePreconfiguration
+		//
+		public static void DevicePreconfiguration(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\DevicePreconfiguration.md");
+			Example._Output = _Output;
+			Example._DevicePreconfiguration(Example);
+			}
+		public void _DevicePreconfiguration(CreateExamples Example) {
+
+				 Format(Connect.ConnectStaticPreconfig);
+					}
+		
+
+		//
 		// SchemaAccount
 		//
 		public static void SchemaAccount(CreateExamples Example) { /* XFile  */
@@ -431,6 +448,29 @@ namespace ExampleGenerator {
 		
 
 		//
+		// SchemaMessagePIN
+		//
+		public static void SchemaMessagePIN(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaMessagePIN.md");
+			Example._Output = _Output;
+			Example._SchemaMessagePIN(Example);
+			}
+		public void _SchemaMessagePIN(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("For example, when Alice reads the connection request from the device in the architecture \n{0}", _Indent);
+				_Output.Write ("examples, a completion message is added to Alice's inbound spool so that the device is not \n{0}", _Indent);
+				_Output.Write ("activated a second time by mistake:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage (Connect.ConnectPINMessagePin);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The details of the presentation and verification of the PIN code\n{0}", _Indent);
+				_Output.Write ("are further described in the section below.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
 		// SchemaMessageCompletion
 		//
 		public static void SchemaMessageCompletion(CreateExamples Example) { /* XFile  */
@@ -444,11 +484,12 @@ namespace ExampleGenerator {
 				_Output.Write ("Having processed a message, a completion message is added to the spool so that other devices \n{0}", _Indent);
 				_Output.Write ("can see that it has been read.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("For example, when Alice reads the connection request from the device in the architecture \n{0}", _Indent);
-				_Output.Write ("examples, a completion message is added to Alice's inbound spool so that the device is not \n{0}", _Indent);
-				_Output.Write ("activated a second time by mistake:\n{0}", _Indent);
+				_Output.Write ("For example, when Alice's administration device uses the PIN registered above to \n{0}", _Indent);
+				_Output.Write ("authenticate a device connection request, a completion message is added to Alice's \n{0}", _Indent);
+				_Output.Write ("inbound spool so that the PIN cannot be reused to authenticate a second device:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (Connect.ConnectPINCompleteWitness);
+				 DescribeMessage (Connect.ConnectPINCompleteMessage);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -465,22 +506,37 @@ namespace ExampleGenerator {
 		public void _SchemaMessageConnection(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The connection process begins with the assignment of a time-limited PIN value. This is\n{0}", _Indent);
-				_Output.Write ("described in a Message sent by the administration device to allow other admin devices\n{0}", _Indent);
-				_Output.Write ("to accept the request made.\n{0}", _Indent);
+				_Output.Write ("Alice connects a watch to her account. Since the watch has a camera (to allow for \n{0}", _Indent);
+				_Output.Write ("video calls) she can use the dynamic QR code connection mechanism.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (Connect.ConnectPINMessagePin);
+				_Output.Write ("The watch reads the QR code generated on Alice's watch. This contains\n{0}", _Indent);
+				_Output.Write ("the device connection URI.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("QR = {{Connect.ConnectQRURI}}\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The initial request is sent to the service\n{0}", _Indent);
+				_Output.Write ("The URI tells the device the Mesh account to connect to and the PIN Code to be\n{0}", _Indent);
+				_Output.Write ("used to authenticate the request. The device requesting the connection adds its\n{0}", _Indent);
+				_Output.Write ("Profile device to create a RequestConnection message that will be presented to\n{0}", _Indent);
+				_Output.Write ("the service as a Connect transaction request.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (Connect.ConnectRequestWitness);
+				 DescribeMessage (Connect.ConnectRequestPIN);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The service returns an acknowledgement giving the Witness value. Note that this is not a 'reply'\n{0}", _Indent);
-				_Output.Write ("since it comes from the service, not the user.\n{0}", _Indent);
+				_Output.Write ("The service generates an AcknowledgeConnection message which is returned to the\n{0}", _Indent);
+				_Output.Write ("device requesting the connection (via the Connect transaction response) and\n{0}", _Indent);
+				_Output.Write ("adds it to the inbound spool of the account for Alice's approval (or not).\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (Connect.AcknowledgeConnectionWitness);
+				 DescribeMessage (Connect.AcknowledgeConnectionPIN);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice's administration device synchronizes to the service and receives the\n{0}", _Indent);
+				_Output.Write ("connection request acknowledgement from the service. Since the request is \n{0}", _Indent);
+				_Output.Write ("authenticated by a PIN code that has been marked for automatic execution, the\n{0}", _Indent);
+				_Output.Write ("service can generate the assertions the device to participate in the account\n{0}", _Indent);
+				_Output.Write ("and appends the corresponding RespondConnection message to the local delivery \n{0}", _Indent);
+				_Output.Write ("spool.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage (Connect.RespondConnectionPIN);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -523,11 +579,12 @@ namespace ExampleGenerator {
 		public void _SchemaMessageConfirmation(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The confirmation request\n{0}", _Indent);
+				_Output.Write ("The console generates a confirmation request message:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage (Confirm.RequestConfirmation);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The confirmation response\n{0}", _Indent);
+				_Output.Write ("Alice accepts the request and returns a ResponseConfirmation confirmation\n{0}", _Indent);
+				_Output.Write ("containing both the request and the response:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage (Confirm.ResponseConfirmation);
 				_Output.Write ("\n{0}", _Indent);

@@ -15,7 +15,7 @@ Alice checks her pending messages and accepts the request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message accept NDIO-5K7G-PWYS-KFBE-KV3B-N6MC-RUGB
+<cmd>Alice> message accept NDQD-NLFS-NMZA-S3AJ-ACKR-OPFJ-WWGO
 <rsp>ERROR - The specified message could not be found.
 </div>
 ~~~~

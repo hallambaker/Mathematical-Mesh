@@ -504,7 +504,7 @@ namespace ExampleGenerator {
 				_Output.Write ("Alice reads her pending messages, notes that the witness value matches the one displayed\n{0}", _Indent);
 				_Output.Write ("earlier and approves the connection request.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage(Connect.ConnectResponseWitness);
+				 DescribeMessage(Connect.RespondConnectionWitness);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("This is then fetched...\n{0}", _Indent);

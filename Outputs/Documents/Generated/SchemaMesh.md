@@ -801,7 +801,7 @@ protocol.
 
 [No fields]
 
-##Static Assertions
+##Publications
 
 ###Structure: DevicePreconfiguration
 
