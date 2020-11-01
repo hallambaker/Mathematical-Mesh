@@ -15,6 +15,10 @@ namespace Goedel.Mesh.Client {
     /// </summary>
     public class ContextMeshPending : ContextAccount {
 
+        public RequestConnection RequestConnection;
+        public AcknowledgeConnection AcknowledgeConnection;
+
+
         ///<summary>Convenience accessor for the pending context.</summary>
         public CatalogedPending CatalogedPending => CatalogedMachine as CatalogedPending;
 
@@ -133,7 +137,7 @@ namespace Goedel.Mesh.Client {
                 Rights = rights
                 };
 
-            var response = meshClient.Connect(connectRequest);
+            var connectResponse = meshClient.Connect(connectRequest);
 
             // create the pending connection here
 
@@ -141,13 +145,19 @@ namespace Goedel.Mesh.Client {
                 Id = profileDevice.Udf,
                 DeviceUDF = profileDevice.Udf,
                 AccountAddress = accountAddress,
-                EnvelopedAcknowledgeConnection = response.EnvelopedAcknowledgeConnection,
-                EnvelopedProfileAccount = response.EnvelopedProfileAccount,
+                EnvelopedAcknowledgeConnection = connectResponse.EnvelopedAcknowledgeConnection,
+                EnvelopedProfileAccount = connectResponse.EnvelopedProfileAccount,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
                 Local = localName
                 };
 
-            var context = new ContextMeshPending(meshHost, catalogedPending);
+            var acknowledgeConnection = 
+                    connectResponse.EnvelopedAcknowledgeConnection.Decode(meshHost.KeyCollection);
+
+            var context = new ContextMeshPending(meshHost, catalogedPending) {
+                RequestConnection = requestConnection,
+                AcknowledgeConnection = acknowledgeConnection
+                };
 
             // persist 
             meshHost.Register(catalogedPending, context);
@@ -201,7 +211,9 @@ namespace Goedel.Mesh.Client {
                 };
 
             // create the context mesh
-            var contextUser = new ContextUser(MeshHost, catalogedStandard);
+            var contextUser = new ContextUser(MeshHost, catalogedStandard) {
+                RespondConnection = respondConnection
+                };
 
             MeshHost.Register(catalogedStandard, contextUser);
 

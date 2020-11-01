@@ -43,8 +43,8 @@
 
 
 #method DescribeMessage Goedel.Mesh.Message message
-#% if (message?.EnvelopedMessage?.JsonObject == null) { ReportMissingExample(); return;}
-#% Format(message.EnvelopedMessage.JsonObject);
+#% if (message == null) { ReportMissingExample(); return;}
+#% Format(message);
 #end method
 
 
@@ -282,12 +282,7 @@ Bob asks Alice to send her contact details and sends his.
 
 #% DescribeMessage (Contact.BobRequest);
 
-Alice responds with her details:
 
-#% DescribeMessage (Contact.AliceResponse);
-
-[Note that this exchange could be performed automatically on Alice's behalf by the service if she 
-delegates this action to it.]
 
 
 #end zfile

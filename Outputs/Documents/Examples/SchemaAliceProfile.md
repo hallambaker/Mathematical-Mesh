@@ -5,41 +5,41 @@ For example, the personal account profile Alice created is:
 {
   "ProfileUser":{
     "ProfileSignature":{
-      "Udf":"MC7H-7HMU-4FC6-NTBJ-5KZ6-P2LQ-GXZ2",
+      "Udf":"MDUH-63CY-4QHM-BKYI-WA7X-DWQJ-JV5X",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"8iWDhhjeRfihIiB3-T9ix0I2gYQfF1CkROlHAbMidbmv27U
-  U-dwGn7l6qnBqhaj4mDk0Q5dOBBwA"}}},
+          "Public":"L_xpS-_gU8UIyDTDTwewSF7T9wX7iWk8r8_zj8YXFK_V_lD
+  z7RSl_suO4-V4h9L2lJeV1Y3bTYeA"}}},
     "AccountAddress":"alice@example.com",
-    "ServiceUdf":"MAXC-GP2U-X7GV-76YY-472F-G2SQ-XYTV",
+    "ServiceUdf":"MDEJ-JG5I-7KGQ-UV5L-ZAJT-EC4B-A3OT",
     "AccountEncryption":{
-      "Udf":"MASY-A732-LAQM-CJI6-IEWB-APGS-PFUP",
+      "Udf":"MAR7-KVLL-BDMR-7XAW-RYAK-5RD7-SDQN",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"qlrhIm-IT3p3yEuS2Zs5CRsBYwMjZ_-EAgD4UHJd9IX3y3e
-  3-fqbADRTJ1mtF8AKpxriHueeR7eA"}}},
+          "Public":"yruR69tZlyXeoKzqzsojP6C21phSNsfB1Lv8eS2chHFKbnr
+  ldfcWUmKKOh8aF1YQlGshXc38cD8A"}}},
     "AdministratorSignature":{
-      "Udf":"MC7H-7HMU-4FC6-NTBJ-5KZ6-P2LQ-GXZ2",
+      "Udf":"MDUH-63CY-4QHM-BKYI-WA7X-DWQJ-JV5X",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"8iWDhhjeRfihIiB3-T9ix0I2gYQfF1CkROlHAbMidbmv27U
-  U-dwGn7l6qnBqhaj4mDk0Q5dOBBwA"}}},
+          "Public":"L_xpS-_gU8UIyDTDTwewSF7T9wX7iWk8r8_zj8YXFK_V_lD
+  z7RSl_suO4-V4h9L2lJeV1Y3bTYeA"}}},
     "AccountAuthentication":{
-      "Udf":"MBPX-FKM2-YLO5-ZQAZ-SP3J-3FFX-IGAD",
+      "Udf":"MDFY-ZMLD-OFLF-RMOB-N3UK-WS43-HU2J",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"Asp-bn46g3UAhGiQKjRvWxseu1QqcmRuchY_W21a2uQzPyG
-  uOgrhghaiqLbbE14LnkmdWCghPLwA"}}},
+          "Public":"P8h-lOY_P2kR0oHAl6RdRCFWFiWld9QAStbYHwvVgobLf47
+  oAYkGioxATRZKBlxBQF79fD5y6j0A"}}},
     "AccountSignature":{
-      "Udf":"MBRZ-7BQK-3QB3-TPFG-H5AW-IFQX-VOPC",
+      "Udf":"MBCN-243I-XHSN-X4IL-4T25-SE43-SFM7",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"Rx4G_Gra7x35BsaPn7bDgrl-OzVFY6ZisXpAZzvd4vaer2B
-  wOKkUZFZlYOH5fyjUdYJybaOomWKA"}}}}}
+          "Public":"9AakTr9OKYwJwALgEA28OeWwHqPpqLf7Suai7UZD4hmeZbK
+  mWm0HPEjNfJYtEwN7L1i2y4_4xd2A"}}}}}
 ~~~~
 

@@ -94,8 +94,7 @@ namespace Goedel.Mesh.Shell {
 			{"ResultProcess", ResultProcess._Factory},
 			{"ResultConnect", ResultConnect._Factory},
 			{"ResultTransactionRequest", ResultTransactionRequest._Factory},
-			{"ResultConfirm", ResultConfirm._Factory},
-			{"ResultComplete", ResultComplete._Factory}			};
+			{"ResultConfirm", ResultConfirm._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JsonReader stream.
@@ -3945,6 +3944,18 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
 
 		public virtual ActivationAccount						ActivationAccount  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual RequestConnection						RequestConnection  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual AcknowledgeConnection						AcknowledgeConnection  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual RespondConnection						RespondConnection  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4004,6 +4015,21 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteToken ("ActivationAccount", 1);
 					ActivationAccount.Serialize (_writer, false);
 				}
+			if (RequestConnection != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("RequestConnection", 1);
+					RequestConnection.Serialize (_writer, false);
+				}
+			if (AcknowledgeConnection != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AcknowledgeConnection", 1);
+					AcknowledgeConnection.Serialize (_writer, false);
+				}
+			if (RespondConnection != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("RespondConnection", 1);
+					RespondConnection.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -4055,6 +4081,27 @@ namespace Goedel.Mesh.Shell {
 					// An untagged structure
 					ActivationAccount = new ActivationAccount ();
 					ActivationAccount.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "RequestConnection" : {
+					// An untagged structure
+					RequestConnection = new RequestConnection ();
+					RequestConnection.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "AcknowledgeConnection" : {
+					// An untagged structure
+					AcknowledgeConnection = new AcknowledgeConnection ();
+					AcknowledgeConnection.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "RespondConnection" : {
+					// An untagged structure
+					RespondConnection = new RespondConnection ();
+					RespondConnection.Deserialize (jsonReader);
  
 					break;
 					}
@@ -4280,110 +4327,6 @@ namespace Goedel.Mesh.Shell {
 					Message = new Message ();
 					Message.Deserialize (jsonReader);
  
-					break;
-					}
-				default : {
-					base.DeserializeToken(jsonReader, tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class ResultComplete : Result {
-        /// <summary>
-        /// </summary>
-
-		public virtual string						ConnectionStatus  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "ResultComplete";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ResultComplete();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			((Result)this).SerializeX(_writer, false, ref _first);
-			if (ConnectionStatus != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ConnectionStatus", 1);
-					_writer.WriteString (ConnectionStatus);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new ResultComplete FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ResultComplete;
-				}
-		    var Result = new ResultComplete ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "ConnectionStatus" : {
-					ConnectionStatus = jsonReader.ReadString ();
 					break;
 					}
 				default : {

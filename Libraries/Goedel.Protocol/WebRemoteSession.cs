@@ -65,7 +65,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Content">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override Stream Post(MemoryStream Content) {
+        public override Stream Post(MemoryStream Content, JsonObject requestObject) {
 
             try {
                 var BaseAddress = new Uri(URI);

@@ -403,6 +403,12 @@
 			Brief "List pending requests"
 			Include AccountOptions
 			Include Reporting
+			Option Unread Flag
+				Default "false"
+			Option Read Flag
+				Default "true"
+			Option Raw Flag
+				Default "false"
 
 		Command MessageStatus "status"
 			Brief "Request status of pending requests"

@@ -35,7 +35,7 @@ Alice adds Bob to the group:
 
 
 ~~~~
-Missing example 3
+Missing example 2
 ~~~~
 
 Adding Bob to the group gives him immediate access to any file encrypted under
@@ -43,14 +43,14 @@ the group key without making any change to the encrypted files:
 
 
 ~~~~
-Missing example 4
+Missing example 3
 ~~~~
 
 Removing Bob from the group immediately withdraws his access.
 
 
 ~~~~
-Missing example 5
+Missing example 4
 ~~~~
 
 Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
@@ -58,6 +58,6 @@ earlier).
 
 
 ~~~~
-Missing example 6
+Missing example 5
 ~~~~
 

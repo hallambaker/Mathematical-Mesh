@@ -2,6 +2,9 @@
 
 ## RFCTool
 
+
+* Wrap bigintegers, etc. at 72 cols. - DO THIS NEXT!!!
+
 * Work out cause of extra trailing space after examples.
 
 * Centering of images
@@ -10,7 +13,7 @@
 
 * Scaling of the QR code
 
-* Wrap bigintegers, etc. at 72 cols.
+
 
 * check wrapping of JSON dumps
 
@@ -73,3 +76,24 @@ QR = {Connect.ConnectQRURI}
 #% DescribeMessage (Contact.AliceResponse);
 #% DescribeMessage (Confirm.RequestConfirmation);
 #% DescribeMessage (Confirm.ResponseConfirmation);
+
+
+# Current bugs to chase
+
+* Connected Devices not being properly provisioned with keys for account
+
+* The Context user is being disposed - stop this.
+
+* Messages can't be feched by envelope ID, confusion envelope vs message IDs here
+
+# Functionality to add
+
+## message pending - selectors to get unread or raw reports.
+
+Should introduce new interogator for the spool class (and catalog???)
+
+
+
+# need to sort out the weirdness caused by not adding Transaction names to the TagDirectories.
+
+

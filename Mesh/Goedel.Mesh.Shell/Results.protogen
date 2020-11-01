@@ -182,6 +182,9 @@
 		Struct CatalogedMachine			CatalogedMachine
 		Struct ActivationDevice			ActivationDevice
 		Struct ActivationAccount			ActivationAccount
+		Struct RequestConnection RequestConnection
+        Struct AcknowledgeConnection AcknowledgeConnection
+		Struct RespondConnection	RespondConnection
 
 	Structure ResultTransactionRequest
 		Inherits		Result
@@ -194,9 +197,7 @@
 		Struct Message Message
 
 
-	Structure ResultComplete
-		Inherits		Result
-		String			ConnectionStatus
+
 
 
 

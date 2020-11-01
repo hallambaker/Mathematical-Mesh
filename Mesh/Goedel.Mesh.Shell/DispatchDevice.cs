@@ -23,7 +23,9 @@ namespace Goedel.Mesh.Shell {
             var contextMeshPending = MeshHost.Connect(accountAddress, pin: pin, rights: rights);
 
             var result = new ResultConnect() {
-                CatalogedMachine = contextMeshPending.CatalogedMachine
+                CatalogedMachine = contextMeshPending.CatalogedMachine,
+                RequestConnection = contextMeshPending.RequestConnection,
+                AcknowledgeConnection = contextMeshPending.AcknowledgeConnection
                 };
 
             return result;
@@ -78,8 +80,11 @@ namespace Goedel.Mesh.Shell {
             var contextUser = MeshHost.Complete(accountAddress);
             var result = new ResultConnect() {
                 CatalogedMachine = contextUser.CatalogedMachine,
-                ActivationDevice = contextUser.ActivationDevice
-                //ActivationAccount = contextUser.ActivationAccount
+                ActivationDevice = contextUser.ActivationDevice,
+                RequestConnection = contextUser.RequestConnection,
+                ActivationAccount = contextUser.ActivationAccount,
+                RespondConnection = contextUser.RespondConnection
+
                 };
 
             return result;

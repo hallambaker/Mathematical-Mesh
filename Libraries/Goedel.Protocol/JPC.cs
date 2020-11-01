@@ -217,15 +217,15 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Data">Input data</param>
         /// <returns>The response data</returns>
-        public abstract Stream Post(MemoryStream Data);
+        public abstract Stream Post(MemoryStream Data, JsonObject request);
 
         /// <summary>
         /// Construct a Post string.
         /// </summary>
         /// <param name="Tag">Operation to perform.</param>
-        /// <param name="Request">Request data.</param>
+        /// <param name="request">Request data.</param>
         /// <returns>string returned in response.</returns>
-        public virtual string Post(string Tag, JsonObject Request) {
+        public virtual string Post(string Tag, JsonObject request) {
 
             var Buffer = new MemoryStream();
             var JSONWriter = new JSONWriter(Buffer);
@@ -233,11 +233,11 @@ namespace Goedel.Protocol {
             // Wrap the request object with the transaction name.
             JSONWriter.WriteObjectStart();
             JSONWriter.WriteToken(Tag, 0);
-            Request.Serialize(JSONWriter, false);
+            request.Serialize(JSONWriter, false);
             JSONWriter.WriteObjectEnd();
 
             // Send the request
-            var ResponseBuffer = Post(Buffer);
+            var ResponseBuffer = Post(Buffer, request);
 
             return ResponseBuffer.GetUTF8();
             }
@@ -271,7 +271,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Data">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override Stream Post(MemoryStream Data) {
+        public override Stream Post(MemoryStream Data, JsonObject requestObject) {
 
             var DataText = Data.GetUTF8();
             var JSONReader = new JsonReader(DataText);

@@ -38,7 +38,9 @@ namespace ExampleGenerator {
         public static ResultEntry GetResultEntry(
             this List<ExampleResult> Results,
             int index = 0) => GetResult(Results, index) as ResultEntry;
-
+        //public static ResultComplete GetResultComplete(
+        //    this List<ExampleResult> Results,
+        //    int index = 0) => GetResult(Results, index) as ResultComplete;
         public static ResultDump GetResultDump(
             this List<ExampleResult> Results,
             int index = 0) => GetResult(Results, index) as ResultDump;

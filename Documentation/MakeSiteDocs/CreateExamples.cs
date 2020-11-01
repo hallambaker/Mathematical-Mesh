@@ -176,6 +176,8 @@ namespace ExampleGenerator {
             Connect.ConnectRequest = testCLIAlice2.Example(
                 $"device request {AliceAccount}"
                 );
+
+
             Connect.ConnectPending = testCLIAlice1.Example(
                 $"device pending"
                 );
@@ -236,7 +238,8 @@ namespace ExampleGenerator {
                 $"message pending"
                  );
             resultPending = Contact.ContactAliceResponse.GetResultPending(1);
-            var contactMessage = resultPending.Messages[0];
+            var contactMessage = resultPending.Messages[0] as Goedel.Mesh.MessageContact;
+            Contact.BobRequest = contactMessage;
 
             var contactAccept = testCLIAlice1.Example(
                 $"message accept {contactMessage.MessageId}"
@@ -252,16 +255,23 @@ namespace ExampleGenerator {
                 $"message confirm {AliceAccount} start"
                 );
             var resultConfirmSent = Confirm.ConfirmRequest.GetResultSent();
+           
+
             var messageId = resultConfirmSent.Message.MessageId;
+            var confirmResponseID = resultConfirmSent.Message.GetResponseId();
 
             Confirm.ConfirmAliceResponse = testCLIAlice1.Example(
                 $"message accept {messageId}"
                 );
 
-            //Confirm.ConfirmVerify = testCLIAlice1.Example(
-            //     );
+            Confirm.ConfirmVerify = testCLIAlice1.Example(
+                "$message status {confirmResponseID}"
+                 );
             "Verify the confirmation response".TaskFunctionality();
 
+            var resultConfirmVerify = Confirm.ConfirmVerify.GetResultSent();
+            Confirm.RequestConfirmation = resultConfirmSent?.Message as RequestConfirmation;
+            Confirm.ResponseConfirmation = resultConfirmVerify?.Message as ResponseConfirmation;
 
             // Group
             Group.GroupCreate = testCLIAlice1.Example(
@@ -303,22 +313,45 @@ namespace ExampleGenerator {
             Connect.ConnectPINMessagePin = pinResult.MessagePIN;
             Connect.ConnectEARL = pinResult.MessagePIN.GetURI();
 
+
+            
+
+
             Connect.ConnectPINRequest = testCLIAlice3.Example(
                 $"device request {AliceAccount} /pin {pin}"
                 );
 
+
+            var connectRequest = Connect.ConnectPINRequest.GetResultConnect();
+            var connectRequestT = Connect.ConnectPINRequest[0].Traces[0].RequestObject;
+            var connectResponseT = Connect.ConnectPINRequest[0].Traces[0].ResponseObject;
+
+            // decode the request message using the server encryption key??
+            // decode the response message using the device key??
+
+            Connect.ConnectRequestPIN = connectRequest.RequestConnection;
+            Connect.AcknowledgeConnectionPIN = connectRequest.AcknowledgeConnection;
+
+
             Connect.ConnectPending = testCLIAlice1.Example(
+                $"message pending",
                 $"account sync /auto"
                 );
+
+            var connectPending = Connect.ConnectPending.GetResultPending();
 
             Connect.ConnectPINComplete = testCLIAlice3.Example(
                 $"device complete",
                 $"account sync"
                 );
+
             var connectPINComplete = Connect.ConnectPINComplete.GetResultConnect();
+            Connect.RespondConnectionPIN = connectPINComplete.RespondConnection;
+
             var watchMachine = connectPINComplete.CatalogedMachine;
             Connect.AliceProfileDeviceWatch = watchMachine.ProfileDevice;
             //Connect.AliceActivationDeviceWatch = watchMachine.ProfileDevice;
+
 
             // Connect the coffee pot using a static QR
 

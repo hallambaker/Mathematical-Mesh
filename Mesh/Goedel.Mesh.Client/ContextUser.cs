@@ -54,9 +54,8 @@ namespace Goedel.Mesh.Client {
         protected PrivateKeyUDF MeshSecretSeed;
 
 
-
-
-
+        public RequestConnection RequestConnection;
+        public RespondConnection RespondConnection;
 
         // device key accessors
         KeyPair DeviceDecrypt { get; }

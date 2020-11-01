@@ -56,8 +56,8 @@ namespace ExampleGenerator {
 		// DescribeMessage
 		//
 		public void DescribeMessage (Goedel.Mesh.Message message) {
-			 if (message?.EnvelopedMessage?.JsonObject == null) { ReportMissingExample(); return;}
-			 Format(message.EnvelopedMessage.JsonObject);
+			 if (message == null) { ReportMissingExample(); return;}
+			 Format(message);
 			}
 		
 
@@ -557,12 +557,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage (Contact.BobRequest);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Alice responds with her details:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (Contact.AliceResponse);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[Note that this exchange could be performed automatically on Alice's behalf by the service if she \n{0}", _Indent);
-				_Output.Write ("delegates this action to it.]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}

@@ -16,13 +16,26 @@ namespace Goedel.Test.Core {
 
         public byte[] Request;
         public byte[] Response;
-
+        public Response ResponseObject;
+        public Request RequestObject;
 
         public string XMLRequest => GetRequest();
         public string XMLResponse=> GetResponse();
 
-        public string GetRequest() => Request.ToUTF8();
-        public string GetResponse() => Response.ToUTF8();
+        public string GetRequest() => RequestText;
+        public string GetResponse() => ResponseText;
+
+        public string RequestText;
+        public string ResponseText;
+        public Trace(byte[] request, byte[] response, JsonObject requestObject) {
+            Request = request;
+            Response = response;
+            RequestText = Request.ToUTF8();
+            ResponseText = Response.ToUTF8();
+            RequestObject = requestObject as Request;
+            ResponseObject = Goedel.Protocol.Response.FromJson(Response.JsonReader(), true);
+            }
+
         }
 
 
@@ -171,7 +184,7 @@ namespace Goedel.Test.Core {
         /// </summary>
         /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override Stream Post(MemoryStream data) {
+        public override Stream Post(MemoryStream data, JsonObject Request) {
             MeshPortalTest.MeshProtocolMessages ??=                 new List<Trace>();
             var requestBytes = data.ToArray();
 
@@ -179,10 +192,7 @@ namespace Goedel.Test.Core {
             var result = Host.Dispatch(this, JSONReader);
             var responseBytes = result.GetBytes();
 
-            var trace = new Trace {
-                Request = requestBytes,
-                Response = responseBytes
-                };
+            var trace = new Trace(requestBytes, responseBytes, Request) ;
 
             MeshProtocolMessages.Add(trace);
             return new MemoryStream(responseBytes);

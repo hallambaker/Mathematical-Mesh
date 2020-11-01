@@ -37,7 +37,7 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override Stream Post(MemoryStream data) {
+        public override Stream Post(MemoryStream data, JsonObject requestObject) {
 
             var DataText = data.GetUTF8();
             var JSONReader = new JsonReader(DataText);
