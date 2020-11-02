@@ -8,7 +8,7 @@ inbound spool so that the PIN cannot be reused to authenticate a second device:
 
 
 ~~~~
-Missing example 19
+Missing example 25
 ~~~~
 
 

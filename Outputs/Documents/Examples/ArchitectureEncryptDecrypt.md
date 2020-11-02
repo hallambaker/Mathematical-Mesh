@@ -13,7 +13,7 @@ readable only by Alice:
 <rsp>File: ciphertext.dare
     Bytes: 0
     Encryption Algorithm: A256CBC
-        Recipient: MAFF-7W3M-SKXK-KEQC-WHQV-3S2N-6UBV
+        Recipient: MDYD-ADZT-CRJG-HOID-HGIG-CKL4-7M2T
     Digest Algorithm: S512
     Payload Digest: 
 </div>

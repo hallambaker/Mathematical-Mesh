@@ -20,12 +20,22 @@
 #end method
 
 
+#method WriteBytesHex byte[] data
+#if (data != null)
+#{data.ToStringBase16FormatHex()}
+#else
+$$$ Missing data $$$
+#end if
+#end method
+
+
 #zfile CreateExamples DareSchemaCatalog "Examples\\DareSchemaCatalog.md" Example
 #end zfile
+
 #zfile CreateExamples DareSchemaSpool "Examples\\DareSchemaSpool.md" Example
 #end zfile
 
-#xfile CreateExamples MeshExamplesContainer "Examples\\ExamplesContainer.md" CreateExamples Example
+#zfile CreateExamples MeshExamplesContainer "Examples\\ExamplesContainer.md" Example
 The data payloads in all the following examples are identical, only the
 authentication and/or encryption is different. 
 
@@ -104,7 +114,7 @@ under separate key agreements specified in the payload frames.
 
 #call DumpHeaders Example.ContainerHeadersEncryptIndependentSession
 
-#end xfile
+#end zfile
 
 
 #method DumpHeaders List<ContainerFrame> Frames
@@ -131,7 +141,7 @@ Frame #{Frame.Header.ContainerInfo.Index}
 
 #end method
 
-#file MeshExamplesMessageMail "Examples\\ExamplesDAREMessageMail.md" CreateExamples Example
+#zfile CreateExamples MeshExamplesMessageMail "Examples\\ExamplesDAREMessageMail.md" Example
 
 For example, consider the following mail message:
 
@@ -154,18 +164,18 @@ The plaintext form of the equivalent DARE Message encoding is:
 This contains the same information as before but the mail message headers are 
 now presented as  a list of Encoded Data Sequences.
 
-#end file 
+#end zfile 
 
-#file MeshExamplesMessageEDS "Examples\\ExamplesDAREMessageEDS.md" CreateExamples Example
+#zfile CreateExamples MeshExamplesMessageEDS "Examples\\ExamplesDAREMessageEDS.md" Example
 
 The encoding of the 'From' header of the previous example as a plaintext EDS is as follows:
 
 ~~~~
 #{Example.EDSText}
 ~~~~
-#end file 
+#end zfile
 
-#file MeshExamplesMessageEncrypted "Examples\\MeshExamplesMessageEncrypted.md" CreateExamples Example
+#zfile CreateExamples MeshExamplesMessageEncrypted "Examples\\MeshExamplesMessageEncrypted.md" Example
 
 The following is an encrypted version of the message shown earlier. 
 The payload and annotations have both increased in size as a result
@@ -176,10 +186,10 @@ includes Recipients and Salt fields to enable the content to be decoded.
 #{JSONDebugWriter.Write (Example.MailMessageAsDAREEncrypted, false)}
 ~~~~
 
-#end file 
+#end zfile
 
 
-#file ExamplesDAREMessage "Examples\\ExamplesDAREMessage.md" CreateExamples Example
+#zfile CreateExamples ExamplesDAREMessage "Examples\\ExamplesDAREMessage.md" Example
 
 ##Test Examples
 
@@ -234,7 +244,7 @@ If a plaintext message contains EDS sequences, these are also in plaintext:
 The creator generates a master session key:
 
 ~~~~
-#{CryptoStackEncrypt?.MasterSecret.ToStringBase16FormatHex()}
+#% WriteBytesHex (CryptoStackEncrypt?.MasterSecret);
 ~~~~
 
 For each recipient of the message:
@@ -248,7 +258,7 @@ The creator generates an ephemeral key:
 The key agreement value is calculated:
 
 ~~~~
-#{Recipient?.KeyAgreement.ToStringBase16FormatHex()}
+#% WriteBytesHex (Recipient?.KeyAgreement);
 ~~~~
 
 The key agreement value is used as the input to a HKDF key
@@ -256,13 +266,13 @@ derivation function with the info parameter
 #{DareRecipient.KDFInfo.ToUTF8()} to create the key used to wrap the master key:
 
 ~~~~
-#{Recipient?.EncryptionKey.ToStringBase16FormatHex()}
+#% WriteBytesHex (Recipient?.EncryptionKey);
 ~~~~
 
 The wrapped master key is:
 
 ~~~~
-#{Recipient?.WrappedMasterKey.ToStringBase16FormatHex()}
+#% WriteBytesHex (Recipient?.WrappedMasterKey);
 ~~~~
 
 This information is used to calculate the Recipient information
@@ -272,26 +282,26 @@ To encrypt a message, we first generate a unique salt value:
 
 
 ~~~~
-#{Salt?.ToStringBase16FormatHex()}
+#% WriteBytesHex (Salt);
 ~~~~
 
 The salt value and master key are used to generate the payload encryption
 key:
 
 ~~~~
-#{CryptoStackEncrypt?.KeyEncrypt.ToStringBase16FormatHex()}
+#% WriteBytesHex (CryptoStackEncrypt?.KeyEncrypt);
 ~~~~
 
 Since AES is a block cipher, we also require an initializarion vector:
 
 ~~~~
-#{CryptoStackEncrypt?.IV.ToStringBase16FormatHex()}
+#% WriteBytesHex (CryptoStackEncrypt?.IV);
 ~~~~
 
 The output sequence is the encrypted bytes:
 
 ~~~~
-#{Example.MessageEnc?.Body.ToStringBase16FormatHex()}
+#% WriteBytesHex (Example.MessageEnc?.Body);
 ~~~~
 
 Since the message is not signed, there is no need for a trailer.
@@ -323,6 +333,6 @@ plaintext witness value.
 ~~~~
 
 
-#end file
+#end zfile
 
 #end xclass

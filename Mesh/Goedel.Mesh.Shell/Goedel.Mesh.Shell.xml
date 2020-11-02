@@ -1918,6 +1918,15 @@
         <member name="P:Goedel.Mesh.Shell._MessagePending.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MessagePending.Unread">
+            <summary>Field accessor for option [unread]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessagePending.Read">
+            <summary>Field accessor for option [read]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessagePending.Raw">
+            <summary>Field accessor for option [raw]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MessageStatus.RequestID">
             <summary>Field accessor for option [requestid]</summary>
         </member>

@@ -49,6 +49,9 @@ namespace ExampleGenerator {
 			 SchemaMessageConnection(Example);
 			 SchemaMessageContact(Example);
 			 SchemaMessageConfirmation(Example);
+			 SchemaCode1(Example);
+			 SchemaCode2(Example);
+			 SchemaCode3(Example);
 			}
 		
 
@@ -59,6 +62,72 @@ namespace ExampleGenerator {
 			 if (message == null) { ReportMissingExample(); return;}
 			 Format(message);
 			}
+		
+
+		//
+		// SchemaCode1
+		//
+		public static void SchemaCode1(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaCode1.md");
+			Example._Output = _Output;
+			Example._SchemaCode1(Example);
+			}
+		public void _SchemaCode1(CreateExamples Example) {
+
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("public static string GetEnvelopeId(string messageID) =>\n{0}", _Indent);
+				_Output.Write ("            UDF.ContentDigestOfUDF(messageID);\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+					}
+		
+
+		//
+		// SchemaCode2
+		//
+		public static void SchemaCode2(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaCode2.md");
+			Example._Output = _Output;
+			Example._SchemaCode2(Example);
+			}
+		public void _SchemaCode2(CreateExamples Example) {
+
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("static string MakeID(string udf, string content) {{\n{0}", _Indent);
+				_Output.Write ("    var (code, bds) = UDF.Parse(udf);\n{0}", _Indent);
+				_Output.Write ("    return code switch\n{0}", _Indent);
+				_Output.Write ("        {{\n{0}", _Indent);
+				_Output.Write ("            UdfTypeIdentifier.Digest_SHA_3_512 => \n{0}", _Indent);
+				_Output.Write ("                UDF.ContentDigestOfDataString(\n{0}", _Indent);
+				_Output.Write ("                bds, content, cryptoAlgorithmId: \n{0}", _Indent);
+				_Output.Write ("                    CryptoAlgorithmId.SHA_3_512),\n{0}", _Indent);
+				_Output.Write ("            _ => UDF.ContentDigestOfDataString(\n{0}", _Indent);
+				_Output.Write ("            bds, content, cryptoAlgorithmId: \n{0}", _Indent);
+				_Output.Write ("                    CryptoAlgorithmId.SHA_2_512),\n{0}", _Indent);
+				_Output.Write ("            }};\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+					}
+		
+
+		//
+		// SchemaCode3
+		//
+		public static void SchemaCode3(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaCode3.md");
+			Example._Output = _Output;
+			Example._SchemaCode3(Example);
+			}
+		public void _SchemaCode3(CreateExamples Example) {
+
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("alg = UdfAlg (PIN)\n{0}", _Indent);
+				_Output.Write ("pinData = UdfBDS (PIN)\n{0}", _Indent);
+				_Output.Write ("saltedPINData = MAC (Action, pinData)\n{0}", _Indent);
+				_Output.Write ("saltedPIN = UDFPresent (Authenticator_HMAC_SHA_2_512 + saltedPINData)\n{0}", _Indent);
+				_Output.Write ("PinId = UDFPresent (MAC (Account, saltedPINData))\n{0}", _Indent);
+				_Output.Write ("witnessData = Account.ToUTF8() + ClientNonce + PayloadDigest\n{0}", _Indent);
+				_Output.Write ("witnessValue =  MAC (witnessData , saltedPINData)\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+					}
 		
 
 		//

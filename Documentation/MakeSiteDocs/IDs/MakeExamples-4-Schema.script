@@ -39,6 +39,9 @@
 #% SchemaMessageConnection(Example);
 #% SchemaMessageContact(Example);
 #% SchemaMessageConfirmation(Example);
+#% SchemaCode1(Example);
+#% SchemaCode2(Example);
+#% SchemaCode3(Example);
 #end method
 
 
@@ -47,6 +50,42 @@
 #% Format(message);
 #end method
 
+
+#zfile CreateExamples SchemaCode1 "Examples\\SchemaCode1.md" Example
+~~~~
+public static string GetEnvelopeId(string messageID) =>
+            UDF.ContentDigestOfUDF(messageID);
+~~~~
+#end zfile
+
+#zfile CreateExamples SchemaCode2 "Examples\\SchemaCode2.md" Example
+~~~~
+static string MakeID(string udf, string content) {
+    var (code, bds) = UDF.Parse(udf);
+    return code switch
+        {
+            UdfTypeIdentifier.Digest_SHA_3_512 => 
+                UDF.ContentDigestOfDataString(
+                bds, content, cryptoAlgorithmId: 
+                    CryptoAlgorithmId.SHA_3_512),
+            _ => UDF.ContentDigestOfDataString(
+            bds, content, cryptoAlgorithmId: 
+                    CryptoAlgorithmId.SHA_2_512),
+            };
+~~~~
+#end zfile
+
+#zfile CreateExamples SchemaCode3 "Examples\\SchemaCode3.md" Example
+~~~~
+alg = UdfAlg (PIN)
+pinData = UdfBDS (PIN)
+saltedPINData = MAC (Action, pinData)
+saltedPIN = UDFPresent (Authenticator_HMAC_SHA_2_512 + saltedPINData)
+PinId = UDFPresent (MAC (Account, saltedPINData))
+witnessData = Account.ToUTF8() + ClientNonce + PayloadDigest
+witnessValue =  MAC (witnessData , saltedPINData)
+~~~~
+#end zfile
 
 
 #zfile CreateExamples SchemaAliceProfile "Examples\\SchemaAliceProfile.md" Example

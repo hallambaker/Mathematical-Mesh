@@ -73,8 +73,56 @@ namespace Goedel.Protocol {
         public override void WriteToken(string Tag, int IndentIn) {
             NewLine();
             var String = $"\"{Tag}\":";
+
+            if (Tag == "ContentMetaData") {
+                }
+
             Output.Write(String);
             OutputCol += String.Length;
+            }
+
+        /// <summary>Write string.</summary>
+        /// <param name="Data">Value to write</param>
+        public override void WriteString(string Data) {
+            Output.Write("\"");
+            foreach (char c in Data) {
+                string conv = null;
+
+                if (c == '\"') {
+                    conv = "\\\"";
+                    }
+                else if (c == '\\') {
+                    conv = "\\\\";
+                    }
+                else if (c >= 32 & c <127) {
+                    conv = c.ToString();
+                    }
+                else if (c == '\b') {
+                    conv = "\\b";
+                    }
+                else if (c == '\f') {
+                    conv = "\\f";
+                    }
+                else if (c == '\n') {
+                    conv = "\\n";
+                    }
+                else if (c == '\r') {
+                    conv = "\\r";
+                    }
+                else {
+                    Int16 ic = (Int16)c;
+                    conv = String.Format("\\u{0:X4}", ic);
+                    }
+
+                if (conv.Length + OutputCol > 66) {
+                    Output.Write("\n");
+                    OutputCol = 0;
+                    }
+
+                Output.Write(conv);
+                OutputCol += conv.Length;
+                }
+            Output.Write("\"");
             }
 
 
@@ -91,21 +139,6 @@ namespace Goedel.Protocol {
                     Data, offset, Length, format: ConversionFormat.Draft,
                     outputCol: OutputCol, outputMax: 66));
 
-
-            //if (Data.Length < Threshold) {
-
-            //    }
-            //else {
-            //    throw new NYI();
-
-            //    //Output.Write(BaseConvert.ToStringBase64url(Data,0,96, Format:ConversionFormat.Draft));
-            //    //Output.Write("\n...");
-            //    //int Start = 48 * (Data.Length / 48);
-            //    //// If the last line is null, make it a full line.
-            //    //Start = (Data.Length % 48) == 0 ? Start - 48 : Start;
-            //    //int Length = Data.Length - Start;
-            //    //Output.Write(BaseConvert.ToStringBase64url(Data, Start, Length, Format: ConversionFormat.Draft));
-            //    }
             Output.Write("\"");
             }
 

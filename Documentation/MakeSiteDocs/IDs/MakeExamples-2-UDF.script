@@ -35,30 +35,32 @@
 #% UDFShamirRecovery(Example);
 #end method
 
+#method2 DescribeValueUDF string tag string text
+#% var ptag = (tag + ":").PadRight (12);
+#% var wrapped = text.Wrap(ptag, indent:8);
+#{wrapped}#!
+#end method2
 
-
-#file UDFVariousUDF "Examples\\UDFVariousUDF.md" CreateExamples Example
+#zfile CreateExamples UDFVariousUDF "Examples\\UDFVariousUDF.md" Example
 ~~~~
-#{Example.ResultUDFNonce.Key}
-#{Example.ResultUDFSecret.Key}
-#{Example.ResultUDFSecret.Shares[0]}
-#{Example.ResultDigestSHA2.Digest}
-#{Example.ResultDigestSHA3.Digest}
-#{Example.ResultCommitSHA2.Digest}
-#{Example.PublicKeyed25519.UDFValue}
+#% DescribeValueUDF ("Nonce", Example.ResultUDFNonce.Key );
+#% DescribeValueUDF ("Secret", Example.ResultUDFSecret.Key );
+#% DescribeValueUDF ("SHA-2 Digest", Example.ResultDigestSHA2.Digest );
+#% DescribeValueUDF ("SHA-3 Digest", Example.ResultDigestSHA3.Digest );
+#% DescribeValueUDF ("Public Key", Example.PublicKeyed25519.UDFValue );
 ~~~~
-#end file
+#end zfile
 
 
-#file UDFNonce "Examples\\UDFNonce.md" CreateExamples Example
+#zfile CreateExamples UDFNonce "Examples\\UDFNonce.md" Example
 ~~~~
 Nonce UDF:
   #{Example.ResultUDFNonce.Key}
 ~~~~
-#end file
+#end zfile
 
 
-#file UDFOID "Examples\\UDFOID.md" CreateExamples Example
+#zfile CreateExamples UDFOID "Examples\\UDFOID.md" Example
 
 Given the following Ed25519 public key:
 
@@ -76,7 +78,7 @@ To encode this key as a UDF OID sequence we prepend the value #{UdfTypeIdentifie
 and convert to Base32:
 
 ~~~~
-#{Example.PublicKeyed25519.UDFValue}
+#% DescribeValueUDF ("OID", Example.PublicKeyed25519.UDFValue);
 ~~~~
 
 The corresponding UDF content digest value is more compact and allows us to identify the 
@@ -85,10 +87,10 @@ key unambiguously but does not provide the value:
 ~~~~
 #{Example.PublicKeyed25519.KeyIdentifier}
 ~~~~
-#end file
+#end zfile
 
 
-#file UDFEncrypt "Examples\\UDFEncrypt.md" CreateExamples Example
+#zfile CreateExamples UDFEncrypt "Examples\\UDFEncrypt.md" Example
 #% var data = UDF.Parse (Example.ResultUDFSecret.Key, out var code);
 ~~~~
 KeyValue:#{data.ToStringBase16FormatHex()}
@@ -96,48 +98,48 @@ KeyValue:#{data.ToStringBase16FormatHex()}
 Encryption/Authenticator UDF:
   #{Example.ResultUDFSecret.Key}
 ~~~~
-#end file
+#end zfile
 
-#file UDFShare "Examples\\UDFShare.md" CreateExamples Example
+#zfile CreateExamples UDFShare "Examples\\UDFShare.md" Example
 ~~~~
 Key:     #{Example.ResultUDFSecret.Key}
 Share 0: #{Example.ResultUDFSecret.Shares[0]}
 Share 1: #{Example.ResultUDFSecret.Shares[1]}
 Share 2: #{Example.ResultUDFSecret.Shares[2]}
 ~~~~
-#end file
+#end zfile
 
-#file UDFDigest "Examples\\UDFDigest.md" CreateExamples Example
+#zfile CreateExamples UDFDigest "Examples\\UDFDigest.md" Example
 ~~~~
 SHA-2-512: #{Example.ResultDigestSHA2.Digest}
 SHA-3-512: #{Example.ResultDigestSHA3.Digest}
 ~~~~
-#end file
+#end zfile
 
-#file UDFAuthenticator "Examples\\UDFAuthenticator.md" CreateExamples Example
+#zfile CreateExamples UDFAuthenticator "Examples\\UDFAuthenticator.md" Example
 ~~~~
 SHA-2-512: #{Example.ResultCommitSHA2.Digest}
 ~~~~
-#end file
+#end zfile
 
-#file UDFDigestURI "Examples\\UDFDigestURI.md" CreateExamples Example
+#zfile CreateExamples UDFDigestURI "Examples\\UDFDigestURI.md" Example
 ~~~~
 udf:#{Example.ResultDigestSHA2.Digest}
 ~~~~
-#end file
+#end zfile
 
-#file UDFDigestLocator "Examples\\UDFDigestLocator.md" CreateExamples Example
+#zfile CreateExamples UDFDigestLocator "Examples\\UDFDigestLocator.md" Example
 ~~~~
 udf://example.com/#{Example.ResultDigestSHA2.Digest}
 ~~~~
-#end file
+#end zfile
 
-#file UDFDigestEARLRAW "Examples\\UDFDigestEARL-raw.md" CreateExamples Example
+#zfile CreateExamples UDFDigestEARLRAW "Examples\\UDFDigestEARL-raw.md" Example
 udf://example.com/#{Example.ResultUDFEARL.Key}#!
-#end file
+#end zfile
 
 
-#file UDFDigestEARL "Examples\\UDFDigestEARL.md" CreateExamples Example
+#zfile CreateExamples UDFDigestEARL "Examples\\UDFDigestEARL.md" Example
 To generate the paper invoice, Example.com first creates a new encryption key:
 
 #{Example.ResultUDFEARL.Key}
@@ -149,9 +151,9 @@ the appropriate version is returned if Alice scans the QR code.
 The key is then converted to form an EARL for the example.com UDF resolution service:
 
 udf://example.com/#{Example.ResultUDFEARL.Key}
-#end file
+#end zfile
 
-#file UDFDigestEARLLocator "Examples\\UDFDigestEARLLocator.md" CreateExamples Example
+#zfile CreateExamples UDFDigestEARLLocator "Examples\\UDFDigestEARLLocator.md" Example
 The UDF EARL locator shown above is resolved by first determining the Web Service
 Endpoint for the mmm-udf service for the domain example.com.
 
@@ -173,9 +175,9 @@ the URI from which the content is obtained using the normal HTTP GET method:
 https://example.com/.well-known/mmm-udf/#{Example.ResultUDFEARL.Identifier}
 
 
-#end file
+#end zfile
 
-#file UDFsin "Examples\\UDFsin.md" CreateExamples Example
+#zfile CreateExamples UDFsin "Examples\\UDFsin.md" Example
 
 For example, Example Inc holds the domain name example.com and has deployed a 
 private CA whose root of trust is a PKIX certificate with the UDF fingerprint 
@@ -193,9 +195,9 @@ Alice is an employee of Example Inc., she uses three email addresses:
 </dl>
 
 
-#end file
+#end zfile
 
-#file UDFDeriveCFRG "Examples\\UDFDeriveCFRG.md" CreateExamples Example
+#zfile CreateExamples UDFDeriveCFRG "Examples\\UDFDeriveCFRG.md" Example
 
 An X25519 key may be derived as follows:
 
@@ -249,9 +251,9 @@ Key =
     #{Example.UDFResults.Derive.Ed448.Key.ToStringBase16FormatHex()}
 ~~~~
 
-#end file
+#end zfile
 
-#file UDFDeriveNIST "Examples\\UDFDeriveNIST.md" CreateExamples Example
+#zfile CreateExamples UDFDeriveNIST "Examples\\UDFDeriveNIST.md" Example
 
 A P-256 key may be derived as follows:
 
@@ -271,8 +273,8 @@ PRK =
 OKM =
     #{Example.UDFResults.Derive.P256.OKM.ToStringBase16FormatHex()}
     
-Key = 
-    #{Example.UDFResults.Derive.P256.Key}
+
+#% DescribeResult ("Key", Example.UDFResults.Derive.P256.Key);
 ~~~~
 
 Derivation of a P-384 key:
@@ -281,8 +283,7 @@ Derivation of a P-384 key:
 Fingerprint =
     #{Example.UDFResults.Derive.P384.UDF}
     
-Key = 
-    #{Example.UDFResults.Derive.P384.Key}
+#% DescribeResult ("Key", Example.UDFResults.Derive.P384.Key);
 ~~~~
 
 Derivation of a P-521 key:
@@ -290,14 +291,13 @@ Derivation of a P-521 key:
 ~~~~
 Fingerprint =
     #{Example.UDFResults.Derive.P521.UDF}
-    
-Key = 
-    #{Example.UDFResults.Derive.P521.Key}
+
+#% DescribeResult ("Key", Example.UDFResults.Derive.P521.Key);   
 ~~~~
 
-#end file
+#end zfile
 
-#file UDFDeriveRSA "Examples\\UDFDeriveRSA.md" CreateExamples Example
+#zfile CreateExamples UDFDeriveRSA "Examples\\UDFDeriveRSA.md" Example
 
 An RSA-2048 may be derived as follows:
 
@@ -325,16 +325,14 @@ Info(q) =
 OKM(q) =
     #{Example.UDFResults.Derive.RSA2048.OKM_Q.ToStringBase16FormatHex()}
     
-Key P = 
-    #{Example.UDFResults.Derive.RSA2048.P}
+#% DescribeResult ("Key P", Example.UDFResults.Derive.RSA2048.P);
 
-Key Q = 
-    #{Example.UDFResults.Derive.RSA2048.Q}
+#% DescribeResult ("Key Q", Example.UDFResults.Derive.RSA2048.Q);
 ~~~~
 
-#end file
+#end zfile
 
-#file UDFDeriveAny "Examples\\UDFDeriveAny.md" CreateExamples Example
+#zfile CreateExamples UDFDeriveAny "Examples\\UDFDeriveAny.md" Example
 
 ~~~~
 Fingerprint =
@@ -344,12 +342,10 @@ To generate an RSA-2048 key
 
 salt =
     #{Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex()}
-    
-Key P = 
-    #{Example.UDFResults.Derive.Any_RSA2048.P}
 
-Key Q = 
-    #{Example.UDFResults.Derive.Any_RSA2048.Q}
+#% DescribeResult ("Key P", Example.UDFResults.Derive.Any_RSA2048.P);
+
+#% DescribeResult ("Key Q", Example.UDFResults.Derive.Any_RSA2048.Q);    
 
 To generate an X25519 key
 
@@ -360,9 +356,9 @@ Key =
     #{Example.UDFResults.Derive.Any_x25519.Key}
 ~~~~
 
-#end file
+#end zfile
 
-#file UDFSplit "Examples\\UDFSplit.md" CreateExamples Example
+#zfile CreateExamples UDFSplit "Examples\\UDFSplit.md" Example
 
 Alice decides to encrypt an important document and split the encryption key so that
 there are five key shares, three of which will be required to recover the key.
@@ -423,10 +419,10 @@ f(5) = #{Example.UDFSplitShares[4].UDFKey}
 To recover the value f(0) from any three shares, we need to fit a polynomial curve to 
 the three points and use it to calculate the value at x=0 using the Lagrange polynomial
 basis.
-#end file
+#end zfile
 
-#file UDFDigestLong "Examples\\UDFDigestLong.md" CreateExamples Example
-#% var instance = Instance (_Output);
+#zfile CreateExamples UDFDigestLong "Examples\\UDFDigestLong.md" Example
+#!% var instance = Instance (_Output);
 #% var DataString = "UDF Data Value";
 #% var Data = DataString.ToUTF8();
 #% var ContentType = "text/plain";
@@ -442,7 +438,7 @@ ContentType = #{ContentType.ToUTF8().ToStringBase16FormatHex()}
 
 ######Using SHA-2-512 Digest
 
-#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, null);
+#% MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, null);
 
 This fingerprint MAY be specified with higher or lower precision as appropriate.
 
@@ -459,7 +455,7 @@ This fingerprint MAY be specified with higher or lower precision as appropriate.
 
 ######Using SHA-3-512 Digest
 
-#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_3_512, null);
+#% MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_3_512, null);
 
 ######Using SHA-2-512 Digest with Compression 
 #% var DataStringc2 = $"UDF Compressed Document {4187123}";
@@ -474,7 +470,7 @@ Data = "#{Datac2.ToStringBase16FormatHex()}"
 
 The UTF8 Content Digest is given as:
 
-#% instance.MakeUTFExtendedExample (DataStringc2, CryptoAlgorithmId.SHA_2_512, null);
+#% MakeUTFExtendedExample (DataStringc2, CryptoAlgorithmId.SHA_2_512, null);
 
 ######Using SHA-3-512 Digest with Compression 
 #% var DataStringc3 = $"UDF Compressed Document {774665}";
@@ -490,7 +486,7 @@ Data = #{Datac3.ToStringBase16FormatHex()}
 The UTF8 SHA-3-512 Content Digest is
 #{UDF.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmId.SHA_3_512)}
 
-#end file
+#end zfile
 
 #method3 MakeUTFExtendedExample string DataString CryptoAlgorithmId CryptoAlgorithmId string key
 #% var DataBytes = DataString.ToUTF8();
@@ -532,8 +528,8 @@ The 125 bit fingerprint value is #{UDF.PresentationBase32 (binaryUDF, 140)}
 
 #end method3
 
-#file UDFAuthenticatorLong "Examples\\UDFAuthenticatorLong.md" CreateExamples Example
-#% var instance = Instance (_Output);
+#zfile CreateExamples UDFAuthenticatorLong "Examples\\UDFAuthenticatorLong.md" Example
+#!% var instance = Instance (_Output);
 #% var key = "NDD7-6CMX-H2FW-ISAL-K4VB-DQ3E-PEDM";
 #% var DataString = "Konrad is the traitor";
 #% var Data = DataString.ToUTF8();
@@ -554,10 +550,10 @@ Key =  #{ key.ToUTF8().ToStringBase16FormatHex()}
 Processing is performed in the same manner as an unkeyed fingerprint except that
 compression is never used:
 
-#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, key);
+#% MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, key);
 #!The SHA-3-512 commitment with the same inputs is:
 #!#{UDF.DataToFormat(Data, ContentType, 125, CryptoAlgorithmId.SHA_3_512, key)}
-#end file
+#end zfile
 
 
 
@@ -567,7 +563,7 @@ compression is never used:
 
 
 
-#file UDFTableReservedId "Examples\\UDFTableReservedId.md" CreateExamples Example
+#zfile CreateExamples UDFTableReservedId "Examples\\UDFTableReservedId.md" Example
 ~~~~
 Code  Description                      Reference
 ---  -------------------               ---------
@@ -586,9 +582,9 @@ Code  Description                      Reference
 104  Random nonce                      [This document]
 144  Shamir Secret Share               [This document]
 ~~~~
-#end file
+#end zfile
 
-#file UDFURIEBNF "Examples\\UDFURIEBNF.md" CreateExamples Example
+#zfile CreateExamples UDFURIEBNF "Examples\\UDFURIEBNF.md" Example
 ~~~~
 URI           = "UDF:" udf [ "?" query ] [ "#" fragment ]
 
@@ -600,9 +596,9 @@ locator-form  = "//" authority "/" udf-value
 authority     = host 
 host          = reg-name
 ~~~~
-#end file
+#end zfile
 
-#file UDFShamirRecovery "Examples\\UDFShamirRecovery.md" CreateExamples Example
+#zfile CreateExamples UDFShamirRecovery "Examples\\UDFShamirRecovery.md" Example
 ~~~~
 using System;
 using System.Collections.Generic;
@@ -692,21 +688,21 @@ namespace Examples {
         }
     }
 ~~~~
-#end file
+#end zfile
 
 
-#file UDFEncryptedResolution "Examples\\UDFEncryptedResolution.md" CreateExamples Example
+#zfile CreateExamples UDFEncryptedResolution "Examples\\UDFEncryptedResolution.md" Example
 
 
-#end file
+#end zfile
 
 
-#xfile CreateExamples UDFDigestResolution "Examples\\UDFDigestResolution.md" CreateExamples Example
-#end xfile
+#zfile CreateExamples UDFDigestResolution "Examples\\UDFDigestResolution.md" Example
+#end zfile
 
 
 
-#file MeshExamplesSIN "Examples\\ExamplesSIN.md" CreateExamples Example
+#zfile CreateExamples MeshExamplesSIN "Examples\\ExamplesSIN.md" Example
 
 A SIN is an Internet Identifier that contains a fingerprint of a root of 
 trust that may be used to verify the interpretation of the identifier. This 
@@ -753,9 +749,9 @@ specified by the fingerprint and apply security enhancements as mandated by that
 These rules allow Bob to send email to Alice with either ‘best effort’ security or 
 mandatory security as the circumstances demand
 
-#end file
+#end zfile
 
-#file MeshExamplesSIN2 "Examples\\ExamplesSIN2.md" CreateExamples Example
+#zfile CreateExamples MeshExamplesSIN2 "Examples\\ExamplesSIN2.md" Example
 
 A security policy may be implicit or explicit depending on the root of trust referenced and the context in which it is used.
 
@@ -768,10 +764,10 @@ Connect to the IMAP server example.com over a TLS connection with a certificate 
 mailto:alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz
 Encrypt mail messages using S/MIME using an S/MIME certificate that is valid in a chain of trust that contains a certificate with the fingerprint mb2gk.
 
-#end file
+#end zfile
 
 
-#file MeshManToolFile "Examples\\MeshManToolFile.md" CreateExamples Example
+#zfile CreateExamples MeshManToolFile "Examples\\MeshManToolFile.md" Example
 
 The file command set supports the following operations on files:
 
@@ -827,6 +823,6 @@ export HISTFILE=/dev/null
 
 ####Command commit
 
-#end file
+#end zfile
 
 #end xclass

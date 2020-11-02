@@ -31,6 +31,18 @@ namespace ExampleGenerator {
 		
 
 		//
+		// WriteBytesHex
+		//
+		public void WriteBytesHex (byte[] data) {
+			if (  (data != null) ) {
+				_Output.Write ("{1}\n{0}", _Indent, data.ToStringBase16FormatHex());
+				} else {
+				_Output.Write ("$$$ Missing data $$$\n{0}", _Indent);
+				}
+			}
+		
+
+		//
 		// DareSchemaCatalog
 		//
 		public static void DareSchemaCatalog(CreateExamples Example) { /* XFile  */
@@ -60,8 +72,9 @@ namespace ExampleGenerator {
 		// MeshExamplesContainer
 		//
 		public static void MeshExamplesContainer(CreateExamples Example) { /* XFile  */
-			using var _Output = new StreamWriter("Examples\\ExamplesContainer.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ExamplesContainer.md" };
-			obj._MeshExamplesContainer(Example);
+				using var _Output = new StreamWriter("Examples\\ExamplesContainer.md");
+			Example._Output = _Output;
+			Example._MeshExamplesContainer(Example);
 			}
 		public void _MeshExamplesContainer(CreateExamples Example) {
 
@@ -181,9 +194,13 @@ namespace ExampleGenerator {
 		//
 		// MeshExamplesMessageMail
 		//
-		public static void MeshExamplesMessageMail (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\ExamplesDAREMessageMail.md");
-				var _Indent = ""; 
+		public static void MeshExamplesMessageMail(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ExamplesDAREMessageMail.md");
+			Example._Output = _Output;
+			Example._MeshExamplesMessageMail(Example);
+			}
+		public void _MeshExamplesMessageMail(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("For example, consider the following mail message:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -206,32 +223,38 @@ namespace ExampleGenerator {
 				_Output.Write ("This contains the same information as before but the mail message headers are \n{0}", _Indent);
 				_Output.Write ("now presented as  a list of Encoded Data Sequences.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// MeshExamplesMessageEDS
 		//
-		public static void MeshExamplesMessageEDS (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\ExamplesDAREMessageEDS.md");
-				var _Indent = ""; 
+		public static void MeshExamplesMessageEDS(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ExamplesDAREMessageEDS.md");
+			Example._Output = _Output;
+			Example._MeshExamplesMessageEDS(Example);
+			}
+		public void _MeshExamplesMessageEDS(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The encoding of the 'From' header of the previous example as a plaintext EDS is as follows:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Example.EDSText);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// MeshExamplesMessageEncrypted
 		//
-		public static void MeshExamplesMessageEncrypted (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\MeshExamplesMessageEncrypted.md");
-				var _Indent = ""; 
+		public static void MeshExamplesMessageEncrypted(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\MeshExamplesMessageEncrypted.md");
+			Example._Output = _Output;
+			Example._MeshExamplesMessageEncrypted(Example);
+			}
+		public void _MeshExamplesMessageEncrypted(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The following is an encrypted version of the message shown earlier. \n{0}", _Indent);
 				_Output.Write ("The payload and annotations have both increased in size as a result\n{0}", _Indent);
@@ -242,16 +265,19 @@ namespace ExampleGenerator {
 				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.MailMessageAsDAREEncrypted, false));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// ExamplesDAREMessage
 		//
-		public static void ExamplesDAREMessage (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\ExamplesDAREMessage.md");
-				var _Indent = ""; 
+		public static void ExamplesDAREMessage(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ExamplesDAREMessage.md");
+			Example._Output = _Output;
+			Example._ExamplesDAREMessage(Example);
+			}
+		public void _ExamplesDAREMessage(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("#Test Examples\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -306,7 +332,7 @@ namespace ExampleGenerator {
 				_Output.Write ("The creator generates a master session key:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, CryptoStackEncrypt?.MasterSecret.ToStringBase16FormatHex());
+				 WriteBytesHex (CryptoStackEncrypt?.MasterSecret);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("For each recipient of the message:\n{0}", _Indent);
@@ -320,7 +346,7 @@ namespace ExampleGenerator {
 				_Output.Write ("The key agreement value is calculated:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Recipient?.KeyAgreement.ToStringBase16FormatHex());
+				 WriteBytesHex (Recipient?.KeyAgreement);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The key agreement value is used as the input to a HKDF key\n{0}", _Indent);
@@ -328,13 +354,13 @@ namespace ExampleGenerator {
 				_Output.Write ("{1} to create the key used to wrap the master key:\n{0}", _Indent, DareRecipient.KDFInfo.ToUTF8());
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Recipient?.EncryptionKey.ToStringBase16FormatHex());
+				 WriteBytesHex (Recipient?.EncryptionKey);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The wrapped master key is:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Recipient?.WrappedMasterKey.ToStringBase16FormatHex());
+				 WriteBytesHex (Recipient?.WrappedMasterKey);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("This information is used to calculate the Recipient information\n{0}", _Indent);
@@ -344,26 +370,26 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Salt?.ToStringBase16FormatHex());
+				 WriteBytesHex (Salt);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The salt value and master key are used to generate the payload encryption\n{0}", _Indent);
 				_Output.Write ("key:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, CryptoStackEncrypt?.KeyEncrypt.ToStringBase16FormatHex());
+				 WriteBytesHex (CryptoStackEncrypt?.KeyEncrypt);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Since AES is a block cipher, we also require an initializarion vector:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, CryptoStackEncrypt?.IV.ToStringBase16FormatHex());
+				 WriteBytesHex (CryptoStackEncrypt?.IV);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The output sequence is the encrypted bytes:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.MessageEnc?.Body.ToStringBase16FormatHex());
+				 WriteBytesHex (Example.MessageEnc?.Body);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Since the message is not signed, there is no need for a trailer.\n{0}", _Indent);
@@ -395,7 +421,6 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		}
 	}

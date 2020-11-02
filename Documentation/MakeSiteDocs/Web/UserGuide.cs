@@ -67,7 +67,7 @@ namespace ExampleGenerator {
 				_Output.Write ("<cmd>{1}> ", _Indent, exampleResult.MachineName);
 				_Output.Write ("{1}\n{0}", _Indent, WrapConsole(exampleResult.Command, exampleResult.MachineName.Length));
 				if (  (exampleResult.ResultText != "") ) {
-					_Output.Write ("<rsp>{1}", _Indent, exampleResult.ResultText);
+					_Output.Write ("<rsp>{1}", _Indent, WrapResult(exampleResult.ResultText));
 					}
 				}
 			_Output.Write ("</div>\n{0}", _Indent);
@@ -81,9 +81,8 @@ namespace ExampleGenerator {
 		public void DescribeRequest (Trace trace) {
 			 if (trace == null) {ReportMissing(); return;}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, trace.GetRequest());
-			_Output.Write ("~~~~\n{0}", _Indent);
+			 Format(trace.RequestObject);
+			_Output.Write ("\n{0}", _Indent);
 			}
 		
 
@@ -93,9 +92,8 @@ namespace ExampleGenerator {
 		public void DescribeResponse (Trace trace) {
 			 if (trace == null) {ReportMissing(); return;}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, trace.GetResponse());
-			_Output.Write ("~~~~\n{0}", _Indent);
+			 Format(trace.ResponseObject);
+			_Output.Write ("\n{0}", _Indent);
 			}
 		
 

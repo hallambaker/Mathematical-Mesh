@@ -40,9 +40,33 @@ namespace Goedel.Registry {
         /// <param name="Output">The output stream</param>
 		public Script(TextWriter Output) => _Output = Output;
 
-        public static string WrapConsole(string text, int position = 0, int cols = 70,
-            string continuation = null, int indent = 0) =>
+        public static string WrapConsole(string text, int position = 0, int cols = 70) =>
                         Wrap(text, position, cols-2, " ^", 4);
+
+        public static string WrapResult(string text, int position = 0, int cols = 69) {
+            var builder = new StringBuilder();
+            var col = 0;
+
+            foreach (char c in text) {
+                if (c == '\n') {
+                    builder.Append("\n");
+                    col = 0;
+                    }
+                else {
+                    if (col >= cols) {
+                        builder.Append("\n");
+                        col = 0;
+                        }
+                    builder.Append(c);
+                    col++;
+                    }
+                }
+
+
+
+            return builder.ToString();
+
+            }
 
 
         /// <summary>

@@ -403,11 +403,11 @@
 			Brief "List pending requests"
 			Include AccountOptions
 			Include Reporting
-			Option Unread Flag
+			Option Unread "unread" Flag
 				Default "false"
-			Option Read Flag
+			Option Read "read" Flag
 				Default "true"
-			Option Raw Flag
+			Option Raw "raw" Flag
 				Default "false"
 
 		Command MessageStatus "status"

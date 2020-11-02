@@ -47,44 +47,62 @@ namespace ExampleGenerator {
 		
 
 		//
+		// DescribeValueUDF
+		//
+		public void DescribeValueUDF (string tag, string text) {
+			 var ptag = (tag + ":").PadRight (12);
+			 var wrapped = text.Wrap(ptag, indent:8);
+			_Output.Write ("{1}", _Indent, wrapped);
+			}
+		
+
+		//
 		// UDFVariousUDF
 		//
-		public static void UDFVariousUDF (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFVariousUDF.md");
-				var _Indent = ""; 
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFNonce.Key);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Key);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[0]);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultDigestSHA3.Digest);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ResultCommitSHA2.Digest);
-				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.UDFValue);
-				_Output.Write ("~~~~\n{0}", _Indent);
-		
+		public static void UDFVariousUDF(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFVariousUDF.md");
+			Example._Output = _Output;
+			Example._UDFVariousUDF(Example);
 			}
+		public void _UDFVariousUDF(CreateExamples Example) {
+
+				_Output.Write ("~~~~\n{0}", _Indent);
+				 DescribeValueUDF ("Nonce", Example.ResultUDFNonce.Key );
+				 DescribeValueUDF ("Secret", Example.ResultUDFSecret.Key );
+				 DescribeValueUDF ("SHA-2 Digest", Example.ResultDigestSHA2.Digest );
+				 DescribeValueUDF ("SHA-3 Digest", Example.ResultDigestSHA3.Digest );
+				 DescribeValueUDF ("Public Key", Example.PublicKeyed25519.UDFValue );
+				_Output.Write ("~~~~\n{0}", _Indent);
+					}
 		
 
 		//
 		// UDFNonce
 		//
-		public static void UDFNonce (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFNonce.md");
-				var _Indent = ""; 
+		public static void UDFNonce(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFNonce.md");
+			Example._Output = _Output;
+			Example._UDFNonce(Example);
+			}
+		public void _UDFNonce(CreateExamples Example) {
+
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Nonce UDF:\n{0}", _Indent);
 				_Output.Write ("  {1}\n{0}", _Indent, Example.ResultUDFNonce.Key);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFOID
 		//
-		public static void UDFOID (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFOID.md");
-				var _Indent = ""; 
+		public static void UDFOID(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFOID.md");
+			Example._Output = _Output;
+			Example._UDFOID(Example);
+			}
+		public void _UDFOID(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Given the following Ed25519 public key:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -102,7 +120,7 @@ namespace ExampleGenerator {
 				_Output.Write ("and convert to Base32:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.UDFValue);
+				 DescribeValueUDF ("OID", Example.PublicKeyed25519.UDFValue);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The corresponding UDF content digest value is more compact and allows us to identify the \n{0}", _Indent);
@@ -111,16 +129,19 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.KeyIdentifier);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFEncrypt
 		//
-		public static void UDFEncrypt (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFEncrypt.md");
-				var _Indent = ""; 
+		public static void UDFEncrypt(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFEncrypt.md");
+			Example._Output = _Output;
+			Example._UDFEncrypt(Example);
+			}
+		public void _UDFEncrypt(CreateExamples Example) {
+
 				 var data = UDF.Parse (Example.ResultUDFSecret.Key, out var code);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("KeyValue:{1}\n{0}", _Indent, data.ToStringBase16FormatHex());
@@ -128,96 +149,117 @@ namespace ExampleGenerator {
 				_Output.Write ("Encryption/Authenticator UDF:\n{0}", _Indent);
 				_Output.Write ("  {1}\n{0}", _Indent, Example.ResultUDFSecret.Key);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFShare
 		//
-		public static void UDFShare (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFShare.md");
-				var _Indent = ""; 
+		public static void UDFShare(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFShare.md");
+			Example._Output = _Output;
+			Example._UDFShare(Example);
+			}
+		public void _UDFShare(CreateExamples Example) {
+
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Key:     {1}\n{0}", _Indent, Example.ResultUDFSecret.Key);
 				_Output.Write ("Share 0: {1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[0]);
 				_Output.Write ("Share 1: {1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[1]);
 				_Output.Write ("Share 2: {1}\n{0}", _Indent, Example.ResultUDFSecret.Shares[2]);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFDigest
 		//
-		public static void UDFDigest (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDigest.md");
-				var _Indent = ""; 
+		public static void UDFDigest(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDigest.md");
+			Example._Output = _Output;
+			Example._UDFDigest(Example);
+			}
+		public void _UDFDigest(CreateExamples Example) {
+
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("SHA-2-512: {1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
 				_Output.Write ("SHA-3-512: {1}\n{0}", _Indent, Example.ResultDigestSHA3.Digest);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFAuthenticator
 		//
-		public static void UDFAuthenticator (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFAuthenticator.md");
-				var _Indent = ""; 
+		public static void UDFAuthenticator(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFAuthenticator.md");
+			Example._Output = _Output;
+			Example._UDFAuthenticator(Example);
+			}
+		public void _UDFAuthenticator(CreateExamples Example) {
+
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("SHA-2-512: {1}\n{0}", _Indent, Example.ResultCommitSHA2.Digest);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFDigestURI
 		//
-		public static void UDFDigestURI (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDigestURI.md");
-				var _Indent = ""; 
+		public static void UDFDigestURI(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDigestURI.md");
+			Example._Output = _Output;
+			Example._UDFDigestURI(Example);
+			}
+		public void _UDFDigestURI(CreateExamples Example) {
+
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("udf:{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFDigestLocator
 		//
-		public static void UDFDigestLocator (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDigestLocator.md");
-				var _Indent = ""; 
+		public static void UDFDigestLocator(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDigestLocator.md");
+			Example._Output = _Output;
+			Example._UDFDigestLocator(Example);
+			}
+		public void _UDFDigestLocator(CreateExamples Example) {
+
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("udf://example.com/{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFDigestEARLRAW
 		//
-		public static void UDFDigestEARLRAW (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDigestEARL-raw.md");
-				var _Indent = ""; 
-				_Output.Write ("udf://example.com/{1}", _Indent, Example.ResultUDFEARL.Key);
-		
+		public static void UDFDigestEARLRAW(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDigestEARL-raw.md");
+			Example._Output = _Output;
+			Example._UDFDigestEARLRAW(Example);
 			}
+		public void _UDFDigestEARLRAW(CreateExamples Example) {
+
+				_Output.Write ("udf://example.com/{1}", _Indent, Example.ResultUDFEARL.Key);
+					}
 		
 
 		//
 		// UDFDigestEARL
 		//
-		public static void UDFDigestEARL (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDigestEARL.md");
-				var _Indent = ""; 
+		public static void UDFDigestEARL(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDigestEARL.md");
+			Example._Output = _Output;
+			Example._UDFDigestEARL(Example);
+			}
+		public void _UDFDigestEARL(CreateExamples Example) {
+
 				_Output.Write ("To generate the paper invoice, Example.com first creates a new encryption key:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Example.ResultUDFEARL.Key);
@@ -229,16 +271,19 @@ namespace ExampleGenerator {
 				_Output.Write ("The key is then converted to form an EARL for the example.com UDF resolution service:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("udf://example.com/{1}\n{0}", _Indent, Example.ResultUDFEARL.Key);
-		
-			}
+					}
 		
 
 		//
 		// UDFDigestEARLLocator
 		//
-		public static void UDFDigestEARLLocator (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDigestEARLLocator.md");
-				var _Indent = ""; 
+		public static void UDFDigestEARLLocator(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDigestEARLLocator.md");
+			Example._Output = _Output;
+			Example._UDFDigestEARLLocator(Example);
+			}
+		public void _UDFDigestEARLLocator(CreateExamples Example) {
+
 				_Output.Write ("The UDF EARL locator shown above is resolved by first determining the Web Service\n{0}", _Indent);
 				_Output.Write ("Endpoint for the mmm-udf service for the domain example.com.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -260,16 +305,19 @@ namespace ExampleGenerator {
 				_Output.Write ("https://example.com/.well-known/mmm-udf/{1}\n{0}", _Indent, Example.ResultUDFEARL.Identifier);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFsin
 		//
-		public static void UDFsin (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFsin.md");
-				var _Indent = ""; 
+		public static void UDFsin(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFsin.md");
+			Example._Output = _Output;
+			Example._UDFsin(Example);
+			}
+		public void _UDFsin(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("For example, Example Inc holds the domain name example.com and has deployed a \n{0}", _Indent);
 				_Output.Write ("private CA whose root of trust is a PKIX certificate with the UDF fingerprint \n{0}", _Indent);
@@ -287,16 +335,19 @@ namespace ExampleGenerator {
 				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFDeriveCFRG
 		//
-		public static void UDFDeriveCFRG (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDeriveCFRG.md");
-				var _Indent = ""; 
+		public static void UDFDeriveCFRG(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDeriveCFRG.md");
+			Example._Output = _Output;
+			Example._UDFDeriveCFRG(Example);
+			}
+		public void _UDFDeriveCFRG(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("An X25519 key may be derived as follows:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -350,16 +401,19 @@ namespace ExampleGenerator {
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.Key.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFDeriveNIST
 		//
-		public static void UDFDeriveNIST (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDeriveNIST.md");
-				var _Indent = ""; 
+		public static void UDFDeriveNIST(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDeriveNIST.md");
+			Example._Output = _Output;
+			Example._UDFDeriveNIST(Example);
+			}
+		public void _UDFDeriveNIST(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("A P-256 key may be derived as follows:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -379,8 +433,8 @@ namespace ExampleGenerator {
 				_Output.Write ("OKM =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.OKM.ToStringBase16FormatHex());
 				_Output.Write ("    \n{0}", _Indent);
-				_Output.Write ("Key = \n{0}", _Indent);
-				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.Key);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeResult ("Key", Example.UDFResults.Derive.P256.Key);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Derivation of a P-384 key:\n{0}", _Indent);
@@ -389,8 +443,7 @@ namespace ExampleGenerator {
 				_Output.Write ("Fingerprint =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P384.UDF);
 				_Output.Write ("    \n{0}", _Indent);
-				_Output.Write ("Key = \n{0}", _Indent);
-				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P384.Key);
+				 DescribeResult ("Key", Example.UDFResults.Derive.P384.Key);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Derivation of a P-521 key:\n{0}", _Indent);
@@ -398,21 +451,23 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Fingerprint =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P521.UDF);
-				_Output.Write ("    \n{0}", _Indent);
-				_Output.Write ("Key = \n{0}", _Indent);
-				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P521.Key);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeResult ("Key", Example.UDFResults.Derive.P521.Key);   
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFDeriveRSA
 		//
-		public static void UDFDeriveRSA (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDeriveRSA.md");
-				var _Indent = ""; 
+		public static void UDFDeriveRSA(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDeriveRSA.md");
+			Example._Output = _Output;
+			Example._UDFDeriveRSA(Example);
+			}
+		public void _UDFDeriveRSA(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("An RSA-2048 may be derived as follows:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -440,23 +495,24 @@ namespace ExampleGenerator {
 				_Output.Write ("OKM(q) =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.OKM_Q.ToStringBase16FormatHex());
 				_Output.Write ("    \n{0}", _Indent);
-				_Output.Write ("Key P = \n{0}", _Indent);
-				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.P);
+				 DescribeResult ("Key P", Example.UDFResults.Derive.RSA2048.P);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Key Q = \n{0}", _Indent);
-				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Q);
+				 DescribeResult ("Key Q", Example.UDFResults.Derive.RSA2048.Q);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFDeriveAny
 		//
-		public static void UDFDeriveAny (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDeriveAny.md");
-				var _Indent = ""; 
+		public static void UDFDeriveAny(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDeriveAny.md");
+			Example._Output = _Output;
+			Example._UDFDeriveAny(Example);
+			}
+		public void _UDFDeriveAny(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Fingerprint =\n{0}", _Indent);
@@ -466,12 +522,10 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("salt =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex());
-				_Output.Write ("    \n{0}", _Indent);
-				_Output.Write ("Key P = \n{0}", _Indent);
-				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.P);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Key Q = \n{0}", _Indent);
-				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.Q);
+				 DescribeResult ("Key P", Example.UDFResults.Derive.Any_RSA2048.P);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeResult ("Key Q", Example.UDFResults.Derive.Any_RSA2048.Q);    
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("To generate an X25519 key\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -482,16 +536,19 @@ namespace ExampleGenerator {
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_x25519.Key);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFSplit
 		//
-		public static void UDFSplit (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFSplit.md");
-				var _Indent = ""; 
+		public static void UDFSplit(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFSplit.md");
+			Example._Output = _Output;
+			Example._UDFSplit(Example);
+			}
+		public void _UDFSplit(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice decides to encrypt an important document and split the encryption key so that\n{0}", _Indent);
 				_Output.Write ("there are five key shares, three of which will be required to recover the key.\n{0}", _Indent);
@@ -552,17 +609,19 @@ namespace ExampleGenerator {
 				_Output.Write ("To recover the value f(0) from any three shares, we need to fit a polynomial curve to \n{0}", _Indent);
 				_Output.Write ("the three points and use it to calculate the value at x=0 using the Lagrange polynomial\n{0}", _Indent);
 				_Output.Write ("basis.\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFDigestLong
 		//
-		public static void UDFDigestLong (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFDigestLong.md");
-				var _Indent = ""; 
-				 var instance = Instance (_Output);
+		public static void UDFDigestLong(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFDigestLong.md");
+			Example._Output = _Output;
+			Example._UDFDigestLong(Example);
+			}
+		public void _UDFDigestLong(CreateExamples Example) {
+
 				 var DataString = "UDF Data Value";
 				 var Data = DataString.ToUTF8();
 				 var ContentType = "text/plain";
@@ -578,7 +637,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-2-512 Digest\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, null);
+				 MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, null);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("This fingerprint MAY be specified with higher or lower precision as appropriate.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -595,7 +654,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-3-512 Digest\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_3_512, null);
+				 MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_3_512, null);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-2-512 Digest with Compression \n{0}", _Indent);
 				 var DataStringc2 = $"UDF Compressed Document {4187123}";
@@ -610,7 +669,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The UTF8 Content Digest is given as:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 instance.MakeUTFExtendedExample (DataStringc2, CryptoAlgorithmId.SHA_2_512, null);
+				 MakeUTFExtendedExample (DataStringc2, CryptoAlgorithmId.SHA_2_512, null);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-3-512 Digest with Compression \n{0}", _Indent);
 				 var DataStringc3 = $"UDF Compressed Document {774665}";
@@ -626,8 +685,7 @@ namespace ExampleGenerator {
 				_Output.Write ("The UTF8 SHA-3-512 Content Digest is\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmId.SHA_3_512));
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
@@ -677,10 +735,13 @@ namespace ExampleGenerator {
 		//
 		// UDFAuthenticatorLong
 		//
-		public static void UDFAuthenticatorLong (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFAuthenticatorLong.md");
-				var _Indent = ""; 
-				 var instance = Instance (_Output);
+		public static void UDFAuthenticatorLong(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFAuthenticatorLong.md");
+			Example._Output = _Output;
+			Example._UDFAuthenticatorLong(Example);
+			}
+		public void _UDFAuthenticatorLong(CreateExamples Example) {
+
 				 var key = "NDD7-6CMX-H2FW-ISAL-K4VB-DQ3E-PEDM";
 				 var DataString = "Konrad is the traitor";
 				 var Data = DataString.ToUTF8();
@@ -701,17 +762,20 @@ namespace ExampleGenerator {
 				_Output.Write ("Processing is performed in the same manner as an unkeyed fingerprint except that\n{0}", _Indent);
 				_Output.Write ("compression is never used:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, key);
-		
-			}
+				 MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, key);
+					}
 		
 
 		//
 		// UDFTableReservedId
 		//
-		public static void UDFTableReservedId (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFTableReservedId.md");
-				var _Indent = ""; 
+		public static void UDFTableReservedId(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFTableReservedId.md");
+			Example._Output = _Output;
+			Example._UDFTableReservedId(Example);
+			}
+		public void _UDFTableReservedId(CreateExamples Example) {
+
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Code  Description                      Reference\n{0}", _Indent);
 				_Output.Write ("---  -------------------               ---------\n{0}", _Indent);
@@ -730,16 +794,19 @@ namespace ExampleGenerator {
 				_Output.Write ("104  Random nonce                      [This document]\n{0}", _Indent);
 				_Output.Write ("144  Shamir Secret Share               [This document]\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFURIEBNF
 		//
-		public static void UDFURIEBNF (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFURIEBNF.md");
-				var _Indent = ""; 
+		public static void UDFURIEBNF(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFURIEBNF.md");
+			Example._Output = _Output;
+			Example._UDFURIEBNF(Example);
+			}
+		public void _UDFURIEBNF(CreateExamples Example) {
+
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("URI           = \"UDF:\" udf [ \"?\" query ] [ \"\" fragment ]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -751,16 +818,19 @@ namespace ExampleGenerator {
 				_Output.Write ("authority     = host \n{0}", _Indent);
 				_Output.Write ("host          = reg-name\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFShamirRecovery
 		//
-		public static void UDFShamirRecovery (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFShamirRecovery.md");
-				var _Indent = ""; 
+		public static void UDFShamirRecovery(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFShamirRecovery.md");
+			Example._Output = _Output;
+			Example._UDFShamirRecovery(Example);
+			}
+		public void _UDFShamirRecovery(CreateExamples Example) {
+
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("using System;\n{0}", _Indent);
 				_Output.Write ("using System.Collections.Generic;\n{0}", _Indent);
@@ -850,28 +920,31 @@ namespace ExampleGenerator {
 				_Output.Write ("        }}\n{0}", _Indent);
 				_Output.Write ("    }}\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// UDFEncryptedResolution
 		//
-		public static void UDFEncryptedResolution (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\UDFEncryptedResolution.md");
-				var _Indent = ""; 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-		
+		public static void UDFEncryptedResolution(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\UDFEncryptedResolution.md");
+			Example._Output = _Output;
+			Example._UDFEncryptedResolution(Example);
 			}
+		public void _UDFEncryptedResolution(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
 		
 
 		//
 		// UDFDigestResolution
 		//
 		public static void UDFDigestResolution(CreateExamples Example) { /* XFile  */
-			using var _Output = new StreamWriter("Examples\\UDFDigestResolution.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\UDFDigestResolution.md" };
-			obj._UDFDigestResolution(Example);
+				using var _Output = new StreamWriter("Examples\\UDFDigestResolution.md");
+			Example._Output = _Output;
+			Example._UDFDigestResolution(Example);
 			}
 		public void _UDFDigestResolution(CreateExamples Example) {
 
@@ -881,9 +954,13 @@ namespace ExampleGenerator {
 		//
 		// MeshExamplesSIN
 		//
-		public static void MeshExamplesSIN (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\ExamplesSIN.md");
-				var _Indent = ""; 
+		public static void MeshExamplesSIN(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ExamplesSIN.md");
+			Example._Output = _Output;
+			Example._MeshExamplesSIN(Example);
+			}
+		public void _MeshExamplesSIN(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("A SIN is an Internet Identifier that contains a fingerprint of a root of \n{0}", _Indent);
 				_Output.Write ("trust that may be used to verify the interpretation of the identifier. This \n{0}", _Indent);
@@ -930,16 +1007,19 @@ namespace ExampleGenerator {
 				_Output.Write ("These rules allow Bob to send email to Alice with either ‘best effort’ security or \n{0}", _Indent);
 				_Output.Write ("mandatory security as the circumstances demand\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// MeshExamplesSIN2
 		//
-		public static void MeshExamplesSIN2 (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\ExamplesSIN2.md");
-				var _Indent = ""; 
+		public static void MeshExamplesSIN2(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ExamplesSIN2.md");
+			Example._Output = _Output;
+			Example._MeshExamplesSIN2(Example);
+			}
+		public void _MeshExamplesSIN2(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("A security policy may be implicit or explicit depending on the root of trust referenced and the context in which it is used.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -952,16 +1032,19 @@ namespace ExampleGenerator {
 				_Output.Write ("mailto:alice@example.com.mm--mb2gk-6duf5-ygyyl-jny5e-rwshz\n{0}", _Indent);
 				_Output.Write ("Encrypt mail messages using S/MIME using an S/MIME certificate that is valid in a chain of trust that contains a certificate with the fingerprint mb2gk.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		
 
 		//
 		// MeshManToolFile
 		//
-		public static void MeshManToolFile (CreateExamples Example) { /* File  */
-			using var _Output = new StreamWriter ("Examples\\MeshManToolFile.md");
-				var _Indent = ""; 
+		public static void MeshManToolFile(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\MeshManToolFile.md");
+			Example._Output = _Output;
+			Example._MeshManToolFile(Example);
+			}
+		public void _MeshManToolFile(CreateExamples Example) {
+
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The file command set supports the following operations on files:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -1017,7 +1100,6 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Command commit\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-		
-			}
+					}
 		}
 	}

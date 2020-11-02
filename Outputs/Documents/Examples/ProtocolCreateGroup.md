@@ -4,52 +4,55 @@ The request payload:
 
 ~~~~
 {
-  "BindAccount": {
-    "AccountAddress": "groupw@example.com",
-    "EnvelopedProfileAccount": [{
-        "EnvelopeID": "MA2L-3RJT-HGWJ-KIAD-MX7G-2EUI-PX4R",
-        "dig": "S512",
-        "ContentMetaData": "ewogICJVbmlxdWVJRCI6ICJNQTJMLTNSSlQtSEdXSi1
-  LSUFELU1YN0ctMkVVSS1QWDRSIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZmlsZ
-  Udyb3VwIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJ
-  DcmVhdGVkIjogIjIwMjAtMTEtMDJUMTQ6Mjc6MTJaIn0"},
-      "ewogICJQcm9maWxlR3JvdXAiOiB7CiAgICAiUHJvZml
-  sZVNpZ25hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNQTJMLTNSSlQtSEdXSi1LS
-  UFELU1YN0ctMkVVSS1QWDRSIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB
-  7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogI
-  kVkNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAiNHBmNWRvQms4REZ5b24yX29
-  lQ3hzSVVVSm9fbThiQXhiTXJELTk1S09YWTVDeGxlbjQ5cwogIExLczMtZTNBN
-  EZiQS10OFl5NTdLX1prQSJ9fX0sCiAgICAiQWNjb3VudEFkZHJlc3MiOiAiZ3J
-  vdXB3QGV4YW1wbGUuY29tIiwKICAgICJBY2NvdW50RW5jcnlwdGlvbiI6IHsKI
-  CAgICAgIlVkZiI6ICJNQ05YLVNaVEctN0pMNy1EV1NNLUhNVVEtN1JZUy1MVzZ
-  ZIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY
-  0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgICA
-  gIlB1YmxpYyI6ICJ3ZnZBdGdoYVp3MndzaWhGLUQySlF1dzMtWnZKRm40bzFsc
-  0RTNVFCd2hNQ0ZKeFItTTFSCiAgMFRmWmtTdzJYalpXWndzdFoxaTBmaXdBIn1
-  9fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIjogewogICAgICAiVWRmI
-  jogIk1BMkwtM1JKVC1IR1dKLUtJQUQtTVg3Ry0yRVVJLVBYNFIiLAogICAgICA
-  iUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUNESCI6I
-  HsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpYyI
-  6ICI0cGY1ZG9CazhERnlvbjJfb2VDeHNJVVVKb19tOGJBeGJNckQtOTVLT1hZN
-  UN4bGVuNDlzCiAgTEtzMy1lM0E0RmJBLXQ4WXk1N0tfWmtBIn19fX19",
+  "BindRequest":{
+    "AccountAddress":"groupw@example.com",
+    "EnvelopedProfileAccount":[{
+        "EnvelopeID":"MDHE-QK2C-RQXN-5CJQ-QROJ-SDQA-XW26",
+        "dig":"S512",
+        "ContentMetaData":"ewogICJVbmlxdWVJRCI6ICJNREhFLVFLMkMtUlFY
+  Ti01Q0pRLVFST0otU0RRQS1YVzI2IiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZmlsZ
+  Udyb3VwIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJDcm
+  VhdGVkIjogIjIwMjAtMTEtMDJUMTc6NDE6MzdaIn0"},
+      "ewogICJQcm9maWxlR3JvdXAiOiB7CiAgICAiUHJvZmlsZVNpZ25hdHVyZSI6
+  IHsKICAgICAgIlVkZiI6ICJNREhFLVFLMkMtUlFYTi01Q0pRLVFST0otU0RRQS1YV
+  zI2IiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0
+  tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJ
+  QdWJsaWMiOiAiVVpXTDhDb1N3OHZoeW11QWtyNUNlWXBPTFpyNkJSVHpPSUg1dWZN
+  cjBnb3h6UEFwcW9PagogIEFhejBrSWx4SjRfdUtQNWJCeElwejlLQSJ9fX0sCiAgI
+  CAiQWNjb3VudEFkZHJlc3MiOiAiZ3JvdXB3QGV4YW1wbGUuY29tIiwKICAgICJBY2
+  NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQ01DLTZHNU8tNklITi1
+  IR05GLVdLR0MtRlJGTi1RQlEzIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7
+  CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0N
+  DgiLAogICAgICAgICAgIlB1YmxpYyI6ICJwYklwVVNVaGlTTlFzSkVhenZiWlVpWX
+  lPRnl5eHUxb1l2cVE3MEZJcm1fRy1SOW5uSUc0CiAgd0NlVjRVTThsaHpRbnVrUVh
+  ya2h2R2NBIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIjogewogICAg
+  ICAiVWRmIjogIk1ESEUtUUsyQy1SUVhOLTVDSlEtUVJPSi1TRFFBLVhXMjYiLAogI
+  CAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUNESC
+  I6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpYyI
+  6ICJVWldMOENvU3c4dmh5bXVBa3I1Q2VZcE9MWnI2QlJUek9JSDV1Zk1yMGdveHpQ
+  QXBxb09qCiAgQWF6MGtJbHhKNF91S1A1YkJ4SXB6OUtBIn19fX19",
       {
-        "signatures": [{
-            "alg": "S512",
-            "kid": "MA2L-3RJT-HGWJ-KIAD-MX7G-2EUI-PX4R",
-            "signature": "c_3schtbmvjll2ZEQkk_Clr-4YiDESMPUnJgSg1H5nBr587_e
-  ErbiKr7x1SyPg5E6nEWrMUuJVuA9XsIffRqube5-J9DPI8wy4MNE84wvR41irt
-  wX2CoY-iKfaDJ2A0ytCc7CEfheSbS5lYRwIkO3T0A"}],
-        "PayloadDigest": "cHS0ON5VpM0vCe0AsI_wWx4w1QIWoqkrTCZABRys1q7po
-  1fAEk3TMwt3Y9ZUjo_Ga4YZ4m19w0F7wgy4VL2eYw"}]}}
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MDHE-QK2C-RQXN-5CJQ-QROJ-SDQA-XW26",
+            "signature":"qp6CXsgAnElmlT1Gqmaqkij1t3VVjWBt034LtAaCcY
+  GWc4xqxBOvSn2mrsXWRLH7ZkvzlOwKZc0A7KAORyZ3tFJc0KA6KqkqVTdr2R5VZ9x
+  DKVgnu_bQbfzO6Vk0jrCkBetV7rXTFnvAVfcgXc7G4BMA"}
+          ],
+        "PayloadDigest":"plq9bhHRRSJDjoBM-A0stSibGswCs_oD3LV1uOYn3l
+  pEm2Qa8Ehhrlji-382fepcXWkaTLvWFJg700espozplg"}
+      ]}}
 ~~~~
+
 
 The response payload:
 
 
 ~~~~
 {
-  "BindResponse": {
-    "Status": 201,
-    "StatusDescription": "Operation completed successfully"}}
+  "BindResponse":{
+    "Status":201,
+    "StatusDescription":"Operation completed successfully"}}
 ~~~~
+
 

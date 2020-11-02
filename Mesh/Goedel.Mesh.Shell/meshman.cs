@@ -6459,6 +6459,9 @@ namespace Goedel.Mesh.Shell {
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
 			new Flag ()			} ;
 
 
@@ -6519,6 +6522,33 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
+		/// <summary>Field accessor for option [unread]</summary>
+		public virtual Flag Unread {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Unread {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [read]</summary>
+		public virtual Flag Read {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Read {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [raw]</summary>
+		public virtual Flag Raw {
+			get => _Data[8] as Flag;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Raw {
+			set => _Data[8].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -6568,6 +6598,27 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Report output in JSON format",
 					Index = 5,
 					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Unread", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 6,
+					Key = "unread"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Read", 
+					Default = "true", // null if null
+					Brief = "<Unspecified>",
+					Index = 7,
+					Key = "read"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Raw", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 8,
+					Key = "raw"
 					}
 				}
 			};

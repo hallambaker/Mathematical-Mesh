@@ -54,7 +54,7 @@
 <cmd>#{exampleResult.MachineName}> #!
 #{WrapConsole(exampleResult.Command, exampleResult.MachineName.Length)}
 #if (exampleResult.ResultText != "")
-<rsp>#{exampleResult.ResultText}#!
+<rsp>#{WrapResult(exampleResult.ResultText)}#!
 #end if
 #end foreach
 </div>
@@ -64,18 +64,16 @@
 #method DescribeRequest Trace trace
 #% if (trace == null) {ReportMissing(); return;}
 
-~~~~
-#{trace.GetRequest()}
-~~~~
+#% Format(trace.RequestObject);
+
 #end method
 
 
 #method DescribeResponse Trace trace
 #% if (trace == null) {ReportMissing(); return;}
 
-~~~~
-#{trace.GetResponse()}
-~~~~
+#% Format(trace.ResponseObject);
+
 #end method
 
 #method DescribeRequestBinding Trace trace

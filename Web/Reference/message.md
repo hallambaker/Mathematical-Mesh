@@ -63,6 +63,9 @@ pending   List pending requests
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
+    /unread   <Unspecified>
+    /read   <Unspecified>
+    /raw   <Unspecified>
 <over>
 </div>
 ~~~~
