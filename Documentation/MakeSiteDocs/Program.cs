@@ -184,7 +184,7 @@ namespace ExampleGenerator {
             MakeDocs();
             }
 
-        public bool All = true;
+        public bool All = false;
 
 
         public void MakeClean() {

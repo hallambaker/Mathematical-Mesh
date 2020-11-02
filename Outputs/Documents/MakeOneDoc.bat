@@ -18,6 +18,6 @@ copy ..\xml2rfc.css .
 copy ..\xml2rfc.js .
 copy ..\bib.xml .
 copy ..\favicon.png .
-rfctool %DocSource%\hallambaker-mesh-4-schema.docx  /auto /cache=bib.xml
+rfctool %DocSource%\hallambaker-threshold-signature.docx  /auto /cache=bib.xml
 exit /b 0
 

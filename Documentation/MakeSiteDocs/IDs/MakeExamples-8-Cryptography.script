@@ -1,4 +1,5 @@
 ﻿#using System.Text
+#using System.Numerics
 #using Goedel.Mesh
 #using Goedel.Protocol
 #using Goedel.Utilities
@@ -84,7 +85,7 @@ The key agreement result is given by multiplying the public key of the encryptio
 pair by the secret scalar of the ephemeral key to obtain the u-coordinate of the result.
 
 ~~~~
-#{Decrypt.KeyEA.XTag}: #{Decrypt.KeyEA.X}
+#% DescribeValue (Decrypt.KeyEA.XTag, Decrypt.KeyEA.X) ;
 ~~~~
 
 The u-coordinate is encoded in the usual fashion (i.e. without specifying the sign of v).
@@ -99,17 +100,17 @@ share and the public key of the ephemeral.
 The outputs from the Montgomery Ladder are:
 
 ~~~~
-x_2 #{Decrypt.KeyE1.X2}
-z_2 #{Decrypt.KeyE1.Z2}
-x_3 #{Decrypt.KeyE1.X3}
-z_3 #{Decrypt.KeyE1.Z3}
+#% DescribeValue ("x_2", Decrypt.KeyE1.X2);
+#% DescribeValue ("z_2", Decrypt.KeyE1.Z2);
+#% DescribeValue ("x_3", Decrypt.KeyE1.X3);
+#% DescribeValue ("z_3", Decrypt.KeyE1.Z3);
 ~~~~
 
 The coordinates of the corresponding point are:
 
 ~~~~
-u #{Decrypt.KeyE1.X}
-v #{Decrypt.KeyE1.Y}
+#% DescribeValue ("u", Decrypt.KeyE1.X);
+#% DescribeValue ("v", Decrypt.KeyE1.Y);
 ~~~~
 
 The encoding of this point specifies the u coordinate and the sign (oddness) of the 
@@ -123,8 +124,8 @@ The second decryption contribution is generated from the secret scalar of the se
 share and the public key of the ephemeral in the same way:
 
 ~~~~
-u #{Decrypt.KeyE2.X}
-v #{Decrypt.KeyE2.Y}
+#% DescribeValue ("u", Decrypt.KeyE2.X);
+#% DescribeValue ("v", Decrypt.KeyE2.Y);
 ~~~~
 
 ~~~~
@@ -134,8 +135,8 @@ v #{Decrypt.KeyE2.Y}
 To obtain the key agreement value, we add the two decryption contributions:
 
 ~~~~
-u #{Decrypt.KeyE12.X}
-v #{Decrypt.KeyE12.Y}
+#% DescribeValue ("u", Decrypt.KeyE12.X);
+#% DescribeValue ("v", Decrypt.KeyE12.Y);
 ~~~~
 
 This returns the same u coordinate value as before, allowing us to obtain the encoding 
@@ -165,7 +166,8 @@ the sum of the secret scalars of the other shares modulo the group order:
 
 ~~~~
 Scalar_2 = (Scalar_A - Scalar_1) mod L
-    = #{Decrypt.Key2.Scalar}
+#% DescribeResult (Decrypt.Key2.Scalar) ;
+
 This is encoded as a binary integer in little endian format:
 #{Decrypt.Key2.Private.ToStringBase16FormatHex()}
 ~~~~
@@ -190,7 +192,7 @@ The composite private key is:
 
 ~~~~
 Scalar_A = (Scalar_1 + Scalar_2) mod L
-  = #{KeyGen.KeyA.Scalar}
+#% DescribeResult (KeyGen.KeyA.Scalar) ;
 
 Encoded Composite Private Key:
 #{KeyGen.KeyA.Private.ToStringBase16FormatHex()}
@@ -201,8 +203,10 @@ The composite public key is:
 ~~~~
 Point_A = Point_1 + Point_2
 
-#{KeyGen.KeyA.XTag}: #{KeyGen.KeyA.X}
-#{KeyGen.KeyA.YTag}: #{KeyGen.KeyA.Y}
+#% DescribeValue (KeyGen.KeyA.XTag, KeyGen.KeyA.X) ;
+#% DescribeValue (KeyGen.KeyA.YTag, KeyGen.KeyA.Y) ;
+#! {KeyGen.KeyA.XTag}: #{}
+#! {KeyGen.KeyA.YTag}: #{KeyGen.KeyA.Y}
 
 Encoded Public#{KeyGen.KeyA.Public.ToStringBase16FormatHex()}
 ~~~~
@@ -216,19 +220,52 @@ is required.
 #end if
 #end method
 
+#method2 DescribeResult string tag string text
+#% var ptag = (tag + " = ").PadRight (8);
+#% var wrapped = text.Wrap(ptag, indent:12);
+#{wrapped}#!
+#end method2
 
+#method2 DescribeResult string tag BigInteger number
+#% DescribeResult (tag, number.ToString());
+#end method2
+
+
+#method DescribeResult string text
+#% var wrapped = text.Wrap("    =", indent:8);
+#{wrapped}#!
+#end method
+
+#method DescribeResult BigInteger number
+#% DescribeResult (number.ToString());
+#end method
+
+
+#method2 DescribeValue string tag string text
+#% var ptag = ("    " + tag + ":").PadRight (20);
+#% var wrapped = text.Wrap(ptag, indent:8);
+#{wrapped}#!
+#end method2
+
+#method2 DescribeValue string tag BigInteger number
+#% DescribeValue (tag, number.ToString());
+#end method2
 
 #method DescribeKeyPrivate CurveKey Key
 #{Key.Name} (#{Key.Curve})
-    UDF:        #{Key.UDF}
-    Scalar:     #{Key.Scalar}
+#% DescribeValue ("UDF", Key.UDF);
+#% DescribeValue ("Scalar", Key.Scalar);
+#!    UDF:        #{Key.UDF}
+#!    Scalar:     #{Key.Scalar}
     Encoded Private#{Key.Private.ToStringBase16FormatHex()}
 #end method
 
 #method DescribeKey CurveKey Key
 #call DescribeKeyPrivate Key
-    #{Key.XTag}: #{Key.X}
-    #{Key.YTag}: #{Key.Y}
+#% DescribeValue (Key.XTag, Key.X);
+#% DescribeValue (Key.YTag, Key.Y);
+#!    #{Key.XTag}: #{Key.X}
+#!    #{Key.YTag}: #{Key.Y}
     Encoded Public#{Key.Public.ToStringBase16FormatHex()}
 #end method
 
@@ -263,21 +300,21 @@ Three key shares are required for Alice, Bob and Carol with a threshold of two.
 The parameters of the Shamir Secret Sharing polynomial are:
 
 ~~~~
-a0 = #{sig.A0}
-a1 = #{sig.A1}
+#% DescribeResult ("a0", sig.A0);
+#% DescribeResult ("a1", sig.A1);
 ~~~~
 
 The key share values for the participants are
 
 ~~~~
-xa = #{sig.Xa}
-ya = #{sig.Ya}
+#% DescribeResult ("xa", sig.Xa);
+#% DescribeResult ("ya", sig.Ya);
 
-xb = #{sig.Xb}
-yb = #{sig.Yb}
+#% DescribeResult ("xb", sig.Xb);
+#% DescribeResult ("yb", sig.Yb);
 
-xc = #{sig.Xc}
-yc = #{sig.Yc}
+#% DescribeResult ("xc", sig.Xc);
+#% DescribeResult ("yc", sig.Yc);
 ~~~~
 
 Alice and Carol are selected to sign the message "#{sig.TestData}"
@@ -285,18 +322,18 @@ Alice and Carol are selected to sign the message "#{sig.TestData}"
 The Lagrange coefficients are:
 
 ~~~~
-la = #{sig.La}
-lc = #{sig.Lc}
+#% DescribeResult ("la", sig.La);
+#% DescribeResult ("lc", sig.Lc);
 ~~~~
 
 
 Alice and Carol select their values ra, rc
 
 ~~~~
-ra = #{sig.Ra}
+#% DescribeResult ("ra", sig.Ra);
 Ra = #{sig.RRa.ToStringBase16FormatHex()}
 
-rc = #{sig.Rc}
+#% DescribeResult ("rc", sig.Rc);
 Rc = #{sig.RRc.ToStringBase16FormatHex()}
 ~~~~
 
@@ -309,7 +346,7 @@ R =  #{sig.R.ToStringBase16FormatHex()}
 The value k is 
 
 ~~~~
-k = #{sig.K}
+#% DescribeResult ("k", sig.K);
 ~~~~
 
 The values R and k (or the document to be signed) and the 
@@ -317,29 +354,29 @@ Lagrange coefficients are passed to Alice and Carol who use them to
 calculate their secret scalar values:
 
 ~~~~
-sa = #{sig.Sa};
-sc = #{sig.Sc}
+#% DescribeResult ("sa", sig.Sa);
+#% DescribeResult ("sc", sig.Sc);
 ~~~~
 
 The signature contributions can now be calulated:
 
 ~~~~
-Sa = #{sig.SSa}
-Sc = #{sig.SSc}
+#% DescribeResult ("Sa", sig.SSa);
+#% DescribeResult ("Sc", sig.SSc);
 ~~~~
 
 The dealer calculates the composite value S = S<sub>a</sub> + S<sub>b</sub>
 
 ~~~~
-S =  #{sig.S}
+#% DescribeResult ("S", sig.S);
 ~~~~
 
 The dealer checks to see that the signature verifies:
 
 ~~~~
 S.B = R + kA = 
-    X: #{sig.SBX}
-    Y: #{sig.SBY}
+#% DescribeValue ("X", sig.SBX);
+#% DescribeValue ("X", sig.SBY);
 ~~~~
 
 #end method
@@ -364,7 +401,7 @@ and multiplies it by the base point to obtain the value R<sub>a</sub>:
 
 ~~~~
 Alice:
-r_a =  #{sig.Ra}
+#% DescribeValue ("r_a", sig.Ra);
 R_a =  #{sig.RRa.ToStringBase16FormatHex()}
 ~~~~
 
@@ -375,7 +412,7 @@ the value R<sub>b</sub>:
 
 ~~~~
 Bob:
-r_b =  #{sig.Rb}
+#% DescribeValue ("r_b", sig.Rb);
 R_b =  #{sig.RRb.ToStringBase16FormatHex()}
 ~~~~
 
@@ -384,14 +421,14 @@ and thus the value k.
 
 ~~~~
 R =  #{sig.R.ToStringBase16FormatHex()}
-k =  #{sig.K}
+#% DescribeValue ("k", sig.K);
 ~~~~
 
 Bob calculates his signature scalar contribution and returns the value to Alice:
 
 ~~~~
 Bob:
-S_b =  #{sig.SSb}
+#% DescribeValue ("S_b", sig.SSb);
 ~~~~
 
 Alice can now calculate her signature scalar contribution and thus the signature 
@@ -399,16 +436,16 @@ scalar S.
 
 ~~~~
 Alice:
-S_a =  #{sig.SSa}
-S =  #{sig.S}
+#% DescribeValue ("S_a", sig.SSa);
+#% DescribeValue ("S", sig.S);
 ~~~~
 
 Alice checks to see that the signature verifies:
 
 ~~~~
 S.B = R + kA = 
-    X: #{sig.SBX}
-    Y: #{sig.SBY}
+#% DescribeValue ("X", sig.SBX);
+#% DescribeValue ("Y", sig.SBY);
 ~~~~
 #end method
 

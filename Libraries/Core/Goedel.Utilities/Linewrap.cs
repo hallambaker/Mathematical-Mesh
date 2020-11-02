@@ -31,53 +31,105 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Wrap text to fit a line without breaking words.
         /// </summary>
-        /// <param name="Input">The input string.</param>
-        /// <param name="Length">Maximum line length</param>
+        /// <param name="input">The input string.</param>
+        /// <param name="input2">Additional input</param>
+        /// <param name="length">Maximum line length</param>
         /// <returns>The wrapped string.</returns>
-        public static string Wrap(this string Input, int Length = 68) {
-            var Buffer = new StringBuilder();
-            var Line = new StringBuilder();
-            var Space = new StringBuilder();
-            var Current = new StringBuilder();
+        public static string Wrap(this string input, string input2 =null, 
+                int length = 68, int indent =0) {
+            var buffer = new StringBuilder();
+            var line = new StringBuilder();
+            var space = new StringBuilder();
+            var current = new StringBuilder();
+            var first = true;
+            int col() => line.Length + space.Length;
+            var max = length - indent;
 
-            foreach (char c in Input) {
+            if (input2 != null) {
+                line.Append(input2);
+                }
+
+            foreach (char c in input) {
+                // space - just keep it in case needed
                 if (c == ' ') {
-                    if (Line.Length + Current.Length < Length) {
-                        Line.Append(Current);
-                        Current.Clear();
-                        Space.Append(c);
+                    if (current.Length > 0) {
+                        addCurrent();
                         }
-                    else {
-                        Line.Append("\n");
-                        Buffer.Append(Line);
-                        Line.Clear();
 
-                        Line.Append(Current);
-                        Current.Clear();
-                        Space.Append(c);
+                    // Check to see if we need to line wrap
+                    if (col() >= length) {
+                        newline();
                         }
-                    }
-                else if (Current.Length > Length) {
-                    Buffer.Append(Current);
-                    Buffer.Append("\n");
-                    Current.Clear();
+
+                    // Suppress leading spaces at col 0
+                    if (!first) {
+                        space.Append(c);
+                        }
+
                     }
                 else {
-                    Line.Append(Space);
-                    Space.Clear();
-                    Current.Append(c);
+                    first = false;
+                    current.Append(c);
+                    }
+                }
+
+            addCurrent();
+
+            line.Append(current);
+            buffer.Append(line);
+            line.Clear();
+            buffer.Append("\n");
+
+
+
+            return buffer.ToString();
+
+            void addSpace() {
+                line.Append(space);
+                space.Clear();
+                }
+
+            void addCurrent () {
+                if (current.Length > max) {
+                    var chunk = length - col();
+                    var left = current.ToString().Substring(0, chunk);
+                    var right = current.ToString().Substring(chunk);
+
+                    line.Append(left);
+                    newline();
+                    while (right.Length > max) {
+                        left = right.Substring(0, max);
+                        line.Append(left);
+                        newline();
+                        right = right.Substring(max);
+                        }
+                    line.Append(right); // the remainder
+                    current.Clear();
+                    }
+                if (col()+current.Length > length) {
+                    space.Clear();
+                    newline();
                     }
 
+                else {
+                    addSpace();
+                    line.Append(current);
+                    current.Clear();
+                    }
                 }
 
-            if (Line.Length + Current.Length >= Length) {
-                Line.Append("\n");
+            void newline() {
+                buffer.Append(line);
+                line.Clear();
+                buffer.Append("\n");
+                line.Append("".PadRight(indent));
                 }
-
-            Line.Append(Current);
-            Buffer.Append(Line);
-            return Buffer.ToString();
             }
+
+
+
+
+
 
         }
     }

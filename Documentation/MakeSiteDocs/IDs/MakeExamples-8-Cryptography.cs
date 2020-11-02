@@ -1,4 +1,5 @@
 using  System.Text;
+using  System.Numerics;
 using  Goedel.Mesh;
 using  Goedel.Protocol;
 using  Goedel.Utilities;
@@ -125,7 +126,7 @@ namespace ExampleGenerator {
 			_Output.Write ("pair by the secret scalar of the ephemeral key to obtain the u-coordinate of the result.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}: {2}\n{0}", _Indent, Decrypt.KeyEA.XTag, Decrypt.KeyEA.X);
+			 DescribeValue (Decrypt.KeyEA.XTag, Decrypt.KeyEA.X) ;
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The u-coordinate is encoded in the usual fashion (i.e. without specifying the sign of v).\n{0}", _Indent);
@@ -140,17 +141,17 @@ namespace ExampleGenerator {
 			_Output.Write ("The outputs from the Montgomery Ladder are:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("x_2 {1}\n{0}", _Indent, Decrypt.KeyE1.X2);
-			_Output.Write ("z_2 {1}\n{0}", _Indent, Decrypt.KeyE1.Z2);
-			_Output.Write ("x_3 {1}\n{0}", _Indent, Decrypt.KeyE1.X3);
-			_Output.Write ("z_3 {1}\n{0}", _Indent, Decrypt.KeyE1.Z3);
+			 DescribeValue ("x_2", Decrypt.KeyE1.X2);
+			 DescribeValue ("z_2", Decrypt.KeyE1.Z2);
+			 DescribeValue ("x_3", Decrypt.KeyE1.X3);
+			 DescribeValue ("z_3", Decrypt.KeyE1.Z3);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The coordinates of the corresponding point are:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("u {1}\n{0}", _Indent, Decrypt.KeyE1.X);
-			_Output.Write ("v {1}\n{0}", _Indent, Decrypt.KeyE1.Y);
+			 DescribeValue ("u", Decrypt.KeyE1.X);
+			 DescribeValue ("v", Decrypt.KeyE1.Y);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The encoding of this point specifies the u coordinate and the sign (oddness) of the \n{0}", _Indent);
@@ -164,8 +165,8 @@ namespace ExampleGenerator {
 			_Output.Write ("share and the public key of the ephemeral in the same way:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("u {1}\n{0}", _Indent, Decrypt.KeyE2.X);
-			_Output.Write ("v {1}\n{0}", _Indent, Decrypt.KeyE2.Y);
+			 DescribeValue ("u", Decrypt.KeyE2.X);
+			 DescribeValue ("v", Decrypt.KeyE2.Y);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
@@ -175,8 +176,8 @@ namespace ExampleGenerator {
 			_Output.Write ("To obtain the key agreement value, we add the two decryption contributions:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("u {1}\n{0}", _Indent, Decrypt.KeyE12.X);
-			_Output.Write ("v {1}\n{0}", _Indent, Decrypt.KeyE12.Y);
+			 DescribeValue ("u", Decrypt.KeyE12.X);
+			 DescribeValue ("v", Decrypt.KeyE12.Y);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("This returns the same u coordinate value as before, allowing us to obtain the encoding \n{0}", _Indent);
@@ -210,7 +211,8 @@ namespace ExampleGenerator {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Scalar_2 = (Scalar_A - Scalar_1) mod L\n{0}", _Indent);
-			_Output.Write ("    = {1}\n{0}", _Indent, Decrypt.Key2.Scalar);
+			 DescribeResult (Decrypt.Key2.Scalar) ;
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("This is encoded as a binary integer in little endian format:\n{0}", _Indent);
 			_Output.Write ("{1}\n{0}", _Indent, Decrypt.Key2.Private.ToStringBase16FormatHex());
 			_Output.Write ("~~~~\n{0}", _Indent);
@@ -239,7 +241,7 @@ namespace ExampleGenerator {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Scalar_A = (Scalar_1 + Scalar_2) mod L\n{0}", _Indent);
-			_Output.Write ("  = {1}\n{0}", _Indent, KeyGen.KeyA.Scalar);
+			 DescribeResult (KeyGen.KeyA.Scalar) ;
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Encoded Composite Private Key:\n{0}", _Indent);
 			_Output.Write ("{1}\n{0}", _Indent, KeyGen.KeyA.Private.ToStringBase16FormatHex());
@@ -250,8 +252,10 @@ namespace ExampleGenerator {
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Point_A = Point_1 + Point_2\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("{1}: {2}\n{0}", _Indent, KeyGen.KeyA.XTag, KeyGen.KeyA.X);
-			_Output.Write ("{1}: {2}\n{0}", _Indent, KeyGen.KeyA.YTag, KeyGen.KeyA.Y);
+			 DescribeValue (KeyGen.KeyA.XTag, KeyGen.KeyA.X) ;
+			 DescribeValue (KeyGen.KeyA.YTag, KeyGen.KeyA.Y) ;
+			// {KeyGen.KeyA.XTag}: #{}
+			// {KeyGen.KeyA.YTag}: #{KeyGen.KeyA.Y}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Encoded Public{1}\n{0}", _Indent, KeyGen.KeyA.Public.ToStringBase16FormatHex());
 			_Output.Write ("~~~~\n{0}", _Indent);
@@ -267,12 +271,67 @@ namespace ExampleGenerator {
 		
 
 		//
+		// DescribeResult
+		//
+		public void DescribeResult (string tag, string text) {
+			 var ptag = (tag + " = ").PadRight (8);
+			 var wrapped = text.Wrap(ptag, indent:12);
+			_Output.Write ("{1}", _Indent, wrapped);
+			}
+		
+
+		//
+		// DescribeResult
+		//
+		public void DescribeResult (string tag, BigInteger number) {
+			 DescribeResult (tag, number.ToString());
+			}
+		
+
+		//
+		// DescribeResult
+		//
+		public void DescribeResult (string text) {
+			 var wrapped = text.Wrap("    =", indent:8);
+			_Output.Write ("{1}", _Indent, wrapped);
+			}
+		
+
+		//
+		// DescribeResult
+		//
+		public void DescribeResult (BigInteger number) {
+			 DescribeResult (number.ToString());
+			}
+		
+
+		//
+		// DescribeValue
+		//
+		public void DescribeValue (string tag, string text) {
+			 var ptag = ("    " + tag + ":").PadRight (20);
+			 var wrapped = text.Wrap(ptag, indent:8);
+			_Output.Write ("{1}", _Indent, wrapped);
+			}
+		
+
+		//
+		// DescribeValue
+		//
+		public void DescribeValue (string tag, BigInteger number) {
+			 DescribeValue (tag, number.ToString());
+			}
+		
+
+		//
 		// DescribeKeyPrivate
 		//
 		public void DescribeKeyPrivate (CurveKey Key) {
 			_Output.Write ("{1} ({2})\n{0}", _Indent, Key.Name, Key.Curve);
-			_Output.Write ("    UDF:        {1}\n{0}", _Indent, Key.UDF);
-			_Output.Write ("    Scalar:     {1}\n{0}", _Indent, Key.Scalar);
+			 DescribeValue ("UDF", Key.UDF);
+			 DescribeValue ("Scalar", Key.Scalar);
+			//    UDF:        #{Key.UDF}
+			//    Scalar:     #{Key.Scalar}
 			_Output.Write ("    Encoded Private{1}\n{0}", _Indent, Key.Private.ToStringBase16FormatHex());
 			}
 		
@@ -282,8 +341,10 @@ namespace ExampleGenerator {
 		//
 		public void DescribeKey (CurveKey Key) {
 			DescribeKeyPrivate (Key);
-			_Output.Write ("    {1}: {2}\n{0}", _Indent, Key.XTag, Key.X);
-			_Output.Write ("    {1}: {2}\n{0}", _Indent, Key.YTag, Key.Y);
+			 DescribeValue (Key.XTag, Key.X);
+			 DescribeValue (Key.YTag, Key.Y);
+			//    #{Key.XTag}: #{Key.X}
+			//    #{Key.YTag}: #{Key.Y}
 			_Output.Write ("    Encoded Public{1}\n{0}", _Indent, Key.Public.ToStringBase16FormatHex());
 			}
 		
@@ -331,21 +392,21 @@ namespace ExampleGenerator {
 			_Output.Write ("The parameters of the Shamir Secret Sharing polynomial are:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("a0 = {1}\n{0}", _Indent, sig.A0);
-			_Output.Write ("a1 = {1}\n{0}", _Indent, sig.A1);
+			 DescribeResult ("a0", sig.A0);
+			 DescribeResult ("a1", sig.A1);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The key share values for the participants are\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("xa = {1}\n{0}", _Indent, sig.Xa);
-			_Output.Write ("ya = {1}\n{0}", _Indent, sig.Ya);
+			 DescribeResult ("xa", sig.Xa);
+			 DescribeResult ("ya", sig.Ya);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("xb = {1}\n{0}", _Indent, sig.Xb);
-			_Output.Write ("yb = {1}\n{0}", _Indent, sig.Yb);
+			 DescribeResult ("xb", sig.Xb);
+			 DescribeResult ("yb", sig.Yb);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("xc = {1}\n{0}", _Indent, sig.Xc);
-			_Output.Write ("yc = {1}\n{0}", _Indent, sig.Yc);
+			 DescribeResult ("xc", sig.Xc);
+			 DescribeResult ("yc", sig.Yc);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Alice and Carol are selected to sign the message \"{1}\"\n{0}", _Indent, sig.TestData);
@@ -353,18 +414,18 @@ namespace ExampleGenerator {
 			_Output.Write ("The Lagrange coefficients are:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("la = {1}\n{0}", _Indent, sig.La);
-			_Output.Write ("lc = {1}\n{0}", _Indent, sig.Lc);
+			 DescribeResult ("la", sig.La);
+			 DescribeResult ("lc", sig.Lc);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Alice and Carol select their values ra, rc\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("ra = {1}\n{0}", _Indent, sig.Ra);
+			 DescribeResult ("ra", sig.Ra);
 			_Output.Write ("Ra = {1}\n{0}", _Indent, sig.RRa.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("rc = {1}\n{0}", _Indent, sig.Rc);
+			 DescribeResult ("rc", sig.Rc);
 			_Output.Write ("Rc = {1}\n{0}", _Indent, sig.RRc.ToStringBase16FormatHex());
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -377,7 +438,7 @@ namespace ExampleGenerator {
 			_Output.Write ("The value k is \n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("k = {1}\n{0}", _Indent, sig.K);
+			 DescribeResult ("k", sig.K);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The values R and k (or the document to be signed) and the \n{0}", _Indent);
@@ -385,29 +446,29 @@ namespace ExampleGenerator {
 			_Output.Write ("calculate their secret scalar values:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("sa = {1};\n{0}", _Indent, sig.Sa);
-			_Output.Write ("sc = {1}\n{0}", _Indent, sig.Sc);
+			 DescribeResult ("sa", sig.Sa);
+			 DescribeResult ("sc", sig.Sc);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The signature contributions can now be calulated:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("Sa = {1}\n{0}", _Indent, sig.SSa);
-			_Output.Write ("Sc = {1}\n{0}", _Indent, sig.SSc);
+			 DescribeResult ("Sa", sig.SSa);
+			 DescribeResult ("Sc", sig.SSc);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The dealer calculates the composite value S = S<sub>a</sub> + S<sub>b</sub>\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("S =  {1}\n{0}", _Indent, sig.S);
+			 DescribeResult ("S", sig.S);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The dealer checks to see that the signature verifies:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("S.B = R + kA = \n{0}", _Indent);
-			_Output.Write ("    X: {1}\n{0}", _Indent, sig.SBX);
-			_Output.Write ("    Y: {1}\n{0}", _Indent, sig.SBY);
+			 DescribeValue ("X", sig.SBX);
+			 DescribeValue ("X", sig.SBY);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			}
@@ -435,7 +496,7 @@ namespace ExampleGenerator {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Alice:\n{0}", _Indent);
-			_Output.Write ("r_a =  {1}\n{0}", _Indent, sig.Ra);
+			 DescribeValue ("r_a", sig.Ra);
 			_Output.Write ("R_a =  {1}\n{0}", _Indent, sig.RRa.ToStringBase16FormatHex());
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -446,7 +507,7 @@ namespace ExampleGenerator {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Bob:\n{0}", _Indent);
-			_Output.Write ("r_b =  {1}\n{0}", _Indent, sig.Rb);
+			 DescribeValue ("r_b", sig.Rb);
 			_Output.Write ("R_b =  {1}\n{0}", _Indent, sig.RRb.ToStringBase16FormatHex());
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -455,14 +516,14 @@ namespace ExampleGenerator {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("R =  {1}\n{0}", _Indent, sig.R.ToStringBase16FormatHex());
-			_Output.Write ("k =  {1}\n{0}", _Indent, sig.K);
+			 DescribeValue ("k", sig.K);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Bob calculates his signature scalar contribution and returns the value to Alice:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Bob:\n{0}", _Indent);
-			_Output.Write ("S_b =  {1}\n{0}", _Indent, sig.SSb);
+			 DescribeValue ("S_b", sig.SSb);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Alice can now calculate her signature scalar contribution and thus the signature \n{0}", _Indent);
@@ -470,16 +531,16 @@ namespace ExampleGenerator {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Alice:\n{0}", _Indent);
-			_Output.Write ("S_a =  {1}\n{0}", _Indent, sig.SSa);
-			_Output.Write ("S =  {1}\n{0}", _Indent, sig.S);
+			 DescribeValue ("S_a", sig.SSa);
+			 DescribeValue ("S", sig.S);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Alice checks to see that the signature verifies:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("S.B = R + kA = \n{0}", _Indent);
-			_Output.Write ("    X: {1}\n{0}", _Indent, sig.SBX);
-			_Output.Write ("    Y: {1}\n{0}", _Indent, sig.SBY);
+			 DescribeValue ("X", sig.SBX);
+			 DescribeValue ("Y", sig.SBY);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			}
 		
