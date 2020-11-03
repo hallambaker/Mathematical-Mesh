@@ -70,7 +70,7 @@ namespace ExampleGenerator {
         public ExampleDare Dare = new ExampleDare();
 
 
-        StringWriter ConsoleWriter;
+        StringWriter consoleWriter;
 
 
         public void PlatformDare() {
@@ -94,10 +94,10 @@ namespace ExampleGenerator {
                     string FileName,
                     CryptoParameters CryptoParameters,
                     ContainerType ContainerType = ContainerType.Chain) {
-            ConsoleWriter = new StringWriter();
+            consoleWriter = new StringWriter();
 
             //var FileStream = FileName.FileStream(FileStatus.Overwrite);
-            var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output: ConsoleWriter);
+            var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output: consoleWriter);
             return Goedel.Cryptography.Dare.Container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
 
             }
@@ -204,7 +204,7 @@ namespace ExampleGenerator {
             var TContainer = MakeContainer("Test1List", CryptoParametersPlaintext, ContainerType.List);
             TContainer.Append(testData300);
             Dare.ContainerHeadersSimple = ReadContainer(TContainer);
-            Dare.ContainerFramingSimple = ConsoleWriter.ToString();
+            Dare.ContainerFramingSimple = consoleWriter.ToString();
 
 
             // Digest
@@ -333,7 +333,7 @@ namespace ExampleGenerator {
             EncryptingContainer.Append(testData300);
             EncryptingContainer.Append(testData300);
             Dare.ContainerHeadersEncryptSingleSession = ReadContainer(EncryptingContainer);
-            Dare.ContainerFramingEncrypted = ConsoleWriter.ToString();
+            Dare.ContainerFramingEncrypted = consoleWriter.ToString();
 
 
             // Encrypt a sequence of items with a key exchange per item.
@@ -341,7 +341,7 @@ namespace ExampleGenerator {
             EncryptedContainer.Append(testData300, cryptoParameters: Dare.CryptoParametersEncrypt);
             EncryptedContainer.Append(testData300, cryptoParameters: Dare.CryptoParametersEncrypt);
             Dare.ContainerHeadersEncryptIndependentSession = ReadContainer(EncryptedContainer);
-            Dare.ContainerFramingEncryptedIndependent = ConsoleWriter.ToString();
+            Dare.ContainerFramingEncryptedIndependent = consoleWriter.ToString();
             }
 
         #endregion

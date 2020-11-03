@@ -190,7 +190,7 @@ For example, the personal account profile Alice created is:
 #end zfile
 
 #zfile CreateExamples SchemaDevice "Examples\\SchemaDevice.md" Example
-#% Format(AliceProfileDeviceCoffee);
+#% Format(Connect.AliceProfileDeviceCoffee);
 #end zfile
 
 #zfile CreateExamples DevicePreconfiguration "Examples\\DevicePreconfiguration.md" Example

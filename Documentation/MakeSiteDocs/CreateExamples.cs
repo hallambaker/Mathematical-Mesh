@@ -20,7 +20,7 @@ namespace ExampleGenerator {
         public string GroupAccount => Group.GroupAccount;
 
         public ProfileAccount AliceProfileAccount;
-        public ProfileDevice AliceProfileDeviceCoffee;
+
 
         public string TestFile1Text = "This is a test";
 
@@ -89,13 +89,13 @@ namespace ExampleGenerator {
 
         public void PerformAll() {
 
-            Service.Hello = testCLIAlice1.Example(
+            Service.Hello = Alice1.Example(
                 $"account hello {AliceAccount}"
                 );
             var hello = Service.Hello.GetResultHello();
 
             // create the alice account.
-            Account.CreateAlice = testCLIAlice1.Example(
+            Account.CreateAlice = Alice1.Example(
                 $"account create {AliceAccount}"
                 );
             var aliceCreateAccount = Account.CreateAlice.GetResultCreateAccount();
@@ -103,10 +103,10 @@ namespace ExampleGenerator {
 
             // Encrypt the file
             Account.EncryptSourceFile.WriteFileNew(TestFile1Text);
-            var dump = testCLIAlice1.DumpFile(Account.EncryptSourceFile);
-            var encode = testCLIAlice1.Example(
+            var dump = Alice1.DumpFile(Account.EncryptSourceFile);
+            var encode = Alice1.Example(
                 $"dare encode {Account.EncryptSourceFile} {Account.EncryptTargetFile} /encrypt {AliceAccount} ");
-            var verify = testCLIAlice1.Example(
+            var verify = Alice1.Example(
                 $"dare verify {Account.EncryptTargetFile}"
                 );
             Account.ConsoleEncryptFile = new List<ExampleResult>() {
@@ -114,27 +114,27 @@ namespace ExampleGenerator {
                 };
 
             // Decrypt the file
-            var decode = testCLIAlice1.Example(
+            var decode = Alice1.Example(
                 $"dare decode {Account.EncryptTargetFile} {Account.EncryptResultFile}"
                 );
-            var dump2 = testCLIAlice1.DumpFile(Account.EncryptResultFile);
+            var dump2 = Alice1.DumpFile(Account.EncryptResultFile);
             Account.ConsoleDecryptFile = new List<ExampleResult>() {
                 decode[0], dump2
                 };
 
             // Check the passwords work
 
-            Account.PasswordAdd = testCLIAlice1.Example(
+            Account.PasswordAdd = Alice1.Example(
                 $"password add {ShellPassword.PasswordSite} {ShellPassword.PasswordAccount1} {ShellPassword.PasswordValue1}",
                 $"password add {ShellPassword.PasswordSite2} {ShellPassword.PasswordAccount2} {ShellPassword.PasswordValue2}"
                 );
-            Account.PasswordGet = testCLIAlice1.Example(
+            Account.PasswordGet = Alice1.Example(
                 $"password get {ShellPassword.PasswordSite}"
                 );
 
             // Bookmark catalog
             string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
-            var bookmark = testCLIAlice1.Example(
+            var bookmark = Alice1.Example(
                 $"bookmark add {path1} {uri1} {title1}",
                 $"bookmark get {path1}"
                 );
@@ -143,7 +143,7 @@ namespace ExampleGenerator {
 
             // Contact catalog
             //string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
-            var contact = testCLIAlice1.Example(
+            var contact = Alice1.Example(
                 $"contact list "
                 );
             var resultContact = contact.GetResultDump();
@@ -155,7 +155,7 @@ namespace ExampleGenerator {
 
             // Network catalog
             //string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
-            var network = testCLIAlice1.Example(
+            var network = Alice1.Example(
                 $"network add myWiFi securePassword",
                 $"network list"
                 );
@@ -164,7 +164,7 @@ namespace ExampleGenerator {
 
             // Task catalog
             //string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
-            var task = testCLIAlice1.Example(
+            var task = Alice1.Example(
                 $"calendar add SomeItem",
                 $"calendar list"
                 );
@@ -174,42 +174,42 @@ namespace ExampleGenerator {
 
             // Connect the second device
 
-            Connect.ConnectRequest = testCLIAlice2.Example(
+            Connect.ConnectRequest = Alice2.Example(
                 $"device request {AliceAccount}"
                 );
 
 
-            Connect.ConnectPending = testCLIAlice1.Example(
+            Connect.ConnectPending = Alice1.Example(
                 $"device pending"
                 );
 
             var resultPending = Connect.ConnectPending.GetResultPending();
             var id1 = resultPending.Messages[0].MessageId;
 
-            Connect.ConnectAccept = testCLIAlice1.Example(
+            Connect.ConnectAccept = Alice1.Example(
                 $"device accept {id1}"
                 );
             var resultAccept = Connect.ConnectAccept[0].Result;
             var deviceId = "TBS";
 
-            Connect.ConnectComplete = testCLIAlice2.Example(
+            Connect.ConnectComplete = Alice2.Example(
                 $"device complete"
                 );
-            Account.SyncAlice = testCLIAlice2.Example(
+            Account.SyncAlice = Alice2.Example(
                 $"account sync"
                 );
 
             // Password catalog access broken on device 2
             // Don't have the account decryption key either.
-            Connect.PasswordList2 = testCLIAlice2.Example(
+            Connect.PasswordList2 = Alice2.Example(
                 $"password get {ShellPassword.PasswordSite}",
                 $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
                 );
 
-            Connect.Disconnect = testCLIAlice1.Example(
+            Connect.Disconnect = Alice1.Example(
                 $"device delete {deviceId}"
                 );
-            Connect.PasswordList2Disconnect = testCLIAlice2.Example(
+            Connect.PasswordList2Disconnect = Alice2.Example(
                 //$"password get {PasswordSite}",
                 $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
                 );
@@ -224,17 +224,17 @@ namespace ExampleGenerator {
             "Mail App config".TaskFunctionality();
 
             // Interactions with Bob... create an account
-            Account.CreateBob = testCLIBob1.Example(
+            Account.CreateBob = Bob1.Example(
                 $"account create {BobAccount}"
                 );
 
 
             // Contact requests (Remote)
-            Contact.ContactBobRequest = testCLIBob1.Example(
+            Contact.ContactBobRequest = Bob1.Example(
                 $"message contact {AliceAccount}"
                  );
 
-            Contact.ContactAliceResponse = testCLIAlice1.Example(
+            Contact.ContactAliceResponse = Alice1.Example(
                 $"account sync",
                 $"message pending"
                  );
@@ -242,17 +242,17 @@ namespace ExampleGenerator {
             var contactMessage = resultPending.Messages[0] as Goedel.Mesh.MessageContact;
             Contact.BobRequest = contactMessage;
 
-            var contactAccept = testCLIAlice1.Example(
+            var contactAccept = Alice1.Example(
                 $"message accept {contactMessage.MessageId}"
                 );
             Contact.ContactAliceResponse.Add(contactAccept[0]);
 
             // Interactions with Bob... create an account
-            Account.CreateConsole = testCLIConsole1.Example(
+            Account.CreateConsole = Console1.Example(
                 $"account create {ConsoleAccount}"
                 );
             // Confirmation
-            Confirm.ConfirmRequest = testCLIConsole1.Example(
+            Confirm.ConfirmRequest = Console1.Example(
                 $"message confirm {AliceAccount} start"
                 );
             var resultConfirmSent = Confirm.ConfirmRequest.GetResultSent();
@@ -261,11 +261,11 @@ namespace ExampleGenerator {
             var messageId = resultConfirmSent.Message.MessageId;
             var confirmResponseID = resultConfirmSent.Message.GetResponseId();
 
-            Confirm.ConfirmAliceResponse = testCLIAlice1.Example(
+            Confirm.ConfirmAliceResponse = Alice1.Example(
                 $"message accept {messageId}"
                 );
 
-            Confirm.ConfirmVerify = testCLIAlice1.Example(
+            Confirm.ConfirmVerify = Alice1.Example(
                 "$message status {confirmResponseID}"
                  );
             "Verify the confirmation response".TaskFunctionality();
@@ -275,18 +275,18 @@ namespace ExampleGenerator {
             Confirm.ResponseConfirmation = resultConfirmVerify?.Message as ResponseConfirmation;
 
             // Group
-            Group.GroupCreate = testCLIAlice1.Example(
+            Group.GroupCreate = Alice1.Example(
                 $"group create {GroupAccount}"
                  );
 
             Group.EncryptSourceFile.WriteFileNew(Group.TestText);
-            Group.GroupEncrypt = testCLIAlice1.Example(
+            Group.GroupEncrypt = Alice1.Example(
                 $"dare encode {Group.EncryptSourceFile} /encrypt {GroupAccount} /out {Group.EncryptTargetFile}"
                  );
-            Group.GroupDecryptAlice = testCLIAlice1.Example(
+            Group.GroupDecryptAlice = Alice1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
-            Group.GroupDecryptBobFail = testCLIAlice1.Example(
+            Group.GroupDecryptBobFail = Alice1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
             //Group.GroupAddBob = testCLIAlice1.Example(
@@ -306,7 +306,7 @@ namespace ExampleGenerator {
 
 
             // Connect device using a PIN (which can be presented as a QR code)
-            Connect.ConnectPINCreate = testCLIAlice1.Example(
+            Connect.ConnectPINCreate = Alice1.Example(
                     $"account pin"
                     );
             var pinResult = Connect.ConnectPINCreate.GetResultPIN();
@@ -318,7 +318,7 @@ namespace ExampleGenerator {
             
 
 
-            Connect.ConnectPINRequest = testCLIAlice3.Example(
+            Connect.ConnectPINRequest = Alice3.Example(
                 $"device request {AliceAccount} /pin {pin}"
                 );
 
@@ -334,14 +334,14 @@ namespace ExampleGenerator {
             Connect.AcknowledgeConnectionPIN = connectRequest.AcknowledgeConnection;
 
 
-            Connect.ConnectPending = testCLIAlice1.Example(
+            Connect.ConnectPending = Alice1.Example(
                 $"message pending",
                 $"account sync /auto"
                 );
 
             var connectPending = Connect.ConnectPending.GetResultPending();
 
-            Connect.ConnectPINComplete = testCLIAlice3.Example(
+            Connect.ConnectPINComplete = Alice3.Example(
                 $"device complete",
                 $"account sync"
                 );
@@ -356,26 +356,26 @@ namespace ExampleGenerator {
 
             // Connect the coffee pot using a static QR
 
-            Connect.ConnectMakerCreate = testCLIMaker1.Example(
+            Connect.ConnectMakerCreate = Maker1.Example(
                 $"account create {MakerAccount}"
                 );
-            Connect.ConnectStaticPrepare = testCLIMaker1.Example(
+            Connect.ConnectStaticPrepare = Maker1.Example(
                 $"device preconfig"
                 );
             var resultPublishDevice = Connect.ConnectStaticPrepare.GetResultPublishDevice();
 
             Connect.ConnectStaticPreconfig = resultPublishDevice.DevicePreconfiguration;
 
-            Connect.ConnectStaticInstall = testCLIAlice4.Example(
+            Connect.ConnectStaticInstall = Alice4.Example(
                 $"device install {resultPublishDevice.FileName}"
                 );
             //Connect.ConnectStaticPollFail = testCLIAlice4.Example(
             //    $"device complete"
             //    );
-            Connect.ConnectStaticClaim = testCLIMaker1.Example(
+            Connect.ConnectStaticClaim = Maker1.Example(
                 $"account connect {resultPublishDevice.Uri}"
                 );
-            Connect.ConnectStaticPollSuccess = testCLIAlice4.Example(
+            Connect.ConnectStaticPollSuccess = Alice4.Example(
                 $"device complete"
                 );
             var connectStaticPollSuccess = Connect.ConnectStaticPollSuccess.GetResultConnect();
@@ -387,18 +387,18 @@ namespace ExampleGenerator {
             Connect.AliceConnectionDeviceCoffee = coffeePotDevice.ConnectionUser;
 
 
-            Account.ProfileEscrow = testCLIAlice1.Example(
+            Account.ProfileEscrow = Alice1.Example(
                 $"account escrow"
                 );
             var resultEscrow = Account.ProfileEscrow.GetResultEscrow();
             var share1 = resultEscrow.Shares[0];
             var share2 = resultEscrow.Shares[2];
 
-            Account.DeleteAlice = testCLIAlice1.Example(
+            Account.DeleteAlice = Alice1.Example(
                 $"account delete"
                 );
 
-            Account.ProfileRecover = testCLIAlice2.Example(
+            Account.ProfileRecover = Alice2.Example(
                 $"account recover {share1} {share2} /verify"
                 );
 

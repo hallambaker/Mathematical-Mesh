@@ -14,15 +14,17 @@ namespace Goedel.Cryptography {
         /// Attempt to find a private key for the specified recipient entry.
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
+        /// <param name="cryptoKey">The key (if found)</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        bool TryFindKeyDecryption(string keyID, out IKeyDecrypt keyDecrypt);
+        bool TryFindKeyDecryption(string keyID, out IKeyDecrypt cryptoKey);
 
         /// <summary>
         /// Locate a private key
         /// </summary>
         /// <param name="UDF">fingerprint of key to locate.</param>
+        /// <param name="cryptoKey">The key (if found)</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
-        bool LocatePrivateKeyPair(string UDF, out CryptoKey keyDecrypt);
+        bool LocatePrivateKeyPair(string UDF, out CryptoKey cryptoKey);
 
         /// <summary>
         /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
@@ -38,6 +40,7 @@ namespace Goedel.Cryptography {
         /// an account identifier or strong account identifier.
         /// </summary>
         /// <param name="signingKey">The identifier to resolve.</param>
+        /// <param name="cryptoKey">The key (if found)</param>
         /// <returns>The identifier.</returns>
         bool TryFindKeySignature(string signingKey, out CryptoKey cryptoKey);
 
@@ -131,6 +134,7 @@ namespace Goedel.Cryptography {
         /// Attempt to find a private key for the specified recipient entry.
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
+        /// <param name="keyDecrypt">The key, (if found).</param>
         /// <returns>True if a match is found, otherwise false.</returns>
         public virtual bool TryFindKeyDecryption(string keyID, out IKeyDecrypt keyDecrypt) {
             var result = TryMatchRecipientKeyPair(keyID, out var key);
@@ -142,6 +146,7 @@ namespace Goedel.Cryptography {
         /// Attempt to find a private key for the specified recipient entry.
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
+        /// <param name="keyPair">The key, (if found).</param>
         /// <returns>True if a match is found, otherwise false.</returns>
         protected bool TryMatchRecipientKeyPair(string keyID, out KeyPair keyPair) {
             // Search our this.SessionPersonal = SessionPersonal;
@@ -171,6 +176,7 @@ namespace Goedel.Cryptography {
         /// Locate a private key
         /// </summary>
         /// <param name="UDF">fingerprint of key to locate.</param>
+        /// <param name="key">The key, (if found).</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
         public virtual bool LocatePrivateKeyPair(string UDF, out CryptoKey key) {
             if (KeyPairRSA.Locate(UDF, out var keyPair)) {
@@ -236,6 +242,7 @@ namespace Goedel.Cryptography {
         /// an account identifier or strong account identifier.
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
+        ///  <param name="cryptoKey">The key, (if found).</param>
         /// <returns>The identifier.</returns>
         public virtual bool TryFindKeySignature(string keyID, out CryptoKey cryptoKey) {
             

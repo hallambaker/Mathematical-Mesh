@@ -26,13 +26,13 @@ namespace ExampleGenerator {
 
         public ShellPassword(CreateExamples createExamples) :
                     base(createExamples) {
-            PasswordAdd = testCLIAlice1.Example(
+            PasswordAdd = Alice1.Example(
                 $"password add {PasswordSite} {PasswordAccount1} {PasswordValue1}",
                 $"password add {PasswordSite2} {PasswordAccount2} {PasswordValue2}");
-            PasswordList = testCLIAlice1.Example($"password list");
-            PasswordUpdate = testCLIAlice1.Example($"password add {PasswordSite} {PasswordAccount1} {PasswordValue1a}");
-            PasswordGet = testCLIAlice1.Example($"password get {PasswordSite}");
-            PasswordDelete = testCLIAlice1.Example($"password delete {PasswordSite2}");
+            PasswordList = Alice1.Example($"password list");
+            PasswordUpdate = Alice1.Example($"password add {PasswordSite} {PasswordAccount1} {PasswordValue1a}");
+            PasswordGet = Alice1.Example($"password get {PasswordSite}");
+            PasswordDelete = Alice1.Example($"password delete {PasswordSite2}");
 
             }
         }

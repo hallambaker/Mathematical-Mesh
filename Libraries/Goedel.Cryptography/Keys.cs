@@ -112,6 +112,7 @@ namespace Goedel.Cryptography {
         /// Attempt to find a private key for the specified recipient entry.
         /// </summary>
         /// <param name="keyId">The key identifier to match</param>
+        ///  <param name="cryptoKey">The key, (if found).</param>
         /// <returns>True if a match is found, otherwise false.</returns>
         public virtual bool TryFindKeyDecryption(string keyId, out IKeyDecrypt cryptoKey) {
             if (keyId == KeyIdentifier) {
@@ -143,6 +144,7 @@ namespace Goedel.Cryptography {
         /// cannot contain a <see cref="KeyPair"/>
         /// </summary>
         /// <param name="keyId">The identifier to resolve.</param>
+        ///  <param name="cryptoKey">The key, (if found).</param>
         /// <returns>The identifier.</returns>
         public bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
             if (keyId == KeyIdentifier) {
@@ -158,6 +160,7 @@ namespace Goedel.Cryptography {
         /// Locate the private key.
         /// </summary>
         /// <param name="keyId">fingerprint of key to locate.</param>
+        ///  <param name="cryptoKey">The key, (if found).</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
         public bool LocatePrivateKeyPair(string keyId, out CryptoKey cryptoKey) {
             if (keyId == KeyIdentifier) {

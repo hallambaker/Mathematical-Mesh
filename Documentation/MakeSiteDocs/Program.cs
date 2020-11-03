@@ -27,14 +27,14 @@ namespace ExampleGenerator {
             createWeb.Examples();
             }
 
-        public virtual TestCLI testCLIAlice1 { get; private set; }
-        public virtual TestCLI testCLIAlice2 { get; private set; }
-        public virtual TestCLI testCLIAlice3 { get; private set; }
-        public virtual TestCLI testCLIAlice4 { get; private set; }
-        public virtual TestCLI testCLIBob1 { get; private set; }
-        public virtual TestCLI testCLIMallet1 { get; private set; }
-        public virtual TestCLI testCLIConsole1 { get; private set; }
-        public virtual TestCLI testCLIMaker1 { get; private set; }
+        public virtual TestCLI Alice1 { get; private set; }
+        public virtual TestCLI Alice2 { get; private set; }
+        public virtual TestCLI Alice3 { get; private set; }
+        public virtual TestCLI Alice4 { get; private set; }
+        public virtual TestCLI Bob1 { get; private set; }
+        public virtual TestCLI Mallet1 { get; private set; }
+        public virtual TestCLI Console1 { get; private set; }
+        public virtual TestCLI Maker1 { get; private set; }
 
         public virtual string Secret1 { get; set; }
 
@@ -113,17 +113,16 @@ namespace ExampleGenerator {
             PlatformCrypto();
 
 
-
             //var t= Directory.GetCurrentDirectory();
 
-            testCLIAlice1 = GetTestCLI(AliceDevice1);
-            testCLIAlice2 = GetTestCLI(AliceDevice2);
-            testCLIAlice3 = GetTestCLI(AliceDevice3);
-            testCLIAlice4 = GetTestCLI(AliceDevice4);
-            testCLIBob1 = GetTestCLI("Bob");
-            testCLIMallet1 = GetTestCLI("Mallet");
-            testCLIConsole1 = GetTestCLI("Console");
-            testCLIMaker1 = GetTestCLI("Maker");
+            Alice1 = GetTestCLI(AliceDevice1);
+            Alice2 = GetTestCLI(AliceDevice2);
+            Alice3 = GetTestCLI(AliceDevice3);
+            Alice4 = GetTestCLI(AliceDevice4);
+            Bob1 = GetTestCLI("Bob");
+            Mallet1 = GetTestCLI("Mallet");
+            Console1 = GetTestCLI("Console");
+            Maker1 = GetTestCLI("Maker");
 
             Directory.CreateDirectory(TestDir1);
             TestFile1.WriteFileNew(TestFile1Text.ToString());

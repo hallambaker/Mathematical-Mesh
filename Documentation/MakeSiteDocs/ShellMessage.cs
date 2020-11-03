@@ -34,30 +34,30 @@ namespace ExampleGenerator {
                 base(createExamples) {
 
 
-            ContactRequest = testCLIBob1.Example($"message contact {AliceService1}");
-            ContactPending = testCLIAlice1.Example($"message pending");
+            ContactRequest = Bob1.Example($"message contact {AliceService1}");
+            ContactPending = Alice1.Example($"message pending");
             var resultPending = (ContactPending[0].Result as ResultPending);
             var id1 = "tbs";// resultPending.Messages[0].MessageID;
             var id2 = "tbs";// resultPending.Messages[1].MessageID;
 
-            ContactAccept = testCLIAlice1.Example($"message accept {id1}");
+            ContactAccept = Alice1.Example($"message accept {id1}");
 
-            ContactCatalog = testCLIAlice1.Example($"contact list");
-            ContactGetResponse = testCLIBob1.Example($"message status {id1}");
-            ContactReject = testCLIAlice1.Example($"message reject {id2}");
-            ContactBlock = testCLIAlice1.Example($"message block {MalletService}");
+            ContactCatalog = Alice1.Example($"contact list");
+            ContactGetResponse = Bob1.Example($"message status {id1}");
+            ContactReject = Alice1.Example($"message reject {id2}");
+            ContactBlock = Alice1.Example($"message block {MalletService}");
 
-            ConfirmRequest = testCLIBob1.Example($"message confirm {AliceService1} \"{ShellMessage.BobPurchase}\"");
-            ConfirmPending = testCLIAlice1.Example($"message pending");
+            ConfirmRequest = Bob1.Example($"message confirm {AliceService1} \"{ShellMessage.BobPurchase}\"");
+            ConfirmPending = Alice1.Example($"message pending");
             var confirmPending = (ConfirmPending[0].Result as ResultPending);
             confirmPending.Keep();
             id1 = "tbs";//confirmPending.Messages[0].MessageID;
             id2 = "tbs";//confirmPending.Messages[1].MessageID;
 
-            ConfirmAccept = testCLIAlice1.Example($"message accept {id1}");
-            ConfirmGetAccept = testCLIBob1.Example($"message status {id1}");
-            ConfirmReject = testCLIAlice1.Example($"message reject {id2}");
-            ConfirmGetReject = testCLIBob1.Example($"message status {id2}");
+            ConfirmAccept = Alice1.Example($"message accept {id1}");
+            ConfirmGetAccept = Bob1.Example($"message status {id1}");
+            ConfirmReject = Alice1.Example($"message reject {id2}");
+            ConfirmGetReject = Bob1.Example($"message status {id2}");
             //ConfirmMallet = testCLIMallet1.Example($"message confirm {AliceService1} \"{BobPurchase}\"");
             }
 

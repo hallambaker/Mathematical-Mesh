@@ -257,6 +257,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="reader">The stream to read the decoded data from.</param>
         /// <param name="keyCollection">Key collection to be used to resolve private
         /// keys.</param>
+        /// <param name="decrypt">If true, attempt to decrypt.</param>
         /// <returns>The decoder. </returns>
         public CryptoStackStream GetDecoder(
                         JsonBcdReader jsonBcdReader,

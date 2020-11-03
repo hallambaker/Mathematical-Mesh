@@ -202,6 +202,7 @@ namespace Goedel.Cryptography {
         /// Locate key by fingerprint.
         /// </summary>
         /// <param name="UDF">Fingerprint of key to be located.</param>
+        ///  <param name="keyPair">The key, (if found).</param>
         /// <returns>The located key (if found).</returns>
         public static bool Locate(string UDF, out KeyPair keyPair) {
             var cspParameters = new CspParameters() {
@@ -219,20 +220,20 @@ namespace Goedel.Cryptography {
                 }
             }
 
-        /// <summary>
-        /// Factory method.
-        /// </summary>
-        /// <param name="keySecurity">The key security model</param>
-        /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
-        /// <param name="algorithmID">The type of keypair to create.</param>
-        /// <param name="keySize">The key size</param>
-        /// <returns>The created key pair</returns>
-        public static KeyPair KeyPairFactory(
-                    KeySecurity keySecurity = KeySecurity.Public,
-                    KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                    int keySize = 2048) =>
-                    throw new NotImplementedException();
+        ///// <summary>
+        ///// Factory method.
+        ///// </summary>
+        ///// <param name="keySecurity">The key security model</param>
+        ///// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+        ///// <param name="algorithmID">The type of keypair to create.</param>
+        ///// <param name="keySize">The key size</param>
+        ///// <returns>The created key pair</returns>
+        //public static KeyPair KeyPairFactory(
+        //            KeySecurity keySecurity = KeySecurity.Public,
+        //            KeyUses keyUses = KeyUses.Any,
+        //            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+        //            int keySize = 2048) =>
+        //            throw new NotImplementedException();
 
         /// <summary>
         /// Delegate to create a key pair base

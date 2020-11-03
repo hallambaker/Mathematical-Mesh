@@ -27,19 +27,19 @@ namespace ExampleGenerator {
 
         public ShellKey(CreateExamples createExamples) :
                 base(createExamples) {
-            KeyNonce = testCLIAlice1.Example("key nonce");
-            KeyNonce256 = testCLIAlice1.Example("key nonce /bits=256");
-            KeySecret = testCLIAlice1.Example("key secret");
-            KeySecret256 = testCLIAlice1.Example("key secret /bits=256");
-            KeyEarl = testCLIAlice1.Example("key earl");
-            KeyShare = testCLIAlice1.Example("key share");
+            KeyNonce = Alice1.Example("key nonce");
+            KeyNonce256 = Alice1.Example("key nonce /bits=256");
+            KeySecret = Alice1.Example("key secret");
+            KeySecret256 = Alice1.Example("key secret /bits=256");
+            KeyEarl = Alice1.Example("key earl");
+            KeyShare = Alice1.Example("key share");
             Secret1 = (KeyShare[0].Result as ResultKey).Key;
             var share1 = (KeyShare[0].Result as ResultKey).Shares[0];
             var share2 = (KeyShare[0].Result as ResultKey).Shares[2];
 
-            KeyRecover = testCLIAlice1.Example($"key recover {share1} {share2}");
-            KeyShare2 = testCLIAlice1.Example($"key share /quorum=3 /shares=5");
-            KeyShare3 = testCLIAlice1.Example($"key share {Secret1}");
+            KeyRecover = Alice1.Example($"key recover {share1} {share2}");
+            KeyShare2 = Alice1.Example($"key share /quorum=3 /shares=5");
+            KeyShare3 = Alice1.Example($"key share {Secret1}");
 
             }
         }

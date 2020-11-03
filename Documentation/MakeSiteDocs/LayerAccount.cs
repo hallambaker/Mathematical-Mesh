@@ -8,8 +8,8 @@ using System.Collections.Generic;
 namespace ExampleGenerator {
 
 
-    public partial class LayerAccount {
-        CreateExamples CreateExamples;
+    public partial class LayerAccount : ExampleSet {
+
 
 
         public string EncryptSourceFile = "plaintext.txt";
@@ -29,14 +29,14 @@ namespace ExampleGenerator {
         public List<ExampleResult> SyncAlice;
 
 
-        public LayerAccount(CreateExamples createExamples) {
-            CreateExamples = createExamples;
+        public LayerAccount(CreateExamples createExamples) :
+                base(createExamples) {
             }
 
 
         }
 
-    public partial class LayerConnect {
+    public partial class LayerConnect : ExampleSet {
         public string EncryptResultFile = "plaintext2.txt";
 
         public List<ExampleResult> ConnectRequest;
@@ -90,27 +90,29 @@ namespace ExampleGenerator {
 
 
 
-        public LayerConnect(CreateExamples CreateExamples) {
+        public LayerConnect(CreateExamples createExamples) :
+                base(createExamples) {
             }
 
 
         }
 
 
-    public partial class LayerService {
+    public partial class LayerService : ExampleSet {
 
         public List<ExampleResult> Hello;
         public ProfileDevice ProfileService;
         public ProfileDevice ConnectionHost;
 
 
-        public LayerService(CreateExamples CreateExamples) {
+        public LayerService(CreateExamples createExamples) :
+                base(createExamples) {
             }
 
 
         }
 
-    public partial class LayerApps {
+    public partial class LayerApps : ExampleSet {
 
         public List<ExampleResult> SSH;
         public List<ExampleResult> Mail;
@@ -124,14 +126,15 @@ namespace ExampleGenerator {
         public CatalogedEntry MailCatalogEntry;
         public CatalogedEntry SSHCatalogEntry;
 
-        public LayerApps(CreateExamples CreateExamples) {
+        public LayerApps(CreateExamples createExamples) :
+                base(createExamples) {
             }
 
 
         }
 
 
-    public partial class LayerContact {
+    public partial class LayerContact : ExampleSet {
 
         public List<ExampleResult> ContactBobRequest;
         public List<ExampleResult> ContactAliceResponse;
@@ -142,7 +145,8 @@ namespace ExampleGenerator {
         public MessageContact AliceResponse;
 
 
-        public LayerContact(CreateExamples CreateExamples) {
+        public LayerContact(CreateExamples createExamples) :
+                base(createExamples) {
             }
 
 
@@ -151,7 +155,7 @@ namespace ExampleGenerator {
 
         }
 
-    public partial class LayerConfirm {
+    public partial class LayerConfirm : ExampleSet {
 
         public List<ExampleResult> ConfirmRequest;
         public List<ExampleResult> ConfirmAliceResponse;
@@ -160,12 +164,13 @@ namespace ExampleGenerator {
         public RequestConfirmation RequestConfirmation;
         public ResponseConfirmation ResponseConfirmation;
 
-        public LayerConfirm(CreateExamples CreateExamples) {
+        public LayerConfirm(CreateExamples createExamples) :
+                base(createExamples) {
             }
         }
 
-    public partial class LayerGroup {
-        public string GroupAccount = "groupw@example.com";
+    public partial class LayerGroup : ExampleSet {
+
         public string EncryptSourceFile = "grouptext.txt";
         public string EncryptTargetFile = "groupsecret.dare";
         public string TestText = "The group secret handshake";
@@ -183,17 +188,19 @@ namespace ExampleGenerator {
 
         public GroupInvitation GroupInvitation;
 
-        public LayerGroup(CreateExamples CreateExamples) {
+        public LayerGroup(CreateExamples createExamples) :
+                base(createExamples) {
             }
         }
 
-    public partial class LayerNYI {
+    public partial class LayerNYI : ExampleSet {
 
 
         public List<ExampleResult> GroupCreate;
 
 
-        public LayerNYI(CreateExamples CreateExamples) {
+        public LayerNYI(CreateExamples createExamples) :
+                base(createExamples) {
             }
 
         }

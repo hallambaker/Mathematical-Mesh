@@ -429,7 +429,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDevice(CreateExamples Example) {
 
-				 Format(AliceProfileDeviceCoffee);
+				 Format(Connect.AliceProfileDeviceCoffee);
 					}
 		
 

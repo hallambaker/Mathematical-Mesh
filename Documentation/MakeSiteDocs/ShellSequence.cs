@@ -32,22 +32,22 @@ namespace ExampleGenerator {
 
         public ShellSequence(CreateExamples createExamples) :
         base(createExamples) {
-            ContainerCreate = testCLIAlice1.Example($"container create {TestContainer}");
-            ContainerCreateEncrypt = testCLIAlice1.Example($"container create {TestContainerEncrypt} /encrypt={GroupService}");
-            ContainerArchive = testCLIAlice1.Example($"container archive {TestContainerArchive} {TestDir1}");
-            ContainerArchiveEnhance = testCLIAlice1.Example($"container create {TestContainerArchiveEnhance} {TestDir1}",
+            ContainerCreate = Alice1.Example($"container create {TestContainer}");
+            ContainerCreateEncrypt = Alice1.Example($"container create {TestContainerEncrypt} /encrypt={GroupService}");
+            ContainerArchive = Alice1.Example($"container archive {TestContainerArchive} {TestDir1}");
+            ContainerArchiveEnhance = Alice1.Example($"container create {TestContainerArchiveEnhance} {TestDir1}",
                                                             $"/encrypt={GroupService} /sign={AliceService1}");
-            ContainerArchiveVerify = testCLIAlice1.Example($"container verify {TestContainerArchiveEnhance}");
-            ContainerArchiveExtractAll = testCLIAlice1.Example($"container extract {TestContainer} {TestDir2}");
-            ContainerArchiveExtractFile = testCLIAlice1.Example($"container extract {TestContainer} /file={TestFile4}");
-            ContainerAppend = testCLIAlice1.Example($"container append {TestContainer} {TestFile1}" +
+            ContainerArchiveVerify = Alice1.Example($"container verify {TestContainerArchiveEnhance}");
+            ContainerArchiveExtractAll = Alice1.Example($"container extract {TestContainer} {TestDir2}");
+            ContainerArchiveExtractFile = Alice1.Example($"container extract {TestContainer} /file={TestFile4}");
+            ContainerAppend = Alice1.Example($"container append {TestContainer} {TestFile1}" +
                                                             $"container append {TestContainer} {TestFile2}" +
                                                             $"container append {TestContainer} {TestFile3}");
-            ContainerDelete = testCLIAlice1.Example($"container delete {TestContainer}  {TestFile2}");
-            ContainerIndex = testCLIAlice1.Example($"container index {TestContainer}");
-            ContainerArchiveCopy = testCLIAlice1.Example($"container copy {TestContainer2}");
-            ContainerArchiveCopyDecrypt = testCLIAlice1.Example($"container copy {TestContainerArchiveEnhance} /decrypt");
-            ContainerArchiveCopyPurge = testCLIAlice1.Example($"container copy {TestContainer2} /purge");
+            ContainerDelete = Alice1.Example($"container delete {TestContainer}  {TestFile2}");
+            ContainerIndex = Alice1.Example($"container index {TestContainer}");
+            ContainerArchiveCopy = Alice1.Example($"container copy {TestContainer2}");
+            ContainerArchiveCopyDecrypt = Alice1.Example($"container copy {TestContainerArchiveEnhance} /decrypt");
+            ContainerArchiveCopyPurge = Alice1.Example($"container copy {TestContainer2} /purge");
 
             }
         }

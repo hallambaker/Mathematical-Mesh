@@ -216,6 +216,28 @@
             <param name="activationAccount">The account key overlay.</param>
             <returns>The CatalogedDevice entry.</returns>
         </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedGroup(Goedel.Mesh.ProfileGroup,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create and return a new catalog entry for <paramref name="profileGroup"/> with
+            the activation data <paramref name="activationAccount"/>.
+            </summary>
+            <param name="profileGroup">The group profile.</param>
+            <param name="activationAccount">The activation data.</param>
+            <param name="capability">Optional capabilities to add.</param>
+            <returns>The created group.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.MakeActivationAccount(Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},Goedel.Mesh.ITransactContextAccount)">
+            <summary>
+            Create an activation record for the device <paramref name="profileDevice"/> 
+            with assigned roles <paramref name="roles"/> using the
+            transaction context <paramref name="transactContextAccount"/> to make
+            changes to the catalogs.
+            </summary>
+            <param name="profileDevice">The device to add the roles to.</param>
+            <param name="roles">The roles to add</param>
+            <param name="transactContextAccount">Transaction context for making the update.</param>
+            <returns>The created activation record.</returns>
+        </member>
         <member name="M:Goedel.Mesh.ActivationAccount.DeviceBindSignature(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Create a key pair bound to the private key <paramref name="profileDevice.OfflineSignature.OfflineSignature"/>
@@ -262,6 +284,21 @@
             </summary>
             <param name="activationAccount">Device to which the access right is granted.</param>
             <param name="right">The right granted.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.InitializeStore(System.String)">
+            <summary>
+            Initialize the store <paramref name="storeName"/> by derriving the corresponding
+            encryption key.
+            </summary>
+            <param name="storeName">The store to initialize.</param>
+            <returns>Cryptographic parameters for the store.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.GetCryptoParameters(System.String)">
+            <summary>
+            Return the cryptographic parameters for the store <paramref name="containerName"/>.
+            </summary>
+            <param name="containerName">The store to return parameters for.</param>
+            <returns>Cryptographic parameters for the store.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
@@ -1669,6 +1706,7 @@
             <param name="keyCollection">Key collection to be used to resolve keys</param>
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">The mesh client.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -5134,6 +5172,24 @@
         <member name="P:Goedel.Mesh.MessagePinValidated.EnvelopedMessagePinValidated">
             <summary>Typed enveloped data</summary> 
         </member>
+        <member name="P:Goedel.Mesh.MessagePinValidated.Action">
+            <summary>The authorized action.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.MessagePinValidated.Authenticate(System.String)">
+            <summary>
+            Create authentication data using the pin value <paramref name="pin"/>/
+            </summary>
+            <param name="pin">The pin value.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePinValidated.ValidatePin(Goedel.Mesh.MessagePin,System.String)">
+            <summary>
+            Verify authentication data using the pin data in <paramref name="messagePin"/>, 
+            binding to the account <paramref name="accountAddress"/>.
+            </summary>
+            <param name="messagePin">The pin data to use for validation.</param>
+            <param name="accountAddress">The account address to which the validation data is bound.</param>
+            <returns>The result of the verification operation.</returns>
+        </member>
         <member name="P:Goedel.Mesh.MessagePinValidated.AuthenticatedData">
              <summary>
             Enveloped data that is authenticated by means of the PIN
@@ -5360,6 +5416,9 @@
         </member>
         <member name="P:Goedel.Mesh.RequestConnection.EnvelopedRequestConnection">
             <summary>Typed enveloped data</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.RequestConnection.Action">
+            <summary>The action for pin code validation.</summary> 
         </member>
         <member name="M:Goedel.Mesh.RequestConnection.#ctor">
             <summary>
@@ -5603,6 +5662,9 @@
         </member>
         <member name="P:Goedel.Mesh.MessageContact.EnvelopedRequestContact">
             <summary>Typed enveloped data</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.MessageContact.Action">
+            <summary>The action for pin code validation.</summary> 
         </member>
         <member name="P:Goedel.Mesh.MessageContact.Reply">
              <summary>

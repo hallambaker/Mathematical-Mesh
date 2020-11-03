@@ -339,10 +339,10 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Verify that the 
+        /// Verify that the signature value is correct for the key <paramref name="key"/>
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <param name="key">The signature key.</param>
+        /// <returns>True, if the signature is valid.</returns>
         public bool Verify(KeyPair key) {
 
             var signature = FindSignature(key);
@@ -355,6 +355,11 @@ namespace Goedel.Cryptography.Dare {
             return key.VerifyHash(Trailer.PayloadDigest, signature.SignatureValue);
             }
 
+        /// <summary>
+        /// Find a signature whose key identifier matches <paramref name="key"/>
+        /// </summary>
+        /// <param name="key">The key</param>
+        /// <returns>The signature entry.</returns>
         public DareSignature FindSignature (CryptoKey key) {
 
             if (Trailer.Signatures != null) {

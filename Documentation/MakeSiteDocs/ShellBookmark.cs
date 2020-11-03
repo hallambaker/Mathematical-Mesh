@@ -26,12 +26,12 @@ namespace ExampleGenerator {
 
         public ShellBookmark(CreateExamples createExamples) :
                 base(createExamples) {
-            BookmarkAdd = testCLIAlice1.Example($"bookmark add {BookmarkPath1} {BookmarkURI1} \"{BookmarkTitle1}\"",
+            BookmarkAdd = Alice1.Example($"bookmark add {BookmarkPath1} {BookmarkURI1} \"{BookmarkTitle1}\"",
                 $"bookmark add {BookmarkPath2} {BookmarkURI2} \"{BookmarkTitle2}\"",
                 $"bookmark add {BookmarkPath3} {BookmarkURI3} \"{BookmarkTitle3}\"");
-            BookmarkGet = testCLIAlice1.Example($"bookmark get {BookmarkPath2}");
-            BookmarkList = testCLIAlice1.Example($"bookmark list");
-            BookmarkDelete = testCLIAlice1.Example($"bookmark delete BookmarkPath2");
+            BookmarkGet = Alice1.Example($"bookmark get {BookmarkPath2}");
+            BookmarkList = Alice1.Example($"bookmark list");
+            BookmarkDelete = Alice1.Example($"bookmark delete BookmarkPath2");
 
             }
 

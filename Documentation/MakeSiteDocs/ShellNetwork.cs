@@ -20,12 +20,12 @@ namespace ExampleGenerator {
 
         public ShellNetwork(CreateExamples createExamples) :
                 base(createExamples) {
-            NetworkAdd = testCLIAlice1.Example($"network add {NetworkFile1} {NetworkID1}",
+            NetworkAdd = Alice1.Example($"network add {NetworkFile1} {NetworkID1}",
                 $"network add {NetworkFile2} {NetworkID2}");
-            NetworkGet = testCLIAlice1.Example($"network get {NetworkID2}");
-            NetworkList = testCLIAlice1.Example($"network list");
+            NetworkGet = Alice1.Example($"network get {NetworkID2}");
+            NetworkList = Alice1.Example($"network list");
 
-            NetworkDelete = testCLIAlice1.Example($"network delete {NetworkID2}",
+            NetworkDelete = Alice1.Example($"network delete {NetworkID2}",
                 $"network list");
             }
         }
