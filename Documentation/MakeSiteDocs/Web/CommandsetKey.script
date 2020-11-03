@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebKey "Guide/key.md" CreateExamples Examples
+#zfile CreateExamples WebKey "Guide/key.md" Examples
 #% MakeTitle ("key");
 
 The `key` command set contains commands that operate on cryptographic secrets and
@@ -97,9 +97,9 @@ be different:
 
 #% ConsoleExample (ShellKey.KeyShare3);
 
-#end xfile
+#end zfile
 
-#xfile CreateExamples KeyReference "Reference/key.md" CreateExamples Examples
+#zfile CreateExamples KeyReference "Reference/key.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Key;
 
 #% Describe(CommandSet);
@@ -150,7 +150,7 @@ value as a UDF Encryption key type.
 #%  ConsoleReference (ShellKey.KeyRecover);
 
 
-#end xfile
+#end zfile
 
 #end xclass
 

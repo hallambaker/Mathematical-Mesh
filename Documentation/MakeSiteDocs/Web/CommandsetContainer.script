@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebContainer "Guide/container.md" CreateExamples Examples
+#zfile CreateExamples WebContainer "Guide/container.md" Examples
 #% MakeTitle ("container");
 
 The `container` command set contains commands that operate on DARE Containers.
@@ -124,9 +124,9 @@ The copy command may also be used to reclaim space used by deleted items:
 #% ConsoleExample (ShellSequence.ContainerArchiveCopyPurge);
 
 
-#end xfile
+#end zfile
 
-#xfile CreateExamples ContainerReference "Reference/container.md" CreateExamples Examples
+#zfile CreateExamples ContainerReference "Reference/container.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Container;
 
 
@@ -189,7 +189,7 @@ and indexing criteria.
 
 #% ConsoleReference (ShellSequence.ContainerArchiveCopy);
 
-#end xfile
+#end zfile
 
 #end xclass
 

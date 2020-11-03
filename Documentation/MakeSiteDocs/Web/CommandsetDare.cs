@@ -15,8 +15,9 @@ namespace ExampleGenerator {
 		// WebDare
 		//
 		public static void WebDare(CreateExamples Examples) { /* XFile  */
-			using var _Output = new StreamWriter("Guide/dare.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/dare.md" };
-			obj._WebDare(Examples);
+				using var _Output = new StreamWriter("Guide/dare.md");
+			Examples._Output = _Output;
+			Examples._WebDare(Examples);
 			}
 		public void _WebDare(CreateExamples Examples) {
 
@@ -116,8 +117,9 @@ namespace ExampleGenerator {
 		// DareReference
 		//
 		public static void DareReference(CreateExamples Examples) { /* XFile  */
-			using var _Output = new StreamWriter("Reference/dare.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/dare.md" };
-			obj._DareReference(Examples);
+				using var _Output = new StreamWriter("Reference/dare.md");
+			Examples._Output = _Output;
+			Examples._DareReference(Examples);
 			}
 		public void _DareReference(CreateExamples Examples) {
 

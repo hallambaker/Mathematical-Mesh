@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebConnect "Guide/device.md" CreateExamples Examples
+#zfile CreateExamples WebConnect "Guide/device.md" Examples
 #% MakeTitle ("device");
 
 The `device` command set contains commands used to connect devices to a 
@@ -152,9 +152,9 @@ Further attempts to make a connection are thus ignored unless the device is
 reset.
 
 
-#end xfile
+#end zfile
 
-#xfile CreateExamples ConnectReference "Reference/device.md" CreateExamples Examples
+#zfile CreateExamples ConnectReference "Reference/device.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Connect;
 
 
@@ -272,7 +272,7 @@ the `/pin` option.
 #%  ConsoleReference (ShellAccount.ConnectRequest);
 
 
-#end xfile
+#end zfile
 
 
 #end xclass

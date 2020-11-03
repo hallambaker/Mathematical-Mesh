@@ -15,8 +15,9 @@ namespace ExampleGenerator {
 		// WebMail
 		//
 		public static void WebMail(CreateExamples Examples) { /* XFile  */
-			using var _Output = new StreamWriter("Guide/mail.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/mail.md" };
-			obj._WebMail(Examples);
+				using var _Output = new StreamWriter("Guide/mail.md");
+			Examples._Output = _Output;
+			Examples._WebMail(Examples);
 			}
 		public void _WebMail(CreateExamples Examples) {
 
@@ -106,8 +107,9 @@ namespace ExampleGenerator {
 		// MailReference
 		//
 		public static void MailReference(CreateExamples Examples) { /* XFile  */
-			using var _Output = new StreamWriter("Reference/mail.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/mail.md" };
-			obj._MailReference(Examples);
+				using var _Output = new StreamWriter("Reference/mail.md");
+			Examples._Output = _Output;
+			Examples._MailReference(Examples);
 			}
 		public void _MailReference(CreateExamples Examples) {
 

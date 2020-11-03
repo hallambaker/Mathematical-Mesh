@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebCalendar "Guide/calendar.md" CreateExamples Examples
+#zfile CreateExamples WebCalendar "Guide/calendar.md" Examples
 #% MakeTitle ("calendar");
 
 The `calendar` command set is used to manage a calendar configuration catalog which contains
@@ -48,9 +48,9 @@ Devices are given authorization to access the calendars catalog using the
  #%  ConsoleExample (ShellCalendar.CalendarAuth);
 
 
-#end xfile
+#end zfile
 
-#xfile CreateExamples CalendarReference "Reference/calendar.md" CreateExamples Examples
+#zfile CreateExamples CalendarReference "Reference/calendar.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Calendar;
 
 
@@ -70,7 +70,7 @@ Devices are given authorization to access the calendars catalog using the
 #% ConsoleReference (ShellCalendar.CalendarList);
 
 
-#end xfile
+#end zfile
 
 #end xclass
 

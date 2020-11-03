@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebBookmark "Guide/bookmark.md" CreateExamples Examples
+#zfile CreateExamples WebBookmark "Guide/bookmark.md" Examples
 #% MakeTitle ("bookmark");
 
 The `bookmark` command set is used to manage a bookmarks catalog which contains
@@ -56,9 +56,9 @@ Devices are given authorization to access the bookmarks catalog using the
 The new device now has access to the Bookmarks catalog:
 
 #%  ConsoleExample (ShellBookmark.BookmarkList2);
-#end xfile
+#end zfile
 
-#xfile CreateExamples BookmarkReference "Reference/bookmark.md" CreateExamples Examples
+#zfile CreateExamples BookmarkReference "Reference/bookmark.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Network;
 
 
@@ -77,7 +77,7 @@ The new device now has access to the Bookmarks catalog:
 #% Describe(CommandSet, _BookmarkDump._DescribeCommand);
 #% ConsoleReference (ShellBookmark.BookmarkList);
 
-#end xfile
+#end zfile
 
 #end xclass
 

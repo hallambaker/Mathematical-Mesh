@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebAccount "Guide/account.md" CreateExamples Examples
+#zfile CreateExamples WebAccount "Guide/account.md" Examples
 #% MakeTitle ("account");
 
 The account command set contains commands used to create and manage
@@ -29,9 +29,9 @@ Create a new Mesh profile
 
 
 
-#end xfile
+#end zfile
 
-#xfile CreateExamples AccountReference "Reference/profile.md" CreateExamples Examples
+#zfile CreateExamples AccountReference "Reference/profile.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Account;
 
 
@@ -111,7 +111,7 @@ The `account sync` command
 
 
 
-#end xfile
+#end zfile
 
 #end xclass
 

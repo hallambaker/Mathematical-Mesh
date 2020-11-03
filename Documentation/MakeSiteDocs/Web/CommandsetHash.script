@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebHash "Guide/hash.md" CreateExamples Examples
+#zfile CreateExamples WebHash "Guide/hash.md" Examples
 #% MakeTitle ("hash");
 
 The `hash` command set contains commands that perform Content Digest and 
@@ -68,9 +68,9 @@ If the expected digest value is specified, this is used to check the calculated 
 #% ConsoleExample (ShellHash.MAC3);
 
 
-#end xfile
+#end zfile
 
-#xfile CreateExamples HashReference "Reference/hash.md" CreateExamples Examples
+#zfile CreateExamples HashReference "Reference/hash.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Hash;
 
 
@@ -112,7 +112,7 @@ true returned if and only if it matches the value specified.
 
 #% ConsoleReference (ShellHash.MAC1);
 
-#end xfile
+#end zfile
 
 #end xclass
 

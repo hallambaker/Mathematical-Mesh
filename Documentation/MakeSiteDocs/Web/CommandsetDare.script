@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebDare "Guide/dare.md" CreateExamples Examples
+#zfile CreateExamples WebDare "Guide/dare.md" Examples
 #% MakeTitle ("dare");
 
 The `dare` command set contains commands that encode, decode and verify 
@@ -96,9 +96,9 @@ been processed already.
 
 #% ConsoleExample (ShellDare.DareEARLLogNew);
 
-#end xfile
+#end zfile
 
-#xfile CreateExamples DareReference "Reference/dare.md" CreateExamples Examples
+#zfile CreateExamples DareReference "Reference/dare.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Dare;
 #% Describe(CommandSet);
 
@@ -187,7 +187,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 #% ConsoleReference (ShellDare.DareEarl);
 
-#end xfile
+#end zfile
 
 #end xclass
 

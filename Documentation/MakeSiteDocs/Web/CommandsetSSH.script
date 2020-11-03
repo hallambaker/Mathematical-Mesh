@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebSSH "Guide/ssh.md" CreateExamples Examples
+#zfile CreateExamples WebSSH "Guide/ssh.md" Examples
 #% MakeTitle ("SSH");
 
 The SSH command set contains commands that 
@@ -136,9 +136,9 @@ Once the device has been authorized, the client machine can start using SSH imme
 
 #%  ConsoleExample (ShellSSH.SSHAuthProof);
 
-#end xfile
+#end zfile
 
-#xfile CreateExamples SSHReference "Reference/ssh.md" CreateExamples Examples
+#zfile CreateExamples SSHReference "Reference/ssh.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_SSH;
 
 
@@ -170,7 +170,7 @@ Once the device has been authorized, the client machine can start using SSH imme
 #%  ConsoleReference (ShellSSH.SSHAuthDev);
 
 
-#end xfile
+#end zfile
 
 #end xclass
 

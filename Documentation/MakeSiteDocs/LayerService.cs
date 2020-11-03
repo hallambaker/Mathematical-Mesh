@@ -19,7 +19,7 @@ namespace ExampleGenerator {
         public override TestCLI testCLIMaker1 => CreateExamples.testCLIMaker1;
 
 
-        public string Secret1 {
+        public override string Secret1 {
             get => CreateExamples.Secret1;
             set => CreateExamples.Secret1 = value;
             }

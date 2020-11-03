@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebGroup "Guide/group.md" CreateExamples Examples
+#zfile CreateExamples WebGroup "Guide/group.md" Examples
 #% MakeTitle ("group");
 
 The group command set is used to manage recryption groups
@@ -103,9 +103,9 @@ Bob is no longer a member of the group and his decryption request now fails:
 #%  ConsoleExample (ShellGroup.GroupDecryptBob3);
 
 
-#end xfile
+#end zfile
 
-#xfile CreateExamples GroupReference "Reference/group.md" CreateExamples Examples
+#zfile CreateExamples GroupReference "Reference/group.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Group;
 
 
@@ -124,7 +124,7 @@ Bob is no longer a member of the group and his decryption request now fails:
 #% Describe( CommandSet, _GroupList._DescribeCommand);
 #%  ConsoleReference (ShellGroup.GroupList1);
 
-#end xfile
+#end zfile
 
 #end xclass
 

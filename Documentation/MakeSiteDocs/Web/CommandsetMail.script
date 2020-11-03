@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebMail "Guide/mail.md" CreateExamples Examples
+#zfile CreateExamples WebMail "Guide/mail.md" Examples
 #% MakeTitle ("mail");
 
 The `mail` command set contains commands used to manage Internet mail 
@@ -86,9 +86,9 @@ The public key may be exported likewise:
 
 #%  ConsoleExample (ShellMail.MailSMIMEPublic);
 
-#end xfile
+#end zfile
 
-#xfile CreateExamples MailReference "Reference/mail.md" CreateExamples Examples
+#zfile CreateExamples MailReference "Reference/mail.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Mail;
 
 
@@ -103,7 +103,7 @@ The public key may be exported likewise:
 #% Describe( CommandSet, _PGPPublic._DescribeCommand);
 
 
-#end xfile
+#end zfile
 
 #end xclass
 
