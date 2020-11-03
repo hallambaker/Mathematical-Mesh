@@ -63,6 +63,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">The mesh client.</param>
         public static new Store Factory(
                 string directory,
                     string storeId,

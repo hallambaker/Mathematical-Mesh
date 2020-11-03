@@ -24,18 +24,18 @@ namespace ExampleGenerator {
 
         public ShellSSH(CreateExamples createExamples) :
             base(createExamples) {
-                SSHCreate = testCLIAlice1.Example($"ssh create");
-                SSHPrivate = testCLIAlice1.Example($"ssh private {SSHFilePrivate}");
-                SSHPublic = testCLIAlice1.Example($"ssh public {SSHFilePublic}");
-                SSHMergeClients = testCLIAlice1.Example($"ssh merge client");
-                SSHMergeHosts = testCLIAlice1.Example($"ssh merge host");
-                SSHAddClient = testCLIAlice1.Example($"ssh add client");
-                SSHShowClient = testCLIAlice1.Example($"ssh show client");
-                SSHAddHost = testCLIAlice1.Example($"ssh add host");
-                SSHShowKnown = testCLIAlice1.Example($"ssh show host");
+                //SSHCreate = testCLIAlice1.Example($"ssh create");
+                //SSHPrivate = testCLIAlice1.Example($"ssh private {SSHFilePrivate}");
+                //SSHPublic = testCLIAlice1.Example($"ssh public {SSHFilePublic}");
+                //SSHMergeClients = testCLIAlice1.Example($"ssh merge client");
+                //SSHMergeHosts = testCLIAlice1.Example($"ssh merge host");
+                //SSHAddClient = testCLIAlice1.Example($"ssh add client");
+                //SSHShowClient = testCLIAlice1.Example($"ssh show client");
+                //SSHAddHost = testCLIAlice1.Example($"ssh add host");
+                //SSHShowKnown = testCLIAlice1.Example($"ssh show host");
 
-                SSHAuthDev = testCLIAlice1.Example($"device auth {AliceDevice2} /ssh");
-                SSHAuthProof = testCLIAlice1.Example($"ssh show host");
+                //SSHAuthDev = testCLIAlice1.Example($"device auth {AliceDevice2} /ssh");
+                //SSHAuthProof = testCLIAlice1.Example($"ssh show host");
                 }
 
             }

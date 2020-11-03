@@ -13,7 +13,9 @@ a container archive.
 
 
 ~~~~
-Missing example 1
+<div="terminal">
+<cmd>Alice> container create Container.dcon
+</div>
 ~~~~
 
 *catalog* *spool* *archive* *log*
@@ -28,7 +30,10 @@ member of the group groupw@example.com;
 
 
 ~~~~
-Missing example 2
+<div="terminal">
+<cmd>Alice> container create ContainerEncrypt.dcon ^
+    /encrypt=groupw@example.com
+</div>
 ~~~~
 
 Since it is rarely desirable to sign every entry in a container, signatures
@@ -39,14 +44,21 @@ specified file(s) as entries and appends an index as the final record:
 
 
 ~~~~
-Missing example 3
+<div="terminal">
+<cmd>Alice> container archive ContainerArchive.dcon TestDir1
+<rsp>ERROR - Path cannot be null. (Parameter 'path')
+</div>
 ~~~~
 
 An archive may be signed and encrypted:
 
 
 ~~~~
-Missing example 4
+<div="terminal">
+<cmd>Alice> container create ContainerArchiveEncrypt.dcon TestDir1
+<cmd>Alice> /encrypt=groupw@example.com /sign=alice@example.com
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 
 The signature on a signed archive is calculated over the final apex of the 
@@ -59,7 +71,9 @@ The `container verify` command verifies the contents of a container:
 
 
 ~~~~
-Missing example 5
+<div="terminal">
+<cmd>Alice> container verify ContainerArchiveEncrypt.dcon
+</div>
 ~~~~
 
 The verification performed depends on the type of authentication applied to the
@@ -75,14 +89,20 @@ the files are extracted by default:
 
 
 ~~~~
-Missing example 6
+<div="terminal">
+<cmd>Alice> container extract Container.dcon TestOut
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~
 
 Alternatively, the `/file` option may be used to extract a specific file:
 
 
 ~~~~
-Missing example 7
+<div="terminal">
+<cmd>Alice> container extract Container.dcon /file=TestDir1\TestFile4.txt
+<rsp>ERROR - Value cannot be null. (Parameter 'path')
+</div>
 ~~~~
 
 
@@ -92,7 +112,13 @@ The `container append` command adds an entry to a container:
 
 
 ~~~~
-Missing example 8
+<div="terminal">
+<cmd>Alice> container append Container.dcon TestFile1.txtcontainer append ^
+    Container.dcon TestFile2.txtcontainer append Container.dcon ^
+    TestFile3.txt
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
+stFile1.txtcontainer'.
+</div>
 ~~~~
 
 If no security enhancements are specified, the default enhancements specified 
@@ -105,7 +131,10 @@ marking an entry as deleted:
 
 
 ~~~~
-Missing example 9
+<div="terminal">
+<cmd>Alice> container delete Container.dcon  TestFile2.txt
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~
 
 Marking an entry for deletion does not cause the entry itself to be modified.
@@ -120,7 +149,9 @@ container:
 
 
 ~~~~
-Missing example 10
+<div="terminal">
+<cmd>Alice> container index Container.dcon
+</div>
 ~~~~
 
 The index entry may be complete, providing an index of the entire file 
@@ -136,7 +167,11 @@ at the end:
 
 
 ~~~~
-Missing example 11
+<div="terminal">
+<cmd>Alice> container copy Container2.dcon
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Co
+ntainer2.dcon'.
+</div>
 ~~~~
 
 The copy command may be used to encrypt or decrypt the container contents during 
@@ -144,14 +179,20 @@ the copy:
 
 
 ~~~~
-Missing example 12
+<div="terminal">
+<cmd>Alice> container copy ContainerArchiveEncrypt.dcon /decrypt
+</div>
 ~~~~
 
 The copy command may also be used to reclaim space used by deleted items:
 
 
 ~~~~
-Missing example 13
+<div="terminal">
+<cmd>Alice> container copy Container2.dcon /purge
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Co
+ntainer2.dcon'.
+</div>
 ~~~~
 
 

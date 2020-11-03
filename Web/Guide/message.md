@@ -28,28 +28,57 @@ using the `message contact` command:
 
 
 ~~~~
-Missing example 1
+<div="terminal">
+<cmd>Bob> message contact alice@example.com
+</div>
 ~~~~
 
 Alice reviews her pending messages using the `message pending` command:
 
 
 ~~~~
-Missing example 2
+<div="terminal">
+<cmd>Alice> message pending
+<rsp>MessageID: NCAR-PVBH-FMFN-NK5Y-SOLP-6WOV-VO6S
+        Contact Request::
+        MessageID: NCAR-PVBH-FMFN-NK5Y-SOLP-6WOV-VO6S
+        To: alice@example.com From: bob@example.com
+        PIN: AAU2-ZQK6-Z347-NRY6-IOV5-W2P2-O5EQ
+MessageID: NA3M-FCCF-P67J-CHXN-NUYJ-X267-RCH5
+        Confirmation Request::
+        MessageID: NA3M-FCCF-P67J-CHXN-NUYJ-X267-RCH5
+        To: alice@example.com From: console@example.com
+        Text: start
+MessageID: NAEZ-UOXO-KBH7-MT7I-KKA2-S37A-RGEZ
+        Contact Request::
+        MessageID: NAEZ-UOXO-KBH7-MT7I-KKA2-S37A-RGEZ
+        To: alice@example.com From: bob@example.com
+        PIN: AADZ-27RV-SGJA-5LIO-GHVA-2QPC-ORRA
+</div>
 ~~~~
 
 Alice sees the request from Bob and accepts it with the `message accept` command:
 
 
 ~~~~
-Missing example 3
+<div="terminal">
+<cmd>Alice> message accept tbs
+<rsp>ERROR - The specified message could not be found.
+</div>
 ~~~~
 
 Bob's contact information has been added to Alice's address book:
 
 
 ~~~~
-Missing example 4
+<div="terminal">
+<cmd>Alice> contact list
+<rsp>Entry<CatalogedContact>: MCDH-FIPQ-XWI3-2MLS-KZ6U-SAVO-EVSH
+  Person MCDH-FIPQ-XWI3-2MLS-KZ6U-SAVO-EVSH
+  Anchor MCDH-FIPQ-XWI3-2MLS-KZ6U-SAVO-EVSH
+  Address alice@example.com
+
+</div>
 ~~~~
 
 Bob can find out if Alice has accepted his contact request using the 
@@ -57,7 +86,10 @@ Bob can find out if Alice has accepted his contact request using the
 
 
 ~~~~
-Missing example 5
+<div="terminal">
+<cmd>Bob> message status tbs
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~
 
 Alice has accepted Bob's request and added him to her contacts list. She has also sent
@@ -68,14 +100,19 @@ using the `message reject` command:
 
 
 ~~~~
-Missing example 6
+<div="terminal">
+<cmd>Alice> message reject tbs
+<rsp>ERROR - The specified message could not be found.
+</div>
 ~~~~
 
 For good measure, she decides to block further requests:
 
 
 ~~~~
-Missing example 7
+<div="terminal">
+<cmd>Alice> message block mallet@example.com
+</div>
 ~~~~
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
@@ -106,28 +143,58 @@ a confirmation request `Purchase equipment for $6,000?` using the
 
 
 ~~~~
-Missing example 8
+<div="terminal">
+<cmd>Bob> message confirm alice@example.com "Purchase equipment for $6,000?"
+</div>
 ~~~~
 
 Alice reviews her pending messages using the using the `message pending` command:
 
 
 ~~~~
-Missing example 9
+<div="terminal">
+<cmd>Alice> message pending
+<rsp>MessageID: NBPA-4YJD-P7RN-2SJJ-ZQFO-NIAD-VOEE
+        Confirmation Request::
+        MessageID: NBPA-4YJD-P7RN-2SJJ-ZQFO-NIAD-VOEE
+        To: alice@example.com From: bob@example.com
+        Text: "Purchase
+MessageID: NCAR-PVBH-FMFN-NK5Y-SOLP-6WOV-VO6S
+        Contact Request::
+        MessageID: NCAR-PVBH-FMFN-NK5Y-SOLP-6WOV-VO6S
+        To: alice@example.com From: bob@example.com
+        PIN: AAU2-ZQK6-Z347-NRY6-IOV5-W2P2-O5EQ
+MessageID: NA3M-FCCF-P67J-CHXN-NUYJ-X267-RCH5
+        Confirmation Request::
+        MessageID: NA3M-FCCF-P67J-CHXN-NUYJ-X267-RCH5
+        To: alice@example.com From: console@example.com
+        Text: start
+MessageID: NAEZ-UOXO-KBH7-MT7I-KKA2-S37A-RGEZ
+        Contact Request::
+        MessageID: NAEZ-UOXO-KBH7-MT7I-KKA2-S37A-RGEZ
+        To: alice@example.com From: bob@example.com
+        PIN: AADZ-27RV-SGJA-5LIO-GHVA-2QPC-ORRA
+</div>
 ~~~~
 
 Alice she accepts Bob's request using the `message pending` command:
 
 
 ~~~~
-Missing example 10
+<div="terminal">
+<cmd>Alice> message accept tbs
+<rsp>ERROR - The specified message could not be found.
+</div>
 ~~~~
 
 Bob receives Alice's approval using the `message status` command:
 
 
 ~~~~
-Missing example 11
+<div="terminal">
+<cmd>Bob> message status tbs
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~
 
 In a full workflow system, Bob might include the response from Alice in a message to
@@ -137,14 +204,20 @@ Alice can also reject requests using the `message reject` command:
 
 
 ~~~~
-Missing example 12
+<div="terminal">
+<cmd>Alice> message reject tbs
+<rsp>ERROR - The specified message could not be found.
+</div>
 ~~~~
 
 Bob receives a reply telling him the request was rejected:
 
 
 ~~~~
-Missing example 13
+<div="terminal">
+<cmd>Bob> message status tbs
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~
 
 As with all Mesh messages, confirmation requests are subject to access control.
@@ -153,7 +226,7 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 
 ~~~~
-Missing example 14
+Missing example 49
 ~~~~
 
 

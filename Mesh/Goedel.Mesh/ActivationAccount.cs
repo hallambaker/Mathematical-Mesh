@@ -261,6 +261,14 @@ namespace Goedel.Mesh {
 
         #endregion
 
+        /// <summary>
+        /// Create and return a new catalog entry for <paramref name="profileGroup"/> with
+        /// the activation data <paramref name="activationAccount"/>.
+        /// </summary>
+        /// <param name="profileGroup">The group profile.</param>
+        /// <param name="activationAccount">The activation data.</param>
+        /// <param name="capability">Optional capabilities to add.</param>
+        /// <returns>The created group.</returns>
         public CatalogedGroup MakeCatalogedGroup(
                         ProfileGroup profileGroup,
                         ActivationAccount activationAccount,
@@ -284,7 +292,16 @@ namespace Goedel.Mesh {
 
             }
 
-
+        /// <summary>
+        /// Create an activation record for the device <paramref name="profileDevice"/> 
+        /// with assigned roles <paramref name="roles"/> using the
+        /// transaction context <paramref name="transactContextAccount"/> to make
+        /// changes to the catalogs.
+        /// </summary>
+        /// <param name="profileDevice">The device to add the roles to.</param>
+        /// <param name="roles">The roles to add</param>
+        /// <param name="transactContextAccount">Transaction context for making the update.</param>
+        /// <returns>The created activation record.</returns>
         public ActivationAccount MakeActivationAccount(
                 ProfileDevice profileDevice,
                 List<string> roles = null,
@@ -443,6 +460,12 @@ namespace Goedel.Mesh {
             Entries.Add(activationEntry);
             }
 
+        /// <summary>
+        /// Initialize the store <paramref name="storeName"/> by derriving the corresponding
+        /// encryption key.
+        /// </summary>
+        /// <param name="storeName">The store to initialize.</param>
+        /// <returns>Cryptographic parameters for the store.</returns>
         public CryptoParameters InitializeStore(string storeName) {
             var encryptionKey = secretSeed.GenerateContributionKeyPair(MeshKeyType.Complete,
                 MeshActor.Account, MeshKeyOperation.Encrypt, keySecurity: KeySecurity.Exportable);
@@ -454,7 +477,11 @@ namespace Goedel.Mesh {
             return cryptoParameters;
             }
 
-
+        /// <summary>
+        /// Return the cryptographic parameters for the store <paramref name="containerName"/>.
+        /// </summary>
+        /// <param name="containerName">The store to return parameters for.</param>
+        /// <returns>Cryptographic parameters for the store.</returns>
         public CryptoParameters GetCryptoParameters(string containerName) {
             if (DictionaryStoreEncryptionKey.TryGetValue(containerName, out var encryptionKey)) {
                 encryptionKey = KeyPair.FactoryExchange(CryptoAlgorithmId.Default,

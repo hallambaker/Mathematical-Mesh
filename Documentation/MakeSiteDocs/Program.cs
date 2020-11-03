@@ -188,6 +188,7 @@ namespace ExampleGenerator {
         public bool All = true;
 
 
+
         public void MakeClean() {
             var Process = System.Diagnostics.Process.Start("CMD.exe", "/C MakeClean");
             Process.WaitForExit();

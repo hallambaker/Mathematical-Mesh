@@ -13,7 +13,12 @@ Alice adds the username and password for an ftp service to her catalog:
 
 
 ~~~~
-Missing example 1
+<div="terminal">
+<cmd>Alice> password add ftp.example.com alice1 password
+<rsp>ERROR - Cannot access a closed file.
+<cmd>Alice> password add www.example.com alice@example.com newpassword
+<rsp>ERROR - Cannot access a closed file.
+</div>
 ~~~~
 
 ## Synchronizing passwords to an application.
@@ -22,7 +27,13 @@ The `password list` command lists all the passwords in the catalog:
 
 
 ~~~~
-Missing example 2
+<div="terminal">
+<cmd>Alice> password list
+<rsp>CatalogedCredential
+
+CatalogedCredential
+
+</div>
 ~~~~
 
 The output of the list command may be used to configure a user application 
@@ -36,7 +47,10 @@ values for a specified service:
 
 
 ~~~~
-Missing example 3
+<div="terminal">
+<cmd>Alice> password get ftp.example.com
+<rsp>alice1@ftp.example.com = [password]
+</div>
 ~~~~
 
 ### Using Credentials in scripts
@@ -70,7 +84,10 @@ password that is randomly generated:
 
 
 ~~~~
-Missing example 4
+<div="terminal">
+<cmd>Alice> password add ftp.example.com alice1 newpassword
+<rsp>ERROR - Cannot access a closed file.
+</div>
 ~~~~
 
 
@@ -80,7 +97,10 @@ Password entries may be deleted using the  `password delete` command:
 
 
 ~~~~
-Missing example 5
+<div="terminal">
+<cmd>Alice> password delete www.example.com
+<rsp>ERROR - Cannot access a closed file.
+</div>
 ~~~~
 
 ## Adding a Device.
@@ -89,7 +109,7 @@ When a device is added, it gets a copy of the password file:
 
 
 ~~~~
-Missing example 6
+Missing example 48
 ~~~~
 
 

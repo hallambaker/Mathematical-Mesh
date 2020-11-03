@@ -22,17 +22,17 @@ namespace ExampleGenerator {
         public ShellGroup(CreateExamples createExamples) :
             base(createExamples) {
 
-            GroupCreate = testCLIAlice1.Example($"group create {GroupService}");
-            GroupEncrypt = testCLIBob1.Example(
-                        $"dare encode{TestFile1} {TestFile1Group} /encrypt={GroupService}",
-                        $"dare decode  {TestFile1Group}");
-            GroupDecryptAlice = testCLIAlice1.Example($"dare decode  {TestFile1Group}");
-            GroupAdd = testCLIAlice1.Example($"group add {GroupService} {BobService}");
-            GroupDecryptBob2 = testCLIAlice1.Example($"dare decode  {TestFile1Group}");
-            GroupList1 = testCLIAlice1.Example($"group list {GroupService}");
-            GroupDelete = testCLIAlice1.Example($"group delete {GroupService} {BobService}");
-            GroupDecryptBob3 = testCLIAlice1.Example($"dare decode  {TestFile1Group}");
-            GroupList2 = testCLIAlice1.Example($"group list {GroupService}");
+            //GroupCreate = testCLIAlice1.Example($"group create {GroupService}");
+            //GroupEncrypt = testCLIBob1.Example(
+            //            $"dare encode{TestFile1} {TestFile1Group} /encrypt={GroupService}",
+            //            $"dare decode  {TestFile1Group}");
+            //GroupDecryptAlice = testCLIAlice1.Example($"dare decode  {TestFile1Group}");
+            //GroupAdd = testCLIAlice1.Example($"group add {GroupService} {BobService}");
+            //GroupDecryptBob2 = testCLIAlice1.Example($"dare decode  {TestFile1Group}");
+            //GroupList1 = testCLIAlice1.Example($"group list {GroupService}");
+            //GroupDelete = testCLIAlice1.Example($"group delete {GroupService} {BobService}");
+            //GroupDecryptBob3 = testCLIAlice1.Example($"dare decode  {TestFile1Group}");
+            //GroupList2 = testCLIAlice1.Example($"group list {GroupService}");
 
             }
 

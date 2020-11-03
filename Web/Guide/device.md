@@ -12,7 +12,7 @@ the mesh service account alice@example.com to which connection is requested:
 
 
 ~~~~
-Missing example 1
+Missing example 9
 ~~~~
 
 In this case there is no existing device profile and so a new profile is
@@ -30,7 +30,7 @@ messages.
 
 
 ~~~~
-Missing example 2
+Missing example 10
 ~~~~
 
 Alice sees the request that she posted and approves it with the connect
@@ -38,7 +38,7 @@ Alice sees the request that she posted and approves it with the connect
 
 
 ~~~~
-Missing example 3
+Missing example 11
 ~~~~
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
@@ -46,7 +46,7 @@ request:
 
 
 ~~~~
-Missing example 4
+Missing example 12
 ~~~~
 
 The connection process is completed by synchronizing the new device. At this point,
@@ -55,7 +55,7 @@ second:
 
 
 ~~~~
-Missing example 5
+Missing example 13
 ~~~~
 
 ##Managing connected devices
@@ -65,14 +65,14 @@ catalog:
 
 
 ~~~~
-Missing example 6
+Missing example 14
 ~~~~
 
 The `device delete` command removes a device from the catalog:
 
 
 ~~~~
-Missing example 7
+Missing example 15
 ~~~~
 
 
@@ -90,14 +90,14 @@ a new PIN code:
 
 
 ~~~~
-Missing example 8
+Missing example 16
 ~~~~
 
 The pin code can now be used to authenticate the connection request:
 
 
 ~~~~
-Missing example 9
+Missing example 17
 ~~~~
 
 Since the PIN code that was issued was set to be self-authorizing, the device
@@ -106,7 +106,7 @@ administrator device:
 
 
 ~~~~
-Missing example 10
+Missing example 18
 ~~~~
 
 

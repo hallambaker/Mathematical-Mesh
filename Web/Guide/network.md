@@ -10,7 +10,12 @@ The `network add` command adds a network entry to a catalog:
 
 
 ~~~~
-Missing example 1
+<div="terminal">
+<cmd>Alice> network add NetworkEntry1.json NetID1
+<rsp>ERROR - Cannot access a closed file.
+<cmd>Alice> network add NetworkEntry2.json NetID2
+<rsp>ERROR - Cannot access a closed file.
+</div>
 ~~~~
 
 
@@ -20,7 +25,10 @@ The `network get`  command retreives a network entry by label:
 
 
 ~~~~
-Missing example 2
+<div="terminal">
+<cmd>Alice> network get NetID2
+<rsp>Empty
+</div>
 ~~~~
 
 ## Deleting networks
@@ -29,7 +37,13 @@ Network entries may be deleted using the  `network delete` command:
 
 
 ~~~~
-Missing example 3
+<div="terminal">
+<cmd>Alice> network delete NetID2
+<rsp>ERROR - The entry could not be found in the store.
+<cmd>Alice> network list
+<rsp>CatalogedNetwork
+
+</div>
 ~~~~
 
 ## Listing networks
@@ -38,7 +52,11 @@ A complete list of networks is obtained using the  `network list` command:
 
 
 ~~~~
-Missing example 4
+<div="terminal">
+<cmd>Alice> network list
+<rsp>CatalogedNetwork
+
+</div>
 ~~~~
 
 ## Adding devices
@@ -46,6 +64,6 @@ Missing example 4
 Devices are given authorization to access the networks catalog using the 
  `device auth` command:
 
- %  ConsoleExample (Examples.NetworkAuth);
+ %  ConsoleExample (ShellNetwork.NetworkAuth);
 
 

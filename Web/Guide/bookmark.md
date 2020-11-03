@@ -19,7 +19,14 @@ The `bookmark add` command adds a bookmark entry to a catalog:
 
 
 ~~~~
-Missing example 1
+<div="terminal">
+<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
+<rsp>ERROR - Cannot access a closed file.
+<cmd>Alice> bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
+<rsp>ERROR - Cannot access a closed file.
+<cmd>Alice> bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
+<rsp>ERROR - Cannot access a closed file.
+</div>
 ~~~~
 
 
@@ -29,7 +36,10 @@ The `bookmark get`  command retreives a bookmark  by its index label:
 
 
 ~~~~
-Missing example 2
+<div="terminal">
+<cmd>Alice> bookmark get Folder1/2
+<rsp>Empty
+</div>
 ~~~~
 
 ## Deleting bookmarks
@@ -38,7 +48,10 @@ Bookmark entries may be deleted using the  `bookmark delete` command:
 
 
 ~~~~
-Missing example 3
+<div="terminal">
+<cmd>Alice> bookmark delete BookmarkPath2
+<rsp>ERROR - The entry could not be found in the store.
+</div>
 ~~~~
 
 ## Listing bookmarks
@@ -47,7 +60,11 @@ A complete list of bookmarks is obtained using the  `bookmark list` command:
 
 
 ~~~~
-Missing example 4
+<div="terminal">
+<cmd>Alice> bookmark list
+<rsp>CatalogedBookmark
+
+</div>
 ~~~~
 
 ## Adding devices
@@ -57,12 +74,12 @@ Devices are given authorization to access the bookmarks catalog using the
 
 
 ~~~~
-Missing example 5
+Missing example 46
 ~~~~
 
 The new device now has access to the Bookmarks catalog:
 
 
 ~~~~
-Missing example 6
+Missing example 47
 ~~~~

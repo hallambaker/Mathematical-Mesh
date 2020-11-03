@@ -10,7 +10,9 @@ The `dare encode` command is used to encode files as DARE Messages:
 
 
 ~~~~
-Missing example 1
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt
+</div>
 ~~~~
 
 In this case, the file `TestFile1.txt` contains the text `"This is a test 1"`.
@@ -22,7 +24,11 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 
 ~~~~
-Missing example 2
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare ^
+    /key=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
 ~~~~
 
 Specifying a directory instead of a file causes all the files in the directory to be 
@@ -30,7 +36,10 @@ encoded:
 
 
 ~~~~
-Missing example 3
+<div="terminal">
+<cmd>Alice> dare encode TestDir1 /encrypt=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+<rsp>ERROR - No decryption key is available
+</div>
 ~~~~
 
 Files may also be signed using the user's Mesh signature key and/or encrypted for one
@@ -40,7 +49,13 @@ public encryption key.
 
 
 ~~~~
-Missing example 4
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt ^
+    TestFile1.txt.mesh.dare/encrypt=bob@example.com ^
+    /sign=alice@example.com
+<rsp>ERROR - Could not find a part of the path 'C:\Users\hallam\Test\Worki
+ngDirectory\TestFile1.txt.mesh.dare\encrypt=bob@example.com'.
+</div>
 ~~~~
 
 
@@ -51,14 +66,22 @@ digest values on a DARE Message without decoding the message body:
 
 
 ~~~~
-Missing example 5
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.dare
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
+stFile1.txt.dare'.
+</div>
 ~~~~
 
 The command to verify a signed message is identical:
 
 
 ~~~~
-Missing example 6
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.mesh.dare
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
+stFile1.txt.mesh.dare'.
+</div>
 ~~~~
 
 Messages that are encrypted and authenticated under a specified symmetric key 
@@ -67,13 +90,21 @@ level otherwise.
 
 
 ~~~~
-Missing example 7
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare ^
+    /encrypt=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
 ~~~~
 
 
 
 ~~~~
-Missing example 8
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
+stFile1.txt.symmetric.dare'.
+</div>
 ~~~~
 
 ## Decoding a DARE message to a file.
@@ -82,14 +113,22 @@ The `dare decode` command is used to decode and verify DARE Messages:
 
 
 ~~~~
-Missing example 9
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.dare
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
+stFile1.txt.dare'.
+</div>
 ~~~~
 
 To decode a message encrypted under a symmetric key, we must specify the key:
 
 
 ~~~~
-Missing example 10
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare ^
+    /encrypt=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
 ~~~~
 
 If the message is encrypted under our private encryption key, the tool will locate
@@ -97,7 +136,11 @@ the necessary decryption key(s) automatically:
 
 
 ~~~~
-Missing example 11
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.mesh.dare
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
+stFile1.txt.mesh.dare'.
+</div>
 ~~~~
 
 
@@ -107,7 +150,7 @@ The `dare earl` command is used to create an EARL:
 
 
 ~~~~
-Missing example 12
+Missing example 5
 ~~~~
 
 A new secret is generated with the specified number of bits, this is then used
@@ -119,7 +162,7 @@ the transaction to be written to a DARE Container Log.
 
 
 ~~~~
-Missing example 13
+Missing example 6
 ~~~~
 
 The `/new` option causes the file to be encoded if and only if it has not 
@@ -127,6 +170,6 @@ been processed already.
 
 
 ~~~~
-Missing example 14
+Missing example 7
 ~~~~
 

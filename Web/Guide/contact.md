@@ -18,7 +18,11 @@ a file.
 
 
 ~~~~
-Missing example 1
+<div="terminal">
+<cmd>Alice> contact add email carol@example.com
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\em
+ail'.
+</div>
 ~~~~
 
 The file carol-contact.json contains Carol's contact information in
@@ -33,7 +37,10 @@ details:
 
 
 ~~~~
-Missing example 2
+<div="terminal">
+<cmd>Alice> contact self email alice@example.com
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~
 
 Contacts may also be added by accepting contact request messages using the 
@@ -41,7 +48,10 @@ Contacts may also be added by accepting contact request messages using the
 
 
 ~~~~
-Missing example 3
+<div="terminal">
+<cmd>Alice> message accept tbs
+<rsp>ERROR - The specified message could not be found.
+</div>
 ~~~~
 
 ## Finding contacts
@@ -51,7 +61,10 @@ email address or label:
 
 
 ~~~~
-Missing example 4
+<div="terminal">
+<cmd>Alice> contact get carol@example.com
+<rsp>Empty
+</div>
 ~~~~
 
 ## Listing contacts
@@ -60,7 +73,14 @@ A complete list of contacts is obtained using the  `contact list` command:
 
 
 ~~~~
-Missing example 5
+<div="terminal">
+<cmd>Alice> contact list
+<rsp>Entry<CatalogedContact>: MCDH-FIPQ-XWI3-2MLS-KZ6U-SAVO-EVSH
+  Person MCDH-FIPQ-XWI3-2MLS-KZ6U-SAVO-EVSH
+  Anchor MCDH-FIPQ-XWI3-2MLS-KZ6U-SAVO-EVSH
+  Address alice@example.com
+
+</div>
 ~~~~
 
 ## Deleting contacts
@@ -69,19 +89,22 @@ Contact entries may be deleted using the  `contact delete` command:
 
 
 ~~~~
-Missing example 6
+<div="terminal">
+<cmd>Alice> contact delete carol@example.com
+<rsp>ERROR - The entry could not be found in the store.
+</div>
 ~~~~
 
 
 
-## Adding devices
+## Adding devicesF
 
 Devices are given authorization to access the contacts catalog using the 
  `device auth` command:
 
- %  ConsoleExample (Examples.ContactAuth);
+ %  ConsoleExample (ShellContact.ContactAuth);
 
  The newly authorized device can now access the contacts catalog:
 
- %  ConsoleExample (Examples.ContactList2);
+ %  ConsoleExample (ShellContact.ContactList2);
 

@@ -33,6 +33,26 @@ add   Add calendar entry from file
 </div>
 ~~~~
 
+~~~~
+<div="terminal">
+<cmd>Alice> network add NetworkEntry1.json NetID1
+<rsp>ERROR - Cannot access a closed file.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> network add NetworkEntry1.json NetID1 /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "Cannot access a closed file."}}
+</div>
+~~~~
+
+
 # network delete
 
 ~~~~
@@ -48,6 +68,26 @@ delete   Delete calendar entry
 <over>
 </div>
 ~~~~
+
+~~~~
+<div="terminal">
+<cmd>Alice> network delete NetID2
+<rsp>ERROR - The entry could not be found in the store.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> network delete NetID2 /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "The entry could not be found in the store."}}
+</div>
+~~~~
+
 
 # network get
 
@@ -65,6 +105,25 @@ get   Lookup calendar entry
 </div>
 ~~~~
 
+~~~~
+<div="terminal">
+<cmd>Alice> network get NetID2
+<rsp>Empty
+</div>
+~~~~
+
+Specifying the /json option returns a result of type ResultEntry:
+
+~~~~
+<div="terminal">
+<cmd>Alice> network get NetID2 /json
+<rsp>{
+  "ResultEntry": {
+    "Success": false}}
+</div>
+~~~~
+
+
 # network list
 
 ~~~~
@@ -79,4 +138,28 @@ list   List network entries
 <over>
 </div>
 ~~~~
+
+~~~~
+<div="terminal">
+<cmd>Alice> network list
+<rsp>CatalogedNetwork
+
+</div>
+~~~~
+
+Specifying the /json option returns a result of type ResultDump:
+
+~~~~
+<div="terminal">
+<cmd>Alice> network list /json
+<rsp>{
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "CatalogedNetwork": {
+          "Service": "myWiFi",
+          "Password": "securePassword"}}]}}
+</div>
+~~~~
+
 

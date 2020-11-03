@@ -180,9 +180,13 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedMessagePinValidated);
         Enveloped<MessagePinValidated> envelopedMessagePinValidated;
 
+        ///<summary>The authorized action.</summary> 
         public virtual string Action { get; }
 
-
+        /// <summary>
+        /// Create authentication data using the pin value <paramref name="pin"/>/
+        /// </summary>
+        /// <param name="pin">The pin value.</param>
         public void Authenticate(
                     string pin) {
             if (pin == null) {
@@ -196,6 +200,13 @@ namespace Goedel.Mesh {
             PinId = MessagePin.GetPinId(saltedPin, Recipient);
             }
 
+        /// <summary>
+        /// Verify authentication data using the pin data in <paramref name="messagePin"/>, 
+        /// binding to the account <paramref name="accountAddress"/>.
+        /// </summary>
+        /// <param name="messagePin">The pin data to use for validation.</param>
+        /// <param name="accountAddress">The account address to which the validation data is bound.</param>
+        /// <returns>The result of the verification operation.</returns>
         public ProcessingResult ValidatePin(
                 MessagePin messagePin,
                 string accountAddress) {
@@ -365,6 +376,7 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedRequestConnection);
         Enveloped<RequestConnection> envelopedRequestConnection;
 
+        ///<summary>The action for pin code validation.</summary> 
         public override string Action => MeshConstants.MessagePINActionDevice;
 
         /// <summary>
@@ -465,6 +477,7 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedRequestContact);
         Enveloped<MessageContact> envelopedRequestContact;
 
+        ///<summary>The action for pin code validation.</summary> 
         public override string Action => MeshConstants.MessagePINActionContact;
 
         }

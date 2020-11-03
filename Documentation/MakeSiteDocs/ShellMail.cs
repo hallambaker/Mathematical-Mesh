@@ -33,18 +33,18 @@ namespace ExampleGenerator {
 
         public ShellMail(CreateExamples createExamples) :
                 base(createExamples) {
-            MailAdd = testCLIAlice1.Example($"mail add {AliceService1}");
-            MailAddExplicit = testCLIAlice1.Example($"mail add {AliceService2} /inbound={AliceAccount2Inbound} /outbound={AliceAccount2Outbound}");
-            MailUpdate = testCLIAlice1.Example($"mail update {AliceService2}");
+            //MailAdd = testCLIAlice1.Example($"mail add {AliceService1}");
+            //MailAddExplicit = testCLIAlice1.Example($"mail add {AliceService2} /inbound={AliceAccount2Inbound} /outbound={AliceAccount2Outbound}");
+            //MailUpdate = testCLIAlice1.Example($"mail update {AliceService2}");
 
-            MailUpdateOpenPGP = testCLIAlice1.Example($"mail update  {AliceService1} /openpgp");
-            MailOpenPGPPrivate = testCLIAlice1.Example($"mail openpgp private {AliceService1} {MailPGPPrivateKey}");
-            MailOpenPGPPublic = testCLIAlice1.Example($"mail openpgp public {AliceService1} {MailPGPPublicKey}");
+            //MailUpdateOpenPGP = testCLIAlice1.Example($"mail update  {AliceService1} /openpgp");
+            //MailOpenPGPPrivate = testCLIAlice1.Example($"mail openpgp private {AliceService1} {MailPGPPrivateKey}");
+            //MailOpenPGPPublic = testCLIAlice1.Example($"mail openpgp public {AliceService1} {MailPGPPublicKey}");
 
-            MailUpdateSMIME = testCLIAlice1.Example($"mail {AliceService1} /smime");
-            MailSMIMECA = testCLIAlice1.Example($"mail {AliceService1} /ca={SMIMECA}");
-            MailSMIMEPrivate = testCLIAlice1.Example($"mail smime private {AliceService1} {MailSMIMEPrivateKey}");
-            MailSMIMEPublic = testCLIAlice1.Example($"mail smime public {AliceService1} {MailSMIMEPublicKey}");
+            //MailUpdateSMIME = testCLIAlice1.Example($"mail {AliceService1} /smime");
+            //MailSMIMECA = testCLIAlice1.Example($"mail {AliceService1} /ca={SMIMECA}");
+            //MailSMIMEPrivate = testCLIAlice1.Example($"mail smime private {AliceService1} {MailSMIMEPrivateKey}");
+            //MailSMIMEPublic = testCLIAlice1.Example($"mail smime public {AliceService1} {MailSMIMEPublicKey}");
 
             }
         }

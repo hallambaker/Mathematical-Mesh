@@ -3,7 +3,7 @@ Alice creates an SSH profile within her Mesh on the administrative device.
 
 
 ~~~~
-Missing example 1
+Missing example 72
 ~~~~
 
 After configuring an SSH server to accept her new SSH credential, she can use any of her devices 

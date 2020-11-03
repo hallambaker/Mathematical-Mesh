@@ -71,6 +71,26 @@ file name is the input file name with the additional extension `.dare`.
 
 
 
+~~~~
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "The option System.Object[] is not known."}}
+</div>
+~~~~
+
+
 
 # dare decode
 
@@ -100,6 +120,26 @@ file name is the input file name stripped of the extension `.dare` if present or
 with the extension `.undare` otherwise.
 
 
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "The option System.Object[] is not known."}}
+</div>
+~~~~
+
+
 # dare verify
 
 ~~~~
@@ -122,6 +162,26 @@ currently active key collection and reports success or failure.
 
 The active key collection may be overriden using the `/mesh` option.
 
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "The option System.Object[] is not known."}}
+</div>
+~~~~
 
 
 # dare earl
