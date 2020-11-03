@@ -34,7 +34,7 @@ namespace ExampleGenerator {
 				_Output.Write ("A mail application profile is added to a Mesh profile using the \n{0}", _Indent);
 				_Output.Write ("{1} command:\n{0}", _Indent, ToCommand("mail add"));
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.MailAdd);
+				  ConsoleExample (ShellMail.MailAdd);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The client attempts to obtain the network configuration for the inbound and\n{0}", _Indent);
 				_Output.Write ("outbound mail services using [SRV auto \n{0}", _Indent);
@@ -43,7 +43,7 @@ namespace ExampleGenerator {
 				_Output.Write ("Alternatively, the configuration may be given explicitly using the form \n{0}", _Indent);
 				_Output.Write ("\\<domain\\>:\\<port\\>:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.MailAddExplicit);
+				  ConsoleExample (ShellMail.MailAddExplicit);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The mail profile only contains the network configuration information. Access \n{0}", _Indent);
 				_Output.Write ("credentials for the inbound and outbound mail services must be configured in the\n{0}", _Indent);
@@ -52,7 +52,7 @@ namespace ExampleGenerator {
 				_Output.Write ("Account profiles may be updated to change the network configuration using the\n{0}", _Indent);
 				_Output.Write ("{1} command:\n{0}", _Indent, ToCommand("mail add"));
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.MailUpdate);
+				  ConsoleExample (ShellMail.MailUpdate);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Specifying no values causes the SRV auto configuration configuration data to be \n{0}", _Indent);
 				_Output.Write ("used replacing the values previously set.\n{0}", _Indent);
@@ -62,30 +62,30 @@ namespace ExampleGenerator {
 				_Output.Write ("An OpenPGP public key pair for encryption and authentication may be added to the\n{0}", _Indent);
 				_Output.Write ("profile when it is created or as a later update using the `/openpgp` option:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.MailUpdateOpenPGP);
+				  ConsoleExample (ShellMail.MailUpdateOpenPGP);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The private key may be extracted from the profile in a variety of interchange\n{0}", _Indent);
 				_Output.Write ("formats to allow installation in a key service:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.MailOpenPGPPrivate);
+				  ConsoleExample (ShellMail.MailOpenPGPPrivate);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The public key may be exported likewise:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.MailOpenPGPPublic);
+				  ConsoleExample (ShellMail.MailOpenPGPPublic);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Creating an S/MIME Key Set\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("An S/MIME public key pair for encryption and authentication may be added to the\n{0}", _Indent);
 				_Output.Write ("profile when it is created or as a later update using the `/smime` option:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.MailUpdateSMIME);
+				  ConsoleExample (ShellMail.MailUpdateSMIME);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("By default, a self signed certificate is created.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The {1}  causes a certificate request to be sent to the\n{0}", _Indent, ToCommand("mail smime validate"));
 				_Output.Write ("specified Certificate Authority service via ACME:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.MailSMIMECA);
+				  ConsoleExample (ShellMail.MailSMIMECA);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Responding to the validation challenge requires an access credential for the \n{0}", _Indent);
 				_Output.Write ("inbound email service to be specified.\n{0}", _Indent);
@@ -93,11 +93,11 @@ namespace ExampleGenerator {
 				_Output.Write ("The private key may be extracted from the profile in a variety of interchange\n{0}", _Indent);
 				_Output.Write ("formats to allow installation in a key service:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.MailSMIMEPrivate);
+				  ConsoleExample (ShellMail.MailSMIMEPrivate);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The public key may be exported likewise:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.MailSMIMEPublic);
+				  ConsoleExample (ShellMail.MailSMIMEPublic);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		

@@ -54,7 +54,7 @@ namespace ExampleGenerator {
 				_Output.Write ("Contacts may also be added by accepting contact request messages using the \n{0}", _Indent);
 				_Output.Write ("{1} command:\n{0}", _Indent, ToCommand("message accept"));
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (ShellContact.ContactAccept);
+				 ConsoleExample (ShellMessage.ContactAccept);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Finding contacts\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

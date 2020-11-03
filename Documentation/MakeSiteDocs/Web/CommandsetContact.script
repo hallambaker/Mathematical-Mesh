@@ -41,7 +41,7 @@ details:
 Contacts may also be added by accepting contact request messages using the 
 #{ToCommand("message accept")} command:
 
-#% ConsoleExample (ShellContact.ContactAccept);
+#% ConsoleExample (ShellMessage.ContactAccept);
 
 #### Finding contacts
 

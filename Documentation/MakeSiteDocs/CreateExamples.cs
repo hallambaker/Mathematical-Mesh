@@ -125,11 +125,11 @@ namespace ExampleGenerator {
             // Check the passwords work
 
             Account.PasswordAdd = testCLIAlice1.Example(
-                $"password add {PasswordSite} {PasswordAccount1} {PasswordValue1}",
-                $"password add {PasswordSite2} {PasswordAccount2} {PasswordValue2}"
+                $"password add {ShellPassword.PasswordSite} {ShellPassword.PasswordAccount1} {ShellPassword.PasswordValue1}",
+                $"password add {ShellPassword.PasswordSite2} {ShellPassword.PasswordAccount2} {ShellPassword.PasswordValue2}"
                 );
             Account.PasswordGet = testCLIAlice1.Example(
-                $"password get {PasswordSite}"
+                $"password get {ShellPassword.PasswordSite}"
                 );
 
             // Bookmark catalog
@@ -202,7 +202,7 @@ namespace ExampleGenerator {
             // Password catalog access broken on device 2
             // Don't have the account decryption key either.
             Connect.PasswordList2 = testCLIAlice2.Example(
-                $"password get {PasswordSite}",
+                $"password get {ShellPassword.PasswordSite}",
                 $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
                 );
 

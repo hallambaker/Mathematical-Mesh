@@ -81,10 +81,10 @@ namespace ExampleGenerator {
             GoDareSequence();
             //GoAdvanced();
 
-            DoCommandsKey();
-            DoCommandsHash();
-            DoCommandsDare();
-            DoCommandsContainer();
+            ShellKey = new ShellKey(this);
+            ShellHash = new ShellHash(this);
+            ShellDare = new ShellDare(this);
+            ShellSequence = new ShellSequence(this);
 
             }
 

@@ -121,10 +121,10 @@ namespace ExampleGenerator {
 				  ConsoleReference (ShellPassword.PasswordAdd);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _PasswordGet._DescribeCommand);
-				  ConsoleReference (ShellPassword.PasswordDelete);
+				  ConsoleReference (ShellPassword.PasswordGet);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _PasswordDelete._DescribeCommand);
-				  ConsoleReference (ProfileList);
+				  ConsoleReference (ShellPassword.PasswordDelete);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _PasswordDump._DescribeCommand);
 				  ConsoleReference (ShellPassword.PasswordList);

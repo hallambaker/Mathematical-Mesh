@@ -34,24 +34,24 @@ perform access control on inbound messages.
 Having created a Mesh profile, Bob asks Alice to add him to her contacts catalog
 using the #{ToCommand("message contact")} command:
 
-#% ConsoleExample (ShellContact.ContactRequest);
+#% ConsoleExample (ShellMessage.ContactRequest);
 
 Alice reviews her pending messages using the #{ToCommand("message pending")} command:
 
-#% ConsoleExample (ShellContact.ContactPending);
+#% ConsoleExample (ShellMessage.ContactPending);
 
 Alice sees the request from Bob and accepts it with the #{ToCommand("message accept")} command:
 
-#% ConsoleExample (ShellContact.ContactAccept);
+#% ConsoleExample (ShellMessage.ContactAccept);
 
 Bob's contact information has been added to Alice's address book:
 
-#% ConsoleExample (ShellContact.ContactCatalog);
+#% ConsoleExample (ShellMessage.ContactCatalog);
 
 Bob can find out if Alice has accepted his contact request using the 
 #{ToCommand("message status")} command:
 
-#% ConsoleExample (ShellContact.ContactGetResponse);
+#% ConsoleExample (ShellMessage.ContactGetResponse);
 
 Alice has accepted Bob's request and added him to her contacts list. She has also sent
 Bob a contact request which for the sake of convenience, is accepted automatically.
@@ -59,11 +59,11 @@ Bob a contact request which for the sake of convenience, is accepted automatical
 Alice isn't required to accept contact requests. She rejects the request from Mallet 
 using the #{ToCommand("message reject")} command:
 
-#% ConsoleExample (ShellContact.ContactReject);
+#% ConsoleExample (ShellMessage.ContactReject);
 
 For good measure, she decides to block further requests:
 
-#% ConsoleExample (ShellContact.ContactBlock);
+#% ConsoleExample (ShellMessage.ContactBlock);
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
 question. If the user chooses to respond, the sender receives back a non-repudiable 
@@ -88,39 +88,39 @@ use of the available graphics and other affordances.
 
 Alice sends Bob an email asking him to buy some equipment costing $6,000. Since this
 is a significant sum, Bob needs an authorization for the purchase. He sends Alice
-a confirmation request `#{ShellConfirm.BobPurchase}` using the  
+a confirmation request `#{ShellMessage.BobPurchase}` using the  
 #{ToCommand("message confirm")} command:
 
-#%  ConsoleExample (ShellConfirm.ConfirmRequest);
+#%  ConsoleExample (ShellMessage.ConfirmRequest);
 
 Alice reviews her pending messages using the using the #{ToCommand("message pending")} command:
 
-#%  ConsoleExample (ShellConfirm.ConfirmPending);
+#%  ConsoleExample (ShellMessage.ConfirmPending);
 
 Alice she accepts Bob's request using the #{ToCommand("message pending")} command:
 
-#%  ConsoleExample (ShellConfirm.ConfirmAccept);
+#%  ConsoleExample (ShellMessage.ConfirmAccept);
 
 Bob receives Alice's approval using the #{ToCommand("message status")} command:
 
-#%  ConsoleExample (ShellConfirm.ConfirmGetAccept);
+#%  ConsoleExample (ShellMessage.ConfirmGetAccept);
 
 In a full workflow system, Bob might include the response from Alice in a message to
 the accounts department asking them to place the order.
 
 Alice can also reject requests using the #{ToCommand("message reject")} command:
 
-#%  ConsoleExample (ShellConfirm.ConfirmReject);
+#%  ConsoleExample (ShellMessage.ConfirmReject);
 
 Bob receives a reply telling him the request was rejected:
 
-#%  ConsoleExample (ShellConfirm.ConfirmGetReject);
+#%  ConsoleExample (ShellMessage.ConfirmGetReject);
 
 As with all Mesh messages, confirmation requests are subject to access control.
 When Mallet attempts to make a request of Alice, it is rejected because Alice
 hasn't accepted his credentials or authorized him to send confirmation requests:
 
-#%  ConsoleExample (ShellConfirm.ConfirmMallet);
+#%  ConsoleExample (ShellMessage.ConfirmMallet);
 
 
 #end xfile
@@ -133,27 +133,27 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 
 #% Describe(CommandSet, _MessageContact._DescribeCommand);
-#%  ConsoleReference (ShellContact.ContactRequest);
+#%  ConsoleReference (ShellMessage.ContactRequest);
 
 #% Describe(CommandSet, _MessageConfirm._DescribeCommand);
-#%  ConsoleReference (ShellConfirm.ConfirmRequest);
+#%  ConsoleReference (ShellMessage.ConfirmRequest);
 
 
 #% Describe(CommandSet, _MessagePending._DescribeCommand);
-#%  ConsoleReference (ShellContact.ContactPending);
+#%  ConsoleReference (ShellMessage.ContactPending);
 
 
 #% Describe(CommandSet, _MessageStatus._DescribeCommand);
-#%  ConsoleReference (ShellConfirm.ConfirmGetAccept);
+#%  ConsoleReference (ShellMessage.ConfirmGetAccept);
 
 #% Describe(CommandSet, _MessageAccept._DescribeCommand);
-#%  ConsoleReference (ShellContact.ContactAccept);
+#%  ConsoleReference (ShellMessage.ContactAccept);
 
 #% Describe(CommandSet, _MessageReject._DescribeCommand);
-#%  ConsoleReference (ShellContact.ContactReject);
+#%  ConsoleReference (ShellMessage.ContactReject);
 
 #% Describe(CommandSet, _MessageBlock._DescribeCommand);
-#%  ConsoleReference (ShellContact.ContactBlock);
+#%  ConsoleReference (ShellMessage.ContactBlock);
 
 #end xfile
 
