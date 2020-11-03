@@ -92,15 +92,15 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Simple container\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("the following example shows a simple container with first frame and a single data frame:\n{0}", _Indent);
+				_Output.Write ("The following example shows a simple container with first frame and a single data frame:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}~~~~\n{0}", _Indent, Example.ContainerFramingSimple);
+				_Output.Write ("{1}~~~~\n{0}", _Indent, Dare.ContainerFramingSimple);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Since there is no integrity check, there is no need for trailer entries.\n{0}", _Indent);
 				_Output.Write ("The header values are:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DumpHeaders (Example.ContainerHeadersSimple);
+				DumpHeaders (Dare.ContainerHeadersSimple);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Payload and chain digests\n{0}", _Indent);
@@ -109,7 +109,7 @@ namespace ExampleGenerator {
 				_Output.Write ("data frames. The headers of these frames is the same as before but the\n{0}", _Indent);
 				_Output.Write ("frames now have trailers specifying the PayloadDigest and ChainDigest values:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DumpHeaders (Example.ContainerHeadersChain);
+				DumpHeaders (Dare.ContainerHeadersChain);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Merkle Tree\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -117,7 +117,7 @@ namespace ExampleGenerator {
 				_Output.Write ("data frames. The trailers now contain the TreePosition and TreeDigest\n{0}", _Indent);
 				_Output.Write ("values:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DumpHeaders (Example.ContainerHeadersMerkleTree);
+				DumpHeaders (Dare.ContainerHeadersMerkleTree);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Signed container\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -127,26 +127,26 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.SignatureAliceKey));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.SignatureAliceKey));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The container headers and trailers are:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DumpHeaders (Example.ContainerHeadersSigned);
+				DumpHeaders (Dare.ContainerHeadersSigned);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Encrypted container\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The following example shows a container in which all the frame payloads are encrypted \n{0}", _Indent);
 				_Output.Write ("under the same master secret established in a key agreement specified in the first frame.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DumpHeaders (Example.ContainerHeadersEncryptSingleSession);
+				DumpHeaders (Dare.ContainerHeadersEncryptSingleSession);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Here are the container bytes. Note that the content is now encrypted and has expanded by\n{0}", _Indent);
 				_Output.Write ("25 bytes. These are the salt (16 bytes), the AES padding (4 bytes) and the \n{0}", _Indent);
 				_Output.Write ("JSON-B framing (5 bytes).\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.ContainerFramingEncrypted);
+				_Output.Write ("{1}\n{0}", _Indent, Dare.ContainerFramingEncrypted);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -154,7 +154,7 @@ namespace ExampleGenerator {
 				_Output.Write ("The following example shows a container in which all the frame payloads are encrypted \n{0}", _Indent);
 				_Output.Write ("under separate key agreements specified in the payload frames.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DumpHeaders (Example.ContainerHeadersEncryptIndependentSession);
+				DumpHeaders (Dare.ContainerHeadersEncryptIndependentSession);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -179,10 +179,10 @@ namespace ExampleGenerator {
 			_Output.Write ("Frame {1}\n{0}", _Indent, Frame.Header.ContainerInfo.Index);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, Frame.Header);
+			_Output.Write ("{1}\n{0}", _Indent,  JSONDebugWriter.Write (Frame.Header));
 			_Output.Write ("\n{0}", _Indent);
 			if (  (Frame.Trailer != null) ) {
-				_Output.Write ("{1}\n{0}", _Indent, Frame.Trailer);
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write(Frame.Trailer));
 				} else {
 				_Output.Write ("[Empty trailer]\n{0}", _Indent);
 				}
@@ -205,7 +205,7 @@ namespace ExampleGenerator {
 				_Output.Write ("For example, consider the following mail message:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}~~~~\n{0}", _Indent, Example.MailMessageAsRFC822);
+				_Output.Write ("{1}~~~~\n{0}", _Indent, Dare.MailMessageAsRFC822);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Existing encryption approaches require that header fields such as the subject line be encrypted \n{0}", _Indent);
 				_Output.Write ("with the body of the message or not encrypted at all. Neither approach is satisfactory.\n{0}", _Indent);
@@ -217,7 +217,7 @@ namespace ExampleGenerator {
 				_Output.Write ("The plaintext form of the equivalent DARE Message encoding is:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.MailMessageAsDAREPlaintext, false));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.MailMessageAsDAREPlaintext, false));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("This contains the same information as before but the mail message headers are \n{0}", _Indent);
@@ -240,7 +240,7 @@ namespace ExampleGenerator {
 				_Output.Write ("The encoding of the 'From' header of the previous example as a plaintext EDS is as follows:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.EDSText);
+				_Output.Write ("{1}\n{0}", _Indent, Dare.EDSText);
 				_Output.Write ("~~~~\n{0}", _Indent);
 					}
 		
@@ -262,7 +262,7 @@ namespace ExampleGenerator {
 				_Output.Write ("includes Recipients and Salt fields to enable the content to be decoded.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.MailMessageAsDAREEncrypted, false));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.MailMessageAsDAREEncrypted, false));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -284,26 +284,26 @@ namespace ExampleGenerator {
 				_Output.Write ("In the following examples, Alice's encryption private key parameters are:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.DareMessageAliceKey));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.DareMessageAliceKey));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write (" Alice's signature private key parameters are:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.SignatureAliceKey));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.SignatureAliceKey));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The body of the test message is the UTF8 representation of the following string:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("\"{1}\"\n{0}", _Indent, Example.DareMessageTest1.ToUTF8());
+				_Output.Write ("\"{1}\"\n{0}", _Indent, Dare.DareMessageTest1.ToUTF8());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The EDS sequences, are the UTF8 representation of the following strings:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("\"{1}\"\n{0}", _Indent, Example.DareMessageTest2.ToUTF8());
-				_Output.Write ("\"{1}\"\n{0}", _Indent, Example.DareMessageTest3.ToUTF8());
+				_Output.Write ("\"{1}\"\n{0}", _Indent, Dare.DareMessageTest2.ToUTF8());
+				_Output.Write ("\"{1}\"\n{0}", _Indent, Dare.DareMessageTest3.ToUTF8());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Plaintext Message\n{0}", _Indent);
@@ -312,7 +312,7 @@ namespace ExampleGenerator {
 				_Output.Write ("followed by the message body:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.DAREMessageAtomic));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.DAREMessageAtomic));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Plaintext Message with EDS\n{0}", _Indent);
@@ -320,13 +320,13 @@ namespace ExampleGenerator {
 				_Output.Write ("If a plaintext message contains EDS sequences, these are also in plaintext:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.MessageAtomicDS));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.MessageAtomicDS));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Encrypted Message\n{0}", _Indent);
-				 var CryptoStackEncrypt = Example.CryptoStackEncrypt;
+				 var CryptoStackEncrypt = Dare.CryptoStackEncrypt;
 				 var Recipient = CryptoStackEncrypt?.Recipients?[0] as Goedel.Test.Core.DareRecipientDebug;
-				 var MessageEnc = Example.MessageEnc;
+				 var MessageEnc = Dare.MessageEnc;
 				 var Salt = MessageEnc?.Header?.Salt;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The creator generates a master session key:\n{0}", _Indent);
@@ -389,14 +389,14 @@ namespace ExampleGenerator {
 				_Output.Write ("The output sequence is the encrypted bytes:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				 WriteBytesHex (Example.MessageEnc?.Body);
+				 WriteBytesHex (Dare.MessageEnc?.Body);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Since the message is not signed, there is no need for a trailer.\n{0}", _Indent);
 				_Output.Write ("The completed message is:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.MessageEnc));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.MessageEnc));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Signed Message\n{0}", _Indent);
@@ -407,7 +407,7 @@ namespace ExampleGenerator {
 				_Output.Write ("to enable signature verification.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.DAREMessageAtomicSign));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.DAREMessageAtomicSign));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Signed and Encrypted Message\n{0}", _Indent);
@@ -417,7 +417,7 @@ namespace ExampleGenerator {
 				_Output.Write ("plaintext witness value.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.DAREMessageAtomicSignEncrypt));
+				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.DAREMessageAtomicSignEncrypt));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

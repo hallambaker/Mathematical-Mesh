@@ -56,20 +56,20 @@ restrictions of this form do not appear to be frequently realized in practice.
 
 Recryption groups are created using the #{ToCommand("group create")} command:
 
-#%  ConsoleExample (Examples.GroupCreate);
+#%  ConsoleExample (ShellGroup.GroupCreate);
 
-This command creates the group #{Examples.GroupService}. Since Alice created the
+This command creates the group #{GroupService}. Since Alice created the
 account she is the administrator.
 
 At this point, the group has no members. Bob can encrypt a file under the group
 public key but he is unable to read it:
 
-#%  ConsoleExample (Examples.GroupEncrypt);
+#%  ConsoleExample (ShellGroup.GroupEncrypt);
 
 Since Alice is the group administrator, she can decrypt the file using her 
 administrator key:
 
-#%  ConsoleExample (Examples.GroupDecryptAlice);
+#%  ConsoleExample (ShellGroup.GroupDecryptAlice);
 
 
 #### Adding users
@@ -78,17 +78,17 @@ The #{ToCommand("group add")} command is used to add users to the group:
 
 Alice adds Bob as a member of the group:
 
-#%  ConsoleExample (Examples.GroupAdd);
+#%  ConsoleExample (ShellGroup.GroupAdd);
 
 Bob can now decrypt the file.
 
-#%  ConsoleExample (Examples.GroupDecryptBob2);
+#%  ConsoleExample (ShellGroup.GroupDecryptBob2);
 
 #### Reporting users
 
 The #{ToCommand("connect ")} command returns a list of group members:
 
-#%  ConsoleExample (Examples.GroupList1);
+#%  ConsoleExample (ShellGroup.GroupList1);
 
 The group currently has one administrator and one member.
 
@@ -96,11 +96,11 @@ The group currently has one administrator and one member.
 
 Users may be removed from a recryption group using the #{ToCommand("group delete")} command:
 
-#%  ConsoleExample (Examples.GroupDelete);
+#%  ConsoleExample (ShellGroup.GroupDelete);
 
 Bob is no longer a member of the group and his decryption request now fails:
 
-#%  ConsoleExample (Examples.GroupDecryptBob3);
+#%  ConsoleExample (ShellGroup.GroupDecryptBob3);
 
 
 #end xfile
@@ -113,16 +113,16 @@ Bob is no longer a member of the group and his decryption request now fails:
 
 
 #% Describe( CommandSet, _GroupCreate._DescribeCommand);
-#%  ConsoleReference (Examples.GroupCreate);
+#%  ConsoleReference (ShellGroup.GroupCreate);
 
 #% Describe( CommandSet, _GroupAdd._DescribeCommand);
-#%  ConsoleReference (Examples.GroupAdd);
+#%  ConsoleReference (ShellGroup.GroupAdd);
 
 #% Describe( CommandSet, _GroupDelete._DescribeCommand);
-#%  ConsoleReference (Examples.GroupDelete);
+#%  ConsoleReference (ShellGroup.GroupDelete);
 
 #% Describe( CommandSet, _GroupList._DescribeCommand);
-#%  ConsoleReference (Examples.GroupList1);
+#%  ConsoleReference (ShellGroup.GroupList1);
 
 #end xfile
 

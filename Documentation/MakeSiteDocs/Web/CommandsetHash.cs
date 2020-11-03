@@ -29,33 +29,33 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The {1}  command calculates the UDF value of a file:\n{0}", _Indent, ToCommand("hash udf"));
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (Examples.HashUDF2);
+				 ConsoleExample (ShellHash.HashUDF2);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("In this case, the file `{1}` contains the text `\"{2}\"`.\n{0}", _Indent, Examples.TestFile1, Examples.TestText1);
+				_Output.Write ("In this case, the file `{1}` contains the text `\"{2}\"`.\n{0}", _Indent, TestFile1, TestText1);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("By default, a SHA-2-512 digest is created and the IANA Media Type parameter is\n{0}", _Indent);
 				_Output.Write ("determined from the file extension of the file being processed. These defaults\n{0}", _Indent);
 				_Output.Write ("may be overriden using the `/cty` and `/alg` options:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (Examples.HashUDF3);
+				 ConsoleExample (ShellHash.HashUDF3);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("By default, UDF values are given to 140 bit precision. Higher precision may be\n{0}", _Indent);
 				_Output.Write ("specified with the `/bits' option:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (Examples.HashUDF200);
+				 ConsoleExample (ShellHash.HashUDF200);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("If the expected digest value is specified, this is used to check the calculated value:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (Examples.HashUDFExpect);
+				 ConsoleExample (ShellHash.HashUDFExpect);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The {1}  command calculates the SHA-2-512 digest and\n{0}", _Indent, ToCommand("hash digest"));
 				_Output.Write ("returns it in hexadecimal form:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (Examples.HashDigest);
+				 ConsoleExample (ShellHash.HashDigest);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Additional digest algorithms may be specified using the `/alg` option:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (Examples.HashDigests);
+				 ConsoleExample (ShellHash.HashDigests);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Calculating UDF Message Authentication Codes\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -69,16 +69,16 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("If no key is specified, a random secret is generated:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (Examples.MAC1);
+				 ConsoleExample (ShellHash.MAC1);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("A key may be specified using the `/key` option:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (Examples.MAC2);
+				 ConsoleExample (ShellHash.MAC2);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("If the expected digest value is specified, this is used to check the calculated value:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (Examples.MAC3);
+				 ConsoleExample (ShellHash.MAC3);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -107,7 +107,7 @@ namespace ExampleGenerator {
 				_Output.Write ("file according to the precision, IANA media type and digest algorithm specified\n{0}", _Indent);
 				_Output.Write ("with the `/bits`, `/cty` and `/alg` options.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleReference (Examples.HashUDF2);
+				 ConsoleReference (ShellHash.HashUDF2);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe( CommandSet, _HashDigest._DescribeCommand);
@@ -116,7 +116,7 @@ namespace ExampleGenerator {
 				_Output.Write ("file according to the digest algorithm specifiedwith the `/alg` option.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleReference (Examples.HashDigest);
+				 ConsoleReference (ShellHash.HashDigest);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `/alg` option allows the digest algorithm to be specified.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -132,7 +132,7 @@ namespace ExampleGenerator {
 				_Output.Write ("If a MAC value is specified, it is compared to the calculated value and the value\n{0}", _Indent);
 				_Output.Write ("true returned if and only if it matches the value specified.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleReference (Examples.MAC1);
+				 ConsoleReference (ShellHash.MAC1);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		}

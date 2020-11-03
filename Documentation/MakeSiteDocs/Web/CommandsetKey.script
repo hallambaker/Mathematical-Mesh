@@ -22,23 +22,23 @@ presentation aids application debugging and audit.
 
 The #{ToCommand("key nonce")} command is used to generate a new random nonce value:
 
-#% ConsoleExample (Examples.KeyNonce);
+#% ConsoleExample (ShellKey.KeyNonce);
 
 The Base32 presentation of a nonce value will always begin with the letter N.
 
 By default, a 128 bit nonce is generated but nonces of any length may be
 generated using the `/bits` option:
 
-#% ConsoleExample (Examples.KeyNonce256);
+#% ConsoleExample (ShellKey.KeyNonce256);
 
 Secrets are generated in the same way using the command `key secret`:
 
-#% ConsoleExample (Examples.KeySecret);
+#% ConsoleExample (ShellKey.KeySecret);
 
 The Base32 presentation of a secret value will always begin with the letter E.
 Again, any output length can be requested up to the platform limit:
 
-#% ConsoleExample (Examples.KeySecret256);
+#% ConsoleExample (ShellKey.KeySecret256);
 
 #### Generating EARL values
 
@@ -51,11 +51,11 @@ on the Web Service under a label that is the Content Digest of the secret.
 EARLs may be generated using the #{ToCommand("key earl")} command to generate
 a new secret/digest pair which are then used to process the content data:
 
-#% ConsoleExample (Examples.KeyEarl);
+#% ConsoleExample (ShellKey.KeyEarl);
 
 Alternatively, the #{ToCommand("dare earl")} command may be used to perform both operations:
 
-#% ConsoleExample (Examples.DareEarl);
+#% ConsoleExample (ShellDare.DareEarl);
 
 #### Sharing and recovering secrets
 
@@ -66,19 +66,19 @@ The #{ToCommand("key share")} command creates a secret and splits it into the sp
 number of shares with the specified quorum for recovery. By default, a 128
 bit secret is created and three shares are created with a quorum of two:
 
-#% ConsoleExample (Examples.KeyShare);
+#% ConsoleExample (ShellKey.KeyShare);
 
 The first UDF output is the secret key, followed by the key identifier 
 two shares. The different outputs are easily distinguished by their first 
 letter. As with every meshman command, the `/json` option may be used to 
 obtain the result as a JSON structure:
 
-#% ConsoleJSON (Examples.KeyShare);
+#% ConsoleJSON (ShellKey.KeyShare);
 
 The original secret may be recovered from a sufficient number of shares to
 meet the quorum using the #{ToCommand("key recover")}:
 
-#%  ConsoleExample (Examples.KeyRecover);
+#%  ConsoleExample (ShellKey.KeyRecover);
 
 As with secret generation, larger or smaller secrets may be created but due
 to a limitation in the implementation of the key sharing algorithm, the secret 
@@ -88,14 +88,14 @@ the nearest multiple of 32 bits.
 For example, we can create a 192 bit secret and share it five ways with a quorum
 of three:
 
-#% ConsoleExample (Examples.KeyShare2);
+#% ConsoleExample (ShellKey.KeyShare2);
 
 It is also possible to share a specified secret. This allows a secret to be 
 shared multiple times creating independent key sets. If we re-share the secret
 created earlier to create three shares with a quorum of two, the shares will
 be different:
 
-#% ConsoleExample (Examples.KeyShare3);
+#% ConsoleExample (ShellKey.KeyShare3);
 
 #end xfile
 
@@ -117,14 +117,14 @@ Nonce values should be used when it is important that a value be unpredictable b
 does not need to be kept secret. For example, the challenge in a challenge/response
 protocol.
 
-#% ConsoleReference (Examples.KeyNonce);
+#% ConsoleReference (ShellKey.KeyNonce);
 
 #% Describe(CommandSet, _KeySecret._DescribeCommand);
 
 The `key secret` command returns a randomized secret value formatted as a UDF Encryption 
 key type.
 
-#% ConsoleReference (Examples.KeySecret);
+#% ConsoleReference (ShellKey.KeySecret);
 
 
 #% Describe(CommandSet, _KeyEarl._DescribeCommand);
@@ -132,14 +132,14 @@ key type.
 The `key earl` command returns a randomized secret value and a fingerprint of the secret 
 value, formatted as a UDF Encryption key type and Content Digest Type
 
-#% ConsoleReference (Examples.KeyEarl);
+#% ConsoleReference (ShellKey.KeyEarl);
 
 #% Describe(CommandSet, _KeyShare._DescribeCommand);
 
 The `key share` command returns a randomized secret value and a set of shares for the secret
 formatted as a UDF Encryption key type and Share types
 
-#% ConsoleReference (Examples.KeyShare);
+#% ConsoleReference (ShellKey.KeyShare);
 
 
 #% Describe(CommandSet, _KeyRecover._DescribeCommand);
@@ -147,7 +147,7 @@ formatted as a UDF Encryption key type and Share types
 The `key recover` command combines the specified set of share to recover the original secret 
 value as a UDF Encryption key type.
 
-#%  ConsoleReference (Examples.KeyRecover);
+#%  ConsoleReference (ShellKey.KeyRecover);
 
 
 #end xfile

@@ -104,7 +104,7 @@ namespace ExampleGenerator {
 				_Output.Write ("The '/expire' option specifies an expiry time for the request as an integer \n{0}", _Indent);
 				_Output.Write ("followed by the letter m, h or d for minutes, hours and days respectively.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleReference (Examples.ConnectGetPin);
+				  ConsoleReference (ShellAccount.ConnectGetPin);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _AccountPublish._DescribeCommand);

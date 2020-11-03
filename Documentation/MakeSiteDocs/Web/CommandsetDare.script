@@ -16,28 +16,28 @@ DARE messages.
 
 The #{ToCommand("dare encode")} command is used to encode files as DARE Messages:
 
-#% ConsoleExample (Examples.DarePlaintext);
+#% ConsoleExample (ShellDare.DarePlaintext);
 
-In this case, the file `#{Examples.TestFile1}` contains the text `"#{Examples.TestText1}"`.
+In this case, the file `#{TestFile1}` contains the text `"#{TestText1}"`.
 
 By default, a content digest is calculated over the contents. This may be 
 suppressed using the `/nohash` flag.
 
 The data contents may be encrypted and authenticated under a specified symmetric key:
 
-#% ConsoleExample (Examples.DareSymmetric);
+#% ConsoleExample (ShellDare.DareSymmetric);
 
 Specifying a directory instead of a file causes all the files in the directory to be 
 encoded:
 
-#% ConsoleExample (Examples.DareSub);
+#% ConsoleExample (ShellDare.DareSub);
 
 Files may also be signed using the user's Mesh signature key and/or encrypted for one
 or more recipients. In this example, Alice creates a message intended for Bob.
 Alice signs the message with her private signature key and encrypts it under Bob's
 public encryption key.
 
-#% ConsoleExample (Examples.DareMesh);
+#% ConsoleExample (ShellDare.DareMesh);
 
 
 #### Verifying a DARE message.
@@ -45,42 +45,42 @@ public encryption key.
 The #{ToCommand("dare verify")} command is used to verify the signature and 
 digest values on a DARE Message without decoding the message body:
 
-#% ConsoleExample (Examples.DareVerifyDigest);
+#% ConsoleExample (ShellDare.DareVerifyDigest);
 
 The command to verify a signed message is identical:
 
-#% ConsoleExample (Examples.DareVerifySigned);
+#% ConsoleExample (ShellDare.DareVerifySigned);
 
 Messages that are encrypted and authenticated under a specified symmetric key 
 may be verified at the plaintext level if the key is known or the ciphertext 
 level otherwise.
 
-#% ConsoleExample (Examples.DareVerifySymmetric);
+#% ConsoleExample (ShellDare.DareVerifySymmetric);
 
 
-#% ConsoleExample (Examples.DareVerifySymmetricUnknown);
+#% ConsoleExample (ShellDare.DareVerifySymmetricUnknown);
 
 #### Decoding a DARE message to a file.
 
 The #{ToCommand("dare decode")} command is used to decode and verify DARE Messages:
 
-#% ConsoleExample (Examples.DareDecodePlaintext);
+#% ConsoleExample (ShellDare.DareDecodePlaintext);
 
 To decode a message encrypted under a symmetric key, we must specify the key:
 
-#% ConsoleExample (Examples.DareDecodeSymmetric);
+#% ConsoleExample (ShellDare.DareDecodeSymmetric);
 
 If the message is encrypted under our private encryption key, the tool will locate
 the necessary decryption key(s) automatically:
 
-#% ConsoleExample (Examples.DareDecodePrivate);
+#% ConsoleExample (ShellDare.DareDecodePrivate);
 
 
 #### Creating an EARL.
 
 The #{ToCommand("dare earl")} command is used to create an EARL:
 
-#% ConsoleExample (Examples.DareEarl);
+#% ConsoleExample (ShellDare.DareEarl);
 
 A new secret is generated with the specified number of bits, this is then used
 to generate the key identifier and encrypt the input file to a file with the
@@ -89,12 +89,12 @@ name of the key identifier.
 The `/log` option causes the filename, encryption key and other details of
 the transaction to be written to a DARE Container Log.
 
-#% ConsoleExample (Examples.DareEARLLog);
+#% ConsoleExample (ShellDare.DareEARLLog);
 
 The `/new` option causes the file to be encoded if and only if it has not 
 been processed already.
 
-#% ConsoleExample (Examples.DareEARLLogNew);
+#% ConsoleExample (ShellDare.DareEARLLogNew);
 
 #end xfile
 
@@ -138,7 +138,7 @@ file name is the input file name with the additional extension `.dare`.
 
 
 
-#% ConsoleReference (Examples.DareSymmetric);
+#% ConsoleReference (ShellDare.DareSymmetric);
 
 
 #% Describe(CommandSet, _DareDecode._DescribeCommand);
@@ -152,7 +152,7 @@ The `/out` option may be used to specify the output file name. Otherwise the out
 file name is the input file name stripped of the extension `.dare` if present or
 with the extension `.undare` otherwise.
 
-#% ConsoleReference (Examples.DareDecodeSymmetric);
+#% ConsoleReference (ShellDare.DareDecodeSymmetric);
 
 #% Describe(CommandSet, _DareVerify._DescribeCommand);
 
@@ -162,7 +162,7 @@ currently active key collection and reports success or failure.
 The active key collection may be overriden using the `/mesh` option.
 
 
-#% ConsoleReference (Examples.DareVerifySymmetric);
+#% ConsoleReference (ShellDare.DareVerifySymmetric);
 
 #% Describe(CommandSet, _DareEARL._DescribeCommand);
 
@@ -185,7 +185,7 @@ the container using the active key collection.
 
 The active key collection may be overriden using the `/mesh` option.
 
-#% ConsoleReference (Examples.DareEarl);
+#% ConsoleReference (ShellDare.DareEarl);
 
 #end xfile
 

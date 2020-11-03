@@ -19,7 +19,7 @@ specified cryptographic enhancements. The #{ToCommand("container archive")}
 command additionally adds the specified file(s) to the container to create 
 a container archive.
 
-#% ConsoleExample (Examples.ContainerCreate);
+#% ConsoleExample (ShellSequence.ContainerCreate);
 
 *catalog* *spool* *archive* *log*
 
@@ -29,9 +29,9 @@ same format and function as for DARE Messages but their scope is the container
 as a whole.
 
 For example, Alice creates an encrypted container readable by anyone who is a
-member of the group #{Examples.GroupService};
+member of the group #{GroupService};
 
-#% ConsoleExample (Examples.ContainerCreateEncrypt);
+#% ConsoleExample (ShellSequence.ContainerCreateEncrypt);
 
 Since it is rarely desirable to sign every entry in a container, signatures
 are typically added to a container when entries or indexes are added. 
@@ -39,11 +39,11 @@ are typically added to a container when entries or indexes are added.
 The #{ToCommand("container archive")} creates a new container, adds the
 specified file(s) as entries and appends an index as the final record:
 
-#% ConsoleExample (Examples.ContainerArchive);
+#% ConsoleExample (ShellSequence.ContainerArchive);
 
 An archive may be signed and encrypted:
 
-#% ConsoleExample (Examples.ContainerArchiveEnhance);
+#% ConsoleExample (ShellSequence.ContainerArchiveEnhance);
 
 The signature on a signed archive is calculated over the final apex of the 
 Merkel tree. Thus a single signature verification may be used to validate
@@ -53,7 +53,7 @@ any or all entries in the container.
 
 The #{ToCommand("container verify")} command verifies the contents of a container: 
 
-#% ConsoleExample (Examples.ContainerArchiveVerify);
+#% ConsoleExample (ShellSequence.ContainerArchiveVerify);
 
 The verification performed depends on the type of authentication applied to the
 container and whether the verifier can provide the necessary authentication or
@@ -66,18 +66,18 @@ One or more container entries may be extracted to a file using the
 #{ToCommand("container extract")} command. If the container is an archive, all
 the files are extracted by default:
 
-#% ConsoleExample (Examples.ContainerArchiveExtractAll);
+#% ConsoleExample (ShellSequence.ContainerArchiveExtractAll);
 
 Alternatively, the `/file` option may be used to extract a specific file:
 
-#% ConsoleExample (Examples.ContainerArchiveExtractFile);
+#% ConsoleExample (ShellSequence.ContainerArchiveExtractFile);
 
 
 #### Writing to Containers
 
 The #{ToCommand("container append")} command adds an entry to a container:
 
-#% ConsoleExample (Examples.ContainerAppend);
+#% ConsoleExample (ShellSequence.ContainerAppend);
 
 If no security enhancements are specified, the default enhancements specified 
 in the index entry are applied.
@@ -87,7 +87,7 @@ The #{ToCommand("container delete")}
 The #{ToCommand("container delete")} command adds an entry to a container
 marking an entry as deleted:
 
-#% ConsoleExample (Examples.ContainerDelete);
+#% ConsoleExample (ShellSequence.ContainerDelete);
 
 Marking an entry for deletion does not cause the entry itself to be modified.
 The entry is merely marked as having been deleted. To erase the entry contents,
@@ -99,7 +99,7 @@ option to reclaim the space used by deleted entries or to use the
 The #{ToCommand("container index")} command adds an index entry to the end of
 container:
 
-#% ConsoleExample (Examples.ContainerIndex);
+#% ConsoleExample (ShellSequence.ContainerIndex);
 
 The index entry may be complete, providing an index of the entire file 
 or incremental, only indexing the items added since the last index was created.
@@ -112,16 +112,16 @@ the specified filtering rules. By default, no changes are made except to
 collect tree index fields dispersed throughout the container with an index 
 at the end:
 
-#% ConsoleExample (Examples.ContainerArchiveCopy);
+#% ConsoleExample (ShellSequence.ContainerArchiveCopy);
 
 The copy command may be used to encrypt or decrypt the container contents during 
 the copy:
 
-#% ConsoleExample (Examples.ContainerArchiveCopyDecrypt);
+#% ConsoleExample (ShellSequence.ContainerArchiveCopyDecrypt);
 
 The copy command may also be used to reclaim space used by deleted items:
 
-#% ConsoleExample (Examples.ContainerArchiveCopyPurge);
+#% ConsoleExample (ShellSequence.ContainerArchiveCopyPurge);
 
 
 #end xfile
@@ -138,21 +138,21 @@ The copy command may also be used to reclaim space used by deleted items:
 The `container create` command creates a container with the specified cryptographic
 enhancements.
 
-#% ConsoleReference (Examples.ContainerCreate);
+#% ConsoleReference (ShellSequence.ContainerCreate);
 
 #% Describe(CommandSet, _ContainerArchive._DescribeCommand);
 
 The `container archive` command creates a container with the specified cryptographic
 enhancements and adds the spefied file(s).
 
-#% ConsoleReference (Examples.ContainerArchive);
+#% ConsoleReference (ShellSequence.ContainerArchive);
 
 #% Describe(CommandSet, _ContainerVerify._DescribeCommand);
 
 The `container verify` command verifies the authentication data of the specified 
 container.
 
-#% ConsoleReference (Examples.ContainerArchiveVerify);
+#% ConsoleReference (ShellSequence.ContainerArchiveVerify);
 
 
 #% Describe(CommandSet, _ContainerExtract._DescribeCommand);
@@ -160,13 +160,13 @@ container.
 The `container extract` command extracts the specified container entries and writes them
 to files.
 
-#% ConsoleReference (Examples.ContainerArchiveExtractAll);
+#% ConsoleReference (ShellSequence.ContainerArchiveExtractAll);
 
 #% Describe(CommandSet, _ContainerAppend._DescribeCommand);
 
 The `container append` command appends the specified file to the container.
 
-#% ConsoleReference (Examples.ContainerAppend);
+#% ConsoleReference (ShellSequence.ContainerAppend);
 
 
 #% Describe(CommandSet, _ContainerDelete._DescribeCommand);
@@ -174,20 +174,20 @@ The `container append` command appends the specified file to the container.
 The `container delete` command marks the specified file entry as deleted in the
 container but does not erase the data from the file.
 
-#% ConsoleReference (Examples.ContainerDelete);
+#% ConsoleReference (ShellSequence.ContainerDelete);
 
 #% Describe(CommandSet, _ContainerIndex._DescribeCommand);
 
 The `container index` command appends an index record to the end of the container.
 
-#% ConsoleReference (Examples.ContainerIndex);
+#% ConsoleReference (ShellSequence.ContainerIndex);
 
 #% Describe(CommandSet, _ContainerCopy._DescribeCommand);
 
 The `container copy` command copies a container applying the specified filtering 
 and indexing criteria.
 
-#% ConsoleReference (Examples.ContainerArchiveCopy);
+#% ConsoleReference (ShellSequence.ContainerArchiveCopy);
 
 #end xfile
 

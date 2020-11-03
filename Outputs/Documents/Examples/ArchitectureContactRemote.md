@@ -19,12 +19,12 @@ Alice checks his Mesh messages and approves Bob's request:
 <div="terminal">
 <cmd>Alice> account sync
 <cmd>Alice> message pending
-<rsp>MessageID: NACV-TW2M-ICI2-5VBJ-QKAS-44FO-BRIP
+<rsp>MessageID: NANV-6BQI-F7VF-DATH-IA46-XNTZ-7NX2
         Contact Request::
-        MessageID: NACV-TW2M-ICI2-5VBJ-QKAS-44FO-BRIP
+        MessageID: NANV-6BQI-F7VF-DATH-IA46-XNTZ-7NX2
         To: alice@example.com From: bob@example.com
-        PIN: AADY-YL2H-5LIT-6PDV-USRI-74XS-YVJA
-<cmd>Alice> message accept NACV-TW2M-ICI2-5VBJ-QKAS-44FO-BRIP
+        PIN: ABUZ-THFJ-NAPN-HWGX-LB5H-PPG5-G5VQ
+<cmd>Alice> message accept NANV-6BQI-F7VF-DATH-IA46-XNTZ-7NX2
 <rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~

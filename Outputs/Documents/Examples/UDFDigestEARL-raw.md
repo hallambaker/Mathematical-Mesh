@@ -1,1 +1,1 @@
-udf://example.com/EASL-RRMJ-B5PI-MEGY-WNRC-GNLG-CZKQ-LA
+udf://example.com/EDQ3-IVHW-3KNE-YL3A-QURR-ADFI-PDYR-QV

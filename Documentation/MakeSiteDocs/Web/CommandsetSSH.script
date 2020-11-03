@@ -54,7 +54,7 @@ appear in the <tt>known_hosts</tt> file.</dd>
 
 The #{ToCommand("ssh create")} command adds an SSH profile named `ssh` to a Mesh account:
 
-#%  ConsoleExample (Examples.SSHCreate);
+#%  ConsoleExample (ShellSSH.SSHCreate);
 
 Since the command creates a new application catalog, the command must be given to 
 an administration device.
@@ -68,12 +68,12 @@ public and/or private keys to be extracted in a format supported by the applicat
 The #{ToCommand("ssh private")} command extracts the private key required top configure
 an SSH client:
 
-#%  ConsoleExample (Examples.SSHPrivate);
+#%  ConsoleExample (ShellSSH.SSHPrivate);
 
 The #{ToCommand("ssh public")} command extracts the public key required top configure
 an SSH client:
 
-#%  ConsoleExample (Examples.SSHPublic);
+#%  ConsoleExample (ShellSSH.SSHPublic);
 
 If a script is being used to automate this process, the best practice is for the
 script to first generate a random nonce and request that the private key file
@@ -89,12 +89,12 @@ For example, if the `authorized_keys` file has an entry for Alice's Mesh profile
 (`alice@example.com.mm--ssss`), the corresponding profile is fetched and the 
 corresponding SSH device public keys added:
 
-#%  ConsoleExample (Examples.SSHMergeClients);
+#%  ConsoleExample (ShellSSH.SSHMergeClients);
 
 The #{ToCommand("ssh merge host")}  command reads the `known_hosts` file on a client machine and adds
 the listed hosts to the user's ssh catalog.
 
-#%  ConsoleExample (Examples.SSHMergeHosts);
+#%  ConsoleExample (ShellSSH.SSHMergeHosts);
 
 #### Client Key management
 
@@ -102,22 +102,22 @@ SSH keys belonging to the user that are not part of the Mesh profile may be adde
 #{ToCommand("ssh add client")}  command.
 
 
-#%  ConsoleExample (Examples.SSHAddClient);
+#%  ConsoleExample (ShellSSH.SSHAddClient);
 
 The list of known clients may be returned in various formats using the #{ToCommand("ssh show client")}  command.
 
-#%  ConsoleExample (Examples.SSHShowClient);
+#%  ConsoleExample (ShellSSH.SSHShowClient);
 
 #### Host Key Management
 
 The #{ToCommand("ssh add host")}  command adds specific host entries to the user's SSH profile.
 
-#%  ConsoleExample (Examples.SSHAddHost);
+#%  ConsoleExample (ShellSSH.SSHAddHost);
 
 The current list of known hosts in the SSH catalog is returned by the #{ToCommand("ssh show known")} 
 command.
 
-#%  ConsoleExample (Examples.SSHShowKnown);
+#%  ConsoleExample (ShellSSH.SSHShowKnown);
 
 #### Additional Devices
 
@@ -130,11 +130,11 @@ can be focused on those from the compromised device alone.
 The #{ToCommand("device auth /ssh")}  command is used *from an administration device* to 
 enable use of ssh on the machine:
 
-#%  ConsoleExample (Examples.SSHAuthDev);
+#%  ConsoleExample (ShellSSH.SSHAuthDev);
 
 Once the device has been authorized, the client machine can start using SSH immediately:
 
-#%  ConsoleExample (Examples.SSHAuthProof);
+#%  ConsoleExample (ShellSSH.SSHAuthProof);
 
 #end xfile
 
@@ -146,28 +146,28 @@ Once the device has been authorized, the client machine can start using SSH imme
 
 
 #% Describe(CommandSet, _SSHCreate._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileList);
+#%  ConsoleReference (ShellSSH.SSHCreate);
 
 #% Describe(CommandSet, _SSHPrivate._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileList);
+#%  ConsoleReference (ShellSSH.SSHPrivate);
 
 #% Describe(CommandSet, _SSHPublic._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileList);
+#%  ConsoleReference (ShellSSH.SSHPublic);
 
 #% Describe(CommandSet, _SSHAddHost._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileList);
+#%  ConsoleReference (ShellSSH.SSHAddHost);
 
 #% Describe(CommandSet, _SSHMergeKnown._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileList);
+#%  ConsoleReference (ShellSSH.SSHMergeHosts);
 
 #% Describe(CommandSet, _SSHAddClient._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileList);
+#%  ConsoleReference (ShellSSH.SSHAddClient);
 
 #% Describe(CommandSet, _SSHKnown._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileList);
+#%  ConsoleReference (ShellSSH.SSHShowKnown);
 
 #% Describe(CommandSet, _SSHAuth._DescribeCommand);
-#%  ConsoleReference (Examples.ProfileList);
+#%  ConsoleReference (ShellSSH.SSHAuthDev);
 
 
 #end xfile

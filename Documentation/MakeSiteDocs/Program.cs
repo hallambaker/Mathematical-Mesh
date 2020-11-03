@@ -14,6 +14,11 @@ namespace ExampleGenerator {
 
     public partial class CreateExamples {
 
+        public bool GitHub = true;
+        public string Preformat => GitHub ? "````" : "~~~~";
+
+
+
         static void Main() {
             Console.WriteLine("Make Document Set");
             Goedel.IO.Debug.Initialize();
@@ -27,6 +32,11 @@ namespace ExampleGenerator {
         public TestCLI testCLIMallet1;
         public TestCLI testCLIConsole1;
         public TestCLI testCLIMaker1;
+
+
+
+
+
 
         public Dictionary<string, string> ToDoList = new Dictionary<string, string>();
 
@@ -148,8 +158,11 @@ namespace ExampleGenerator {
 
             PerformAll();
 
+
+            LayerAccount();
+
             // Dare uses the keys from the contacts catalog.
-            //PlatformDare();
+            PlatformDare();
 
 
 
@@ -162,17 +175,12 @@ namespace ExampleGenerator {
             GitHub = false;
 
 
-
+            // Call the generators to create output.
             MakeUDFExamples(this);
-
             MakeArchitectureExamples(this);
-
-
             MakeDareExamples(this);
             MakeSchemaExamples(this);
             MakeProtocolExamples(this);
-
-
             MakeCryptographyExamples(this);
 
 
@@ -184,7 +192,7 @@ namespace ExampleGenerator {
             MakeDocs();
             }
 
-        public bool All = false;
+        public bool All = true;
 
 
         public void MakeClean() {
@@ -218,7 +226,7 @@ namespace ExampleGenerator {
         #region // Application commands
 
 
-        public List<T> Concat<T>(params List<T>[] lists) {
+        public static List<T> Concat<T>(params List<T>[] lists) {
             var result = new List<T>();
 
             foreach (var list in lists) {

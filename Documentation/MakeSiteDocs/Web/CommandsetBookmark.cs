@@ -38,37 +38,37 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The {1} command adds a bookmark entry to a catalog:\n{0}", _Indent, ToCommand("bookmark add"));
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.BookmarkAdd);
+				  ConsoleExample (ShellBookmark.BookmarkAdd);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Finding bookmarks\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The {1}  command retreives a bookmark  by its index label:\n{0}", _Indent, ToCommand("bookmark get"));
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.BookmarkGet);
+				  ConsoleExample (ShellBookmark.BookmarkGet);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Deleting bookmarks\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Bookmark entries may be deleted using the  {1} command:\n{0}", _Indent, ToCommand("bookmark delete"));
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.BookmarkDelete);
+				  ConsoleExample (ShellBookmark.BookmarkDelete);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Listing bookmarks\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("A complete list of bookmarks is obtained using the  {1} command:\n{0}", _Indent, ToCommand("bookmark list"));
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.BookmarkList);
+				  ConsoleExample (ShellBookmark.BookmarkList);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Adding devices\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Devices are given authorization to access the bookmarks catalog using the \n{0}", _Indent);
 				_Output.Write (" {1} command:\n{0}", _Indent, ToCommand("device auth"));
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.BookmarkAuth);
+				  ConsoleExample (ShellBookmark.BookmarkAuth);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The new device now has access to the Bookmarks catalog:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Examples.BookmarkList2);
+				  ConsoleExample (ShellBookmark.BookmarkList2);
 					}
 		
 
@@ -88,16 +88,16 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _BookmarkAdd._DescribeCommand);
-				 ConsoleReference (Examples.BookmarkAdd);
+				 ConsoleReference (ShellBookmark.BookmarkAdd);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _BookmarkDelete._DescribeCommand);
-				 ConsoleReference (Examples.BookmarkDelete);
+				 ConsoleReference (ShellBookmark.BookmarkDelete);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _BookmarkGet._DescribeCommand);
-				 ConsoleReference (Examples.BookmarkGet);
+				 ConsoleReference (ShellBookmark.BookmarkGet);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _BookmarkDump._DescribeCommand);
-				 ConsoleReference (Examples.BookmarkList);
+				 ConsoleReference (ShellBookmark.BookmarkList);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		}

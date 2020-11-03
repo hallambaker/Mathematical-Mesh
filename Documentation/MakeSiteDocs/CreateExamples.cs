@@ -11,6 +11,7 @@ namespace ExampleGenerator {
     public partial class CreateExamples {
         public string AliceService = "example.com";
         public string AliceFingerprint;
+
         public string AliceAccount = "alice@example.com";
         public string BobAccount = "bob@example.com";
         public string MeshServiceProvider = "example.com";

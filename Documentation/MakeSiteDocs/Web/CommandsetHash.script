@@ -16,33 +16,33 @@ Message Authentication Code operations on the contents of a file.
 
 The #{ToCommand("hash udf")}  command calculates the UDF value of a file:
 
-#% ConsoleExample (Examples.HashUDF2);
+#% ConsoleExample (ShellHash.HashUDF2);
 
-In this case, the file `#{Examples.TestFile1}` contains the text `"#{Examples.TestText1}"`.
+In this case, the file `#{TestFile1}` contains the text `"#{TestText1}"`.
 
 By default, a SHA-2-512 digest is created and the IANA Media Type parameter is
 determined from the file extension of the file being processed. These defaults
 may be overriden using the `/cty` and `/alg` options:
 
-#% ConsoleExample (Examples.HashUDF3);
+#% ConsoleExample (ShellHash.HashUDF3);
 
 By default, UDF values are given to 140 bit precision. Higher precision may be
 specified with the `/bits' option:
 
-#% ConsoleExample (Examples.HashUDF200);
+#% ConsoleExample (ShellHash.HashUDF200);
 
 If the expected digest value is specified, this is used to check the calculated value:
 
-#% ConsoleExample (Examples.HashUDFExpect);
+#% ConsoleExample (ShellHash.HashUDFExpect);
 
 The #{ToCommand("hash digest")}  command calculates the SHA-2-512 digest and
 returns it in hexadecimal form:
 
-#% ConsoleExample (Examples.HashDigest);
+#% ConsoleExample (ShellHash.HashDigest);
 
 Additional digest algorithms may be specified using the `/alg` option:
 
-#% ConsoleExample (Examples.HashDigests);
+#% ConsoleExample (ShellHash.HashDigests);
 
 #### Calculating UDF Message Authentication Codes
 
@@ -56,16 +56,16 @@ brute force attack.
 
 If no key is specified, a random secret is generated:
 
-#% ConsoleExample (Examples.MAC1);
+#% ConsoleExample (ShellHash.MAC1);
 
 A key may be specified using the `/key` option:
 
-#% ConsoleExample (Examples.MAC2);
+#% ConsoleExample (ShellHash.MAC2);
 
 If the expected digest value is specified, this is used to check the calculated value:
 
 
-#% ConsoleExample (Examples.MAC3);
+#% ConsoleExample (ShellHash.MAC3);
 
 
 #end xfile
@@ -85,7 +85,7 @@ The `hash udf` command returns the UDF Content digest of the specified input
 file according to the precision, IANA media type and digest algorithm specified
 with the `/bits`, `/cty` and `/alg` options.
 
-#% ConsoleReference (Examples.HashUDF2);
+#% ConsoleReference (ShellHash.HashUDF2);
 
 
 #% Describe( CommandSet, _HashDigest._DescribeCommand);
@@ -94,7 +94,7 @@ The `hash digest` command returns the Content digest of the specified input
 file according to the digest algorithm specifiedwith the `/alg` option.
 
 
-#% ConsoleReference (Examples.HashDigest);
+#% ConsoleReference (ShellHash.HashDigest);
 
 The `/alg` option allows the digest algorithm to be specified.
 
@@ -110,7 +110,7 @@ key is used.
 If a MAC value is specified, it is compared to the calculated value and the value
 true returned if and only if it matches the value specified.
 
-#% ConsoleReference (Examples.MAC1);
+#% ConsoleReference (ShellHash.MAC1);
 
 #end xfile
 

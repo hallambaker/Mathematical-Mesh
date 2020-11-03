@@ -50,15 +50,15 @@ where the data payload has been transformed, (i.e. encrypted).
 
 ####Simple container
 
-the following example shows a simple container with first frame and a single data frame:
+The following example shows a simple container with first frame and a single data frame:
 
 ~~~~
-#{Example.ContainerFramingSimple}~~~~
+#{Dare.ContainerFramingSimple}~~~~
 
 Since there is no integrity check, there is no need for trailer entries.
 The header values are:
 
-#call DumpHeaders Example.ContainerHeadersSimple
+#call DumpHeaders Dare.ContainerHeadersSimple
 
 
 ####Payload and chain digests
@@ -67,7 +67,7 @@ The following example shows a chain container with a first frame and three
 data frames. The headers of these frames is the same as before but the
 frames now have trailers specifying the PayloadDigest and ChainDigest values:
 
-#call DumpHeaders Example.ContainerHeadersChain
+#call DumpHeaders Dare.ContainerHeadersChain
 
 ####Merkle Tree
 
@@ -75,7 +75,7 @@ The following example shows a chain container with a first frame and six
 data frames. The trailers now contain the TreePosition and TreeDigest
 values:
 
-#call DumpHeaders Example.ContainerHeadersMerkleTree
+#call DumpHeaders Dare.ContainerHeadersMerkleTree
 
 ####Signed container
 
@@ -85,26 +85,26 @@ The signing key parameters are:
 
 
 ~~~~
-#{JSONDebugWriter.Write (Example.SignatureAliceKey)}
+#{JSONDebugWriter.Write (Dare.SignatureAliceKey)}
 ~~~~
 
 The container headers and trailers are:
 
-#call DumpHeaders Example.ContainerHeadersSigned
+#call DumpHeaders Dare.ContainerHeadersSigned
 
 ####Encrypted container
 
 The following example shows a container in which all the frame payloads are encrypted 
 under the same master secret established in a key agreement specified in the first frame.
 
-#call DumpHeaders Example.ContainerHeadersEncryptSingleSession
+#call DumpHeaders Dare.ContainerHeadersEncryptSingleSession
 
 Here are the container bytes. Note that the content is now encrypted and has expanded by
 25 bytes. These are the salt (16 bytes), the AES padding (4 bytes) and the 
 JSON-B framing (5 bytes).
 
 ~~~~
-#{Example.ContainerFramingEncrypted}
+#{Dare.ContainerFramingEncrypted}
 
 ~~~~
 
@@ -112,7 +112,7 @@ JSON-B framing (5 bytes).
 The following example shows a container in which all the frame payloads are encrypted 
 under separate key agreements specified in the payload frames.
 
-#call DumpHeaders Example.ContainerHeadersEncryptIndependentSession
+#call DumpHeaders Dare.ContainerHeadersEncryptIndependentSession
 
 #end zfile
 
@@ -130,10 +130,10 @@ under separate key agreements specified in the payload frames.
 Frame #{Frame.Header.ContainerInfo.Index}
 
 ~~~~
-#{Frame.Header}
+#{ JSONDebugWriter.Write (Frame.Header)}
 
 #if (Frame.Trailer != null)
-#{Frame.Trailer}
+#{JSONDebugWriter.Write(Frame.Trailer)}
 #else
 [Empty trailer]
 #end if
@@ -146,7 +146,7 @@ Frame #{Frame.Header.ContainerInfo.Index}
 For example, consider the following mail message:
 
 ~~~~
-#{Example.MailMessageAsRFC822}~~~~
+#{Dare.MailMessageAsRFC822}~~~~
 
 Existing encryption approaches require that header fields such as the subject line be encrypted 
 with the body of the message or not encrypted at all. Neither approach is satisfactory.
@@ -158,7 +158,7 @@ message body, a mail client must retrieve at least part of the message body to p
 The plaintext form of the equivalent DARE Message encoding is:
 
 ~~~~
-#{JSONDebugWriter.Write (Example.MailMessageAsDAREPlaintext, false)}
+#{JSONDebugWriter.Write (Dare.MailMessageAsDAREPlaintext, false)}
 ~~~~
 
 This contains the same information as before but the mail message headers are 
@@ -171,7 +171,7 @@ now presented as  a list of Encoded Data Sequences.
 The encoding of the 'From' header of the previous example as a plaintext EDS is as follows:
 
 ~~~~
-#{Example.EDSText}
+#{Dare.EDSText}
 ~~~~
 #end zfile
 
@@ -183,7 +183,7 @@ of the block cipher padding. The header now
 includes Recipients and Salt fields to enable the content to be decoded.
 
 ~~~~
-#{JSONDebugWriter.Write (Example.MailMessageAsDAREEncrypted, false)}
+#{JSONDebugWriter.Write (Dare.MailMessageAsDAREEncrypted, false)}
 ~~~~
 
 #end zfile
@@ -196,26 +196,26 @@ includes Recipients and Salt fields to enable the content to be decoded.
 In the following examples, Alice's encryption private key parameters are:
 
 ~~~~
-#{JSONDebugWriter.Write (Example.DareMessageAliceKey)}
+#{JSONDebugWriter.Write (Dare.DareMessageAliceKey)}
 ~~~~
 
  Alice's signature private key parameters are:
 
 ~~~~
-#{JSONDebugWriter.Write (Example.SignatureAliceKey)}
+#{JSONDebugWriter.Write (Dare.SignatureAliceKey)}
 ~~~~
 
 The body of the test message is the UTF8 representation of the following string:
 
 ~~~~
-"#{Example.DareMessageTest1.ToUTF8()}"
+"#{Dare.DareMessageTest1.ToUTF8()}"
 ~~~~
 
 The EDS sequences, are the UTF8 representation of the following strings:
 
 ~~~~
-"#{Example.DareMessageTest2.ToUTF8()}"
-"#{Example.DareMessageTest3.ToUTF8()}"
+"#{Dare.DareMessageTest2.ToUTF8()}"
+"#{Dare.DareMessageTest3.ToUTF8()}"
 ~~~~
 
 #### Plaintext Message
@@ -224,7 +224,7 @@ A plaintext message without associated EDS sequences is an empty header
 followed by the message body:
 
 ~~~~
-#{JSONDebugWriter.Write (Example.DAREMessageAtomic)}
+#{JSONDebugWriter.Write (Dare.DAREMessageAtomic)}
 ~~~~
 
 #### Plaintext Message with EDS
@@ -232,13 +232,13 @@ followed by the message body:
 If a plaintext message contains EDS sequences, these are also in plaintext:
 
 ~~~~
-#{JSONDebugWriter.Write (Example.MessageAtomicDS)}
+#{JSONDebugWriter.Write (Dare.MessageAtomicDS)}
 ~~~~
 
 #### Encrypted Message
-#% var CryptoStackEncrypt = Example.CryptoStackEncrypt;
+#% var CryptoStackEncrypt = Dare.CryptoStackEncrypt;
 #% var Recipient = CryptoStackEncrypt?.Recipients?[0] as Goedel.Test.Core.DareRecipientDebug;
-#% var MessageEnc = Example.MessageEnc;
+#% var MessageEnc = Dare.MessageEnc;
 #% var Salt = MessageEnc?.Header?.Salt;
 
 The creator generates a master session key:
@@ -301,14 +301,14 @@ Since AES is a block cipher, we also require an initializarion vector:
 The output sequence is the encrypted bytes:
 
 ~~~~
-#% WriteBytesHex (Example.MessageEnc?.Body);
+#% WriteBytesHex (Dare.MessageEnc?.Body);
 ~~~~
 
 Since the message is not signed, there is no need for a trailer.
 The completed message is:
 
 ~~~~
-#{JSONDebugWriter.Write (Example.MessageEnc)}
+#{JSONDebugWriter.Write (Dare.MessageEnc)}
 ~~~~
 
 #### Signed Message
@@ -319,7 +319,7 @@ since it serves as notice that a decoder should digest the payload value
 to enable signature verification.
 
 ~~~~
-#{JSONDebugWriter.Write (Example.DAREMessageAtomicSign)}
+#{JSONDebugWriter.Write (Dare.DAREMessageAtomicSign)}
 ~~~~
 
 #### Signed and Encrypted Message
@@ -329,7 +329,7 @@ The signer proves knowledge of the payload plaintext by providing the
 plaintext witness value.
 
 ~~~~
-#{JSONDebugWriter.Write (Example.DAREMessageAtomicSignEncrypt)}
+#{JSONDebugWriter.Write (Dare.DAREMessageAtomicSignEncrypt)}
 ~~~~
 
 
