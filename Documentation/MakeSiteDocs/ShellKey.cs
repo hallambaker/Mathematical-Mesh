@@ -17,6 +17,13 @@ namespace ExampleGenerator {
         public List<ExampleResult> KeyShare3;
 
 
+        ////AdvancedQuantum
+        public byte[] AdvancedQuantumMasterSecret;
+        public string[] AdvancedQuantumShares;
+        public byte[][] AdvancedQuantumPrivate;
+        public byte[] AdvancedQuantumPublic;
+        public string AdvancedQuantumPublicUDF;
+
 
         public ShellKey(CreateExamples createExamples) :
                 base(createExamples) {

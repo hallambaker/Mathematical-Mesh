@@ -16,10 +16,10 @@ namespace ExampleGenerator {
             ShellCalendar = new ShellCalendar(this);
             ShellMessage = new ShellMessage(this);
             ShellContact = new ShellContact(this);
-            ShellGroup = new ShellGroup(this);
+            //ShellGroup = new ShellGroup(this);
 
-            ShellSSH = new ShellSSH(this);
-            ShellMail = new ShellMail(this);
+            //ShellSSH = new ShellSSH(this);
+            //ShellMail = new ShellMail(this);
             }
 
 

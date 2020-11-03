@@ -676,49 +676,44 @@ namespace ExampleGenerator {
         //KeyExchangeClient KeyExchangeClient;
         //KeyExchangePortalTraced KeyExchangePortalTraced;
 
-        public TraceDictionary KeyExchangeTraces;
-        public Key ClientDHIdentity;
-        public string TraceDH = "DiffieHellman";
+        //public TraceDictionary KeyExchangeTraces;
+        //public Key ClientDHIdentity;
+        //public string TraceDH = "DiffieHellman";
 
         //AdvancedRecovery
-        public byte[] AdvancedRecoveryMaster;
-        public int AdvancedRecoveryThreshold = 3;
-        public int AdvancedRecoveryCount = 5;
-        public BigInteger[] AdvancedRecoveryPolynomial;
-        public KeyShareSymmetric[] AdvancedRecoveryShares;
-        public BigInteger[] AdvancedRecoveryShareValues;
-        public byte[][] AdvancedRecoverySharesHex;
-        public string[] AdvancedRecoveryBase32;
+        //public byte[] AdvancedRecoveryMaster;
+        //public int AdvancedRecoveryThreshold = 3;
+        //public int AdvancedRecoveryCount = 5;
+        //public BigInteger[] AdvancedRecoveryPolynomial;
+        //public KeyShareSymmetric[] AdvancedRecoveryShares;
+        //public BigInteger[] AdvancedRecoveryShareValues;
+        //public byte[][] AdvancedRecoverySharesHex;
+        //public string[] AdvancedRecoveryBase32;
 
         //AdvancedCogen
-        public ProfileDevice AdvancedCogenDeviceProfile;
-        public byte[] AdvancedCogenPrivateKeySeed;
-        public PrivateKeyECDH AdvancedCogenPrivateKeyValue;
-        public PublicKeyECDH AdvancedCogenCompositeKey;
-        public DareEnvelope AdvancedCogenPrivateKeySeedEncrypted;
+        //public ProfileDevice AdvancedCogenDeviceProfile;
+        //public byte[] AdvancedCogenPrivateKeySeed;
+        //public PrivateKeyECDH AdvancedCogenPrivateKeyValue;
+        //public PublicKeyECDH AdvancedCogenCompositeKey;
+        //public DareEnvelope AdvancedCogenPrivateKeySeedEncrypted;
 
 
-        //AdvancedRecryption
-        public string AdvancedRecryptionGroupID = "recrypt@example.com";
-        //public ProfileMesh AdvancedRecryptionGroup;
-        public string AdvancedRecryptionMessagePlaintext;
-        public DareEnvelope AdvancedRecryptionMessageEncrypted;
-        public Assertion AdvancedRecryptionBobProfile;
-        public Key AdvancedRecryptionBobDecryptionKey;
-        public Key AdvancedRecryptionBobRecryptionKey;
-        public Key AdvancedRecryptionBobRecryptionEntry;
-        public Object AdvancedRecryptionRecryptionAddMemberRequest;
-        public Object AdvancedRecryptionRecryptionRecryptionRequest;
-        public Object AdvancedRecryptionRecryptionRecryptionResponse;
-        public Object AdvancedRecryptionDecryptionValue;
-        public Object AdvancedRecryptionKeyAgreementValue;
+        ////AdvancedRecryption
+        //public string AdvancedRecryptionGroupID = "recrypt@example.com";
+        ////public ProfileMesh AdvancedRecryptionGroup;
+        //public string AdvancedRecryptionMessagePlaintext;
+        //public DareEnvelope AdvancedRecryptionMessageEncrypted;
+        //public Assertion AdvancedRecryptionBobProfile;
+        //public Key AdvancedRecryptionBobDecryptionKey;
+        //public Key AdvancedRecryptionBobRecryptionKey;
+        //public Key AdvancedRecryptionBobRecryptionEntry;
+        //public Object AdvancedRecryptionRecryptionAddMemberRequest;
+        //public Object AdvancedRecryptionRecryptionRecryptionRequest;
+        //public Object AdvancedRecryptionRecryptionRecryptionResponse;
+        //public Object AdvancedRecryptionDecryptionValue;
+        //public Object AdvancedRecryptionKeyAgreementValue;
 
-        //AdvancedQuantum
-        public byte[] AdvancedQuantumMasterSecret;
-        public string[] AdvancedQuantumShares;
-        public byte[][] AdvancedQuantumPrivate;
-        public byte[] AdvancedQuantumPublic;
-        public string AdvancedQuantumPublicUDF;
+
         #endregion      
         public CryptoCombine CryptoCombine;
         public CryptoGroup CryptoGroup;
