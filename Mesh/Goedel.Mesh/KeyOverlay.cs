@@ -140,18 +140,37 @@ namespace Goedel.Mesh {
                     keySecurity, keyUses: keyUses, cryptoAlgorithmID, keyName);
             }
 
-
-         public static KeyPairAdvanced ActivatePublic(
-                this PrivateKeyUDF activationSeed,
-                KeyPair baseKey,
-                MeshActor actor, 
-                MeshKeyOperation operation) {
+        /// <summary>
+        /// Derrive the public key from the activation seed <paramref name="activationSeed"/>
+        /// and base key <paramref name="baseKey"/> for a key to be used by an actor
+        /// <paramref name="actor"/> for the cryptoraphic operation <paramref name="operation"/>.
+        /// </summary>
+        /// <param name="activationSeed">The activation seed.</param>
+        /// <param name="baseKey">The base key specifying the public parameters.</param>
+        /// <param name="actor">The actor for whom the key is generated.</param>
+        /// <param name="operation">The operation for which the key is to be used.</param>
+        /// <returns>The derrived public key</returns>
+        public static KeyPairAdvanced ActivatePublic(
+               this PrivateKeyUDF activationSeed,
+               KeyPair baseKey,
+               MeshActor actor,
+               MeshKeyOperation operation) {
             var activationKey = activationSeed.GenerateContributionKeyPair(
                         MeshKeyType.Activation, actor, operation) as KeyPairAdvanced;
             var combinedKey = activationKey.CombinePublic(baseKey as KeyPairAdvanced, keyUses: baseKey.KeyUses);
             return combinedKey;
             }
 
+        /// <summary>
+        /// Derrive the private key from the activation seed <paramref name="activationSeed"/>
+        /// and base seed <paramref name="baseSeed"/> for a key to be used by an actor
+        /// <paramref name="actor"/> for the cryptoraphic operation <paramref name="operation"/>.
+        /// </summary>
+        /// <param name="activationSeed">The activation seed.</param>
+        /// <param name="baseSeed">The base seed used to derive the private parameters..</param>
+        /// <param name="actor">The actor for whom the key is generated.</param>
+        /// <param name="operation">The operation for which the key is to be used.</param>
+        /// <returns>The derrived private key</returns>
         public static KeyPairAdvanced ActivatePrivate(
                 this PrivateKeyUDF activationSeed,
                 PrivateKeyUDF baseSeed,
@@ -161,10 +180,18 @@ namespace Goedel.Mesh {
             var baseKey = baseSeed.GenerateContributionKeyPair(
                 MeshKeyType.Base, actor, operation) as KeyPairAdvanced;
             return activationSeed.ActivatePrivate(baseKey, actor, operation);
-
-
             }
 
+        /// <summary>
+        /// Derrive the private key from the activation seed <paramref name="activationSeed"/>
+        /// and base key <paramref name="baseKey"/> for a key to be used by an actor
+        /// <paramref name="actor"/> for the cryptoraphic operation <paramref name="operation"/>.
+        /// </summary>
+        /// <param name="activationSeed">The activation seed.</param>
+        /// <param name="baseKey">The base key specifying the private parameters.</param>
+        /// <param name="actor">The actor for whom the key is generated.</param>
+        /// <param name="operation">The operation for which the key is to be used.</param>
+        /// <returns>The derrived private key</returns>
         public static KeyPairAdvanced ActivatePrivate(
                 this PrivateKeyUDF activationSeed,
                 KeyPair baseKey,

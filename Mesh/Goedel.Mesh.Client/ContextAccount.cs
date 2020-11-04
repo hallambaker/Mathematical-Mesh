@@ -141,13 +141,13 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public ContextAccount() {
-            }
-
-
-        public ContextAccount(ActivationAccount activationAccount) {
+        /// <summary>
+        /// Constructor, generate a new context from the activation record 
+        /// <paramref name="activationAccount"/>.
+        /// </summary>
+        /// <param name="activationAccount">The activation record.</param>
+        public ContextAccount(ActivationAccount activationAccount) => 
             ActivationAccount = activationAccount;
-            }
 
 
         #endregion
@@ -156,7 +156,7 @@ namespace Goedel.Mesh.Client {
 
 
 
-            
+
 
         #endregion
         #region // PIN code generation and use
@@ -586,9 +586,8 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="cryptoKey">The key to validate.</param>
         /// <returns>The identifier.</returns>
-        public virtual bool ValidateTrustAnchor(CryptoKey cryptoKey) {
-            throw new NYI();
-            }
+        public virtual bool ValidateTrustAnchor(CryptoKey cryptoKey) => throw new NYI();
+
         #endregion
         #region Implement IDare
 
@@ -640,7 +639,10 @@ namespace Goedel.Mesh.Client {
         /// <returns>The plaintext payload data.</returns>
         public byte[] DareDecode(
                     DareEnvelope envelope,
-                    bool verify = false) => envelope.GetPlaintext(this);
+                    bool verify = false) {
+            verify.Future();
+            return envelope.GetPlaintext(this);
+            }
 
         /// <summary>
         /// Attempt to form a trust path for the key used to sign <paramref name="dareSignature"/>.

@@ -2,6 +2,7 @@
 using Goedel.Mesh.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
+using Goedel.Mesh.Shell;
 
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,23 @@ namespace ExampleGenerator {
 
         public virtual string Secret1 { get; set; }
 
+        #region // Should probably suppress these...
+        public List<ExampleResult> ProfileCreateAlice;
+        public List<ExampleResult> ProfileAliceDelete;
+        public List<ExampleResult> ProfileAliceRecover;
+        public List<ExampleResult> ProfileCreateBob;
 
+
+        public List<ExampleResult> ProfileList;
+        public List<ExampleResult> ProfileDump;
+
+        public List<ExampleResult> ProfileExport;
+        public List<ExampleResult> ProfileImport;
+        public List<ExampleResult> ProfileHello;
+
+        public ResultCreatePersonal AliceProfiles;
+        public ResultHello ResultHello;
+        #endregion
 
 
         public Dictionary<string, string> ToDoList = new Dictionary<string, string>();

@@ -34,6 +34,7 @@ namespace Goedel.Utilities {
         /// <param name="input">The input string.</param>
         /// <param name="input2">Additional input</param>
         /// <param name="length">Maximum line length</param>
+        /// <param name="indent">Number of spaces to indent wrapped lines.</param>
         /// <returns>The wrapped string.</returns>
         public static string Wrap(this string input, string input2 =null, 
                 int length = 68, int indent =0) {

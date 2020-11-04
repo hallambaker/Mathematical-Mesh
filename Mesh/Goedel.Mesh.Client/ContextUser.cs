@@ -53,8 +53,14 @@ namespace Goedel.Mesh.Client {
         ///<summary>The device key generation seed</summary>
         protected PrivateKeyUDF MeshSecretSeed;
 
-
+        ///<summary>The RequestConnection message sent during device connection.
+        ///This is only populated when the context is returned as the result of completing 
+        ///device connection</summary> 
         public RequestConnection RequestConnection;
+
+        ///<summary>The RespondConnection message returned during device connection.
+        ///This is only populated when the context is returned as the result of completing 
+        ///device connection</summary> 
         public RespondConnection RespondConnection;
 
         // device key accessors

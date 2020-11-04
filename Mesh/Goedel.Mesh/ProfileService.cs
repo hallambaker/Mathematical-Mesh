@@ -46,6 +46,9 @@ namespace Goedel.Mesh {
         /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
         /// </summary>
         /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="keyCollection">The base key collection</param>
+        /// <param name="persist">If true, persist the service record to the local machine
+        /// store.</param>
         ProfileService(
                     IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed,

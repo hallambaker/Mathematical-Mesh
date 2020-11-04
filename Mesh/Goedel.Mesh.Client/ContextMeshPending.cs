@@ -15,7 +15,12 @@ namespace Goedel.Mesh.Client {
     /// </summary>
     public class ContextMeshPending : ContextAccount {
 
+        ///<summary>The connection request message sent to the service. This is only populated
+        ///in an instance returned as a result of issuing a device connection request.</summary> 
         public RequestConnection RequestConnection;
+        ///<summary>The connection request acknowledgement message received from the service. 
+        ///This is only populated
+        ///in an instance returned as a result of issuing a device connection request.</summary> 
         public AcknowledgeConnection AcknowledgeConnection;
 
 
@@ -58,6 +63,7 @@ namespace Goedel.Mesh.Client {
             keyAuthentication = DeviceKeySeed?.GenerateContributionKeyPair(
                         MeshKeyType.Base, MeshActor.Device, MeshKeyOperation.Encrypt);
             KeyCollection.Add(keyEncryption);
+            KeyCollection.Add(keyAuthentication);
             }
 
 

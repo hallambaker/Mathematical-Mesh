@@ -31,11 +31,6 @@ namespace Goedel.Mesh {
         ///<summary>The <see cref="ProfileDevice"/> that this activation activates.</summary>
         public ProfileDevice ProfileDevice { get; set; }
 
-        ///<summary>The aggregate signature key</summary>
-        protected KeyPairAdvanced ProfileSignature { get; set; }
-
-        ///<summary>The UDF identifier</summary>
-        public string UDF => ProfileSignature.KeyIdentifier;
 
         ///<summary>The connection value.</summary>
         public virtual Connection Connection => throw new NYI();
@@ -58,8 +53,6 @@ namespace Goedel.Mesh {
         /// If the value <paramref name="masterSecret"/> is
         /// specified, it is used as the seed value. Otherwise, a seed value of
         /// length <paramref name="bits"/> is generated.
-        /// The <see cref="ProfileSignature"/> public key value is calculated for the specified 
-        /// parameters. Other key pair properties should be populated by the caller.
         /// </summary>
         /// <param name="profile">The base profile that the activation activates.</param>
         /// <param name="udfAlgorithmIdentifier">The UDF key derivation specifier.</param>
@@ -75,10 +68,10 @@ namespace Goedel.Mesh {
             (var actor, var keytype) = udfAlgorithmIdentifier.GetMeshKeyType();
             ActivationKey = Cryptography.UDF.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
             ActivationSeed = new PrivateKeyUDF(ActivationKey);
+            //ProfileSignature = ActivationSeed.ActivatePublic(
+            //        profile.ProfileSignature.GetKeyPairAdvanced(), actor, MeshKeyOperation.Profile);
 
-            ProfileSignature = ActivationSeed.ActivatePublic(
-                    profile.ProfileSignature.GetKeyPairAdvanced(), actor, MeshKeyOperation.Profile);
-            } 
+            }
         #endregion
         }
     }

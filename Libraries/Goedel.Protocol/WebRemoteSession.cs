@@ -34,8 +34,8 @@ namespace Goedel.Protocol {
     /// Manage JPC session to a remote Web Service.
     /// </summary>
     public partial class WebRemoteSession : JPCRemoteSession {
-        ServiceDescription ServiceDescription = null;
-        string URI;
+        ServiceDescription serviceDescription = null;
+        string uri;
 
         /// <summary>
         /// Create a remote session with authentication under the
@@ -44,18 +44,20 @@ namespace Goedel.Protocol {
         /// <param name="domain">Domain</param>
         /// <param name="service">The IANA Well Known service identifier</param>
         /// <param name="accountAddress">Account name</param>
-        /// <param name="UDF">Fingerprint of authentication key.</param>
-        public WebRemoteSession(string domain, string service, string accountAddress = null, string UDF = null) : base(accountAddress) {
+        /// <param name="udf">Fingerprint of authentication key.</param>
+        public WebRemoteSession(string domain, string service, string accountAddress = null, string udf = null) : base(accountAddress) {
+
+            udf.Future();
             AccountAddress = accountAddress;
 
             if (domain == null) {
-                URI = "http://127.0.0.1:80/.well-known/"; // + Service + "/";
+                uri = "http://127.0.0.1:80/.well-known/"; // + Service + "/";
                 Domain = null;
                 }
             else {
-                ServiceDescription = DNSClient.ResolveService(domain, Service: service);
-                var Host = ServiceDescription.Next();
-                URI = Host.HTTPEndpoint;
+                serviceDescription = DNSClient.ResolveService(domain, Service: service);
+                var Host = serviceDescription.Next();
+                uri = Host.HTTPEndpoint;
                 Domain = Host.Address;
                 }
             }
@@ -64,11 +66,12 @@ namespace Goedel.Protocol {
         /// Post a request and retrieve the response.
         /// </summary>
         /// <param name="Content">StreamBuffer object containing JSON encoded request.</param>
+        /// <param name="requestObject">Request object (for debugging)</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
         public override Stream Post(MemoryStream Content, JsonObject requestObject) {
 
             try {
-                var BaseAddress = new Uri(URI);
+                var BaseAddress = new Uri(uri);
 
                 using var HTTPClient = new HttpClient();
                 HTTPClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue() {
@@ -80,7 +83,7 @@ namespace Goedel.Protocol {
                 HTTPContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
 
-                var ResponseTask = HTTPClient.PostAsync(new Uri(URI), HTTPContent);
+                var ResponseTask = HTTPClient.PostAsync(new Uri(uri), HTTPContent);
                 ResponseTask.Wait();
                 var HTTPResponse = ResponseTask.Result;
 
@@ -98,7 +101,7 @@ namespace Goedel.Protocol {
                 return ContentTask.Result;
                 }
             catch {
-                throw new ConnectionFail(args: URI) ;
+                throw new ConnectionFail(args: uri) ;
                 }
             }
 

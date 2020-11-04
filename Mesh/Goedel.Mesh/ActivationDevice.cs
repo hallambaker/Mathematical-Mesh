@@ -63,8 +63,7 @@ namespace Goedel.Mesh {
 
         /// <summary>
         /// Construct a new <see cref="ActivationDevice"/> instance for the profile
-        /// <paramref name="profileDevice"/>. The property <see cref="Activation.ActivationUdf"/> is
-        /// calculated from the values specified for the activation type.
+        /// <paramref name="profileDevice"/>.
         /// If the value <paramref name="masterSecret"/> is
         /// specified, it is used as the seed value. Otherwise, a seed value of
         /// length <paramref name="bits"/> is generated.
@@ -84,6 +83,8 @@ namespace Goedel.Mesh {
             ProfileDevice = profileDevice;
 
             AccountUdf = profileDevice.Udf;
+
+
 
             var deviceEncryption = ActivationSeed.ActivatePublic(
                     profileDevice.BaseEncryption.GetKeyPairAdvanced(), 
@@ -136,7 +137,7 @@ namespace Goedel.Mesh {
             DareEnvelope.Report(builder, indent);
             indent++;
 
-            builder.AppendIndent(indent, $"KeySignature:     {ProfileSignature} ");
+            //builder.AppendIndent(indent, $"KeySignature:     {ProfileSignature} ");
             }
         }
 

@@ -1,19 +1,14 @@
 ﻿using System;
 
-/* Unmerged change from project 'Goedel.Registry'
-Before:
-using System.IO;
-using System.Collections.Generic;
-After:
-using System.Collections.Generic;
-using System.IO;
-*/
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Globalization;
 
+#pragma warning disable IDE0022
+#pragma warning disable IDE0060
+#pragma warning disable IDE1006
 
 namespace Goedel.Registry {
 
@@ -40,12 +35,31 @@ namespace Goedel.Registry {
         /// <param name="Output">The output stream</param>
 		public Script(TextWriter Output) => _Output = Output;
 
+        /// <summary>
+        /// Wrap the string <paramref name="text"/> to wrap at <paramref name="cols"/>
+        /// characters wide with initial starting position <paramref name="position"/>.
+        /// Avoid breaking console commands.
+        /// Append a console line continuation character to the end of each line inserted.
+        /// </summary>
+        /// <param name="text">The text to format.</param>
+        /// <param name="position">The start position.</param>
+        /// <param name="cols">The maximum colum width.</param>
+        /// <returns>The formatted text</returns>
         public static string WrapConsole(string text, int position = 0, int cols = 70) =>
                         Wrap(text, position, cols-2, " ^", 4);
 
+        /// <summary>
+        /// Wrap the string <paramref name="text"/> to wrap at <paramref name="cols"/>
+        /// characters wide with initial starting position <paramref name="position"/>.
+        /// Do not perform any special handling for spaces.
+        /// </summary>
+        /// <param name="text">The text to format.</param>
+        /// <param name="position">The start position.</param>
+        /// <param name="cols">The maximum colum width.</param>
+        /// <returns>The formatted text</returns>
         public static string WrapResult(string text, int position = 0, int cols = 69) {
             var builder = new StringBuilder();
-            var col = 0;
+            var col = position;
 
             foreach (char c in text) {
                 if (c == '\n') {
@@ -61,9 +75,6 @@ namespace Goedel.Registry {
                     col++;
                     }
                 }
-
-
-
             return builder.ToString();
 
             }
@@ -125,12 +136,6 @@ namespace Goedel.Registry {
             return builder.ToString();
 
 
-            }
-
-        static void Wrap(StringBuilder builder, string text,
-            int position, int cols, string continuation, int indent) {
-
-            builder.Append(text);
             }
 
 

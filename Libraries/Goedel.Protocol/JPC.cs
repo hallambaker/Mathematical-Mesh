@@ -216,6 +216,7 @@ namespace Goedel.Protocol {
         /// Post the specified data to the remote service.
         /// </summary>
         /// <param name="Data">Input data</param>
+        /// <param name="request">The request</param>
         /// <returns>The response data</returns>
         public abstract Stream Post(MemoryStream Data, JsonObject request);
 
@@ -270,6 +271,7 @@ namespace Goedel.Protocol {
         /// Post a request and retrieve the response.
         /// </summary>
         /// <param name="Data">StreamBuffer object containing JSON encoded request.</param>
+        /// <param name="requestObject">The request object.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
         public override Stream Post(MemoryStream Data, JsonObject requestObject) {
 

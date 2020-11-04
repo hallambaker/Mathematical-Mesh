@@ -14,12 +14,6 @@
         <member name="P:Goedel.Mesh.Activation.ProfileDevice">
             <summary>The <see cref="P:Goedel.Mesh.Activation.ProfileDevice"/> that this activation activates.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Activation.ProfileSignature">
-            <summary>The aggregate signature key</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Activation.UDF">
-            <summary>The UDF identifier</summary>
-        </member>
         <member name="P:Goedel.Mesh.Activation.Connection">
             <summary>The connection value.</summary>
         </member>
@@ -39,8 +33,6 @@
             If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
-            The <see cref="P:Goedel.Mesh.Activation.ProfileSignature"/> public key value is calculated for the specified 
-            parameters. Other key pair properties should be populated by the caller.
             </summary>
             <param name="profile">The base profile that the activation activates.</param>
             <param name="udfAlgorithmIdentifier">The UDF key derivation specifier.</param>
@@ -422,8 +414,7 @@
         <member name="M:Goedel.Mesh.ActivationDevice.#ctor(Goedel.Mesh.ProfileDevice,System.Byte[],System.Int32)">
             <summary>
             Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
-            <paramref name="profileDevice"/>. The property <see cref="!:Activation.ActivationUdf"/> is
-            calculated from the values specified for the activation type.
+            <paramref name="profileDevice"/>.
             If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
@@ -565,6 +556,19 @@
         </member>
         <member name="P:Goedel.Mesh.CryptographicCapability._PrimaryKey">
             <summary>The primary key is the value of the <see cref="P:Goedel.Mesh.CryptographicCapability.Id"/> property.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CryptographicCapability.#ctor">
+            <summary>
+            Default constructor used for deserialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CryptographicCapability.#ctor(System.String,System.String)">
+            <summary>
+            Constructor returning an instance of the capability named <paramref name="capability"/>
+            for the subject <paramref name="subjectId"/>.
+            </summary>
+            <param name="subjectId">The subject identifier.</param>
+            <param name="capability">The capability type.</param>
         </member>
         <member name="P:Goedel.Mesh.CryptographicCapability.Id">
              <summary>
@@ -945,6 +949,35 @@
              The corresponding key is a key that may be used to generate key shares.
              </summary>
         </member>
+        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.#ctor">
+            <summary>
+            Default constructor used for deserialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.#ctor(System.String,System.String)">
+            <summary>
+            Constructor returning an instance of the capability named <paramref name="capability"/>
+            for the subject <paramref name="subjectId"/>.
+            </summary>
+            <param name="subjectId">The subject identifier.</param>
+            <param name="capability">The capability type.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.CreateThreshold(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair)">
+            <summary>
+            Factory method returning a new capability for the private key 
+            <paramref name="keyPair"/> encrypting the one of the shares under <paramref name="encrypt"/>.
+            </summary>
+            <param name="keyPair">The key to split</param>
+            <param name="encrypt">The key to encrypt the shaed key under.</param>
+            <returns>The generated capability.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.CreateDirect(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Create a direct key generation capability.
+            </summary>
+            <param name="keyPair">The key from which keys are to be generated.</param>
+            <returns>The generated capability.</returns>
+        </member>
         <member name="M:Goedel.Mesh.CapabilityKeyGenerate.CreateShares(Goedel.Mesh.CryptographicCapability[])">
             <summary>
             Create key shares to augment the array of capabilities <paramref name="capabilities"/>
@@ -1237,7 +1270,8 @@
             </summary>
             <param name="keyId">The identifier of the public key to obtain a decryption 
             capability against.</param>
-            <returns>The decryption capability if found, otherwise null.</returns>
+            <param name="keyDecrypt">The decryption key if found, otherwise null.</param>
+            <returns>true if a key is found, otherwise false.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogAccess.TryFindKeySign(System.String)">
             <summary>
@@ -2337,6 +2371,7 @@
             <param name="keyCollection">Key collection to be used to resolve keys</param>
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Means of obtaining a Mesh Client.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogCredential.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -2801,6 +2836,8 @@
             <param name="keyCollection">Key collection to be used to resolve keys</param>
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">If present provides a means of obtaining a MeshClient instance
+            which may be used to resolve thresholded key shares.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogMember.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -2913,6 +2950,8 @@
             <param name="keyCollection">Key collection to be used to resolve keys</param>
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">If present provides a means of obtaining a MeshClient instance
+            which may be used to resolve thresholded key shares.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogNetwork.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -3056,7 +3095,8 @@
             <param name="cryptoParameters">Cryptographic parameters for the store.</param>
             <param name="keyCollection">Key collection to be used to resolve keys</param>
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
+            <param name="create">If true, create a new file if none exists.</param><param name="meshClient">If present provides a means of obtaining a MeshClient instance
+            which may be used to resolve thresholded key shares.</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedPublication">
              <summary>
@@ -3225,6 +3265,8 @@
             <param name="keyCollection">Key collection to be used to resolve keys</param>
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">If present provides a means of obtaining a MeshClient instance
+            which may be used to resolve thresholded key shares.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogTask.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -4693,6 +4735,42 @@
             (the key is always generated as ephemeral.)</param>
             <param name="keySecurity">The key security model of the derrived key.</param>
             <returns>The derrived key.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.ActivatePublic(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.KeyPair,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation)">
+            <summary>
+            Derrive the public key from the activation seed <paramref name="activationSeed"/>
+            and base key <paramref name="baseKey"/> for a key to be used by an actor
+            <paramref name="actor"/> for the cryptoraphic operation <paramref name="operation"/>.
+            </summary>
+            <param name="activationSeed">The activation seed.</param>
+            <param name="baseKey">The base key specifying the public parameters.</param>
+            <param name="actor">The actor for whom the key is generated.</param>
+            <param name="operation">The operation for which the key is to be used.</param>
+            <returns>The derrived public key</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.ActivatePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation)">
+            <summary>
+            Derrive the private key from the activation seed <paramref name="activationSeed"/>
+            and base seed <paramref name="baseSeed"/> for a key to be used by an actor
+            <paramref name="actor"/> for the cryptoraphic operation <paramref name="operation"/>.
+            </summary>
+            <param name="activationSeed">The activation seed.</param>
+            <param name="baseSeed">The base seed used to derive the private parameters..</param>
+            <param name="actor">The actor for whom the key is generated.</param>
+            <param name="operation">The operation for which the key is to be used.</param>
+            <returns>The derrived private key</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.ActivatePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.KeyPair,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation)">
+            <summary>
+            Derrive the private key from the activation seed <paramref name="activationSeed"/>
+            and base key <paramref name="baseKey"/> for a key to be used by an actor
+            <paramref name="actor"/> for the cryptoraphic operation <paramref name="operation"/>.
+            </summary>
+            <param name="activationSeed">The activation seed.</param>
+            <param name="baseKey">The base key specifying the private parameters.</param>
+            <param name="actor">The actor for whom the key is generated.</param>
+            <param name="operation">The operation for which the key is to be used.</param>
+            <returns>The derrived private key</returns>
         </member>
         <member name="T:Goedel.Mesh.StateSpoolInbound">
             <summary>Inbound spool message state</summary>
@@ -7053,6 +7131,9 @@
             Construct a Profile Host instance  from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             </summary>
             <param name="secretSeed">The secret seed value.</param>
+            <param name="keyCollection">The base key collection</param>
+            <param name="persist">If true, persist the service record to the local machine
+            store.</param>
         </member>
         <member name="M:Goedel.Mesh.ProfileService.Generate">
             <summary>

@@ -20,6 +20,7 @@
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
 
 using System;
 using System.Collections;
@@ -55,6 +56,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
+        /// <param name="meshClient">Means of obtaining a Mesh Client.</param>
         public static new Store Factory(
                 string directory,
                     string storeId,
@@ -62,8 +64,10 @@ namespace Goedel.Mesh {
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
-                    bool create = true) =>
-            new CatalogCredential(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+                    bool create = true) {
+            meshClient.Future();
+            return new CatalogCredential(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+            }
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory

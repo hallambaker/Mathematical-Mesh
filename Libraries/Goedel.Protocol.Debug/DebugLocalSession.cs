@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using Goedel.Utilities;
+
+using System.IO;
 
 
 namespace Goedel.Protocol.Debug {
@@ -36,6 +38,7 @@ namespace Goedel.Protocol.Debug {
         /// Post a request and retrieve the response.
         /// </summary>
         /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
+        /// <param name="requestObject">The abstract request object (for debugging).</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
         public override Stream Post(MemoryStream data, JsonObject requestObject) {
 
@@ -43,6 +46,9 @@ namespace Goedel.Protocol.Debug {
             var JSONReader = new JsonReader(DataText);
 
             var ResultObject = Host.Dispatch(this, JSONReader);
+            ResultObject.Future();
+
+            "Need to reset the API here to be on the object.".TaskFunctionality(true);
 
             return null;
             }

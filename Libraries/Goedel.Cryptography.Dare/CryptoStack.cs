@@ -240,6 +240,8 @@ namespace Goedel.Cryptography.Dare
             if (recipients != null & decrypt) {
                 MasterSecret = keyCollection.Decrypt(recipients, encryptID);
                 }
+
+            signatures.Future(); // Build a list of the verified signatures??
             }
 
 
@@ -453,12 +455,12 @@ namespace Goedel.Cryptography.Dare
         /// message salt to vary it</param>
         /// <returns>The decoder.</returns>
         public CryptoStackStream GetDecoder(
-            Stream inputStream,
-            out Stream outputStream,
-            long contentLength = -1,
-            byte[] saltSuffix = null
-            )
-            {
+                Stream inputStream,
+                out Stream outputStream,
+                long contentLength = -1,
+                byte[] saltSuffix = null) {
+            contentLength.Future();
+
             CalculateParameters(
                 false, saltSuffix, out var TransformEncrypt,
                 out var TransformMac, out var TransformDigest);
@@ -489,6 +491,9 @@ namespace Goedel.Cryptography.Dare
                 long contentLength = -1,
                 byte[] saltSuffix = null,
                 bool decrypt = true) {
+
+            contentLength.Future();
+            decrypt.Future();
 
             CalculateParameters(
                 false, saltSuffix, out var TransformEncrypt,

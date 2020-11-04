@@ -92,9 +92,18 @@ namespace Goedel.Mesh {
         ///<summary>The primary key is the value of the <see cref="Id"/> property.</summary>
         public override string _PrimaryKey => Id;
 
-
+        /// <summary>
+        /// Default constructor used for deserialization.
+        /// </summary>
         public CryptographicCapability() {
             }
+
+        /// <summary>
+        /// Constructor returning an instance of the capability named <paramref name="capability"/>
+        /// for the subject <paramref name="subjectId"/>.
+        /// </summary>
+        /// <param name="subjectId">The subject identifier.</param>
+        /// <param name="capability">The capability type.</param>
         public CryptographicCapability(string subjectId, string capability) {
             SubjectId = subjectId;
 
@@ -208,6 +217,9 @@ namespace Goedel.Mesh {
             KeyPair ephemeral,
             BigInteger? lagrange = null) {
 
+            lagrange.Future();
+
+
             var operation = new CryptographicOperationKeyAgreement() {
                 KeyId = keyId,
                 PublicKey = Key.GetPublic(ephemeral)
@@ -236,14 +248,31 @@ namespace Goedel.Mesh {
 
     public partial class CapabilityKeyGenerate {
 
+
+        /// <summary>
+        /// Default constructor used for deserialization.
+        /// </summary>
         public CapabilityKeyGenerate() {
             }
 
+        /// <summary>
+        /// Constructor returning an instance of the capability named <paramref name="capability"/>
+        /// for the subject <paramref name="subjectId"/>.
+        /// </summary>
+        /// <param name="subjectId">The subject identifier.</param>
+        /// <param name="capability">The capability type.</param>
         public CapabilityKeyGenerate(string subjectId, string capability) :
                     base(subjectId, capability) {
             }
 
 
+        /// <summary>
+        /// Factory method returning a new capability for the private key 
+        /// <paramref name="keyPair"/> encrypting the one of the shares under <paramref name="encrypt"/>.
+        /// </summary>
+        /// <param name="keyPair">The key to split</param>
+        /// <param name="encrypt">The key to encrypt the shaed key under.</param>
+        /// <returns>The generated capability.</returns>
         public static CapabilityKeyGenerate CreateThreshold(KeyPair keyPair, 
                         KeyPair encrypt=null) {
             if (encrypt == null) {
@@ -253,7 +282,11 @@ namespace Goedel.Mesh {
             return null;
             }
 
-
+        /// <summary>
+        /// Create a direct key generation capability.
+        /// </summary>
+        /// <param name="keyPair">The key from which keys are to be generated.</param>
+        /// <returns>The generated capability.</returns>
         public static CapabilityKeyGenerate CreateDirect(KeyPair keyPair) {
             var result = new CapabilityKeyGenerate(keyPair.KeyIdentifier, "CapabilityKeyGenerate") {
 

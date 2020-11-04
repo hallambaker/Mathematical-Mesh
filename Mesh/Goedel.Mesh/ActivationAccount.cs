@@ -246,7 +246,7 @@ namespace Goedel.Mesh {
             // Wrap the connectionDevice and activationDevice in envelopes
 
             var catalogEntryDevice = new CatalogedDevice() {
-                Udf = activationDevice.UDF,
+                Udf = activationAccount.ProfileSignature.Udf,
                 EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
                 EnvelopedConnectionUser = connectionDevice.EnvelopedConnectionDevice,
