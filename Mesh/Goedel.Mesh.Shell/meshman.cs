@@ -6645,7 +6645,7 @@ namespace Goedel.Mesh.Shell {
 
 
 
-		/// <summary>Field accessor for option [requestid]</summary>
+		/// <summary>Field accessor for parameter []</summary>
 		public virtual String RequestID {
 			get => _Data[0] as String;
 			set => _Data[0]  = value;
@@ -6712,16 +6712,16 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "status",
-			Brief =  "Request status of pending requests",
+			Brief =  "Request status of pending request",
 			HandleDelegate =  CommandLineInterpreter.Handle_MessageStatus,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "RequestID", 
 					Default = null, // null if null
 					Brief = "Specifies the request to provide the status of",
 					Index = 0,
-					Key = "requestid"
+					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 

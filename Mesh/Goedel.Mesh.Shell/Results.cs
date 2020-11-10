@@ -94,7 +94,7 @@ namespace Goedel.Mesh.Shell {
 			{"ResultProcess", ResultProcess._Factory},
 			{"ResultConnect", ResultConnect._Factory},
 			{"ResultTransactionRequest", ResultTransactionRequest._Factory},
-			{"ResultConfirm", ResultConfirm._Factory}			};
+			{"ResultReceived", ResultReceived._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JsonReader stream.
@@ -4222,11 +4222,11 @@ namespace Goedel.Mesh.Shell {
 
 	/// <summary>
 	/// </summary>
-	public partial class ResultConfirm : Result {
+	public partial class ResultReceived : Result {
         /// <summary>
         /// </summary>
 
-		public virtual string						Id  {get; set;}
+		public virtual string						Status  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -4240,13 +4240,13 @@ namespace Goedel.Mesh.Shell {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ResultConfirm";
+		public new const string __Tag = "ResultReceived";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ResultConfirm();
+		public static new JsonObject _Factory () => new ResultReceived();
 
 
         /// <summary>
@@ -4275,10 +4275,10 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteObjectStart ();
 				}
 			((Result)this).SerializeX(_writer, false, ref _first);
-			if (Id != null) {
+			if (Status != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Id", 1);
-					_writer.WriteString (Id);
+				_writer.WriteToken ("Status", 1);
+					_writer.WriteString (Status);
 				}
 			if (Message != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -4296,15 +4296,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultConfirm FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new ResultReceived FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ResultConfirm;
+				return Out as ResultReceived;
 				}
-		    var Result = new ResultConfirm ();
+		    var Result = new ResultReceived ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -4318,8 +4318,8 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Id" : {
-					Id = jsonReader.ReadString ();
+				case "Status" : {
+					Status = jsonReader.ReadString ();
 					break;
 					}
 				case "Message" : {

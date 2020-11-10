@@ -158,6 +158,7 @@ namespace ExampleGenerator {
     public partial class LayerConfirm : ExampleSet {
 
         public List<ExampleResult> ConfirmRequest;
+        public List<ExampleResult> ConfirmAliceSync;
         public List<ExampleResult> ConfirmAliceResponse;
         public List<ExampleResult> ConfirmVerify;
 

@@ -411,8 +411,8 @@
 				Default "false"
 
 		Command MessageStatus "status"
-			Brief "Request status of pending requests"
-			Option RequestID "requestid" String
+			Brief "Request status of pending request"
+			Parameter RequestID "requestid" String
 				Brief "Specifies the request to provide the status of"
 			Include AccountOptions
 			Include Reporting

@@ -160,7 +160,7 @@
 
 	Structure ResultSent
 		Inherits		Result
-		Struct Message Message
+		Struct			Message Message
 		String			Status
 
 	Structure ResultPending
@@ -191,10 +191,11 @@
 		String			Identifier
 
 
-	Structure ResultConfirm
+	Structure ResultReceived
 		Inherits		Result
-		String			Id
+		String			Status
 		Struct Message Message
+
 
 
 

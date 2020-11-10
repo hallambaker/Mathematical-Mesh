@@ -124,7 +124,7 @@ namespace ExampleGenerator {
             TestConnectDisconnect(deviceId);
             SSHApp();
             MailApp();
-            CreateBob();
+            CreateBobAccount();
             ContactExchange();
             Confirmation();
             GroupOperations();
@@ -332,7 +332,7 @@ namespace ExampleGenerator {
             false.TestTrue();
             }
 
-        public void CreateBob() {
+        public void CreateBobAccount() {
             // Interactions with Bob... create an account
             Bob1 = GetTestCLI("Bob");
             Account.CreateBob = Bob1.Example(
@@ -382,7 +382,10 @@ namespace ExampleGenerator {
                 );
             var resultConfirmSent = Confirm.ConfirmRequest.GetResultSent();
 
-
+            Confirm.ConfirmAliceSync = Alice1.Example(
+                $"account sync",
+                $"message pending"
+                 );
             var messageId = resultConfirmSent.Message.MessageId;
             var confirmResponseID = resultConfirmSent.Message.GetResponseId();
 
@@ -390,7 +393,12 @@ namespace ExampleGenerator {
                 $"message accept {messageId}"
                 );
 
-            Confirm.ConfirmVerify = Alice1.Example(
+            var testc = Console1.Example(
+                $"account sync",
+                $"message pending"
+                 );
+
+            Confirm.ConfirmVerify = Console1.Example(
                 $"message status {confirmResponseID}"
                  );
             "Verify the confirmation response".TaskFunctionality();

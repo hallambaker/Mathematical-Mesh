@@ -65,7 +65,7 @@ namespace Goedel.XUnit {
             TestConnectDisconnect(deviceId);
             SSHApp();
             MailApp();
-            CreateBob();
+            CreateBobAccount();
             ContactExchange();
             Confirmation();
             GroupOperations();
@@ -136,7 +136,7 @@ namespace Goedel.XUnit {
         public void TestContact() {
             ServiceConnect();
             CreateAliceAccount();
-            CreateBob();
+            CreateBobAccount();
             ContactExchange();
             }
 
@@ -151,7 +151,7 @@ namespace Goedel.XUnit {
         public void GroupTests() {
             ServiceConnect();
             CreateAliceAccount();
-            CreateBob();
+            CreateBobAccount();
 
             GroupOperations();
             }

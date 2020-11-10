@@ -81,7 +81,36 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
+    public partial class ResultReceived {
 
+        /// <summary>
+        /// Converts the value of this instance to a <see langword="String"/>.
+        /// </summary>
+        /// <returns>The current string.</returns>
+        public override string ToString() {
+            var Builder = new StringBuilder();
+
+
+            switch (Message) {
+                case null: {
+                    Builder.AppendLine("Pending");
+                    break;
+                    }
+                case ResponseConfirmation responseConfirmation: {
+                    Builder.AppendLine(responseConfirmation.Accept ? "Accept" :  "Reject");
+                    break;
+                    }
+
+
+                }
+
+
+
+
+
+            return Builder.ToString();
+            }
+        }
 
 
     public partial class ResultDigest {

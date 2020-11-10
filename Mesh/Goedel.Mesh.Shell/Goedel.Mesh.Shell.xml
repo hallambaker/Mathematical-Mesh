@@ -1928,7 +1928,7 @@
             <summary>Field accessor for option [raw]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageStatus.RequestID">
-            <summary>Field accessor for option [requestid]</summary>
+            <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageStatus.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -5998,35 +5998,35 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.Shell.ResultConfirm">
+        <member name="T:Goedel.Mesh.Shell.ResultReceived">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultConfirm.Id">
+        <member name="P:Goedel.Mesh.Shell.ResultReceived.Status">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultConfirm.Message">
+        <member name="P:Goedel.Mesh.Shell.ResultReceived.Message">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultConfirm._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ResultConfirm.__Tag">
+        <member name="P:Goedel.Mesh.Shell.ResultReceived._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultConfirm._Factory">
+        <member name="F:Goedel.Mesh.Shell.ResultReceived.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultReceived._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultConfirm.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.Shell.ResultReceived.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -6035,7 +6035,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultConfirm.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.Shell.ResultReceived.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -6046,7 +6046,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultConfirm.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Shell.ResultReceived.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6054,12 +6054,18 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultConfirm.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.Shell.ResultReceived.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultReceived.ToString">
+            <summary>
+            Converts the value of this instance to a <see langword="String"/>.
+            </summary>
+            <returns>The current string.</returns>
         </member>
     </members>
 </doc>

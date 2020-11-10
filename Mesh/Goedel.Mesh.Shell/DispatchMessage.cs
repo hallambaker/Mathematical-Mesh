@@ -97,10 +97,18 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageStatus(MessageStatus options) {
             var contextAccount = GetContextUser(options);
-            var result = new ResultSent() {
+            var messageID = options.RequestID.Value;
 
+            // pull out the message here.
+
+            var message = contextAccount.GetPendingMessageByID(messageID, out var found);
+
+            // return status as Pending / Accepted / Rejected
+
+            var result = new ResultReceived() {
+                Message = message 
                 };
-            throw new NYI();
+            return result;
             }
 
 
