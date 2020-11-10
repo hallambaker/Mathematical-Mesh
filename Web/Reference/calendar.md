@@ -36,19 +36,23 @@ add   Add calendar entry
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar add CalendarEntry1.json CalID1
-<rsp>ERROR - Cannot access a closed file.
-</div>
+<rsp>{
+  "Title": "CalendarEntry1.json",
+  "Key": "NBAV-GPP4-X3P4-XBMH-IWUX-ZB4A-B7V5"}</div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar add CalendarEntry1.json CalID1 /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Cannot access a closed file."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedTask": {
+        "Title": "CalendarEntry1.json",
+        "Key": "NBAV-GPP4-X3P4-XBMH-IWUX-ZB4A-B7V5"}}}}
 </div>
 ~~~~
 
@@ -144,6 +148,10 @@ list   List calendar entries
 <cmd>Alice> calendar list
 <rsp>CatalogedTask
 
+CatalogedTask
+
+CatalogedTask
+
 </div>
 ~~~~
 
@@ -158,7 +166,15 @@ Specifying the /json option returns a result of type ResultDump:
     "CatalogedEntries": [{
         "CatalogedTask": {
           "Title": "SomeItem",
-          "Key": "NDNI-2XIG-UEFN-7ZB4-SNFQ-O3GQ-IZFB"}}]}}
+          "Key": "NCG2-LBDN-GLMT-UAEC-Z2LL-C5DL-GURP"}},
+      {
+        "CatalogedTask": {
+          "Title": "CalendarEntry1.json",
+          "Key": "NBAV-GPP4-X3P4-XBMH-IWUX-ZB4A-B7V5"}},
+      {
+        "CatalogedTask": {
+          "Title": "CalendarEntry2.json",
+          "Key": "NDTW-A4KX-SLAY-PA3A-QTWH-RQ37-TSKM"}}]}}
 </div>
 ~~~~
 

@@ -75,10 +75,20 @@ A complete list of contacts is obtained using the  `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MBFU-YM7B-CJC4-HDLU-KRX5-UXC5-KYBS
-  Person MBFU-YM7B-CJC4-HDLU-KRX5-UXC5-KYBS
-  Anchor MBFU-YM7B-CJC4-HDLU-KRX5-UXC5-KYBS
+<rsp>Entry<CatalogedContact>: MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
+  Person MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
+  Anchor MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
   Address alice@example.com
+
+Entry<CatalogedContact>: NC6S-FHAS-TTJX-5VFB-B57Z-JOG3-DJDA
+  Person 
+  Anchor MCNN-EDO6-GYYF-2H2H-IJTV-KXQZ-TXXJ
+  Address bob@example.com
+
+Entry<CatalogedContact>: NBYD-QOZ3-BUQJ-QTYU-YPZJ-SCXL-LA64
+  Person 
+  Anchor MCL5-XUKG-CQ6T-ASVR-6RP5-X2C3-BL2L
+  Address groupw@example.com
 
 </div>
 ~~~~

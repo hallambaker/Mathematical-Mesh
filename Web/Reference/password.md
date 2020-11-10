@@ -36,19 +36,23 @@ add   Add password entry
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 password
-<rsp>ERROR - Cannot access a closed file.
+<rsp>alice1@ftp.example.com = [password]
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 password /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Cannot access a closed file."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedCredential": {
+        "Service": "ftp.example.com",
+        "Username": "alice1",
+        "Password": "password"}}}}
 </div>
 ~~~~
 
@@ -72,7 +76,7 @@ get   Lookup password entry
 ~~~~
 <div="terminal">
 <cmd>Alice> password get ftp.example.com
-<rsp>alice1@ftp.example.com = [password]
+<rsp>alice1@ftp.example.com = [newpassword]
 </div>
 ~~~~
 
@@ -88,7 +92,7 @@ Specifying the /json option returns a result of type ResultEntry:
       "CatalogedCredential": {
         "Service": "ftp.example.com",
         "Username": "alice1",
-        "Password": "password"}}}}
+        "Password": "newpassword"}}}}
 </div>
 ~~~~
 
@@ -112,8 +116,7 @@ delete   Delete password entry
 ~~~~
 <div="terminal">
 <cmd>Alice> password delete www.example.com
-<rsp>ERROR - Cannot access a closed file.
-</div>
+<rsp></div>
 ~~~~
 
 Specifying the /json option returns a result of type Result:
@@ -123,8 +126,7 @@ Specifying the /json option returns a result of type Result:
 <cmd>Alice> password delete www.example.com /json
 <rsp>{
   "Result": {
-    "Success": false,
-    "Reason": "Cannot access a closed file."}}
+    "Success": true}}
 </div>
 ~~~~
 

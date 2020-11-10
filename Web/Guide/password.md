@@ -15,9 +15,9 @@ Alice adds the username and password for an ftp service to her catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 password
-<rsp>ERROR - Cannot access a closed file.
+<rsp>alice1@ftp.example.com = [password]
 <cmd>Alice> password add www.example.com alice@example.com newpassword
-<rsp>ERROR - Cannot access a closed file.
+<rsp>alice@example.com@www.example.com = [newpassword]
 </div>
 ~~~~
 
@@ -49,7 +49,7 @@ values for a specified service:
 ~~~~
 <div="terminal">
 <cmd>Alice> password get ftp.example.com
-<rsp>alice1@ftp.example.com = [password]
+<rsp>alice1@ftp.example.com = [newpassword]
 </div>
 ~~~~
 
@@ -86,7 +86,7 @@ password that is randomly generated:
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 newpassword
-<rsp>ERROR - Cannot access a closed file.
+<rsp>alice1@ftp.example.com = [newpassword]
 </div>
 ~~~~
 
@@ -99,7 +99,6 @@ Password entries may be deleted using the  `password delete` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> password delete www.example.com
-<rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
 

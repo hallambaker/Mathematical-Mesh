@@ -21,12 +21,18 @@ The `bookmark add` command adds a bookmark entry to a catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-<rsp>ERROR - Cannot access a closed file.
-<cmd>Alice> bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
-<rsp>ERROR - Cannot access a closed file.
-<cmd>Alice> bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
-<rsp>ERROR - Cannot access a closed file.
-</div>
+<rsp>{
+  "Uri": "http://example.com/",
+  "Title": "\"Example",
+  "Path": "Folder1/1"}<cmd>Alice> bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
+<rsp>{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}<cmd>Alice> bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
+<rsp>{
+  "Uri": "http://example.com/Fred",
+  "Title": "\"The",
+  "Path": "Folder1/1a"}</div>
 ~~~~
 
 
@@ -38,8 +44,10 @@ The `bookmark get`  command retreives a bookmark  by its index label:
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark get Folder1/2
-<rsp>Empty
-</div>
+<rsp>{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}</div>
 ~~~~
 
 ## Deleting bookmarks
@@ -63,6 +71,12 @@ A complete list of bookmarks is obtained using the  `bookmark list` command:
 <div="terminal">
 <cmd>Alice> bookmark list
 <rsp>CatalogedBookmark
+
+CatalogedBookmark
+
+CatalogedBookmark
+
+CatalogedBookmark
 
 </div>
 ~~~~

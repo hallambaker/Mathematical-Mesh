@@ -15,10 +15,12 @@ The `password add` command adds a calendar entry to a catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar add CalendarEntry1.json CalID1
-<rsp>ERROR - Cannot access a closed file.
-<cmd>Alice> calendar add CalendarEntry2.json CalID2
-<rsp>ERROR - Cannot access a closed file.
-</div>
+<rsp>{
+  "Title": "CalendarEntry1.json",
+  "Key": "NBAV-GPP4-X3P4-XBMH-IWUX-ZB4A-B7V5"}<cmd>Alice> calendar add CalendarEntry2.json CalID2
+<rsp>{
+  "Title": "CalendarEntry2.json",
+  "Key": "NDTW-A4KX-SLAY-PA3A-QTWH-RQ37-TSKM"}</div>
 ~~~~
 
 
@@ -46,6 +48,10 @@ Calendar entries may be deleted using the  `calendar delete` command:
 <cmd>Alice> calendar list
 <rsp>CatalogedTask
 
+CatalogedTask
+
+CatalogedTask
+
 </div>
 ~~~~
 
@@ -58,6 +64,10 @@ A complete list of calendars is obtained using the  `calendar list` command:
 <div="terminal">
 <cmd>Alice> calendar list
 <rsp>CatalogedTask
+
+CatalogedTask
+
+CatalogedTask
 
 </div>
 ~~~~

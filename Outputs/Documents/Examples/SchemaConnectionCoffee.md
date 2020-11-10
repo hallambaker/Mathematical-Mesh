@@ -2,24 +2,24 @@
 {
   "ConnectionDevice":{
     "DeviceSignature":{
-      "Udf":"MBFN-KKHZ-XIS2-673H-P6Y7-3DTG-EUCR",
+      "Udf":"MBPB-TOZG-FIWS-LA3P-GN5D-X6DD-3BHZ",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"F9pI207c-e4T2HJU_THRHxregLaKdfr-dj0HWGBBRWGTk
-  nqMrJYGhQaqG3JzGCQiFwztGKi1KwsA"}}},
+          "Public":"hx6_OIX4oh4e6aILvXs7FhJASlkUG-VbazYcZgXdU3Y5a
+  eo5OorSF4mwT_Xl5MXSO2yDfDsX0C0A"}}},
     "DeviceEncryption":{
-      "Udf":"MAZB-YMJG-LGMY-DX2T-WN56-6I5T-YGMZ",
+      "Udf":"MDV5-FM6U-FSVH-VDOR-GD2L-YP3E-W7DZ",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"gWqJYBt0_8ixlTvHlujHCQPwlBtyLAKANX3WKxnUgazMJ
-  DUDljJwiQ_aa7TRe6Iyvvjj4knkRG-A"}}},
+          "Public":"9r7l6JnZH_QZuf1lG9An3ISs5ZtDvQYI6A7yDfTMNaOaf
+  xMxpOARfrmS2RlDikurSEIZKFeUD-iA"}}},
     "DeviceAuthentication":{
-      "Udf":"MDRU-G5CD-KUS2-OXJG-TGU7-K5QT-OYYV",
+      "Udf":"MD6K-C2HA-T74Y-MQKD-55C4-DX3N-SIC4",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"9E8jXblD93LqMBjz6Ab6KtVdnMSgOVhefYeBH3QbZPZ2y
-  aqpvZNSOO79DHH0ZLqtxJpZoGUfz9iA"}}}}}
+          "Public":"pP8s9wZ6KlILGqqFGp6PlxJDIfWj6_O7_qpKSe9hoZU0K
+  tUTlQ7kWLUYXOieZ28jwYhxBGemPukA"}}}}}
 ~~~~

@@ -4,8 +4,8 @@ The connection request is initiated on the device being connected:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MDQJ-WIIP-CJXX-ZQ4D-L5UU-KGLH-EEVB
-   Witness value = FRPG-UBLD-JKCN-HAWA-F4MU-KNMN-L2PG
+<rsp>   Device UDF = MCBZ-J5MT-S5BZ-5JOW-QZW4-3USK-VMWG
+   Witness value = ETAD-G4P3-UG4H-N3M6-27TY-MGSX-FDIM
 </div>
 ~~~~
 
@@ -17,26 +17,24 @@ accepts it:
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: OKYP-F5A2-MBT6-GV7X-MCZH-2K3T-4OHU
+<rsp>MessageID: LH27-DJJ7-KIYC-7UZJ-5BXY-V7GU-6RZ3
         Connection Request::
-        MessageID: OKYP-F5A2-MBT6-GV7X-MCZH-2K3T-4OHU
+        MessageID: LH27-DJJ7-KIYC-7UZJ-5BXY-V7GU-6RZ3
         To:  From: 
-        Device:  MDTY-B2DV-56KN-O6EG-XG5T-62NT-4UTE
-        Witness: OKYP-F5A2-MBT6-GV7X-MCZH-2K3T-4OHU
-MessageID: NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
+        Device:  MBFE-KWS7-AC5S-LYJS-EJ2I-ZY37-HCI7
+        Witness: LH27-DJJ7-KIYC-7UZJ-5BXY-V7GU-6RZ3
+MessageID: NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
         Confirmation Request::
-        MessageID: NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
+        MessageID: NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NDGZ-J52O-DPPK-JG7R-2YZQ-JUPS-3GJK
+MessageID: NB2L-XW4K-7HZ3-5UHJ-B46U-2ZUJ-KXWC
         Contact Request::
-        MessageID: NDGZ-J52O-DPPK-JG7R-2YZQ-JUPS-3GJK
+        MessageID: NB2L-XW4K-7HZ3-5UHJ-B46U-2ZUJ-KXWC
         To: alice@example.com From: bob@example.com
-        PIN: ACJP-PFU2-2O4N-73XX-J3KN-E7K4-FV3A
+        PIN: ACQ6-HOEL-5EOQ-OKX4-XIX5-ZUSS-JGIA
 <cmd>Alice> account sync /auto
-<rsp>ERROR - Cannot access a closed file.
-<cmd>Alice> device accept FRPG-UBLD-JKCN-HAWA-F4MU-KNMN-L2PG
-<rsp>ERROR - Cannot access a closed file.
+<cmd>Alice> device accept ETAD-G4P3-UG4H-N3M6-27TY-MGSX-FDIM
 </div>
 ~~~~
 

@@ -5,7 +5,6 @@ her closest friends:
 ~~~~
 <div="terminal">
 <cmd>Alice> group create groupw@example.com
-<rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
 

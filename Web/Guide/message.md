@@ -39,21 +39,21 @@ Alice reviews her pending messages using the `message pending` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: NDT4-66BJ-HIH5-UMHG-4QVG-YXDJ-RKJD
+<rsp>MessageID: ND5A-QIRU-VE3S-DA6R-CJDO-3RUB-KIR7
         Contact Request::
-        MessageID: NDT4-66BJ-HIH5-UMHG-4QVG-YXDJ-RKJD
+        MessageID: ND5A-QIRU-VE3S-DA6R-CJDO-3RUB-KIR7
         To: alice@example.com From: bob@example.com
-        PIN: ACBR-HCBB-UYL7-6MVU-QKWB-4N64-UP3A
-MessageID: NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
+        PIN: AC2Z-MDNH-J3CC-T2OP-Z36L-CJF4-75WQ
+MessageID: NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
         Confirmation Request::
-        MessageID: NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
+        MessageID: NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NDGZ-J52O-DPPK-JG7R-2YZQ-JUPS-3GJK
+MessageID: NB2L-XW4K-7HZ3-5UHJ-B46U-2ZUJ-KXWC
         Contact Request::
-        MessageID: NDGZ-J52O-DPPK-JG7R-2YZQ-JUPS-3GJK
+        MessageID: NB2L-XW4K-7HZ3-5UHJ-B46U-2ZUJ-KXWC
         To: alice@example.com From: bob@example.com
-        PIN: ACJP-PFU2-2O4N-73XX-J3KN-E7K4-FV3A
+        PIN: ACQ6-HOEL-5EOQ-OKX4-XIX5-ZUSS-JGIA
 </div>
 ~~~~
 
@@ -73,10 +73,20 @@ Bob's contact information has been added to Alice's address book:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MBFU-YM7B-CJC4-HDLU-KRX5-UXC5-KYBS
-  Person MBFU-YM7B-CJC4-HDLU-KRX5-UXC5-KYBS
-  Anchor MBFU-YM7B-CJC4-HDLU-KRX5-UXC5-KYBS
+<rsp>Entry<CatalogedContact>: MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
+  Person MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
+  Anchor MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
   Address alice@example.com
+
+Entry<CatalogedContact>: NC6S-FHAS-TTJX-5VFB-B57Z-JOG3-DJDA
+  Person 
+  Anchor MCNN-EDO6-GYYF-2H2H-IJTV-KXQZ-TXXJ
+  Address bob@example.com
+
+Entry<CatalogedContact>: NBYD-QOZ3-BUQJ-QTYU-YPZJ-SCXL-LA64
+  Person 
+  Anchor MCL5-XUKG-CQ6T-ASVR-6RP5-X2C3-BL2L
+  Address groupw@example.com
 
 </div>
 ~~~~
@@ -154,26 +164,26 @@ Alice reviews her pending messages using the using the `message pending` command
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: NBUI-FV4Y-G4QA-IAOH-YQRT-BR5R-5UOX
+<rsp>MessageID: NDUY-KIYX-RINT-7N5B-JY3H-JERJ-QVQG
         Confirmation Request::
-        MessageID: NBUI-FV4Y-G4QA-IAOH-YQRT-BR5R-5UOX
+        MessageID: NDUY-KIYX-RINT-7N5B-JY3H-JERJ-QVQG
         To: alice@example.com From: bob@example.com
         Text: "Purchase
-MessageID: NDT4-66BJ-HIH5-UMHG-4QVG-YXDJ-RKJD
+MessageID: ND5A-QIRU-VE3S-DA6R-CJDO-3RUB-KIR7
         Contact Request::
-        MessageID: NDT4-66BJ-HIH5-UMHG-4QVG-YXDJ-RKJD
+        MessageID: ND5A-QIRU-VE3S-DA6R-CJDO-3RUB-KIR7
         To: alice@example.com From: bob@example.com
-        PIN: ACBR-HCBB-UYL7-6MVU-QKWB-4N64-UP3A
-MessageID: NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
+        PIN: AC2Z-MDNH-J3CC-T2OP-Z36L-CJF4-75WQ
+MessageID: NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
         Confirmation Request::
-        MessageID: NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
+        MessageID: NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NDGZ-J52O-DPPK-JG7R-2YZQ-JUPS-3GJK
+MessageID: NB2L-XW4K-7HZ3-5UHJ-B46U-2ZUJ-KXWC
         Contact Request::
-        MessageID: NDGZ-J52O-DPPK-JG7R-2YZQ-JUPS-3GJK
+        MessageID: NB2L-XW4K-7HZ3-5UHJ-B46U-2ZUJ-KXWC
         To: alice@example.com From: bob@example.com
-        PIN: ACJP-PFU2-2O4N-73XX-J3KN-E7K4-FV3A
+        PIN: ACQ6-HOEL-5EOQ-OKX4-XIX5-ZUSS-JGIA
 </div>
 ~~~~
 

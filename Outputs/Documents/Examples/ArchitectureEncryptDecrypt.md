@@ -11,11 +11,13 @@ readable only by Alice:
     alice@example.com 
 <cmd>Alice> dare verify ciphertext.dare
 <rsp>File: ciphertext.dare
-    Bytes: 0
+    Bytes: 16
     Encryption Algorithm: A256CBC
-        Recipient: MCTT-2LFQ-XSC5-V3OL-EVOS-NMQU-YOC6
+        Recipient: MBYJ-AMCF-4QVD-3WAT-KS3X-5LTP-YIA7
     Digest Algorithm: S512
-    Payload Digest: 
+    Payload Digest: 91CCB8B36366C4E8BECDDE4F58F0AF90FC5A65DE05C5CB384
+EEC42918178693D39388B855C954149487CD04342C0E9B885F2F2C9EBFCD9A602A406
+586FF34638
 </div>
 ~~~~
 

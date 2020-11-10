@@ -3,9 +3,9 @@
 ~~~~
 {
   "ActivationDevice":{
-    "ActivationKey":"ZAAQ-GYWU-5OLM-3KMN-BVRJ-Y35Y-VAKI-A2RE-4QEK-D
-W44-2RHT-Q3C5-FYTT-IAMN",
-    "AccountUdf":"MAOL-MVTJ-3T6F-H2OV-ATEA-DD4B-FVFD"}}
+    "ActivationKey":"ZAAQ-GDKE-MH35-BNHQ-SN4S-N5XK-IMLK-Y47O-7BLA-U
+WAZ-3PQJ-VCI6-BE5R-YPYH",
+    "AccountUdf":"MAIN-SGXZ-Q2ZI-WUHH-DJ3M-F4GN-ELNY"}}
 ~~~~
 
 

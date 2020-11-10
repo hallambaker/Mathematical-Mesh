@@ -18,7 +18,7 @@ The `key nonce` command is used to generate a new random nonce value:
 ~~~~
 <div="terminal">
 <cmd>Alice> key nonce
-<rsp>NDQQ-2XUX-D2CW-NPTO-QOFE-KRLU-3Q4Q
+<rsp>NDLG-SJIB-OWFK-WBUB-LXDG-UAC4-D3VQ
 </div>
 ~~~~
 
@@ -31,7 +31,7 @@ generated using the `/bits` option:
 ~~~~
 <div="terminal">
 <cmd>Alice> key nonce /bits=256
-<rsp>NCZZ-AXCD-SWWR-VI5K-BMMR-QQAG-7CMZ-NKLM-MXSU-4NH2-PBGU-A3QF-F76X-W
+<rsp>NBL6-2FLQ-64WZ-VDX4-3RHU-4XJP-6ISR-TR7C-SWE7-XJ5I-ZYVV-ZUDZ-MA42-Y
 </div>
 ~~~~
 
@@ -41,7 +41,7 @@ Secrets are generated in the same way using the command `key secret`:
 ~~~~
 <div="terminal">
 <cmd>Alice> key secret
-<rsp>EADB-RNYX-E24C-XLPK-EID3-BQMU-YQOQ
+<rsp>EB2T-PUJQ-EONW-UMZA-YX65-EUOP-OA7A
 </div>
 ~~~~
 
@@ -52,7 +52,7 @@ Again, any output length can be requested up to the platform limit:
 ~~~~
 <div="terminal">
 <cmd>Alice> key secret /bits=256
-<rsp>EC2O-DO4B-ZTHT-Q26M-5JSP-XTQD-V2CB-V42V-CEZI-4NJ2-3OBP-HAO2-I4BR-Y
+<rsp>EAYZ-RY25-I73L-DQFD-ITTO-3RXW-EEGD-RRCC-3DW5-U24S-UG7G-QAF7-RXWT-C
 </div>
 ~~~~
 
@@ -71,8 +71,8 @@ a new secret/digest pair which are then used to process the content data:
 ~~~~
 <div="terminal">
 <cmd>Alice> key earl
-<rsp>EB36-N7RQ-RPQY-VLPV-NOC5-CELK-E5RR-JA
-MCSN-I5MW-YA6T-MM23-CELK-GD7B-65F6-6SEM-K2LZ-4OUE-5LN7-3LMB-6JKG-63RF
+<rsp>EDBP-RZZR-YGCU-FQOV-QECB-IGGB-VQ5J-J5
+MC7O-JJME-VNBV-VLUQ-5K5U-D56L-ZOZH-Z7K2-QRVI-XVEH-XXHI-BERQ-TIPX-VISV
 
 </div>
 ~~~~
@@ -97,11 +97,11 @@ bit secret is created and three shares are created with a quorum of two:
 ~~~~
 <div="terminal">
 <cmd>Alice> key share
-<rsp>UUPQ-Q3GF-XBJI-PHKT-IP4D-AICP-Q4
-MBPF-MOKL-H5YX-G63R-OTXN-O3M4-KM45-WP3D-33XH-FXXX-ZQG6-LCLO-R5V3
-SAQC-PXRK-KY7O-37FU-DURM-D2N2-S7LX-I
-SAQ2-VHKM-H64C-HJXA-TTZD-7W2F-B5PZ-I
-SARC-2XDO-FEYV-SUIN-DTA3-3TGP-Q3TY-C
+<rsp>BMI5-ZURI-RC4J-7LA7-OQLH-SBQY-TA
+MDN5-NPL2-X5UW-YACY-U3XC-KICD-3SPL-LTCF-ODP4-PZEA-6LQC-3Q3Q-3HXH
+SAQN-UQMI-LHQJ-DRYS-AZXT-B7HV-3JYW-C
+SAQ2-S4JT-4GMJ-VVME-MC7O-3Y3S-V3E7-O
+SARH-RIG7-NFIK-HY7W-XMHK-VSPP-QMRI-2
 </div>
 ~~~~
 
@@ -117,11 +117,11 @@ obtain the result as a JSON structure:
 <rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "UUPQ-Q3GF-XBJI-PHKT-IP4D-AICP-Q4",
-    "Identifier": "MBPF-MOKL-H5YX-G63R-OTXN-O3M4-KM45-WP3D-33XH-FXXX-ZQG6-LCLO-R5V3",
-    "Shares": ["SAQC-PXRK-KY7O-37FU-DURM-D2N2-S7LX-I",
-      "SAQ2-VHKM-H64C-HJXA-TTZD-7W2F-B5PZ-I",
-      "SARC-2XDO-FEYV-SUIN-DTA3-3TGP-Q3TY-C"]}}
+    "Key": "BMI5-ZURI-RC4J-7LA7-OQLH-SBQY-TA",
+    "Identifier": "MDN5-NPL2-X5UW-YACY-U3XC-KICD-3SPL-LTCF-ODP4-PZEA-6LQC-3Q3Q-3HXH",
+    "Shares": ["SAQN-UQMI-LHQJ-DRYS-AZXT-B7HV-3JYW-C",
+      "SAQ2-S4JT-4GMJ-VVME-MC7O-3Y3S-V3E7-O",
+      "SARH-RIG7-NFIK-HY7W-XMHK-VSPP-QMRI-2"]}}
 </div>
 ~~~~
 
@@ -131,9 +131,9 @@ meet the quorum using the `key recover`:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key recover SAQC-PXRK-KY7O-37FU-DURM-D2N2-S7LX-I ^
-    SARC-2XDO-FEYV-SUIN-DTA3-3TGP-Q3TY-C
-<rsp>UUPQ-Q3GF-XBJI-PHKT-IP4D-AICP-Q4
+<cmd>Alice> key recover SAQN-UQMI-LHQJ-DRYS-AZXT-B7HV-3JYW-C ^
+    SARH-RIG7-NFIK-HY7W-XMHK-VSPP-QMRI-2
+<rsp>BMI5-ZURI-RC4J-7LA7-OQLH-SBQY-TA
 </div>
 ~~~~
 
@@ -149,13 +149,13 @@ of three:
 ~~~~
 <div="terminal">
 <cmd>Alice> key share /quorum=3 /shares=5
-<rsp>CZYC-2VU6-K7C3-EU7O-XJQV-DGD3-SY
-MBKE-TOJE-2CRX-ONMN-2NDP-CV5E-WIGD-4FQP-ADPC-E73J-5UHV-QM7A-HTWO
-SAYP-SUIE-XYQ2-4Z3A-6LIJ-BFEO-LTXC-O
-SAYY-OACE-5Y5Y-HKFI-7QBM-ENZD-WRU3-4
-SAZL-67PN-43V5-PCMK-N6CU-6SIR-T3XM-C
-SAZ2-FSP7-VAZK-UCQF-JVMD-PSSY-DR6P-2
-SA2D-BZD2-GIH7-WKQZ-SV5X-XOXX-FUKH-E
+<rsp>YCUX-45F2-533Q-NG6L-H4FW-FQLP-6I
+MCVU-DW5L-BDEZ-QWBF-DSRL-N4G3-MMBS-UHIP-YFBL-56WB-3BL4-HFET-AMVC
+SAYJ-MOQZ-VBZ7-BU5U-VL36-WFML-3GRL-O
+SAYX-LVDL-Z5O5-YXIM-MST7-ZJZV-KKGN-C
+SAZF-66DU-5F4L-DEYN-ZDNX-HQC7-FQXE-A
+SAZV-GJRU-63CH-A5NY-26JF-AYIJ-M2DQ-I
+SA2F-BXNL-65AR-SBIN-SDGJ-FCJU-AGLR-2
 </div>
 ~~~~
 
@@ -167,7 +167,7 @@ be different:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key share UUPQ-Q3GF-XBJI-PHKT-IP4D-AICP-Q4
+<cmd>Alice> key share BMI5-ZURI-RC4J-7LA7-OQLH-SBQY-TA
 <rsp>ERROR - Attempted to divide by zero.
 </div>
 ~~~~

@@ -15,7 +15,7 @@ Alice checks her pending messages and accepts the request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message accept NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
+<cmd>Alice> message accept NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
 <rsp>ERROR - The specified message could not be found.
 </div>
 ~~~~
@@ -25,7 +25,7 @@ The secure console verifies the response and grants access:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message status MCHT-W6AI-4ENF-JJYN-HWND-FARO-IGS2
+<cmd>Alice> message status MA77-BZ24-EDBS-EVN7-QOJV-M53E-ZJ53
 <rsp>ERROR - The feature has not been implemented
 </div>
 ~~~~

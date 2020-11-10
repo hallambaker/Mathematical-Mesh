@@ -36,19 +36,21 @@ add   Add calendar entry from file
 ~~~~
 <div="terminal">
 <cmd>Alice> network add NetworkEntry1.json NetID1
-<rsp>ERROR - Cannot access a closed file.
-</div>
+<rsp>{Username}@{Service} = [{Password}]</div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> network add NetworkEntry1.json NetID1 /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Cannot access a closed file."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedNetwork": {
+        "Service": "NetworkEntry1.json",
+        "Password": "NetID1"}}}}
 </div>
 ~~~~
 
@@ -144,6 +146,10 @@ list   List network entries
 <cmd>Alice> network list
 <rsp>CatalogedNetwork
 
+CatalogedNetwork
+
+CatalogedNetwork
+
 </div>
 ~~~~
 
@@ -158,7 +164,15 @@ Specifying the /json option returns a result of type ResultDump:
     "CatalogedEntries": [{
         "CatalogedNetwork": {
           "Service": "myWiFi",
-          "Password": "securePassword"}}]}}
+          "Password": "securePassword"}},
+      {
+        "CatalogedNetwork": {
+          "Service": "NetworkEntry1.json",
+          "Password": "NetID1"}},
+      {
+        "CatalogedNetwork": {
+          "Service": "NetworkEntry2.json",
+          "Password": "NetID2"}}]}}
 </div>
 ~~~~
 

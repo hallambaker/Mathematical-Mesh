@@ -300,6 +300,11 @@ namespace ExampleGenerator {
                 $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
                 );
 
+            Connect.PasswordList2.GetResult(0).Success.TestTrue();
+            Connect.PasswordList2.GetResult(1).Success.TestTrue();
+
+
+
             Connect.Disconnect = Alice1.Example(
                 $"device delete {deviceId}"
                 );

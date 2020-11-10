@@ -37,19 +37,25 @@ add   Add bookmark
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-<rsp>ERROR - Cannot access a closed file.
-</div>
+<rsp>{
+  "Uri": "http://example.com/",
+  "Title": "\"Example",
+  "Path": "Folder1/1"}</div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Cannot access a closed file."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedBookmark": {
+        "Uri": "http://example.com/",
+        "Title": "\"Example",
+        "Path": "Folder1/1"}}}}
 </div>
 ~~~~
 
@@ -110,8 +116,10 @@ get   Lookup bookmark entry
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark get Folder1/2
-<rsp>Empty
-</div>
+<rsp>{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}</div>
 ~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
@@ -121,7 +129,12 @@ Specifying the /json option returns a result of type ResultEntry:
 <cmd>Alice> bookmark get Folder1/2 /json
 <rsp>{
   "ResultEntry": {
-    "Success": false}}
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedBookmark": {
+        "Uri": "http://example.net/Bananas",
+        "Title": "\"Banana",
+        "Path": "Folder1/2"}}}}
 </div>
 ~~~~
 
@@ -146,6 +159,12 @@ list   List bookmark entries
 <cmd>Alice> bookmark list
 <rsp>CatalogedBookmark
 
+CatalogedBookmark
+
+CatalogedBookmark
+
+CatalogedBookmark
+
 </div>
 ~~~~
 
@@ -161,7 +180,22 @@ Specifying the /json option returns a result of type ResultDump:
         "CatalogedBookmark": {
           "Uri": "http://www.site1.com",
           "Title": "site1",
-          "Path": "Sites.1"}}]}}
+          "Path": "Sites.1"}},
+      {
+        "CatalogedBookmark": {
+          "Uri": "http://example.com/",
+          "Title": "\"Example",
+          "Path": "Folder1/1"}},
+      {
+        "CatalogedBookmark": {
+          "Uri": "http://example.net/Bananas",
+          "Title": "\"Banana",
+          "Path": "Folder1/2"}},
+      {
+        "CatalogedBookmark": {
+          "Uri": "http://example.com/Fred",
+          "Title": "\"The",
+          "Path": "Folder1/1a"}}]}}
 </div>
 ~~~~
 
