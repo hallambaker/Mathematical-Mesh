@@ -322,6 +322,14 @@ namespace ExampleGenerator {
             //Apps.SSH = testCLIAlice1.Example(
             //     );
             "SSH App config".TaskFunctionality();
+
+            // Add an SSH application profile 'SSH'
+
+            // Dump out the private key in SSH format
+
+            // Dump out the public key in SSH format
+
+
             false.TestTrue();
             }
 
@@ -329,6 +337,16 @@ namespace ExampleGenerator {
             //Apps.Mail = testCLIAlice1.Example(
             //     );
             "Mail App config".TaskFunctionality();
+
+            // Add an Email profile
+
+
+            // Add keys for S/MIME
+
+
+            // Add keys for OpenPGP
+
+
             false.TestTrue();
             }
 
@@ -425,7 +443,7 @@ namespace ExampleGenerator {
                 $"dare encode {Group.EncryptSourceFile} /encrypt {GroupAccount} /out {Group.EncryptTargetFile}"
                  );
 
-            //false.TestTrue();
+
 
 
             Group.GroupDecryptAlice = Alice1.Example(
@@ -447,6 +465,15 @@ namespace ExampleGenerator {
             Group.GroupDecryptBobRevoked = Bob1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
+
+            Group.GroupDecryptAlice.GetResult().Success.TestTrue();
+            Group.GroupDecryptBobFail.GetResult().Success.TestFalse();
+            Group.GroupAddBob.GetResult().Success.TestTrue();
+            Group.GroupDecryptBobSuccess.GetResult(0).Success.TestTrue();
+            Group.GroupDecryptBobSuccess.GetResult(1).Success.TestTrue();
+            Group.GroupDeleteBob.GetResult().Success.TestTrue();
+            Group.GroupDecryptBobRevoked.GetResult().Success.TestFalse();
+
             }
 
         public void ConnectPINDynamicQR() {
