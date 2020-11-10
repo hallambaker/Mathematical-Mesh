@@ -52,12 +52,16 @@ namespace Goedel.XUnit {
             ServiceConnect();
             CreateAliceAccount();
             EncodeDecodeFile();
+            
             PasswordCatalog();
             BookmarkCatalog();
             ContactCatalog();
             NetworkCatalog();
             TaskCatalog();
             ConnectDeviceCompare(out var deviceId);
+
+
+
             TestConnectDisconnect(deviceId);
             SSHApp();
             MailApp();

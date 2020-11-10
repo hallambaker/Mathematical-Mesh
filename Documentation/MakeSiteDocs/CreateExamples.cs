@@ -285,7 +285,7 @@ namespace ExampleGenerator {
             Connect.ConnectAccept.GetResult().Success.TestTrue();
             Connect.ConnectComplete.GetResult().Success.TestTrue();
 
-            true.TestFalse();
+
             }
 
         public void TestConnectDisconnect(string deviceId) {
