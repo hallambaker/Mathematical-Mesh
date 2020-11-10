@@ -366,7 +366,6 @@ namespace ExampleGenerator {
             Contact.ContactAliceResponse.GetResult().Success.TestTrue();
             Contact.ContactAliceResponse.GetResult(1).Success.TestTrue();
             contactAccept.GetResult().Success.TestTrue();
-            true.TestFalse();
 
             return resultPending;
             }
@@ -418,28 +417,28 @@ namespace ExampleGenerator {
                 $"dare encode {Group.EncryptSourceFile} /encrypt {GroupAccount} /out {Group.EncryptTargetFile}"
                  );
 
-            false.TestTrue();
+            //false.TestTrue();
 
 
-            //Group.GroupDecryptAlice = Alice1.Example(
-            //    $"dare decode {Group.EncryptTargetFile}"
-            //     );
-            //Group.GroupDecryptBobFail = Alice1.Example(
-            //    $"dare decode {Group.EncryptTargetFile}"
-            //     );
-            //Group.GroupAddBob = Alice1.Example(
-            //    $"group add {GroupAccount} {BobAccount}"
-            //     );
-            //Group.GroupDecryptBobSuccess = Bob1.Example(
-            //    $"account sync",
-            //    $"dare decode {Group.EncryptTargetFile}"
-            //     );
-            //Group.GroupDeleteBob = Alice1.Example(
-            //    $"group delete {GroupAccount} {BobAccount}"
-            //     );
-            //Group.GroupDecryptBobRevoked = Bob1.Example(
-            //    $"dare decode {Group.EncryptTargetFile}"
-            //     );
+            Group.GroupDecryptAlice = Alice1.Example(
+                $"dare decode {Group.EncryptTargetFile}"
+                 );
+            Group.GroupDecryptBobFail = Alice1.Example(
+                $"dare decode {Group.EncryptTargetFile}"
+                 );
+            Group.GroupAddBob = Alice1.Example(
+                $"group add {GroupAccount} {BobAccount}"
+                 );
+            Group.GroupDecryptBobSuccess = Bob1.Example(
+                $"account sync",
+                $"dare decode {Group.EncryptTargetFile}"
+                 );
+            Group.GroupDeleteBob = Alice1.Example(
+                $"group delete {GroupAccount} {BobAccount}"
+                 );
+            Group.GroupDecryptBobRevoked = Bob1.Example(
+                $"dare decode {Group.EncryptTargetFile}"
+                 );
             }
 
         public void ConnectPINDynamicQR() {
@@ -527,6 +526,9 @@ namespace ExampleGenerator {
             }
 
         public void EscrowAndRecover() {
+            Alice2 = GetTestCLI(AliceDevice2);
+
+
             Account.ProfileEscrow = Alice1.Example(
                 $"account escrow"
                 );
@@ -535,12 +537,19 @@ namespace ExampleGenerator {
             var share2 = resultEscrow.Shares[2];
 
             Account.DeleteAlice = Alice1.Example(
-                $"account delete"
+                $"account delete {AliceProfileAccount.Udf}"
                 );
 
             Account.ProfileRecover = Alice2.Example(
                 $"account recover {share1} {share2} /verify"
                 );
+
+
+            Account.ProfileEscrow.GetResult().Success.TestTrue();
+            Account.DeleteAlice.GetResult().Success.TestTrue();
+            Account.ProfileRecover.GetResult().Success.TestTrue();
+
+
             }
 
 

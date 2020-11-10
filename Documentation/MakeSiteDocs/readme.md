@@ -2,63 +2,54 @@
 
 ## RFCTool
 
-* Titles are missing from all figures
-
 * Centering of images
 
 * combine TXT and SVG versions
 
 
-* Scaling of the QR code
-
-# Nits
-
-## Alice> dare verify ciphertext.dare
-
-The number of bytes and the payload digest fields are not being populated in the response.
-
-
-
-
 # Errors
 
-## Alice> account sync /auto
 
-ERROR - Cannot access a closed file.
-Alice> device accept RQUH-LNHP-XVR6-UHQ5-WSCZ-WCZC-Q5PK
-ERROR - Cannot access a closed file
-
-## device complete
-
-Gives no report on outcome [pending / accepted / refused]
 
 ## Alice2> password get ftp.example.com
 
 ERROR - No decryption key is available
-Alice2> dare decode ciphertext.dare plaintext2.txt
-ERROR - No decryption key is available
-
-## Alice> device delete TBS
-
-ERROR - The feature has not been implemented
-
 
 ## Alice2> dare decode ciphertext.dare plaintext2.txt
 
 ERROR - No decryption key is available
 
 
+
+## Alice> device delete TBS
+
+ERROR - The feature has not been implemented
+
+
+
+
+
 ## Create SSH profile....
 
 
-## Alice> message accept NBKU-OVBZ-YZRN-FEB4-ARMW-VUVI-2JSG
-
-ERROR - Cannot access a closed file.
 
 
-## Alice> message accept NBAC-LLBY-E4EU-7ZRF-I47O-ZYHZ-PBCW
+## Confirm bugs
 
 ERROR - The specified message could not be found.
+
+
+Console> message confirm alice@example.com start
+Alice checks her pending messages and accepts the request: 
+
+Alice> message accept NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
+ERROR - The specified message could not be found.
+The secure console verifies the response and grants access: 
+
+Alice> message status MA77-BZ24-EDBS-EVN7-QOJV-M53E-ZJ53
+ERROR - The feature has not been implemented
+
+
 
 
 ## Alice> $message status {confirmResponseID}
@@ -74,13 +65,16 @@ ERROR - Expected {
 
 
 
+## device complete
+
+Gives no report on outcome [pending / accepted / refused]
+
+
 
 
 # Current bugs to chase
 
 * Connected Devices not being properly provisioned with keys for account
-
-* The Context user is being disposed - stop this.
 
 * Messages can't be feched by envelope ID, confusion envelope vs message IDs here
 
@@ -89,8 +83,6 @@ ERROR - Expected {
 ## message pending - selectors to get unread or raw reports.
 
 Should introduce new interogator for the spool class (and catalog???)
-
-
 
 # need to sort out the weirdness caused by not adding Transaction names to the TagDirectories.
 

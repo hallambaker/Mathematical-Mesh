@@ -42,13 +42,18 @@ namespace Scratchpad {
 
 
             //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
-            Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
+            //Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
             //Goedel.XUnit.MakeSiteDocs.Test().DecodeSecondDevice();
             //Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
             //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
             //Goedel.XUnit.MakeSiteDocs.Test().TestContact();
-            //Goedel.XUnit.MakeSiteDocs.Test().TestConfirmation();
+            Goedel.XUnit.MakeSiteDocs.Test().TestConfirmation();
             //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+
+
+
+
+            //ShellTests.Test().TestEscrowDeleteDevice();
             //Goedel.XUnit.MakeSiteDocs.Test().Recover();
 
 
