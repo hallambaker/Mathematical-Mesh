@@ -278,7 +278,7 @@ namespace ExampleGenerator {
 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice wants to exchange Mesh messages with Bob. Although Alice knows Bob's Mesh address \n{0}", _Indent);
-				_Output.Write ("({1}), she does not (yet) have permission to send any message to Bob\n{0}", _Indent, Example.BobAccount);
+				_Output.Write ("({1}), she does not (yet) have permission to send any message to Bob\n{0}", _Indent, BobAccount);
 				_Output.Write ("excepting a request to exchange contact information.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Bob sends Alice a contact exchange request:\n{0}", _Indent);
@@ -330,7 +330,7 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureRecrypt(CreateExamples Example) {
 
-				_Output.Write ("Alice creates the recryption group {1} to share confidential information with\n{0}", _Indent, GroupService);
+				_Output.Write ("Alice creates the recryption group {1} to share confidential information with\n{0}", _Indent, GroupAccount);
 				_Output.Write ("her closest friends:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Group.GroupCreate);

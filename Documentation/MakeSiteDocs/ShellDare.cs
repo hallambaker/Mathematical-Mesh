@@ -30,7 +30,7 @@ namespace ExampleGenerator {
                         $"/key={Secret1}");
             DareSub = Alice1.Example($"dare encode {TestDir1} /encrypt={Secret1}");
             DareMesh = Alice1.Example($"dare encode {TestFile1} {TestFile1}.mesh.dare" +
-                        $"/encrypt={BobService} /sign={AliceService1}");
+                        $"/encrypt={BobAccount} /sign={AliceAccount}");
 
             DareVerifyDigest = Alice1.Example($"dare verify {TestFile1}.dare");
             DareVerifySigned = Alice1.Example($"dare verify {TestFile1}.mesh.dare");

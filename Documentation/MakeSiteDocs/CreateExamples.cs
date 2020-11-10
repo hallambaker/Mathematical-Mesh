@@ -5,6 +5,7 @@ using Goedel.Utilities;
 using Goedel.IO;
 using System;
 using System.Collections.Generic;
+using Goedel.Test;
 
 namespace ExampleGenerator {
 
@@ -12,12 +13,7 @@ namespace ExampleGenerator {
         public string AliceService = "example.com";
         public string AliceFingerprint;
 
-        public string AliceAccount = "alice@example.com";
-        public string BobAccount = "bob@example.com";
-        public string MeshServiceProvider = "example.com";
-        public string ConsoleAccount = "console@example.com";
-        public string MakerAccount = "maker@example.com";
-        public string GroupAccount => Group.GroupAccount;
+
 
         public ProfileAccount AliceProfileAccount;
 
@@ -52,55 +48,113 @@ namespace ExampleGenerator {
         /*
          * Stuff needing to be fixed...
          * 
-        Alice2> dare decode ciphertext.dare plaintext2.txt
-        ERROR - No decryption key is available
+            ## Alice> account sync /auto
 
-        Alice> device delete TBS
-        ERROR - The feature has not been implemented
+            ERROR - Cannot access a closed file.
+            Alice> device accept RQUH-LNHP-XVR6-UHQ5-WSCZ-WCZC-Q5PK
+            ERROR - Cannot access a closed file
 
-        Alice2> dare decode ciphertext.dare plaintext2.txt
-        ERROR - No decryption key is available
+            ## device complete
 
-        Alice creates an SSH profile within her Mesh on the administrative device. 
-        Missing example 1
+            Gives no report on outcome [pending / accepted / refused]
 
-        Alice> message accept NCYI-I2BW-RJ5F-UYEB-X47Y-UTJW-FUX3
-        ERROR - The specified message could not be found.
+            ## Alice2> password get ftp.example.com
 
-        The secure console verifies the response and grants access: 
-        Missing example 2
+            ERROR - No decryption key is available
+            Alice2> dare decode ciphertext.dare plaintext2.txt
+            ERROR - No decryption key is available
 
-        Alice> dare encode grouptext.txt /encrypt groupw@example.com /out ^
-        groupsecret.dare
-        ERROR - The option System.Object[] is not known.
+            ## Alice> device delete TBS
 
-        Alice> dare decode groupsecret.dare
-        ERROR - No decryption key is available
+            ERROR - The feature has not been implemented
 
-        Bob> account sync
-        Bob> dare decode groupsecret.dare
-        ERROR - No decryption key is available
 
-        Alice2> account recover /verify
-        ERROR - Expected {
+            ## Alice2> dare decode ciphertext.dare plaintext2.txt
+
+            ERROR - No decryption key is available
+
+
+            ## Create SSH profile....
+
+
+            ## Alice> message accept NBKU-OVBZ-YZRN-FEB4-ARMW-VUVI-2JSG
+
+            ERROR - Cannot access a closed file.
+
+
+            ## Alice> message accept NBAC-LLBY-E4EU-7ZRF-I47O-ZYHZ-PBCW
+
+            ERROR - The specified message could not be found.
+
+
+            ## Alice> $message status {confirmResponseID}
+
+            ERROR - The command System.Object[] is not known.
+
+            ## Alice> group create groupw@example.com
+            ERROR - Cannot access a closed file.
+
+
+            ## Alice2> account recover /verify
+            ERROR - Expected {
          * 
          */
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void PerformAll() {
+            // ignore unit test errors.
+            Goedel.Test.AssertTest.FlagFailure = false;
 
+
+            ServiceConnect();
+            CreateAliceAccount();
+            EncodeDecodeFile();
+            PasswordCatalog();
+            BookmarkCatalog();
+            ContactCatalog();
+
+
+            NetworkCatalog();
+            TaskCatalog();
+
+
+            ConnectDeviceCompare( out var deviceId);
+            TestConnectDisconnect(deviceId);
+            SSHApp();
+            MailApp();
+            CreateBob();
+            ContactExchange();
+            Confirmation();
+            GroupOperations();
+            ConnectPINDynamicQR();
+            ConnectStaticQR();
+            EscrowAndRecover();
+            }
+
+
+
+
+        public void ServiceConnect() {
+            Alice1 = GetTestCLI(AliceDevice1);
             Service.Hello = Alice1.Example(
                 $"account hello {AliceAccount}"
                 );
             var hello = Service.Hello.GetResultHello();
+            }
 
+        public void CreateAliceAccount() {
             // create the alice account.
             Account.CreateAlice = Alice1.Example(
                 $"account create {AliceAccount}"
                 );
             var aliceCreateAccount = Account.CreateAlice.GetResultCreateAccount();
             AliceProfileAccount = aliceCreateAccount.ProfileAccount;
+            }
 
+
+        public void EncodeDecodeFile() {
             // Encrypt the file
             Account.EncryptSourceFile.WriteFileNew(TestFile1Text);
             var dump = Alice1.DumpFile(Account.EncryptSourceFile);
@@ -109,6 +163,12 @@ namespace ExampleGenerator {
             var verify = Alice1.Example(
                 $"dare verify {Account.EncryptTargetFile}"
                 );
+
+            var verifyFile = verify.GetResultFileDare();
+            (verifyFile.TotalBytes > 0).TestTrue();
+            //verifyFile.Envelope.Trailer.TestNotNull();
+            verifyFile.Envelope.PayloadDigest.TestNotNull();
+
             Account.ConsoleEncryptFile = new List<ExampleResult>() {
                 dump, encode[0], verify[0]
                 };
@@ -122,6 +182,11 @@ namespace ExampleGenerator {
                 decode[0], dump2
                 };
 
+
+            }
+
+
+        public void PasswordCatalog() {
             // Check the passwords work
 
             Account.PasswordAdd = Alice1.Example(
@@ -132,6 +197,15 @@ namespace ExampleGenerator {
                 $"password get {ShellPassword.PasswordSite}"
                 );
 
+            // Password catalog
+            var resultPassword = Account.PasswordGet.GetResultEntry();
+            Apps.CredentialCatalogEntry = resultPassword.CatalogEntry;
+
+
+            }
+
+
+        public void BookmarkCatalog() {
             // Bookmark catalog
             string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
             var bookmark = Alice1.Example(
@@ -140,6 +214,10 @@ namespace ExampleGenerator {
                 );
             var resultBookmark = bookmark.GetResultEntry(1);
             Apps.BookmarkCatalogEntry = resultBookmark.CatalogEntry;
+            }
+
+
+        public void ContactCatalog() {
 
             // Contact catalog
             //string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
@@ -148,11 +226,12 @@ namespace ExampleGenerator {
                 );
             var resultContact = contact.GetResultDump();
             Apps.ContactCatalogEntry = resultContact.CatalogedEntries[0];
+            }
 
-            // Password catalog
-            var resultPassword = Account.PasswordGet.GetResultEntry();
-            Apps.CredentialCatalogEntry = resultPassword.CatalogEntry;
 
+
+
+        public void NetworkCatalog() {
             // Network catalog
             //string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
             var network = Alice1.Example(
@@ -161,6 +240,9 @@ namespace ExampleGenerator {
                 );
             var resultNetwork = network.GetResultDump(1);
             Apps.NetworkCatalogEntry = resultNetwork.CatalogedEntries[0];
+            }
+
+        public void TaskCatalog() {
 
             // Task catalog
             //string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
@@ -170,8 +252,11 @@ namespace ExampleGenerator {
                 );
             var resultTask = task.GetResultDump(1);
             Apps.TaskCatalogEntry = resultTask.CatalogedEntries[0];
+            }
 
+        public void ConnectDeviceCompare(out string deviceId) {
 
+            Alice2 = GetTestCLI(AliceDevice2);
             // Connect the second device
 
             Connect.ConnectRequest = Alice2.Example(
@@ -190,11 +275,20 @@ namespace ExampleGenerator {
                 $"device accept {id1}"
                 );
             var resultAccept = Connect.ConnectAccept[0].Result;
-            var deviceId = "TBS";
-
+            deviceId = "TBS";
             Connect.ConnectComplete = Alice2.Example(
                 $"device complete"
                 );
+
+            Connect.ConnectRequest.GetResult().Success.TestTrue();
+            Connect.ConnectPending.GetResult().Success.TestTrue();
+            Connect.ConnectAccept.GetResult().Success.TestTrue();
+            Connect.ConnectComplete.GetResult().Success.TestTrue();
+
+            true.TestFalse();
+            }
+
+        public void TestConnectDisconnect(string deviceId) {
             Account.SyncAlice = Alice2.Example(
                 $"account sync"
                 );
@@ -209,26 +303,40 @@ namespace ExampleGenerator {
             Connect.Disconnect = Alice1.Example(
                 $"device delete {deviceId}"
                 );
+            Connect.Disconnect.GetResult().Success.TestTrue();
+
+
             Connect.PasswordList2Disconnect = Alice2.Example(
                 //$"password get {PasswordSite}",
                 $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
                 );
+            }
 
+        public static void SSHApp() {
             // Application tests
             //Apps.SSH = testCLIAlice1.Example(
             //     );
             "SSH App config".TaskFunctionality();
+            false.TestTrue();
+            }
 
+        public static void MailApp() {
             //Apps.Mail = testCLIAlice1.Example(
             //     );
             "Mail App config".TaskFunctionality();
+            false.TestTrue();
+            }
 
+        public void CreateBob() {
             // Interactions with Bob... create an account
+            Bob1 = GetTestCLI("Bob");
             Account.CreateBob = Bob1.Example(
                 $"account create {BobAccount}"
                 );
+            }
 
-
+        public ResultPending ContactExchange() {
+            ResultPending resultPending;
             // Contact requests (Remote)
             Contact.ContactBobRequest = Bob1.Example(
                 $"message contact {AliceAccount}"
@@ -248,6 +356,19 @@ namespace ExampleGenerator {
             Contact.ContactAliceResponse.Add(contactAccept[0]);
 
             // Interactions with Bob... create an account
+
+            Contact.ContactBobRequest.GetResult().Success.TestTrue();
+            Contact.ContactAliceResponse.GetResult().Success.TestTrue();
+            Contact.ContactAliceResponse.GetResult(1).Success.TestTrue();
+            contactAccept.GetResult().Success.TestTrue();
+            true.TestFalse();
+
+            return resultPending;
+            }
+
+        public void Confirmation() {
+            Console1 = GetTestCLI("Console");
+
             Account.CreateConsole = Console1.Example(
                 $"account create {ConsoleAccount}"
                 );
@@ -256,7 +377,7 @@ namespace ExampleGenerator {
                 $"message confirm {AliceAccount} start"
                 );
             var resultConfirmSent = Confirm.ConfirmRequest.GetResultSent();
-           
+
 
             var messageId = resultConfirmSent.Message.MessageId;
             var confirmResponseID = resultConfirmSent.Message.GetResponseId();
@@ -266,13 +387,21 @@ namespace ExampleGenerator {
                 );
 
             Confirm.ConfirmVerify = Alice1.Example(
-                "$message status {confirmResponseID}"
+                $"message status {confirmResponseID}"
                  );
             "Verify the confirmation response".TaskFunctionality();
 
             var resultConfirmVerify = Confirm.ConfirmVerify.GetResultSent();
             Confirm.RequestConfirmation = resultConfirmSent?.Message as RequestConfirmation;
             Confirm.ResponseConfirmation = resultConfirmVerify?.Message as ResponseConfirmation;
+
+
+            Confirm.ConfirmRequest.GetResult().Success.TestTrue();
+            Confirm.ConfirmAliceResponse.GetResult().Success.TestTrue();
+            Confirm.ConfirmVerify.GetResult().Success.TestTrue();
+            }
+
+        public void GroupOperations() {
 
             // Group
             Group.GroupCreate = Alice1.Example(
@@ -283,27 +412,33 @@ namespace ExampleGenerator {
             Group.GroupEncrypt = Alice1.Example(
                 $"dare encode {Group.EncryptSourceFile} /encrypt {GroupAccount} /out {Group.EncryptTargetFile}"
                  );
-            Group.GroupDecryptAlice = Alice1.Example(
-                $"dare decode {Group.EncryptTargetFile}"
-                 );
-            Group.GroupDecryptBobFail = Alice1.Example(
-                $"dare decode {Group.EncryptTargetFile}"
-                 );
-            //Group.GroupAddBob = testCLIAlice1.Example(
+
+            false.TestTrue();
+
+
+            //Group.GroupDecryptAlice = Alice1.Example(
+            //    $"dare decode {Group.EncryptTargetFile}"
+            //     );
+            //Group.GroupDecryptBobFail = Alice1.Example(
+            //    $"dare decode {Group.EncryptTargetFile}"
+            //     );
+            //Group.GroupAddBob = Alice1.Example(
             //    $"group add {GroupAccount} {BobAccount}"
             //     );
-            //Group.GroupDecryptBobSuccess = testCLIBob1.Example(
+            //Group.GroupDecryptBobSuccess = Bob1.Example(
             //    $"account sync",
             //    $"dare decode {Group.EncryptTargetFile}"
             //     );
-            //Group.GroupDeleteBob = testCLIAlice1.Example(
+            //Group.GroupDeleteBob = Alice1.Example(
             //    $"group delete {GroupAccount} {BobAccount}"
             //     );
-            //Group.GroupDecryptBobRevoked = testCLIBob1.Example(
+            //Group.GroupDecryptBobRevoked = Bob1.Example(
             //    $"dare decode {Group.EncryptTargetFile}"
             //     );
+            }
 
-
+        public void ConnectPINDynamicQR() {
+            Alice3 = GetTestCLI(AliceDevice3);
 
             // Connect device using a PIN (which can be presented as a QR code)
             Connect.ConnectPINCreate = Alice1.Example(
@@ -314,14 +449,9 @@ namespace ExampleGenerator {
             Connect.ConnectPINMessagePin = pinResult.MessagePIN;
             Connect.ConnectEARL = pinResult.MessagePIN.GetURI();
 
-
-            
-
-
             Connect.ConnectPINRequest = Alice3.Example(
                 $"device request {AliceAccount} /pin {pin}"
                 );
-
 
             var connectRequest = Connect.ConnectPINRequest.GetResultConnect();
             var connectRequestT = Connect.ConnectPINRequest[0].Traces[0].RequestObject;
@@ -352,7 +482,11 @@ namespace ExampleGenerator {
             var watchMachine = connectPINComplete.CatalogedMachine;
             Connect.AliceProfileDeviceWatch = watchMachine.ProfileDevice;
             //Connect.AliceActivationDeviceWatch = watchMachine.ProfileDevice;
+            }
 
+        public void ConnectStaticQR() {
+            Maker1 = GetTestCLI("Maker");
+            Alice4 = GetTestCLI(AliceDevice4);
 
             // Connect the coffee pot using a static QR
 
@@ -385,8 +519,9 @@ namespace ExampleGenerator {
             Connect.AliceActivationDeviceCoffee = connectStaticPollSuccess.ActivationDevice;
             //Connect.AliceActivationAccountCoffee = connectStaticPollSuccess.ActivationAccount;
             Connect.AliceConnectionDeviceCoffee = coffeePotDevice.ConnectionUser;
+            }
 
-
+        public void EscrowAndRecover() {
             Account.ProfileEscrow = Alice1.Example(
                 $"account escrow"
                 );
@@ -401,25 +536,12 @@ namespace ExampleGenerator {
             Account.ProfileRecover = Alice2.Example(
                 $"account recover {share1} {share2} /verify"
                 );
+            }
 
 
 
-            
-             }
 
 
-        //public byte[] Enhance(
-        //            byte[] MasterSecret,
-        //            byte[] Plaintext,
-        //            byte[] Salt = null) {
-
-        //    Salt ??= Goedel.Cryptography.Platform.GetRandomBits(128);
-        //    var CryptoStack = new CryptoStack(encryptID: CryptoAlgorithmId.AES256CBC) {
-        //        Salt = Salt ?? Goedel.Cryptography.Platform.GetRandomBits(128),
-        //        MasterSecret = MasterSecret
-        //        };
-        //    return CryptoStack.EncodeEDS(Plaintext, null);
-        //    }
 
 
 

@@ -2,80 +2,78 @@
 
 ## RFCTool
 
-
-* Wrap bigintegers, etc. at 72 cols. - DO THIS NEXT!!!
-
-* Work out cause of extra trailing space after examples.
+* Titles are missing from all figures
 
 * Centering of images
 
 * combine TXT and SVG versions
 
+
 * Scaling of the QR code
 
+# Nits
+
+## Alice> dare verify ciphertext.dare
+
+The number of bytes and the payload digest fields are not being populated in the response.
 
 
-* check wrapping of JSON dumps
-
-* fix wrapping of commands to be more intelligent
-
-## unfinished business
-
-### ProtocolHelloRequest
-
-Don't have the protocol HTTP binding:
 
 
-### Decryption of catalog on connected devices
+# Errors
 
-Not granting access to the catalogs as should happen. Possibly because we are not granting web rights.
+## Alice> account sync /auto
+
+ERROR - Cannot access a closed file.
+Alice> device accept RQUH-LNHP-XVR6-UHQ5-WSCZ-WCZC-Q5PK
+ERROR - Cannot access a closed file
+
+## device complete
+
+Gives no report on outcome [pending / accepted / refused]
+
+## Alice2> password get ftp.example.com
+
+ERROR - No decryption key is available
+Alice2> dare decode ciphertext.dare plaintext2.txt
+ERROR - No decryption key is available
+
+## Alice> device delete TBS
+
+ERROR - The feature has not been implemented
 
 
-### Confirm verify not implemented
+## Alice2> dare decode ciphertext.dare plaintext2.txt
 
-Also need to spit out the message id of the confirmation request and the
-details.
+ERROR - No decryption key is available
 
-### Account sync explanation is bogus
 
-Sync only pulls data from the service. There is no separate status upload/download scheme.
+## Create SSH profile....
 
-### File encryption examples
 
-Need mechanism to display contents of the file in examples. Both the
-plaintext and summary of the siphertext envelope.
+## Alice> message accept NBKU-OVBZ-YZRN-FEB4-ARMW-VUVI-2JSG
 
-###Create Group 
+ERROR - Cannot access a closed file.
 
-Should just dump the group fingerprint, not the profile.
 
-### Escrow/Recover
+## Alice> message accept NBAC-LLBY-E4EU-7ZRF-I47O-ZYHZ-PBCW
 
-Recovery is failing for some reason. Need to specify the account ???
+ERROR - The specified message could not be found.
 
-### EARL
 
-The URI version of the EARL is not being shown. Possibly due to the 
-QR not being generated.
+## Alice> $message status {confirmResponseID}
 
-### Hello Result
+ERROR - The command System.Object[] is not known.
 
-Need to extend hello result to populate the service profile. And every response to
-include the host profile.
+## Alice> group create groupw@example.com
+ERROR - Cannot access a closed file.
 
-### Create Account
 
-The Connected device field is not being populated.
+## Alice2> account recover /verify
+ERROR - Expected {
 
-#% DescribeMessage (Connect.ConnectPINCompleteWitness);
-QR = {Connect.ConnectQRURI}
-#% DescribeMessage (Connect.ConnectRequestPIN);
-#% DescribeMessage (Connect.AcknowledgeConnectionPIN);
-#% DescribeMessage (Connect.RespondConnectionPIN);
-#% DescribeMessage (Contact.BobRequest);
-#% DescribeMessage (Contact.AliceResponse);
-#% DescribeMessage (Confirm.RequestConfirmation);
-#% DescribeMessage (Confirm.ResponseConfirmation);
+
+
 
 
 # Current bugs to chase

@@ -160,7 +160,7 @@ that has been granted the SSH right to connect to it.
 #zfile CreateExamples ArchitectureContactRemote "Examples\\ArchitectureContactRemote.md" Example
 
 Alice wants to exchange Mesh messages with Bob. Although Alice knows Bob's Mesh address 
-(#{Example.BobAccount}), she does not (yet) have permission to send any message to Bob
+(#{BobAccount}), she does not (yet) have permission to send any message to Bob
 excepting a request to exchange contact information.
 
 Bob sends Alice a contact exchange request:
@@ -193,7 +193,7 @@ The secure console verifies the response and grants access:
 #end zfile
 
 #zfile CreateExamples ArchitectureRecrypt "Examples\\ArchitectureRecrypt.md" Example
-Alice creates the recryption group #{GroupService} to share confidential information with
+Alice creates the recryption group #{GroupAccount} to share confidential information with
 her closest friends:
 
 #%  ConsoleExample (Example.Group.GroupCreate);

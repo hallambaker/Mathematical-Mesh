@@ -59,7 +59,7 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            var fileA = $"Contact-{AccountA}.mcf";
+            var fileA = $"Contact-{AliceAccount}.mcf";
             var fileB = $"Contact-{AccountB}.mcf";
             var fileC = $"Contact-{AccountC}.mcf";
 
@@ -67,43 +67,43 @@ namespace Goedel.XUnit {
             // then test import into the catalog from the file.
 
             // create the accounts
-            device1.Dispatch($"account create {AccountA}");
+            device1.Dispatch($"account create {AliceAccount}");
             device2.Dispatch($"account create {AccountB}");
             device3.Dispatch($"account create {AccountC}");
 
             // Check each account has exactly the right set of contacts (i.e. self):
-            ValidContact(device1, AccountA);
+            ValidContact(device1, AliceAccount);
             ValidContact(device2, AccountB);
             ValidContact(device3, AccountC);
 
 
             // export the contact data to a file
-            device1.Dispatch($"contact export {AccountA} {fileA}");
+            device1.Dispatch($"contact export {AliceAccount} {fileA}");
             device2.Dispatch($"contact export {AccountB} {fileB}");
             device3.Dispatch($"contact export {AccountC} {fileC}");
 
             // Add a single entry and check that it is correctly registered.
             var contactID1 = GetContactKey(device1.Dispatch($"contact add {fileB}"));
-            ValidContact(device1, AccountA, AccountB);
+            ValidContact(device1, AliceAccount, AccountB);
             ValidContact(device2, AccountB);
             ValidContact(device3, AccountC);
 
             // Add a second entry, check that the first and second are correctly registered,
             var contactID2 = GetContactKey(device1.Dispatch($"contact add {fileC}"));
-            ValidContact(device1, AccountA, AccountB, AccountC);
+            ValidContact(device1, AliceAccount, AccountB, AccountC);
             ValidContact(device2, AccountB);
             ValidContact(device3, AccountC);
 
 
             // Delete the second entry, check that only the first is still there.
             device1.Dispatch($"contact delete {AccountB}");
-            ValidContact(device1, AccountA, AccountC);
+            ValidContact(device1, AliceAccount, AccountC);
             ValidContact(device2, AccountB);
             ValidContact(device3, AccountC);
 
             // Add it back and check
             var contactID3 = GetContactKey(device1.Dispatch($"contact add {fileB}"));
-            ValidContact(device1, AccountA, AccountB, AccountC);
+            ValidContact(device1, AliceAccount, AccountB, AccountC);
             ValidContact(device2, AccountB);
             ValidContact(device3, AccountC);
             }

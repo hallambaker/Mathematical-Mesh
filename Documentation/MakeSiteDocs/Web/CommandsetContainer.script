@@ -32,7 +32,7 @@ same format and function as for DARE Messages but their scope is the container
 as a whole.
 
 For example, Alice creates an encrypted container readable by anyone who is a
-member of the group #{GroupService};
+member of the group #{GroupAccount};
 
 #% ConsoleExample (ShellSequence.ContainerCreateEncrypt);
 

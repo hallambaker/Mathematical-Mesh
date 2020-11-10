@@ -26,7 +26,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 ~~~~
 <div="terminal">
 <cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare ^
-    /key=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+    /key=UUPQ-Q3GF-XBJI-PHKT-IP4D-AICP-Q4
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -37,7 +37,7 @@ encoded:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestDir1 /encrypt=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+<cmd>Alice> dare encode TestDir1 /encrypt=UUPQ-Q3GF-XBJI-PHKT-IP4D-AICP-Q4
 <rsp>ERROR - No decryption key is available
 </div>
 ~~~~
@@ -92,7 +92,7 @@ level otherwise.
 ~~~~
 <div="terminal">
 <cmd>Alice> dare verify TestFile1.txt.symmetric.dare ^
-    /encrypt=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+    /encrypt=UUPQ-Q3GF-XBJI-PHKT-IP4D-AICP-Q4
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -126,7 +126,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 ~~~~
 <div="terminal">
 <cmd>Alice> dare decode TestFile1.txt.symmetric.dare ^
-    /encrypt=NVDK-BE47-VSB4-FTMG-Z26I-FZFQ-OQ
+    /encrypt=UUPQ-Q3GF-XBJI-PHKT-IP4D-AICP-Q4
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~

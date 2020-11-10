@@ -39,21 +39,21 @@ Alice reviews her pending messages using the `message pending` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: NCAR-PVBH-FMFN-NK5Y-SOLP-6WOV-VO6S
+<rsp>MessageID: NDT4-66BJ-HIH5-UMHG-4QVG-YXDJ-RKJD
         Contact Request::
-        MessageID: NCAR-PVBH-FMFN-NK5Y-SOLP-6WOV-VO6S
+        MessageID: NDT4-66BJ-HIH5-UMHG-4QVG-YXDJ-RKJD
         To: alice@example.com From: bob@example.com
-        PIN: AAU2-ZQK6-Z347-NRY6-IOV5-W2P2-O5EQ
-MessageID: NA3M-FCCF-P67J-CHXN-NUYJ-X267-RCH5
+        PIN: ACBR-HCBB-UYL7-6MVU-QKWB-4N64-UP3A
+MessageID: NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
         Confirmation Request::
-        MessageID: NA3M-FCCF-P67J-CHXN-NUYJ-X267-RCH5
+        MessageID: NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NAEZ-UOXO-KBH7-MT7I-KKA2-S37A-RGEZ
+MessageID: NDGZ-J52O-DPPK-JG7R-2YZQ-JUPS-3GJK
         Contact Request::
-        MessageID: NAEZ-UOXO-KBH7-MT7I-KKA2-S37A-RGEZ
+        MessageID: NDGZ-J52O-DPPK-JG7R-2YZQ-JUPS-3GJK
         To: alice@example.com From: bob@example.com
-        PIN: AADZ-27RV-SGJA-5LIO-GHVA-2QPC-ORRA
+        PIN: ACJP-PFU2-2O4N-73XX-J3KN-E7K4-FV3A
 </div>
 ~~~~
 
@@ -73,9 +73,9 @@ Bob's contact information has been added to Alice's address book:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MCDH-FIPQ-XWI3-2MLS-KZ6U-SAVO-EVSH
-  Person MCDH-FIPQ-XWI3-2MLS-KZ6U-SAVO-EVSH
-  Anchor MCDH-FIPQ-XWI3-2MLS-KZ6U-SAVO-EVSH
+<rsp>Entry<CatalogedContact>: MBFU-YM7B-CJC4-HDLU-KRX5-UXC5-KYBS
+  Person MBFU-YM7B-CJC4-HDLU-KRX5-UXC5-KYBS
+  Anchor MBFU-YM7B-CJC4-HDLU-KRX5-UXC5-KYBS
   Address alice@example.com
 
 </div>
@@ -154,26 +154,26 @@ Alice reviews her pending messages using the using the `message pending` command
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: NBPA-4YJD-P7RN-2SJJ-ZQFO-NIAD-VOEE
+<rsp>MessageID: NBUI-FV4Y-G4QA-IAOH-YQRT-BR5R-5UOX
         Confirmation Request::
-        MessageID: NBPA-4YJD-P7RN-2SJJ-ZQFO-NIAD-VOEE
+        MessageID: NBUI-FV4Y-G4QA-IAOH-YQRT-BR5R-5UOX
         To: alice@example.com From: bob@example.com
         Text: "Purchase
-MessageID: NCAR-PVBH-FMFN-NK5Y-SOLP-6WOV-VO6S
+MessageID: NDT4-66BJ-HIH5-UMHG-4QVG-YXDJ-RKJD
         Contact Request::
-        MessageID: NCAR-PVBH-FMFN-NK5Y-SOLP-6WOV-VO6S
+        MessageID: NDT4-66BJ-HIH5-UMHG-4QVG-YXDJ-RKJD
         To: alice@example.com From: bob@example.com
-        PIN: AAU2-ZQK6-Z347-NRY6-IOV5-W2P2-O5EQ
-MessageID: NA3M-FCCF-P67J-CHXN-NUYJ-X267-RCH5
+        PIN: ACBR-HCBB-UYL7-6MVU-QKWB-4N64-UP3A
+MessageID: NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
         Confirmation Request::
-        MessageID: NA3M-FCCF-P67J-CHXN-NUYJ-X267-RCH5
+        MessageID: NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NAEZ-UOXO-KBH7-MT7I-KKA2-S37A-RGEZ
+MessageID: NDGZ-J52O-DPPK-JG7R-2YZQ-JUPS-3GJK
         Contact Request::
-        MessageID: NAEZ-UOXO-KBH7-MT7I-KKA2-S37A-RGEZ
+        MessageID: NDGZ-J52O-DPPK-JG7R-2YZQ-JUPS-3GJK
         To: alice@example.com From: bob@example.com
-        PIN: AADZ-27RV-SGJA-5LIO-GHVA-2QPC-ORRA
+        PIN: ACJP-PFU2-2O4N-73XX-J3KN-E7K4-FV3A
 </div>
 ~~~~
 

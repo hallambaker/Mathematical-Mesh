@@ -71,6 +71,7 @@ namespace Goedel.Mesh.Shell {
 
             return new ResultFileDare() {
                 Verified = true, // Hack: Should test here!!!!
+                TotalBytes = (int) result.PayloadLength,
                 Filename = inputFile,
                 Envelope = result
                 };

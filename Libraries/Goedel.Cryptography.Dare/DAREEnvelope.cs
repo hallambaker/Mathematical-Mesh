@@ -56,6 +56,10 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The payload MAC value calculated during decoding.</summary> 
         public byte[] PayloadMac;
 
+        ///<summary>The length of the payload value</summary> 
+        public long PayloadLength;
+
+
         #endregion
 
         #region IDisposable boilerplate code.
@@ -670,6 +674,21 @@ namespace Goedel.Cryptography.Dare {
             keyCollection ??= Cryptography.KeyCollection.Default;
             var jsonBcdReader = new JsonBcdReader(inputStream);
             using var message = DecodeHeader(jsonBcdReader);
+
+            var decoder = message.Header.GetDecoder(
+                jsonBcdReader, out var Reader,
+                keyCollection: keyCollection, decrypt:false);
+
+            Reader.CopyTo(Stream.Null);
+            decoder.Close();
+            message.PayloadDigest = decoder.DigestValue;
+            message.PayloadMac = decoder.MacValue;
+            message.PayloadLength = decoder.BytesRead;
+
+            if (jsonBcdReader.NextArray()) {
+                message.Trailer = DareTrailer.FromJson(jsonBcdReader, false);
+                }
+
 
             return message;
 

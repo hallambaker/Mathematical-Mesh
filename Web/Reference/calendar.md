@@ -158,7 +158,7 @@ Specifying the /json option returns a result of type ResultDump:
     "CatalogedEntries": [{
         "CatalogedTask": {
           "Title": "SomeItem",
-          "Key": "NAZH-Z36Z-HJRC-KS5C-RVWH-XVSB-Z5A7"}}]}}
+          "Key": "NDNI-2XIG-UEFN-7ZB4-SNFQ-O3GQ-IZFB"}}]}}
 </div>
 ~~~~
 

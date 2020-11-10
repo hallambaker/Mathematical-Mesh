@@ -15,7 +15,7 @@ Alice checks her pending messages and accepts the request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message accept NA3M-FCCF-P67J-CHXN-NUYJ-X267-RCH5
+<cmd>Alice> message accept NBR3-D554-BQLH-FK5I-7YU3-T5B2-XGDS
 <rsp>ERROR - The specified message could not be found.
 </div>
 ~~~~
@@ -25,8 +25,8 @@ The secure console verifies the response and grants access:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> $message status {confirmResponseID}
-<rsp>ERROR - The command System.Object[] is not known.
+<cmd>Alice> message status MCHT-W6AI-4ENF-JJYN-HWND-FARO-IGS2
+<rsp>ERROR - The feature has not been implemented
 </div>
 ~~~~
 

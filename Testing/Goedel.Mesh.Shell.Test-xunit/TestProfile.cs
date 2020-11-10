@@ -9,7 +9,7 @@ using Xunit;
 #pragma warning disable IDE0059
 namespace Goedel.XUnit {
     public partial class ShellTests {
-        string AccountA => "alice@example.com";
+        string AliceAccount => "alice@example.com";
         string AccountA2 => "alice@example.net";
 
         string AccountB => "bob@example.com";
@@ -47,14 +47,14 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"account create {AccountA}");
+            device1.Dispatch($"account create {AliceAccount}");
 
             device1.CheckHostCatalogExtended();
 
             device1.Dispatch($"account sync");
 
 
-            device2.Dispatch($"device request {AccountA}");
+            device2.Dispatch($"device request {AliceAccount}");
             device2.CheckHostCatalogExtended();
 
             device2.Dispatch($"account sync", fail: true);
@@ -71,7 +71,7 @@ namespace Goedel.XUnit {
 
             device2.Dispatch($"account sync");
 
-            device3.Dispatch($"device request {AccountA}  /new");
+            device3.Dispatch($"device request {AliceAccount}  /new");
             device3.Dispatch($"account sync", fail: true);
 
             var result3 = device1.Dispatch($"device pending");
@@ -92,7 +92,7 @@ namespace Goedel.XUnit {
             var device3 = GetTestCLI("Device3");
 
 
-            device1.Dispatch($"account create {AccountA}");
+            device1.Dispatch($"account create {AliceAccount}");
 
             var c1 = device1.Connect(device2, accountA);
             c1.ProcessedResults.TestEqual(1);
@@ -109,7 +109,7 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
 
 
-            device1.Dispatch($"account create {AccountA}");
+            device1.Dispatch($"account create {AliceAccount}");
 
             var result = device1.Dispatch($"account pin /expire 0") as ResultPIN;
             Thread.Sleep(1000); // make sure that the PIN expires
@@ -132,7 +132,7 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
 
 
-            device1.Dispatch($"account create {AccountA}");
+            device1.Dispatch($"account create {AliceAccount}");
 
             var result = device1.Dispatch($"account pin") as ResultPIN;
 
@@ -154,13 +154,13 @@ namespace Goedel.XUnit {
             var device3 = GetTestCLI("Device3");
 
 
-            device1.Dispatch($"account create {this.AccountA}");
+            device1.Dispatch($"account create {this.AliceAccount}");
 
             var result = device1.Dispatch($"account pin") as ResultPIN;
 
 
             var pin = result.MessagePIN.Pin;
-            device2.Dispatch($"device request {AccountA} /pin {pin}");
+            device2.Dispatch($"device request {AliceAccount} /pin {pin}");
             device1.Dispatch($"account sync /auto");
 
             // This connection MUST be accepted.
@@ -168,7 +168,7 @@ namespace Goedel.XUnit {
             device2.Dispatch($"account sync");
 
             // The connection MUST be rejected as the PIN was already used.
-            device3.Dispatch($"device request {AccountA} /pin {pin}");
+            device3.Dispatch($"device request {AliceAccount} /pin {pin}");
             device1.Dispatch($"account sync /auto");
 
             // The connection MUST be rejected as the PIN has expired.
@@ -188,7 +188,7 @@ namespace Goedel.XUnit {
             var deviceConnect1   = GetTestCLI(DeviceConnect1Name);
 
 
-            deviceAdmin.Dispatch($"account create {AccountA}");
+            deviceAdmin.Dispatch($"account create {AliceAccount}");
 
             // create the connection QR code
             var invite = deviceAdmin.Dispatch($"account pin") as ResultPIN;
@@ -222,7 +222,7 @@ namespace Goedel.XUnit {
             var deviceInit = deviceQ.Dispatch($"device preconfig") as ResultPublishDevice;
             deviceConnect1.Dispatch($"device install {deviceInit.FileName}");
 
-            deviceAdmin.Dispatch($"account create {AccountA}");
+            deviceAdmin.Dispatch($"account create {AliceAccount}");
 
             deviceAdmin.Dispatch($"account connect {deviceInit.Uri} ");
 
@@ -374,10 +374,10 @@ namespace Goedel.XUnit {
         bool TestAuthCreate(Mesh.Test.TestCLI device1, Mesh.Test.TestCLI device2, string auth) {
 
 
-            device1.Dispatch($"account create {AccountA} ");
+            device1.Dispatch($"account create {AliceAccount} ");
             device1.CheckHostCatalogExtended();
 
-            device2.Dispatch($"device request {AccountA} ");
+            device2.Dispatch($"device request {AliceAccount} ");
             device2.CheckHostCatalogExtended();
 
             device1.Dispatch($"account sync");

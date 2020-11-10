@@ -68,7 +68,7 @@ namespace ExampleGenerator {
         public void DoCommandsService() {
 
             // check connection to service
-            ProfileHello = Alice1.Example($"account hello {AliceService1}");
+            ProfileHello = Alice1.Example($"account hello {AliceAccount}");
             ResultHello = ProfileHello[0].Result as ResultHello;
 
             // Shortcut to existing profile
@@ -76,7 +76,7 @@ namespace ExampleGenerator {
 
 
             // Create a Bob Account
-            ProfileCreateBob = Bob1.Example($"account create {BobService} ");
+            ProfileCreateBob = Bob1.Example($"account create {BobAccount} ");
 
             // Basic get information tests.
             ProfileList = Alice1.Example($"mesh list");
@@ -92,8 +92,8 @@ namespace ExampleGenerator {
 
             // ToDo: need to add a flow for an administration QR code push and implement the QR code document.
 
-            ShellAccount.ConnectRequest = Alice2.Example($"device request {AliceService1}");
-            ShellAccount.ConnectRequestMallet = Mallet1.Example($"device request {AliceService1}");
+            ShellAccount.ConnectRequest = Alice2.Example($"device request {AliceAccount}");
+            ShellAccount.ConnectRequestMallet = Mallet1.Example($"device request {AliceAccount}");
 
             ShellAccount.ConnectPending = Alice1.ExampleNoCatch($"device pending");
 
@@ -121,7 +121,7 @@ namespace ExampleGenerator {
             ShellAccount.ConnectGetPin = Alice1.Example($"account pin");
             var resultPin = (ShellAccount.ConnectGetPin[0].Result as ResultPIN);
             var pin = resultPin.MessagePIN.SaltedPin;
-            ShellAccount.ConnectPin = Alice3.Example($"device request {AliceService1} /pin={pin}");
+            ShellAccount.ConnectPin = Alice3.Example($"device request {AliceAccount} /pin={pin}");
 
             // Bug: fails because of spool not having envelope written to it and this causes closed message to crash
             //ConnectPending3 = testCLIAlice1.Example($"device pending");
@@ -166,7 +166,7 @@ namespace ExampleGenerator {
             ShellNetwork.NetworkList2 = Alice2.Example($"network list");
 
             ShellMail.MailAuth = Alice1.Example($"device auth {AliceDevice2} /mail ");
-            ShellMail.MailSMIMEPrivate2 = Alice2.Example($"mail smime private {AliceService1} {ShellMail.MailSMIMEPrivateKey}");
+            ShellMail.MailSMIMEPrivate2 = Alice2.Example($"mail smime private {AliceAccount} {ShellMail.MailSMIMEPrivateKey}");
             }
 
 

@@ -33,7 +33,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The {1} command is used on the new device \n{0}", _Indent, ToCommand("device request"));
 				_Output.Write ("to request connection to the user's profile. Alice need only specify \n{0}", _Indent);
-				_Output.Write ("the mesh service account {1} to which connection is requested:\n{0}", _Indent, AliceService1);
+				_Output.Write ("the mesh service account {1} to which connection is requested:\n{0}", _Indent, AliceAccount);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (ShellAccount.ConnectRequest);
 				_Output.Write ("\n{0}", _Indent);

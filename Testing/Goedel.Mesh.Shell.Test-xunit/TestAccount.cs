@@ -51,7 +51,7 @@ namespace Goedel.XUnit {
 
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
 
-            var ProfileCreateAlice = testCLIAlice1.Example($"account create  {AccountA}");
+            var ProfileCreateAlice = testCLIAlice1.Example($"account create  {AliceAccount}");
             var AliceProfiles = ProfileCreateAlice[0].Result as ResultCreatePersonal;
 
             var ProfileList = testCLIAlice1.Example($"account list");
@@ -75,7 +75,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestEscrowDeleteDevice() {
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
-            testCLIAlice1.Dispatch($"account create {AccountA}");
+            testCLIAlice1.Dispatch($"account create {AliceAccount}");
 
             var ProfileEscrow = testCLIAlice1.Example($"account escrow");
             var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
@@ -116,7 +116,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestAccountDelete() {
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
-            var account = testCLIAlice1.Dispatch($"account create {AccountA}") as ResultCreateAccount;
+            var account = testCLIAlice1.Dispatch($"account create {AliceAccount}") as ResultCreateAccount;
             var profileUdf = account.ProfileAccount.Udf;
             var ProfileAliceDelete = testCLIAlice1.Example($"account delete {profileUdf}");
 

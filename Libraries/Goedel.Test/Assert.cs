@@ -13,6 +13,10 @@ namespace Goedel.Test {
     /// </summary>
     public static class AssertTest {
 
+        public static bool FlagFailure = true;
+        public static int TestsFailed = 0;
+
+
         /// <summary>Throw an exception if the specified object is not null. 
         /// </summary>
         /// <param name="test">The condition</param>
@@ -22,9 +26,14 @@ namespace Goedel.Test {
         /// <param name="Int">Integer default parameter</param>
         /// <param name="String">String default parameter</param>
         public static void TestNotNull(this object test, ThrowDelegate throwDelegate = null,
-                    params object[] args) =>
-            Assert.AssertNotNull(test, throwDelegate ?? TestExpectedNotNull.Throw, args);
-
+                    params object[] args) {
+            if (FlagFailure) {
+                Assert.AssertNotNull(test, throwDelegate ?? TestExpectedNotNull.Throw, args);
+                }
+            else {
+                TestsFailed++;
+                }
+            }
         /// <summary>Throw an exception if <paramref name="test"/> is not null. 
         /// </summary>
         /// <param name="test">The object to test to see if it is null</param>
@@ -32,8 +41,15 @@ namespace Goedel.Test {
         /// Condition is true</param>
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
         public static void TestNull(this object test, ThrowDelegate throwDelegate = null,
-                    params object[] args) =>
-            Assert.AssertNull(test, throwDelegate ?? TestExpectedNull.Throw, args);
+                    params object[] args) {
+            if (FlagFailure) {
+                Assert.AssertNull(test, throwDelegate ?? TestExpectedNull.Throw, args);
+                }
+            else {
+                TestsFailed++;
+                }
+            }
+
 
         /// <summary>Throw an exception if <paramref name="condition"/> is true. 
         /// (test, NYIException.Throw, "test was false").AssertTrue();
@@ -43,8 +59,15 @@ namespace Goedel.Test {
         /// Condition is true</param>
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
         public static void TestFalse(this bool condition, ThrowDelegate throwDelegate = null,
-                    params object[] args) =>
-            Assert.AssertFalse(condition, throwDelegate ?? TestExpectedFalse.Throw, args);
+                    params object[] args) {
+            if (FlagFailure) {
+                Assert.AssertFalse(condition, throwDelegate ?? TestExpectedFalse.Throw, args);
+                }
+            else {
+                TestsFailed++;
+                }
+            }
+
 
         /// <summary>Throw an exception if <paramref name="condition"/> is false. 
         /// (test, NYIException.Throw, "test was false").AssertTrue();
@@ -54,8 +77,15 @@ namespace Goedel.Test {
         /// Condition is true</param>
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
         public static void TestTrue(this bool condition, ThrowDelegate throwDelegate = null,
-                    params object[] args) =>
-            Assert.AssertTrue(condition, throwDelegate ?? TestExpectedTrue.Throw, args);
+                    params object[] args) {
+            if (FlagFailure) {
+                Assert.AssertTrue(condition, throwDelegate ?? TestExpectedTrue.Throw, args);
+                }
+            else {
+                TestsFailed++;
+                }
+            }
+
 
         /// <summary>Test to see if two arrays are equal.
         /// </summary>
@@ -66,8 +96,15 @@ namespace Goedel.Test {
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
 
         public static void TestEqual(this byte[] test1, byte[] test2, ThrowDelegate throwDelegate = null,
-                    params object[] args) =>
-            Assert.AssertEqual(test1, test2, throwDelegate ?? TestExpectedArraysEqual.Throw, args);
+                    params object[] args) {
+            if (FlagFailure) {
+                Assert.AssertEqual(test1, test2, throwDelegate ?? TestExpectedArraysEqual.Throw, args);
+                }
+            else {
+                TestsFailed++;
+                }
+            }
+        
 
         /// <summary>Test to see if two values are equal.
         /// </summary>
@@ -78,8 +115,15 @@ namespace Goedel.Test {
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
 
         public static void TestEqual<T>(this T test1, T test2, ThrowDelegate throwDelegate = null,
-                    params object[] args) =>
-            Assert.AssertEqual(test1, test2, throwDelegate ?? TestExpectedEqual.Throw, args);
+                    params object[] args) {
+            if (FlagFailure) {
+                Assert.AssertEqual(test1, test2, throwDelegate ?? TestExpectedEqual.Throw, args);
+                }
+            else {
+                TestsFailed++;
+                }
+            }
+        
 
 
         }    

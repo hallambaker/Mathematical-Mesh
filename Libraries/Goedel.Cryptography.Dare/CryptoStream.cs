@@ -68,7 +68,11 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public byte[] DigestValue { get; protected set; }
 
+        ///<summary>The number of bytes read</summary> 
+        public long BytesRead { get; protected set; } = 0;
 
+        ///<summary>The number of bytes read</summary> 
+        public long BytesWrite { get; protected set; } = 0;
 
         /// <summary>
         /// Create a CryptoStack
@@ -136,8 +140,11 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The total number of bytes read into the buffer. This can be less than the number of bytes 
         /// requested if that many bytes are not currently available, or zero (0) if the end of the stream 
         /// has been reached.</returns>
-        public override int Read(byte[] buffer, int offset, int count) =>
-                    Stream == null ? 0 : Stream.Read(buffer, offset, count);
+        public override int Read(byte[] buffer, int offset, int count) {
+            var read = Stream == null ? 0 : Stream.Read(buffer, offset, count);
+            BytesRead += read;
+            return read;
+            }
 
 
         /// <summary>
@@ -148,7 +155,10 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
         /// at which to begin copying bytes to the current stream.</param>
         /// <param name="count">The number of bytes to be written to the current stream.</param>
-        public override void Write(byte[] buffer, int offset, int count) => Stream?.Write(buffer, offset, count);
+        public override void Write(byte[] buffer, int offset, int count) {
+            BytesWrite += count;
+            Stream?.Write(buffer, offset, count);
+            }
 
         /// <summary>
         /// Closes the current stream, completes calculation of cryptographic values (MAC/Digest)
@@ -263,7 +273,7 @@ namespace Goedel.Cryptography.Dare {
         /// has been reached.</returns>
         public override int Read(byte[] buffer, int offset, int count) {
             var length = jbcdReader.ReadBinaryData(buffer, offset, count);
-
+            BytesRead += length;
             streamMac?.Write(buffer, offset, length);
             streamDigest?.Write(buffer, offset, length);
 
@@ -360,7 +370,8 @@ namespace Goedel.Cryptography.Dare {
         /// has been reached.</returns>
         public override int Read(byte[] buffer, int offset, int count) {
             var length = inputStream.Read(buffer, offset, count);
-
+            
+            BytesRead += length;
             streamMac?.Write(buffer, offset, length);
             streamDigest?.Write(buffer, offset, length);
 
@@ -502,6 +513,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="count">The number of bytes to be written to the current stream.</param>
         public override void Write(byte[] buffer, int offset, int count) {
             streamMac?.Write(buffer, offset, count);
+            BytesWrite += count;
 
             if (payloadLength > 0 | packagingFormat == PackagingFormat.Direct) {
                 payloadLength -= count;

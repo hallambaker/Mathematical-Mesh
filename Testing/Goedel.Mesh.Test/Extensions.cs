@@ -6,7 +6,7 @@ using Goedel.IO;
 using System;
 using System.Collections.Generic;
 
-namespace ExampleGenerator {
+namespace Goedel.Mesh.Test {
     public static class Extensions {
 
         public static ResultPending GetResultPending(
@@ -33,7 +33,9 @@ namespace ExampleGenerator {
         public static ResultConnect GetResultConnect(
             this List<ExampleResult> Results,
             int index = 0) => GetResult(Results, index) as ResultConnect;
-
+        public static ResultFileDare GetResultFileDare(
+            this List<ExampleResult> Results,
+            int index = 0) => GetResult(Results, index) as ResultFileDare;
 
         public static ResultEntry GetResultEntry(
             this List<ExampleResult> Results,

@@ -22,11 +22,11 @@ namespace ExampleGenerator {
         public ShellContact(CreateExamples createExamples) :
                 base(createExamples) {
 
-            ContactAddSelf = Alice1.Example($"contact self email {AliceService1}");
-            ContactAdd = Alice1.Example($"contact add email {CarolService}");
-            ContactGet = Alice1.Example($"contact get {CarolService}");
+            ContactAddSelf = Alice1.Example($"contact self email {AliceAccount}");
+            ContactAdd = Alice1.Example($"contact add email {CarolAccount}");
+            ContactGet = Alice1.Example($"contact get {CarolAccount}");
             ContactList = Alice1.Example($"contact list");
-            ContactDelete = Alice1.Example($"contact delete {CarolService}");
+            ContactDelete = Alice1.Example($"contact delete {CarolAccount}");
 
             }
         }

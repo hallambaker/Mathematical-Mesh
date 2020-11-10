@@ -18,7 +18,7 @@ namespace Goedel.XUnit {
             var deviceB = GetTestCLI("DeviceBobName");
 
 
-            var resulta = MakeAccount(deviceA, AccountA);
+            var resulta = MakeAccount(deviceA, AliceAccount);
             var resultb = MakeAccount(deviceB, AccountB);
 
             // Create a contact with 
@@ -28,8 +28,8 @@ namespace Goedel.XUnit {
 
             // fetch the contact, do not reciprocate
             var resultfetch = deviceB.Dispatch($"contact fetch {uri}");
-            ValidContact(deviceB, AccountB, AccountA);
-            ValidContact(deviceA, AccountA);
+            ValidContact(deviceB, AccountB, AliceAccount);
+            ValidContact(deviceA, AliceAccount);
             }
 
 
@@ -39,7 +39,7 @@ namespace Goedel.XUnit {
             var deviceB = GetTestCLI("DeviceBobName");
 
 
-            var resulta = MakeAccount(deviceA, AccountA);
+            var resulta = MakeAccount(deviceA, AliceAccount);
             var resultb = MakeAccount(deviceB, AccountB);
 
             // Create a static QR code contact.
@@ -49,19 +49,19 @@ namespace Goedel.XUnit {
 
             // fetch the contact, request reciprocation
             var resultfetch = deviceB.Dispatch($"contact exchange {uri}") as ResultEntrySent;
-            ValidContact(deviceB, AccountB, AccountA);
+            ValidContact(deviceB, AccountB, AliceAccount);
 
             // process the contact request. It is not processed automatically because
             // this pin is markes as not automatic
 
             var result6 = deviceA.Dispatch($"account sync /auto");
-            ValidContact(deviceA, AccountA);
+            ValidContact(deviceA, AliceAccount);
 
             var messageId = resultfetch.Message.MessageId;
 
             // reject the contact request.
             var result7 = ProcessMessage(deviceA, true, messageId);
-            ValidContact(deviceA, AccountA, AccountB);
+            ValidContact(deviceA, AliceAccount, AccountB);
             }
 
 
@@ -71,7 +71,7 @@ namespace Goedel.XUnit {
             var deviceB = GetTestCLI("DeviceBobName");
 
 
-            var resulta = MakeAccount(deviceA, AccountA);
+            var resulta = MakeAccount(deviceA, AliceAccount);
             var resultb = MakeAccount(deviceB, AccountB);
 
             // Create a dynamic QR code contact.
@@ -81,18 +81,18 @@ namespace Goedel.XUnit {
 
             // fetch the contact, request reciprocation
             var resultfetch = deviceB.Dispatch($"contact exchange {uri}") as ResultEntrySent;
-            ValidContact(deviceB, AccountB, AccountA);
+            ValidContact(deviceB, AccountB, AliceAccount);
 
 
             var messageId = resultfetch.Message.MessageId;
 
             // reject the contact request.
             var result6 = ProcessMessage(deviceA, false, messageId);
-            ValidContact(deviceA, AccountA);
+            ValidContact(deviceA, AliceAccount);
 
             // Explicit reject has no effect
             var result7 = deviceA.Dispatch($"account sync /auto");
-            ValidContact(deviceA, AccountA);
+            ValidContact(deviceA, AliceAccount);
             }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Goedel.XUnit {
             var deviceA = GetTestCLI("MachineAlice");
             var deviceB = GetTestCLI("DeviceBobName");
 
-            var resulta = MakeAccount(deviceA, AccountA);
+            var resulta = MakeAccount(deviceA, AliceAccount);
             var resultb = MakeAccount(deviceB, AccountB);
 
             // Create a dynamic QR code contact.
@@ -110,11 +110,11 @@ namespace Goedel.XUnit {
 
             // fetch the contact, request reciprocation
             var resultfetch = deviceB.Dispatch($"contact exchange {uri}");
-            ValidContact(deviceB, AccountB, AccountA);
+            ValidContact(deviceB, AccountB, AliceAccount);
 
             // Automatically accept the contact request.
             var result6 = deviceA.Dispatch($"account sync /auto");
-            ValidContact(deviceA, AccountA, AccountB);
+            ValidContact(deviceA, AliceAccount, AccountB);
             }
 
 
@@ -125,23 +125,23 @@ namespace Goedel.XUnit {
             var deviceA = GetTestCLI("MachineAlice");
             var deviceB = GetTestCLI("DeviceBobName");
 
-            var resulta = MakeAccount(deviceA, AccountA);
+            var resulta = MakeAccount(deviceA, AliceAccount);
             var resultb = MakeAccount(deviceB, AccountB);
 
 
-            var result2 = deviceB.Dispatch($"message contact {AccountA}");
+            var result2 = deviceB.Dispatch($"message contact {AliceAccount}");
 
             var result3 = deviceA.Dispatch("message pending") as ResultPending;
 
             // check there is exactly one pending message and accept it
             var result4 = ProcessMessage(deviceA, true, 1, 0);
 
-            ValidContact(deviceA, AccountA, AccountB);
+            ValidContact(deviceA, AliceAccount, AccountB);
 
 
             // check the contact is listed
             var result6 = deviceB.Dispatch($"account sync /auto");
-            ValidContact(deviceB, AccountB, AccountA);
+            ValidContact(deviceB, AccountB, AliceAccount);
             }
 
         Result MakeAccount(TestCLI device, string account) {
@@ -197,8 +197,8 @@ namespace Goedel.XUnit {
             GetTestCLI("Device1");
 
 
-            device1 = CreateMasterDevice("Device1A", AccountA);
-            device2 = GetConnectedCLI(device1, "Device2A", AccountA);
+            device1 = CreateMasterDevice("Device1A", AliceAccount);
+            device2 = GetConnectedCLI(device1, "Device2A", AliceAccount);
 
             return true;
             }
@@ -222,7 +222,7 @@ namespace Goedel.XUnit {
             device3 = GetTestCLI("Device3");
 
             CreateAlice(out device1, out device2);
-            device1.Connect(device3, AccountA);
+            device1.Connect(device3, AliceAccount);
 
             return true;
             }
@@ -232,7 +232,7 @@ namespace Goedel.XUnit {
             deviceA = GetTestCLI("MachineAlice");
             deviceB = GetTestCLI("DeviceBobName");
 
-            var resulta = MakeAccount(deviceA, AccountA);
+            var resulta = MakeAccount(deviceA, AliceAccount);
             var resultb = MakeAccount(deviceB, AccountB);
 
             // Create a dynamic QR code contact.
@@ -242,11 +242,11 @@ namespace Goedel.XUnit {
 
             // fetch the contact, request reciprocation
             var resultfetch = deviceB.Dispatch($"contact exchange {uri}");
-            ValidContact(deviceB, AccountB, AccountA);
+            ValidContact(deviceB, AccountB, AliceAccount);
 
             // Automatically accept the contact request.
             var result6 = deviceA.Dispatch($"account sync /auto");
-            ValidContact(deviceA, AccountA, AccountB);
+            ValidContact(deviceA, AliceAccount, AccountB);
 
             return true;
             }
@@ -296,7 +296,7 @@ namespace Goedel.XUnit {
         public void TestMessageConfirmationAccept() {
             CreateAliceBob(out var deviceA, out var deviceB);
 
-            var resultRequest = deviceB.Dispatch($"message confirm {AccountA} start") as ResultSent;
+            var resultRequest = deviceB.Dispatch($"message confirm {AliceAccount} start") as ResultSent;
             var messageId = resultRequest.Message.MessageId;
 
             var resultHandle = ProcessMessage(deviceA, true, messageId); // Hack - lets start using MessageID eh?
@@ -310,7 +310,7 @@ namespace Goedel.XUnit {
         public void TestMessageConfirmationReject() {
             CreateAliceBob(out var deviceA, out var deviceB);
 
-            var resultRequest = deviceB.Dispatch($"message confirm {AccountA} start") as ResultSent;
+            var resultRequest = deviceB.Dispatch($"message confirm {AliceAccount} start") as ResultSent;
             var messageId = resultRequest.Message.MessageId;
 
             var resultHandle = ProcessMessage(deviceA, false, messageId);

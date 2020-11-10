@@ -34,7 +34,7 @@ namespace ExampleGenerator {
                 base(createExamples) {
 
 
-            ContactRequest = Bob1.Example($"message contact {AliceService1}");
+            ContactRequest = Bob1.Example($"message contact {AliceAccount}");
             ContactPending = Alice1.Example($"message pending");
             var resultPending = (ContactPending[0].Result as ResultPending);
             var id1 = "tbs";// resultPending.Messages[0].MessageID;
@@ -45,9 +45,9 @@ namespace ExampleGenerator {
             ContactCatalog = Alice1.Example($"contact list");
             ContactGetResponse = Bob1.Example($"message status {id1}");
             ContactReject = Alice1.Example($"message reject {id2}");
-            ContactBlock = Alice1.Example($"message block {MalletService}");
+            ContactBlock = Alice1.Example($"message block {MalletAccount}");
 
-            ConfirmRequest = Bob1.Example($"message confirm {AliceService1} \"{ShellMessage.BobPurchase}\"");
+            ConfirmRequest = Bob1.Example($"message confirm {AliceAccount} \"{ShellMessage.BobPurchase}\"");
             ConfirmPending = Alice1.Example($"message pending");
             var confirmPending = (ConfirmPending[0].Result as ResultPending);
             confirmPending.Keep();

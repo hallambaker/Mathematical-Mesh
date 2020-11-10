@@ -23,7 +23,7 @@ namespace Goedel.XUnit {
             //deviceA.Dispatch($"dare decode {result1.Filename}", fail: true);
             //deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
 
-            deviceA.Dispatch($"group add {accountGroup} {AccountA}");
+            deviceA.Dispatch($"group add {accountGroup} {AliceAccount}");
             deviceA.Dispatch($"account sync /auto");
             deviceA.Dispatch($"group add {accountGroup} {AccountB}");
             deviceB.Dispatch($"account sync /auto");

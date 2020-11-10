@@ -33,10 +33,10 @@ namespace ExampleGenerator {
         public ShellSequence(CreateExamples createExamples) :
         base(createExamples) {
             ContainerCreate = Alice1.Example($"container create {TestContainer}");
-            ContainerCreateEncrypt = Alice1.Example($"container create {TestContainerEncrypt} /encrypt={GroupService}");
+            ContainerCreateEncrypt = Alice1.Example($"container create {TestContainerEncrypt} /encrypt={GroupAccount}");
             ContainerArchive = Alice1.Example($"container archive {TestContainerArchive} {TestDir1}");
             ContainerArchiveEnhance = Alice1.Example($"container create {TestContainerArchiveEnhance} {TestDir1}",
-                                                            $"/encrypt={GroupService} /sign={AliceService1}");
+                                                            $"/encrypt={GroupAccount} /sign={AliceAccount}");
             ContainerArchiveVerify = Alice1.Example($"container verify {TestContainerArchiveEnhance}");
             ContainerArchiveExtractAll = Alice1.Example($"container extract {TestContainer} {TestDir2}");
             ContainerArchiveExtractFile = Alice1.Example($"container extract {TestContainer} /file={TestFile4}");

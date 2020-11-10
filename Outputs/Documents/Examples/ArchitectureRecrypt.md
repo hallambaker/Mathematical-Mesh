@@ -25,17 +25,14 @@ she adds herself to the group.
 
 
 ~~~~
-<div="terminal">
-<cmd>Alice> dare decode groupsecret.dare
-<rsp>ERROR - No decryption key is available
-</div>
+Missing example 73
 ~~~~
 
 Alice adds Bob to the group:
 
 
 ~~~~
-Missing example 73
+Missing example 74
 ~~~~
 
 Adding Bob to the group gives him immediate access to any file encrypted under
@@ -43,14 +40,14 @@ the group key without making any change to the encrypted files:
 
 
 ~~~~
-Missing example 74
+Missing example 75
 ~~~~
 
 Removing Bob from the group immediately withdraws his access.
 
 
 ~~~~
-Missing example 75
+Missing example 76
 ~~~~
 
 Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
@@ -58,6 +55,6 @@ earlier).
 
 
 ~~~~
-Missing example 76
+Missing example 77
 ~~~~
 

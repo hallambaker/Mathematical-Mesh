@@ -28,14 +28,14 @@ namespace ExampleGenerator {
             createWeb.Examples();
             }
 
-        public virtual TestCLI Alice1 { get; private set; }
-        public virtual TestCLI Alice2 { get; private set; }
-        public virtual TestCLI Alice3 { get; private set; }
-        public virtual TestCLI Alice4 { get; private set; }
-        public virtual TestCLI Bob1 { get; private set; }
-        public virtual TestCLI Mallet1 { get; private set; }
-        public virtual TestCLI Console1 { get; private set; }
-        public virtual TestCLI Maker1 { get; private set; }
+        public virtual TestCLI Alice1 { get; protected set; }
+        public virtual TestCLI Alice2 { get; protected set; }
+        public virtual TestCLI Alice3 { get; protected set; }
+        public virtual TestCLI Alice4 { get; protected set; }
+        public virtual TestCLI Bob1 { get; protected set; }
+        public virtual TestCLI Mallet1 { get; protected set; }
+        public virtual TestCLI Console1 { get; protected set; }
+        public virtual TestCLI Maker1 { get; protected set; }
 
         public virtual string Secret1 { get; set; }
 
@@ -89,16 +89,21 @@ namespace ExampleGenerator {
         public const string MeshServiceProvider2 = "example.net";
 
 
-        public string AliceService1 => "alice@" + MeshServiceProvider1;
-        public string AliceService2 => "alice@" + MeshServiceProvider2;
+        public string AliceAccount => "alice@" + MeshServiceProvider1;
+        public string AliceAccountNew => "alice@" + MeshServiceProvider2;
 
 
-        public const string BobService = "bob@example.com";
-        public const string CarolService = "carol@example.com";
-        public const string DougService = "doug@example.com";
-        public const string MalletService = "mallet@example.com";
-        public const string GroupService = "groupw@example.com";
+        public const string BobAccount = "bob@example.com";
+        public const string MeshServiceProvider = "example.com";
+        public const string ConsoleAccount = "console@example.com";
+        public const string MakerAccount = "maker@example.com";
+        public const string CarolAccount = "carol@example.com";
+        public const string DougAccount = "doug@example.com";
+        public const string MalletAccount = "mallet@example.com";
+        public const string GroupAccount = "groupw@example.com";
+
         public const string PollService = "devices@example.com";
+
 
         public const string AliceContactFile = "alice-contact.json";
         public const string CarolContactFile = "carol-contact.json";
@@ -130,17 +135,6 @@ namespace ExampleGenerator {
             PlatformCrypto();
 
 
-            //var t= Directory.GetCurrentDirectory();
-
-            Alice1 = GetTestCLI(AliceDevice1);
-            Alice2 = GetTestCLI(AliceDevice2);
-            Alice3 = GetTestCLI(AliceDevice3);
-            Alice4 = GetTestCLI(AliceDevice4);
-            Bob1 = GetTestCLI("Bob");
-            Mallet1 = GetTestCLI("Mallet");
-            Console1 = GetTestCLI("Console");
-            Maker1 = GetTestCLI("Maker");
-
             Directory.CreateDirectory(TestDir1);
             TestFile1.WriteFileNew(TestFile1Text.ToString());
             TestFile2.WriteFileNew(TestText2.ToString());
@@ -157,7 +151,6 @@ namespace ExampleGenerator {
             Service = new LayerService(this);
             Account = new LayerAccount(this);
             Connect = new LayerConnect(this);
-
             Apps = new LayerApps(this);
             Contact = new LayerContact(this);
             Confirm = new LayerConfirm(this);

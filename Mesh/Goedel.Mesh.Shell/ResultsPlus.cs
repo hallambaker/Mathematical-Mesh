@@ -461,7 +461,7 @@ namespace Goedel.Mesh.Shell {
                 }
             if (header?.DigestAlgorithm != null) {
                 builder.Append($"    Digest Algorithm: {header.DigestAlgorithm}\n");
-                builder.Append($"    Payload Digest: {trailer?.PayloadDigest}\n");
+                builder.Append($"    Payload Digest: {trailer?.PayloadDigest?.ToStringBase16()}\n");
                 if (trailer?.Signatures != null) {
                     foreach (var signature in trailer?.Signatures) {
                         builder.Append($"        Signer: {signature.KeyIdentifier}\n");
