@@ -271,8 +271,11 @@ namespace ExampleGenerator {
             var resultPending = Connect.ConnectPending.GetResultPending();
             var id1 = resultPending.Messages[0].MessageId;
 
+
+            "Need to specify WHAT rights are being assigned!".TaskFunctionality();
+
             Connect.ConnectAccept = Alice1.Example(
-                $"device accept {id1}"
+                $"device accept {id1} /message"
                 );
             var resultAccept = Connect.ConnectAccept[0].Result;
             deviceId = "TBS";

@@ -445,13 +445,31 @@ namespace Goedel.Mesh {
             activationAccount.Future();
             Screen.WriteLine($"Grant right {right.Name}/{right.Resource}");
 
-            // which store do we need?
-            if (!DictionaryStoreEncryptionKey.TryGetValue(right.Name, out var keyPair)) {
-                return;
-                }
-            //.AssertTrue(UnknownRight.Throw);
 
-            var activationEntry = new ActivationEntry() {
+            // This is failing because we do not populate DictionaryStoreEncryptionKey
+            // except when initially creating the entry.
+
+            // which store do we need?
+            if (!DictionaryStoreEncryptionKey.TryGetValue(
+                right.Name, out var keyPair)) {
+                if (activationAccount?.Entries != null) {
+
+                    foreach (var entry in activationAccount.Entries) {
+
+
+
+                        }
+                    }
+
+                }
+            if (keyPair == null) {
+                return; // hack: Every right should have a key.
+                }
+
+            //keyPair.AssertNotNull(NotAdministrator.Throw);
+
+
+                var activationEntry = new ActivationEntry() {
                 Resource = right.Name,
                 Key = new KeyData(keyPair, true)
                 };
