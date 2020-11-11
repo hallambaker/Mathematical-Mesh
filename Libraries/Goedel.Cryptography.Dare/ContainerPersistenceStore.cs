@@ -197,7 +197,7 @@ namespace Goedel.Cryptography.Dare {
 
                 var item = frameIndex.JsonObject;
 
-                // This is failing because ContentMetaData is not being written to envelopes...
+                // This is failing on encrypted objects because the object isn't being decrypted.
                 CommitTransaction(frameIndex, item);
 
 

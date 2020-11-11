@@ -162,6 +162,8 @@ namespace Goedel.Mesh {
                 foreach (var entry in Entries) {
                     var key = entry.Key.GetKeyPair();
                     keyCollection.Add(key);
+
+                    //DictionaryStoreEncryptionKey.Add(entry.Resource, key);
                     }
                 }
 
@@ -521,13 +523,11 @@ namespace Goedel.Mesh {
 
                 DictionaryStoreEncryptionKey.Add(containerName, encryptionKey);
                 }
-            else {
+            else if (GetEntry (containerName, out var entry)){
+                encryptionKey = entry.Key.GetKeyPair(KeySecurity.Exportable);
 
-                // check our entries here!!!!!
+                DictionaryStoreEncryptionKey.Add(entry.Resource, encryptionKey);
 
-                throw new 
-                    
-                    NYI();
 
                 }
 

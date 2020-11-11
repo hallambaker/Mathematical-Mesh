@@ -20,8 +20,7 @@ a file.
 ~~~~
 <div="terminal">
 <cmd>Alice> contact add email carol@example.com
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\em
-ail'.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -50,7 +49,7 @@ Contacts may also be added by accepting contact request messages using the
 ~~~~
 <div="terminal">
 <cmd>Alice> message accept tbs
-<rsp>ERROR - The specified message could not be found.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -63,7 +62,7 @@ email address or label:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact get carol@example.com
-<rsp>Empty
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -75,21 +74,7 @@ A complete list of contacts is obtained using the  `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
-  Person MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
-  Anchor MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
-  Address alice@example.com
-
-Entry<CatalogedContact>: NC6S-FHAS-TTJX-5VFB-B57Z-JOG3-DJDA
-  Person 
-  Anchor MCNN-EDO6-GYYF-2H2H-IJTV-KXQZ-TXXJ
-  Address bob@example.com
-
-Entry<CatalogedContact>: NBYD-QOZ3-BUQJ-QTYU-YPZJ-SCXL-LA64
-  Person 
-  Anchor MCL5-XUKG-CQ6T-ASVR-6RP5-X2C3-BL2L
-  Address groupw@example.com
-
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -101,7 +86,7 @@ Contact entries may be deleted using the  `contact delete` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact delete carol@example.com
-<rsp>ERROR - The entry could not be found in the store.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 

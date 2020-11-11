@@ -1,5 +1,109 @@
 The request payload:
 
 
+~~~~
+{
+  "TransactRequest":{
+    "Accounts":["bob@example.com"
+      ],
+    "Outbound":[[{
+          "EnvelopeID":"MCJD-TMBQ-AA4W-BDW4-IU3K-PQQI-7EDM",
+          "enc":"A256CBC",
+          "kid":"EBQK-BRF5-3OAL-ULAU-SHF3-C2DR-7N7V",
+          "Salt":"r3nfL0_rFsiV6BHyHnY1fA",
+          "recipients":[{
+              "kid":"MAYC-73YM-3P3M-U5NR-K2NQ-T66M-NYMH",
+              "epk":{
+                "PublicKeyECDH":{
+                  "crv":"X448",
+                  "Public":"yLEJjY18qymz1Z97aVgihOlAXCISjEG2zhFfA
+  AEvB7dQgJIaU0iN4-vKrsMyLEZoKa9l7T5hOXoA"}},
+              "wmk":"slyU6YWYh90vFMdZRDdMWgFreLdWQIXQuWTxDl4n4A_H
+  igFXmLqcXg"}
+            ],
+          "ContentMetaData":"ewogICJVbmlxdWVJRCI6ICJOQ1VVLVlDTlUt
+  NE9DVS1MUUVELUxJNk0tRFhJSi1KV1pMIiwKICAiTWVzc2FnZVR5cGUiOiAiR3Jvd
+  XBJbnZpdGF0aW9uIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLA
+  ogICJDcmVhdGVkIjogIjIwMjAtMTEtMTFUMTY6NTQ6NDRaIn0"},
+        "iKZE2xxUoyjJVwhxxG8z34w--_VSlOcpcZMcvZYquEPBjHTZ501JUg0t
+  VOKsNHc1sOuh_fUYpPFoZSPjD7fegha7f4M-63-a9GBTbgACN8vbx2_-nb3wdDxa_
+  ZUuLz6uDR3OGV2Lpfh7A6JUqfK0cIR8HWqkSL6000jSud9Iu1_CYfoWATCsmrtWIh
+  ZnyzpEZv0cdRgE7cDJbfaiQ0xcKOSiajGpULTLEgkm7UXPB3kwTmUFgTTDpxvrGy4
+  7N2NUyxdP2w5w9YJVsfIJrBR1pkKplTESqCeYO-Z7GMpM0JkRVDj9cRoQJBvRaADp
+  dgtPW7GdFzYn3p0s6uoNXGxi7Eq7l3e-KsK5qgubIof9AvBEBPdkOZi1zKrfErwjI
+  SnlVRmU0E-kTXC8_2AjtP7pSBXARxkxxwbSR8P5LZho0lT69Id_8UnHMrV_eSKM_E
+  efLO6zz37-XljBaZ8dDYQW8Oa1vi4n67gdRcni7NlHXOG4qvIS0-rsEEvxwX1ZTNe
+  zUQ4CThG1s6m4qll9WcsxZNQGEo7lRVn6TfTZl--lFY6TEmc-24Fr0N7NRh9bRRKZ
+  dVgRFBtxx9vi7Opp5vbtFcdTI6HJV_W_VRaDOUmjHaiFXQpRGLXfChg2SE_yLqfI5
+  6FSi3jX8Cj4xqbnIfAuKaFeoOYdlkOMNa8LVXz5VR5XOG-8O3Q0AIATl34xaOU_FM
+  RMIfTfZPATguMvITWBMSEZ1BpXAytz7LQseQSmKI9NAnHIC4shYl04brzLq8M1PLU
+  Ekpdp55xNz-GlqQphmBGRhLKRrj2jsQ3uEF8v1yBllbG0osG6rujHUKnEHJjH6EZe
+  zMIlE17GcX2c-3vDwI81Oi54qj9zatjfAI6PVPYzTmP0j1RlT3XjGJsHkyxaTXSvW
+  fGt4RJhVizrIP8r-6MrsaKn_qX--pnKgRiPxoMRTVd152llAFTm5OquYB--n-lil2
+  tPtTi2q2XlzcXdr_0c21KBRiRjeDyvsS-2ffHaiDN9IzJ_EuTs-gl9avVmybPS8ay
+  PGw99taP-5G7YlUGT_y_GlzDxrMTDXs1OlkTaWgoYCiDUuAg57h3Y-igd_6b3sfrI
+  Is1SNtX6BN2-CXOI5FlNENsoz615383fij0cP5_hKhGWcTrpVZF4-lpdNVYOKcMGj
+  eQ8eAJVk722BBCbqREpMwHyQCbaxM8faMuiDP_GBj0IoaGgh-hGbgUKIiaOvITdQG
+  yGoA0nUiZzwU9qbybsxuhp5Koz4d4IiAvkHCHY8S9LtBKLXqhTxtf0h4NaaJ60oKF
+  yas0nR1I3cyQ4ICj7P6e5wcVPywC8PRbZJS_I3kh7UVAypu86JaM2E1QAG8HVKQ6o
+  YkeWDaluOGz3deAWSdP81mvTWhUANL-sTpOyBWnizKfVBcV71yXSuUmrQdRi8SdYe
+  CV0ZtTmDO1F6OQN1rMMnTHQZpP6CAiYQio3ljnpwig3dqLHplTPFFl87S7tgDs_xu
+  pEq6jFdj3LfD2Rus1QgHBZR6HoIbtN6xG6H3tUd3CM89wEWvymZJblyv69u1vdiPT
+  r1tigpzmTqlBC5bZShLG3zZvjYMkFFvq3X741Q-6AW6nsB3pOsHqW1MSqfp4XBttR
+  EUocbsi47ACAJozdbFDGWXUHTuPcK30pT0-TfSLHpp2xUR0Z0mSt8wCjztNT8aC-t
+  1aV60uSgF1YPAhygztvHylM6kGF1IgagAN4KIaLuUw3V4cOdjB7jlxlc78C7iPYUO
+  cFhi3QjUPSfPLPHd4Z1Q24Rugwet19CNCgJe93zbOgADCAhlnOnn2I3Dqe3NUP0Om
+  YMbFNRdS5-mg1rhpgYAiNvF8fcFTZsL4UBPAJqkhroznYr-eoCu2_pRDaRMq4qbSm
+  3CFxdRUWI5ZTfteJjRHG9aEr6hPDqjXTgI_I8qMiE_HaTE5qZWVdEL1tDd-AZvI_z
+  sYfu11UjHQlkX5UZbB2mraSjWrht_Qa6dLR_J1cRGHB5sgtioByK3-AGkYKg91fkb
+  dGHTpOYrkXgcmKt_m-_fmhe8TtjPwThEtHGtvkaTvApYDvVQXUKTLwigq3iNY6gjZ
+  3uXx0Ou9sOHr_bgtfKxwQlR3QU4ge7LnQ43T29FfOYZitJFGeGut5sQqeNOQ6wMVC
+  xEtPDfJzyNgqdUEGydPeYVVRIC43dgr27PD5RRH6bFCVxgPdmtTFrATMJhk5jFiIZ
+  Fn-7ES9TbYPLi662anrDsmVk6JHuGiQmgl259LscpOepxNs9HOOQo913CkwMtsDj3
+  JXt0GeneBp23fHyTk6qgvKh53IwBiAQ_ltzgsx_y99XP0eo5fc6rgFcJDmX2iBjFM
+  A_e2iba2RWv7SyNsoOvTqNy8k6mkPsWlK1tDWBG619ZtRgJ2A5O0lV2hYBZMDR3qa
+  tz2reQAz3H167YRUMe0V8Hg7oxrZgIncmN1cuJKAMpkXD6k_qKIl3rxqsaI5mTB4o
+  adpUXbfpBPY-Z7Vx70V2pxK5GQX1eX58bF5cvoh6gBPsIx6M1yCq-oq_iiILD5Ysl
+  bQKips4_NL3p6BsdRhIxuoBuugbkIWeqJ4UOyYh4-_a_woKvoGZT4Xnf6dBKNOZcL
+  9hSR3UCOkqxk2gd5c6RW-UrghqoWQ2IhLbj8MVR5ETvUDTCiUQXrSG-E4qcBpkNsx
+  KA67NFf7XbioRhFExdZGbv9nWnkKAKUC0f-4LyLUHWFCuDz6EjG4bid_-xsn2WMzD
+  pzchhMfsYP9jsdoQyoSsLMOAXUtHmocoajpaMl3LhDhPR3f_e-R1PaIIBudmrbaRw
+  hLT-ct2uG0upgxVL0SOrsRbyRljhvHAJHP24pFzcLHkyj5HHkf2WQ5fiQCY25DqW1
+  8bR85c4mIop9NJ3gZY3hlfrgEItKDpiY94Wa8ejR-baHiQuBHqL_MIdCUYim34006
+  DxoGXvNtUukoWTfM1KJBnu9Up2bBwrTmsrG__70kUPGp4dSRV7hRNwOzl3MQ8TXv6
+  c1wpXZsoExYDos3HyFTMjROz1jIeJ1_w1mjFaal33GzwlAYjJIegBsMT8jGz-KzlN
+  FBS4wDpzMcsdkxWhdE6xg0NiM1Ntz3zZDnrCDd6V8TfeC1siy9yH7I0Rk_-54adQo
+  kaHvFbcfldZFsvlrCQ-KEJ3-80vHFP7e3VKAZkkIbZux47nk19IqQ-1gbYxkZg1UK
+  oqzm_ltpBWS-dcT3r15kRhfi3QkHpiofBgqTpDyiAhdWrm0PurM3ckTr_AL6n2TbZ
+  05iXVwf_xtN-Jl_cyKhVnwMGAhJx7q30IbD8xFogeXiw6637CdUO6bcAlz7M9g7Ap
+  PJk3mnq0lmiCrj_aTWCVhWe6p080vhLWBqROiGJus0aExWW6my7gXCIEaRj01sHky
+  413G2a2fkxjsi3SUD4Vp1_ROY03yDYeJDK1JDVbVZffpUXbITuUt_LL1t0ZvO5Dzy
+  FHmz3RkeSxPw7ZkJ_eW2Orby1SAsj8Wtx7Js9eK61MRZv1rD4xcJqkhGM-__xjwEF
+  vobsJ5pzBex-pKQsW0pcxghq2M-7KvDVazapTEPzCpq2FhrfvDhMay4sToNRAAAhN
+  rR5Y1rz3CG3DYsQbLuRgGvFZdJTsteKkAcG9Z1Pz80PL-JaAn0OBf6H_XjR9AkP8T
+  XRcMsrLSUgEBzXLUWhwiwC3ES70D9d1Twb6S7Kb3-s8tXyVFBCztQolTeh5PKHYSI
+  fFD4PKVIoWhEOYU4Y8yDhcp5569Gnp2TepuFBBNMjl8QF_4tiIbmUjWk-L_FARiTI
+  FLob5tNzwjApSN3xl2-SOroduDJE4txrEYMz0ErPB_pIHfZDr8uRmqwquLxe60xKN
+  DMerxMc9OE7yVfkHv4acRrsG4-oZk8VHl2FggasMZD_VgR92pEAiJ4eQImmLMY7Tp
+  ez3RtCNSKp41y3j_NZqE1JMOtnbc_RRV4PagGlIr3YHbw4bHSkfF8c8D7TLD6V7LY
+  7U8rR6FiztcAs8XivZ5-L9GPEp7z1ObvXotJbKmHbCDjtqcBdwmue39BX2qxqmI-f
+  wDOnD6_yRFvkc0mwu9T8GweE_XvmfOCdV4qvJRn_XMkhJ6bd7wugxnTOXYUhQXm6d
+  XovnLpEcpkM13_3vRQbWdtrc50GCdKF5SkCEJ0bNAwp0mTesAOb4P_2UG1K2E-ObJ
+  vHEqdWVYS8ifIvScwMx46wnjXKdkfHmIUgGAeZbSxghw6KMmqqKYAMtXE6L3mgUuP
+  d6GevLrO8rYXISWAZE7Ut7i7L_9d5o3t9G8aU2bq_o43NsklH9jHEg0e6f0jkpnEu
+  0NwA-As5g9SWPlRVOEiQvsgbDMqSg"
+        ]
+      ]}}
+~~~~
+
+
 The response payload:
+
+
+~~~~
+{
+  "TransactResponse":{
+    "Status":201,
+    "StatusDescription":"Operation completed successfully"}}
+~~~~
 

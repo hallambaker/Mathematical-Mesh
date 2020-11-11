@@ -6,7 +6,7 @@ and is likely to require authentication and possibly payment.
 ~~~~
 <div="terminal">
 <cmd>Alice> account create alice@example.com
-<rsp>Account=MAHU-T4MN-EPMO-L6JF-PE43-JBM3-VHBW
+<rsp>Account=MDOS-GLM5-GHBD-V2BW-ORPW-ZV5H-ZZKS
 </div>
 ~~~~
 

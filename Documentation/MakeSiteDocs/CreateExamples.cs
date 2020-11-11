@@ -151,6 +151,16 @@ namespace ExampleGenerator {
                 );
             var aliceCreateAccount = Account.CreateAlice.GetResultCreateAccount();
             AliceProfileAccount = aliceCreateAccount.ProfileAccount;
+
+
+            // Check the passwords work - enable checks later on.
+            Account.PasswordAdd = Alice1.Example(
+                $"password add {ShellPassword.PasswordSite} {ShellPassword.PasswordAccount1} {ShellPassword.PasswordValue1}",
+                $"password add {ShellPassword.PasswordSite2} {ShellPassword.PasswordAccount2} {ShellPassword.PasswordValue2}"
+                );
+            Account.PasswordGet = Alice1.Example(
+                $"password get {ShellPassword.PasswordSite}"
+                );
             }
 
 
@@ -187,15 +197,9 @@ namespace ExampleGenerator {
 
 
         public void PasswordCatalog() {
-            // Check the passwords work
 
-            Account.PasswordAdd = Alice1.Example(
-                $"password add {ShellPassword.PasswordSite} {ShellPassword.PasswordAccount1} {ShellPassword.PasswordValue1}",
-                $"password add {ShellPassword.PasswordSite2} {ShellPassword.PasswordAccount2} {ShellPassword.PasswordValue2}"
-                );
-            Account.PasswordGet = Alice1.Example(
-                $"password get {ShellPassword.PasswordSite}"
-                );
+
+
 
             // Password catalog
             var resultPassword = Account.PasswordGet.GetResultEntry();
@@ -288,10 +292,7 @@ namespace ExampleGenerator {
             Connect.ConnectAccept.GetResult().Success.TestTrue();
             Connect.ConnectComplete.GetResult().Success.TestTrue();
 
-
-            }
-
-        public void TestConnectDisconnect(string deviceId) {
+            // This is not syncing correctly. Do not have the credentials in the store(!)
             Account.SyncAlice = Alice2.Example(
                 $"account sync"
                 );
@@ -305,6 +306,12 @@ namespace ExampleGenerator {
 
             Connect.PasswordList2.GetResult(0).Success.TestTrue();
             Connect.PasswordList2.GetResult(1).Success.TestTrue();
+            }
+
+        public void TestConnectDisconnect(string deviceId) {
+
+
+
 
 
 

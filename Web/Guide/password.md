@@ -15,9 +15,9 @@ Alice adds the username and password for an ftp service to her catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 password
-<rsp>alice1@ftp.example.com = [password]
+<rsp>ERROR - Object reference not set to an instance of an object.
 <cmd>Alice> password add www.example.com alice@example.com newpassword
-<rsp>alice@example.com@www.example.com = [newpassword]
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -29,10 +29,7 @@ The `password list` command lists all the passwords in the catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice> password list
-<rsp>CatalogedCredential
-
-CatalogedCredential
-
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -49,7 +46,7 @@ values for a specified service:
 ~~~~
 <div="terminal">
 <cmd>Alice> password get ftp.example.com
-<rsp>alice1@ftp.example.com = [newpassword]
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -86,7 +83,7 @@ password that is randomly generated:
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 newpassword
-<rsp>alice1@ftp.example.com = [newpassword]
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -99,6 +96,7 @@ Password entries may be deleted using the  `password delete` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> password delete www.example.com
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 

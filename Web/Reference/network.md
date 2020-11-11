@@ -36,21 +36,19 @@ add   Add calendar entry from file
 ~~~~
 <div="terminal">
 <cmd>Alice> network add NetworkEntry1.json NetID1
-<rsp>{Username}@{Service} = [{Password}]</div>
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> network add NetworkEntry1.json NetID1 /json
 <rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "CatalogedNetwork": {
-        "Service": "NetworkEntry1.json",
-        "Password": "NetID1"}}}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -74,7 +72,7 @@ delete   Delete calendar entry
 ~~~~
 <div="terminal">
 <cmd>Alice> network delete NetID2
-<rsp>ERROR - The entry could not be found in the store.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -86,7 +84,7 @@ Specifying the /json option returns a result of type Result:
 <rsp>{
   "Result": {
     "Success": false,
-    "Reason": "The entry could not be found in the store."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -110,18 +108,19 @@ get   Lookup calendar entry
 ~~~~
 <div="terminal">
 <cmd>Alice> network get NetID2
-<rsp>Empty
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> network get NetID2 /json
 <rsp>{
-  "ResultEntry": {
-    "Success": false}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -144,35 +143,19 @@ list   List network entries
 ~~~~
 <div="terminal">
 <cmd>Alice> network list
-<rsp>CatalogedNetwork
-
-CatalogedNetwork
-
-CatalogedNetwork
-
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultDump:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> network list /json
 <rsp>{
-  "ResultDump": {
-    "Success": true,
-    "CatalogedEntries": [{
-        "CatalogedNetwork": {
-          "Service": "myWiFi",
-          "Password": "securePassword"}},
-      {
-        "CatalogedNetwork": {
-          "Service": "NetworkEntry1.json",
-          "Password": "NetID1"}},
-      {
-        "CatalogedNetwork": {
-          "Service": "NetworkEntry2.json",
-          "Password": "NetID2"}}]}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 

@@ -1,3 +1,3 @@
 ~~~~
-mcu://alice@example.com/ADMI-CCIW-GCZJ-AIP2-WE
+mcu://alice@example.com/ADZK-HABK-6VCN-UE5O-7U
 ~~~~

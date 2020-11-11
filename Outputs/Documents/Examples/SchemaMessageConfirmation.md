@@ -4,7 +4,7 @@ The console generates a confirmation request message:
 ~~~~
 {
   "RequestConfirmation":{
-    "MessageId":"NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN",
+    "MessageId":"NBF2-RKIJ-G3MT-RCSA-JDCT-UGVT-XYSR",
     "Sender":"console@example.com",
     "Recipient":"alice@example.com",
     "Text":"start"}}
@@ -15,6 +15,6 @@ containing both the request and the response:
 
 
 ~~~~
-Missing example 91
+Missing example 86
 ~~~~
 

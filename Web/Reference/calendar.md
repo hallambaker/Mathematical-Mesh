@@ -36,23 +36,19 @@ add   Add calendar entry
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar add CalendarEntry1.json CalID1
-<rsp>{
-  "Title": "CalendarEntry1.json",
-  "Key": "NBAV-GPP4-X3P4-XBMH-IWUX-ZB4A-B7V5"}</div>
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar add CalendarEntry1.json CalID1 /json
 <rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "CatalogedTask": {
-        "Title": "CalendarEntry1.json",
-        "Key": "NBAV-GPP4-X3P4-XBMH-IWUX-ZB4A-B7V5"}}}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -76,7 +72,7 @@ delete   Delete calendar entry
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar delete CalID1
-<rsp>ERROR - The entry could not be found in the store.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -88,7 +84,7 @@ Specifying the /json option returns a result of type Result:
 <rsp>{
   "Result": {
     "Success": false,
-    "Reason": "The entry could not be found in the store."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -112,18 +108,19 @@ get   Lookup calendar entry
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar get CalID1
-<rsp>Empty
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar get CalID1 /json
 <rsp>{
-  "ResultEntry": {
-    "Success": false}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -146,35 +143,19 @@ list   List calendar entries
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar list
-<rsp>CatalogedTask
-
-CatalogedTask
-
-CatalogedTask
-
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultDump:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar list /json
 <rsp>{
-  "ResultDump": {
-    "Success": true,
-    "CatalogedEntries": [{
-        "CatalogedTask": {
-          "Title": "SomeItem",
-          "Key": "NCG2-LBDN-GLMT-UAEC-Z2LL-C5DL-GURP"}},
-      {
-        "CatalogedTask": {
-          "Title": "CalendarEntry1.json",
-          "Key": "NBAV-GPP4-X3P4-XBMH-IWUX-ZB4A-B7V5"}},
-      {
-        "CatalogedTask": {
-          "Title": "CalendarEntry2.json",
-          "Key": "NDTW-A4KX-SLAY-PA3A-QTWH-RQ37-TSKM"}}]}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 

@@ -39,21 +39,7 @@ Alice reviews her pending messages using the `message pending` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: ND5A-QIRU-VE3S-DA6R-CJDO-3RUB-KIR7
-        Contact Request::
-        MessageID: ND5A-QIRU-VE3S-DA6R-CJDO-3RUB-KIR7
-        To: alice@example.com From: bob@example.com
-        PIN: AC2Z-MDNH-J3CC-T2OP-Z36L-CJF4-75WQ
-MessageID: NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
-        Confirmation Request::
-        MessageID: NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
-        To: alice@example.com From: console@example.com
-        Text: start
-MessageID: NB2L-XW4K-7HZ3-5UHJ-B46U-2ZUJ-KXWC
-        Contact Request::
-        MessageID: NB2L-XW4K-7HZ3-5UHJ-B46U-2ZUJ-KXWC
-        To: alice@example.com From: bob@example.com
-        PIN: ACQ6-HOEL-5EOQ-OKX4-XIX5-ZUSS-JGIA
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -63,7 +49,7 @@ Alice sees the request from Bob and accepts it with the `message accept` command
 ~~~~
 <div="terminal">
 <cmd>Alice> message accept tbs
-<rsp>ERROR - The specified message could not be found.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -73,21 +59,7 @@ Bob's contact information has been added to Alice's address book:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
-  Person MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
-  Anchor MCR2-U4OO-FBV3-6BSP-WKEQ-4QOG-QSAV
-  Address alice@example.com
-
-Entry<CatalogedContact>: NC6S-FHAS-TTJX-5VFB-B57Z-JOG3-DJDA
-  Person 
-  Anchor MCNN-EDO6-GYYF-2H2H-IJTV-KXQZ-TXXJ
-  Address bob@example.com
-
-Entry<CatalogedContact>: NBYD-QOZ3-BUQJ-QTYU-YPZJ-SCXL-LA64
-  Person 
-  Anchor MCL5-XUKG-CQ6T-ASVR-6RP5-X2C3-BL2L
-  Address groupw@example.com
-
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -98,7 +70,7 @@ Bob can find out if Alice has accepted his contact request using the
 ~~~~
 <div="terminal">
 <cmd>Bob> message status tbs
-<rsp>ERROR - The feature has not been implemented
+<rsp>Pending
 </div>
 ~~~~
 
@@ -112,7 +84,7 @@ using the `message reject` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> message reject tbs
-<rsp>ERROR - The specified message could not be found.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -164,26 +136,7 @@ Alice reviews her pending messages using the using the `message pending` command
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: NDUY-KIYX-RINT-7N5B-JY3H-JERJ-QVQG
-        Confirmation Request::
-        MessageID: NDUY-KIYX-RINT-7N5B-JY3H-JERJ-QVQG
-        To: alice@example.com From: bob@example.com
-        Text: "Purchase
-MessageID: ND5A-QIRU-VE3S-DA6R-CJDO-3RUB-KIR7
-        Contact Request::
-        MessageID: ND5A-QIRU-VE3S-DA6R-CJDO-3RUB-KIR7
-        To: alice@example.com From: bob@example.com
-        PIN: AC2Z-MDNH-J3CC-T2OP-Z36L-CJF4-75WQ
-MessageID: NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
-        Confirmation Request::
-        MessageID: NDDR-3DMR-QFGH-5NTT-W6V4-WAWM-ERSN
-        To: alice@example.com From: console@example.com
-        Text: start
-MessageID: NB2L-XW4K-7HZ3-5UHJ-B46U-2ZUJ-KXWC
-        Contact Request::
-        MessageID: NB2L-XW4K-7HZ3-5UHJ-B46U-2ZUJ-KXWC
-        To: alice@example.com From: bob@example.com
-        PIN: ACQ6-HOEL-5EOQ-OKX4-XIX5-ZUSS-JGIA
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -193,7 +146,7 @@ Alice she accepts Bob's request using the `message pending` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> message accept tbs
-<rsp>ERROR - The specified message could not be found.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -203,7 +156,7 @@ Bob receives Alice's approval using the `message status` command:
 ~~~~
 <div="terminal">
 <cmd>Bob> message status tbs
-<rsp>ERROR - The feature has not been implemented
+<rsp>Pending
 </div>
 ~~~~
 
@@ -216,7 +169,7 @@ Alice can also reject requests using the `message reject` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> message reject tbs
-<rsp>ERROR - The specified message could not be found.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -226,7 +179,7 @@ Bob receives a reply telling him the request was rejected:
 ~~~~
 <div="terminal">
 <cmd>Bob> message status tbs
-<rsp>ERROR - The feature has not been implemented
+<rsp>Pending
 </div>
 ~~~~
 

@@ -21,18 +21,12 @@ The `bookmark add` command adds a bookmark entry to a catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-<rsp>{
-  "Uri": "http://example.com/",
-  "Title": "\"Example",
-  "Path": "Folder1/1"}<cmd>Alice> bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
-<rsp>{
-  "Uri": "http://example.net/Bananas",
-  "Title": "\"Banana",
-  "Path": "Folder1/2"}<cmd>Alice> bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
-<rsp>{
-  "Uri": "http://example.com/Fred",
-  "Title": "\"The",
-  "Path": "Folder1/1a"}</div>
+<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
+<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
 ~~~~
 
 
@@ -44,10 +38,8 @@ The `bookmark get`  command retreives a bookmark  by its index label:
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark get Folder1/2
-<rsp>{
-  "Uri": "http://example.net/Bananas",
-  "Title": "\"Banana",
-  "Path": "Folder1/2"}</div>
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
 ~~~~
 
 ## Deleting bookmarks
@@ -58,7 +50,7 @@ Bookmark entries may be deleted using the  `bookmark delete` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark delete BookmarkPath2
-<rsp>ERROR - The entry could not be found in the store.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -70,14 +62,7 @@ A complete list of bookmarks is obtained using the  `bookmark list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark list
-<rsp>CatalogedBookmark
-
-CatalogedBookmark
-
-CatalogedBookmark
-
-CatalogedBookmark
-
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 

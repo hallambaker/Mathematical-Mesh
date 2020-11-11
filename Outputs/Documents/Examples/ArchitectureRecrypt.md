@@ -24,14 +24,22 @@ she adds herself to the group.
 
 
 ~~~~
-Missing example 73
+<div="terminal">
+<cmd>Alice> dare decode groupsecret.dare
+<rsp>ERROR - No decryption key is available
+</div>
 ~~~~
 
 Alice adds Bob to the group:
 
 
 ~~~~
-Missing example 74
+<div="terminal">
+<cmd>Alice> group add groupw@example.com bob@example.com
+<rsp>{
+  "ContactAddress": "bob@example.com",
+  "MemberCapabilityId": "MBYS-4ZXG-U2F6-7QAA-ASH2-RSY7-LACK",
+  "ServiceCapabilityId": "NBUQ-FJCD-OO2L-OJM6-XXTE-G3AJ-YMIQ"}</div>
 ~~~~
 
 Adding Bob to the group gives him immediate access to any file encrypted under
@@ -39,14 +47,23 @@ the group key without making any change to the encrypted files:
 
 
 ~~~~
-Missing example 75
+<div="terminal">
+<cmd>Bob> account sync
+<cmd>Bob> dare decode groupsecret.dare
+<rsp>ERROR - No decryption key is available
+</div>
 ~~~~
 
 Removing Bob from the group immediately withdraws his access.
 
 
 ~~~~
-Missing example 76
+<div="terminal">
+<cmd>Alice> group delete groupw@example.com bob@example.com
+<rsp>{
+  "ContactAddress": "bob@example.com",
+  "MemberCapabilityId": "MBYS-4ZXG-U2F6-7QAA-ASH2-RSY7-LACK",
+  "ServiceCapabilityId": "NBUQ-FJCD-OO2L-OJM6-XXTE-G3AJ-YMIQ"}</div>
 ~~~~
 
 Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
@@ -54,6 +71,9 @@ earlier).
 
 
 ~~~~
-Missing example 77
+<div="terminal">
+<cmd>Bob> dare decode groupsecret.dare
+<rsp>ERROR - No decryption key is available
+</div>
 ~~~~
 

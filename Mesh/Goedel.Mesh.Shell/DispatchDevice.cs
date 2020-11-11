@@ -84,7 +84,6 @@ namespace Goedel.Mesh.Shell {
                 RequestConnection = contextUser.RequestConnection,
                 ActivationAccount = contextUser.ActivationAccount,
                 RespondConnection = contextUser.RespondConnection
-
                 };
 
             return result;

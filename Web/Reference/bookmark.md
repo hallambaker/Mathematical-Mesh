@@ -37,25 +37,19 @@ add   Add bookmark
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-<rsp>{
-  "Uri": "http://example.com/",
-  "Title": "\"Example",
-  "Path": "Folder1/1"}</div>
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
 <rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "CatalogedBookmark": {
-        "Uri": "http://example.com/",
-        "Title": "\"Example",
-        "Path": "Folder1/1"}}}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -80,7 +74,7 @@ delete   Delete bookmark entry
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark delete BookmarkPath2
-<rsp>ERROR - The entry could not be found in the store.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -92,7 +86,7 @@ Specifying the /json option returns a result of type Result:
 <rsp>{
   "Result": {
     "Success": false,
-    "Reason": "The entry could not be found in the store."}}
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -116,25 +110,19 @@ get   Lookup bookmark entry
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark get Folder1/2
-<rsp>{
-  "Uri": "http://example.net/Bananas",
-  "Title": "\"Banana",
-  "Path": "Folder1/2"}</div>
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark get Folder1/2 /json
 <rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "CatalogedBookmark": {
-        "Uri": "http://example.net/Bananas",
-        "Title": "\"Banana",
-        "Path": "Folder1/2"}}}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -157,45 +145,19 @@ list   List bookmark entries
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark list
-<rsp>CatalogedBookmark
-
-CatalogedBookmark
-
-CatalogedBookmark
-
-CatalogedBookmark
-
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultDump:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> bookmark list /json
 <rsp>{
-  "ResultDump": {
-    "Success": true,
-    "CatalogedEntries": [{
-        "CatalogedBookmark": {
-          "Uri": "http://www.site1.com",
-          "Title": "site1",
-          "Path": "Sites.1"}},
-      {
-        "CatalogedBookmark": {
-          "Uri": "http://example.com/",
-          "Title": "\"Example",
-          "Path": "Folder1/1"}},
-      {
-        "CatalogedBookmark": {
-          "Uri": "http://example.net/Bananas",
-          "Title": "\"Banana",
-          "Path": "Folder1/2"}},
-      {
-        "CatalogedBookmark": {
-          "Uri": "http://example.com/Fred",
-          "Title": "\"The",
-          "Path": "Folder1/1a"}}]}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 

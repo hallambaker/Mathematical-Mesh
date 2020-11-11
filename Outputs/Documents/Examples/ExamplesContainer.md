@@ -282,7 +282,7 @@ The signing key parameters are:
 {
   "PrivateKeyECDH":{
     "crv":"Ed25519",
-    "Private":"yjrUDVNNSbZIsuk_OwpJzGErfz-3B_483-pJzYTtmb4"}}
+    "Private":"B-K6VxuFjt9pIX28Ve1ebVsKL2v8TNxFTYbVx3Vyf0s"}}
 ~~~~
 
 The container headers and trailers are:
@@ -353,16 +353,16 @@ Frame 0
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQJ-TYOJ-OONN-PUCP-JYP3-FCL6-M3BT",
-    "Salt":"dFEbqQeMXcEado8HnvJznQ",
+    "kid":"EBQB-Q3I5-54EX-5JF7-IUHI-FOIP-HNNY",
+    "Salt":"4AX0kxxF3iOiyXNVhXph8g",
     "recipients":[{
-        "kid":"MAE2-3NJU-IUW7-N44W-W6F6-IBEK-D6JI",
+        "kid":"MAAB-5QQZ-WH4Z-YE3R-KYUY-7DCU-JW3D",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"OzESL_nJNipOINthxFgn8LwANXNX1czmaU2FwQdexHw"}},
-        "wmk":"gk8nDcFGw7rPbZk_8fkLsRY9PRvuDz7yMTkmTXezfe5twhe9Ra
-  97TQ"}
+            "Public":"cmjF8BcKQ4Dbm_iYiGCLJVPjJuR9SST6bUxC-Vy0AB8"}},
+        "wmk":"ok4-KZhgD9UwrpsZHEK0PUCrb55ErVel7JchHiyHSzN7GooT-e
+  vqfw"}
       ],
     "ContentMetaData":"e30",
     "ContainerInfo":{
@@ -380,8 +380,8 @@ Frame 1
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQJ-TYOJ-OONN-PUCP-JYP3-FCL6-M3BT",
-    "Salt":"I4cAN-oE7o0mSUdMJVZ9dA",
+    "kid":"EBQB-Q3I5-54EX-5JF7-IUHI-FOIP-HNNY",
+    "Salt":"EfWVWw0kavl0AUIRHKRvyA",
     "ContentMetaData":"e30",
     "ContainerInfo":{
       "Index":1}}}
@@ -396,8 +396,8 @@ Frame 2
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQJ-TYOJ-OONN-PUCP-JYP3-FCL6-M3BT",
-    "Salt":"Ze4XirY2y3INF1jjFyvAMA",
+    "kid":"EBQB-Q3I5-54EX-5JF7-IUHI-FOIP-HNNY",
+    "Salt":"3WD2eb2Ucc129NjvgDgoLA",
     "ContentMetaData":"e30",
     "ContainerInfo":{
       "Index":2}}}
@@ -454,16 +454,16 @@ Frame 1
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQI-H4US-5BZ2-EJXU-624M-OGSD-XAAW",
-    "Salt":"2Dr7Ry-IuGmVMC89OWtwaw",
+    "kid":"EBQL-G4BM-7O7A-KDKK-I26L-NRO5-MRLZ",
+    "Salt":"fb-oAnvqsosXPx8EjcPFFw",
     "recipients":[{
-        "kid":"MAE2-3NJU-IUW7-N44W-W6F6-IBEK-D6JI",
+        "kid":"MAAB-5QQZ-WH4Z-YE3R-KYUY-7DCU-JW3D",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"WCaVSPqltv1YiFslhH_EPhp7kAecqmwaku-UtIJbG54"}},
-        "wmk":"KjVe_CASwpbToIdztP_EJSC_wsfsYKQlAanePvnf1fIF9S6p17
-  u-rw"}
+            "Public":"YcQSp3pfXGFt2sgKAIkk_M-GsZn6PmuTPs9wN7opTeA"}},
+        "wmk":"ggY4TbpZFOew2ZpkkfkIgTo76LtWod4TVNRtSl4PLtrySFvUnl
+  W9Eg"}
       ],
     "ContentMetaData":"e30",
     "ContainerInfo":{
@@ -479,16 +479,16 @@ Frame 2
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQM-SVNM-DZ3A-RW7T-P2UP-47Z2-GZV5",
-    "Salt":"Lwie3zqOAOMK0F-w7NM9gw",
+    "kid":"EBQB-DTUV-NAAC-E6ET-4AC5-BAWF-I3ZH",
+    "Salt":"DUUtwuzMtGl_g9qNQzqi7A",
     "recipients":[{
-        "kid":"MAE2-3NJU-IUW7-N44W-W6F6-IBEK-D6JI",
+        "kid":"MAAB-5QQZ-WH4Z-YE3R-KYUY-7DCU-JW3D",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"Y06IyrM6aDVbbp9DNq_DVKzx3BLXWizpH1nG-JXvnss"}},
-        "wmk":"qKdqrnESNBDUZrThNOgWMBE6tksbd9aw_BjKHG7ya8bjLlEScr
-  pm8w"}
+            "Public":"oOq0f-OchHTZu6UcnjyyjsThqefpVWwSiu5H6exSjO4"}},
+        "wmk":"qI4t9XqGSBmmebf0OlOECKgjhhfoofN1ECBc4tD-fLwg9VskQQ
+  hnTA"}
       ],
     "ContentMetaData":"e30",
     "ContainerInfo":{

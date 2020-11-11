@@ -26,7 +26,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 ~~~~
 <div="terminal">
 <cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare ^
-    /key=BMI5-ZURI-RC4J-7LA7-OQLH-SBQY-TA
+    /key=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -37,8 +37,8 @@ encoded:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestDir1 /encrypt=BMI5-ZURI-RC4J-7LA7-OQLH-SBQY-TA
-<rsp>ERROR - No decryption key is available
+<cmd>Alice> dare encode TestDir1 /encrypt=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -53,8 +53,7 @@ public encryption key.
 <cmd>Alice> dare encode TestFile1.txt ^
     TestFile1.txt.mesh.dare/encrypt=bob@example.com ^
     /sign=alice@example.com
-<rsp>ERROR - Could not find a part of the path 'C:\Users\hallam\Test\Worki
-ngDirectory\TestFile1.txt.mesh.dare\encrypt=bob@example.com'.
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
@@ -92,7 +91,7 @@ level otherwise.
 ~~~~
 <div="terminal">
 <cmd>Alice> dare verify TestFile1.txt.symmetric.dare ^
-    /encrypt=BMI5-ZURI-RC4J-7LA7-OQLH-SBQY-TA
+    /encrypt=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -126,7 +125,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 ~~~~
 <div="terminal">
 <cmd>Alice> dare decode TestFile1.txt.symmetric.dare ^
-    /encrypt=BMI5-ZURI-RC4J-7LA7-OQLH-SBQY-TA
+    /encrypt=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~

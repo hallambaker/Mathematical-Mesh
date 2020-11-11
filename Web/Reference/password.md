@@ -36,23 +36,19 @@ add   Add password entry
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 password
-<rsp>alice1@ftp.example.com = [password]
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> password add ftp.example.com alice1 password /json
 <rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "CatalogedCredential": {
-        "Service": "ftp.example.com",
-        "Username": "alice1",
-        "Password": "password"}}}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -76,23 +72,19 @@ get   Lookup password entry
 ~~~~
 <div="terminal">
 <cmd>Alice> password get ftp.example.com
-<rsp>alice1@ftp.example.com = [newpassword]
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> password get ftp.example.com /json
 <rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "CatalogedCredential": {
-        "Service": "ftp.example.com",
-        "Username": "alice1",
-        "Password": "newpassword"}}}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -116,7 +108,8 @@ delete   Delete password entry
 ~~~~
 <div="terminal">
 <cmd>Alice> password delete www.example.com
-<rsp></div>
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
 ~~~~
 
 Specifying the /json option returns a result of type Result:
@@ -126,7 +119,8 @@ Specifying the /json option returns a result of type Result:
 <cmd>Alice> password delete www.example.com /json
 <rsp>{
   "Result": {
-    "Success": true}}
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
@@ -150,31 +144,19 @@ list   List password entries
 ~~~~
 <div="terminal">
 <cmd>Alice> password list
-<rsp>CatalogedCredential
-
-CatalogedCredential
-
+<rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultDump:
+Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> password list /json
 <rsp>{
-  "ResultDump": {
-    "Success": true,
-    "CatalogedEntries": [{
-        "CatalogedCredential": {
-          "Service": "ftp.example.com",
-          "Username": "alice1",
-          "Password": "password"}},
-      {
-        "CatalogedCredential": {
-          "Service": "www.example.com",
-          "Username": "alice@example.com",
-          "Password": "newpassword"}}]}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 </div>
 ~~~~
 
