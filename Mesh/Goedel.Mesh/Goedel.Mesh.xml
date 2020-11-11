@@ -253,28 +253,28 @@
             <summary>
             Grant super administrator access.
             </summary>
-            <param name="activationAccount">Device to which the access right is granted.</param>
+            <param name="newActivation">Device to which the access right is granted.</param>
             <param name="right">The right granted.</param>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.GrantProfileAdmin(Goedel.Mesh.ActivationAccount,Goedel.Mesh.Right)">
             <summary>
             Grant device administrator access.
             </summary>
-            <param name="activationAccount">Device to which the access right is granted.</param>
+            <param name="newActivation">Device to which the access right is granted.</param>
             <param name="right">The right granted.</param>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.GrantAccount(Goedel.Mesh.ActivationAccount,Goedel.Mesh.Right)">
             <summary>
             Grant access to global account.
             </summary>
-            <param name="activationAccount">Device to which the access right is granted.</param>
+            <param name="newActivation">Device to which the access right is granted.</param>
             <param name="right">The right granted.</param>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.GrantStore(Goedel.Mesh.ActivationAccount,Goedel.Mesh.Right)">
             <summary>
             Grant access to the store X.
             </summary>
-            <param name="activationAccount">Device to which the access right is granted.</param>
+            <param name="newActivation">Device to which the access right is granted.</param>
             <param name="right">The right granted.</param>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.InitializeStore(System.String)">

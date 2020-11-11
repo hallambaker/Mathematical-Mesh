@@ -308,7 +308,7 @@ namespace Goedel.Mesh {
                 ITransactContextAccount transactContextAccount=null
                 ) {
 
-            var activationAccount = new ActivationAccount {
+            var newActivation = new ActivationAccount {
                 ProfileDevice = profileDevice
                 };
 
@@ -325,11 +325,11 @@ namespace Goedel.Mesh {
 
             // Grant each right
             foreach (var right in rights) {
-                Grant(activationAccount, right);
+                Grant(newActivation, right);
                 }
 
 
-            return activationAccount;
+            return newActivation;
 
             }
 
@@ -365,23 +365,23 @@ namespace Goedel.Mesh {
             }
 
 
-        void Grant(ActivationAccount activationAccount, Right right) {
+        void Grant(ActivationAccount newActivation, Right right) {
 
             switch (right.Resource) {
                 case Resource.ProfileRoot: {
-                    GrantProfileRoot(activationAccount, right);
+                    GrantProfileRoot(newActivation, right);
                     break;
                     }
                 case Resource.ProfileAdmin: {
-                    GrantProfileAdmin(activationAccount, right);
+                    GrantProfileAdmin(newActivation, right);
                     break;
                     }
                 case Resource.Store: {
-                    GrantStore(activationAccount, right);
+                    GrantStore(newActivation, right);
                     break;
                     }
                 case Resource.Account: {
-                    GrantAccount(activationAccount, right);
+                    GrantAccount(newActivation, right);
                     break;
                     }
                 }
@@ -391,46 +391,46 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Grant super administrator access.
         /// </summary>
-        /// <param name="activationAccount">Device to which the access right is granted.</param>
+        /// <param name="newActivation">Device to which the access right is granted.</param>
         /// <param name="right">The right granted.</param>
-        void GrantProfileRoot(ActivationAccount activationAccount, Right right) {
+        void GrantProfileRoot(ActivationAccount newActivation, Right right) {
             right.Future();
-            activationAccount.ProfileSignature = AddCapability(
-                        ProfileSignatureKey, activationAccount.ProfileDevice);
+            newActivation.ProfileSignature = AddCapability(
+                        ProfileSignatureKey, newActivation.ProfileDevice);
             }
 
         /// <summary>
         /// Grant device administrator access.
         /// </summary>
-        /// <param name="activationAccount">Device to which the access right is granted.</param>
+        /// <param name="newActivation">Device to which the access right is granted.</param>
         /// <param name="right">The right granted.</param>
         void GrantProfileAdmin(
-                            ActivationAccount activationAccount,
+                            ActivationAccount newActivation,
                             Right right) {
             right.Future();
-            var keyPairOnlineSignature = DeviceBindSignature(activationAccount.ProfileDevice, KeyCollection);
-            activationAccount.AdministratorSignature = AddCapability(
-                        keyPairOnlineSignature, activationAccount.ProfileDevice);
+            var keyPairOnlineSignature = DeviceBindSignature(newActivation.ProfileDevice, KeyCollection);
+            newActivation.AdministratorSignature = AddCapability(
+                        keyPairOnlineSignature, newActivation.ProfileDevice);
             }
 
 
         /// <summary>
         /// Grant access to global account.
         /// </summary>
-        /// <param name="activationAccount">Device to which the access right is granted.</param>
+        /// <param name="newActivation">Device to which the access right is granted.</param>
         /// <param name="right">The right granted.</param>
-        void GrantAccount(ActivationAccount activationAccount, Right right) {
+        void GrantAccount(ActivationAccount newActivation, Right right) {
             if (right.Decrypt) {
-                activationAccount.AccountEncryption = AddCapability(
-                            AccountEncryptionKey, activationAccount.ProfileDevice);
+                newActivation.AccountEncryption = AddCapability(
+                            AccountEncryptionKey, newActivation.ProfileDevice);
                 }
             if (right.Authenticate) {
-                activationAccount.AccountAuthentication = AddCapability(
-                            AccountAuthenticationKey, activationAccount.ProfileDevice);
+                newActivation.AccountAuthentication = AddCapability(
+                            AccountAuthenticationKey, newActivation.ProfileDevice);
                 }
             if (right.Sign) {
-                activationAccount.AccountSignature = AddCapability(
-                            AccountSignatureKey, activationAccount.ProfileDevice);
+                newActivation.AccountSignature = AddCapability(
+                            AccountSignatureKey, newActivation.ProfileDevice);
                 }
 
             }
@@ -438,11 +438,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Grant access to the store X.
         /// </summary>
-        /// <param name="activationAccount">Device to which the access right is granted.</param>
+        /// <param name="newActivation">Device to which the access right is granted.</param>
         /// <param name="right">The right granted.</param>
-        void GrantStore(ActivationAccount activationAccount, Right right) {
-            right.Future();
-            activationAccount.Future();
+        void GrantStore(ActivationAccount newActivation, Right right) {
             Screen.WriteLine($"Grant right {right.Name}/{right.Resource}");
 
 
@@ -450,33 +448,47 @@ namespace Goedel.Mesh {
             // except when initially creating the entry.
 
             // which store do we need?
-            if (!DictionaryStoreEncryptionKey.TryGetValue(
-                right.Name, out var keyPair)) {
-                if (activationAccount?.Entries != null) {
-
-                    foreach (var entry in activationAccount.Entries) {
-
-
-
-                        }
-                    }
+            if (DictionaryStoreEncryptionKey.TryGetValue(right.Name, out var keyPair)) {
 
                 }
-            if (keyPair == null) {
-                return; // hack: Every right should have a key.
+            else if (GetEntry(right.Name, out var entry)) {
+                keyPair = entry.Key.GetKeyPair(KeySecurity.Exportable);
+
                 }
+
+            else {
+                return;
+                }
+
 
             //keyPair.AssertNotNull(NotAdministrator.Throw);
 
 
-                var activationEntry = new ActivationEntry() {
+            var activationEntry = new ActivationEntry() {
                 Resource = right.Name,
                 Key = new KeyData(keyPair, true)
                 };
 
-            Entries ??= new List<ActivationEntry>();
-            Entries.Add(activationEntry);
+            newActivation.Entries ??= new List<ActivationEntry>();
+            newActivation.Entries.Add(activationEntry);
             }
+
+        bool GetEntry(string name, out ActivationEntry activationEntry) {
+            if (Entries != null) {
+                foreach (var entry in Entries) {
+
+                    if (entry.Resource == name) {
+                        activationEntry = entry;
+                        return true;
+                        }
+
+                    }
+                }
+            activationEntry = null;
+            return false;
+            }
+
+
 
         /// <summary>
         /// Initialize the store <paramref name="storeName"/> by derriving the corresponding

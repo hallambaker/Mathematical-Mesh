@@ -1058,7 +1058,6 @@ namespace Goedel.Mesh.Client {
         ProcessResult Process(AcknowledgeConnection request, bool accept = true, MessagePin messagePin = null,
                List<string> rights=null) {
             var transactRequest = TransactBegin();
-            rights.Future();
 
             var respondConnection = new RespondConnection() {
                 MessageId = request.GetResponseId()
