@@ -521,6 +521,17 @@ namespace Goedel.Mesh {
 
                 DictionaryStoreEncryptionKey.Add(containerName, encryptionKey);
                 }
+            else {
+
+                // check our entries here!!!!!
+
+                throw new 
+                    
+                    NYI();
+
+                }
+
+
             return new CryptoParameters(KeyCollection, recipient: encryptionKey);
             }
 

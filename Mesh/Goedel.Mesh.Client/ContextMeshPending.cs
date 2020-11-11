@@ -178,7 +178,7 @@ namespace Goedel.Mesh.Client {
         /// to the connected account. Otherwise, a null value is returned.</returns>
         public ContextUser Complete() {
 
-            "The catalog contents are not currently encrypted as they should be".TaskFunctionality();
+            //"The catalog contents are not currently encrypted as they should be".TaskFunctionality();
 
             var completeRequest = new CompleteRequest() {
                 ResponseID = CatalogedPending.GetResponseID(),
