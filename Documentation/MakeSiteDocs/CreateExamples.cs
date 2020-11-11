@@ -275,7 +275,7 @@ namespace ExampleGenerator {
             "Need to specify WHAT rights are being assigned!".TaskFunctionality();
 
             Connect.ConnectAccept = Alice1.Example(
-                $"device accept {id1} /message"
+                $"device accept {id1} /message /web"
                 );
             var resultAccept = Connect.ConnectAccept[0].Result;
             deviceId = "TBS";
