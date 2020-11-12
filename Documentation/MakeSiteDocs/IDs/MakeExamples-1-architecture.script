@@ -109,7 +109,7 @@ The connection request is initiated on the device being connected:
 
 Using her administration device, Alice gets a list of pending requests. Seeing that
 there is a pending request matching the witness value presented by the device, Alice
-accepts it:
+accepts the request, granting the new device the messaging and web roles:
 
 #%  ConsoleExample (Concat (Example.Connect.ConnectPending, Example.Connect.ConnectAccept) );
 
@@ -122,8 +122,8 @@ Alice can now synchronize her newly connected device to her account:
 
 #zfile CreateExamples ArchitectureConnectPassword "Examples\\ArchitectureConnectPassword.md" Example
 
-For example, Alice can now decrypt the file she encrypted on her first device and access her 
-credential catalog from the new device:
+For example, bacause Alice granted the device the Web role, she can now access her credential 
+catalog and decrypt the file she encrypted on her first device from the new device:
 
 #%  ConsoleExample (Example.Connect.PasswordList2);
 

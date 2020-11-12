@@ -1,6 +1,6 @@
 ﻿using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
-
+using Goedel.Utilities;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -223,6 +223,9 @@ namespace Goedel.Cryptography.Dare {
                        IKeyLocate keyCollection = null) {
 
             var EncryptID = EncryptionAlgorithm.FromJoseID();
+
+
+            (EncryptionAlgorithm == null | Recipients != null).AssertTrue(NYI.Throw);
 
             CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmId.NULL,
                 Recipients, Signatures, keyCollection) {

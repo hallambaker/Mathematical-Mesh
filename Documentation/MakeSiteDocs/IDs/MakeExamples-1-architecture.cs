@@ -190,7 +190,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Using her administration device, Alice gets a list of pending requests. Seeing that\n{0}", _Indent);
 				_Output.Write ("there is a pending request matching the witness value presented by the device, Alice\n{0}", _Indent);
-				_Output.Write ("accepts it:\n{0}", _Indent);
+				_Output.Write ("accepts the request, granting the new device the messaging and web roles:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Concat (Example.Connect.ConnectPending, Example.Connect.ConnectAccept) );
 				_Output.Write ("\n{0}", _Indent);
@@ -213,8 +213,8 @@ namespace ExampleGenerator {
 		public void _ArchitectureConnectPassword(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("For example, Alice can now decrypt the file she encrypted on her first device and access her \n{0}", _Indent);
-				_Output.Write ("credential catalog from the new device:\n{0}", _Indent);
+				_Output.Write ("For example, bacause Alice granted the device the Web role, she can now access her credential \n{0}", _Indent);
+				_Output.Write ("catalog and decrypt the file she encrypted on her first device from the new device:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Connect.PasswordList2);
 				_Output.Write ("\n{0}", _Indent);

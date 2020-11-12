@@ -195,7 +195,7 @@ namespace Goedel.Cryptography.Dare {
 
             foreach (var frameIndex in Container) {
 
-                var item = frameIndex.JsonObject;
+                var item = frameIndex.GetJSONObject(Container);
 
                 // This is failing on encrypted objects because the object isn't being decrypted.
                 CommitTransaction(frameIndex, item);

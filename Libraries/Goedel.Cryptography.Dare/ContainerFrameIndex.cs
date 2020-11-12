@@ -57,6 +57,10 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The frame payload data.</returns>
         public byte[] GetPayload(IKeyLocate keyCollection) {
             using var input = jbcdStream.FramerGetReader(DataPosition, DataLength);
+
+
+            // failing here because we have encryption but no recipients!!!
+
             var Decoder = Header.GetDecoder(input, out var Reader,
                         keyCollection: keyCollection);
 
@@ -106,8 +110,17 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container">The container that was indexed.</param>
         /// <returns>The deserialized object.</returns>
-        public JsonObject GetJSONObject(Container container) => JsonObject ??
-            GetPayload(container.KeyLocate).JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
+        public JsonObject GetJSONObject(Container container) {
+            if (JsonObject != null) {
+                return JsonObject;
+                }
+            var bytes = GetPayload(container.KeyLocate);
+            var text = bytes.ToUTF8();
+            return bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
+
+            }
+        //=> JsonObject ??
+        //    GetPayload(container.KeyLocate).JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
 
 
         /// <summary>
