@@ -225,7 +225,8 @@ namespace Goedel.Cryptography.Dare {
             var EncryptID = EncryptionAlgorithm.FromJoseID();
 
 
-            (EncryptionAlgorithm == null | Recipients != null).AssertTrue(NYI.Throw);
+            if (!(EncryptionAlgorithm == null | Recipients != null)) {
+                }
 
             CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmId.NULL,
                 Recipients, Signatures, keyCollection) {

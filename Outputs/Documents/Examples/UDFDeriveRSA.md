@@ -6,31 +6,25 @@ Fingerprint =
     ZAAA-RJ5I-OSMI-X2KH-MBHX-KUPB-OC54-NQI
 
 IKM =
-    
   00 08 A7 A8  74 98 8B E9  47 60 4F 75  51 E1 70 BB
   C6 C1
 
 salt =
-    
   00 08
 
 [Generation of the PRK as before]
 
-Info(p) = 
-    
+Info(p) =
   70
 
 OKM(p) =
-    
   92 D4 DA FA  C4 22 DB 17  B0 04 93 C6  F1 D2 7A AF
   34 6F 69 98  54 1A F5 F3  E3 ED DA 98  F5 64 EE 6A
 
-Info(q) = 
-    
+Info(q) =
   71
 
-OKM(q) =
-    
+OKM(q) = 
   01 50 07 9F  B3 53 70 5A  7E 95 63 BD  19 8D 52 59
   2F EE 38 E7  8F D4 46 D9  4C 55 E6 DD  39 CA DB 36
     

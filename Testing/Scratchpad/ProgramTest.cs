@@ -40,7 +40,9 @@ namespace Scratchpad {
 
             //ShellTests.Test().TestFilePlain();
 
-            Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
+            Goedel.XUnit.MakeSiteDocs.Test().SyncSecondDevice();
+
+            //Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
 
 
 

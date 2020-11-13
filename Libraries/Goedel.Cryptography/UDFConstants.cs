@@ -89,6 +89,24 @@ namespace Goedel.Cryptography {
         ///<summary>Mesh host activation</summary>
         MeshActivationService = 261        }
 
+    ///<summary>Udf derrived key uses</summary>
+    public enum DerivedKeyUdfDerrivedKeyUses {
+        ///<summary>Undefined type</summary>
+        Unknown,
+        ///<summary>Any</summary>
+        Any = 0,
+        ///<summary>Encryption</summary>
+        Encryption = 1,
+        ///<summary>Signature</summary>
+        Signature = 2,
+        ///<summary>Authentication</summary>
+        Authentication = 3        }
+
+    ///<summary>UDF type identifier codes</summary>
+    public enum DerivedKeyRSATags {
+        ///<summary>Undefined type</summary>
+        Unknown        }
+
 
     ///<summary>
     ///Constants specified in hallambaker-mesh-udf
@@ -120,7 +138,7 @@ namespace Goedel.Cryptography {
                 _ => null
                 };
 
-        // File: TypeIdentifier
+        // File: AlgorithmIdentifier
 
 
         /// <summary>
@@ -167,6 +185,64 @@ namespace Goedel.Cryptography {
 
         ///<summary>application/udf-lock</summary>
         public const string UDFLock = "UDFLock";
+
+        // File: KeyUses
+
+
+        /// <summary>
+        /// Convert the string <paramref name="text"/> to the corresponding enumeration
+        /// value.
+        /// </summary>
+        /// <param name="text">The string to convert.</param>
+        /// <returns>The enumeration value.</returns>
+        public static  DerivedKeyUdfDerrivedKeyUses ToDerivedKeyUdfDerrivedKeyUses (this string text) =>
+            text switch {
+                _ => DerivedKeyUdfDerrivedKeyUses.Unknown
+                };
+
+        /// <summary>
+        /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+        /// value.
+        /// </summary>
+        /// <param name="data">The enumerated value.</param>
+        /// <returns>The text value.</returns>
+        public static string ToLabel (this DerivedKeyUdfDerrivedKeyUses data) =>
+            data switch {
+                _ => null
+                };
+
+        // File: ECDHValuesCFRG
+
+        // File: ECDHValuesNIST
+
+        // File: RSATags
+
+
+        /// <summary>
+        /// Convert the string <paramref name="text"/> to the corresponding enumeration
+        /// value.
+        /// </summary>
+        /// <param name="text">The string to convert.</param>
+        /// <returns>The enumeration value.</returns>
+        public static  DerivedKeyRSATags ToDerivedKeyRSATags (this string text) =>
+            text switch {
+                _ => DerivedKeyRSATags.Unknown
+                };
+
+        /// <summary>
+        /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+        /// value.
+        /// </summary>
+        /// <param name="data">The enumerated value.</param>
+        /// <returns>The text value.</returns>
+        public static string ToLabel (this DerivedKeyRSATags data) =>
+            data switch {
+                _ => null
+                };
+
+        // File: RSAValues
+
+        // File: IANAValues
 
         }
     }

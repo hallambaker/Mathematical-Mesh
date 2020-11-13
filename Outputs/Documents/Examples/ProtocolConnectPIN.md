@@ -2,11 +2,11 @@
 ~~~~
 {
   "MessagePin":{
-    "MessageId":"AD7X-KA6T-P4RB-4GBH-SARW-YIGG-V7YO",
+    "MessageId":"ABGK-7DCK-Z4PK-UYZY-DHZE-TMS5-ITLE",
     "Account":"alice@example.com",
-    "Expires":"2020-11-12T16:54:49Z",
+    "Expires":"2020-11-14T14:25:46Z",
     "Automatic":true,
-    "SaltedPin":"ABLW-TKAA-2VMF-F6QG-VZPN-TAFY-EFYB",
+    "SaltedPin":"AB7W-WWNW-AERH-JLED-FF5S-NVQ4-SY3Y",
     "Action":"Device"}}
 ~~~~
 

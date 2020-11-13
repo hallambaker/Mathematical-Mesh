@@ -38,8 +38,8 @@ Alice adds Bob to the group:
 <cmd>Alice> group add groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MBYS-4ZXG-U2F6-7QAA-ASH2-RSY7-LACK",
-  "ServiceCapabilityId": "NBUQ-FJCD-OO2L-OJM6-XXTE-G3AJ-YMIQ"}</div>
+  "MemberCapabilityId": "MCUY-PDZX-RMZP-UUJQ-XJ5D-P5S3-WVRA",
+  "ServiceCapabilityId": "NDHU-MTRR-RBOL-5F4S-HCVX-C2LO-37TS"}</div>
 ~~~~
 
 Adding Bob to the group gives him immediate access to any file encrypted under
@@ -62,8 +62,8 @@ Removing Bob from the group immediately withdraws his access.
 <cmd>Alice> group delete groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MBYS-4ZXG-U2F6-7QAA-ASH2-RSY7-LACK",
-  "ServiceCapabilityId": "NBUQ-FJCD-OO2L-OJM6-XXTE-G3AJ-YMIQ"}</div>
+  "MemberCapabilityId": "MCUY-PDZX-RMZP-UUJQ-XJ5D-P5S3-WVRA",
+  "ServiceCapabilityId": "NDHU-MTRR-RBOL-5F4S-HCVX-C2LO-37TS"}</div>
 ~~~~
 
 Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 

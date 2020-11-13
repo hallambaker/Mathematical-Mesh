@@ -26,7 +26,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 ~~~~
 <div="terminal">
 <cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare ^
-    /key=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
+    /key=DC5E-KHZW-CTII-7W76-WSUD-PT5B-GY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -37,7 +37,7 @@ encoded:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestDir1 /encrypt=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
+<cmd>Alice> dare encode TestDir1 /encrypt=DC5E-KHZW-CTII-7W76-WSUD-PT5B-GY
 <rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
@@ -91,7 +91,7 @@ level otherwise.
 ~~~~
 <div="terminal">
 <cmd>Alice> dare verify TestFile1.txt.symmetric.dare ^
-    /encrypt=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
+    /encrypt=DC5E-KHZW-CTII-7W76-WSUD-PT5B-GY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -125,7 +125,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 ~~~~
 <div="terminal">
 <cmd>Alice> dare decode TestFile1.txt.symmetric.dare ^
-    /encrypt=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
+    /encrypt=DC5E-KHZW-CTII-7W76-WSUD-PT5B-GY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~

@@ -4,6 +4,7 @@
 #using Goedel.Utilities
 #using Goedel.Cryptography
 #using Goedel.Cryptography.Dare
+#using System.Numerics
 #% #pragma warning disable IDE0022
 #% #pragma warning disable IDE0060
 #% #pragma warning disable IDE1006
@@ -33,6 +34,7 @@
 #% UDFURIEBNF(Example);
 #% UDFTableReservedId(Example);
 #% UDFShamirRecovery(Example);
+#% UDFPrimes(Example);
 #end method
 
 #method2 DescribeValueUDF string tag string text
@@ -40,6 +42,31 @@
 #% var wrapped = text.Wrap(ptag, indent:8);
 #{wrapped}#!
 #end method2
+
+#zfile CreateExamples UDFPrimes "Examples\\UDFPrimes.md" Example
+#% var table = SharedSecret.PrimeOffsetNext;
+<table>
+<thead>
+<tr><th>Bytes</th><th>Bits</th><th>Prime</th></tr>
+</thead>
+<tbody>
+#% for (var i=0; i< table.Length; i+=1) {
+<tr>
+#% var offset = table[i];
+#% var e = (i+1)*8;
+#% var prime = BigInteger.Pow(2, e) + offset;
+#% prime.IsProbablePrime(256).AssertTrue(DocumentationException.Throw);
+<td>#{i+1}</td>
+<td>#{e}</td>
+<td>2^#{e}+#{offset}</td>
+#!<td>#{prime}</td>
+</tr>
+#% }
+</tr>
+</tbody>
+</table>
+#end zfile
+
 
 #zfile CreateExamples UDFVariousUDF "Examples\\UDFVariousUDF.md" Example
 ~~~~
@@ -50,7 +77,6 @@
 #% DescribeValueUDF ("Public Key", Example.PublicKeyed25519.UDFValue );
 ~~~~
 #end zfile
-
 
 #zfile CreateExamples UDFNonce "Examples\\UDFNonce.md" Example
 ~~~~
@@ -205,20 +231,15 @@ An X25519 key may be derived as follows:
 Fingerprint =
     #{Example.UDFResults.Derive.X25519.UDF}
 
-IKM =
-    #{Example.UDFResults.Derive.X25519.IKM.ToStringBase16FormatHex()}
+IKM =#{Example.UDFResults.Derive.X25519.IKM.ToStringBase16FormatHex()}
 
-salt =
-    #{Example.UDFResults.Derive.X25519.Salt.ToStringBase16FormatHex()}
+salt =#{Example.UDFResults.Derive.X25519.Salt.ToStringBase16FormatHex()}
 
-PRK =
-    #{Example.UDFResults.Derive.X25519.PRK.ToStringBase16FormatHex()}
+PRK =#{Example.UDFResults.Derive.X25519.PRK.ToStringBase16FormatHex()}
 
-OKM =
-    #{Example.UDFResults.Derive.X25519.OKM.ToStringBase16FormatHex()}
+OKM =#{Example.UDFResults.Derive.X25519.OKM.ToStringBase16FormatHex()}
     
-Key = 
-    #{Example.UDFResults.Derive.X25519.Key.ToStringBase16FormatHex()}
+Key =#{Example.UDFResults.Derive.X25519.Key.ToStringBase16FormatHex()}
 ~~~~
 
 Derivation of an X448 key:
@@ -227,8 +248,7 @@ Derivation of an X448 key:
 Fingerprint =
     #{Example.UDFResults.Derive.X448.UDF}
     
-Key = 
-    #{Example.UDFResults.Derive.X448.Key.ToStringBase16FormatHex()}
+Key =#{Example.UDFResults.Derive.X448.Key.ToStringBase16FormatHex()}
 ~~~~
 
 Derivation of an Ed25519 key:
@@ -237,8 +257,7 @@ Derivation of an Ed25519 key:
 Fingerprint =
     #{Example.UDFResults.Derive.Ed25519.UDF}
     
-Key = 
-    #{Example.UDFResults.Derive.Ed25519.Key.ToStringBase16FormatHex()}
+Key =#{Example.UDFResults.Derive.Ed25519.Key.ToStringBase16FormatHex()}
 ~~~~
 
 Derivation of an Ed448 key:
@@ -247,8 +266,7 @@ Derivation of an Ed448 key:
 Fingerprint =
     #{Example.UDFResults.Derive.Ed448.UDF}
     
-Key = 
-    #{Example.UDFResults.Derive.Ed448.Key.ToStringBase16FormatHex()}
+Key =#{Example.UDFResults.Derive.Ed448.Key.ToStringBase16FormatHex()}
 ~~~~
 
 #end zfile
@@ -261,17 +279,13 @@ A P-256 key may be derived as follows:
 Fingerprint =
     #{Example.UDFResults.Derive.P256.UDF}
 
-IKM =
-    #{Example.UDFResults.Derive.P256.IKM.ToStringBase16FormatHex()}
+IKM =#{Example.UDFResults.Derive.P256.IKM.ToStringBase16FormatHex()}
 
-salt =
-    #{Example.UDFResults.Derive.P256.Salt.ToStringBase16FormatHex()}
+salt =#{Example.UDFResults.Derive.P256.Salt.ToStringBase16FormatHex()}
 
-PRK =
-    #{Example.UDFResults.Derive.P256.PRK.ToStringBase16FormatHex()}
+PRK =#{Example.UDFResults.Derive.P256.PRK.ToStringBase16FormatHex()}
 
-OKM =
-    #{Example.UDFResults.Derive.P256.OKM.ToStringBase16FormatHex()}
+OKM =#{Example.UDFResults.Derive.P256.OKM.ToStringBase16FormatHex()}
     
 
 #% DescribeResult ("Key", Example.UDFResults.Derive.P256.Key);
@@ -305,25 +319,19 @@ An RSA-2048 may be derived as follows:
 Fingerprint =
     #{Example.UDFResults.Derive.RSA2048.UDF}
 
-IKM =
-    #{Example.UDFResults.Derive.RSA2048.IKM.ToStringBase16FormatHex()}
+IKM =#{Example.UDFResults.Derive.RSA2048.IKM.ToStringBase16FormatHex()}
 
-salt =
-    #{Example.UDFResults.Derive.RSA2048.Salt.ToStringBase16FormatHex()}
+salt =#{Example.UDFResults.Derive.RSA2048.Salt.ToStringBase16FormatHex()}
 
 [Generation of the PRK as before]
 
-Info(p) = 
-    #{Example.UDFResults.Derive.RSA2048.Info_P.ToStringBase16FormatHex()}
+Info(p) =#{Example.UDFResults.Derive.RSA2048.Info_P.ToStringBase16FormatHex()}
 
-OKM(p) =
-    #{Example.UDFResults.Derive.RSA2048.OKM_P.ToStringBase16FormatHex()}
+OKM(p) =#{Example.UDFResults.Derive.RSA2048.OKM_P.ToStringBase16FormatHex()}
 
-Info(q) = 
-    #{Example.UDFResults.Derive.RSA2048.Info_Q.ToStringBase16FormatHex()}
+Info(q) =#{Example.UDFResults.Derive.RSA2048.Info_Q.ToStringBase16FormatHex()}
 
-OKM(q) =
-    #{Example.UDFResults.Derive.RSA2048.OKM_Q.ToStringBase16FormatHex()}
+OKM(q) = #{Example.UDFResults.Derive.RSA2048.OKM_Q.ToStringBase16FormatHex()}
     
 #% DescribeResult ("Key P", Example.UDFResults.Derive.RSA2048.P);
 
@@ -340,8 +348,7 @@ Fingerprint =
 
 To generate an RSA-2048 key
 
-salt =
-    #{Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex()}
+salt =#{Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex()}
 
 #% DescribeResult ("Key P", Example.UDFResults.Derive.Any_RSA2048.P);
 
@@ -349,8 +356,7 @@ salt =
 
 To generate an X25519 key
 
-salt =
-    #{Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex()}
+salt =#{Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex()}
 
 Key = 
     #{Example.UDFResults.Derive.Any_x25519.Key}

@@ -4,37 +4,37 @@ The connection request is initiated on the device being connected:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MA4M-VAQE-AMR3-OPXI-JIX5-YZQM-UZSF
-   Witness value = 3LXA-LK2V-6CV4-EQQM-7D36-SCFN-T2FJ
+<rsp>   Device UDF = MDXZ-CDAK-HQK2-DAQX-I6RR-2SMY-SWPT
+   Witness value = SCR2-CEZJ-CPJJ-HEPT-3MKL-WUBW-RXCO
 </div>
 ~~~~
 
 Using her administration device, Alice gets a list of pending requests. Seeing that
 there is a pending request matching the witness value presented by the device, Alice
-accepts it:
+accepts the request, granting the new device the messaging and web roles:
 
 
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: SHND-CD5R-WRWY-RZH7-KFUS-7ODR-BZU3
+<rsp>MessageID: SEI7-CZRC-SND6-YTD6-JI37-VCM5-ZRTU
         Connection Request::
-        MessageID: SHND-CD5R-WRWY-RZH7-KFUS-7ODR-BZU3
+        MessageID: SEI7-CZRC-SND6-YTD6-JI37-VCM5-ZRTU
         To:  From: 
-        Device:  MC2J-FUUG-XWLF-CNWI-DHW3-TQBX-LXND
-        Witness: SHND-CD5R-WRWY-RZH7-KFUS-7ODR-BZU3
-MessageID: NBF2-RKIJ-G3MT-RCSA-JDCT-UGVT-XYSR
+        Device:  MAAK-CCMO-EIOM-2AZ5-6SXD-W3L2-KWK2
+        Witness: SEI7-CZRC-SND6-YTD6-JI37-VCM5-ZRTU
+MessageID: NDBR-Q2V7-VKQP-4HSN-JJVC-JIM5-GV2R
         Confirmation Request::
-        MessageID: NBF2-RKIJ-G3MT-RCSA-JDCT-UGVT-XYSR
+        MessageID: NDBR-Q2V7-VKQP-4HSN-JJVC-JIM5-GV2R
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: ND4E-AZFT-VO2I-T2EM-EMJH-ORID-PX76
+MessageID: NAEX-I6PT-PAPW-DIHU-I4XK-WP5U-KO5V
         Contact Request::
-        MessageID: ND4E-AZFT-VO2I-T2EM-EMJH-ORID-PX76
+        MessageID: NAEX-I6PT-PAPW-DIHU-I4XK-WP5U-KO5V
         To: alice@example.com From: bob@example.com
-        PIN: ABJG-3RTO-7KLS-ZEW3-UF64-RPQ3-NS5A
+        PIN: ABII-UOYN-BS3E-FXM5-3HSW-FCQQ-2DTA
 <cmd>Alice> account sync /auto
-<cmd>Alice> device accept 3LXA-LK2V-6CV4-EQQM-7D36-SCFN-T2FJ /message /web
+<cmd>Alice> device accept SCR2-CEZJ-CPJJ-HEPT-3MKL-WUBW-RXCO /message /web
 </div>
 ~~~~
 

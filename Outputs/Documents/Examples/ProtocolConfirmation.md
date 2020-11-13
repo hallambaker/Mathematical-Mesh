@@ -4,7 +4,7 @@ The service sends out the following challenge:
 ~~~~
 {
   "RequestConfirmation":{
-    "MessageId":"NBF2-RKIJ-G3MT-RCSA-JDCT-UGVT-XYSR",
+    "MessageId":"NDBR-Q2V7-VKQP-4HSN-JJVC-JIM5-GV2R",
     "Sender":"console@example.com",
     "Recipient":"alice@example.com",
     "Text":"start"}}

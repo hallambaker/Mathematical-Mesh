@@ -1,6 +1,6 @@
 
-For example, Alice can now decrypt the file she encrypted on her first device and access her 
-credential catalog from the new device:
+For example, bacause Alice granted the device the Web role, she can now access her credential 
+catalog and decrypt the file she encrypted on her first device from the new device:
 
 
 ~~~~

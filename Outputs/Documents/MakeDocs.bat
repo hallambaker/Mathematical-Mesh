@@ -14,7 +14,7 @@ protogen %Root%/Mesh/Goedel.Mesh/ProtocolSchema.protocol /md
 protogen %Root%/Mesh/Goedel.Mesh.Services/ServiceSchema.protocol /md
 protogen %Root%/Mesh/Goedel.Mesh.Presence/PresenceSchema.protocol /md
 
-QRCoderConsole -i="..\Examples\UDFDigestEARL-raw.md" -f=svg -o=UDFDigestEARLRAW.svg
+QRCoderConsole -i="..\Examples\UDFDigestEARL-raw.md" -f=svg -o=UDFDigestEARLRAW.svg -s=7
 QRCoderConsole -i="..\Examples\UDFDigestEARL-raw.md" -f=png -o=UDFDigestEARLRAW.png
 
 cd ..\Publish

@@ -52,7 +52,7 @@ File TypeIdentifier
 		UDF 200 DerivedKey
 			Note "Secret seed"
 
-File TypeIdentifier
+File AlgorithmIdentifier
 	Enum UdfAlgorithmIdentifier "UDF key derevation algorithm identifier codes"
 		Integer Any			0	"Seed MAY be used to generate keypairs for any algorithm"
         Integer X25519		1	"X25519 keypair as described in RFC7748"
@@ -100,3 +100,37 @@ File ContentTypeValues
 			|UDF Fingerprint list
 
 
+File KeyUses
+	Enum DerivedKeyUdfDerrivedKeyUses "Udf derrived key uses"
+		Integer Any				0	"Any"
+		Integer Encryption		1	"Encryption"
+		Integer Signature		2	"Signature"
+		Integer Authentication	3	"Authentication"
+
+File ECDHValuesCFRG
+	Parameters DerivedKeyECDHParametersCFRG "ECDH parameter values"
+		Integer X25519				256	"X25519"
+		Integer X448				448	"X448"
+		Integer Ed25519				256	"Ed25519"
+		Integer Ed448				448	"Ed448"
+
+File ECDHValuesNIST
+	Parameters DerivedKeyECDHParametersNIST "ECDH parameter values"
+		Integer P256				320	"P-256"
+		Integer P448				448	"P-384"
+		Integer P512				592	"P-521"
+
+File RSATags
+	Enum DerivedKeyRSATags "UDF type identifier codes"
+		Tag p "p"  
+		Tag q "q"
+
+File RSAValues
+	Parameters DerivedKeyRSAValuesL "RSA parameter values"
+		Integer RSA2048				1024	"RSA-2048"
+		Integer RSA3072				1536	"RSA-3072"
+		Integer RSA4096				2048	"RSA-4096"
+
+
+File IANAValues
+	IANA UdfTypeIdentifier "UDF type identifier codes"

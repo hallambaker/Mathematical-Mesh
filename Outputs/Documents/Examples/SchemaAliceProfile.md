@@ -5,41 +5,41 @@ For example, the personal account profile Alice created is:
 {
   "ProfileUser":{
     "ProfileSignature":{
-      "Udf":"MDNB-JONO-SAPP-AQBL-UMTZ-PAD5-YZIL",
+      "Udf":"MA3R-VOOS-AGKS-DDAF-ZH3M-KW2P-T33J",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"iMVZUdNTYKXf_QyMaI1zjTj_oQyv4sYcohtBdfll6frU4
-  6m675k_skFMMErzyLzk2Aoch9iMs7kA"}}},
+          "Public":"D9tGBEilTd3OYFg3xu7MXuR2xLCpW-S5hXdmzvOPVCmfv
+  cs48Wjg9yyhwqKS4xQr9M5GqIiM2YOA"}}},
     "AccountAddress":"alice@example.com",
-    "ServiceUdf":"MA22-BV5A-QPW3-JZH2-UEYF-A2TP-HSV4",
+    "ServiceUdf":"MAMA-6HCZ-IANI-HRDY-BC42-PE7A-KQFH",
     "AccountEncryption":{
-      "Udf":"MA42-45LZ-UYMZ-4KEE-OK2B-OADT-Q5MS",
+      "Udf":"MDO5-NHXU-6OBX-AVZV-EST7-3Y3A-H6VV",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"1cdILCcRh0ALwRmkdUciJnHYCxsDvOluuNByW7IP2Nwsb
-  0JKIwBUqthm2L96vdwEYNpTfaLPSVkA"}}},
+          "Public":"Ke-2JXP3dpXWGMBRwCNhY49webkMiRUmMqHGhOvg59STr
+  uVYYgycDJfMzag63D22AJaxcWUGxtqA"}}},
     "AdministratorSignature":{
-      "Udf":"MDNB-JONO-SAPP-AQBL-UMTZ-PAD5-YZIL",
+      "Udf":"MA3R-VOOS-AGKS-DDAF-ZH3M-KW2P-T33J",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"iMVZUdNTYKXf_QyMaI1zjTj_oQyv4sYcohtBdfll6frU4
-  6m675k_skFMMErzyLzk2Aoch9iMs7kA"}}},
+          "Public":"D9tGBEilTd3OYFg3xu7MXuR2xLCpW-S5hXdmzvOPVCmfv
+  cs48Wjg9yyhwqKS4xQr9M5GqIiM2YOA"}}},
     "AccountAuthentication":{
-      "Udf":"MBUG-A74H-342D-MWZ2-MOKV-N6RK-RPWR",
+      "Udf":"MBYF-444Q-PJXY-UPVG-E3RA-VZER-ZAPG",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"gNQbTaGdkHwmKwx3RAQFkp666jrYXfpVTNPITkEjnGH6E
-  OyYJaJyuBeIB4JVIIzBXEZvSy2dSniA"}}},
+          "Public":"2lF0bybMWKodXwHxsHdUyY9SD_rfcmbF5LXmrPCWLmJ2J
+  e8qPdCljGV6CxZJN11AJONclh8T30eA"}}},
     "AccountSignature":{
-      "Udf":"MCTV-SYYQ-RDAJ-QD7T-DEVQ-T5YG-YNGX",
+      "Udf":"MB6Q-FXP7-CVEN-P2B3-R5IP-C52V-PMLN",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"lztRPMFGxBClqb1dAuB2svIimKjw_nEVxWSqhbBcf1o9f
-  W_BFJoA99Yg_Hf-et4G-uxV-Cf_CKEA"}}}}}
+          "Public":"ISmYsLoaj-pn8LV9M8EllOWFod3ScbRzoFOHtSgPBqnFN
+  yxzjx_fBO-rEIlXr6C_sHR5inUnDbSA"}}}}}
 ~~~~
 

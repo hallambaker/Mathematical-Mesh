@@ -73,7 +73,7 @@ file name is the input file name with the additional extension `.dare`.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=DC5E-KHZW-CTII-7W76-WSUD-PT5B-GY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -82,7 +82,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY /json
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=DC5E-KHZW-CTII-7W76-WSUD-PT5B-GY /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -122,7 +122,7 @@ with the extension `.undare` otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=DC5E-KHZW-CTII-7W76-WSUD-PT5B-GY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -131,7 +131,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY /json
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=DC5E-KHZW-CTII-7W76-WSUD-PT5B-GY /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -166,7 +166,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=DC5E-KHZW-CTII-7W76-WSUD-PT5B-GY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -175,7 +175,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=CLCH-5ASI-3NGI-ESPY-5VPK-BDGZ-NY /json
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=DC5E-KHZW-CTII-7W76-WSUD-PT5B-GY /json
 <rsp>{
   "Result": {
     "Success": false,
