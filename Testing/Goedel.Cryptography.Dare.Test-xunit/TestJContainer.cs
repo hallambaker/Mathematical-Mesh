@@ -28,17 +28,17 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ContainerTestEncrypted() {
-            var CryptoParameters = new CryptoParametersTest(
+            var CryptoParameters = new DarePolicy(
                         recipients: Recipients);
 
-            TestContainer($"ContainerList", ContainerType.List, 0, CryptoParameters: CryptoParameters);
-            TestContainer($"ContainerList", ContainerType.List, 1, CryptoParameters: CryptoParameters);
-            TestContainer($"ContainerList", ContainerType.List, 10, CryptoParameters: CryptoParameters);
+            TestContainer($"ContainerList", ContainerType.List, 0, policy: CryptoParameters);
+            TestContainer($"ContainerList", ContainerType.List, 1, policy: CryptoParameters);
+            TestContainer($"ContainerList", ContainerType.List, 10, policy: CryptoParameters);
             }
 
         [Fact]
         public void ContainerTestEncryptedItem() {
-            var CryptoParametersEntry = new CryptoParametersTest(
+            var CryptoParametersEntry = new CryptoParameters(
                         recipients: Recipients);
 
             TestContainer($"ContainerList", ContainerType.List, 0, CryptoParametersEntry: CryptoParametersEntry);
@@ -48,12 +48,12 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ContainerTestSigned() {
-            var CryptoParameters = new CryptoParametersTest(
+            var CryptoParameters = new DarePolicy(
                         signers: Signers);
 
-            TestContainer($"ContainerList", ContainerType.List, 0, CryptoParameters: CryptoParameters);
-            TestContainer($"ContainerList", ContainerType.List, 1, CryptoParameters: CryptoParameters);
-            TestContainer($"ContainerList", ContainerType.List, 10, CryptoParameters: CryptoParameters);
+            TestContainer($"ContainerList", ContainerType.List, 0, policy: CryptoParameters);
+            TestContainer($"ContainerList", ContainerType.List, 1, policy: CryptoParameters);
+            TestContainer($"ContainerList", ContainerType.List, 10, policy: CryptoParameters);
             }
 
         [Fact]
@@ -121,15 +121,15 @@ namespace Goedel.XUnit {
         [Fact]
         public void ContainerTestEncryptedMulti() {
 
-            var CryptoParameters = new CryptoParametersTest(
+            var CryptoParameters = new DarePolicy(
                     recipients: Recipients);
 
             var Records = 0;
-            TestContainerMulti($"-Encrypted-{Records}", Records, CryptoParameters: CryptoParameters);
+            TestContainerMulti($"-Encrypted-{Records}", Records, policy: CryptoParameters);
             Records = 1;
-            TestContainerMulti($"-Encrypted-{Records}", Records, CryptoParameters: CryptoParameters);
+            TestContainerMulti($"-Encrypted-{Records}", Records, policy: CryptoParameters);
             Records = 10;
-            TestContainerMulti($"-Encrypted-{Records}", Records, CryptoParameters: CryptoParameters);
+            TestContainerMulti($"-Encrypted-{Records}", Records, policy: CryptoParameters);
             }
 
         [Fact]
@@ -184,28 +184,28 @@ namespace Goedel.XUnit {
 
         void TestContainerMulti(string FileName,
             int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0,
-            CryptoParameters CryptoParameters = null,
+            DarePolicy policy = null,
             CryptoParameters CryptoParametersEntry = null) {
 
             TestContainer($"Container-List-{FileName}", ContainerType.List, Records, MaxSize, ReOpen, MoveStep,
-                CryptoParameters, CryptoParametersEntry);
+                policy, CryptoParametersEntry);
             TestContainer($"Container-Digest-{FileName}", ContainerType.Digest, Records, MaxSize, ReOpen, MoveStep,
-                CryptoParameters, CryptoParametersEntry);
+                policy, CryptoParametersEntry);
             TestContainer($"Container-Chain-{FileName}", ContainerType.Chain, Records, MaxSize, ReOpen, MoveStep,
-            CryptoParameters, CryptoParametersEntry);
+            policy, CryptoParametersEntry);
             TestContainer($"Container-Tree-{FileName}", ContainerType.Tree, Records, MaxSize, ReOpen, MoveStep,
-                CryptoParameters, CryptoParametersEntry);
+                policy, CryptoParametersEntry);
             TestContainer($"Container-MerkleTree-{FileName}", ContainerType.MerkleTree, Records, MaxSize, ReOpen, MoveStep,
-                CryptoParameters, CryptoParametersEntry);
+                policy, CryptoParametersEntry);
             }
 
         void TestContainer(string FileName, ContainerType ContainerType,
                     int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0,
-                    CryptoParameters CryptoParameters = null,
+                    DarePolicy policy = null,
                     CryptoParameters CryptoParametersEntry = null) {
-            CryptoParameters ??= new CryptoParameters();
 
-            var KeyCollection = CryptoParameters?.KeyLocate ?? CryptoParametersEntry?.KeyLocate;
+            var keyCollection = policy.KeyLocate;
+            //var KeyCollection = policy?.KeyLocate ?? CryptoParametersEntry?.KeyLocate;
 
             ReOpen = ReOpen == 0 ? Records : ReOpen;
             MaxSize = MaxSize == 0 ? Records + 1 : MaxSize;
@@ -217,7 +217,7 @@ namespace Goedel.XUnit {
             // Write initial set of records
             using (var XContainer = Container.NewContainer(
                             FileName, FileStatus.Overwrite, containerType: ContainerType,
-                            cryptoParameters: CryptoParameters)) {
+                            policy)) {
                 for (Record = 0; Record < ReOpen; Record++) {
                     var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
                     XContainer.Append(Test, cryptoParameters: CryptoParametersEntry);
@@ -227,7 +227,7 @@ namespace Goedel.XUnit {
             // Write additional records
             while (Record < Records) {
                 using var XContainer = Container.Open(FileName, FileStatus.Append,
-                            cryptoParameters: CryptoParameters);
+                             policy:policy);
                 for (var i = 0; (Record < Records) & i < ReOpen; i++) {
                     var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
                     XContainer.Append(Test, cryptoParameters: CryptoParametersEntry);
@@ -237,15 +237,15 @@ namespace Goedel.XUnit {
 
             var Headers = new List<DareHeader>();
             using (var XContainer = Container.Open(FileName, FileStatus.Read,
-                            cryptoParameters: CryptoParameters,
-                            keyCollection: KeyCollection)) {
+                            policy: policy,
+                            keyCollection: keyCollection)) {
                 XContainer.VerifyContainer();
                 }
 
             // Read records 
             using (var XContainer = Container.Open(FileName, FileStatus.Read,
-                            cryptoParameters: CryptoParameters,
-                            keyCollection: KeyCollection)) {
+                            policy: policy,
+                            keyCollection: keyCollection)) {
 
                 Record = 0;
                 foreach (var ContainerDataReader in XContainer) {
@@ -266,7 +266,7 @@ namespace Goedel.XUnit {
             if (MoveStep > 0) {
                 // Check in forward direction
                 using (var XContainer = Container.Open(FileName, FileStatus.Read,
-                            cryptoParameters: CryptoParameters)) {
+                            policy: policy)) {
                     for (Record = MoveStep; Record < Records; Record += MoveStep) {
                         var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
                         (ContainerDataReader.Header.ContainerInfo.Index == Record).TestTrue(); ;
@@ -276,7 +276,7 @@ namespace Goedel.XUnit {
 
                 // Check in backwards direction
                 using (var XContainer = Container.Open(FileName, FileStatus.Read,
-                            cryptoParameters: CryptoParameters)) {
+                            policy: policy)) {
                     for (Record = Records; Record > 0; Record -= MoveStep) {
                         var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
                         (ContainerDataReader.Header.ContainerInfo.Index == Record).TestTrue(); ;

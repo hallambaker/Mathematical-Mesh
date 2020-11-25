@@ -72,13 +72,14 @@ namespace Goedel.Mesh {
         /// <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
         /// <param name="create">If true, create a container if it does not already exist.</param>
         public Catalog(string directory, string containerName,
+                     DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     IMeshClient meshClient = null,
                     bool readContainer = true,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, containerName, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                base(directory, containerName, policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
 
             if (!create & Container == null) {
                 return;

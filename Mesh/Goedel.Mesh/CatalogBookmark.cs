@@ -55,11 +55,12 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient = null,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new CatalogBookmark(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
+            new CatalogBookmark(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -76,13 +77,14 @@ namespace Goedel.Mesh {
         public CatalogBookmark(
                     string directory, 
                     string storeName = null,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     IMeshClient meshClient = null, 
                     bool decrypt = true,
                     bool create = true) :
             base(directory, storeName ?? Label,
-                        cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                        policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
         #endregion

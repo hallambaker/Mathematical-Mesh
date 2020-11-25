@@ -44,6 +44,7 @@ namespace Goedel.Mesh {
                     string directory,
                     string storeId,
                     IMeshClient meshClient,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
@@ -93,11 +94,12 @@ namespace Goedel.Mesh {
                     string directory, 
                     string storeId,
                     IMeshClient meshClient,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new Store(directory, storeId, cryptoParameters, keyCollection, meshClient);
+            new Store(directory, storeId, policy, cryptoParameters, keyCollection, meshClient);
 
 
         /// <summary>
@@ -112,6 +114,7 @@ namespace Goedel.Mesh {
         /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public Store(string directory, 
                     string storeId = null,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     IMeshClient meshClient = null,
@@ -125,8 +128,8 @@ namespace Goedel.Mesh {
                 fileName,
                 FileStatus.ConcurrentLocked,
                 keyCollection ?? cryptoParameters?.KeyLocate,
-                cryptoParameters,
                 ContainerType.MerkleTree,
+                policy,
                 "application/mmm-catalog",
                 decrypt: decrypt,
                 create: create

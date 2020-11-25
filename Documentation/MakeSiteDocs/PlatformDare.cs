@@ -57,6 +57,11 @@ namespace ExampleGenerator {
         public DareEnvelope MessageEnc;
         public DareEnvelope MessageAtomicDSEnc;
 
+        public DarePolicy DarePolicyPlaintext;
+        public DarePolicy DarePolicyEncrypt;
+        public DarePolicy DarePolicySign;
+        public DarePolicy DarePolicySignEncrypt;
+
         public CryptoParameters CryptoParametersPlaintext;
         public CryptoParameters CryptoParametersEncrypt;
         public CryptoParameters CryptoParametersSign;
@@ -92,13 +97,13 @@ namespace ExampleGenerator {
 
         public Container MakeContainer(
                     string FileName,
-                    CryptoParameters CryptoParameters,
+                    DarePolicy policy,
                     ContainerType ContainerType = ContainerType.Chain) {
             consoleWriter = new StringWriter();
 
             //var FileStream = FileName.FileStream(FileStatus.Overwrite);
             var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output: consoleWriter);
-            return Goedel.Cryptography.Dare.Container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
+            return Goedel.Cryptography.Dare.Container.NewContainer(JBCDStream, ContainerType, policy);
 
             }
 
@@ -198,17 +203,17 @@ namespace ExampleGenerator {
         #region // Tests -bare
 
         void GoContainer() {
-            var CryptoParametersPlaintext = new Goedel.Test.CryptoParametersTest();
+            var policyPlaintext = new DarePolicy();
 
             // Simple
-            var TContainer = MakeContainer("Test1List", CryptoParametersPlaintext, ContainerType.List);
+            var TContainer = MakeContainer("Test1List", policyPlaintext, ContainerType.List);
             TContainer.Append(testData300);
             Dare.ContainerHeadersSimple = ReadContainer(TContainer);
             Dare.ContainerFramingSimple = consoleWriter.ToString();
 
 
             // Digest
-            TContainer = MakeContainer("Test1Chain", CryptoParametersPlaintext, ContainerType.Chain);
+            TContainer = MakeContainer("Test1Chain", policyPlaintext, ContainerType.Chain);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
@@ -216,7 +221,7 @@ namespace ExampleGenerator {
 
 
             // Tree
-            TContainer = MakeContainer("Test1Tree", CryptoParametersPlaintext, ContainerType.Tree);
+            TContainer = MakeContainer("Test1Tree", policyPlaintext, ContainerType.Tree);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
@@ -227,7 +232,7 @@ namespace ExampleGenerator {
 
 
             // Merkle Tree
-            TContainer = MakeContainer("Test1Merkle", CryptoParametersPlaintext, ContainerType.MerkleTree);
+            TContainer = MakeContainer("Test1Merkle", policyPlaintext, ContainerType.MerkleTree);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
@@ -237,7 +242,7 @@ namespace ExampleGenerator {
             Dare.ContainerHeadersMerkleTree = ReadContainer(TContainer);
 
 
-            TContainer = MakeContainer("Test1Sign", CryptoParametersPlaintext, ContainerType.MerkleTree);
+            TContainer = MakeContainer("Test1Sign", policyPlaintext, ContainerType.MerkleTree);
             TContainer.Append(testData300);
             TContainer.Append(testData300, Dare.CryptoParametersSign);
             Dare.ContainerHeadersSigned = ReadContainer(TContainer);
@@ -271,21 +276,32 @@ namespace ExampleGenerator {
             // Initialize the crypto parameters.
 
             var Accounts = new List<string> { AliceAccount };
-            Dare.CryptoParametersPlaintext = new CryptoParameters(
-                        keyCollection: keyCollection);
 
-            Dare.CryptoParametersEncrypt = new CryptoParameters(
+            Dare.DarePolicyPlaintext = new DarePolicy() {
+                        KeyLocate= keyCollection };
+
+            Dare.DarePolicyEncrypt = new DarePolicy(
                         keyCollection: keyCollection,
                         recipients: Accounts);
 
-            Dare.CryptoParametersSign = new CryptoParameters(
+            Dare.DarePolicySign = new DarePolicy(
                         keyCollection: keyCollection,
                         signers: Accounts);
 
-            Dare.CryptoParametersSignEncrypt = new CryptoParameters(
+            Dare.DarePolicySignEncrypt = new DarePolicy(
                         keyCollection: keyCollection,
                         recipients: Accounts,
                         signers: Accounts);
+
+
+
+            Dare.CryptoParametersPlaintext = Dare.DarePolicyPlaintext.GetCryptoParameters();
+            Dare.CryptoParametersEncrypt = Dare.DarePolicyEncrypt.GetCryptoParameters();
+
+            Dare.CryptoParametersSign = Dare.DarePolicySign.GetCryptoParameters();
+
+            Dare.CryptoParametersSignEncrypt = Dare.DarePolicySignEncrypt.GetCryptoParameters();
+
 
             Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt);
 
@@ -329,7 +345,7 @@ namespace ExampleGenerator {
 
         void GoDareSequence() {
             // Encrypt a set of data under one key exchange.
-            var EncryptingContainer = MakeContainer("Test1Enc", Dare.CryptoParametersEncrypt, ContainerType.List);
+            var EncryptingContainer = MakeContainer("Test1Enc", Dare.DarePolicyEncrypt, ContainerType.List);
             EncryptingContainer.Append(testData300);
             EncryptingContainer.Append(testData300);
             Dare.ContainerHeadersEncryptSingleSession = ReadContainer(EncryptingContainer);
@@ -337,7 +353,7 @@ namespace ExampleGenerator {
 
 
             // Encrypt a sequence of items with a key exchange per item.
-            var EncryptedContainer = MakeContainer("Test1EncSep", Dare.CryptoParametersPlaintext, ContainerType.List);
+            var EncryptedContainer = MakeContainer("Test1EncSep", Dare.DarePolicyPlaintext, ContainerType.List);
             EncryptedContainer.Append(testData300, cryptoParameters: Dare.CryptoParametersEncrypt);
             EncryptedContainer.Append(testData300, cryptoParameters: Dare.CryptoParametersEncrypt);
             Dare.ContainerHeadersEncryptIndependentSession = ReadContainer(EncryptedContainer);

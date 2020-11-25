@@ -59,11 +59,12 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new CatalogApplication(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
+            new CatalogApplication(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
 
         /// <summary>
@@ -81,11 +82,12 @@ namespace Goedel.Mesh {
         public CatalogApplication(
                     string directory, 
                     string storeName = null,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     IMeshClient meshClient = null,
                     bool decrypt = true, bool create = true) :
-            base(directory, storeName, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+            base(directory, storeName, policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
         #endregion

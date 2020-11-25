@@ -2520,7 +2520,7 @@
         <member name="M:Goedel.Mesh.Client.PersistHost.#cctor">
             <summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.#ctor(System.String,System.String,System.String,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.ContainerType,Goedel.Protocol.DataEncoding,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.PersistHost.#ctor(System.String,System.String,System.String,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.ContainerType,Goedel.Protocol.DataEncoding,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean)">
             <summary>
             Open or create a persistence store in specified mode with 
             the specified file name, content type and optional comment.

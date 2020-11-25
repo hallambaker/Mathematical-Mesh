@@ -285,8 +285,9 @@ namespace Goedel.Cryptography.Dare {
                     string Comment = null,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     ContainerType ContainerType = ContainerType.Chain,
+                    DarePolicy policy = null,
                     DataEncoding DataEncoding = DataEncoding.JSON) : base(
-                        FileName, Type, Comment, FileStatus, ContainerType, DataEncoding) {
+                        FileName, Type, Comment, FileStatus, ContainerType, policy, DataEncoding) {
             }
 
         /// <summary>

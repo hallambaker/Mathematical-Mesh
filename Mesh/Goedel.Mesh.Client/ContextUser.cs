@@ -239,17 +239,17 @@ namespace Goedel.Mesh.Client {
                 if (!ServiceCatalogs.Contains(storeName)) {
 
                     var factory = entry.Value;
-                    var cryptoParameters = activationAccount.InitializeStore(storeName);
+                    var policy = activationAccount.InitializeStore(storeName);
 
-                    using var store = factory(StoresDirectory, storeName, null, cryptoParameters);
+                    using var store = factory(StoresDirectory, storeName, null, policy);
                     }
                 }
             foreach (var entry in StaticSpoolDelegates) {
                 var storeName = entry.Key;
                 var factory = entry.Value;
-                var cryptoParameters = activationAccount.InitializeStore(storeName);
+                var policy = activationAccount.InitializeStore(storeName);
 
-                using var store = factory(StoresDirectory, storeName, null, cryptoParameters);
+                using var store = factory(StoresDirectory, storeName, null, policy);
                 }
 
             }

@@ -285,7 +285,7 @@
             <param name="storeName">The store to initialize.</param>
             <returns>Cryptographic parameters for the store.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.GetCryptoParameters(System.String)">
+        <member name="M:Goedel.Mesh.ActivationAccount.GetDarePolicy(System.String)">
             <summary>
             Return the cryptographic parameters for the store <paramref name="containerName"/>.
             </summary>
@@ -1056,7 +1056,7 @@
             Disposal method, disposes the underlying persistence store if defined.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Catalog`1.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Base constuctor.
             </summary>
@@ -1238,7 +1238,7 @@
         <member name="F:Goedel.Mesh.CatalogAccess.DictionaryFairExchange">
             <summary>Dictionary for locating capabilities for use.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogAccess.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogAccess.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -1250,7 +1250,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogAccess.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogAccess.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -1399,7 +1399,7 @@
         <member name="P:Goedel.Mesh.CatalogApplication.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogApplication.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogApplication.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -1411,7 +1411,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogApplication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogApplication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -1598,7 +1598,7 @@
         <member name="P:Goedel.Mesh.CatalogBlind.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogBlind.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogBlind.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Constructor for a catalog named <paramref name="containerName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -1620,7 +1620,7 @@
         <member name="P:Goedel.Mesh.CatalogBookmark.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogBookmark.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogBookmark.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -1632,7 +1632,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogBookmark.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogBookmark.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -1730,7 +1730,7 @@
         <member name="P:Goedel.Mesh.CatalogContact.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogContact.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogContact.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -1742,7 +1742,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">The mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogContact.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogContact.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2361,7 +2361,7 @@
         <member name="P:Goedel.Mesh.CatalogCredential.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCredential.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogCredential.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -2373,7 +2373,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Means of obtaining a Mesh Client.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCredential.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogCredential.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2484,7 +2484,7 @@
         <member name="P:Goedel.Mesh.CatalogDevice.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogDevice.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogDevice.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -2501,7 +2501,7 @@
             Disposing method.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogDevice.#ctor(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogDevice.#ctor(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2826,7 +2826,7 @@
         <member name="P:Goedel.Mesh.CatalogMember.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogMember.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogMember.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -2839,7 +2839,7 @@
             <param name="meshClient">If present provides a means of obtaining a MeshClient instance
             which may be used to resolve thresholded key shares.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogMember.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogMember.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2940,7 +2940,7 @@
         <member name="P:Goedel.Mesh.CatalogNetwork.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogNetwork.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogNetwork.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -2953,7 +2953,7 @@
             <param name="meshClient">If present provides a means of obtaining a MeshClient instance
             which may be used to resolve thresholded key shares.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogNetwork.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogNetwork.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -3073,7 +3073,7 @@
         <member name="P:Goedel.Mesh.CatalogPublication.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogPublication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogPublication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -3086,7 +3086,7 @@
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogPublication.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogPublication.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -3255,7 +3255,7 @@
         <member name="P:Goedel.Mesh.CatalogTask.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogTask.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogTask.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -3268,7 +3268,7 @@
             <param name="meshClient">If present provides a means of obtaining a MeshClient instance
             which may be used to resolve thresholded key shares.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogTask.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogTask.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -12613,7 +12613,7 @@
         <member name="P:Goedel.Mesh.Spool.SpoolEntryById">
             <summary>Dictionary of entries by identifier.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Spool.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Spool.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
             <summary>
             Constructor.
             </summary>
@@ -12773,7 +12773,7 @@
         <member name="F:Goedel.Mesh.SpoolLocal.Label">
             <summary>Canonical name for local spool</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolLocal.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.SpoolLocal.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -12785,7 +12785,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.SpoolLocal.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.SpoolLocal.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
             <summary>
             Constructor.
             </summary>
@@ -12815,7 +12815,7 @@
         <member name="F:Goedel.Mesh.SpoolInbound.Label">
             <summary>Canonical name for inbound spool</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolInbound.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.SpoolInbound.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -12827,7 +12827,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.SpoolInbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.SpoolInbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
             <summary>
             Constructor.
             </summary>
@@ -12847,7 +12847,7 @@
         <member name="F:Goedel.Mesh.SpoolOutbound.Label">
             <summary>Canonical name for outbound spool</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolOutbound.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.SpoolOutbound.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -12859,7 +12859,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.SpoolOutbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.SpoolOutbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
             <summary>
             Constructor.
             </summary>
@@ -12879,7 +12879,7 @@
         <member name="F:Goedel.Mesh.SpoolArchive.Label">
             <summary>Canonical name for outbound spool</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolArchive.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.SpoolArchive.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -12891,7 +12891,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.SpoolArchive.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.SpoolArchive.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
             <summary>
             Constructor.
             </summary>
@@ -12939,7 +12939,7 @@
         <member name="M:Goedel.Mesh.Store.Disposing">
             <summary>The disposal routing</summary>
         </member>
-        <member name="M:Goedel.Mesh.Store.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Store.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
             </summary>
@@ -12951,7 +12951,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.Store.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Store.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
             <summary>
             The constructor
             </summary>

@@ -7,6 +7,9 @@ using System.IO;
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
 
+
+        DarePolicy GetPolicy(Goedel.Command.Dispatch Options) => throw new NYI();
+
         /// <summary>
         /// Dispatch method
         /// </summary>
@@ -15,9 +18,11 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult ContainerCreate(ContainerCreate options) {
             var outputFile = options.Container.Value;
 
-            var CryptoParameters = new CryptoParameters();
+            var policy = GetPolicy(options);
+
+
             using (var Writer = new FileContainerWriter(
-                    outputFile, CryptoParameters, true, fileStatus: FileStatus.Overwrite)) {
+                    outputFile, policy, true, fileStatus: FileStatus.Overwrite)) {
                 }
 
             return new ResultFile() {
@@ -34,12 +39,12 @@ namespace Goedel.Mesh.Shell {
             var inputFile = options.Input.Value;
             var outputFile = options.Container.Value;
 
-            var CryptoParameters = new CryptoParameters();
+            var policy = GetPolicy(options);
 
             // should create an archive class as a subset of store.
 
             using (var Writer = new FileContainerWriter(
-                    outputFile, CryptoParameters, true, fileStatus: FileStatus.Overwrite)) {
+                    outputFile, policy, true, fileStatus: FileStatus.Overwrite)) {
 
                 // Hack: This functionality should be pushed into FileContainerWriter and made recursive, etc.
 
@@ -69,9 +74,9 @@ namespace Goedel.Mesh.Shell {
             var inputFile = options.File.Value;
             var outputFile = options.Container.Value;
 
-            var CryptoParameters = new CryptoParameters();
+            
             using (var Writer = new FileContainerWriter(
-                    outputFile, CryptoParameters, true, fileStatus: FileStatus.Overwrite)) {
+                    outputFile, null, true, fileStatus: FileStatus.Existing)) {
                 Writer.Add(inputFile, path: inputFile);
                 }
 
@@ -90,9 +95,9 @@ namespace Goedel.Mesh.Shell {
             var inputFile = options.Filename.Value;
             var outputFile = options.Container.Value;
 
-            var CryptoParameters = new CryptoParameters();
+
             using (var Writer = new FileContainerWriter(
-                    outputFile, CryptoParameters, true, fileStatus: FileStatus.Overwrite)) {
+                    outputFile, null, true, fileStatus: FileStatus.Existing)) {
                 Writer.Delete(inputFile);
                 }
 

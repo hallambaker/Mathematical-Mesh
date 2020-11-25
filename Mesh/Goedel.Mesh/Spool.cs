@@ -183,12 +183,13 @@ namespace Goedel.Mesh {
         public Spool(
                     string directory, 
                     string storeId,
+                     DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create) {
+                base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create) {
 
             }
 
@@ -569,11 +570,12 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient,
+                                        DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new SpoolLocal(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
+            new SpoolLocal(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
         /// <summary>
         /// Constructor.
@@ -588,12 +590,13 @@ namespace Goedel.Mesh {
         public SpoolLocal(
                     string directory,
                     string storeId,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create) {
+                base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create) {
             }
 
         #endregion
@@ -645,11 +648,12 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new SpoolInbound(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
+            new SpoolInbound(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
         /// <summary>
         /// Constructor.
@@ -664,12 +668,13 @@ namespace Goedel.Mesh {
         public SpoolInbound(
                     string directory, 
                     string storeId,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create) {
+                base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create) {
 
             }
 
@@ -699,11 +704,12 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new SpoolOutbound(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
+            new SpoolOutbound(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
 
         /// <summary>
@@ -717,12 +723,13 @@ namespace Goedel.Mesh {
         /// <param name="create">If true, create a new file if none exists.</param>
         /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public SpoolOutbound(string directory, string storeName,
+            DarePolicy policy = null,
             CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, storeName, cryptoParameters, keyCollection, meshClient, decrypt, create) {
+                base(directory, storeName, policy, cryptoParameters, keyCollection, meshClient, decrypt, create) {
 
             }
         #endregion
@@ -751,11 +758,12 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient,
+                                        DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new SpoolArchive(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create);
+            new SpoolArchive(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
         /// <summary>
         /// Constructor.
@@ -770,12 +778,13 @@ namespace Goedel.Mesh {
         public SpoolArchive(
                     string directory,
                     string storeId,
+                                        DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-                base(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt, create) {
+                base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create) {
 
             }
         #endregion

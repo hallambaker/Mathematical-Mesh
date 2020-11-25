@@ -43,11 +43,15 @@ namespace Goedel.Cryptography.Dare {
         public long DataLength;
 
         ///<summary>If true, the frame has a payload section</summary>
-        public bool HasPayload => throw new NYI();
+        public bool HasPayload => DataLength > 0;
 
         ///<summary>The decoded JSONObject</summary>
         public JsonObject JsonObject;
 
+
+        public bool IsEncrypted => throw new NYI();
+
+        public bool KeyExchange => throw new NYI();
 
         JbcdStream jbcdStream;
 

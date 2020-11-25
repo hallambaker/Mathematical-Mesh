@@ -67,11 +67,12 @@ namespace Goedel.Mesh.Client {
                     FileStatus fileStatus = FileStatus.ConcurrentLocked,
                     ContainerType containerType = ContainerType.Chain,
                     DataEncoding dataEncoding = DataEncoding.JSON,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
                     bool readContainer = true) : base(
                         fileName, type, comment,
-                        fileStatus, containerType, dataEncoding, cryptoParameters,
+                        fileStatus, containerType, policy, dataEncoding,
                         keyCollection, readContainer) {
             }
 

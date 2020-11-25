@@ -76,14 +76,14 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The newly constructed container.</returns>
         public FileContainerWriter(
                 string fileName,
-                CryptoParameters cryptoParameters,
+                DarePolicy policy,
                 bool archive = false,
                 bool digest = true,
                 FileStatus fileStatus = FileStatus.Overwrite,
                 ContainerType containerType = ContainerType.Unknown) {
 
             jbcdStream = new JbcdStream(fileName, fileStatus);
-            container = BindContainer(jbcdStream, cryptoParameters, archive, digest, containerType);
+            container = BindContainer(jbcdStream, archive, digest, containerType);
             }
 
 
@@ -102,15 +102,13 @@ namespace Goedel.Cryptography.Dare {
         /// be applied to this message.</param>
         public FileContainerWriter(
                 JbcdStream jbcdStream,
-                CryptoParameters cryptoParameters,
                 bool archive = false,
                 bool digest = true,
                 ContainerType containerType = ContainerType.Unknown) => container = BindContainer(
-                    jbcdStream, cryptoParameters, archive, digest, containerType);
+                    jbcdStream, archive, digest, containerType);
 
         Container BindContainer(
                     JbcdStream jbcdStream,
-                    CryptoParameters cryptoParameters,
                     bool archive = false,
                     bool digest = true,
                     ContainerType containerType = ContainerType.Unknown) {
@@ -121,7 +119,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             if (jbcdStream.Length == 0) {
-                return Container.NewContainer(jbcdStream, cryptoParameters, containerType);
+                return Container.NewContainer(jbcdStream, containerType);
 
                 }
             else {
@@ -143,18 +141,19 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>File Container instance</returns>
         public static void File(
                 string fileName,
-                CryptoParameters cryptoParameters,
+                DarePolicy policy,
                 byte[] data,
                 ContentMeta contentMeta = null,
                 FileStatus fileStatus = FileStatus.Overwrite
                 ) {
 
             using var Writer = new FileContainerWriter(
-                        fileName, cryptoParameters,
+                        fileName,
+                        policy,
                         archive: false,
                         digest: false,
                         fileStatus: fileStatus, containerType: ContainerType.List);
-            Writer.Add(data, cryptoParameters, contentMeta);
+            Writer.Add(data, contentMeta);
             }
 
 
@@ -168,16 +167,15 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>File Container instance</returns>
         public static byte[] Data(
                 byte[] dataIn,
-                ContentMeta contentMeta = null,
-                CryptoParameters cryptoParameters = null
+                ContentMeta contentMeta = null
                 ) {
 
             var Stream = new MemoryStream();
             var JBCDStream = new JbcdStream(null, Stream);
 
-            using (var Writer = new FileContainerWriter(JBCDStream, cryptoParameters, archive: false, digest: false,
+            using (var Writer = new FileContainerWriter(JBCDStream, archive: false, digest: false,
                             containerType: ContainerType.List)) {
-                Writer.Add(dataIn, cryptoParameters, contentMeta);
+                Writer.Add(dataIn, contentMeta);
                 }
 
             return Stream.ToArray();
@@ -193,10 +191,9 @@ namespace Goedel.Cryptography.Dare {
         /// be applied to this message.</param>
         public void Add(
                 byte[] data,
-                CryptoParameters cryptoParameters,
                 ContentMeta contentInfo = null) => container.Append(
                     data,
-                    cryptoParameters,
+                    null,
                     contentInfo);
 
         /// <summary>

@@ -62,11 +62,12 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient,
+                    DarePolicy policy = null, 
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new CatalogDevice(directory, storeId, meshClient, cryptoParameters, keyCollection, decrypt, create);
+            new CatalogDevice(directory, storeId, meshClient, policy, cryptoParameters, keyCollection, decrypt, create);
 
         //string directory;
 
@@ -91,12 +92,13 @@ namespace Goedel.Mesh {
                     string directory,
                     string storeName = null,
                     IMeshClient meshClient = null,
+                    DarePolicy policy = null, 
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) :
             base(directory, storeName ?? Label,
-                        cryptoParameters, keyCollection, meshClient, decrypt: decrypt, create: create) {
+                        policy, cryptoParameters, keyCollection, meshClient, decrypt: decrypt, create: create) {
             //this.directory = directory;
             //Screen.WriteLine($"^^^^^^^^Create Device Catalog {this.directory}");
 

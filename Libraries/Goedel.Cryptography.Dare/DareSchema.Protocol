@@ -120,7 +120,7 @@
 			Description
 				|Processing of cloaked data is described in…
 		Binary EDSS
-			Tag "Annotations"
+			Tag "annotations"
 			Multiple
 			Description
 				|If present, the Annotations field contains a sequence of Encrypted Data 
@@ -136,6 +136,11 @@
 			Tag "recipients"
 			Description
 				|A list of recipient key exchange information blocks.
+
+		Struct DarePolicy Policy
+			Tag "policy"
+			Description
+				|A DARE security policy governing future additions to the container.
 
 		Binary ContentMetaData
 			Description			
@@ -283,3 +288,36 @@
 			Tag "rkd"
 			Description
 				|The per-recipient key exchange data.
+
+
+	Structure DarePolicy
+		String Encryption
+			Description
+				|The encryption policy specifier, determines how often a key exchange is required.
+				|'Single': All entries are encrypted under the key exchange specified in the 
+				|entry specifying this policy.
+				|'Isolated': All entries are encrypted under a separate key exchange.
+				|'All': All entries are encrypted.
+				|'None': No entries are encrypted.
+			Description
+				|Default value is 'None' if EncryptKeys is null, and 'All' otherwise.
+		String Signature
+			Description
+				|The signature policy
+				|'None': No entries are signed.
+				|'Final': The final entry is signed.
+				|'Isolated': All entries are independently signed.
+				|'Any': Entries may be signed.
+			Description
+				|Default value is 'None' if SignKeys is null, and 'Any' otherwise.
+		TStruct Key EncryptKeys
+			Multiple
+			Description
+				|The public parameters of keys used for encryption
+		TStruct Key SignKeys
+			Multiple
+			Description
+				|The public parameters of keys to which entries MUST be encrypted.
+		Boolean Sealed
+			Description
+				|If true the policy is immutable and cannot be changed by a subsequent policy override.

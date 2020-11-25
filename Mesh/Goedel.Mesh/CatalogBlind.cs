@@ -52,9 +52,10 @@ namespace Goedel.Mesh {
         public CatalogBlind(
                     string directory,
                     string containerName,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null) :
-            base(directory, containerName, cryptoParameters, keyCollection,
+            base(directory, containerName, policy, cryptoParameters, keyCollection,
                         readContainer: false, decrypt: false, create: false) => PersistenceStore?.FastReadContainer();
 
         }

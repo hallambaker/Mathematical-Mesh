@@ -64,7 +64,8 @@ namespace Goedel.Cryptography.Dare {
 			{"ContentMeta", ContentMeta._Factory},
 			{"DareSignature", DareSignature._Factory},
 			{"X509Certificate", X509Certificate._Factory},
-			{"DareRecipient", DareRecipient._Factory}			};
+			{"DareRecipient", DareRecipient._Factory},
+			{"DarePolicy", DarePolicy._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JsonReader stream.
@@ -485,6 +486,11 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual List<DareRecipient>				Recipients  {get; set;}
         /// <summary>
+        ///A DARE security policy governing future additions to the container.
+        /// </summary>
+
+		public virtual DarePolicy						Policy  {get; set;}
+        /// <summary>
         ///If present contains a JSON encoded ContentInfo structure which specifies
         ///plaintext content metadata and forms one of the inputs to the envelope digest value.
         /// </summary>
@@ -587,7 +593,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 			if (EDSS != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Annotations", 1);
+				_writer.WriteToken ("annotations", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in EDSS) {
@@ -631,6 +637,11 @@ namespace Goedel.Cryptography.Dare {
 				_writer.WriteArrayEnd ();
 				}
 
+			if (Policy != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("policy", 1);
+					Policy.Serialize (_writer, false);
+				}
 			if (ContentMetaData != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("ContentMetaData", 1);
@@ -712,7 +723,7 @@ namespace Goedel.Cryptography.Dare {
 					Cloaked = jsonReader.ReadBinary ();
 					break;
 					}
-				case "Annotations" : {
+				case "annotations" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
 					EDSS = new List <byte[]> ();
@@ -749,6 +760,13 @@ namespace Goedel.Cryptography.Dare {
 						Recipients.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
+					break;
+					}
+				case "policy" : {
+					// An untagged structure
+					Policy = new DarePolicy ();
+					Policy.Deserialize (jsonReader);
+ 
 					break;
 					}
 				case "ContentMetaData" : {
@@ -1602,6 +1620,217 @@ namespace Goedel.Cryptography.Dare {
 					}
 				case "rkd" : {
 					RecipientKeyData = jsonReader.ReadString ();
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class DarePolicy : Dare {
+        /// <summary>
+        ///The encryption policy specifier, determines how often a key exchange is required.
+        ///'Single': All entries are encrypted under the key exchange specified in the 
+        ///entry specifying this policy.
+        ///'Isolated': All entries are encrypted under a separate key exchange.
+        ///'All': All entries are encrypted.
+        ///'None': No entries are encrypted.
+        ///Default value is 'None' if EncryptKeys is null, and 'All' otherwise.
+        /// </summary>
+
+		public virtual string						Encryption  {get; set;}
+        /// <summary>
+        ///The signature policy
+        ///'None': No entries are signed.
+        ///'Final': The final entry is signed.
+        ///'Isolated': All entries are independently signed.
+        ///'Any': Entries may be signed.
+        ///Default value is 'None' if SignKeys is null, and 'Any' otherwise.
+        /// </summary>
+
+		public virtual string						Signature  {get; set;}
+        /// <summary>
+        ///The public parameters of keys used for encryption
+        /// </summary>
+
+		public virtual List<Key>				EncryptKeys  {get; set;}
+        /// <summary>
+        ///The public parameters of keys to which entries MUST be encrypted.
+        /// </summary>
+
+		public virtual List<Key>				SignKeys  {get; set;}
+		bool								__Sealed = false;
+		private bool						_Sealed;
+        /// <summary>
+        ///If true the policy is immutable and cannot be changed by a subsequent policy override.
+        /// </summary>
+
+		public virtual bool						Sealed {
+			get => _Sealed;
+			set {_Sealed = value; __Sealed = true; }
+			}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "DarePolicy";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new DarePolicy();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (Encryption != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Encryption", 1);
+					_writer.WriteString (Encryption);
+				}
+			if (Signature != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Signature", 1);
+					_writer.WriteString (Signature);
+				}
+			if (EncryptKeys != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EncryptKeys", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in EncryptKeys) {
+					_writer.WriteArraySeparator (ref _firstarray);
+                    _writer.WriteObjectStart();
+                    _writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    _writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (SignKeys != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("SignKeys", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in SignKeys) {
+					_writer.WriteArraySeparator (ref _firstarray);
+                    _writer.WriteObjectStart();
+                    _writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    _writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (__Sealed){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Sealed", 1);
+					_writer.WriteBoolean (Sealed);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new DarePolicy FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as DarePolicy;
+				}
+		    var Result = new DarePolicy ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Encryption" : {
+					Encryption = jsonReader.ReadString ();
+					break;
+					}
+				case "Signature" : {
+					Signature = jsonReader.ReadString ();
+					break;
+					}
+				case "EncryptKeys" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					EncryptKeys = new List <Key> ();
+					while (_Going) {
+						var _Item = Key.FromJson (jsonReader, true); // a tagged structure
+						EncryptKeys.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "SignKeys" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					SignKeys = new List <Key> ();
+					while (_Going) {
+						var _Item = Key.FromJson (jsonReader, true); // a tagged structure
+						SignKeys.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "Sealed" : {
+					Sealed = jsonReader.ReadBoolean ();
 					break;
 					}
 				default : {

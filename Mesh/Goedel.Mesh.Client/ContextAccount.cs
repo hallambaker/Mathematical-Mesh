@@ -503,11 +503,11 @@ namespace Goedel.Mesh.Client {
             //    }
 
             if (DictionaryCatalogDelegates.TryGetValue(name, out var factory)) {
-                var cryptoParameters = ActivationAccount.GetCryptoParameters(name);
-                return factory(StoresDirectory, name, this, cryptoParameters, KeyCollection);
+                var darePolicy = ActivationAccount.GetDarePolicy(name);
+                return factory(StoresDirectory, name, this, darePolicy, null, KeyCollection);
                 }
             if (DictionarySpoolDelegates.TryGetValue(name, out factory)) {
-                return factory(StoresDirectory, name, this, null, KeyCollection);
+                return factory(StoresDirectory, name, this, null, null, KeyCollection);
                 }
 
 

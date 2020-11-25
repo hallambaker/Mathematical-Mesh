@@ -68,11 +68,12 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient = null,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new CatalogContact(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+            new CatalogContact(directory, storeId, policy, cryptoParameters, keyCollection, decrypt, create);
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -88,12 +89,13 @@ namespace Goedel.Mesh {
         public CatalogContact(
                     string directory,
                     string storeName = null,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) :
             base(directory, storeName ?? Label,
-                        cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                        policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
         #endregion
         #region // Override methods

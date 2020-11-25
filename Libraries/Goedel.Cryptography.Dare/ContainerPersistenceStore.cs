@@ -120,17 +120,17 @@ namespace Goedel.Cryptography.Dare {
                     string comment = null,
                     FileStatus fileStatus = FileStatus.OpenOrCreate,
                     ContainerType containerType = ContainerType.Chain,
+                    DarePolicy policy=null,
                     DataEncoding dataEncoding = DataEncoding.JSON,
-                    CryptoParameters cryptoParameters = null,
                     IKeyLocate keyCollection = null,
                     bool readContainer = true,
                     bool decrypt = true) : this(
                         Container.Open(
                             fileName,
                             fileStatus,
-                            keyCollection ?? cryptoParameters?.KeyLocate,
-                            cryptoParameters,
+                            keyCollection,
                             containerType,
+                            policy,
                             contentType,
                             decrypt
                             ), keyCollection, readContainer) { }

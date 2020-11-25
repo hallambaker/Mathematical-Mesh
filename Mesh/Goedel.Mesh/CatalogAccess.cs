@@ -74,11 +74,12 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new CatalogAccess(directory, storeId, cryptoParameters, keyCollection, meshClient, decrypt:decrypt, create:create);
+            new CatalogAccess(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt:decrypt, create:create);
 
 
         /// <summary>
@@ -96,13 +97,14 @@ namespace Goedel.Mesh {
         public CatalogAccess(
                     string directory,
                     string storeName = null,
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
                     base(directory, storeName ?? Label,
-                        cryptoParameters, keyCollection, meshClient: meshClient, decrypt: decrypt, create: create) {
+                        policy, cryptoParameters, keyCollection, meshClient: meshClient, decrypt: decrypt, create: create) {
 
             // Hack: likely to have issues here because the CatalogAccess needs to be readable by the service
             // Should treat this like any other account except that the service is granted access when it

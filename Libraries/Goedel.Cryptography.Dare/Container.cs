@@ -228,8 +228,9 @@ namespace Goedel.Cryptography.Dare {
                         string fileName,
                         FileStatus fileStatus = FileStatus.Read,
                         IKeyLocate keyCollection = null,
-                        CryptoParameters cryptoParameters = null,
+                        //CryptoParameters cryptoParameters = null,
                         ContainerType containerType = ContainerType.Unknown,
+                        DarePolicy policy = null,
                         string contentType = null,
                         bool decrypt = true,
                         bool create = true) {
@@ -239,10 +240,10 @@ namespace Goedel.Cryptography.Dare {
                 }
             var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
-            cryptoParameters = cryptoParameters ?? new CryptoParameters(keyCollection);
+            //cryptoParameters = cryptoParameters ?? new CryptoParameters(keyCollection);
 
 
-            keyCollection ??= cryptoParameters?.KeyLocate;
+            //keyCollection ??= cryptoParameters?.KeyLocate;
 
 
             try {
@@ -253,8 +254,8 @@ namespace Goedel.Cryptography.Dare {
 
                 // Create new container if empty or read the old one.
                 if (jbcdStream.Length == 0) {
-                    Container = NewContainer(jbcdStream, cryptoParameters,
-                        containerType, contentType: contentType);
+                    Container = NewContainer(jbcdStream,
+                        containerType, policy, contentType: contentType);
                     }
                 else {
                     
@@ -421,10 +422,6 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
 
-
-
-
-
             // initialize the Frame index dictionary
             container.FrameZero = frameZero;
             container.DareHeaderFinal = finalContainerHeader;
@@ -455,8 +452,9 @@ namespace Goedel.Cryptography.Dare {
         public static Container NewContainer(
                         string filename,
                         FileStatus fileStatus,
-                        CryptoParameters cryptoParameters = null,
+                        //CryptoParameters cryptoParameters = null,
                         ContainerType containerType = ContainerType.Chain,
+                        DarePolicy policy = null,
                         byte[] payload = null,
                         string contentType = null,
                         DataEncoding dataEncoding = DataEncoding.JSON,
@@ -469,8 +467,9 @@ namespace Goedel.Cryptography.Dare {
 
             var jbcdStream = new JbcdStream(filename, fileStatus);
             var container = NewContainer(
-                jbcdStream, cryptoParameters, containerType, payload, contentType, dataEncoding,
+                jbcdStream, containerType, policy, payload, contentType, dataEncoding,
                 cloaked, dataSequences);
+
             container.DisposeJBCDStream = jbcdStream;
 
             return container;
@@ -498,8 +497,9 @@ namespace Goedel.Cryptography.Dare {
         ///     as an EDSS header entry.</param>
         public static Container NewContainer(
                         JbcdStream jbcdStream,
-                        CryptoParameters cryptoParameters,
+                        //CryptoParameters cryptoParameters,
                         ContainerType containerType = ContainerType.Chain,
+                        DarePolicy policy = null,
                         byte[] payload = null,
                         string contentType = null,
                         DataEncoding dataEncoding = DataEncoding.JSON,
@@ -507,11 +507,16 @@ namespace Goedel.Cryptography.Dare {
                         List<byte[]> dataSequences = null
                         ) {
 
-            cryptoParameters ??= new CryptoParameters();
+            //cryptoParameters ??= new CryptoParameters();
+
+            CryptoParameters cryptoParameters = new CryptoParameters();
             var container = MakeNewContainer(jbcdStream,
                     cryptoParameters: cryptoParameters, containerType: containerType);
 
             container.CryptoParametersContainer = cryptoParameters;
+
+
+
             container.DataEncoding = dataEncoding;
             container.FrameCount = 0;
 
@@ -817,7 +822,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented </param>
         /// <returns>The number of bytes written.</returns>
-        public long Append(byte[] data,
+        public long Append(
+            
+                    byte[] data,
                     CryptoParameters cryptoParameters = null,
                     ContentMeta contentMeta = null,
                     string contentType = null,
@@ -996,10 +1003,13 @@ namespace Goedel.Cryptography.Dare {
             byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
 
+            // here we need to decide whether to perform a new key exchange or re-use an old one.
+            /*
+             * var cryptoStack =  new CryptoStack()
+             */
 
             var cryptoStack = cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
                             GetCryptoStack(cryptoParametersFrame);
-
             contextWrite.StreamOpen(contentInfo, cryptoStack, cloaked, dataSequences);
 
             if (data != null) {

@@ -498,7 +498,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="storeName">The store to initialize.</param>
         /// <returns>Cryptographic parameters for the store.</returns>
-        public CryptoParameters InitializeStore(string storeName) {
+        public DarePolicy InitializeStore(string storeName) {
             var encryptionKey = secretSeed.GenerateContributionKeyPair(MeshKeyType.Complete,
                 MeshActor.Account, MeshKeyOperation.Encrypt, keySecurity: KeySecurity.Exportable);
 
@@ -506,7 +506,8 @@ namespace Goedel.Mesh {
 
             var cryptoParameters = new CryptoParameters(recipient: encryptionKey);
 
-            return cryptoParameters;
+            throw new NYI();
+            //return cryptoParameters;
             }
 
         /// <summary>
@@ -514,7 +515,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="containerName">The store to return parameters for.</param>
         /// <returns>Cryptographic parameters for the store.</returns>
-        public CryptoParameters GetCryptoParameters(string containerName) {
+        public DarePolicy GetDarePolicy(string containerName) {
             if (DictionaryStoreEncryptionKey.TryGetValue(containerName, out var encryptionKey)) {
                 encryptionKey = KeyPair.FactoryExchange(CryptoAlgorithmId.Default,
                         KeySecurity.Exportable, KeyCollection);
@@ -532,7 +533,10 @@ namespace Goedel.Mesh {
                 }
 
 
-            return new CryptoParameters(KeyCollection, recipient: encryptionKey);
+            //return new CryptoParameters(KeyCollection, recipient: encryptionKey);
+
+
+            throw new NYI();
             }
 
 
