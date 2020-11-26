@@ -15,7 +15,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerCreate(ContainerCreate options) {
+        public override ShellResult DareLog(DareLog options) {
             var outputFile = options.Container.Value;
 
             var policy = GetPolicy(options);
@@ -35,7 +35,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerArchive(ContainerArchive options) {
+        public override ShellResult DareArchive(DareArchive options) {
             var inputFile = options.Input.Value;
             var outputFile = options.Container.Value;
 
@@ -70,7 +70,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerAppend(ContainerAppend options) {
+        public override ShellResult DareAppend(DareAppend options) {
             var inputFile = options.File.Value;
             var outputFile = options.Container.Value;
 
@@ -91,7 +91,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerDelete(ContainerDelete options) {
+        public override ShellResult DareDelete(DareDelete options) {
             var inputFile = options.Filename.Value;
             var outputFile = options.Container.Value;
 
@@ -111,7 +111,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerIndex(ContainerIndex options) {
+        public override ShellResult DareIndex(DareIndex options) {
             var inputFile = options.Container.Value;
 
             using (var container = Cryptography.Dare.Container.Open(
@@ -129,7 +129,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerExtract(ContainerExtract options) {
+        public override ShellResult DareExtract(DareExtract options) {
             var inputFile = options.Container.Value;
             var outputFile = options.Output.Value;
 
@@ -159,7 +159,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerCopy(ContainerCopy options) {
+        public override ShellResult DareCopy(DareCopy options) {
             var inputFile = options.Input.Value;
             var outputFile = options.Output.Value;
 
@@ -173,22 +173,22 @@ namespace Goedel.Mesh.Shell {
             }
 
 
-        /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult ContainerVerify(ContainerVerify options) {
-            var inputFile = options.Container.Value;
+        ///// <summary>
+        ///// Dispatch method
+        ///// </summary>
+        ///// <param name="options">The command line options.</param>
+        ///// <returns>Mesh result instance</returns>
+        //public override ShellResult DareVerify(ContainerVerify options) {
+        //    var inputFile = options.Container.Value;
 
-            using (var container = Cryptography.Dare.Container.Open(
-                inputFile, containerType: ContainerType.MerkleTree)) {
-                }
+        //    using (var container = Cryptography.Dare.Container.Open(
+        //        inputFile, containerType: ContainerType.MerkleTree)) {
+        //        }
 
-            return new ResultFile() {
-                Filename = inputFile
-                };
-            }
+        //    return new ResultFile() {
+        //        Filename = inputFile
+        //        };
+        //    }
 
 
 

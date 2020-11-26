@@ -1275,70 +1275,70 @@ namespace Goedel.Mesh.Shell {
 		public static void Handle_ContainerCreate (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ContainerCreate		Options = new ContainerCreate ();
+			DareLog		Options = new DareLog ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ContainerCreate (Options);
+			var result = Dispatch.DareLog (Options);
 			Dispatch._PostProcess (result);
 			}
 
 		public static void Handle_ContainerArchive (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ContainerArchive		Options = new ContainerArchive ();
+			DareArchive		Options = new DareArchive ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ContainerArchive (Options);
+			var result = Dispatch.DareArchive (Options);
 			Dispatch._PostProcess (result);
 			}
 
 		public static void Handle_ContainerAppend (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ContainerAppend		Options = new ContainerAppend ();
+			DareAppend		Options = new DareAppend ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ContainerAppend (Options);
+			var result = Dispatch.DareAppend (Options);
 			Dispatch._PostProcess (result);
 			}
 
 		public static void Handle_ContainerDelete (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ContainerDelete		Options = new ContainerDelete ();
+			DareDelete		Options = new DareDelete ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ContainerDelete (Options);
+			var result = Dispatch.DareDelete (Options);
 			Dispatch._PostProcess (result);
 			}
 
 		public static void Handle_ContainerIndex (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ContainerIndex		Options = new ContainerIndex ();
+			DareIndex		Options = new DareIndex ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ContainerIndex (Options);
+			var result = Dispatch.DareIndex (Options);
 			Dispatch._PostProcess (result);
 			}
 
 		public static void Handle_ContainerExtract (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ContainerExtract		Options = new ContainerExtract ();
+			DareExtract		Options = new DareExtract ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ContainerExtract (Options);
+			var result = Dispatch.DareExtract (Options);
 			Dispatch._PostProcess (result);
 			}
 
 		public static void Handle_ContainerCopy (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ContainerCopy		Options = new ContainerCopy ();
+			DareCopy		Options = new DareCopy ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ContainerCopy (Options);
+			var result = Dispatch.DareCopy (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -1348,7 +1348,7 @@ namespace Goedel.Mesh.Shell {
 			ContainerVerify		Options = new ContainerVerify ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ContainerVerify (Options);
+			var result = Dispatch.DareVerify (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -14570,7 +14570,7 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ContainerCreate : _ContainerCreate {
+    public partial class DareLog : _ContainerCreate {
         } // class ContainerCreate
 
     public class _ContainerArchive : Goedel.Command.Dispatch ,
@@ -14871,7 +14871,7 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ContainerArchive : _ContainerArchive {
+    public partial class DareArchive : _ContainerArchive {
         } // class ContainerArchive
 
     public class _ContainerAppend : Goedel.Command.Dispatch ,
@@ -15137,7 +15137,7 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ContainerAppend : _ContainerAppend {
+    public partial class DareAppend : _ContainerAppend {
         } // class ContainerAppend
 
     public class _ContainerDelete : Goedel.Command.Dispatch  {
@@ -15212,7 +15212,7 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ContainerDelete : _ContainerDelete {
+    public partial class DareDelete : _ContainerDelete {
         } // class ContainerDelete
 
     public class _ContainerIndex : Goedel.Command.Dispatch ,
@@ -15444,7 +15444,7 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ContainerIndex : _ContainerIndex {
+    public partial class DareIndex : _ContainerIndex {
         } // class ContainerIndex
 
     public class _ContainerExtract : Goedel.Command.Dispatch ,
@@ -15657,7 +15657,7 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ContainerExtract : _ContainerExtract {
+    public partial class DareExtract : _ContainerExtract {
         } // class ContainerExtract
 
     public class _ContainerCopy : Goedel.Command.Dispatch ,
@@ -16009,7 +16009,7 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ContainerCopy : _ContainerCopy {
+    public partial class DareCopy : _ContainerCopy {
         } // class ContainerCopy
 
     public class _ContainerVerify : Goedel.Command.Dispatch ,
@@ -19208,42 +19208,42 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
-		public virtual ShellResult ContainerCreate ( ContainerCreate Options) {
+		public virtual ShellResult DareLog ( DareLog Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ContainerArchive ( ContainerArchive Options) {
+		public virtual ShellResult DareArchive ( DareArchive Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ContainerAppend ( ContainerAppend Options) {
+		public virtual ShellResult DareAppend ( DareAppend Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ContainerDelete ( ContainerDelete Options) {
+		public virtual ShellResult DareDelete ( DareDelete Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ContainerIndex ( ContainerIndex Options) {
+		public virtual ShellResult DareIndex ( DareIndex Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ContainerExtract ( ContainerExtract Options) {
+		public virtual ShellResult DareExtract ( DareExtract Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ContainerCopy ( ContainerCopy Options) {
+		public virtual ShellResult DareCopy ( DareCopy Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ContainerVerify ( ContainerVerify Options) {
+		public virtual ShellResult DareVerify ( ContainerVerify Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

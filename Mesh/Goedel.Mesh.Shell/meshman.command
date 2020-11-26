@@ -846,11 +846,9 @@
 			Include AccountOptions
 			Include Reporting
 
-	CommandSet Container "container"
-		Brief "DARE container commands"
 
-		Command ContainerCreate "create"
-			Brief "Create a new DARE Container"
+		Command DareLog "log"
+			Brief "Create a new DARE Sequence"
 			Include EncodeOptions
 			Include CryptoOptions
 			Include ContainerOptions
@@ -859,8 +857,8 @@
 			Parameter Container "out" NewFile
 				Brief "New container"			
 
-		Command ContainerArchive "archive"
-			Brief "Create a new DARE Container and archive the specified files"
+		Command DareArchive "archive"
+			Brief "Create a new DARE archive and add the specified files"
 			Include EncodeOptions
 			Include CryptoOptions
 			Include AccountOptions
@@ -871,7 +869,7 @@
 			Option Container "out" NewFile
 				Brief "New container"	
 
-		Command ContainerAppend "append"
+		Command DareAppend "append"
 			Brief "Append the specified file as an entry to the specified container"
 			Include EncodeOptions
 			Include CryptoOptions
@@ -883,14 +881,14 @@
 				Brief "File to append"
 			Option Key "key" String
 
-		Command ContainerDelete "delete"
+		Command DareDelete "delete"
 			Parameter Container "in" ExistingFile
 				Brief "Container to append to"
 			Option Filename "file" String
 				Brief "Name of file to delete"
 			Option Key "key" String
 
-		Command ContainerIndex "index"
+		Command DareIndex "index"
 			Brief "Compile an index for the specified container and append to the end."
 			Include EncodeOptions
 			Include CryptoOptions
@@ -899,7 +897,7 @@
 			Parameter Container "in" ExistingFile
 				Brief "Container to append to"
 
-		Command ContainerExtract "extract"
+		Command DareExtract "extract"
 			Brief "Extract the specified record from the container"
 			Parameter Container "in" ExistingFile
 				Brief "Container to read"
@@ -915,8 +913,8 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command ContainerCopy "copy"
-			Brief "Copy container contents to create a new container"
+		Command DareCopy "purge"
+			Brief "Copy container contents to create a new container removing deleted elements"
 			Parameter Input "in" ExistingFile
 				Brief "Container to read"
 			Parameter Output "out" NewFile
@@ -935,13 +933,6 @@
 			Option Purge "purge" Flag
 				Default "true"
 				Brief "Purge unused data etc."
-
-		Command ContainerVerify "verify"
-			Brief "Verify signatures and digests on container."
-			Include AccountOptions
-			Include Reporting
-			Parameter Container "in" ExistingFile
-				Brief "Container to read"
 
 	// Mail
 	CommandSet Mail "mail"

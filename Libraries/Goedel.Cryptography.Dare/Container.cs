@@ -1088,6 +1088,14 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
+        /// Verify that the file <paramref name="filename"/> is a DARE Sequence that
+        /// is in compliance with its specified policy.
+        /// </summary>
+        /// <param name="filename">The container to verify.</param>
+        public static void VerifyPolicy(string filename) => throw new NYI();
+
+
+        /// <summary>
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="headers">List of headers to check</param>

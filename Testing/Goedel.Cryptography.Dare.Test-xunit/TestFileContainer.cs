@@ -21,9 +21,9 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestFileContainer1() {
-            var Bytes = CreateBytes(100);
+            var bytes = CreateBytes(100);
 
-            ReadWriteContainer("TestFilePlaintext_100", Bytes, null);
+            ReadWriteContainer("TestFilePlaintext_100", bytes, null);
             }
 
 
@@ -32,15 +32,15 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestFileContainer16() {
-            byte[] Bytes = new byte[0];
-            ReadWriteContainer("TestFilePlaintext_0", Bytes, null);
+            byte[] bytes = new byte[0];
+            ReadWriteContainer("TestFilePlaintext_0", bytes, null);
 
-            int Length = 1;
+            int length = 1;
             for (var i = 1; i < 16; i++) {
-                var Filename = $"TestFilePlaintext_{Length}";
-                Bytes = CreateBytes(Length);
-                ReadWriteContainer(Filename, Bytes, null);
-                Length *= 2;
+                var filename = $"TestFilePlaintext_{length}";
+                bytes = CreateBytes(length);
+                ReadWriteContainer(filename, bytes, null);
+                length *= 2;
                 }
             }
 
@@ -53,9 +53,9 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestFileContainerEncrypted1() {
-            var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
+            var recipients = new List<string> { "Alice@example.com" };
+            var cryptoParameters = new CryptoParametersTest(
+                        recipients: recipients);
 
             var Bytes = CreateBytes(100);
             ReadWriteContainer("TestFileEncrypted_100", Bytes, null);
@@ -67,19 +67,19 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestFileContainerEncrypted16() {
-            var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
+            var recipients = new List<string> { "Alice@example.com" };
+            var cryptoParameters = new CryptoParametersTest(
+                        recipients: recipients);
 
-            byte[] Bytes = new byte[0];
-            ReadWriteContainer("TestFileEncrypted_0", Bytes, null);
+            byte[] bytes = new byte[0];
+            ReadWriteContainer("TestFileEncrypted_0", bytes, null);
 
-            int Length = 1;
+            int length = 1;
             for (var i = 1; i < 16; i++) {
-                var Filename = $"TestFileEncrypted_{Length}";
-                Bytes = CreateBytes(Length);
-                ReadWriteContainer(Filename, Bytes, null);
-                Length *= 2;
+                var filename = $"TestFileEncrypted_{length}";
+                bytes = CreateBytes(length);
+                ReadWriteContainer(filename, bytes, null);
+                length *= 2;
                 }
             }
 
@@ -106,9 +106,9 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestArchiveEncrypted10Bulk() {
-            var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
+            var recipients = new List<string> { "Alice@example.com" };
+            var cryptoParameters = new CryptoParametersTest(
+                        recipients: recipients);
             ReadWriteArchive("TestArchive_", 10, null, false);
             }
 
@@ -117,9 +117,9 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestArchiveEncrypted10Individual() {
-            var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
+            var recipients = new List<string> { "Alice@example.com" };
+            var cryptoParameters = new CryptoParametersTest(
+                        recipients: recipients);
             ReadWriteArchive("TestArchive_", 10, null, true);
             }
 
@@ -128,66 +128,72 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestArchiveMulti() {
-            var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
-            var Entries = new int[] { 5, 15, 30, 100 };
+            var recipients = new List<string> { "Alice@example.com" };
+            var cryptoParameters = new CryptoParametersTest(
+                        recipients: recipients);
+            var entries = new int[] { 5, 15, 30, 100 };
 
-            foreach (var Entry in Entries) {
-                ReadWriteArchive("TestArchive_", Entry);
-                ReadWriteArchive("TestArchive_", Entry, null, false);
-                ReadWriteArchive("TestArchive_", Entry, null, true);
+            foreach (var entry in entries) {
+                ReadWriteArchive("TestArchive_", entry);
+                ReadWriteArchive("TestArchive_", entry, null, false);
+                ReadWriteArchive("TestArchive_", entry, null, true);
                 }
             }
 
         static Random Random = new Random();
-        byte[] CreateBytes(int Length) => CryptoCatalog.GetBytes(Length);
+        byte[] CreateBytes(int length) => CryptoCatalog.GetBytes(length);
 
-        void ReadWriteContainer(string FileName, byte[] TestData, DarePolicy CryptoParameters = null) {
+        void ReadWriteContainer(string fileName, byte[] testData, DarePolicy cryptoParameters = null) {
             //CryptoParameters ??= new CryptoParameters();
 
             // Create container
-            FileContainerWriter.File(FileName, CryptoParameters, TestData, null);
+            FileContainerWriter.File(fileName, cryptoParameters, testData, null);
 
             // Read Container
-            FileContainerReader.File(FileName, CryptoParameters.KeyLocate,
+            FileContainerReader.File(fileName, cryptoParameters.KeyLocate,
                         out var ReadData, out var ContentMetaOut);
 
             // Check for equality
-            ReadData.IsEqualTo(TestData).TestTrue();
+            ReadData.IsEqualTo(testData).TestTrue();
+
+
+            Container.VerifyPolicy(fileName);
             }
 
 
-        void ReadWriteArchive(string FileNameBase, int Entries,
-                    DarePolicy policy = null, bool Independent = false) {
+        void ReadWriteArchive(string fileNameBase, int entries,
+                    DarePolicy policy = null, bool independent = false) {
 
-            var CryptoParameters = new CryptoParameters();
+            var cryptoParameters = new CryptoParameters();
 
-            var TestData = new byte[Entries][];
-            for (var i = 0; i < Entries; i++) {
+            var testData = new byte[entries][];
+            for (var i = 0; i < entries; i++) {
                 var Length = Random.Next(32768);
-                TestData[i] = CreateBytes(Length);
+                testData[i] = CreateBytes(Length);
                 }
 
-            var Mode = policy.Encrypt ? "" : (Independent ? "_Ind" : "_Bulk");
-            var Filename = FileNameBase + $"{Mode}_{Entries}";
+            var mode = policy.Encrypt ? "" : (independent ? "_Ind" : "_Bulk");
+            var filename = fileNameBase + $"{mode}_{entries}";
 
 
-            using (var Writer = new FileContainerWriter(
-                    Filename, policy, true, fileStatus: FileStatus.Overwrite)) {
-                for (var i = 0; i < Entries; i++) {
-                    Writer.Add(TestData[i]);
+            using (var writer = new FileContainerWriter(
+                    filename, policy, true, fileStatus: FileStatus.Overwrite)) {
+                for (var i = 0; i < entries; i++) {
+                    writer.Add(testData[i]);
                     }
                 }
 
             // Test retrieval by index number. Note that since record 0 has the 
             // container header data, the data items run through [1..Entries]
-            using var Reader = new FileContainerReader(Filename, policy.KeyLocate);
-            for (var i = 0; i < Entries; i++) {
+            using (var reader = new FileContainerReader(filename, policy.KeyLocate)) {
+                for (var i = 0; i < entries; i++) {
 
-                Reader.Read(policy?.KeyLocate, out var ReadData, out var ContentMeta, index: i + 1);
-                ReadData.IsEqualTo(TestData[i]).TestTrue(); 
+                    reader.Read(policy?.KeyLocate, out var ReadData, out var ContentMeta, index: i + 1);
+                    ReadData.IsEqualTo(testData[i]).TestTrue();
+                    }
                 }
+
+            Container.VerifyPolicy(filename);
             }
 
 

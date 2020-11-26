@@ -5,6 +5,7 @@ using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
 
+using System.Collections.Generic;
 using Xunit;
 
 namespace Goedel.XUnit {
@@ -74,6 +75,97 @@ namespace Goedel.XUnit {
             return true;
             }
 
+        [Fact]
+        public void TestArchive() => TestSequence(true);
 
+        [Fact]
+        public void TestLog() => TestSequence(false);
+
+
+        [Theory]
+        [InlineData (true, 100)]
+        public void TestSequence(
+                    bool archive = true,
+                    int count = 10,
+                    string encrypt=null,
+                    string sign=null,
+                    bool purge=false,
+                    bool index=false) {
+
+            // create Alice account
+
+
+            // create Mallet account
+
+
+            var entries = new Dictionary<string, bool>();
+            var filename = "";
+
+            "Exercise a file archive".TaskTest();
+
+            // Delete test directory, Create directory and test files
+            // Create archive with specified security policy
+
+
+            VerifyArchive(filename, entries, sign, encrypt);
+
+            // Append new file
+            // Update old file.
+
+            VerifyArchive(filename, entries, sign, encrypt);
+
+            // Delete file
+
+            VerifyArchive(filename, entries, sign, encrypt);
+
+
+            if (purge) {
+                // Test Purge
+                }
+
+            if (index) {
+                // Test Index
+                }
+
+
+            throw new NYI();
+            }
+
+
+
+        bool VerifyArchive(string filename, Dictionary<string, bool> entries, string sign, string encrypt) {
+            VerifyPolicy(filename, sign, encrypt);
+
+            // Extract all files and test.
+            foreach (var entry in entries) {
+                var subFile = entry.Key;
+                // extract
+
+                VerifyPolicy(subFile, sign, encrypt);
+                }
+
+            // Extract single files and test.
+            foreach (var entry in entries) {
+                var subFile = entry.Key;
+                // extract
+
+                VerifyPolicy(subFile, sign, encrypt);
+                }
+
+            throw new NYI();
+            }
+
+
+        bool VerifyPolicy(string filename, string encrypt, string sign) {
+
+            "Test that the file matches the policy".TaskTest();
+
+
+            filename.Future();
+            encrypt.Future();
+            sign.Future();
+
+            throw new NYI();
+            }
         }
     }
