@@ -34,18 +34,11 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
-            Goedel.XUnit.TestContainers.Test().ContainerFixedExchange();
-
-            // Need to re-engineer shell tests so that they can be run as a monolithic process or detached. 
-
-            //TestService.Test().ProtocolHello();
+            TestContainers.Test().ContainerFixedExchange();
 
             //ShellTests.Test().TestFilePlain();
-
-            //Goedel.XUnit.MakeSiteDocs.Test().SyncSecondDevice();
-
-            //Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
-
+            //ShellTests.Test().TestArchive();
+            //ShellTests.Test().TestLog();
 
 
             //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
@@ -55,13 +48,6 @@ namespace Scratchpad {
             //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
 
             //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
-
-
-
-
-            //ShellTests.Test().TestEscrowDeleteDevice();
-            //Goedel.XUnit.MakeSiteDocs.Test().Recover();
-
 
             }
 

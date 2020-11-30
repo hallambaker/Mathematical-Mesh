@@ -1,4 +1,4 @@
-﻿
+﻿using System.IO;
 using Goedel.IO;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
@@ -83,40 +83,72 @@ namespace Goedel.XUnit {
 
 
         [Theory]
-        [InlineData (true, 100)]
+        [InlineData(true, 100)]
         public void TestSequence(
                     bool archive = true,
                     int count = 10,
-                    string encrypt=null,
-                    string sign=null,
-                    bool purge=false,
-                    bool index=false) {
+                    string encrypt = null,
+                    string sign = null,
+                    bool purge = false,
+                    bool index = false,
+                    string initial = "Archive1") {
+
+
+            initial = initial == null ? null : "../CommonData/" + initial;
 
             // create Alice account
-
+            var accountAlice = AliceAccount;
+            CreateAccount(accountAlice);
 
             // create Mallet account
+            var mallet = GetTestCLI("Mallet");
+            MakeAccount(mallet, MalletAccount);
 
 
             var entries = new Dictionary<string, bool>();
-            var filename = "";
+            var filename = $"seq-{archive}-{encrypt}-{sign}-{count}-{purge}-{index}";
 
             "Exercise a file archive".TaskTest();
 
-            // Delete test directory, Create directory and test files
+            var options = encrypt == null ? "" : $" /encrypt={encrypt}" +
+                        sign == null ? "" : $" /sign={sign}";
+
             // Create archive with specified security policy
 
+            if (archive) {
+                // add the initial values (if any);
+                options = initial == null ? options : $" {initial}" + options;
+                Dispatch($"dare archive {options} /out={filename}");
+                AddEntries(entries, initial);
+                }
+            else {
+                Dispatch($"dare log {filename}");
+                }
 
-            VerifyArchive(filename, entries, sign, encrypt);
+            VerifyArchive(filename, entries, sign, encrypt, mallet);
 
-            // Append new file
-            // Update old file.
+            if (archive) {
+                // add count new file
 
-            VerifyArchive(filename, entries, sign, encrypt);
+                // Update old file.
+                }
+            else {
 
-            // Delete file
 
-            VerifyArchive(filename, entries, sign, encrypt);
+                // add count log entries
+
+                }
+
+
+
+            VerifyArchive(filename, entries, sign, encrypt, mallet);
+
+            if (archive) {
+                // Delete file
+
+                VerifyArchive(filename, entries, sign, encrypt, mallet);
+                }
+            
 
 
             if (purge) {
@@ -132,8 +164,23 @@ namespace Goedel.XUnit {
             }
 
 
+        void AddEntries(Dictionary<string, bool> dictionary, string directory) {
+            if (directory == null) {
+                return;
+                }
 
-        bool VerifyArchive(string filename, Dictionary<string, bool> entries, string sign, string encrypt) {
+            var files = Directory.GetFiles(directory);
+
+            foreach (var file in files) {
+                var filename = Path.GetFileName(file);
+                dictionary.Add(filename, true);
+                }
+
+            }
+
+
+        bool VerifyArchive(string filename, Dictionary<string, bool> entries, string sign, string encrypt,
+                TestCLI mallet) {
             VerifyPolicy(filename, sign, encrypt);
 
             // Extract all files and test.
