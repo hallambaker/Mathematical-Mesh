@@ -27,8 +27,8 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="keyLocate">Key collection to be used to resolve public keys</param>
-        public ContainerList(IKeyLocate keyLocate) : base (keyLocate) {
+
+        public ContainerList() : base () {
             }
 
         /// <summary>
@@ -43,10 +43,9 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The newly constructed container.</returns>
 
         public static Container MakeNewContainer(
-                        JbcdStream JBCDStream,
-                        CryptoParameters cryptoParameters) {
+                        JbcdStream JBCDStream) {
 
-            var keyLocate = cryptoParameters.KeyLocate;
+
             var containerInfo = new ContainerInfo() {
                 ContainerType = Label,
                 Index = 0
@@ -56,7 +55,7 @@ namespace Goedel.Cryptography.Dare {
                 ContainerInfo = containerInfo
                 };
 
-            var container = new ContainerList(keyLocate) {
+            var container = new ContainerList() {
                 JbcdStream = JBCDStream,
                 ContainerHeaderFirst = containerHeader
                 };

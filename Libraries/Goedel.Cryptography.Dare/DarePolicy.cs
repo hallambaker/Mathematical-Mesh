@@ -9,21 +9,33 @@ namespace Goedel.Cryptography.Dare {
 
     public partial class DarePolicy {
 
-        public bool Encrypt => throw new NYI();
+        public bool Encrypt => EncryptKeys != null;
 
         public IKeyLocate KeyLocate { get; set; }
 
-        public CryptoParameters GetCryptoParameters() => throw new NYI();
 
 
-        public DarePolicy(
-                        IKeyLocate keyCollection = null,
-                        List<string> recipients = null,
-                        List<string> signers = null,
-                        CryptoKey recipient = null,
-                        CryptoKey signer = null,
-                        CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
-                        CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) => throw new NYI();
+
+
+        public CryptoParameters GetCryptoParameters() =>
+                CryptoParameters ?? MakeCryptoParameters();
+
+        CryptoParameters CryptoParameters { get; set; }
+
+        public DarePolicy() {
+            }
+
+        public DarePolicy(CryptoParameters cryptoParameters) {
+            CryptoParameters = cryptoParameters;
+            }
+
+        CryptoParameters MakeCryptoParameters() {
+
+            throw new NYI();
+
+            }
+
+
 
         }
 

@@ -19,8 +19,8 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="keyLocate">Key collection to be used to resolve public keys</param>
-        public ContainerMerkleTree(IKeyLocate keyLocate) : base(keyLocate) {
+
+        public ContainerMerkleTree()  {
             }
 
         /// <summary>
@@ -30,15 +30,12 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jbcdStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="cryptoParameters">Cryptographic parameters specifying algorithms and keys
-        /// for encoding and authentication of data.</param>
         /// <returns>The newly constructed container.</returns>
 
         public static new Container MakeNewContainer(
-                        JbcdStream jbcdStream,
-                        CryptoParameters cryptoParameters) {
+                        JbcdStream jbcdStream) {
 
-            var keyLocate = cryptoParameters.KeyLocate;
+
             var containerInfo = new ContainerInfo() {
                 ContainerType = Label,
                 Index = 0
@@ -49,7 +46,7 @@ namespace Goedel.Cryptography.Dare {
                 ContainerInfo = containerInfo
                 };
 
-            var container = new ContainerMerkleTree(keyLocate) {
+            var container = new ContainerMerkleTree() {
                 JbcdStream = jbcdStream,
                 ContainerHeaderFirst = containerHeader
                 };

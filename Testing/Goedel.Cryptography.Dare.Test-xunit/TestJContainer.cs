@@ -29,7 +29,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void ContainerTestEncrypted() {
             var CryptoParameters = new DarePolicy(
-                        recipients: Recipients);
+                        new CryptoParameters (recipients: Recipients));
 
             TestContainer($"ContainerList", ContainerType.List, 0, policy: CryptoParameters);
             TestContainer($"ContainerList", ContainerType.List, 1, policy: CryptoParameters);
@@ -49,7 +49,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void ContainerTestSigned() {
             var CryptoParameters = new DarePolicy(
-                        signers: Signers);
+                        new CryptoParameters(signers: Signers));
 
             TestContainer($"ContainerList", ContainerType.List, 0, policy: CryptoParameters);
             TestContainer($"ContainerList", ContainerType.List, 1, policy: CryptoParameters);
@@ -122,7 +122,7 @@ namespace Goedel.XUnit {
         public void ContainerTestEncryptedMulti() {
 
             var CryptoParameters = new DarePolicy(
-                    recipients: Recipients);
+                    new CryptoParameters(recipients: Recipients));
 
             var Records = 0;
             TestContainerMulti($"-Encrypted-{Records}", Records, policy: CryptoParameters);

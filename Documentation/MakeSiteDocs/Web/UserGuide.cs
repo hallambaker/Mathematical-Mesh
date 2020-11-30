@@ -29,8 +29,6 @@ namespace ExampleGenerator {
 			 HashReference (Index);
 			 WebDare (Index);
 			 DareReference (Index);
-			 WebContainer (Index);
-			 ContainerReference (Index);
 			 WebConnect (Index);
 			 ConnectReference (Index);
 			

@@ -342,22 +342,14 @@ namespace Goedel.Mesh.Shell {
 				{"encode", _DareEncode._DescribeCommand },
 				{"decode", _DareDecode._DescribeCommand },
 				{"verify", _DareVerify._DescribeCommand },
-				{"earl", _DareEARL._DescribeCommand }
-				} // End Entries
-			};
-
-		public static DescribeCommandSet DescribeCommandSet_Container = new DescribeCommandSet () {
-            Identifier = "container",
-			Brief = "DARE container commands",
-			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"create", _ContainerCreate._DescribeCommand },
-				{"archive", _ContainerArchive._DescribeCommand },
-				{"append", _ContainerAppend._DescribeCommand },
-				{"delete", _ContainerDelete._DescribeCommand },
-				{"index", _ContainerIndex._DescribeCommand },
-				{"extract", _ContainerExtract._DescribeCommand },
-				{"copy", _ContainerCopy._DescribeCommand },
-				{"verify", _ContainerVerify._DescribeCommand }
+				{"earl", _DareEARL._DescribeCommand },
+				{"log", _DareLog._DescribeCommand },
+				{"archive", _DareArchive._DescribeCommand },
+				{"append", _DareAppend._DescribeCommand },
+				{"delete", _DareDelete._DescribeCommand },
+				{"index", _DareIndex._DescribeCommand },
+				{"extract", _DareExtract._DescribeCommand },
+				{"purge", _DareCopy._DescribeCommand }
 				} // End Entries
 			};
 
@@ -458,7 +450,6 @@ namespace Goedel.Mesh.Shell {
 				{"key", DescribeCommandSet_Key},
 				{"hash", DescribeCommandSet_Hash},
 				{"dare", DescribeCommandSet_Dare},
-				{"container", DescribeCommandSet_Container},
 				{"mail", DescribeCommandSet_Mail},
 				{"ssh", DescribeCommandSet_SSH},
 				{"about", DescribeAbout },
@@ -1272,7 +1263,7 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ContainerCreate (
+		public static void Handle_DareLog (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
 			DareLog		Options = new DareLog ();
@@ -1282,7 +1273,7 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ContainerArchive (
+		public static void Handle_DareArchive (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
 			DareArchive		Options = new DareArchive ();
@@ -1292,7 +1283,7 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ContainerAppend (
+		public static void Handle_DareAppend (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
 			DareAppend		Options = new DareAppend ();
@@ -1302,7 +1293,7 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ContainerDelete (
+		public static void Handle_DareDelete (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
 			DareDelete		Options = new DareDelete ();
@@ -1312,7 +1303,7 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ContainerIndex (
+		public static void Handle_DareIndex (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
 			DareIndex		Options = new DareIndex ();
@@ -1322,7 +1313,7 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ContainerExtract (
+		public static void Handle_DareExtract (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
 			DareExtract		Options = new DareExtract ();
@@ -1332,23 +1323,13 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ContainerCopy (
+		public static void Handle_DareCopy (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
 			DareCopy		Options = new DareCopy ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.DareCopy (Options);
-			Dispatch._PostProcess (result);
-			}
-
-		public static void Handle_ContainerVerify (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			Shell Dispatch =	DispatchIn as Shell;
-			ContainerVerify		Options = new ContainerVerify ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
-			var result = Dispatch.DareVerify (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -14289,7 +14270,7 @@ namespace Goedel.Mesh.Shell {
     public partial class DareEARL : _DareEARL {
         } // class DareEARL
 
-    public class _ContainerCreate : Goedel.Command.Dispatch ,
+    public class _DareLog : Goedel.Command.Dispatch ,
 							IEncodeOptions,
 							ICryptoOptions,
 							IContainerOptions,
@@ -14455,9 +14436,9 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "create",
-			Brief =  "Create a new DARE Container",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContainerCreate,
+			Identifier = "log",
+			Brief =  "Create a new DARE Sequence",
+			HandleDelegate =  CommandLineInterpreter.Handle_DareLog,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -14570,10 +14551,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class DareLog : _ContainerCreate {
-        } // class ContainerCreate
+    public partial class DareLog : _DareLog {
+        } // class DareLog
 
-    public class _ContainerArchive : Goedel.Command.Dispatch ,
+    public class _DareArchive : Goedel.Command.Dispatch ,
 							IEncodeOptions,
 							ICryptoOptions,
 							IAccountOptions,
@@ -14750,8 +14731,8 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "archive",
-			Brief =  "Create a new DARE Container and archive the specified files",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContainerArchive,
+			Brief =  "Create a new DARE archive and add the specified files",
+			HandleDelegate =  CommandLineInterpreter.Handle_DareArchive,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -14871,10 +14852,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class DareArchive : _ContainerArchive {
-        } // class ContainerArchive
+    public partial class DareArchive : _DareArchive {
+        } // class DareArchive
 
-    public class _ContainerAppend : Goedel.Command.Dispatch ,
+    public class _DareAppend : Goedel.Command.Dispatch ,
 							IEncodeOptions,
 							ICryptoOptions,
 							IAccountOptions,
@@ -15031,7 +15012,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "append",
 			Brief =  "Append the specified file as an entry to the specified container",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContainerAppend,
+			HandleDelegate =  CommandLineInterpreter.Handle_DareAppend,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -15137,10 +15118,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class DareAppend : _ContainerAppend {
-        } // class ContainerAppend
+    public partial class DareAppend : _DareAppend {
+        } // class DareAppend
 
-    public class _ContainerDelete : Goedel.Command.Dispatch  {
+    public class _DareDelete : Goedel.Command.Dispatch  {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new ExistingFile (),
@@ -15183,7 +15164,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "delete",
 			Brief =  "<Unspecified>",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContainerDelete,
+			HandleDelegate =  CommandLineInterpreter.Handle_DareDelete,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -15212,10 +15193,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class DareDelete : _ContainerDelete {
-        } // class ContainerDelete
+    public partial class DareDelete : _DareDelete {
+        } // class DareDelete
 
-    public class _ContainerIndex : Goedel.Command.Dispatch ,
+    public class _DareIndex : Goedel.Command.Dispatch ,
 							IEncodeOptions,
 							ICryptoOptions,
 							IAccountOptions,
@@ -15352,7 +15333,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "index",
 			Brief =  "Compile an index for the specified container and append to the end.",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContainerIndex,
+			HandleDelegate =  CommandLineInterpreter.Handle_DareIndex,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -15444,10 +15425,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class DareIndex : _ContainerIndex {
-        } // class ContainerIndex
+    public partial class DareIndex : _DareIndex {
+        } // class DareIndex
 
-    public class _ContainerExtract : Goedel.Command.Dispatch ,
+    public class _DareExtract : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
 
@@ -15572,7 +15553,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "extract",
 			Brief =  "Extract the specified record from the container",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContainerExtract,
+			HandleDelegate =  CommandLineInterpreter.Handle_DareExtract,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -15657,10 +15638,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class DareExtract : _ContainerExtract {
-        } // class ContainerExtract
+    public partial class DareExtract : _DareExtract {
+        } // class DareExtract
 
-    public class _ContainerCopy : Goedel.Command.Dispatch ,
+    public class _DareCopy : Goedel.Command.Dispatch ,
 							IEncodeOptions,
 							ICryptoOptions,
 							IContainerOptions,
@@ -15866,9 +15847,9 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "copy",
-			Brief =  "Copy container contents to create a new container",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContainerCopy,
+			Identifier = "purge",
+			Brief =  "Copy container contents to create a new container removing deleted elements",
+			HandleDelegate =  CommandLineInterpreter.Handle_DareCopy,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -16009,153 +15990,8 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class DareCopy : _ContainerCopy {
-        } // class ContainerCopy
-
-    public class _ContainerVerify : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new ExistingFile ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [local]</summary>
-		public virtual String LocalName {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _LocalName {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Container {
-			get => _Data[6] as ExistingFile;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Container {
-			set => _Data[6].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "verify",
-			Brief =  "Verify signatures and digests on container.",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContainerVerify,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryOption () {
-					Identifier = "LocalName", 
-					Default = null, // null if null
-					Brief = "Local name for account (e.g. personal)",
-					Index = 1,
-					Key = "local"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Container", 
-					Default = null, // null if null
-					Brief = "Container to read",
-					Index = 6,
-					Key = ""
-					}
-				}
-			};
-
-		}
-
-    public partial class ContainerVerify : _ContainerVerify {
-        } // class ContainerVerify
+    public partial class DareCopy : _DareCopy {
+        } // class DareCopy
 
     public class _MailAdd : Goedel.Command.Dispatch ,
 							IAccountOptions,
@@ -19239,11 +19075,6 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult DareCopy ( DareCopy Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			return null;
-			}
-
-		public virtual ShellResult DareVerify ( ContainerVerify Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

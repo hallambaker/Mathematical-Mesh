@@ -148,16 +148,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Web\CommandsetContainer.cs">
-      <DependentUpon>CommandsetContainer.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-      <Compile Update="Web\CommandsetKey.cs">
-      <DependentUpon>CommandsetKey.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
       <Compile Update="Web\CommandsetDevice.cs">
       <DependentUpon>CommandsetDevice.script</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -268,10 +258,6 @@
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetHash.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetContainer.script">
       <LastGenOutput>CommandsetKey.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>

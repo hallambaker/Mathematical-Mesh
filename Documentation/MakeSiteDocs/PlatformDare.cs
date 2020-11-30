@@ -277,30 +277,27 @@ namespace ExampleGenerator {
 
             var Accounts = new List<string> { AliceAccount };
 
-            Dare.DarePolicyPlaintext = new DarePolicy() {
+            Dare.CryptoParametersPlaintext = new CryptoParameters() {
                         KeyLocate= keyCollection };
 
-            Dare.DarePolicyEncrypt = new DarePolicy(
+            Dare.CryptoParametersEncrypt = new CryptoParameters(
                         keyCollection: keyCollection,
                         recipients: Accounts);
-
-            Dare.DarePolicySign = new DarePolicy(
+            Dare.CryptoParametersSign = new CryptoParameters(
                         keyCollection: keyCollection,
                         signers: Accounts);
-
-            Dare.DarePolicySignEncrypt = new DarePolicy(
+            Dare.CryptoParametersSignEncrypt = new CryptoParameters(
                         keyCollection: keyCollection,
                         recipients: Accounts,
                         signers: Accounts);
 
 
 
-            Dare.CryptoParametersPlaintext = Dare.DarePolicyPlaintext.GetCryptoParameters();
-            Dare.CryptoParametersEncrypt = Dare.DarePolicyEncrypt.GetCryptoParameters();
 
-            Dare.CryptoParametersSign = Dare.DarePolicySign.GetCryptoParameters();
-
-            Dare.CryptoParametersSignEncrypt = Dare.DarePolicySignEncrypt.GetCryptoParameters();
+            Dare.DarePolicyPlaintext = new DarePolicy(Dare.CryptoParametersPlaintext);
+            Dare.DarePolicyEncrypt = new DarePolicy(Dare.CryptoParametersEncrypt);
+            Dare.DarePolicySign = new DarePolicy(Dare.CryptoParametersSign);
+            Dare.DarePolicySignEncrypt = new DarePolicy(Dare.CryptoParametersSignEncrypt);
 
 
             Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt);

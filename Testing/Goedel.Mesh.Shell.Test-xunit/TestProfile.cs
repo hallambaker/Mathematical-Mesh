@@ -10,6 +10,7 @@ using Xunit;
 namespace Goedel.XUnit {
     public partial class ShellTests {
         string AliceAccount => "alice@example.com";
+        string MalletAccount => "mallet@example.com";
         string AccountA2 => "alice@example.net";
 
         string AccountB => "bob@example.com";

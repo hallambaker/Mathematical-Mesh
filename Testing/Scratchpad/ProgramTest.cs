@@ -34,6 +34,9 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
+            TestContainers.Test().ContainerTest0();
+            TestContainers.Test().ContainerTest1();
+            TestContainers.Test().ContainerTest10();
             TestContainers.Test().ContainerFixedExchange();
 
             //ShellTests.Test().TestFilePlain();
