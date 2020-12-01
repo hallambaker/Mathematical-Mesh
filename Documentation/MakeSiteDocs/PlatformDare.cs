@@ -103,7 +103,7 @@ namespace ExampleGenerator {
 
             //var FileStream = FileName.FileStream(FileStatus.Overwrite);
             var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output: consoleWriter);
-            return Goedel.Cryptography.Dare.Container.NewContainer(JBCDStream, ContainerType, policy);
+            return Goedel.Cryptography.Dare.Container.NewContainer(JBCDStream, containerType: ContainerType, policy: policy);
 
             }
 

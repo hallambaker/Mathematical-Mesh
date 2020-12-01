@@ -13,7 +13,7 @@ namespace Goedel.Cryptography.Dare {
     /// <threadsafety static="true" instance="false"/>
     public class ContainerDigest : ContainerList {
 
-
+        public override bool DigestRequired => true;
         /// <summary>
         /// The label for the container type for use in header declarations
         /// </summary>

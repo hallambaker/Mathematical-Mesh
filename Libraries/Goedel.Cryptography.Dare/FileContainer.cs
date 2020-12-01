@@ -119,7 +119,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             if (jbcdStream.Length == 0) {
-                return Container.NewContainer(jbcdStream, containerType);
+                return Container.NewContainer(jbcdStream, containerType: containerType);
 
                 }
             else {

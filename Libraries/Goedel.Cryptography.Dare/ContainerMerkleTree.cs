@@ -16,6 +16,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public new const string Label = "Merkle";
 
+        public override bool DigestRequired => true;
+
         /// <summary>
         /// Default constructor
         /// </summary>

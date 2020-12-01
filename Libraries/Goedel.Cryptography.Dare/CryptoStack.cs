@@ -121,8 +121,7 @@ namespace Goedel.Cryptography.Dare
         /// <param name="cryptoParameters">The cryptographic parameters to create the stack from.</param>
         public CryptoStack(
             CryptoParameters cryptoParameters
-            )
-            {
+            ) {
             encryptId = cryptoParameters.EncryptID;
             digestId = cryptoParameters.DigestID;
 
@@ -139,16 +138,34 @@ namespace Goedel.Cryptography.Dare
                 Recipients ??= new List<DareRecipient>();
                 foreach (var encryptionKey in cryptoParameters.EncryptionKeys) {
                     MakeRecipient(MasterSecret, encryptionKey);
+                    }
                 }
-            }
 
             if (cryptoParameters.SignerKeys != null) {
                 SignerKeys = cryptoParameters.SignerKeys;
-            }
+                }
             if (DigestId != CryptoAlgorithmId.NULL) {
                 DigestAlgorithm = DigestId.ToJoseID();
+                }
             }
+
+        public CryptoStack(
+                DarePolicy policy,
+                bool digestRequired
+                ) {
+
+            if (policy == null) {
+                encryptId = CryptoAlgorithmId.NULL;
+                digestId = CryptoAlgorithmId.NULL;
+                }
+
+            // If digest is required, force the selection of a digest algorithm.
+            if (digestRequired & digestId == CryptoAlgorithmId.NULL) {
+                digestId = CryptoAlgorithmId.Default;
+                }
+
             }
+
 
 
         /// <summary>
@@ -156,8 +173,7 @@ namespace Goedel.Cryptography.Dare
         /// signers using the specified KeyCollection to resolve the identifiers.
         /// </summary>
         /// <param name="pin"></param>
-        public CryptoStack(string pin)
-            {
+        public CryptoStack(string pin) {
             Salt = Platform.GetRandomBits(128);
             EncryptionAlgorithm = EncryptId.ToJoseID();
 

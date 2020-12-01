@@ -204,7 +204,7 @@ namespace Goedel.XUnit {
                     DarePolicy policy = null,
                     CryptoParameters CryptoParametersEntry = null) {
 
-            var keyCollection = policy.KeyLocate;
+            var keyCollection = policy?.KeyLocate;
             //var KeyCollection = policy?.KeyLocate ?? CryptoParametersEntry?.KeyLocate;
 
             ReOpen = ReOpen == 0 ? Records : ReOpen;
@@ -238,14 +238,14 @@ namespace Goedel.XUnit {
             var Headers = new List<DareHeader>();
             using (var XContainer = Container.Open(FileName, FileStatus.Read,
                             policy: policy,
-                            keyCollection: keyCollection)) {
+                            keyLocate: keyCollection)) {
                 XContainer.VerifyContainer();
                 }
 
             // Read records 
             using (var XContainer = Container.Open(FileName, FileStatus.Read,
                             policy: policy,
-                            keyCollection: keyCollection)) {
+                            keyLocate: keyCollection)) {
 
                 Record = 0;
                 foreach (var ContainerDataReader in XContainer) {

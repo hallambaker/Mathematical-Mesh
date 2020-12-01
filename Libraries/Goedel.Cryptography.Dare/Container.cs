@@ -91,6 +91,9 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The apex digest value of the container as written to the file.</summary>
         public byte[] Digest;
 
+
+        public virtual bool DigestRequired => false;
+
         ///<summary>The first frame in the container</summary>
         public DareEnvelope FrameZero;
 
@@ -211,10 +214,9 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="fileName">The file name.</param>
         /// <param name="fileStatus">The file access mode.</param>
-        /// <param name="keyCollection">The key collection to be used to resolve requests
+        /// <param name="keyLocate">The key collection to be used to resolve requests
         /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
-        /// <param name="cryptoParameters">Cryptographic parameters specifying defaults
-        /// for encoding and authentication of data.</param>
+        /// <param name="policy">The cryptographic policy to govern the container.</param>
         /// <param name="containerType">The container type to create if the container does
         /// not already exist.</param>
         /// <param name="contentType">The content type to declare if a new container is
@@ -226,7 +228,7 @@ namespace Goedel.Cryptography.Dare {
         public static Container Open(
                         string fileName,
                         FileStatus fileStatus = FileStatus.Read,
-                        IKeyLocate keyCollection = null,
+                        IKeyLocate keyLocate = null,
                         //CryptoParameters cryptoParameters = null,
                         ContainerType containerType = ContainerType.Unknown,
                         DarePolicy policy = null,
@@ -254,15 +256,15 @@ namespace Goedel.Cryptography.Dare {
                 // Create new container if empty or read the old one.
                 if (jbcdStream.Length == 0) {
                     Container = NewContainer(jbcdStream,
-                        containerType, policy, contentType: contentType);
+                        keyLocate: keyLocate, containerType: containerType, policy: policy, contentType: contentType);
                     }
                 else {
                     
-                    Container = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt);
+                    Container = OpenExisting(jbcdStream, keyLocate, decrypt: decrypt);
 
                     }
 
-                (Container.KeyCollection == keyCollection).AssertTrue(NYI.Throw);
+                (Container.KeyCollection == keyLocate).AssertTrue(NYI.Throw);
 
                 Container.DisposeJBCDStream = jbcdStream;
                 return Container;
@@ -468,8 +470,8 @@ namespace Goedel.Cryptography.Dare {
 
             var jbcdStream = new JbcdStream(filename, fileStatus);
             var container = NewContainer(
-                jbcdStream, containerType, policy, payload, contentType, dataEncoding,
-                cloaked, dataSequences);
+                jbcdStream, containerType: containerType, policy: policy, payload: payload, contentType: contentType, dataEncoding: dataEncoding,
+                cloaked: cloaked, dataSequences: dataSequences);
 
             container.DisposeJBCDStream = jbcdStream;
 
@@ -485,40 +487,30 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jbcdStream">The underlying file stream. This MUST be opened
         /// in a read access mode and should have exclusive write access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
+        /// <param name="keyLocate">The key collection to be used to resolve requests
+        /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
         /// <param name="payload">Optional data payload. </param>
         /// <param name="dataEncoding">The data encoding.</param>
         /// <param name="contentType">Content type of the optional data payload</param>
         /// <param name="containerType">The container type. This determines whether
         /// a tree index is to be created or not and if so, whether </param>
-
+        /// <param name="policy">The cryptographic policy to govern the container.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         public static Container NewContainer(
                         JbcdStream jbcdStream,
-                        //CryptoParameters cryptoParameters,
+                        IKeyLocate keyLocate = null,
                         ContainerType containerType = ContainerType.Chain,
                         DarePolicy policy = null,
                         byte[] payload = null,
                         string contentType = null,
                         DataEncoding dataEncoding = DataEncoding.JSON,
                         byte[] cloaked = null,
-                        List<byte[]> dataSequences = null
-                        ) {
-
-            //cryptoParameters ??= new CryptoParameters();
-
-
-
+                        List<byte[]> dataSequences = null) {
             var container = MakeNewContainer(jbcdStream, containerType: containerType);
 
-            //container.CryptoParametersContainer = cryptoParameters;
-
-
-
-
+            container.CryptoStackContainer = new CryptoStack(policy, container.DigestRequired);
             container.DataEncoding = dataEncoding;
             container.FrameCount = 0;
 
@@ -543,7 +535,7 @@ namespace Goedel.Cryptography.Dare {
             container.AppendFrame(headerBytes, payload, trailerBytes);
             container.FrameCount++;
 
-            container.KeyCollection = policy.KeyLocate;
+            container.KeyCollection = keyLocate ?? policy?.KeyLocate;
 
             container.FrameZero = new DareEnvelope() {
                 Header = containerHeaderFirst,
@@ -563,8 +555,6 @@ namespace Goedel.Cryptography.Dare {
         /// content in the file will be overwritten.</param>
         /// <param name="containerType">The container type. This determines whether
         /// a tree index is to be created or not and if so, whether </param>
-        /// <param name="cryptoParameters">Cryptographic parameters specifying algorithms and keys
-        /// for encoding and authentication of data.</param>
         /// <returns>The newly constructed container.</returns>
         public static Container MakeNewContainer(
                         JbcdStream jbcdStream,

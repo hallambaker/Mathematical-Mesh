@@ -167,7 +167,7 @@ namespace Goedel.XUnit {
                 }
 
             using (var XContainer = Container.Open(filename, FileStatus.Read,
-                            keyCollection: keyCollection)) {
+                            keyLocate: keyCollection)) {
                 XContainer.VerifyContainer();
                 }
 
@@ -177,7 +177,7 @@ namespace Goedel.XUnit {
 
             // Read records 
             using (var XContainer = Container.Open(filename, FileStatus.Read,
-                            keyCollection: keyCollection)) {
+                            keyLocate: keyCollection)) {
 
                 record = 0;
                 foreach (var ContainerDataReader in XContainer) {
