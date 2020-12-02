@@ -91,7 +91,7 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The apex digest value of the container as written to the file.</summary>
         public byte[] Digest;
 
-
+        ///<summary>If true, the Container type requires a digest calculated on the payload.</summary> 
         public virtual bool DigestRequired => false;
 
         ///<summary>The first frame in the container</summary>
@@ -355,6 +355,10 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             var containerInfo = containerHeaderFirst.ContainerInfo;
+
+            //var cryptoParameters = new CryptoParameters(containerHeaderFirst);
+
+
             var cryptoStack = containerHeaderFirst.GetCryptoStack(keyCollection, decrypt: decrypt);
 
             var positionFinalFrameStart = jbcdStream.StartLastFrameRead;
@@ -509,6 +513,12 @@ namespace Goedel.Cryptography.Dare {
                         byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
             var container = MakeNewContainer(jbcdStream, containerType: containerType);
+
+            //var cryptoParameters = new CryptoParameters(policy);
+
+
+
+
 
             container.CryptoStackContainer = new CryptoStack(policy, container.DigestRequired);
             container.DataEncoding = dataEncoding;
@@ -814,7 +824,7 @@ namespace Goedel.Cryptography.Dare {
         public long Append(
             
                     byte[] data,
-                    CryptoParameters cryptoParameters = null,
+                    //CryptoParameters cryptoParameters = null,
                     ContentMeta contentMeta = null,
                     string contentType = null,
                     byte[] cloaked = null,
@@ -822,7 +832,7 @@ namespace Goedel.Cryptography.Dare {
 
             using var InputStream = new MemoryStream(data);
             var ContentLength = InputStream.Length;
-            return AppendFromStream(InputStream, ContentLength, contentMeta, cryptoParameters,
+            return AppendFromStream(InputStream, ContentLength, contentMeta, //cryptoParameters,
                     contentType, cloaked, dataSequences);
             }
 
@@ -841,14 +851,14 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The number of bytes written.</returns>
         public long AppendFile(string fileName,
                 ContentMeta contentInfo = null,
-                CryptoParameters cryptoParameters = null,
+                //CryptoParameters cryptoParameters = null,
                 string contentType = null,
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null) {
 
             using var FileStream = fileName.OpenFileRead();
             var ContentLength = FileStream.Length;
-            return AppendFromStream(FileStream, ContentLength, contentInfo, cryptoParameters,
+            return AppendFromStream(FileStream, ContentLength, contentInfo, //cryptoParameters,
                     contentType, cloaked, dataSequences);
             }
 
@@ -871,11 +881,11 @@ namespace Goedel.Cryptography.Dare {
         public long AppendFromStream(Stream input,
                 long contentLength,
                 ContentMeta contentInfo = null,
-                CryptoParameters cryptoParameters = null,
+                //CryptoParameters cryptoParameters = null,
                 string contentType = null,
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null) {
-            var index = AppendBegin(contentLength, out var CryptoStack, cryptoParameters, contentInfo,
+            var index = AppendBegin(contentLength, out var CryptoStack, contentInfo,
                     contentType, cloaked, dataSequences);
             input.ProcessRead(AppendProcess);
             AppendEnd();
@@ -913,7 +923,7 @@ namespace Goedel.Cryptography.Dare {
         public long AppendBegin(
                         long contentLength,
                         out CryptoStack cryptoStack,
-                        CryptoParameters cryptoParametersFrame = null,
+                        //CryptoParameters cryptoParametersFrame = null,
                         ContentMeta contentInfo = null,
                         string contentType = null,
                         byte[] cloaked = null,
@@ -921,8 +931,12 @@ namespace Goedel.Cryptography.Dare {
 
             var index = (int)FrameCount++;
 
-            cryptoStack = cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
-                            GetCryptoStack(cryptoParametersFrame);
+            // this need fix'n
+            cryptoStack = new CryptoStack(this.CryptoStackContainer);
+
+
+                //cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
+                //            GetCryptoStack(cryptoParametersFrame);
             contentInfo ??= new ContentMeta() {
                 ContentType = contentType
                 };
@@ -979,7 +993,6 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="contextWrite">The container write context the envelope is to be written in.</param>
         /// <param name="contentInfo">The content metadata.</param>
         /// <param name="data">The data plaintext payload.</param>
-        /// <param name="cryptoParametersFrame">The cryptographic parameters.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
@@ -988,7 +1001,6 @@ namespace Goedel.Cryptography.Dare {
             ContainerWriterDeferred contextWrite,
             ContentMeta contentInfo,
             byte[] data,
-            CryptoParameters cryptoParametersFrame = null,
             byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
 
@@ -997,8 +1009,7 @@ namespace Goedel.Cryptography.Dare {
              * var cryptoStack =  new CryptoStack()
              */
 
-            var cryptoStack = cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
-                            GetCryptoStack(cryptoParametersFrame);
+            var cryptoStack = new CryptoStack(this.CryptoStackContainer);
             contextWrite.StreamOpen(contentInfo, cryptoStack, cloaked, dataSequences);
 
             if (data != null) {
@@ -1018,16 +1029,6 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-        // The virtual dispatch methods
-
-        /// <summary>
-        /// Create a set of master keys and other cryptographic parameters from the
-        /// specified profile.
-        /// </summary>
-        /// <param name="cryptoParameters">The cryptographic algorithms to use</param>
-        /// <returns>The master parameters.</returns>
-        protected virtual CryptoStack GetCryptoStack(CryptoParameters cryptoParameters) =>
-            cryptoParameters.GetCryptoStack();
 
         /// <summary>
         /// Prepare the header information to write an envelope to a container.
@@ -1107,13 +1108,6 @@ namespace Goedel.Cryptography.Dare {
             JbcdStream.Begin();
             return JbcdStream.EOF;
             }
-
-        ///// <summary>
-        ///// Begin reading record data. This method is called before ReadData
-        ///// to move the read pointer to the start of the payload data.
-        ///// </summary>
-        ///// <returns></returns>
-        //public abstract long ReadDataBegin();
 
         /// <summary>
         /// Read the next frame in the file.

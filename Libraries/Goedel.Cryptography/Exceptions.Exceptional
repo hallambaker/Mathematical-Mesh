@@ -12,6 +12,10 @@ Namespace Goedel.Cryptography
 			Console "An internal assertion check failed"
 			Description
 				|An internal assertion check failed."
+		Exception KeyNotFound
+			Console "Key could not be found"
+			Description
+				|Key could not be found."
 
 		Exception MismatchedCurves
 			Console "Points are on different curves"

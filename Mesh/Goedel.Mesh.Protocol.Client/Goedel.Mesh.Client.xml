@@ -656,6 +656,15 @@
             <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindPublicKey(System.String,Goedel.Cryptography.CryptoKey@)">
+            <summary>
+            Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
+            an account identifier or strong account identifier.
+            </summary>
+            <param name="keyId">The identifier to resolve.</param>
+            <param name="cryptoKey">The found key </param>
+            <returns>The identifier.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptoKey@)">
             <summary>
             Attempt to obtain a private key with identifier <paramref name="keyId"/>.

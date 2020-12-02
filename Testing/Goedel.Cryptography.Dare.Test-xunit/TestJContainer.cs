@@ -1,4 +1,5 @@
-﻿using Goedel.Cryptography.Dare;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Test;
 using Goedel.Test.Core;
@@ -14,8 +15,10 @@ namespace Goedel.XUnit {
 
     public partial class TestContainers {
 
-        static List<string> Signers = new List<string> { "Alice@example.com" };
-        static List<string> Recipients = new List<string> { "Alice@example.com" };
+        static string AccountAlice = "alice@example.com";
+
+        static List<string> Signers = new List<string> { AccountAlice };
+        static List<string> Recipients = new List<string> { AccountAlice };
 
         public TestContainers() => TestEnvironmentCommon.Initialize(true);
         public static TestContainers Test() => new TestContainers();
@@ -28,8 +31,23 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ContainerTestEncrypted() {
-            var CryptoParameters = new DarePolicy(
-                        new CryptoParameters (recipients: Recipients));
+
+            // cre
+            //var testEnvironmentCommon = new TestEnvironmentCommon();
+            //var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, "Alice");
+            //var contextAccountAlice_1_a = machineAdminAlice.MeshHost.CreateMesh(AccountAlice, "personal");
+
+            // Setup
+            var keyCollection = MakeKeyCollection();
+
+            // Generate key(s)
+            var encrypt = KeyPair.Factory(CryptoAlgorithmId.X448,
+                    KeySecurity.Session, keyCollection, keyUses: KeyUses.Encrypt);
+
+            var recipients = new List<string> { encrypt.KeyIdentifier };
+
+            var CryptoParameters = new DarePolicy(keyCollection, recipients: recipients);
+
 
             TestContainer($"ContainerList", ContainerType.List, 0, policy: CryptoParameters);
             TestContainer($"ContainerList", ContainerType.List, 1, policy: CryptoParameters);
@@ -220,7 +238,7 @@ namespace Goedel.XUnit {
                             policy)) {
                 for (Record = 0; Record < ReOpen; Record++) {
                     var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
-                    XContainer.Append(Test, cryptoParameters: CryptoParametersEntry);
+                    XContainer.Append(Test);
                     }
                 }
 
@@ -230,7 +248,7 @@ namespace Goedel.XUnit {
                              policy:policy);
                 for (var i = 0; (Record < Records) & i < ReOpen; i++) {
                     var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
-                    XContainer.Append(Test, cryptoParameters: CryptoParametersEntry);
+                    XContainer.Append(Test);
                     Record++;
                     }
                 }

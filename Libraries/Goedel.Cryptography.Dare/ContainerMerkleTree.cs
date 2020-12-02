@@ -72,17 +72,6 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-        /// <summary>
-        /// Create a set of master keys and other cryptographic parameters from the
-        /// specified profile.
-        /// </summary>
-        /// <param name="cryptoParameters">The cryptographic algorithms to use</param>
-        /// <returns>The master parameters.</returns>
-        protected override CryptoStack GetCryptoStack(CryptoParameters cryptoParameters) {
-            var Result = cryptoParameters.GetCryptoStack();
-            Result.Digest = true;
-            return Result;
-            }
 
         //readonly static byte[] EmptyBytes = new byte[0];
 

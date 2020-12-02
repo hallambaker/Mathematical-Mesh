@@ -44,6 +44,14 @@ namespace Goedel.Cryptography {
         /// <returns>The identifier.</returns>
         bool TryFindKeySignature(string signingKey, out CryptoKey cryptoKey);
 
+        /// <summary>
+        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="keyId">The identifier to resolve.</param>
+        /// <param name="cryptoKey">The key (if found)</param>
+        /// <returns>The identifier.</returns>
+        bool TryFindPublicKey(string keyId, out CryptoKey cryptoKey);
 
 
         /// <summary>
@@ -133,11 +141,11 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Attempt to find a private key for the specified recipient entry.
         /// </summary>
-        /// <param name="keyID">The key identifier to match</param>
+        /// <param name="keyId">The key identifier to match</param>
         /// <param name="keyDecrypt">The key, (if found).</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        public virtual bool TryFindKeyDecryption(string keyID, out IKeyDecrypt keyDecrypt) {
-            var result = TryMatchRecipientKeyPair(keyID, out var key);
+        public virtual bool TryFindKeyDecryption(string keyId, out IKeyDecrypt keyDecrypt) {
+            var result = TryMatchRecipientKeyPair(keyId, out var key);
             keyDecrypt = key as IKeyDecrypt;
             return result;
             }
@@ -145,21 +153,25 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Attempt to find a private key for the specified recipient entry.
         /// </summary>
-        /// <param name="keyID">The key identifier to match</param>
-        /// <param name="keyPair">The key, (if found).</param>
+        /// <param name="keyId">The key identifier to match</param>
+        /// <param name="cryptoKey">The key, (if found).</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        protected bool TryMatchRecipientKeyPair(string keyID, out KeyPair keyPair) {
+        protected bool TryMatchRecipientKeyPair(string keyId, out CryptoKey cryptoKey) {
             // Search our this.SessionPersonal = SessionPersonal;
-            if (DictionaryKeyPairByUDF.TryGetValue(keyID, out keyPair)) {
+            if (DictionaryKeyPairByUDF.TryGetValue(keyId, out var keyPair)) {
+                cryptoKey = keyPair;
                 return true;
                 }
-            if (DictionaryKeyPairBySINEncrypt.TryGetValue(keyID, out keyPair)) {
+            if (DictionaryKeyPairBySINEncrypt.TryGetValue(keyId, out keyPair)) {
+                cryptoKey = keyPair;
                 return true;
                 }
-            if (DictionaryKeyPairByAccountEncrypt.TryGetValue(keyID, out keyPair)) {
+            if (DictionaryKeyPairByAccountEncrypt.TryGetValue(keyId, out keyPair)) {
+                cryptoKey = keyPair;
                 return true;
                 }
 
+            cryptoKey = null;
             return false;
             }
 
@@ -175,11 +187,11 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Locate a private key
         /// </summary>
-        /// <param name="UDF">fingerprint of key to locate.</param>
+        /// <param name="udf">fingerprint of key to locate.</param>
         /// <param name="key">The key, (if found).</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
-        public virtual bool LocatePrivateKeyPair(string UDF, out CryptoKey key) {
-            if (KeyPairRSA.Locate(UDF, out var keyPair)) {
+        public virtual bool LocatePrivateKeyPair(string udf, out CryptoKey key) {
+            if (KeyPairRSA.Locate(udf, out var keyPair)) {
                 key = keyPair;
                 return true;
                 }
@@ -232,26 +244,43 @@ namespace Goedel.Cryptography {
         /// <param name="cryptoKey">The found key </param>
         /// <returns>The identifier.</returns>
         public virtual bool TryFindKeyEncryption(string keyId, out CryptoKey cryptoKey) {
-            var result = DictionaryKeyPairByAccountEncrypt.TryGetValue(keyId, out var key);
-            cryptoKey = key;
-            return result;
+
+            if (DictionaryKeyPairByUDF.TryGetValue(keyId, out var keyPair)) {
+                cryptoKey = keyPair;
+                return true;
+                }
+            if (DictionaryKeyPairByAccountEncrypt.TryGetValue(keyId, out keyPair)) {
+                cryptoKey = keyPair;
+                return true;
+                }
+            cryptoKey = null;
+            return false;
             }
 
         /// <summary>
         /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
         /// </summary>
-        /// <param name="keyID">The identifier to resolve.</param>
+        /// <param name="keyId">The identifier to resolve.</param>
         ///  <param name="cryptoKey">The key, (if found).</param>
         /// <returns>The identifier.</returns>
-        public virtual bool TryFindKeySignature(string keyID, out CryptoKey cryptoKey) {
+        public virtual bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
             
-            var result = DictionaryKeyPairByAccountSign.TryGetValue(keyID, out var keyPair);
+            var result = DictionaryKeyPairByAccountSign.TryGetValue(keyId, out var keyPair);
             cryptoKey = keyPair;
             return result;
             }
 
 
+        /// <summary>
+        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="keyId">The identifier to resolve.</param>
+        /// <param name="cryptoKey">The key (if found)</param>
+        /// <returns>The identifier.</returns>
+        public virtual bool TryFindPublicKey(string keyId, out CryptoKey cryptoKey) =>
+                    TryMatchRecipientKeyPair(keyId, out cryptoKey);
 
 
         }

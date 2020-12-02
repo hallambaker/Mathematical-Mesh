@@ -113,9 +113,25 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+        ///// <summary>
+        ///// Default constructor.
+        ///// </summary>
+        //public CryptoParameters(DarePolicy policy) {
+
+        //    throw new NYI();
 
 
+        //    }
 
+        ///// <summary>
+        ///// Default constructor.
+        ///// </summary>
+        //public CryptoParameters(DareHeader header) {
+
+        //    throw new NYI();
+
+
+        //    }
 
 
 

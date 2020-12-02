@@ -193,7 +193,6 @@ namespace Goedel.Cryptography.Dare {
                 byte[] data,
                 ContentMeta contentInfo = null) => container.Append(
                     data,
-                    null,
                     contentInfo);
 
         /// <summary>

@@ -244,7 +244,7 @@ namespace ExampleGenerator {
 
             TContainer = MakeContainer("Test1Sign", policyPlaintext, ContainerType.MerkleTree);
             TContainer.Append(testData300);
-            TContainer.Append(testData300, Dare.CryptoParametersSign);
+            TContainer.Append(testData300);
             Dare.ContainerHeadersSigned = ReadContainer(TContainer);
 
             }
@@ -351,8 +351,8 @@ namespace ExampleGenerator {
 
             // Encrypt a sequence of items with a key exchange per item.
             var EncryptedContainer = MakeContainer("Test1EncSep", Dare.DarePolicyPlaintext, ContainerType.List);
-            EncryptedContainer.Append(testData300, cryptoParameters: Dare.CryptoParametersEncrypt);
-            EncryptedContainer.Append(testData300, cryptoParameters: Dare.CryptoParametersEncrypt);
+            EncryptedContainer.Append(testData300);
+            EncryptedContainer.Append(testData300);
             Dare.ContainerHeadersEncryptIndependentSession = ReadContainer(EncryptedContainer);
             Dare.ContainerFramingEncryptedIndependent = consoleWriter.ToString();
             }

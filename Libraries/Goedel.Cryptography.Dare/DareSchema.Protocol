@@ -291,6 +291,16 @@
 
 
 	Structure DarePolicy
+		
+		String EncryptionAlgorithm
+			Tag "enc"
+			Description
+				|The encryption algorithm to be used to compute the payload.
+		String DigestAlgorithm
+			Tag "dig"
+			Description
+				|The digest algorithm to be used to compute the payload digest.
+
 		String Encryption
 			Description
 				|The encryption policy specifier, determines how often a key exchange is required.

@@ -1636,6 +1636,16 @@ namespace Goedel.Cryptography.Dare {
 	/// </summary>
 	public partial class DarePolicy : Dare {
         /// <summary>
+        ///The encryption algorithm to be used to compute the payload.
+        /// </summary>
+
+		public virtual string						EncryptionAlgorithm  {get; set;}
+        /// <summary>
+        ///The digest algorithm to be used to compute the payload digest.
+        /// </summary>
+
+		public virtual string						DigestAlgorithm  {get; set;}
+        /// <summary>
         ///The encryption policy specifier, determines how often a key exchange is required.
         ///'Single': All entries are encrypted under the key exchange specified in the 
         ///entry specifying this policy.
@@ -1719,6 +1729,16 @@ namespace Goedel.Cryptography.Dare {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
+			if (EncryptionAlgorithm != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("enc", 1);
+					_writer.WriteString (EncryptionAlgorithm);
+				}
+			if (DigestAlgorithm != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("dig", 1);
+					_writer.WriteString (DigestAlgorithm);
+				}
 			if (Encryption != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Encryption", 1);
@@ -1799,6 +1819,14 @@ namespace Goedel.Cryptography.Dare {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "enc" : {
+					EncryptionAlgorithm = jsonReader.ReadString ();
+					break;
+					}
+				case "dig" : {
+					DigestAlgorithm = jsonReader.ReadString ();
+					break;
+					}
 				case "Encryption" : {
 					Encryption = jsonReader.ReadString ();
 					break;

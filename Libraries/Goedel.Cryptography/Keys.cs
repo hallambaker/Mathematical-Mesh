@@ -108,6 +108,25 @@ namespace Goedel.Cryptography {
 
 
         #region // Implement IKeyLocate
+
+
+        /// <summary>
+        /// Attempt to find a private key for the specified recipient entry.
+        /// </summary>
+        /// <param name="keyId">The key identifier to match</param>
+        ///  <param name="cryptoKey">The key, (if found).</param>
+        /// <returns>True if a match is found, otherwise false.</returns>
+        public virtual bool TryFindPublicKey(string keyId, out CryptoKey cryptoKey) {
+            if (keyId == KeyIdentifier) {
+                cryptoKey = this;
+                return true;
+                }
+            cryptoKey = null;
+            return false;
+            }
+
+
+
         /// <summary>
         /// Attempt to find a private key for the specified recipient entry.
         /// </summary>

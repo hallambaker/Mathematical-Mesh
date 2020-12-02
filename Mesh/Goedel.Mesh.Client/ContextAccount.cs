@@ -537,7 +537,15 @@ namespace Goedel.Mesh.Client {
         public virtual bool TryFindKeyEncryption(string keyId, out CryptoKey cryptoKey) =>
                     KeyCollection.TryFindKeyEncryption(keyId, out cryptoKey);
 
-
+        /// <summary>
+        /// Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="keyId">The identifier to resolve.</param>
+        /// <param name="cryptoKey">The found key </param>
+        /// <returns>The identifier.</returns>
+        public virtual bool TryFindPublicKey(string keyId, out CryptoKey cryptoKey) =>
+                    KeyCollection.TryFindPublicKey(keyId, out cryptoKey);
 
 
         /// <summary>
