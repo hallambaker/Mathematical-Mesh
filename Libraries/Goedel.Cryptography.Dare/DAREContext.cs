@@ -37,7 +37,7 @@ namespace Goedel.Cryptography.Dare {
                 Epk = Key.GetPublic(ephemeral);
                 }
             KeyIdentifier = encryptionKey.KeyIdentifier;
-            WrappedMasterKey = exchange;
+            WrappedBaseSeed = exchange;
 
             }
 

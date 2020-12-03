@@ -85,16 +85,17 @@ namespace Goedel.Test.Core {
         /// parameters.
         /// </summary>
         public CryptoStackDebug(
-                        CryptoParameters cryptoParameters
-                        ) : base(cryptoParameters) => CalculateParameters(Salt, out KeyEncrypt, out KeyMac, out IV);
+                        CryptoParameters cryptoParameters,
+                        DareHeader dareHeader
+                        ) : base(cryptoParameters, dareHeader) => CalculateParameters(Salt, out KeyEncrypt, out KeyMac, out IV);
 
-        /// <summary>
-        /// Add a recipient.
-        /// </summary>
-        /// <param name="MasterKey"></param>
-        /// <param name="EncryptionKey"></param>
-        public override void MakeRecipient(byte[] MasterKey, CryptoKey EncryptionKey) =>
-                Recipients.Add(new DareRecipientDebug(MasterSecret, EncryptionKey));
+        ///// <summary>
+        ///// Add a recipient.
+        ///// </summary>
+        ///// <param name="MasterKey"></param>
+        ///// <param name="EncryptionKey"></param>
+        //public override void MakeRecipient(byte[] MasterKey, CryptoKey EncryptionKey) =>
+        //        Recipients.Add(new DareRecipientDebug(BaseSeed, EncryptionKey));
         }
 
 
@@ -137,7 +138,7 @@ namespace Goedel.Test.Core {
 
             KeyIdentifier = PublicKey.KeyIdentifier;
             Epk = JoseKey;
-            WrappedMasterKey = exchange;
+            WrappedBaseSeed = exchange;
             }
         }
 

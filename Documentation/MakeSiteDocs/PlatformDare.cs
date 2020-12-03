@@ -300,7 +300,9 @@ namespace ExampleGenerator {
             Dare.DarePolicySignEncrypt = new DarePolicy(Dare.CryptoParametersSignEncrypt);
 
 
-            Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt);
+            "Need to implement a CryptoParameters debug".TaskFunctionality(true);
+            //Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt);
+
 
 
             // Data Sequences
@@ -330,8 +332,10 @@ namespace ExampleGenerator {
             Dare.DAREMessageAtomicSignEncrypt = new DareEnvelope(Dare.CryptoParametersSignEncrypt, Dare.DareMessageTest1);
 
 
-            Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt);
-            Dare.MessageEnc = new DareEnvelope(Dare.CryptoStackEncrypt, Dare.DareMessageTest1);
+            "Need to implement a CryptoParameters debug".TaskFunctionality(true);
+            //Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt);
+            
+            //Dare.MessageEnc = new DareEnvelope(Dare.CryptoStackEncrypt, Dare.DareMessageTest1);
 
             //CryptoStackEncrypt.Message(DareMessageTest1);
             //ExampleGenerator.MeshExamplesMessage(this);

@@ -330,7 +330,7 @@ namespace Goedel.Mesh.Shell {
             var cryptoParameters = new CryptoParameters(keyCollection, recipients, signers) ;
 
             if (Options.Hash.Value) {
-                cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
+                cryptoParameters.DigestId = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
                 }
 
             return cryptoParameters;

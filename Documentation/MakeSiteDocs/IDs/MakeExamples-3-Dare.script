@@ -95,7 +95,7 @@ The container headers and trailers are:
 ####Encrypted container
 
 The following example shows a container in which all the frame payloads are encrypted 
-under the same master secret established in a key agreement specified in the first frame.
+under the same base seed established in a key agreement specified in the first frame.
 
 #call DumpHeaders Dare.ContainerHeadersEncryptSingleSession
 
@@ -241,10 +241,10 @@ If a plaintext message contains EDS sequences, these are also in plaintext:
 #% var MessageEnc = Dare.MessageEnc;
 #% var Salt = MessageEnc?.Header?.Salt;
 
-The creator generates a master session key:
+The creator generates a base seed:
 
 ~~~~
-#% WriteBytesHex (CryptoStackEncrypt?.MasterSecret);
+#% WriteBytesHex (CryptoStackEncrypt?.BaseSeed);
 ~~~~
 
 For each recipient of the message:
@@ -263,16 +263,16 @@ The key agreement value is calculated:
 
 The key agreement value is used as the input to a HKDF key
 derivation function with the info parameter 
-#{DareRecipient.KDFInfo.ToUTF8()} to create the key used to wrap the master key:
+#{DareRecipient.KDFInfo.ToUTF8()} to create the key used to wrap the base seed:
 
 ~~~~
 #% WriteBytesHex (Recipient?.EncryptionKey);
 ~~~~
 
-The wrapped master key is:
+The wrapped base seed is:
 
 ~~~~
-#% WriteBytesHex (Recipient?.WrappedMasterKey);
+#% WriteBytesHex (Recipient?.WrappedBaseSeed);
 ~~~~
 
 This information is used to calculate the Recipient information
@@ -285,7 +285,7 @@ To encrypt a message, we first generate a unique salt value:
 #% WriteBytesHex (Salt);
 ~~~~
 
-The salt value and master key are used to generate the payload encryption
+The base seed and salt value are used to generate the payload encryption
 key:
 
 ~~~~

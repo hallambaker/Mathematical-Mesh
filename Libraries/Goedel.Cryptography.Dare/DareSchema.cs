@@ -86,28 +86,28 @@ namespace Goedel.Cryptography.Dare {
 		// Transaction Classes
 	/// <summary>
 	///
-	/// A DARE Message containing Header, EDS and Trailer in JSON object encoding.
+	/// A DARE envelope containing Header, EDS and Trailer in JSON object encoding.
 	/// Since a DAREMessage is almost invariably presented in JSON sequence or
 	/// compact encoding, use of the DAREMessage subclass is preferred.
-	/// Although a DARE Message is functionally an object, it is serialized as 
-	/// an ordered sequence. This ensures that the message header field will always
+	/// Although a DARE envelope is functionally an object, it is serialized as 
+	/// an ordered sequence. This ensures that the envelope header field will always
 	/// precede the body in a serialization, this allowing processing of the header
 	/// information to be performed before the entire body has been received.
 	/// </summary>
 	public partial class DareEnvelopeSequence : Dare {
         /// <summary>
-        ///The message header. May specify the key exchange data, pre-signature 
+        ///The envelope header. May specify the key exchange data, pre-signature 
         ///or signature data, cloaked headers and/or encrypted data sequences.
         /// </summary>
 
 		public virtual DareHeader						Header  {get; set;}
         /// <summary>
-        ///The message body
+        ///The envelope body
         /// </summary>
 
 		public virtual byte[]						Body  {get; set;}
         /// <summary>
-        ///The message trailer. If present, this contains the signature.
+        ///The envelope trailer. If present, this contains the signature.
         /// </summary>
 
 		public virtual DareTrailer						Trailer  {get; set;}
@@ -232,12 +232,12 @@ namespace Goedel.Cryptography.Dare {
 
 	/// <summary>
 	///
-	/// A DARE Message Trailer
+	/// A DARE envelope Trailer
 	/// </summary>
 	public partial class DareTrailer : Dare {
         /// <summary>
         ///A list of signatures.
-        ///A message trailer MUST NOT contain a signatures field if the header contains 
+        ///A envelope trailer MUST NOT contain a signatures field if the header contains 
         ///a signatures field.
         /// </summary>
 
@@ -418,8 +418,8 @@ namespace Goedel.Cryptography.Dare {
 
 	/// <summary>
 	///
-	/// A DARE Message Header. Since any field that is present in a trailer MAY be 
-	/// placed in a header instead, the message header inherits from the trailer.
+	/// A DARE Envelope Header. Since any field that is present in a trailer MAY be 
+	/// placed in a header instead, the envelope header inherits from the trailer.
 	/// </summary>
 	public partial class DareHeader : DareTrailer {
         /// <summary>
@@ -434,12 +434,12 @@ namespace Goedel.Cryptography.Dare {
 		public virtual string						EncryptionAlgorithm  {get; set;}
         /// <summary>
         ///Digest Algorithm. If specified, tells decoder that the digest algorithm is used to
-        ///construct a signature over the message payload.
+        ///construct a signature over the envelope payload.
         /// </summary>
 
 		public virtual string						DigestAlgorithm  {get; set;}
         /// <summary>
-        ///Master key identifier.
+        ///Base seed identifier.
         /// </summary>
 
 		public virtual string						KeyIdentifier  {get; set;}
@@ -459,10 +459,10 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         ///If present in a header or trailer, specifies an encrypted data block 
         ///containing additional header fields whose values override those specified 
-        ///in the message and context headers.
+        ///in the envelope and context headers.
         ///When specified in a header, a cloaked field MAY be used to conceal metadata 
         ///(content type, compression) and/or to specify an additional layer of key exchange. 
-        ///That applies to both the Message body and to headers specified within the cloaked 
+        ///That applies to both the envelope body and to headers specified within the cloaked 
         ///header.
         ///Processing of cloaked data is described in…
         /// </summary>
@@ -470,7 +470,7 @@ namespace Goedel.Cryptography.Dare {
 		public virtual byte[]						Cloaked  {get; set;}
         /// <summary>
         ///If present, the Annotations field contains a sequence of Encrypted Data 
-        ///Segments encrypted under the message Master Key. The interpretation of these fields 
+        ///Segments encrypted under the envelope base seed. The interpretation of these fields 
         ///is application specific.
         /// </summary>
 
@@ -1140,7 +1140,7 @@ namespace Goedel.Cryptography.Dare {
 	public partial class DareSignature : Dare {
         /// <summary>
         ///Digest algorithm hint. Specifying the digest algorithm to be applied
-        ///to the message body allows the body to be processed in streaming mode.
+        ///to the envelope body allows the body to be processed in streaming mode.
         /// </summary>
 
 		public virtual string						Dig  {get; set;}
@@ -1170,14 +1170,14 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual byte[]						Manifest  {get; set;}
         /// <summary>
-        ///The signature value as an Enhanced Data Sequence under the message Master Key.
+        ///The signature value as an Enhanced Data Sequence under the envelope base seed.
         /// </summary>
 
 		public virtual byte[]						SignatureValue  {get; set;}
         /// <summary>
-        ///The signature witness value used on an encrypted message to demonstrate that 
+        ///The signature witness value used on an encrypted envelope to demonstrate that 
         ///the signature was authorized by a party with actual knowledge of the encryption 
-        ///key used to encrypt the message.
+        ///key used to encrypt the envelope.
         /// </summary>
 
 		public virtual byte[]						WitnessValue  {get; set;}
@@ -1484,10 +1484,10 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual Key						Epk  {get; set;}
         /// <summary>
-        ///The wrapped master key. The master key is encrypted under the result of the key exchange.
+        ///The wrapped base seed. The base seed is encrypted under the result of the key exchange.
         /// </summary>
 
-		public virtual byte[]						WrappedMasterKey  {get; set;}
+		public virtual byte[]						WrappedBaseSeed  {get; set;}
         /// <summary>
         ///The per-recipient key exchange data.
         /// </summary>
@@ -1559,10 +1559,10 @@ namespace Goedel.Cryptography.Dare {
 						_writer.WriteObjectEnd();
 						}
 				}
-			if (WrappedMasterKey != null) {
+			if (WrappedBaseSeed != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("wmk", 1);
-					_writer.WriteBinary (WrappedMasterKey);
+					_writer.WriteBinary (WrappedBaseSeed);
 				}
 			if (RecipientKeyData != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -1615,7 +1615,7 @@ namespace Goedel.Cryptography.Dare {
 					break;
 					}
 				case "wmk" : {
-					WrappedMasterKey = jsonReader.ReadBinary ();
+					WrappedBaseSeed = jsonReader.ReadBinary ();
 					break;
 					}
 				case "rkd" : {

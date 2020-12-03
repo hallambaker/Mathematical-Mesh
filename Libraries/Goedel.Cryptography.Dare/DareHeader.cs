@@ -76,54 +76,25 @@ namespace Goedel.Cryptography.Dare {
         public DareHeader() {
             }
 
-        /// <summary>
-        /// Create a message header.
-        /// </summary>
-        /// <param name="cryptoStack">The cryptographic enhancements to apply.</param>
-        /// <param name="contentMeta">The content metadata</param>
-        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-        ///     as an EDSS header entry.</param>
-        public DareHeader(
-                    CryptoStack cryptoStack,
-                    ContentMeta contentMeta = null,
-                    byte[] cloaked = null,
-                    List<byte[]> dataSequences = null
-                    ) {
-            ContentMeta = contentMeta;
-            ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
-            }
+        ///// <summary>
+        ///// Create a message header.
+        ///// </summary>
+        ///// <param name="cryptoStack">The cryptographic enhancements to apply.</param>
+        ///// <param name="contentMeta">The content metadata</param>
+        ///// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        ///// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+        /////     as an EDSS header entry.</param>
+        //public DareHeader(
+        //            CryptoStack cryptoStack,
+        //            ContentMeta contentMeta = null,
+        //            byte[] cloaked = null,
+        //            List<byte[]> dataSequences = null
+        //            ) {
+        //    ContentMeta = contentMeta;
+        //    ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
+        //    }
 
-        /// <summary>
-        /// Apply the specified cryptographic options.
-        /// </summary>
-        /// <param name="cryptoStack">The cryptographic enhancements to apply.</param>
-        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-        ///     as an EDSS header entry.</param>
-        public virtual void ApplyCryptoStack(
-                    CryptoStack cryptoStack,
-                    byte[] cloaked = null,
-                    List<byte[]> dataSequences = null) {
-            this.CryptoStack = cryptoStack;
 
-            Salt = cryptoStack.Salt;
-            Recipients = cryptoStack.Recipients;
-            EncryptionAlgorithm = cryptoStack.EncryptionAlgorithm;
-            DigestAlgorithm = cryptoStack.DigestAlgorithm;
-            KeyIdentifier = cryptoStack.GetKeyIdentifier();
-
-            if (cloaked != null) {
-                this.Cloaked = cryptoStack.Encode(cloaked, MakeSalt());
-                }
-            if (dataSequences != null) {
-                EDSS = new List<byte[]>();
-                foreach (var DataSequence in dataSequences) {
-                    EDSS.Add(cryptoStack.Encode(DataSequence, MakeSalt()));
-                    }
-                }
-
-            }
 
 
         /// <summary>
@@ -317,7 +288,7 @@ namespace Goedel.Cryptography.Dare {
                     // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
 
                     return decryptionKey.Decrypt(
-                            recipient.WrappedMasterKey, recipient.Epk?.KeyPair,
+                            recipient.WrappedBaseSeed, recipient.Epk?.KeyPair,
                             algorithmID: algorithmID, null);
                     }
                 }

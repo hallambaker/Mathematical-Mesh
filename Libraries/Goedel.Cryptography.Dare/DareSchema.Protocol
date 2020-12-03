@@ -8,53 +8,53 @@
 		Description
 			|A DARE Envelope consists of a Header, an Enhanced Data Sequence (EDS) and 
 			|an optional trailer. This section describes the JSON data fields used to 
-			|construct headers, trailers and complete messages.
+			|construct headers, trailers and complete envelopes.
 		Description
 			|Wherever possible, fields from JWE, JWS and JWK have been used. In these cases,
 			|the fields have the exact same semantics. Note however that the classes in 
 			|which these fields are presented have different structure and nesting.
 
-	Section 2 "Message Classes"
+	Section 2 "Envelope Classes"
 		Description
-			|A DARE Message contains a single DAREMessageSequence in either the JSON or 
+			|A DARE envelope contains a single DAREMessageSequence in either the JSON or 
 			|Compact serialization as directed by the protocol in which it is applied.
 
 	Structure DareEnvelopeSequence
 		Description
-			|A DARE Message containing Header, EDS and Trailer in JSON object encoding.
+			|A DARE envelope containing Header, EDS and Trailer in JSON object encoding.
 			|Since a DAREMessage is almost invariably presented in JSON sequence or
 			|compact encoding, use of the DAREMessage subclass is preferred.
 		Description
-			|Although a DARE Message is functionally an object, it is serialized as 
-			|an ordered sequence. This ensures that the message header field will always
+			|Although a DARE envelope is functionally an object, it is serialized as 
+			|an ordered sequence. This ensures that the envelope header field will always
 			|precede the body in a serialization, this allowing processing of the header
 			|information to be performed before the entire body has been received.
 		Struct DareHeader Header
 			Description
-				|The message header. May specify the key exchange data, pre-signature 
+				|The envelope header. May specify the key exchange data, pre-signature 
 				|or signature data, cloaked headers and/or encrypted data sequences.
 		Binary Body
 			Description
-				|The message body
+				|The envelope body
 		Struct DareTrailer Trailer
 			Description
-				|The message trailer. If present, this contains the signature.
+				|The envelope trailer. If present, this contains the signature.
 
 
 	Section 2 "Header and Trailer Classes"
 		Description
-			|A DARE Message sequence MUST contain a (possibly empty) DAREHeader and MAY contain
+			|A DARE sequence MUST contain a (possibly empty) DAREHeader and MAY contain
 			|a DARETrailer. 
 
 	Structure DareTrailer
 		Description
-			|A DARE Message Trailer
+			|A DARE envelope Trailer
 		Struct DareSignature Signatures
 			Multiple
 			Tag "signatures"
 			Description
 				|A list of signatures.
-				|A message trailer MUST NOT contain a signatures field if the header contains 
+				|A envelope trailer MUST NOT contain a signatures field if the header contains 
 				|a signatures field.
 		Binary SignedData
 			Description
@@ -77,8 +77,8 @@
 	Structure DareHeader
 		Inherits DareTrailer
 		Description
-			|A DARE Message Header. Since any field that is present in a trailer MAY be 
-			|placed in a header instead, the message header inherits from the trailer.
+			|A DARE Envelope Header. Since any field that is present in a trailer MAY be 
+			|placed in a header instead, the envelope header inherits from the trailer.
 		String EnvelopeID
 			Description 
 				|Unique identifier
@@ -90,12 +90,12 @@
 			Tag "dig"
 			Description
 				|Digest Algorithm. If specified, tells decoder that the digest algorithm is used to
-				|construct a signature over the message payload.
+				|construct a signature over the envelope payload.
 
 		String KeyIdentifier
 			Tag "kid"
 			Description
-				|Master key identifier.
+				|Base seed identifier.
 
 		Binary Salt
 			Description
@@ -111,11 +111,11 @@
 			Description
 				|If present in a header or trailer, specifies an encrypted data block 
 				|containing additional header fields whose values override those specified 
-				|in the message and context headers.
+				|in the envelope and context headers.
 			Description
 				|When specified in a header, a cloaked field MAY be used to conceal metadata 
 				|(content type, compression) and/or to specify an additional layer of key exchange. 
-				|That applies to both the Message body and to headers specified within the cloaked 
+				|That applies to both the envelope body and to headers specified within the cloaked 
 				|header.
 			Description
 				|Processing of cloaked data is described in…
@@ -124,7 +124,7 @@
 			Multiple
 			Description
 				|If present, the Annotations field contains a sequence of Encrypted Data 
-				|Segments encrypted under the message Master Key. The interpretation of these fields 
+				|Segments encrypted under the envelope base seed. The interpretation of these fields 
 				|is application specific.
 		Struct DareSignature Signers
 			Multiple
@@ -209,8 +209,8 @@
 
 	Section 2 "Cryptographic Data"
 		Description
-			|DARE Message uses the same fields as JWE and JWS but with different
-			|structure. In particular, DARE messages MAY have multiple recipients
+			|DARE envelope uses the same fields as JWE and JWS but with different
+			|structure. In particular, DARE envelopes MAY have multiple recipients
 			|and multiple signers.
 
 	Structure DareSignature
@@ -220,7 +220,7 @@
 			Tag "dig"
 			Description
 				|Digest algorithm hint. Specifying the digest algorithm to be applied
-				|to the message body allows the body to be processed in streaming mode.
+				|to the envelope body allows the body to be processed in streaming mode.
 		String Alg
 			Tag "alg"
 			Description
@@ -243,13 +243,13 @@
 		Binary SignatureValue
 			Tag "signature"
 			Description
-				|The signature value as an Enhanced Data Sequence under the message Master Key.
+				|The signature value as an Enhanced Data Sequence under the envelope base seed.
 		Binary WitnessValue
 			Tag "witness"
 			Description
-				|The signature witness value used on an encrypted message to demonstrate that 
+				|The signature witness value used on an encrypted envelope to demonstrate that 
 				|the signature was authorized by a party with actual knowledge of the encryption 
-				|key used to encrypt the message.
+				|key used to encrypt the envelope.
 
 	Structure X509Certificate
 		String X5u
@@ -280,10 +280,10 @@
 			Tag "epk"
 			Description
 				|The key parameters of the ephemeral key as specified in JWE
-		Binary WrappedMasterKey
+		Binary WrappedBaseSeed
 			Tag "wmk"
 			Description
-				|The wrapped master key. The master key is encrypted under the result of the key exchange.
+				|The wrapped base seed. The base seed is encrypted under the result of the key exchange.
 		String RecipientKeyData
 			Tag "rkd"
 			Description

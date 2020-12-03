@@ -128,32 +128,35 @@ namespace Goedel.Cryptography.Dare {
             ContentMeta contentMeta = null,
             byte[] cloaked = null,
             List<byte[]> dataSequences = null
-            ) : this(cryptoParameters.GetCryptoStack(), plaintext, contentMeta,
-                cloaked, dataSequences) { }
+            ) => throw new NYI();
+            
+            
+            //: this(cryptoParameters.GetCryptoStack(), plaintext, contentMeta,
+            //    cloaked, dataSequences) { }
 
 
         /// <summary>
-        /// Create a DARE Message instance.
-        /// </summary>
-        /// <param name="cryptoStack">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
-        /// <param name="contentMeta">The content metadata</param>
-        /// <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
-        /// create the message body. Otherwise the body is specified by calls to the Process method.</param>
-        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-        ///     as an EDSS header entry.</param>
-        public DareEnvelope(
-            CryptoStack cryptoStack,
-            byte[] plaintext,
-            ContentMeta contentMeta = null,
-            byte[] cloaked = null,
-            List<byte[]> dataSequences = null
-            ) {
-            Header = new DareHeader(cryptoStack, contentMeta, cloaked, dataSequences);
-            Body = Header.EnhanceBody(plaintext, out var trailer);
-            Trailer = trailer;
-            }
+        ///// Create a DARE Message instance.
+        ///// </summary>
+        ///// <param name="cryptoStack">Specifies the cryptographic enhancements to
+        ///// be applied to this message.</param>
+        ///// <param name="contentMeta">The content metadata</param>
+        ///// <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
+        ///// create the message body. Otherwise the body is specified by calls to the Process method.</param>
+        ///// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        ///// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+        /////     as an EDSS header entry.</param>
+        //public DareEnvelope(
+        //    CryptoStack cryptoStack,
+        //    byte[] plaintext,
+        //    ContentMeta contentMeta = null,
+        //    byte[] cloaked = null,
+        //    List<byte[]> dataSequences = null
+        //    ) {
+        //    Header = new DareHeader(cryptoStack, contentMeta, cloaked, dataSequences);
+        //    Body = Header.EnhanceBody(plaintext, out var trailer);
+        //    Trailer = trailer;
+        //    }
 
         /// <summary>
         /// Create a new DARE Message from the specified parameters.

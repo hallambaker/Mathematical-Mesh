@@ -112,7 +112,7 @@ namespace Goedel.Cryptography.Dare {
                 ContentMeta = contentMeta
                 };
 
-            ContainerHeader.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
+            //ContainerHeader.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
 
 
 

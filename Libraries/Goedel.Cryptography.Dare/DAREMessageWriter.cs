@@ -1,4 +1,6 @@
 ﻿using Goedel.Protocol;
+using Goedel.Utilities;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -95,16 +97,20 @@ namespace Goedel.Cryptography.Dare {
             List<byte[]> dataSequences = null) {
             this.outputStream = outputStream;
 
-            cryptoStack = cryptoParameters.GetCryptoStack();
-            var header = new DareHeader(cryptoStack, contentMeta, cloaked, dataSequences);
+            throw new NYI();
 
-            outputStream.WriteArrayStart();
-            header.Serialize(outputStream);
-            outputStream.WriteArraySeparator();
+            
+            //var header = new DareHeader(cryptoStack, contentMeta, cloaked, dataSequences);
+            //cryptoStack = new CryptoStack(cryptoParameters, header);
 
-            cryptoStackStreamWriter = header.CryptoStack.GetEncoder(
-                outputStream.Output, PackagingFormat.Body, contentLength);
-            writer = cryptoStackStreamWriter.Writer;
+
+            //outputStream.WriteArrayStart();
+            //header.Serialize(outputStream);
+            //outputStream.WriteArraySeparator();
+
+            //cryptoStackStreamWriter = header.CryptoStack.GetEncoder(
+            //    outputStream.Output, PackagingFormat.Body, contentLength);
+            //writer = cryptoStackStreamWriter.Writer;
             }
 
         /// <summary>

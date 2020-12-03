@@ -1,4 +1,5 @@
 ﻿using Goedel.Utilities;
+
 using System.Collections.Generic;
 namespace Goedel.Cryptography.Dare {
 
@@ -12,17 +13,41 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>The key collection to use to resolve names to keys</summary>
         public IKeyLocate KeyLocate;
         /// <summary>The set of keys to encrypt to.</summary>
+        /// 
+
+        /// <summary>
+        /// The base seed provided as a verbatim value or provided through a key exchange to be 
+        /// used together with the salt data to derive the keys and initialization data for 
+        /// cryptographic operations.
+        /// </summary>
+        public byte[] BaseSeed;
+
+        ///<summary>The key size in bits determined by the value of <see cref="EncryptId"/></summary> 
+        public int KeySize { get; private set; }
+
+        ///<summary>The block size in bits determined by the value of <see cref="EncryptId"/></summary> 
+        public int BlockSize { get; private set; }
+
+        ///<summary>The block size in bytes determined by the value of <see cref="EncryptId"/></summary> 
+        public int BlockSizeByte => BlockSize / 8;
+
+        ///<summary>The set of encryption keys under which key exchanges are to be performed.</summary> 
+        ///<remarks>If the value <see cref="EncryptId"/> is to be overriden, this should be done
+        ///first so as to avoid recalculating the parameters.</remarks>
         public List<CryptoKey> EncryptionKeys {
             get => encryptionKeys;
             set {
                 encryptionKeys = value;
-                SetEncrypt();
+                if (value != null) {
+                    SetEncrypt();
+                    }
                 }
             }
         List<CryptoKey> encryptionKeys;
 
-
         /// <summary>The set of keys to use to sign</summary>
+        ///<remarks>If the value <see cref="DigestId"/> is to be overriden, this should be done
+        ///first so as to avoid recalculating the parameters.</remarks>
         public List<CryptoKey> SignerKeys {
             get => signerKeys;
             set {
@@ -32,28 +57,46 @@ namespace Goedel.Cryptography.Dare {
             }
         List<CryptoKey> signerKeys;
 
-        /// <summary>The authentication algorithm to use</summary>
-        public CryptoAlgorithmId DigestID;
+        /// <summary>The payload digest algorithm.</summary>
+        public CryptoAlgorithmId DigestId;
 
-        /// <summary>The encryption algorithm to use</summary>
-        public CryptoAlgorithmId EncryptID;
+        /// <summary>The payload encryption algorithm.</summary>
+        public CryptoAlgorithmId EncryptId {
+            get => encryptId;
+            set => SetEncryptId(value);
+            }
+        CryptoAlgorithmId encryptId;
 
-
+        void SetEncryptId(CryptoAlgorithmId encryptId) {
+            EncryptId = encryptId;
+            (KeySize, BlockSize) = EncryptId.GetKeySize();
+            (KeySize >= 128).AssertTrue(InsufficientKeySize.Throw, "Key size insufficient");
+            BaseSeed = Platform.GetRandomBits(KeySize);
+            }
 
         /// <summary>
         /// If true, data is to be encrypted.
         /// </summary>
-        public bool Encrypt => EncryptID != CryptoAlgorithmId.NULL;
+        public bool Encrypt => EncryptId != CryptoAlgorithmId.NULL;
 
         /// <summary>
         /// If true, data is to be digested.
         /// </summary>
-        public bool Digest => DigestID != CryptoAlgorithmId.NULL;
+        public bool Digest => DigestId != CryptoAlgorithmId.NULL;
 
+        ///<summary>Require payload encryption.</summary> 
+        public void SetEncrypt() {
+            if (EncryptId == CryptoAlgorithmId.NULL) {
+                EncryptId = CryptoAlgorithmId.Default;
+                }
+            }
 
-
-        void SetEncrypt() => EncryptID = EncryptID == CryptoAlgorithmId.NULL ? CryptoAlgorithmId.Default : EncryptID;
-        void SetDigest() => DigestID = DigestID == CryptoAlgorithmId.NULL ? CryptoAlgorithmId.Default : DigestID;
+        ///<summary>Require payload digest.</summary> 
+        public void SetDigest() {
+                if (DigestId == CryptoAlgorithmId.NULL) {
+                    DigestId = CryptoAlgorithmId.Default;
+                    }
+                }
 
         /// <summary>
         /// If true, data is to be signed.
@@ -87,8 +130,8 @@ namespace Goedel.Cryptography.Dare {
                         CryptoKey signer = null,
                         CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
                         CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) {
-            this.DigestID = digestID;
-            this.EncryptID = encryptID;
+            this.DigestId = digestID;
+            this.EncryptId = encryptID;
 
             this.KeyLocate = keyCollection;
 
@@ -113,25 +156,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        ///// <summary>
-        ///// Default constructor.
-        ///// </summary>
-        //public CryptoParameters(DarePolicy policy) {
 
-        //    throw new NYI();
-
-
-        //    }
-
-        ///// <summary>
-        ///// Default constructor.
-        ///// </summary>
-        //public CryptoParameters(DareHeader header) {
-
-        //    throw new NYI();
-
-
-        //    }
 
 
 
@@ -160,14 +185,43 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+        ///// <summary>
+        ///// Generate a new CryptoStack for this parameter set.
+        ///// </summary>
+        ///// <returns>The created CryptoStack.</returns>
+        //public CryptoStack GetCryptoStack() => new CryptoStack(this);
+
+
         /// <summary>
-        /// Generate a new CryptoStack for this parameter set.
+        /// Perform the steps necessary to 
         /// </summary>
-        /// <returns>The created CryptoStack.</returns>
-        public CryptoStack GetCryptoStack() => new CryptoStack(this);
+        /// <param name="header"></param>
+        public virtual void SetKeyExchange(DareHeader header) {
+
+            header.Recipients = KeyExchange();
+
+            }
+
+
+        /// <summary>
+        /// Perform a new key exchange and 
+        /// </summary>
+        /// <returns></returns>
+        protected List<DareRecipient> KeyExchange() {
+            // create the new base seed.
+            BaseSeed = Platform.GetRandomBits(KeySize);
+
+            // perform a key exchange for each recipient.
+            var result = new List<DareRecipient>();
+            foreach (var encryptionKey in EncryptionKeys) {
+                result.Add(new DareRecipient(BaseSeed, encryptionKey));
+                }
+
+            return result;
+            }
+
+
 
 
         }
-
-
     }
