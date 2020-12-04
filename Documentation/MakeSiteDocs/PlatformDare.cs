@@ -232,7 +232,7 @@ namespace ExampleGenerator {
 
 
             // Merkle Tree
-            TContainer = MakeContainer("Test1Merkle", policyPlaintext, ContainerType.MerkleTree);
+            TContainer = MakeContainer("Test1Merkle", policyPlaintext, ContainerType.Merkle);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
@@ -242,7 +242,7 @@ namespace ExampleGenerator {
             Dare.ContainerHeadersMerkleTree = ReadContainer(TContainer);
 
 
-            TContainer = MakeContainer("Test1Sign", policyPlaintext, ContainerType.MerkleTree);
+            TContainer = MakeContainer("Test1Sign", policyPlaintext, ContainerType.Merkle);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
             Dare.ContainerHeadersSigned = ReadContainer(TContainer);

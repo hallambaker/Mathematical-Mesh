@@ -80,7 +80,7 @@ namespace Goedel.Mesh.Server {
             var fileName = Path.Combine(directory, "Master.cat");
             Container = new PersistenceStore(fileName, "application/mmm-catalog",
                 fileStatus: FileStatus.OpenOrCreate,
-                containerType: ContainerType.MerkleTree
+                containerType: ContainerType.Merkle
                 );
             }
 

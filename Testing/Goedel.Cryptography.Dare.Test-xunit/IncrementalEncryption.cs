@@ -148,7 +148,7 @@ namespace Goedel.XUnit {
             // Write initial set of records
             using (var XContainer = Container.NewContainer(
                             filename, FileStatus.Overwrite, containerType:
-                            ContainerType.MerkleTree,
+                            ContainerType.Merkle,
                             policy: darePolicy)) {
                 for (record = 0; record < reOpen; record++) {
                     var Test = MakeRecordData(record, maxSize);

@@ -38,9 +38,9 @@ namespace Scratchpad {
             //TestContainers.Test().ContainerTest1();
             //TestContainers.Test().ContainerTest10();
 
-            TestContainers.Test().ContainerTestEncrypted();
+            //TestContainers.Test().ContainerTestEncrypted();
 
-
+            // This is failing because the policy isn't being read back.
             TestContainers.Test().ContainerFixedExchange();
 
             //ShellTests.Test().TestFilePlain();

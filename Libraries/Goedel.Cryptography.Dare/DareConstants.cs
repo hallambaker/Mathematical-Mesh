@@ -21,8 +21,8 @@ namespace Goedel.Cryptography.Dare {
         Chain,
         ///<summary>Tree</summary>
         Tree,
-        ///<summary>MerkleTree</summary>
-        MerkleTree        }
+        ///<summary>Merkle</summary>
+        Merkle        }
 
     ///<summary>Encryption policies</summary>
     public enum PolicyEncryption {
@@ -71,7 +71,7 @@ namespace Goedel.Cryptography.Dare {
                 "Digest" => ContainerType.Digest,
                 "Chain" => ContainerType.Chain,
                 "Tree" => ContainerType.Tree,
-                "MerkleTree" => ContainerType.MerkleTree,
+                "Merkle" => ContainerType.Merkle,
                 _ => ContainerType.Unknown
                 };
 
@@ -87,7 +87,7 @@ namespace Goedel.Cryptography.Dare {
                 ContainerType.Digest => "Digest",
                 ContainerType.Chain => "Chain",
                 ContainerType.Tree => "Tree",
-                ContainerType.MerkleTree => "MerkleTree",
+                ContainerType.Merkle => "Merkle",
                 _ => null
                 };
 

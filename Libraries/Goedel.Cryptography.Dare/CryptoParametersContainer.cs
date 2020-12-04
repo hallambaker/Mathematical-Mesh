@@ -23,25 +23,27 @@ namespace Goedel.Cryptography.Dare {
         int keyExchangeFrame;
 
         /// <summary>
-        /// Create cryptoparameters for a reopened container.
+        /// Create cryptoparameters for a container from the specified policy.
         /// </summary>
-        /// <param name="keyCollection"></param>
+        /// <param name="containerType">The container type.</param>
         /// <param name="header">Header specifying the governing policy.</param>
         public CryptoParametersContainer(
-                IKeyLocate keyCollection,
                 ContainerType containerType,
                 DareHeader header) {
 
             var policy = header.Policy;
 
             // Force calculation of the payload digest for container types that require it.
+            var digest = policy?.DigestAlgorithm;
             switch (containerType) {
                 case ContainerType.Digest:
                 case ContainerType.Chain:
-                case ContainerType.MerkleTree: {
-                    var digest = policy?.DigestAlgorithm;
-                    DigestId = digest != null ?
-                            digest.FromJoseID() : CryptoID.DefaultDigestId;
+                case ContainerType.Merkle: {
+                    DigestId = digest != null ? digest.FromJoseID() : CryptoID.DefaultDigestId;
+                    break;
+                    }
+                default: {
+                    DigestId = digest != null ? digest.FromJoseID() : CryptoAlgorithmId.NULL;
                     break;
                     }
                 }

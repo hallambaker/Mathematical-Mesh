@@ -322,6 +322,9 @@ namespace Goedel.Cryptography.Dare {
 
             check += frameLength;
             Assert.AssertTrue(PositionWrite == check, Internal.Throw);
+                // Note, if this check fails, check to see if the trailer length is being calculated correctly.
+                // Missing or incorrect dummy trailers will cause this check to fail as will incorrect calculation
+                // of the payload length.
 
             WriteTagReverse(BFrame, frameLength);
             StreamWrite.Flush(); // Force output of data

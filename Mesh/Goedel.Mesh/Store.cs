@@ -128,7 +128,7 @@ namespace Goedel.Mesh {
                 fileName,
                 FileStatus.ConcurrentLocked,
                 keyCollection ?? cryptoParameters?.KeyLocate,
-                ContainerType.MerkleTree,
+                ContainerType.Merkle,
                 policy,
                 "application/mmm-catalog",
                 decrypt: decrypt,

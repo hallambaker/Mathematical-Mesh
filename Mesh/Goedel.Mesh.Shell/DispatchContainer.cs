@@ -115,7 +115,7 @@ namespace Goedel.Mesh.Shell {
             var inputFile = options.Container.Value;
 
             using (var container = Cryptography.Dare.Container.Open(
-                inputFile, containerType: ContainerType.MerkleTree)) {
+                inputFile, containerType: ContainerType.Merkle)) {
                 }
 
             return new ResultFile() {
@@ -164,7 +164,7 @@ namespace Goedel.Mesh.Shell {
             var outputFile = options.Output.Value;
 
             using (var container = Cryptography.Dare.Container.Open(
-                inputFile, containerType: ContainerType.MerkleTree)) {
+                inputFile, containerType: ContainerType.Merkle)) {
                 }
 
             return new ResultFile() {

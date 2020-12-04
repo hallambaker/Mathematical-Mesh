@@ -122,7 +122,7 @@ namespace Goedel.Mesh {
             // Now read the container to get the directories.
             var containerHost = new PersistHost(FileNameHost, FileTypeHost,
                 fileStatus: FileStatus.ConcurrentLocked,
-                containerType: ContainerType.MerkleTree);
+                containerType: ContainerType.Merkle);
 
             MeshHost = new MeshHost(containerHost, this);
             }

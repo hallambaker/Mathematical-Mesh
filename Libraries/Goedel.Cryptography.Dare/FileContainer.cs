@@ -114,7 +114,7 @@ namespace Goedel.Cryptography.Dare {
                     ContainerType containerType = ContainerType.Unknown) {
 
             if (containerType == ContainerType.Unknown) {
-                containerType = digest ? archive ? ContainerType.MerkleTree : ContainerType.Chain :
+                containerType = digest ? archive ? ContainerType.Merkle : ContainerType.Chain :
                     archive ? ContainerType.Tree : ContainerType.List;
                 }
 

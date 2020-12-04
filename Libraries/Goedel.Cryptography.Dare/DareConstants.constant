@@ -8,7 +8,7 @@ File ContainerTypes
 		Code Digest					"Digest"
 		Code Chain					"Chain"
 		Code Tree					"Tree"
-		Code MerkleTree				"MerkleTree"
+		Code Merkle					"Merkle"
 
 File EncryptionPolicies
 	Enum PolicyEncryption "Encryption policies"

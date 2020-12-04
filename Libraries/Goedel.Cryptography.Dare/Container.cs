@@ -359,8 +359,7 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-            var cryptoParametersContainer = new CryptoParametersContainer(
-                    keyCollection, containerType, containerHeaderFirst);
+            var cryptoParametersContainer = new CryptoParametersContainer(containerType, containerHeaderFirst);
 
 
             //var cryptoStack = containerHeaderFirst.GetCryptoStack(keyCollection, decrypt: decrypt);
@@ -522,7 +521,7 @@ namespace Goedel.Cryptography.Dare {
 
             // The cryptographic parameters that will be kept between calls.
             container.CryptoParametersContainer = 
-                new CryptoParametersContainer(keyLocate, containerType, containerHeaderFirst);
+                new CryptoParametersContainer(containerType, containerHeaderFirst);
             
 
             container.DataEncoding = dataEncoding;
@@ -538,7 +537,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             // These two should be merged into one here!
-            var cryptoStack = new CryptoStack(container.CryptoParametersContainer, 
+            container.CryptoStackContainer = new CryptoStack(container.CryptoParametersContainer, 
                 containerHeaderFirst, cloaked, dataSequences);
             //containerHeaderFirst.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
 
@@ -576,7 +575,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The newly constructed container.</returns>
         public static Container MakeNewContainer(
                         JbcdStream jbcdStream,
-                        ContainerType containerType = ContainerType.MerkleTree) {
+                        ContainerType containerType = ContainerType.Merkle) {
             Container result;
 
             switch (containerType) {
@@ -596,7 +595,7 @@ namespace Goedel.Cryptography.Dare {
                     result = ContainerTree.MakeNewContainer(jbcdStream);
                     break;
                     }
-                case ContainerType.MerkleTree: {
+                case ContainerType.Merkle: {
                     result = ContainerMerkleTree.MakeNewContainer(jbcdStream);
                     break;
                     }
@@ -839,6 +838,7 @@ namespace Goedel.Cryptography.Dare {
                     List<byte[]> dataSequences = null) {
 
             using var InputStream = new MemoryStream(data);
+            InputStream.Position = 0;
             var ContentLength = InputStream.Length;
             return AppendFromStream(InputStream, ContentLength, contentMeta, //cryptoParameters,
                     contentType, cloaked, dataSequences);
@@ -962,6 +962,7 @@ namespace Goedel.Cryptography.Dare {
             var dummyTrailer = FillDummyTrailer(CryptoStackContainer);
             var lengthTrailer = dummyTrailer == null ? -1 : dummyTrailer.GetBytes(false).Length;
             var dataPayload = appendContainerHeader.GetBytes(false);
+            
             JbcdStream.WriteWrappedFrameBegin(dataPayload, payloadLength, lengthTrailer);
             bodyWrite = appendContainerHeader.BodyWriter(JbcdStream.StreamWrite);
 
