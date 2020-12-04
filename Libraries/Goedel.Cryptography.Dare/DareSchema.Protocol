@@ -291,7 +291,6 @@
 
 
 	Structure DarePolicy
-		
 		String EncryptionAlgorithm
 			Tag "enc"
 			Description
@@ -315,7 +314,7 @@
 			Description
 				|The signature policy
 				|'None': No entries are signed.
-				|'Final': The final entry is signed.
+				|'Last': The last entry in the container is signed.
 				|'Isolated': All entries are independently signed.
 				|'Any': Entries may be signed.
 			Description

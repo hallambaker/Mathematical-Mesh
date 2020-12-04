@@ -50,6 +50,9 @@ namespace Goedel.XUnit {
 
 
             TestContainer($"ContainerList", ContainerType.List, 0, policy: CryptoParameters);
+
+
+            // probably failing because the encrypted payload length is being incorrectly calculated.
             TestContainer($"ContainerList", ContainerType.List, 1, policy: CryptoParameters);
             TestContainer($"ContainerList", ContainerType.List, 10, policy: CryptoParameters);
             }

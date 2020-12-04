@@ -26,7 +26,9 @@ LinkFiles = \
 ToolTargets = \
 	ContainerEntry.cs\
 	DareSchema.cs\
-	Exceptions.cs
+	Exceptions.cs\
+	DareConstants.cs
+
 ContainerEntry.cs : ContainerEntry.pschema 
 	protogen ContainerEntry.pschema  /cs  ContainerEntry.cs
 
@@ -36,7 +38,8 @@ DareSchema.cs : DareSchema.Protocol
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
-
+DareConstants.cs : DareConstants.Constant 
+	constant DareConstants.Constant  
 
 prebuildRecurse : 
 

@@ -45,7 +45,7 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
 
-
+            Sealed = true;
             }
 
 

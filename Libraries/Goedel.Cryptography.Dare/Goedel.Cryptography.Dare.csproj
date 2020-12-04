@@ -48,6 +48,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="DareConstants.cs">
+      <DependentUpon>DareConstants.constant</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -62,6 +67,10 @@
     <None Update="Exceptions.exceptional">
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
+    </None>
+    <None Update="DareConstants.constant">
+      <LastGenOutput>DareConstants.cs</LastGenOutput>
+      <Generator>Constant</Generator>
     </None>
   </ItemGroup>
 

@@ -1,0 +1,25 @@
+﻿Namespace Goedel.Cryptography.Dare DareConstants
+	|Constants specified in hallambaker-mesh-udf
+
+
+File ContainerTypes
+	Enum ContainerType "Container types"
+		Code List					"List"
+		Code Digest					"Digest"
+		Code Chain					"Chain"
+		Code Tree					"Tree"
+		Code MerkleTree				"MerkleTree"
+
+File EncryptionPolicies
+	Enum PolicyEncryption "Encryption policies"
+		Code Once					"Once"
+		Code Session				"Session"
+		Code Isolated				"Isolated"
+		Code None					"None"
+
+File SignaturePolicies
+	Enum PolicySignature "Signature policies"
+		Code None					"None"
+		Code Isolated				"Isolated"
+		Code Last					"Last"
+		Code Any					"Any"

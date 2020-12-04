@@ -68,10 +68,12 @@ namespace Goedel.Cryptography.Dare {
         CryptoAlgorithmId encryptId;
 
         void SetEncryptId(CryptoAlgorithmId encryptId) {
-            EncryptId = encryptId;
-            (KeySize, BlockSize) = EncryptId.GetKeySize();
-            (KeySize >= 128).AssertTrue(InsufficientKeySize.Throw, "Key size insufficient");
-            BaseSeed = Platform.GetRandomBits(KeySize);
+            this.encryptId = encryptId;
+            if (encryptId != CryptoAlgorithmId.NULL) {
+                (KeySize, BlockSize) = EncryptId.GetKeySize();
+                (KeySize >= 128).AssertTrue(InsufficientKeySize.Throw, "Key size insufficient");
+                BaseSeed = Platform.GetRandomBits(KeySize);
+                }
             }
 
         /// <summary>

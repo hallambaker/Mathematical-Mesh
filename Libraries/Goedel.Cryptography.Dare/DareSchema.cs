@@ -1659,7 +1659,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         ///The signature policy
         ///'None': No entries are signed.
-        ///'Final': The final entry is signed.
+        ///'Last': The last entry in the container is signed.
         ///'Isolated': All entries are independently signed.
         ///'Any': Entries may be signed.
         ///Default value is 'None' if SignKeys is null, and 'Any' otherwise.

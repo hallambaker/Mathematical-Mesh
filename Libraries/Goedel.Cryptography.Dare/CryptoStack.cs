@@ -47,7 +47,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The Keys to be used to sign the message. 
         /// </summary>
-        public List<CryptoKey> SignerKeys;
+        public List<CryptoKey> SignerKeys => CryptoParameters.SignerKeys;
 
         /// <summary>
         /// The base salt value.
@@ -59,7 +59,7 @@ namespace Goedel.Cryptography.Dare {
         /// used together with the salt data to derive the keys and initialization data for 
         /// cryptographic operations.
         /// </summary>
-        public byte[] BaseSeed;
+        public byte[] BaseSeed => CryptoParameters.BaseSeed;
 
         ///<summary>Returns a UDF key identifier for the master secret</summary>
         public string GetKeyIdentifier() => BaseSeed == null ? null : UDF.SymetricKeyId(BaseSeed);
@@ -103,13 +103,16 @@ namespace Goedel.Cryptography.Dare {
             CryptoParameters = cryptoParameters;
 
             header.CryptoStack = this;
-            header.Salt = Salt;
 
 
             if (cryptoParameters.Encrypt) {
                 header.EncryptionAlgorithm = EncryptId.ToJoseID();
+
+                Salt = Platform.GetRandomBits(128);
                 header.Salt = Salt;
                 header.KeyIdentifier = GetKeyIdentifier();
+
+                // make this conditional
                 cryptoParameters.SetKeyExchange(header);
 
                 long saltValue = 0;
@@ -124,15 +127,9 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
 
-            if (cryptoParameters.SignerKeys != null) {
-                SignerKeys = cryptoParameters.SignerKeys;
-                }
             if (DigestId != CryptoAlgorithmId.NULL) {
                 header.DigestAlgorithm = DigestId.ToJoseID();
                 }
-
-
-
             }
 
         /// <summary>
@@ -141,22 +138,22 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="saltValue"></param>
         /// <returns></returns>
         public static byte[] MakeSalt(long saltValue) {
-            var Salt = saltValue;
+            var salt = saltValue;
 
             var Index = 0;
-            while (Salt > 0xFF) {
+            while (salt > 0xFF) {
                 Index++;
-                Salt >>= 8;
+                salt >>= 8;
                 }
 
             var Result = new byte[Index + 1];
 
-            Salt = saltValue;
+            salt = saltValue;
             Index = 0;
-            Result[Index++] = (byte)(Salt & 0xFF);
-            while (Salt > 0xFF) {
-                Result[Index++] = (byte)(Salt & 0xFF);
-                Salt >>= 8;
+            Result[Index++] = (byte)(salt & 0xFF);
+            while (salt > 0xFF) {
+                Result[Index++] = (byte)(salt & 0xFF);
+                salt >>= 8;
                 }
             return Result;
 

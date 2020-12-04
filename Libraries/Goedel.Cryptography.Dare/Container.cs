@@ -11,34 +11,34 @@ using System.Text;
 namespace Goedel.Cryptography.Dare {
 
     #region // enumerations
-    /// <summary>
-    /// Enumeration describing a container type.
-    /// </summary>
-    public enum ContainerType {
-        /// <summary>The type is not defined.</summary>
-        Unknown,
-        ///<summary>A double linked list container. It can be read efficiently in
-        ///the forward or the reverse direction. It does not provide protection against
-        ///an insertion attack or efficient random access.</summary>
-        List,
-        ///<summary>A double linked list container. It can be read efficiently in
-        ///the forward or the reverse direction. It does not provide protection against
-        ///an insertion attack or efficient random access. A digest checksum is calculated
-        ///over the frame payload value but this is not linked to any other digest.</summary>
-        Digest,
-        ///<summary>A double linked list container indexed by a binary tree.It can be read efficiently in
-        ///the forward or the reverse direction or as a random access file. It does not provide protection against
-        ///an insertion attack.</summary>
-        Tree,
-        ///<summary>A double linked list container. It can be read efficiently in
-        ///the forward or the reverse direction and incorporates a digest chain to
-        ///provide protection against insertion attacks. It does not supporrt efficient random access.</summary>
-        Chain,
-        ///<summary>A double linked list container indexed by a binary tree.It can be read efficiently in
-        ///the forward or the reverse direction or as a random access file and incorporates a Merkle tree to
-        ///provide protection against insertion attacks.</summary>
-        MerkleTree,
-        }
+    ///// <summary>
+    ///// Enumeration describing a container type.
+    ///// </summary>
+    //public enum ContainerType {
+    //    /// <summary>The type is not defined.</summary>
+    //    Unknown,
+    //    ///<summary>A double linked list container. It can be read efficiently in
+    //    ///the forward or the reverse direction. It does not provide protection against
+    //    ///an insertion attack or efficient random access.</summary>
+    //    List,
+    //    ///<summary>A double linked list container. It can be read efficiently in
+    //    ///the forward or the reverse direction. It does not provide protection against
+    //    ///an insertion attack or efficient random access. A digest checksum is calculated
+    //    ///over the frame payload value but this is not linked to any other digest.</summary>
+    //    Digest,
+    //    ///<summary>A double linked list container indexed by a binary tree.It can be read efficiently in
+    //    ///the forward or the reverse direction or as a random access file. It does not provide protection against
+    //    ///an insertion attack.</summary>
+    //    Tree,
+    //    ///<summary>A double linked list container. It can be read efficiently in
+    //    ///the forward or the reverse direction and incorporates a digest chain to
+    //    ///provide protection against insertion attacks. It does not supporrt efficient random access.</summary>
+    //    Chain,
+    //    ///<summary>A double linked list container indexed by a binary tree.It can be read efficiently in
+    //    ///the forward or the reverse direction or as a random access file and incorporates a Merkle tree to
+    //    ///provide protection against insertion attacks.</summary>
+    //    MerkleTree,
+    //    }
 
     /// <summary>File index modes</summary>
     public enum IndexType {
@@ -355,8 +355,12 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             var containerInfo = containerHeaderFirst.ContainerInfo;
+            var containerType = containerInfo.ContainerType.ToContainerType();
 
-            var cryptoParametersContainer = new CryptoParametersContainer(keyCollection, containerHeaderFirst);
+
+
+            var cryptoParametersContainer = new CryptoParametersContainer(
+                    keyCollection, containerType, containerHeaderFirst);
 
 
             //var cryptoStack = containerHeaderFirst.GetCryptoStack(keyCollection, decrypt: decrypt);
@@ -510,16 +514,21 @@ namespace Goedel.Cryptography.Dare {
                         byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
             var container = MakeNewContainer(jbcdStream, containerType: containerType);
+            var containerHeaderFirst = container.ContainerHeaderFirst;
+            var containerInfoFirst = containerHeaderFirst.ContainerInfo;
+
+            // set the encryption policy
+            containerHeaderFirst.Policy = policy;
 
             // The cryptographic parameters that will be kept between calls.
-            container.CryptoParametersContainer = new CryptoParametersContainer(keyLocate, policy);
+            container.CryptoParametersContainer = 
+                new CryptoParametersContainer(keyLocate, containerType, containerHeaderFirst);
             
 
             container.DataEncoding = dataEncoding;
             container.FrameCount = 0;
 
-            var containerHeaderFirst = container.ContainerHeaderFirst;
-            var containerInfoFirst = containerHeaderFirst.ContainerInfo;
+
 
             containerInfoFirst.DataEncoding = dataEncoding.ToString();
 

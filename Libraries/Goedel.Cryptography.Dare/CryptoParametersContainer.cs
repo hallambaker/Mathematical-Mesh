@@ -16,23 +16,11 @@ namespace Goedel.Cryptography.Dare {
 
         bool ForcePolicy = false;
         DarePolicy Policy { get; set; }
+        PolicyEncryption PolicyEncryption { get; }
 
-        /// <summary>
-        /// Create cryptoparameters for a new container.
-        /// </summary>
-        /// <param name="keyCollection">The resolution instance.</param>
-        /// <param name="policy">The container security policy</param>
-        public CryptoParametersContainer(
-                    IKeyLocate keyCollection,
-                    DarePolicy policy) {
+        PolicySignature PolicySignature { get; }
 
-            SetPolicy(keyCollection, policy);
-            ForcePolicy = true;
-
-
-
-
-            }
+        int keyExchangeFrame;
 
         /// <summary>
         /// Create cryptoparameters for a reopened container.
@@ -40,46 +28,122 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyCollection"></param>
         /// <param name="header">Header specifying the governing policy.</param>
         public CryptoParametersContainer(
-                IKeyLocate keyCollection, 
+                IKeyLocate keyCollection,
+                ContainerType containerType,
                 DareHeader header) {
 
-            if (header.Policy != null) {
-                SetPolicy(keyCollection, header.Policy);
+            var policy = header.Policy;
+
+            // Force calculation of the payload digest for container types that require it.
+            switch (containerType) {
+                case ContainerType.Digest:
+                case ContainerType.Chain:
+                case ContainerType.MerkleTree: {
+                    var digest = policy?.DigestAlgorithm;
+                    DigestId = digest != null ?
+                            digest.FromJoseID() : CryptoID.DefaultDigestId;
+                    break;
+                    }
+                }
+
+            if (policy == null) {
+                return; // no policy to set here.
+                }
+
+            // EncryptionAlgorithm, Encryption, EncryptKeys
+            PolicyEncryption = policy.Encryption.ToPolicyEncryption();
+            if (PolicyEncryption == PolicyEncryption.Unknown) {
+                PolicyEncryption = policy.EncryptKeys == null ? PolicyEncryption.None :
+                    PolicyEncryption.Isolated;
+                }
+
+            if (PolicyEncryption == PolicyEncryption.None) {
+                EncryptId = CryptoAlgorithmId.NULL;
                 }
             else {
-                // what to do if there is no policy? I guess we are just doing plaintext
+                EncryptId = policy.EncryptionAlgorithm == null ? CryptoID.DefaultEncryptionId :
+                    policy.EncryptionAlgorithm.FromJoseID();
+                if (policy.EncryptKeys != null) {
+                    EncryptionKeys = new List<CryptoKey>();
+                    foreach (var key in policy.EncryptKeys) {
+                        var keyPair = key.KeyPair;
+                        EncryptionKeys.Add(keyPair);
+                        }
+                    }
+                keyExchangeFrame = header.Index;
+                if (keyExchangeFrame > 0 & PolicyEncryption == PolicyEncryption.Once) {
+                    RecoverKeyExchange(header);
+                    }
                 }
 
-
-            throw new NYI();
-
-
+            // DigestAlgorithm, Signature, SignKeys
+            PolicySignature = policy.Signature.ToPolicySignature();
+            if (PolicySignature == PolicySignature.Unknown) {
+                PolicySignature = policy.SignKeys == null ? PolicySignature.None :
+                    PolicySignature.Last;
+                }
+            if (PolicySignature != PolicySignature.None) {
+                if (policy.SignKeys != null) {
+                    SignerKeys = new List<CryptoKey>();
+                    foreach (var key in policy.SignKeys) {
+                        var keyPair = key.KeyPair;
+                        EncryptionKeys.Add(keyPair);
+                        }
+                    }
+                }
             }
 
+
+        void RecoverKeyExchange(DareHeader header) {
+
+            throw new NYI();
+            }
+
+        /// <summary>
+        /// Applies the security policy and container status information to determine if a prior
+        /// key exchange can be reused. If the value false is returned, a new key exchange is
+        /// required. Otherwise, the value <paramref name="previousFrame"/> is set to the index value
+        /// of the prior frame where the key exchange can be found.
+        /// </summary>
+        /// <param name="currentFrame"></param>
+        /// <param name="previousFrame"></param>
+        /// <returns></returns>
+        public bool ReuseKeyExchange(
+                int currentFrame,
+                out int previousFrame) {
+
+            switch (PolicyEncryption) {
+                case PolicyEncryption.Isolated: {
+                    previousFrame = currentFrame;
+                    return false;
+                    }
+                case PolicyEncryption.Once:
+                case PolicyEncryption.Session: {
+                    if (currentFrame == keyExchangeFrame) {
+                        previousFrame = currentFrame;
+                        return false;
+                        }
+                    previousFrame = keyExchangeFrame;
+                    return true;
+                    }
+                }
+
+            throw new NYI();
+            }
 
 
         /// <summary>
         /// Perform the steps necessary to 
         /// </summary>
         /// <param name="header"></param>
-        public virtual void SetKeyExchange(DareHeader header) {
+        public override void SetKeyExchange(DareHeader header) {
 
             header.Recipients = KeyExchange();
-            if (ForcePolicy) {
-                header.Policy = Policy;
-                ForcePolicy = false;
-                }
+
 
             }
 
 
-
-        public void SetPolicy(
-                    IKeyLocate keyCollection,
-                    DarePolicy policy) {
-            Policy = policy;
-
-            }
 
 
 

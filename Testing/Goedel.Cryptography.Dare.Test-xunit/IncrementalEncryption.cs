@@ -20,8 +20,8 @@ namespace Goedel.XUnit {
 
         KeyCollection MakeKeyCollection() {
             var TestEnvironment = new TestEnvironmentCommon();
-            var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
-            return new KeyCollectionTest(machineAdmin);
+            //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
+            return new KeyCollectionTestEnv(TestEnvironment.Path);
             }
 
         [Fact]

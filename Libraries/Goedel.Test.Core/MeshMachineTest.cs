@@ -7,6 +7,7 @@ using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Test;
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 
@@ -157,5 +158,19 @@ namespace Goedel.Test.Core {
 
 
         }
+
+
+    public class KeyCollectionTestEnv : KeyCollectionCore {
+        string path;
+
+        public override string DirectoryKeys => Path.Combine (path, "Keys");
+
+
+        public KeyCollectionTestEnv(string path) => this.path = path;
+
+
+
+        }
+
 
     }
