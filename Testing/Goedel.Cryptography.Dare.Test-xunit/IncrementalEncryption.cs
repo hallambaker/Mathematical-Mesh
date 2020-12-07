@@ -185,7 +185,7 @@ namespace Goedel.XUnit {
 
                 record = 0;
                 foreach (var ContainerDataReader in XContainer) {
-                    Verify(XContainer, darePolicy, ContainerDataReader, record, maxSize, keyCollection);
+                    Verify(XContainer, darePolicy, ContainerDataReader, record++, maxSize, keyCollection);
                     }
 
                 //XContainer.CheckContainer(Headers);
