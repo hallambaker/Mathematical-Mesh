@@ -142,7 +142,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
-        bool IsApex(long index) {
+        static bool IsApex(long index) {
             if (index == 0) {
                 return true;
                 }
@@ -300,7 +300,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="frame">The frame index</param>
         /// <returns>The preceding frame index.</returns>
-        public long PreviousFrame(long frame) {
+        public static long PreviousFrame(long frame) {
             long x2 = frame + 1;
             long d = 1;
 

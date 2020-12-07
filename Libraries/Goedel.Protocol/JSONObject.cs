@@ -115,7 +115,7 @@ namespace Goedel.Protocol {
         /// Add a dictionary to the persistence store decoder.
         /// </summary>
         /// <param name="dictionary">The dictionary to add</param>
-        public void AddDictionary(
+        public static void AddDictionary(
                     Dictionary<string, JsonFactoryDelegate> dictionary) => Append(TagDictionary, dictionary);
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Goedel.Protocol {
         /// <param name="first">This is the first field in the object being serialized. This 
         /// value is set to false on exit.</param>
         /// <param name="wrap">Wrap the objects for formatting.</param>
-		public void SerializeX(Writer writer, bool wrap, ref bool first) {
+		public static void SerializeX(Writer writer, bool wrap, ref bool first) {
             writer.Keep();
             wrap.Keep();
             first.Keep();

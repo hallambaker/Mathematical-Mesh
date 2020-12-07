@@ -75,7 +75,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestEd448x() => TestEd448(SignatureTest.Tests448[0]);
 
-        void TestEd25519(SignatureTest Test) {
+        static void TestEd25519(SignatureTest Test) {
 
             var Private = new CurveEdwards25519Private(Test.SecretKey);
             var Public = Private.Public;
@@ -84,7 +84,7 @@ namespace Goedel.XUnit {
 
             }
 
-        void TestEd448(SignatureTest Test) {
+        static void TestEd448(SignatureTest Test) {
 
             var Private = new CurveEdwards448Private(Test.SecretKey);
             var Public = Private.Public;

@@ -43,7 +43,7 @@ namespace Goedel.Cryptography.Algorithms {
 
         ///<summary>The neutral point which returns the original value when 
         ///added to a point.</summary>
-        public CurveX448 Neutral => throw new NYI();
+        public static CurveX448 Neutral => throw new NYI();
         #endregion
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <returns>The key agreement parameters, the public key value and the
         /// key agreement.</returns>
-        public CurveX448 Agreement(CurveX448[] Carry) {
+        public static CurveX448 Agreement(CurveX448[] Carry) {
             Assert.AssertTrue(Carry.Length >= 1, InsufficientResults.Throw);
 
             var Total = Carry[0];

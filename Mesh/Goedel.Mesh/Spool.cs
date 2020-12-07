@@ -232,7 +232,7 @@ namespace Goedel.Mesh {
         /// <returns><code>true</code> unless one of the conditions defined by <paramref name="maxTicks"/>, 
         /// <paramref name="notBefore"/> or <paramref name="notOnOrAfter"/> </returns> is not
         /// met in which case return <code>false</code>.
-        public bool CheckTime(
+        public static bool CheckTime(
                     DateTime? dateTime,
                     long maxTicks = -1,
                     DateTime? notBefore = null,
@@ -428,7 +428,7 @@ namespace Goedel.Mesh {
         /// Apply the list of message status updates specified in <paramref name="references"/>.
         /// </summary>
         /// <param name="references">List of message status values to be updated.</param>
-        public void SetStatus(List<Reference> references) {
+        public static void SetStatus(List<Reference> references) {
             if (references == null || references.Count == 0) {
                 return;
                 }

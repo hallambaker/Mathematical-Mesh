@@ -85,7 +85,7 @@ namespace Goedel.Cryptography {
 
         // Note here that since BigInteger is a structure, not a class, we don't
         // need to worry about boxing or call by value issues
-        BigInteger PolyMod(BigInteger x, BigInteger[] polyNomial, BigInteger modulus) {
+        static BigInteger PolyMod(BigInteger x, BigInteger[] polyNomial, BigInteger modulus) {
             BigInteger power = 1;  // expect the optimizer to catch
             var result = polyNomial[0];
             for (int i = 1; i < polyNomial.Length; i++) {

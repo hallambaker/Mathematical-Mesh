@@ -202,7 +202,7 @@ namespace Goedel.Cryptography {
         /// Debug aid
         /// </summary>
         /// <param name="R">Write out the register set</param>
-        public void Trace(Block[] R) {
+        public static void Trace(Block[] R) {
             var Builder = new StringBuilder();
             for (var i = 0; i < R.Length; i++) {
                 Builder.Append(R[i].ToString());

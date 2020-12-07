@@ -370,11 +370,11 @@ After:
 
         /// <summary>Get IPv4Address</summary>
         /// <returns>The value returned</returns>
-        public IPAddress IPv4() => null;
+        public static IPAddress IPv4() => null;
 
         /// <summary>Get IPv6Address</summary>
         /// <returns>The value returned</returns>
-        public IPAddress IPv6() => null;
+        public static IPAddress IPv6() => null;
 
         /// <summary>Get Domain name</summary>
         /// <returns>The value returned</returns>
@@ -385,15 +385,15 @@ After:
 
         /// <summary>Get Mail Address</summary>
         /// <returns>The value returned</returns>
-        public string Mail() => null;
+        public static string Mail() => null;
 
         /// <summary>Get Node ID</summary>
         /// <returns>The value returned</returns>
-        public ulong NodeID() => 0;
+        public static ulong NodeID() => 0;
 
         /// <summary>Get Byte</summary>
         /// <returns>The value returned</returns>
-        public byte Byte() => 0;
+        public static byte Byte() => 0;
 
         /// <summary>Get Int16</summary>
         /// <returns>The value returned</returns>
@@ -413,16 +413,16 @@ After:
 
         /// <summary>Get Time32</summary>
         /// <returns>The value returned</returns>
-        public uint Time32() => 0;
+        public static uint Time32() => 0;
         // Same as for Time32 (resolution is still seconds, just a longer interval)
 
         /// <summary>Get Time48</summary>
         /// <returns>The value returned</returns>
-        public ulong Time48() => 0;
+        public static ulong Time48() => 0;
 
         /// <summary>Get String</summary>
         /// <returns>The value returned</returns>
-        public string String() => null;
+        public static string String() => null;
 
         /// <summary>Get Optional String</summary>
         /// <returns>The value returned</returns>
@@ -448,7 +448,7 @@ After:
 
         /// <summary>Get Binary data</summary>
         /// <returns>The value returned</returns>
-        public byte[] Binary() => null;
+        public static byte[] Binary() => null;
 
         /// <summary>Get Binary data with 8 bit length value</summary>
         /// <returns>The value returned</returns>
@@ -460,11 +460,11 @@ After:
 
         /// <summary>Get Binary data with L production</summary>
         /// <returns>The value returned</returns>
-        public byte[] LBinary() => null;
+        public static byte[] LBinary() => null;
 
         /// <summary>Get Hex data</summary>
         /// <returns>The value returned</returns>>
-        public byte[] Hex() => null;
+        public static byte[] Hex() => null;
 
         /// <summary>Get Hex data with 8 bit length value</summary>
         /// <returns>The value returned</returns>

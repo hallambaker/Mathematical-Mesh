@@ -277,24 +277,24 @@ namespace Goedel.Mesh.Shell {
 
                 switch (message) {
                     case AcknowledgeConnection acknowledgeConnection: {
-                            ToBuilder(builder, message, $"    Connection Request:");
+                        ToBuilder(builder, message, $"    Connection Request:");
                         builder.AppendLine($"        Device:  {acknowledgeConnection.MessageConnectionRequest.ProfileDevice.Udf}");
                         builder.AppendLine($"        Witness: {acknowledgeConnection.Witness}");
                         break;
                         }
                     case RequestConfirmation requestConfirmation: {
-                            ToBuilder(builder, message, $"    Confirmation Request:");
+                        ToBuilder(builder, message, $"    Confirmation Request:");
                         builder.AppendLine($"        Text: {requestConfirmation.Text}");
                         break;
                         }
                     case ResponseConfirmation responseConfirmation: {
-                            ToBuilder(builder, message, $"    Confirmation Reply:");
+                        ToBuilder(builder, message, $"    Confirmation Reply:");
                         builder.AppendLine($"        RequestID: {responseConfirmation.Request.Header.EnvelopeID}");
                         builder.AppendLine($"        Accept: {responseConfirmation.Accept}");
                         break;
                         }
                     case RequestTask requestTask: {
-                            ToBuilder(builder, message, $"    Task Request:");
+                        ToBuilder(builder, message, $"    Task Request:");
                         requestTask.Future();
                         break;
                         }
@@ -305,12 +305,12 @@ namespace Goedel.Mesh.Shell {
                     //    break;
                     //    }
                     case Mesh.MessageContact requestContact: {
-                            ToBuilder(builder, message, $"    Contact Request:");
+                        ToBuilder(builder, message, $"    Contact Request:");
                         builder.AppendLine($"        PIN: {requestContact.PIN}");
                         break;
                         }
                     case GroupInvitation groupInvitation: {
-                            ToBuilder(builder, message, $"    Group invitation:");
+                        ToBuilder(builder, message, $"    Group invitation:");
                         groupInvitation.Future();
                         break;
                         }
@@ -323,8 +323,7 @@ namespace Goedel.Mesh.Shell {
             return builder.ToString();
             }
 
-
-        void ToBuilder(StringBuilder builder, Message message, string tag) {
+        static void ToBuilder(StringBuilder builder, Message message, string tag) {
             builder.AppendLine($"    {tag}:");
             builder.AppendLine($"        MessageID: {message.MessageId}");
             builder.AppendLine($"        To: {message.Recipient} From: {message.Sender}");

@@ -68,8 +68,7 @@ namespace Goedel.XUnit {
             throw new NYI();
             }
 
-
-        bool TestBase(KeyPairAdvanced baseKey, KeyPairAdvanced activationKey, string activationUDF,
+        static bool TestBase(KeyPairAdvanced baseKey, KeyPairAdvanced activationKey, string activationUDF,
                     MeshActor actor, MeshKeyOperation operation) {
             // Check these are both the same kind
             (baseKey.CryptoAlgorithmId == activationKey.CryptoAlgorithmId).TestTrue();
@@ -96,7 +95,7 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        bool TestComplete(KeyPairAdvanced completeKey, KeyPairAdvanced activationKey, string activationUDF,
+        static bool TestComplete(KeyPairAdvanced completeKey, KeyPairAdvanced activationKey, string activationUDF,
                     MeshActor actor, MeshKeyOperation operation) {
             // Check these are both the same kind
             (completeKey.CryptoAlgorithmId == activationKey.CryptoAlgorithmId).TestTrue();
@@ -245,7 +244,7 @@ namespace Goedel.XUnit {
             }
 
 
-        public bool TestSign(KeyPair privateKey, KeyPair publicKey) {
+        public static bool TestSign(KeyPair privateKey, KeyPair publicKey) {
 
             var message = "This is a test".ToBytes();
 
@@ -260,7 +259,7 @@ namespace Goedel.XUnit {
             return result;
             }
 
-        public bool TestEncrypt(KeyPair privateKey, KeyPair publicKey) {
+        public static bool TestEncrypt(KeyPair privateKey, KeyPair publicKey) {
             var plaintext = Platform.GetRandomBits(256);
 
             // sign a message with the private

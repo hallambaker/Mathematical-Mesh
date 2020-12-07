@@ -26,8 +26,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public Stream StreamRead;
 
-        Stream DisposeStreamRead = null;
-        Stream DisposeStreamWrite = null;
+        Stream disposeStreamRead = null;
+        Stream disposeStreamWrite = null;
 
         /// <summary>
         /// The current position within the stream.
@@ -72,12 +72,12 @@ namespace Goedel.Cryptography.Dare {
 
             if (fileStatus != FileStatus.Read) {
                 StreamWrite = fileName.FileStream(fileStatus);
-                DisposeStreamWrite = StreamWrite;
+                disposeStreamWrite = StreamWrite;
                 StreamWrite.Seek(0, SeekOrigin.End);
                 }
             if (!writeOnly) {
                 StreamRead = fileName.FileStream(FileStatus.Read);
-                DisposeStreamRead = StreamRead;
+                disposeStreamRead = StreamRead;
                 }
             }
 
@@ -97,8 +97,8 @@ namespace Goedel.Cryptography.Dare {
         /// Dispose method, frees all resources.
         /// </summary>
         protected override void Disposing() {
-            DisposeStreamWrite?.Dispose();
-            DisposeStreamRead?.Dispose();
+            disposeStreamWrite?.Dispose();
+            disposeStreamRead?.Dispose();
             LockGlobal?.Dispose();
             }
 
@@ -136,7 +136,8 @@ namespace Goedel.Cryptography.Dare {
                 }
             catch (Exception exception) {
                 LockGlobal.Exit();
-                throw exception;
+                exception.Future();
+                throw ;
                 }
 
             }

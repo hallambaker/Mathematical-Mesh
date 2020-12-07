@@ -22,6 +22,7 @@
 //  
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
+using Goedel.ASN;
 
 using System;
 using System.Security.Cryptography;
@@ -162,6 +163,7 @@ namespace Goedel.Cryptography {
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmId algorithmID = CryptoAlgorithmId.NULL) {
+            algorithmID.Keep();
             keySize = keySize == 0 ? 2048 : keySize;
 
             var cspParameters = new CspParameters() { Flags = CspProviderFlags.CreateEphemeralKey };
@@ -255,6 +257,9 @@ namespace Goedel.Cryptography {
         public static new KeyPair KeyPairPrivateFactory(
                 PkixPrivateKeyRsa PKIXParameters,
         KeySecurity keySecurity, KeyCollection keyCollection) {
+
+            keyCollection.Keep();
+
             var RSAParameters = PKIXParameters.GetRsaParameters();
             return new KeyPairRSA(RSAParameters, keySecurity);
             }

@@ -9,23 +9,29 @@ using Xunit;
 #pragma warning disable IDE0059
 namespace Goedel.XUnit {
     public partial class ShellTests {
-        string AliceAccount => "alice@example.com";
-        string MalletAccount => "mallet@example.com";
-        string AccountA2 => "alice@example.net";
+        static string AliceAccount => "alice@example.com";
 
-        string AccountB => "bob@example.com";
-        string AccountC => "carol@example.com";
-        string AccountQ => "quartermaster@example.com";
-        string DeviceQName => "DeviceQ";
-        string DeviceAdminName => "DeviceAdmin";
-        string DeviceConnect1Name => "DeviceConnect1";
+        static string MalletAccount => "mallet@example.com";
 
+        static string AccountA2 => "alice@example.net";
 
-        string DeviceAliceName => "MachineAlice";
+        static string AccountB => "bob@example.com";
 
-        string DeviceAliceName2 => "MachineAlice2";
+        static string AccountC => "carol@example.com";
 
-        string DeviceBobName => "MachineBob";
+        static string AccountQ => "quartermaster@example.com";
+
+        static string DeviceQName => "DeviceQ";
+
+        static string DeviceAdminName => "DeviceAdmin";
+
+        static string DeviceConnect1Name => "DeviceConnect1";
+
+        static string DeviceAliceName => "MachineAlice";
+
+        static string DeviceAliceName2 => "MachineAlice2";
+
+        static string DeviceBobName => "MachineBob";
 
         [Fact]
         public void TestHello() {
@@ -155,7 +161,7 @@ namespace Goedel.XUnit {
             var device3 = GetTestCLI("Device3");
 
 
-            device1.Dispatch($"account create {this.AliceAccount}");
+            device1.Dispatch($"account create {AliceAccount}");
 
             var result = device1.Dispatch($"account pin") as ResultPIN;
 
@@ -257,7 +263,7 @@ namespace Goedel.XUnit {
             CheckCanSuper(device2).TestTrue();
             }
 
-        bool CheckCanSuper(Mesh.Test.TestCLI device2) {
+        static bool CheckCanSuper(Mesh.Test.TestCLI device2) {
             return true;
             }
 
@@ -285,7 +291,7 @@ namespace Goedel.XUnit {
             CheckCanAdmin(device2).TestTrue();
             }
 
-        bool CheckCanAdmin(Mesh.Test.TestCLI device2) {
+        static bool CheckCanAdmin(Mesh.Test.TestCLI device2) {
             return true;
             }
 
@@ -313,7 +319,7 @@ namespace Goedel.XUnit {
             CheckCanMessage(device2).TestTrue();
             }
 
-        bool CheckCanMessage(Mesh.Test.TestCLI device2) {
+        static bool CheckCanMessage(Mesh.Test.TestCLI device2) {
             return true;
             }
 
@@ -340,7 +346,7 @@ namespace Goedel.XUnit {
             CheckCanWeb(device2).TestTrue();
             }
 
-        bool CheckCanWeb(Mesh.Test.TestCLI device2) {
+        static bool CheckCanWeb(Mesh.Test.TestCLI device2) {
             return true;
             }
 
@@ -367,7 +373,7 @@ namespace Goedel.XUnit {
             CheckCanDevice(device2).TestTrue();
             }
 
-        bool CheckCanDevice(Mesh.Test.TestCLI device2) {
+        static bool CheckCanDevice(Mesh.Test.TestCLI device2) {
             return true;
             }
 

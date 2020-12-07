@@ -141,7 +141,7 @@ namespace Goedel.Mesh {
         /// <param name="meshMachine">The machine.</param>
         /// <param name="algorithmSign">The signature algorithm.</param>
         /// <returns>The host profile.</returns>
-        public ProfileHost CreateHost(IMeshMachine meshMachine,
+        public static ProfileHost CreateHost(IMeshMachine meshMachine,
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) => 
                         ProfileHost.Generate(algorithmSign);
 

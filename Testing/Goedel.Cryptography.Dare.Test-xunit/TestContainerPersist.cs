@@ -164,8 +164,7 @@ namespace Goedel.XUnit {
 
             }
 
-
-        bool CheckEqual(TestItem v1, TestItem v2) {
+        static bool CheckEqual(TestItem v1, TestItem v2) {
             var t1 = (v1.AccountID == v2.AccountID);
             var t2 = (v1.Status == v2.Status);
             var t3 = (v1.Created.ToString() == v2.Created.ToString());

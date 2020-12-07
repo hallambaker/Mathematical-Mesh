@@ -76,14 +76,14 @@ namespace Goedel.XUnit {
 
             }
 
-        DareEnvelope MakeMessage(string id, KeyPair signingKey) {
+        static DareEnvelope MakeMessage(string id, KeyPair signingKey) {
             var message = new Message() {
                 MessageId = id
                 };
             return message.Envelope(signingKey);
             }
 
-        MessageComplete SetStatus(Spool spool, string id, MessageStatus messageStatus, KeyPair signingKey) {
+        static MessageComplete SetStatus(Spool spool, string id, MessageStatus messageStatus, KeyPair signingKey) {
 
             var message = new MessageComplete() {
                 

@@ -114,7 +114,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="Private"></param>
         /// <returns></returns>
-        public PrivateKeyECDH CombinePrivate(PrivateKeyECDH Private) => throw new NYI();
+        public static PrivateKeyECDH CombinePrivate(PrivateKeyECDH Private) => throw new NYI();
 
 
         /// <summary>

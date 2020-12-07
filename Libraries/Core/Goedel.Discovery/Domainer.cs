@@ -1754,7 +1754,7 @@ namespace Goedel.Discovery {
         public static DNSRecord_RP Decode(DNSBufferIndex Index, int Length) {
             DNSRecord_RP NewRecord = new DNSRecord_RP() {
                 Start = Index.Start,
-                MBox = Index.ReadMail(),
+                MBox = DNSBufferIndex.ReadMail(),
                 Txt = Index.ReadDomain()
                 };
 
@@ -2118,8 +2118,8 @@ namespace Goedel.Discovery {
                 Algorithm = Index.ReadByte(),
                 Labels = Index.ReadByte(),
                 OriginalTTL = Index.ReadInt32(),
-                SignatureExpiration = Index.ReadTime32(),
-                SignatureInception = Index.ReadTime32(),
+                SignatureExpiration = DNSBufferIndex.ReadTime32(),
+                SignatureInception = DNSBufferIndex.ReadTime32(),
                 KeyTag = Index.ReadInt16(),
                 SignersName = Index.ReadString(),
                 Signature = Index.ReadData(Index.Remainder(Length))
@@ -3028,8 +3028,8 @@ namespace Goedel.Discovery {
                 Algorithm = Index.ReadByte(),
                 Labels = Index.ReadByte(),
                 OriginalTTL = Index.ReadInt32(),
-                SignatureExpiration = Index.ReadTime32(),
-                SignatureInception = Index.ReadTime32(),
+                SignatureExpiration = DNSBufferIndex.ReadTime32(),
+                SignatureInception = DNSBufferIndex.ReadTime32(),
                 KeyTag = Index.ReadInt16(),
                 SignersName = Index.ReadString(),
                 Signature = Index.ReadData(Index.Remainder(Length))
@@ -3576,7 +3576,7 @@ namespace Goedel.Discovery {
         public override string Canonical() {
             Canonicalize Canonicalize = new Canonicalize("NID", Domain);
             Canonicalize.Int16(Preference);
-            Canonicalize.NodeID(NodeID);
+            Discovery.Canonicalize.NodeID(NodeID);
             return Canonicalize.Text;
             }
 
@@ -3706,7 +3706,7 @@ namespace Goedel.Discovery {
         public override string Canonical() {
             Canonicalize Canonicalize = new Canonicalize("L64", Domain);
             Canonicalize.Int16(Preference);
-            Canonicalize.NodeID(Locator);
+            Discovery.Canonicalize.NodeID(Locator);
             return Canonicalize.Text;
             }
 
@@ -3902,8 +3902,8 @@ namespace Goedel.Discovery {
             DNSRecord_TKEY NewRecord = new DNSRecord_TKEY() {
                 Start = Index.Start,
                 Algorithm = Index.ReadDomain(),
-                Inception = Index.ReadTime32(),
-                Expiration = Index.ReadTime32(),
+                Inception = DNSBufferIndex.ReadTime32(),
+                Expiration = DNSBufferIndex.ReadTime32(),
                 Mode = Index.ReadInt16(),
                 Error = Index.ReadInt16(),
                 KeyData = Index.ReadData(Index.ReadInt16()),
@@ -4004,7 +4004,7 @@ namespace Goedel.Discovery {
             DNSRecord_TSIG NewRecord = new DNSRecord_TSIG() {
                 Start = Index.Start,
                 Algorithm = Index.ReadDomain(),
-                TimeSigned = Index.ReadTime48(),
+                TimeSigned = DNSBufferIndex.ReadTime48(),
                 Fudge = Index.ReadInt16(),
                 MAC = Index.ReadData(Index.ReadInt16()),
                 OriginalID = Index.ReadInt16(),

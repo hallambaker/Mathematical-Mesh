@@ -115,7 +115,7 @@ namespace ExampleGenerator {
             return Data;
             }
 
-        public List<ContainerFrame> ReadContainer(Container container) {
+        public static List<ContainerFrame> ReadContainer(Container container) {
             var ContainerHeaders = new List<ContainerFrame> {
                 new ContainerFrame {
                     Header = container.ContainerHeaderFirst
@@ -132,8 +132,7 @@ namespace ExampleGenerator {
             return ContainerHeaders;
             }
 
-
-        byte[] ReadBinary(JbcdStream jBCDStream) {
+        static byte[] ReadBinary(JbcdStream jBCDStream) {
             jBCDStream.ReadTag(out _, out var Length);
             var Result = new byte[Length];
             jBCDStream.Read(Result, 0, (int)Length);
@@ -181,8 +180,7 @@ namespace ExampleGenerator {
                     contentMeta: contentInfo, dataSequences: Data);
                 }
 
-
-            byte[] MakeData(string Tag, string Data) => $"{Tag}: {Data}".ToUTF8();
+            static byte[] MakeData(string Tag, string Data) => $"{Tag}: {Data}".ToUTF8();
 
             }
 

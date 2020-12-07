@@ -168,7 +168,7 @@ namespace Goedel.Cryptography.Dare {
             if (!Header.HasExchangePosition) {
                 return Header.Recipients;
                 }
-            var exchangeHeader = container.GetHeader(Header.ContainerInfo.ExchangePosition);
+            var exchangeHeader = Container.GetHeader(Header.ContainerInfo.ExchangePosition);
 
             if (Header.Recipients == null) {
                 return exchangeHeader.Recipients;
@@ -185,7 +185,7 @@ namespace Goedel.Cryptography.Dare {
         /// Copy the payload data to file.
         /// </summary>
         /// <param name="file">The file to write the payload to.</param>
-        public void CopyToFile(string file) {
+        public static void CopyToFile(string file) {
             file.Future();
             throw new NYI();
             }

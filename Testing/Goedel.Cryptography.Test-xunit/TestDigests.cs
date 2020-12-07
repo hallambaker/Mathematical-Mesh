@@ -169,7 +169,7 @@ namespace Goedel.XUnit {
             foreach (var TestVector in TestData) {
                 if (TestVector.ID != CryptoAlgorithmId.NULL) {
                     var Provider = CryptoCatalog.Default.GetDigest(TestVector.ID);
-                    TestVector.Verify_Streamed(Provider, Message, Repeat, TestVector);
+                    XUnit.TestVector.Verify_Streamed(Provider, Message, Repeat, TestVector);
                     }
                 }
             }
@@ -189,7 +189,7 @@ namespace Goedel.XUnit {
             Xunit.Assert.True(Result.IsEqualTo(TestVector.Digest));
             }
 
-        public void Verify_Streamed(CryptoProviderDigest Provider, string MessageString,
+        public static void Verify_Streamed(CryptoProviderDigest Provider, string MessageString,
                 int Repeat, TestVector TestVector) {
             var Message = MessageString.ToBytes();
             var Encoder = Provider.MakeEncoder();

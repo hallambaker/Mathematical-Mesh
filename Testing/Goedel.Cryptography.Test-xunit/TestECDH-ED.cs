@@ -128,7 +128,7 @@ namespace Goedel.XUnit {
             Carry[0] = (RecryptKeys[0] as CurveEdwards25519Private).Agreement(Result.Public);
             Carry[1] = (RecryptKeys[1] as CurveEdwards25519Private).Agreement(Result.Public);
 
-            var AgreeAB = KeyAPublic.Agreement(Carry);
+            var AgreeAB = CurveEdwards25519Public.Agreement(Carry);
 
             (AgreeAB.Y0 == Result.AgreementEd25519.Y0).TestTrue();
             }

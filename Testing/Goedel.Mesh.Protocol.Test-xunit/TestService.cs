@@ -57,8 +57,8 @@ namespace Goedel.XUnit {
 
         static string AccountGroup = "groupw@example.com";
 
-        public Contact ContactAlice => MeshMachineTest.ContactAlice;
-        public Contact ContactBob => MeshMachineTest.ContactBob;
+        public static Contact ContactAlice => MeshMachineTest.ContactAlice;
+        public static Contact ContactBob => MeshMachineTest.ContactBob;
 
 
         CatalogedCredential password1 = new CatalogedCredential() {
@@ -112,14 +112,14 @@ namespace Goedel.XUnit {
                 }
 
 
-            //// second device
-            //var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
-            //var boundPin = contextAccountAlice_1_a.GetPIN(MeshConstants.MessagePINActionDevice);
-            //var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.Pin);
-            //var sync = contextAccountAlice_1_a.Sync();
-            //var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-            //contextAccountAlice_1_a.Process(connectRequest);
-            //contextAccountAlice_2.Complete();
+            // second device
+            var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+            var boundPin = contextAccountAlice_1_a.GetPIN(MeshConstants.MessagePINActionDevice);
+            var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.Pin);
+            var sync = contextAccountAlice_1_a.Sync();
+            var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+            contextAccountAlice_1_a.Process(connectRequest);
+            contextAccountAlice_2.Complete();
 
 
 
@@ -407,7 +407,7 @@ namespace Goedel.XUnit {
             CanAdmin(context2).TestTrue();
             }
 
-        bool CanAdmin(ContextUser contextUser) => true;
+        static bool CanAdmin(ContextUser contextUser) => true;
 
 
         (ContextUser, ContextUser) CreateConnectGrant(string roles) {
@@ -504,7 +504,7 @@ namespace Goedel.XUnit {
             }
 
 
-        public bool Exchange(ContextUser contextAccountAlice, ContextUser contextAccountBob) {
+        public static bool Exchange(ContextUser contextAccountAlice, ContextUser contextAccountBob) {
             contextAccountBob.ContactRequest(AccountAlice);
             var sync = contextAccountAlice.Sync();
 
@@ -574,7 +574,7 @@ namespace Goedel.XUnit {
 
         #region // helper routines
 
-        void ReportDevices(ContextUser contextUser) {
+        static void ReportDevices(ContextUser contextUser) {
             var catalogDevice = contextUser.GetStore(CatalogDevice.Label) as CatalogDevice;
 
             Console.WriteLine();
@@ -586,15 +586,14 @@ namespace Goedel.XUnit {
         /// Exercise the account to verify functionality. Currently a stub.
         /// </summary>
         /// <param name="contextUser">The context to exercise the account from.</param>
-        void ExerciseAccount(ContextUser contextUser) => contextUser.Future();
+        static void ExerciseAccount(ContextUser contextUser) => contextUser.Future();
 
-
-        List<ProcessResult> ProcessAutomatics(ContextUser contextUser) {
+        static List<ProcessResult> ProcessAutomatics(ContextUser contextUser) {
             contextUser.Sync();
             return contextUser.ProcessAutomatics();
             }
 
-        ContextUser TestCompletionSuccess(ContextMeshPending contextMeshPending) {
+        static ContextUser TestCompletionSuccess(ContextMeshPending contextMeshPending) {
             var contextUser = contextMeshPending.Complete();
             contextUser.Sync(); // Will fail if cannot complete
 
@@ -629,11 +628,10 @@ namespace Goedel.XUnit {
 
         bool VerifyContainerEncrypted(
                     Store container,
-                    KeyPair encryptionKey) => 
+                    KeyPair encryptionKey) =>
             VerifyContainerEncrypted(container.Container, encryptionKey);
 
-
-        bool VerifyContainerEncrypted(Goedel.Cryptography.Dare.Container container,
+        static bool VerifyContainerEncrypted(Goedel.Cryptography.Dare.Container container,
                     KeyPair encryptionKey) {
 
 
@@ -655,19 +653,19 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        bool Verify(ActivationDevice first, ActivationDevice second) {
+        static bool Verify(ActivationDevice first, ActivationDevice second) {
             //Verify(first.ConnectionAccount, second.ConnectionAccount);
             (first.AccountUdf == second.AccountUdf).TestTrue();
             return true;
             }
 
-        bool Verify(ProfileUser first, ProfileUser second) {
+        static bool Verify(ProfileUser first, ProfileUser second) {
             (first.AccountEncryption.Udf == second.AccountEncryption.Udf).TestTrue();
             (first.Udf == second.Udf).TestTrue();
             return true;
             }
 
-        public bool Verify(ConnectionDevice first, ConnectionDevice second) {
+        public static bool Verify(ConnectionDevice first, ConnectionDevice second) {
             (first.DeviceSignature.Udf == second.DeviceSignature.Udf).TestTrue();
             (first.DeviceEncryption.Udf == second.DeviceEncryption.Udf).TestTrue();
             (first.DeviceAuthentication.Udf == second.DeviceAuthentication.Udf).TestTrue();

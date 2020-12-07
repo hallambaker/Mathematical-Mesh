@@ -65,8 +65,8 @@ namespace ExampleGenerator {
         public const string TestFile1 = "TestFile1.txt";
         public const string TestFile2 = "TestFile2.txt";
         public const string TestFile3 = "TestFile3.txt";
-        public string TestFile4 => Path.Combine(TestDir1, "TestFile4.txt");
-        public string TestFile5 => Path.Combine(TestDir1, "TestFile5.txt");
+        public static string TestFile4 => Path.Combine(TestDir1, "TestFile4.txt");
+        public static string TestFile5 => Path.Combine(TestDir1, "TestFile5.txt");
         
         public const string TestText1 = "This is a test 1";
         public const string TestText2 = "This is a test 2";
@@ -89,8 +89,8 @@ namespace ExampleGenerator {
         public const string MeshServiceProvider2 = "example.net";
 
 
-        public string AliceAccount => "alice@" + MeshServiceProvider1;
-        public string AliceAccountNew => "alice@" + MeshServiceProvider2;
+        public static string AliceAccount => "alice@" + MeshServiceProvider1;
+        public static string AliceAccountNew => "alice@" + MeshServiceProvider2;
 
 
         public const string BobAccount = "bob@example.com";
@@ -198,7 +198,7 @@ namespace ExampleGenerator {
 
 
 
-        public void MakeClean() {
+        public static void MakeClean() {
             var Process = System.Diagnostics.Process.Start("CMD.exe", "/C MakeClean");
             Process.WaitForExit();
             }

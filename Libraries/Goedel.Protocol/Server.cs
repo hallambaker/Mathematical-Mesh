@@ -171,7 +171,7 @@ namespace Goedel.Protocol {
         /// </param>
         /// <returns>The port registration created</returns>
         /// <exception cref="NYI">Not Yet Implemented</exception> 
-        public PortRegistration AddUDP(int port) => throw new NYI(
+        public static PortRegistration AddUDP(int port) => throw new NYI(
                     args: "Need to add implementation of Add UDP");
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Goedel.Protocol {
 
             }
 
-        private PortRegistration GetPort(List<PortRegistration> Ports, Uri URI) {
+        private static PortRegistration GetPort(List<PortRegistration> Ports, Uri URI) {
             foreach (var Port in Ports) {
                 var HTTPPort = Port as HTTPPortRegistration;
                 if (URI.AbsoluteUri == HTTPPort.URI) {
@@ -388,7 +388,7 @@ namespace Goedel.Protocol {
         /// Start the server. Note that the server runs in a separate
         /// thread and so control returns to the main loop.
         /// </summary>
-        public void StartAsync() {
+        public static void StartAsync() {
 
             }
 

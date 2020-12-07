@@ -147,9 +147,9 @@ namespace Goedel.XUnit {
             CheckBookmarkResult(path3, uri3, title3);
             }
 
-        string GetTaskKey(ShellResult result) =>
+        static string GetTaskKey(ShellResult result) =>
             ((result as ResultEntry).CatalogEntry as CatalogedTask).Key;
-        string GetContactKey(ShellResult result) =>
+        static string GetContactKey(ShellResult result) =>
             ((result as ResultEntry).CatalogEntry as CatalogedContact).Key;
 
 

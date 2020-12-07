@@ -265,7 +265,8 @@ namespace Goedel.Cryptography.Dare {
                     Monitor.Exit(LockGlobal);
                     }
 
-                throw exception;
+                exception.Future();
+                throw;
                 }
 
             }

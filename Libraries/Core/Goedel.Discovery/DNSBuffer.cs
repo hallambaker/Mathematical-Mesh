@@ -583,22 +583,22 @@ namespace Goedel.Discovery {
         /// <summary>Read value</summary>
         /// <returns>The value read</returns>
         /// <remarks>Not yet implemented</remarks>
-        public string ReadMail() => null;
+        public static string ReadMail() => null;
 
         /// <summary>Read value</summary>
         /// <returns>The value read</returns>
         /// <remarks>Not yet implemented</remarks>
-        public string ReadOptionalString() => null;
+        public static string ReadOptionalString() => null;
 
         /// <summary>Read 32 bit time value</summary>
         /// <returns>The value read</returns>
         /// <remarks>Not yet implemented</remarks>
-        public uint ReadTime32() => 0;
+        public static uint ReadTime32() => 0;
 
         /// <summary>Read 48 bit time value</summary>
         /// <returns>The value read</returns>
         /// <remarks>Not yet implemented</remarks>
-        public ulong ReadTime48() => 0;
+        public static ulong ReadTime48() => 0;
 
 
 

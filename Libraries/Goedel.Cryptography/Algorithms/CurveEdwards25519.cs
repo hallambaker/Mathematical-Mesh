@@ -479,7 +479,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="carry">The partial recryption results.</param>
         /// <returns>The key agreement value ZZ</returns>
-        public CurveEdwards25519 Agreement(CurveEdwards25519[] carry) {
+        public static CurveEdwards25519 Agreement(CurveEdwards25519[] carry) {
             Assert.AssertTrue(carry.Length >= 1, InsufficientResults.Throw);
 
             var Total = CurveEdwards25519.Neutral;
@@ -716,7 +716,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="hash">The hash value</param>
         /// <returns>The private key.</returns>
-        public byte[] ValidatePrivateBytes(byte[] hash) {
+        public static byte[] ValidatePrivateBytes(byte[] hash) {
             var Copy = new byte[32];
             Array.Copy(hash, Copy, 32); // bytes 0-31
 

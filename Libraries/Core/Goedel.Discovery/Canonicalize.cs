@@ -30,7 +30,7 @@ namespace Goedel.Discovery {
         public void IPv6(IPAddress Data) => Add(Data.ToString());
         public void Domain(Domain Data) => Add(Data.Name);
         public void Mail(string Data) => Add(Data);
-        public void NodeID(ulong Data) {
+        public static void NodeID(ulong Data) {
             // Add (Data); 
             }
         public void Byte(byte Data) => Add(Data.ToString());

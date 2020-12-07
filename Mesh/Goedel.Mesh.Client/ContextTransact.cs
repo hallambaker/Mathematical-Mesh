@@ -294,14 +294,14 @@ namespace Goedel.Mesh.Client {
         public abstract TAccount ContextAccount { get; }
 
         ///<summary>Outbound message signature key, the global account signature key</summary> 
-        KeyPair SignOutboundMessage => null; // ToDo: set signing key to the account signature key.
+        static KeyPair SignOutboundMessage => null; // ToDo: set signing key to the account signature key.
 
         ///<summary>Inbound message signature key, the device account signature key.
         ///This is only used to update message status.</summary> 
-        KeyPair SignInboundMessage => null; // ToDo: set signing key to the device account key.
+        static KeyPair SignInboundMessage => null; // ToDo: set signing key to the device account key.
 
         ///<summary>Inbound message signature key, the device admin signature key</summary> 
-        KeyPair SignLocalMessage => null; // ToDo: set signing key to the device admin key.
+        static KeyPair SignLocalMessage => null; // ToDo: set signing key to the device admin key.
 
         bool TryFindKeyEncryption(string recipient, out CryptoKey cryptoKey) => 
                 ContextAccount.TryFindKeyEncryption(recipient, out cryptoKey);
@@ -465,8 +465,7 @@ namespace Goedel.Mesh.Client {
 
             }
 
-
-        TransactionUpdate<TEntry> GetContainerUpdate<TEntry>(
+        static TransactionUpdate<TEntry> GetContainerUpdate<TEntry>(
                 List<ContainerUpdate> containerUpdates,
                 Catalog<TEntry> catalog
                 ) where TEntry : CatalogedEntry {

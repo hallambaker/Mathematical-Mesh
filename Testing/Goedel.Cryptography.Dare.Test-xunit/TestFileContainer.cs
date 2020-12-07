@@ -141,9 +141,10 @@ namespace Goedel.XUnit {
             }
 
         static Random Random = new Random();
-        byte[] CreateBytes(int length) => CryptoCatalog.GetBytes(length);
 
-        void ReadWriteContainer(string fileName, byte[] testData, DarePolicy cryptoParameters = null) {
+        static byte[] CreateBytes(int length) => CryptoCatalog.GetBytes(length);
+
+        static void ReadWriteContainer(string fileName, byte[] testData, DarePolicy cryptoParameters = null) {
             //CryptoParameters ??= new CryptoParameters();
 
             // Create container

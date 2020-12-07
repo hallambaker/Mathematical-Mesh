@@ -45,10 +45,7 @@ namespace Goedel.Protocol {
         /// <param name="Input">The data to be read.</param>
         public JsonBcdReader(byte[] Input) : base(Input) { }
 
-
-
-
-        int ModifierToLength(int c) {
+        static int ModifierToLength(int c) {
             var Code = c & 0x03;
             return Code switch
                 {
@@ -60,9 +57,7 @@ namespace Goedel.Protocol {
                     };
             }
 
-
-
-        bool IsWhitespace(byte c) =>
+        static bool IsWhitespace(byte c) =>
             (c == ' ') | (c == '\t') | (c == '\r') | (c == '\n') | (c == '\f') | (c == '\b');
 
         /// <summary>Get the next lexical token.</summary>
@@ -317,25 +312,25 @@ namespace Goedel.Protocol {
 
 
         // JSON-B (currently unused)
-        Token LexerReal32() => throw new NYI();
+        static Token LexerReal32() => throw new NYI();
 
-        Token LexerReal64() => throw new NYI();
+        static Token LexerReal64() => throw new NYI();
 
-        Token LexerBigInteger(bool Positive) => throw new NYI();
+        static Token LexerBigInteger(bool Positive) => throw new NYI();
 
         // JSON-C (currently unused)
-        Token LexerTagCode(int Code) => throw new NYI();
+        static Token LexerTagCode(int Code) => throw new NYI();
 
-        void LexerTagDefinition(int Code) => throw new NYI();
+        static void LexerTagDefinition(int Code) => throw new NYI();
 
-        Token LexerTagCodeDefinition(int Code) => throw new NYI();
+        static Token LexerTagCodeDefinition(int Code) => throw new NYI();
 
-        void LexerDictionaryDefinition(int Code) => throw new NYI();
+        static void LexerDictionaryDefinition(int Code) => throw new NYI();
 
-        void ReadDictionary() { }
+        static void ReadDictionary() { }
 
         // JSON-D (currently unused)
-        Token LexerRealOther(int length) => throw new NYI();
+        static Token LexerRealOther(int length) => throw new NYI();
 
         // Reader methods
         /// <summary>

@@ -98,7 +98,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="c">Input character</param>
         /// <returns>Character class</returns>
-        protected CharType GetCharType(char c) {
+        protected static CharType GetCharType(char c) {
             if (c == '\"') { return CharType.Quote; }
             if (c == '{') { return CharType.LeftBrace; }
             if (c == '}') { return CharType.RightBrace; }

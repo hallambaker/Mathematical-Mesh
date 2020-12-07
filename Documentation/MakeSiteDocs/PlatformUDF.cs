@@ -219,8 +219,7 @@ namespace ExampleGenerator {
             Key = ModConvert(OKM, prime);
             }
 
-
-        BigInteger ModConvert(byte[] okm, BigInteger prime) {
+        static BigInteger ModConvert(byte[] okm, BigInteger prime) {
 
             var c = okm.BigIntegerBigEndian();
             return (c % (prime - 1)) + 1;
@@ -272,8 +271,7 @@ namespace ExampleGenerator {
             Q = NextPrime(OKM_Q);
             }
 
-
-        BigInteger NextPrime(byte[] okm) {
+        static BigInteger NextPrime(byte[] okm) {
             var c = okm.BigIntegerBigEndian();
 
             c = c % 2 == 1 ? c : c + 1; // next highest odd number;

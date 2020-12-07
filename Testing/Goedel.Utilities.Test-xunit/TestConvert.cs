@@ -198,8 +198,7 @@ namespace Goedel.XUnit {
             FromStringConvertTest(BaseConvert.FromBase64, Vector.Data, Vector.Base64Url);
             }
 
-
-        void FromStringConvertTest(FromStringDelegate ConverterDelegate, byte[] Data, string Test) {
+        static void FromStringConvertTest(FromStringDelegate ConverterDelegate, byte[] Data, string Test) {
             var Result = ConverterDelegate(Test);
             Result.TestEqual(Data);
             }
@@ -222,7 +221,7 @@ namespace Goedel.XUnit {
             CheckTrim(Result, Test);
             }
 
-        string StreamToString(GetStreamConverterDelegate ConverterDelegate,
+        static string StreamToString(GetStreamConverterDelegate ConverterDelegate,
             byte[] Data, ConversionFormat Format = ConversionFormat.None, int Chunk = -1) {
 
             var Stream = new MemoryStream();
@@ -240,13 +239,12 @@ namespace Goedel.XUnit {
             return Stream.ToArray().ToUTF8();
             }
 
-
-        void CheckTrim(string Value, string Result, string Reason = null) =>
+        static void CheckTrim(string Value, string Result, string Reason = null) =>
             Value.AssertEqual(Result.Trim(), Compare.Throw,  Reason);
 
 
 
-        void CheckExact(string Value, string Result, string Reason = null) =>
+        static void CheckExact(string Value, string Result, string Reason = null) =>
             Value.AssertEqual(Result, Compare.Throw, Reason);
 
         }

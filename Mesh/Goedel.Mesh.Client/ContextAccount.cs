@@ -344,7 +344,7 @@ namespace Goedel.Mesh.Client {
             return complete;
             }
 
-        int AddUpload(List<ContainerUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
+        static int AddUpload(List<ContainerUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
 
             //Console.WriteLine($"Initial sync of {syncStatus.Store.ContainerName}");
 

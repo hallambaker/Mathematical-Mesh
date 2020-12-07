@@ -17,8 +17,7 @@ namespace Goedel.XUnit {
             Mesh.Mesh.Initialize();
             }
 
-
-        KeyCollection MakeKeyCollection() {
+        static KeyCollection MakeKeyCollection() {
             var TestEnvironment = new TestEnvironmentCommon();
             //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
             return new KeyCollectionTestEnv(TestEnvironment.Path);
@@ -71,7 +70,7 @@ namespace Goedel.XUnit {
             TestContainerIncremental(namebase, keyCollection, policy, records, maxSize, reOpen, moveStep);
             }
 
-        byte[] MakeRecordData(int record, int size) {
+        static byte[] MakeRecordData(int record, int size) {
             var rand = new Random(record);
             size = rand.Next(1,size);
             var result = new byte[size];
@@ -83,7 +82,7 @@ namespace Goedel.XUnit {
             return result;
             }
 
-        bool Verify(
+        static bool Verify(
                     Container container,
                     DarePolicy darePolicy, 
                     ContainerFrameIndex frameIndex, 
@@ -135,8 +134,7 @@ namespace Goedel.XUnit {
             return true;
             }
 
-
-        void TestContainerIncremental(
+        static void TestContainerIncremental(
                 string namebase,
                     IKeyLocate keyCollection,
                 DarePolicy darePolicy = null,

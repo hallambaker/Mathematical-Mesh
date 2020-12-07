@@ -251,7 +251,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="deviceAuthOptions">The set of options.</param>
         /// <returns>If any of the rights flag values are present, returns a list of rights
         /// specifiers. Otherwise returns null.</returns>
-        public List<string> GetRights(IDeviceAuthOptions deviceAuthOptions) {
+        public static List<string> GetRights(IDeviceAuthOptions deviceAuthOptions) {
             var result = new List<string>();
 
             if (deviceAuthOptions.Auth.Value != null) {

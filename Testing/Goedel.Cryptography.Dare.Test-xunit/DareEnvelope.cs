@@ -207,7 +207,7 @@ namespace Goedel.XUnit {
 
             }
 
-        void TestMessageJSON(byte[] Plaintext,
+        static void TestMessageJSON(byte[] Plaintext,
                 CryptoParameters CryptoParameters = null,
                 int Stride = -1,
                 List<byte[]> DataSequences = null,
@@ -221,8 +221,7 @@ namespace Goedel.XUnit {
 
             }
 
-
-        void TestMessageAtomic(byte[] Plaintext,
+        static void TestMessageAtomic(byte[] Plaintext,
                     CryptoParameters CryptoParameters = null,
                     int Stride = -1,
                     List<byte[]> DataSequences = null,
@@ -241,7 +240,7 @@ namespace Goedel.XUnit {
             CheckDecodeDirect(CryptoParameters, MessageBytesB, Plaintext, DataSequences, ContentType);
             }
 
-        void TestCorruptedAtomic(byte[] Plaintext,
+        static void TestCorruptedAtomic(byte[] Plaintext,
             CryptoParameters CryptoParameters = null,
             int Stride = -1,
             List<byte[]> DataSequences = null,
@@ -262,12 +261,7 @@ namespace Goedel.XUnit {
             CheckDecodeCorrupted(CryptoParameters, MessageBytesB, Plaintext, DataSequences, ContentType);
             }
 
-
-
-
-
-
-        void TestMessageFixed(byte[] Plaintext,
+        static void TestMessageFixed(byte[] Plaintext,
                     CryptoParameters CryptoParameters = null,
                     int Stride = -1,
                     List<byte[]> DataSequences = null,
@@ -283,7 +277,7 @@ namespace Goedel.XUnit {
             CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, contentType);
             }
 
-        void TestMessageVariable(byte[] Plaintext,
+        static void TestMessageVariable(byte[] Plaintext,
                     CryptoParameters CryptoParameters = null,
                     int Stride = -1,
                     List<byte[]> DataSequences = null,

@@ -183,7 +183,7 @@ namespace Goedel.Cryptography.Dare {
         /// The class specific disposal routine. This frees the read lock on the resource
         /// </summary>
         protected override void Disposing() {
-            if (ReadMode) {
+            if (readMode) {
                 PersistenceStore.ReaderWriterLock.ExitUpgradeableReadLock();
                 }
             else {
@@ -193,11 +193,11 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        bool ReadMode = true;
+        bool readMode = true;
         void GetWrite() {
-            if (ReadMode) {
+            if (readMode) {
                 PersistenceStore.ReaderWriterLock.TryEnterWriteLock(Timeout);
-                ReadMode = false;
+                readMode = false;
                 }
             }
 

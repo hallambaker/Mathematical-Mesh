@@ -20,7 +20,7 @@ namespace Goedel.Mesh.Test {
         public static TestProfiles Test => new TestProfiles();
         public TestProfiles() => TestEnvironmentCommon.Initialize();
 
-        public void EscrowRecover() {
+        public static void EscrowRecover() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
 
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice Admin");
@@ -104,7 +104,7 @@ namespace Goedel.Mesh.Test {
         /// <summary>
         /// Test direct addition/removal of devices without going through the services or inbound spool
         /// </summary>
-        public void CatalogDevices() {
+        public static void CatalogDevices() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
 
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
@@ -140,7 +140,7 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        public CatalogedDevice MakeCatalogEntryDevice(ProfileDevice profileDevice, KeyPair keySign) {
+        public static CatalogedDevice MakeCatalogEntryDevice(ProfileDevice profileDevice, KeyPair keySign) {
 
             var profileMeshDevicePublic = new ConnectionDevice() {
                 //DeviceProfile = profileDevice.DareEnvelope
@@ -218,8 +218,7 @@ namespace Goedel.Mesh.Test {
 
             }
 
-
-        void CheckCatalogEntry(CatalogedEntry Test1, CatalogedEntry Test2) {
+        static void CheckCatalogEntry(CatalogedEntry Test1, CatalogedEntry Test2) {
             if (Test1 == null) {
                 Test2.TestNull();
                 }

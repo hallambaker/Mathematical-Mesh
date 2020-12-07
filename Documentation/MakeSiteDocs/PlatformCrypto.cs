@@ -60,7 +60,7 @@ namespace ExampleGenerator {
             }
 
 
-        public void TestLagrange() {
+        public static void TestLagrange() {
 
             var KeyShares = new KeyShare[] {
                 //new KeyShareSymmetric (1, 1494, 16),
@@ -476,7 +476,7 @@ namespace ExampleGenerator {
         public string UDF = "TBS";
         public BigInteger Scalar = -1;
 
-        public BigInteger Modulus => throw new NYI();
+        public static BigInteger Modulus => throw new NYI();
 
         public byte[] Public = Dummy;
         public byte[] Private = Dummy;

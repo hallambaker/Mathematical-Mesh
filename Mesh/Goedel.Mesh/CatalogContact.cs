@@ -161,7 +161,7 @@ namespace Goedel.Mesh {
         /// <param name="contact">The contact whose values are to be merged.</param>
         /// <param name="self">If true set the self marker.</param>
         /// <returns>The updated contact.</returns>
-        public CatalogedContact GetUpdated(Contact contact, bool self = false) {
+        public static CatalogedContact GetUpdated(Contact contact, bool self = false) {
             var cataloged = new CatalogedContact(contact, self);
 
             "Need to merge catalog data intelligently".TaskFunctionality();
@@ -459,15 +459,14 @@ namespace Goedel.Mesh {
             FullName = builder.ToString();
             }
 
-        void Unspaced(StringBuilder builder, string value) {
+        static void Unspaced(StringBuilder builder, string value) {
             if (value != null) {
                 builder.Append(value);
                 }
 
             }
 
-
-        void SpaceAfter(StringBuilder builder, string value) {
+        static void SpaceAfter(StringBuilder builder, string value) {
             if (value != null) {
                 builder.Append(value);
                 builder.Append(' ');
@@ -475,7 +474,7 @@ namespace Goedel.Mesh {
 
             }
 
-        void SpaceBefore(StringBuilder builder, string value) {
+        static void SpaceBefore(StringBuilder builder, string value) {
             if (value != null) {
                 builder.Append(' ');
                 builder.Append(value);

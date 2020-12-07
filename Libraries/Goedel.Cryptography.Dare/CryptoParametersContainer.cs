@@ -93,8 +93,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
-
-        void RecoverKeyExchange(DareHeader header) {
+        static void RecoverKeyExchange(DareHeader header) {
 
             throw new NYI();
             }

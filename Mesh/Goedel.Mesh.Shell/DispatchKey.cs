@@ -81,8 +81,7 @@ namespace Goedel.Mesh.Shell {
                 };
             }
 
-
-        List<string> MakeList(params string[] shares) {
+        static List<string> MakeList(params string[] shares) {
             var result = new List<string>();
             foreach (var share in shares) {
                 if (share != null) {

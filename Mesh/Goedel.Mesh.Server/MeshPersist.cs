@@ -54,10 +54,10 @@ namespace Goedel.Mesh.Server {
         public string DirectoryRoot;
 
         ///<summary>The service encryption key.</summary>  
-        public CryptoKey ServiceEncryptionKey => null;
+        public static CryptoKey ServiceEncryptionKey => null;
 
         ///<summary>The service signature key.</summary> 
-        public CryptoKey ServiceSignatureKey => null;
+        public static CryptoKey ServiceSignatureKey => null;
 
         static MeshPersist() {
             _ = MeshItem.Initialize;
@@ -376,7 +376,7 @@ namespace Goedel.Mesh.Server {
             var id = messageClaim.PublicationId;
             var publicationEntry = store.GetEntry(id);
 
-            if (!(publicationEntry.JsonObject is CatalogedPublication publication)) {
+            if (publicationEntry.JsonObject is not CatalogedPublication publication) {
                 return null;
                 }
 
@@ -471,7 +471,7 @@ namespace Goedel.Mesh.Server {
             throw new NYI();
             }
 
-        CryptographicResult Operate(
+        static CryptographicResult Operate(
                 CatalogAccess catalogCapability,
                 CryptographicOperationKeyAgreement cryptographicOperation) {
 
@@ -571,7 +571,7 @@ namespace Goedel.Mesh.Server {
             return true;
             }
 
-        bool MessagePostRemote(string recipient, DareEnvelope dareMessage) {
+        static bool MessagePostRemote(string recipient, DareEnvelope dareMessage) {
             recipient.Future();
             dareMessage.Future();
 
@@ -674,7 +674,7 @@ namespace Goedel.Mesh.Server {
         /// Verification function.
         /// </summary>
         /// <returns>True if the account entry is properly formatted.</returns>
-        public bool Verify() => true; // NYI: Verification of signed profile.
+        public static bool Verify() => true; // NYI: Verification of signed profile.
 
         }
 

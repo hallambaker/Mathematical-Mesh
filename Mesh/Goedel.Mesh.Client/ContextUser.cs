@@ -440,7 +440,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="envelopedCapability">The envelope to attempt to decrypt.</param>
         /// <returns>The first cryptographic capability this device has been granted if found,
         /// otherwise null.</returns>
-        public CryptographicCapability GetCapability(DareEnvelope envelopedCapability) {
+        public static CryptographicCapability GetCapability(DareEnvelope envelopedCapability) {
             envelopedCapability.Future();
 
             throw new NYI();

@@ -324,6 +324,9 @@ namespace Goedel.ASN {
         /// <param name="flags">Flags</param>
         /// <param name="code">Code</param>
         public void Encode__Any(byte[] data, int flags, int code) {
+            data.Keep();
+            flags.Keep();
+            code.Keep();
             }
 
         //

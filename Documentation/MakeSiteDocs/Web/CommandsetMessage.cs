@@ -63,7 +63,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Bob's contact information has been added to Alice's address book:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ConsoleExample (ShellMessage.ContactCatalog);
+				 ConsoleExample (ShellMessage.ContactCatalogList);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Bob can find out if Alice has accepted his contact request using the \n{0}", _Indent);
 				_Output.Write ("{1} command:\n{0}", _Indent, ToCommand("message status"));

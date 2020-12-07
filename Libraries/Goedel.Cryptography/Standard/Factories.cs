@@ -36,7 +36,7 @@ namespace Goedel.Cryptography.Standard {
         /// </summary>
         /// <param name="RSAParameters">Input parameters in System.Security.Cryotography format</param>
         /// <returns>The public key</returns>
-        public PkixPublicKeyRsa RSAPublicKey(RSAParameters RSAParameters) {
+        public static PkixPublicKeyRsa RSAPublicKey(RSAParameters RSAParameters) {
             var RSAPublicKey = new PkixPublicKeyRsa() {
                 Modulus = RSAParameters.Modulus,
                 PublicExponent = RSAParameters.Exponent

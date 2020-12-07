@@ -163,8 +163,7 @@ namespace Goedel.XUnit {
             throw new NYI();
             }
 
-
-        void AddEntries(Dictionary<string, bool> dictionary, string directory) {
+        static void AddEntries(Dictionary<string, bool> dictionary, string directory) {
             if (directory == null) {
                 return;
                 }
@@ -202,8 +201,7 @@ namespace Goedel.XUnit {
             throw new NYI();
             }
 
-
-        bool VerifyPolicy(string filename, string encrypt, string sign) {
+        static bool VerifyPolicy(string filename, string encrypt, string sign) {
 
             "Test that the file matches the policy".TaskTest();
 

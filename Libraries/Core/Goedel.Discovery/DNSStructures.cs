@@ -102,7 +102,7 @@ namespace Goedel.Discovery {
 
 
         /// <summary>Write value</summary>
-        public void Write() {
+        public static void Write() {
             //Encode ();
             }
 

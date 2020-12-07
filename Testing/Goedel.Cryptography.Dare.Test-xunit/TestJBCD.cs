@@ -14,8 +14,7 @@ namespace Goedel.XUnit {
 
         public TestJBCD() => TestEnvironmentCommon.Initialize(true);
 
-
-        byte[] MakeConstant(string Text, int Repeat) {
+        static byte[] MakeConstant(string Text, int Repeat) {
 
             var Builder = new StringBuilder();
             for (var i = 0; i < Repeat; i++) {

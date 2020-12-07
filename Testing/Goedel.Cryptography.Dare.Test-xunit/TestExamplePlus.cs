@@ -78,7 +78,7 @@ namespace Goedel.XUnit {
                         FileName, Type, Comment, FileStatus, ContainerType) =>
                         IndexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
 
-        TestItem Get(IPersistenceEntry DataItem) => DataItem.JsonObject as TestItem;
+        static TestItem Get(IPersistenceEntry DataItem) => DataItem.JsonObject as TestItem;
 
 
         /// <summary>
@@ -109,10 +109,10 @@ namespace Goedel.XUnit {
         /// <param name="MaxResult">Maximum number of results to return.</param>
         /// <param name="OnOrAfter">Only return versions that are on or after the specified value.</param>
         /// <returns>The list of previous versions.</returns>
-        public List<TestItem> GetPrevious(TestItem TestItem, int MaxResult, DateTime OnOrAfter) => throw new NYI();
+        public static List<TestItem> GetPrevious(TestItem TestItem, int MaxResult, DateTime OnOrAfter) => throw new NYI();
 
 
-        public TestItem GetRecord(int Record) =>
+        public static TestItem GetRecord(int Record) =>
             // read the header and data from container
 
             //

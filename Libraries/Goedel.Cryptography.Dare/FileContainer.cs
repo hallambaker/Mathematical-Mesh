@@ -103,7 +103,7 @@ namespace Goedel.Cryptography.Dare {
                 ContainerType containerType = ContainerType.Unknown) => container = BindContainer(
                     jbcdStream, archive, digest, containerType);
 
-        Container BindContainer(
+        static Container BindContainer(
                     JbcdStream jbcdStream,
                     bool archive = false,
                     bool digest = true,
@@ -217,7 +217,7 @@ namespace Goedel.Cryptography.Dare {
         /// Delete a file entry
         /// </summary>
         /// <param name="path">The path name attribute to give the file in the container</param>
-        public void Delete(string path) {
+        public static void Delete(string path) {
             path.Future();
             throw new NYI();
             }
@@ -229,7 +229,7 @@ namespace Goedel.Cryptography.Dare {
         /// container data is to be read.</param>
         /// <param name="cryptoParameters">The new crypto parameters to be used to 
         /// write the container data.</param>
-        public void Add(ContainerFrameIndex containerDataReader,
+        public static void Add(ContainerFrameIndex containerDataReader,
                 CryptoParameters cryptoParameters = null) {
             containerDataReader.Future();
             cryptoParameters.Future();
@@ -241,7 +241,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="signatures">List of JWS signatures. Since this is the first block, the signature
         /// is always over the payload data only.</param>
-        public void AddIndex(List<KeyPair> signatures = null) {
+        public static void AddIndex(List<KeyPair> signatures = null) {
             signatures.Future();
             throw new NYI();
             }
@@ -385,7 +385,7 @@ namespace Goedel.Cryptography.Dare {
             path.Future();
 
             var ContainerDataReader = container.GetContainerFrameIndex(index);
-            ContainerDataReader.CopyToFile(outputFile);
+            ContainerFrameIndex.CopyToFile(outputFile);
             }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Goedel.Cryptography.Dare {
                     var OutputFile = Path.Combine(outputDirectory, FilePath[0]);
 
 
-                    ContainerDataReader.CopyToFile(OutputFile);
+                    ContainerFrameIndex.CopyToFile(OutputFile);
                     //Container.WriteFrameToFile2(OutputFile);
                     }
                 }
@@ -425,7 +425,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="fileContainerWriter">The container to be written to.</param>
         public void CopyArchive(FileContainerWriter fileContainerWriter) {
             foreach (var ContainerDataReader in container) {
-                fileContainerWriter.Add(ContainerDataReader);
+                FileContainerWriter.Add(ContainerDataReader);
 
                 }
 
@@ -450,7 +450,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="recipients">The recipient entry.</param>
         /// <param name="algorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
         /// <returns></returns>
-        public byte[] Decrypt(
+        public static byte[] Decrypt(
                 List<Recipient> recipients, 
                 CryptoAlgorithmId algorithmID) {
             foreach (var Recipient in recipients) {

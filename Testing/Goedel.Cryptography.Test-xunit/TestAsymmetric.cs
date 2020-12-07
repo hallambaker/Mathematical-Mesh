@@ -93,7 +93,7 @@ namespace Goedel.XUnit {
             EncryptTest(KeyPublic, KeyPrivate);
             }
 
-        public void Ed448() {
+        public static void Ed448() {
 
             }
 

@@ -180,7 +180,7 @@ namespace Goedel.XUnit {
 
         #region // Equality tests
 
-        void CheckEqual(MultiInstance First, MultiInstance Second) {
+        static void CheckEqual(MultiInstance First, MultiInstance Second) {
             Utilities.Assert.AssertTrue(First.FieldBoolean == Second.FieldBoolean, Compare.Throw, "Boolean failed");
             Utilities.Assert.AssertTrue(First.FieldInteger == Second.FieldInteger, Compare.Throw, "Integer failed");
 

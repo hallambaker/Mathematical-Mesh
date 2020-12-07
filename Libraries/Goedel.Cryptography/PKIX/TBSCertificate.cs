@@ -312,7 +312,7 @@ namespace Goedel.Cryptography.PKIX {
         // of bits possible with leading zeros (or maybe its trailing) 
         // suppressed.
 
-        private byte[] Assanine_wankathon(int data) {
+        private static byte[] Assanine_wankathon(int data) {
 
 
             int reversed = 0;

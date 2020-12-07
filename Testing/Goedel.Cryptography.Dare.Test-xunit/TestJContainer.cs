@@ -191,8 +191,7 @@ namespace Goedel.XUnit {
                 Records, ReOpen: ReOpen, MoveStep: MoveStep);
             }
 
-
-        byte[] MakeConstant(string Text, int Repeat) {
+        static byte[] MakeConstant(string Text, int Repeat) {
 
             var Builder = new StringBuilder();
             for (var i = 0; i < Repeat; i++) {
@@ -203,7 +202,7 @@ namespace Goedel.XUnit {
 
             }
 
-        void TestContainerMulti(string FileName,
+        static void TestContainerMulti(string FileName,
             int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0,
             DarePolicy policy = null,
             CryptoParameters CryptoParametersEntry = null) {
@@ -220,7 +219,7 @@ namespace Goedel.XUnit {
                 policy, CryptoParametersEntry);
             }
 
-        void TestContainer(string FileName, ContainerType ContainerType,
+        static void TestContainer(string FileName, ContainerType ContainerType,
                     int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0,
                     DarePolicy policy = null,
                     CryptoParameters CryptoParametersEntry = null) {

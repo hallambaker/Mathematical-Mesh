@@ -35,7 +35,7 @@ namespace Goedel.XUnit {
                 }
             }
 
-        public bool EncodingTestInner(CryptoAlgorithmId cryptoAlgorithmId) {
+        public static bool EncodingTestInner(CryptoAlgorithmId cryptoAlgorithmId) {
 
             var keypair = KeyPair.Factory(cryptoAlgorithmId, KeySecurity.Ephemeral);
 
@@ -50,7 +50,7 @@ namespace Goedel.XUnit {
             }
 
 
-        public bool EncodingTestInnerX448() {
+        public static bool EncodingTestInnerX448() {
 
             var keypair = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairX448;
 
@@ -159,7 +159,7 @@ namespace Goedel.XUnit {
                 }
             }
 
-        void Test22519(ref byte[] kb, ref byte[] ub) {
+        static void Test22519(ref byte[] kb, ref byte[] ub) {
             var k = CurveX25519.DecodeScalar(kb);
             var u = new CurveX25519(ub);
 
@@ -257,9 +257,7 @@ namespace Goedel.XUnit {
                 }
             }
 
-
-
-        void Test448(ref byte[] kb, ref byte[] ub) {
+        static void Test448(ref byte[] kb, ref byte[] ub) {
             var k = CurveX448.DecodeScalar(kb);
             var u = new CurveX448(ub);
             var uu = u.U;
@@ -518,8 +516,7 @@ namespace Goedel.XUnit {
             (p3.V == p3test.V).TestTrue();
             }
 
-
-        void CheckCurve(CurveMontgomery curve) {
+        static void CheckCurve(CurveMontgomery curve) {
             bool? odd = ((curve.V) & 1) == 1;
             var vtest = curve.GetV(odd);
 
@@ -574,7 +571,7 @@ namespace Goedel.XUnit {
             }
 
 
-        public bool TryX25519AgreeRecryption() {
+        public static bool TryX25519AgreeRecryption() {
 
             var KeyA = new CurveX25519Private();
             var KeyAPublic = KeyA.Public;
@@ -587,7 +584,7 @@ namespace Goedel.XUnit {
             Carry[0] = (RecryptKeys[0] as CurveX25519Private).Agreement(Result.Public);
             Carry[1] = (RecryptKeys[1] as CurveX25519Private).Agreement(Result.Public);
 
-            var AgreeAB = KeyAPublic.Agreement(Carry);
+            var AgreeAB = CurveX25519Public.Agreement(Carry);
 
             return (AgreeAB == Result.AgreementX25519);
             }

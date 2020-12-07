@@ -358,7 +358,7 @@ namespace Goedel.Mesh {
         /// <param name="keyPair">Keypair from which the capability is to be derrived.</param>
         /// <param name="profileDevice">The device to which the capability is to be added.</param>
         /// <returns>The key data for the added capability.</returns>
-        public KeyData AddCapability(CryptoKey keyPair, ProfileDevice profileDevice) {
+        public static KeyData AddCapability(CryptoKey keyPair, ProfileDevice profileDevice) {
             "**** MUST add keys to devices as shared capabilities".TaskFunctionality();
 
             //var catalogCapability = GetCatalogCapability();

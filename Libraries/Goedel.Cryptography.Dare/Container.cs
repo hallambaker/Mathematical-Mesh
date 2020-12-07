@@ -997,7 +997,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         /// <returns>The created envelope</returns>
-        public DareEnvelope Defer(
+        public static DareEnvelope Defer(
             ContainerWriterDeferred contextWrite,
             ContentMeta contentInfo,
             byte[] data,
@@ -1058,7 +1058,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="frame">The index of the frame to be returned.</param>
         /// <returns>The requested header.</returns>
-        public DareHeader GetHeader(int frame) {
+        public static DareHeader GetHeader(int frame) {
             frame.Future(); // NYI: Code does not support incremental encryption yet.
             throw new NYI();
             }

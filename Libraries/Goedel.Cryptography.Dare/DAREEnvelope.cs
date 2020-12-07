@@ -230,7 +230,7 @@ namespace Goedel.Cryptography.Dare {
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool ReadChunk(JsonReader jsonReader,
+        public static bool ReadChunk(JsonReader jsonReader,
             out byte[] chunk) => jsonReader.ReadBinaryIncremental(out chunk);
 
         #endregion

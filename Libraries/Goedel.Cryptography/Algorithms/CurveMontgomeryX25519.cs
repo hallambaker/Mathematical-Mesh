@@ -36,9 +36,6 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>The base point for the subgroup</summary>
         public static CurveX25519 Base => BasePoint.Copy();
 
-        ///<summary>The neutral point which returns the original value when 
-        ///added to a point.</summary>
-        public CurveX25519 Neutral => throw new NYI();
         #endregion
 
         /// <summary>
@@ -222,7 +219,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <returns>The key agreement parameters, the public key value and the
         /// key agreement.</returns>
-        public CurveX25519 Agreement(CurveX25519[] Carry) {
+        public static CurveX25519 Agreement(CurveX25519[] Carry) {
             Assert.AssertTrue(Carry.Length >= 1, InsufficientResults.Throw);
 
             var Total = Carry[0].Copy(); 

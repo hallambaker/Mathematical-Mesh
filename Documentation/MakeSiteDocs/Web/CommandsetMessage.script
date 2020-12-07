@@ -49,7 +49,7 @@ Alice sees the request from Bob and accepts it with the #{ToCommand("message acc
 
 Bob's contact information has been added to Alice's address book:
 
-#% ConsoleExample (ShellMessage.ContactCatalog);
+#% ConsoleExample (ShellMessage.ContactCatalogList);
 
 Bob can find out if Alice has accepted his contact request using the 
 #{ToCommand("message status")} command:

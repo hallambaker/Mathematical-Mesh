@@ -190,7 +190,7 @@ namespace Goedel.XUnit {
             }
 
 
-        public int FindCompression() {
+        public static int FindCompression() {
 
             for (var i = 0; true; i++) {
                 if (i % 1000 == 0) {

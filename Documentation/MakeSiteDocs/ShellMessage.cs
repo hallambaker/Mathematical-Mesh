@@ -9,7 +9,7 @@ namespace ExampleGenerator {
         public List<ExampleResult> ContactRequest;
         public List<ExampleResult> ContactPending;
         public List<ExampleResult> ContactAccept;
-        public List<ExampleResult> ContactCatalog;
+        public List<ExampleResult> ContactCatalogList;
         public List<ExampleResult> ContactGetResponse;
         public List<ExampleResult> ContactReject;
         public List<ExampleResult> ContactBlock;
@@ -42,7 +42,7 @@ namespace ExampleGenerator {
 
             ContactAccept = Alice1.Example($"message accept {id1}");
 
-            ContactCatalog = Alice1.Example($"contact list");
+            ContactCatalogList = Alice1.Example($"contact list");
             ContactGetResponse = Bob1.Example($"message status {id1}");
             ContactReject = Alice1.Example($"message reject {id2}");
             ContactBlock = Alice1.Example($"message block {MalletAccount}");

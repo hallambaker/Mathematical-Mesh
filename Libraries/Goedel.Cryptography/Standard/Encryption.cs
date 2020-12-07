@@ -261,8 +261,7 @@ namespace Goedel.Cryptography.Standard {
             //return Process(Data, Transform);
             }
 
-
-        byte[] Process(byte[] Data, ICryptoTransform Transform) {
+        static byte[] Process(byte[] Data, ICryptoTransform Transform) {
             byte[] Result;
             using (var Output = new MemoryStream()) {
                 using (var Input = new CryptoStream(Output, Transform, CryptoStreamMode.Write)) {

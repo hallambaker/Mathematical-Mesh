@@ -232,8 +232,7 @@ namespace Goedel.Command {
 
             }
 
-
-        _ExistingFile Get(Type[] Data) {
+        static _ExistingFile Get(Type[] Data) {
             foreach (var Entry in Data) {
                 if (Entry as _ExistingFile != null) {
                     return Entry as _ExistingFile;

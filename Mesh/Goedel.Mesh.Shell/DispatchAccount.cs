@@ -192,8 +192,7 @@ namespace Goedel.Mesh.Shell {
             throw new NYI();
             }
 
-
-        void AddIfPresent(List<string> Keys, String Parameter) {
+        static void AddIfPresent(List<string> Keys, String Parameter) {
             if (Parameter.Value != null) {
                 Keys.Add(Parameter.Value);
                 }

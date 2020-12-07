@@ -157,8 +157,7 @@ namespace Goedel.XUnit {
             return result;
             }
 
-
-        Result ProcessMessage(TestCLI device, bool accept, int length, int index) {
+        static Result ProcessMessage(TestCLI device, bool accept, int length, int index) {
             var resultPending = device.Dispatch("message pending") as ResultPending;
             // check there is exactly one pending message.
             (resultPending.Messages.Count == length).TestTrue();
@@ -253,8 +252,7 @@ namespace Goedel.XUnit {
 
         Message GetResponse(TestCLI deviceA, Message message) => GetMessage(deviceA, message.GetResponseId());
 
-
-        Message GetMessage(TestCLI deviceA, string id) {
+        static Message GetMessage(TestCLI deviceA, string id) {
             var resultPending = deviceA.Dispatch($"message pending") as ResultPending;
 
             if (resultPending.Messages == null) {
@@ -268,8 +266,7 @@ namespace Goedel.XUnit {
             return null;
             }
 
-
-        bool ValidContact(List<CatalogedEntry> catalogedEntries , params string[] accountAddress) {
+        static bool ValidContact(List<CatalogedEntry> catalogedEntries , params string[] accountAddress) {
             var dictionary = new Dictionary<string, NetworkAddress>();
             foreach (var catalogedEntry in catalogedEntries) {
                 var contactEntry = catalogedEntry as CatalogedContact;

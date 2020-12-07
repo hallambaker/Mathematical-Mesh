@@ -111,8 +111,7 @@ namespace Goedel.XUnit {
                 }
             }
 
-
-        void TestRecrypt(int Shares) {
+        static void TestRecrypt(int Shares) {
             // Alice's encryption
             var AliceAgreeW = AlicePrivate.Agreement(GroupKeyPublic);
 

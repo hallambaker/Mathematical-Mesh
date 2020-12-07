@@ -6,9 +6,7 @@ using System.IO;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
-
-
-        DarePolicy GetPolicy(Goedel.Command.Dispatch Options) => throw new NYI();
+        static DarePolicy GetPolicy(Goedel.Command.Dispatch Options) => throw new NYI();
 
         /// <summary>
         /// Dispatch method
@@ -57,7 +55,7 @@ namespace Goedel.Mesh.Shell {
                 // Hack: is not currently indexed.
                 // Need to design a proper index!
 
-                Writer.AddIndex(); 
+                FileContainerWriter.AddIndex(); 
                 }
 
             return new ResultFile() {
@@ -98,7 +96,7 @@ namespace Goedel.Mesh.Shell {
 
             using (var Writer = new FileContainerWriter(
                     outputFile, null, true, fileStatus: FileStatus.Existing)) {
-                Writer.Delete(inputFile);
+                FileContainerWriter.Delete(inputFile);
                 }
 
             return new ResultFile() {
