@@ -105,8 +105,7 @@ namespace Goedel.Cryptography.Dare {
         /// Open or create a persistence store in specified mode with 
         /// the specified file name, content type and optional comment.
         /// </summary>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
         /// <param name="fileName">Log file.</param>
         /// <param name="contentType">Type of data to store (the schema name).</param>
         /// <param name="comment">Comment to be written to the log.</param>

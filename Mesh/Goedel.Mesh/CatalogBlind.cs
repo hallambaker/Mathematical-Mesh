@@ -48,6 +48,7 @@ namespace Goedel.Mesh {
         /// <param name="directory">The directory in which the catalog persistence container is stored.</param>
         /// <param name="containerName">The catalog persistence container file name.</param>
         /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the catalog.</param>
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         public CatalogBlind(
                     string directory,

@@ -14,8 +14,6 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public partial class CryptoParametersContainer : CryptoParameters {
 
-        bool ForcePolicy = false;
-        DarePolicy Policy { get; set; }
         PolicyEncryption PolicyEncryption { get; }
 
         PolicySignature PolicySignature { get; }

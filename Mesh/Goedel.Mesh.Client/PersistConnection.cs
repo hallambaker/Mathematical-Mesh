@@ -50,6 +50,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the spool.</param>
         /// <param name="fileName">Log file.</param>
         /// <param name="readOnly">If true, persistence store must exist
         /// and will be opened in read-only mode. If false, persistence store

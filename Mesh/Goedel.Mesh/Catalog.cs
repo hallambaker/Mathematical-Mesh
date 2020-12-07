@@ -66,6 +66,7 @@ namespace Goedel.Mesh {
         /// <param name="directory">Directory to create the catalog in.</param>
         /// <param name="containerName">Container name.</param>
         /// <param name="cryptoParameters">Cryptographic parameters.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
         /// <param name="keyCollection">Key collection to use for decryption.</param>
         /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         /// <param name="readContainer">If true, read the container.</param>

@@ -135,7 +135,7 @@ namespace Goedel.Cryptography.Dare {
             //    cloaked, dataSequences) { }
 
 
-        /// <summary>
+        ///// <summary>
         ///// Create a DARE Message instance.
         ///// </summary>
         ///// <param name="cryptoStack">Specifies the cryptographic enhancements to

@@ -50,6 +50,7 @@ namespace Goedel.Mesh {
         /// <param name="directory">Directory of store file on local machine.</param>
         /// <param name="storeId">Store identifier.</param>
         /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the catalog.</param>
         /// <param name="keyCollection">Key collection to be used to resolve keys</param>
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
@@ -73,6 +74,7 @@ namespace Goedel.Mesh {
         /// and key collection <paramref name="keyCollection"/>.
         /// </summary>
         /// <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the catalog.</param>
         /// <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
         /// <param name="directory">The directory in which the catalog persistence container is stored.</param>
         /// <param name="storeName">The catalog persistence container file name.</param>

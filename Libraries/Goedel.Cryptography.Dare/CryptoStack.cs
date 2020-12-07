@@ -9,7 +9,9 @@ using System.Threading;
 
 namespace Goedel.Cryptography.Dare {
 
-
+    /// <summary>
+    /// Cryptographic stack to encode an envelope.
+    /// </summary>
     public partial class CryptoStackEncode : CryptoStack {
         CryptoParameters CryptoParameters;
 
@@ -92,6 +94,9 @@ namespace Goedel.Cryptography.Dare {
 
         }
 
+    /// <summary>
+    /// Cryptographic stack to decode an envelope.
+    /// </summary>
     public partial class CryptoStackDecode : CryptoStack {
 
         /// <summary>
@@ -110,7 +115,6 @@ namespace Goedel.Cryptography.Dare {
 
         /// <summary>The authentication algorithm to use</summary>
         public override CryptoAlgorithmId DigestId { get; }
-        CryptoAlgorithmId digestId;
 
         /// <summary>The encryption algorithm to use</summary>
         public override CryptoAlgorithmId EncryptId { get; }
@@ -267,154 +271,6 @@ namespace Goedel.Cryptography.Dare {
             return Result;
 
             }
-
-
-        ///// <summary>
-        ///// Apply the specified cryptographic options.
-        ///// </summary>
-        ///// <param name="cryptoStack">The cryptographic enhancements to apply.</param>
-        ///// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        ///// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-        /////     as an EDSS header entry.</param>
-        //public virtual void ApplyCryptoStack(
-        //            CryptoStack cryptoStack,
-        //            byte[] cloaked = null,
-        //            List<byte[]> dataSequences = null) {
-        //    this.CryptoStack = cryptoStack;
-
-        //    Salt = cryptoStack.Salt;
-        //    Recipients = cryptoStack.Recipients;
-        //    EncryptionAlgorithm = cryptoStack.EncryptionAlgorithm;
-        //    DigestAlgorithm = cryptoStack.DigestAlgorithm;
-        //    KeyIdentifier = cryptoStack.GetKeyIdentifier();
-
-        //    if (cloaked != null) {
-        //        this.Cloaked = cryptoStack.Encode(cloaked, MakeSalt());
-        //        }
-        //    if (dataSequences != null) {
-        //        EDSS = new List<byte[]>();
-        //        foreach (var DataSequence in dataSequences) {
-        //            EDSS.Add(cryptoStack.Encode(DataSequence, MakeSalt()));
-        //            }
-        //        }
-
-        //    }
-
-
-
-        ///*
-        // * 
-        // * 
-        // * This is the wrong way to go about this
-        // *
-        // * Should create an augmented cryptoparameters and populate from it.
-        // * 
-        // * This would in turn determine if the Master secret was to be reused etc.
-        // * 
-        // */
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="policy"></param>
-        ///// <param name="digestRequired"></param>
-
-        //public CryptoStack(
-        //        DarePolicy policy,
-        //        bool digestRequired
-        //        ) {
-
-        //    if (policy == null) {
-        //        encryptId = CryptoAlgorithmId.NULL;
-        //        digestId = digestRequired ? CryptoAlgorithmId.Default : CryptoAlgorithmId.NULL;
-        //        return;
-        //        }
-
-        //    // process the encryption policy
-        //    if (policy.EncryptKeys != null) {
-        //        var encryptId = CryptoAlgorithmId.AES256CBC;
-        //        if (policy.EncryptionAlgorithm == null) {
-        //            EncryptionAlgorithm = encryptId.ToJoseID();
-        //            }
-        //        else {
-        //            encryptId = EncryptionAlgorithm.FromJoseID();
-        //            }
-        //        SetEncryptId(encryptId);
-
-        //        foreach (var key in policy.EncryptKeys) {
-        //            var encryptionKey = key.KeyPair;
-        //            MakeRecipient(MasterSecret, encryptionKey);
-        //            }
-        //        }
-
-        //    // process the signature policy
-        //    if (policy.SignKeys != null) {
-        //        digestRequired = true;
-        //        SignerKeys = new List<CryptoKey>();
-        //        foreach (var key in policy.SignKeys) {
-        //            var signKey = key.KeyPair;
-        //            SignerKeys.Add(signKey);
-        //            }
-
-        //        }
-
-        //    digestId = policy.DigestAlgorithm != null ? policy.DigestAlgorithm.FromJoseID() :
-        //        (digestRequired ? CryptoAlgorithmId.Default : CryptoAlgorithmId.NULL);
-
-        //    }
-
-
-
-        //void SetEncryptId(CryptoAlgorithmId encryptId) {
-        //    EncryptId = encryptId;
-        //    Salt = Platform.GetRandomBits(128);
-        //    (keySize, blockSize) = EncryptId.GetKeySize();
-        //    (keySize >= 128).AssertTrue(InsufficientKeySize.Throw, "Key size insufficient");
-        //    BaseSeed = Platform.GetRandomBits(keySize);
-        //    }
-
-
-        ///// <summary>
-        ///// Create a CryptoParameters instance to encode data for the specified recipients and
-        ///// signers using the specified KeyCollection to resolve the identifiers.
-        ///// </summary>
-        ///// <param name="pin"></param>
-        //public CryptoStack(string pin) {
-        //    Salt = Platform.GetRandomBits(128);
-        //    EncryptionAlgorithm = EncryptId.ToJoseID();
-
-        //    Salt = Platform.GetRandomBits(128);
-
-        //    BaseSeed = UDF.Parse(pin, out var _);
-
-        //    Recipients ??= new List<DareRecipient>();
-        //    Recipients.Add(new DareRecipient(BaseSeed));
-        //    }
-
-        ///// <summary>
-        ///// Construct a CryptoStack from a Secret key value.
-        ///// </summary>
-        ///// <param name="secret">The secret to use to form the MasterSecret</param>
-        ///// <param name="encryptID">The encryption algorithm to use.</param>
-        //public CryptoStack(
-        //        SharedSecret secret,
-        //        CryptoAlgorithmId encryptID = CryptoAlgorithmId.Default) {
-        //    EncryptId = encryptID.DefaultBulk(CryptoAlgorithmId.AES256CBC);
-        //    (keySize, blockSize) = encryptID.GetKeySize();
-        //    BaseSeed = secret.Key;
-        //    Salt = Platform.GetRandomBits(128);
-        //    }
-
-        ///// <summary>
-        ///// Add a recipient.
-        ///// </summary>
-        ///// <param name="MasterKey"></param>
-        ///// <param name="EncryptionKey"></param>
-        //public virtual void MakeRecipient(byte[] MasterKey,
-        //    CryptoKey EncryptionKey) =>
-        //        Recipients.Add(new DareRecipient(BaseSeed, EncryptionKey));
-
-
 
 
         /// <summary>

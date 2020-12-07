@@ -53,7 +53,8 @@ namespace Goedel.Utilities {
                 writeLock = new Mutex(false, resource);
                 }
             catch (Exception exception) {
-                throw exception;
+                exception.Future();
+                throw;
                 }
 
             }

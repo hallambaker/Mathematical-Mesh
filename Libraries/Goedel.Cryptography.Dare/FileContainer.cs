@@ -71,8 +71,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerType">The container type to use. If unspecified,
         /// a type appropriate for the type of use will be selected.</param>
         /// <returns>File Container instance</returns>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
         /// <returns>The newly constructed container.</returns>
         public FileContainerWriter(
                 string fileName,
@@ -94,12 +93,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="archive">If true, the container is intended to be used to create a multi-file
         /// archive.</param>
         /// <param name="digest">If true, construct a digest </param>
-
         /// <param name="containerType">The container type to use. If unspecified,
         /// a type appropriate for the type of use will be selected.</param>
         /// <returns>File Container instance</returns>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
         public FileContainerWriter(
                 JbcdStream jbcdStream,
                 bool archive = false,
@@ -136,8 +132,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="contentMeta">The content metadata</param>
         /// <param name="fileStatus">The mode to open the file in, this must be a mode
         /// that permits write access.</param>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
         /// <returns>File Container instance</returns>
         public static void File(
                 string fileName,
@@ -162,8 +157,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="dataIn">The content data</param>
         /// <param name="contentMeta">The content metadata</param>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
         /// <returns>File Container instance</returns>
         public static byte[] Data(
                 byte[] dataIn,
@@ -187,8 +180,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="data">The content data</param>
         /// <param name="contentInfo">The content metadata</param>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
         public void Add(
                 byte[] data,
                 ContentMeta contentInfo = null) => container.Append(

@@ -16,6 +16,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public new const string Label = "Merkle";
 
+        ///<summary>If true, the Container type requires a digest calculated on the payload.</summary> 
         public override bool DigestRequired => true;
 
         /// <summary>

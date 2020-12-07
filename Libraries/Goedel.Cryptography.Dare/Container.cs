@@ -452,6 +452,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="payload">Optional data payload. </param>
         /// <param name="contentType">Content type of the optional data payload</param>
         /// <param name="containerType">The container type.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
         /// <param name="dataEncoding">The data encoding.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
@@ -822,8 +823,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="data">Ciphertext data to append.</param>
         /// <param name="contentMeta">Content metadata.</param>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
         /// <param name="contentType">The payload content type.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented </param>
@@ -837,8 +836,9 @@ namespace Goedel.Cryptography.Dare {
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null) {
 
-            using var InputStream = new MemoryStream(data);
-            InputStream.Position = 0;
+            using var InputStream = new MemoryStream(data) {
+                Position = 0
+                };
             var ContentLength = InputStream.Length;
             return AppendFromStream(InputStream, ContentLength, contentMeta, //cryptoParameters,
                     contentType, cloaked, dataSequences);
@@ -850,8 +850,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="fileName">The file to append</param>
         /// <param name="contentInfo">Container header data.</param>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
         /// <param name="contentType">The payload content type.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
@@ -877,8 +875,6 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="input">The stream to be read.</param>
         /// <param name="contentLength"> The number of bytes to read from <paramref name="input"/>.</param>
         /// <param name="contentInfo">Container header data.</param>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
         /// <param name="contentType">The payload content type.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
