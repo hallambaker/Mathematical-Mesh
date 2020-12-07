@@ -48,10 +48,11 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The decoded JSONObject</summary>
         public JsonObject JsonObject;
 
+        ///<summary>Convenience property, set true iff payload is encrypted.</summary> 
+        public bool IsEncrypted => Header?.EncryptionAlgorithm != null;
 
-        public bool IsEncrypted => throw new NYI();
-
-        public bool KeyExchange => throw new NYI();
+        ///<summary>Convenience property, set true iff header contains direct key exchange.</summary> 
+        public bool KeyExchange => Header?.Recipients != null;
 
         JbcdStream jbcdStream;
 

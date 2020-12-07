@@ -75,7 +75,7 @@ namespace Goedel.Test.Core {
                 }
             }
         }
-    public class CryptoStackDebug : CryptoStack {
+    public class CryptoStackDebug : CryptoStackEncode {
         public byte[] KeyEncrypt;
         public byte[] KeyMac;
         public byte[] IV;

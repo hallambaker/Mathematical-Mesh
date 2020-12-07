@@ -8,82 +8,40 @@ using System.Security.Cryptography;
 using System.Threading;
 
 namespace Goedel.Cryptography.Dare {
-    /// <summary>
-    /// Creates a factory for generating a stack of CryptoStream objects for processing
-    /// a stream of data.
-    /// </summary>
-    public partial class CryptoStack {
 
 
+    public partial class CryptoStackEncode : CryptoStack {
         CryptoParameters CryptoParameters;
-
-
-
-        /// <summary>Constant for deriving a MAC key.</summary>
-        public static readonly byte[] InfoKeyMac = "mac".ToBytes();
-
-        /// <summary>Constant for deriving an encryption key.</summary>
-        public static readonly byte[] InfoKeyEncrypt = "encrypt".ToBytes();
-
-        /// <summary>Constant for deriving an initialization vector.</summary>
-        public static readonly byte[] InfoKeyIv = "iv".ToBytes();
-
-
-        /// <summary>
-        /// The recipient information fields.
-        /// </summary>
-        public List<DareRecipient> Recipients;
-
-        /// <summary>
-        /// The JOSE algorithm identifier for the encryption algorithm.
-        /// </summary>
-        public string EncryptionAlgorithm = null;
-
-        /// <summary>
-        /// The JOSE algorithm identifier for the encryption algorithm.
-        /// </summary>
-        public string DigestAlgorithm = null;
 
         /// <summary>
         /// The Keys to be used to sign the message. 
         /// </summary>
-        public List<CryptoKey> SignerKeys => CryptoParameters.SignerKeys;
-
-        /// <summary>
-        /// The base salt value.
-        /// </summary>
-        public byte[] Salt;
+        public override List<CryptoKey> SignerKeys => CryptoParameters.SignerKeys;
 
         /// <summary>
         /// The base seed provided as a verbatim value or provided through a key exchange to be 
         /// used together with the salt data to derive the keys and initialization data for 
         /// cryptographic operations.
         /// </summary>
-        public byte[] BaseSeed => CryptoParameters.BaseSeed;
-
-        ///<summary>Returns a UDF key identifier for the master secret</summary>
-        public string GetKeyIdentifier() => BaseSeed == null ? null : UDF.SymetricKeyId(BaseSeed);
-
+        public override byte[] BaseSeed => CryptoParameters.BaseSeed;
 
 
         /// <summary>The authentication algorithm to use</summary>
-        public CryptoAlgorithmId DigestId => CryptoParameters.DigestId;
+        public override CryptoAlgorithmId DigestId => CryptoParameters.DigestId;
+
 
         /// <summary>The encryption algorithm to use</summary>
-        public CryptoAlgorithmId EncryptId => CryptoParameters.EncryptId;
-
+        public override CryptoAlgorithmId EncryptId => CryptoParameters.EncryptId;
 
         ///<summary>The block size in bytes.</summary> 
-        int BlockSizeByte => CryptoParameters.BlockSizeByte;
+        protected override int BlockSizeByte => CryptoParameters.BlockSizeByte;
 
-        /// <summary>
-        /// Calculate the ciphertext length for a specified plaintext length.
-        /// </summary>
-        /// <param name="plaintextLength">The input plaintext length.</param>
-        /// <returns>The ciphertext length using the current cipher.</returns>
-        public long CipherTextLength(long plaintextLength) => EncryptId == CryptoAlgorithmId.NULL
-            ? plaintextLength
-            : BlockSizeByte * (1 + (plaintextLength / BlockSizeByte));
+
+        ///<summary>The key size in bits determined by the value of <see cref="EncryptId"/></summary> 
+        public override int KeySize => CryptoParameters.KeySize;
+
+        ///<summary>The block size in bits determined by the value of <see cref="EncryptId"/></summary> 
+        public override int BlockSize => CryptoParameters.BlockSize;
 
         /// <summary>
         /// Create a CryptoStack instance to encode data with the specified cryptographic
@@ -94,7 +52,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
-        public CryptoStack(
+        public CryptoStackEncode(
                 CryptoParameters cryptoParameters,
                 DareHeader header,
                 byte[] cloaked = null,
@@ -103,7 +61,6 @@ namespace Goedel.Cryptography.Dare {
             CryptoParameters = cryptoParameters;
 
             header.CryptoStack = this;
-
 
             if (cryptoParameters.Encrypt) {
                 header.EncryptionAlgorithm = EncryptId.ToJoseID();
@@ -131,6 +88,161 @@ namespace Goedel.Cryptography.Dare {
                 header.DigestAlgorithm = DigestId.ToJoseID();
                 }
             }
+
+
+        }
+
+    public partial class CryptoStackDecode : CryptoStack {
+
+        /// <summary>
+        /// The Keys to be used to sign the message. 
+        /// </summary>
+        public override List<CryptoKey> SignerKeys { get; }
+
+
+        /// <summary>
+        /// The base seed provided as a verbatim value or provided through a key exchange to be 
+        /// used together with the salt data to derive the keys and initialization data for 
+        /// cryptographic operations.
+        /// </summary>
+        public override byte[] BaseSeed => baseSeed;
+        byte[] baseSeed;
+
+        /// <summary>The authentication algorithm to use</summary>
+        public override CryptoAlgorithmId DigestId { get; }
+        CryptoAlgorithmId digestId;
+
+        /// <summary>The encryption algorithm to use</summary>
+        public override CryptoAlgorithmId EncryptId { get; }
+
+        ///<summary>The block size in bytes.</summary> 
+        protected override int BlockSizeByte { get; }
+
+        ///<summary>The key size in bits determined by the value of <see cref="EncryptId"/></summary> 
+        public override int KeySize { get; }
+
+        ///<summary>The block size in bits determined by the value of <see cref="EncryptId"/></summary> 
+        public override int BlockSize { get; }
+
+        /// <summary>
+        /// Create a CryptoStack Instance to decode data with the specified cryptographic
+        /// parameters.
+        /// </summary>
+        /// <param name="encryptID">The keyed cryptographic enhancement to be applied to the content.</param>
+        /// <param name="digest">The digest algorithm to be applied to the message.</param>
+        /// <param name="recipients">The recipient information</param>
+        /// <param name="signatures">The message signatures.</param>
+        /// <param name="keyCollection">The key collection to be used to resolve private keys.</param>
+        /// <param name="decrypt">If true, prepare to decrypt the payload.</param>
+        public CryptoStackDecode(
+                CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
+                CryptoAlgorithmId digest = CryptoAlgorithmId.NULL,
+                List<DareRecipient> recipients = null,
+                List<DareSignature> signatures = null,
+                IKeyLocate keyCollection = null,
+                bool decrypt = true) {
+
+            throw new NYI();
+
+
+            EncryptId = encryptID;
+            DigestId = digest;
+            (KeySize, BlockSize) = encryptID.GetKeySize();
+
+            keyCollection ??= Cryptography.KeyCollection.Default;
+
+            if (recipients != null & decrypt) {
+                baseSeed = keyCollection.Decrypt(recipients, encryptID);
+                }
+
+            signatures.Future(); // Build a list of the verified signatures??
+            }
+
+
+        }
+
+
+    /// <summary>
+    /// Creates a factory for generating a stack of CryptoStream objects for processing
+    /// a stream of data.
+    /// </summary>
+    public abstract partial class CryptoStack {
+
+        /// <summary>Constant for deriving a MAC key.</summary>
+        public static readonly byte[] InfoKeyMac = "mac".ToBytes();
+
+        /// <summary>Constant for deriving an encryption key.</summary>
+        public static readonly byte[] InfoKeyEncrypt = "encrypt".ToBytes();
+
+        /// <summary>Constant for deriving an initialization vector.</summary>
+        public static readonly byte[] InfoKeyIv = "iv".ToBytes();
+
+
+        /// <summary>
+        /// The recipient information fields.
+        /// </summary>
+        public List<DareRecipient> Recipients;
+
+        /// <summary>
+        /// The JOSE algorithm identifier for the encryption algorithm.
+        /// </summary>
+        public string EncryptionAlgorithm = null;
+
+        /// <summary>
+        /// The JOSE algorithm identifier for the encryption algorithm.
+        /// </summary>
+        public string DigestAlgorithm = null;
+
+
+
+        /// <summary>
+        /// The base salt value.
+        /// </summary>
+        public byte[] Salt;
+
+
+        /// <summary>
+        /// The Keys to be used to sign the message. 
+        /// </summary>
+        public abstract List<CryptoKey> SignerKeys { get; }
+
+        /// <summary>
+        /// The base seed provided as a verbatim value or provided through a key exchange to be 
+        /// used together with the salt data to derive the keys and initialization data for 
+        /// cryptographic operations.
+        /// </summary>
+        public abstract byte[] BaseSeed { get; }
+
+        /// <summary>The authentication algorithm to use</summary>
+        public abstract CryptoAlgorithmId DigestId { get; }
+
+        /// <summary>The encryption algorithm to use</summary>
+        public abstract CryptoAlgorithmId EncryptId { get; }
+
+        ///<summary>The key size in bits determined by the value of <see cref="EncryptId"/></summary> 
+        public abstract int KeySize { get; }
+
+        ///<summary>The block size in bits determined by the value of <see cref="EncryptId"/></summary> 
+        public abstract int BlockSize { get; }
+
+
+
+        ///<summary>The block size in bytes.</summary> 
+        protected abstract int BlockSizeByte { get; }
+
+        ///<summary>Returns a UDF key identifier for the master secret</summary>
+        public string GetKeyIdentifier() => BaseSeed == null ? null : UDF.SymetricKeyId(BaseSeed);
+
+
+        /// <summary>
+        /// Calculate the ciphertext length for a specified plaintext length.
+        /// </summary>
+        /// <param name="plaintextLength">The input plaintext length.</param>
+        /// <returns>The ciphertext length using the current cipher.</returns>
+        public long CipherTextLength(long plaintextLength) => EncryptId == CryptoAlgorithmId.NULL
+            ? plaintextLength
+            : BlockSizeByte * (1 + (plaintextLength / BlockSizeByte));
+
 
         /// <summary>
         /// Convert an int64 counter to a unique salt value.
@@ -306,39 +418,6 @@ namespace Goedel.Cryptography.Dare {
         //        Recipients.Add(new DareRecipient(BaseSeed, EncryptionKey));
 
 
-        /// <summary>
-        /// Create a CryptoStack Instance to decode data with the specified cryptographic
-        /// parameters.
-        /// </summary>
-        /// <param name="encryptID">The keyed cryptographic enhancement to be applied to the content.</param>
-        /// <param name="digest">The digest algorithm to be applied to the message.</param>
-        /// <param name="recipients">The recipient information</param>
-        /// <param name="signatures">The message signatures.</param>
-        /// <param name="keyCollection">The key collection to be used to resolve private keys.</param>
-        /// <param name="decrypt">If true, prepare to decrypt the payload.</param>
-        public CryptoStack(
-                CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
-                CryptoAlgorithmId digest = CryptoAlgorithmId.NULL,
-                List<DareRecipient> recipients = null,
-                List<DareSignature> signatures = null,
-                IKeyLocate keyCollection = null,
-                bool decrypt = true) {
-
-            throw new NYI();
-
-
-            //EncryptId = encryptID;
-            //DigestId = digest;
-            //(keySize, blockSize) = encryptID.GetKeySize();
-
-            //keyCollection ??= Cryptography.KeyCollection.Default;
-
-            //if (recipients != null & decrypt) {
-            //    BaseSeed = keyCollection.Decrypt(recipients, encryptID);
-            //    }
-
-            //signatures.Future(); // Build a list of the verified signatures??
-            }
 
 
         /// <summary>
@@ -356,8 +435,8 @@ namespace Goedel.Cryptography.Dare {
             ) {
             var KDF = new KeyDeriveHKDF(BaseSeed, thisSalt, CryptoAlgorithmId.HMAC_SHA_2_256);
             keyEncrypt = KDF.Derive(InfoKeyEncrypt, 256);
-            keyMac = KDF.Derive(InfoKeyMac, CryptoParameters.KeySize);
-            iv = KDF.Derive(InfoKeyIv, CryptoParameters.BlockSize);
+            keyMac = KDF.Derive(InfoKeyMac, KeySize);
+            iv = KDF.Derive(InfoKeyIv, BlockSize);
             }
 
 

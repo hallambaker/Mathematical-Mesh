@@ -537,7 +537,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             // These two should be merged into one here!
-            container.CryptoStackContainer = new CryptoStack(container.CryptoParametersContainer, 
+            container.CryptoStackContainer = new CryptoStackEncode(container.CryptoParametersContainer, 
                 containerHeaderFirst, cloaked, dataSequences);
             //containerHeaderFirst.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
 
@@ -950,7 +950,7 @@ namespace Goedel.Cryptography.Dare {
                 };
 
             // These should be paired.
-            CryptoStackContainer = new CryptoStack(CryptoParametersContainer, 
+            CryptoStackContainer = new CryptoStackEncode(CryptoParametersContainer, 
                 appendContainerHeader, cloaked, dataSequences);
             //appendContainerHeader.ApplyCryptoStack(CryptoStackContainer, cloaked, dataSequences);
 

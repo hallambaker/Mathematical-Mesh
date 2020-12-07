@@ -199,7 +199,7 @@ namespace Goedel.Cryptography.Dare {
             if (!(EncryptionAlgorithm == null | Recipients != null)) {
                 }
 
-            CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmId.NULL,
+            CryptoStack = new CryptoStackDecode(EncryptID, CryptoAlgorithmId.NULL,
                 Recipients, Signatures, keyCollection) {
                 Salt = Salt
                 };
@@ -217,7 +217,7 @@ namespace Goedel.Cryptography.Dare {
             var EncryptID = EncryptionAlgorithm.FromJoseID();
             var DigestID = DigestAlgorithm.FromJoseID();
 
-            var CryptoStack = new CryptoStack(EncryptID, DigestID,
+            var CryptoStack = new CryptoStackDecode(EncryptID, DigestID,
                 Recipients, Signatures, keyCollection, decrypt: decrypt) {
                 Salt = Salt
 
