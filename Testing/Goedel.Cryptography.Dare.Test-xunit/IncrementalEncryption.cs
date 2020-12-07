@@ -55,7 +55,7 @@ namespace Goedel.XUnit {
 
             // Generate key(s)
             var encrypt = KeyPair.Factory(cryptoAlgorithmId,
-                    KeySecurity.Ephemeral, keyCollection, keyUses: KeyUses.Encrypt);
+                    KeySecurity.Exportable, keyCollection, keyUses: KeyUses.Encrypt);
 
             // Create Policy
             var policy = new DarePolicy() {
@@ -77,10 +77,14 @@ namespace Goedel.XUnit {
             var result = new byte[size];
             rand.NextBytes(result);
 
+            Console.WriteLine($"MakeRecordData  {record} {size} => {result} ");
+
+
             return result;
             }
 
         bool Verify(
+                    Container container,
                     DarePolicy darePolicy, 
                     ContainerFrameIndex frameIndex, 
                     int record, 
@@ -124,7 +128,7 @@ namespace Goedel.XUnit {
 
             // check the encrypted payload isn't the plaintext(!)
             if (frameIndex.IsEncrypted) {
-                var body = frameIndex.GetBody(null);
+                var body = frameIndex.GetBody(container);
                 ArrayUtilities.IsEqualTo(body, test).TestFalse();
                 }
 
@@ -181,7 +185,7 @@ namespace Goedel.XUnit {
 
                 record = 0;
                 foreach (var ContainerDataReader in XContainer) {
-                    Verify(darePolicy, ContainerDataReader, record, maxSize, keyCollection);
+                    Verify(XContainer, darePolicy, ContainerDataReader, record, maxSize, keyCollection);
                     }
 
                 //XContainer.CheckContainer(Headers);

@@ -142,9 +142,6 @@ namespace Goedel.Cryptography.Dare {
                 IKeyLocate keyCollection = null,
                 bool decrypt = true) {
 
-            throw new NYI();
-
-
             EncryptId = encryptID;
             DigestId = digest;
             (KeySize, BlockSize) = encryptID.GetKeySize();
