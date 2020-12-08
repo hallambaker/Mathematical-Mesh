@@ -1,0 +1,37 @@
+
+
+  <Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net5.0</TargetFramework>
+      <RootNamespace>meshhost</RootNamespace>
+      <Configurations>Debug;Release;Focus;Windows</Configurations>
+      <Company>ThresholdSecrets.Com</Company>
+      <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+      <Product>meshhost (windows)</Product>
+      <Description>meshhost command line daemon</Description>
+      <Copyright>© 2020</Copyright>
+      <Title>meshhost command line daemons</Title>
+      <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+      <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+      <StartupObject>meshhost_windows.Program</StartupObject>
+      <AssemblyName>meshhost</AssemblyName>
+
+    </PropertyGroup>
+
+
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+      <Exec Command="VSPreBuild" />
+    </Target>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="VSPostBuild" />
+    </Target>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Libraries\Windows\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+    </ItemGroup>
+
+  </Project>
+

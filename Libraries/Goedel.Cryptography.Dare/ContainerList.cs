@@ -14,17 +14,6 @@ namespace Goedel.Cryptography.Dare {
     public class ContainerList : Container {
 
         /// <summary>
-        /// The label for the container type for use in header declarations
-        /// </summary>
-        public const string Label = "List";
-
-
-        ///// <summary>
-        ///// The digest provider used to calculate the tree value. [OBSOLETE, to be removed]
-        ///// </summary>
-        //public CryptoProviderDigest DigestProvider { get; set; } = null;
-
-        /// <summary>
         /// Default constructor
         /// </summary>
 
@@ -45,7 +34,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var containerInfo = new ContainerInfo() {
-                ContainerType = Label,
+                ContainerType = DareConstants.ContainerTypeListTag,
                 Index = 0
                 };
 
@@ -295,7 +284,7 @@ namespace Goedel.Cryptography.Dare {
                 Assert.AssertTrue(Header.ContainerInfo.Index == Index, 
                         ContainerDataCorrupt.Throw);
 
-                if (ContainerHeaderFirst.ContainerInfo.ContainerType == Label) {
+                if (ContainerHeaderFirst.ContainerInfo.ContainerType == DareConstants.ContainerTypeListTag) {
                     Assert.AssertNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
                     }
                 else {

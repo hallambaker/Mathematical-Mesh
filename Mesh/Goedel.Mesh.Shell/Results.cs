@@ -25,8 +25,11 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+
+
 #pragma warning disable IDE1006
 
 
@@ -95,6 +98,12 @@ namespace Goedel.Mesh.Shell {
 			{"ResultConnect", ResultConnect._Factory},
 			{"ResultTransactionRequest", ResultTransactionRequest._Factory},
 			{"ResultReceived", ResultReceived._Factory}			};
+
+        [ModuleInitializer]
+        internal static void _Initialize() {
+            AddDictionary(ref _TagDictionary);
+            }
+
 
 		/// <summary>
         /// Construct an instance from the specified tagged JsonReader stream.

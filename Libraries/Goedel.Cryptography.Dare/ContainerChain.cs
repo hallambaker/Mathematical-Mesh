@@ -13,10 +13,6 @@ namespace Goedel.Cryptography.Dare {
     /// <threadsafety static="true" instance="false"/>
     public class ContainerChain : ContainerDigest {
 
-        /// <summary>
-        /// The label for the container type for use in header declarations
-        /// </summary>
-        public new const string Label = "Chain";
 
 
         /// <summary>
@@ -38,7 +34,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var containerInfo = new ContainerInfo() {
-                ContainerType = Label,
+                ContainerType = DareConstants.ContainerTypeChainTag,
                 Index = 0
                 };
 

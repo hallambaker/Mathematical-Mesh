@@ -368,7 +368,7 @@ namespace Goedel.Cryptography.Dare {
 
             Container container;
             switch (containerInfo.ContainerType) {
-                case ContainerList.Label: {
+                case DareConstants.ContainerTypeListTag: {
                     container = new ContainerList() {
                         JbcdStream = jbcdStream,
                         ContainerHeaderFirst = containerHeaderFirst,
@@ -378,7 +378,7 @@ namespace Goedel.Cryptography.Dare {
                         };
                     break;
                     }
-                case ContainerDigest.Label: {
+                case DareConstants.ContainerTypeDigestTag: {
                     cryptoParametersContainer.SetDigest();
                     container = new ContainerDigest() {
                         JbcdStream = jbcdStream,
@@ -390,7 +390,7 @@ namespace Goedel.Cryptography.Dare {
                         };
                     break;
                     }
-                case ContainerChain.Label: {
+                case DareConstants.ContainerTypeChainTag: {
                     cryptoParametersContainer.SetDigest();
                     container = new ContainerChain() {
                         JbcdStream = jbcdStream,
@@ -402,7 +402,7 @@ namespace Goedel.Cryptography.Dare {
                         };
                     break;
                     }
-                case ContainerTree.Label: {
+                case DareConstants.ContainerTypeTreeTag: {
                     container = new ContainerTree() {
                         JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
@@ -413,7 +413,7 @@ namespace Goedel.Cryptography.Dare {
                         };
                     break;
                     }
-                case ContainerMerkleTree.Label: {
+                case DareConstants.ContainerTypeMerkleTag: {
                     cryptoParametersContainer.SetDigest();
                     container = new ContainerMerkleTree() {
                         JbcdStream = jbcdStream,

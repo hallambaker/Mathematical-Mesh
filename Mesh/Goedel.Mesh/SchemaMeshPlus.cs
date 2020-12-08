@@ -67,14 +67,14 @@ namespace Goedel.Mesh {
         ///<summary>The key collection that was used to decode this object instance.</summary>
         public IKeyCollection KeyCollection;
 
-        ///<summary>Initialization property, used to force initialization of the 
-        ///Json parser dictionaries.</summary>
-        public static object Initialize => null;
+        /////<summary>Initialization property, used to force initialization of the 
+        /////Json parser dictionaries.</summary>
+        //public static object Initialize => null;
 
         ///<summary>Reports the status of the item. </summary>
         public MessageStatus Status = MessageStatus.None;
 
-        static MeshItem() => AddDictionary(ref _TagDictionary);
+        //static MeshItem() => AddDictionary(ref _TagDictionary);
 
 
         /// <summary>

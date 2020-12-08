@@ -3628,6 +3628,12 @@
         <member name="F:Goedel.Mesh.MeshConstants.MMM_Archive">
             <summary>Archive Spool</summary>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolInboundInitialTag">
+            <summary>Jose enumeration tag for StateSpoolInbound.Initial</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolInboundReadTag">
+            <summary>Jose enumeration tag for StateSpoolInbound.Read</summary>
+        </member>
         <member name="M:Goedel.Mesh.MeshConstants.ToStateSpoolInbound(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -3644,6 +3650,18 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolOutboundInitialTag">
+            <summary>Jose enumeration tag for StateSpoolOutbound.Initial</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolOutboundSentTag">
+            <summary>Jose enumeration tag for StateSpoolOutbound.Sent</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolOutboundReceivedTag">
+            <summary>Jose enumeration tag for StateSpoolOutbound.Received</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolOutboundRefusedTag">
+            <summary>Jose enumeration tag for StateSpoolOutbound.Refused</summary>
+        </member>
         <member name="M:Goedel.Mesh.MeshConstants.ToStateSpoolOutbound(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -3659,6 +3677,12 @@
             </summary>
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolLocalInitialTag">
+            <summary>Jose enumeration tag for StateSpoolLocal.Initial</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolLocalClosedTag">
+            <summary>Jose enumeration tag for StateSpoolLocal.Closed</summary>
         </member>
         <member name="M:Goedel.Mesh.MeshConstants.ToStateSpoolLocal(System.String)">
             <summary>
@@ -3750,6 +3774,15 @@
             <param name="inoperation">The operation for which the key is to be used.</param>
             <returns></returns>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyTypeCompleteTag">
+            <summary>Jose enumeration tag for MeshKeyType.Complete</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyTypeBaseTag">
+            <summary>Jose enumeration tag for MeshKeyType.Base</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyTypeActivationTag">
+            <summary>Jose enumeration tag for MeshKeyType.Activation</summary>
+        </member>
         <member name="M:Goedel.Mesh.MeshConstants.ToMeshKeyType(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -3766,6 +3799,21 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshActorAccountTag">
+            <summary>Jose enumeration tag for MeshActor.Account</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshActorMemberTag">
+            <summary>Jose enumeration tag for MeshActor.Member</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshActorDeviceTag">
+            <summary>Jose enumeration tag for MeshActor.Device</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshActorServiceTag">
+            <summary>Jose enumeration tag for MeshActor.Service</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshActorHostTag">
+            <summary>Jose enumeration tag for MeshActor.Host</summary>
+        </member>
         <member name="M:Goedel.Mesh.MeshConstants.ToMeshActor(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -3781,6 +3829,24 @@
             </summary>
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationEncryptTag">
+            <summary>Jose enumeration tag for MeshKeyOperation.Encrypt</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationSignTag">
+            <summary>Jose enumeration tag for MeshKeyOperation.Sign</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationAuthenticateTag">
+            <summary>Jose enumeration tag for MeshKeyOperation.Authenticate</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationProfileTag">
+            <summary>Jose enumeration tag for MeshKeyOperation.Profile</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationAdministratorTag">
+            <summary>Jose enumeration tag for MeshKeyOperation.Administrator</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationEscrowTag">
+            <summary>Jose enumeration tag for MeshKeyOperation.Escrow</summary>
         </member>
         <member name="M:Goedel.Mesh.MeshConstants.ToMeshKeyOperation(System.String)">
             <summary>
@@ -7517,10 +7583,6 @@
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
         </member>
-        <member name="P:Goedel.Mesh.MeshProtocol.Initialize">
-            <summary>Initialization property. Access this property to force initialization 
-            of the static method.</summary>
-        </member>
         <member name="T:Goedel.Mesh.MeshServiceClient">
             <summary>
             Client class for MeshService.
@@ -11016,10 +11078,6 @@
         </member>
         <member name="F:Goedel.Mesh.MeshItem.KeyCollection">
             <summary>The key collection that was used to decode this object instance.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.MeshItem.Initialize">
-            <summary>Initialization property, used to force initialization of the 
-            Json parser dictionaries.</summary>
         </member>
         <member name="F:Goedel.Mesh.MeshItem.Status">
             <summary>Reports the status of the item. </summary>

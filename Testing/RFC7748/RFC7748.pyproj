@@ -20,6 +20,9 @@
     <DebugSymbols>true</DebugSymbols>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Windows' ">
+    <OutputPath>bin\Windows\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="RFC7748.py" />
   </ItemGroup>

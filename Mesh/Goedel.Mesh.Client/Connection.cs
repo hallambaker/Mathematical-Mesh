@@ -6,10 +6,10 @@ namespace Goedel.Mesh.Client {
 
     public partial class HostCatalogItem {
 
-        ///<summary>Dummy property used to force initialization.</summary>
-        public static object Initialize => null;
+        /////<summary>Dummy property used to force initialization.</summary>
+        //public static object Initialize => null;
 
-        static HostCatalogItem() => AddDictionary(ref _TagDictionary);
+        //static HostCatalogItem() => AddDictionary(ref _TagDictionary);
         }
 
     public partial class CatalogedMachine {

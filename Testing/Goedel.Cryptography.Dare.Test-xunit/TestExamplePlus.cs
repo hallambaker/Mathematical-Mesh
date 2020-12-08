@@ -12,11 +12,11 @@ namespace Goedel.XUnit {
     /// </summary>
     public partial class TestItem {
 
-        ///<summary>Initialization property. Access this property to force initialization 
-        ///of the static method.</summary>
-        public static object Initialize => null;
+        ///////<summary>Initialization property. Access this property to force initialization 
+        ///////of the static method.</summary>
+        ////public static object Initialize => null;
 
-        static TestItem() => AddDictionary(ref _TagDictionary);
+        //static TestItem() => AddDictionary(ref _TagDictionary);
 
 
 

@@ -5,6 +5,8 @@
     <RootNamespace>Goedel.ASN1_Test_xunit</RootNamespace>
 
     <IsPackable>false</IsPackable>
+
+    <Configurations>Debug;Release;Windows</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

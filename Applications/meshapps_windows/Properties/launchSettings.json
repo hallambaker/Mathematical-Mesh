@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "meshapp_windows": {
-      "commandName": "Project",
-      "commandLineArgs": " /start mathmesh.com host1.mathmesh.com /nomulti"
-    }
-  }
-}

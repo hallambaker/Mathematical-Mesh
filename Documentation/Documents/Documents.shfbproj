@@ -344,4 +344,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Focus' ">
     <OutputPath>bin\Focus\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Windows' ">
+    <OutputPath>bin\Windows\</OutputPath>
+  </PropertyGroup>
 </Project>

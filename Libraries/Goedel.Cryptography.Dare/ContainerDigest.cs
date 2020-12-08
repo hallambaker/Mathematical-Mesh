@@ -15,10 +15,6 @@ namespace Goedel.Cryptography.Dare {
 
         ///<summary>If true, the Container type requires a digest calculated on the payload.</summary> 
         public override bool DigestRequired => true;
-        /// <summary>
-        /// The label for the container type for use in header declarations
-        /// </summary>
-        public new const string Label = "Digest";
 
 
         /// <summary>
@@ -41,7 +37,7 @@ namespace Goedel.Cryptography.Dare {
                         JbcdStream JBCDStream) {
 
             var containerInfo = new ContainerInfo() {
-                ContainerType = Label,
+                ContainerType = DareConstants.ContainerTypeDigestTag,
                 Index = 0
                 };
 
@@ -76,7 +72,7 @@ namespace Goedel.Cryptography.Dare {
 
                 Assert.AssertTrue(Header.ContainerInfo.Index == Index, ContainerDataCorrupt.Throw);
 
-                if (ContainerHeaderFirst.ContainerInfo.ContainerType == ContainerList.Label) {
+                if (ContainerHeaderFirst.ContainerInfo.ContainerType == DareConstants.ContainerTypeListTag) {
                     Assert.AssertNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
                     }
                 else {

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Focus</Configurations>
+    <Configurations>Debug;Release;Focus;Windows</Configurations>
     <Company>ThresholdMode.Com</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.FSR</Product>

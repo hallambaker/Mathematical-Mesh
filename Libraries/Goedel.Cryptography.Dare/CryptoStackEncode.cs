@@ -6,7 +6,7 @@ namespace Goedel.Cryptography.Dare {
     /// Cryptographic stack to encode an envelope.
     /// </summary>
     public partial class CryptoStackEncode : CryptoStack {
-        CryptoParameters CryptoParameters;
+        CryptoParameters CryptoParameters { get; }
 
         /// <summary>
         /// The Keys to be used to sign the message. 

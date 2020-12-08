@@ -13,11 +13,6 @@ namespace Goedel.Cryptography.Dare {
     public class ContainerTree : ContainerList {
 
         /// <summary>
-        /// The label for the container type for use in header declarations
-        /// </summary>
-        public new const string Label = "Tree";
-
-        /// <summary>
         /// Default constructor
         /// </summary>
         public ContainerTree()  {
@@ -37,7 +32,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var containerInfo = new ContainerInfo() {
-                ContainerType = Label,
+                ContainerType = DareConstants.ContainerTypeTreeTag,
                 Index = 0
                 };
 
@@ -76,7 +71,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerInfo">The frame to prepare.</param>
         protected override void PrepareFrame(ContainerInfo containerInfo) {
             if (containerInfo.Index == 0) {
-                containerInfo.ContainerType = Label;
+                containerInfo.ContainerType = DareConstants.ContainerTypeTreeTag;
                 }
             else {
                 containerInfo.TreePosition =

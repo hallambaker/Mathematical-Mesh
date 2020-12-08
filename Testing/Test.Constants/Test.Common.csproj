@@ -5,7 +5,7 @@
 
     <IsPackable>false</IsPackable>
 
-    <Configurations>Debug;Release;Focus</Configurations>
+    <Configurations>Debug;Release;Focus;Windows</Configurations>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Mesh</Product>
     <Description></Description>

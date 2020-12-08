@@ -11,10 +11,6 @@ namespace Goedel.Cryptography.Dare {
     /// <threadsafety static="true" instance="false"/>
     public class ContainerMerkleTree : ContainerTree {
 
-        /// <summary>
-        /// The label for the container type for use in header declarations
-        /// </summary>
-        public new const string Label = "Merkle";
 
         ///<summary>If true, the Container type requires a digest calculated on the payload.</summary> 
         public override bool DigestRequired => true;
@@ -40,7 +36,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var containerInfo = new ContainerInfo() {
-                ContainerType = Label,
+                ContainerType = DareConstants.ContainerTypeMerkleTag,
                 Index = 0
                 };
 
@@ -63,7 +59,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerInfo">The frame to prepare.</param>
         protected override void PrepareFrame(ContainerInfo containerInfo) {
             if (containerInfo.Index == 0) {
-                containerInfo.ContainerType = Label;
+                containerInfo.ContainerType = DareConstants.ContainerTypeMerkleTag;
                 }
             else {
                 containerInfo.TreePosition =

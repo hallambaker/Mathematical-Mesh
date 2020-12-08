@@ -26,18 +26,24 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace Goedel.Mesh {
 
     public partial class MeshProtocol {
 
-        ///<summary>Initialization property. Access this property to force initialization 
-        ///of the static method.</summary>
-        public static object Initialize => null;
+        /////<summary>Initialization property. Access this property to force initialization 
+        /////of the static method.</summary>
+        //public static object Initialize => null;
 
-        static MeshProtocol() {
-            AddDictionary(ref Goedel.Protocol.Message._TagDictionary);
-            AddDictionary(ref _TagDictionary);
-            }
+        //[ModuleInitializer]
+        //internal static void Initializer() {
+        //    AddDictionary(ref Goedel.Protocol.Message._TagDictionary);
+        //    AddDictionary(ref _TagDictionary);
+        //    }
+
+        //static MeshProtocol() {
+        //    Initializer();
+        //    }
         }
 
 

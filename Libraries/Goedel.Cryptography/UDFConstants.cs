@@ -12,7 +12,7 @@ namespace Goedel.Cryptography {
     ///<summary>UDF type identifier codes</summary>
     public enum UdfTypeIdentifier {
         ///<summary>Undefined type</summary>
-        Unknown,
+        Unknown = -1,
         ///<summary>Authenticator HMAC_SHA_2_512</summary>
         Authenticator_HMAC_SHA_2_512 = 0,
         ///<summary>Authenticator HMAC_SHA_3_512</summary>
@@ -53,7 +53,7 @@ namespace Goedel.Cryptography {
     ///<summary>UDF key derevation algorithm identifier codes</summary>
     public enum UdfAlgorithmIdentifier {
         ///<summary>Undefined type</summary>
-        Unknown,
+        Unknown = -1,
         ///<summary>Seed MAY be used to generate keypairs for any algorithm</summary>
         Any = 0,
         ///<summary>X25519 keypair as described in RFC7748</summary>
@@ -92,7 +92,7 @@ namespace Goedel.Cryptography {
     ///<summary>Udf derrived key uses</summary>
     public enum DerivedKeyUdfDerrivedKeyUses {
         ///<summary>Undefined type</summary>
-        Unknown,
+        Unknown = -1,
         ///<summary>Any</summary>
         Any = 0,
         ///<summary>Encryption</summary>
@@ -105,7 +105,7 @@ namespace Goedel.Cryptography {
     ///<summary>UDF type identifier codes</summary>
     public enum DerivedKeyRSATags {
         ///<summary>Undefined type</summary>
-        Unknown        }
+        Unknown = -1        }
 
 
     ///<summary>
@@ -116,13 +116,14 @@ namespace Goedel.Cryptography {
         // File: TypeIdentifier
 
 
+
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
         /// value.
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  UdfTypeIdentifier ToUdfTypeIdentifier (this string text) =>
+        public static UdfTypeIdentifier ToUdfTypeIdentifier (this string text) =>
             text switch {
                 _ => UdfTypeIdentifier.Unknown
                 };
@@ -141,13 +142,14 @@ namespace Goedel.Cryptography {
         // File: AlgorithmIdentifier
 
 
+
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
         /// value.
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  UdfAlgorithmIdentifier ToUdfAlgorithmIdentifier (this string text) =>
+        public static UdfAlgorithmIdentifier ToUdfAlgorithmIdentifier (this string text) =>
             text switch {
                 _ => UdfAlgorithmIdentifier.Unknown
                 };
@@ -189,13 +191,14 @@ namespace Goedel.Cryptography {
         // File: KeyUses
 
 
+
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
         /// value.
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  DerivedKeyUdfDerrivedKeyUses ToDerivedKeyUdfDerrivedKeyUses (this string text) =>
+        public static DerivedKeyUdfDerrivedKeyUses ToDerivedKeyUdfDerrivedKeyUses (this string text) =>
             text switch {
                 _ => DerivedKeyUdfDerrivedKeyUses.Unknown
                 };
@@ -218,13 +221,14 @@ namespace Goedel.Cryptography {
         // File: RSATags
 
 
+
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
         /// value.
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  DerivedKeyRSATags ToDerivedKeyRSATags (this string text) =>
+        public static DerivedKeyRSATags ToDerivedKeyRSATags (this string text) =>
             text switch {
                 _ => DerivedKeyRSATags.Unknown
                 };

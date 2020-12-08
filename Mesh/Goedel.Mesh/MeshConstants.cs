@@ -12,7 +12,7 @@ namespace Goedel.Mesh {
     ///<summary>Inbound spool message state</summary>
     public enum StateSpoolInbound {
         ///<summary>Undefined type</summary>
-        Unknown,
+        Unknown = -1,
         ///<summary>Initial state (unread)</summary>
         Initial,
         ///<summary>Message was read</summary>
@@ -21,7 +21,7 @@ namespace Goedel.Mesh {
     ///<summary>Outbound spool message state</summary>
     public enum StateSpoolOutbound {
         ///<summary>Undefined type</summary>
-        Unknown,
+        Unknown = -1,
         ///<summary>Initial state (not sent)</summary>
         Initial,
         ///<summary>Message was sent</summary>
@@ -34,7 +34,7 @@ namespace Goedel.Mesh {
     ///<summary>Local spool message state</summary>
     public enum StateSpoolLocal {
         ///<summary>Undefined type</summary>
-        Unknown,
+        Unknown = -1,
         ///<summary>Initial state (unread)</summary>
         Initial,
         ///<summary>Transaction associated with the message was completed</summary>
@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
     ///<summary>Types of cryptographic key that may be created</summary>
     public enum MeshKeyType {
         ///<summary>Undefined type</summary>
-        Unknown,
+        Unknown = -1,
         ///<summary>Complete Key</summary>
         Complete,
         ///<summary>Base Key Contribution</summary>
@@ -54,7 +54,7 @@ namespace Goedel.Mesh {
     ///<summary>Actors for which a cryptographic key may be created</summary>
     public enum MeshActor {
         ///<summary>Undefined type</summary>
-        Unknown,
+        Unknown = -1,
         ///<summary>Account</summary>
         Account,
         ///<summary>Group Member</summary>
@@ -69,7 +69,7 @@ namespace Goedel.Mesh {
     ///<summary>Operations for which a cryptographic key may be created</summary>
     public enum MeshKeyOperation {
         ///<summary>Undefined type</summary>
-        Unknown,
+        Unknown = -1,
         ///<summary>Encryption key</summary>
         Encrypt,
         ///<summary>Signature key</summary>
@@ -138,16 +138,21 @@ namespace Goedel.Mesh {
         // File: MessageStateInbound
 
 
+        ///<summary>Jose enumeration tag for StateSpoolInbound.Initial</summary>
+        public const string  StateSpoolInboundInitialTag = "Initial";
+        ///<summary>Jose enumeration tag for StateSpoolInbound.Read</summary>
+        public const string  StateSpoolInboundReadTag = "Read";
+
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
         /// value.
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  StateSpoolInbound ToStateSpoolInbound (this string text) =>
+        public static StateSpoolInbound ToStateSpoolInbound (this string text) =>
             text switch {
-                "Initial" => StateSpoolInbound.Initial,
-                "Read" => StateSpoolInbound.Read,
+                StateSpoolInboundInitialTag => StateSpoolInbound.Initial,
+                StateSpoolInboundReadTag => StateSpoolInbound.Read,
                 _ => StateSpoolInbound.Unknown
                 };
 
@@ -159,13 +164,22 @@ namespace Goedel.Mesh {
         /// <returns>The text value.</returns>
         public static string ToLabel (this StateSpoolInbound data) =>
             data switch {
-                StateSpoolInbound.Initial => "Initial",
-                StateSpoolInbound.Read => "Read",
+                StateSpoolInbound.Initial => StateSpoolInboundInitialTag,
+                StateSpoolInbound.Read => StateSpoolInboundReadTag,
                 _ => null
                 };
 
         // File: MessageStateOutbound
 
+
+        ///<summary>Jose enumeration tag for StateSpoolOutbound.Initial</summary>
+        public const string  StateSpoolOutboundInitialTag = "Initial";
+        ///<summary>Jose enumeration tag for StateSpoolOutbound.Sent</summary>
+        public const string  StateSpoolOutboundSentTag = "Sent";
+        ///<summary>Jose enumeration tag for StateSpoolOutbound.Received</summary>
+        public const string  StateSpoolOutboundReceivedTag = "Received";
+        ///<summary>Jose enumeration tag for StateSpoolOutbound.Refused</summary>
+        public const string  StateSpoolOutboundRefusedTag = "Refused";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -173,12 +187,12 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  StateSpoolOutbound ToStateSpoolOutbound (this string text) =>
+        public static StateSpoolOutbound ToStateSpoolOutbound (this string text) =>
             text switch {
-                "Initial" => StateSpoolOutbound.Initial,
-                "Sent" => StateSpoolOutbound.Sent,
-                "Received" => StateSpoolOutbound.Received,
-                "Refused" => StateSpoolOutbound.Refused,
+                StateSpoolOutboundInitialTag => StateSpoolOutbound.Initial,
+                StateSpoolOutboundSentTag => StateSpoolOutbound.Sent,
+                StateSpoolOutboundReceivedTag => StateSpoolOutbound.Received,
+                StateSpoolOutboundRefusedTag => StateSpoolOutbound.Refused,
                 _ => StateSpoolOutbound.Unknown
                 };
 
@@ -190,15 +204,20 @@ namespace Goedel.Mesh {
         /// <returns>The text value.</returns>
         public static string ToLabel (this StateSpoolOutbound data) =>
             data switch {
-                StateSpoolOutbound.Initial => "Initial",
-                StateSpoolOutbound.Sent => "Sent",
-                StateSpoolOutbound.Received => "Received",
-                StateSpoolOutbound.Refused => "Refused",
+                StateSpoolOutbound.Initial => StateSpoolOutboundInitialTag,
+                StateSpoolOutbound.Sent => StateSpoolOutboundSentTag,
+                StateSpoolOutbound.Received => StateSpoolOutboundReceivedTag,
+                StateSpoolOutbound.Refused => StateSpoolOutboundRefusedTag,
                 _ => null
                 };
 
         // File: MessageStateLocal
 
+
+        ///<summary>Jose enumeration tag for StateSpoolLocal.Initial</summary>
+        public const string  StateSpoolLocalInitialTag = "Initial";
+        ///<summary>Jose enumeration tag for StateSpoolLocal.Closed</summary>
+        public const string  StateSpoolLocalClosedTag = "Closed";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -206,10 +225,10 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  StateSpoolLocal ToStateSpoolLocal (this string text) =>
+        public static StateSpoolLocal ToStateSpoolLocal (this string text) =>
             text switch {
-                "Initial" => StateSpoolLocal.Initial,
-                "Closed" => StateSpoolLocal.Closed,
+                StateSpoolLocalInitialTag => StateSpoolLocal.Initial,
+                StateSpoolLocalClosedTag => StateSpoolLocal.Closed,
                 _ => StateSpoolLocal.Unknown
                 };
 
@@ -221,8 +240,8 @@ namespace Goedel.Mesh {
         /// <returns>The text value.</returns>
         public static string ToLabel (this StateSpoolLocal data) =>
             data switch {
-                StateSpoolLocal.Initial => "Initial",
-                StateSpoolLocal.Closed => "Closed",
+                StateSpoolLocal.Initial => StateSpoolLocalInitialTag,
+                StateSpoolLocal.Closed => StateSpoolLocalClosedTag,
                 _ => null
                 };
 
@@ -315,17 +334,24 @@ namespace Goedel.Mesh {
 
 
 
+        ///<summary>Jose enumeration tag for MeshKeyType.Complete</summary>
+        public const string  MeshKeyTypeCompleteTag = "Complete";
+        ///<summary>Jose enumeration tag for MeshKeyType.Base</summary>
+        public const string  MeshKeyTypeBaseTag = "Base";
+        ///<summary>Jose enumeration tag for MeshKeyType.Activation</summary>
+        public const string  MeshKeyTypeActivationTag = "Activation";
+
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
         /// value.
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  MeshKeyType ToMeshKeyType (this string text) =>
+        public static MeshKeyType ToMeshKeyType (this string text) =>
             text switch {
-                "Complete" => MeshKeyType.Complete,
-                "Base" => MeshKeyType.Base,
-                "Activation" => MeshKeyType.Activation,
+                MeshKeyTypeCompleteTag => MeshKeyType.Complete,
+                MeshKeyTypeBaseTag => MeshKeyType.Base,
+                MeshKeyTypeActivationTag => MeshKeyType.Activation,
                 _ => MeshKeyType.Unknown
                 };
 
@@ -337,12 +363,23 @@ namespace Goedel.Mesh {
         /// <returns>The text value.</returns>
         public static string ToLabel (this MeshKeyType data) =>
             data switch {
-                MeshKeyType.Complete => "Complete",
-                MeshKeyType.Base => "Base",
-                MeshKeyType.Activation => "Activation",
+                MeshKeyType.Complete => MeshKeyTypeCompleteTag,
+                MeshKeyType.Base => MeshKeyTypeBaseTag,
+                MeshKeyType.Activation => MeshKeyTypeActivationTag,
                 _ => null
                 };
 
+
+        ///<summary>Jose enumeration tag for MeshActor.Account</summary>
+        public const string  MeshActorAccountTag = "Account";
+        ///<summary>Jose enumeration tag for MeshActor.Member</summary>
+        public const string  MeshActorMemberTag = "Member";
+        ///<summary>Jose enumeration tag for MeshActor.Device</summary>
+        public const string  MeshActorDeviceTag = "Device";
+        ///<summary>Jose enumeration tag for MeshActor.Service</summary>
+        public const string  MeshActorServiceTag = "Service";
+        ///<summary>Jose enumeration tag for MeshActor.Host</summary>
+        public const string  MeshActorHostTag = "Host";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -350,13 +387,13 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  MeshActor ToMeshActor (this string text) =>
+        public static MeshActor ToMeshActor (this string text) =>
             text switch {
-                "Account" => MeshActor.Account,
-                "Member" => MeshActor.Member,
-                "Device" => MeshActor.Device,
-                "Service" => MeshActor.Service,
-                "Host" => MeshActor.Host,
+                MeshActorAccountTag => MeshActor.Account,
+                MeshActorMemberTag => MeshActor.Member,
+                MeshActorDeviceTag => MeshActor.Device,
+                MeshActorServiceTag => MeshActor.Service,
+                MeshActorHostTag => MeshActor.Host,
                 _ => MeshActor.Unknown
                 };
 
@@ -368,14 +405,27 @@ namespace Goedel.Mesh {
         /// <returns>The text value.</returns>
         public static string ToLabel (this MeshActor data) =>
             data switch {
-                MeshActor.Account => "Account",
-                MeshActor.Member => "Member",
-                MeshActor.Device => "Device",
-                MeshActor.Service => "Service",
-                MeshActor.Host => "Host",
+                MeshActor.Account => MeshActorAccountTag,
+                MeshActor.Member => MeshActorMemberTag,
+                MeshActor.Device => MeshActorDeviceTag,
+                MeshActor.Service => MeshActorServiceTag,
+                MeshActor.Host => MeshActorHostTag,
                 _ => null
                 };
 
+
+        ///<summary>Jose enumeration tag for MeshKeyOperation.Encrypt</summary>
+        public const string  MeshKeyOperationEncryptTag = "Encrypt";
+        ///<summary>Jose enumeration tag for MeshKeyOperation.Sign</summary>
+        public const string  MeshKeyOperationSignTag = "Sign";
+        ///<summary>Jose enumeration tag for MeshKeyOperation.Authenticate</summary>
+        public const string  MeshKeyOperationAuthenticateTag = "Authenticate";
+        ///<summary>Jose enumeration tag for MeshKeyOperation.Profile</summary>
+        public const string  MeshKeyOperationProfileTag = "Profile";
+        ///<summary>Jose enumeration tag for MeshKeyOperation.Administrator</summary>
+        public const string  MeshKeyOperationAdministratorTag = "Administrator";
+        ///<summary>Jose enumeration tag for MeshKeyOperation.Escrow</summary>
+        public const string  MeshKeyOperationEscrowTag = "Escrow";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -383,14 +433,14 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static  MeshKeyOperation ToMeshKeyOperation (this string text) =>
+        public static MeshKeyOperation ToMeshKeyOperation (this string text) =>
             text switch {
-                "Encrypt" => MeshKeyOperation.Encrypt,
-                "Sign" => MeshKeyOperation.Sign,
-                "Authenticate" => MeshKeyOperation.Authenticate,
-                "Profile" => MeshKeyOperation.Profile,
-                "Administrator" => MeshKeyOperation.Administrator,
-                "Escrow" => MeshKeyOperation.Escrow,
+                MeshKeyOperationEncryptTag => MeshKeyOperation.Encrypt,
+                MeshKeyOperationSignTag => MeshKeyOperation.Sign,
+                MeshKeyOperationAuthenticateTag => MeshKeyOperation.Authenticate,
+                MeshKeyOperationProfileTag => MeshKeyOperation.Profile,
+                MeshKeyOperationAdministratorTag => MeshKeyOperation.Administrator,
+                MeshKeyOperationEscrowTag => MeshKeyOperation.Escrow,
                 _ => MeshKeyOperation.Unknown
                 };
 
@@ -402,12 +452,12 @@ namespace Goedel.Mesh {
         /// <returns>The text value.</returns>
         public static string ToLabel (this MeshKeyOperation data) =>
             data switch {
-                MeshKeyOperation.Encrypt => "Encrypt",
-                MeshKeyOperation.Sign => "Sign",
-                MeshKeyOperation.Authenticate => "Authenticate",
-                MeshKeyOperation.Profile => "Profile",
-                MeshKeyOperation.Administrator => "Administrator",
-                MeshKeyOperation.Escrow => "Escrow",
+                MeshKeyOperation.Encrypt => MeshKeyOperationEncryptTag,
+                MeshKeyOperation.Sign => MeshKeyOperationSignTag,
+                MeshKeyOperation.Authenticate => MeshKeyOperationAuthenticateTag,
+                MeshKeyOperation.Profile => MeshKeyOperationProfileTag,
+                MeshKeyOperation.Administrator => MeshKeyOperationAdministratorTag,
+                MeshKeyOperation.Escrow => MeshKeyOperationEscrowTag,
                 _ => null
                 };
 

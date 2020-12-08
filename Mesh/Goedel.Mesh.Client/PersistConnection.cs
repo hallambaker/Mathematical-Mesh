@@ -34,12 +34,12 @@ namespace Goedel.Mesh.Client {
 
         Dictionary<string, CatalogedMachine> DictionaryLocal2Connection = new Dictionary<string, CatalogedMachine>();
 
-        ///<summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
-        static PersistHost() {
-            _ = MeshItem.Initialize;
-            _ = HostCatalogItem.Initialize;
-            _ = MeshProtocol.Initialize;
-            }
+        /////<summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
+        //static PersistHost() {
+        //    _ = MeshItem.Initialize;
+        //    _ = HostCatalogItem.Initialize;
+        //    _ = MeshProtocol.Initialize;
+        //    }
 
 
 

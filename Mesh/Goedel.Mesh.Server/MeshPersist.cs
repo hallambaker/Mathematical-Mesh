@@ -32,11 +32,11 @@ using System;
 namespace Goedel.Mesh.Server {
     public partial class CatalogItem {
 
-        ///<summary>Initialization property. Access this property to force initialization 
-        ///of the static method.</summary>
-        public static object Initialize => null;
+        /////<summary>Initialization property. Access this property to force initialization 
+        /////of the static method.</summary>
+        //public static object Initialize => null;
 
-        static CatalogItem() => AddDictionary(ref _TagDictionary);
+        //static CatalogItem() => AddDictionary(ref _TagDictionary);
         }
 
     /// <summary>
@@ -59,11 +59,11 @@ namespace Goedel.Mesh.Server {
         ///<summary>The service signature key.</summary> 
         public static CryptoKey ServiceSignatureKey => null;
 
-        static MeshPersist() {
-            _ = MeshItem.Initialize;
-            _ = CatalogItem.Initialize;
-            _ = MeshProtocol.Initialize;
-            }
+        //static MeshPersist() {
+        //    _ = MeshItem.Initialize;
+        //    _ = CatalogItem.Initialize;
+        //    _ = MeshProtocol.Initialize;
+        //    }
 
         /// <summary>
         /// Open or create the accounts persistence container.

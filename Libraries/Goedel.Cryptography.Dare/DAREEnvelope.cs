@@ -3,6 +3,7 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.IO;
 
 namespace Goedel.Cryptography.Dare {
@@ -21,8 +22,11 @@ namespace Goedel.Cryptography.Dare {
                 {"DareEnvelope", Factory}
                 };
 
-
-        static DareEnvelope() => AddDictionary(ref ThisTagDictionary);
+        /// <summary>
+        /// The module initializer. This is called during initialization of the module.
+        /// </summary>
+        [ModuleInitializer]
+        internal static void Initialize() => AddDictionary(ref ThisTagDictionary);
 
         /// <summary>
         /// Tag identifying this class

@@ -11,6 +11,7 @@
     <Title>Goedel.Test</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <Configurations>Debug;Release;Windows</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

@@ -28,11 +28,11 @@ namespace Scratchpad {
             Cryptography.Initialize();
 
 
-            var _ = Goedel.Mesh.Client.HostCatalogItem.Initialize;
-            _ = Goedel.Mesh.MeshProtocol.Initialize;
-            _ = Goedel.Mesh.MeshItem.Initialize;
-            _ = Goedel.Mesh.Server.CatalogItem.Initialize;
-            _ = Goedel.XUnit.TestItem.Initialize;
+            //var _ = Goedel.Mesh.Client.HostCatalogItem.Initialize;
+            //_ = Goedel.Mesh.MeshProtocol.Initialize;
+            //_ = Goedel.Mesh.MeshItem.Initialize;
+            //_ = Goedel.Mesh.Server.CatalogItem.Initialize;
+            //_ = Goedel.XUnit.TestItem.Initialize;
 
             //TestContainers.Test().ContainerTest0();
             //TestContainers.Test().ContainerTest1();

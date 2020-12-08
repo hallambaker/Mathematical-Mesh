@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Company>ThresholdSecrets.Com</Company>
-    <Configurations>Debug;Release;Focus</Configurations>
+    <Configurations>Debug;Release;Focus;Windows</Configurations>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Cryptography</Product>
     <Description>Cryptographic support libraries.</Description>
