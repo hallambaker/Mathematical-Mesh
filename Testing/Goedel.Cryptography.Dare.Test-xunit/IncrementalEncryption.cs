@@ -25,7 +25,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ContainerFixedExchange() =>
-            ContainerFixedExchangeTest("Single", true, 10, 2048, 5, 2);
+            ContainerFixedExchangeTest("Session", true, 10, 2048, 5, 2);
 
         [Fact]
         public void ContainerFixedPolicy() =>
@@ -37,8 +37,8 @@ namespace Goedel.XUnit {
 
 
         [Theory]
-        [InlineData("Single", true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
-        [InlineData("Single", true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
+        [InlineData("Session", true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
+        [InlineData("Session", true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
         [InlineData("Isolated", true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
         [InlineData("Isolated", true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
         [InlineData("All", true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
@@ -93,9 +93,11 @@ namespace Goedel.XUnit {
             bool encrypt = true;
             bool? keyExchange = null;
 
+            var header = frameIndex.Header;
+
             switch (darePolicy.Encryption) {
-                case "Single": {
-                    keyExchange = (record == 0);
+                case "Session": {
+                    keyExchange = (header.Index == 0);
                     break;
                     }
                 case "Isolated": {

@@ -31,6 +31,10 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The block size in bytes determined by the value of <see cref="EncryptId"/></summary> 
         public int BlockSizeByte => BlockSize / 8;
 
+
+        ///<summary>The last frame in which a key exchange was performed.</summary> 
+        public int KeyExchangeIndex = -1;
+
         ///<summary>The set of encryption keys under which key exchanges are to be performed.</summary> 
         ///<remarks>If the value <see cref="EncryptId"/> is to be overriden, this should be done
         ///first so as to avoid recalculating the parameters.</remarks>
