@@ -70,9 +70,14 @@ namespace Goedel.Cryptography.Dare {
                         EncryptionKeys.Add(keyPair);
                         }
                     }
-                keyExchangeFrame = header.Index;
-                if (keyExchangeFrame > 0 & PolicyEncryption == PolicyEncryption.Once) {
-                    RecoverKeyExchange(header);
+                if (PolicyEncryption == PolicyEncryption.Once) {
+                    keyExchangeFrame = header.Index;
+                    if (keyExchangeFrame > 0) {
+                        RecoverKeyExchange(header);
+                        }
+                    }
+                else {
+                    keyExchangeFrame = -1; // do not attempt to restart!
                     }
                 }
 
@@ -118,8 +123,9 @@ namespace Goedel.Cryptography.Dare {
                     }
                 case PolicyEncryption.Once:
                 case PolicyEncryption.Session: {
-                    if (currentFrame == keyExchangeFrame) {
+                    if (keyExchangeFrame==-1) {
                         previousFrame = currentFrame;
+                        keyExchangeFrame = currentFrame;
                         return false;
                         }
                     previousFrame = keyExchangeFrame;

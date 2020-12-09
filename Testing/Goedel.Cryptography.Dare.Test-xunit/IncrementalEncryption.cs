@@ -24,25 +24,25 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void ContainerFixedExchange() =>
-            ContainerFixedExchangeTest("Session", true, 10, 2048, 5, 2);
+        public void ContainerOnceExchange() =>
+            ContainerFixedExchangeTest(DareConstants.PolicyEncryptionOnceTag, true, 10, 2048, 5, 2);
 
         [Fact]
-        public void ContainerFixedPolicy() =>
-            ContainerFixedExchangeTest("Isolated", true, 10, 2048, 5, 2);
+        public void ContainerIsolatedPolicy() =>
+            ContainerFixedExchangeTest(DareConstants.PolicyEncryptionIsolatedTag, true, 10, 2048, 5, 2);
 
         [Fact]
-        public void ContainerMultiplePolicy() =>
-            ContainerFixedExchangeTest("All", false, 10, 2048, 5, 2);
+        public void ContainerSessionPolicy() =>
+            ContainerFixedExchangeTest(DareConstants.PolicyEncryptionSessionTag, false, 10, 2048, 5, 2);
 
 
         [Theory]
-        [InlineData("Session", true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
-        [InlineData("Session", true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
-        [InlineData("Isolated", true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
-        [InlineData("Isolated", true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
-        [InlineData("All", true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
-        [InlineData("All", true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
+        [InlineData(DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
+        [InlineData(DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
+        [InlineData(DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
+        [InlineData(DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
+        [InlineData(DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
+        [InlineData(DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
         public void ContainerFixedExchangeTest(
                 string encryptPolicy,
                 bool seal,
@@ -96,20 +96,21 @@ namespace Goedel.XUnit {
             var header = frameIndex.Header;
 
             switch (darePolicy.Encryption) {
-                case "Session": {
+                case DareConstants.PolicyEncryptionOnceTag: {
                     keyExchange = (header.Index == 0);
                     break;
                     }
-                case "Isolated": {
+                case DareConstants.PolicyEncryptionIsolatedTag: {
                     keyExchange = true;
                     break;
                     }
 
-                case "None": {
+                case DareConstants.PolicyEncryptionNoneTag: {
                     encrypt = false;
                     break;
                     }
-                case "All": {
+                case DareConstants.PolicyEncryptionSessionTag: {
+                    keyExchange = null;
                     break;
                     }
                 default: {

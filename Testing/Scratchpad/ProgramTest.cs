@@ -42,7 +42,7 @@ namespace Scratchpad {
 
             // This is failing because the policy isn't being read back.
             //TestContainers.Test().ContainerFixedPolicy();
-            TestContainers.Test().ContainerFixedExchange();
+            TestContainers.Test().ContainerOnceExchange();
 
             //ShellTests.Test().TestFilePlain();
             //ShellTests.Test().TestArchive();
