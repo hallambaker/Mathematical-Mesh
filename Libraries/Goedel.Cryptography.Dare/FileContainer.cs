@@ -326,7 +326,7 @@ namespace Goedel.Cryptography.Dare {
             var container = Reader.container;
             var ContainerDataReader = container.GetContainerFrameIndex(
                         position: container.PositionFinalFrameStart);
-            Data = ContainerDataReader.GetPayload(KeyCollection);
+            Data = ContainerDataReader.GetPayload(container, KeyCollection);
             ContentMeta = ContainerDataReader?.Header.ContentMeta;
             }
 
@@ -367,7 +367,7 @@ namespace Goedel.Cryptography.Dare {
             path.Future();
 
             var ContainerDataReader = container.GetContainerFrameIndex(index);
-            Data = ContainerDataReader.GetPayload(keyLocate);
+            Data = ContainerDataReader.GetPayload(container, keyLocate);
             contentMeta = ContainerDataReader?.Header.ContentMeta;
             }
 

@@ -13,14 +13,14 @@ namespace Goedel.XUnit {
 
 
 
-        ///<summary>Initialization property. Access this property to force initialization 
-        ///of the static method.</summary>
-        public static object Initialize => null;
+        /////<summary>Initialization property. Access this property to force initialization 
+        /////of the static method.</summary>
+        //public static object Initialize => null;
 
-        static TestPersist() {
-            Cryptography.Cryptography.Initialize();
-            _ = Goedel.XUnit.TestItem.Initialize;
-            }
+        //static TestPersist() {
+        //    Cryptography.Cryptography.Initialize();
+        //    _ = Goedel.XUnit.TestItem.Initialize;
+        //    }
 
 
 

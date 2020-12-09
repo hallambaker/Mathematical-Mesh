@@ -123,7 +123,7 @@ namespace Goedel.XUnit {
 
             // check the payload
             frameIndex.HasPayload.TestTrue();
-            var payload = frameIndex.GetPayload(keyCollection);
+            var payload = frameIndex.GetPayload(container, keyCollection);
             var test = MakeRecordData(record, size);
             payload.TestEqual(test);
 

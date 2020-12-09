@@ -1,0 +1,37 @@
+
+  <Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net5.0-macos</TargetFramework>
+      <RootNamespace>meshman</RootNamespace>
+      <Configurations>Debug;Release;Focus;Windows</Configurations>
+      <Company>ThresholdSecrets.Com</Company>
+      <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+      <Product>meshman (windows)</Product>
+      <Description>meshman command line tool</Description>
+      <Copyright>© 2020</Copyright>
+      <Title>meshhost command line daemons</Title>
+      <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+      <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+      <StartupObject>meshman_windows.Program</StartupObject>
+      <AssemblyName>meshman</AssemblyName>
+
+    </PropertyGroup>
+
+
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+      <Exec Command="VSPreBuild" />
+    </Target>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="VSPostBuild" />
+    </Target>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Libraries\macos\Goedel.Cryptography.macos\Goedel.Cryptography.macos.csproj" />
+    </ItemGroup>
+
+  </Project>
+
+

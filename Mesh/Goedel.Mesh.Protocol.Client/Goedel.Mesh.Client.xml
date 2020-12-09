@@ -10,9 +10,6 @@
              An entry in the Mesh linked logchain.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.HostCatalogItem.Initialize">
-            <summary>Dummy property used to force initialization.</summary>
-        </member>
         <member name="P:Goedel.Mesh.Client.HostCatalogItem._Tag">
             <summary>
             Tag identifying this class
@@ -2525,9 +2522,6 @@
         </member>
         <member name="P:Goedel.Mesh.Client.PersistHost.DefaultEntry">
             <summary>The default entry</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.#cctor">
-            <summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.PersistHost.#ctor(System.String,System.String,System.String,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.ContainerType,Goedel.Protocol.DataEncoding,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean)">
             <summary>

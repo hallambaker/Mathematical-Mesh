@@ -17,6 +17,14 @@ Provide simple service + restart capability
 Service admin tool generates PIN codes and adds them to the service log. Hmm... seems this is a user thang???
 
 
+# Efficiency
+
+## Check container reads.
+
+Should avoid reading container data multiple times, should establish a strategy for caching 
+key exchange info, etc.
+
+
 # Delivery chunks
 
 

@@ -21,46 +21,46 @@ namespace Goedel.Cryptography {
         /// <summary>Default SHA-2-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm SHA2_512;
+        public static CryptoAlgorithm SHA2_512 { get; set; }
         /// <summary>Default SHA-2-256 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm SHA2_256;
+        public static CryptoAlgorithm SHA2_256 { get; set; }
         /// <summary>Default SHA-3-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
-        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm SHA3_512;
+        /// specific implementation by a call { get; set; } to  Platform.Initialize() before use</remarks>
+        public static CryptoAlgorithm SHA3_512 { get; set; }
         /// <summary>Default SHA-3-256 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm SHA3_256;
+        public static CryptoAlgorithm SHA3_256 { get; set; }
         /// <summary>Default SHA-1 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm SHA1;
+        public static CryptoAlgorithm SHA1 { get; set; }
 
         /// <summary>Default HMAC-SHA2-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm HMAC_SHA2_256;
+        public static CryptoAlgorithm HMAC_SHA2_256 { get; set; }
         /// <summary>Default HMAC-SHA2-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm HMAC_SHA2_384;
+        public static CryptoAlgorithm HMAC_SHA2_384 { get; set; }
         /// <summary>Default HMAC-SHA2-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm HMAC_SHA2_512;
+        public static CryptoAlgorithm HMAC_SHA2_512 { get; set; }
 
 
         /// <summary>Default AES-256 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm AES_256;
+        public static CryptoAlgorithm AES_256 { get; set; }
 
 
         /// <summary>Provider for AES block transform</summary>
-        public static BlockProviderFactoryDelegate BlockProviderFactoryAes = null;
+        public static BlockProviderFactoryDelegate BlockProviderFactoryAes { get; set; } = null;
 
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers.</summary>
@@ -72,7 +72,7 @@ namespace Goedel.Cryptography {
         /// <summary>Fill byte buffer with cryptographically strong random numbers</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static FillRandomBytesDelegate FillRandom = FillRandomBytesDefault;
+        public static FillRandomBytesDelegate FillRandom { get; set; } = FillRandomBytesDefault;
 
 
         static void FillRandomBytesDefault(byte[] Data, int Offset, int Count) =>
@@ -90,7 +90,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static WriteToKeyStoreDelegate WriteToKeyStore = WriteToKeyStoreDefault;
+        public static WriteToKeyStoreDelegate WriteToKeyStore { get; set; } = WriteToKeyStoreDefault;
 
         static void WriteToKeyStoreDefault(IPKIXPrivateKey KeyPair, KeySecurity KeySecurity) =>
                     throw new PlatformNotInitialized();
@@ -110,7 +110,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static FindInKeyStoreDelegate FindInKeyStore = FindInKeyStoreDefault;
+        public static FindInKeyStoreDelegate FindInKeyStore { get; set; } = FindInKeyStoreDefault;
 
         static KeyPair FindInKeyStoreDefault(string UDF,
                 CryptoAlgorithmId KeyType = CryptoAlgorithmId.Default) =>
@@ -131,7 +131,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static EraseFromKeyStoreDelegate EraseFromKeyStore = EraseFromKeyStoreDefault;
+        public static EraseFromKeyStoreDelegate EraseFromKeyStore { get; set; } = EraseFromKeyStoreDefault;
 
         static bool EraseFromKeyStoreDefault(string UDF,
                 CryptoAlgorithmId KeyType = CryptoAlgorithmId.Default) =>
@@ -147,7 +147,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// List of registered key erasure delegates
         /// </summary>
-        public static List<EraseTestDelegate> EraseTest = new List<EraseTestDelegate>();
+        public static List<EraseTestDelegate> EraseTest { get; set; } = new List<EraseTestDelegate>();
 
         /// <summary>
         /// Get a specified number of random bytes.
@@ -204,16 +204,16 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Catalog of all local key stores.
         /// </summary>
-        public static List<FindLocalDelegate> FindLocalDelegates =
+        public static List<FindLocalDelegate> FindLocalDelegates { get; set; } =
             new List<FindLocalDelegate>();
 
         /// <summary>
         /// Shared RFC 3394 Key Wrap provider.
         /// </summary>
-        public static KeyWrapRFC3394 KeyWrapRFC3394 = new KeyWrapRFC3394();
+        public static KeyWrapRFC3394 KeyWrapRFC3394 { get; set; } = new KeyWrapRFC3394();
 
         ///<summary>Returns information used to configure the platform.</summary>
-        public static GetPlatformInformationDelegate GetPlatformInformation;
+        public static GetPlatformInformationDelegate GetPlatformInformation { get; set; }
 
 
 

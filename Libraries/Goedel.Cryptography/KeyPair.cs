@@ -305,19 +305,19 @@ namespace Goedel.Cryptography {
         /// Generate a new keypair. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryKeyPairDelegate KeyPairFactoryRSA = KeyPairRSA.Generate;
+        public static FactoryKeyPairDelegate KeyPairFactoryRSA { get; set; } = KeyPairRSA.Generate;
 
         /// <summary>
         /// Generate a new keypair. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryKeyPairDelegate KeyPairFactoryDH = KeyPairDH.Generate;
+        public static FactoryKeyPairDelegate KeyPairFactoryDH { get; set; } = KeyPairDH.Generate;
 
         /// <summary>
         /// Generate a new keypair. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryKeyPairDelegate KeyPairFactoryECDH = KeyPairECDH.KeyPairFactory;
+        public static FactoryKeyPairDelegate KeyPairFactoryECDH { get; set; } = KeyPairECDH.KeyPairFactory;
 
 
 

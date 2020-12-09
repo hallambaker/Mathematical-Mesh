@@ -61,7 +61,6 @@ ToolTargets = \
 	Web\CommandsetDare.cs\
 	Web\CommandsetHash.cs\
 	Web\CommandsetDevice.cs
-
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 

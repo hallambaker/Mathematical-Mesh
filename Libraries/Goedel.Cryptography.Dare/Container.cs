@@ -1058,9 +1058,11 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="frame">The index of the frame to be returned.</param>
         /// <returns>The requested header.</returns>
-        public static DareHeader GetHeader(int frame) {
-            frame.Future(); // NYI: Code does not support incremental encryption yet.
-            throw new NYI();
+        public DareHeader GetHeader(int frame) {
+            MoveToIndex(frame).AssertTrue(InvalidFrameIndex.Throw);
+
+            return JbcdStream.ReadFrameHeader();
+
             }
 
 

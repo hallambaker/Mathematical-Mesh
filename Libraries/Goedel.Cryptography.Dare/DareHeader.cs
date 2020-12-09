@@ -189,18 +189,22 @@ namespace Goedel.Cryptography.Dare {
         /// keys.</param>
         /// <returns>The decoder. </returns>
         public CryptoStackStream GetDecoder(
-                        Stream stream,
-                        out Stream reader,
-                       IKeyLocate keyCollection = null) {
+                    Stream stream,
+                    out Stream reader,
+                    IKeyLocate keyCollection = null,
+                    DareHeader exchange = null) {
 
             var EncryptID = EncryptionAlgorithm.FromJoseID();
 
+            // if an exchange header is specified, use the recipients specified there.
+            var recipients = exchange?.Recipients ?? Recipients;
 
-            if (!(EncryptionAlgorithm == null | Recipients != null)) {
-                }
+            //if (!(EncryptionAlgorithm == null | recipients != null)) {
+            //    }
 
+            // We always use the locally specified salt though.
             CryptoStack = new CryptoStackDecode(EncryptID, CryptoAlgorithmId.NULL,
-                Recipients, Signatures, keyCollection) {
+                recipients, Signatures, keyCollection) {
                 Salt = Salt
                 };
             return CryptoStack.GetDecoder(stream, out reader);

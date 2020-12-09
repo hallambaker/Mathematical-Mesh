@@ -60,14 +60,20 @@ namespace Goedel.Cryptography.Dare {
         /// Return the frame payload.
         /// </summary>
         /// <returns>The frame payload data.</returns>
-        public byte[] GetPayload(IKeyLocate keyCollection) {
-            using var input = jbcdStream.FramerGetReader(DataPosition, DataLength);
+        public byte[] GetPayload(Container container, IKeyLocate keyCollection) {
+
 
 
             // failing here because we have encryption but no recipients!!!
 
-            var Decoder = Header.GetDecoder(input, out var Reader,
-                        keyCollection: keyCollection);
+            DareHeader exchange=null;
+            if (Header?.HasExchangePosition == true) {
+                exchange = container.GetHeader(Header.ContainerInfo.ExchangePosition);
+                }
+
+            using var input = jbcdStream.FramerGetReader(DataPosition, DataLength);
+            Header.GetDecoder(input, 
+                out var Reader, keyCollection: keyCollection, exchange: exchange);
 
             using var output = new MemoryStream();
             Reader.CopyTo(output);
@@ -119,7 +125,7 @@ namespace Goedel.Cryptography.Dare {
             if (JsonObject != null) {
                 return JsonObject;
                 }
-            var bytes = GetPayload(container.KeyLocate);
+            var bytes = GetPayload(container, container.KeyLocate);
             var text = bytes.ToUTF8();
             return bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
 
@@ -168,7 +174,7 @@ namespace Goedel.Cryptography.Dare {
             if (!Header.HasExchangePosition) {
                 return Header.Recipients;
                 }
-            var exchangeHeader = Container.GetHeader(Header.ContainerInfo.ExchangePosition);
+            var exchangeHeader = container.GetHeader(Header.ContainerInfo.ExchangePosition);
 
             if (Header.Recipients == null) {
                 return exchangeHeader.Recipients;

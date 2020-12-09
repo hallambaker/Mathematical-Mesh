@@ -333,13 +333,13 @@ namespace Goedel.Cryptography {
         /// Construct a KeyPair entry from PKIX parameters. Defaults to the built in
         /// provider.
         /// </summary>
-        public static FactoryRSAPublicKeyDelegate KeyPairPublicFactory = KeyPairRSA.KeyPairPublicFactory;
+        public static FactoryRSAPublicKeyDelegate KeyPairPublicFactory { get; set; } = KeyPairRSA.KeyPairPublicFactory;
 
         /// <summary>
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryRSAPrivateKeyDelegate KeyPairPrivateFactory = KeyPairRSA.KeyPairPrivateFactory;
+        public static FactoryRSAPrivateKeyDelegate KeyPairPrivateFactory { get; set; } = KeyPairRSA.KeyPairPrivateFactory;
 
 
 

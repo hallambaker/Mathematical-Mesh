@@ -33,7 +33,8 @@ PKIX\PKIX.cs : PKIX\PKIX.asn2
 	asn2 PKIX\PKIX.asn2  /cs  PKIX\PKIX.cs
 
 UDFConstants.cs : UDFConstants.Constant 
-	constant UDFConstants.Constant  
+	constant UDFConstants.Constant  /cs  UDFConstants.cs
+
 
 
 prebuildRecurse : 

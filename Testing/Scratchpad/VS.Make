@@ -35,7 +35,8 @@ LinkFiles = \
     Goedel.Mesh.Test-xunit.dll\
     Goedel.Protocol.Test-xunit.dll\
     Goedel.Utilities.Test-xunit.dll\
-    Test.Common.dll
+    Test.Common.dll\
+    Test.MakeSiteDocs.dll
 
 ToolTargets = 
 

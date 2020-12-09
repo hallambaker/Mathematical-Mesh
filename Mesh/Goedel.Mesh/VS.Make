@@ -34,7 +34,7 @@ ProtocolSchema.cs : ProtocolSchema.Protocol
 	protogen ProtocolSchema.Protocol  /cs  ProtocolSchema.cs
 
 MeshConstants.cs : MeshConstants.Constant 
-	constant MeshConstants.Constant  
+	constant MeshConstants.Constant  /cs  MeshConstants.cs
 
 SchemaMesh.cs : SchemaMesh.protocol 
 	protogen SchemaMesh.protocol  /cs  SchemaMesh.cs

@@ -89,7 +89,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The default collection.
         /// </summary>
-        public static KeyCollection Default;
+        public static KeyCollection Default { get; set; }
 
         //static KeyCollection _Default = null;
 
@@ -205,7 +205,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyPair">The key to persist.</param>
         public virtual void Persist(KeyPair keyPair) {
-
+            ///<summary></summary> 
             //DictionaryKeyPairPrivateByUDF.AddSafe(keyPair.UDF, keyPair);
 
             if (keyPair.PersistPending) {

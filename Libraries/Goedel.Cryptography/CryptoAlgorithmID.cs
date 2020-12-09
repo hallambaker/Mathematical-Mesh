@@ -218,10 +218,10 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>Flag for CBC mode</summary>
-        Level_Any = 0,
+        Level_Any = Default,
 
         /// <summary>Flag for Cipher Text Stealing Mode</summary>
-        Level_Low = Meta * 1,
+        Level_Low = Meta,
 
         /// <summary>Flag for Galois Counter Mode</summary>
         Level_High = Meta * 2,

@@ -28,7 +28,6 @@ ToolTargets = \
 	DareSchema.cs\
 	Exceptions.cs\
 	DareConstants.cs
-
 ContainerEntry.cs : ContainerEntry.pschema 
 	protogen ContainerEntry.pschema  /cs  ContainerEntry.cs
 
@@ -38,8 +37,10 @@ DareSchema.cs : DareSchema.Protocol
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
-DareConstants.cs : DareConstants.Constant 
-	constant DareConstants.Constant  
+DareConstants.cs : DareConstants.constant 
+	constant DareConstants.constant  /cs  DareConstants.cs
+
+
 
 prebuildRecurse : 
 

@@ -701,10 +701,6 @@
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
         </member>
-        <member name="P:Goedel.Mesh.Server.CatalogItem.Initialize">
-            <summary>Initialization property. Access this property to force initialization 
-            of the static method.</summary>
-        </member>
         <member name="T:Goedel.Mesh.Server.AccountEntry">
              <summary>
             
