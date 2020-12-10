@@ -28,6 +28,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+#pragma warning disable IDE1006
+
 namespace Goedel.Protocol {
 
     /// <summary>
@@ -104,10 +106,10 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Factory method used as default for ToString methods.
         /// </summary>
-        public static JSONWriterFactoryDelegate JSONWriterFactory = JSONWriter.JSONWriterFactory;
+        public static JSONWriterFactoryDelegate JSONWriterFactory { get; set; } = JSONWriter.JSONWriterFactory;
 
         ///<summary>The tag dictionary for decoding entries.</summary>
-        public static Dictionary<string, JsonFactoryDelegate> TagDictionary = tagDictionary ??
+        public static Dictionary<string, JsonFactoryDelegate> TagDictionary => tagDictionary ??
             new Dictionary<string, JsonFactoryDelegate>().CacheValue(out tagDictionary);
         static Dictionary<string, JsonFactoryDelegate> tagDictionary;
 

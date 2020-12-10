@@ -52,7 +52,7 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Services.ServiceProtocol._TagDictionary">
+        <member name="P:Goedel.Mesh.Services.ServiceProtocol._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
             </summary>

@@ -163,7 +163,7 @@ namespace Goedel.XUnit {
 
             // Write additional records
             while (record < records) {
-                using var XContainer = Container.Open(filename, FileStatus.Append);
+                using var XContainer = Container.Open(filename, FileStatus.Append, keyCollection);
                 for (var i = 0; (record < records) & i < reOpen; i++) {
                     var Test = MakeRecordData(record, maxSize);
                     XContainer.Append(Test);
@@ -195,7 +195,7 @@ namespace Goedel.XUnit {
             //Test random access.
             if (moveStep > 0) {
                 // Check in forward direction
-                using (var XContainer = Container.Open(filename, FileStatus.Read)) {
+                using (var XContainer = Container.Open(filename, FileStatus.Read, keyCollection)) {
                     for (record = moveStep; record < records; record += moveStep) {
                         var ContainerDataReader = XContainer.GetContainerFrameIndex(record);
                         (ContainerDataReader.Header.ContainerInfo.Index == record).TestTrue();
@@ -204,7 +204,7 @@ namespace Goedel.XUnit {
                     }
 
                 // Check in backwards direction
-                using (var XContainer = Container.Open(filename, FileStatus.Read)) {
+                using (var XContainer = Container.Open(filename, FileStatus.Read, keyCollection)) {
                     for (record = records; record > 0; record -= moveStep) {
                         var ContainerDataReader = XContainer.GetContainerFrameIndex(record);
                         (ContainerDataReader.Header.ContainerInfo.Index == record).TestTrue();

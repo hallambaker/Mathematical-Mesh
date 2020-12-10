@@ -20,7 +20,7 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.HostCatalogItem._TagDictionary">
+        <member name="P:Goedel.Mesh.Client.HostCatalogItem._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
             </summary>

@@ -7571,7 +7571,7 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshProtocol._TagDictionary">
+        <member name="P:Goedel.Mesh.MeshProtocol._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
             </summary>
@@ -11047,7 +11047,7 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshItem._TagDictionary">
+        <member name="P:Goedel.Mesh.MeshItem._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
             </summary>

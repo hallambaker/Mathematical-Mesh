@@ -359,7 +359,8 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-            var cryptoParametersContainer = new CryptoParametersContainer(containerType, containerHeaderFirst);
+            var cryptoParametersContainer = 
+                new CryptoParametersContainer(containerType, containerHeaderFirst, true, keyCollection);
 
 
             //var cryptoStack = containerHeaderFirst.GetCryptoStack(keyCollection, decrypt: decrypt);

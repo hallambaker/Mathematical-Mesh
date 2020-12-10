@@ -3733,7 +3733,7 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.ShellResult._TagDictionary">
+        <member name="P:Goedel.Mesh.Shell.ShellResult._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
             </summary>

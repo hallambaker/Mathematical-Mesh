@@ -60,7 +60,8 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = 
+		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
+		static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"MeshRequest", MeshRequest._Factory},
@@ -106,9 +107,7 @@ namespace Goedel.Mesh {
 			{"OperateResponse", OperateResponse._Factory}			};
 
         [ModuleInitializer]
-        internal static void _Initialize() {
-            AddDictionary(ref _TagDictionary);
-            }
+        internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 
 
 		/// <summary>

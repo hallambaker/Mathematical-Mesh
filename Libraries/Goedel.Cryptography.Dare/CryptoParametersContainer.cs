@@ -27,7 +27,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="header">Header specifying the governing policy.</param>
         public CryptoParametersContainer(
                 ContainerType containerType,
-                DareHeader header) {
+                DareHeader header,
+                bool recover=false,
+                IKeyLocate keyLocate=null) {
 
             var policy = header.Policy;
 
@@ -71,9 +73,12 @@ namespace Goedel.Cryptography.Dare {
                         }
                     }
                 if (PolicyEncryption == PolicyEncryption.Once) {
-                    keyExchangeFrame = header.Index;
-                    if (keyExchangeFrame > 0) {
-                        RecoverKeyExchange(header);
+                    keyExchangeFrame = 0;
+                    if (recover) {
+                        BaseSeed = keyLocate.Decrypt(header.Recipients, EncryptId);
+                        }
+                    else {
+                         SetKeyExchange(header);
                         }
                     }
                 else {
@@ -98,10 +103,6 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
-        static void RecoverKeyExchange(DareHeader header) {
-
-            throw new NYI();
-            }
 
         /// <summary>
         /// Applies the security policy and container status information to determine if a prior
