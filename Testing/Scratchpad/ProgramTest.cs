@@ -41,9 +41,17 @@ namespace Scratchpad {
             //TestContainers.Test().ContainerTestEncrypted();
 
             // This is failing because the policy isn't being read back.
-            //TestContainers.Test().ContainerFixedPolicy();
-            TestContainers.Test().ContainerOnceExchange();
+            //TestContainers.Test().ContainerSessionPolicy();
+            //TestContainers.Test().ContainerTestEncryptedItem();
+            //TestContainers.Test().ContainerTestSigned();
 
+
+            // Failing on plaintext now... Encryption algorithm is default, should be NULL
+
+            //TestContainers.Test().ContainerTest0();
+            TestDare.Test().EnvelopeEncryptedAtomic();
+            //TestDare.Test().MessagePlaintextFixed();
+            //TestDare.Test().MessagePlaintextVariable();
             //ShellTests.Test().TestFilePlain();
             //ShellTests.Test().TestArchive();
             //ShellTests.Test().TestLog();

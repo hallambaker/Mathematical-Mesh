@@ -97,20 +97,16 @@ namespace Goedel.Cryptography.Dare {
             List<byte[]> dataSequences = null) {
             this.outputStream = outputStream;
 
-            throw new NYI();
+            var header = new DareHeader();
+            cryptoStack = new CryptoStackEncode(cryptoParameters, header, cloaked, dataSequences);
 
-            
-            //var header = new DareHeader(cryptoStack, contentMeta, cloaked, dataSequences);
-            //cryptoStack = new CryptoStack(cryptoParameters, header);
+            outputStream.WriteArrayStart();
+            header.Serialize(outputStream);
+            outputStream.WriteArraySeparator();
 
-
-            //outputStream.WriteArrayStart();
-            //header.Serialize(outputStream);
-            //outputStream.WriteArraySeparator();
-
-            //cryptoStackStreamWriter = header.CryptoStack.GetEncoder(
-            //    outputStream.Output, PackagingFormat.Body, contentLength);
-            //writer = cryptoStackStreamWriter.Writer;
+            cryptoStackStreamWriter = header.CryptoStack.GetEncoder(
+                outputStream.Output, PackagingFormat.Body, contentLength);
+            writer = cryptoStackStreamWriter.Writer;
             }
 
         /// <summary>

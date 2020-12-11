@@ -49,6 +49,8 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             if (policy == null) {
+                PolicyEncryption = PolicyEncryption.None;
+                EncryptId = CryptoAlgorithmId.NULL;
                 return; // no policy to set here.
                 }
 

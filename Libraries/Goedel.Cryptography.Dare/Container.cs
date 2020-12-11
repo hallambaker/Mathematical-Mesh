@@ -831,18 +831,18 @@ namespace Goedel.Cryptography.Dare {
         public long Append(
             
                     byte[] data,
-                    //CryptoParameters cryptoParameters = null,
                     ContentMeta contentMeta = null,
                     string contentType = null,
                     byte[] cloaked = null,
-                    List<byte[]> dataSequences = null) {
+                    List<byte[]> dataSequences = null,
+                    CryptoParameters cryptoParameters = null) {
 
             using var InputStream = new MemoryStream(data) {
                 Position = 0
                 };
             var ContentLength = InputStream.Length;
             return AppendFromStream(InputStream, ContentLength, contentMeta, //cryptoParameters,
-                    contentType, cloaked, dataSequences);
+                    contentType, cloaked, dataSequences, cryptoParameters);
             }
 
 
@@ -888,9 +888,10 @@ namespace Goedel.Cryptography.Dare {
                 ContentMeta contentInfo = null,
                 string contentType = null,
                 byte[] cloaked = null,
-                List<byte[]> dataSequences = null) {
+                List<byte[]> dataSequences = null,
+                        CryptoParameters cryptoParameters = null) {
             var index = AppendBegin(contentLength, contentInfo,
-                    contentType, cloaked, dataSequences);
+                    contentType, cloaked, dataSequences, cryptoParameters);
             input.ProcessRead(AppendProcess);
             AppendEnd();
 
@@ -927,7 +928,8 @@ namespace Goedel.Cryptography.Dare {
                         ContentMeta contentInfo = null,
                         string contentType = null,
                         byte[] cloaked = null,
-                        List<byte[]> dataSequences = null) {
+                        List<byte[]> dataSequences = null,
+                        CryptoParameters cryptoParameters=null) {
 
             var index = (int)FrameCount++;
 
@@ -947,7 +949,7 @@ namespace Goedel.Cryptography.Dare {
                 };
 
             // These should be paired.
-            CryptoStackContainer = new CryptoStackEncode(CryptoParametersContainer, 
+            CryptoStackContainer = new CryptoStackEncode(cryptoParameters ?? CryptoParametersContainer, 
                 appendContainerHeader, cloaked, dataSequences);
             //appendContainerHeader.ApplyCryptoStack(CryptoStackContainer, cloaked, dataSequences);
 

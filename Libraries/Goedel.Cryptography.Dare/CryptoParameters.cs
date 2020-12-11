@@ -146,10 +146,14 @@ namespace Goedel.Cryptography.Dare {
                 foreach (var Entry in recipients) {
                     AddEncrypt(Entry);
                     }
+                SetEncrypt();
                 }
             else if (recipient != null) {
                 EncryptionKeys = new List<CryptoKey>() { recipient };
+                SetEncrypt();
                 }
+            EncryptId = EncryptId == CryptoAlgorithmId.Default ? CryptoID.DefaultEncryptionId : EncryptId;
+
             if (signers != null) {
                 SignerKeys = new List<CryptoKey>();
                 foreach (var Entry in signers) {
@@ -159,6 +163,8 @@ namespace Goedel.Cryptography.Dare {
             else if (signer != null) {
                 SignerKeys = new List<CryptoKey>() { signer };
                 }
+
+            DigestId = DigestId == CryptoAlgorithmId.Default ? CryptoID.DefaultDigestId : DigestId;
             }
 
 

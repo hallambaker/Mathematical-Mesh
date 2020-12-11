@@ -8,6 +8,7 @@ using Goedel.Utilities;
 
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 using Xunit;
 
@@ -21,51 +22,78 @@ namespace Goedel.XUnit {
 
         static CryptoParameters CryptoParametersNull = new CryptoParametersTest();
 
+        //static string AccountAlice = "alice@example.com";
 
-         [Fact]
-        public void MessagePlaintextJSON() {
-            var Test1 = Platform.GetRandomBytes(1000);
-            TestMessageJSON(Test1);
+        //static List<string> Signers = new List<string> { AccountAlice };
+        //static List<string> Recipients = new List<string> { AccountAlice };
+        //static KeyPair encryptAlice = KeyPair.Factory(CryptoAlgorithmId.X448,
+        //        KeySecurity.Session, keyCollection, keyUses: KeyUses.Encrypt);
+
+        [Fact]
+        public void EnvelopePlaintextJSON() {
+            var test1 = Platform.GetRandomBytes(1000);
+            TestEnvelopeJSON(test1);
             }
 
 
         [Fact]
-        public void MessagePlaintext() {
-            var Test1 = Platform.GetRandomBytes(1000);
-            TestMessageAtomic(Test1);
-            TestMessageFixed(Test1);
-            TestMessageVariable(Test1);
+        public void EnvelopePlaintext() {
+            var test1 = Platform.GetRandomBytes(1000);
+            TestEnvelopeAtomic(test1);
+            TestEnvelopeFixed(test1);
+            TestEnvelopeVariable(test1);
             }
 
         [Fact]
-        public void MessagePlaintextAtomic() {
-            var Test1 = Platform.GetRandomBytes(1000);
-            TestMessageAtomic(Test1);
+        public void EnvelopePlaintextAtomic() {
+            var test1 = Platform.GetRandomBytes(1000);
+            TestEnvelopeAtomic(test1);
             }
 
         [Fact]
-        public void MessagePlaintextFixed() {
-            var Test1 = Platform.GetRandomBytes(1000);
-            TestMessageFixed(Test1);
+        public void EnvelopePlaintextFixed() {
+            var test1 = Platform.GetRandomBytes(1000);
+            TestEnvelopeFixed(test1);
             }
 
         [Fact]
-        public void MessagePlaintextVariable() {
-            var Test1 = Platform.GetRandomBytes(1000);
-            TestMessageVariable(Test1);
+        public void EnvelopePlaintextVariable() {
+            var test1 = Platform.GetRandomBytes(1000);
+            TestEnvelopeVariable(test1);
             }
 
+        static KeyCollection MakeKeyCollection() {
+            var testEnvironment = new TestEnvironmentCommon();
+            //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
+            return new KeyCollectionTestEnv(testEnvironment.Path);
+            }
+        static List<string> MakeRecipients(IKeyLocate keyLocate) {
+            var encrypt = KeyPair.Factory(CryptoAlgorithmId.X448,
+                    KeySecurity.Session, keyLocate, keyUses: KeyUses.Encrypt);
 
+            return new List<string> { encrypt.KeyIdentifier };
+            }
+
+        static List<string> MakeSigners(IKeyLocate keyLocate) {
+            var sign = KeyPair.Factory(CryptoAlgorithmId.Ed448,
+                    KeySecurity.Session, keyLocate, keyUses: KeyUses.Sign);
+
+            return new List<string> { sign.KeyIdentifier };
+            }
 
         [Fact]
-        public void MessageEncryptedAtomic() {
-            var Recipients = new List<string> { "Alice@example.com" };
+        public void EnvelopeEncryptedAtomic() {
+            // Setup
+            var keyCollection = MakeKeyCollection();
+            var recipients = MakeRecipients(keyCollection);
+
+
             var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
+                        recipients: recipients);
 
-            var Test1 = Platform.GetRandomBytes(1000);
+            var test1 = Platform.GetRandomBytes(1000);
 
-            TestMessageAtomic(Test1, CryptoParameters);
+            TestEnvelopeAtomic(test1, CryptoParameters);
             }
 
 
@@ -73,254 +101,267 @@ namespace Goedel.XUnit {
 
 
         [Fact]
-        public void MessageDigestAtomic() {
-            var Recipients = new List<string> { "Alice@example.com" };
+        public void EnvelopeDigestAtomic() {
+            var keyCollection = MakeKeyCollection();
+            var recipients = MakeRecipients(keyCollection);
             var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients,
+                        recipients: recipients,
                         digestID: CryptoAlgorithmId.SHA_2_512);
 
-            var Test1 = Platform.GetRandomBytes(100);
+            var test1 = Platform.GetRandomBytes(100);
 
-            TestMessageAtomic(Test1, CryptoParameters);
+            TestEnvelopeAtomic(test1, CryptoParameters);
 
-            TestCorruptedAtomic(Test1, CryptoParameters);
+            TestCorruptedAtomic(test1, CryptoParameters);
 
 
             }
 
         [Fact]
-        public void MessageDigestAtomicCorrupted() {
-            var Recipients = new List<string> { "Alice@example.com" };
+        public void EnvelopeDigestAtomicCorrupted() {
+            var keyCollection = MakeKeyCollection();
+            var recipients = MakeRecipients(keyCollection);
             var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients,
+                        recipients: recipients,
                         digestID: CryptoAlgorithmId.SHA_2_512);
 
-            var Test1 = Platform.GetRandomBytes(100);
-            TestCorruptedAtomic(Test1, CryptoParameters);
+            var test1 = Platform.GetRandomBytes(100);
+            TestCorruptedAtomic(test1, CryptoParameters);
             }
 
 
         [Fact]
-        public void MessageSignAtomic() {
-            var Recipients = new List<string> { "Alice@example.com" };
-            var Signers = new List<string> { "Alice@example.com" };
+        public void EnvelopeSignAtomic() {
+            var keyCollection = MakeKeyCollection();
+            var recipients = MakeRecipients(keyCollection);
+            var signers = MakeSigners(keyCollection);
             var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients,
-                        signers: Signers);
+                        recipients: recipients,
+                        signers: signers);
 
-            var Test1 = Platform.GetRandomBytes(100);
+            var test1 = Platform.GetRandomBytes(100);
 
-            TestMessageAtomic(Test1, CryptoParameters);
+            TestEnvelopeAtomic(test1, CryptoParameters);
             }
 
 
         [Fact]
         //[MT.ExpectedException(typeof(NoAvailableDecryptionKey))]
-        public void MessageEncryptedAtomicFail() =>
-            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() => {
-                var CryptoParameters = new CryptoParametersTest();
-                CryptoParameters.AddEncrypt("Alice@example.com", false);
+        public void EnvelopeEncryptedAtomicFail() =>
 
-                var Test1 = Platform.GetRandomBytes(1000);
-                TestMessageAtomic(Test1, CryptoParameters);
+
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() => {
+                var encrypt = KeyPair.Factory(CryptoAlgorithmId.X448,
+                        KeySecurity.Session, null, keyUses: KeyUses.Encrypt);
+
+                var cryptoParameters = new CryptoParametersTest();
+                cryptoParameters.AddEncrypt(encrypt.KeyIdentifier, false);
+
+                var test1 = Platform.GetRandomBytes(1000);
+                TestEnvelopeAtomic(test1, cryptoParameters);
             });
 
         [Fact]
-        public void MessageEncryptedFixed() {
-            var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
+        public void EnvelopeEncryptedFixed() {
+            var keyCollection = MakeKeyCollection();
+            var recipients = MakeRecipients(keyCollection);
+            var cryptoParameters = new CryptoParametersTest(
+                        recipients: recipients);
 
-            var Test1 = Platform.GetRandomBytes(1000);
+            var test1 = Platform.GetRandomBytes(1000);
 
 
-            TestMessageFixed(Test1, CryptoParameters);
-            TestMessageFixed(Test1, CryptoParameters, 13);
-            TestMessageFixed(Test1, CryptoParameters, 42);
+            TestEnvelopeFixed(test1, cryptoParameters);
+            TestEnvelopeFixed(test1, cryptoParameters, 13);
+            TestEnvelopeFixed(test1, cryptoParameters, 42);
             }
 
         [Fact]
-        public void MessageEncryptedVariable() {
-            var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
+        public void EnvelopeEncryptedVariable() {
+            var keyCollection = MakeKeyCollection();
+            var recipients = MakeRecipients(keyCollection);
+            var cryptoParameters = new CryptoParametersTest(
+                        recipients: recipients);
 
-            var Test1 = Platform.GetRandomBytes(1000);
-            TestMessageVariable(Test1, CryptoParameters);
-            TestMessageVariable(Test1, CryptoParameters, 13);
-            TestMessageVariable(Test1, CryptoParameters, 42);
+            var test1 = Platform.GetRandomBytes(1000);
+            TestEnvelopeVariable(test1, cryptoParameters);
+            TestEnvelopeVariable(test1, cryptoParameters, 13);
+            TestEnvelopeVariable(test1, cryptoParameters, 42);
             }
 
 
         [Fact]
-        public void MessageCryptoParameters() {
-            var CryptoParameters = new CryptoParametersTest();
+        public void EnvelopeCryptoParameters() {
+            var cryptoParameters = new CryptoParametersTest();
 
-            var Test1 = Platform.GetRandomBytes(1000);
+            var test1 = Platform.GetRandomBytes(1000);
 
-            TestMessageAtomic(Test1, CryptoParameters);
+            TestEnvelopeAtomic(test1, cryptoParameters);
             }
 
         [Fact]
-        public void MessageEncryptedCryptoParameters() {
-            var Recipients = new List<string> { "Alice@example.com" };
+        public void EnvelopeEncryptedCryptoParameters() {
+            var keyCollection = MakeKeyCollection();
+            var recipients = MakeRecipients(keyCollection);
 
-            var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
+            var cryptoParameters = new CryptoParametersTest(
+                        recipients: recipients);
 
-            var Test1 = Platform.GetRandomBytes(1000);
+            var test1 = Platform.GetRandomBytes(1000);
 
-            TestMessageAtomic(Test1, CryptoParameters);
-            TestMessageFixed(Test1, CryptoParameters);
-            TestMessageVariable(Test1, CryptoParameters);
+            TestEnvelopeAtomic(test1, cryptoParameters);
+            TestEnvelopeFixed(test1, cryptoParameters);
+            TestEnvelopeVariable(test1, cryptoParameters);
             }
 
         [Fact]
-        public void MessageEncrypted() {
-            var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
+        public void EnvelopeEncrypted() {
+            var keyCollection = MakeKeyCollection();
+            var recipients = MakeRecipients(keyCollection);
+            var cryptoParameters = new CryptoParametersTest(
+                        recipients: recipients);
 
-            var Test1 = Platform.GetRandomBytes(1000);
-            TestMessageAtomic(Test1, CryptoParameters);
-            TestMessageFixed(Test1, CryptoParameters);
-            TestMessageVariable(Test1, CryptoParameters);
+            var test1 = Platform.GetRandomBytes(1000);
+            TestEnvelopeAtomic(test1, cryptoParameters);
+            TestEnvelopeFixed(test1, cryptoParameters);
+            TestEnvelopeVariable(test1, cryptoParameters);
 
-            TestMessageFixed(Test1, CryptoParameters, 13);
-            TestMessageVariable(Test1, CryptoParameters, 13);
+            TestEnvelopeFixed(test1, cryptoParameters, 13);
+            TestEnvelopeVariable(test1, cryptoParameters, 13);
 
-            TestMessageFixed(Test1, CryptoParameters, 42);
-            TestMessageVariable(Test1, CryptoParameters, 42);
+            TestEnvelopeFixed(test1, cryptoParameters, 42);
+            TestEnvelopeVariable(test1, cryptoParameters, 42);
             }
 
         [Fact]
-        public void MessageEncryptedWithData() {
-            var Recipients = new List<string> { "Alice@example.com" };
-            var CryptoParameters = new CryptoParametersTest(
-                        recipients: Recipients);
+        public void EnvelopeEncryptedWithData() {
+            var keyCollection = MakeKeyCollection();
+            var recipients = MakeRecipients(keyCollection);
+            var cryptoParameters = new CryptoParametersTest(
+                        recipients: recipients);
 
-            var Test1 = Platform.GetRandomBytes(1000);
-            var Test2 = Platform.GetRandomBytes(100);
-            var Test3 = Platform.GetRandomBytes(50);
-            var DataSequences = new List<byte[]> { Test2, Test3 };
-            TestMessageAtomic(Test1, CryptoParameters, DataSequences: DataSequences);
-
-            }
-
-        static void TestMessageJSON(byte[] Plaintext,
-                CryptoParameters CryptoParameters = null,
-                int Stride = -1,
-                List<byte[]> DataSequences = null,
-                string ContentType = null) {
-
-            CryptoParameters ??= CryptoParametersNull;
-            var Message = new DareEnvelope(CryptoParameters, Plaintext);
-
-            var MessageBytes = Message.GetJson(false);
-            CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, ContentType);
+            var test1 = Platform.GetRandomBytes(1000);
+            var test2 = Platform.GetRandomBytes(100);
+            var test3 = Platform.GetRandomBytes(50);
+            var dataSequences = new List<byte[]> { test2, test3 };
+            TestEnvelopeAtomic(test1, cryptoParameters, dataSequences: dataSequences);
 
             }
 
-        static void TestMessageAtomic(byte[] Plaintext,
-                    CryptoParameters CryptoParameters = null,
-                    int Stride = -1,
-                    List<byte[]> DataSequences = null,
-                    string ContentType = null) {
+        static void TestEnvelopeJSON(byte[] Plaintext,
+                CryptoParameters cryptoParameters = null,
+                int stride = -1,
+                List<byte[]> dataSequences = null,
+                string contentType = null) {
 
-            CryptoParameters ??= CryptoParametersNull;
+            cryptoParameters ??= CryptoParametersNull;
+            var envelope = new DareEnvelope(cryptoParameters, Plaintext);
 
-            var Message = new DareEnvelope(CryptoParameters, Plaintext, dataSequences: DataSequences);
+            var envelopeBytes = envelope.GetJson(false);
+            CheckDecodeDirect(cryptoParameters, envelopeBytes, Plaintext, dataSequences, contentType);
 
-            var MessageBytes = Message.GetJson(false);
+            }
 
-            //Console.WriteLine(MessageBytes.ToUTF8());
-            CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, ContentType);
+        static void TestEnvelopeAtomic(byte[] plaintext,
+                    CryptoParameters cryptoParameters = null,
+                    int stride = -1,
+                    List<byte[]> dataSequences = null,
+                    string contentType = null) {
 
-            var MessageBytesB = Message.GetJsonB(false);
-            CheckDecodeDirect(CryptoParameters, MessageBytesB, Plaintext, DataSequences, ContentType);
+            cryptoParameters ??= CryptoParametersNull;
+
+            var envelope = new DareEnvelope(cryptoParameters, plaintext, dataSequences: dataSequences);
+
+            var envelopeBytes = envelope.GetJson(false);
+
+            Console.WriteLine(envelopeBytes.ToUTF8());
+            CheckDecodeDirect(cryptoParameters, envelopeBytes, plaintext, dataSequences, contentType);
+
+            var EnvelopeBytesB = envelope.GetJsonB(false);
+            CheckDecodeDirect(cryptoParameters, EnvelopeBytesB, plaintext, dataSequences, contentType);
             }
 
         static void TestCorruptedAtomic(byte[] Plaintext,
-            CryptoParameters CryptoParameters = null,
-            int Stride = -1,
-            List<byte[]> DataSequences = null,
-            string ContentType = null) {
+            CryptoParameters cryptoParameters = null,
+            int stride = -1,
+            List<byte[]> dataSequences = null,
+            string contentType = null) {
 
-            CryptoParameters ??= CryptoParametersNull;
+            cryptoParameters ??= CryptoParametersNull;
 
-            var message = new DareEnvelope(CryptoParameters, Plaintext, dataSequences: DataSequences);
+            var envelope = new DareEnvelope(cryptoParameters, Plaintext, dataSequences: dataSequences);
 
-            message.Corrupt();
+            envelope.Corrupt();
 
-            var MessageBytes = message.GetJson(false);
+            var envelopeBytes = envelope.GetJson(false);
 
-            //Console.WriteLine(MessageBytes.ToUTF8());
-            CheckDecodeCorrupted(CryptoParameters, MessageBytes, Plaintext, DataSequences, ContentType);
+            //Console.WriteLine(EnvelopeBytes.ToUTF8());
+            CheckDecodeCorrupted(cryptoParameters, envelopeBytes, Plaintext, dataSequences, contentType);
 
-            var MessageBytesB = message.GetJsonB(false);
-            CheckDecodeCorrupted(CryptoParameters, MessageBytesB, Plaintext, DataSequences, ContentType);
+            var EnvelopeBytesB = envelope.GetJsonB(false);
+            CheckDecodeCorrupted(cryptoParameters, EnvelopeBytesB, Plaintext, dataSequences, contentType);
             }
 
-        static void TestMessageFixed(byte[] Plaintext,
-                    CryptoParameters CryptoParameters = null,
-                    int Stride = -1,
-                    List<byte[]> DataSequences = null,
+        static void TestEnvelopeFixed(byte[] Plaintext,
+                    CryptoParameters cryptoParameters = null,
+                    int stride = -1,
+                    List<byte[]> dataSequences = null,
                     string contentType = null) {
-            CryptoParameters ??= CryptoParametersNull;
+            cryptoParameters ??= CryptoParametersNull;
             var contentInfo = new ContentMeta() { ContentType = contentType };
             using var InputStream = new MemoryStream(Plaintext);
             using var OutputStream = new MemoryStream();
-            DareEnvelope.Encode(CryptoParameters, InputStream, OutputStream,
-                    Plaintext.Length, contentInfo, dataSequences: DataSequences);
+            DareEnvelope.Encode(cryptoParameters, InputStream, OutputStream,
+                    Plaintext.Length, contentInfo, dataSequences: dataSequences);
 
-            var MessageBytes = OutputStream.ToArray();
-            CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, contentType);
+            var EnvelopeBytes = OutputStream.ToArray();
+            CheckDecodeDirect(cryptoParameters, EnvelopeBytes, Plaintext, dataSequences, contentType);
             }
 
-        static void TestMessageVariable(byte[] Plaintext,
-                    CryptoParameters CryptoParameters = null,
-                    int Stride = -1,
-                    List<byte[]> DataSequences = null,
+        static void TestEnvelopeVariable(byte[] plaintext,
+                    CryptoParameters cryptoParameters = null,
+                    int stride = -1,
+                    List<byte[]> dataSequences = null,
                     string contentType = null) {
-            CryptoParameters ??= CryptoParametersNull;
+            cryptoParameters ??= CryptoParametersNull;
             var contentInfo = new ContentMeta() { ContentType = contentType };
-            using var InputStream = new MemoryStream(Plaintext);
-            using var OutputStream = new MemoryStream();
-            DareEnvelope.Encode(CryptoParameters, InputStream, OutputStream,
-                        contentMeta: contentInfo, dataSequences: DataSequences);
+            using var inputStream = new MemoryStream(plaintext);
+            using var outputStream = new MemoryStream();
+            DareEnvelope.Encode(cryptoParameters, inputStream, outputStream,
+                        contentMeta: contentInfo, dataSequences: dataSequences);
 
-            var MessageBytes = OutputStream.ToArray();
-            CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, contentType);
+            var envelopeBytes = outputStream.ToArray();
+            CheckDecodeDirect(cryptoParameters, envelopeBytes, plaintext, dataSequences, contentType);
             }
 
 
 
         static void CheckDecodeDirect(
-            CryptoParameters CryptoParameters,
-            byte[] Serialization,
-            byte[] Plaintext,
-            List<byte[]> DataSequences = null,
-            string ContentType = null) {
+            CryptoParameters cryptoParameters,
+            byte[] serialization,
+            byte[] plaintext,
+            List<byte[]> dataSequences = null,
+            string contentType = null) {
 
-            var Message = DareEnvelope.FromJSON(Serialization, false,
-                    decrypt: CryptoParameters.Encrypt, keyCollection: CryptoParameters.KeyLocate);
-            CheckDecodeResult(Message, DataSequences, ContentType);
+            var envelope = DareEnvelope.FromJSON(serialization, false,
+                    decrypt: cryptoParameters.Encrypt, keyCollection: cryptoParameters.KeyLocate);
+            CheckDecodeResult(envelope, dataSequences, contentType);
 
-            Plaintext.IsEqualTo(Message.Body).TestTrue();
+            plaintext.IsEqualTo(envelope.Body).TestTrue();
             }
 
         static void CheckDecodeCorrupted(
-                CryptoParameters CryptoParameters,
-                byte[] Serialization,
-                byte[] Plaintext,
-                List<byte[]> DataSequences = null,
-                string ContentType = null) {
+                CryptoParameters cryptoParameters,
+                byte[] serialization,
+                byte[] plaintext,
+                List<byte[]> dataSequences = null,
+                string contentType = null) {
 
-            var Message = DareEnvelope.FromJSON(Serialization, false,
-                    decrypt: CryptoParameters.Encrypt, keyCollection: CryptoParameters.KeyLocate);
-            CheckDecodeResult(Message, DataSequences, ContentType);
+            var Envelope = DareEnvelope.FromJSON(serialization, false,
+                    decrypt: cryptoParameters.Encrypt, keyCollection: cryptoParameters.KeyLocate);
+            CheckDecodeResult(Envelope, dataSequences, contentType);
 
-            //Plaintext.IsEqualTo(Message.Body).TestTrue();
+            //Plaintext.IsEqualTo(Envelope.Body).TestTrue();
             }
 
 
@@ -346,18 +387,18 @@ namespace Goedel.XUnit {
 
 
         static void CheckDecodeResult(
-            DareEnvelope Message,
-            List<byte[]> DataSequences = null,
-            string ContentType = null) {
+            DareEnvelope envelope,
+            List<byte[]> dataSequences = null,
+            string contentType = null) {
 
-            (ContentType == Message.Header.ContentType).TestTrue(); ;
-            if (DataSequences == null) {
+            (contentType == envelope.Header.ContentType).TestTrue(); ;
+            if (dataSequences == null) {
                 }
             else {
-                (DataSequences.Count == Message.DataSequences).TestTrue(); ;
-                for (var i = 0; i < DataSequences.Count; i++) {
-                    var MEDSS = Message.DataSequence(i);
-                    (DataSequences[i].IsEqualTo(MEDSS)).TestTrue(); ;
+                (dataSequences.Count == envelope.DataSequences).TestTrue(); ;
+                for (var i = 0; i < dataSequences.Count; i++) {
+                    var MEDSS = envelope.DataSequence(i);
+                    (dataSequences[i].IsEqualTo(MEDSS)).TestTrue(); ;
                     }
                 }
             }

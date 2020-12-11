@@ -48,7 +48,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         public CryptoStackEncode(
-                CryptoParametersContainer cryptoParameters,
+                CryptoParameters cryptoParameters,
                 DareHeader header,
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null) {
@@ -65,14 +65,17 @@ namespace Goedel.Cryptography.Dare {
                 header.KeyIdentifier = GetKeyIdentifier();
 
 
-                if (cryptoParameters.ReuseKeyExchange(header.Index, out var keyExchange)) {
-                    header.ContainerInfo.ExchangePosition = keyExchange;
+                if (cryptoParameters is CryptoParametersContainer cryptoParametersContainer) {
+                    if (cryptoParametersContainer.ReuseKeyExchange(header.Index, out var keyExchange)) {
+                        header.ContainerInfo.ExchangePosition = keyExchange;
+                        }
+                    else {
+                        cryptoParameters.SetKeyExchange(header);
+                        }
                     }
                 else {
                     cryptoParameters.SetKeyExchange(header);
-                    
                     }
-
                 long saltValue = 0;
                 if (cloaked != null) {
                     header.Cloaked = Encode(cloaked, MakeSalt(saltValue++));
