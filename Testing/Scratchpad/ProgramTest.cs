@@ -49,7 +49,10 @@ namespace Scratchpad {
             // Failing on plaintext now... Encryption algorithm is default, should be NULL
 
             //TestContainers.Test().ContainerTest0();
-            TestDare.Test().EnvelopeEncryptedAtomic();
+            //TestDare.Test().EnvelopeEncryptedAtomic();
+
+            TestPersist.Test().TestPersistenceStoreAdd();
+
             //TestDare.Test().MessagePlaintextFixed();
             //TestDare.Test().MessagePlaintextVariable();
             //ShellTests.Test().TestFilePlain();
