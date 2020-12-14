@@ -94,13 +94,13 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="trailer">The trailer to augment.</param>
         public override void MakeTrailer(ref DareTrailer trailer) {
-            trailer ??= CryptoStackContainer.GetNullTrailer();
+            trailer ??= CryptoParametersContainer.GetNullTrailer();
 
             if (DareHeaderFinal != null) {
-                trailer.ChainDigest = CryptoStackContainer.CombineDigest(DareHeaderFinal.ChainDigest, trailer.PayloadDigest);
+                trailer.ChainDigest = CryptoParametersContainer.CombineDigest(DareHeaderFinal.ChainDigest, trailer.PayloadDigest);
                 }
             else {
-                trailer.ChainDigest = CryptoStackContainer.CombineDigest(null, trailer.PayloadDigest);
+                trailer.ChainDigest = CryptoParametersContainer.CombineDigest(null, trailer.PayloadDigest);
                 }
             }
 

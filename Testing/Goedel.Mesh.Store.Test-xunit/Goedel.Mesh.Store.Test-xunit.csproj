@@ -7,6 +7,8 @@
     <IsPackable>false</IsPackable>
 
     <Configurations>Debug;Release;Windows</Configurations>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,11 +35,5 @@
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
     <ProjectReference Include="..\Goedel.Utilities.Test-xunit\Goedel.Utilities.Test-xunit.csproj" />
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="VSPreBuild" />
-  </Target>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="VSPostBuild" />
-  </Target>
 </Project>

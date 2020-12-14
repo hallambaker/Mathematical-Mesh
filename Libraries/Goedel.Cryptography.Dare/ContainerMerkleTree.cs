@@ -107,13 +107,13 @@ namespace Goedel.Cryptography.Dare {
         ///<param name="trailer">The trailer to augment.</param>
         public override void MakeTrailer(ref DareTrailer trailer) {
 
-            trailer ??= CryptoStackContainer.GetNullTrailer();
+            trailer ??= CryptoParametersContainer.GetNullTrailer();
 
             if (FrameCount > 0) {
                 trailer.TreeDigest = GetTreeDigest(FrameCount, trailer.PayloadDigest);
                 }
             else {
-                trailer.TreeDigest = CryptoStackContainer.CombineDigest(null, trailer.PayloadDigest);
+                trailer.TreeDigest = CryptoParametersContainer.CombineDigest(null, trailer.PayloadDigest);
                 }
             }
 
@@ -139,7 +139,7 @@ namespace Goedel.Cryptography.Dare {
                 d *= 2;
                 x2 /= 2;
                 }
-            return CryptoStackContainer.CombineDigest(null, contentDigest);
+            return CryptoParametersContainer.CombineDigest(null, contentDigest);
             }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The calculated digest.</returns>
         public byte[] DigestFrame(long frame, byte[] right) {
             var left = GetFrameDigest(frame);
-            return CryptoStackContainer.CombineDigest(left, right);
+            return CryptoParametersContainer.CombineDigest(left, right);
             }
 
 

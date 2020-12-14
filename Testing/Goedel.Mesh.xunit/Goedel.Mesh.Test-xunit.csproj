@@ -6,6 +6,8 @@
     <IsPackable>false</IsPackable>
 
     <Configurations>Debug;Release;Windows</Configurations>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
   <ItemGroup>

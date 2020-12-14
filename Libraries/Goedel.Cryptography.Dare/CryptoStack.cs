@@ -421,23 +421,6 @@ namespace Goedel.Cryptography.Dare {
             return output.ToArray();
             }
 
-        CryptoProviderDigest DigestProvider {
-            get {
-                digestProvider ??= CryptoCatalog.Default.GetDigest(DigestId);
-                return digestProvider;
-                }
-            }
-
-        CryptoProviderDigest digestProvider;
-
-        /// <summary>
-        /// Get a trailer for an empty payload.
-        /// </summary>
-        /// <returns>The trailer with a null digest value.</returns>
-        public DareTrailer GetNullTrailer() => new DareTrailer() {
-            PayloadDigest = DigestProvider.NullDigest
-            };
-
         /// <summary>
         /// Calculate the length of the trailer.
         /// </summary>
@@ -446,46 +429,16 @@ namespace Goedel.Cryptography.Dare {
             DareTrailer result = null;
 
             var digestLength = CryptoCatalog.Default.ResultInBytes(DigestId);
-
-
             if (digestLength > 0) {
                 result = new DareTrailer() {
                     PayloadDigest = new byte[digestLength]
                     };
                 }
 
+            // Hack: does not create a dummy signature trailer.
+
             return result;
             }
 
-
-        /// <summary>
-        /// Combine digests to produce the digest for a node.
-        /// </summary>
-        /// <param name="first">The left hand digest.</param>
-        /// <param name="second">The right hand digest.</param>
-        /// <returns>The digest value.</returns>
-        public byte[] CombineDigest(
-            byte[] first,
-            byte[] second) {
-            var length = DigestProvider.Size / 8;
-
-            var buffer = new byte[length * 2];
-            if (first != null) {
-                Assert.AssertTrue(
-                    length == first.Length,
-                    CryptographicException.Throw);
-                Array.Copy(first, buffer, length);
-                }
-            if (second != null) {
-                Assert.AssertTrue(
-                    length == second.Length,
-                    CryptographicException.Throw);
-                Array.Copy(second, 0, buffer, length, length);
-                }
-
-
-            return DigestProvider.ProcessData(buffer);
-            ;
-            }
         }
     }

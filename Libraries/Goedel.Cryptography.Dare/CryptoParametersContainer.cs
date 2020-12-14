@@ -151,11 +151,50 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
+        /// <summary>
+        /// Get a trailer for an empty payload.
+        /// </summary>
+        /// <returns>The trailer with a null digest value.</returns>
+        public DareTrailer GetNullTrailer() => new DareTrailer() {
+            PayloadDigest = DigestProvider.NullDigest
+            };
+
+        CryptoProviderDigest DigestProvider => digestProvider ??= 
+            CryptoCatalog.Default.GetDigest(DigestId).CacheValue(out digestProvider);
+        CryptoProviderDigest digestProvider;
+
+        /// <summary>
+        /// Combine digests to produce the digest for a node.
+        /// </summary>
+        /// <param name="first">The left hand digest.</param>
+        /// <param name="second">The right hand digest.</param>
+        /// <returns>The digest value.</returns>
+        public byte[] CombineDigest(
+            byte[] first,
+            byte[] second) {
+            var length = DigestProvider.Size / 8;
+
+            var buffer = new byte[length * 2];
+            if (first != null) {
+                Assert.AssertTrue(
+                    length == first.Length,
+                    CryptographicException.Throw);
+                Array.Copy(first, buffer, length);
+                }
+            if (second != null) {
+                Assert.AssertTrue(
+                    length == second.Length,
+                    CryptographicException.Throw);
+                Array.Copy(second, 0, buffer, length, length);
+                }
 
 
-
+            return DigestProvider.ProcessData(buffer);
+            }
 
 
 
         }
+
+
     }
