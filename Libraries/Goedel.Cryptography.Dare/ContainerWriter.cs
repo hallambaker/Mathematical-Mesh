@@ -12,8 +12,16 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The container to be written to.</summary>
         protected Container Container;
 
+        ///<summary>Property allowing access to the crypto parameters and policy governing
+        ///the container.</summary> 
+        public CryptoParametersContainer CryptoParametersContainer => 
+                Container.CryptoParametersContainer;
+
         ///<summary>The last container header written</summary>
         public DareHeader ContainerHeader;
+
+
+
 
         ///<summary>ContainerInfo element of last container header written.</summary>
         public ContainerInfo ContainerInfo => ContainerHeader.ContainerInfo;
@@ -98,23 +106,14 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cloaked"></param>
         /// <param name="dataSequences"></param>
         public void StreamOpen(
-                    ContentMeta contentMeta,
-                    CryptoStack cryptoStack,
-                    byte[] cloaked = null,
-                    List<byte[]> dataSequences = null) {
+
+                    CryptoStack cryptoStack) {
 
             var containerInfo = new ContainerInfo() {
                 Index = (int)frameCount++
                 };
 
-            ContainerHeader = new DareHeader() {
-                ContainerInfo = containerInfo,
-                ContentMeta = contentMeta
-                };
-
-            //ContainerHeader.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
-
-
+            ContainerHeader.ContainerInfo = containerInfo;
 
             Container.PrepareFrame(this);
 

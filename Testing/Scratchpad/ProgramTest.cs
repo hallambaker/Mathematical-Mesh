@@ -51,7 +51,7 @@ namespace Scratchpad {
             //TestContainers.Test().ContainerTest0();
             //TestDare.Test().EnvelopeEncryptedAtomic();
 
-            TestPersist.Test().TestPersistenceStoreAdd();
+            TestPersist.Test().TestPersistenceStoreAll();
 
             //TestDare.Test().MessagePlaintextFixed();
             //TestDare.Test().MessagePlaintextVariable();

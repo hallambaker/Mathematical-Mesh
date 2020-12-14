@@ -1002,29 +1002,33 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The created envelope</returns>
         public static DareEnvelope Defer(
             ContainerWriterDeferred contextWrite,
-            ContentMeta contentInfo,
+            ContentMeta contentMeta,
             byte[] data,
             byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
 
-            //var cryptoStack = new CryptoStack(CryptoParametersContainer);
-            //contextWrite.StreamOpen(contentInfo, cryptoStack, cloaked, dataSequences);
+            contextWrite.ContainerHeader = new DareHeader() {
+                ContentMeta = contentMeta
+                };
 
-            //if (data != null) {
-            //    using var buffer = new MemoryStream(data.Length + 32);
-            //    var stream = contextWrite.ContainerHeader.BodyWriter(buffer);
-            //    stream.Write(data);
-            //    contextWrite.StreamClose();
-            //    return contextWrite.End(buffer.ToArray());
-            //    }
-            //else {
+            var cryptoStack = new CryptoStackEncode(
+                contextWrite.CryptoParametersContainer, contextWrite.ContainerHeader, cloaked, dataSequences);
+            contextWrite.StreamOpen(cryptoStack);
 
-            //    return contextWrite.End(null);
-            //    }
+            if (data != null) {
+                using var buffer = new MemoryStream(data.Length + 32);
+                var stream = contextWrite.ContainerHeader.BodyWriter(buffer);
+                stream.Write(data);
+                contextWrite.StreamClose();
+                return contextWrite.End(buffer.ToArray());
+                }
+            else {
+
+                return contextWrite.End(null);
+                }
 
 
-            // ugh... need to complete the trailer!!!
-            throw new NYI();
+
             }
 
 

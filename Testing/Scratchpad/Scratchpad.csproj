@@ -38,4 +38,8 @@
     <Exec Command="VSPreBuild" />
   </Target>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="VSPostBuild" />
+  </Target>
+
 </Project>

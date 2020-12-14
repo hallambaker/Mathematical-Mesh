@@ -29,5 +29,11 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
   </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="VSPreBuild" />
+  </Target>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="VSPostBuild" />
+  </Target>
 </Project>
