@@ -3,6 +3,8 @@ using Goedel.Mesh;
 using Goedel.Mesh.Server;
 using Goedel.Protocol;
 using Goedel.Utilities;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
 
 using System;
 using System.Collections.Generic;
@@ -98,11 +100,13 @@ namespace Goedel.Test.Core {
             TestRoot = Environment.GetEnvironmentVariable(TestPath);
 
 
-            TestRoot.AssertNotNull( EnvironmentVariableRequired.Throw, TestPath);
+            TestRoot.AssertNotNull(EnvironmentVariableRequired.Throw, TestPath);
 
             Directory.CreateDirectory(WorkingDirectory);
             Directory.SetCurrentDirectory(WorkingDirectory);
             }
+
+
 
 
         public TestEnvironmentCommon() {
@@ -114,6 +118,40 @@ namespace Goedel.Test.Core {
             }
 
         public string MachinePath(string machineName) => System.IO.Path.Combine(Path, machineName);
+
+
+        public static KeyCollection MakeKeyCollection() {
+            var testEnvironment = new TestEnvironmentCommon();
+            //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
+            return new KeyCollectionTestEnv(testEnvironment.Path);
+            }
+
+        public static DarePolicy MakePolicy(
+                CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
+                CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) =>
+            MakePolicy(out _, out _, signId, encryptId);
+        public static DarePolicy MakePolicy(
+            out KeyPair signKey, out KeyPair encryptKey,
+            CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
+            CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) {
+
+            encryptKey = null;
+            signKey = null;
+
+            var keyCollection = MakeKeyCollection();
+
+
+            if (encryptId != CryptoAlgorithmId.NULL) {
+                encryptKey = KeyPair.Factory(encryptId,
+                        KeySecurity.Exportable, keyCollection, keyUses: KeyUses.Encrypt);
+                }
+            if (signId != CryptoAlgorithmId.NULL) {
+                signKey = KeyPair.Factory(encryptId,
+                        KeySecurity.Exportable, keyCollection, keyUses: KeyUses.Sign);
+                }
+
+            return new DarePolicy(keyCollection, signKey, encryptKey);
+            }
 
 
         }

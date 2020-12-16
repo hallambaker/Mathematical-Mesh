@@ -28,13 +28,23 @@ namespace Scratchpad {
             Cryptography.Initialize();
 
 
-            //var _ = Goedel.Mesh.Client.HostCatalogItem.Initialize;
-            //_ = Goedel.Mesh.MeshProtocol.Initialize;
-            //_ = Goedel.Mesh.MeshItem.Initialize;
-            //_ = Goedel.Mesh.Server.CatalogItem.Initialize;
-            //_ = Goedel.XUnit.TestItem.Initialize;
 
-            //TestContainers.Test().ContainerTest0();
+            TestService.Test().MeshServiceEncryptCredential();
+            TestService.Test().CheckPinMessageSigned();
+            TestService.Test().CheckPinMessageEncrypted();
+            
+            ShellTests.Test().TestArchive();
+            ShellTests.Test().TestLog();
+
+            Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
+            Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
+            Goedel.XUnit.MakeSiteDocs.Test().DecodeSecondDevice();
+            Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
+            Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+            Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+            Goedel.XUnit.MakeSiteDocs.Test().SyncSecondDevice();
+
+
             //TestContainers.Test().ContainerTest1();
             //TestContainers.Test().ContainerTest10();
 
@@ -51,7 +61,7 @@ namespace Scratchpad {
             //TestContainers.Test().ContainerTest0();
             //TestDare.Test().EnvelopeEncryptedAtomic();
 
-            TestService.Test().MeshServiceFull();
+            //TestService.Test().MeshServiceFull();
 
             //TestDare.Test().MessagePlaintextFixed();
             //TestDare.Test().MessagePlaintextVariable();

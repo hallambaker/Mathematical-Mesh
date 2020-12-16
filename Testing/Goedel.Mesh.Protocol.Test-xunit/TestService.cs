@@ -572,6 +572,13 @@ namespace Goedel.XUnit {
 
             }
 
+
+        [Fact]
+        public void CheckPinMessageSigned() => throw new NYI();
+        [Fact]
+        public void CheckPinMessageEncrypted() => throw new NYI();
+
+
         #region // helper routines
 
         static void ReportDevices(ContextUser contextUser) {

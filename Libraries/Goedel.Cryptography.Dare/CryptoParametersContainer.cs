@@ -40,6 +40,7 @@ namespace Goedel.Cryptography.Dare {
                 case ContainerType.Chain:
                 case ContainerType.Merkle: {
                     DigestId = digest != null ? digest.FromJoseID() : CryptoID.DefaultDigestId;
+                    DigestId = DigestId == CryptoAlgorithmId.NULL ? CryptoID.DefaultDigestId : DigestId;
                     break;
                     }
                 default: {

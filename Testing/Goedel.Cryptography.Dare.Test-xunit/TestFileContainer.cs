@@ -2,6 +2,7 @@
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Test;
+using Goedel.Test.Core;
 using Goedel.Utilities;
 
 using System;
@@ -15,6 +16,10 @@ namespace Goedel.XUnit {
     /// Test routines for file containers
     /// </summary>
     public partial class TestDareArchive {
+
+
+
+
         public static TestDareArchive Test() => new TestDareArchive();
         /// <summary>
         /// Test a single plaintext singleton containers.
@@ -22,8 +27,9 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestFileContainer1() {
             var bytes = CreateBytes(100);
+            var policy = TestEnvironmentCommon.MakePolicy();
 
-            ReadWriteContainer("TestFilePlaintext_100", bytes, null);
+            ReadWriteContainer("TestFilePlaintext_100", bytes, policy);
             }
 
 
@@ -33,7 +39,9 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestFileContainer16() {
             byte[] bytes = new byte[0];
-            ReadWriteContainer("TestFilePlaintext_0", bytes, null);
+
+            var policy = TestEnvironmentCommon.MakePolicy();
+            ReadWriteContainer("TestFilePlaintext_0", bytes, policy);
 
             int length = 1;
             for (var i = 1; i < 16; i++) {
@@ -53,12 +61,11 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestFileContainerEncrypted1() {
-            var recipients = new List<string> { "Alice@example.com" };
-            var cryptoParameters = new CryptoParametersTest(
-                        recipients: recipients);
+
+            var policy = TestEnvironmentCommon.MakePolicy(encryptId:CryptoAlgorithmId.X448);
 
             var Bytes = CreateBytes(100);
-            ReadWriteContainer("TestFileEncrypted_100", Bytes, null);
+            ReadWriteContainer("TestFileEncrypted_100", Bytes, policy);
             }
 
 
@@ -67,12 +74,10 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestFileContainerEncrypted16() {
-            var recipients = new List<string> { "Alice@example.com" };
-            var cryptoParameters = new CryptoParametersTest(
-                        recipients: recipients);
+            var policy = TestEnvironmentCommon.MakePolicy(encryptId: CryptoAlgorithmId.X448);
 
             byte[] bytes = new byte[0];
-            ReadWriteContainer("TestFileEncrypted_0", bytes, null);
+            ReadWriteContainer("TestFileEncrypted_0", bytes, policy);
 
             int length = 1;
             for (var i = 1; i < 16; i++) {
@@ -106,10 +111,8 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestArchiveEncrypted10Bulk() {
-            var recipients = new List<string> { "Alice@example.com" };
-            var cryptoParameters = new CryptoParametersTest(
-                        recipients: recipients);
-            ReadWriteArchive("TestArchive_", 10, null, false);
+            var policy = TestEnvironmentCommon.MakePolicy(encryptId: CryptoAlgorithmId.X448);
+            ReadWriteArchive("TestArchive_", 10, policy, false);
             }
 
         /// <summary>
@@ -117,10 +120,8 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestArchiveEncrypted10Individual() {
-            var recipients = new List<string> { "Alice@example.com" };
-            var cryptoParameters = new CryptoParametersTest(
-                        recipients: recipients);
-            ReadWriteArchive("TestArchive_", 10, null, true);
+            var policy = TestEnvironmentCommon.MakePolicy(encryptId: CryptoAlgorithmId.X448);
+            ReadWriteArchive("TestArchive_", 10, policy, true);
             }
 
         /// <summary>
@@ -128,15 +129,13 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestArchiveMulti() {
-            var recipients = new List<string> { "Alice@example.com" };
-            var cryptoParameters = new CryptoParametersTest(
-                        recipients: recipients);
+            var policy = TestEnvironmentCommon.MakePolicy(encryptId: CryptoAlgorithmId.X448);
             var entries = new int[] { 5, 15, 30, 100 };
 
             foreach (var entry in entries) {
                 ReadWriteArchive("TestArchive_", entry);
-                ReadWriteArchive("TestArchive_", entry, null, false);
-                ReadWriteArchive("TestArchive_", entry, null, true);
+                ReadWriteArchive("TestArchive_", entry, policy, false);
+                ReadWriteArchive("TestArchive_", entry, policy, true);
                 }
             }
 
@@ -144,28 +143,28 @@ namespace Goedel.XUnit {
 
         static byte[] CreateBytes(int length) => CryptoCatalog.GetBytes(length);
 
-        static void ReadWriteContainer(string fileName, byte[] testData, DarePolicy cryptoParameters = null) {
-            //CryptoParameters ??= new CryptoParameters();
+        static void ReadWriteContainer(string fileName, byte[] testData, DarePolicy policy = null) {
+            policy = policy ?? TestEnvironmentCommon.MakePolicy();
 
             // Create container
-            FileContainerWriter.File(fileName, cryptoParameters, testData, null);
+            FileContainerWriter.File(fileName, policy, testData, null);
 
             // Read Container
-            FileContainerReader.File(fileName, cryptoParameters.KeyLocate,
+            FileContainerReader.File(fileName, policy.KeyLocate,
                         out var ReadData, out var ContentMetaOut);
 
             // Check for equality
             ReadData.IsEqualTo(testData).TestTrue();
 
 
-            Container.VerifyPolicy(fileName);
+            Container.VerifyPolicy(fileName, policy.KeyLocate);
             }
 
 
         void ReadWriteArchive(string fileNameBase, int entries,
                     DarePolicy policy = null, bool independent = false) {
 
-            var cryptoParameters = new CryptoParameters();
+            policy = policy ?? TestEnvironmentCommon.MakePolicy();
 
             var testData = new byte[entries][];
             for (var i = 0; i < entries; i++) {
@@ -194,7 +193,7 @@ namespace Goedel.XUnit {
                     }
                 }
 
-            Container.VerifyPolicy(filename);
+            Container.VerifyPolicy(filename, policy.KeyLocate);
             }
 
 

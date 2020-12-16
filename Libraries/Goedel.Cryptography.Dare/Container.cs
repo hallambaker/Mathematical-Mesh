@@ -1007,7 +1007,9 @@ namespace Goedel.Cryptography.Dare {
             byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
 
+            var containerInfo = contextWrite.PrepareContainerInfo();
             contextWrite.ContainerHeader = new DareHeader() {
+                ContainerInfo = containerInfo,
                 ContentMeta = contentMeta
                 };
 
@@ -1089,7 +1091,106 @@ namespace Goedel.Cryptography.Dare {
         /// is in compliance with its specified policy.
         /// </summary>
         /// <param name="filename">The container to verify.</param>
-        public static void VerifyPolicy(string filename) => throw new NYI();
+        public static void VerifyPolicy(string filename, IKeyLocate keyLocate) {
+
+            var dictionary = new Dictionary<int, ContainerFrameIndex>();
+
+            // open the container
+            using var XContainer = Container.Open(filename, FileStatus.Read, keyLocate);
+
+            var darePolicy = XContainer.ContainerHeaderFirst.Policy;
+            ContainerFrameIndex lastFrame = null;
+
+            var record = 0;
+            // read each record in turn
+            foreach (var frameIndex in XContainer) {
+                record++;
+                Verify(XContainer, darePolicy, frameIndex, record, keyLocate, dictionary);
+                dictionary.Add(record, frameIndex);
+                lastFrame = frameIndex;
+                
+                }
+
+            VerifyFinal(XContainer, darePolicy, lastFrame);
+
+            }
+
+        static bool VerifyFinal(
+                Container container,
+                DarePolicy darePolicy,
+                ContainerFrameIndex frameIndex) {
+
+            // here perform policy checks on the very last frame.
+
+            return true;
+
+            }
+
+
+        static bool Verify(
+            Container container,
+            DarePolicy darePolicy,
+            ContainerFrameIndex frameIndex,
+            int record,
+
+            IKeyLocate keyCollection,
+            Dictionary<int, ContainerFrameIndex> dictionary) {
+
+            bool encrypt = true;
+            bool? keyExchange = null;
+
+            var header = frameIndex.Header;
+            header.AssertNotNull(ContainerDataCorrupt.Throw);
+
+            var containerInfo = header.ContainerInfo;
+            containerInfo.AssertNotNull(ContainerDataCorrupt.Throw);
+
+            switch (darePolicy?.Encryption) {
+                case DareConstants.PolicyEncryptionOnceTag: {
+                    keyExchange = (header.Index == 0);
+                    break;
+                    }
+                case DareConstants.PolicyEncryptionIsolatedTag: {
+                    keyExchange = true;
+                    break;
+                    }
+
+                case DareConstants.PolicyEncryptionNoneTag: {
+                    encrypt = false;
+                    break;
+                    }
+                case DareConstants.PolicyEncryptionSessionTag: {
+                    keyExchange = null;
+                    break;
+                    }
+                default: {
+                    encrypt = false;
+                    break;
+                    }
+                }
+
+            // check frame data
+            (containerInfo.Index == record).AssertTrue(ContainerDataCorrupt.Throw);
+
+            //TreePosition
+            //ExchangePosition
+            //IndexPosition
+
+
+            // check payload digest (if present)
+
+
+
+            // check compliance with encryption policy
+            (frameIndex.IsEncrypted == encrypt).AssertTrue(ContainerDataCorrupt.Throw);
+            (keyExchange == null || keyExchange == frameIndex.KeyExchange).AssertTrue(ContainerDataCorrupt.Throw);
+
+            // check compliance with authentication policy
+
+
+
+            return true;
+            }
 
 
         /// <summary>

@@ -227,7 +227,8 @@ namespace Goedel.Mesh.Client {
         public static void CreateDirectory(
                     MeshHost meshHost, 
                     ProfileUser profileUser,
-                    ActivationAccount activationAccount) {
+                    ActivationAccount activationAccount,
+                    IKeyCollection keyLocate) {
             var StoresDirectory = ContextUser.GetStoresDirectory(meshHost, profileUser);
             Directory.CreateDirectory(StoresDirectory);
 
@@ -241,7 +242,7 @@ namespace Goedel.Mesh.Client {
                     var factory = entry.Value;
                     var policy = activationAccount.InitializeStore(storeName);
 
-                    using var store = factory(StoresDirectory, storeName, null, policy);
+                    using var store = factory(StoresDirectory, storeName, null, policy, keyCollection: keyLocate);
                     }
                 }
             foreach (var entry in StaticSpoolDelegates) {

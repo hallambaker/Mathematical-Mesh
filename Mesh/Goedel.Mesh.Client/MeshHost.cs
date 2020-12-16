@@ -214,7 +214,7 @@ namespace Goedel.Mesh.Client {
 
             // Generate the initial seed for the account if not already specified.
             accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
-            Screen.WriteLine($"***** Secret Seed = {accountSeed.PrivateValue}");
+            //Screen.WriteLine($"***** Secret Seed = {accountSeed.PrivateValue}");
 
             // Generate a device profile if needed
             var persistDevice = profileDevice == null;
@@ -237,7 +237,7 @@ namespace Goedel.Mesh.Client {
             profileDevice.Validate();
 
             // Create the account directory.
-            ContextUser.CreateDirectory(this, profileUser, activationRoot);
+            ContextUser.CreateDirectory(this, profileUser, activationRoot, KeyCollection);
 
 
             rights ??= new List<string> {

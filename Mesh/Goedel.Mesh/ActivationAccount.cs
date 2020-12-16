@@ -504,10 +504,10 @@ namespace Goedel.Mesh {
 
             DictionaryStoreEncryptionKey.Add(storeName, encryptionKey);
 
-            var cryptoParameters = new CryptoParameters(recipient: encryptionKey);
+            // here we have to build the policy for the store. This will be to encrypt under the store key
 
-            throw new NYI();
-            //return cryptoParameters;
+            var policy = new DarePolicy(KeyCollection, recipient: encryptionKey);
+            return policy;
             }
 
         /// <summary>
@@ -531,12 +531,12 @@ namespace Goedel.Mesh {
 
 
                 }
-
-
+            var policy = new DarePolicy(KeyCollection, recipient: encryptionKey);
+            return policy;
             //return new CryptoParameters(KeyCollection, recipient: encryptionKey);
 
 
-            throw new NYI();
+            //throw new NYI();
             }
 
 

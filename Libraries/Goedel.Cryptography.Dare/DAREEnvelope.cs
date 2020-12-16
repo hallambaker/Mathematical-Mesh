@@ -133,7 +133,9 @@ namespace Goedel.Cryptography.Dare {
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null   
                 ) {
-            Header = new DareHeader();
+            Header = new DareHeader() {
+                ContentMeta= contentMeta
+                };
             var _ = new CryptoStackEncode(cryptoParameters, Header, cloaked, dataSequences);
             Body = Header.EnhanceBody(plaintext, out var trailer);
             Trailer = trailer;

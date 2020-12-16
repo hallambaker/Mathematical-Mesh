@@ -1147,7 +1147,7 @@
             <param name="profileUser">The profile.</param>
             <returns>Path to the directory containing the profile stores.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser,Goedel.Mesh.ActivationAccount)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Create the stores directory and initialize catalogs.
             </summary>

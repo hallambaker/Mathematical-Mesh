@@ -98,6 +98,13 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+        public ContainerInfo PrepareContainerInfo() {
+            return new ContainerInfo() {
+                Index = (int)frameCount++
+                };
+            }
+
+
         /// <summary>
         /// Open a write stream
         /// </summary>
@@ -106,19 +113,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cloaked"></param>
         /// <param name="dataSequences"></param>
         public void StreamOpen(
-
                     CryptoStack cryptoStack) {
-
-            var containerInfo = new ContainerInfo() {
-                Index = (int)frameCount++
-                };
-
-            ContainerHeader.ContainerInfo = containerInfo;
-
             Container.PrepareFrame(this);
-
             DareTrailer = null;
-
             return;
             }
 
