@@ -23,60 +23,28 @@ namespace Scratchpad {
 
     partial class Program {
         static void Main() {
-            Console.WriteLine("Hello World");
-
             Cryptography.Initialize();
 
 
-
+            // 
             TestService.Test().MeshServiceEncryptCredential();
-            TestService.Test().CheckPinMessageSigned();
-            TestService.Test().CheckPinMessageEncrypted();
+
+
+
+            //TestService.Test().CheckPinMessageSigned();
+            //TestService.Test().CheckPinMessageEncrypted();
             
-            ShellTests.Test().TestArchive();
-            ShellTests.Test().TestLog();
-
-            Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
-            Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
-            Goedel.XUnit.MakeSiteDocs.Test().DecodeSecondDevice();
-            Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
-            Goedel.XUnit.MakeSiteDocs.Test().FullTest();
-            Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
-            Goedel.XUnit.MakeSiteDocs.Test().SyncSecondDevice();
-
-
-            //TestContainers.Test().ContainerTest1();
-            //TestContainers.Test().ContainerTest10();
-
-            //TestContainers.Test().ContainerTestEncrypted();
-
-            // This is failing because the policy isn't being read back.
-            //TestContainers.Test().ContainerSessionPolicy();
-            //TestContainers.Test().ContainerTestEncryptedItem();
-            //TestContainers.Test().ContainerTestSigned();
-
-
-            // Failing on plaintext now... Encryption algorithm is default, should be NULL
-
-            //TestContainers.Test().ContainerTest0();
-            //TestDare.Test().EnvelopeEncryptedAtomic();
-
-            //TestService.Test().MeshServiceFull();
-
-            //TestDare.Test().MessagePlaintextFixed();
-            //TestDare.Test().MessagePlaintextVariable();
-            //ShellTests.Test().TestFilePlain();
             //ShellTests.Test().TestArchive();
             //ShellTests.Test().TestLog();
 
-
-            //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
-
-            //Goedel.XUnit.MakeSiteDocs.Test().DecodeSecondDevice();
-            //Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
             //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
-
+            //Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
+            //Goedel.XUnit.MakeSiteDocs.Test().DecodeSecondDevice();
+            //Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
+            //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
             //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+            //Goedel.XUnit.MakeSiteDocs.Test().SyncSecondDevice();
+
 
             }
 

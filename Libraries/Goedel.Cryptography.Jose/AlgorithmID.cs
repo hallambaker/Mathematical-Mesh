@@ -177,6 +177,35 @@ namespace Goedel.Cryptography.Jose {
             }
 
         /// <summary>
+        /// Convert a case sensitive JOSE name to an identifier.
+        /// </summary>
+        /// <param name="joseID">Jose Name</param>
+        /// <returns>Identifier</returns>
+        public static CryptoAlgorithmId FromJoseIDEncryption(this string joseID, bool force = false) =>
+            joseID switch {
+                null => force ? CryptoID.DefaultEncryptionId : CryptoAlgorithmId.NULL,
+                "" => force ? CryptoID.DefaultEncryptionId : CryptoAlgorithmId.NULL,
+                "none" => force ? CryptoID.DefaultEncryptionId : CryptoAlgorithmId.NULL,
+                "default" => CryptoID.DefaultEncryptionId,
+                _ => FromJoseID (joseID)
+                };
+
+        /// <summary>
+        /// Convert a case sensitive JOSE name to an identifier.
+        /// </summary>
+        /// <param name="joseID">Jose Name</param>
+        /// <returns>Identifier</returns>
+        public static CryptoAlgorithmId FromJoseIDDigest(this string joseID, bool force=false) =>
+            joseID switch {
+                null => force ? CryptoID.DefaultDigestId : CryptoAlgorithmId.NULL,
+                "" => force ? CryptoID.DefaultDigestId : CryptoAlgorithmId.NULL,
+                "none" => force ? CryptoID.DefaultDigestId : CryptoAlgorithmId.NULL,
+                "default" => CryptoID.DefaultDigestId,
+                _ => FromJoseID(joseID)
+                };
+
+
+        /// <summary>
         /// Convert a case insensitive algorithm name to an identifier.
         /// </summary>
         /// <param name="uncasedID">Jose Name</param>

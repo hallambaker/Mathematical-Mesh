@@ -39,12 +39,11 @@ namespace Goedel.Cryptography.Dare {
                 case ContainerType.Digest:
                 case ContainerType.Chain:
                 case ContainerType.Merkle: {
-                    DigestId = digest != null ? digest.FromJoseID() : CryptoID.DefaultDigestId;
-                    DigestId = DigestId == CryptoAlgorithmId.NULL ? CryptoID.DefaultDigestId : DigestId;
+                    DigestId = digest.FromJoseIDDigest(true);
                     break;
                     }
                 default: {
-                    DigestId = digest != null ? digest.FromJoseID() : CryptoAlgorithmId.NULL;
+                    DigestId = digest.FromJoseIDDigest(false);
                     break;
                     }
                 }
@@ -66,8 +65,7 @@ namespace Goedel.Cryptography.Dare {
                 EncryptId = CryptoAlgorithmId.NULL;
                 }
             else {
-                EncryptId = policy.EncryptionAlgorithm == null ? CryptoID.DefaultEncryptionId :
-                    policy.EncryptionAlgorithm.FromJoseID();
+                EncryptId = digest.FromJoseIDEncryption(true);
                 if (policy.EncryptKeys != null) {
                     EncryptionKeys = new List<CryptoKey>();
                     foreach (var key in policy.EncryptKeys) {

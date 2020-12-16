@@ -68,7 +68,22 @@ namespace Goedel.Cryptography {
             algorithmID == CryptoAlgorithmId.Default ? CryptoID.DefaultSignatureId : algorithmID;
 
 
+        /// <summary>
+        /// Apply the default signature algorithm specified in <see cref="CryptoID.DefaultExchangeId"/> 
+        /// if required.
+        /// </summary>
+        /// <param name="algorithmID">The algorithm identifier to be defaulted.</param>
+        /// <returns>If <paramref name="algorithmID"/> is <see cref="CryptoAlgorithmId.Default"/>
+        /// returns the value <see cref="CryptoID.DefaultExchangeId"/>, 
+        /// otherwise returns <paramref name="algorithmID"/>.</returns>
+        public static CryptoAlgorithmId ForceExchange(this CryptoAlgorithmId algorithmID) =>
+            algorithmID switch {
+                CryptoAlgorithmId.NULL => CryptoID.DefaultExchangeId,
+                CryptoAlgorithmId.Default => CryptoID.DefaultExchangeId,
+                _ => algorithmID
+                };
 
+            //algorithmID == CryptoAlgorithmId.Default ? CryptoID.DefaultExchangeId : algorithmID;
 
 
         /// <summary>
