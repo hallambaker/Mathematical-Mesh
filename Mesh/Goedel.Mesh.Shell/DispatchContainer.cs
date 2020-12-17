@@ -1,12 +1,47 @@
-﻿using Goedel.Cryptography.Dare;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using Goedel.Mesh.Client;
 using Goedel.IO;
 using Goedel.Utilities;
 
+using System;
+using System.Collections.Generic;
 using System.IO;
+
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
-        static DarePolicy GetPolicy(Goedel.Command.Dispatch Options) => throw new NYI();
+        static DarePolicy GetPolicy(IKeyLocate keyCollection, IEncodeOptions Options) {
+            List<string> recipients = null;
+            List<string> signers = null;
+
+
+            // ToDo: enable specification of multiple recipients in COMMAND
+            if (Options.Encrypt != null) {
+                if (Options.Encrypt.Value != null) {
+                    recipients = new List<string> {
+                        Options.Encrypt.Value
+                        };
+                    }
+
+                }
+
+            // ToDo: enable specification of multiple signers in COMMAND
+            if (Options.Sign != null) {
+                if (Options.Sign.Value != null) {
+                    signers = new List<string> {
+                        Options.Sign.Value
+                        };
+                    }
+                }
+
+
+            var policy = new DarePolicy(keyCollection,
+                signers, recipients);
+
+            return policy;
+            }
 
         /// <summary>
         /// Dispatch method
@@ -16,7 +51,8 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult DareLog(DareLog options) {
             var outputFile = options.Container.Value;
 
-            var policy = GetPolicy(options);
+            var keyLocate = GetKeyCollection(options);
+            var policy = GetPolicy(keyLocate, options);
 
 
             using (var Writer = new FileContainerWriter(
@@ -37,7 +73,8 @@ namespace Goedel.Mesh.Shell {
             var inputFile = options.Input.Value;
             var outputFile = options.Container.Value;
 
-            var policy = GetPolicy(options);
+            var keyLocate = GetKeyCollection(options);
+            var policy = GetPolicy(keyLocate, options);
 
             // should create an archive class as a subset of store.
 

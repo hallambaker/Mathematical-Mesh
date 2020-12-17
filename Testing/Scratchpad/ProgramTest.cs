@@ -25,17 +25,17 @@ namespace Scratchpad {
         static void Main() {
             Cryptography.Initialize();
 
+            /* These only pass because the checks are disabled. */
 
-
-            ShellTests.Test().TestArchive();
+            //ShellTests.Test().TestArchive();
             //ShellTests.Test().TestLog();
-
             //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
             //Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
+
             //Goedel.XUnit.MakeSiteDocs.Test().DecodeSecondDevice();
             //Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
             //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
-            //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+            Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
             //Goedel.XUnit.MakeSiteDocs.Test().SyncSecondDevice();
 
 

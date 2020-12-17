@@ -211,11 +211,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceDelete(DeviceDelete options) {
-            var contextAccount = GetContextUser(options);
+            using var contextAccount = GetContextUser(options);
+            var deviceID = options.DeviceID.Value;
+
+            contextAccount.DeleteDevice(deviceID);
+
             var result = new Result() {
 
                 };
-            throw new NYI();
+            return result;
             }
 
         /// <summary>

@@ -6641,13 +6641,10 @@
         </member>
         <member name="T:Goedel.Mesh.ResultAcknowledgeConnection">
             <summary>
-            Report successful handling of a <see cref="F:Goedel.Mesh.ResultAcknowledgeConnection.AcknowledgeConnection"/> message.
+            Report successful handling of a <see cref="P:Goedel.Mesh.ResultAcknowledgeConnection.AcknowledgeConnection"/> message.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.ResultAcknowledgeConnection.AcknowledgeConnection">
-            <summary>The message that caused this result</summary>
-        </member>
-        <member name="P:Goedel.Mesh.ResultAcknowledgeConnection.RequestMessage">
+        <member name="P:Goedel.Mesh.ResultAcknowledgeConnection.AcknowledgeConnection">
             <summary>The message that caused this result</summary>
         </member>
         <member name="F:Goedel.Mesh.ResultAcknowledgeConnection.TransactResponse">

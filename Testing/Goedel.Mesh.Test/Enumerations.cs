@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Goedel.Mesh.Test {
+
+    
+
+
     public enum ContentEnhancement {
 
         // *** Encryption mode

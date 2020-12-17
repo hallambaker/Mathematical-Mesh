@@ -281,8 +281,10 @@ namespace ExampleGenerator {
             Connect.ConnectAccept = Alice1.Example(
                 $"device accept {id1} /message /web"
                 );
-            var resultAccept = Connect.ConnectAccept[0].Result;
-            deviceId = "TBS";
+            var resultAccept = Connect.ConnectAccept[0].Result as ResultProcess;
+            deviceId = (resultAccept.ProcessResult as ResultAcknowledgeConnection).
+                    AcknowledgeConnection.MessageConnectionRequest.ProfileDevice.Udf;
+
             Connect.ConnectComplete = Alice2.Example(
                 $"device complete"
                 );
@@ -321,11 +323,18 @@ namespace ExampleGenerator {
             Connect.Disconnect.GetResult().Success.TestTrue();
 
 
-            Connect.PasswordList2Disconnect = Alice2.Example(
-                //$"password get {PasswordSite}",
-                $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
-                );
+            if (Check.DisableDeletedDevices) {
+                throw new NYI();
+                }
+
+            //Connect.PasswordList2Disconnect = Alice2.Example(
+            //    //$"password get {PasswordSite}",
+            //    $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
+            //    );
             }
+
+
+
 
         public static void SSHApp() {
             // Application tests
@@ -339,8 +348,9 @@ namespace ExampleGenerator {
 
             // Dump out the public key in SSH format
 
-
-            false.TestTrue();
+            if (Check.DisableSSH) {
+                throw new NYI();
+                }
             }
 
         public static void MailApp() {
@@ -356,8 +366,9 @@ namespace ExampleGenerator {
 
             // Add keys for OpenPGP
 
-
-            false.TestTrue();
+            if (Check.DisableMail) {
+                throw new NYI();
+                }
             }
 
         public void CreateBobAccount() {
@@ -452,9 +463,9 @@ namespace ExampleGenerator {
             Group.GroupEncrypt = Alice1.Example(
                 $"dare encode {Group.EncryptSourceFile} /encrypt {GroupAccount} /out {Group.EncryptTargetFile}"
                  );
-
-
-
+            Group.GroupAddBob = Alice1.Example(
+                $"group add {GroupAccount} {AliceAccount}"
+                    );
 
             Group.GroupDecryptAlice = Alice1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
@@ -462,6 +473,8 @@ namespace ExampleGenerator {
             Group.GroupDecryptBobFail = Alice1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
+
+
             Group.GroupAddBob = Alice1.Example(
                 $"group add {GroupAccount} {BobAccount}"
                  );

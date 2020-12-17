@@ -152,6 +152,7 @@ namespace Goedel.XUnit {
             ServiceConnect();
             CreateAliceAccount();
             CreateBobAccount();
+            ContactExchange();
 
             GroupOperations();
             }

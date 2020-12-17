@@ -203,10 +203,7 @@ namespace Goedel.Mesh {
     public class ResultAcknowledgeConnection : ProcessResult {
 
         /// <summary>The message that caused this result</summary>
-        public AcknowledgeConnection AcknowledgeConnection;
-
-        /// <summary>The message that caused this result</summary>
-        public override Message RequestMessage => AcknowledgeConnection;
+        public AcknowledgeConnection AcknowledgeConnection => RequestMessage as AcknowledgeConnection;
 
         /// <summary>Result of the transaction</summary>
         public TransactResponse TransactResponse;
