@@ -70,6 +70,9 @@ namespace Goedel.Mesh {
         ///<summary>The account administrator signature key bound to an administrator device.</summary>
         public KeyPair AdministratorSignatureKey { get; private set; }
 
+        ///<summary>The account administrator signature key bound to an administrator device.</summary>
+        public KeyPair AdministratorEncryptionKey { get; private set; }
+
         ///<summary>The account encryption key under which inbound messages are encrypted.</summary>
         public KeyPair AccountEncryptionKey { get; private set; }
 
@@ -122,7 +125,10 @@ namespace Goedel.Mesh {
                 MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Profile,
                 keyCollection, KeySecurity.Exportable);
             AdministratorSignatureKey = secretSeed.GenerateContributionKeyPair(
-                MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Profile,
+                MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.AdminSign,
+                keyCollection, KeySecurity.Exportable);
+            AdministratorEncryptionKey = secretSeed.GenerateContributionKeyPair(
+                MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.AdminEncrypt,
                 keyCollection, KeySecurity.Exportable);
             AccountEncryptionKey = secretSeed.GenerateContributionKeyPair(
                 MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Encrypt,

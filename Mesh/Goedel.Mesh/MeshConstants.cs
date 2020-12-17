@@ -78,8 +78,10 @@ namespace Goedel.Mesh {
         Authenticate,
         ///<summary>Profile Signature key</summary>
         Profile,
+        ///<summary>Administrator Encryption key</summary>
+        AdminEncrypt,
         ///<summary>Administrator Signature key</summary>
-        Administrator,
+        AdminSign,
         ///<summary>Escrow Encryption key</summary>
         Escrow        }
 
@@ -422,8 +424,10 @@ namespace Goedel.Mesh {
         public const string  MeshKeyOperationAuthenticateTag = "Authenticate";
         ///<summary>Jose enumeration tag for MeshKeyOperation.Profile</summary>
         public const string  MeshKeyOperationProfileTag = "Profile";
-        ///<summary>Jose enumeration tag for MeshKeyOperation.Administrator</summary>
-        public const string  MeshKeyOperationAdministratorTag = "Administrator";
+        ///<summary>Jose enumeration tag for MeshKeyOperation.AdminEncrypt</summary>
+        public const string  MeshKeyOperationAdminEncryptTag = "AdminEncrypt";
+        ///<summary>Jose enumeration tag for MeshKeyOperation.AdminSign</summary>
+        public const string  MeshKeyOperationAdminSignTag = "AdminSign";
         ///<summary>Jose enumeration tag for MeshKeyOperation.Escrow</summary>
         public const string  MeshKeyOperationEscrowTag = "Escrow";
 
@@ -439,7 +443,8 @@ namespace Goedel.Mesh {
                 MeshKeyOperationSignTag => MeshKeyOperation.Sign,
                 MeshKeyOperationAuthenticateTag => MeshKeyOperation.Authenticate,
                 MeshKeyOperationProfileTag => MeshKeyOperation.Profile,
-                MeshKeyOperationAdministratorTag => MeshKeyOperation.Administrator,
+                MeshKeyOperationAdminEncryptTag => MeshKeyOperation.AdminEncrypt,
+                MeshKeyOperationAdminSignTag => MeshKeyOperation.AdminSign,
                 MeshKeyOperationEscrowTag => MeshKeyOperation.Escrow,
                 _ => MeshKeyOperation.Unknown
                 };
@@ -456,7 +461,8 @@ namespace Goedel.Mesh {
                 MeshKeyOperation.Sign => MeshKeyOperationSignTag,
                 MeshKeyOperation.Authenticate => MeshKeyOperationAuthenticateTag,
                 MeshKeyOperation.Profile => MeshKeyOperationProfileTag,
-                MeshKeyOperation.Administrator => MeshKeyOperationAdministratorTag,
+                MeshKeyOperation.AdminEncrypt => MeshKeyOperationAdminEncryptTag,
+                MeshKeyOperation.AdminSign => MeshKeyOperationAdminSignTag,
                 MeshKeyOperation.Escrow => MeshKeyOperationEscrowTag,
                 _ => null
                 };

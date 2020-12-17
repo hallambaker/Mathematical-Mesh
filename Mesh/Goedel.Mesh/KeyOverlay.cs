@@ -64,6 +64,8 @@ namespace Goedel.Mesh {
                                     MeshKeyOperation.Escrow => secretSeed.AlgorithmEncryptID,
                                     MeshKeyOperation.Sign => secretSeed.AlgorithmSignID,
                                     MeshKeyOperation.Profile => secretSeed.AlgorithmSignID,
+                                    MeshKeyOperation.AdminEncrypt => secretSeed.AlgorithmEncryptID,
+                                    MeshKeyOperation.AdminSign => secretSeed.AlgorithmSignID,
                                     _ => secretSeed.AlgorithmSignID
                                     };
 
@@ -80,6 +82,8 @@ namespace Goedel.Mesh {
                 MeshKeyOperation.Escrow => KeyUses.Encrypt,
                 MeshKeyOperation.Sign => KeyUses.Sign,
                 MeshKeyOperation.Profile => KeyUses.Sign,
+                MeshKeyOperation.AdminEncrypt => KeyUses.Encrypt,
+                MeshKeyOperation.AdminSign => KeyUses.Sign,
                 _ => KeyUses.Any
                 };
 

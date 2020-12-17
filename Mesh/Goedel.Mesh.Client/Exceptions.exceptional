@@ -6,6 +6,10 @@ Namespace Goedel.Mesh.Client
 		Description
 			|An internal assertion check failed.
 
+	Exception DeviceSeedNotFound
+		Console "The device seed could not be found."
+
+
 	Exception AddressNotSupported
 		Console "The profile does not have a supported address format."
 

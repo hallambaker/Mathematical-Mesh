@@ -58,10 +58,15 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogedMachine">The pending connection description.</param>
         public ContextMeshPending(MeshHost meshHost, CatalogedMachine catalogedMachine) :
                     base(meshHost, catalogedMachine) {
+
+            //DeviceKeySeed should never be null
+            DeviceKeySeed = KeyCollection.LocatePrivateKey(ProfileDevice.Udf) as PrivateKeyUDF;
+            DeviceKeySeed.AssertNotNull(DeviceSeedNotFound.Throw);
+
             keyEncryption = DeviceKeySeed?.GenerateContributionKeyPair(
-                        MeshKeyType.Base, MeshActor.Device, MeshKeyOperation.Authenticate);
-            keyAuthentication = DeviceKeySeed?.GenerateContributionKeyPair(
                         MeshKeyType.Base, MeshActor.Device, MeshKeyOperation.Encrypt);
+            keyAuthentication = DeviceKeySeed?.GenerateContributionKeyPair(
+                        MeshKeyType.Base, MeshActor.Device, MeshKeyOperation.Authenticate);
             KeyCollection.Add(keyEncryption);
             KeyCollection.Add(keyAuthentication);
             }
@@ -177,8 +182,6 @@ namespace Goedel.Mesh.Client {
         /// <returns>If successfull returns an ContextAccountService instance to allow access
         /// to the connected account. Otherwise, a null value is returned.</returns>
         public ContextUser Complete() {
-
-            //"The catalog contents are not currently encrypted as they should be".TaskFunctionality();
 
             var completeRequest = new CompleteRequest() {
                 ResponseID = CatalogedPending.GetResponseID(),

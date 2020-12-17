@@ -832,7 +832,7 @@ namespace Goedel.Mesh.Client {
                 DeviceEncryption = profileDevice.BaseEncryption,
                 DeviceAuthentication = profileDevice.BaseEncryption
                 };
-            connectionDevice.Envelope(KeyAdministrator);
+            connectionDevice.Envelope(KeyAdministratorSign);
 
 
             // Convert the enveloped profile device to a binary field and take the envelope
@@ -866,6 +866,7 @@ namespace Goedel.Mesh.Client {
 
             // Decode the Profile Device
             var profileDevice = ProfileDevice.Decode(envelopedProfileDevice);
+            var deviceEncrypt = profileDevice.BaseEncryption.GetKeyPair();
 
             // Approve the request
             // Have to add in the Mesh profile here and Account Assertion
@@ -881,7 +882,7 @@ namespace Goedel.Mesh.Client {
 
             // Transactional update.
             var transact = TransactBegin();
-            transact.LocalMessage(respondConnection);
+            transact.LocalMessage(respondConnection, deviceEncrypt);
 
             var catalogDevice = transact.GetCatalogDevice();
             transact.CatalogUpdate(catalogDevice, cataloguedDevice);
@@ -1078,8 +1079,10 @@ namespace Goedel.Mesh.Client {
                 respondConnection.Result = MeshConstants.TransactionResultReject;
                 }
 
+            var deviceEncrypt = request.MessageConnectionRequest.ProfileDevice.BaseEncryption.GetKeyPair();
+
             transactRequest.InboundComplete(MessageStatus.Closed, request, respondConnection);
-            transactRequest.LocalMessage(respondConnection);
+            transactRequest.LocalMessage(respondConnection, deviceEncrypt);
 
             // Mark the pin code as having been used.
             if (messagePin != null) {
@@ -1288,7 +1291,7 @@ namespace Goedel.Mesh.Client {
                 pin, automatic, expire, AccountAddress, MeshConstants.MessagePINActionContact);
 
             using (var transactRequest = TransactBegin()) {
-                transactRequest.LocalMessage(messageConnectionPIN);
+                transactRequest.LocalMessage(messageConnectionPIN, KeyAccountEncryption);
                 var catalogPublication = transactRequest.GetCatalogPublication();
                 transactRequest.CatalogUpdate(catalogPublication, catalogedPublication);
                 Transact(transactRequest);
@@ -1330,7 +1333,7 @@ namespace Goedel.Mesh.Client {
                     var messagePin = GetPIN(MeshConstants.MessagePINActionContact, true,
                         128, register: false);
                     message.PIN = messagePin.Pin;
-                    transact.LocalMessage(messagePin);
+                    transact.LocalMessage(messagePin, KeyAccountEncryption);
                     }
 
                 // If a PIN value was specified in the request, use it to authenticate the response.

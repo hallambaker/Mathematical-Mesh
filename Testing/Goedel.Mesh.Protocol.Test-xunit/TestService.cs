@@ -107,7 +107,7 @@ namespace Goedel.XUnit {
                 transaction1.Transact();
 
 
-                VerifyContainerEncrypted(catalogCredential, profileAlice.AccountEncryptionKey);
+                VerifyStoreEncrypted(catalogCredential, profileAlice.AccountEncryptionKey);
                 catalogCredential.Dump();
                 }
 
@@ -122,7 +122,7 @@ namespace Goedel.XUnit {
             contextAccountAlice_2.Complete();
 
 
-
+            CheckPinMessageSignedEncrypted(contextAccountAlice_1_a);
             }
 
 
@@ -380,13 +380,13 @@ namespace Goedel.XUnit {
 
             // FAIL: create key shares 2
 
-            Xunit.Assert.Throws<NoMeshSecret>( 
-                ()=>contextAliceOriginal.Escrow(3, 2));
+            Xunit.Assert.Throws<NoMeshSecret>(
+                () => contextAliceOriginal.Escrow(3, 2));
 
             // Recover to new service
 
 
-            contextAliceOriginal.ProfileUser.Udf.TestEqual( recoveredAccount.ProfileUser.Udf);
+            contextAliceOriginal.ProfileUser.Udf.TestEqual(recoveredAccount.ProfileUser.Udf);
 
 
             }
@@ -395,7 +395,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshCreateAdmin() {
             var (context1, context2) = CreateConnectGrant("/admin");
-            CanAdmin(context2).TestTrue() ;
+            CanAdmin(context2).TestTrue();
             }
 
         [Fact]
@@ -452,7 +452,7 @@ namespace Goedel.XUnit {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
-            var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon, 
+            var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceBobAdmin, AccountBob, "main");
 
 
@@ -573,10 +573,12 @@ namespace Goedel.XUnit {
             }
 
 
-        [Fact]
-        public void CheckPinMessageSigned() => throw new NYI();
-        [Fact]
-        public void CheckPinMessageEncrypted() => throw new NYI();
+        static void CheckPinMessageSignedEncrypted(ContextUser contextUser) {
+
+            var spoolLocal = contextUser.GetStore(SpoolLocal.Label) as SpoolLocal;
+            VerifyStoreEncrypted(spoolLocal);
+            }
+
 
 
         #region // helper routines
@@ -613,19 +615,19 @@ namespace Goedel.XUnit {
 
             var profileuser = contextUser.ProfileUser;
             using (var transaction1 = contextUser.TransactBegin()) {
-                VerifyContainerEncrypted(transaction1.GetCatalogApplication(), 
+                VerifyStoreEncrypted(transaction1.GetCatalogApplication(), 
                                 profileuser.AccountEncryptionKey);
-                VerifyContainerEncrypted(transaction1.GetCatalogDevice(),
+                VerifyStoreEncrypted(transaction1.GetCatalogDevice(),
                                 profileuser.AccountEncryptionKey);
-                VerifyContainerEncrypted(transaction1.GetCatalogContact(),
+                VerifyStoreEncrypted(transaction1.GetCatalogContact(),
                                 profileuser.AccountEncryptionKey);
-                VerifyContainerEncrypted(transaction1.GetCatalogCredential(),
+                VerifyStoreEncrypted(transaction1.GetCatalogCredential(),
                                 profileuser.AccountEncryptionKey);
-                VerifyContainerEncrypted(transaction1.GetCatalogBookmark(),
+                VerifyStoreEncrypted(transaction1.GetCatalogBookmark(),
                                 profileuser.AccountEncryptionKey); 
-                VerifyContainerEncrypted(transaction1.GetCatalogCalendar(),
+                VerifyStoreEncrypted(transaction1.GetCatalogCalendar(),
                                 profileuser.AccountEncryptionKey);
-                VerifyContainerEncrypted(transaction1.GetCatalogNetwork(),
+                VerifyStoreEncrypted(transaction1.GetCatalogNetwork(),
                                 profileuser.AccountEncryptionKey);
                 }
 
@@ -633,13 +635,13 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        bool VerifyContainerEncrypted(
+        static bool VerifyStoreEncrypted(
                     Store container,
-                    KeyPair encryptionKey) =>
+                    KeyPair encryptionKey=null) =>
             VerifyContainerEncrypted(container.Container, encryptionKey);
 
         static bool VerifyContainerEncrypted(Goedel.Cryptography.Dare.Container container,
-                    KeyPair encryptionKey) {
+                    KeyPair encryptionKey=null) {
 
 
             foreach (var envelope in container) {

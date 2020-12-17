@@ -26,15 +26,8 @@ namespace Scratchpad {
             Cryptography.Initialize();
 
 
-            // 
-            TestService.Test().MeshServiceEncryptCredential();
 
-
-
-            //TestService.Test().CheckPinMessageSigned();
-            //TestService.Test().CheckPinMessageEncrypted();
-            
-            //ShellTests.Test().TestArchive();
+            ShellTests.Test().TestArchive();
             //ShellTests.Test().TestLog();
 
             //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();

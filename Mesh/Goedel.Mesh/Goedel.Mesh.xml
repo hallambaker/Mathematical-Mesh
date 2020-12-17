@@ -141,6 +141,9 @@
         <member name="P:Goedel.Mesh.ActivationAccount.AdministratorSignatureKey">
             <summary>The account administrator signature key bound to an administrator device.</summary>
         </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.AdministratorEncryptionKey">
+            <summary>The account administrator signature key bound to an administrator device.</summary>
+        </member>
         <member name="P:Goedel.Mesh.ActivationAccount.AccountEncryptionKey">
             <summary>The account encryption key under which inbound messages are encrypted.</summary>
         </member>
@@ -3842,8 +3845,11 @@
         <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationProfileTag">
             <summary>Jose enumeration tag for MeshKeyOperation.Profile</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationAdministratorTag">
-            <summary>Jose enumeration tag for MeshKeyOperation.Administrator</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationAdminEncryptTag">
+            <summary>Jose enumeration tag for MeshKeyOperation.AdminEncrypt</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationAdminSignTag">
+            <summary>Jose enumeration tag for MeshKeyOperation.AdminSign</summary>
         </member>
         <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationEscrowTag">
             <summary>Jose enumeration tag for MeshKeyOperation.Escrow</summary>
@@ -4956,7 +4962,10 @@
         <member name="F:Goedel.Mesh.MeshKeyOperation.Profile">
             <summary>Profile Signature key</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshKeyOperation.Administrator">
+        <member name="F:Goedel.Mesh.MeshKeyOperation.AdminEncrypt">
+            <summary>Administrator Encryption key</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyOperation.AdminSign">
             <summary>Administrator Signature key</summary>
         </member>
         <member name="F:Goedel.Mesh.MeshKeyOperation.Escrow">

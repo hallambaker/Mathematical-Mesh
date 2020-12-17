@@ -499,8 +499,11 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyProfile">
             <summary>The account profile key</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAdministrator">
-            <summary>The account profile key</summary>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAdministratorSign">
+            <summary>The administration signature key</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAdministratorEncrypt">
+            <summary>The administration signature key</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAccountSignature">
             <summary>The account encryption key </summary>
@@ -546,7 +549,7 @@
             </summary>
             <param name="activationAccount">The activation record.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean,Goedel.Cryptography.CryptoKey)">
             <summary>
             Create a PIN value of length <paramref name="length"/> bits valid for 
             <paramref name="validity"/> minutes.
@@ -1677,7 +1680,7 @@
             </summary>
             <param name="message">The message to append to the inbound spool.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.Transaction`1.LocalMessage(Goedel.Mesh.Message)">
+        <member name="M:Goedel.Mesh.Client.Transaction`1.LocalMessage(Goedel.Mesh.Message,Goedel.Cryptography.CryptoKey)">
             <summary>
             Add the message <paramref name="message"/> to the local pickup spool.
             local message.
@@ -1756,6 +1759,37 @@
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Client.Internal.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.DeviceSeedNotFound">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.DeviceSeedNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.DeviceSeedNotFound.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.DeviceSeedNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.DeviceSeedNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.Client.DeviceSeedNotFound.Throw">
             <summary>
             The public fatory delegate
             </summary>

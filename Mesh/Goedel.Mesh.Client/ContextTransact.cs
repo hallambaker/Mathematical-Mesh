@@ -136,7 +136,9 @@ namespace Goedel.Mesh.Client {
                 var message = new MessageComplete() {
                     References = transact.LocalReferences
                     };
-                transact.LocalMessage(message);
+                transact.LocalMessage(message, null);
+                // Hack: should completion messages be encrypted or not?
+
                 }
 
             var response = MeshClient.Transact(transactRequest);
@@ -411,9 +413,13 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="message">The message to append to the local spool.</param>
         public void LocalMessage(
-                Message message) {
+                Message message,
+                CryptoKey keyEncrypt) {
             TransactRequest.Local ??= new List<Enveloped<Message>>();
-            var envelope = message.Envelope(SignLocalMessage); 
+
+            //"Fix the encryption of local messages".TaskFunctionality(true);
+
+            var envelope = message.Envelope(SignLocalMessage, keyEncrypt); 
             envelope.JsonObject = message;
             TransactRequest.Local.Add(new Enveloped<Message>(envelope));
             }

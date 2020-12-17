@@ -77,14 +77,21 @@ namespace Goedel.Mesh.Client {
         public ActivationAccount ActivationAccount { get; protected set; }
         ///<summary>The account profile key</summary>
         protected KeyPair KeyProfile => ActivationAccount.ProfileSignatureKey;
-        ///<summary>The account profile key</summary>
-        protected KeyPair KeyAdministrator => ActivationAccount.AdministratorSignatureKey;
+        ///<summary>The administration signature key</summary>
+        protected KeyPair KeyAdministratorSign => ActivationAccount.AdministratorSignatureKey;
+        ///<summary>The administration signature key</summary>
+        protected KeyPair KeyAdministratorEncrypt => ActivationAccount.AdministratorEncryptionKey;
+
         ///<summary>The account encryption key </summary>
         protected KeyPair KeyAccountSignature => ActivationAccount.AccountSignatureKey;
         ///<summary>The account encryption key </summary>
         protected KeyPair KeyAccountEncryption => ActivationAccount.AccountEncryptionKey;
         ///<summary>The authentication key used to authenticate as the account.</summary>
-        protected KeyPair KeyAccountAuthentication => ActivationAccount?.AccountAuthenticationKey; 
+        protected KeyPair KeyAccountAuthentication => ActivationAccount?.AccountAuthenticationKey;
+
+
+        public KeyPair KeyAdministratorEncryption => ActivationAccount.AccountEncryptionKey;
+
         #endregion
         #region // Store definitions
         ///<summary>The directory containing the catalogs related to the account.</summary>
@@ -152,13 +159,7 @@ namespace Goedel.Mesh.Client {
 
         #endregion
 
-        #region // Activation of the context
 
-
-
-
-
-        #endregion
         #region // PIN code generation and use
         /// <summary>
         /// Create a PIN value of length <paramref name="length"/> bits valid for 
@@ -174,15 +175,16 @@ namespace Goedel.Mesh.Client {
         /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
         public MessagePin GetPIN(string action, bool automatic = true, 
                             int length = 80, long validity = MeshConstants.DayInTicks,
-                            bool register = true) {
+                            bool register = true, CryptoKey encryptKey = null) {
             var pin = UDF.AuthenticationKey(length);
             var expires = DateTime.Now.AddTicks(validity);
-
             var messagePin = new MessagePin(pin, automatic, expires, AccountAddress, action);
+
+            encryptKey ??= KeyAccountEncryption;
 
             if (register) {
                 var transactRequest = TransactBegin();
-                transactRequest.LocalMessage(messagePin);
+                transactRequest.LocalMessage(messagePin, encryptKey);
                 transactRequest.Transact();
                 }
             return messagePin;
