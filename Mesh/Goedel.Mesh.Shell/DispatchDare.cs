@@ -47,9 +47,10 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult DareDecode(DareDecode options) {
             var inputFile = options.Input.Value;
             var outputFile = options.Output.Value ?? Path.ChangeExtension(inputFile, ".xdare");
-            var keyLocate = GetKeyCollection(options);
+            //var keyLocate = GetKeyCollection(options);
 
-            var Length = DareEnvelope.Decode(inputFile, outputFile, keyCollection: keyLocate);
+            var contextAccount = GetContextUser(options);
+            var Length = DareEnvelope.Decode(inputFile, outputFile, keyCollection: contextAccount);
 
             return new ResultFile() {
                 TotalBytes = (int)Length

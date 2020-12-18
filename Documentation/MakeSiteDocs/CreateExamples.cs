@@ -464,7 +464,8 @@ namespace ExampleGenerator {
                 $"dare encode {Group.EncryptSourceFile} /encrypt {GroupAccount} /out {Group.EncryptTargetFile}"
                  );
             Group.GroupAddBob = Alice1.Example(
-                $"group add {GroupAccount} {AliceAccount}"
+                $"group add {GroupAccount} {AliceAccount}",
+                $"account sync /auto"
                     );
 
             Group.GroupDecryptAlice = Alice1.Example(

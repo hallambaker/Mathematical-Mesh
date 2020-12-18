@@ -155,17 +155,15 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Add <paramref name="capability"/> to the catalog, encrypting the data under
-        /// <paramref name="encryptionKey"/> if that turns out to be a good idea.
+        /// Add <paramref name="capability"/> to the catalog.
         /// </summary>
         /// <param name="capability">Capability to add.</param>
-        /// <param name="encryptionKey">Stub for possible encryption key entry.</param>
+
         public void Add(
-                    CryptographicCapability capability,
-                    CryptoKey encryptionKey = null
+                    CryptographicCapability capability
                     ) {
             var catalogedCapability = new CatalogedAccess(capability);
-            New(catalogedCapability, encryptionKey);
+            New(catalogedCapability);
             }
 
         /// <summary>

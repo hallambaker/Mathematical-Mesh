@@ -1106,7 +1106,7 @@
             </summary>
             <param name="dareMessage">The update to apply.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.New(`0,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.Catalog`1.New(`0)">
             <summary>
             Add <paramref name="catalogEntry"/> to the catalog as a new entry.
             </summary>
@@ -1295,13 +1295,11 @@
             generation capability for.</param>
             <returns>The key share generation capability if found, otherwise null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogAccess.Add(Goedel.Mesh.CryptographicCapability,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.CatalogAccess.Add(Goedel.Mesh.CryptographicCapability)">
             <summary>
-            Add <paramref name="capability"/> to the catalog, encrypting the data under
-            <paramref name="encryptionKey"/> if that turns out to be a good idea.
+            Add <paramref name="capability"/> to the catalog.
             </summary>
             <param name="capability">Capability to add.</param>
-            <param name="encryptionKey">Stub for possible encryption key entry.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogAccess.NewEntry(Goedel.Mesh.CatalogedAccess)">
             <summary>

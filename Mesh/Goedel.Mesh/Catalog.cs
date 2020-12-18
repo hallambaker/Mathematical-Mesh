@@ -145,8 +145,8 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="catalogEntry">The entry to add.</param>
         /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
-        public void New(T catalogEntry, CryptoKey encryptionKey = null) {
-            var envelope = PersistenceStore.PrepareNew(catalogEntry, encryptionKey);
+        public void New(T catalogEntry) {
+            var envelope = PersistenceStore.PrepareNew(catalogEntry);
             PersistenceStore.Apply(envelope);
             NewEntry(catalogEntry);
             }
