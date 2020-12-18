@@ -42,6 +42,9 @@ Namespace Goedel.Mesh.Server
 		Exception MeshRedirect
 			Console "The specified account has been transfered to another service"
 
+		Exception MeshOperationFailed
+			Console "A requested cryptographic operation failed."
+
 		Exception MeshMessageControl
 			Console "Mesh message control exception"
 

@@ -35,9 +35,7 @@ namespace Scratchpad {
             //Goedel.XUnit.MakeSiteDocs.Test().DecodeSecondDevice();
             //Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
             //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
-            Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
-            //Goedel.XUnit.MakeSiteDocs.Test().SyncSecondDevice();
-
+            //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
 
             }
 

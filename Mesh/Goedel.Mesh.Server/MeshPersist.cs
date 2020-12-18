@@ -475,21 +475,20 @@ namespace Goedel.Mesh.Server {
                 CatalogAccess catalogCapability,
                 CryptographicOperationKeyAgreement cryptographicOperation) {
 
-            if (catalogCapability.TryFindKeyDecryption(cryptographicOperation.KeyId, out var capability)) {
-                var keypair = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
+            catalogCapability.TryFindKeyDecryption(
+                cryptographicOperation.KeyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
+            var keypair = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
 
-                var keyAgreement = capability.Agreement(keypair);
+            var keyAgreement = capability.Agreement(keypair);
 
-                var cryptographicResultKeyAgreement = new CryptographicResultKeyAgreement() {
-                    KeyAgreement = KeyAgreement.Factory(keyAgreement)
-                    };
+            var cryptographicResultKeyAgreement = new CryptographicResultKeyAgreement() {
+                KeyAgreement = KeyAgreement.Factory(keyAgreement)
+                };
 
 
-                return cryptographicResultKeyAgreement;
-                }
-            else {
-                return null;
-                }
+            return cryptographicResultKeyAgreement;
+
+
             }
 
 

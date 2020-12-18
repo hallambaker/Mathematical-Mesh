@@ -84,15 +84,7 @@ namespace Goedel.XUnit {
 
             }
 
-        [Fact]
-        public void SyncSecondDevice() {
 
-            ServiceConnect();
-            CreateAliceAccount();
-
-            ConnectDeviceCompare(out var deviceId);
-
-            }
         
         [Fact]
         public void DeleteDevice() {
@@ -110,8 +102,9 @@ namespace Goedel.XUnit {
 
             ServiceConnect();
             CreateAliceAccount();
-            ConnectDeviceCompare(out var deviceId);
             EncodeDecodeFile();
+            ConnectDeviceCompare(out var deviceId);
+
 
 
             }
