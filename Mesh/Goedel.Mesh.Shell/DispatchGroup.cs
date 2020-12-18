@@ -17,6 +17,9 @@ namespace Goedel.Mesh.Shell {
             var contextAccount = GetContextUser(options);
             var contextGroup = contextAccount.CreateGroup(groupID);
 
+            Screen.WriteLine($"Group Encryption key is {contextGroup.ProfileGroup.AccountEncryptionKey.KeyIdentifier}");
+
+
             return new ResultCreateAccount() {
                 Success = true,
                 ProfileAccount = contextGroup.ProfileGroup,
@@ -33,6 +36,7 @@ namespace Goedel.Mesh.Shell {
             var memberID = options.MemberID.Value;
             var contextAccount = GetContextUser(options);
             var contextGroup = contextAccount.GetContextGroup(groupID);
+
 
             var entryMember = contextGroup.Add(memberID);
 

@@ -461,7 +461,7 @@ namespace ExampleGenerator {
 
             Group.EncryptSourceFile.WriteFileNew(Group.TestText);
             Group.GroupEncrypt = Alice1.Example(
-                $"dare encode {Group.EncryptSourceFile} /encrypt {GroupAccount} /out {Group.EncryptTargetFile}"
+                $"dare encode {Group.EncryptSourceFile}  {Group.EncryptTargetFile} /encrypt {GroupAccount}"
                  );
             Group.GroupAddBob = Alice1.Example(
                 $"group add {GroupAccount} {AliceAccount}",
@@ -471,7 +471,7 @@ namespace ExampleGenerator {
             Group.GroupDecryptAlice = Alice1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
-            Group.GroupDecryptBobFail = Alice1.Example(
+            Group.GroupDecryptBobFail = Bob1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
 
@@ -480,12 +480,15 @@ namespace ExampleGenerator {
                 $"group add {GroupAccount} {BobAccount}"
                  );
             Group.GroupDecryptBobSuccess = Bob1.Example(
-                $"account sync",
+                $"account sync  /auto",
                 $"dare decode {Group.EncryptTargetFile}"
                  );
             Group.GroupDeleteBob = Alice1.Example(
                 $"group delete {GroupAccount} {BobAccount}"
                  );
+
+
+            // Failing here because the server is not responding to the failure of the operate request.
             Group.GroupDecryptBobRevoked = Bob1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
