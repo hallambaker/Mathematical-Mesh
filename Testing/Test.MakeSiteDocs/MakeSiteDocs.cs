@@ -52,7 +52,7 @@ namespace Goedel.XUnit {
             ServiceConnect();
             CreateAliceAccount();
             EncodeDecodeFile();
-            
+
             PasswordCatalog();
             BookmarkCatalog();
             ContactCatalog();
@@ -67,6 +67,8 @@ namespace Goedel.XUnit {
             MailApp();
             CreateBobAccount();
             ContactExchange();
+
+
             Confirmation();
             GroupOperations();
             ConnectPINDynamicQR();
@@ -91,7 +93,7 @@ namespace Goedel.XUnit {
 
             ServiceConnect();
             CreateAliceAccount();
-
+            EncodeDecodeFile();
             ConnectDeviceCompare(out var deviceId);
             TestConnectDisconnect(deviceId);
             }
