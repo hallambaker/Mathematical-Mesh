@@ -296,7 +296,7 @@ namespace Goedel.Mesh.Client {
             admin.Future();
 
             var key = localName ?? ContainerHost?.DefaultEntry?.Id;
-            return LocateMesh(key);
+            return key == null ? null : LocateMesh(key);
             }
 
         /// <summary>
