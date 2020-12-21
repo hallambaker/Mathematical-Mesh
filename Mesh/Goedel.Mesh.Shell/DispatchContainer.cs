@@ -55,7 +55,7 @@ namespace Goedel.Mesh.Shell {
             var policy = GetPolicy(keyLocate, options);
 
 
-            using (var Writer = new FileContainerWriter(
+            using (var Writer = new DareLogWriter(
                     outputFile, policy, true, fileStatus: FileStatus.Overwrite)) {
                 }
 
@@ -78,7 +78,7 @@ namespace Goedel.Mesh.Shell {
 
             // should create an archive class as a subset of store.
 
-            using (var Writer = new FileContainerWriter(
+            using (var Writer = new DareLogWriter(
                     outputFile, policy, true, fileStatus: FileStatus.Overwrite)) {
 
                 // Hack: This functionality should be pushed into FileContainerWriter and made recursive, etc.
@@ -92,7 +92,7 @@ namespace Goedel.Mesh.Shell {
                 // Hack: is not currently indexed.
                 // Need to design a proper index!
 
-                FileContainerWriter.AddIndex(); 
+                Writer.AddIndex(); 
                 }
 
             return new ResultFile() {
@@ -110,7 +110,7 @@ namespace Goedel.Mesh.Shell {
             var outputFile = options.Container.Value;
 
             
-            using (var Writer = new FileContainerWriter(
+            using (var Writer = new DareLogWriter(
                     outputFile, null, true, fileStatus: FileStatus.Existing)) {
                 Writer.Add(inputFile, path: inputFile);
                 }
@@ -131,9 +131,9 @@ namespace Goedel.Mesh.Shell {
             var outputFile = options.Container.Value;
 
 
-            using (var Writer = new FileContainerWriter(
+            using (var Writer = new DareLogWriter(
                     outputFile, null, true, fileStatus: FileStatus.Existing)) {
-                FileContainerWriter.Delete(inputFile);
+                DareLogWriter.Delete(inputFile);
                 }
 
             return new ResultFile() {
@@ -149,7 +149,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult DareIndex(DareIndex options) {
             var inputFile = options.Container.Value;
 
-            using (var container = Cryptography.Dare.Container.Open(
+            using (var container = Cryptography.Dare.Sequence.Open(
                 inputFile, containerType: ContainerType.Merkle)) {
                 }
 
@@ -198,7 +198,7 @@ namespace Goedel.Mesh.Shell {
             var inputFile = options.Input.Value;
             var outputFile = options.Output.Value;
 
-            using (var container = Cryptography.Dare.Container.Open(
+            using (var container = Cryptography.Dare.Sequence.Open(
                 inputFile, containerType: ContainerType.Merkle)) {
                 }
 

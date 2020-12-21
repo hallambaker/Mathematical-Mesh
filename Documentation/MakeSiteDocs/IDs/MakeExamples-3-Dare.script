@@ -48,9 +48,9 @@ For conciseness, the raw data format is omitted for examples after the first, ex
 where the data payload has been transformed, (i.e. encrypted).
 
 
-####Simple container
+####Simple sequence
 
-The following example shows a simple container with first frame and a single data frame:
+The following example shows a simple sequence with first frame and a single data frame:
 
 ~~~~
 #{Dare.ContainerFramingSimple}~~~~
@@ -63,7 +63,7 @@ The header values are:
 
 ####Payload and chain digests
 
-The following example shows a chain container with a first frame and three 
+The following example shows a chain sequence with a first frame and three 
 data frames. The headers of these frames is the same as before but the
 frames now have trailers specifying the PayloadDigest and ChainDigest values:
 
@@ -71,15 +71,15 @@ frames now have trailers specifying the PayloadDigest and ChainDigest values:
 
 ####Merkle Tree
 
-The following example shows a chain container with a first frame and six 
+The following example shows a chain sequence with a first frame and six 
 data frames. The trailers now contain the TreePosition and TreeDigest
 values:
 
 #call DumpHeaders Dare.ContainerHeadersMerkleTree
 
-####Signed container
+####Signed sequence
 
-The following example shows a tree container with a signature in the final record.
+The following example shows a tree sequence with a signature in the final record.
 The signing key parameters are:
 
 
@@ -88,18 +88,18 @@ The signing key parameters are:
 #{JSONDebugWriter.Write (Dare.SignatureAliceKey)}
 ~~~~
 
-The container headers and trailers are:
+The sequence headers and trailers are:
 
 #call DumpHeaders Dare.ContainerHeadersSigned
 
-####Encrypted container
+####Encrypted sequence
 
-The following example shows a container in which all the frame payloads are encrypted 
+The following example shows a sequence in which all the frame payloads are encrypted 
 under the same base seed established in a key agreement specified in the first frame.
 
 #call DumpHeaders Dare.ContainerHeadersEncryptSingleSession
 
-Here are the container bytes. Note that the content is now encrypted and has expanded by
+Here are the sequence bytes. Note that the content is now encrypted and has expanded by
 25 bytes. These are the salt (16 bytes), the AES padding (4 bytes) and the 
 JSON-B framing (5 bytes).
 
@@ -109,7 +109,7 @@ JSON-B framing (5 bytes).
 ~~~~
 
 
-The following example shows a container in which all the frame payloads are encrypted 
+The following example shows a sequence in which all the frame payloads are encrypted 
 under separate key agreements specified in the payload frames.
 
 #call DumpHeaders Dare.ContainerHeadersEncryptIndependentSession
@@ -127,7 +127,7 @@ under separate key agreements specified in the payload frames.
 #method DumpHeader ContainerFrame Frame
 #% if (Frame == null) {ReportMissing(); return;}
 
-Frame #{Frame.Header.ContainerInfo.Index}
+Frame #{Frame.Header.SequenceInfo.Index}
 
 ~~~~
 #{ JSONDebugWriter.Write (Frame.Header)}

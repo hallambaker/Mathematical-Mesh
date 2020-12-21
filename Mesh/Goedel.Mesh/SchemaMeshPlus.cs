@@ -51,7 +51,7 @@ namespace Goedel.Mesh {
                     CryptoKey encryptionKey = null) {
 
             var contentMeta = new ContentMeta() {
-                UniqueID = _PrimaryKey,
+                UniqueId = _PrimaryKey,
                 Created = DateTime.Now,
                 ContentType = MeshConstants.IanaTypeMeshObject,
                 MessageType = _Tag

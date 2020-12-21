@@ -33,17 +33,17 @@ namespace Goedel.Cryptography.Dare {
         /// content in the file will be overwritten.</param>
         /// <returns>The newly constructed container.</returns>
 
-        public static new Container MakeNewContainer(
+        public static new Sequence MakeNewContainer(
                         JbcdStream JBCDStream) {
 
-            var containerInfo = new ContainerInfo() {
+            var containerInfo = new SequenceInfo() {
                 ContainerType = DareConstants.ContainerTypeDigestTag,
                 Index = 0
                 };
 
 
             var containerHeader = new DareHeader() {
-                ContainerInfo = containerInfo
+                SequenceInfo = containerInfo
                 };
 
             var container = new ContainerDigest() {
@@ -68,11 +68,11 @@ namespace Goedel.Cryptography.Dare {
         public override void CheckContainer(List<DareHeader> Headers) {
             int Index = 1;
             foreach (var Header in Headers) {
-                Assert.AssertNotNull(Header.ContainerInfo, ContainerDataCorrupt.Throw);
+                Assert.AssertNotNull(Header.SequenceInfo, ContainerDataCorrupt.Throw);
 
-                Assert.AssertTrue(Header.ContainerInfo.Index == Index, ContainerDataCorrupt.Throw);
+                Assert.AssertTrue(Header.SequenceInfo.Index == Index, ContainerDataCorrupt.Throw);
 
-                if (ContainerHeaderFirst.ContainerInfo.ContainerType == DareConstants.ContainerTypeListTag) {
+                if (ContainerHeaderFirst.SequenceInfo.ContainerType == DareConstants.ContainerTypeListTag) {
                     Assert.AssertNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
                     }
                 else {

@@ -1,11 +1,11 @@
 ﻿namespace Goedel.Cryptography.Dare {
 
-    public partial class ContainerIndex {
+    public partial class SequenceIndex {
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public ContainerIndex() {
+        public SequenceIndex() {
             }
 
         ///// <summary>

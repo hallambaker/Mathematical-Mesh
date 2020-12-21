@@ -60,7 +60,7 @@ namespace Goedel.Mesh {
         public virtual string ContainerDefault => throw new NYI();
 
         ///<summary>The container</summary>
-        public virtual Container Container { get; }
+        public virtual Sequence Container { get; }
 
         ///<summary>The frame count (returns -1 if no container has been created)</summary>
         public long FrameCount => Container == null ? -1 : Container.FrameCount;
@@ -127,7 +127,7 @@ namespace Goedel.Mesh {
             ContainerName = storeId ?? ContainerDefault;
             var fileName = FileName(directory, ContainerName);
 
-            Container = Container.Open(
+            Container = Sequence.Open(
                 fileName,
                 FileStatus.ConcurrentLocked,
                 keyCollection ?? cryptoParameters?.KeyLocate,
@@ -174,12 +174,12 @@ namespace Goedel.Mesh {
 
             var fileName = FileName(directory, containerName);
 
-            if (envelopes[0].Header.ContainerInfo.Index == 0) {
-                using var container = Container.MakeNewContainer(fileName, keyLocate, envelopes);
+            if (envelopes[0].Header.SequenceInfo.Index == 0) {
+                using var container = Sequence.MakeNewContainer(fileName, keyLocate, envelopes);
                 }
             else {
                 // here open the existing container.
-                using var container = Container.OpenExisting(fileName, FileStatus.ConcurrentLocked, decrypt: false);
+                using var container = Sequence.OpenExisting(fileName, FileStatus.ConcurrentLocked, decrypt: false);
                 container.Append(envelopes);
                 }
 

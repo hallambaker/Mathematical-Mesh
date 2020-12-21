@@ -95,7 +95,7 @@ namespace ExampleGenerator {
 
         #region // utils
 
-        public Container MakeContainer(
+        public Sequence MakeContainer(
                     string FileName,
                     DarePolicy policy,
                     ContainerType ContainerType = ContainerType.Chain) {
@@ -103,7 +103,7 @@ namespace ExampleGenerator {
 
             //var FileStream = FileName.FileStream(FileStatus.Overwrite);
             var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output: consoleWriter);
-            return Goedel.Cryptography.Dare.Container.NewContainer(JBCDStream, containerType: ContainerType, policy: policy);
+            return Goedel.Cryptography.Dare.Sequence.NewContainer(JBCDStream, containerType: ContainerType, policy: policy);
 
             }
 
@@ -115,7 +115,7 @@ namespace ExampleGenerator {
             return Data;
             }
 
-        public static List<ContainerFrame> ReadContainer(Container container) {
+        public static List<ContainerFrame> ReadContainer(Sequence container) {
             var ContainerHeaders = new List<ContainerFrame> {
                 new ContainerFrame {
                     Header = container.ContainerHeaderFirst

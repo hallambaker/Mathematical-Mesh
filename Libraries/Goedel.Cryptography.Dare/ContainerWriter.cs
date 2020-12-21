@@ -10,7 +10,7 @@ namespace Goedel.Cryptography.Dare {
     public class ContainerWriter {
 
         ///<summary>The container to be written to.</summary>
-        protected Container Container;
+        protected Sequence Container;
 
         ///<summary>Property allowing access to the crypto parameters and policy governing
         ///the container.</summary> 
@@ -24,7 +24,7 @@ namespace Goedel.Cryptography.Dare {
 
 
         ///<summary>ContainerInfo element of last container header written.</summary>
-        public ContainerInfo ContainerInfo => ContainerHeader.ContainerInfo;
+        public SequenceInfo ContainerInfo => ContainerHeader.SequenceInfo;
 
         ///<summary>The trailer of the envelope currently being written.</summary>
         public DareTrailer DareTrailer;
@@ -56,7 +56,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="container">The container to be written</param>
         /// <param name="containerHeader">The container header???</param>
         /// <param name="JBCDStream">The stream???</param>
-        public ContainerWriterFile(Container container, DareHeader containerHeader, JbcdStream JBCDStream) {
+        public ContainerWriterFile(Sequence container, DareHeader containerHeader, JbcdStream JBCDStream) {
             Container = container;
             frameStart = JBCDStream.PositionWrite;
             ContainerHeader = containerHeader;
@@ -92,14 +92,14 @@ namespace Goedel.Cryptography.Dare {
         /// Main constructor
         /// </summary>
         /// <param name="container">The container to be written</param>
-        public ContainerWriterDeferred(Container container) {
+        public ContainerWriterDeferred(Sequence container) {
             Container = container;
             frameCount = container.FrameCount;
             }
 
 
-        public ContainerInfo PrepareContainerInfo() {
-            return new ContainerInfo() {
+        public SequenceInfo PrepareContainerInfo() {
+            return new SequenceInfo() {
                 Index = (int)frameCount++
                 };
             }

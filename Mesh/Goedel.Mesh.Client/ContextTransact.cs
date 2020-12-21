@@ -65,7 +65,7 @@ namespace Goedel.Mesh.Client {
                         break;
                         }
                     case PersistenceStore.EventDelete: {
-                        Catalog.DeleteEntry(envelope.Header.ContentMeta.UniqueID);
+                        Catalog.DeleteEntry(envelope.Header.ContentMeta.UniqueId);
                         break;
                         }
                     }

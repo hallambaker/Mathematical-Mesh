@@ -33,7 +33,7 @@ namespace Goedel.Cryptography.Dare {
         //JBCDStream JBCDStream;
 
         ///<summary>The underlying container.</summary>
-        public Container Container;
+        public Sequence Container;
 
 
 
@@ -124,7 +124,7 @@ namespace Goedel.Cryptography.Dare {
                     IKeyLocate keyCollection = null,
                     bool readContainer = true,
                     bool decrypt = true) : this(
-                        Container.Open(
+                        Sequence.Open(
                             fileName,
                             fileStatus,
                             keyCollection,
@@ -141,7 +141,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="container"></param>
         /// <param name="readContainer"></param>
         /// <param name="keyLocate">The key collection to be used to resolve keys</param>
-        public PersistenceStore(Container container, IKeyLocate keyLocate, bool readContainer = true) {
+        public PersistenceStore(Sequence container, IKeyLocate keyLocate, bool readContainer = true) {
             container.AssertNotNull(NoAvailableDecryptionKey.Throw);
 
             Container = container;
@@ -160,9 +160,9 @@ namespace Goedel.Cryptography.Dare {
         public void FastReadContainer() {
             foreach (var frameIndex in Container) {
                 var contentMeta = frameIndex.Header.ContentMeta;
-                var containertInfo = frameIndex.Header.ContainerInfo;
+                var containertInfo = frameIndex.Header.SequenceInfo;
 
-                var uniqueID = contentMeta.UniqueID;
+                var uniqueID = contentMeta.UniqueId;
 
                 ObjectIndex.TryGetValue(uniqueID, out var previous);
                 var ContainerStoreEntry = new StoreEntry(frameIndex, previous, Container);
@@ -190,7 +190,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="containerIntegrity">Specifies the degree of container integrity checking to perform.</param>
         /// <param name="keyLocate">The key collection to be used to resolve keys</param>
-        void ReadContainer(IKeyLocate keyLocate, ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
+        void ReadContainer(IKeyLocate keyLocate, SequenceIntegrity containerIntegrity = SequenceIntegrity.None) {
 
             foreach (var frameIndex in Container) {
 
@@ -200,7 +200,7 @@ namespace Goedel.Cryptography.Dare {
                 CommitTransaction(frameIndex, item);
 
 
-                if (containerIntegrity != ContainerIntegrity.None) {
+                if (containerIntegrity != SequenceIntegrity.None) {
                     throw new NYI();
                     }
 
@@ -227,10 +227,10 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="frameIndex">The container position</param>
         /// <param name="jSONObject">The object being committed in deserialized form.</param>
-        public virtual void CommitTransaction(ContainerFrameIndex frameIndex, JsonObject jSONObject) {
+        public virtual void CommitTransaction(SequenceFrameIndex frameIndex, JsonObject jSONObject) {
             var contentMeta = frameIndex.Header.ContentMeta;
 
-            ObjectIndex.TryGetValue(contentMeta.UniqueID, out var Previous);
+            ObjectIndex.TryGetValue(contentMeta.UniqueId, out var Previous);
             var ContainerStoreEntry = new StoreEntry(frameIndex, Previous, Container, jSONObject);
 
             switch (contentMeta.Event) {
@@ -337,7 +337,7 @@ namespace Goedel.Cryptography.Dare {
             var contextWrite = new ContainerWriterDeferred(Container);
 
             var data = jsonObject?.GetBytes();
-            var envelope = Container.Defer(contextWrite, contentInfo, data);
+            var envelope = Sequence.Defer(contextWrite, contentInfo, data);
             envelope.JsonObject = jsonObject;
             return envelope;
             }
@@ -381,7 +381,7 @@ namespace Goedel.Cryptography.Dare {
             // Create new container
             var contentInfo = new ContentMeta() {
                 Event = EventNew,
-                UniqueID = jsonObject._PrimaryKey,
+                UniqueId = jsonObject._PrimaryKey,
                 KeyValues = jsonObject._KeyValues.ToKeyValues()
                 };
 
@@ -410,7 +410,7 @@ namespace Goedel.Cryptography.Dare {
             // Create new container
             var contentInfo = new ContentMeta() {
                 Event = Exists ? EventUpdate : EventNew,
-                UniqueID = jsonObject._PrimaryKey,
+                UniqueId = jsonObject._PrimaryKey,
                 KeyValues = jsonObject._KeyValues.ToKeyValues(),
                 };
 
@@ -440,7 +440,7 @@ namespace Goedel.Cryptography.Dare {
             // Create new container
             var contentInfo = new ContentMeta() {
                 Event = EventDelete,
-                UniqueID = uniqueID,
+                UniqueId = uniqueID,
                 Previous = (int)previous?.FrameCount,
                 First = (int)First?.FrameCount
                 };

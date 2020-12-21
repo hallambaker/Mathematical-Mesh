@@ -66,7 +66,7 @@ namespace Goedel.Mesh.Shell {
 
             foreach (var envelope in inbound.Select(1, true)) {
                 var meshMessage = Message.Decode (envelope, contextAccount);
-                if (!completed.ContainsKey(envelope.Header.ContentMeta.UniqueID)) {
+                if (!completed.ContainsKey(envelope.Header.ContentMeta.UniqueId)) {
                     switch (meshMessage) {
                         case MessageComplete meshMessageComplete: {
                             foreach (var reference in meshMessageComplete.References) {

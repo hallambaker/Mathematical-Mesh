@@ -515,7 +515,7 @@ namespace Goedel.Mesh.Server {
         /// <returns>Identifier of the message posted.</returns>
         public string MessagePostSelf(JpcSession jpcSession, VerifiedAccount account, DareEnvelope dareMessage) {
 
-            var identifier = dareMessage.Header?.ContentMeta?.UniqueID;
+            var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
 
             identifier.AssertNotNull(InvalidMessageID.Throw);
 
@@ -543,7 +543,7 @@ namespace Goedel.Mesh.Server {
 
             jpcSession.Future();
 
-            var identifier = dareMessage.Header?.ContentMeta?.UniqueID;
+            var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
             identifier.AssertNotNull(InvalidMessageID.Throw);
 
             var senderService = senderAccount.AccountAddress.GetService();

@@ -31,18 +31,18 @@ namespace Goedel.Cryptography.Dare {
         /// content in the file will be overwritten.</param>
         /// <returns>The newly constructed container.</returns>
 
-        public static new Container MakeNewContainer(
+        public static new Sequence MakeNewContainer(
                         JbcdStream jbcdStream) {
 
 
-            var containerInfo = new ContainerInfo() {
+            var containerInfo = new SequenceInfo() {
                 ContainerType = DareConstants.ContainerTypeMerkleTag,
                 Index = 0
                 };
 
 
             var containerHeader = new DareHeader() {
-                ContainerInfo = containerInfo
+                SequenceInfo = containerInfo
                 };
 
             var container = new ContainerMerkleTree() {
@@ -57,7 +57,7 @@ namespace Goedel.Cryptography.Dare {
         /// Prepare the ContainerInfo data for the frame.
         /// </summary>
         /// <param name="containerInfo">The frame to prepare.</param>
-        protected override void PrepareFrame(ContainerInfo containerInfo) {
+        protected override void PrepareFrame(SequenceInfo containerInfo) {
             if (containerInfo.Index == 0) {
                 containerInfo.ContainerType = DareConstants.ContainerTypeMerkleTag;
                 }
@@ -77,7 +77,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="containerInfo">Frame header</param>
         /// <param name="position">Position of the frame</param>
-        protected override void RegisterFrame(ContainerInfo containerInfo, long position) {
+        protected override void RegisterFrame(SequenceInfo containerInfo, long position) {
             var Index = containerInfo.Index;
             FrameIndexToPositionDictionary.Add(Index, position);
             //FrameDigestDictionary.Add(Index, ContainerInfo.TreeDigest);
@@ -173,10 +173,10 @@ namespace Goedel.Cryptography.Dare {
         public override void CheckContainer(List<DareHeader> headers) {
             int index = 1;
             foreach (var header in headers) {
-                Assert.AssertNotNull(header.ContainerInfo,
+                Assert.AssertNotNull(header.SequenceInfo,
                         ContainerDataCorrupt.Throw);
 
-                Assert.AssertTrue(header.ContainerInfo.Index == index, ContainerDataCorrupt.Throw);
+                Assert.AssertTrue(header.SequenceInfo.Index == index, ContainerDataCorrupt.Throw);
                 Assert.AssertNotNull(header.PayloadDigest,
                         ContainerDataCorrupt.Throw);
 

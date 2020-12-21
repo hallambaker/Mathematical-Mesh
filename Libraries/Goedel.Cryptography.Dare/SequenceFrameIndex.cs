@@ -6,8 +6,8 @@ using System.IO;
 
 namespace Goedel.Cryptography.Dare {
 
-    ///<summary>Describe the integrity checking to be applied when reading a container.</summary>
-    public enum ContainerIntegrity {
+    ///<summary>Describe the integrity checking to be applied when reading a sequence.</summary>
+    public enum SequenceIntegrity {
         ///<summary>Do not perform integrity checks.</summary>
         None,
 
@@ -25,10 +25,10 @@ namespace Goedel.Cryptography.Dare {
         }
 
     /// <summary>
-    /// Container index with the decoded head and tail and extent information for
+    /// Sequence index with the decoded head and tail and extent information for
     /// the body.
     /// </summary>
-    public partial class ContainerFrameIndex {
+    public partial class SequenceFrameIndex {
 
         ///<summary>The frame header</summary>
         public DareHeader Header;
@@ -60,7 +60,7 @@ namespace Goedel.Cryptography.Dare {
         /// Return the frame payload.
         /// </summary>
         /// <returns>The frame payload data.</returns>
-        public byte[] GetPayload(Container container, IKeyLocate keyCollection) {
+        public byte[] GetPayload(Sequence sequence, IKeyLocate keyCollection) {
 
 
 
@@ -68,7 +68,7 @@ namespace Goedel.Cryptography.Dare {
 
             DareHeader exchange=null;
             if (Header?.HasExchangePosition == true) {
-                exchange = container.GetHeader(Header.ContainerInfo.ExchangePosition);
+                exchange = sequence.GetHeader(Header.SequenceInfo.ExchangePosition);
                 }
 
             using var input = jbcdStream.FramerGetReader(DataPosition, DataLength);
@@ -84,7 +84,7 @@ namespace Goedel.Cryptography.Dare {
         /// Constructor returning an instance for the envelope <paramref name="envelope"/>.
         /// </summary>
         /// <param name="envelope">The envelope to return an index for.</param>
-        public ContainerFrameIndex(DareEnvelope envelope) {
+        public SequenceFrameIndex(DareEnvelope envelope) {
             Header = envelope.Header;
             Trailer = envelope.Trailer;
             JsonObject = envelope.JsonObject;
@@ -99,7 +99,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="jsonStream">Stream reader positioned to the start of the frame.</param>
         /// <param name="Position">The position in the file.</param>
-        public ContainerFrameIndex(JbcdStream jsonStream, long Position = -1) {
+        public SequenceFrameIndex(JbcdStream jsonStream, long Position = -1) {
             jbcdStream = jsonStream;
 
             jsonStream.FramerOpen(Position);
@@ -116,16 +116,16 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Read the payload data from the specified position in <paramref name="container"/>
+        /// Read the payload data from the specified position in <paramref name="sequence"/>
         /// and deserialize to return the corresponding object.
         /// </summary>
-        /// <param name="container">The container that was indexed.</param>
+        /// <param name="sequence">The container that was indexed.</param>
         /// <returns>The deserialized object.</returns>
-        public JsonObject GetJSONObject(Container container) {
+        public JsonObject GetJSONObject(Sequence sequence) {
             if (JsonObject != null) {
                 return JsonObject;
                 }
-            var bytes = GetPayload(container, container.KeyLocate);
+            var bytes = GetPayload(sequence, sequence.KeyLocate);
             var text = bytes.ToUTF8();
             return bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
 
@@ -139,8 +139,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container">The indexed container.</param>
         /// <returns>The frame payload</returns>
-        public byte[] GetBody(Container container) {
-            using var input = container.JbcdStream.FramerGetReader(DataPosition, DataLength);
+        public byte[] GetBody(Sequence sequence) {
+            using var input = sequence.JbcdStream.FramerGetReader(DataPosition, DataLength);
             using var output = new MemoryStream();
             input.CopyTo(output);
             return output.ToArray();
@@ -151,18 +151,18 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Return a DareEnvelope wrapping the fnewrame.
         /// </summary>
-        /// <param name="container">The indexed container.</param>
+        /// <param name="sequence">The indexed container.</param>
         /// <param name="detatched">If true, </param>
         /// <returns>The frame payload</returns>      
-        public DareEnvelope GetEnvelope(Container container, bool detatched = false) {
+        public DareEnvelope GetEnvelope(Sequence sequence, bool detatched = false) {
             var envelope = new DareEnvelope() {
                 Header = Header,
                 Trailer = Trailer,
-                Body = GetBody(container)
+                Body = GetBody(sequence)
                 };
 
             if (!detatched | !Header.HasExchangePosition) {
-                Header.Recipients = GetRecipients(container);
+                Header.Recipients = GetRecipients(sequence);
                 }
 
 
@@ -170,11 +170,11 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
-        List<DareRecipient> GetRecipients(Container container) {
+        List<DareRecipient> GetRecipients(Sequence sequence) {
             if (!Header.HasExchangePosition) {
                 return Header.Recipients;
                 }
-            var exchangeHeader = container.GetHeader(Header.ContainerInfo.ExchangePosition);
+            var exchangeHeader = sequence.GetHeader(Header.SequenceInfo.ExchangePosition);
 
             if (Header.Recipients == null) {
                 return exchangeHeader.Recipients;

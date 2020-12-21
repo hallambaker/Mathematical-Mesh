@@ -43,7 +43,7 @@ namespace Goedel.Cryptography.Dare {
 	///
 	/// Classes that describe the DARE Container Format.
 	/// </summary>
-	public abstract partial class ContainerData : global::Goedel.Protocol.JsonObject {
+	public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -53,7 +53,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ContainerData";
+		public new const string __Tag = "SequenceData";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -62,11 +62,10 @@ namespace Goedel.Cryptography.Dare {
 		static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 				new Dictionary<string, JsonFactoryDelegate> () {
 
-			{"ContainerInfo", ContainerInfo._Factory},
-			{"ContainerIndex", ContainerIndex._Factory},
+			{"SequenceInfo", SequenceInfo._Factory},
+			{"SequenceIndex", SequenceIndex._Factory},
 			{"IndexPosition", IndexPosition._Factory},
-			{"KeyValue", KeyValue._Factory},
-			{"IndexMeta", IndexMeta._Factory}			};
+			{"KeyValue", KeyValue._Factory}			};
 
         [ModuleInitializer]
         internal static void _Initialize() => AddDictionary(ref _tagDictionary);
@@ -93,7 +92,7 @@ namespace Goedel.Cryptography.Dare {
 	///
 	/// Information that describes container information
 	/// </summary>
-	public partial class ContainerInfo : ContainerData {
+	public partial class SequenceInfo : SequenceData {
         /// <summary>
         ///Specifies the data encoding for the header section of for the following frames.
         ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
@@ -182,13 +181,13 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ContainerInfo";
+		public new const string __Tag = "SequenceInfo";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ContainerInfo();
+		public static new JsonObject _Factory () => new SequenceInfo();
 
 
         /// <summary>
@@ -267,15 +266,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ContainerInfo FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new SequenceInfo FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ContainerInfo;
+				return Out as SequenceInfo;
 				}
-		    var Result = new ContainerInfo ();
+		    var Result = new SequenceInfo ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -335,7 +334,7 @@ namespace Goedel.Cryptography.Dare {
 	///
 	/// A container index
 	/// </summary>
-	public partial class ContainerIndex : ContainerData {
+	public partial class SequenceIndex : SequenceData {
 		bool								__Full = false;
 		private bool						_Full;
         /// <summary>
@@ -354,11 +353,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual List<IndexPosition>				Positions  {get; set;}
-        /// <summary>
-        ///List of container position entries
-        /// </summary>
-
-		public virtual List<IndexMeta>				Metas  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -368,13 +362,13 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ContainerIndex";
+		public new const string __Tag = "SequenceIndex";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ContainerIndex();
+		public static new JsonObject _Factory () => new SequenceIndex();
 
 
         /// <summary>
@@ -424,23 +418,6 @@ namespace Goedel.Cryptography.Dare {
 				_writer.WriteArrayEnd ();
 				}
 
-			if (Metas != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Metas", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Metas) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
-
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -452,15 +429,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ContainerIndex FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new SequenceIndex FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ContainerIndex;
+				return Out as SequenceIndex;
 				}
-		    var Result = new ContainerIndex ();
+		    var Result = new SequenceIndex ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -492,20 +469,6 @@ namespace Goedel.Cryptography.Dare {
 						}
 					break;
 					}
-				case "Metas" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Metas = new List <IndexMeta> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  IndexMeta ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new IndexMeta (jsonReader);
-						Metas.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
 				default : {
 					break;
 					}
@@ -520,7 +483,7 @@ namespace Goedel.Cryptography.Dare {
 	///
 	/// Specifies the position in a file at which a specified record index is found
 	/// </summary>
-	public partial class IndexPosition : ContainerData {
+	public partial class IndexPosition : SequenceData {
 		bool								__Index = false;
 		private int						_Index;
         /// <summary>
@@ -541,6 +504,11 @@ namespace Goedel.Cryptography.Dare {
 			get => _Position;
 			set {_Position = value; __Position = true; }
 			}
+        /// <summary>
+        ///Unique object identifier
+        /// </summary>
+
+		public virtual string						UniqueId  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -594,6 +562,11 @@ namespace Goedel.Cryptography.Dare {
 				_writer.WriteToken ("Position", 1);
 					_writer.WriteInteger32 (Position);
 				}
+			if (UniqueId != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("UniqueId", 1);
+					_writer.WriteString (UniqueId);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -635,6 +608,10 @@ namespace Goedel.Cryptography.Dare {
 					Position = jsonReader.ReadInteger32 ();
 					break;
 					}
+				case "UniqueId" : {
+					UniqueId = jsonReader.ReadString ();
+					break;
+					}
 				default : {
 					break;
 					}
@@ -649,7 +626,7 @@ namespace Goedel.Cryptography.Dare {
 	///
 	/// Specifies a key/value entry
 	/// </summary>
-	public partial class KeyValue : ContainerData {
+	public partial class KeyValue : SequenceData {
         /// <summary>
         ///The key
         /// </summary>
@@ -752,196 +729,6 @@ namespace Goedel.Cryptography.Dare {
 					}
 				case "Value" : {
 					Value = jsonReader.ReadString ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	///
-	/// Specifies the list of index entries at which a record with the specified metadata occurrs.
-	/// </summary>
-	public partial class IndexMeta : ContainerData {
-        /// <summary>
-        ///List of record indicies within the file where frames matching the specified 
-        ///criteria are found.
-        /// </summary>
-
-		public virtual List<int>				Index  {get; set;}
-        /// <summary>
-        ///Content type parameter
-        /// </summary>
-
-		public virtual string						ContentType  {get; set;}
-        /// <summary>
-        ///List of filename paths for the current frame.
-        /// </summary>
-
-		public virtual List<string>				Paths  {get; set;}
-        /// <summary>
-        ///List of labels that are applied to the current frame.
-        /// </summary>
-
-		public virtual List<string>				Labels  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "IndexMeta";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new IndexMeta();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (Index != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Index", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Index) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					_writer.WriteInteger32 (_index);
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (ContentType != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ContentType", 1);
-					_writer.WriteString (ContentType);
-				}
-			if (Paths != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Paths", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Paths) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					_writer.WriteString (_index);
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (Labels != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Labels", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Labels) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					_writer.WriteString (_index);
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new IndexMeta FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as IndexMeta;
-				}
-		    var Result = new IndexMeta ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "Index" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Index = new List <int> ();
-					while (_Going) {
-						int _Item = jsonReader.ReadInteger32 ();
-						Index.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "ContentType" : {
-					ContentType = jsonReader.ReadString ();
-					break;
-					}
-				case "Paths" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Paths = new List <string> ();
-					while (_Going) {
-						string _Item = jsonReader.ReadString ();
-						Paths.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "Labels" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Labels = new List <string> ();
-					while (_Going) {
-						string _Item = jsonReader.ReadString ();
-						Labels.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
 					break;
 					}
 				default : {

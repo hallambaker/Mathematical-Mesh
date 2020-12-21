@@ -1,4 +1,4 @@
-﻿Protocol Goedel.Cryptography.Dare ContainerData ContainerData
+﻿Protocol Goedel.Cryptography.Dare SequenceData SequenceData
     Using Goedel.Cryptography.Jose 
 	Extern DareHeader
 	Extern DareRecipient
@@ -21,7 +21,7 @@
 	//		Description
 	//			|The container data.
 
-	Structure ContainerInfo
+	Structure SequenceInfo
 
 				
 		Description
@@ -82,7 +82,7 @@
 
 
 
-	Structure ContainerIndex
+	Structure SequenceIndex
 		Description
 			|A container index
 		Boolean Full
@@ -92,10 +92,6 @@
 				|contains position entries for records added since the last 
 				|frame containing a ContainerIndex.
 		Struct IndexPosition Positions
-			Multiple
-			Description
-				|List of container position entries
-		Struct IndexMeta Metas
 			Multiple
 			Description
 				|List of container position entries
@@ -109,6 +105,11 @@
 		Integer Position
 			Description
 				|The record position within the file relative to the index base.
+		String UniqueId
+			Description 
+				|Unique object identifier
+
+
 
 
 	Structure KeyValue
@@ -120,26 +121,3 @@
 		String Value
 			Description
 				|The value corresponding to the key
-
-	Structure IndexMeta
-		Description
-			|Specifies the list of index entries at which a record with the specified metadata occurrs.
-
-		Integer Index
-			Multiple
-			Description
-				|List of record indicies within the file where frames matching the specified 
-				|criteria are found.
-		String ContentType
-			Description
-				|Content type parameter
-		String Paths
-			Multiple
-			Description
-				|List of filename paths for the current frame.
-		String Labels
-			Multiple
-			Description
-				|List of labels that are applied to the current frame.
-
-

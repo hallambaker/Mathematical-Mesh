@@ -206,7 +206,7 @@ namespace Goedel.XUnit {
             int Record;
 
             // Write initial set of records
-            using (var XContainer = Container.NewContainer(
+            using (var XContainer = Sequence.NewContainer(
                             fileName, FileStatus.Overwrite, containerType: containerType,
                             policy)) {
                 for (Record = 0; Record < reOpen; Record++) {
@@ -217,7 +217,7 @@ namespace Goedel.XUnit {
 
             // Write additional records
             while (Record < records) {
-                using var XContainer = Container.Open(fileName, FileStatus.Append,
+                using var XContainer = Sequence.Open(fileName, FileStatus.Append,
                              policy:policy);
                 for (var i = 0; (Record < records) & i < reOpen; i++) {
                     var Test = MakeConstant("Test ", ((Record + 1) % maxSize));
@@ -227,14 +227,14 @@ namespace Goedel.XUnit {
                 }
 
             var Headers = new List<DareHeader>();
-            using (var XContainer = Container.Open(fileName, FileStatus.Read,
+            using (var XContainer = Sequence.Open(fileName, FileStatus.Read,
                             policy: policy,
                             keyLocate: keyCollection)) {
                 XContainer.VerifyContainer();
                 }
 
             // Read records 
-            using (var XContainer = Container.Open(fileName, FileStatus.Read,
+            using (var XContainer = Sequence.Open(fileName, FileStatus.Read,
                             policy: policy,
                             keyLocate: keyCollection)) {
 
@@ -256,21 +256,21 @@ namespace Goedel.XUnit {
             // Test random access.
             if (moveStep > 0) {
                 // Check in forward direction
-                using (var XContainer = Container.Open(fileName, FileStatus.Read,
+                using (var XContainer = Sequence.Open(fileName, FileStatus.Read,
                             policy: policy)) {
                     for (Record = moveStep; Record < records; Record += moveStep) {
                         var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
-                        (ContainerDataReader.Header.ContainerInfo.Index == Record).TestTrue(); ;
+                        (ContainerDataReader.Header.SequenceInfo.Index == Record).TestTrue(); ;
                         }
 
                     }
 
                 // Check in backwards direction
-                using (var XContainer = Container.Open(fileName, FileStatus.Read,
+                using (var XContainer = Sequence.Open(fileName, FileStatus.Read,
                             policy: policy)) {
                     for (Record = records; Record > 0; Record -= moveStep) {
                         var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
-                        (ContainerDataReader.Header.ContainerInfo.Index == Record).TestTrue(); ;
+                        (ContainerDataReader.Header.SequenceInfo.Index == Record).TestTrue(); ;
                         }
                     }
                 }

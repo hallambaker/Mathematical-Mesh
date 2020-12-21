@@ -508,13 +508,13 @@ namespace Goedel.Cryptography.Dare {
         ///Information that describes container information
         /// </summary>
 
-		public virtual ContainerInfo						ContainerInfo  {get; set;}
+		public virtual SequenceInfo						SequenceInfo  {get; set;}
         /// <summary>
         ///An index of records in the current container up to but not including
         ///this one.
         /// </summary>
 
-		public virtual ContainerIndex						ContainerIndex  {get; set;}
+		public virtual SequenceIndex						SequenceIndex  {get; set;}
         /// <summary>
         ///Date on which the envelope was received.
         /// </summary>
@@ -655,15 +655,15 @@ namespace Goedel.Cryptography.Dare {
 				_writer.WriteToken ("ContentMetaData", 1);
 					_writer.WriteBinary (ContentMetaData);
 				}
-			if (ContainerInfo != null) {
+			if (SequenceInfo != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ContainerInfo", 1);
-					ContainerInfo.Serialize (_writer, false);
+				_writer.WriteToken ("SequenceInfo", 1);
+					SequenceInfo.Serialize (_writer, false);
 				}
-			if (ContainerIndex != null) {
+			if (SequenceIndex != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ContainerIndex", 1);
-					ContainerIndex.Serialize (_writer, false);
+				_writer.WriteToken ("SequenceIndex", 1);
+					SequenceIndex.Serialize (_writer, false);
 				}
 			if (Received != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -781,17 +781,17 @@ namespace Goedel.Cryptography.Dare {
 					ContentMetaData = jsonReader.ReadBinary ();
 					break;
 					}
-				case "ContainerInfo" : {
+				case "SequenceInfo" : {
 					// An untagged structure
-					ContainerInfo = new ContainerInfo ();
-					ContainerInfo.Deserialize (jsonReader);
+					SequenceInfo = new SequenceInfo ();
+					SequenceInfo.Deserialize (jsonReader);
  
 					break;
 					}
-				case "ContainerIndex" : {
+				case "SequenceIndex" : {
 					// An untagged structure
-					ContainerIndex = new ContainerIndex ();
-					ContainerIndex.Deserialize (jsonReader);
+					SequenceIndex = new SequenceIndex ();
+					SequenceIndex.Deserialize (jsonReader);
  
 					break;
 					}
@@ -817,7 +817,7 @@ namespace Goedel.Cryptography.Dare {
         ///Unique object identifier
         /// </summary>
 
-		public virtual string						UniqueID  {get; set;}
+		public virtual string						UniqueId  {get; set;}
         /// <summary>
         ///List of labels that are applied to the payload of the frame.
         /// </summary>
@@ -931,10 +931,10 @@ namespace Goedel.Cryptography.Dare {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			if (UniqueID != null) {
+			if (UniqueId != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("UniqueID", 1);
-					_writer.WriteString (UniqueID);
+				_writer.WriteToken ("UniqueId", 1);
+					_writer.WriteString (UniqueId);
 				}
 			if (Labels != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -1055,8 +1055,8 @@ namespace Goedel.Cryptography.Dare {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "UniqueID" : {
-					UniqueID = jsonReader.ReadString ();
+				case "UniqueId" : {
+					UniqueId = jsonReader.ReadString ();
 					break;
 					}
 				case "Labels" : {

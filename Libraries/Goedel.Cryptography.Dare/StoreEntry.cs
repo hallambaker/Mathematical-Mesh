@@ -13,7 +13,7 @@ namespace Goedel.Cryptography.Dare {
         #region // Propeties and fields
 
         ///<summary>The container the store entry belongs to</summary>
-        Container Container;
+        Sequence Container;
 
         /////<summary>The enveloped data</summary>
         //public DareEnvelope DareEnvelope;
@@ -25,10 +25,10 @@ namespace Goedel.Cryptography.Dare {
         public ContentMeta ContentInfo => ContainerHeader.ContentMeta;
 
         ///<summary>Unique identifier of entry;</summary>
-        public string UniqueID => ContentInfo?.UniqueID;
+        public string UniqueID => ContentInfo?.UniqueId;
 
         ///<summary>The container frame</summary>
-        public long FrameCount => ContainerHeader.ContainerInfo.Index;
+        public long FrameCount => ContainerHeader.SequenceInfo.Index;
 
         ///<summary>If true the object haws been deleted and cannot be further modified.</summary>
 
@@ -39,7 +39,7 @@ namespace Goedel.Cryptography.Dare {
         JsonObject jsonObject;
 
         ///<summary>The frame index within the container</summary>
-        public ContainerFrameIndex FrameIndex;
+        public SequenceFrameIndex FrameIndex;
 
 
 
@@ -69,7 +69,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="dareEnvelope">The envelope entry.</param>
         /// <param name="previous">Link to previous value of this object</param>
         /// <param name="item">The JSONObject representation.</param>
-        public StoreEntry(Container container,
+        public StoreEntry(Sequence container,
                     DareEnvelope dareEnvelope,
                     StoreEntry previous,
                     JsonObject item = null) {
@@ -89,9 +89,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="container"></param>
         /// <param name="item">The JSONObject representation.</param>
         public StoreEntry(
-                    ContainerFrameIndex frameIndex,
+                    SequenceFrameIndex frameIndex,
                     StoreEntry previous,
-                    Container container,
+                    Sequence container,
                     JsonObject item = null) {
             Container = container;
             ContainerHeader = frameIndex.Header;

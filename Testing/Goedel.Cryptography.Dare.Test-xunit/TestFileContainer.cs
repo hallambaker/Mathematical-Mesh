@@ -147,17 +147,17 @@ namespace Goedel.XUnit {
             policy = policy ?? TestEnvironmentCommon.MakePolicy();
 
             // Create container
-            FileContainerWriter.File(fileName, policy, testData, null);
+            DareLogWriter.File(fileName, policy, testData, null);
 
             // Read Container
-            FileContainerReader.File(fileName, policy.KeyLocate,
+            DareLogReader.File(fileName, policy.KeyLocate,
                         out var ReadData, out var ContentMetaOut);
 
             // Check for equality
             ReadData.IsEqualTo(testData).TestTrue();
 
 
-            Container.VerifyPolicy(fileName, policy.KeyLocate);
+            Sequence.VerifyPolicy(fileName, policy.KeyLocate);
             }
 
 
@@ -176,7 +176,7 @@ namespace Goedel.XUnit {
             var filename = fileNameBase + $"{mode}_{entries}";
 
 
-            using (var writer = new FileContainerWriter(
+            using (var writer = new DareLogWriter(
                     filename, policy, true, fileStatus: FileStatus.Overwrite)) {
                 for (var i = 0; i < entries; i++) {
                     writer.Add(testData[i]);
@@ -185,7 +185,7 @@ namespace Goedel.XUnit {
 
             // Test retrieval by index number. Note that since record 0 has the 
             // container header data, the data items run through [1..Entries]
-            using (var reader = new FileContainerReader(filename, policy.KeyLocate)) {
+            using (var reader = new DareLogReader(filename, policy.KeyLocate)) {
                 for (var i = 0; i < entries; i++) {
 
                     reader.Read(policy?.KeyLocate, out var ReadData, out var ContentMeta, index: i + 1);
@@ -193,7 +193,7 @@ namespace Goedel.XUnit {
                     }
                 }
 
-            Container.VerifyPolicy(filename, policy.KeyLocate);
+            Sequence.VerifyPolicy(filename, policy.KeyLocate);
             }
 
 

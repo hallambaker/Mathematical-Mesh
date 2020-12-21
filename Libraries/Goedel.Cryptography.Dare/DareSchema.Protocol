@@ -146,10 +146,10 @@
 			Description			
 				|If present contains a JSON encoded ContentInfo structure which specifies
 				|plaintext content metadata and forms one of the inputs to the envelope digest value.
-		Struct ContainerInfo ContainerInfo
+		Struct SequenceInfo SequenceInfo
 			Description
 				|Information that describes container information
-		Struct ContainerIndex ContainerIndex
+		Struct SequenceIndex SequenceIndex
 			Description
 				|An index of records in the current container up to but not including
 				|this one.
@@ -160,7 +160,7 @@
 
 
 	Structure ContentMeta
-		String UniqueID
+		String UniqueId
 			Description 
 				|Unique object identifier
 		String Labels

@@ -640,7 +640,7 @@ namespace Goedel.XUnit {
                     KeyPair encryptionKey=null) =>
             VerifyContainerEncrypted(container.Container, encryptionKey);
 
-        static bool VerifyContainerEncrypted(Goedel.Cryptography.Dare.Container container,
+        static bool VerifyContainerEncrypted(Goedel.Cryptography.Dare.Sequence container,
                     KeyPair encryptionKey=null) {
 
 

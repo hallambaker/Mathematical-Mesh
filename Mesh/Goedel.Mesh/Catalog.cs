@@ -303,7 +303,7 @@ namespace Goedel.Mesh {
                 var signatures = trailer?.Signatures ?? header?.Signatures;
 
                 // give the status
-                if (header?.ContainerInfo is var containerInfo) {
+                if (header?.SequenceInfo is var containerInfo) {
                     output.WriteLine($"   Index: {containerInfo.Index} Tree: {containerInfo.TreePosition}");
                     }
                 else {

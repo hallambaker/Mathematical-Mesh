@@ -29,17 +29,17 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        public static new Container MakeNewContainer(
+        public static new Sequence MakeNewContainer(
                         JbcdStream JBCDStream) {
 
 
-            var containerInfo = new ContainerInfo() {
+            var containerInfo = new SequenceInfo() {
                 ContainerType = DareConstants.ContainerTypeChainTag,
                 Index = 0
                 };
 
             var containerHeader = new DareHeader() {
-                ContainerInfo = containerInfo
+                SequenceInfo = containerInfo
                 };
 
             var container = new ContainerChain() {
@@ -58,7 +58,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="firstPosition">Position of frame 1</param>
         /// <param name="positionLast">Position of the last frame</param>
         protected override void FillDictionary(
-                        ContainerInfo header, 
+                        SequenceInfo header, 
                         long firstPosition, 
                         long positionLast) => 
             base.FillDictionary(header, firstPosition, positionLast);
@@ -113,10 +113,10 @@ namespace Goedel.Cryptography.Dare {
         public override void CheckContainer(List<DareHeader> headers) {
             int Index = 1;
             foreach (var Header in headers) {
-                Assert.AssertNotNull(Header.ContainerInfo, ContainerDataCorrupt.Throw);
+                Assert.AssertNotNull(Header.SequenceInfo, ContainerDataCorrupt.Throw);
 
 
-                Assert.AssertTrue(Header.ContainerInfo.Index == Index, ContainerDataCorrupt.Throw);
+                Assert.AssertTrue(Header.SequenceInfo.Index == Index, ContainerDataCorrupt.Throw);
                 Assert.AssertNotNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
                 Index++;
                 }

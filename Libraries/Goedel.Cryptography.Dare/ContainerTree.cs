@@ -27,18 +27,18 @@ namespace Goedel.Cryptography.Dare {
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
         /// <returns>The newly constructed container.</returns>
-        public static new Container MakeNewContainer(
+        public static new Sequence MakeNewContainer(
                         JbcdStream jbcdStream) {
 
 
-            var containerInfo = new ContainerInfo() {
+            var containerInfo = new SequenceInfo() {
                 ContainerType = DareConstants.ContainerTypeTreeTag,
                 Index = 0
                 };
 
 
             var containerHeader = new DareHeader() {
-                ContainerInfo = containerInfo
+                SequenceInfo = containerInfo
                 };
 
 
@@ -69,7 +69,7 @@ namespace Goedel.Cryptography.Dare {
         /// Prepare the ContainerInfo data for the frame.
         /// </summary>
         /// <param name="containerInfo">The frame to prepare.</param>
-        protected override void PrepareFrame(ContainerInfo containerInfo) {
+        protected override void PrepareFrame(SequenceInfo containerInfo) {
             if (containerInfo.Index == 0) {
                 containerInfo.ContainerType = DareConstants.ContainerTypeTreeTag;
                 }
@@ -97,7 +97,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerInfo">Final frame header</param>
         /// <param name="firstPosition">Position of frame 1</param>
         /// <param name="positionLast">Position of the last frame</param>
-        protected override void FillDictionary(ContainerInfo containerInfo, long firstPosition, long positionLast) {
+        protected override void FillDictionary(SequenceInfo containerInfo, long firstPosition, long positionLast) {
             FrameIndexToPositionDictionary.Add(0, 0);
             if (containerInfo.Index == 0) {
                 return;
@@ -121,7 +121,7 @@ namespace Goedel.Cryptography.Dare {
 
                 // 
                 JbcdStream.PositionRead = treePosition;
-                containerInfo = JbcdStream.ReadFrameHeader().ContainerInfo;
+                containerInfo = JbcdStream.ReadFrameHeader().SequenceInfo;
 
                 if (index != containerInfo.Index) {
 
@@ -209,7 +209,7 @@ namespace Goedel.Cryptography.Dare {
                         if (!found) {
                             JbcdStream.PositionRead = Position;
                             frameHeader = JbcdStream.ReadFrameHeader();
-                            RegisterFrame(frameHeader.ContainerInfo, Position);
+                            RegisterFrame(frameHeader.SequenceInfo, Position);
                             }
 
                         PositionRead = Position;
@@ -217,7 +217,7 @@ namespace Goedel.Cryptography.Dare {
                         nextPosition = JbcdStream.PositionRead;
 
                         frameHeader = JbcdStream.ReadFrameHeader();
-                        Assert.AssertTrue(frameHeader.ContainerInfo.Index == nextRecord, ContainerDataCorrupt.Throw);
+                        Assert.AssertTrue(frameHeader.SequenceInfo.Index == nextRecord, ContainerDataCorrupt.Throw);
 
                         found = false;
                         }
@@ -233,10 +233,10 @@ namespace Goedel.Cryptography.Dare {
 
                         PositionRead = Position;
                         frameHeader = JbcdStream.ReadFrameHeader();
-                        nextPosition = frameHeader.ContainerInfo.TreePosition;
+                        nextPosition = frameHeader.SequenceInfo.TreePosition;
 
                         if (!found) {
-                            RegisterFrame(frameHeader.ContainerInfo, Position);
+                            RegisterFrame(frameHeader.SequenceInfo, Position);
                             }
                         found = false;
                         }
@@ -319,7 +319,7 @@ namespace Goedel.Cryptography.Dare {
         public override void CheckContainer(List<DareHeader> headers) {
             var index = 1;
             foreach (var Header in headers) {
-                Assert.AssertTrue(Header.ContainerInfo.Index == index,
+                Assert.AssertTrue(Header.SequenceInfo.Index == index,
                         ContainerDataCorrupt.Throw);
                 Assert.AssertNotNull(Header.PayloadDigest,
                         ContainerDataCorrupt.Throw);
@@ -340,7 +340,7 @@ namespace Goedel.Cryptography.Dare {
             // Check the first frame
             JbcdStream.PositionRead = 0;
             var header = JbcdStream.ReadFirstFrameHeader();
-            Assert.AssertTrue(header.ContainerInfo.Index == 0, ContainerDataCorrupt.Throw);
+            Assert.AssertTrue(header.SequenceInfo.Index == 0, ContainerDataCorrupt.Throw);
             headerDictionary.Add(0, header);
 
             // Check subsequent frames
@@ -350,12 +350,12 @@ namespace Goedel.Cryptography.Dare {
                 header = JbcdStream.ReadFrameHeader();
                 headerDictionary.Add(Position, header);
 
-                Assert.AssertTrue(header.ContainerInfo.Index == index, ContainerDataCorrupt.Throw);
+                Assert.AssertTrue(header.SequenceInfo.Index == index, ContainerDataCorrupt.Throw);
                 if (index > 1) {
                     var Previous = PreviousFrame(index);
-                    Assert.AssertTrue(headerDictionary.TryGetValue(header.ContainerInfo.TreePosition, out var PreviousHeader), 
+                    Assert.AssertTrue(headerDictionary.TryGetValue(header.SequenceInfo.TreePosition, out var PreviousHeader), 
                         ContainerDataCorrupt.Throw);
-                    Assert.AssertTrue(PreviousHeader.ContainerInfo.Index == Previous, 
+                    Assert.AssertTrue(PreviousHeader.SequenceInfo.Index == Previous, 
                         ContainerDataCorrupt.Throw);
                     }
 

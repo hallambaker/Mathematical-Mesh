@@ -483,7 +483,7 @@ namespace Goedel.Mesh.Client {
             foreach (var message in GetSpoolInbound().Select(1, true)) {
                 var contentMeta = message.Header.ContentMeta;
 
-                if (!completed.ContainsKey(contentMeta.UniqueID)) {
+                if (!completed.ContainsKey(contentMeta.UniqueId)) {
                     var meshMessage = Message.Decode(message, KeyCollection);
                     //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
                     if (contentMeta.MessageType == tag) {

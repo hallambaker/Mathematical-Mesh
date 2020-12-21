@@ -9,27 +9,136 @@ using System.IO;
 
 namespace Goedel.Cryptography.Dare {
 
-    // Feature: Record filenames when creating containers
-    // Feature: Extract file by name
-    // Feature: Sign and verify archives by Merkle tree
-    // Feature: Use cloaked headers to conceal file names
+    /// <summary>
+    /// Record tracking a file in an archive.
+    /// </summary>
+    public record FileEntry {
 
-    /// <summary>Specify chunking mode.</summary>
-    public enum ChunkMode {
-        /// <summary>The frame carries the complete data entry.</summary>
-        Full,
-        /// <summary>The frame carries a partial, non terminal chunk.</summary>
-        Chunk,
-        /// <summary>The frame carries the last chunk.</summary>
-        Last
+        ///<summary>The file path in canonical form.</summary> 
+        public string Path;
+
+        ///<summary>The creation time.</summary> 
+        public DateTime? CreationTimeUtc;
+
+        ///<summary>The last access time.</summary> 
+        public DateTime? LastAccessTimeUtc;
+
+        ///<summary>The last write time.</summary> 
+        public DateTime? LastWriteTimeUtc;
+
+        ///<summary>The file attributes mask.</summary> 
+        public int Attributes;
+
+        ///<summary>The index in the log.</summary> 
+        public long Index;
+
+        ///<summary>The position within the container.</summary> 
+        public long Position;
+
+        ///<summary>The index of the previous version of this file in the log.</summary> 
+        public long Previous;
+
+        ///<summary>The previous position within the container.</summary> 
+        public long PreviousPosition;
         }
+
+    /// <summary>
+    /// Class tracking a set of files in a sequence.
+    /// </summary>
+    public class FileCollection {
+
+        ///<summary>Dictionary mapping full names to file entries.</summary> 
+        public SortedDictionary<string, FileEntry> DictionaryByPath = new ();
+
+        /// <summary>
+        /// Add an entry described by <paramref name="fileInfo"/> to the collection using
+        /// <paramref name="relativeTo"/> as the relative path.
+        /// </summary>
+        /// <param name="fileInfo">File information block.</param>
+        /// <param name="relativeTo">Point that the path is relative to.</param>
+        /// <param name="index">Index of the frame in the sequence.</param>
+        /// <param name="position">Position of the first byte of the frame.</param>
+        /// <returns>The file entry created. This will contain relative links to the
+        /// previous entry (if it exists).</returns>
+        public FileEntry Add(FileInfo fileInfo, string relativeTo, long index, long position) {
+
+            var path = Path.GetRelativePath(relativeTo, fileInfo.FullName);
+            var result = new FileEntry() {
+                Path = path,
+                CreationTimeUtc = fileInfo.CreationTimeUtc,
+                LastAccessTimeUtc = fileInfo.LastAccessTimeUtc,
+                LastWriteTimeUtc = fileInfo.LastWriteTimeUtc,
+                Attributes = (int)fileInfo.Attributes,
+                Index = index,
+                Position = position
+                };
+
+            if (DictionaryByPath.TryGetValue(path, out var previous)) {
+                result.Previous = previous.Index;
+                result.PreviousPosition = previous.Position;
+                DictionaryByPath.Remove(path);
+                }
+            DictionaryByPath.Add(path, result);
+
+            return result;
+            }
+
+        /// <summary>
+        /// Delete the file entry <paramref name="path"/> from the sequence.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public FileEntry Delete(string path) {
+            if (DictionaryByPath.TryGetValue(path, out var entry)) {
+                DictionaryByPath.Remove(path);
+                return entry;
+                }
+            else {
+                return null;
+                }
+
+            }
+
+        /// <summary>
+        /// Make a sequence index from the specified values.
+        /// </summary>
+        /// <returns>The created index.</returns>
+        public SequenceIndex MakeIndex() {
+
+            var index = new SequenceIndex() {
+                Positions = new List<IndexPosition>(),
+                };
+
+            Screen.WriteLine($"Start index {DictionaryByPath.Count} items");
+            foreach (var item in DictionaryByPath) {
+                var entry = item.Value;
+                Screen.WriteLine($"    {entry.Index} {entry.Path}");
+
+                var position = new IndexPosition() {
+                    Index = (int) entry.Index,
+                    Position = (int)entry.Position,
+                    UniqueId = entry.Path
+                    };
+                index.Positions.Add(position);
+                }
+
+            return index;
+            }
+
+        }
+
 
 
     /// <summary>
     /// 
     /// </summary>
-    public abstract class FileContainer : Disposable {
+    public abstract class DareLog : Disposable {
 
+        ///<summary>The archive index</summary> 
+        public FileCollection FileCollection = new ();
+
+        ///<summary>The index position of the first file in the dictionary.</summary> 
+        public int DictionaryStart;
 
         #region IDisposable
         /// <summary>
@@ -44,14 +153,14 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// 
     /// </summary>
-    public class FileContainerWriter : FileContainer {
-        Container container = null;
+    public class DareLogWriter : DareLog {
+        Sequence Sequence = null;
 
         /// <summary>
         /// The class specific disposal routine.
         /// </summary>
         protected override void Disposing() {
-            container?.Dispose();
+            Sequence?.Dispose();
             jbcdStream.Dispose();
             }
 
@@ -73,17 +182,14 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>File Container instance</returns>
         /// <param name="policy">The cryptographic policy to be applied to the container.</param>
         /// <returns>The newly constructed container.</returns>
-        public FileContainerWriter(
+        public DareLogWriter(
                 string fileName,
                 DarePolicy policy,
                 bool archive = false,
                 bool digest = true,
                 FileStatus fileStatus = FileStatus.Overwrite,
-                ContainerType containerType = ContainerType.Unknown) {
-
-            jbcdStream = new JbcdStream(fileName, fileStatus);
-            container = BindContainer(jbcdStream, archive, digest, containerType);
-            }
+                ContainerType containerType = ContainerType.Unknown) :
+                        this(new JbcdStream(fileName, fileStatus), archive, digest, containerType) { }
 
 
         /// <summary>
@@ -96,31 +202,28 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerType">The container type to use. If unspecified,
         /// a type appropriate for the type of use will be selected.</param>
         /// <returns>File Container instance</returns>
-        public FileContainerWriter(
+        public DareLogWriter(
                 JbcdStream jbcdStream,
                 bool archive = false,
                 bool digest = true,
-                ContainerType containerType = ContainerType.Unknown) => container = BindContainer(
-                    jbcdStream, archive, digest, containerType);
-
-        static Container BindContainer(
-                    JbcdStream jbcdStream,
-                    bool archive = false,
-                    bool digest = true,
-                    ContainerType containerType = ContainerType.Unknown) {
+                ContainerType containerType = ContainerType.Unknown) {
 
             if (containerType == ContainerType.Unknown) {
                 containerType = digest ? archive ? ContainerType.Merkle : ContainerType.Chain :
                     archive ? ContainerType.Tree : ContainerType.List;
                 }
 
+            Sequence container;
             if (jbcdStream.Length == 0) {
-                return Container.NewContainer(jbcdStream, containerType: containerType);
-
+                
+                container = Sequence.NewContainer(jbcdStream, containerType: containerType);
+                DictionaryStart = 0;
                 }
             else {
-                return Container.Open(jbcdStream, null);
+                container = Sequence.Open(jbcdStream, null);
+                DictionaryStart = container.FrameIndexLast;
                 }
+
             }
 
 
@@ -142,7 +245,7 @@ namespace Goedel.Cryptography.Dare {
                 FileStatus fileStatus = FileStatus.Overwrite
                 ) {
 
-            using var Writer = new FileContainerWriter(
+            using var Writer = new DareLogWriter(
                         fileName,
                         policy,
                         archive: false,
@@ -166,7 +269,7 @@ namespace Goedel.Cryptography.Dare {
             var Stream = new MemoryStream();
             var JBCDStream = new JbcdStream(null, Stream);
 
-            using (var Writer = new FileContainerWriter(JBCDStream, archive: false, digest: false,
+            using (var Writer = new DareLogWriter(JBCDStream, archive: false, digest: false,
                             containerType: ContainerType.List)) {
                 Writer.Add(dataIn, contentMeta);
                 }
@@ -182,7 +285,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="contentInfo">The content metadata</param>
         public void Add(
                 byte[] data,
-                ContentMeta contentInfo = null) => container.Append(
+                ContentMeta contentInfo = null) => Sequence.Append(
                     data,
                     contentInfo);
 
@@ -210,7 +313,8 @@ namespace Goedel.Cryptography.Dare {
                 Paths = new List<string> { path }
                 };
 
-            container.AppendFile(file, contentInfo);
+            Sequence.AppendFile(file, contentInfo);
+            ArchiveIndex.Add(file, Sequence.FrameIndexLast);
             }
 
         /// <summary>
@@ -229,7 +333,7 @@ namespace Goedel.Cryptography.Dare {
         /// container data is to be read.</param>
         /// <param name="cryptoParameters">The new crypto parameters to be used to 
         /// write the container data.</param>
-        public static void Add(ContainerFrameIndex containerDataReader,
+        public void Add(SequenceFrameIndex containerDataReader,
                 CryptoParameters cryptoParameters = null) {
             containerDataReader.Future();
             cryptoParameters.Future();
@@ -241,10 +345,18 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="signatures">List of JWS signatures. Since this is the first block, the signature
         /// is always over the payload data only.</param>
-        public static void AddIndex(List<KeyPair> signatures = null) {
+        public void AddIndex(List<KeyPair> signatures = null) {
             signatures.Future();
             throw new NYI();
             }
+
+
+        public void MakeIndex() {
+
+            }
+
+
+        
 
         }
 
@@ -252,9 +364,9 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// 
     /// </summary>
-    public class FileContainerReader : FileContainer, IEnumerable<ContainerFrameIndex> {
+    public class DareLogReader : DareLog, IEnumerable<SequenceFrameIndex> {
 
-        Container container = null;
+        Sequence container = null;
 
         /// <summary>
         /// The class specific disposal routine.
@@ -271,7 +383,7 @@ namespace Goedel.Cryptography.Dare {
         /// Enumerate over the archive contents.
         /// </summary>
         /// <returns>The enumerator</returns>
-        public IEnumerator<ContainerFrameIndex> GetEnumerator() => container.GetEnumerator();
+        public IEnumerator<SequenceFrameIndex> GetEnumerator() => container.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();
 
 
@@ -283,13 +395,13 @@ namespace Goedel.Cryptography.Dare {
         /// that permits read access.</param>
         /// <param name="keyCollection">Key collection to be used to resolve private key references.</param>
         /// <returns>File Container instance</returns>
-        public FileContainerReader(
+        public DareLogReader(
                 string fileName,
                 IKeyLocate keyCollection = null,
                 FileStatus fileStatus = FileStatus.Read) {
 
             var JBCDStream = new JbcdStream(fileName, fileStatus);
-            container = Container.OpenExisting(JBCDStream, keyCollection);
+            container = Sequence.OpenExisting(JBCDStream, keyCollection);
             }
 
 
@@ -298,13 +410,13 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Data">The container data.</param>
         /// <param name="KeyCollection">Key collection to be used to resolve private key references.</param>
-        public FileContainerReader(
+        public DareLogReader(
                 byte[] Data,
                 IKeyLocate KeyCollection = null) {
 
             var Stream = new MemoryStream(Data, 0, Data.Length, false);
             var JBCDStream = new JbcdStream(Stream, null);
-            container = Container.OpenExisting(JBCDStream, KeyCollection);
+            container = Sequence.OpenExisting(JBCDStream, KeyCollection);
 
             }
 
@@ -321,7 +433,7 @@ namespace Goedel.Cryptography.Dare {
                 out byte[] Data,
                 out ContentMeta ContentMeta) {
 
-            using var Reader = new FileContainerReader(FileName, KeyCollection);
+            using var Reader = new DareLogReader(FileName, KeyCollection);
 
             var container = Reader.container;
             var ContainerDataReader = container.GetContainerFrameIndex(
@@ -345,7 +457,7 @@ namespace Goedel.Cryptography.Dare {
                 out byte[] Data,
                 out ContentMeta ContentMeta) {
 
-            using var Reader = new FileContainerReader(DataIn);
+            using var Reader = new DareLogReader(DataIn);
             Reader.Read(keyLocate, out Data, out ContentMeta);
 
             }
@@ -385,7 +497,7 @@ namespace Goedel.Cryptography.Dare {
             path.Future();
 
             var ContainerDataReader = container.GetContainerFrameIndex(index);
-            ContainerFrameIndex.CopyToFile(outputFile);
+            SequenceFrameIndex.CopyToFile(outputFile);
             }
 
         /// <summary>
@@ -413,7 +525,7 @@ namespace Goedel.Cryptography.Dare {
                     var OutputFile = Path.Combine(outputDirectory, FilePath[0]);
 
 
-                    ContainerFrameIndex.CopyToFile(OutputFile);
+                    SequenceFrameIndex.CopyToFile(OutputFile);
                     //Container.WriteFrameToFile2(OutputFile);
                     }
                 }
@@ -423,9 +535,9 @@ namespace Goedel.Cryptography.Dare {
         /// Copy data from this container to the specified container writer.
         /// </summary>
         /// <param name="fileContainerWriter">The container to be written to.</param>
-        public void CopyArchive(FileContainerWriter fileContainerWriter) {
+        public void CopyArchive(DareLogWriter fileContainerWriter) {
             foreach (var ContainerDataReader in container) {
-                FileContainerWriter.Add(ContainerDataReader);
+                fileContainerWriter.Add(ContainerDataReader);
 
                 }
 

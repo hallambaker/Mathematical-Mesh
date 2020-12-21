@@ -90,9 +90,9 @@ namespace ExampleGenerator {
 				_Output.Write ("where the data payload has been transformed, (i.e. encrypted).\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("##Simple container\n{0}", _Indent);
+				_Output.Write ("##Simple sequence\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The following example shows a simple container with first frame and a single data frame:\n{0}", _Indent);
+				_Output.Write ("The following example shows a simple sequence with first frame and a single data frame:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("{1}~~~~\n{0}", _Indent, Dare.ContainerFramingSimple);
@@ -105,7 +105,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Payload and chain digests\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The following example shows a chain container with a first frame and three \n{0}", _Indent);
+				_Output.Write ("The following example shows a chain sequence with a first frame and three \n{0}", _Indent);
 				_Output.Write ("data frames. The headers of these frames is the same as before but the\n{0}", _Indent);
 				_Output.Write ("frames now have trailers specifying the PayloadDigest and ChainDigest values:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -113,15 +113,15 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Merkle Tree\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The following example shows a chain container with a first frame and six \n{0}", _Indent);
+				_Output.Write ("The following example shows a chain sequence with a first frame and six \n{0}", _Indent);
 				_Output.Write ("data frames. The trailers now contain the TreePosition and TreeDigest\n{0}", _Indent);
 				_Output.Write ("values:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				DumpHeaders (Dare.ContainerHeadersMerkleTree);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("##Signed container\n{0}", _Indent);
+				_Output.Write ("##Signed sequence\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The following example shows a tree container with a signature in the final record.\n{0}", _Indent);
+				_Output.Write ("The following example shows a tree sequence with a signature in the final record.\n{0}", _Indent);
 				_Output.Write ("The signing key parameters are:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -130,18 +130,18 @@ namespace ExampleGenerator {
 				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.SignatureAliceKey));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The container headers and trailers are:\n{0}", _Indent);
+				_Output.Write ("The sequence headers and trailers are:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				DumpHeaders (Dare.ContainerHeadersSigned);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("##Encrypted container\n{0}", _Indent);
+				_Output.Write ("##Encrypted sequence\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The following example shows a container in which all the frame payloads are encrypted \n{0}", _Indent);
+				_Output.Write ("The following example shows a sequence in which all the frame payloads are encrypted \n{0}", _Indent);
 				_Output.Write ("under the same base seed established in a key agreement specified in the first frame.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				DumpHeaders (Dare.ContainerHeadersEncryptSingleSession);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Here are the container bytes. Note that the content is now encrypted and has expanded by\n{0}", _Indent);
+				_Output.Write ("Here are the sequence bytes. Note that the content is now encrypted and has expanded by\n{0}", _Indent);
 				_Output.Write ("25 bytes. These are the salt (16 bytes), the AES padding (4 bytes) and the \n{0}", _Indent);
 				_Output.Write ("JSON-B framing (5 bytes).\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -151,7 +151,7 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The following example shows a container in which all the frame payloads are encrypted \n{0}", _Indent);
+				_Output.Write ("The following example shows a sequence in which all the frame payloads are encrypted \n{0}", _Indent);
 				_Output.Write ("under separate key agreements specified in the payload frames.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				DumpHeaders (Dare.ContainerHeadersEncryptIndependentSession);
@@ -176,7 +176,7 @@ namespace ExampleGenerator {
 		public void DumpHeader (ContainerFrame Frame) {
 			 if (Frame == null) {ReportMissing(); return;}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Frame {1}\n{0}", _Indent, Frame.Header.ContainerInfo.Index);
+			_Output.Write ("Frame {1}\n{0}", _Indent, Frame.Header.SequenceInfo.Index);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("{1}\n{0}", _Indent,  JSONDebugWriter.Write (Frame.Header));

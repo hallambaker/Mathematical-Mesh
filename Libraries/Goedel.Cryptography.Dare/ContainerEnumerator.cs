@@ -9,7 +9,7 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public class ContainerEnumeratorRaw : IEnumerator<DareEnvelope> {
 
-        Container container;
+        Sequence container;
         int lowIndex;
         bool reverse;
         bool active;
@@ -27,7 +27,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="reverse">If true, enumeratre from the last item to <paramref name="lowIndex"/> (inclusive).
         /// otherwise, enumerate from <paramref name="lowIndex"/> to the first.</param>
         /// <param name="container">The container to enumerate.</param>
-        public ContainerEnumeratorRaw(Container container, int lowIndex = 0, bool reverse = false) {
+        public ContainerEnumeratorRaw(Sequence container, int lowIndex = 0, bool reverse = false) {
             this.container = container;
             this.lowIndex = lowIndex;
             this.reverse = reverse;
@@ -67,7 +67,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             var header = Current.Header;
-            return header.ContainerInfo.Index >= lowIndex;
+            return header.SequenceInfo.Index >= lowIndex;
             }
 
         /// <summary>
@@ -88,14 +88,14 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Enumerator for frames in a container beginning with frame 1.
     /// </summary>
-    public class ContainerEnumerator : IEnumerator<ContainerFrameIndex> {
+    public class ContainerEnumerator : IEnumerator<SequenceFrameIndex> {
 
-        Container container;
+        Sequence container;
 
         /// <summary>
         /// Gets the element in the collection at the current position of the enumerator.
         /// </summary>
-        public ContainerFrameIndex Current { get; set; }
+        public SequenceFrameIndex Current { get; set; }
 
 
 
@@ -103,7 +103,7 @@ namespace Goedel.Cryptography.Dare {
         /// Create an enumerator for <paramref name="container"/>.
         /// </summary>
         /// <param name="container">The container to enumerate.</param>
-        public ContainerEnumerator(Container container) {
+        public ContainerEnumerator(Sequence container) {
             this.container = container;
             Reset();
             }
