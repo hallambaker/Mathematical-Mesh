@@ -154,7 +154,7 @@ namespace Goedel.Cryptography.Dare {
     /// 
     /// </summary>
     public class DareLogWriter : DareLog {
-        Sequence Sequence = null;
+        Sequence Sequence { get; }
 
         /// <summary>
         /// The class specific disposal routine.
@@ -213,68 +213,16 @@ namespace Goedel.Cryptography.Dare {
                     archive ? ContainerType.Tree : ContainerType.List;
                 }
 
-            Sequence container;
             if (jbcdStream.Length == 0) {
-                
-                container = Sequence.NewContainer(jbcdStream, containerType: containerType);
+
+                Sequence = Sequence.NewContainer(jbcdStream, containerType: containerType);
                 DictionaryStart = 0;
                 }
             else {
-                container = Sequence.Open(jbcdStream, null);
-                DictionaryStart = container.FrameIndexLast;
+                Sequence = Sequence.Open(jbcdStream, null);
+                DictionaryStart = Sequence.FrameIndexLast;
                 }
 
-            }
-
-
-        /// <summary>
-        /// Open a new file container for write access and write a single file entry.
-        /// </summary>
-        /// <param name="fileName">The file name to create</param>
-        /// <param name="data">The content data</param>
-        /// <param name="contentMeta">The content metadata</param>
-        /// <param name="fileStatus">The mode to open the file in, this must be a mode
-        /// that permits write access.</param>
-        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
-        /// <returns>File Container instance</returns>
-        public static void File(
-                string fileName,
-                DarePolicy policy,
-                byte[] data,
-                ContentMeta contentMeta = null,
-                FileStatus fileStatus = FileStatus.Overwrite
-                ) {
-
-            using var Writer = new DareLogWriter(
-                        fileName,
-                        policy,
-                        archive: false,
-                        digest: false,
-                        fileStatus: fileStatus, containerType: ContainerType.List);
-            Writer.Add(data, contentMeta);
-            }
-
-
-        /// <summary>
-        /// Open a new file container for write access and write a single file entry.
-        /// </summary>
-        /// <param name="dataIn">The content data</param>
-        /// <param name="contentMeta">The content metadata</param>
-        /// <returns>File Container instance</returns>
-        public static byte[] Data(
-                byte[] dataIn,
-                ContentMeta contentMeta = null
-                ) {
-
-            var Stream = new MemoryStream();
-            var JBCDStream = new JbcdStream(null, Stream);
-
-            using (var Writer = new DareLogWriter(JBCDStream, archive: false, digest: false,
-                            containerType: ContainerType.List)) {
-                Writer.Add(dataIn, contentMeta);
-                }
-
-            return Stream.ToArray();
             }
 
 
@@ -283,38 +231,46 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="data">The content data</param>
         /// <param name="contentInfo">The content metadata</param>
-        public void Add(
+        public void AddData(
                 byte[] data,
-                ContentMeta contentInfo = null) => Sequence.Append(
-                    data,
-                    contentInfo);
+                ContentMeta contentInfo = null) => Sequence.Append(data, contentInfo);
 
         /// <summary>
         /// Add a file entry
         /// </summary>
         /// <param name="file">The file to add</param>
         /// <param name="path">The path name attribute to give the file in the container</param>
-        public void Add(
+        public void AddFile(
+                string basePath,
+                string relativePath,
+                ContentMeta contentMeta = null) {
+            var path = Path.Combine(basePath, relativePath);
+            var fileinfo = new FileInfo(path);
+            AddFile(basePath, fileinfo);
+            }
+
+        /// <summary>
+        /// Add a file entry
+        /// </summary>
+        /// <param name="file">The file to add</param>
+        /// <param name="path">The path name attribute to give the file in the container</param>
+        public void AddFile(
+                string path,
                 FileInfo file,
-                string path = null) => Add(file.FullName, path);
+                ContentMeta contentMeta = null) {
 
-        /// <summary>
-        /// Add a file entry
-        /// </summary>
-        /// <param name="file">The file to add</param>
-        /// <param name="path">The path name attribute to give the file in the container</param>
-        public void Add(
-                string file,
-                string path = null) {
-
-
-            var contentInfo = new ContentMeta() {
-                Filename = file,
-                Paths = new List<string> { path }
+            var filename = Path.Combine(path, file.FullName);
+            contentMeta ??= new ContentMeta() {
+                Filename = filename,
                 };
 
-            Sequence.AppendFile(file, contentInfo);
-            ArchiveIndex.Add(file, Sequence.FrameIndexLast);
+
+
+            Sequence.AppendFile(file.FullName, contentMeta);
+            var index = Sequence.FrameIndexLast;
+            var position = Sequence.PositionFinalFrameStart;
+
+            FileCollection.Add(file, path, index, position);
             }
 
         /// <summary>
@@ -346,23 +302,94 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="signatures">List of JWS signatures. Since this is the first block, the signature
         /// is always over the payload data only.</param>
         public void AddIndex(List<KeyPair> signatures = null) {
+
+
+            var index = FileCollection.MakeIndex(); 
+
+
             signatures.Future();
             throw new NYI();
             }
 
 
-        public void MakeIndex() {
-
+        /// <summary>
+        /// Open a new file container for write access and write a single file entry.
+        /// </summary>
+        /// <param name="fileName">The file name to create</param>
+        /// <param name="data">The content data</param>
+        /// <param name="contentMeta">The content metadata</param>
+        /// <param name="fileStatus">The mode to open the file in, this must be a mode
+        /// that permits write access.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
+        /// <returns>File Container instance</returns>
+        public static void ArchiveFile(
+                string fileName,
+                DarePolicy policy,
+                byte[] data,
+                ContentMeta contentMeta = null,
+                FileStatus fileStatus = FileStatus.Overwrite
+                ) {
+            using var writer = new DareLogWriter(fileName, policy, true, true, fileStatus, ContainerType.Digest);
+            writer.AddData(data, contentMeta);
             }
 
+        /// <summary>
+        /// Open a new file container for write access and append all the files in the directory 
+        /// <paramref name="directory"/>.
+        /// </summary>
+        /// <param name="fileName">The file name to create</param>
+        /// <param name="directory">The directory to append files from.</param>
+        /// <param name="contentMeta">The content metadata</param>
+        /// <param name="fileStatus">The mode to open the file in, this must be a mode
+        /// that permits write access.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
+        /// <returns>File Container instance</returns>
+        public static void ArchiveDirectory(
+                string fileName,
+                DarePolicy policy,
+                string directory,
+                ContentMeta contentMeta = null,
+                FileStatus fileStatus = FileStatus.Overwrite
+                ) {
 
-        
+            using var writer = new DareLogWriter(fileName, policy, true, true, fileStatus, ContainerType.Merkle);
+            writer.ArchiveDirectory(directory);
+            }
 
+        /// <summary>
+        /// Append all the files in the directory 
+        /// <paramref name="directory"/>.
+        /// </summary>
+        /// <param name="directory">The directory to append files from.</param>
+        /// <param name="contentMeta">The content metadata</param>
+        public void ArchiveDirectory(string directory, ContentMeta contentMeta = null) {
+            var directoryInfo = new DirectoryInfo(directory);
+            directoryInfo.Exists.AssertTrue(DirectoryNotFound.Throw);
+            AddDirectory(directory, directoryInfo, contentMeta);
+            }
+
+        /// <summary>
+        /// Append all the files in the directory 
+        /// <paramref name="directory"/>.
+        /// </summary>
+        /// <param name="directory">The directory to append files from.</param>
+        /// <param name="directoryInfo">The directory descriptor.</param>
+        /// <param name="contentMeta">The content metadata</param>
+        public void AddDirectory(string directory, DirectoryInfo directoryInfo, ContentMeta contentMeta) {
+            foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
+                AddFile(directory, fileInfo, contentMeta);
+
+                }
+            foreach (var fileInfo in directoryInfo.EnumerateDirectories()) {
+                AddDirectory(directory, fileInfo, contentMeta);
+
+                }
+            }
         }
 
 
     /// <summary>
-    /// 
+    /// Log reader.
     /// </summary>
     public class DareLogReader : DareLog, IEnumerable<SequenceFrameIndex> {
 

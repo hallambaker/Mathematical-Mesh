@@ -144,10 +144,10 @@ namespace Goedel.XUnit {
         static byte[] CreateBytes(int length) => CryptoCatalog.GetBytes(length);
 
         static void ReadWriteContainer(string fileName, byte[] testData, DarePolicy policy = null) {
-            policy = policy ?? TestEnvironmentCommon.MakePolicy();
+            policy ??= TestEnvironmentCommon.MakePolicy();
 
             // Create container
-            DareLogWriter.File(fileName, policy, testData, null);
+            DareLogWriter.ArchiveFile(fileName, policy, testData, null);
 
             // Read Container
             DareLogReader.File(fileName, policy.KeyLocate,
@@ -179,7 +179,7 @@ namespace Goedel.XUnit {
             using (var writer = new DareLogWriter(
                     filename, policy, true, fileStatus: FileStatus.Overwrite)) {
                 for (var i = 0; i < entries; i++) {
-                    writer.Add(testData[i]);
+                    writer.AddData(testData[i]);
                     }
                 }
 

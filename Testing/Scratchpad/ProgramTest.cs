@@ -23,6 +23,9 @@ namespace Scratchpad {
 
     partial class Program {
         static void Main() {
+            //var x = Environment.CommandLine;
+
+
             Cryptography.Initialize();
 
             /* These only pass because the checks are disabled. */

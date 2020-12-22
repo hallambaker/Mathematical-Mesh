@@ -78,22 +78,26 @@ namespace Goedel.Mesh.Shell {
 
             // should create an archive class as a subset of store.
 
-            using (var Writer = new DareLogWriter(
-                    outputFile, policy, true, fileStatus: FileStatus.Overwrite)) {
+            DareLogWriter.ArchiveDirectory(outputFile, policy,
+                inputFile);
 
-                // Hack: This functionality should be pushed into FileContainerWriter and made recursive, etc.
 
-                var directoryInfo = new DirectoryInfo(inputFile);
-                if (directoryInfo.Exists) {
-                    foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
-                        Writer.Add(fileInfo, path: fileInfo.Name);
-                        }
-                    }
-                // Hack: is not currently indexed.
-                // Need to design a proper index!
+            //using (var Writer = new DareLogWriter(
+            //        outputFile, policy, true, fileStatus: FileStatus.Overwrite)) {
 
-                Writer.AddIndex(); 
-                }
+            //    // Hack: This functionality should be pushed into FileContainerWriter and made recursive, etc.
+
+            //    var directoryInfo = new DirectoryInfo(inputFile);
+            //    if (directoryInfo.Exists) {
+            //        foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
+            //            Writer.AddFile(relativePath: fileInfo);
+            //            }
+            //        }
+            //    // Hack: is not currently indexed.
+            //    // Need to design a proper index!
+
+            //    Writer.AddIndex(); 
+            //    }
 
             return new ResultFile() {
                 Filename = outputFile
@@ -112,7 +116,7 @@ namespace Goedel.Mesh.Shell {
             
             using (var Writer = new DareLogWriter(
                     outputFile, null, true, fileStatus: FileStatus.Existing)) {
-                Writer.Add(inputFile, path: inputFile);
+                Writer.AddFile("", inputFile);
                 }
 
             return new ResultFile() {

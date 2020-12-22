@@ -2,6 +2,7 @@
   "profiles": {
     "Scratchpad": {
       "commandName": "Project",
+      "commandLineArgs": "fred.* % ! |",
       "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Testing\\WorkingDirectory"
     }
   }
