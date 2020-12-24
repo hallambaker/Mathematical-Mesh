@@ -1093,26 +1093,31 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="filename">The container to verify.</param>
         public static void VerifyPolicy(string filename, IKeyLocate keyLocate) {
 
-            var dictionary = new Dictionary<int, SequenceFrameIndex>();
+
 
             // open the container
-            using var XContainer = Sequence.Open(filename, FileStatus.Read, keyLocate);
+            using var sequence = Sequence.Open(filename, FileStatus.Read, keyLocate);
 
-            var darePolicy = XContainer.ContainerHeaderFirst.Policy;
+            sequence.VerifyPolicy(keyLocate);
+
+            }
+
+
+        public void VerifyPolicy(IKeyLocate keyLocate) {
+            var dictionary = new Dictionary<int, SequenceFrameIndex>();
+            var darePolicy = ContainerHeaderFirst.Policy;
             SequenceFrameIndex lastFrame = null;
 
             var record = 0;
             // read each record in turn
-            foreach (var frameIndex in XContainer) {
+            foreach (var frameIndex in this) {
                 record++;
-                Verify(XContainer, darePolicy, frameIndex, record, keyLocate, dictionary);
+                Verify(this, darePolicy, frameIndex, record, keyLocate, dictionary);
                 dictionary.Add(record, frameIndex);
                 lastFrame = frameIndex;
-                
                 }
 
-            VerifyFinal(XContainer, darePolicy, lastFrame);
-
+            VerifyFinal(this, darePolicy, lastFrame);
             }
 
         static bool VerifyFinal(

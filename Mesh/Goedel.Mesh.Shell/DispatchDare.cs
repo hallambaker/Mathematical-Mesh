@@ -64,9 +64,9 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareVerify(DareVerify options) {
             var inputFile = options.Input.Value;
-            var keyLocate = GetKeyCollection(options);
+            var contextAccount = GetContextUser(options);
 
-            var result = DareEnvelope.Verify(inputFile, keyLocate);
+            var result = DareEnvelope.Verify(inputFile, contextAccount);
 
             "Should check that the signature value is correct".TaskFunctionality();
 
@@ -77,6 +77,8 @@ namespace Goedel.Mesh.Shell {
                 Envelope = result
                 };
             }
+
+
 
         /// <summary>
         /// Dispatch method for the 

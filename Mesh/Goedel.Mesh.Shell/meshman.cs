@@ -347,6 +347,7 @@ namespace Goedel.Mesh.Shell {
 				{"archive", _DareArchive._DescribeCommand },
 				{"append", _DareAppend._DescribeCommand },
 				{"delete", _DareDelete._DescribeCommand },
+				{"list", _DareList._DescribeCommand },
 				{"index", _DareIndex._DescribeCommand },
 				{"extract", _DareExtract._DescribeCommand },
 				{"purge", _DareCopy._DescribeCommand }
@@ -1303,6 +1304,16 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
+		public static void Handle_DareList (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			DareList		Options = new DareList ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.DareList (Options);
+			Dispatch._PostProcess (result);
+			}
+
 		public static void Handle_DareIndex (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
@@ -1579,7 +1590,7 @@ namespace Goedel.Mesh.Shell {
 		String			DigestKey{get; set;}
 		}
 
-	public interface IContainerOptions {
+	public interface ISequenceOptions {
 		String			Type{get; set;}
 		}
 
@@ -14195,7 +14206,7 @@ namespace Goedel.Mesh.Shell {
 				new DescribeEntryOption () {
 					Identifier = "New", 
 					Default = null, // null if null
-					Brief = "Only convert file if not listed in DARE Container Log.",
+					Brief = "Only convert file if not listed in DARE Sequence Log.",
 					Index = 3,
 					Key = "new"
 					},
@@ -14209,7 +14220,7 @@ namespace Goedel.Mesh.Shell {
 				new DescribeEntryOption () {
 					Identifier = "Log", 
 					Default = null, // null if null
-					Brief = "Write transaction report to DARE Container Log.",
+					Brief = "Write transaction report to DARE Sequence Log.",
 					Index = 5,
 					Key = "log"
 					},
@@ -14273,7 +14284,7 @@ namespace Goedel.Mesh.Shell {
     public class _DareLog : Goedel.Command.Dispatch ,
 							IEncodeOptions,
 							ICryptoOptions,
-							IContainerOptions,
+							ISequenceOptions,
 							IAccountOptions,
 							IReporting {
 
@@ -14425,12 +14436,12 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[13].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile Container {
+		public virtual NewFile Sequence {
 			get => _Data[14] as NewFile;
 			set => _Data[14]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Sequence {
 			set => _Data[14].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -14479,7 +14490,7 @@ namespace Goedel.Mesh.Shell {
 				new DescribeEntryOption () {
 					Identifier = "Type", 
 					Default = null, // null if null
-					Brief = "The container type, plain/tree/digest/chain/tree",
+					Brief = "The sequence type, plain/tree/digest/chain/tree",
 					Index = 5,
 					Key = "type"
 					},
@@ -14540,9 +14551,9 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
-					Identifier = "Container", 
+					Identifier = "Sequence", 
 					Default = null, // null if null
-					Brief = "New container",
+					Brief = "New sequence",
 					Index = 14,
 					Key = ""
 					}
@@ -14559,7 +14570,7 @@ namespace Goedel.Mesh.Shell {
 							ICryptoOptions,
 							IAccountOptions,
 							IReporting,
-							IContainerOptions {
+							ISequenceOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
@@ -14719,12 +14730,12 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[14].Parameter (value);
 			}
 		/// <summary>Field accessor for option [out]</summary>
-		public virtual NewFile Container {
+		public virtual NewFile Sequence {
 			get => _Data[15] as NewFile;
 			set => _Data[15]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Sequence {
 			set => _Data[15].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -14815,7 +14826,7 @@ namespace Goedel.Mesh.Shell {
 				new DescribeEntryOption () {
 					Identifier = "Type", 
 					Default = null, // null if null
-					Brief = "The container type, plain/tree/digest/chain/tree",
+					Brief = "The sequence type, plain/tree/digest/chain/tree",
 					Index = 11,
 					Key = "type"
 					},
@@ -14841,9 +14852,9 @@ namespace Goedel.Mesh.Shell {
 					Key = ""
 					},
 				new DescribeEntryOption () {
-					Identifier = "Container", 
+					Identifier = "Sequence", 
 					Default = null, // null if null
-					Brief = "New container",
+					Brief = "New sequence",
 					Index = 15,
 					Key = "out"
 					}
@@ -14981,12 +14992,12 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[10].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Container {
+		public virtual ExistingFile Sequence {
 			get => _Data[11] as ExistingFile;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Sequence {
 			set => _Data[11].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
@@ -15011,7 +15022,7 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "append",
-			Brief =  "Append the specified file as an entry to the specified container",
+			Brief =  "Append the specified file as an entry to the specified sequence.",
 			HandleDelegate =  CommandLineInterpreter.Handle_DareAppend,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -15093,9 +15104,9 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
-					Identifier = "Container", 
+					Identifier = "Sequence", 
 					Default = null, // null if null
-					Brief = "Container to append to",
+					Brief = "Sequence to append to",
 					Index = 11,
 					Key = ""
 					},
@@ -15133,12 +15144,12 @@ namespace Goedel.Mesh.Shell {
 
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Container {
+		public virtual ExistingFile Sequence {
 			get => _Data[0] as ExistingFile;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Sequence {
 			set => _Data[0].Parameter (value);
 			}
 		/// <summary>Field accessor for option [file]</summary>
@@ -15168,9 +15179,9 @@ namespace Goedel.Mesh.Shell {
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
-					Identifier = "Container", 
+					Identifier = "Sequence", 
 					Default = null, // null if null
-					Brief = "Container to append to",
+					Brief = "Sequence to append to",
 					Index = 0,
 					Key = ""
 					},
@@ -15195,6 +15206,151 @@ namespace Goedel.Mesh.Shell {
 
     public partial class DareDelete : _DareDelete {
         } // class DareDelete
+
+    public class _DareList : Goedel.Command.Dispatch ,
+							IReporting,
+							IAccountOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String (),
+			new ExistingFile ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[0] as Enumeration<EnumReporting>;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Sequence {
+			get => _Data[6] as ExistingFile;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Sequence {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "list",
+			Brief =  "Compile a catalog for the specified sequence.",
+			HandleDelegate =  CommandLineInterpreter.Handle_DareList,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 0,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 1,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 3,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 4,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 5,
+					Key = "local"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Sequence", 
+					Default = null, // null if null
+					Brief = "Sequence to be cataloged",
+					Index = 6,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class DareList : _DareList {
+        } // class DareList
 
     public class _DareIndex : Goedel.Command.Dispatch ,
 							IEncodeOptions,
@@ -15320,19 +15476,19 @@ namespace Goedel.Mesh.Shell {
 			set => _Data[10].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Container {
+		public virtual ExistingFile Sequence {
 			get => _Data[11] as ExistingFile;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Sequence {
 			set => _Data[11].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "index",
-			Brief =  "Compile an index for the specified container and append to the end.",
+			Brief =  "Compile an index for the specified sequence and append to the end.",
 			HandleDelegate =  CommandLineInterpreter.Handle_DareIndex,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
@@ -15414,9 +15570,9 @@ namespace Goedel.Mesh.Shell {
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
-					Identifier = "Container", 
+					Identifier = "Sequence", 
 					Default = null, // null if null
-					Brief = "Container to append to",
+					Brief = "Sequence to be indexed",
 					Index = 11,
 					Key = ""
 					}
@@ -15450,12 +15606,12 @@ namespace Goedel.Mesh.Shell {
 
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Container {
+		public virtual ExistingFile Sequence {
 			get => _Data[0] as ExistingFile;
 			set => _Data[0]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Sequence {
 			set => _Data[0].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
@@ -15552,14 +15708,14 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "extract",
-			Brief =  "Extract the specified record from the container",
+			Brief =  "Extract the specified record from the sequence",
 			HandleDelegate =  CommandLineInterpreter.Handle_DareExtract,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
-					Identifier = "Container", 
+					Identifier = "Sequence", 
 					Default = null, // null if null
-					Brief = "Container to read",
+					Brief = "Sequence to read",
 					Index = 0,
 					Key = ""
 					},
@@ -15644,7 +15800,7 @@ namespace Goedel.Mesh.Shell {
     public class _DareCopy : Goedel.Command.Dispatch ,
 							IEncodeOptions,
 							ICryptoOptions,
-							IContainerOptions,
+							ISequenceOptions,
 							IAccountOptions,
 							IReporting {
 
@@ -15848,14 +16004,14 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "purge",
-			Brief =  "Copy container contents to create a new container removing deleted elements",
+			Brief =  "Copy sequence contents to create a new sequence removing deleted elements",
 			HandleDelegate =  CommandLineInterpreter.Handle_DareCopy,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
 					Identifier = "Input", 
 					Default = null, // null if null
-					Brief = "Container to read",
+					Brief = "Sequence to read",
 					Index = 0,
 					Key = ""
 					},
@@ -15904,7 +16060,7 @@ namespace Goedel.Mesh.Shell {
 				new DescribeEntryOption () {
 					Identifier = "Type", 
 					Default = null, // null if null
-					Brief = "The container type, plain/tree/digest/chain/tree",
+					Brief = "The sequence type, plain/tree/digest/chain/tree",
 					Index = 7,
 					Key = "type"
 					},
@@ -19060,6 +19216,11 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult DareDelete ( DareDelete Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult DareList ( DareList Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

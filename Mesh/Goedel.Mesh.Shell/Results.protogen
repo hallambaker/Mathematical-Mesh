@@ -140,6 +140,20 @@
 
 	// Catalog commands
 
+	Structure ResultSequence 
+		Inherits		Result
+		Struct LogEntry Entries
+	
+	Structure LogEntry
+		String			Key
+		Integer			Length
+		Binary			Digest
+		DateTime		Recorded
+		Boolean			Encrypted
+		Boolean			Signed
+		Boolean			KeyExchange
+
+
 	Structure ResultEntry
 		Inherits		Result
 		TStruct CatalogedEntry CatalogEntry

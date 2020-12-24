@@ -4,7 +4,7 @@ using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
-
+using Goedel.Cryptography.Dare;
 using System.Collections.Generic;
 using Xunit;
 
@@ -164,6 +164,10 @@ namespace Goedel.XUnit {
             }
 
         static void AddEntries(Dictionary<string, bool> dictionary, string directory) {
+
+
+
+
             if (directory == null) {
                 return;
                 }
@@ -180,22 +184,30 @@ namespace Goedel.XUnit {
 
         bool VerifyArchive(string filename, Dictionary<string, bool> entries, string sign, string encrypt,
                 TestCLI mallet) {
-            VerifyPolicy(filename, sign, encrypt);
+
+            using var archive = new DareLogReader(filename);
+            archive.Sequence.VerifyPolicy(null);
+
 
             // Extract all files and test.
             foreach (var entry in entries) {
                 var subFile = entry.Key;
                 // extract
 
-                VerifyPolicy(subFile, sign, encrypt);
+                //VerifyPolicy(subFile, sign, encrypt);
                 }
 
             // Extract single files and test.
             foreach (var entry in entries) {
                 var subFile = entry.Key;
+
+
+                Dispatch($"dare extract {filename} /file={entry.Key}");
+
+
                 // extract
 
-                VerifyPolicy(subFile, sign, encrypt);
+                //VerifyPolicy(subFile, sign, encrypt);
                 }
 
             throw new NYI();

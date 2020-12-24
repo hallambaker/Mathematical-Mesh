@@ -37,7 +37,7 @@
 
 	OptionSet LogOptions
 		Option Log "log" ExistingFile
-			Brief "Write transaction report to DARE Container Log."
+			Brief "Write transaction report to DARE Sequence Log."
 		Option Admin "admin" String
 			Brief "Identifier of administrator authorized to read the log."
 
@@ -145,9 +145,9 @@
 		Option DigestKey "key" String
 			Brief "Encrypt data for specified recipient"
 
-	OptionSet ContainerOptions
+	OptionSet SequenceOptions
 		Option Type "type" String
-			Brief "The container type, plain/tree/digest/chain/tree"
+			Brief "The sequence type, plain/tree/digest/chain/tree"
 		Enumerate EnumAuthentication "auth"
 			Brief "Authentication and indexing"
 			Case ePlain "plain"
@@ -840,7 +840,7 @@
 
 			
 			Option New "new" Flag
-				Brief "Only convert file if not listed in DARE Container Log."
+				Brief "Only convert file if not listed in DARE Sequence Log."
 			Include CryptoOptions
 			Include LogOptions
 			Include AccountOptions
@@ -851,11 +851,11 @@
 			Brief "Create a new DARE Sequence"
 			Include EncodeOptions
 			Include CryptoOptions
-			Include ContainerOptions
+			Include SequenceOptions
 			Include AccountOptions
 			Include Reporting
-			Parameter Container "out" NewFile
-				Brief "New container"			
+			Parameter Sequence "out" NewFile
+				Brief "New sequence"			
 
 		Command DareArchive "archive"
 			Brief "Create a new DARE archive and add the specified files"
@@ -863,44 +863,53 @@
 			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
-			Include ContainerOptions
+			Include SequenceOptions
 			Parameter Input "in" ExistingFile
 				Brief "Directory containing files to create archive from"
-			Option Container "out" NewFile
-				Brief "New container"	
+			Option Sequence "out" NewFile
+				Brief "New sequence"	
 
 		Command DareAppend "append"
-			Brief "Append the specified file as an entry to the specified container"
+			Brief "Append the specified file as an entry to the specified sequence."
 			Include EncodeOptions
 			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
-			Parameter Container "in" ExistingFile
-				Brief "Container to append to"
+			Parameter Sequence "in" ExistingFile
+				Brief "Sequence to append to"
 			Parameter File "file" NewFile
 				Brief "File to append"
 			Option Key "key" String
 
 		Command DareDelete "delete"
-			Parameter Container "in" ExistingFile
-				Brief "Container to append to"
+			Parameter Sequence "in" ExistingFile
+				Brief "Sequence to append to"
 			Option Filename "file" String
 				Brief "Name of file to delete"
 			Option Key "key" String
 
+
+		Command DareList "list"
+			Brief "Compile a catalog for the specified sequence."
+			Include Reporting
+			Include AccountOptions
+			Parameter Sequence "in" ExistingFile
+				Brief "Sequence to be cataloged"
+
+
 		Command DareIndex "index"
-			Brief "Compile an index for the specified container and append to the end."
+			Brief "Compile an index for the specified sequence and append to the end."
 			Include EncodeOptions
 			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
-			Parameter Container "in" ExistingFile
-				Brief "Container to append to"
+			Parameter Sequence "in" ExistingFile
+				Brief "Sequence to be indexed"
 
 		Command DareExtract "extract"
-			Brief "Extract the specified record from the container"
-			Parameter Container "in" ExistingFile
-				Brief "Container to read"
+			Brief "Extract the specified record from the sequence"
+			Parameter Sequence "in" ExistingFile
+				Brief "Sequence to read"
 
 			Parameter Output "out" NewFile
 				Brief "Extracted file"	
@@ -914,14 +923,14 @@
 			Include Reporting
 
 		Command DareCopy "purge"
-			Brief "Copy container contents to create a new container removing deleted elements"
+			Brief "Copy sequence contents to create a new sequence removing deleted elements"
 			Parameter Input "in" ExistingFile
-				Brief "Container to read"
+				Brief "Sequence to read"
 			Parameter Output "out" NewFile
 				Brief "Copy"
 			Include EncodeOptions
 			Include CryptoOptions
-			Include ContainerOptions
+			Include SequenceOptions
 			Include AccountOptions
 			Include Reporting
 			Option Decrypt "decrypt" Flag

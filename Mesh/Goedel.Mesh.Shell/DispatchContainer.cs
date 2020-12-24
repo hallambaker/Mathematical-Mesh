@@ -49,7 +49,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareLog(DareLog options) {
-            var outputFile = options.Container.Value;
+            var outputFile = options.Sequence.Value;
 
             var keyLocate = GetKeyCollection(options);
             var policy = GetPolicy(keyLocate, options);
@@ -71,33 +71,12 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareArchive(DareArchive options) {
             var inputFile = options.Input.Value;
-            var outputFile = options.Container.Value;
+            var outputFile = options.Sequence.Value;
 
             var keyLocate = GetKeyCollection(options);
             var policy = GetPolicy(keyLocate, options);
 
-            // should create an archive class as a subset of store.
-
-            DareLogWriter.ArchiveDirectory(outputFile, policy,
-                inputFile);
-
-
-            //using (var Writer = new DareLogWriter(
-            //        outputFile, policy, true, fileStatus: FileStatus.Overwrite)) {
-
-            //    // Hack: This functionality should be pushed into FileContainerWriter and made recursive, etc.
-
-            //    var directoryInfo = new DirectoryInfo(inputFile);
-            //    if (directoryInfo.Exists) {
-            //        foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
-            //            Writer.AddFile(relativePath: fileInfo);
-            //            }
-            //        }
-            //    // Hack: is not currently indexed.
-            //    // Need to design a proper index!
-
-            //    Writer.AddIndex(); 
-            //    }
+            DareLogWriter.ArchiveDirectory(outputFile, policy, inputFile);
 
             return new ResultFile() {
                 Filename = outputFile
@@ -111,7 +90,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareAppend(DareAppend options) {
             var inputFile = options.File.Value;
-            var outputFile = options.Container.Value;
+            var outputFile = options.Sequence.Value;
 
             
             using (var Writer = new DareLogWriter(
@@ -132,12 +111,12 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareDelete(DareDelete options) {
             var inputFile = options.Filename.Value;
-            var outputFile = options.Container.Value;
+            var outputFile = options.Sequence.Value;
 
 
-            using (var Writer = new DareLogWriter(
+            using (var writer = new DareLogWriter(
                     outputFile, null, true, fileStatus: FileStatus.Existing)) {
-                DareLogWriter.Delete(inputFile);
+                writer.Delete(inputFile);
                 }
 
             return new ResultFile() {
@@ -151,7 +130,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareIndex(DareIndex options) {
-            var inputFile = options.Container.Value;
+            var inputFile = options.Sequence.Value;
 
             using (var container = Cryptography.Dare.Sequence.Open(
                 inputFile, containerType: ContainerType.Merkle)) {
@@ -162,6 +141,30 @@ namespace Goedel.Mesh.Shell {
                 };
             }
 
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult DareList(DareList options) {
+            var inputFile = options.Sequence.Value;
+            var contextAccount = GetContextUser(options);
+
+            using (var reader = new DareLogReader(inputFile, contextAccount)) {
+                reader.GetIndex();
+
+                // need to do a reorg - the writer needs to be a subclass of the reader.
+
+
+                // reader needs to have option to compile the index.
+
+
+                }
+
+            return new ResultSequence() {
+
+                };
+            }
 
         /// <summary>
         /// Dispatch method
@@ -169,10 +172,17 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareExtract(DareExtract options) {
-            var inputFile = options.Container.Value;
+            var inputFile = options.Sequence.Value;
             var outputFile = options.Output.Value;
+            var file = options.Filename.Value;
 
-            Directory.CreateDirectory(outputFile);
+
+            if (file != null) {
+                // extract single file
+                }
+            else {
+                // extract all files to a directory
+                }
 
             throw new NYI();
 
@@ -210,24 +220,6 @@ namespace Goedel.Mesh.Shell {
                 Filename = inputFile
                 };
             }
-
-
-        ///// <summary>
-        ///// Dispatch method
-        ///// </summary>
-        ///// <param name="options">The command line options.</param>
-        ///// <returns>Mesh result instance</returns>
-        //public override ShellResult DareVerify(ContainerVerify options) {
-        //    var inputFile = options.Container.Value;
-
-        //    using (var container = Cryptography.Dare.Container.Open(
-        //        inputFile, containerType: ContainerType.MerkleTree)) {
-        //        }
-
-        //    return new ResultFile() {
-        //        Filename = inputFile
-        //        };
-        //    }
 
 
 
