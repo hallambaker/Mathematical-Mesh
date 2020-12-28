@@ -1,9 +1,43 @@
 ﻿# ToDo
 
-## Clear the unit tests
 
-These are failing due to the upgrades.
+## Functionality 
 
+### Archive
+
+* Test that the files are correctly decrypted
+
+* Test subsequent append
+
+* Implement and test delete functionality.
+
+* Implement and test archive index functionality.
+
+* Test of log functionality
+
+* Test of archive list functionality.
+
+
+### SSH 
+
+* Generate an SSH key
+
+* Create client/server config files for OpenSSH
+
+* Test suite
+
+### Email
+
+* Create email account record
+
+* Add S/MIME cert / pull private key / pull public key
+
+* Add OpenPGP key / pull private key / pull public key
+
+
+
+
+# Delivery chunks
 
 ## Detached client/server
 
@@ -12,78 +46,13 @@ Can be run from the console.
 Provide simple service + restart capability
 
 
-### Issue of connection PIN codes.
-
-Service admin tool generates PIN codes and adds them to the service log. Hmm... seems this is a user thang???
 
 
-# Efficiency
-
-## Check container reads.
-
-Should avoid reading container data multiple times, should establish a strategy for caching 
-key exchange info, etc.
 
 
-# Delivery chunks
 
 
-## 1) File encrypt/decrypt tool
-
-Check complete DARE Envelope encrypt/decrypt capability.
-
-Check DARE Archive encrypt/decrypt capability:
-
-* Create from directory
-* Add files
-* Delete files
-* Re-index
-* Purge.
-
-## 2) Device management
-
-Connect via comparison
-
-Connect via PIN
-
-Connect via dynamic URI
-[Simulate for demo]
-
-Connect via static URI
-[Simulate for demo]
-
-## 3) Bookmarks/ Contacts/ Passwords/ Tasks
-
-Check complete line mode capability.
-
-This isn't going to be pleasant to use until there is a GUI.
-
-Can still make it useful from scripts:
-
-* what are the next n appointments?
-* pull password from vault for use in script.
-
-## 4) Contact Exchange
-
-Remote connect
-
-Dynamic PIN
-
-Static PIN
-
-TTP accredited
-
-## 5) Messaging Protocols
-
-Confirmation application
-
-Group Encryption
-
-Add User
-Remove User
-Fetch account log.
-
-## 6) Mesh Notary Service
+## Mesh Notary Service
 
 Local Notary Service
 
@@ -92,7 +61,7 @@ Verify
 
 Inter-notary accreditation
 
-## 7) Mesh Name Service
+## Mesh Name Service
 
 Register name
 Synchronize log

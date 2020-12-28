@@ -119,6 +119,9 @@ namespace Goedel.Cryptography.Dare {
         public IKeyLocate KeyLocate { get; protected set; }
 
 
+        public long Position => JbcdStream.PositionRead;
+
+
         /// <summary>The current frame header as binary data</summary>
         public virtual byte[] FrameHeader {
             get => frameHeader;
@@ -1233,6 +1236,12 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns>True if a next frame exists, otherwise false</returns>
         public abstract bool PreviousFrame();
+
+
+        //public DareHeader PreviousFrameHeader() {
+        //    return Previous() ? JbcdStream.ReadFrameHeader() : null;
+        //    }
+
 
         /// <summary>
         /// Read the previous frame in the file.

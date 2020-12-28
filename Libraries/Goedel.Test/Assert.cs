@@ -123,9 +123,75 @@ namespace Goedel.Test {
                 TestsFailed++;
                 }
             }
-        
 
+        /// <summary>
+        /// Test to see if the dictionaries <paramref name="first"/> and <paramref name="second"/>
+        /// contain exactly the same set of keys.
+        /// </summary>
+        /// <typeparam name="T">The key type.</typeparam>
+        /// <typeparam name="U">The value type of the first dictionary (ignored)</typeparam>
+        /// <typeparam name="V">The value type of the second dictionary (ignored</typeparam>
+        /// <param name="first">The first dictionary</param>
+        /// <param name="second">The second dictionary</param>
+        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+        /// Condition is true</param>
+        /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        public static void TestEqualKeys<T, U, V> (
+                    this Dictionary<T, U> first,
+                    Dictionary<T, V> second, 
+                    ThrowDelegate throwDelegate = null,
+                    params object[] args) {
+            first.Count.TestEqual(second.Count, throwDelegate, args);
+            foreach (var entry in first) {
+                second.ContainsKey(entry.Key).TestTrue(throwDelegate, args);
+                }
+            }
 
+        /// <summary>
+        /// Test to see if the dictionaries <paramref name="first"/> and <paramref name="second"/>
+        /// contain exactly the same set of keys.
+        /// </summary>
+        /// <typeparam name="T">The key type.</typeparam>
+        /// <typeparam name="U">The value type of the first dictionary (ignored)</typeparam>
+        /// <typeparam name="V">The value type of the second dictionary (ignored</typeparam>
+        /// <param name="first">The first dictionary</param>
+        /// <param name="second">The second dictionary</param>
+        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+        /// Condition is true</param>
+        /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        public static void TestEqualKeys<T, U, V>(
+                    this Dictionary<T, U> first,
+                    SortedDictionary<T, V> second,
+                    ThrowDelegate throwDelegate = null,
+                    params object[] args) {
+            first.Count.TestEqual(second.Count, throwDelegate, args);
+            foreach (var entry in first) {
+                second.ContainsKey(entry.Key).TestTrue(throwDelegate, args);
+                }
+            }
+
+        /// <summary>
+        /// Test to see if the dictionaries <paramref name="first"/> and <paramref name="second"/>
+        /// contain exactly the same set of keys.
+        /// </summary>
+        /// <typeparam name="T">The key type.</typeparam>
+        /// <typeparam name="U">The value type of the first dictionary (ignored)</typeparam>
+        /// <typeparam name="V">The value type of the second dictionary (ignored</typeparam>
+        /// <param name="first">The first dictionary</param>
+        /// <param name="second">The second dictionary</param>
+        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+        /// Condition is true</param>
+        /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        public static void TestEqualKeys<T, U, V>(
+                    this SortedDictionary<T, U> first,
+                    SortedDictionary<T, V> second,
+                    ThrowDelegate throwDelegate = null,
+                    params object[] args) {
+            first.Count.TestEqual(second.Count, throwDelegate, args);
+            foreach (var entry in first) {
+                second.ContainsKey(entry.Key).TestTrue(throwDelegate, args);
+                }
+            }
         }    
     }
 

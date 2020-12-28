@@ -176,30 +176,21 @@ namespace Goedel.Mesh.Shell {
             var outputFile = options.Output.Value;
             var file = options.Filename.Value;
 
-
+            var contextAccount = GetContextUser(options);
+            using var reader = new DareLogReader(inputFile, contextAccount);
+            
             if (file != null) {
-                // extract single file
+                outputFile ??= Path.GetFileName(file);
+                reader.ReadToFile(outputFile, path:file);
+
+                return new ResultFile() {
+                    Filename = outputFile
+                    };
                 }
             else {
-                // extract all files to a directory
+                throw new NYI();
                 }
 
-            throw new NYI();
-
-            //using (var reader = new FileContainerReader (inputFile)) {
-            //    foreach (var entry in reader) {
-            //        var path = Path.Combine(outputFile, entry.Header.Filename);
-
-            //        entry.CopyToFile(path);
-
-
-            //        }
-
-            //    }
-
-            //return new ResultFile() {
-            //    Filename = inputFile
-            //    };
             }
 
 

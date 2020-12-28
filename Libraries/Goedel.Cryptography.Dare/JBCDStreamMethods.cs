@@ -430,6 +430,12 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
         public bool ReadTagReverse(out int Code, out long Length) {
+            if (PositionRead <= 0) {
+                Code = -1;
+                Length = -1;
+                return false;
+                }
+
 
             Code = ReadByteReverse();
 
@@ -877,9 +883,9 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// Read the final frame header
+        /// Read the current frame header
         /// </summary>
-        /// <returns>The last frame header</returns>
+        /// <returns>The current frame header</returns>
         public DareHeader ReadFrameHeader() {
             ReadFrame(out var HeaderData);
             return DareHeader.FromJson(HeaderData.JsonReader(), false);

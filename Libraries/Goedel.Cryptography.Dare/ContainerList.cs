@@ -227,16 +227,16 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>If success, the frame index.</returns>
         public override bool MoveToIndex(long index) {
 
-            if (FrameIndexToPositionDictionary.TryGetValue(index, out var Position)) {
-                PositionRead = Position;
+            if (FrameIndexToPositionDictionary.TryGetValue(index, out var position)) {
+                PositionRead = position;
                 }
             else {
                 Assert.AssertTrue(index > frameLowUnknown & index < frameHighUnknown, ContainerDataCorrupt.Throw);
 
                 if (index - frameLowUnknown <= frameHighUnknown - index) {
                     Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(
-                        frameLowUnknown, out Position), ContainerDataCorrupt.Throw);
-                    PositionRead = Position;
+                        frameLowUnknown, out position), ContainerDataCorrupt.Throw);
+                    PositionRead = position;
                     var Last = PositionRead;
                     Next();
                     while (ContainerInfo != null && ContainerInfo.Index < index) {
@@ -250,9 +250,9 @@ namespace Goedel.Cryptography.Dare {
 
                 else {
                     Assert.AssertTrue(
-                        FrameIndexToPositionDictionary.TryGetValue(frameHighUnknown, out Position), 
+                        FrameIndexToPositionDictionary.TryGetValue(frameHighUnknown, out position), 
                         ContainerDataCorrupt.Throw);
-                    PositionRead = Position;
+                    PositionRead = position;
 
                     Previous();
                     while (ContainerInfo != null && (ContainerInfo.Index > index)) {

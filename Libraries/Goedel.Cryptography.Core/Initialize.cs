@@ -1,5 +1,7 @@
 ﻿using Goedel.IO;
 
+using System.Runtime.CompilerServices;
+
 namespace Goedel.Cryptography {
 
     ///<summary>Static class whose only function is to contain the initialization 
@@ -7,6 +9,9 @@ namespace Goedel.Cryptography {
     public class Cryptography : Initialization {
 
         static bool Flag = false;
+
+        //[ModuleInitializer]
+        //internal static void _Initialize() => Initialize();
 
         /// <summary>
         /// Thread safe generic initialization, calls the initialization for the

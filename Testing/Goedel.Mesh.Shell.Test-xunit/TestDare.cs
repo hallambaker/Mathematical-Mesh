@@ -108,7 +108,6 @@ namespace Goedel.XUnit {
             var entries = new Dictionary<string, bool>();
             var filename = $"seq-{archive}-{encrypt}-{sign}-{count}-{purge}-{index}";
 
-            "Exercise a file archive".TaskTest();
 
             var options = encrypt == null ? "" : $" /encrypt={encrypt}" +
                         sign == null ? "" : $" /sign={sign}";
@@ -119,6 +118,7 @@ namespace Goedel.XUnit {
                 // add the initial values (if any);
                 options = initial == null ? options : $" {initial}" + options;
                 Dispatch($"dare archive {options} /out={filename}");
+
                 AddEntries(entries, initial);
                 }
             else {
@@ -160,25 +160,23 @@ namespace Goedel.XUnit {
                 }
 
 
-            throw new NYI();
             }
 
         static void AddEntries(Dictionary<string, bool> dictionary, string directory) {
-
-
-
-
             if (directory == null) {
                 return;
                 }
+            var directoryInfo = new DirectoryInfo(directory);
+            AddEntries(dictionary, directoryInfo);
+            }
 
-            var files = Directory.GetFiles(directory);
-
-            foreach (var file in files) {
-                var filename = Path.GetFileName(file);
-                dictionary.Add(filename, true);
+        static void AddEntries(Dictionary<string, bool> dictionary, DirectoryInfo directoryInfo) {
+            foreach (var file in directoryInfo.GetFiles()) {
+                dictionary.Add(Path.Combine(directoryInfo.Name, file.Name), true);
                 }
-
+            foreach (var file in directoryInfo.GetDirectories()) {
+                AddEntries(dictionary, file);
+                }
             }
 
 
@@ -187,15 +185,12 @@ namespace Goedel.XUnit {
 
             using var archive = new DareLogReader(filename);
             archive.Sequence.VerifyPolicy(null);
+            archive.GetIndex();
+
+            entries.TestEqualKeys(archive.FileCollection.DictionaryByPath);
 
 
-            // Extract all files and test.
-            foreach (var entry in entries) {
-                var subFile = entry.Key;
-                // extract
 
-                //VerifyPolicy(subFile, sign, encrypt);
-                }
 
             // Extract single files and test.
             foreach (var entry in entries) {
@@ -204,13 +199,9 @@ namespace Goedel.XUnit {
 
                 Dispatch($"dare extract {filename} /file={entry.Key}");
 
-
-                // extract
-
-                //VerifyPolicy(subFile, sign, encrypt);
                 }
 
-            throw new NYI();
+            return true;
             }
 
         static bool VerifyPolicy(string filename, string encrypt, string sign) {

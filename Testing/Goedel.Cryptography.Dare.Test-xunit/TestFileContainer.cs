@@ -164,6 +164,7 @@ namespace Goedel.XUnit {
         void ReadWriteArchive(string fileNameBase, int entries,
                     DarePolicy policy = null, bool independent = false) {
 
+            var policyNill = policy == null ? "_null" : "";
             policy = policy ?? TestEnvironmentCommon.MakePolicy();
 
             var testData = new byte[entries][];
@@ -172,8 +173,8 @@ namespace Goedel.XUnit {
                 testData[i] = CreateBytes(Length);
                 }
 
-            var mode = policy.Encrypt ? "" : (independent ? "_Ind" : "_Bulk");
-            var filename = fileNameBase + $"{mode}_{entries}";
+            var mode = policy.Encrypt ? (independent ? "_Ind" : "_Bulk") : "_plaintext";
+            var filename = fileNameBase + $"{policyNill}{mode}_{entries}";
 
 
             using (var writer = new DareLogWriter(

@@ -175,15 +175,15 @@ namespace Goedel.Cryptography.Dare {
                 return false;
                 }
 
-            if (FrameIndexToPositionDictionary.TryGetValue(index, out var Position)) {
-                JbcdStream.PositionRead = Position;
+            if (FrameIndexToPositionDictionary.TryGetValue(index, out var position)) {
+                JbcdStream.PositionRead = position;
                 return true;
                 //return Next();
                 }
 
             //Obtain the position of the very last record in the file, this must be known.
             var Record = FrameCount - 1;
-            Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(Record, out Position), ContainerDataCorrupt.Throw);
+            Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(Record, out position), ContainerDataCorrupt.Throw);
             // Bug: this is failing because the position dictionary is not being updated.
             // check that commit frame is being properly called on deferred writes.
             // Also check every operation on the device catalog
@@ -207,12 +207,12 @@ namespace Goedel.Cryptography.Dare {
                     if (!FrameIndexToPositionDictionary.TryGetValue(nextRecord, out nextPosition)) {
                         // we do not know the position of the next frame
                         if (!found) {
-                            JbcdStream.PositionRead = Position;
+                            JbcdStream.PositionRead = position;
                             frameHeader = JbcdStream.ReadFrameHeader();
-                            RegisterFrame(frameHeader.SequenceInfo, Position);
+                            RegisterFrame(frameHeader.SequenceInfo, position);
                             }
 
-                        PositionRead = Position;
+                        PositionRead = position;
                         JbcdStream.Previous();
                         nextPosition = JbcdStream.PositionRead;
 
@@ -231,12 +231,12 @@ namespace Goedel.Cryptography.Dare {
                     if (!FrameIndexToPositionDictionary.TryGetValue(nextRecord, out nextPosition)) {
                         // we do not know the position of the next frame
 
-                        PositionRead = Position;
+                        PositionRead = position;
                         frameHeader = JbcdStream.ReadFrameHeader();
                         nextPosition = frameHeader.SequenceInfo.TreePosition;
 
                         if (!found) {
-                            RegisterFrame(frameHeader.SequenceInfo, Position);
+                            RegisterFrame(frameHeader.SequenceInfo, position);
                             }
                         found = false;
                         }
@@ -246,13 +246,13 @@ namespace Goedel.Cryptography.Dare {
 
                     }
 
-                Position = nextPosition;
+                position = nextPosition;
                 Record = nextRecord;
 
                 //Console.WriteLine("    {0}: {1}", Record, Position);
                 }
 
-            PositionRead = Position;
+            PositionRead = position;
             return true;
             //return Next();
             }

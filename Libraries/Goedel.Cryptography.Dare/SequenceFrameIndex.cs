@@ -1,6 +1,6 @@
 ﻿using Goedel.Protocol;
 using Goedel.Utilities;
-
+using Goedel.IO;
 using System.Collections.Generic;
 using System.IO;
 
@@ -60,7 +60,7 @@ namespace Goedel.Cryptography.Dare {
         /// Return the frame payload.
         /// </summary>
         /// <returns>The frame payload data.</returns>
-        public byte[] GetPayload(Sequence sequence, IKeyLocate keyCollection) {
+        public void CopyPayload(Sequence sequence, IKeyLocate keyCollection, Stream output) {
 
 
 
@@ -75,9 +75,8 @@ namespace Goedel.Cryptography.Dare {
             Header.GetDecoder(input, 
                 out var Reader, keyCollection: keyCollection, exchange: exchange);
 
-            using var output = new MemoryStream();
+
             Reader.CopyTo(output);
-            return output.ToArray();
             }
 
         /// <summary>
@@ -191,10 +190,24 @@ namespace Goedel.Cryptography.Dare {
         /// Copy the payload data to file.
         /// </summary>
         /// <param name="file">The file to write the payload to.</param>
-        public static void CopyToFile(string file) {
-            file.Future();
-            throw new NYI();
+        public void CopyToFile(Sequence sequence, string file) {
+
+            using var output = file.OpenFileNew();
+            CopyPayload(sequence, sequence.KeyLocate, output);
             }
+
+        /// <summary>
+        /// Return the frame payload.
+        /// </summary>
+        /// <returns>The frame payload data.</returns>
+        public byte[] GetPayload(Sequence sequence, IKeyLocate keyCollection) {
+
+
+            using var output = new MemoryStream();
+            CopyPayload(sequence, keyCollection, output);
+            return output.ToArray();
+            }
+
         }
 
 

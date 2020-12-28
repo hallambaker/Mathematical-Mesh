@@ -30,7 +30,7 @@ namespace Scratchpad {
 
             /* These only pass because the checks are disabled. */
 
-            ShellTests.Test().TestArchive();
+            TestDareArchive.Test().TestArchiveMulti();
             //ShellTests.Test().TestFilePlain();
             //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
             //Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
