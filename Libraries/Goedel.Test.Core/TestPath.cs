@@ -44,7 +44,7 @@ namespace Goedel.Test.Core {
     /// <summary>
     /// Test environment for one test with one service with one or more devices.
     /// </summary>
-    public class TestEnvironmentCommon : Initialization {
+    public class TestEnvironmentCommon  {
 
         //static TestEnvironmentCommon() {
         //    Cryptography.Cryptography.Initialize();
@@ -77,11 +77,7 @@ namespace Goedel.Test.Core {
             (Direct ? new MeshPortalDirect(ServiceName, ServiceDirectory).CacheValue(out meshPortalDirect) :
             new MeshPortalTest(ServiceName, ServiceDirectory).CacheValue(out meshPortalDirect));
 
-
-
-
         MeshLocalPortal meshPortalDirect = null;
-
 
 
         /// <summary>
@@ -90,27 +86,16 @@ namespace Goedel.Test.Core {
         /// </summary>
         /// <param name="testMode">If true, the application will be initialized in
         /// test/debug mode.</param>
-        public static void Initialize(bool testMode = false) =>
-            Initialize(ref Flag, Initialization, testMode);
 
-        static void Initialization(bool testMode = false) {
-            IO.Debug.Initialize(); // initialize the debug environment for tracing
-            Cryptography.Cryptography.Initialize(); // initialize the cryptographic support libraries.
-
+        static TestEnvironmentCommon() {
             TestRoot = Environment.GetEnvironmentVariable(TestPath);
-
-
             TestRoot.AssertNotNull(EnvironmentVariableRequired.Throw, TestPath);
 
             Directory.CreateDirectory(WorkingDirectory);
             Directory.SetCurrentDirectory(WorkingDirectory);
             }
 
-
-
-
         public TestEnvironmentCommon() {
-            Initialize(true);
             Test = Unique.Next();
             Path.DirectoryDelete();
             Directory.CreateDirectory(Path);

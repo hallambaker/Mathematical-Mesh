@@ -24,7 +24,6 @@ namespace Goedel.XUnit {
 
 
 
-        public TestPersist() => TestEnvironmentCommon.Initialize(true);
         public static TestPersist Test() => new TestPersist();
 
         static string FileTest = "TestStore.jcx";

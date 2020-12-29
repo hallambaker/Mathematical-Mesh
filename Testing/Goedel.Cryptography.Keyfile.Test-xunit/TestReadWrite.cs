@@ -9,7 +9,6 @@ using Xunit;
 namespace Goedel.XUnit {
 
     public partial class KeyFileTest {
-        public KeyFileTest() => TestEnvironmentCommon.Initialize(true);
         public static KeyFileTest Test() => new KeyFileTest();
 
 

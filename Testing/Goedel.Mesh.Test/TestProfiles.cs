@@ -18,7 +18,6 @@ namespace Goedel.Mesh.Test {
         public static string NextAccountBob(string Test) => $"bob{Test}@{Service}";
 
         public static TestProfiles Test => new TestProfiles();
-        public TestProfiles() => TestEnvironmentCommon.Initialize();
 
         public static void EscrowRecover() {
             var testEnvironmentCommon = new TestEnvironmentCommon();

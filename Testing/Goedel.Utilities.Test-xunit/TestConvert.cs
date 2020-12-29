@@ -11,9 +11,6 @@ namespace Goedel.XUnit {
 
     public class Utilities {
         public static Utilities Test() => new Utilities();
-        public Utilities() => TestEnvironmentCommon.Initialize(true);
-
-
 
         class TestVectorBaseConvert {
             public byte[] Data;

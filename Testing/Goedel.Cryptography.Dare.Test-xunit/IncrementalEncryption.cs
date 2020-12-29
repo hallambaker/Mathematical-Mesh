@@ -13,8 +13,6 @@ using Xunit;
 namespace Goedel.XUnit {
     public partial class TestContainers {
         static TestContainers() {
-            TestEnvironmentCommon.Initialize();
-            Mesh.Mesh.Initialize();
             }
 
         static KeyCollection MakeKeyCollection() {

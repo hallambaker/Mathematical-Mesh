@@ -29,8 +29,6 @@ namespace Goedel.XUnit {
         public KeyCollection KeyCollection;
 
         static TestCryptography() {
-            Cryptography.Cryptography.Initialize();
-
             AlicePrivate = new DiffeHellmanPrivate();
             BobPrivate = new DiffeHellmanPrivate();
             GroupPrivate = new DiffeHellmanPrivate();

@@ -10,7 +10,6 @@ using Xunit;
 namespace Goedel.XUnit {
     public class TestAsymmetric {
 
-        public TestAsymmetric() => TestEnvironmentCommon.Initialize();
         public static TestAsymmetric Test() => new TestAsymmetric();
 
 

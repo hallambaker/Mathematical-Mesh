@@ -1,15 +1,17 @@
-﻿using Goedel.IO;
-
+﻿using System;
 using System.Runtime.CompilerServices;
+using Goedel.Cryptography;
 
-namespace Goedel.Cryptography.Core {
-
+namespace Goedel.Cryptography.Test {
     ///<summary>Static class whose only function is to contain the initialization 
     ///routine.</summary>
     public static class Initialization {
 
-        ///<summary>Initialization witness flag.</summary> 
+
+        ///<summary>Initialization witness flag. This may be used to force initialization
+        ///of the module prior to other modules being initialized.</summary> 
         public static bool Initialized { get; private set; }
+
 
         /// <summary>
         /// Initialization routine for cryptographic functions on the dotNet Core platform.
@@ -17,8 +19,11 @@ namespace Goedel.Cryptography.Core {
 
         [ModuleInitializer]
         internal static void Initialize() {
-            Initialized = true;
-            KeyCollection.Default = new Core.KeyCollectionCore();
+            // Force initialization of dependent modules.
+            Initialized = Goedel.Cryptography.Initialization.Initialized;
+
             }
+
+
         }
     }

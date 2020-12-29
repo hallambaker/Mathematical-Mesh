@@ -11,7 +11,7 @@ namespace Goedel.XUnit {
     public partial class GoedelCryptography {
 
 
-        static GoedelCryptography() => Cryptography.Cryptography.Initialize();
+        static GoedelCryptography() { }
 
 
         readonly static byte[] NIST_Plaintext =

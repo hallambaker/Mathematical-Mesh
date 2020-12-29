@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Company>ThresholdSecrets.Com</Company>
+    <Configurations>Debug;Release;Focus;Windows</Configurations>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Product>Goedel.Cryptography.Test</Product>
+    <Description>Cryptographic support libraries test modification</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Goedel.Cryptography.Test</Title>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+  </ItemGroup>
+
+</Project>

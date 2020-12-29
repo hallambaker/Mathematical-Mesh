@@ -1,5 +1,6 @@
-﻿//   Copyright © 2015 by Comodo Group Inc.
-//  
+﻿//  Copyright © 2015 by Comodo Group Inc.
+//  Copyright © 2021 by Threshold Secrets Llc.
+//
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -379,7 +380,7 @@ namespace Goedel.Protocol {
                 Lookahead = true;
                 }
             if (Trace) {
-                Goedel.IO.Debug.WriteLine("Peek {0} \"{1}\"", TokenType, ResultString);
+                Screen.WriteLine("Peek {0} \"{1}\"", TokenType, ResultString);
                 }
             }
 
@@ -406,7 +407,7 @@ namespace Goedel.Protocol {
             Lookahead = false;
 
             if (Trace) {
-                Goedel.IO.Debug.WriteLine("Got  {0} \"{1}\"", TokenType, ResultString);
+                Screen.WriteLine($"Got  {TokenType} \"{ResultString}\"");
                 }
             }
 

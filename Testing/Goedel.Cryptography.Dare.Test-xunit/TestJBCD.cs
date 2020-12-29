@@ -12,7 +12,7 @@ namespace Goedel.XUnit {
 
     public class TestJBCD {
 
-        public TestJBCD() => TestEnvironmentCommon.Initialize(true);
+
 
         static byte[] MakeConstant(string Text, int Repeat) {
 

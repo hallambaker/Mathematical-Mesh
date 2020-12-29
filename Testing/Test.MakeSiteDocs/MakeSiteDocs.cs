@@ -38,9 +38,6 @@ namespace Goedel.XUnit {
             Group = new LayerGroup(this);
             NYI = new LayerNYI(this);
 
-            Goedel.IO.Debug.Initialize();
-            Goedel.Cryptography.Cryptography.Initialize();
-
             TestEnvironment = new TestEnvironmentCommon();
             }
 

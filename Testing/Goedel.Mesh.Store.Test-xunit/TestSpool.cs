@@ -26,8 +26,6 @@ namespace Goedel.XUnit {
         IKeyCollection keyCollection;
 
         static StoreTests() {
-            TestEnvironmentCommon.Initialize();
-            Mesh.Mesh.Initialize();
             }
 
         public static StoreTests Test() => new StoreTests();

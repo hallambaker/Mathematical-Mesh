@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
+using Goedel.IO;
 
-namespace Goedel.IO {
+namespace Goedel.Debug {
     /// <summary>
     /// Class containing static helper methods. This should inherit from the Trace class
     /// but that is sealed.
     /// </summary>
-    public class Debug : Initialization {
-        static bool Flag = false;
+    public class Debug {
 
-        /// <summary>
-        /// Class initialization routine.
-        /// </summary>
-        /// <param name="TestMode">If true the first time the initialization is
-        /// called, initializes parameters in test mode.</param>
-        public static void Initialize(bool TestMode = false) =>
-            Initialize(ref Flag, Initialization, TestMode);
 
         /// <summary>
         /// Perform standard initialization

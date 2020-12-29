@@ -148,7 +148,6 @@ namespace Goedel.XUnit {
             };
 
 
-        public TestDigests() => CryptographyCommon.Initialize();
 
 
         [Theory]

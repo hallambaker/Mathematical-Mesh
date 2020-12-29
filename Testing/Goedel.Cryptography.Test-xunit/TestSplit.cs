@@ -9,7 +9,7 @@ using Xunit;
 namespace Goedel.XUnit {
     public class TestSplit {
         public static TestSplit Test() => new TestSplit();
-        public TestSplit() => CryptographyCommon.Initialize();
+
 
 
 

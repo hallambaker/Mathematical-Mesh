@@ -15,7 +15,6 @@ namespace Goedel.XUnit {
 
     public partial class TestContainers {
 
-        public TestContainers() => TestEnvironmentCommon.Initialize(true);
         public static TestContainers Test() => new TestContainers();
 
         [Fact]

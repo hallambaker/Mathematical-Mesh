@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\Goedel.Debug\Goedel.Debug.csproj" />
     <ProjectReference Include="..\Goedel.Test\Goedel.Test.csproj" />
   </ItemGroup>
 

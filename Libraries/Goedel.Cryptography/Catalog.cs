@@ -33,49 +33,49 @@ namespace Goedel.Cryptography {
     /// </summary>
     public class CryptoCatalog {
 
-        static CryptoCatalog _CryptoCatalog;
+        static CryptoCatalog cryptoCatalog;
 
         /// <summary>
         /// Returns the default catalog of suites.
         /// </summary>
         public static CryptoCatalog Default {
             get {
-                _CryptoCatalog ??= new CryptoCatalog();
-                return _CryptoCatalog;
+                cryptoCatalog ??= new CryptoCatalog();
+                return cryptoCatalog;
                 }
             }
 
 
 
         /// <summary>The default digest algorithm.</summary>
-        public CryptoAlgorithmId AlgorithmDigest { get; set; } = CryptoAlgorithmId.NULL;
+        public CryptoAlgorithmId AlgorithmDigest { get; set; } = CryptoID.DefaultDigestId;
 
         /// <summary>The default symmetric encryption algorithm.</summary>
-        public CryptoAlgorithmId AlgorithmEncryption { get; set; } = CryptoAlgorithmId.NULL;
+        public CryptoAlgorithmId AlgorithmEncryption { get; set; } = CryptoID.DefaultEncryptionId;
 
         /// <summary>The default message authentication code algorithm.</summary>
-        public CryptoAlgorithmId AlgorithmMAC { get; set; } = CryptoAlgorithmId.NULL;
+        public CryptoAlgorithmId AlgorithmMAC { get; set; } = CryptoID.DefaultMACId;
 
         /// <summary>The default asymmetric encryption algorithm.</summary>
-        public CryptoAlgorithmId AlgorithmExchange { get; set; } = CryptoAlgorithmId.NULL;
+        public CryptoAlgorithmId AlgorithmExchange { get; set; } = CryptoID.DefaultExchangeId;
 
         /// <summary>The default signature algorithm.</summary>
-        public CryptoAlgorithmId AlgorithmSignature { get; set; } = CryptoAlgorithmId.NULL;
+        public CryptoAlgorithmId AlgorithmSignature { get; set; } = CryptoID.DefaultSignatureId;
 
 
         /// <summary>
         /// Set undefined identifier components to default signature and digest.
         /// </summary>
-        /// <param name="Base">The base id</param>
+        /// <param name="baseId">The base id</param>
         /// <returns>The defaulted algorithm relative to the base.</returns>
-        public CryptoAlgorithmId SignatureDefaults(CryptoAlgorithmId Base) => Base.Default(AlgorithmDigest, AlgorithmSignature);
+        public CryptoAlgorithmId SignatureDefaults(CryptoAlgorithmId baseId) => baseId.Default(AlgorithmDigest, AlgorithmSignature);
 
         /// <summary>
         /// Set undefined identifier components to default exchange and encryption.
         /// </summary>
-        /// <param name="Base">The base id</param>
+        /// <param name="baseId">The base id</param>
         /// <returns>The defaulted algorithm relative to the base.</returns>
-        public CryptoAlgorithmId EncryptionDefaults(CryptoAlgorithmId Base) => Base.Default(AlgorithmExchange, AlgorithmEncryption);
+        public CryptoAlgorithmId EncryptionDefaults(CryptoAlgorithmId baseId) => baseId.Default(AlgorithmExchange, AlgorithmEncryption);
 
 
         static CryptoAlgorithmId SetDefault(CryptoAlgorithmId Current, CryptoAlgorithm New, CryptoAlgorithmId ID,
@@ -104,11 +104,11 @@ namespace Goedel.Cryptography {
 
 
 
-                AlgorithmDigest = SetDefault(AlgorithmDigest, CryptoAlgorithm, ID, CryptoAlgorithmClasses.Digest);
-                AlgorithmMAC = SetDefault(AlgorithmMAC, CryptoAlgorithm, ID, CryptoAlgorithmClasses.MAC);
-                AlgorithmEncryption = SetDefault(AlgorithmEncryption, CryptoAlgorithm, ID, CryptoAlgorithmClasses.Encryption);
-                AlgorithmSignature = SetDefault(AlgorithmSignature, CryptoAlgorithm, ID, CryptoAlgorithmClasses.Signature);
-                AlgorithmExchange = SetDefault(AlgorithmExchange, CryptoAlgorithm, ID, CryptoAlgorithmClasses.Exchange);
+                //AlgorithmDigest = SetDefault(AlgorithmDigest, CryptoAlgorithm, ID, CryptoAlgorithmClasses.Digest);
+                //AlgorithmMAC = SetDefault(AlgorithmMAC, CryptoAlgorithm, ID, CryptoAlgorithmClasses.MAC);
+                //AlgorithmEncryption = SetDefault(AlgorithmEncryption, CryptoAlgorithm, ID, CryptoAlgorithmClasses.Encryption);
+                //AlgorithmSignature = SetDefault(AlgorithmSignature, CryptoAlgorithm, ID, CryptoAlgorithmClasses.Signature);
+                //AlgorithmExchange = SetDefault(AlgorithmExchange, CryptoAlgorithm, ID, CryptoAlgorithmClasses.Exchange);
                 }
             catch {
                 // already added, ignore.
@@ -156,20 +156,20 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Get a cryptographic provider by combined algorithm identifier
         /// </summary>
-        /// <param name="ID">Combined algorithm identifier.</param>
+        /// <param name="Id">Combined algorithm identifier.</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProvider Get(CryptoAlgorithmId ID) {
+        public CryptoProvider Get(CryptoAlgorithmId Id) {
 
             // Look for an exact match first implementing the combined ID
-            var Found = Dictionary.TryGetValue(ID, out var Meta);
+            var Found = Dictionary.TryGetValue(Id, out var Meta);
             if (Found) {
-                return Meta.CryptoProviderFactory(Meta.KeySize, ID);
+                return Meta.CryptoProviderFactory(Meta.KeySize, Id);
                 }
 
             // If not successful, try to construct from a meta and a bulk algorithm
-            Found = Dictionary.TryGetValue(ID.Meta(), out Meta);
+            Found = Dictionary.TryGetValue(Id.Meta(), out Meta);
             if (Found) {
-                return Meta.CryptoProviderFactory(Meta.KeySize, ID.Bulk());
+                return Meta.CryptoProviderFactory(Meta.KeySize, Id.Bulk());
 
                 }
             return null;
@@ -178,23 +178,26 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Get a cryptographic provider by algorithm identifier
         /// </summary>
-        /// <param name="ID">Algorithm identifier</param>
+        /// <param name="Id">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderDigest GetDigest(CryptoAlgorithmId ID) => Get(ID.DefaultBulk(AlgorithmDigest)) as CryptoProviderDigest;
+        public CryptoProviderDigest GetDigest(CryptoAlgorithmId Id) => 
+                        Get(Id.DefaultDigest()) as CryptoProviderDigest;
 
         /// <summary>
         /// Get a cryptographic provider  by algorithm identifier
         /// </summary>
-        /// <param name="ID">Algorithm identifier</param>
+        /// <param name="Id">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderAuthentication GetAuthentication(CryptoAlgorithmId ID) => Get(ID.DefaultBulk(AlgorithmMAC)) as CryptoProviderAuthentication;
+        public CryptoProviderAuthentication GetMAC(CryptoAlgorithmId Id) => 
+                        Get(Id.DefaultMac()) as CryptoProviderAuthentication;
 
         /// <summary>
         /// Get a cryptographic provider  by algorithm identifier
         /// </summary>
-        /// <param name="ID">Algorithm identifier</param>
+        /// <param name="Id">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderEncryption GetEncryption(CryptoAlgorithmId ID) => Get(ID.DefaultBulk(AlgorithmEncryption)) as CryptoProviderEncryption;
+        public CryptoProviderEncryption GetEncryption(CryptoAlgorithmId Id) => 
+                        Get(Id.DefaultEncryption()) as CryptoProviderEncryption;
 
 
         /// <summary>

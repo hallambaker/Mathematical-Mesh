@@ -145,8 +145,8 @@ namespace Goedel.XUnit {
         public void TestHMAC_4231_Separate() {
             foreach (var TestVector in TestVectors_HMAC_4231) {
 
-                var SHA256 = CryptoCatalog.Default.GetAuthentication(CryptoAlgorithmId.HMAC_SHA_2_256);
-                var SHA512 = CryptoCatalog.Default.GetAuthentication(CryptoAlgorithmId.HMAC_SHA_2_512);
+                var SHA256 = CryptoCatalog.Default.GetMAC(CryptoAlgorithmId.HMAC_SHA_2_256);
+                var SHA512 = CryptoCatalog.Default.GetMAC(CryptoAlgorithmId.HMAC_SHA_2_512);
 
                 TestVector.Verify(SHA256, TestVector.Result_HMAC_256);
                 TestVector.Verify(SHA512, TestVector.Result_HMAC_512);
@@ -155,8 +155,8 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestHMAC_4231_Repeat() {
-            var SHA256 = CryptoCatalog.Default.GetAuthentication(CryptoAlgorithmId.HMAC_SHA_2_256);
-            var SHA512 = CryptoCatalog.Default.GetAuthentication(CryptoAlgorithmId.HMAC_SHA_2_512);
+            var SHA256 = CryptoCatalog.Default.GetMAC(CryptoAlgorithmId.HMAC_SHA_2_256);
+            var SHA512 = CryptoCatalog.Default.GetMAC(CryptoAlgorithmId.HMAC_SHA_2_512);
 
             foreach (var TestVector in TestVectors_HMAC_4231) {
                 TestVector.Verify(SHA256, TestVector.Result_HMAC_256);
@@ -192,9 +192,9 @@ namespace Goedel.XUnit {
                 System.Array.Resize(ref Result, Expected.Length);
                 }
 
-            Debug.WriteLine("Key = {0}", Key.ToStringBase16());
-            Debug.WriteLine("Data = {0}", Data.ToStringBase16());
-            Debug.WriteLine("Result = {0}", Result.ToStringBase16());
+            Screen.WriteLine("Key = {0}", Key.ToStringBase16());
+            Screen.WriteLine("Data = {0}", Data.ToStringBase16());
+            Screen.WriteLine("Result = {0}", Result.ToStringBase16());
 
             Result.IsEqualTo(Expected).TestTrue();
             }

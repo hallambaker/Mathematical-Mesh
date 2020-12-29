@@ -4,25 +4,17 @@
         <name>Goedel.Mesh.Core</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Mesh.Mesh">
-            <summary>
-            Initialization class. Applications should perform a call to Mesh.Initialize 
-            before using Mesh library functions.
-            </summary>
+        <member name="T:Goedel.Mesh.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Mesh.Initialize(System.Boolean)">
-            <summary>
-            Thread safe generic initialization, calls the initialization for the
-            cryptographic support libraries exactly once. 
-            </summary>
-            <remarks>This method is defined in each of the platform specific packages, to
-            allow use of shared libraries for cross-platform support. If an implementation
-            is linked to multiple platform packages, the platform specific initialization must
-            be called for each.</remarks>
+        <member name="P:Goedel.Mesh.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Mesh.InitializationCore(System.Boolean)">
+        <member name="M:Goedel.Mesh.Initialization.Initialize">
             <summary>
-            Initialization routine for all Mesh functions on the dotNet Core platform.
+            Initialization routine for cryptographic functions on the dotNet Core platform.
             </summary>
         </member>
         <member name="T:Goedel.Mesh.MeshMachineCoreServer">

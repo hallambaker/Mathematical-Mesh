@@ -38,8 +38,6 @@ namespace Goedel.XUnit {
         // Encrypt: Encrypt confirmation request
 
         static TestService() {
-            TestEnvironmentCommon.Initialize();
-            Mesh.Mesh.Initialize();
             }
 
 

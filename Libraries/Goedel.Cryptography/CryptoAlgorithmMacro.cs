@@ -46,41 +46,76 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Apply the default signature algorithm specified in <see cref="CryptoID.DefaultExchangeId"/> 
+        /// Apply the default signature algorithm specified in <see cref="DefaultExchangeId"/> 
         /// if required.
         /// </summary>
-        /// <param name="algorithmID">The algorithm identifier to be defaulted.</param>
-        /// <returns>If <paramref name="algorithmID"/> is <see cref="CryptoAlgorithmId.Default"/>
+        /// <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+        /// <returns>If <paramref name="algorithmId"/> is <see cref="CryptoAlgorithmId.Default"/>
         /// returns the value <see cref="CryptoID.DefaultExchangeId"/>, 
-        /// otherwise returns <paramref name="algorithmID"/>.</returns>
-        public static CryptoAlgorithmId DefaultExchange(this CryptoAlgorithmId algorithmID) =>
-            algorithmID == CryptoAlgorithmId.Default ? CryptoID.DefaultExchangeId : algorithmID;
+        /// otherwise returns <paramref name="algorithmId"/>.</returns>
+        public static CryptoAlgorithmId DefaultExchange(this CryptoAlgorithmId algorithmId) =>
+            algorithmId == CryptoAlgorithmId.Default ? DefaultExchangeId : algorithmId;
 
         /// <summary>
-        /// Apply the default signature algorithm specified in <see cref="CryptoID.DefaultSignatureId"/> 
+        /// Apply the default signature algorithm specified in <see cref="DefaultSignatureId"/> 
         /// if required.
         /// </summary>
-        /// <param name="algorithmID">The algorithm identifier to be defaulted.</param>
-        /// <returns>If <paramref name="algorithmID"/> is <see cref="CryptoAlgorithmId.Default"/>
+        /// <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+        /// <returns>If <paramref name="algorithmId"/> is <see cref="CryptoAlgorithmId.Default"/>
         /// returns the value <see cref="CryptoID.DefaultSignatureId"/>, 
-        /// otherwise returns <paramref name="algorithmID"/>.</returns>
-        public static CryptoAlgorithmId DefaultSignature(this CryptoAlgorithmId algorithmID) =>
-            algorithmID == CryptoAlgorithmId.Default ? CryptoID.DefaultSignatureId : algorithmID;
+        /// otherwise returns <paramref name="algorithmId"/>.</returns>
+        public static CryptoAlgorithmId DefaultSignature(this CryptoAlgorithmId algorithmId) =>
+            algorithmId == CryptoAlgorithmId.Default ? DefaultSignatureId : algorithmId;
 
+
+        /// <summary>
+        /// Apply the default digest algorithm specified in <see cref="DefaultMACId"/> 
+        /// if required.
+        /// </summary>
+        /// <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+        /// <returns>If <paramref name="algorithmId"/> is <see cref="CryptoAlgorithmId.Default"/>
+        /// returns the value <see cref="DefaultMACId"/>, 
+        /// otherwise returns <paramref name="algorithmId"/>.</returns>
+        public static CryptoAlgorithmId DefaultMac(this CryptoAlgorithmId algorithmId) =>
+            algorithmId == CryptoAlgorithmId.Default ? DefaultEncryptionId : algorithmId;
+
+
+        /// <summary>
+        /// Apply the default digest algorithm specified in <see cref="DefaultEncryptionId"/> 
+        /// if required.
+        /// </summary>
+        /// <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+        /// <returns>If <paramref name="algorithmId"/> is <see cref="CryptoAlgorithmId.Default"/>
+        /// returns the value <see cref="DefaultEncryptionId"/>, 
+        /// otherwise returns <paramref name="algorithmId"/>.</returns>
+        public static CryptoAlgorithmId DefaultEncryption(this CryptoAlgorithmId algorithmId) =>
+            algorithmId == CryptoAlgorithmId.Default ? DefaultEncryptionId : algorithmId;
+
+
+        /// <summary>
+        /// Apply the default digest algorithm specified in <see cref="DefaultDigestId"/> 
+        /// if required.
+        /// </summary>
+        /// <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+        /// <returns>If <paramref name="algorithmId"/> is <see cref="CryptoAlgorithmId.Default"/>
+        /// returns the value <see cref="DefaultDigestId"/>, 
+        /// otherwise returns <paramref name="algorithmId"/>.</returns>
+        public static CryptoAlgorithmId DefaultDigest(this CryptoAlgorithmId algorithmId) =>
+            algorithmId == CryptoAlgorithmId.Default ? DefaultDigestId : algorithmId;
 
         /// <summary>
         /// Apply the default signature algorithm specified in <see cref="CryptoID.DefaultExchangeId"/> 
         /// if required.
         /// </summary>
-        /// <param name="algorithmID">The algorithm identifier to be defaulted.</param>
-        /// <returns>If <paramref name="algorithmID"/> is <see cref="CryptoAlgorithmId.Default"/>
+        /// <param name="algorithmId">The algorithm identifier to be defaulted.</param>
+        /// <returns>If <paramref name="algorithmId"/> is <see cref="CryptoAlgorithmId.Default"/>
         /// returns the value <see cref="CryptoID.DefaultExchangeId"/>, 
-        /// otherwise returns <paramref name="algorithmID"/>.</returns>
-        public static CryptoAlgorithmId ForceExchange(this CryptoAlgorithmId algorithmID) =>
-            algorithmID switch {
+        /// otherwise returns <paramref name="algorithmId"/>.</returns>
+        public static CryptoAlgorithmId ForceExchange(this CryptoAlgorithmId algorithmId) =>
+            algorithmId switch {
                 CryptoAlgorithmId.NULL => CryptoID.DefaultExchangeId,
                 CryptoAlgorithmId.Default => CryptoID.DefaultExchangeId,
-                _ => algorithmID
+                _ => algorithmId
                 };
 
             //algorithmID == CryptoAlgorithmId.Default ? CryptoID.DefaultExchangeId : algorithmID;

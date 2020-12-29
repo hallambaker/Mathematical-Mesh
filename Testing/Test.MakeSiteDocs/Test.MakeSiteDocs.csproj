@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Documentation\MakeSiteDocs\MakeSiteDocs.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Debug\Goedel.Debug.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

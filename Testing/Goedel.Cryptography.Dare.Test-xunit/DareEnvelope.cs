@@ -18,7 +18,6 @@ namespace Goedel.XUnit {
 
     public partial class TestDare {
         public static TestDare Test() => new TestDare();
-        public TestDare() => TestEnvironmentCommon.Initialize(true);
 
         static CryptoParameters CryptoParametersNull = new CryptoParametersTest();
 

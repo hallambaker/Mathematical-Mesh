@@ -9,10 +9,9 @@ using Xunit;
 
 namespace Goedel.XUnit {
 
-    public class Buffer {
-        public static Buffer Test => new Buffer();
-        public Buffer() => TestEnvironmentCommon.Initialize(true);
-        // Feature: ASN1. Decode
+    public class BufferTests {
+        public static BufferTests Test() => new BufferTests();
+
 
         [Fact]
         public void TestBuffer() {

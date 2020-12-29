@@ -3,6 +3,7 @@ using Goedel.Utilities;
 
 using System.Collections.Generic;
 using System.Numerics;
+using Goedel.Cryptography.Standard;
 
 namespace Goedel.Cryptography {
     /// <summary>
@@ -21,46 +22,43 @@ namespace Goedel.Cryptography {
         /// <summary>Default SHA-2-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm SHA2_512 { get; set; }
+        public static CryptoAlgorithm SHA2_512 { get; set; } = CryptoProviderSHA2_512.Register();
         /// <summary>Default SHA-2-256 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm SHA2_256 { get; set; }
+        public static CryptoAlgorithm SHA2_256 { get; set; } = CryptoProviderSHA2_256.Register();
         /// <summary>Default SHA-3-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call { get; set; } to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm SHA3_512 { get; set; }
+        public static CryptoAlgorithm SHA3_512 { get; set; } = CryptoProviderSHA3_512.Register();
         /// <summary>Default SHA-3-256 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm SHA3_256 { get; set; }
+        public static CryptoAlgorithm SHA3_256 { get; set; } = CryptoProviderSHA3_256.Register();
         /// <summary>Default SHA-1 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm SHA1 { get; set; }
+        public static CryptoAlgorithm SHA1 { get; set; } = CryptoProviderSHA1.Register();
+
+        /// <summary>Default HMAC-SHA2-256 provider optimized for small data items</summary>
+        /// <remarks>This delegate must bound to the platform
+        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
+        public static CryptoAlgorithm HMAC_SHA2_256 { get; set; } = CryptoProviderHMACSHA2_256.Register();
 
         /// <summary>Default HMAC-SHA2-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm HMAC_SHA2_256 { get; set; }
-        /// <summary>Default HMAC-SHA2-512 provider optimized for small data items</summary>
-        /// <remarks>This delegate must bound to the platform
-        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm HMAC_SHA2_384 { get; set; }
-        /// <summary>Default HMAC-SHA2-512 provider optimized for small data items</summary>
-        /// <remarks>This delegate must bound to the platform
-        /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm HMAC_SHA2_512 { get; set; }
+        public static CryptoAlgorithm HMAC_SHA2_512 { get; set; } = CryptoProviderHMACSHA2_512.Register();
 
 
         /// <summary>Default AES-256 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static CryptoAlgorithm AES_256 { get; set; }
+        public static CryptoAlgorithm AES_256 { get; set; } = CryptoProviderEncryptAES.Register();
 
 
         /// <summary>Provider for AES block transform</summary>
-        public static BlockProviderFactoryDelegate BlockProviderFactoryAes { get; set; } = null;
+        public static BlockProviderFactoryDelegate BlockProviderFactoryAes { get; set; } = AesBlock.Factory;
 
 
         /// <summary>Fill byte buffer with cryptographically strong random numbers.</summary>
@@ -72,11 +70,8 @@ namespace Goedel.Cryptography {
         /// <summary>Fill byte buffer with cryptographically strong random numbers</summary>
         /// <remarks>This delegate must bound to the platform
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
-        public static FillRandomBytesDelegate FillRandom { get; set; } = FillRandomBytesDefault;
+        public static FillRandomBytesDelegate FillRandom { get; set; } = CryptographyCommon.GetRandomBytes;
 
-
-        static void FillRandomBytesDefault(byte[] Data, int Offset, int Count) =>
-                    throw new PlatformNotInitialized();
 
         /// <summary>
         /// Write a key to the machine keystore

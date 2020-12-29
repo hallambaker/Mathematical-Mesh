@@ -21,9 +21,7 @@ namespace ExampleGenerator {
 
 
         static void Main() {
-            Console.WriteLine("Make Document Set");
-            Goedel.IO.Debug.Initialize();
-            Goedel.Cryptography.Cryptography.Initialize(); // initialize the cryptographic support libraries.
+            Screen.WriteLine("Make Document Set");
             var createWeb = new CreateExamples();
             createWeb.Examples();
             }
