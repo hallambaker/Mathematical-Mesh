@@ -1,4 +1,5 @@
-﻿using Goedel.IO;
+﻿
+using Goedel.Cryptography.Standard;
 
 using System.Runtime.CompilerServices;
 
@@ -8,7 +9,8 @@ namespace Goedel.Cryptography.Core {
     ///routine.</summary>
     public static class Initialization {
 
-        ///<summary>Initialization witness flag.</summary> 
+        ///<summary>Initialization witness flag. This may be used to force initialization
+        ///of the module prior to other modules being initialized.</summary> 
         public static bool Initialized { get; private set; }
 
         /// <summary>
@@ -17,8 +19,8 @@ namespace Goedel.Cryptography.Core {
 
         [ModuleInitializer]
         internal static void Initialize() {
-            Initialized = true;
-            KeyCollection.Default = new Core.KeyCollectionCore();
+            Initialized = Goedel.Cryptography.Initialization.Initialized;
+            KeyCollection.Default = new KeyCollectionCore();
             }
         }
     }

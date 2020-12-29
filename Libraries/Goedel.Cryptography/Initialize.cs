@@ -19,7 +19,8 @@ namespace Goedel.Cryptography {
 
         [ModuleInitializer]
         internal static void Initialize() {
-            Initialized = true;
+            Initialized = Platform.Initialized;
+
 
             CryptoProviderSHAKE128.Register();
             CryptoProviderSHAKE256.Register();

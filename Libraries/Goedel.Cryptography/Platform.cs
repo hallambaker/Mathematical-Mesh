@@ -11,13 +11,19 @@ namespace Goedel.Cryptography {
     /// factory methods. 
     /// </summary>
     public static class Platform {
+        ///<summary>Initialization witness flag. This may be used to force initialization
+        ///of the module prior to other modules being initialized.</summary> 
+        public static bool Initialized { get; private set; }
+
 
         /// <summary>
         /// Static initializer
         /// </summary>
-        static Platform() =>
+        static Platform() {
             // Add the providers defined in the portable library to the catalog.
+            Initialized = true;
             FindLocalDelegates.Add(KeyPairDH.FindLocalAdvanced);
+            }
 
         /// <summary>Default SHA-2-512 provider optimized for small data items</summary>
         /// <remarks>This delegate must bound to the platform

@@ -16,6 +16,7 @@ namespace Goedel.XUnit {
 
         public static TestCryptographyJose Test() => new TestCryptographyJose();
 
+
         static string TestString = "This is a test";
         static string TestStringBad = "This is a Test"; // Flip one bit
 
@@ -49,6 +50,9 @@ namespace Goedel.XUnit {
         [InlineData(CryptoAlgorithmId.RSAExch)]
         [InlineData(CryptoAlgorithmId.RSASign)]
         public void RoundTripKeyExportable(CryptoAlgorithmId cryptoAlgorithmID) {
+
+            
+
             var key = KeyPair.Factory(cryptoAlgorithmID, keySecurity: KeySecurity.Exportable);
             var jsonPublic = Key.GetPublic(key);
             var key2 = jsonPublic.KeyPair;

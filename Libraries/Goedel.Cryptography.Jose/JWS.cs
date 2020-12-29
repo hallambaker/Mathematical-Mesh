@@ -65,38 +65,38 @@ namespace Goedel.Cryptography.Jose {
         /// Sign JSON object.
         /// </summary>
         /// <param name="JSONObject">The object to sign</param>
-        /// <param name="Encoding">The data encoding to use</param>
-        /// <param name="SigningKey">The signature key</param>
-        /// <param name="ContentType">Optional IANA content type identifier. 
+        /// <param name="encoding">The data encoding to use</param>
+        /// <param name="signingKey">The signature key</param>
+        /// <param name="contentType">Optional IANA content type identifier. 
         /// Omitted if null</param>
-        /// <param name="Algorithm">The signature and encryption algorithm</param>
+        /// <param name="algorithm">The signature and encryption algorithm</param>
         public JoseWebSignature(JsonObject JSONObject,
-                    DataEncoding Encoding = DataEncoding.JSON,
-                    KeyPair SigningKey = null,
-                    string ContentType = null,
-                    CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default) :
-                this(JSONObject.GetBytes(Encoding), SigningKey, ContentType, Algorithm) {
+                    DataEncoding encoding = DataEncoding.JSON,
+                    KeyPair signingKey = null,
+                    string contentType = null,
+                    CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) :
+                this(JSONObject.GetBytes(encoding), signingKey, contentType, algorithm) {
             }
 
         /// <summary>
         /// Sign binary data.
         /// </summary>
-        /// <param name="Data">The data to sign</param>
-        /// <param name="SigningKey">The signature key</param>
-        /// <param name="ContentType">Optional IANA content type identifier. 
+        /// <param name="data">The data to sign</param>
+        /// <param name="signingKey">The signature key</param>
+        /// <param name="contentType">Optional IANA content type identifier. 
         /// Omitted if null</param>
-        /// <param name="Algorithm">The signature and encryption algorithm</param>
-        public JoseWebSignature(byte[] Data,
-                    KeyPair SigningKey = null,
-                    string ContentType = null,
-                    CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default) {
+        /// <param name="algorithm">The signature and encryption algorithm</param>
+        public JoseWebSignature(byte[] data,
+                    KeyPair signingKey = null,
+                    string contentType = null,
+                    CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) {
 
-            var Encoder = CryptoCatalog.Default.GetDigest(Algorithm);
-            _CryptoDataDigest = Encoder.Process(Data);
-            Payload = Data;
+            var encoder = CryptoCatalog.Default.GetDigest(algorithm);
+            _CryptoDataDigest = encoder.Process(data);
+            Payload = data;
 
-            if (SigningKey != null) {
-                AddSignature(SigningKey, Encoder.CryptoAlgorithmID);
+            if (signingKey != null) {
+                AddSignature(signingKey, encoder.CryptoAlgorithmID);
                 }
 
             Bind(_CryptoDataDigest);
@@ -105,56 +105,56 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Sign text as UTF8 encoding.
         /// </summary>
-        /// <param name="Text">The text to sign</param>
-        /// <param name="SigningKey">The signature key</param>
-        /// <param name="ContentType">Optional IANA content type identifier. 
+        /// <param name="text">The text to sign</param>
+        /// <param name="signingKey">The signature key</param>
+        /// <param name="contentType">Optional IANA content type identifier. 
         /// Omitted if null</param>
-        /// <param name="Algorithm">The signature and encryption algorithm</param>
+        /// <param name="algorithm">The signature and encryption algorithm</param>
         public JoseWebSignature(
-                    string Text,
-                    KeyPair SigningKey = null,
-                    string ContentType = null,
-                    CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default) :
-                this(System.Text.Encoding.UTF8.GetBytes(Text),
-                        SigningKey, ContentType, Algorithm) { }
+                    string text,
+                    KeyPair signingKey = null,
+                    string contentType = null,
+                    CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) :
+                this(System.Text.Encoding.UTF8.GetBytes(text),
+                        signingKey, contentType, algorithm) { }
 
 
         /// <summary>
         /// Add a signature to an existing data item.
         /// </summary>
-        /// <param name="SignerKey">The signing key</param>
-        /// <param name="ContentType">The content type</param>
-        /// <param name="ProviderAlgorithm">The provider algorithm</param>
+        /// <param name="signerKey">The signing key</param>
+        /// <param name="contentType">The content type</param>
+        /// <param name="providerAlgorithm">The provider algorithm</param>
         /// <returns>The signature instance.</returns>
-        public Signature AddSignature(KeyPair SignerKey,
-                CryptoAlgorithmId ProviderAlgorithm = CryptoAlgorithmId.Default,
-                string ContentType = null) {
+        public Signature AddSignature(KeyPair signerKey,
+                CryptoAlgorithmId providerAlgorithm = CryptoAlgorithmId.Default,
+                string contentType = null) {
 
             Signatures ??= new List<Signature>();
 
-            var Alg = SignerKey.SignatureAlgorithmID(ProviderAlgorithm);
+            var alg = signerKey.SignatureAlgorithmID(providerAlgorithm);
 
 
-            var ProtectedTBE = new Header() {
-                Cty = ContentType,
+            var protectedTBE = new Header() {
+                Cty = contentType,
                 Val = CryptoDataDigest.Integrity,
-                Alg = Alg.ToJoseID()
+                Alg = alg.ToJoseID()
                 };
-            var Protected = ProtectedTBE.ToJson();
+            var protectedJson = protectedTBE.ToJson();
 
-            var SignatureValue = SignerKey.Sign(Protected, ProviderAlgorithm);
+            var signatureValue = signerKey.Sign(protectedJson, providerAlgorithm);
 
-            var Header = new Header() {
-                Kid = SignerKey.KeyIdentifier
+            var header = new Header() {
+                Kid = signerKey.KeyIdentifier
                 };
 
-            var Signature = new Signature() {
-                Header = Header,
-                Protected = Protected,
-                SignatureValue = SignatureValue
+            var signature = new Signature() {
+                Header = header,
+                Protected = protectedJson,
+                SignatureValue = signatureValue
                 };
-            Signatures.Add(Signature);
-            return Signature;
+            Signatures.Add(signature);
+            return signature;
 
             }
 
@@ -166,72 +166,72 @@ namespace Goedel.Cryptography.Jose {
 
 
 
-        private void Bind(CryptoData Data,
-                string ContentType = null
+        private void Bind(CryptoData data,
+                string contentType = null
                 ) {
-            var DigestID = Data.AlgorithmIdentifier.Digest();
+            var digestID = data.AlgorithmIdentifier.Digest();
 
             Unprotected = new Header() {
-                Dig = DigestID.ToJoseID()
+                Dig = digestID.ToJoseID()
                 };
             }
 
         /// <summary>
         /// Verify the specified signature.
         /// </summary>
-        /// <param name="UDF">The UDF of the purported signature verification key.</param>
-        /// <param name="Public">The public signature verification key.</param>
+        /// <param name="udf">The UDF of the purported signature verification key.</param>
+        /// <param name="publicKey">The public signature verification key.</param>
         /// <returns>True if verification succeeds, otherwise false.</returns>
-        public bool Verify(string UDF, KeyPair Public) {
-            Assert.AssertTrue(UDF == Public.KeyIdentifier, FingerprintMatchFailed.Throw);
-            return Verify(Public);
+        public bool Verify(string udf, KeyPair publicKey) {
+            Assert.AssertTrue(udf == publicKey.KeyIdentifier, FingerprintMatchFailed.Throw);
+            return Verify(publicKey);
             }
 
         /// <summary>
         /// Verify the specified signature.
         /// </summary>
-        /// <param name="Public">The public signature verification key.</param>
+        /// <param name="publicKey">The public signature verification key.</param>
         /// <returns>True if verification succeeds, otherwise false.</returns>
-        public bool Verify(KeyPair Public) {
-            var Signature = MatchSigner(Public);
+        public bool Verify(KeyPair publicKey) {
+            var signature = MatchSigner(publicKey);
 
-            var ProtectedText = Signature.Protected.ToUTF8();
-            var Header = new Header();
-            Header.Deserialize(ProtectedText);
+            var protectedText = signature.Protected.ToUTF8();
+            var header = new Header();
+            header.Deserialize(protectedText);
 
-            var Algorithm = Header.Alg.FromJoseID();
-            var BulkID = Algorithm.Bulk();
+            var algorithm = header.Alg.FromJoseID();
+            var bulkID = algorithm.Bulk();
 
-            var Encoder = CryptoCatalog.Default.GetDigest(Algorithm);
-            var DigestOfData = Encoder.Process(Data);
+            var encoder = CryptoCatalog.Default.GetDigest(algorithm);
+            var digestOfData = encoder.Process(Data);
 
 
-            var Match = Header.Val.IsEqualTo(DigestOfData.Integrity);
+            var match = header.Val.IsEqualTo(digestOfData.Integrity);
 
-            if (!Header.Val.IsEqualTo(DigestOfData.Integrity)) {
+            if (!header.Val.IsEqualTo(digestOfData.Integrity)) {
                 return false; // Digest does not match
                 }
 
-            return Public.Verify(Signature.Protected, Signature.SignatureValue, Algorithm);
+            return publicKey.Verify(signature.Protected, signature.SignatureValue, algorithm);
             }
 
 
         /// <summary>
         /// Match a recipient header by key.
         /// </summary>
-        /// <param name="SigningKey">Key</param>
+        /// <param name="signingKey">Key</param>
         /// <returns>The Recipient data for the specified key, if found.</returns>
-        public Signature MatchSigner(KeyPair SigningKey) => MatchSigner(SigningKey.KeyIdentifier);
+        public Signature MatchSigner(KeyPair signingKey) => MatchSigner(signingKey.KeyIdentifier);
 
         /// <summary>
         /// Match a recipient header by key identifier.
         /// </summary>
-        /// <param name="UDF">Key fingerprint</param>
+        /// <param name="udf">Key fingerprint</param>
         /// <returns>The Recipient data for the specified key, if found.</returns>
-        public Signature MatchSigner(string UDF) {
-            foreach (var Signature in Signatures) {
-                if (Signature?.Header?.Kid == UDF) {
-                    return Signature;
+        public Signature MatchSigner(string udf) {
+            foreach (var signature in Signatures) {
+                if (signature?.Header?.Kid == udf) {
+                    return signature;
                     }
                 }
             return null;

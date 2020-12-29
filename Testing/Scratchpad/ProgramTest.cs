@@ -26,8 +26,8 @@ namespace Scratchpad {
             //var x = Environment.CommandLine;
             /* These only pass because the checks are disabled. */
 
-            TestCryptographyJose.Test().Test_Jose_Sign();
-            //ShellTests.Test().TestFilePlain();
+            //TestCryptographyJose.Test().RoundTripKeyExportable(CryptoAlgorithmId.Ed448);
+            GoedelCryptography.Test().TestAES_NIST_Streaming();
             //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
             //Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
 

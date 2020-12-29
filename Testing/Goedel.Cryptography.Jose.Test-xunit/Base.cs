@@ -3,7 +3,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.KeyFile;
 using Goedel.IO;
 using Goedel.Test.Core;
-
+using Goedel.Test;
 
 namespace Goedel.XUnit {
 
@@ -13,18 +13,11 @@ namespace Goedel.XUnit {
         static KeyPairBaseRSA EncrypterKeyPair;
         static KeyPairBaseRSA SignerKeyPair;
 
-        //static KeyPairDH AliceKeyPair;
-        //static KeyPairDH BobKeyPair;
-        //static KeyPairDH GroupKeyPair;
-
         static KeyPairDH TestKeyPairDH;
         static KeyPairBaseRSA TestKeyPairRSA;
 
-
-
-
         static TestCryptographyJose() {
-
+            Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
 
             SignerKeyPair = (KeyPairBaseRSA)KeyFileDecode.DecodePEM(
                     Directories.TestKey_OpenSSH_Private, KeySecurity.Exportable, null);
