@@ -23,18 +23,13 @@ namespace Scratchpad {
 
     partial class Program {
         static void Main() {
-            //var x = Environment.CommandLine;
-            /* These only pass because the checks are disabled. */
 
-            //TestCryptographyJose.Test().RoundTripKeyExportable(CryptoAlgorithmId.Ed448);
-            GoedelCryptography.Test().TestAES_NIST_Streaming();
-            //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
-            //Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
+            ServiceDiscovery.Test().TestDNS();
 
-            //Goedel.XUnit.MakeSiteDocs.Test().DecodeSecondDevice();
-            //Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
-            //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
-            //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+
+
+            //Goedel.XUnit.TestService.Test().KeyShareTestCapability(CryptoAlgorithmId.X448);
+
 
             }
 

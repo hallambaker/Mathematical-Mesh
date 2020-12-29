@@ -38,6 +38,7 @@ namespace Goedel.XUnit {
         // Encrypt: Encrypt confirmation request
 
         static TestService() {
+            Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
             }
 
 

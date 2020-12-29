@@ -7,7 +7,7 @@ using Xunit;
 namespace Goedel.XUnit {
 
     public partial class ServiceDiscovery {
-
+        public static ServiceDiscovery Test() => new ServiceDiscovery();
 
         [Fact]
         public void TestDNS() {
