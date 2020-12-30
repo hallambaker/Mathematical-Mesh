@@ -144,7 +144,6 @@ namespace Goedel.Mesh {
         /// Add <paramref name="catalogEntry"/> to the catalog as a new entry.
         /// </summary>
         /// <param name="catalogEntry">The entry to add.</param>
-        /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         public void New(T catalogEntry) {
             var envelope = PersistenceStore.PrepareNew(catalogEntry);
             PersistenceStore.Apply(envelope);

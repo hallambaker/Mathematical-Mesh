@@ -30,6 +30,13 @@
 		Integer			TotalBytes
 		Boolean			Verified
 
+
+	Structure ResultArchive
+		Inherits			Result
+		Struct FileEntry	Entries
+			Multiple
+	
+
 	Structure ResultFileDare
 		Inherits		ResultFile
 		Struct DareEnvelope Envelope 

@@ -26,9 +26,9 @@ namespace Scratchpad {
 
             ShellTests.Test().TestArchive();
 
+            //ShellTests.Test().TestLog();
 
 
-            //Goedel.XUnit.TestService.Test().KeyShareTestCapability(CryptoAlgorithmId.X448);
 
 
             }

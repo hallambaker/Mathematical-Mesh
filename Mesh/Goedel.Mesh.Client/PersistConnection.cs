@@ -66,7 +66,7 @@ namespace Goedel.Mesh.Client {
         public PersistHost(string fileName, string type = null,
                     string comment = null, bool readOnly = false,
                     FileStatus fileStatus = FileStatus.ConcurrentLocked,
-                    ContainerType containerType = ContainerType.Chain,
+                    SequenceType containerType = SequenceType.Chain,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,

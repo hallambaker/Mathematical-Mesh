@@ -9,8 +9,8 @@ using Goedel.Utilities;
 namespace Goedel.Cryptography.Dare {
 
 
-    ///<summary>Container types</summary>
-    public enum ContainerType {
+    ///<summary>Sequence types</summary>
+    public enum SequenceType {
         ///<summary>Undefined type</summary>
         Unknown = -1,
         ///<summary>List</summary>
@@ -50,6 +50,17 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>Any</summary>
         Any        }
 
+    ///<summary>Sequence Events</summary>
+    public enum SequenceEvent {
+        ///<summary>Undefined type</summary>
+        Unknown = -1,
+        ///<summary>New</summary>
+        New,
+        ///<summary>Update</summary>
+        Update,
+        ///<summary>Delete</summary>
+        Delete        }
+
 
     ///<summary>
     ///Constants specified in hallambaker-mesh-udf
@@ -59,16 +70,16 @@ namespace Goedel.Cryptography.Dare {
         // File: ContainerTypes
 
 
-        ///<summary>Jose enumeration tag for ContainerType.List</summary>
-        public const string  ContainerTypeListTag = "List";
-        ///<summary>Jose enumeration tag for ContainerType.Digest</summary>
-        public const string  ContainerTypeDigestTag = "Digest";
-        ///<summary>Jose enumeration tag for ContainerType.Chain</summary>
-        public const string  ContainerTypeChainTag = "Chain";
-        ///<summary>Jose enumeration tag for ContainerType.Tree</summary>
-        public const string  ContainerTypeTreeTag = "Tree";
-        ///<summary>Jose enumeration tag for ContainerType.Merkle</summary>
-        public const string  ContainerTypeMerkleTag = "Merkle";
+        ///<summary>Jose enumeration tag for SequenceType.List</summary>
+        public const string  SequenceTypeListTag = "List";
+        ///<summary>Jose enumeration tag for SequenceType.Digest</summary>
+        public const string  SequenceTypeDigestTag = "Digest";
+        ///<summary>Jose enumeration tag for SequenceType.Chain</summary>
+        public const string  SequenceTypeChainTag = "Chain";
+        ///<summary>Jose enumeration tag for SequenceType.Tree</summary>
+        public const string  SequenceTypeTreeTag = "Tree";
+        ///<summary>Jose enumeration tag for SequenceType.Merkle</summary>
+        public const string  SequenceTypeMerkleTag = "Merkle";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -76,14 +87,14 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static ContainerType ToContainerType (this string text) =>
+        public static SequenceType ToSequenceType (this string text) =>
             text switch {
-                ContainerTypeListTag => ContainerType.List,
-                ContainerTypeDigestTag => ContainerType.Digest,
-                ContainerTypeChainTag => ContainerType.Chain,
-                ContainerTypeTreeTag => ContainerType.Tree,
-                ContainerTypeMerkleTag => ContainerType.Merkle,
-                _ => ContainerType.Unknown
+                SequenceTypeListTag => SequenceType.List,
+                SequenceTypeDigestTag => SequenceType.Digest,
+                SequenceTypeChainTag => SequenceType.Chain,
+                SequenceTypeTreeTag => SequenceType.Tree,
+                SequenceTypeMerkleTag => SequenceType.Merkle,
+                _ => SequenceType.Unknown
                 };
 
         /// <summary>
@@ -92,13 +103,13 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="data">The enumerated value.</param>
         /// <returns>The text value.</returns>
-        public static string ToLabel (this ContainerType data) =>
+        public static string ToLabel (this SequenceType data) =>
             data switch {
-                ContainerType.List => ContainerTypeListTag,
-                ContainerType.Digest => ContainerTypeDigestTag,
-                ContainerType.Chain => ContainerTypeChainTag,
-                ContainerType.Tree => ContainerTypeTreeTag,
-                ContainerType.Merkle => ContainerTypeMerkleTag,
+                SequenceType.List => SequenceTypeListTag,
+                SequenceType.Digest => SequenceTypeDigestTag,
+                SequenceType.Chain => SequenceTypeChainTag,
+                SequenceType.Tree => SequenceTypeTreeTag,
+                SequenceType.Merkle => SequenceTypeMerkleTag,
                 _ => null
                 };
 
@@ -183,6 +194,44 @@ namespace Goedel.Cryptography.Dare {
                 PolicySignature.Isolated => PolicySignatureIsolatedTag,
                 PolicySignature.Last => PolicySignatureLastTag,
                 PolicySignature.Any => PolicySignatureAnyTag,
+                _ => null
+                };
+
+        // File: SequenceEvents
+
+
+        ///<summary>Jose enumeration tag for SequenceEvent.New</summary>
+        public const string  SequenceEventNewTag = "New";
+        ///<summary>Jose enumeration tag for SequenceEvent.Update</summary>
+        public const string  SequenceEventUpdateTag = "Update";
+        ///<summary>Jose enumeration tag for SequenceEvent.Delete</summary>
+        public const string  SequenceEventDeleteTag = "Delete";
+
+        /// <summary>
+        /// Convert the string <paramref name="text"/> to the corresponding enumeration
+        /// value.
+        /// </summary>
+        /// <param name="text">The string to convert.</param>
+        /// <returns>The enumeration value.</returns>
+        public static SequenceEvent ToSequenceEvent (this string text) =>
+            text switch {
+                SequenceEventNewTag => SequenceEvent.New,
+                SequenceEventUpdateTag => SequenceEvent.Update,
+                SequenceEventDeleteTag => SequenceEvent.Delete,
+                _ => SequenceEvent.Unknown
+                };
+
+        /// <summary>
+        /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+        /// value.
+        /// </summary>
+        /// <param name="data">The enumerated value.</param>
+        /// <returns>The text value.</returns>
+        public static string ToLabel (this SequenceEvent data) =>
+            data switch {
+                SequenceEvent.New => SequenceEventNewTag,
+                SequenceEvent.Update => SequenceEventUpdateTag,
+                SequenceEvent.Delete => SequenceEventDeleteTag,
                 _ => null
                 };
 

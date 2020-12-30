@@ -9,22 +9,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Record tracking a file in an archive.
     /// </summary>
-    public record FileEntry {
-
-        ///<summary>The file path in canonical form.</summary> 
-        public string Path;
-
-        ///<summary>The creation time.</summary> 
-        public DateTime? CreationTimeUtc;
-
-        ///<summary>The last access time.</summary> 
-        public DateTime? LastAccessTimeUtc;
-
-        ///<summary>The last write time.</summary> 
-        public DateTime? LastWriteTimeUtc;
-
-        ///<summary>The file attributes mask.</summary> 
-        public int Attributes;
+    public partial class FileEntry {
 
         ///<summary>The index in the log.</summary> 
         public long Index;
@@ -38,15 +23,23 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The previous position within the container.</summary> 
         public long PreviousPosition;
 
-
+        /// <summary>
+        /// Base constructor for serialization.
+        /// </summary>
         public FileEntry() {
             }
 
+        /// <summary>
+        /// Constructor to create an instance for the header <paramref name="dareHeader"/>
+        /// located at file sequence position <paramref name="position"/>.
+        /// </summary>
+        /// <param name="dareHeader">The header describing the file entry.</param>
+        /// <param name="position">The position of the entry in the file.</param>
         public FileEntry(DareHeader dareHeader, long position) {
             var contentMeta = dareHeader.ContentMeta;
             Path = contentMeta?.Filename;
-            CreationTimeUtc = contentMeta?.Created;
-            LastWriteTimeUtc = contentMeta?.Modified;
+            CreationTime= contentMeta?.Created;
+            LastWriteTime = contentMeta?.Modified;
             Index = dareHeader.Index;
             Position = position;
             Previous = -1;
@@ -67,8 +60,7 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>Dictionary mapping full names to file entries.</summary> 
         public SortedDictionary<long, FileEntry> DictionaryByIndex = new();
         /// <summary>
-        /// Add an entry described by <paramref name="fileInfo"/> to the collection using
-        /// <paramref name="relativeTo"/> as the relative path.
+        /// Add an entry described by <paramref name="fileInfo"/> to the collection.
         /// </summary>
         /// <param name="fileInfo">File information block.</param>
         /// <param name="path">The path to be recorded.</param>
@@ -84,9 +76,9 @@ namespace Goedel.Cryptography.Dare {
 
             var fileEntry = new FileEntry() {
                 Path = path,
-                CreationTimeUtc = fileInfo.CreationTimeUtc,
-                LastAccessTimeUtc = fileInfo.LastAccessTimeUtc,
-                LastWriteTimeUtc = fileInfo.LastWriteTimeUtc,
+                CreationTime = fileInfo.CreationTimeUtc,
+                LastAccessTime = fileInfo.LastAccessTimeUtc,
+                LastWriteTime = fileInfo.LastWriteTimeUtc,
                 Attributes = (int)fileInfo.Attributes,
                 Index = index,
                 Position = position
@@ -98,6 +90,12 @@ namespace Goedel.Cryptography.Dare {
             return Add(fileEntry);
             }
 
+        /// <summary>
+        /// Add a file to the collection.
+        /// </summary>
+        /// <param name="dareHeader">DARE header describing the entry.</param>
+        /// <param name="position">Position within the sequence file.</param>
+        /// <returns></returns>
         public FileEntry Add(DareHeader dareHeader, long position) {
             if (DictionaryByIndex.TryGetValue(dareHeader.Index, out var previous)) {
                 return previous; // already exists, do nothing
@@ -115,6 +113,11 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+        /// <summary>
+        /// Add a file entry.
+        /// </summary>
+        /// <param name="fileEntry">The entry to add</param>
+        /// <returns>The entry created.</returns>
         public FileEntry Add(FileEntry fileEntry) {
             if (DictionaryByIndex.TryGetValue(fileEntry.Index, out var previous)) {
                 return previous; // already exists
@@ -145,11 +148,16 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Delete the file entry <paramref name="path"/> from the sequence.
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public FileEntry Delete(string path) {
+        /// <param name="path">The unique identifier of the entry to delete.</param>
+        /// <param name="position">The index position of the entry.</param>
+        /// <returns>The file entry of the deleted file.</returns>
+        public FileEntry Delete(string path, long position) {
+            position.Future(); // keep for later use
+
+
             if (DictionaryByPath.TryGetValue(path, out var entry)) {
                 DictionaryByPath.Remove(path);
+                DictionaryByIndex.Remove(entry.Index);
                 return entry;
                 }
             else {

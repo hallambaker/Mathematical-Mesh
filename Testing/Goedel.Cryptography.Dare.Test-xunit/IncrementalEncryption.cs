@@ -150,8 +150,8 @@ namespace Goedel.XUnit {
 
             // Write initial set of records
             using (var XContainer = Sequence.NewContainer(
-                            filename, FileStatus.Overwrite, containerType:
-                            ContainerType.Merkle,
+                            filename, FileStatus.Overwrite, sequenceType:
+                            SequenceType.Merkle,
                             policy: darePolicy)) {
                 for (record = 0; record < reOpen; record++) {
                     var Test = MakeRecordData(record, maxSize);
@@ -195,7 +195,7 @@ namespace Goedel.XUnit {
                 // Check in forward direction
                 using (var XContainer = Sequence.Open(filename, FileStatus.Read, keyCollection)) {
                     for (record = moveStep; record < records; record += moveStep) {
-                        var ContainerDataReader = XContainer.GetContainerFrameIndex(record);
+                        var ContainerDataReader = XContainer.GetSequenceFrameIndex(record);
                         (ContainerDataReader.Header.SequenceInfo.Index == record).TestTrue();
                         }
 
@@ -204,7 +204,7 @@ namespace Goedel.XUnit {
                 // Check in backwards direction
                 using (var XContainer = Sequence.Open(filename, FileStatus.Read, keyCollection)) {
                     for (record = records; record > 0; record -= moveStep) {
-                        var ContainerDataReader = XContainer.GetContainerFrameIndex(record);
+                        var ContainerDataReader = XContainer.GetSequenceFrameIndex(record);
                         (ContainerDataReader.Header.SequenceInfo.Index == record).TestTrue();
                         }
                     }

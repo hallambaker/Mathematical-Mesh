@@ -204,7 +204,9 @@
 		Integer Previous
 			Description
 				|Frame number of the immediately prior object instance value	
-
+		Struct FileEntry FileEntry
+			Description
+				|Information describing the file entry on disk.
 
 
 	Section 2 "Cryptographic Data"
@@ -330,3 +332,22 @@
 		Boolean Sealed
 			Description
 				|If true the policy is immutable and cannot be changed by a subsequent policy override.
+
+
+	Structure FileEntry
+		String Path
+			Description
+				|The file path in canonical form. 
+		DateTime CreationTime
+			Description
+				|The creation time of the file on disk in UTC
+		DateTime LastAccessTime
+			Description
+				|The last access time of the file on disk in UTC
+		DateTime LastWriteTime
+			Description
+				|The last write time of the file on disk in UTC
+		Integer Attributes
+			Description
+				|The file attribues as a bitmapped integer.
+

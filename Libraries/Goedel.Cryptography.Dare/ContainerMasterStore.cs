@@ -285,7 +285,7 @@ namespace Goedel.Cryptography.Dare {
         public ContainerPersistenceStoreThreadSafe(string FileName, string Type = null,
                     string Comment = null,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
-                    ContainerType ContainerType = ContainerType.Chain,
+                    SequenceType ContainerType = SequenceType.Chain,
                     DarePolicy policy = null,
                     DataEncoding DataEncoding = DataEncoding.JSON) : base(
                         FileName, Type, Comment, FileStatus, ContainerType, policy, DataEncoding) {

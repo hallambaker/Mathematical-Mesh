@@ -7,7 +7,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Enumerator that returns the raw, unencrypted container data.
     /// </summary>
-    public class ContainerEnumeratorRaw : IEnumerator<DareEnvelope> {
+    public class SequenceEnumeratorRaw : IEnumerator<DareEnvelope> {
 
         Sequence container;
         int lowIndex;
@@ -27,7 +27,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="reverse">If true, enumeratre from the last item to <paramref name="lowIndex"/> (inclusive).
         /// otherwise, enumerate from <paramref name="lowIndex"/> to the first.</param>
         /// <param name="container">The container to enumerate.</param>
-        public ContainerEnumeratorRaw(Sequence container, int lowIndex = 0, bool reverse = false) {
+        public SequenceEnumeratorRaw(Sequence container, int lowIndex = 0, bool reverse = false) {
             this.container = container;
             this.lowIndex = lowIndex;
             this.reverse = reverse;
@@ -39,7 +39,7 @@ namespace Goedel.Cryptography.Dare {
         /// selectors to be used in sub classes.
         /// </summary>
         /// <returns>This instance</returns>
-        public ContainerEnumeratorRaw GetEnumerator() => this;
+        public SequenceEnumeratorRaw GetEnumerator() => this;
 
         object IEnumerator.Current => Current;
 
@@ -131,7 +131,7 @@ namespace Goedel.Cryptography.Dare {
         /// <code>false</code> if the enumerator has passed the end of the collection.</returns>
         public bool MoveNext() {
             var Result = container.NextFrame();
-            Current = Result ? container.GetContainerFrameIndex() : null;
+            Current = Result ? container.GetSequenceFrameIndex() : null;
             return Result;
             }
         /// <summary>
@@ -145,7 +145,7 @@ namespace Goedel.Cryptography.Dare {
             
             // Hack - should pull the container frame index from the dictionary.
             
-            Current = container.GetContainerFrameIndex();
+            Current = container.GetSequenceFrameIndex();
             }
         }
 

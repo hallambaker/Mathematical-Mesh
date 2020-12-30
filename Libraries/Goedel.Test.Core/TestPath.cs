@@ -69,7 +69,6 @@ namespace Goedel.Test.Core {
         public string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
         public string Test;
 
-        static bool Flag = false;
 
         static bool Direct = false;
 

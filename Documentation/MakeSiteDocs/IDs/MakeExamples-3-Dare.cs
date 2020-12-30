@@ -162,7 +162,7 @@ namespace ExampleGenerator {
 		//
 		// DumpHeaders
 		//
-		public void DumpHeaders (List<ContainerFrame> Frames) {
+		public void DumpHeaders (List<SequenceFrame> Frames) {
 			 if (Frames == null) {ReportMissing(); return;}
 			foreach  (var Frame in Frames) {
 				 DumpHeader (Frame);
@@ -173,7 +173,7 @@ namespace ExampleGenerator {
 		//
 		// DumpHeader
 		//
-		public void DumpHeader (ContainerFrame Frame) {
+		public void DumpHeader (SequenceFrame Frame) {
 			 if (Frame == null) {ReportMissing(); return;}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Frame {1}\n{0}", _Indent, Frame.Header.SequenceInfo.Index);

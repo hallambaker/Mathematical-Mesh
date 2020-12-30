@@ -514,6 +514,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAccountAuthentication">
             <summary>The authentication key used to authenticate as the account.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAdministratorEncryption">
+            <summary>The encryption key to be used for administration purposes.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
         </member>
@@ -561,6 +564,7 @@
             <param name="automatic">If true, presentation of the pin code is sufficient
             to authenticate and authorize the action.</param>
             <param name="register">If true, register the pin at the service.</param>
+            <param name="encryptKey">The encryption key to be used to encrypt the PIN registration.</param>
             <returns>A <see cref="T:Goedel.Mesh.MessagePin"/> instance describing the created parameters.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetMessagePIN(System.String)">
@@ -1157,6 +1161,7 @@
             <param name="meshHost">The host context</param>
             <param name="profileUser">The user profile</param>
             <param name="activationAccount">The account activation</param>
+            <param name="keyLocate">the key locator.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelf(Goedel.Mesh.Contact,System.String)">
             <summary>
@@ -1317,6 +1322,12 @@
             <param name="uri">The connection URI</param>
             <param name="rights">The list of rights being requested by the device.</param>
             <returns>The </returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.DeleteDevice(System.String)">
+            <summary>
+            Delete the device <paramref name="id"/> from the device catalog.
+            </summary>
+            <param name="id">Identifier of the device to remove.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ClaimPublication(System.String,System.String@)">
             <summary>
@@ -1686,6 +1697,7 @@
             local message.
             </summary>
             <param name="message">The message to append to the local spool.</param>
+            <param name="keyEncrypt">The message encryption key.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.InboundComplete(Goedel.Mesh.MessageStatus,Goedel.Mesh.Message,Goedel.Mesh.Message)">
             <summary>
@@ -2557,7 +2569,7 @@
         <member name="P:Goedel.Mesh.Client.PersistHost.DefaultEntry">
             <summary>The default entry</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.#ctor(System.String,System.String,System.String,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.ContainerType,Goedel.Protocol.DataEncoding,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.PersistHost.#ctor(System.String,System.String,System.String,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.SequenceType,Goedel.Protocol.DataEncoding,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean)">
             <summary>
             Open or create a persistence store in specified mode with 
             the specified file name, content type and optional comment.

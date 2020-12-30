@@ -37,7 +37,7 @@ namespace Goedel.Cryptography.Dare {
                         JbcdStream JBCDStream) {
 
             var containerInfo = new SequenceInfo() {
-                ContainerType = DareConstants.ContainerTypeDigestTag,
+                ContainerType = DareConstants.SequenceTypeDigestTag,
                 Index = 0
                 };
 
@@ -48,7 +48,7 @@ namespace Goedel.Cryptography.Dare {
 
             var container = new ContainerDigest() {
                 JbcdStream = JBCDStream,
-                ContainerHeaderFirst = containerHeader
+                HeaderFirst = containerHeader
                 };
 
             // initialize the Frame index dictionary
@@ -72,7 +72,7 @@ namespace Goedel.Cryptography.Dare {
 
                 Assert.AssertTrue(Header.SequenceInfo.Index == Index, ContainerDataCorrupt.Throw);
 
-                if (ContainerHeaderFirst.SequenceInfo.ContainerType == DareConstants.ContainerTypeListTag) {
+                if (HeaderFirst.SequenceInfo.ContainerType == DareConstants.SequenceTypeListTag) {
                     Assert.AssertNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
                     }
                 else {

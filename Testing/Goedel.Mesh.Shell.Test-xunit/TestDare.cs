@@ -108,47 +108,49 @@ namespace Goedel.XUnit {
             var entries = new Dictionary<string, bool>();
             var filename = $"seq-{archive}-{encrypt}-{sign}-{count}-{purge}-{index}";
 
-
             var options = encrypt == null ? "" : $" /encrypt={encrypt}" +
                         sign == null ? "" : $" /sign={sign}";
 
             // Create archive with specified security policy
 
             if (archive) {
+                ArchiveTest(encrypt, sign, purge, index, initial, mallet, entries, filename, options);
+                }
+            else {
+                LogTest(encrypt, sign, purge, index, initial, mallet, entries, filename, options);
+                }
+
+            }
+
+        private void ArchiveTest(string encrypt, string sign, bool purge, bool index, string initial, TestCLI mallet, Dictionary<string, bool> entries, string filename, string options) {
+
                 // add the initial values (if any);
                 options = initial == null ? options : $" {initial}" + options;
                 Dispatch($"dare archive {options} /out={filename}");
 
                 AddEntries(entries, initial);
-                }
-            else {
-                Dispatch($"dare log {filename}");
-                }
 
             VerifyArchive(filename, entries, sign, encrypt, mallet, initial);
 
-            if (archive) {
-                // add count new file
+            // add count new file
+            // Update old file.
 
-                // Update old file.
-                }
-            else {
+            // Delete file
+            //VerifyArchive(filename, entries, sign, encrypt, mallet, initial);
 
-
-                // add count log entries
-
+            if (purge) {
+                // Test Purge
                 }
 
-
-
-            VerifyArchive(filename, entries, sign, encrypt, mallet, initial);
-
-            if (archive) {
-                // Delete file
-
-                VerifyArchive(filename, entries, sign, encrypt, mallet, initial);
+            if (index) {
+                // Test Index
                 }
-            
+            }
+
+        private void LogTest(string encrypt, string sign, bool purge, bool index, string initial, TestCLI mallet, Dictionary<string, bool> entries, string filename, string options) {
+
+                Dispatch($"dare log {options}");
+
 
 
             if (purge) {
@@ -158,9 +160,9 @@ namespace Goedel.XUnit {
             if (index) {
                 // Test Index
                 }
-
-
+            throw new NYI();
             }
+
 
         static void AddEntries(Dictionary<string, bool> dictionary, string directory) {
             if (directory == null) {
@@ -184,7 +186,7 @@ namespace Goedel.XUnit {
                 TestCLI mallet, string initial) {
 
             using var archive = new DareLogReader(filename);
-            archive.Sequence.VerifyPolicy(null);
+            archive.Sequence.VerifyPolicy();
             archive.GetIndex();
 
             entries.TestEqualKeys(archive.FileCollection.DictionaryByPath);
@@ -193,6 +195,8 @@ namespace Goedel.XUnit {
             var unpack = filename + "_unpack";
             var unpackDir = Path.Combine(unpack, Path.GetFileName(initial));
             Dispatch($"dare extract {filename} {unpack}");
+
+            var listArchive = Dispatch($"dare list {filename} ");
 
 
             unpackDir.CheckDirectroriesEqual(initial);

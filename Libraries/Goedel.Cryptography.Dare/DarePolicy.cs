@@ -66,16 +66,11 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Convenience constructor to create a policy to be used to encode a container. The parameter
-        /// <paramref name="keyLocate"/> is used to resolve the keys specified in 
-        /// <paramref name="signers"/> and <paramref name="recipients"/>. The parameters 
-        /// <paramref name="encrypt"/> and <paramref name="digest"/> allow the bulk ciphers to be
-        /// specified using <see cref="CryptoAlgorithmId"/> parameters rather than JOSE identifiers.
-        /// Additional properties MAY be specified directly.
+        /// Convenience constructor to create a policy to be used to encode a container.
         /// </summary>
         /// <param name="keyLocate">The key location instance.</param>
-        /// <param name="signers">Signer identifiers. to be resolved using <paramref name="keyLocate"/></param>
-        /// <param name="recipients">Recipient identifiers. to be resolved using <paramref name="keyLocate"/></param>
+        /// <param name="signer">Signer key</param>
+        /// <param name="recipient">Recipient key</param>
         /// <param name="encrypt">The bulk encryption algorithm.</param>
         /// <param name="digest">The bulk digest algorithm.</param>
         public DarePolicy(IKeyLocate keyLocate,

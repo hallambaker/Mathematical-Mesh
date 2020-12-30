@@ -224,6 +224,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="meshHost">The host context</param>
         /// <param name="profileUser">The user profile</param>
         /// <param name="activationAccount">The account activation</param>
+        /// <param name="keyLocate">the key locator.</param>
         public static void CreateDirectory(
                     MeshHost meshHost, 
                     ProfileUser profileUser,
@@ -804,6 +805,10 @@ namespace Goedel.Mesh.Client {
             return cataloguedDevice;
             }
 
+        /// <summary>
+        /// Delete the device <paramref name="id"/> from the device catalog.
+        /// </summary>
+        /// <param name="id">Identifier of the device to remove.</param>
         public void DeleteDevice(string id) {
             var transact = TransactBegin();
             var catalogDevice = transact.GetCatalogDevice();

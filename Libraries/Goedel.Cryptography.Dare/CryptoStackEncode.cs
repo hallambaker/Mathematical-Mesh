@@ -65,7 +65,7 @@ namespace Goedel.Cryptography.Dare {
                 header.KeyIdentifier = GetKeyIdentifier();
 
 
-                if (cryptoParameters is CryptoParametersContainer cryptoParametersContainer) {
+                if (cryptoParameters is CryptoParametersSequence cryptoParametersContainer) {
                     if (cryptoParametersContainer.ReuseKeyExchange(header.Index, out var keyExchange)) {
                         header.SequenceInfo.ExchangePosition = keyExchange;
                         }

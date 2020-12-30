@@ -180,6 +180,7 @@ namespace Goedel.Cryptography.Jose {
         /// Convert a case sensitive JOSE name to an identifier.
         /// </summary>
         /// <param name="joseID">Jose Name</param>
+        /// <param name="force">Force use of encryption if not specified.</param>
         /// <returns>Identifier</returns>
         public static CryptoAlgorithmId FromJoseIDEncryption(this string joseID, bool force = false) =>
             joseID switch {
@@ -194,6 +195,7 @@ namespace Goedel.Cryptography.Jose {
         /// Convert a case sensitive JOSE name to an identifier.
         /// </summary>
         /// <param name="joseID">Jose Name</param>
+        /// <param name="force">Force use of digest if not specified.</param>
         /// <returns>Identifier</returns>
         public static CryptoAlgorithmId FromJoseIDDigest(this string joseID, bool force=false) =>
             joseID switch {

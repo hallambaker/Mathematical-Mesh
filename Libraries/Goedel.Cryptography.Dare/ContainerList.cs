@@ -34,7 +34,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var containerInfo = new SequenceInfo() {
-                ContainerType = DareConstants.ContainerTypeListTag,
+                ContainerType = DareConstants.SequenceTypeListTag,
                 Index = 0
                 };
 
@@ -44,7 +44,7 @@ namespace Goedel.Cryptography.Dare {
 
             var container = new ContainerList() {
                 JbcdStream = JBCDStream,
-                ContainerHeaderFirst = containerHeader
+                HeaderFirst = containerHeader
                 };
 
             return container;
@@ -143,7 +143,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="index">The container index to obtain the frame index for.</param>
         /// <param name="position">The container position to obtain the frame index for.</param>
         /// <returns>The created ContainerFrameIndex instance,</returns>
-        public override SequenceFrameIndex GetContainerFrameIndex(
+        public override SequenceFrameIndex GetSequenceFrameIndex(
                     long index = -1,
                     long position = -1) {
             if (position < 0 & index >= 0) {
@@ -183,11 +183,11 @@ namespace Goedel.Cryptography.Dare {
             frameRemaining = JbcdStream.ReadFrame(out var FrameHeader);
             frameReadStartPosition = PositionRead;
 
-            this.FrameHeader = FrameHeader;
+            this.HeaderBytes = FrameHeader;
 
 
             if (FrameHeader != null) {
-                var Index = ContainerHeader.SequenceInfo.Index;
+                var Index = Header.SequenceInfo.Index;
                 if (!FrameIndexToPositionDictionary.TryGetValue(Index, out _)) {
                     FrameIndexToPositionDictionary.Add(Index, RecordStart);
                     }
@@ -208,9 +208,9 @@ namespace Goedel.Cryptography.Dare {
             frameRemaining = JbcdStream.ReadFrameReverse(out var FrameHeader);
             frameReadStartPosition = PositionRead;
 
-            this.FrameHeader = FrameHeader;
+            this.HeaderBytes = FrameHeader;
             if (FrameHeader != null) {
-                var Index = ContainerHeader.SequenceInfo.Index;
+                var Index = Header.SequenceInfo.Index;
                 if (!FrameIndexToPositionDictionary.TryGetValue(Index, out _)) {
                     FrameIndexToPositionDictionary.Add(Index, frameReadStartPosition);
                     }
@@ -239,13 +239,13 @@ namespace Goedel.Cryptography.Dare {
                     PositionRead = position;
                     var Last = PositionRead;
                     Next();
-                    while (ContainerInfo != null && ContainerInfo.Index < index) {
+                    while (SequenceInfo != null && SequenceInfo.Index < index) {
                         Last = PositionRead;
                         Next();
                         }
                     PositionRead = Last;
-                    frameLowUnknown = ContainerInfo.Index;
-                    return ContainerInfo.Index == index;
+                    frameLowUnknown = SequenceInfo.Index;
+                    return SequenceInfo.Index == index;
                     }
 
                 else {
@@ -255,12 +255,12 @@ namespace Goedel.Cryptography.Dare {
                     PositionRead = position;
 
                     Previous();
-                    while (ContainerInfo != null && (ContainerInfo.Index > index)) {
+                    while (SequenceInfo != null && (SequenceInfo.Index > index)) {
                         Previous();
                         }
 
-                    frameHighUnknown = ContainerInfo.Index;
-                    return ContainerInfo.Index == index;
+                    frameHighUnknown = SequenceInfo.Index;
+                    return SequenceInfo.Index == index;
                     }
                 }
             return true;
@@ -284,7 +284,7 @@ namespace Goedel.Cryptography.Dare {
                 Assert.AssertTrue(Header.SequenceInfo.Index == Index, 
                         ContainerDataCorrupt.Throw);
 
-                if (ContainerHeaderFirst.SequenceInfo.ContainerType == DareConstants.ContainerTypeListTag) {
+                if (HeaderFirst.SequenceInfo.ContainerType == DareConstants.SequenceTypeListTag) {
                     Assert.AssertNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
                     }
                 else {

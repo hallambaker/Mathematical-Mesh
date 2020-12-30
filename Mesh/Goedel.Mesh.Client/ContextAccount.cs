@@ -89,7 +89,7 @@ namespace Goedel.Mesh.Client {
         ///<summary>The authentication key used to authenticate as the account.</summary>
         protected KeyPair KeyAccountAuthentication => ActivationAccount?.AccountAuthenticationKey;
 
-
+        ///<summary>The encryption key to be used for administration purposes.</summary> 
         public KeyPair KeyAdministratorEncryption => ActivationAccount.AccountEncryptionKey;
 
         #endregion
@@ -172,6 +172,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="automatic">If true, presentation of the pin code is sufficient
         /// to authenticate and authorize the action.</param>
         /// <param name="register">If true, register the pin at the service.</param>
+        /// <param name="encryptKey">The encryption key to be used to encrypt the PIN registration.</param>
         /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
         public MessagePin GetPIN(string action, bool automatic = true, 
                             int length = 80, long validity = MeshConstants.DayInTicks,

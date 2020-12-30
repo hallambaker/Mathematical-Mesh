@@ -34,7 +34,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var containerInfo = new SequenceInfo() {
-                ContainerType = DareConstants.ContainerTypeChainTag,
+                ContainerType = DareConstants.SequenceTypeChainTag,
                 Index = 0
                 };
 
@@ -44,7 +44,7 @@ namespace Goedel.Cryptography.Dare {
 
             var container = new ContainerChain() {
                 JbcdStream = JBCDStream,
-                ContainerHeaderFirst = containerHeader
+                HeaderFirst = containerHeader
                 };
 
             return container;
@@ -71,7 +71,7 @@ namespace Goedel.Cryptography.Dare {
         public override void PrepareFrame(
                         ContainerWriter contextWrite
                         ) {
-            DareHeaderFinal = contextWrite.ContainerHeader;
+            HeaderFinal = contextWrite.ContainerHeader;
             base.PrepareFrame(contextWrite);
             }
 
@@ -94,13 +94,13 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="trailer">The trailer to augment.</param>
         public override void MakeTrailer(ref DareTrailer trailer) {
-            trailer ??= CryptoParametersContainer.GetNullTrailer();
+            trailer ??= CryptoParametersSequence.GetNullTrailer();
 
-            if (DareHeaderFinal != null) {
-                trailer.ChainDigest = CryptoParametersContainer.CombineDigest(DareHeaderFinal.ChainDigest, trailer.PayloadDigest);
+            if (HeaderFinal != null) {
+                trailer.ChainDigest = CryptoParametersSequence.CombineDigest(HeaderFinal.ChainDigest, trailer.PayloadDigest);
                 }
             else {
-                trailer.ChainDigest = CryptoParametersContainer.CombineDigest(null, trailer.PayloadDigest);
+                trailer.ChainDigest = CryptoParametersSequence.CombineDigest(null, trailer.PayloadDigest);
                 }
             }
 

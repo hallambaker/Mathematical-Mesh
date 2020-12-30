@@ -131,9 +131,11 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareIndex(DareIndex options) {
             var inputFile = options.Sequence.Value;
+            var contextAccount = GetContextUser(options);
 
-            using (var container = Cryptography.Dare.Sequence.Open(
-                inputFile, containerType: ContainerType.Merkle)) {
+            using (var writer = new DareLogWriter(inputFile, null)) {
+                writer.GetIndex();
+                writer.AddIndex();
                 }
 
             return new ResultFile() {
@@ -150,20 +152,18 @@ namespace Goedel.Mesh.Shell {
             var inputFile = options.Sequence.Value;
             var contextAccount = GetContextUser(options);
 
-            using (var reader = new DareLogReader(inputFile, contextAccount)) {
-                reader.GetIndex();
+            using var reader = new DareLogReader(inputFile, contextAccount);
+            reader.GetIndex();
 
-                // need to do a reorg - the writer needs to be a subclass of the reader.
+            var result = new ResultArchive() {
+                Entries = new List<FileEntry>()
+                };
 
-
-                // reader needs to have option to compile the index.
-
-
+            foreach (var entry in reader.FileCollection.DictionaryByPath) {
+                result.Entries.Add(entry.Value);
                 }
 
-            return new ResultSequence() {
-
-                };
+            return result;
             }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Goedel.Mesh.Shell {
             var outputFile = options.Output.Value;
 
             using (var container = Cryptography.Dare.Sequence.Open(
-                inputFile, containerType: ContainerType.Merkle)) {
+                inputFile, sequenceType: SequenceType.Merkle)) {
                 }
 
             return new ResultFile() {

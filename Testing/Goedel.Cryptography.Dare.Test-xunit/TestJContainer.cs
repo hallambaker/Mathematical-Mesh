@@ -18,9 +18,9 @@ namespace Goedel.XUnit {
         public static TestContainers Test() => new TestContainers();
 
         [Fact]
-        public void ContainerTestList0() => TestContainer($"ContainerList", ContainerType.List, 0);
+        public void ContainerTestList0() => TestContainer($"ContainerList", SequenceType.List, 0);
         [Fact]
-        public void ContainerTestList1() => TestContainer($"ContainerList", ContainerType.List, 1);
+        public void ContainerTestList1() => TestContainer($"ContainerList", SequenceType.List, 1);
 
 
         [Fact]
@@ -47,8 +47,8 @@ namespace Goedel.XUnit {
 
 
             // probably failing because the encrypted payload length is being incorrectly calculated.
-            TestContainer($"ContainerList", ContainerType.List, 1, policy: policy);
-            TestContainer($"ContainerList", ContainerType.List, 10, policy: policy);
+            TestContainer($"ContainerList", SequenceType.List, 1, policy: policy);
+            TestContainer($"ContainerList", SequenceType.List, 10, policy: policy);
             }
 
         [Fact]
@@ -63,9 +63,9 @@ namespace Goedel.XUnit {
             var CryptoParametersEntry = new CryptoParameters(
                 keyCollection, recipients: recipients);
 
-            TestContainer($"ContainerList", ContainerType.List, 0, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
-            TestContainer($"ContainerList", ContainerType.List, 1, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
-            TestContainer($"ContainerList", ContainerType.List, 10, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
+            TestContainer($"ContainerList", SequenceType.List, 0, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
+            TestContainer($"ContainerList", SequenceType.List, 1, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
+            TestContainer($"ContainerList", SequenceType.List, 10, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
             }
 
         [Fact]
@@ -83,51 +83,51 @@ namespace Goedel.XUnit {
                         keyCollection,
                         signers: signers);
 
-            TestContainer($"ContainerList", ContainerType.List, 0, policy: CryptoParameters);
-            TestContainer($"ContainerList", ContainerType.List, 1, policy: CryptoParameters);
-            TestContainer($"ContainerList", ContainerType.List, 10, policy: CryptoParameters);
+            TestContainer($"ContainerList", SequenceType.List, 0, policy: CryptoParameters);
+            TestContainer($"ContainerList", SequenceType.List, 1, policy: CryptoParameters);
+            TestContainer($"ContainerList", SequenceType.List, 10, policy: CryptoParameters);
             }
 
         [Fact]
         public void ContainerTestList() {
-            TestContainer($"ContainerList", ContainerType.List, 0);
-            TestContainer($"ContainerList", ContainerType.List, 1);
-            TestContainer($"ContainerList", ContainerType.List, 10);
+            TestContainer($"ContainerList", SequenceType.List, 0);
+            TestContainer($"ContainerList", SequenceType.List, 1);
+            TestContainer($"ContainerList", SequenceType.List, 10);
             }
 
         [Fact]
         public void ContainerTestDigest() {
-            TestContainer($"ContainerDigest", ContainerType.Digest, 0);
-            TestContainer($"ContainerDigest", ContainerType.Digest, 1);
-            TestContainer($"ContainerDigest", ContainerType.Digest, 10);
+            TestContainer($"ContainerDigest", SequenceType.Digest, 0);
+            TestContainer($"ContainerDigest", SequenceType.Digest, 1);
+            TestContainer($"ContainerDigest", SequenceType.Digest, 10);
             }
 
 
         [Fact]
         public void ContainerTestChain() {
-            TestContainer($"ContainerChain", ContainerType.Chain, 0);
-            TestContainer($"ContainerChain", ContainerType.Chain, 1);
-            TestContainer($"ContainerChain", ContainerType.Chain, 10);
+            TestContainer($"ContainerChain", SequenceType.Chain, 0);
+            TestContainer($"ContainerChain", SequenceType.Chain, 1);
+            TestContainer($"ContainerChain", SequenceType.Chain, 10);
             }
 
         [Fact]
         public void ContainerTestTree() {
-            TestContainer($"ContainerTree", ContainerType.Tree, 0);
-            TestContainer($"ContainerTree", ContainerType.Tree, 1);
-            TestContainer($"ContainerTree", ContainerType.Tree, 10);
+            TestContainer($"ContainerTree", SequenceType.Tree, 0);
+            TestContainer($"ContainerTree", SequenceType.Tree, 1);
+            TestContainer($"ContainerTree", SequenceType.Tree, 10);
             }
 
         [Fact]
-        public void ContainerTestTree1() => TestContainer($"ContainerTree", ContainerType.Tree, 1);
+        public void ContainerTestTree1() => TestContainer($"ContainerTree", SequenceType.Tree, 1);
 
         [Fact]
-        public void ContainerTestTree10() => TestContainer($"ContainerTree", ContainerType.Tree, 10);
+        public void ContainerTestTree10() => TestContainer($"ContainerTree", SequenceType.Tree, 10);
 
         [Fact]
         public void ContainerTestMerkleTree() {
-            TestContainer($"ContainerMerkle", ContainerType.Merkle, 0);
-            TestContainer($"ContainerMerkle", ContainerType.Merkle, 1);
-            TestContainer($"ContainerMerkle", ContainerType.Merkle, 10);
+            TestContainer($"ContainerMerkle", SequenceType.Merkle, 0);
+            TestContainer($"ContainerMerkle", SequenceType.Merkle, 1);
+            TestContainer($"ContainerMerkle", SequenceType.Merkle, 10);
             }
 
 
@@ -176,19 +176,19 @@ namespace Goedel.XUnit {
             DarePolicy policy = null,
             CryptoParameters CryptoParametersEntry = null) {
 
-            TestContainer($"Container-List-{FileName}", ContainerType.List, Records, MaxSize, ReOpen, MoveStep,
+            TestContainer($"Container-List-{FileName}", SequenceType.List, Records, MaxSize, ReOpen, MoveStep,
                 policy, CryptoParametersEntry);
-            TestContainer($"Container-Digest-{FileName}", ContainerType.Digest, Records, MaxSize, ReOpen, MoveStep,
+            TestContainer($"Container-Digest-{FileName}", SequenceType.Digest, Records, MaxSize, ReOpen, MoveStep,
                 policy, CryptoParametersEntry);
-            TestContainer($"Container-Chain-{FileName}", ContainerType.Chain, Records, MaxSize, ReOpen, MoveStep,
+            TestContainer($"Container-Chain-{FileName}", SequenceType.Chain, Records, MaxSize, ReOpen, MoveStep,
             policy, CryptoParametersEntry);
-            TestContainer($"Container-Tree-{FileName}", ContainerType.Tree, Records, MaxSize, ReOpen, MoveStep,
+            TestContainer($"Container-Tree-{FileName}", SequenceType.Tree, Records, MaxSize, ReOpen, MoveStep,
                 policy, CryptoParametersEntry);
-            TestContainer($"Container-MerkleTree-{FileName}", ContainerType.Merkle, Records, MaxSize, ReOpen, MoveStep,
+            TestContainer($"Container-MerkleTree-{FileName}", SequenceType.Merkle, Records, MaxSize, ReOpen, MoveStep,
                 policy, CryptoParametersEntry);
             }
 
-        static void TestContainer(string fileName, ContainerType containerType,
+        static void TestContainer(string fileName, SequenceType containerType,
                     int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0,
                     DarePolicy policy = null,
                     CryptoParameters cryptoParametersEntry = null,
@@ -206,7 +206,7 @@ namespace Goedel.XUnit {
 
             // Write initial set of records
             using (var XContainer = Sequence.NewContainer(
-                            fileName, FileStatus.Overwrite, containerType: containerType,
+                            fileName, FileStatus.Overwrite, sequenceType: containerType,
                             policy)) {
                 for (Record = 0; Record < reOpen; Record++) {
                     var Test = MakeConstant("Test ", ((Record + 1) % maxSize));
@@ -258,7 +258,7 @@ namespace Goedel.XUnit {
                 using (var XContainer = Sequence.Open(fileName, FileStatus.Read,
                             policy: policy)) {
                     for (Record = moveStep; Record < records; Record += moveStep) {
-                        var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
+                        var ContainerDataReader = XContainer.GetSequenceFrameIndex(Record);
                         (ContainerDataReader.Header.SequenceInfo.Index == Record).TestTrue(); ;
                         }
 
@@ -268,7 +268,7 @@ namespace Goedel.XUnit {
                 using (var XContainer = Sequence.Open(fileName, FileStatus.Read,
                             policy: policy)) {
                     for (Record = records; Record > 0; Record -= moveStep) {
-                        var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
+                        var ContainerDataReader = XContainer.GetSequenceFrameIndex(Record);
                         (ContainerDataReader.Header.SequenceInfo.Index == Record).TestTrue(); ;
                         }
                     }

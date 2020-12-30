@@ -32,7 +32,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var containerInfo = new SequenceInfo() {
-                ContainerType = DareConstants.ContainerTypeTreeTag,
+                ContainerType = DareConstants.SequenceTypeTreeTag,
                 Index = 0
                 };
 
@@ -44,7 +44,7 @@ namespace Goedel.Cryptography.Dare {
 
             var container = new ContainerTree() {
                 JbcdStream = jbcdStream,
-                ContainerHeaderFirst = containerHeader
+                HeaderFirst = containerHeader
                 };
 
             return container;
@@ -71,7 +71,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerInfo">The frame to prepare.</param>
         protected override void PrepareFrame(SequenceInfo containerInfo) {
             if (containerInfo.Index == 0) {
-                containerInfo.ContainerType = DareConstants.ContainerTypeTreeTag;
+                containerInfo.ContainerType = DareConstants.SequenceTypeTreeTag;
                 }
             else {
                 containerInfo.TreePosition =

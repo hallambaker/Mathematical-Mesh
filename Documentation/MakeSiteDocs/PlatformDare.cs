@@ -27,14 +27,14 @@ namespace ExampleGenerator {
         public DareEnvelope MailMessageAsDAREPlaintext;
         public DareEnvelope MailMessageAsDAREEncrypted;
 
-        public List<ContainerFrame> ContainerHeadersSimple;
-        public List<ContainerFrame> ContainerHeadersChain;
-        public List<ContainerFrame> ContainerHeadersTree;
-        public List<ContainerFrame> ContainerHeadersMerkleTree;
-        public List<ContainerFrame> ContainerHeadersSigned;
+        public List<SequenceFrame> ContainerHeadersSimple;
+        public List<SequenceFrame> ContainerHeadersChain;
+        public List<SequenceFrame> ContainerHeadersTree;
+        public List<SequenceFrame> ContainerHeadersMerkleTree;
+        public List<SequenceFrame> ContainerHeadersSigned;
 
-        public List<ContainerFrame> ContainerHeadersEncryptSingleSession;
-        public List<ContainerFrame> ContainerHeadersEncryptIndependentSession;
+        public List<SequenceFrame> ContainerHeadersEncryptSingleSession;
+        public List<SequenceFrame> ContainerHeadersEncryptIndependentSession;
 
 
         // envelope stuff
@@ -98,12 +98,12 @@ namespace ExampleGenerator {
         public Sequence MakeContainer(
                     string FileName,
                     DarePolicy policy,
-                    ContainerType ContainerType = ContainerType.Chain) {
+                    SequenceType ContainerType = SequenceType.Chain) {
             consoleWriter = new StringWriter();
 
             //var FileStream = FileName.FileStream(FileStatus.Overwrite);
             var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output: consoleWriter);
-            return Goedel.Cryptography.Dare.Sequence.NewContainer(JBCDStream, containerType: ContainerType, policy: policy);
+            return Goedel.Cryptography.Dare.Sequence.NewContainer(JBCDStream, sequenceType: ContainerType, policy: policy);
 
             }
 
@@ -115,15 +115,15 @@ namespace ExampleGenerator {
             return Data;
             }
 
-        public static List<ContainerFrame> ReadContainer(Sequence container) {
-            var ContainerHeaders = new List<ContainerFrame> {
-                new ContainerFrame {
-                    Header = container.ContainerHeaderFirst
+        public static List<SequenceFrame> ReadContainer(Sequence container) {
+            var ContainerHeaders = new List<SequenceFrame> {
+                new SequenceFrame {
+                    Header = container.HeaderFirst
                     }
                 };
             //Console.WriteLine($"First Frame {Container.ContainerHeader}");
             foreach (var ContainerDataReader in container) {
-                ContainerHeaders.Add(new ContainerFrame {
+                ContainerHeaders.Add(new SequenceFrame {
                     Header = ContainerDataReader.Header,
                     Trailer = ContainerDataReader.Trailer
                     });
@@ -204,14 +204,14 @@ namespace ExampleGenerator {
             var policyPlaintext = new DarePolicy();
 
             // Simple
-            var TContainer = MakeContainer("Test1List", policyPlaintext, ContainerType.List);
+            var TContainer = MakeContainer("Test1List", policyPlaintext, SequenceType.List);
             TContainer.Append(testData300);
             Dare.ContainerHeadersSimple = ReadContainer(TContainer);
             Dare.ContainerFramingSimple = consoleWriter.ToString();
 
 
             // Digest
-            TContainer = MakeContainer("Test1Chain", policyPlaintext, ContainerType.Chain);
+            TContainer = MakeContainer("Test1Chain", policyPlaintext, SequenceType.Chain);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
@@ -219,7 +219,7 @@ namespace ExampleGenerator {
 
 
             // Tree
-            TContainer = MakeContainer("Test1Tree", policyPlaintext, ContainerType.Tree);
+            TContainer = MakeContainer("Test1Tree", policyPlaintext, SequenceType.Tree);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
@@ -230,7 +230,7 @@ namespace ExampleGenerator {
 
 
             // Merkle Tree
-            TContainer = MakeContainer("Test1Merkle", policyPlaintext, ContainerType.Merkle);
+            TContainer = MakeContainer("Test1Merkle", policyPlaintext, SequenceType.Merkle);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
@@ -240,7 +240,7 @@ namespace ExampleGenerator {
             Dare.ContainerHeadersMerkleTree = ReadContainer(TContainer);
 
 
-            TContainer = MakeContainer("Test1Sign", policyPlaintext, ContainerType.Merkle);
+            TContainer = MakeContainer("Test1Sign", policyPlaintext, SequenceType.Merkle);
             TContainer.Append(testData300);
             TContainer.Append(testData300);
             Dare.ContainerHeadersSigned = ReadContainer(TContainer);
@@ -344,7 +344,7 @@ namespace ExampleGenerator {
 
         void GoDareSequence() {
             // Encrypt a set of data under one key exchange.
-            var EncryptingContainer = MakeContainer("Test1Enc", Dare.DarePolicyEncrypt, ContainerType.List);
+            var EncryptingContainer = MakeContainer("Test1Enc", Dare.DarePolicyEncrypt, SequenceType.List);
             EncryptingContainer.Append(testData300);
             EncryptingContainer.Append(testData300);
             Dare.ContainerHeadersEncryptSingleSession = ReadContainer(EncryptingContainer);
@@ -352,7 +352,7 @@ namespace ExampleGenerator {
 
 
             // Encrypt a sequence of items with a key exchange per item.
-            var EncryptedContainer = MakeContainer("Test1EncSep", Dare.DarePolicyPlaintext, ContainerType.List);
+            var EncryptedContainer = MakeContainer("Test1EncSep", Dare.DarePolicyPlaintext, SequenceType.List);
             EncryptedContainer.Append(testData300);
             EncryptedContainer.Append(testData300);
             Dare.ContainerHeadersEncryptIndependentSession = ReadContainer(EncryptedContainer);

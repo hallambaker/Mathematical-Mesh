@@ -74,7 +74,7 @@ namespace Goedel.XUnit {
         public TestItemContainerPersistenceStore(string FileName, string Type = null,
                     string Comment = null,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
-                    ContainerType ContainerType = ContainerType.Chain) : base(
+                    SequenceType ContainerType = SequenceType.Chain) : base(
                         FileName, Type, Comment, FileStatus, ContainerType) =>
                         IndexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
 

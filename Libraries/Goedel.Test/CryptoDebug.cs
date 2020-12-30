@@ -85,7 +85,7 @@ namespace Goedel.Test.Core {
         /// parameters.
         /// </summary>
         public CryptoStackDebug(
-                        CryptoParametersContainer cryptoParameters,
+                        CryptoParametersSequence cryptoParameters,
                         DareHeader dareHeader
                         ) : base(cryptoParameters, dareHeader) => CalculateParameters(Salt, out KeyEncrypt, out KeyMac, out IV);
 

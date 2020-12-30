@@ -3,7 +3,7 @@
 
 
 File ContainerTypes
-	Enum ContainerType "Container types"
+	Enum SequenceType "Sequence types"
 		Code List					"List"
 		Code Digest					"Digest"
 		Code Chain					"Chain"
@@ -23,3 +23,9 @@ File SignaturePolicies
 		Code Isolated				"Isolated"
 		Code Last					"Last"
 		Code Any					"Any"
+
+File SequenceEvents
+	Enum SequenceEvent "Sequence Events"
+		Code New					"New"
+		Code Update					"Update"
+		Code Delete					"Delete"

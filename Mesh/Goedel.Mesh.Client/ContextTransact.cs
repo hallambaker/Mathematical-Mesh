@@ -412,6 +412,7 @@ namespace Goedel.Mesh.Client {
         /// local message.
         /// </summary>
         /// <param name="message">The message to append to the local spool.</param>
+        /// <param name="keyEncrypt">The message encryption key.</param>
         public void LocalMessage(
                 Message message,
                 CryptoKey keyEncrypt) {

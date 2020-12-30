@@ -1111,7 +1111,6 @@
             Add <paramref name="catalogEntry"/> to the catalog as a new entry.
             </summary>
             <param name="catalogEntry">The entry to add.</param>
-            <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.Update(`0,Goedel.Cryptography.CryptoKey)">
             <summary>

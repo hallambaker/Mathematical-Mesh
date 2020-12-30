@@ -187,6 +187,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="reader">The stream to read the decoded data from.</param>
         /// <param name="keyCollection">Key collection to be used to resolve private
         /// keys.</param>
+        /// <param name="exchange">Header containing the exchange information.</param>
         /// <returns>The decoder. </returns>
         public CryptoStackStream GetDecoder(
                     Stream stream,

@@ -36,7 +36,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var containerInfo = new SequenceInfo() {
-                ContainerType = DareConstants.ContainerTypeMerkleTag,
+                ContainerType = DareConstants.SequenceTypeMerkleTag,
                 Index = 0
                 };
 
@@ -47,7 +47,7 @@ namespace Goedel.Cryptography.Dare {
 
             var container = new ContainerMerkleTree() {
                 JbcdStream = jbcdStream,
-                ContainerHeaderFirst = containerHeader
+                HeaderFirst = containerHeader
                 };
 
             return container;
@@ -59,7 +59,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerInfo">The frame to prepare.</param>
         protected override void PrepareFrame(SequenceInfo containerInfo) {
             if (containerInfo.Index == 0) {
-                containerInfo.ContainerType = DareConstants.ContainerTypeMerkleTag;
+                containerInfo.ContainerType = DareConstants.SequenceTypeMerkleTag;
                 }
             else {
                 containerInfo.TreePosition =
@@ -107,13 +107,13 @@ namespace Goedel.Cryptography.Dare {
         ///<param name="trailer">The trailer to augment.</param>
         public override void MakeTrailer(ref DareTrailer trailer) {
 
-            trailer ??= CryptoParametersContainer.GetNullTrailer();
+            trailer ??= CryptoParametersSequence.GetNullTrailer();
 
             if (FrameCount > 0) {
                 trailer.TreeDigest = GetTreeDigest(FrameCount, trailer.PayloadDigest);
                 }
             else {
-                trailer.TreeDigest = CryptoParametersContainer.CombineDigest(null, trailer.PayloadDigest);
+                trailer.TreeDigest = CryptoParametersSequence.CombineDigest(null, trailer.PayloadDigest);
                 }
             }
 
@@ -139,7 +139,7 @@ namespace Goedel.Cryptography.Dare {
                 d *= 2;
                 x2 /= 2;
                 }
-            return CryptoParametersContainer.CombineDigest(null, contentDigest);
+            return CryptoParametersSequence.CombineDigest(null, contentDigest);
             }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The calculated digest.</returns>
         public byte[] DigestFrame(long frame, byte[] right) {
             var left = GetFrameDigest(frame);
-            return CryptoParametersContainer.CombineDigest(left, right);
+            return CryptoParametersSequence.CombineDigest(left, right);
             }
 
 

@@ -131,7 +131,7 @@ namespace Goedel.Mesh {
                 fileName,
                 FileStatus.ConcurrentLocked,
                 keyCollection ?? cryptoParameters?.KeyLocate,
-                ContainerType.Merkle,
+                SequenceType.Merkle,
                 policy,
                 "application/mmm-catalog",
                 decrypt: decrypt,
@@ -175,7 +175,7 @@ namespace Goedel.Mesh {
             var fileName = FileName(directory, containerName);
 
             if (envelopes[0].Header.SequenceInfo.Index == 0) {
-                using var container = Sequence.MakeNewContainer(fileName, keyLocate, envelopes);
+                using var container = Sequence.MakeNewSequence(fileName, keyLocate, envelopes);
                 }
             else {
                 // here open the existing container.
@@ -222,7 +222,7 @@ namespace Goedel.Mesh {
         /// work backwards. Otherwise begin at <paramref name="minIndex"/> and move
         /// forwards.</param>
         /// <returns></returns>
-        public ContainerEnumeratorRaw Select(int minIndex, bool reverse = false) =>
+        public SequenceEnumeratorRaw Select(int minIndex, bool reverse = false) =>
             Container.Select(minIndex, reverse);
 
 

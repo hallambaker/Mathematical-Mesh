@@ -117,14 +117,14 @@ under separate key agreements specified in the payload frames.
 #end zfile
 
 
-#method DumpHeaders List<ContainerFrame> Frames
+#method DumpHeaders List<SequenceFrame> Frames
 #% if (Frames == null) {ReportMissing(); return;}
 #foreach (var Frame in Frames)
 #% DumpHeader (Frame);
 #end foreach
 #end method
 
-#method DumpHeader ContainerFrame Frame
+#method DumpHeader SequenceFrame Frame
 #% if (Frame == null) {ReportMissing(); return;}
 
 Frame #{Frame.Header.SequenceInfo.Index}

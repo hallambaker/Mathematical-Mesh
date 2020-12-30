@@ -14,8 +14,8 @@ namespace Goedel.Cryptography.Dare {
 
         ///<summary>Property allowing access to the crypto parameters and policy governing
         ///the container.</summary> 
-        public CryptoParametersContainer CryptoParametersContainer => 
-                Container.CryptoParametersContainer;
+        public CryptoParametersSequence CryptoParametersContainer => 
+                Container.CryptoParametersSequence;
 
         ///<summary>The last container header written</summary>
         public DareHeader ContainerHeader;
@@ -97,8 +97,11 @@ namespace Goedel.Cryptography.Dare {
             frameCount = container.FrameCount;
             }
 
-
-        public SequenceInfo PrepareContainerInfo() {
+        /// <summary>
+        /// Prepare the sequence information for a new frame to be added to the sequence.
+        /// </summary>
+        /// <returns>The new sequence information</returns>
+        public SequenceInfo PrepareSequenceInfo() {
             return new SequenceInfo() {
                 Index = (int)frameCount++
                 };
@@ -108,12 +111,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Open a write stream
         /// </summary>
-        /// <param name="contentMeta"></param>
-        /// <param name="cryptoStack"></param>
-        /// <param name="cloaked"></param>
-        /// <param name="dataSequences"></param>
-        public void StreamOpen(
-                    CryptoStack cryptoStack) {
+        public void StreamOpen() {
             Container.PrepareFrame(this);
             DareTrailer = null;
             return;

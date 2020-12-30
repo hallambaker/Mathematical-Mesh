@@ -118,7 +118,7 @@ namespace Goedel.Cryptography.Dare {
         public PersistenceStore(string fileName, string contentType = null,
                     string comment = null,
                     FileStatus fileStatus = FileStatus.OpenOrCreate,
-                    ContainerType containerType = ContainerType.Chain,
+                    SequenceType containerType = SequenceType.Chain,
                     DarePolicy policy=null,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     IKeyLocate keyCollection = null,

@@ -136,7 +136,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Return the frame payload verbatim (i.e. ciphertext if encrypted).
         /// </summary>
-        /// <param name="container">The indexed container.</param>
+        /// <param name="sequence">The indexed sequence.</param>
         /// <returns>The frame payload</returns>
         public byte[] GetBody(Sequence sequence) {
             using var input = sequence.JbcdStream.FramerGetReader(DataPosition, DataLength);
@@ -190,6 +190,7 @@ namespace Goedel.Cryptography.Dare {
         /// Copy the payload data to file.
         /// </summary>
         /// <param name="file">The file to write the payload to.</param>
+        /// <param name="sequence">The sequence in which the payload is recorded.</param>
         public void CopyToFile(Sequence sequence, string file) {
 
             using var output = file.OpenFileNew();

@@ -12,7 +12,7 @@ namespace Goedel.Cryptography.Dare {
     /// Specifies a set of cryptographic parameters to be used to create 
     /// CryptoStacks
     /// </summary>
-    public partial class CryptoParametersContainer : CryptoParameters {
+    public partial class CryptoParametersSequence : CryptoParameters {
 
         PolicyEncryption PolicyEncryption { get; }
 
@@ -25,8 +25,10 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="containerType">The container type.</param>
         /// <param name="header">Header specifying the governing policy.</param>
-        public CryptoParametersContainer(
-                ContainerType containerType,
+        /// <param name="recover">Attempt to recover the master secret.</param>
+        /// <param name="keyLocate">Key location instance.</param>
+        public CryptoParametersSequence(
+                SequenceType containerType,
                 DareHeader header,
                 bool recover=false,
                 IKeyLocate keyLocate=null) {
@@ -36,9 +38,9 @@ namespace Goedel.Cryptography.Dare {
             // Force calculation of the payload digest for container types that require it.
             var digest = policy?.DigestAlgorithm;
             switch (containerType) {
-                case ContainerType.Digest:
-                case ContainerType.Chain:
-                case ContainerType.Merkle: {
+                case SequenceType.Digest:
+                case SequenceType.Chain:
+                case SequenceType.Merkle: {
                     DigestId = digest.FromJoseIDDigest(true);
                     break;
                     }
