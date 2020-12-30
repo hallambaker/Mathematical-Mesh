@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net5.0-macos</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Goedel.Cryptography.Windows</RootNamespace>
-    <Configurations>Debug;Release;Focus;Windows</Configurations>
+    <Configurations>Debug;Release;Focus;</Configurations>
     <Company>ThresholdSecrets.Com</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Cryptography.Windows</Product>
@@ -13,7 +13,7 @@
     <Title>Goedel.Cryptography.Windows</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-
+    <RuntimeIdentifier>osx.10.11-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

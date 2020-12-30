@@ -61,19 +61,8 @@ namespace Goedel.Cryptography.Dare {
         public DareLogReader(
                 string fileName,
                 IKeyLocate keyCollection = null,
-                FileStatus fileStatus = FileStatus.Read) : this (new JbcdStream(fileName, fileStatus)) {
-            }
-
-
-        /// <summary>
-        /// Open an existing file container in read mode.
-        /// </summary>
-        /// <param name="Data">The container data.</param>
-        /// <param name="KeyCollection">Key collection to be used to resolve private key references.</param>
-        public DareLogReader(
-                JbcdStream jbcdStream,
-                IKeyLocate keyCollection = null) {
-            Sequence = Sequence.OpenExisting(jbcdStream, keyCollection);
+                FileStatus fileStatus = FileStatus.Read, bool decrypt = true)  {
+            Sequence = Sequence.OpenExisting(fileName, fileStatus, keyCollection, decrypt);
             DictionaryStart = Sequence.FrameIndexLast;
             }
 
@@ -161,32 +150,42 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Unpack a file archive
         /// </summary>
-        /// <param name="outputDirectory">The output directory path to which the
+        /// <param name="outputPath">The output directory path to which the
         /// data is to be written.</param>
         /// <param name="selector">Optional selector to be used for filtering 
         /// (not implemented).</param>
         public void UnpackArchive(
-            string outputDirectory,
+            string outputPath,
             string selector = null) {
 
             selector.Future();
+            GetIndex();
+            var outputDirectory = Path.GetFullPath(outputPath) + Path.DirectorySeparatorChar;
 
-            foreach (var containerDataReader in Sequence) {
-                //Console.WriteLine($"Found entry");
+            // no, have to iterate over the archive.
+            foreach (var entry in FileCollection.DictionaryByPath) {
+                var fileEntry = entry.Value;
 
-                if (containerDataReader.HasPayload) {
+                // form the path here
+                var destination = Path.Combine(outputDirectory, fileEntry.Path);
 
-                    var FilePath = containerDataReader?.Header?.ContentMeta?.Paths;
-                    Assert.AssertTrue(FilePath != null && FilePath.Count > 0,
-                        ArchiveEntryMissingFileName.Throw);
+                var destinationInfo = new FileInfo(destination);
+                var destinationDir = destinationInfo.Directory;
 
-                    var OutputFile = Path.Combine(outputDirectory, FilePath[0]);
+                // verify that the destination is a subdirectory of outputDirectory
+                destinationDir.FullName.StartsWith(outputDirectory).AssertTrue(NYI.Throw);
 
-
-                    containerDataReader.CopyToFile(Sequence, OutputFile);
-                    //Container.WriteFrameToFile2(OutputFile);
+                // Create the directory (if needed)
+                if (!destinationDir.Exists) {
+                    Directory.CreateDirectory(destinationDir.FullName);
                     }
+
+                // unpack the file
+                Screen.WriteLine($"File: {fileEntry.Path} Position is {fileEntry.Index}");
+                var containerDataReader = Sequence.GetContainerFrameIndex(fileEntry.Index);
+                containerDataReader.CopyToFile(Sequence, destination);
                 }
+
             }
 
         /// <summary>

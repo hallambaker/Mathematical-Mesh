@@ -184,11 +184,14 @@ namespace Goedel.Mesh.Shell {
                 reader.ReadToFile(outputFile, path:file);
 
                 return new ResultFile() {
-                    Filename = outputFile
+                    Filename = file
                     };
                 }
             else {
-                throw new NYI();
+                reader.UnpackArchive(outputFile);
+                return new ResultFile() {
+                    Filename = outputFile
+                    };
                 }
 
             }

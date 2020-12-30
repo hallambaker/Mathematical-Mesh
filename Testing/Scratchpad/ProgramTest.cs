@@ -24,7 +24,7 @@ namespace Scratchpad {
     partial class Program {
         static void Main() {
 
-            ServiceDiscovery.Test().TestDNS();
+            ShellTests.Test().TestArchive();
 
 
 

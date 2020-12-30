@@ -125,7 +125,7 @@ namespace Goedel.XUnit {
                 Dispatch($"dare log {filename}");
                 }
 
-            VerifyArchive(filename, entries, sign, encrypt, mallet);
+            VerifyArchive(filename, entries, sign, encrypt, mallet, initial);
 
             if (archive) {
                 // add count new file
@@ -141,12 +141,12 @@ namespace Goedel.XUnit {
 
 
 
-            VerifyArchive(filename, entries, sign, encrypt, mallet);
+            VerifyArchive(filename, entries, sign, encrypt, mallet, initial);
 
             if (archive) {
                 // Delete file
 
-                VerifyArchive(filename, entries, sign, encrypt, mallet);
+                VerifyArchive(filename, entries, sign, encrypt, mallet, initial);
                 }
             
 
@@ -181,7 +181,7 @@ namespace Goedel.XUnit {
 
 
         bool VerifyArchive(string filename, Dictionary<string, bool> entries, string sign, string encrypt,
-                TestCLI mallet) {
+                TestCLI mallet, string initial) {
 
             using var archive = new DareLogReader(filename);
             archive.Sequence.VerifyPolicy(null);
@@ -189,16 +189,28 @@ namespace Goedel.XUnit {
 
             entries.TestEqualKeys(archive.FileCollection.DictionaryByPath);
 
+            //extract all files to directory
+            var unpack = filename + "_unpack";
+            var unpackDir = Path.Combine(unpack, Path.GetFileName(initial));
+            Dispatch($"dare extract {filename} {unpack}");
 
 
+            unpackDir.CheckDirectroriesEqual(initial);
+            Directory.Delete(unpack, true);
+
+            var source = new DirectoryInfo(initial);
 
             // Extract single files and test.
             foreach (var entry in entries) {
                 var subFile = entry.Key;
-
+                var initialFile = Path.Combine(source.Parent.FullName, subFile);
 
                 Dispatch($"dare extract {filename} /file={entry.Key}");
 
+                var recoverFile = Path.GetFileName(entry.Key);
+
+                recoverFile.CheckFilesEqual (initialFile);
+                System.IO.File.Delete(recoverFile);
                 }
 
             return true;
