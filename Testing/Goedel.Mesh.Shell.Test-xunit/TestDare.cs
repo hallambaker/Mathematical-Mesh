@@ -210,7 +210,7 @@ namespace Goedel.XUnit {
             foreach (var count in counts) {
                 for (var i = 0; i < count; i++) {
                     var bytes = Platform.GetRandomBytes(10, 80);
-                    var entry = bytes.ToStringBase64();
+                    var entry = bytes.ToStringBase64url();
                     Dispatch($"dare log {filename} {entry}");
                     entries.Add(entry);
                     }
@@ -223,13 +223,30 @@ namespace Goedel.XUnit {
 
         void VerifyLog(
                 string encrypt,
-                string sign, 
+                string sign,
                 string filename,
                 List<string> entries,
                 TestCLI mallet) {
             var output = "output_" + filename;
-            var listArchive = Dispatch($"dare list {filename} {output}");
+            var listArchive = Dispatch($"dare list {filename} {output}") as ResultListLog;
+
+            entries.Count.TestEqual(listArchive.Count);
+
+            using (var reader = output.OpenTextReader()) {
+                foreach (var entry in entries) {
+                    var line = reader.ReadLine();
+                    line.Separate(',', out var date, out var value);
+                    value.TestEqual(entry);
+
+                    }
+
+
+                }
+
+
             System.IO.File.Delete(output);
+
+
 
             }
 
