@@ -35,7 +35,8 @@ namespace Goedel.Cryptography.Dare {
             set => throw new NotImplementedException();
             }
 
-        private readonly CryptoStack cryptoStack;
+        private readonly DareHeader dareHeader;
+        //private readonly CryptoStack cryptoStack;
         private readonly CryptoStackStreamWriter cryptoStackStreamWriter;
         private readonly JSONWriter outputStream;
         private readonly Stream writer;
@@ -97,14 +98,16 @@ namespace Goedel.Cryptography.Dare {
             List<byte[]> dataSequences = null) {
             this.outputStream = outputStream;
 
-            var header = new DareHeader();
-            cryptoStack = new CryptoStackEncode(cryptoParameters, header, cloaked, dataSequences);
+            dareHeader = new DareHeader();
+            dareHeader.BindEncoder(cryptoParameters, cloaked, dataSequences);
+
+            //cryptoStack = new CryptoStackEncode(cryptoParameters, dareHeader, cloaked, dataSequences);
 
             outputStream.WriteArrayStart();
-            header.Serialize(outputStream);
+            dareHeader.Serialize(outputStream);
             outputStream.WriteArraySeparator();
 
-            cryptoStackStreamWriter = header.CryptoStack.GetEncoder(
+            cryptoStackStreamWriter = dareHeader.CryptoStack.GetEncoder(
                 outputStream.Output, PackagingFormat.Body, contentLength);
             writer = cryptoStackStreamWriter.Writer;
             }
@@ -136,7 +139,7 @@ namespace Goedel.Cryptography.Dare {
             // write out the trailer
             cryptoStackStreamWriter.Close();
 
-            var trailer = cryptoStack.GetTrailer(cryptoStackStreamWriter);
+            var trailer = dareHeader.CryptoStack.GetTrailer(cryptoStackStreamWriter);
             if (trailer != null) {
                 outputStream.WriteArraySeparator();
                 trailer.Serialize(outputStream);

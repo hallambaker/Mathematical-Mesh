@@ -65,18 +65,18 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="Headers">List of headers to check</param>
-        public override void CheckContainer(List<DareHeader> Headers) {
+        public override void CheckSequence(List<DareHeader> Headers) {
             int Index = 1;
             foreach (var Header in Headers) {
-                Assert.AssertNotNull(Header.SequenceInfo, ContainerDataCorrupt.Throw);
+                Assert.AssertNotNull(Header.SequenceInfo, SequenceDataCorrupt.Throw);
 
-                Assert.AssertTrue(Header.SequenceInfo.Index == Index, ContainerDataCorrupt.Throw);
+                Assert.AssertTrue(Header.SequenceInfo.Index == Index, SequenceDataCorrupt.Throw);
 
                 if (HeaderFirst.SequenceInfo.ContainerType == DareConstants.SequenceTypeListTag) {
-                    Assert.AssertNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
+                    Assert.AssertNull(Header.PayloadDigest, SequenceDataCorrupt.Throw);
                     }
                 else {
-                    Assert.AssertNotNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
+                    Assert.AssertNotNull(Header.PayloadDigest, SequenceDataCorrupt.Throw);
                     }
                 Index++;
                 }

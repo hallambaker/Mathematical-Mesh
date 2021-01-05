@@ -229,7 +229,7 @@ namespace Goedel.XUnit {
             using (var XContainer = Sequence.Open(fileName, FileStatus.Read,
                             policy: policy,
                             keyLocate: keyCollection)) {
-                XContainer.VerifyContainer();
+                XContainer.VerifySequence();
                 }
 
             // Read records 
@@ -249,7 +249,7 @@ namespace Goedel.XUnit {
                         }
                     }
 
-                XContainer.CheckContainer(Headers);
+                XContainer.CheckSequence(Headers);
                 }
 
             // Test random access.

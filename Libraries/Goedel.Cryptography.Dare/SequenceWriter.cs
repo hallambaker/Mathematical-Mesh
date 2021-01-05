@@ -7,24 +7,24 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Base class for container writers.
     /// </summary>
-    public class ContainerWriter {
+    public class SequenceWriter {
 
         ///<summary>The container to be written to.</summary>
-        protected Sequence Container;
+        protected Sequence Sequence;
 
         ///<summary>Property allowing access to the crypto parameters and policy governing
         ///the container.</summary> 
-        public CryptoParametersSequence CryptoParametersContainer => 
-                Container.CryptoParametersSequence;
+        public CryptoParametersSequence CryptoParametersSequence => 
+                Sequence.CryptoParametersSequence;
 
         ///<summary>The last container header written</summary>
-        public DareHeader ContainerHeader;
+        public DareHeader SequenceHeader;
 
 
 
 
-        ///<summary>ContainerInfo element of last container header written.</summary>
-        public SequenceInfo ContainerInfo => ContainerHeader.SequenceInfo;
+        ///<summary>SequenceInfo element of last container header written.</summary>
+        public SequenceInfo SequenceInfo => SequenceHeader.SequenceInfo;
 
         ///<summary>The trailer of the envelope currently being written.</summary>
         public DareTrailer DareTrailer;
@@ -42,9 +42,9 @@ namespace Goedel.Cryptography.Dare {
         }
 
     /// <summary>
-    /// Container writer to write direct to a file.
+    /// Sequence writer to write direct to a file.
     /// </summary>
-    public class ContainerWriterFile : ContainerWriter {
+    public class SequenceWriterFile : SequenceWriter {
 
         ///<summary>Position of the frame start.</summary>
         public override long FrameStart => frameStart;
@@ -53,13 +53,13 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Main constructor.
         /// </summary>
-        /// <param name="container">The container to be written</param>
-        /// <param name="containerHeader">The container header???</param>
+        /// <param name="sequence">The sequence to be written</param>
+        /// <param name="header">The sequence header???</param>
         /// <param name="JBCDStream">The stream???</param>
-        public ContainerWriterFile(Sequence container, DareHeader containerHeader, JbcdStream JBCDStream) {
-            Container = container;
+        public SequenceWriterFile(Sequence sequence, DareHeader header, JbcdStream JBCDStream) {
+            base.Sequence = sequence;
             frameStart = JBCDStream.PositionWrite;
-            ContainerHeader = containerHeader;
+            SequenceHeader = header;
             }
 
         /// <summary>
@@ -68,16 +68,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="dareTrailer">The trailer to write.</param>
         public override void CommitFrame(DareTrailer dareTrailer = null) {
             DareTrailer = dareTrailer;
-            Container.CommitHeader(ContainerHeader, this);
-            Container.Digest = DareTrailer?.TreeDigest ?? DareTrailer?.ChainDigest;
+            Sequence.CommitHeader(SequenceHeader, this);
+            Sequence.Digest = DareTrailer?.TreeDigest ?? DareTrailer?.ChainDigest;
             }
 
         }
 
     /// <summary>
-    /// Container writer to write in defered mode so that the updates can be applied in one transaction.
+    /// Sequence writer to write in defered mode so that the updates can be applied in one transaction.
     /// </summary>
-    public class ContainerWriterDeferred : ContainerWriter {
+    public class SequenceWriterDeferred : SequenceWriter {
 
         long frameCount;
 
@@ -91,10 +91,10 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Main constructor
         /// </summary>
-        /// <param name="container">The container to be written</param>
-        public ContainerWriterDeferred(Sequence container) {
-            Container = container;
-            frameCount = container.FrameCount;
+        /// <param name="sequence">The container to be written</param>
+        public SequenceWriterDeferred(Sequence sequence) {
+            Sequence = sequence;
+            frameCount = sequence.FrameCount;
             }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Goedel.Cryptography.Dare {
         /// Open a write stream
         /// </summary>
         public void StreamOpen() {
-            Container.PrepareFrame(this);
+            Sequence.PrepareFrame(this);
             DareTrailer = null;
             return;
             }
@@ -118,7 +118,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Close the write stream.
         /// </summary>
-        public void StreamClose() => ContainerHeader.CloseBodyWriter(out DareTrailer);
+        public void StreamClose() => SequenceHeader.CloseBodyWriter(out DareTrailer);
 
         /// <summary>
         /// Write a fixed length body.
@@ -128,11 +128,11 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope End(byte[] body) {
 
 
-            Container.MakeTrailer(ref DareTrailer);
+            Sequence.MakeTrailer(ref DareTrailer);
 
 
             return new DareEnvelope() {
-                Header = ContainerHeader,
+                Header = SequenceHeader,
                 Body = body,
                 Trailer = DareTrailer
                 };

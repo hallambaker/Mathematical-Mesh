@@ -64,7 +64,7 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The apex digest value of the sequence as written to the file.</summary>
         public byte[] Digest;
 
-        ///<summary>If true, the Container type requires a digest calculated on the payload.</summary> 
+        ///<summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
         public virtual bool DigestRequired => false;
 
         ///<summary>The first frame in the sequence</summary>
@@ -139,7 +139,7 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// The first container header. This is read only since it is fixed after
+        /// The first sequence header. This is read only since it is fixed after
         /// the record is written.
         /// </summary>
         public DareHeader HeaderFirst { get; protected set; }
@@ -195,14 +195,14 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyLocate">The key collection to be used to resolve requests
         /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
         /// <param name="policy">The cryptographic policy to govern the sequence.</param>
-        /// <param name="sequenceType">The container type to create if the container does
+        /// <param name="sequenceType">The sequence type to create if the sequence does
         /// not already exist.</param>
-        /// <param name="contentType">The content type to declare if a new container is
+        /// <param name="contentType">The content type to declare if a new sequence is
         /// created.</param>
-        /// <param name="decrypt">If true, enable decryption of container payload,
+        /// <param name="decrypt">If true, enable decryption of sequence payload,
         /// otherwise return payload contents as plaintext.</param>
-        /// <param name="create">If true, create a container file if none already exists</param>
-        /// <returns>The new container.</returns>
+        /// <param name="create">If true, create a sequence file if none already exists</param>
+        /// <returns>The new sequence.</returns>
         public static Sequence Open(
                         string fileName,
                         FileStatus fileStatus = FileStatus.Read,
@@ -218,32 +218,18 @@ namespace Goedel.Cryptography.Dare {
                 return null;
                 }
             var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
-
-            //cryptoParameters = cryptoParameters ?? new CryptoParameters(keyCollection);
-
-
-            //keyCollection ??= cryptoParameters?.KeyLocate;
-
-
             try {
-
-                //Console.WriteLine($"Open Stream {fileName}");
-                // Attempt to open file.
                 Sequence Container;
 
-                // Create new container if empty or read the old one.
+                // Create new sequence if empty or read the old one.
                 if (jbcdStream.Length == 0) {
                     Container = NewContainer(jbcdStream,
                         keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, contentType: contentType);
                     }
                 else {
-                    
                     Container = OpenExisting(jbcdStream, keyLocate, decrypt: decrypt);
-
                     }
-
                 (Container.KeyCollection == keyLocate).AssertTrue(NYI.Throw);
-
                 Container.DisposeJBCDStream = jbcdStream;
                 return Container;
                 }
@@ -254,24 +240,24 @@ namespace Goedel.Cryptography.Dare {
             }
 
         #endregion
-        #region // Open container 
+        #region // Open sequence 
 
         /// <summary>
-        /// Open or create container according to the setting of FileStatus. The underlying 
-        /// filestreams will be disposed of automatically when the container is disposed.
+        /// Open or create sequence according to the setting of FileStatus. The underlying 
+        /// filestreams will be disposed of automatically when the sequence is disposed.
         /// </summary>
-        /// <param name="jbcdStream">The stream to use to access the container.</param>
+        /// <param name="jbcdStream">The stream to use to access the sequence.</param>
         /// <param name="keyLocate">The key collection to be used to resolve keys</param>
-        /// <returns>The new container.</returns>
+        /// <returns>The new sequence.</returns>
         public static Sequence Open(
                         JbcdStream jbcdStream,
                         IKeyLocate keyLocate = null) {
 
 
-            var container = OpenExisting(jbcdStream, keyLocate);
-            container.DisposeJBCDStream = jbcdStream;
+            var sequence = OpenExisting(jbcdStream, keyLocate);
+            sequence.DisposeJBCDStream = jbcdStream;
 
-            return container;
+            return sequence;
             }
 
         /// <summary>
@@ -280,14 +266,14 @@ namespace Goedel.Cryptography.Dare {
         protected IKeyLocate KeyCollection;
 
         /// <summary>
-        /// Open an existing container file.
+        /// Open an existing sequence file.
         /// </summary>
-        /// <param name="fileName">The file to open as a container.</param>
+        /// <param name="fileName">The file to open as a sequence.</param>
         /// <param name="fileStatus">The file status.</param>
         /// <param name="keyCollection">The key collection to be used to decrypt the contents
-        /// of the container.</param>
+        /// of the sequence.</param>
         /// <param name="decrypt">If true configure to enable decryption of bodies.</param>
-        /// <returns>The container object if found. Otherwise, an exception is thrown.</returns>
+        /// <returns>The sequence object if found. Otherwise, an exception is thrown.</returns>
         public static Sequence OpenExisting(
                 string fileName,
                 FileStatus fileStatus = FileStatus.Read,
@@ -299,13 +285,13 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// Open an existing container according to the information contained in the next frame to be read.
+        /// Open an existing sequence according to the information contained in the next frame to be read.
         /// </summary>
         /// <param name="jbcdStream">The frame reader. Since this is passed to the
-        /// method to create the class it is not disposed with the container using it.</param>
+        /// method to create the class it is not disposed with the sequence using it.</param>
         /// <param name="keyCollection">The key collection to be used to resolve requests
         /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
-        /// <param name="decrypt">If true, enable decryption of container payload,
+        /// <param name="decrypt">If true, enable decryption of sequence payload,
         /// otherwise return payload contents as plaintext.</param>
         /// <returns></returns>
         public static Sequence OpenExisting(
@@ -315,12 +301,10 @@ namespace Goedel.Cryptography.Dare {
             // Initialize frame zero
             var frameZero = jbcdStream.ReadDareEnvelope();
 
-            var containerHeaderFirst = frameZero.Header;
+            var sequenceHeaderFirst = frameZero.Header;
 
             var position1 = jbcdStream.PositionRead; // is always positioned after the first record on entry.
             //CryptoProviderDigest DigestProvider = CryptoCatalog.Default.GetDigest(CryptoAlgorithmID.Default);
-
-
 
             long frameCount = 1;
             DareHeader finalHeader;
@@ -329,34 +313,23 @@ namespace Goedel.Cryptography.Dare {
                 frameCount = finalHeader.SequenceInfo.Index + 1;
                 }
             else {
-                finalHeader = containerHeaderFirst;
+                finalHeader = sequenceHeaderFirst;
                 }
 
-
-
-
-
-
-
-            var containerInfo = containerHeaderFirst.SequenceInfo;
-            var sequenceType = containerInfo.ContainerType.ToSequenceType();
-
-
+            var sequenceInfo = sequenceHeaderFirst.SequenceInfo;
+            var sequenceType = sequenceInfo.ContainerType.ToSequenceType();
 
             var cryptoParametersContainer = 
-                new CryptoParametersSequence(sequenceType, containerHeaderFirst, true, keyCollection);
-
-
-            //var cryptoStack = containerHeaderFirst.GetCryptoStack(keyCollection, decrypt: decrypt);
+                new CryptoParametersSequence(sequenceType, sequenceHeaderFirst, true, keyCollection);
 
             var positionFinalFrameStart = jbcdStream.StartLastFrameRead;
 
             Sequence sequence;
-            switch (containerInfo.ContainerType) {
+            switch (sequenceInfo.ContainerType) {
                 case DareConstants.SequenceTypeListTag: {
                     sequence = new ContainerList() {
                         JbcdStream = jbcdStream,
-                        HeaderFirst = containerHeaderFirst,
+                        HeaderFirst = sequenceHeaderFirst,
                         StartOfData = position1,
                         FrameCount = frameCount,
                         CryptoParametersSequence = cryptoParametersContainer
@@ -368,7 +341,7 @@ namespace Goedel.Cryptography.Dare {
                     sequence = new ContainerDigest() {
                         JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
-                        HeaderFirst = containerHeaderFirst,
+                        HeaderFirst = sequenceHeaderFirst,
                         StartOfData = position1,
                         FrameCount = frameCount,
                         CryptoParametersSequence = cryptoParametersContainer
@@ -380,7 +353,7 @@ namespace Goedel.Cryptography.Dare {
                     sequence = new ContainerChain() {
                         JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
-                        HeaderFirst = containerHeaderFirst,
+                        HeaderFirst = sequenceHeaderFirst,
                         StartOfData = position1,
                         FrameCount = frameCount,
                         CryptoParametersSequence = cryptoParametersContainer
@@ -391,7 +364,7 @@ namespace Goedel.Cryptography.Dare {
                     sequence = new ContainerTree() {
                         JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
-                        HeaderFirst = containerHeaderFirst,
+                        HeaderFirst = sequenceHeaderFirst,
                         StartOfData = position1,
                         FrameCount = frameCount,
                         CryptoParametersSequence = cryptoParametersContainer
@@ -403,7 +376,7 @@ namespace Goedel.Cryptography.Dare {
                     sequence = new ContainerMerkleTree() {
                         JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
-                        HeaderFirst = containerHeaderFirst,
+                        HeaderFirst = sequenceHeaderFirst,
                         StartOfData = position1,
                         FrameCount = frameCount,
                         CryptoParametersSequence = cryptoParametersContainer
@@ -434,15 +407,15 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Create a new container file of the specified type and write the initial
+        /// Create a new sequence file of the specified type and write the initial
         /// data record
         /// </summary>
         /// <param name="filename">The file to open</param>
         /// <param name="fileStatus">The file status.</param>
         /// <param name="payload">Optional data payload. </param>
         /// <param name="contentType">Content type of the optional data payload</param>
-        /// <param name="sequenceType">The container type.</param>
-        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
+        /// <param name="sequenceType">The sequence type.</param>
+        /// <param name="policy">The cryptographic policy to be applied to the sequence.</param>
         /// <param name="dataEncoding">The data encoding.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
@@ -464,19 +437,19 @@ namespace Goedel.Cryptography.Dare {
                 InvalidFileModeException.Throw);
 
             var jbcdStream = new JbcdStream(filename, fileStatus);
-            var container = NewContainer(
+            var sequence = NewContainer(
                 jbcdStream, sequenceType: sequenceType, policy: policy, payload: payload, contentType: contentType, dataEncoding: dataEncoding,
                 cloaked: cloaked, dataSequences: dataSequences);
 
-            container.DisposeJBCDStream = jbcdStream;
+            sequence.DisposeJBCDStream = jbcdStream;
 
-            return container;
+            return sequence;
             }
 
 
 
         /// <summary>
-        /// Create a new container file of the specified type and write the initial
+        /// Create a new sequence file of the specified type and write the initial
         /// data record
         /// </summary>
         /// <param name="jbcdStream">The underlying file stream. This MUST be opened
@@ -487,9 +460,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="payload">Optional data payload. </param>
         /// <param name="dataEncoding">The data encoding.</param>
         /// <param name="contentType">Content type of the optional data payload</param>
-        /// <param name="sequenceType">The container type. This determines whether
+        /// <param name="sequenceType">The sequence type. This determines whether
         /// a tree index is to be created or not and if so, whether </param>
-        /// <param name="policy">The cryptographic policy to govern the container.</param>
+        /// <param name="policy">The cryptographic policy to govern the sequence.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
@@ -503,68 +476,62 @@ namespace Goedel.Cryptography.Dare {
                         DataEncoding dataEncoding = DataEncoding.JSON,
                         byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
-            var container = MakeNewContainer(jbcdStream, sequenceType: sequenceType);
-            var containerHeaderFirst = container.HeaderFirst;
-            var containerInfoFirst = containerHeaderFirst.SequenceInfo;
+            var sequence = MakeNewSequence(jbcdStream, sequenceType: sequenceType);
+            var sequenceHeaderFirst = sequence.HeaderFirst;
+            var sequenceInfoFirst = sequenceHeaderFirst.SequenceInfo;
 
             // set the encryption policy
-            containerHeaderFirst.Policy = policy;
+            sequenceHeaderFirst.Policy = policy;
 
             // The cryptographic parameters that will be kept between calls.
-            container.CryptoParametersSequence = 
-                new CryptoParametersSequence(sequenceType, containerHeaderFirst);
-            
+            sequence.CryptoParametersSequence = 
+                new CryptoParametersSequence(sequenceType, sequenceHeaderFirst);
 
-            container.DataEncoding = dataEncoding;
-            container.FrameCount = 0;
+            sequence.DataEncoding = dataEncoding;
+            sequence.FrameCount = 0;
 
+            sequenceInfoFirst.DataEncoding = dataEncoding.ToString();
 
-
-            containerInfoFirst.DataEncoding = dataEncoding.ToString();
-
-            containerHeaderFirst.ContentMeta = new ContentMeta() {
+            sequenceHeaderFirst.ContentMeta = new ContentMeta() {
                 ContentType = contentType
                 };
 
 
-            // These two should be merged into one here!
-            container.CryptoStack = new CryptoStackEncode(container.CryptoParametersSequence, 
-                containerHeaderFirst, cloaked, dataSequences);
-            //containerHeaderFirst.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
 
+            sequence.CryptoStack = sequenceHeaderFirst.BindEncoder (sequence.CryptoParametersSequence,
+                    cloaked, dataSequences);
 
-            payload = containerHeaderFirst.EnhanceBody(payload, out var Trailer);
-            container.MakeTrailer(ref Trailer);
+            payload = sequenceHeaderFirst.EnhanceBody(payload, out var Trailer);
+            sequence.MakeTrailer(ref Trailer);
 
-            // May have issues here because we are not calling thje old append frame.
-            var headerBytes = containerHeaderFirst.GetBytes(dataEncoding, false);
+            var headerBytes = sequenceHeaderFirst.GetBytes(dataEncoding, false);
             var trailerBytes = Trailer?.GetBytes(dataEncoding, false);
 
-            container.AppendFrame(headerBytes, payload, trailerBytes);
-            container.FrameCount++;
+            sequence.AppendFrame(headerBytes, payload, trailerBytes);
+            sequence.FrameCount++;
 
-            container.KeyCollection = keyLocate ?? policy?.KeyLocate;
+            sequence.KeyCollection = keyLocate ?? policy?.KeyLocate;
 
-            container.FrameZero = new DareEnvelope() {
-                Header = containerHeaderFirst,
+            sequence.FrameZero = new DareEnvelope() {
+                Header = sequenceHeaderFirst,
                 Body = payload,
                 Trailer = Trailer
                 };
 
-            return container;
+            return sequence;
             }
 
         /// <summary>
-        /// Create a new container file of the specified type and write the initial
+        /// Create a new sequence file of the specified type and write the initial
         /// data record
         /// </summary>
         /// <param name="jbcdStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        /// <param name="sequenceType">The container type. This determines whether
+        /// <param name="sequenceType">The sequence type. This determines whether
         /// a tree index is to be created or not and if so, whether </param>
-        /// <returns>The newly constructed container.</returns>
-        public static Sequence MakeNewContainer(
+        /// <returns>The newly constructed sequence.</returns>
+        public static Sequence MakeNewSequence(
                         JbcdStream jbcdStream,
                         SequenceType sequenceType = SequenceType.Merkle) {
             Sequence result;
@@ -590,26 +557,23 @@ namespace Goedel.Cryptography.Dare {
                     result = ContainerMerkleTree.MakeNewContainer(jbcdStream);
                     break;
                     }
-
                 default: {
                     throw new InvalidContainerTypeException();
                     }
                 }
-
-
             return result;
 
             }
 
         /// <summary>
-        /// Create a new container with the name <paramref name="fileName"/> and
-        /// append <paramref name="envelopes"/> to the end of the container.
+        /// Create a new sequence with the name <paramref name="fileName"/> and
+        /// append <paramref name="envelopes"/> to the end of the sequence.
         /// </summary>
-        /// <param name="fileName">Name of the container to create</param>
+        /// <param name="fileName">Name of the sequence to create</param>
         /// <param name="envelopes">Envelopes to add</param>
         /// <param name="fileStatus">File status (used for concurrency locking)</param>
         /// <param name="keyLocate">The key location collection to be used to resolve keys.</param>
-        /// <returns>The created container</returns>
+        /// <returns>The created sequence</returns>
         public static Sequence MakeNewSequence(
                         string fileName,
                         IKeyLocate keyLocate,
@@ -637,7 +601,7 @@ namespace Goedel.Cryptography.Dare {
         /// Return an enumerator with the specified selectors.
         /// </summary>
         /// <param name="minIndex">The minimum index.</param>
-        /// <param name="reverse">If true, read the container from the end.</param>
+        /// <param name="reverse">If true, read the sequence from the end.</param>
         /// <returns>The enumerator.</returns>
         public SequenceEnumeratorRaw Select(int minIndex, bool reverse = false) =>
             new SequenceEnumeratorRaw(this, minIndex, reverse);
@@ -650,7 +614,7 @@ namespace Goedel.Cryptography.Dare {
             new Dictionary<long, long>();
 
         /// <summary>
-        /// Register a frame in the container access dictionaries.
+        /// Register a frame in the sequence access dictionaries.
         /// </summary>
         /// <param name="sequenceInfo">Frame header</param>
         /// <param name="position">Position of the frame</param>
@@ -700,7 +664,7 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// Append the envelopes <paramref name="envelopes"/> to the container starting
+        /// Append the envelopes <paramref name="envelopes"/> to the sequence starting
         /// with the <paramref name="index"/>th envelope.
         /// </summary>
         /// <param name="envelopes">The enveolpes to append</param>
@@ -713,7 +677,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Initialize a <see cref="SequenceInfo"/> instance for the current container
+        /// Initialize a <see cref="SequenceInfo"/> instance for the current sequence
         /// position.
         /// </summary>
         /// <returns>The initialized instance.</returns>
@@ -743,9 +707,9 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// Write a previously prepared or validated Dare Envelope to the container directly.
+        /// Write a previously prepared or validated Dare Envelope to the sequence directly.
         /// </summary>
-        /// <param name="envelope">The envelope to append to the container</param>
+        /// <param name="envelope">The envelope to append to the sequence</param>
         /// <param name="updateEnvelope">If true, update the header and trailer of 
         /// <paramref name="envelope"/> to the computed values.</param>
         public virtual SequenceFrameIndex Append(DareEnvelope envelope, bool updateEnvelope = false) {
@@ -777,12 +741,12 @@ namespace Goedel.Cryptography.Dare {
                 DigestAlgorithm = headerIn.DigestAlgorithm
                 };
 
-            // we need to recompute the PayloadDigest under the container DigestAlgorithm
+            // we need to recompute the PayloadDigest under the sequence DigestAlgorithm
             var trailer = new DareTrailer() {
                 };
 
 
-            // Hack: should check that the digest algorithm is the same as the container
+            // Hack: should check that the digest algorithm is the same as the sequence
             // Hack: should verify the digest value and signature.
 
 
@@ -801,7 +765,7 @@ namespace Goedel.Cryptography.Dare {
 
         private void AppendEnvelope(byte[] body, DareHeader header, DareTrailer trailer) {
             PrepareFrame(header.SequenceInfo);
-            var contextWrite = new ContainerWriterFile(this, header, JbcdStream);
+            var contextWrite = new SequenceWriterFile(this, header, JbcdStream);
             contextWrite.CommitFrame(trailer);
 
             //Console.WriteLine($"   {header.ContainerInfo.TreePosition} ");
@@ -813,9 +777,9 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Prepare the container frame information in <paramref name="sequenceInfo"/>.
+        /// Prepare the sequence frame information in <paramref name="sequenceInfo"/>.
         /// </summary>
-        /// <param name="sequenceInfo">The container information to be prepared.</param>
+        /// <param name="sequenceInfo">The sequence information to be prepared.</param>
         protected virtual void PrepareFrame(SequenceInfo sequenceInfo) {
             }
 
@@ -824,8 +788,8 @@ namespace Goedel.Cryptography.Dare {
         /// Obtain a ContainerFrameIndex instance for <paramref name="index"/> if
         /// specified or <paramref name="position"/> otherwise.
         /// </summary>
-        /// <param name="index">The container index to obtain the frame index for.</param>
-        /// <param name="position">The container position to obtain the frame index for.</param>
+        /// <param name="index">The sequence index to obtain the frame index for.</param>
+        /// <param name="position">The sequence position to obtain the frame index for.</param>
         /// <returns>The created ContainerFrameIndex instance,</returns>
         public abstract SequenceFrameIndex GetSequenceFrameIndex(
             long index = -1, long position = -1);
@@ -833,7 +797,7 @@ namespace Goedel.Cryptography.Dare {
 
 
         #endregion
-        #region // Convenience methods to read/write to containers.
+        #region // Convenience methods to read/write to sequences.
 
 
         /// <summary>
@@ -865,7 +829,7 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// Read data from the specified file and append to the container.
+        /// Read data from the specified file and append to the sequence.
         /// </summary>
         /// <param name="fileName">The file to append</param>
         /// <param name="contentInfo">Container header data.</param>
@@ -889,7 +853,7 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// Read data from the specified file and append to the container.
+        /// Read data from the specified file and append to the sequence.
         /// </summary>
         /// <param name="input">The stream to be read.</param>
         /// <param name="contentLength"> The number of bytes to read from <paramref name="input"/>.</param>
@@ -925,18 +889,18 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Header of the framer being written
         /// </summary>
-        ContainerWriterFile contextWrite;
+        SequenceWriterFile contextWrite;
         Stream bodyWrite;
 
         /// <summary>
         /// Begin appending a data frame.
         /// </summary>
         /// <remarks>This call is not thread safe. It is the responsibility of the caller
-        /// to ensure that only one process writes to the container at once and that no other
+        /// to ensure that only one process writes to the sequence at once and that no other
         /// process has access.</remarks>
         /// <param name="contentLength">The plaintext payload data length. the final payload
         /// length may be longer as a result of padding.</param>
-        /// <param name="contentInfo">Pre-populated container header.</param>
+        /// <param name="contentInfo">Pre-populated sequence header.</param>
         /// <param name="contentType">The payload content type.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
@@ -960,23 +924,26 @@ namespace Goedel.Cryptography.Dare {
                 ContentType = contentType
                 };
 
-            var containerInfo = new SequenceInfo() {
+            var sequenceInfo = new SequenceInfo() {
                 Index = index
                 };
 
             var appendContainerHeader = new DareHeader() {
-                SequenceInfo = containerInfo,
+                SequenceInfo = sequenceInfo,
                 ContentMeta = contentInfo
                 };
 
             // These should be paired.
-            CryptoStack = new CryptoStackEncode(cryptoParameters ?? CryptoParametersSequence, 
-                appendContainerHeader, cloaked, dataSequences);
+            CryptoStack = appendContainerHeader.BindEncoder (cryptoParameters ?? CryptoParametersSequence, 
+                cloaked, dataSequences);
+
+
+
             //appendContainerHeader.ApplyCryptoStack(CryptoStackContainer, cloaked, dataSequences);
 
-            contextWrite = new ContainerWriterFile(this, appendContainerHeader, JbcdStream);
+            contextWrite = new SequenceWriterFile(this, appendContainerHeader, JbcdStream);
 
-            PrepareFrame(contextWrite); // Perform container type specific processing.
+            PrepareFrame(contextWrite); // Perform sequence type specific processing.
 
             var payloadLength = appendContainerHeader.OutputLength(contentLength);
             var dummyTrailer = FillDummyTrailer(CryptoStack);
@@ -1004,7 +971,7 @@ namespace Goedel.Cryptography.Dare {
         /// Complete appending a record.
         /// </summary>
         void AppendEnd() {
-            contextWrite.ContainerHeader.CloseBodyWriter(out var trailer);
+            contextWrite.SequenceHeader.CloseBodyWriter(out var trailer);
             MakeTrailer(ref trailer);
             var trailerData = trailer?.GetBytes(false);
             JbcdStream.WriteWrappedFrameEnd(trailerData);
@@ -1012,9 +979,9 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Create a DareEnvelope to be added to the container in deferred write mode.
+        /// Create a DareEnvelope to be added to the sequence in deferred write mode.
         /// </summary>
-        /// <param name="contextWrite">The container write context the envelope is to be written in.</param>
+        /// <param name="contextWrite">The sequence write context the envelope is to be written in.</param>
         /// <param name="contentMeta">The content metadata.</param>
         /// <param name="data">The data plaintext payload.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
@@ -1022,52 +989,41 @@ namespace Goedel.Cryptography.Dare {
         ///     as an EDSS header entry.</param>
         /// <returns>The created envelope</returns>
         public static DareEnvelope Defer(
-            ContainerWriterDeferred contextWrite,
+            SequenceWriterDeferred contextWrite,
             ContentMeta contentMeta,
             byte[] data,
             byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
 
-            var containerInfo = contextWrite.PrepareSequenceInfo();
-            contextWrite.ContainerHeader = new DareHeader() {
-                SequenceInfo = containerInfo,
+            var sequenceInfo = contextWrite.PrepareSequenceInfo();
+            contextWrite.SequenceHeader = new DareHeader() {
+                SequenceInfo = sequenceInfo,
                 ContentMeta = contentMeta
                 };
 
-            var cryptoStack = new CryptoStackEncode(
-                contextWrite.CryptoParametersContainer, contextWrite.ContainerHeader, cloaked, dataSequences);
+            contextWrite.SequenceHeader.BindEncoder(contextWrite.CryptoParametersSequence, cloaked, dataSequences);
             contextWrite.StreamOpen();
 
             if (data != null) {
                 using var buffer = new MemoryStream(data.Length + 32);
-                var stream = contextWrite.ContainerHeader.BodyWriter(buffer);
+                var stream = contextWrite.SequenceHeader.BodyWriter(buffer);
                 stream.Write(data);
                 contextWrite.StreamClose();
                 return contextWrite.End(buffer.ToArray());
                 }
-            else {
-
-                return contextWrite.End(null);
-                }
-
-
-
-            }
-
-
-
-
-
-        /// <summary>
-        /// Prepare the header information to write an envelope to a container.
-        /// </summary>
-        public virtual void PrepareFrame(ContainerWriter contextWrite) {
+            return contextWrite.End(null);
             }
 
         /// <summary>
-        /// Validate a frame to be added to the container.
+        /// Prepare the header information to write an envelope to a sequence.
         /// </summary>
-        public virtual void ValidateFrame(ContainerWriter contextWrite) {
+        public virtual void PrepareFrame(SequenceWriter contextWrite) {
+            }
+
+        /// <summary>
+        /// Validate a frame to be added to the sequence.
+        /// </summary>
+        public virtual void ValidateFrame(SequenceWriter contextWrite) {
             }
 
 
@@ -1075,7 +1031,7 @@ namespace Goedel.Cryptography.Dare {
         /// Append the header to the frame. This is called after the payload data
         /// has been passed using AppendPreprocess.
         /// </summary>
-        public virtual void CommitHeader(DareHeader ContainerHeader, ContainerWriter contextWrite) {
+        public virtual void CommitHeader(DareHeader sequenceHeader, SequenceWriter contextWrite) {
             }
 
 
@@ -1111,13 +1067,13 @@ namespace Goedel.Cryptography.Dare {
         /// Verify that the file <paramref name="filename"/> is a DARE Sequence that
         /// is in compliance with its specified policy.
         /// </summary>
-        /// <param name="filename">The container to verify.</param>
+        /// <param name="filename">The sequence to verify.</param>
         /// <param name="keyLocate">Key location to be used to resolve keys.</param>
         public static void VerifyPolicy(string filename, IKeyLocate keyLocate) {
 
 
 
-            // open the container
+            // open the sequence
             using var sequence = Sequence.Open(filename, FileStatus.Read, keyLocate);
 
             sequence.VerifyPolicy();
@@ -1125,7 +1081,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Verify policy on the container.
+        /// Verify policy on the sequence.
         /// </summary>
         public void VerifyPolicy() {
             var dictionary = new Dictionary<int, SequenceFrameIndex>();
@@ -1145,7 +1101,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
         static bool VerifyFinal(
-                Sequence container,
+                Sequence sequence,
                 DarePolicy darePolicy,
                 SequenceFrameIndex frameIndex) {
 
@@ -1157,7 +1113,7 @@ namespace Goedel.Cryptography.Dare {
 
 
         static bool Verify(
-            Sequence container,
+            Sequence sequence,
             DarePolicy darePolicy,
             SequenceFrameIndex frameIndex,
             int record,
@@ -1169,10 +1125,10 @@ namespace Goedel.Cryptography.Dare {
             bool? keyExchange = null;
 
             var header = frameIndex.Header;
-            header.AssertNotNull(ContainerDataCorrupt.Throw);
+            header.AssertNotNull(SequenceDataCorrupt.Throw);
 
-            var containerInfo = header.SequenceInfo;
-            containerInfo.AssertNotNull(ContainerDataCorrupt.Throw);
+            var sequenceInfo = header.SequenceInfo;
+            sequenceInfo.AssertNotNull(SequenceDataCorrupt.Throw);
 
             switch (darePolicy?.Encryption) {
                 case DareConstants.PolicyEncryptionOnceTag: {
@@ -1199,7 +1155,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             // check frame data
-            (containerInfo.Index == record).AssertTrue(ContainerDataCorrupt.Throw);
+            (sequenceInfo.Index == record).AssertTrue(SequenceDataCorrupt.Throw);
 
             //TreePosition
             //ExchangePosition
@@ -1211,8 +1167,8 @@ namespace Goedel.Cryptography.Dare {
 
 
             // check compliance with encryption policy
-            (frameIndex.IsEncrypted == encrypt).AssertTrue(ContainerDataCorrupt.Throw);
-            (keyExchange == null || keyExchange == frameIndex.KeyExchange).AssertTrue(ContainerDataCorrupt.Throw);
+            (frameIndex.IsEncrypted == encrypt).AssertTrue(SequenceDataCorrupt.Throw);
+            (keyExchange == null || keyExchange == frameIndex.KeyExchange).AssertTrue(SequenceDataCorrupt.Throw);
 
             // check compliance with authentication policy
 
@@ -1223,10 +1179,10 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// Perform sanity checking on a list of container headers.
+        /// Perform sanity checking on a list of sequence headers.
         /// </summary>
         /// <param name="headers">List of headers to check</param>
-        public abstract void CheckContainer(List<DareHeader> headers);
+        public abstract void CheckSequence(List<DareHeader> headers);
 
         /// <summary>
         /// Read the data in the current file 
@@ -1276,7 +1232,7 @@ namespace Goedel.Cryptography.Dare {
         public abstract bool MoveToIndex(long frameIndex);
 
         /// <summary>
-        /// Move to begin reading the last frame in the container.
+        /// Move to begin reading the last frame in the sequence.
         /// </summary>
         /// <returns></returns>
         public bool MoveToLast() {
@@ -1285,10 +1241,10 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Verify container contents by reading every frame starting with the first and checking
+        /// Verify sequence contents by reading every frame starting with the first and checking
         /// for integrity. This is likely to take a very long time.
         /// </summary>
-        public virtual void VerifyContainer() {
+        public virtual void VerifySequence() {
             }
 
         #endregion
@@ -1317,16 +1273,16 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Return the current container frame as a DareEnvelope.
+        /// Return the current sequence frame as a DareEnvelope.
         /// </summary>
-        /// <returns>The container data.</returns>
+        /// <returns>The sequence data.</returns>
         public DareEnvelope ReadDirect() => JbcdStream.ReadDareEnvelope();
 
 
         /// <summary>
-        /// Pretty print the container specified to the console
+        /// Pretty print the sequence specified to the console
         /// </summary>
-        /// <param name="fileName">The container file.</param>
+        /// <param name="fileName">The sequence file.</param>
         public static void ToConsole(string fileName) {
             var builder = new StringBuilder();
             ToBuilder(fileName, builder, 0);
@@ -1335,9 +1291,9 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// Pretty print the container specified.
+        /// Pretty print the sequence specified.
         /// </summary>
-        /// <param name="fileName">The container file.</param>
+        /// <param name="fileName">The sequence file.</param>
         /// <param name="builder">The stringbuilder to use.</param>
         /// <param name="indent">The indent level.</param>
         public static void ToBuilder(string fileName, StringBuilder builder, int indent) {
@@ -1345,12 +1301,12 @@ namespace Goedel.Cryptography.Dare {
             var positionRead = jbcdStream.PositionRead;
             var envelope = jbcdStream.ReadDareEnvelope();
             while (envelope != null) {
-                if (envelope?.Header?.SequenceInfo is var containerInfo) {
-                    builder.AppendIndent(indent, $"[{containerInfo.Index}]  <{positionRead}-{jbcdStream.PositionRead}>");
-                    builder.AppendIndent(indent + 1, $"Tree Position:{containerInfo.TreePosition}");
+                if (envelope?.Header?.SequenceInfo is var sequenceInfo) {
+                    builder.AppendIndent(indent, $"[{sequenceInfo.Index}]  <{positionRead}-{jbcdStream.PositionRead}>");
+                    builder.AppendIndent(indent + 1, $"Tree Position:{sequenceInfo.TreePosition}");
                     }
                 else {
-                    builder.AppendIndent(indent + 1, $"No Container header");
+                    builder.AppendIndent(indent + 1, $"No Sequence header");
                     }
 
                 builder.AppendIndent(indent + 1, $"Body Length:{envelope.Body?.Length}");

@@ -76,26 +76,6 @@ namespace Goedel.Cryptography.Dare {
         public DareHeader() {
             }
 
-        ///// <summary>
-        ///// Create a message header.
-        ///// </summary>
-        ///// <param name="cryptoStack">The cryptographic enhancements to apply.</param>
-        ///// <param name="contentMeta">The content metadata</param>
-        ///// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        ///// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-        /////     as an EDSS header entry.</param>
-        //public DareHeader(
-        //            CryptoStack cryptoStack,
-        //            ContentMeta contentMeta = null,
-        //            byte[] cloaked = null,
-        //            List<byte[]> dataSequences = null
-        //            ) {
-        //    ContentMeta = contentMeta;
-        //    ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
-        //    }
-
-
-
 
         /// <summary>
         /// Use information from the specified header to speficy defaults.
@@ -134,6 +114,20 @@ namespace Goedel.Cryptography.Dare {
             currentBodyWriter?.Dispose();
             currentBodyWriter = null;
             }
+
+
+        /// <summary>
+        /// Create a new cryptostack encoder and bind it to this header.
+        /// </summary>
+        /// <param name="cryptoParameters">The cryptographic parameters from which 
+        /// the stack is constructed.</param>
+        /// <param name="cloaked">Cloaked headers.</param>
+        /// <param name="dataSequences">Data sequences.</param>
+        public CryptoStackEncode BindEncoder(
+            CryptoParameters cryptoParameters,
+            byte[] cloaked = null,
+            List<byte[]> dataSequences = null) => new CryptoStackEncode(
+                cryptoParameters, this, cloaked, dataSequences);
 
 
         #endregion

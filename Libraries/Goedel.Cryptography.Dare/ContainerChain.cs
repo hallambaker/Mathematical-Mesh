@@ -69,9 +69,9 @@ namespace Goedel.Cryptography.Dare {
         /// has been passed using AppendPreprocess.
         /// </summary>
         public override void PrepareFrame(
-                        ContainerWriter contextWrite
+                        SequenceWriter contextWrite
                         ) {
-            HeaderFinal = contextWrite.ContainerHeader;
+            HeaderFinal = contextWrite.SequenceHeader;
             base.PrepareFrame(contextWrite);
             }
 
@@ -110,14 +110,14 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="headers">List of headers to check</param>
-        public override void CheckContainer(List<DareHeader> headers) {
+        public override void CheckSequence(List<DareHeader> headers) {
             int Index = 1;
             foreach (var Header in headers) {
-                Assert.AssertNotNull(Header.SequenceInfo, ContainerDataCorrupt.Throw);
+                Assert.AssertNotNull(Header.SequenceInfo, SequenceDataCorrupt.Throw);
 
 
-                Assert.AssertTrue(Header.SequenceInfo.Index == Index, ContainerDataCorrupt.Throw);
-                Assert.AssertNotNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
+                Assert.AssertTrue(Header.SequenceInfo.Index == Index, SequenceDataCorrupt.Throw);
+                Assert.AssertNotNull(Header.PayloadDigest, SequenceDataCorrupt.Throw);
                 Index++;
                 }
             }

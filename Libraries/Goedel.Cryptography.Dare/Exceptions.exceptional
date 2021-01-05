@@ -5,7 +5,7 @@ Namespace Goedel.Cryptography.Dare
 	Exception StreamDataCorrupt
         Console "The JBCD stream data is corrupted."
 
-	Exception ContainerDataCorrupt
+	Exception SequenceDataCorrupt
         Console "The container data is corrupted."
 
 	Exception EnvelopeDataCorrupt

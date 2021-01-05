@@ -171,7 +171,7 @@ namespace Goedel.XUnit {
 
             using (var XContainer = Sequence.Open(filename, FileStatus.Read,
                             keyLocate: keyCollection)) {
-                XContainer.VerifyContainer();
+                XContainer.VerifySequence();
                 }
 
 

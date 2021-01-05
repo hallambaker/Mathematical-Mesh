@@ -23,6 +23,9 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The previous position within the container.</summary> 
         public long PreviousPosition;
 
+
+
+
         /// <summary>
         /// Base constructor for serialization.
         /// </summary>
@@ -57,8 +60,16 @@ namespace Goedel.Cryptography.Dare {
 
         ///<summary>Dictionary mapping full names to file entries.</summary> 
         public SortedDictionary<string, FileEntry> DictionaryByPath = new ();
+
+        ///<summary>Dictionary mapping full names to file entries.</summary> 
+        public SortedDictionary<string, long> DictionaryDeleted = new();
+
         ///<summary>Dictionary mapping full names to file entries.</summary> 
         public SortedDictionary<long, FileEntry> DictionaryByIndex = new();
+
+        ///<summary>Count of the number of deleted entries</summary> 
+        public long CountDeleted = 0;
+
         /// <summary>
         /// Add an entry described by <paramref name="fileInfo"/> to the collection.
         /// </summary>
@@ -97,20 +108,43 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="position">Position within the sequence file.</param>
         /// <returns></returns>
         public FileEntry Add(DareHeader dareHeader, long position) {
-            if (DictionaryByIndex.TryGetValue(dareHeader.Index, out var previous)) {
-                return previous; // already exists, do nothing
-                }
-            if (dareHeader.ContentMeta?.Filename == null) {
+            var filename = dareHeader.ContentMeta?.Filename;
+            if (filename == null) {
                 return null; // not a file entry.
                 }
 
+            if (dareHeader.ContentMeta?.Event == DareConstants.SequenceEventDeleteTag) {
+                DictionaryDeleted.AddSafe(filename, position);
+                CountDeleted++;
+                return null; // add to the list of deleted entries;
+                }
+
+            if (DictionaryByIndex.TryGetValue(dareHeader.Index, out var previous)) {
+                return previous; // already exists, do nothing
+                }
+
+            if (DictionaryDeleted.ContainsKey(filename)) {
+                return Delete(filename, position);
+                }
 
             var fileEntry = new FileEntry(dareHeader, position);
-
             Add(fileEntry);
 
             return (fileEntry);
             }
+
+
+        FileEntry Remove(DareHeader dareHeader, long position) {
+            if (!DictionaryByPath.TryGetValue(dareHeader.ContentMeta?.Filename, out var previous)) {
+                return null; // didn't exist, return null
+                }
+
+            DictionaryByPath.Remove(dareHeader.ContentMeta?.Filename);
+
+
+            return previous;
+            }
+
 
 
         /// <summary>
@@ -153,7 +187,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The file entry of the deleted file.</returns>
         public FileEntry Delete(string path, long position) {
             position.Future(); // keep for later use
-
+            // future: add to a list of deleted files.
 
             if (DictionaryByPath.TryGetValue(path, out var entry)) {
                 DictionaryByPath.Remove(path);

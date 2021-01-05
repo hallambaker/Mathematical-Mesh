@@ -334,7 +334,7 @@ namespace Goedel.Cryptography.Dare {
                 ContentMeta contentInfo,
                 JsonObject jsonObject) {
 
-            var contextWrite = new ContainerWriterDeferred(Container);
+            var contextWrite = new SequenceWriterDeferred(Container);
 
             var data = jsonObject?.GetBytes();
             var envelope = Sequence.Defer(contextWrite, contentInfo, data);

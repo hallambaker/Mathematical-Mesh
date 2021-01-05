@@ -64,7 +64,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// </summary>
     [global::System.Serializable]
-	public partial class ContainerDataCorrupt : global::Goedel.Utilities.GoedelException {
+	public partial class SequenceDataCorrupt : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
@@ -86,7 +86,7 @@ namespace Goedel.Cryptography.Dare {
 		/// generated message.</param>	
 		/// <param name="inner">Inner Exception</param>	
 		/// <param name="args">Optional list of parameterized arguments.</param>
-		public ContainerDataCorrupt  (string description=null, System.Exception inner=null,
+		public SequenceDataCorrupt  (string description=null, System.Exception inner=null,
 			params object[] args) : 
 				base (ExceptionFormatDelegate(description, Templates,
 					null, args), inner) {
@@ -101,7 +101,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new ContainerDataCorrupt(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new SequenceDataCorrupt(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate

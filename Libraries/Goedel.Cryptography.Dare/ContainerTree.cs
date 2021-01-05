@@ -56,10 +56,10 @@ namespace Goedel.Cryptography.Dare {
         /// Append the header to the frame. This is called after the payload data
         /// has been passed using AppendPreprocess.
         /// </summary>
-        public override void PrepareFrame(ContainerWriter contextWrite) {
+        public override void PrepareFrame(SequenceWriter contextWrite) {
 
 
-            PrepareFrame(contextWrite.ContainerInfo);
+            PrepareFrame(contextWrite.SequenceInfo);
 
 
             base.PrepareFrame(contextWrite);
@@ -129,7 +129,7 @@ namespace Goedel.Cryptography.Dare {
 
 
                 // This is failing because the container index is set to 2 when it should be 1.
-                Assert.AssertTrue(index == containerInfo.Index, ContainerDataCorrupt.Throw);
+                Assert.AssertTrue(index == containerInfo.Index, SequenceDataCorrupt.Throw);
                 treePosition = containerInfo.TreePosition;
                 }
             if (containerInfo.Index != 1) {
@@ -183,7 +183,7 @@ namespace Goedel.Cryptography.Dare {
 
             //Obtain the position of the very last record in the file, this must be known.
             var Record = FrameCount - 1;
-            Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(Record, out position), ContainerDataCorrupt.Throw);
+            Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(Record, out position), SequenceDataCorrupt.Throw);
             // Bug: this is failing because the position dictionary is not being updated.
             // check that commit frame is being properly called on deferred writes.
             // Also check every operation on the device catalog
@@ -217,7 +217,7 @@ namespace Goedel.Cryptography.Dare {
                         nextPosition = JbcdStream.PositionRead;
 
                         frameHeader = JbcdStream.ReadFrameHeader();
-                        Assert.AssertTrue(frameHeader.SequenceInfo.Index == nextRecord, ContainerDataCorrupt.Throw);
+                        Assert.AssertTrue(frameHeader.SequenceInfo.Index == nextRecord, SequenceDataCorrupt.Throw);
 
                         found = false;
                         }
@@ -316,13 +316,13 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="headers">List of headers to check</param>
-        public override void CheckContainer(List<DareHeader> headers) {
+        public override void CheckSequence(List<DareHeader> headers) {
             var index = 1;
             foreach (var Header in headers) {
                 Assert.AssertTrue(Header.SequenceInfo.Index == index,
-                        ContainerDataCorrupt.Throw);
+                        SequenceDataCorrupt.Throw);
                 Assert.AssertNotNull(Header.PayloadDigest,
-                        ContainerDataCorrupt.Throw);
+                        SequenceDataCorrupt.Throw);
 
                 index++;
                 }
@@ -333,14 +333,14 @@ namespace Goedel.Cryptography.Dare {
         /// Verify container contents by reading every frame starting with the first and checking
         /// for integrity. This is likely to take a very long time.
         /// </summary>
-        public override void VerifyContainer() {
+        public override void VerifySequence() {
 
             SortedDictionary<long, DareHeader> headerDictionary = new SortedDictionary<long, DareHeader>();
 
             // Check the first frame
             JbcdStream.PositionRead = 0;
             var header = JbcdStream.ReadFirstFrameHeader();
-            Assert.AssertTrue(header.SequenceInfo.Index == 0, ContainerDataCorrupt.Throw);
+            Assert.AssertTrue(header.SequenceInfo.Index == 0, SequenceDataCorrupt.Throw);
             headerDictionary.Add(0, header);
 
             // Check subsequent frames
@@ -350,13 +350,13 @@ namespace Goedel.Cryptography.Dare {
                 header = JbcdStream.ReadFrameHeader();
                 headerDictionary.Add(Position, header);
 
-                Assert.AssertTrue(header.SequenceInfo.Index == index, ContainerDataCorrupt.Throw);
+                Assert.AssertTrue(header.SequenceInfo.Index == index, SequenceDataCorrupt.Throw);
                 if (index > 1) {
                     var Previous = PreviousFrame(index);
                     Assert.AssertTrue(headerDictionary.TryGetValue(header.SequenceInfo.TreePosition, out var PreviousHeader), 
-                        ContainerDataCorrupt.Throw);
+                        SequenceDataCorrupt.Throw);
                     Assert.AssertTrue(PreviousHeader.SequenceInfo.Index == Previous, 
-                        ContainerDataCorrupt.Throw);
+                        SequenceDataCorrupt.Throw);
                     }
 
 

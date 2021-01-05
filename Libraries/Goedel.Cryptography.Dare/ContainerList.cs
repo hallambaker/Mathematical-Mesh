@@ -91,12 +91,12 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Prepare the data to be incorporated into the header.
         /// </summary>
-        public override void PrepareFrame(ContainerWriter contextWrite) { }
+        public override void PrepareFrame(SequenceWriter contextWrite) { }
 
         /// <summary>
         /// Commit the header data to the container.
         /// </summary>
-        public override void CommitHeader(DareHeader containerHeader, ContainerWriter contextWrite) =>
+        public override void CommitHeader(DareHeader containerHeader, SequenceWriter contextWrite) =>
             FrameIndexToPositionDictionary.Add(containerHeader.SequenceInfo.Index,
                     contextWrite.FrameStart);
 
@@ -231,11 +231,11 @@ namespace Goedel.Cryptography.Dare {
                 PositionRead = position;
                 }
             else {
-                Assert.AssertTrue(index > frameLowUnknown & index < frameHighUnknown, ContainerDataCorrupt.Throw);
+                Assert.AssertTrue(index > frameLowUnknown & index < frameHighUnknown, SequenceDataCorrupt.Throw);
 
                 if (index - frameLowUnknown <= frameHighUnknown - index) {
                     Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(
-                        frameLowUnknown, out position), ContainerDataCorrupt.Throw);
+                        frameLowUnknown, out position), SequenceDataCorrupt.Throw);
                     PositionRead = position;
                     var Last = PositionRead;
                     Next();
@@ -251,7 +251,7 @@ namespace Goedel.Cryptography.Dare {
                 else {
                     Assert.AssertTrue(
                         FrameIndexToPositionDictionary.TryGetValue(frameHighUnknown, out position), 
-                        ContainerDataCorrupt.Throw);
+                        SequenceDataCorrupt.Throw);
                     PositionRead = position;
 
                     Previous();
@@ -275,20 +275,20 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="headers">List of headers to check</param>
-        public override void CheckContainer(List<DareHeader> headers) {
+        public override void CheckSequence(List<DareHeader> headers) {
             int Index = 1;
             foreach (var Header in headers) {
                 Assert.AssertNotNull(Header.SequenceInfo,
-                        ContainerDataCorrupt.Throw);
+                        SequenceDataCorrupt.Throw);
 
                 Assert.AssertTrue(Header.SequenceInfo.Index == Index, 
-                        ContainerDataCorrupt.Throw);
+                        SequenceDataCorrupt.Throw);
 
                 if (HeaderFirst.SequenceInfo.ContainerType == DareConstants.SequenceTypeListTag) {
-                    Assert.AssertNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
+                    Assert.AssertNull(Header.PayloadDigest, SequenceDataCorrupt.Throw);
                     }
                 else {
-                    Assert.AssertNotNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
+                    Assert.AssertNotNull(Header.PayloadDigest, SequenceDataCorrupt.Throw);
                     }
                 Index++;
                 }
