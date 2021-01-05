@@ -847,7 +847,7 @@
 			Include Reporting
 
 
-		Command DareLog "log"
+		Command DareSequence "sequence"
 			Brief "Create a new DARE Sequence"
 			Include EncodeOptions
 			Include CryptoOptions
@@ -872,6 +872,16 @@
 				Default "true"
 				Brief "Append index to the archive"	
 
+		Command DareLog "log"
+			Brief "Append the specified string to the sequence."
+			Include EncodeOptions
+			Include CryptoOptions
+			Include AccountOptions
+			Include Reporting
+			Parameter Sequence "in" ExistingFile
+				Brief "Sequence to append to"
+			Parameter Entry "entry" NewFile
+				Brief "Text to append"
 
 		Command DareAppend "append"
 			Brief "Append the specified file as an entry to the specified sequence."
@@ -896,13 +906,21 @@
 			Option Key "key" String
 
 
-		Command DareList "list"
+		Command DareDir "dir"
 			Brief "Compile a catalog for the specified sequence."
 			Include Reporting
 			Include AccountOptions
 			Parameter Sequence "in" ExistingFile
 				Brief "Sequence to be cataloged"
 
+		Command DareList "list"
+			Brief "Compile a catalog for the specified sequence."
+			Include Reporting
+			Include AccountOptions
+			Parameter Sequence "in" ExistingFile
+				Brief "Sequence to be cataloged"
+			Parameter Output "out" NewFile
+				Brief "List output"	
 
 		Command DareIndex "index"
 			Brief "Compile an index for the specified sequence and append to the end."

@@ -93,18 +93,18 @@ namespace Goedel.Cryptography {
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static WriteToKeyStoreDelegate WriteToKeyStore { get; set; } = WriteToKeyStoreDefault;
 
-        static void WriteToKeyStoreDefault(IPKIXPrivateKey KeyPair, KeySecurity KeySecurity) =>
+        static void WriteToKeyStoreDefault(IPKIXPrivateKey keyPair, KeySecurity keySecurity) =>
                     throw new PlatformNotInitialized();
 
 
         /// <summary>
         /// Retrieve record from the local key store. 
         /// </summary>
-        /// <param name="UDF">The key identifier</param>
-        /// <param name="KeyType">Key type, if known</param>
+        /// <param name="udf">The key identifier</param>
+        /// <param name="keyType">Key type, if known</param>
         /// <returns></returns>
-        public delegate KeyPair FindInKeyStoreDelegate(string UDF,
-                CryptoAlgorithmId KeyType = CryptoAlgorithmId.Default);
+        public delegate KeyPair FindInKeyStoreDelegate(string udf,
+                CryptoAlgorithmId keyType = CryptoAlgorithmId.Default);
 
         /// <summary>
         /// Retrieve record from the local key store. 
@@ -113,18 +113,18 @@ namespace Goedel.Cryptography {
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static FindInKeyStoreDelegate FindInKeyStore { get; set; } = FindInKeyStoreDefault;
 
-        static KeyPair FindInKeyStoreDefault(string UDF,
-                CryptoAlgorithmId KeyType = CryptoAlgorithmId.Default) =>
+        static KeyPair FindInKeyStoreDefault(string udf,
+                CryptoAlgorithmId keyType = CryptoAlgorithmId.Default) =>
                     throw new PlatformNotInitialized();
 
 
         /// <summary>
         /// Retrieve record from the local key store. 
         /// </summary>
-        /// <param name="UDF">The key identifier</param>
+        /// <param name="udf">The key identifier</param>
         /// <param name="KeyType">Key type, if known</param>
         /// <returns>True if key was found, otherwise false</returns>
-        public delegate bool EraseFromKeyStoreDelegate(string UDF,
+        public delegate bool EraseFromKeyStoreDelegate(string udf,
                 CryptoAlgorithmId KeyType = CryptoAlgorithmId.Default);
 
         /// <summary>
@@ -134,8 +134,8 @@ namespace Goedel.Cryptography {
         /// specific implementation by a call to  Platform.Initialize() before use</remarks>
         public static EraseFromKeyStoreDelegate EraseFromKeyStore { get; set; } = EraseFromKeyStoreDefault;
 
-        static bool EraseFromKeyStoreDefault(string UDF,
-                CryptoAlgorithmId KeyType = CryptoAlgorithmId.Default) =>
+        static bool EraseFromKeyStoreDefault(string udf,
+                CryptoAlgorithmId keyType = CryptoAlgorithmId.Default) =>
                     throw new PlatformNotInitialized();
 
 
@@ -153,13 +153,25 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Get a specified number of random bytes.
         /// </summary>
-        /// <param name="Length">Number of bytes to get</param>
+        /// <param name="min">Number of bytes to get</param>
+        /// <param name="max">Maximum number of bytes to get. Ignored if less than 
+        /// <paramref name="min"/>.</param>
         /// <returns>Random data</returns>
-        public static byte[] GetRandomBytes(int Length) {
-            var Data = new byte[Length];
-            FillRandom(Data, 0, Length);
-            return Data;
+        public static byte[] GetRandomBytes(int min, int max=0) {
+            var length = max <= min ? min :
+                min + (int)GetRandomInteger(max - min);
+
+            var data = new byte[length];
+            FillRandom(data, 0, length);
+            return data;
             }
+
+        /// <summary>
+        /// Return a random positive integer that is strictly less than <paramref name="max"/>
+        /// </summary>
+        /// <param name="max">Maximum value to return.</param>
+        /// <returns>The random value.</returns>
+        public static int GetRandomInteger(int max)=>((int) GetRandomBigInteger(30)) % max;
 
 
         /// <summary>

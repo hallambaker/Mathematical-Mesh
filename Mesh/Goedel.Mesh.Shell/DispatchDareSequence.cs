@@ -48,7 +48,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DareLog(DareLog options) {
+        public override ShellResult DareSequence(DareSequence options) {
             var outputFile = options.Sequence.Value;
 
             var keyLocate = GetKeyCollection(options);
@@ -114,6 +114,35 @@ namespace Goedel.Mesh.Shell {
             }
 
 
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult DareLog(DareLog options) {
+
+            var outputFile = options.Sequence.Value;
+            var Entry = options.Entry.Value;
+
+            using var Writer = new DareLogWriter(
+                    outputFile, null, true, fileStatus: FileStatus.Existing);
+
+
+            var data = Entry.ToUTF8();
+            var contentMeta = new ContentMeta() {
+                Created = DateTime.Now
+                };
+
+            Writer.AddData(data, contentMeta );
+
+            return new ResultLog() {
+                Count = (int)Writer.Sequence.FrameCount
+                };
+            }
+
+
+
         /// <summary>
         /// Dispatch method
         /// </summary>
@@ -159,6 +188,30 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareList(DareList options) {
+            var inputFile = options.Sequence.Value;
+            var outputFile = options.Output.Value;
+            var contextAccount = GetContextUser(options);
+
+            using var reader = new DareLogReader(inputFile, contextAccount);
+            using var output = outputFile.OpenTextWriterNew();
+
+            var count = reader.List(output);
+
+            var result = new ResultListLog() {
+                Filename = outputFile,
+                Count = count
+                };
+
+            return result;
+            }
+
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult DareDir(DareDir options) {
             var inputFile = options.Sequence.Value;
             var contextAccount = GetContextUser(options);
 

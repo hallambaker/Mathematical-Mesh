@@ -29,7 +29,14 @@
 		String			Filename
 		Integer			TotalBytes
 		Boolean			Verified
+	Structure ResultListLog
+		Inherits		Result
+		String			Filename
+		Integer			Count
 
+	Structure ResultLog
+		Inherits		Result
+		Integer			Count
 
 	Structure ResultArchive
 		Inherits			Result

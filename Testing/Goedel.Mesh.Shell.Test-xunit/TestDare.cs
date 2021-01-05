@@ -4,6 +4,7 @@ using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using System.Collections.Generic;
 using Xunit;
@@ -78,9 +79,14 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestArchive() => TestSequence(true);
 
-        [Fact]
-        public void TestLog() => TestSequence(false);
+        int[] counts = { 10, 20 };
 
+        [Fact]
+        public void TestLog() => LogTest(counts);
+
+        string archive1 = "../CommonData/Archive1";
+        string archive2 = "../CommonData/Archive2";
+        string archive3 = "../CommonData/Archive3";
 
         [Theory]
         [InlineData(true, 100)]
@@ -106,36 +112,11 @@ namespace Goedel.XUnit {
 
 
             var entries = new SortedDictionary<string, string>();
-            var filename = $"seq-{archive}-{encrypt}-{sign}-{count}-{purge}-{index}";
+            var filename = $"archive-{encrypt}-{sign}-{count}-{purge}-{index}";
 
             var options = encrypt == null ? "" : $" /encrypt={encrypt}" +
                         sign == null ? "" : $" /sign={sign}";
 
-            // Create archive with specified security policy
-
-            if (archive) {
-                ArchiveTest(encrypt, sign, purge, index, initial, mallet, entries, filename, options);
-                }
-            else {
-                LogTest(encrypt, sign, purge, index, initial, mallet, entries, filename, options);
-                }
-
-            }
-
-        string archive1 = "../CommonData/Archive1";
-        string archive2 = "../CommonData/Archive2";
-        string archive3 = "../CommonData/Archive3";
-
-        private void ArchiveTest(string encrypt, 
-                string sign, 
-                bool purge, 
-                bool index, 
-                string initial, 
-                TestCLI mallet,
-                SortedDictionary<string, string> entries, 
-                string filename, 
-                string options) {
-            // add the initial values (if any);
             var staleFrames = 0;
 
             options = initial == null ? options : $" {initial}" + options;
@@ -164,13 +145,13 @@ namespace Goedel.XUnit {
             VerifyArchive(filename, entries, sign, encrypt, mallet, initial, archive3);
             staleFrames++;
 
-            var original = Dispatch($"dare list {filename}") as ResultArchive;
+            var original = Dispatch($"dare dir {filename}") as ResultArchive;
             if (purge) {
                 // Test Purge
                 var purgefile = "purged_" + filename;
                 Dispatch($"dare purge {filename} {purgefile}");
                 VerifyArchive(purgefile, entries, sign, encrypt, mallet, initial, archive3);
-                var purged = Dispatch($"dare list {purgefile}") as ResultArchive;
+                var purged = Dispatch($"dare dir {purgefile}") as ResultArchive;
 
                 purged.Deleted.TestEqual(0);
                 purged.Frames.TestEqual(original.Frames - staleFrames);
@@ -195,21 +176,63 @@ namespace Goedel.XUnit {
 
             }
 
-        private void LogTest(string encrypt, string sign, bool purge, bool index, string initial, TestCLI mallet, SortedDictionary<string, string> entries, string filename, string options) {
-
-                Dispatch($"dare log {options}");
 
 
 
-            if (purge) {
-                // Test Purge
+        private void LogTest(
+            int[] counts,
+                    string encrypt = null,
+                    string sign = null
+            ) {
+
+
+            // create Alice account
+            var accountAlice = AliceAccount;
+            CreateAccount(accountAlice);
+
+            // create Mallet account
+            var mallet = GetTestCLI("Mallet");
+            MakeAccount(mallet, MalletAccount);
+
+            var ct = "";
+            foreach (var count in counts) {
+                ct += $"-{count}";
                 }
 
-            if (index) {
-                // Test Index
+            var filename = $"log-{encrypt}-{sign}{ct}";
+
+            var options = encrypt == null ? "" : $" /encrypt={encrypt}" +
+                        sign == null ? "" : $" /sign={sign}";
+
+            Dispatch($"dare sequence {filename} {options}");
+
+            var entries = new List<string>();
+            foreach (var count in counts) {
+                for (var i = 0; i < count; i++) {
+                    var bytes = Platform.GetRandomBytes(10, 80);
+                    var entry = bytes.ToStringBase64();
+                    Dispatch($"dare log {filename} {entry}");
+                    entries.Add(entry);
+                    }
+                VerifyLog(encrypt, sign, filename, entries, mallet);
+                // test
                 }
-            throw new NYI();
             }
+
+
+
+        void VerifyLog(
+                string encrypt,
+                string sign, 
+                string filename,
+                List<string> entries,
+                TestCLI mallet) {
+            var output = "output_" + filename;
+            var listArchive = Dispatch($"dare list {filename} {output}");
+            System.IO.File.Delete(output);
+
+            }
+
 
 
         static void AddEntries(SortedDictionary<string, string> dictionary, string directory) {
@@ -248,7 +271,7 @@ namespace Goedel.XUnit {
             var unpackDir = Path.Combine(unpack, Path.GetFileName(initial));
             Dispatch($"dare extract {filename} {unpack}");
 
-            var listArchive = Dispatch($"dare list {filename} ");
+            var listArchive = Dispatch($"dare dir {filename} ");
 
 
             unpackDir.CheckDirectroriesEqual(test);
@@ -270,7 +293,7 @@ namespace Goedel.XUnit {
                 }
 
 
-            Dispatch($"dare list {filename}");
+            Dispatch($"dare dir {filename}");
 
 
             return true;

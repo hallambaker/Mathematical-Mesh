@@ -343,10 +343,12 @@ namespace Goedel.Mesh.Shell {
 				{"decode", _DareDecode._DescribeCommand },
 				{"verify", _DareVerify._DescribeCommand },
 				{"earl", _DareEARL._DescribeCommand },
-				{"log", _DareLog._DescribeCommand },
+				{"sequence", _DareSequence._DescribeCommand },
 				{"archive", _DareArchive._DescribeCommand },
+				{"log", _DareLog._DescribeCommand },
 				{"append", _DareAppend._DescribeCommand },
 				{"delete", _DareDelete._DescribeCommand },
+				{"dir", _DareDir._DescribeCommand },
 				{"list", _DareList._DescribeCommand },
 				{"index", _DareIndex._DescribeCommand },
 				{"extract", _DareExtract._DescribeCommand },
@@ -1264,13 +1266,13 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_DareLog (
+		public static void Handle_DareSequence (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			DareLog		Options = new DareLog ();
+			DareSequence		Options = new DareSequence ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.DareLog (Options);
+			var result = Dispatch.DareSequence (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -1281,6 +1283,16 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.DareArchive (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_DareLog (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			DareLog		Options = new DareLog ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.DareLog (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -1301,6 +1313,16 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.DareDelete (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_DareDir (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			DareDir		Options = new DareDir ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.DareDir (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -14281,7 +14303,7 @@ namespace Goedel.Mesh.Shell {
     public partial class DareEARL : _DareEARL {
         } // class DareEARL
 
-    public class _DareLog : Goedel.Command.Dispatch ,
+    public class _DareSequence : Goedel.Command.Dispatch ,
 							IEncodeOptions,
 							ICryptoOptions,
 							ISequenceOptions,
@@ -14447,9 +14469,9 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "log",
+			Identifier = "sequence",
 			Brief =  "Create a new DARE Sequence",
-			HandleDelegate =  CommandLineInterpreter.Handle_DareLog,
+			HandleDelegate =  CommandLineInterpreter.Handle_DareSequence,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -14562,8 +14584,8 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class DareLog : _DareLog {
-        } // class DareLog
+    public partial class DareSequence : _DareSequence {
+        } // class DareSequence
 
     public class _DareArchive : Goedel.Command.Dispatch ,
 							IEncodeOptions,
@@ -14882,6 +14904,255 @@ namespace Goedel.Mesh.Shell {
 
     public partial class DareArchive : _DareArchive {
         } // class DareArchive
+
+    public class _DareLog : Goedel.Command.Dispatch ,
+							IEncodeOptions,
+							ICryptoOptions,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Flag (),
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new ExistingFile (),
+			new NewFile ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [cty]</summary>
+		public virtual String ContentType {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _ContentType {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Encrypt {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [sign]</summary>
+		public virtual String Sign {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Sign {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [hash]</summary>
+		public virtual Flag Hash {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Hash {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String Algorithms {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Algorithms {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[7] as Enumeration<EnumReporting>;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[8] as Flag;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[10] as Flag;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[10].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Sequence {
+			get => _Data[11] as ExistingFile;
+			set => _Data[11]  = value;
+			}
+
+		public virtual string _Sequence {
+			set => _Data[11].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile Entry {
+			get => _Data[12] as NewFile;
+			set => _Data[12]  = value;
+			}
+
+		public virtual string _Entry {
+			set => _Data[12].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "log",
+			Brief =  "Append the specified string to the sequence.",
+			HandleDelegate =  CommandLineInterpreter.Handle_DareLog,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "ContentType", 
+					Default = null, // null if null
+					Brief = "Content Type",
+					Index = 0,
+					Key = "cty"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Encrypt", 
+					Default = null, // null if null
+					Brief = "Encrypt data for specified recipient",
+					Index = 1,
+					Key = "encrypt"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Sign", 
+					Default = null, // null if null
+					Brief = "Sign data with specified key",
+					Index = 2,
+					Key = "sign"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Hash", 
+					Default = "true", // null if null
+					Brief = "Compute hash of content",
+					Index = 3,
+					Key = "hash"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Algorithms", 
+					Default = null, // null if null
+					Brief = "List of algorithm specifiers",
+					Index = 4,
+					Key = "alg"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 5,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 6,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 7,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 8,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 9,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 10,
+					Key = "json"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Sequence", 
+					Default = null, // null if null
+					Brief = "Sequence to append to",
+					Index = 11,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Entry", 
+					Default = null, // null if null
+					Brief = "Text to append",
+					Index = 12,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class DareLog : _DareLog {
+        } // class DareLog
 
     public class _DareAppend : Goedel.Command.Dispatch ,
 							IEncodeOptions,
@@ -15241,7 +15512,7 @@ namespace Goedel.Mesh.Shell {
     public partial class DareDelete : _DareDelete {
         } // class DareDelete
 
-    public class _DareList : Goedel.Command.Dispatch ,
+    public class _DareDir : Goedel.Command.Dispatch ,
 							IReporting,
 							IAccountOptions {
 
@@ -15324,6 +15595,161 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "dir",
+			Brief =  "Compile a catalog for the specified sequence.",
+			HandleDelegate =  CommandLineInterpreter.Handle_DareDir,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 0,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 1,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 3,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 4,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 5,
+					Key = "local"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Sequence", 
+					Default = null, // null if null
+					Brief = "Sequence to be cataloged",
+					Index = 6,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class DareDir : _DareDir {
+        } // class DareDir
+
+    public class _DareList : Goedel.Command.Dispatch ,
+							IReporting,
+							IAccountOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String (),
+			new ExistingFile (),
+			new NewFile ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[0] as Enumeration<EnumReporting>;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Sequence {
+			get => _Data[6] as ExistingFile;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Sequence {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile Output {
+			get => _Data[7] as NewFile;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Output {
+			set => _Data[7].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "list",
 			Brief =  "Compile a catalog for the specified sequence.",
 			HandleDelegate =  CommandLineInterpreter.Handle_DareList,
@@ -15376,6 +15802,13 @@ namespace Goedel.Mesh.Shell {
 					Default = null, // null if null
 					Brief = "Sequence to be cataloged",
 					Index = 6,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Output", 
+					Default = null, // null if null
+					Brief = "List output",
+					Index = 7,
 					Key = ""
 					}
 				}
@@ -19234,12 +19667,17 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
-		public virtual ShellResult DareLog ( DareLog Options) {
+		public virtual ShellResult DareSequence ( DareSequence Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
 		public virtual ShellResult DareArchive ( DareArchive Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult DareLog ( DareLog Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
@@ -19250,6 +19688,11 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult DareDelete ( DareDelete Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult DareDir ( DareDir Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

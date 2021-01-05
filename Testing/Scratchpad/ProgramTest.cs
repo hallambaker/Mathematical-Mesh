@@ -24,9 +24,9 @@ namespace Scratchpad {
     partial class Program {
         static void Main() {
 
-            ShellTests.Test().TestArchive();
+            //ShellTests.Test().TestArchive();
 
-            //ShellTests.Test().TestLog();
+            ShellTests.Test().TestLog();
 
 
 

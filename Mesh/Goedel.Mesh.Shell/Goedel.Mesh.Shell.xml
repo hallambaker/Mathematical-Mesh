@@ -269,7 +269,7 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.DareLog(Goedel.Mesh.Shell.DareLog)">
+        <member name="M:Goedel.Mesh.Shell.Shell.DareSequence(Goedel.Mesh.Shell.DareSequence)">
             <summary>
             Dispatch method
             </summary>
@@ -284,6 +284,13 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DareAppend(Goedel.Mesh.Shell.DareAppend)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DareLog(Goedel.Mesh.Shell.DareLog)">
             <summary>
             Dispatch method
             </summary>
@@ -305,6 +312,13 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DareList(Goedel.Mesh.Shell.DareList)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DareDir(Goedel.Mesh.Shell.DareDir)">
             <summary>
             Dispatch method
             </summary>
@@ -3052,49 +3066,49 @@
         <member name="P:Goedel.Mesh.Shell._DareEARL.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.ContentType">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.ContentType">
             <summary>Field accessor for option [cty]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.Encrypt">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.Sign">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.Sign">
             <summary>Field accessor for option [sign]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.Hash">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.Hash">
             <summary>Field accessor for option [hash]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.Algorithms">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.Type">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.Type">
             <summary>Field accessor for option [type]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.EnumAuthentication">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.EnumAuthentication">
             <summary>Field accessor for parameter [auth]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.EnumUse">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.EnumUse">
             <summary>Field accessor for parameter [use]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.LocalName">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.Verbose">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.Report">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.Json">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.Sequence">
+        <member name="P:Goedel.Mesh.Shell._DareSequence.Sequence">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareArchive.ContentType">
@@ -3147,6 +3161,45 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareArchive.Index">
             <summary>Field accessor for option [index]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.ContentType">
+            <summary>Field accessor for option [cty]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.Encrypt">
+            <summary>Field accessor for option [encrypt]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.Sign">
+            <summary>Field accessor for option [sign]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.Hash">
+            <summary>Field accessor for option [hash]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.Algorithms">
+            <summary>Field accessor for option [alg]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.Sequence">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.Entry">
+            <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareAppend.ContentType">
             <summary>Field accessor for option [cty]</summary>
@@ -3202,6 +3255,27 @@
         <member name="P:Goedel.Mesh.Shell._DareDelete.Key">
             <summary>Field accessor for option [key]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareDir.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareDir.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareDir.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareDir.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareDir.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareDir.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareDir.Sequence">
+            <summary>Field accessor for parameter []</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareList.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3221,6 +3295,9 @@
             <summary>Field accessor for option [local]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareList.Sequence">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareList.Output">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareIndex.ContentType">
@@ -4074,6 +4151,128 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Shell.ResultFile.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultListLog">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultListLog.Filename">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultListLog.Count">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultListLog._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultListLog.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultListLog._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultListLog.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultListLog.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultListLog.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultListLog.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultLog">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultLog.Count">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultLog._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultLog.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultLog._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultLog.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultLog.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultLog.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultLog.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

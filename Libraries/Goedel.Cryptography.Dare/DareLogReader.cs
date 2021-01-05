@@ -87,6 +87,20 @@ namespace Goedel.Cryptography.Dare {
 
 
 
+        public int List(TextWriter output) {
+            Sequence.Start();
+
+            int count = 0;
+            foreach (var frame in Sequence) {
+                var data = frame.GetPayload(Sequence, Sequence.KeyLocate).ToUTF8();
+                var created = frame.Header.ContentMeta?.Created;
+                output.WriteLine($"[{created}],{data}");
+                count++;
+                }
+            return count;
+
+            }
+
 
         /// <summary>
         /// Open a file container and then read and return the last entry in the file.
