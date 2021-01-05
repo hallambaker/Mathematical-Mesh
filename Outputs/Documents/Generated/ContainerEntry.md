@@ -8,7 +8,7 @@ TBS stuff
 
 TBS stuff
 
-###Structure: ContainerInfo
+###Structure: SequenceInfo
 
 Information that describes container information
 
@@ -43,7 +43,7 @@ to be found
 
 TBS stuff
 
-###Structure: ContainerIndex
+###Structure: SequenceIndex
 
 A container index
 
@@ -55,8 +55,6 @@ contains position entries for records added since the last
 frame containing a ContainerIndex.
 <dt>Positions: IndexPosition [0..Many]
 <dd>List of container position entries
-<dt>Metas: IndexMeta [0..Many]
-<dd>List of container position entries
 </dl>
 ###Structure: IndexPosition
 
@@ -67,6 +65,8 @@ Specifies the position in a file at which a specified record index is found
 <dd>The record index within the file.
 <dt>Position: Integer (Optional)
 <dd>The record position within the file relative to the index base.
+<dt>UniqueId: String (Optional)
+<dd>Unique object identifier
 </dl>
 ###Structure: KeyValue
 
@@ -77,19 +77,4 @@ Specifies a key/value entry
 <dd>The key
 <dt>Value: String (Optional)
 <dd>The value corresponding to the key
-</dl>
-###Structure: IndexMeta
-
-Specifies the list of index entries at which a record with the specified metadata occurrs.
-
-<dl>
-<dt>Index: Integer [0..Many]
-<dd>List of record indicies within the file where frames matching the specified 
-criteria are found.
-<dt>ContentType: String (Optional)
-<dd>Content type parameter
-<dt>Paths: String [0..Many]
-<dd>List of filename paths for the current frame.
-<dt>Labels: String [0..Many]
-<dd>List of labels that are applied to the current frame.
 </dl>

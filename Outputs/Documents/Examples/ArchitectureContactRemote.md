@@ -19,12 +19,12 @@ Alice checks his Mesh messages and approves Bob's request:
 <div="terminal">
 <cmd>Alice> account sync
 <cmd>Alice> message pending
-<rsp>MessageID: NAEX-I6PT-PAPW-DIHU-I4XK-WP5U-KO5V
+<rsp>MessageID: NAYL-CPBL-XTBK-HFVR-IKAS-GH3A-TA2V
         Contact Request::
-        MessageID: NAEX-I6PT-PAPW-DIHU-I4XK-WP5U-KO5V
+        MessageID: NAYL-CPBL-XTBK-HFVR-IKAS-GH3A-TA2V
         To: alice@example.com From: bob@example.com
-        PIN: ABII-UOYN-BS3E-FXM5-3HSW-FCQQ-2DTA
-<cmd>Alice> message accept NAEX-I6PT-PAPW-DIHU-I4XK-WP5U-KO5V
+        PIN: AA2V-M76R-UA6A-7TZF-SLNV-GLLN-JIEA
+<cmd>Alice> message accept NAYL-CPBL-XTBK-HFVR-IKAS-GH3A-TA2V
 </div>
 ~~~~
 

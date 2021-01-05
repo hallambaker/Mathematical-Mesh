@@ -219,7 +219,7 @@ namespace Goedel.Cryptography.Dare {
         /// Perform a new key exchange and 
         /// </summary>
         /// <returns></returns>
-        protected List<DareRecipient> KeyExchange() {
+        protected virtual List<DareRecipient> KeyExchange() {
             // create the new base seed.
             BaseSeed = Platform.GetRandomBits(KeySize);
 

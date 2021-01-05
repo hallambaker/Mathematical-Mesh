@@ -43,18 +43,17 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>Caches the CryptoData instance</summary>
-        protected CryptoData _CryptoDataDigest = null;
+        CryptoData cryptoDataDigest;
 
         /// <summary>
         /// Call GetCryptoData and return the result, unless GetCryptoData has been
         /// called previously on this instance in which case return the last result. 
         /// </summary>
         public CryptoData CryptoDataDigest {
-            get {
-                _CryptoDataDigest ??= GetCryptoData();
-                return _CryptoDataDigest;
-                }
+            get => cryptoDataDigest ?? GetCryptoData().CacheValue(out cryptoDataDigest);
+            protected set => cryptoDataDigest = value;
             }
+
 
         /// <summary>
         /// Default Constructor
@@ -92,14 +91,14 @@ namespace Goedel.Cryptography.Jose {
                     CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) {
 
             var encoder = CryptoCatalog.Default.GetDigest(algorithm);
-            _CryptoDataDigest = encoder.Process(data);
+            cryptoDataDigest = encoder.Process(data);
             Payload = data;
 
             if (signingKey != null) {
                 AddSignature(signingKey, encoder.CryptoAlgorithmID);
                 }
 
-            Bind(_CryptoDataDigest);
+            Bind(cryptoDataDigest);
             }
 
         /// <summary>
@@ -162,7 +161,7 @@ namespace Goedel.Cryptography.Jose {
         /// Recalculate the CryptoData object parameters. This causes 
         /// </summary>
         /// <returns>The result of the cryptographic operation.</returns>
-        public CryptoData GetCryptoData() => _CryptoDataDigest;
+        public CryptoData GetCryptoData() => cryptoDataDigest;
 
 
 
@@ -200,13 +199,13 @@ namespace Goedel.Cryptography.Jose {
             header.Deserialize(protectedText);
 
             var algorithm = header.Alg.FromJoseID();
-            var bulkID = algorithm.Bulk();
+            //var bulkID = algorithm.Bulk();
 
             var encoder = CryptoCatalog.Default.GetDigest(algorithm);
             var digestOfData = encoder.Process(Data);
 
 
-            var match = header.Val.IsEqualTo(digestOfData.Integrity);
+            //var match = header.Val.IsEqualTo(digestOfData.Integrity);
 
             if (!header.Val.IsEqualTo(digestOfData.Integrity)) {
                 return false; // Digest does not match

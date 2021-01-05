@@ -57,6 +57,7 @@ namespace Goedel.Cryptography.Dare {
 
             header.CryptoStack = this;
 
+            long saltValue = 0;
             if (cryptoParameters.Encrypt) {
                 header.EncryptionAlgorithm = EncryptId.ToJoseID();
 
@@ -76,18 +77,18 @@ namespace Goedel.Cryptography.Dare {
                 else {
                     cryptoParameters.SetKeyExchange(header);
                     }
-                long saltValue = 0;
+
                 if (cloaked != null) {
                     header.Cloaked = Encode(cloaked, MakeSalt(saltValue++));
                     }
-                if (dataSequences != null) {
-                    header.EDSS = new List<byte[]>();
-                    foreach (var DataSequence in dataSequences) {
-                        header.EDSS.Add(Encode(DataSequence, MakeSalt(saltValue++)));
-                        }
+
+                }
+            if (dataSequences != null) {
+                header.EDSS = new List<byte[]>();
+                foreach (var DataSequence in dataSequences) {
+                    header.EDSS.Add(Encode(DataSequence, MakeSalt(saltValue++)));
                     }
                 }
-
             if (DigestId != CryptoAlgorithmId.NULL) {
                 header.DigestAlgorithm = DigestId.ToJoseID();
                 }

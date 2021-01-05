@@ -170,14 +170,14 @@ namespace ExampleGenerator {
                 }
 
             public DareEnvelope GetDAREMessage(CryptoParameters cryptoParameters) {
-                var Data = new List<byte[]>() {
+                var data = new List<byte[]>() {
                 MakeData("From", From),MakeData("To", To),MakeData("Subject", Subject)
                 };
 
                 var contentInfo = new ContentMeta() { ContentType = "application/example-mail" };
 
                 return new DareEnvelope(cryptoParameters, Body.ToUTF8(),
-                    contentMeta: contentInfo, dataSequences: Data);
+                    contentMeta: contentInfo, dataSequences: data);
                 }
 
             static byte[] MakeData(string Tag, string Data) => $"{Tag}: {Data}".ToUTF8();
@@ -272,34 +272,39 @@ namespace ExampleGenerator {
             keyCollection.Add(Dare.SignatureAliceKeyPair);
 
             // Initialize the crypto parameters.
+            var accounts = new List<string> { AliceAccount };
 
-            var Accounts = new List<string> { AliceAccount };
+
+            Dare.DarePolicyPlaintext = new DarePolicy (
+                        keyLocate: keyCollection,
+                        signers: null) ;
+            Dare.DarePolicyEncrypt = new DarePolicy(
+                        keyLocate: keyCollection,
+                        recipients: accounts);
+            Dare.DarePolicySign = new DarePolicy(
+                        keyLocate: keyCollection,
+                        signers: accounts); 
+            Dare.DarePolicySignEncrypt = new DarePolicy(
+                        keyLocate: keyCollection,
+                        recipients: accounts,
+                        signers: accounts);
+
 
             Dare.CryptoParametersPlaintext = new CryptoParameters() {
-                        KeyLocate= keyCollection };
-
-            Dare.CryptoParametersEncrypt = new CryptoParameters(
+                        KeyLocate = keyCollection
+                        };
+            Dare.CryptoParametersEncrypt = new CryptoParametersDebug(
                         keyCollection: keyCollection,
-                        recipients: Accounts);
+                        recipients: accounts);
             Dare.CryptoParametersSign = new CryptoParameters(
                         keyCollection: keyCollection,
-                        signers: Accounts);
+                        signers: accounts);
             Dare.CryptoParametersSignEncrypt = new CryptoParameters(
                         keyCollection: keyCollection,
-                        recipients: Accounts,
-                        signers: Accounts);
+                        recipients: accounts,
+                        signers: accounts);
 
 
-
-
-            Dare.DarePolicyPlaintext = new DarePolicy(Dare.CryptoParametersPlaintext);
-            Dare.DarePolicyEncrypt = new DarePolicy(Dare.CryptoParametersEncrypt);
-            Dare.DarePolicySign = new DarePolicy(Dare.CryptoParametersSign);
-            Dare.DarePolicySignEncrypt = new DarePolicy(Dare.CryptoParametersSignEncrypt);
-
-
-            "Need to implement a CryptoParameters debug".TaskFunctionality(true);
-            //Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt);
 
 
 
@@ -311,6 +316,11 @@ namespace ExampleGenerator {
             Dare.MailMessageAsRFC822 = MailMessage.GetRFC822();
             Dare.MailMessageAsDAREPlaintext = MailMessage.GetDAREMessage(Dare.CryptoParametersPlaintext);
             Dare.MailMessageAsDAREEncrypted = MailMessage.GetDAREMessage(Dare.CryptoParametersEncrypt);
+
+            // Recalculate the encryption parameters
+            Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt,
+                         Dare.MailMessageAsDAREEncrypted.Header);
+
 
             var EDS1 = Dare.MailMessageAsDAREPlaintext.Header.EDSS[0];
             Dare.EDSText = ReadEDS(EDS1);
@@ -330,10 +340,16 @@ namespace ExampleGenerator {
             Dare.DAREMessageAtomicSignEncrypt = new DareEnvelope(Dare.CryptoParametersSignEncrypt, Dare.DareMessageTest1);
 
 
-            "Need to implement a CryptoParameters debug".TaskFunctionality(true);
-            //Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt);
+            var encEnvelope = new DareEnvelope {
+                Header = new DareHeader() {
+                    }
+                };
+
+            Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt, encEnvelope.Header);
+            encEnvelope.Body = encEnvelope.Header.EnhanceBody(Dare.DareMessageTest1, out var trailer);
+            encEnvelope.Trailer = trailer;
             
-            //Dare.MessageEnc = new DareEnvelope(Dare.CryptoStackEncrypt, Dare.DareMessageTest1);
+            Dare.MessageEnc = encEnvelope;
 
             //CryptoStackEncrypt.Message(DareMessageTest1);
             //ExampleGenerator.MeshExamplesMessage(this);

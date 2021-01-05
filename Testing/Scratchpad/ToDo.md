@@ -5,11 +5,7 @@
 
 ### Archive
 
-* Test that the files are correctly decrypted
-
-* Test subsequent append
-
-* Implement and test delete functionality.
+* Implement delete functionality.
 
 * Implement and test archive index functionality.
 

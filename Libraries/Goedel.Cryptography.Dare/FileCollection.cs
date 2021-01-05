@@ -138,7 +138,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
 
-            DictionaryByPath.Add(fileEntry.Path, fileEntry);
+            DictionaryByPath.AddSafe(fileEntry.Path, fileEntry);
             DictionaryByIndex.Add(fileEntry.Index, fileEntry);
 
             return fileEntry;

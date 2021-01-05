@@ -16,7 +16,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-        public static Dictionary<string, JsonFactoryDelegate> ThisTagDictionary =
+        static Dictionary<string, JsonFactoryDelegate> thisTagDictionary =
             new Dictionary<string, JsonFactoryDelegate>()
                 {
                 {"DareEnvelope", Factory}
@@ -26,7 +26,7 @@ namespace Goedel.Cryptography.Dare {
         /// The module initializer. This is called during initialization of the module.
         /// </summary>
         [ModuleInitializer]
-        internal static void Initialize() => AddDictionary(ref ThisTagDictionary);
+        internal static void Initialize() => AddDictionary(ref thisTagDictionary);
 
         /// <summary>
         /// Tag identifying this class
@@ -141,6 +141,10 @@ namespace Goedel.Cryptography.Dare {
             Trailer = trailer;
             }
 
+
+
+
+
         /// <summary>
         /// Create a new DARE Message from the specified parameters.
         /// </summary>
@@ -220,9 +224,6 @@ namespace Goedel.Cryptography.Dare {
 
         #region // Serialization overrides
 
-        ///<summary>Null byte array used for serialization.</summary>
-        readonly static byte[] NullBytes = new byte[0];
-
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
@@ -256,7 +257,7 @@ namespace Goedel.Cryptography.Dare {
                 writer.WriteObjectEnd();
                 }
             writer.WriteArraySeparator(ref first);
-            writer.WriteBinary(Body ?? NullBytes);
+            writer.WriteBinary(Body ?? Array.Empty<byte>());
             if (Trailer != null) {
                 writer.WriteArraySeparator(ref first);
                 Trailer.Serialize(writer, false);

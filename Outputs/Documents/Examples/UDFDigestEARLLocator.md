@@ -9,13 +9,13 @@ https://example.com/.well-known/mmm-udf/
 Next the fingerprint of the source UDF is obtained.
 
 ~~~~
-UDF (EDQK-7BC3-GPFV-KCGZ-D3RP-4AIK-TPIF-QF) =
-MAXG-JGJQ-PFNI-ZFJY-FGPX-4C5X-BKWB-PTBL-HEXQ-2MBR-N6OK-5XWX-BQKW-65KL
+UDF (ECBD-KSLB-BCTF-7WBY-NEUF-PW7A-RL4V-LN) =
+MDS2-P4RE-4R2W-X6RN-7TOK-YU4E-SSLB-HFMS-4EVU-CPCK-5YI4-PVMF-OQOT-GQN6
 ~~~~
 
 Combining the Web Service Endpoint and the fingerprint of the source UDF provides
 the URI from which the content is obtained using the normal HTTP GET method:
 
-https://example.com/.well-known/mmm-udf/MAXG-JGJQ-PFNI-ZFJY-FGPX-4C5X-BKWB-PTBL-HEXQ-2MBR-N6OK-5XWX-BQKW-65KL
+https://example.com/.well-known/mmm-udf/MDS2-P4RE-4R2W-X6RN-7TOK-YU4E-SSLB-HFMS-4EVU-CPCK-5YI4-PVMF-OQOT-GQN6
 
 

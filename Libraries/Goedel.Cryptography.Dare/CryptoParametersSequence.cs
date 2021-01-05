@@ -145,12 +145,7 @@ namespace Goedel.Cryptography.Dare {
         /// Perform the steps necessary to 
         /// </summary>
         /// <param name="header"></param>
-        public override void SetKeyExchange(DareHeader header) {
-
-            header.Recipients = KeyExchange();
-
-
-            }
+        public override void SetKeyExchange(DareHeader header) => header.Recipients = KeyExchange();
 
         /// <summary>
         /// Get a trailer for an empty payload.

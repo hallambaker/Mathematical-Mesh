@@ -15,7 +15,7 @@ Alice checks her pending messages and accepts the request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message accept NDBR-Q2V7-VKQP-4HSN-JJVC-JIM5-GV2R
+<cmd>Alice> message accept NDAZ-JLVP-HE53-RYKS-M2Q2-3QO6-JC75
 </div>
 ~~~~
 
@@ -24,7 +24,7 @@ The secure console verifies the response and grants access:
 
 ~~~~
 <div="terminal">
-<cmd>Console> message status MCEN-W5KE-C7BK-6OEK-TJGU-NPVK-3IPB
+<cmd>Console> message status MDID-CENP-LBXW-423P-BL7U-HFNS-BORW
 <rsp>Accept
 </div>
 ~~~~

@@ -350,7 +350,7 @@ namespace Goedel.Mesh.Shell {
 				{"list", _DareList._DescribeCommand },
 				{"index", _DareIndex._DescribeCommand },
 				{"extract", _DareExtract._DescribeCommand },
-				{"purge", _DareCopy._DescribeCommand }
+				{"purge", _DarePurge._DescribeCommand }
 				} // End Entries
 			};
 
@@ -1334,13 +1334,13 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_DareCopy (
+		public static void Handle_DarePurge (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			DareCopy		Options = new DareCopy ();
+			DarePurge		Options = new DarePurge ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.DareCopy (Options);
+			var result = Dispatch.DarePurge (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -14588,7 +14588,8 @@ namespace Goedel.Mesh.Shell {
 			new Enumeration<EnumAuthentication> (CommandLineInterpreter.DescribeEnumAuthentication),
 			new Enumeration<EnumUse> (CommandLineInterpreter.DescribeEnumUse),
 			new ExistingFile (),
-			new NewFile ()			} ;
+			new NewFile (),
+			new Flag ()			} ;
 
 
 
@@ -14738,6 +14739,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Sequence {
 			set => _Data[15].Parameter (value);
 			}
+		/// <summary>Field accessor for option [index]</summary>
+		public virtual Flag Index {
+			get => _Data[16] as Flag;
+			set => _Data[16]  = value;
+			}
+
+		public virtual string _Index {
+			set => _Data[16].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -14857,6 +14867,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "New sequence",
 					Index = 15,
 					Key = "out"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Index", 
+					Default = "true", // null if null
+					Brief = "Append index to the archive",
+					Index = 16,
+					Key = "index"
 					}
 				}
 			};
@@ -14886,7 +14903,8 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new ExistingFile (),
 			new NewFile (),
-			new String ()			} ;
+			new String (),
+			new Flag ()			} ;
 
 
 
@@ -15018,6 +15036,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Key {
 			set => _Data[13].Parameter (value);
 			}
+		/// <summary>Field accessor for option [index]</summary>
+		public virtual Flag Index {
+			get => _Data[14] as Flag;
+			set => _Data[14]  = value;
+			}
+
+		public virtual string _Index {
+			set => _Data[14].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -15123,6 +15150,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "<Unspecified>",
 					Index = 13,
 					Key = "key"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Index", 
+					Default = "false", // null if null
+					Brief = "Append index to the archive",
+					Index = 14,
+					Key = "index"
 					}
 				}
 			};
@@ -15797,7 +15831,7 @@ namespace Goedel.Mesh.Shell {
     public partial class DareExtract : _DareExtract {
         } // class DareExtract
 
-    public class _DareCopy : Goedel.Command.Dispatch ,
+    public class _DarePurge : Goedel.Command.Dispatch ,
 							IEncodeOptions,
 							ICryptoOptions,
 							ISequenceOptions,
@@ -16005,7 +16039,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "purge",
 			Brief =  "Copy sequence contents to create a new sequence removing deleted elements",
-			HandleDelegate =  CommandLineInterpreter.Handle_DareCopy,
+			HandleDelegate =  CommandLineInterpreter.Handle_DarePurge,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -16146,8 +16180,8 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class DareCopy : _DareCopy {
-        } // class DareCopy
+    public partial class DarePurge : _DarePurge {
+        } // class DarePurge
 
     public class _MailAdd : Goedel.Command.Dispatch ,
 							IAccountOptions,
@@ -19235,7 +19269,7 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
-		public virtual ShellResult DareCopy ( DareCopy Options) {
+		public virtual ShellResult DarePurge ( DarePurge Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

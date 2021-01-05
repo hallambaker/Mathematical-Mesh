@@ -10,20 +10,20 @@ For conciseness, the raw data format is omitted for examples after the first, ex
 where the data payload has been transformed, (i.e. encrypted).
 
 
-##Simple container
+##Simple sequence
 
-The following example shows a simple container with first frame and a single data frame:
+The following example shows a simple sequence with first frame and a single data frame:
 
 ~~~~
-f4 82 
-f0 7c 
+f4 91 
+f0 8b 
 f0 00 
 f0 00 
-82 f4 
-f5 01 74 
-f0 43 
+91 f4 
+f5 01 73 
+f0 42 
 f1 01 2c 
-74 01 f5 
+73 01 f5 
 ~~~~
 
 Since there is no integrity check, there is no need for trailer entries.
@@ -35,8 +35,9 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
+    "policy":{},
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"List",
       "Index":0}}}
@@ -51,7 +52,7 @@ Frame 1
 {
   "DareHeader":{
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":1}}}
 
 [Empty trailer]
@@ -61,7 +62,7 @@ Frame 1
 
 ##Payload and chain digests
 
-The following example shows a chain container with a first frame and three 
+The following example shows a chain sequence with a first frame and three 
 data frames. The headers of these frames is the same as before but the
 frames now have trailers specifying the PayloadDigest and ChainDigest values:
 
@@ -71,8 +72,10 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
+    "policy":{},
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"Chain",
       "Index":0}}}
@@ -86,8 +89,9 @@ Frame 1
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":1}}}
 
 {
@@ -104,8 +108,9 @@ Frame 2
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":2}}}
 
 {
@@ -122,8 +127,9 @@ Frame 3
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":3}}}
 
 {
@@ -137,7 +143,7 @@ Frame 3
 
 ##Merkle Tree
 
-The following example shows a chain container with a first frame and six 
+The following example shows a chain sequence with a first frame and six 
 data frames. The trailers now contain the TreePosition and TreeDigest
 values:
 
@@ -147,8 +153,10 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
+    "policy":{},
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"Merkle",
       "Index":0}}}
@@ -162,8 +170,9 @@ Frame 1
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":1,
       "TreePosition":0}}}
 
@@ -181,10 +190,11 @@ Frame 2
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":2,
-      "TreePosition":360}}}
+      "TreePosition":392}}}
 
 {
   "DareTrailer":{
@@ -200,10 +210,11 @@ Frame 3
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":3,
-      "TreePosition":360}}}
+      "TreePosition":392}}}
 
 {
   "DareTrailer":{
@@ -219,10 +230,11 @@ Frame 4
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":4,
-      "TreePosition":1612}}}
+      "TreePosition":1676}}}
 
 {
   "DareTrailer":{
@@ -238,10 +250,11 @@ Frame 5
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":5,
-      "TreePosition":1612}}}
+      "TreePosition":1676}}}
 
 {
   "DareTrailer":{
@@ -257,10 +270,11 @@ Frame 6
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":6,
-      "TreePosition":2867}}}
+      "TreePosition":2963}}}
 
 {
   "DareTrailer":{
@@ -271,9 +285,9 @@ Frame 6
 ~~~~
 
 
-##Signed container
+##Signed sequence
 
-The following example shows a tree container with a signature in the final record.
+The following example shows a tree sequence with a signature in the final record.
 The signing key parameters are:
 
 
@@ -282,10 +296,10 @@ The signing key parameters are:
 {
   "PrivateKeyECDH":{
     "crv":"Ed25519",
-    "Private":"-5zIro5wEnRp0fvMBc5m7bofU0bfG74jJJQs38sMyAg"}}
+    "Private":"GuNgjCDBAl-xlR1nU5KydjuZ_HR8U4iwLTD3inAPzQk"}}
 ~~~~
 
-The container headers and trailers are:
+The sequence headers and trailers are:
 
 
 Frame 0
@@ -293,8 +307,10 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
+    "policy":{},
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"Merkle",
       "Index":0}}}
@@ -308,8 +324,9 @@ Frame 1
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":1,
       "TreePosition":0}}}
 
@@ -327,10 +344,11 @@ Frame 2
 ~~~~
 {
   "DareHeader":{
+    "dig":"S512",
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":2,
-      "TreePosition":360}}}
+      "TreePosition":392}}}
 
 {
   "DareTrailer":{
@@ -341,10 +359,10 @@ Frame 2
 ~~~~
 
 
-##Encrypted container
+##Encrypted sequence
 
-The following example shows a container in which all the frame payloads are encrypted 
-under the same master secret established in a key agreement specified in the first frame.
+The following example shows a sequence in which all the frame payloads are encrypted 
+under the same base seed established in a key agreement specified in the first frame.
 
 
 Frame 0
@@ -353,19 +371,28 @@ Frame 0
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQI-IUV4-YVFB-T46D-2IMR-PYNY-6EQS",
-    "Salt":"isRTli7V_v8NbuX4oGIfMw",
+    "kid":"EBQK-YKQQ-PFLB-RYRY-R323-QRH2-S6NL",
+    "Salt":"Ao4xac11qJC0UUdzbFxhcg",
     "recipients":[{
-        "kid":"MCOP-FVIJ-Y67Y-UY5G-4POC-T43X-VKME",
+        "kid":"MAW5-HWG2-5AKV-SRYJ-RMA6-LCIQ-UUCY",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"gSen3A3vdrfTyUKnGp5mcZ51xIIfrFXuyCK_bVuqOdE"}},
-        "wmk":"ipU11m6gRVFNeLeu5uf_bkhgYWCqa-hgP6_sxXF9KoysbhLX-r
-  6KsA"}
+            "Public":"vucxrNDgBMdxUkL6fCXsm59yBLE7Cu4bKNna-Ht_DwQ"}},
+        "wmk":"l7WnD0BNkCEpZP0TZLni7JnanTdPIW1fer_MvFlEdv31nhdnv-
+  afwQ"}
       ],
+    "policy":{
+      "enc":"none",
+      "dig":"none",
+      "EncryptKeys":[{
+          "PublicKeyECDH":{
+            "crv":"Ed25519",
+            "Public":"RbBgLrAHehdG4VVPpkBZnRQv8tmg3mq4TPuYjHtm-lo"}}
+        ],
+      "Sealed":true},
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"List",
       "Index":0}}}
@@ -380,10 +407,19 @@ Frame 1
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQI-IUV4-YVFB-T46D-2IMR-PYNY-6EQS",
-    "Salt":"1zCfDgETSdcFSGIxvvYfRA",
+    "kid":"EBQB-CAYU-7IUF-DLYP-GLXL-XFKD-63KA",
+    "Salt":"uMSGWeuXjfj2vsVryp6eMA",
+    "recipients":[{
+        "kid":"MAW5-HWG2-5AKV-SRYJ-RMA6-LCIQ-UUCY",
+        "epk":{
+          "PublicKeyECDH":{
+            "crv":"Ed25519",
+            "Public":"D3z9BUwxqFcfyryRivVL_eDez-qahBzv-XSSEGtF4Bw"}},
+        "wmk":"0yFdkFYAAjJwFb_N9fbclh6oUZ2irWJAaNISo-lv0uWTNmWUEa
+  Exrg"}
+      ],
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":1}}}
 
 [Empty trailer]
@@ -396,40 +432,49 @@ Frame 2
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQI-IUV4-YVFB-T46D-2IMR-PYNY-6EQS",
-    "Salt":"tueEAhpDYPz1_UEeOi1WyA",
+    "kid":"EBQA-DOCT-S3OQ-YJ62-GLUT-UUNZ-KNFJ",
+    "Salt":"h6WSUyRSzH8dGaQ1L2AVnw",
+    "recipients":[{
+        "kid":"MAW5-HWG2-5AKV-SRYJ-RMA6-LCIQ-UUCY",
+        "epk":{
+          "PublicKeyECDH":{
+            "crv":"Ed25519",
+            "Public":"CtOg1MjVsitZyqJjlALtN7aj5rqLXNvrQRtElYf8XYI"}},
+        "wmk":"Fc1xfBxxB6Y19KCejdVLADEiv8sDwLiAZWqg9P-960LaWrDLo_
+  KhaQ"}
+      ],
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":2}}}
 
 [Empty trailer]
 ~~~~
 
 
-Here are the container bytes. Note that the content is now encrypted and has expanded by
+Here are the sequence bytes. Note that the content is now encrypted and has expanded by
 25 bytes. These are the salt (16 bytes), the AES padding (4 bytes) and the 
 JSON-B framing (5 bytes).
 
 ~~~~
-f5 02 14 
-f1 01 fd 
+f5 02 ef 
+f1 02 d8 
 f0 10 
 f0 00 
-14 02 f5 
-f5 01 df 
-f0 aa 
+ef 02 f5 
+f5 02 f9 
+f1 01 c3 
 f1 01 30 
-df 01 f5 
-f5 01 df 
-f0 aa 
+f9 02 f5 
+f5 02 f9 
+f1 01 c3 
 f1 01 30 
-df 01 f5 
+f9 02 f5 
 
 
 ~~~~
 
 
-The following example shows a container in which all the frame payloads are encrypted 
+The following example shows a sequence in which all the frame payloads are encrypted 
 under separate key agreements specified in the payload frames.
 
 
@@ -438,8 +483,12 @@ Frame 0
 ~~~~
 {
   "DareHeader":{
+    "policy":{
+      "enc":"none",
+      "dig":"none",
+      "Sealed":true},
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "DataEncoding":"JSON",
       "ContainerType":"List",
       "Index":0}}}
@@ -453,20 +502,8 @@ Frame 1
 ~~~~
 {
   "DareHeader":{
-    "enc":"A256CBC",
-    "kid":"EBQK-IH24-X3VD-ZZ7V-SURY-WGMH-IG75",
-    "Salt":"5PZUe91W2YS7ZdH54JOP6g",
-    "recipients":[{
-        "kid":"MCOP-FVIJ-Y67Y-UY5G-4POC-T43X-VKME",
-        "epk":{
-          "PublicKeyECDH":{
-            "crv":"Ed25519",
-            "Public":"wdQXSEyhRMsQu7BL7PTb_YWGzfSGCwQddN-HI7PQlNc"}},
-        "wmk":"_BCBEHITg6g6TkI5lfEL0aAyKkM9mrhhkPA-azDQEpSm-n4v3W
-  twWg"}
-      ],
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":1}}}
 
 [Empty trailer]
@@ -478,20 +515,8 @@ Frame 2
 ~~~~
 {
   "DareHeader":{
-    "enc":"A256CBC",
-    "kid":"EBQI-JJD5-YXBR-QCCZ-DKUE-WFDT-57UD",
-    "Salt":"jlYFWBSWrKb5b38ca_2HZg",
-    "recipients":[{
-        "kid":"MCOP-FVIJ-Y67Y-UY5G-4POC-T43X-VKME",
-        "epk":{
-          "PublicKeyECDH":{
-            "crv":"Ed25519",
-            "Public":"YDk9YA7nVgkPYkqi_X3U07WnQQ9DV_TXvTUaU5u3q2A"}},
-        "wmk":"JYMa-KHT6lrzIFKxuZ3n1XhJTQVNxfTo4LeABNjufX3z5al2YU
-  YFlg"}
-      ],
     "ContentMetaData":"e30",
-    "ContainerInfo":{
+    "SequenceInfo":{
       "Index":2}}}
 
 [Empty trailer]

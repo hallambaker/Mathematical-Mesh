@@ -3,7 +3,7 @@ using Goedel.Mesh.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
 using Goedel.Mesh.Shell;
-
+using Goedel.Cryptography.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +18,9 @@ namespace ExampleGenerator {
         public bool GitHub = true;
         public string Preformat => GitHub ? "````" : "~~~~";
 
-
+        static CreateExamples() {
+            Initialization.Initialized.AssertTrue(Goedel.Utilities.NYI.Throw);
+            }
 
         static void Main() {
             Screen.WriteLine("Make Document Set");

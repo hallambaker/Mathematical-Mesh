@@ -281,7 +281,9 @@ namespace Goedel.Cryptography.Dare {
                 bool digest = true,
                 FileStatus fileStatus = FileStatus.Overwrite,
                 SequenceType containerType = SequenceType.Unknown) :
-                        this(new JbcdStream(fileName, fileStatus), archive, digest, containerType) { }
+                        this(new JbcdStream(fileName, fileStatus), archive, digest, containerType) {
+            Sequence.DisposeJBCDStream = Sequence.JbcdStream;
+            }
 
 
         /// <summary>
@@ -339,7 +341,7 @@ namespace Goedel.Cryptography.Dare {
                 ContentMeta contentMeta = null) {
             var path = Path.Combine(basePath, relativePath);
             var fileinfo = new FileInfo(path);
-            AddFile(basePath, fileinfo);
+            AddFile(basePath, fileinfo, contentMeta);
             }
 
         /// <summary>
@@ -364,7 +366,7 @@ namespace Goedel.Cryptography.Dare {
             Sequence.AppendFile(file.FullName, contentMeta);
 
 
-            FileCollection.Add(file, filename, index, position);
+            FileCollection.Add(file, contentMeta.Filename, index, position);
             }
 
         /// <summary>
@@ -402,6 +404,8 @@ namespace Goedel.Cryptography.Dare {
                 CryptoParameters cryptoParameters = null) {
             containerDataReader.Future();
             cryptoParameters.Future();
+            this.Future();
+
             throw new NYI();
             }
 

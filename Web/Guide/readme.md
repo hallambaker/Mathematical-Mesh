@@ -9,8 +9,6 @@
 <dd>Manage calendar catalogs connected to an account
 <dt><a href="contact.html">contact</a>
 <dd>Manage contact catalogs connected to an account
-<dt><a href="container.html">container</a>
-<dd>DARE container commands
 <dt><a href="dare.html">dare</a>
 <dd>DARE Message encryption and decryption commands
 <dt><a href="device.html">device</a>

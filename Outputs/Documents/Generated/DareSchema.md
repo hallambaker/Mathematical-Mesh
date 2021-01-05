@@ -4,50 +4,50 @@
 
 A DARE Envelope consists of a Header, an Enhanced Data Sequence (EDS) and 
 an optional trailer. This section describes the JSON data fields used to 
-construct headers, trailers and complete messages.
+construct headers, trailers and complete envelopes.
 
 Wherever possible, fields from JWE, JWS and JWK have been used. In these cases,
 the fields have the exact same semantics. Note however that the classes in 
 which these fields are presented have different structure and nesting.
 
-##Message Classes
+##Envelope Classes
 
-A DARE Message contains a single DAREMessageSequence in either the JSON or 
+A DARE envelope contains a single DAREMessageSequence in either the JSON or 
 Compact serialization as directed by the protocol in which it is applied.
 
 ###Structure: DareEnvelopeSequence
 
-A DARE Message containing Header, EDS and Trailer in JSON object encoding.
+A DARE envelope containing Header, EDS and Trailer in JSON object encoding.
 Since a DAREMessage is almost invariably presented in JSON sequence or
 compact encoding, use of the DAREMessage subclass is preferred.
 
-Although a DARE Message is functionally an object, it is serialized as 
-an ordered sequence. This ensures that the message header field will always
+Although a DARE envelope is functionally an object, it is serialized as 
+an ordered sequence. This ensures that the envelope header field will always
 precede the body in a serialization, this allowing processing of the header
 information to be performed before the entire body has been received.
 
 <dl>
 <dt>Header: DareHeader (Optional)
-<dd>The message header. May specify the key exchange data, pre-signature 
+<dd>The envelope header. May specify the key exchange data, pre-signature 
 or signature data, cloaked headers and/or encrypted data sequences.
 <dt>Body: Binary (Optional)
-<dd>The message body
+<dd>The envelope body
 <dt>Trailer: DareTrailer (Optional)
-<dd>The message trailer. If present, this contains the signature.
+<dd>The envelope trailer. If present, this contains the signature.
 </dl>
 ##Header and Trailer Classes
 
-A DARE Message sequence MUST contain a (possibly empty) DAREHeader and MAY contain
+A DARE sequence MUST contain a (possibly empty) DAREHeader and MAY contain
 a DARETrailer. 
 
 ###Structure: DareTrailer
 
-A DARE Message Trailer
+A DARE envelope Trailer
 
 <dl>
 <dt>Signatures: DareSignature [0..Many]
 <dd>A list of signatures.
-A message trailer MUST NOT contain a signatures field if the header contains 
+A envelope trailer MUST NOT contain a signatures field if the header contains 
 a signatures field.
 <dt>SignedData: Binary (Optional)
 <dd>Contains a DAREHeader object 
@@ -65,8 +65,8 @@ frame and the frame immediately preceding.
 <dt>Inherits:  DareTrailer
 </dl>
 
-A DARE Message Header. Since any field that is present in a trailer MAY be 
-placed in a header instead, the message header inherits from the trailer.
+A DARE Envelope Header. Since any field that is present in a trailer MAY be 
+placed in a header instead, the envelope header inherits from the trailer.
 
 <dl>
 <dt>EnvelopeID: String (Optional)
@@ -75,9 +75,9 @@ placed in a header instead, the message header inherits from the trailer.
 <dd>The encryption algorithm as specified in JWE
 <dt>DigestAlgorithm: String (Optional)
 <dd>Digest Algorithm. If specified, tells decoder that the digest algorithm is used to
-construct a signature over the message payload.
+construct a signature over the envelope payload.
 <dt>KeyIdentifier: String (Optional)
-<dd>Master key identifier.
+<dd>Base seed identifier.
 <dt>Salt: Binary (Optional)
 <dd>Salt value used to derrive cryptographic parameters for the content data.
 <dt>Malt: Binary (Optional)
@@ -88,26 +88,28 @@ without affecting the ability to calculate the payload digest value.
 <dt>Cloaked: Binary (Optional)
 <dd>If present in a header or trailer, specifies an encrypted data block 
 containing additional header fields whose values override those specified 
-in the message and context headers.
+in the envelope and context headers.
 <dd>When specified in a header, a cloaked field MAY be used to conceal metadata 
 (content type, compression) and/or to specify an additional layer of key exchange. 
-That applies to both the Message body and to headers specified within the cloaked 
+That applies to both the envelope body and to headers specified within the cloaked 
 header.
 <dd>Processing of cloaked data is described in…
 <dt>EDSS: Binary [0..Many]
 <dd>If present, the Annotations field contains a sequence of Encrypted Data 
-Segments encrypted under the message Master Key. The interpretation of these fields 
+Segments encrypted under the envelope base seed. The interpretation of these fields 
 is application specific.
 <dt>Signers: DareSignature [0..Many]
 <dd>A list of 'presignature'
 <dt>Recipients: DareRecipient [0..Many]
 <dd>A list of recipient key exchange information blocks.
+<dt>Policy: DarePolicy (Optional)
+<dd>A DARE security policy governing future additions to the container.
 <dt>ContentMetaData: Binary (Optional)
 <dd>If present contains a JSON encoded ContentInfo structure which specifies
 plaintext content metadata and forms one of the inputs to the envelope digest value.
-<dt>ContainerInfo: ContainerInfo (Optional)
+<dt>SequenceInfo: SequenceInfo (Optional)
 <dd>Information that describes container information
-<dt>ContainerIndex: ContainerIndex (Optional)
+<dt>SequenceIndex: SequenceIndex (Optional)
 <dd>An index of records in the current container up to but not including
 this one.
 <dt>Received: DateTime (Optional)
@@ -116,7 +118,7 @@ this one.
 ###Structure: ContentMeta
 
 <dl>
-<dt>UniqueID: String (Optional)
+<dt>UniqueId: String (Optional)
 <dd>Unique object identifier
 <dt>Labels: String [0..Many]
 <dd>List of labels that are applied to the payload of the frame.
@@ -142,11 +144,13 @@ this one.
 <dd>Frame number of the first object instance value.
 <dt>Previous: Integer (Optional)
 <dd>Frame number of the immediately prior object instance value	
+<dt>FileEntry: FileEntry (Optional)
+<dd>Information describing the file entry on disk.
 </dl>
 ##Cryptographic Data
 
-DARE Message uses the same fields as JWE and JWS but with different
-structure. In particular, DARE messages MAY have multiple recipients
+DARE envelope uses the same fields as JWE and JWS but with different
+structure. In particular, DARE envelopes MAY have multiple recipients
 and multiple signers.
 
 ###Structure: DareSignature
@@ -156,7 +160,7 @@ The signature value
 <dl>
 <dt>Dig: String (Optional)
 <dd>Digest algorithm hint. Specifying the digest algorithm to be applied
-to the message body allows the body to be processed in streaming mode.
+to the envelope body allows the body to be processed in streaming mode.
 <dt>Alg: String (Optional)
 <dd>Key exchange algorithm
 <dt>KeyIdentifier: String (Optional)
@@ -168,11 +172,11 @@ to the message body allows the body to be processed in streaming mode.
 <dt>Manifest: Binary (Optional)
 <dd>The data description that was signed.
 <dt>SignatureValue: Binary (Optional)
-<dd>The signature value as an Enhanced Data Sequence under the message Master Key.
+<dd>The signature value as an Enhanced Data Sequence under the envelope base seed.
 <dt>WitnessValue: Binary (Optional)
-<dd>The signature witness value used on an encrypted message to demonstrate that 
+<dd>The signature witness value used on an encrypted envelope to demonstrate that 
 the signature was authorized by a party with actual knowledge of the encryption 
-key used to encrypt the message.
+key used to encrypt the envelope.
 </dl>
 ###Structure: X509Certificate
 
@@ -192,8 +196,47 @@ Recipient information
 <dd>The Key identifier MUST be either a UDF fingerprint of a key or a Group Key Identifier
 <dt>KeyWrapDerivation: String (Optional)
 <dd>The key wrapping and derivation algorithms.
-<dt>WrappedMasterKey: Binary (Optional)
-<dd>The wrapped master key. The master key is encrypted under the result of the key exchange.
+<dt>WrappedBaseSeed: Binary (Optional)
+<dd>The wrapped base seed. The base seed is encrypted under the result of the key exchange.
 <dt>RecipientKeyData: String (Optional)
 <dd>The per-recipient key exchange data.
+</dl>
+###Structure: DarePolicy
+
+<dl>
+<dt>EncryptionAlgorithm: String (Optional)
+<dd>The encryption algorithm to be used to compute the payload.
+<dt>DigestAlgorithm: String (Optional)
+<dd>The digest algorithm to be used to compute the payload digest.
+<dt>Encryption: String (Optional)
+<dd>The encryption policy specifier, determines how often a key exchange is required.
+'Single': All entries are encrypted under the key exchange specified in the 
+entry specifying this policy.
+'Isolated': All entries are encrypted under a separate key exchange.
+'All': All entries are encrypted.
+'None': No entries are encrypted.
+<dd>Default value is 'None' if EncryptKeys is null, and 'All' otherwise.
+<dt>Signature: String (Optional)
+<dd>The signature policy
+'None': No entries are signed.
+'Last': The last entry in the container is signed.
+'Isolated': All entries are independently signed.
+'Any': Entries may be signed.
+<dd>Default value is 'None' if SignKeys is null, and 'Any' otherwise.
+<dt>Sealed: Boolean (Optional)
+<dd>If true the policy is immutable and cannot be changed by a subsequent policy override.
+</dl>
+###Structure: FileEntry
+
+<dl>
+<dt>Path: String (Optional)
+<dd>The file path in canonical form. 
+<dt>CreationTime: DateTime (Optional)
+<dd>The creation time of the file on disk in UTC
+<dt>LastAccessTime: DateTime (Optional)
+<dd>The last access time of the file on disk in UTC
+<dt>LastWriteTime: DateTime (Optional)
+<dd>The last write time of the file on disk in UTC
+<dt>Attributes: Integer (Optional)
+<dd>The file attribues as a bitmapped integer.
 </dl>

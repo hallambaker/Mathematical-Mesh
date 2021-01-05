@@ -274,7 +274,7 @@ The `dare index` command appends an index record to the end of the container.
 
 #% ConsoleReference (ShellSequence.ContainerIndex);
 
-#% Describe(CommandSet, _DareCopy._DescribeCommand);
+#% Describe(CommandSet, _DarePurge._DescribeCommand);
 
 The `dare purge` command copies a container applying the specified filtering 
 and indexing criteria.

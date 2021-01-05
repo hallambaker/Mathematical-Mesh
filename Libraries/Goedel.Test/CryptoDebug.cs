@@ -85,17 +85,43 @@ namespace Goedel.Test.Core {
         /// parameters.
         /// </summary>
         public CryptoStackDebug(
-                        CryptoParametersSequence cryptoParameters,
+                        CryptoParameters cryptoParameters,
                         DareHeader dareHeader
                         ) : base(cryptoParameters, dareHeader) => CalculateParameters(Salt, out KeyEncrypt, out KeyMac, out IV);
 
-        ///// <summary>
-        ///// Add a recipient.
-        ///// </summary>
-        ///// <param name="MasterKey"></param>
-        ///// <param name="EncryptionKey"></param>
-        //public override void MakeRecipient(byte[] MasterKey, CryptoKey EncryptionKey) =>
-        //        Recipients.Add(new DareRecipientDebug(BaseSeed, EncryptionKey));
+        }
+
+
+    public class CryptoParametersDebug : CryptoParameters{
+
+        public CryptoParametersDebug(IKeyLocate keyCollection = null,
+                        List<string> recipients = null,
+                        List<string> signers = null,
+                        CryptoKey recipient = null,
+                        CryptoKey signer = null,
+                        CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
+                        CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) : 
+                    base (keyCollection, recipients, signers, recipient, signer, encryptID, digestID) {
+            }
+
+        /// <summary>
+        /// Perform a new key exchange and 
+        /// </summary>
+        /// <returns></returns>
+        protected override List<DareRecipient> KeyExchange() {
+            // create the new base seed.
+            BaseSeed = Platform.GetRandomBits(KeySize);
+
+            // perform a key exchange for each recipient.
+            var result = new List<DareRecipient>();
+            foreach (var encryptionKey in EncryptionKeys) {
+                result.Add(new DareRecipientDebug(BaseSeed, encryptionKey));
+                }
+
+            return result;
+            }
+
+
         }
 
 

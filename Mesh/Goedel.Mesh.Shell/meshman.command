@@ -868,6 +868,10 @@
 				Brief "Directory containing files to create archive from"
 			Option Sequence "out" NewFile
 				Brief "New sequence"	
+			Option Index "index" Flag
+				Default "true"
+				Brief "Append index to the archive"	
+
 
 		Command DareAppend "append"
 			Brief "Append the specified file as an entry to the specified sequence."
@@ -880,6 +884,9 @@
 			Parameter File "file" NewFile
 				Brief "File to append"
 			Option Key "key" String
+			Option Index "index" Flag
+				Default "false"
+				Brief "Append index to the archive"	
 
 		Command DareDelete "delete"
 			Parameter Sequence "in" ExistingFile
@@ -922,7 +929,7 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command DareCopy "purge"
+		Command DarePurge "purge"
 			Brief "Copy sequence contents to create a new sequence removing deleted elements"
 			Parameter Input "in" ExistingFile
 				Brief "Sequence to read"

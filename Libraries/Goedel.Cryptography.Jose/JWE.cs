@@ -137,7 +137,7 @@ namespace Goedel.Cryptography.Jose {
             CipherText = EncryptEncoder.OutputData;
 
             if (SigningKey != null) {
-                _CryptoDataDigest = DigestProvider.Process(CipherText);
+                CryptoDataDigest = DigestProvider.Process(CipherText);
                 AddSignature(SigningKey, DigestProvider.CryptoAlgorithmID);
                 }
 

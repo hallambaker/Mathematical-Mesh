@@ -298,7 +298,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleReference (ShellSequence.ContainerIndex);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _DareCopy._DescribeCommand);
+				 Describe(CommandSet, _DarePurge._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `dare purge` command copies a container applying the specified filtering \n{0}", _Indent);
 				_Output.Write ("and indexing criteria.\n{0}", _Indent);

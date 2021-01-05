@@ -105,7 +105,7 @@ namespace Goedel.XUnit {
             MakeAccount(mallet, MalletAccount);
 
 
-            var entries = new Dictionary<string, bool>();
+            var entries = new SortedDictionary<string, string>();
             var filename = $"seq-{archive}-{encrypt}-{sign}-{count}-{purge}-{index}";
 
             var options = encrypt == null ? "" : $" /encrypt={encrypt}" +
@@ -122,32 +122,80 @@ namespace Goedel.XUnit {
 
             }
 
-        private void ArchiveTest(string encrypt, string sign, bool purge, bool index, string initial, TestCLI mallet, Dictionary<string, bool> entries, string filename, string options) {
+        string archive1 = "../CommonData/Archive1";
+        string archive2 = "../CommonData/Archive2";
+        string archive3 = "../CommonData/Archive3";
 
-                // add the initial values (if any);
-                options = initial == null ? options : $" {initial}" + options;
-                Dispatch($"dare archive {options} /out={filename}");
+        private void ArchiveTest(string encrypt, 
+                string sign, 
+                bool purge, 
+                bool index, 
+                string initial, 
+                TestCLI mallet,
+                SortedDictionary<string, string> entries, 
+                string filename, 
+                string options) {
+            // add the initial values (if any);
+            var staleFrames = 0;
 
-                AddEntries(entries, initial);
+            options = initial == null ? options : $" {initial}" + options;
+            Dispatch($"dare archive {options} /out={filename}");
 
-            VerifyArchive(filename, entries, sign, encrypt, mallet, initial);
+            AddEntries(entries, initial);
 
-            // add count new file
-            // Update old file.
-
-            // Delete file
+            VerifyArchive(filename, entries, sign, encrypt, mallet, archive1);
             //VerifyArchive(filename, entries, sign, encrypt, mallet, initial);
 
+            // Update old file.
+            var filepath = getItem(entries,0);
+            var update = Path.Combine (archive2, Path.GetFileName(filepath));
+            Dispatch($"dare append {filename} {update} /key={filepath}");
+
+            // update the entries directory
+            entries.Remove(filepath);
+            entries.Add(filepath, update);
+            VerifyArchive(filename, entries, sign, encrypt, mallet, initial, archive2);
+            staleFrames++;
+
+            // Delete file
+            var filepathd = getItem(entries, 2); ;
+            Dispatch($"dare delete {filename} /file={filepathd}");
+            entries.Remove(filepathd);
+            VerifyArchive(filename, entries, sign, encrypt, mallet, initial, archive3);
+            staleFrames++;
+
+            var original = Dispatch($"dare list {filename}") as ResultArchive;
             if (purge) {
                 // Test Purge
+                var purgefile = "purged_" + filename;
+                Dispatch($"dare purge {filename} {purgefile}");
+                VerifyArchive(purgefile, entries, sign, encrypt, mallet, initial, archive3);
+                var purged = Dispatch($"dare list {purgefile}") as ResultArchive;
+
+                purged.Deleted.TestEqual(0);
+                purged.Frames.TestEqual(original.Frames - staleFrames);
+
+                System.IO.File.Delete(purgefile);
                 }
 
-            if (index) {
-                // Test Index
+            (index ? original.IndexFrame > 0 : original.IndexFrame == 0).TestTrue();
+
+
+
+            string getItem (SortedDictionary<string, string> entries, int index) {
+                var count = 0;
+                foreach (var entry in entries) {
+                    if (count++ == index) {
+                        return entry.Key;
+                        }
+                    }
+                return null;
+
                 }
+
             }
 
-        private void LogTest(string encrypt, string sign, bool purge, bool index, string initial, TestCLI mallet, Dictionary<string, bool> entries, string filename, string options) {
+        private void LogTest(string encrypt, string sign, bool purge, bool index, string initial, TestCLI mallet, SortedDictionary<string, string> entries, string filename, string options) {
 
                 Dispatch($"dare log {options}");
 
@@ -164,26 +212,30 @@ namespace Goedel.XUnit {
             }
 
 
-        static void AddEntries(Dictionary<string, bool> dictionary, string directory) {
+        static void AddEntries(SortedDictionary<string, string> dictionary, string directory) {
             if (directory == null) {
                 return;
                 }
             var directoryInfo = new DirectoryInfo(directory);
-            AddEntries(dictionary, directoryInfo);
+            AddEntries(dictionary, directoryInfo, directoryInfo.Name);
             }
 
-        static void AddEntries(Dictionary<string, bool> dictionary, DirectoryInfo directoryInfo) {
+        static void AddEntries(SortedDictionary<string, string> dictionary, DirectoryInfo directoryInfo,
+                    string path) {
             foreach (var file in directoryInfo.GetFiles()) {
-                dictionary.Add(Path.Combine(directoryInfo.Name, file.Name), true);
+                dictionary.Add(Path.Combine(path, file.Name), 
+                            Path.Combine(directoryInfo.Name, file.FullName));
                 }
-            foreach (var file in directoryInfo.GetDirectories()) {
-                AddEntries(dictionary, file);
+            foreach (var subDirectory in directoryInfo.GetDirectories()) {
+                AddEntries(dictionary, subDirectory, Path.Combine(path, subDirectory.Name));
                 }
             }
 
 
-        bool VerifyArchive(string filename, Dictionary<string, bool> entries, string sign, string encrypt,
-                TestCLI mallet, string initial) {
+        bool VerifyArchive(string filename, SortedDictionary<string, string> entries, string sign, string encrypt,
+                TestCLI mallet, string initial, string test=null) {
+
+            test ??= initial;
 
             using var archive = new DareLogReader(filename);
             archive.Sequence.VerifyPolicy();
@@ -199,7 +251,7 @@ namespace Goedel.XUnit {
             var listArchive = Dispatch($"dare list {filename} ");
 
 
-            unpackDir.CheckDirectroriesEqual(initial);
+            unpackDir.CheckDirectroriesEqual(test);
             Directory.Delete(unpack, true);
 
             var source = new DirectoryInfo(initial);
@@ -207,7 +259,7 @@ namespace Goedel.XUnit {
             // Extract single files and test.
             foreach (var entry in entries) {
                 var subFile = entry.Key;
-                var initialFile = Path.Combine(source.Parent.FullName, subFile);
+                var initialFile = entry.Value;
 
                 Dispatch($"dare extract {filename} /file={entry.Key}");
 
@@ -216,6 +268,10 @@ namespace Goedel.XUnit {
                 recoverFile.CheckFilesEqual (initialFile);
                 System.IO.File.Delete(recoverFile);
                 }
+
+
+            Dispatch($"dare list {filename}");
+
 
             return true;
             }

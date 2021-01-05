@@ -670,6 +670,33 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
 
 		public virtual List<FileEntry>				Entries  {get; set;}
+		bool								__Frames = false;
+		private int						_Frames;
+        /// <summary>
+        /// </summary>
+
+		public virtual int						Frames {
+			get => _Frames;
+			set {_Frames = value; __Frames = true; }
+			}
+		bool								__Deleted = false;
+		private int						_Deleted;
+        /// <summary>
+        /// </summary>
+
+		public virtual int						Deleted {
+			get => _Deleted;
+			set {_Deleted = value; __Deleted = true; }
+			}
+		bool								__IndexFrame = false;
+		private int						_IndexFrame;
+        /// <summary>
+        /// </summary>
+
+		public virtual int						IndexFrame {
+			get => _IndexFrame;
+			set {_IndexFrame = value; __IndexFrame = true; }
+			}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -731,6 +758,21 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteArrayEnd ();
 				}
 
+			if (__Frames){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Frames", 1);
+					_writer.WriteInteger32 (Frames);
+				}
+			if (__Deleted){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Deleted", 1);
+					_writer.WriteInteger32 (Deleted);
+				}
+			if (__IndexFrame){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("IndexFrame", 1);
+					_writer.WriteInteger32 (IndexFrame);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -776,6 +818,18 @@ namespace Goedel.Mesh.Shell {
 						Entries.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
+					break;
+					}
+				case "Frames" : {
+					Frames = jsonReader.ReadInteger32 ();
+					break;
+					}
+				case "Deleted" : {
+					Deleted = jsonReader.ReadInteger32 ();
+					break;
+					}
+				case "IndexFrame" : {
+					IndexFrame = jsonReader.ReadInteger32 ();
 					break;
 					}
 				default : {

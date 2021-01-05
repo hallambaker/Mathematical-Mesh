@@ -318,7 +318,7 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.DareCopy(Goedel.Mesh.Shell.DareCopy)">
+        <member name="M:Goedel.Mesh.Shell.Shell.DarePurge(Goedel.Mesh.Shell.DarePurge)">
             <summary>
             Dispatch method
             </summary>
@@ -3145,6 +3145,9 @@
         <member name="P:Goedel.Mesh.Shell._DareArchive.Sequence">
             <summary>Field accessor for option [out]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareArchive.Index">
+            <summary>Field accessor for option [index]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareAppend.ContentType">
             <summary>Field accessor for option [cty]</summary>
         </member>
@@ -3186,6 +3189,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareAppend.Key">
             <summary>Field accessor for option [key]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareAppend.Index">
+            <summary>Field accessor for option [index]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareDelete.Sequence">
             <summary>Field accessor for parameter []</summary>
@@ -3286,61 +3292,61 @@
         <member name="P:Goedel.Mesh.Shell._DareExtract.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Input">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Input">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Output">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Output">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.ContentType">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.ContentType">
             <summary>Field accessor for option [cty]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Encrypt">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Sign">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Sign">
             <summary>Field accessor for option [sign]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Hash">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Hash">
             <summary>Field accessor for option [hash]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Algorithms">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Type">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Type">
             <summary>Field accessor for option [type]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.EnumAuthentication">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.EnumAuthentication">
             <summary>Field accessor for parameter [auth]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.EnumUse">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.EnumUse">
             <summary>Field accessor for parameter [use]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.LocalName">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Verbose">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Report">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Json">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Decrypt">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Decrypt">
             <summary>Field accessor for option [decrypt]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Index">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Index">
             <summary>Field accessor for option [index]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.Purge">
+        <member name="P:Goedel.Mesh.Shell._DarePurge.Purge">
             <summary>Field accessor for option [purge]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailAdd.Address">
@@ -4079,6 +4085,18 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultArchive.Entries">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultArchive.Frames">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultArchive.Deleted">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultArchive.IndexFrame">
             <summary>
             </summary>
         </member>

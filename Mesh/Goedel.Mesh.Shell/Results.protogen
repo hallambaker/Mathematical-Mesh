@@ -35,11 +35,14 @@
 		Inherits			Result
 		Struct FileEntry	Entries
 			Multiple
-	
+		Integer			Frames
+		Integer			Deleted
+		Integer			IndexFrame	
 
 	Structure ResultFileDare
 		Inherits		ResultFile
-		Struct DareEnvelope Envelope 
+		Struct DareEnvelope Envelope
+
 
 
 	Structure ResultFileEARL

@@ -18,8 +18,8 @@ namespace Goedel.Cryptography.Dare {
         public IKeyLocate KeyLocate { get; set; }
 
 
-        ///<summary></summary> 
-        CryptoParameters CryptoParameters { get; set; }
+        /////<summary></summary> 
+        //CryptoParameters CryptoParameters { get; set; }
 
         /// <summary>
         /// Default constructor used for deserialization.
@@ -98,14 +98,14 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-        /// <summary>
-        /// Obsolete constructor being used for testing, eliminate when no longer used.
-        /// </summary>
-        /// <param name="cryptoParameters"></param>
-        public DarePolicy(CryptoParameters cryptoParameters) {
-            CryptoParameters = cryptoParameters;
-            throw new NYI();
-            }
+        ///// <summary>
+        ///// Obsolete constructor being used for testing, eliminate when no longer used.
+        ///// </summary>
+        ///// <param name="cryptoParameters"></param>
+        //public DarePolicy(CryptoParameters cryptoParameters) {
+        //    CryptoParameters = cryptoParameters;
+        //    throw new NYI();
+        //    }
 
 
 

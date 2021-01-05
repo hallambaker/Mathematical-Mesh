@@ -21,6 +21,7 @@
     <ProjectReference Include="..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj" />
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Debug\Goedel.Debug.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
