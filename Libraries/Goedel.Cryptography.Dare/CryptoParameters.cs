@@ -179,7 +179,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddEncrypt(string AccountId) {
             KeyLocate.TryFindKeyEncryption(AccountId, out var key).AssertTrue(
-                        NoAvailableDecryptionKey.Throw);
+                        NoAvailableEncryptionKey.Throw);
 
             EncryptionKeys ??= new List<CryptoKey>();
             EncryptionKeys.Add(key);

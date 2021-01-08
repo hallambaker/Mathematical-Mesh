@@ -22,7 +22,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -74,7 +74,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -126,7 +126,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -178,7 +178,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -230,7 +230,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -282,7 +282,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -333,7 +333,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -384,7 +384,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -435,7 +435,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -486,7 +486,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -537,7 +537,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -588,7 +588,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -639,7 +639,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -690,7 +690,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -741,7 +741,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -792,7 +792,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -843,7 +843,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -894,7 +894,7 @@ namespace Goedel.Mesh.Server {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 

@@ -171,6 +171,10 @@ Alice checks his Mesh messages and approves Bob's request:
 
 #%  ConsoleExample (Example.Contact.ContactAliceResponse);
 
+Bob can now collect Alice's contact:
+
+#%  ConsoleExample (Example.Contact.ContactBobFinal);
+
 #end zfile
 
 
@@ -198,16 +202,19 @@ her closest friends:
 
 #%  ConsoleExample (Example.Group.GroupCreate);
 
-Bob encrypts a test file but he can't decrypt it because he isn't in the group:
+Alice encrypts a test file but he can't decrypt it because she hasn't added herself 
+to the group yet.
 
 #%  ConsoleExample (Example.Group.GroupEncrypt);
 
-Even though she is the group administrator, Alice can't decrypt the file either until
-she adds herself to the group.
+Alice adds herself to the group, now she can decrypt:
 
-#%  ConsoleExample (Example.Group.GroupDecryptAlice);
+#%  ConsoleExample (Example.Group.GroupAddAlice);
 
-Alice adds Bob to the group:
+At this point, Bob can't encrypt or decrypt messages because he doesn't know the 
+public key and he isn't in the group. Alice could allow Bob to encrypt but not
+decrypt by sending him the group contact information. Instead she adds Bob to 
+the group:
 
 #%  ConsoleExample (Example.Group.GroupAddBob);
 

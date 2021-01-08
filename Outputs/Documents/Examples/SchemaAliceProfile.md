@@ -5,41 +5,41 @@ For example, the personal account profile Alice created is:
 {
   "ProfileUser":{
     "ProfileSignature":{
-      "Udf":"MAKT-VDSO-7MJ3-L5E5-6GWZ-4U6U-HXKS",
+      "Udf":"MD7M-NMJY-4SVX-PMOD-T6FN-2LTV-DUEL",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"iTx-XLSR63XTJmCF-TWv29B6lHMJl46WYkHXxwMKkFtiY
-  fn-KN7Z47vHkZO2RbP71k_zbfaCcgMA"}}},
+          "Public":"N_VQ-z12ZtWHx7W5quDhZE9d6yhmlboZdij1eY0lDt8NS
+  COAvXgSVv1kRGn1HFbKjl2NRMzJRBgA"}}},
     "AccountAddress":"alice@example.com",
-    "ServiceUdf":"MDOX-XBQ6-B6PF-EP5W-7WEE-FCCI-IRK2",
+    "ServiceUdf":"MDRT-45J4-LNQO-CJVN-ZYSF-YFNO-VXHG",
     "AccountEncryption":{
-      "Udf":"MDP5-GPL7-OVDS-KREF-2KCY-JC7P-KSHY",
+      "Udf":"MDZB-55U3-IGR2-SFOJ-X2B5-YDTH-JEE4",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"hoj-dsoiQ5mrSHhMfZRxKxxmdEAdkCy9TlS2lQ-JNISXP
-  yM50TS3RatUSzqA3n9hvV0OlmbJmBYA"}}},
+          "Public":"fKTxAB08MAhRQrJABC0nGz1hdrBr7m0nUl9Rcp0JNbOby
+  xmDdyZwiCJCgIaQF5zULAaME86FENoA"}}},
     "AdministratorSignature":{
-      "Udf":"MAZC-RCJD-KPFW-F5QX-LJYM-ZTDM-UAS2",
+      "Udf":"MAQD-SF2M-DW2H-YWDL-IWO4-YECV-UUUE",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"5QA48gpBOdwyDHmvwvIgwT0N04o0IIgycOiLx1Oc9VKaS
-  U9KLzlue2f8Z7U6bKUxBVXtY8WVU3QA"}}},
+          "Public":"bmIJGYdBYLI5uxDknnxu8D4zNO81O23oJHHxBgH6W4at7
+  RW-7cBsUDyD5LDGgluSxwh6ai1PdqwA"}}},
     "AccountAuthentication":{
-      "Udf":"MBZL-YHLY-M6DM-COXM-CSZ2-R75X-FKIG",
+      "Udf":"MAFV-W7QU-5K57-IZUT-H5CD-2UL5-5Y4T",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"P8Cjh3OfV9IXbu7fsAXsDvN6aH1f-l9XfXS7kJ6Ipio3e
-  MeLMiw-H13ANBiOc5UWF0v3JL8qVSsA"}}},
+          "Public":"KBHK0dr1YqUN5zwXz-CV2png3Gjps52AC9TDEf1ayBEWo
+  -jb9BJON3mTgaYTwuP4e30LaQ0vzbEA"}}},
     "AccountSignature":{
-      "Udf":"MC4C-3O5E-KFCB-5VIP-RJK3-UT23-443H",
+      "Udf":"MAG4-TKVM-E3DO-RGSF-ESRF-TZJK-VBAX",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"8jmjyEMTA8e1twPHwaGlWskU8NqwTJltOaRFhlBmmt9Mf
-  -B6oI21ARRfeP6c9wFLL8QLN5Tt-6CA"}}}}}
+          "Public":"NrSdqMzdkLVFIn7zE9WvXfUUFgPUniZC0cY7Gqg3SRxXB
+  DuG_j7lKgpePEVcXohQwWv9GYRR4KeA"}}}}}
 ~~~~
 

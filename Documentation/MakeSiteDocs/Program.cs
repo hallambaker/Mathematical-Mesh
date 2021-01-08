@@ -171,18 +171,27 @@ namespace ExampleGenerator {
 
             Directory.SetCurrentDirectory(outputPath);
             var CreateExamples = new CreateExamples();
-            WebDocs(this);
+
+            //Console.WriteLine($"***** WebDocs");
+            //WebDocs(this);
 
             Directory.SetCurrentDirectory("..\\Outputs\\Documents");
             GitHub = false;
 
 
-            // Call the generators to create output.
-            MakeUDFExamples(this);
+            //// Call the generators to create output.
+            ///
+            Console.WriteLine($"***** Architecture");
             MakeArchitectureExamples(this);
+            Console.WriteLine($"***** UDF");
+            MakeUDFExamples(this);
+            Console.WriteLine($"***** DARE");
             MakeDareExamples(this);
+            Console.WriteLine($"***** Schema");
             MakeSchemaExamples(this);
+            Console.WriteLine($"***** Protocol");
             MakeProtocolExamples(this);
+            Console.WriteLine($"***** Cryptography");
             MakeCryptographyExamples(this);
 
 
@@ -194,7 +203,7 @@ namespace ExampleGenerator {
             MakeDocs();
             }
 
-        public bool All = true;
+        public bool All = false;
 
 
 

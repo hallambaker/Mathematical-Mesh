@@ -8,13 +8,15 @@ dare    DARE Message encryption and decryption commands
     archive   Create a new DARE archive and add the specified files
     decode   Decode a DARE Message.
     delete   <Unspecified>
+    dir   Compile a catalog for the specified sequence.
     earl   Create an Encrypted Authenticated Resource Locator (EARL)
     encode   Encode data as DARE Message.
     extract   Extract the specified record from the sequence
     index   Compile an index for the specified sequence and append to the end.
     list   Compile a catalog for the specified sequence.
-    log   Create a new DARE Sequence
+    log   Append the specified string to the sequence.
     purge   Copy sequence contents to create a new sequence removing deleted elements
+    sequence   Create a new DARE Sequence
     verify   Verify a DARE Message.
 <over>
 </div>
@@ -43,6 +45,7 @@ archive   Create a new DARE archive and add the specified files
     /json   Report output in JSON format
     /type   The sequence type, plain/tree/digest/chain/tree
     /out   New sequence
+    /index   Append index to the archive
 <over>
 </div>
 ~~~~
@@ -76,14 +79,14 @@ Specifying the /json option returns a result of type Result:
 ~~~~
 <div="helptext">
 <over>
-log   Create a new DARE Sequence
-       New sequence
+log   Append the specified string to the sequence.
+       Sequence to append to
+       Text to append
     /cty   Content Type
     /encrypt   Encrypt data for specified recipient
     /sign   Sign data with specified key
     /hash   Compute hash of content
     /alg   List of algorithm specifiers
-    /type   The sequence type, plain/tree/digest/chain/tree
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -182,6 +185,7 @@ append   Append the specified file as an entry to the specified sequence.
     /report   Report output (default)
     /json   Report output in JSON format
     /key   <Unspecified>
+    /index   Append index to the archive
 <over>
 </div>
 ~~~~
@@ -401,7 +405,7 @@ file name is the input file name with the additional extension `.dare`.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=X5JS-33OJ-O7VD-UOYB-LKKL-OBOO-I4
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -410,7 +414,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=X5JS-33OJ-O7VD-UOYB-LKKL-OBOO-I4 /json
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -450,7 +454,7 @@ with the extension `.undare` otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=X5JS-33OJ-O7VD-UOYB-LKKL-OBOO-I4
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -459,7 +463,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=X5JS-33OJ-O7VD-UOYB-LKKL-OBOO-I4 /json
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -494,7 +498,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=X5JS-33OJ-O7VD-UOYB-LKKL-OBOO-I4
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -503,7 +507,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=X5JS-33OJ-O7VD-UOYB-LKKL-OBOO-I4 /json
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU /json
 <rsp>{
   "Result": {
     "Success": false,

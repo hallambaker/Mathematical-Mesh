@@ -209,11 +209,12 @@
 		Struct Message			ProcessResult
 
 	Structure ResultConnect
-		Inherits		Result
-		Struct CatalogedMachine			CatalogedMachine
-		Struct ActivationDevice			ActivationDevice
-		Struct ActivationAccount			ActivationAccount
-		Struct RequestConnection RequestConnection
+		Inherits					Result
+		TStruct Profile			Profile
+		Struct CatalogedMachine		CatalogedMachine
+		Struct ActivationDevice		ActivationDevice
+		Struct ActivationAccount	ActivationAccount
+		Struct RequestConnection	RequestConnection
         Struct AcknowledgeConnection AcknowledgeConnection
 		Struct RespondConnection	RespondConnection
 

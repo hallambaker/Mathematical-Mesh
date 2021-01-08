@@ -32,11 +32,15 @@ Namespace Goedel.Utilities
 
 	Exception EnvironmentVariableRequired
 		Console "The environment variable [{0}] must be defined."
-
-
+		Description
+			|The environment variable must be defined.
 
 	Exception ExpectedSuccess
 		Console "Service request failed when it should have succeded"
+		Description
+			|Service request failed when it should have succeded
 	Exception ExpectedError
 		Console "Service request succeeded when it should have returned an error"
+		Description
+			|Service request succeeded when it should have returned an error
 

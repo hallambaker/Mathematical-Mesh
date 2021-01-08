@@ -31,18 +31,18 @@ namespace Goedel.Mesh.Client {
 
         }
 
-    public partial class CatalogedAdmin {
+    //public partial class CatalogedAdmin {
 
-        ///<summary>The device profile (from <see cref="CatalogedDevice"/>)</summary>
-        public override ProfileDevice ProfileDevice => CatalogedDevice?.ProfileDevice;
+    //    ///<summary>The device profile (from <see cref="CatalogedDevice"/>)</summary>
+    //    public override ProfileDevice ProfileDevice => CatalogedDevice?.ProfileDevice;
 
-        /// <summary>
-        /// Default constructor used for deserialization.
-        /// </summary>
-        public CatalogedAdmin() {
-            }
+    //    /// <summary>
+    //    /// Default constructor used for deserialization.
+    //    /// </summary>
+    //    public CatalogedAdmin() {
+    //        }
 
-        }
+    //    }
 
 
     public partial class CatalogedPending {

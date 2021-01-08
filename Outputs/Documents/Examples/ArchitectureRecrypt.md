@@ -5,30 +5,44 @@ her closest friends:
 ~~~~
 <div="terminal">
 <cmd>Alice> group create groupw@example.com
+<rsp>Account=groupw@example.com
+UDF=MAPU-EOYF-3IHO-3BVP-YUPN-FLP2-W45I
 </div>
 ~~~~
 
-Bob encrypts a test file but he can't decrypt it because he isn't in the group:
+Alice encrypts a test file but he can't decrypt it because she hasn't added herself 
+to the group yet.
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode grouptext.txt  groupsecret.dare /encrypt ^
+<cmd>Alice> dare encode grouptext.txt groupsecret.dare /encrypt ^
     groupw@example.com
+<cmd>Alice> dare decode groupsecret.dare grouptext_bob.dare
+<rsp>ERROR - No decryption key is available
 </div>
 ~~~~
 
-Even though she is the group administrator, Alice can't decrypt the file either until
-she adds herself to the group.
+Alice adds herself to the group, now she can decrypt:
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode groupsecret.dare
+<cmd>Alice> group add groupw@example.com alice@example.com
+<rsp>{
+  "ContactAddress": "alice@example.com",
+  "MemberCapabilityId": "MBDN-UP3O-HUIO-45IY-7Y5Y-XMON-I6ER",
+  "ServiceCapabilityId": "NA56-5KQZ-3GZA-MKZQ-5NWV-YYIZ-JDOT"}<cmd>Alice> account sync /auto
+<cmd>Alice> dare decode groupsecret.dare grouptext_alice.dare
+<cmd>Alice> type grouptext_alice.dare
+<rsp>The group secret handshake
 </div>
 ~~~~
 
-Alice adds Bob to the group:
+At this point, Bob can't encrypt or decrypt messages because he doesn't know the 
+public key and he isn't in the group. Alice could allow Bob to encrypt but not
+decrypt by sending him the group contact information. Instead she adds Bob to 
+the group:
 
 
 ~~~~
@@ -36,8 +50,8 @@ Alice adds Bob to the group:
 <cmd>Alice> group add groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MAF3-FQ2B-VCIJ-K66B-JCFK-HTMA-ZBZH",
-  "ServiceCapabilityId": "NDPW-7KR4-TSDP-QZRC-T67Y-CMOL-UAJI"}</div>
+  "MemberCapabilityId": "MBDN-UP3O-HUIO-45IY-7Y5Y-XMON-I6ER",
+  "ServiceCapabilityId": "NBMO-FNOM-7TDT-GM3P-747A-JDH6-4ID2"}</div>
 ~~~~
 
 Adding Bob to the group gives him immediate access to any file encrypted under
@@ -47,7 +61,9 @@ the group key without making any change to the encrypted files:
 ~~~~
 <div="terminal">
 <cmd>Bob> account sync  /auto
-<cmd>Bob> dare decode groupsecret.dare
+<cmd>Bob> dare decode groupsecret.dare grouptext_bob.dare
+<cmd>Bob> type grouptext_bob.dare
+<rsp>The group secret handshake
 </div>
 ~~~~
 
@@ -59,8 +75,8 @@ Removing Bob from the group immediately withdraws his access.
 <cmd>Alice> group delete groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MAF3-FQ2B-VCIJ-K66B-JCFK-HTMA-ZBZH",
-  "ServiceCapabilityId": "NDPW-7KR4-TSDP-QZRC-T67Y-CMOL-UAJI"}</div>
+  "MemberCapabilityId": "MBDN-UP3O-HUIO-45IY-7Y5Y-XMON-I6ER",
+  "ServiceCapabilityId": "NBMO-FNOM-7TDT-GM3P-747A-JDH6-4ID2"}</div>
 ~~~~
 
 Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
@@ -69,7 +85,7 @@ earlier).
 
 ~~~~
 <div="terminal">
-<cmd>Bob> dare decode groupsecret.dare
+<cmd>Bob> dare decode groupsecret.dare grouptext_bob2.dare
 <rsp>ERROR - A requested cryptographic operation failed.
 </div>
 ~~~~

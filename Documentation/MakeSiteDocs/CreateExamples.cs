@@ -306,31 +306,30 @@ namespace ExampleGenerator {
                 $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
                 );
 
+            Connect.PasswordList2.Add(Alice2.DumpFile(Connect.EncryptResultFile));
+
+
             Connect.PasswordList2.GetResult(0).Success.TestTrue();
             Connect.PasswordList2.GetResult(1).Success.TestTrue();
             }
 
         public void TestConnectDisconnect(string deviceId) {
-
-
-
-
-
-
-            Connect.Disconnect = Alice1.Example(
+                Connect.Disconnect = Alice1.Example(
                 $"device delete {deviceId}"
                 );
             Connect.Disconnect.GetResult().Success.TestTrue();
 
+            Connect.PasswordList2Disconnect = Alice2.Example(
+                //$"password get {PasswordSite}",
+                $"account sync",
+                $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
+                );
+
 
             if (Check.DisableDeletedDevices) {
-                throw new NYI();
+                Connect.PasswordList2Disconnect.GetResult(1).Success.TestFalse();
                 }
 
-            //Connect.PasswordList2Disconnect = Alice2.Example(
-            //    //$"password get {PasswordSite}",
-            //    $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
-            //    );
             }
 
 
@@ -395,9 +394,18 @@ namespace ExampleGenerator {
             Contact.BobRequest = contactMessage;
 
             var contactAccept = Alice1.Example(
-                $"message accept {contactMessage.MessageId}"
+                $"message accept {contactMessage.MessageId}",
+                $"contact list"
                 );
             Contact.ContactAliceResponse.Add(contactAccept[0]);
+            Contact.ContactAliceResponse.Add(contactAccept[1]);
+
+            Contact.ContactBobFinal = Bob1.Example(
+                    $"account sync /auto",
+                    $"contact list"
+                     );
+
+
 
             // Interactions with Bob... create an account
 
@@ -460,13 +468,27 @@ namespace ExampleGenerator {
                  );
 
             Group.EncryptSourceFile.WriteFileNew(Group.TestText);
+
             Group.GroupEncrypt = Alice1.Example(
-                $"dare encode {Group.EncryptSourceFile}  {Group.EncryptTargetFile} /encrypt {GroupAccount}"
+                $"dare encode {Group.EncryptSourceFile} {Group.EncryptTargetFile} /encrypt {GroupAccount}",
+                $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile}"
+                );
+
+
+
+
+            Group.GroupDecryptAlice = Alice1.Example(
+                $"dare decode {Group.EncryptTargetFile}"
                  );
-            Group.GroupAddBob = Alice1.Example(
+
+            Group.GroupAddAlice = Alice1.Example(
                 $"group add {GroupAccount} {AliceAccount}",
-                $"account sync /auto"
-                    );
+                $"account sync /auto",
+                $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptAliceFile}"
+                 );
+
+            Group.GroupAddAlice.Add(Alice1.DumpFile(Group.GroupDecryptAliceFile));
+            // dump EncryptTargetFile 
 
             Group.GroupDecryptAlice = Alice1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
@@ -479,18 +501,21 @@ namespace ExampleGenerator {
             Group.GroupAddBob = Alice1.Example(
                 $"group add {GroupAccount} {BobAccount}"
                  );
+
+
             Group.GroupDecryptBobSuccess = Bob1.Example(
                 $"account sync  /auto",
-                $"dare decode {Group.EncryptTargetFile}"
+                $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile}"
                  );
+            Group.GroupDecryptBobSuccess.Add(Bob1.DumpFile(Group.GroupDecryptBobFile));
+            // dump EncryptTargetFile 
+
             Group.GroupDeleteBob = Alice1.Example(
                 $"group delete {GroupAccount} {BobAccount}"
                  );
 
-
-            // Failing here because the server is not responding to the failure of the operate request.
             Group.GroupDecryptBobRevoked = Bob1.Example(
-                $"dare decode {Group.EncryptTargetFile}"
+                $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile2}"
                  );
 
             Group.GroupDecryptAlice.GetResult().Success.TestTrue();
@@ -530,12 +555,12 @@ namespace ExampleGenerator {
             Connect.AcknowledgeConnectionPIN = connectRequest.AcknowledgeConnection;
 
 
-            Connect.ConnectPending = Alice1.Example(
+            Connect.ConnectPINPending = Alice1.Example(
                 $"message pending",
                 $"account sync /auto"
                 );
 
-            var connectPending = Connect.ConnectPending.GetResultPending();
+            var connectPendingPIN = Connect.ConnectPINPending.GetResultPending();
 
             Connect.ConnectPINComplete = Alice3.Example(
                 $"device complete",

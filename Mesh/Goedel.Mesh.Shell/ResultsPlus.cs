@@ -191,11 +191,18 @@ namespace Goedel.Mesh.Shell {
                     break;
                     }
                 case CatalogedStandard catalogedStandard: {
+                    Builder.AppendLine($"   Device UDF = {catalogedStandard.ProfileDevice.Udf}");
+
+                    if (Profile is ProfileUser profileUser) {
+                        Builder.AppendLine($"   Account = {profileUser.AccountAddress}");
+                        }
+                    Builder.AppendLine($"   Account UDF = {Profile.Udf}");
+
                     break;
                     }
-                case CatalogedAdmin catalogedAdmin: {
-                    break;
-                    }
+                //case CatalogedAdmin catalogedAdmin: {
+                //    break;
+                //    }
 
                 default:
                     break;
@@ -225,6 +232,24 @@ namespace Goedel.Mesh.Shell {
 
                 default:
                     break;
+                }
+            return Builder.ToString();
+            }
+        }
+
+
+    public partial class ResultSent {
+
+        /// <summary>
+        /// Converts the value of this instance to a <see langword="String"/>.
+        /// </summary>
+        /// <returns>The current string.</returns>
+        public override string ToString() {
+            var Builder = new StringBuilder();
+            if (Message != null) {
+                Builder.AppendLine($"Envelope ID: {Message.EnvelopeId}");
+                Builder.AppendLine($"Message ID: {Message.MessageId}");
+                Builder.AppendLine($"Response ID: {Message.GetResponseId()}");
                 }
             return Builder.ToString();
             }
@@ -389,9 +414,10 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <returns>The current string.</returns>
         public override string ToString() {
-            var Builder = StringBuilder();
-            Builder.AppendNotNull(Account, $"Account={Account}");
-            return Builder.ToString();
+            var builder = StringBuilder();
+            builder.AppendNotNull(ProfileAccount?.AccountAddress, $"Account={ProfileAccount?.AccountAddress}");
+            builder.AppendNotNull(ProfileAccount?.ProfileSignature?.Udf, $"UDF={ProfileAccount?.ProfileSignature?.Udf}");
+            return builder.ToString();
             }
         }
 

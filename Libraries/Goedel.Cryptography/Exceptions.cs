@@ -22,7 +22,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -74,7 +74,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -126,7 +126,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -178,7 +178,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -230,7 +230,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -282,7 +282,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -334,7 +334,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -386,7 +386,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -427,6 +427,58 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// No encryption key is available
+    /// </summary>
+    [global::System.Serializable]
+	public partial class NoAvailableEncryptionKey : CryptographicException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary>Templates for formatting response messages.</summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"No encryption key is available"
+				};
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public NoAvailableEncryptionKey  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
+			}
+
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+        static System.Exception _Throw(object reasons) => new NoAvailableEncryptionKey(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+
+        }
+
+
+    /// <summary>
     /// No decryption key is available
     /// </summary>
     [global::System.Serializable]
@@ -438,7 +490,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -491,7 +543,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -543,7 +595,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -596,7 +648,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -649,7 +701,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -701,7 +753,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -753,7 +805,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -806,7 +858,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -859,7 +911,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -911,7 +963,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -963,7 +1015,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1016,7 +1068,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1069,7 +1121,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1122,7 +1174,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1174,7 +1226,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1228,7 +1280,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1280,7 +1332,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1332,7 +1384,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1384,7 +1436,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1437,7 +1489,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1489,7 +1541,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1541,7 +1593,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1593,7 +1645,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1644,7 +1696,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1695,7 +1747,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1747,7 +1799,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1799,7 +1851,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1850,7 +1902,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1902,7 +1954,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -1954,7 +2006,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -2006,7 +2058,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -2058,7 +2110,7 @@ namespace Goedel.Cryptography {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 

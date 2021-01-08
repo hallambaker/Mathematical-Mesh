@@ -150,7 +150,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshServerException.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshServerException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -182,7 +182,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshServerResponse.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshServerResponse.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -214,7 +214,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshResponseNotFound.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshResponseNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -246,7 +246,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshResponseRefused.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshResponseRefused.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -278,7 +278,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshResponseExpired.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshResponseExpired.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -310,7 +310,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshRequestSize.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshRequestSize.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -341,7 +341,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshUnknownAccount.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshUnknownAccount.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -372,7 +372,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshAccountAlreadyRegistered.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshAccountAlreadyRegistered.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -403,7 +403,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshRedirect.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshRedirect.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -434,7 +434,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshOperationFailed.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshOperationFailed.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -465,7 +465,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshMessageControl.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshMessageControl.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -496,7 +496,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshServiceBlockedSender.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshServiceBlockedSender.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -527,7 +527,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshServiceBlockedService.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshServiceBlockedService.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -558,7 +558,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshRecipientBlockedSender.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshRecipientBlockedSender.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -589,7 +589,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshRecipientBlockedService.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshRecipientBlockedService.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -620,7 +620,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -651,7 +651,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshMessageInvalid.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshMessageInvalid.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -682,7 +682,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshMessageUnsupported.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshMessageUnsupported.#ctor(System.String,System.Exception,System.Object[])">
             <summary>

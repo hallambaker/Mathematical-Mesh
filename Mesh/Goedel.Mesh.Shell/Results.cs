@@ -4666,6 +4666,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
+		public virtual Profile						Profile  {get; set;}
+        /// <summary>
+        /// </summary>
+
 		public virtual CatalogedMachine						CatalogedMachine  {get; set;}
         /// <summary>
         /// </summary>
@@ -4731,6 +4735,19 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteObjectStart ();
 				}
 			((Result)this).SerializeX(_writer, false, ref _first);
+			if (Profile != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Profile", 1);
+					// expand this to a tagged structure
+					//Profile.Serialize (_writer, false);
+					{
+						_writer.WriteObjectStart();
+						_writer.WriteToken(Profile._Tag, 1);
+						bool firstinner = true;
+						Profile.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
+						}
+				}
 			if (CatalogedMachine != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("CatalogedMachine", 1);
@@ -4794,6 +4811,10 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "Profile" : {
+					Profile = Profile.FromJson (jsonReader, true) ;  // A tagged structure
+					break;
+					}
 				case "CatalogedMachine" : {
 					// An untagged structure
 					CatalogedMachine = new CatalogedMachine ();

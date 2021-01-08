@@ -14,7 +14,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Presence.PresenceTBS.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Presence.PresenceTBS.#ctor(System.String,System.Exception,System.Object[])">
             <summary>

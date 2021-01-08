@@ -80,6 +80,8 @@ namespace Goedel.Mesh.Shell {
             var contextUser = MeshHost.Complete(accountAddress);
             var result = new ResultConnect() {
                 CatalogedMachine = contextUser.CatalogedMachine,
+                Profile = contextUser.Profile,
+
                 ActivationDevice = contextUser.ActivationDevice,
                 RequestConnection = contextUser.RequestConnection,
                 ActivationAccount = contextUser.ActivationAccount,

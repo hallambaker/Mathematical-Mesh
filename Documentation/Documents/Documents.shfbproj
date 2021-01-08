@@ -30,33 +30,11 @@
       <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.ASN\Goedel.ASN.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.Command\Goedel.Command.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.Discovery\Goedel.Discovery.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.FSR\Goedel.FSR.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj" />
       <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Server\Goedel.Mesh.Portal.Server.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Confirm\Goedel.Confirm\Goedel.Confirm.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Confirm\Goedel.Confirm.Client\Goedel.Confirm.Client.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Confirm\Goedel.Confirm.Server\Goedel.Confirm.Server.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Account\Goedel.Account\Goedel.Account.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Account\Goedel.Account.Client\Goedel.Account.Client.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Account\Goedel.Account.Server\Goedel.Account.Server.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Recrypt\Goedel.Recrypt.Client\Goedel.Recrypt.Client.csproj" />
-      <DocumentationSource sourceFile="..\..\Protocols\Recrypt\Goedel.Recrypt.Server\Goedel.Recrypt.Server.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj" />
     </DocumentationSources>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
@@ -136,6 +114,11 @@
     <Content Include="icons\Help.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Base\Goedel.Cryptography.Base\Goedel.Cryptography.Base.csproj">
+      <Name>Goedel.Cryptography.Base</Name>
+      <Project>{9617263c-992b-4456-af7f-cf3083dfcbad}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Core\Goedel.ASN\Goedel.ASN.csproj">
       <Name>Goedel.ASN</Name>
       <Project>{8c3faaaa-4187-4368-8c10-4f3f7c31ab51}</Project>
@@ -144,11 +127,6 @@
     <ProjectReference Include="..\..\Libraries\Core\Goedel.Command\Goedel.Command.csproj">
       <Name>Goedel.Command</Name>
       <Project>{92374241-b365-4366-8c08-6db92b0460b7}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Core\Goedel.Discovery\Goedel.Discovery.csproj">
-      <Name>Goedel.Discovery</Name>
-      <Project>{c67e9a8e-c56d-43d8-9cbd-4fd3f5e3956a}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Core\Goedel.FSR\Goedel.FSR.csproj">
@@ -171,9 +149,14 @@
       <Project>{171f782c-4d04-40bd-8d12-ead48eefb79a}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Container\Goedel.Cryptography.Container.csproj">
-      <Name>Goedel.Cryptography.Container</Name>
-      <Project>{5766d752-9296-42e0-a016-69f27fb45167}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj">
+      <Name>Goedel.Cryptography.Core</Name>
+      <Project>{baa85316-3cbf-4d38-a52e-1f16f2895a29}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj">
+      <Name>Goedel.Cryptography.Dare</Name>
+      <Project>{0fa406e8-ee81-45da-bcf8-1f72c66a2ea0}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
@@ -186,29 +169,9 @@
       <Project>{8340d6c4-d1ba-4369-b9cc-0e0eb36387d7}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj">
-      <Name>Goedel.Cryptography.Linux</Name>
-      <Project>{c78b8d70-df01-4666-8ca0-d9bff27f1cff}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.OSX\Goedel.Cryptography.OSX.csproj">
-      <Name>Goedel.Cryptography.OSX</Name>
-      <Project>{7d97c054-c210-4899-af43-365aeb01645a}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj">
-      <Name>Goedel.Cryptography.Standard</Name>
-      <Project>{dd13e278-f9e6-49f0-81b9-7a5bd5817818}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Ticket\Goedel.Cryptography.Ticket.csproj">
-      <Name>Goedel.Cryptography.Ticket</Name>
-      <Project>{5130f2be-207f-4b21-83f6-6e37c9a32219}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
-      <Name>Goedel.Cryptography.Windows</Name>
-      <Project>{b0e63b96-6d97-44ff-bc12-1538c3633997}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Test\Goedel.Cryptography.Test.csproj">
+      <Name>Goedel.Cryptography.Test</Name>
+      <Project>{d2ab97dd-b0e2-4485-9697-7122b2e9c72a}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
@@ -216,29 +179,9 @@
       <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Linux\Goedel.Mesh.Platform.Linux.csproj">
-      <Name>Goedel.Mesh.Platform.Linux</Name>
-      <Project>{64600026-f599-45c7-a2c5-91aa6fa7cadc}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.OSX\Goedel.Mesh.Platform.OSX.csproj">
-      <Name>Goedel.Mesh.Platform.OSX</Name>
-      <Project>{cf35adbf-ebf9-4069-82d7-e45e07cbe578}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh.Platform.Windows\Goedel.Mesh.Platform.Windows.csproj">
-      <Name>Goedel.Mesh.Platform.Windows</Name>
-      <Project>{544eed84-501e-4b48-8ae4-ddaf459dee28}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Mesh\Goedel.Mesh.csproj">
-      <Name>Goedel.Mesh</Name>
-      <Project>{a93fe437-9540-49a5-8fce-a190436db5db}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Persistence\Goedel.Persistence.csproj">
-      <Name>Goedel.Persistence</Name>
-      <Project>{4a0246cb-4964-4343-bda2-0a0eff5860d7}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Debug\Goedel.Debug.csproj">
+      <Name>Goedel.Debug</Name>
+      <Project>{4a8c6fd3-b818-4517-8f2a-5a759315b7aa}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
@@ -246,79 +189,69 @@
       <Project>{dfd86335-edec-4503-9a31-247c401d6342}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange.Server\Goedel.Protocol.Exchange.Server.csproj">
-      <Name>Goedel.Protocol.Exchange.Server</Name>
-      <Project>{a94a7c70-4e43-48bc-9f86-2f8ed6c9f1b7}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Exchange\Goedel.Protocol.Exchange.csproj">
-      <Name>Goedel.Protocol.Exchange</Name>
-      <Project>{72beed95-fade-43f0-aa8a-504155abfd8f}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <Name>Goedel.Protocol</Name>
       <Project>{5b919409-8341-4d0a-bcdf-43a6841b6d7b}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account.Client\Goedel.Account.Client.csproj">
-      <Name>Goedel.Account.Client</Name>
-      <Project>{abaf72a0-1851-4f59-94f9-8cbf84abe11e}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj">
+      <Name>Goedel.Test.Core</Name>
+      <Project>{c4b778bf-808c-4681-8e66-906218d86b5a}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account.Server\Goedel.Account.Server.csproj">
-      <Name>Goedel.Account.Server</Name>
-      <Project>{cdb6f43e-bda4-400a-95b8-8cdb52fb317d}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj">
+      <Name>Goedel.Test</Name>
+      <Project>{8a74d219-ed84-4943-bba7-e4b00aacbaf4}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Account\Goedel.Account\Goedel.Account.csproj">
-      <Name>Goedel.Account</Name>
-      <Project>{59ead12d-dead-4b6b-a8d9-b3871f173869}</Project>
+    <ProjectReference Include="..\..\Libraries\Linux\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj">
+      <Name>Goedel.Cryptography.Linux</Name>
+      <Project>{82e63726-ab12-4a40-b9e0-184b8e657ef7}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm.Client\Goedel.Confirm.Client.csproj">
-      <Name>Goedel.Confirm.Client</Name>
-      <Project>{c60d140b-eb03-4966-9cb1-a11f5ad3acb2}</Project>
+    <ProjectReference Include="..\..\Libraries\macos\Goedel.Cryptography.macos\Goedel.Cryptography.macos.csproj">
+      <Name>Goedel.Cryptography.macos</Name>
+      <Project>{d50b8ed2-945d-44e0-8c1d-12191c9409c0}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm.Server\Goedel.Confirm.Server.csproj">
-      <Name>Goedel.Confirm.Server</Name>
-      <Project>{f79bd6c6-594b-45e8-8583-b8403429b8a4}</Project>
+    <ProjectReference Include="..\..\Libraries\Windows\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
+      <Name>Goedel.Cryptography.Windows</Name>
+      <Project>{79f3c448-a1ef-4bf9-866b-b0a03fb22195}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Confirm\Goedel.Confirm\Goedel.Confirm.csproj">
-      <Name>Goedel.Confirm</Name>
-      <Project>{be5a09d7-6886-428f-8849-48ca3ae3f976}</Project>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
+      <Name>Goedel.Mesh.Client</Name>
+      <Project>{1a14c73e-960c-4e21-aeb7-184b6d5a0ab3}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Client\Goedel.Mesh.Portal.Client.csproj">
-      <Name>Goedel.Mesh.Portal.Client</Name>
-      <Project>{d1a9200f-a58b-410b-b8cc-52346c4741ac}</Project>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj">
+      <Name>Goedel.Mesh.Core</Name>
+      <Project>{ab63da2b-ec91-4413-820a-3f755f15861d}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal.Server\Goedel.Mesh.Portal.Server.csproj">
-      <Name>Goedel.Mesh.Portal.Server</Name>
-      <Project>{3754c081-b10b-471e-aa4d-69b941ff3e7b}</Project>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Presence\Goedel.Mesh.Presence.csproj">
+      <Name>Goedel.Mesh.Presence</Name>
+      <Project>{6eb78f33-15eb-4cf8-9975-1d9a40307323}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Mesh\Goedel.Mesh.Portal\Goedel.Mesh.Portal.csproj">
-      <Name>Goedel.Mesh.Portal</Name>
-      <Project>{87066fce-63e6-4118-9e38-18e978ef039d}</Project>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
+      <Name>Goedel.Mesh.Server</Name>
+      <Project>{602358c6-28b7-446d-86d3-02b3fd1b3d6c}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Client\Goedel.Recrypt.Client.csproj">
-      <Name>Goedel.Recrypt.Client</Name>
-      <Project>{c1748c76-8109-4eb1-b0ef-39462903a24d}</Project>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Services\Goedel.Mesh.Services.csproj">
+      <Name>Goedel.Mesh.Services</Name>
+      <Project>{1c4ea25c-e762-4470-8381-fd2537d854d3}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt.Server\Goedel.Recrypt.Server.csproj">
-      <Name>Goedel.Recrypt.Server</Name>
-      <Project>{297941fe-0364-45a9-b005-6a88ebb2f5ef}</Project>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj">
+      <Name>Goedel.Mesh.Shell</Name>
+      <Project>{0e631986-5213-4fb5-b4ca-09488ea5c4b5}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Protocols\Recrypt\Goedel.Recrypt\Goedel.Recrypt.csproj">
-      <Name>Goedel.Recrypt</Name>
-      <Project>{fc5a5407-02c3-43a0-b4de-bb68dc7c1ee7}</Project>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
+      <Name>Goedel.Mesh</Name>
+      <Project>{6b2d9659-e2a6-4e0f-a6e4-2af27bdaea89}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

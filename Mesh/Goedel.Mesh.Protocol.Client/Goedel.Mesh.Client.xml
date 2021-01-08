@@ -180,82 +180,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.Client.CatalogedAdmin">
-             <summary>
-            
-             Information enabling administration of a Master profile. It adds an overlay key
-             for the administration key.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedAdmin.ProfileDevice">
-            <summary>The device profile (from <see cref="T:Goedel.Mesh.CatalogedDevice"/>)</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedAdmin.#ctor">
-            <summary>
-            Default constructor used for deserialization.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedAdmin.SignatureKey">
-             <summary>
-            Overlay for the signature key.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedAdmin.DeviceUDF">
-             <summary>
-            UDF of the connected device
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedAdmin._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedAdmin.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedAdmin._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedAdmin.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedAdmin.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedAdmin.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedAdmin.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.Client.CatalogedPending">
              <summary>
             
@@ -1753,7 +1677,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.Internal.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.Internal.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1784,7 +1708,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.DeviceSeedNotFound.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.DeviceSeedNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1815,7 +1739,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.AddressNotSupported.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.AddressNotSupported.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1846,7 +1770,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.AccountNotBound.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.AccountNotBound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1877,7 +1801,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.InvalidServiceResponse.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.InvalidServiceResponse.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1909,7 +1833,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.AccountNotFound.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.AccountNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1941,7 +1865,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.MeshNotFound.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1973,7 +1897,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionStillPending.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionStillPending.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2005,7 +1929,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.SyncFailed.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.SyncFailed.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2037,7 +1961,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.Gateway.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.Gateway.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2069,7 +1993,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.NoPortalAccount.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.NoPortalAccount.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2101,7 +2025,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.PortalConnectFail.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.PortalConnectFail.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2133,7 +2057,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.PublicationRequestRefused.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.PublicationRequestRefused.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2165,7 +2089,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionException.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2197,7 +2121,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionRefused.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionRefused.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2229,7 +2153,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionPending.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionPending.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2261,7 +2185,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionExpired.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionExpired.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2293,7 +2217,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionAccountUnknown.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknown.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2325,7 +2249,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.RefusedPINInvalid.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2356,7 +2280,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.MessageIdNotFound.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.MessageIdNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -2387,7 +2311,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.InvalidRecoverySecret.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.InvalidRecoverySecret.#ctor(System.String,System.Exception,System.Object[])">
             <summary>

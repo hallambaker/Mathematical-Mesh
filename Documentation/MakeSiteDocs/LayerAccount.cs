@@ -65,7 +65,7 @@ namespace ExampleGenerator {
         public List<ExampleResult> ConnectPINCreate;
         public List<ExampleResult> ConnectPINRequest;
         public List<ExampleResult> ConnectPINComplete;
-
+        public List<ExampleResult> ConnectPINPending;
 
         public DevicePreconfiguration ConnectStaticPreconfig;
 
@@ -138,6 +138,7 @@ namespace ExampleGenerator {
 
         public List<ExampleResult> ContactBobRequest;
         public List<ExampleResult> ContactAliceResponse;
+        public List<ExampleResult> ContactBobFinal;
 
         public MessagePin MessagePin;
 
@@ -173,6 +174,11 @@ namespace ExampleGenerator {
     public partial class LayerGroup : ExampleSet {
 
         public string EncryptSourceFile = "grouptext.txt";
+
+        public string GroupDecryptBobFile = "grouptext_bob.dare";
+        public string GroupDecryptBobFile2 = "grouptext_bob2.dare";
+        public string GroupDecryptAliceFile = "grouptext_alice.dare";
+
         public string EncryptTargetFile = "groupsecret.dare";
         public string TestText = "The group secret handshake";
 
@@ -181,6 +187,7 @@ namespace ExampleGenerator {
         public List<ExampleResult> GroupEncrypt;
         public List<ExampleResult> GroupDecryptAlice;
         public List<ExampleResult> GroupDecryptBobFail;
+        public List<ExampleResult> GroupAddAlice;
         public List<ExampleResult> GroupAddBob;
         public List<ExampleResult> GroupDecryptBobSuccess;
         public List<ExampleResult> GroupDeleteBob;

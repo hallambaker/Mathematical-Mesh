@@ -43,7 +43,7 @@ protocol.
 ~~~~
 <div="terminal">
 <cmd>Alice> key nonce
-<rsp>NBNG-K554-5YYI-NLJ3-6I7U-JEKD-SHZQ
+<rsp>NAC4-FVVP-OG4R-RGQS-XCTC-3ECI-LWTA
 </div>
 ~~~~
 
@@ -55,7 +55,7 @@ Specifying the /json option returns a result of type ResultKey:
 <rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "NBNG-K554-5YYI-NLJ3-6I7U-JEKD-SHZQ"}}
+    "Key": "NAC4-FVVP-OG4R-RGQS-XCTC-3ECI-LWTA"}}
 </div>
 ~~~~
 
@@ -81,7 +81,7 @@ key type.
 ~~~~
 <div="terminal">
 <cmd>Alice> key secret
-<rsp>ECUV-DNB4-RGYZ-MNLS-2WAS-OAS4-4F7Q
+<rsp>ECZS-MCZV-Q4PT-2V7C-B4EO-BZXY-CMOA
 </div>
 ~~~~
 
@@ -93,7 +93,7 @@ Specifying the /json option returns a result of type ResultKey:
 <rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "ECUV-DNB4-RGYZ-MNLS-2WAS-OAS4-4F7Q"}}
+    "Key": "ECZS-MCZV-Q4PT-2V7C-B4EO-BZXY-CMOA"}}
 </div>
 ~~~~
 
@@ -121,8 +121,8 @@ value, formatted as a UDF Encryption key type and Content Digest Type
 ~~~~
 <div="terminal">
 <cmd>Alice> key earl
-<rsp>ECW2-UPXH-QX27-762O-BCF5-JHCF-AEX4-2B
-MAXS-MYXJ-4OSB-WNT7-UTUK-PSVE-3GBB-5J5N-MK4Z-CZKC-F7Z4-XKOH-NUBM-6WZL
+<rsp>EAMA-F3Z3-KOXN-6T2S-LXJN-M3RP-YHBA-YH
+MAG7-QZVX-DYJZ-7BNZ-CAS6-NU6O-7NC7-LW7D-MJZJ-LHHT-WJR7-YOIW-4IEY-ZG7W
 </div>
 ~~~~
 
@@ -134,8 +134,8 @@ Specifying the /json option returns a result of type ResultKey:
 <rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "ECW2-UPXH-QX27-762O-BCF5-JHCF-AEX4-2B",
-    "Identifier": "MAXS-MYXJ-4OSB-WNT7-UTUK-PSVE-3GBB-5J5N-MK4Z-CZKC-F7Z4-XKOH-NUBM-6WZL"}}
+    "Key": "EAMA-F3Z3-KOXN-6T2S-LXJN-M3RP-YHBA-YH",
+    "Identifier": "MAG7-QZVX-DYJZ-7BNZ-CAS6-NU6O-7NC7-LW7D-MJZJ-LHHT-WJR7-YOIW-4IEY-ZG7W"}}
 </div>
 ~~~~
 
@@ -165,11 +165,11 @@ formatted as a UDF Encryption key type and Share types
 ~~~~
 <div="terminal">
 <cmd>Alice> key share
-<rsp>X5JS-33OJ-O7VD-UOYB-LKKL-OBOO-I4
-MABY-3I7S-MLWT-W62Y-R3OC-QXFT-Q5AC-P3N4-DYPN-UMKH-PLIQ-LFTK-TL6W
-SAQN-WBKW-VQOS-2LTZ-NGIG-TOQG-M4QD-O
-SAQ7-NN37-NJYO-E4VY-TAPX-RX2V-ZBZC-O
-SARB-E2NI-FDCJ-PNXX-Y2XI-QBFF-FHB6-I
+<rsp>INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
+MARI-JIJ7-MN3S-JHRE-GVQC-Z3H4-727N-W3QY-UHBJ-4KZT-4O3G-OPXC-GCZR
+SAQJ-BYIM-G42W-ZED7-DTNL-KY3Q-YGJC-I
+SAQ5-4UM3-TYJC-FBQV-VVLB-TCVK-PNYP-W
+SARC-XQRL-ATXN-Q65M-HXIX-3MPE-GVHZ-6
 </div>
 ~~~~
 
@@ -181,11 +181,11 @@ Specifying the /json option returns a result of type ResultKey:
 <rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "X5JS-33OJ-O7VD-UOYB-LKKL-OBOO-I4",
-    "Identifier": "MABY-3I7S-MLWT-W62Y-R3OC-QXFT-Q5AC-P3N4-DYPN-UMKH-PLIQ-LFTK-TL6W",
-    "Shares": ["SAQN-WBKW-VQOS-2LTZ-NGIG-TOQG-M4QD-O",
-      "SAQ7-NN37-NJYO-E4VY-TAPX-RX2V-ZBZC-O",
-      "SARB-E2NI-FDCJ-PNXX-Y2XI-QBFF-FHB6-I"]}}
+    "Key": "INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU",
+    "Identifier": "MARI-JIJ7-MN3S-JHRE-GVQC-Z3H4-727N-W3QY-UHBJ-4KZT-4O3G-OPXC-GCZR",
+    "Shares": ["SAQJ-BYIM-G42W-ZED7-DTNL-KY3Q-YGJC-I",
+      "SAQ5-4UM3-TYJC-FBQV-VVLB-TCVK-PNYP-W",
+      "SARC-XQRL-ATXN-Q65M-HXIX-3MPE-GVHZ-6"]}}
 </div>
 ~~~~
 
@@ -218,8 +218,8 @@ value as a UDF Encryption key type.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key recover SAQN-WBKW-VQOS-2LTZ-NGIG-TOQG-M4QD-O SARB-E2NI-FDCJ-PNXX-Y2XI-QBFF-FHB6-I
-<rsp>X5JS-33OJ-O7VD-UOYB-LKKL-OBOO-I4
+<cmd>Alice> key recover SAQJ-BYIM-G42W-ZED7-DTNL-KY3Q-YGJC-I SARC-XQRL-ATXN-Q65M-HXIX-3MPE-GVHZ-6
+<rsp>INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
 </div>
 ~~~~
 
@@ -227,11 +227,11 @@ Specifying the /json option returns a result of type ResultKey:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key recover SAQN-WBKW-VQOS-2LTZ-NGIG-TOQG-M4QD-O SARB-E2NI-FDCJ-PNXX-Y2XI-QBFF-FHB6-I /json
+<cmd>Alice> key recover SAQJ-BYIM-G42W-ZED7-DTNL-KY3Q-YGJC-I SARC-XQRL-ATXN-Q65M-HXIX-3MPE-GVHZ-6 /json
 <rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "X5JS-33OJ-O7VD-UOYB-LKKL-OBOO-I4"}}
+    "Key": "INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU"}}
 </div>
 ~~~~
 

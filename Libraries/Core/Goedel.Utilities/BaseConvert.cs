@@ -54,26 +54,26 @@ namespace Goedel.Utilities {
 
         #region // Conversion table constants
 
-        /// <summary></summary>
+        /// <summary>Base16 conversion table</summary>
         public static readonly char[] BASE16 = new char[]{
                     '0', '1', '2', '3', '4', '5', '6', '7',
                     '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
-        /// <summary></summary>
+        /// <summary>Base32 conversion table</summary>
         public static readonly char[] BASE32 = new char[]{
                     'A' , 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                      'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                      'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
                      'Y', 'Z', '2', '3', '4', '5', '6', '7'};
 
-        /// <summary></summary>
+        /// <summary>Base32Hex conversion table</summary>
         public static readonly char[] BASE32HEX = new char[]{
                     '0' , '1', '2', '3', '4', '5', '6', '7',
                      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
                      'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
                      'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'};
 
-        /// <summary></summary>
+        /// <summary>Base64URL conversion table</summary>
         public static readonly char[] BASE64URL = new char[]{
                     'A' , 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                      'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -84,7 +84,7 @@ namespace Goedel.Utilities {
                      'w', 'x', 'y', 'z', '0', '1', '2', '3',
                      '4', '5', '6', '7', '8', '9', '-', '_'};
 
-        /// <summary></summary>
+        /// <summary>Base64 conversion table</summary>
         public static readonly char[] BASE64 = new char[]{
                     'A' , 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                      'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -95,7 +95,7 @@ namespace Goedel.Utilities {
                      'w', 'x', 'y', 'z', '0', '1', '2', '3',
                      '4', '5', '6', '7', '8', '9', '+', '/'};
 
-        /// <summary></summary>
+        /// <summary>Base 16 conversion table</summary>
         public static readonly byte[] BASE16Value = new byte[] {
                     255, 255, 255, 255,  255, 255, 255, 255,   //  0-7
                     255, 255, 255, 255,  255, 255, 255, 255,   //  8-15
@@ -115,7 +115,7 @@ namespace Goedel.Utilities {
                     255, 255, 255, 255,  255, 255, 255, 255,   // 120-127
         };
 
-        /// <summary></summary>
+        /// <summary>Base 32 conversion table</summary>
         public static readonly byte[] BASE32Value = new byte[] {
                     255, 255, 255, 255,  255, 255, 255, 255,   //  0-7
                     255, 255, 255, 255,  255, 255, 255, 255,   //  8-15
@@ -139,7 +139,7 @@ namespace Goedel.Utilities {
         // For reverse conversion permit either Base64 (+/) 
         // or Base64Url (-_) encodings of 62 and 63
         // 
-        /// <summary></summary>
+        /// <summary>Base 64 conversion table</summary>
         public static readonly byte[] BASE64Value = new byte[] {
                     255, 255, 255, 255,  255, 255, 255, 255,   //  0-7
                     255, 255, 255, 255,  255, 255, 255, 255,   //  8-15
@@ -164,8 +164,8 @@ namespace Goedel.Utilities {
         /// Convenience function returning the number of characters that will be returned by converting
         /// a string of <paramref name="precision"/> bits to Base32 encoding.
         /// </summary>
-        /// <param name="precision"></param>
-        /// <returns></returns>
+        /// <param name="precision">Output precision</param>
+        /// <returns>The output length</returns>
         public static int OutputLength32(int precision) => (precision + 4) / 5;
 
         #region // Base16

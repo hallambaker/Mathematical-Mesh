@@ -2,6 +2,7 @@
 ~~~~
 <div="terminal">
 <cmd>Alice2> account recover /verify
-<rsp>Account=MBRS-APIS-7XDH-2XVC-QR3K-4VGK-RNBI
+<rsp>Account=main
+UDF=MD7M-NMJY-4SVX-PMOD-T6FN-2LTV-DUEL
 </div>
 ~~~~

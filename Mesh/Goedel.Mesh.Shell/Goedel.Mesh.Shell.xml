@@ -849,7 +849,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.MeshShellException.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.MeshShellException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -881,7 +881,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.DidNotMatchExpectedValue.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.DidNotMatchExpectedValue.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -912,7 +912,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.ProfileFingerprintInvalid.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.ProfileFingerprintInvalid.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -944,7 +944,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.AccountNotFound.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.AccountNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -976,7 +976,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.ProfileNotFound.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.ProfileNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1008,7 +1008,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.DirectoryNotFound.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.DirectoryNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1040,7 +1040,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.FileNotFound.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.FileNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1071,7 +1071,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.CommandNotImplemented.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.CommandNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1102,7 +1102,7 @@
             locally or globally to implement different exception formatting.</summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.OptionNotImplemented.Templates">
-            <summary></summary>
+            <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.OptionNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -6083,6 +6083,12 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.Shell.ResultSent.ToString">
+            <summary>
+            Converts the value of this instance to a <see langword="String"/>.
+            </summary>
+            <returns>The current string.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Shell.ResultPending">
             <summary>
             </summary>
@@ -6273,6 +6279,10 @@
             <returns>The current string.</returns>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultConnect">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultConnect.Profile">
             <summary>
             </summary>
         </member>

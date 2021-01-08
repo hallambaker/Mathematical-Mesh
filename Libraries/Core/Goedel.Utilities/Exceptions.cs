@@ -22,7 +22,7 @@ namespace Goedel.Utilities {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -74,7 +74,7 @@ namespace Goedel.Utilities {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -126,7 +126,7 @@ namespace Goedel.Utilities {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -178,7 +178,7 @@ namespace Goedel.Utilities {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -231,7 +231,7 @@ namespace Goedel.Utilities {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -272,6 +272,7 @@ namespace Goedel.Utilities {
 
 
     /// <summary>
+    /// The environment variable must be defined.
     /// </summary>
     [global::System.Serializable]
 	public partial class EnvironmentVariableRequired : global::Goedel.Utilities.GoedelException {
@@ -282,7 +283,7 @@ namespace Goedel.Utilities {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -323,6 +324,7 @@ namespace Goedel.Utilities {
 
 
     /// <summary>
+    /// Service request failed when it should have succeded
     /// </summary>
     [global::System.Serializable]
 	public partial class ExpectedSuccess : global::Goedel.Utilities.GoedelException {
@@ -333,7 +335,7 @@ namespace Goedel.Utilities {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 
@@ -374,6 +376,7 @@ namespace Goedel.Utilities {
 
 
     /// <summary>
+    /// Service request succeeded when it should have returned an error
     /// </summary>
     [global::System.Serializable]
 	public partial class ExpectedError : global::Goedel.Utilities.GoedelException {
@@ -384,7 +387,7 @@ namespace Goedel.Utilities {
 				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary></summary>
+		///<summary>Templates for formatting response messages.</summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
 

@@ -40,6 +40,10 @@ Namespace Goedel.Cryptography
 			Description
 				|The requested cryptographic operation is not supported
 
+		Exception NoAvailableEncryptionKey
+			Console "No encryption key is available"
+			Description
+				|No encryption key is available
 		Exception NoAvailableDecryptionKey
 			Console "No decryption key is available"
 			Description

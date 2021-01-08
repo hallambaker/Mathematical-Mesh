@@ -11,8 +11,8 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Write debug output to current trace listener.
         /// </summary>
-        /// <param name="format"></param>
-        /// <param name="arg"></param>
+        /// <param name="format">The format string</param>
+        /// <param name="arg">Arguments to apply to the format string.</param>
         public static void WriteLine(string format, params object[] arg) {
 
             var caller = AssemblyStack.GetCallerMethodName();

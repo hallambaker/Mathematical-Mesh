@@ -100,8 +100,8 @@ If no key is specified, a random secret is generated:
 ~~~~
 <div="terminal">
 <cmd>Alice> hash mac TestFile1.txt
-<rsp>AB6V-F7KB-SRTV-W6SO-SE4C-EQPX-H7G5
-NCAY-JRYI-5ZFU-TRWS-GAZ4-Y2FY-5U4H
+<rsp>ACFH-BJQS-B73O-HFXF-B3SL-WQGO-OEKI
+NCGR-VIRQ-YSI2-V6MB-MVF5-4RQ2-LUDL
 </div>
 ~~~~
 
@@ -110,9 +110,9 @@ A key may be specified using the `/key` option:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> hash mac TestFile1.txt /key=NCAY-JRYI-5ZFU-TRWS-GAZ4-Y2FY-5U4H
-<rsp>AB6V-F7KB-SRTV-W6SO-SE4C-EQPX-H7G5
-NCAY-JRYI-5ZFU-TRWS-GAZ4-Y2FY-5U4H
+<cmd>Alice> hash mac TestFile1.txt /key=NCGR-VIRQ-YSI2-V6MB-MVF5-4RQ2-LUDL
+<rsp>ACFH-BJQS-B73O-HFXF-B3SL-WQGO-OEKI
+NCGR-VIRQ-YSI2-V6MB-MVF5-4RQ2-LUDL
 </div>
 ~~~~
 
@@ -122,10 +122,10 @@ If the expected digest value is specified, this is used to check the calculated 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> hash mac TestFile1.txt /key=NCAY-JRYI-5ZFU-TRWS-GAZ4-Y2FY-5U4H ^
-    /expect=AB6V-F7KB-SRTV-W6SO-SE4C-EQPX-H7G5
+<cmd>Alice> hash mac TestFile1.txt /key=NCGR-VIRQ-YSI2-V6MB-MVF5-4RQ2-LUDL ^
+    /expect=ACFH-BJQS-B73O-HFXF-B3SL-WQGO-OEKI
 <rsp>True
-<cmd>Alice> hash mac TestFile1.txt /key=NCAY-JRYI-5ZFU-TRWS-GAZ4-Y2FY-5U4H ^
+<cmd>Alice> hash mac TestFile1.txt /key=NCGR-VIRQ-YSI2-V6MB-MVF5-4RQ2-LUDL ^
     /expect=MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
 <rsp>ERROR - The calculated fingerprint did not match the expected value.
 </div>

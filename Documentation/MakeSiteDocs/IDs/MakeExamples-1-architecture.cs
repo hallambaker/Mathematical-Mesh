@@ -289,6 +289,10 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Contact.ContactAliceResponse);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Bob can now collect Alice's contact:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.Contact.ContactBobFinal);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -335,16 +339,19 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Group.GroupCreate);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Bob encrypts a test file but he can't decrypt it because he isn't in the group:\n{0}", _Indent);
+				_Output.Write ("Alice encrypts a test file but he can't decrypt it because she hasn't added herself \n{0}", _Indent);
+				_Output.Write ("to the group yet.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Group.GroupEncrypt);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Even though she is the group administrator, Alice can't decrypt the file either until\n{0}", _Indent);
-				_Output.Write ("she adds herself to the group.\n{0}", _Indent);
+				_Output.Write ("Alice adds herself to the group, now she can decrypt:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Example.Group.GroupDecryptAlice);
+				  ConsoleExample (Example.Group.GroupAddAlice);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Alice adds Bob to the group:\n{0}", _Indent);
+				_Output.Write ("At this point, Bob can't encrypt or decrypt messages because he doesn't know the \n{0}", _Indent);
+				_Output.Write ("public key and he isn't in the group. Alice could allow Bob to encrypt but not\n{0}", _Indent);
+				_Output.Write ("decrypt by sending him the group contact information. Instead she adds Bob to \n{0}", _Indent);
+				_Output.Write ("the group:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Group.GroupAddBob);
 				_Output.Write ("\n{0}", _Indent);

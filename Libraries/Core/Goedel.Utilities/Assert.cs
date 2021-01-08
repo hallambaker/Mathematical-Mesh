@@ -290,6 +290,7 @@ namespace Goedel.Utilities {
 
         /// <summary>Test to see if two values are equal.
         /// </summary>
+        /// <typeparam name="T">The type of the argument.</typeparam>
         /// <param name="test1">First test value</param>
         /// <param name="test2">Second test value</param>
         /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
@@ -326,14 +327,14 @@ namespace Goedel.Utilities {
         /// Utility routine used to flag missing code to implement missing
         /// cryptographic authentication check
         /// </summary>
-        /// <param name="description"></param>
+        /// <param name="description">Task description</param>
         public static void TaskValidate(this string description) => description.Keep();
 
 
         /// <summary>
         /// Utility routine used to flag possibly redundant code.
         /// </summary>
-        /// <param name="description"></param>
+        /// <param name="description">Task description</param>
         public static void TaskRedundant(this string description) => description.Keep();
 
 
@@ -341,7 +342,7 @@ namespace Goedel.Utilities {
         /// Utility routine used to flag missing code to implement missing test for
         /// functionality not yet implemented.
         /// </summary>
-        /// <param name="description"></param>
+        /// <param name="description">Task description</param>
         public static void TaskTest(this string description) => description.Keep();
 
         /// <summary>

@@ -33,17 +33,7 @@
 		Description
 			|Describes an ordinary device connected to a Mesh
 
-	Structure CatalogedAdmin
-		Inherits CatalogedMachine
-		Description
-			|Information enabling administration of a Master profile. It adds an overlay key
-			|for the administration key.
-		TStruct Key SignatureKey
-			Description
-				|Overlay for the signature key.
-		String DeviceUDF
-			Description
-				|UDF of the connected device
+
 
 	Structure CatalogedPending
 		Inherits CatalogedMachine
