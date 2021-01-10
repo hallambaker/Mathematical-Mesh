@@ -8,29 +8,7 @@ Deleted devices do not lose their decryption capabilities.
 
 
 
-
-
-
-
-# Architecture
-
-4.2.2
-
-Alice creates an SSH profile within her Mesh on the administrative device. 
-
-Missing example 73
-[Need more stuff here, need to sync from a second device]
-
-# 3 DARE
-
-13.3. Encrypted Message
-The creator generates a base seed: 
-
-
- 4 missing examples
-
-
- # 4 Schema
+# 4 Schema
 
 6.2. Message Response Identifier
 

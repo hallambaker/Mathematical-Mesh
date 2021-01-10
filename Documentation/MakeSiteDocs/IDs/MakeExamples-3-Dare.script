@@ -237,7 +237,8 @@ If a plaintext message contains EDS sequences, these are also in plaintext:
 
 #### Encrypted Message
 #% var CryptoStackEncrypt = Dare.CryptoStackEncrypt;
-#% var Recipient = CryptoStackEncrypt?.Recipients?[0] as Goedel.Test.Core.DareRecipientDebug;
+#% var encHeader = Dare.MailMessageAsDAREEncrypted?.Header;
+#% var Recipient = encHeader?.Recipients?[0] as Goedel.Test.Core.DareRecipientDebug;
 #% var MessageEnc = Dare.MessageEnc;
 #% var Salt = MessageEnc?.Header?.Salt;
 

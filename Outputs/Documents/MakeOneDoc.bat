@@ -23,7 +23,12 @@ copy ..\xml2rfc.css .
 copy ..\xml2rfc.js .
 copy ..\bib.xml .
 copy ..\favicon.png .
-:: rfctool %DocSource%\hallambaker-mesh-1-architecture.docx  /auto /cache=bib.xml
-rfctool %DocSource%\hallambaker-mesh-1-architecture.docx  /auto /cache=bib.xml
+
+::rfctool %DocSource%\hallambaker-mesh-1-architecture.docx  /auto /cache=bib.xml
+
+rfctool %DocSource%\hallambaker-mesh-3-dare.docx /auto /cache=bib.xml
+::rfctool %DocSource%\hallambaker-mesh-4-schema.docx  /auto /cache=bib.xml
+::rfctool %DocSource%\hallambaker-mesh-5-protocol.docx  /auto /cache=bib.xml
+
 exit /b 0
 

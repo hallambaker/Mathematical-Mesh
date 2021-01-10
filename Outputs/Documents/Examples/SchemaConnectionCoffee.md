@@ -2,24 +2,24 @@
 {
   "ConnectionDevice":{
     "DeviceSignature":{
-      "Udf":"MDPN-MEFU-TKXE-QE5A-2CYH-NWCS-YZ4X",
+      "Udf":"MARC-YRO4-3FJT-GOAY-2KQM-KRQ2-3ZOA",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"LFHGUY4EQU_ddVMEokHS-sS2T7FZHzkWnEgIP9oTA-HB1
-  KbjeZDoT4YXMo-pT4xZg4wx9fb1j8oA"}}},
+          "Public":"liaidJByMTW__evpWvyu_4a0WTMfqO4ahzLfUG93eG0Up
+  gORFhFNceORkqT--FQbg6sq0vcAIXcA"}}},
     "DeviceEncryption":{
-      "Udf":"MCX7-W2O4-RA7F-CU44-HNL5-JW5E-Z5LA",
+      "Udf":"MCIK-K5Z7-OAN2-GBD6-IHIF-DQGQ-UZHL",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"JGvpOtZRdVsi_DKw_456d3Tu1me-mNQpHI_1O_rAzs3py
-  qJXv2yrdPZiWZ4vzQqnn_0Z7ZwUYxwA"}}},
+          "Public":"jYBEXc_Ihl6heemkuB62L2W_VB0mFnh7-PHenHw0OUgLf
+  1PMX_yksucBgCrXnFwtcLnrxat6GACA"}}},
     "DeviceAuthentication":{
-      "Udf":"MCXY-YDXX-R2GI-PVPO-ES62-FP22-E64J",
+      "Udf":"MBMH-HBEM-JSXF-TDXQ-BBEV-DZQV-4L72",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"A4izLs7swUhoJ1iXD3tZpw10eZtadnD95NkuYA3R6U5W4
-  1kBXx8HSUIR6x843PuvLzdctslyjy8A"}}}}}
+          "Public":"iWHNwGYpiCIPygRhLyfJ5LS1SEgPqgkoMPv5QxTbCYhGZ
+  nSLCMeVJrfqC0etfZjB7FwRzk3QW04A"}}}}}
 ~~~~

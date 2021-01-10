@@ -325,7 +325,8 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Encrypted Message\n{0}", _Indent);
 				 var CryptoStackEncrypt = Dare.CryptoStackEncrypt;
-				 var Recipient = CryptoStackEncrypt?.Recipients?[0] as Goedel.Test.Core.DareRecipientDebug;
+				 var encHeader = Dare.MailMessageAsDAREEncrypted?.Header;
+				 var Recipient = encHeader?.Recipients?[0] as Goedel.Test.Core.DareRecipientDebug;
 				 var MessageEnc = Dare.MessageEnc;
 				 var Salt = MessageEnc?.Header?.Salt;
 				_Output.Write ("\n{0}", _Indent);
