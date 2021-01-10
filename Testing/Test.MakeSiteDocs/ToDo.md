@@ -1,10 +1,32 @@
 ﻿# Unfinished business
 
+# Implementing the bindings
+
+## 4 Schema
+6.5. Key Agreement
+
+##5 Protocol
+5.2.3. Request
+5.2.4. Response
+
+# Implement Service to Service
+##5 Protocol
+6.4. Messaging
+Service-Service (Post Transaction)
+
+
+
 ## Check.DisableDeletedDevices
 
 Deleted devices do not lose their decryption capabilities.
 
-## Implement SSH  [73]
+## Implement SSH  
+
+## Implement Mail  
+
+
+
+---------------------------------
 
 
 
@@ -49,6 +71,9 @@ Missing example 87
 Service-Service (Post Transaction)
 
 Missing example 94
+
+
+
 
 7.1.3. Validation
 

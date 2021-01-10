@@ -1,17 +1,24 @@
-﻿# ToDo
+﻿# Unfinished business
+
+## Check.DisableDeletedDevices
+
+Deleted devices do not lose their decryption capabilities.
+
+## Implement SSH  [73]
+
+
+# ToDo
+
+## Binding
+
+Web binding.
 
 
 ## Functionality 
 
 ### Archive
 
-* Implement delete functionality.
-
 * Implement and test archive index functionality.
-
-* Test of log functionality
-
-* Test of archive list functionality.
 
 
 ### SSH 

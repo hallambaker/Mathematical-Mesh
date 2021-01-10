@@ -266,7 +266,8 @@ namespace ExampleGenerator {
             Connect.ConnectRequest = Alice2.Example(
                 $"device request {AliceAccount}"
                 );
-
+            Connect.ResponseIdentifierEnvelope = null;
+            Connect.ResponseIdentifierMessage = null;
 
             Connect.ConnectPending = Alice1.Example(
                 $"device pending"
@@ -452,6 +453,8 @@ namespace ExampleGenerator {
 
             var resultConfirmVerify = Confirm.ConfirmVerify.GetResultSent();
             Confirm.RequestConfirmation = resultConfirmSent?.Message as RequestConfirmation;
+
+            // This is not working correctly here.
             Confirm.ResponseConfirmation = resultConfirmVerify?.Message as ResponseConfirmation;
 
 
@@ -566,6 +569,8 @@ namespace ExampleGenerator {
                 $"device complete",
                 $"account sync"
                 );
+
+            // this is not being assigned correctly
 
             var connectPINComplete = Connect.ConnectPINComplete.GetResultConnect();
             Connect.RespondConnectionPIN = connectPINComplete.RespondConnection;

@@ -11,6 +11,7 @@ using Goedel.Utilities;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Goedel.Mesh;
 
 namespace ExampleGenerator {
 
@@ -67,6 +68,10 @@ namespace ExampleGenerator {
         public CryptoParameters CryptoParametersSign;
         public CryptoParameters CryptoParametersSignEncrypt;
         public CryptoStackDebug CryptoStackEncrypt;
+
+
+
+
         }
 
     public partial class CreateExamples {

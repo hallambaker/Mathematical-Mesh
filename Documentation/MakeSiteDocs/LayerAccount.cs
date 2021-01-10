@@ -4,6 +4,7 @@ using Goedel.Utilities;
 using Goedel.IO;
 using System;
 using System.Collections.Generic;
+using Goedel.Cryptography.Dare;
 
 namespace ExampleGenerator {
 
@@ -71,6 +72,8 @@ namespace ExampleGenerator {
 
 
 
+
+
         public MessagePin ConnectPINMessagePin;
         public AcknowledgeConnection ConnectPINAcknowledgeConnection;
         public RespondConnection ConnectPINConnectResponse;
@@ -87,6 +90,25 @@ namespace ExampleGenerator {
 
         public string ConnectEARL;
 
+
+
+        public DareEnvelope ResponseIdentifierEnvelope;
+        public RequestConnection ResponseIdentifierMessage;
+        public string ResponseIdentifierMessageId;
+        public string ResponseIdentifierResponseId;
+
+        public string ProofOfKnowledgePin;
+        public byte[] ProofOfKnowledgeAlg;
+        public byte[] ProofOfKnowledgePinData;
+        public string ProofOfKnowledgeActionString;
+        public byte[] ProofOfKnowledgeActionBytes;
+        public byte[] ProofOfKnowledgeSaltedPin;
+        public string ProofOfKnowledgeSaltedPinId;
+
+        public byte[] ProofOfKnowledgeWitnessData;
+        public string ProofOfKnowledgeWitnessValue;
+
+        public MessagePinValidated MessagePinValidated;
 
 
 
