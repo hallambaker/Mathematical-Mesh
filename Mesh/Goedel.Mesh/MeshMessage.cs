@@ -193,7 +193,7 @@ namespace Goedel.Mesh {
                 return;
                 }
 
-            var saltedPin = MessagePin.SaltPIN(pin, MeshConstants.MessagePINActionContact);
+            var saltedPin = MessagePin.SaltPIN(pin, Action);
 
             ClientNonce = CryptoCatalog.GetBits(128);
             PinWitness = MessagePin.GetPinWitness(saltedPin, Recipient, AuthenticatedData, ClientNonce);

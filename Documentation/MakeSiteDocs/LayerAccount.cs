@@ -94,6 +94,7 @@ namespace ExampleGenerator {
 
         public DareEnvelope ResponseIdentifierEnvelope;
         public RequestConnection ResponseIdentifierMessage;
+
         public string ResponseIdentifierMessageId;
         public string ResponseIdentifierResponseId;
 

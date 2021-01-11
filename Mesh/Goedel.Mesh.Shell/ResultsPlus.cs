@@ -314,7 +314,7 @@ namespace Goedel.Mesh.Shell {
                         }
                     case ResponseConfirmation responseConfirmation: {
                         ToBuilder(builder, message, $"    Confirmation Reply:");
-                        builder.AppendLine($"        RequestID: {responseConfirmation.Request.Header.EnvelopeID}");
+                        builder.AppendLine($"        RequestID: {responseConfirmation.Request.Header.EnvelopeId}");
                         builder.AppendLine($"        Accept: {responseConfirmation.Accept}");
                         break;
                         }

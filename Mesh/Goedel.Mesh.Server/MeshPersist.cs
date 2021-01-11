@@ -388,7 +388,7 @@ namespace Goedel.Mesh.Server {
 
             // Post the claim to the local spool. The unique identifier is the
             // publication identifier.
-            dareEnvelope.Header.EnvelopeID = Message.GetEnvelopeId(id);
+            dareEnvelope.Header.EnvelopeId = Message.GetEnvelopeId(id);
             accountEntry.PostLocal(dareEnvelope);
 
             // Hack: Allow for the possibility of multiple claims on the same item.

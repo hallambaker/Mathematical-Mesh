@@ -723,7 +723,7 @@ namespace Goedel.Cryptography.Dare {
             var header = new DareHeader() {
                 SequenceInfo = MakeSequenceInfo(),
 
-                EnvelopeID = headerIn.EnvelopeID,
+                EnvelopeId = headerIn.EnvelopeId,
                 EncryptionAlgorithm = headerIn.EncryptionAlgorithm,
                 Salt = headerIn.Salt,
                 Cloaked = headerIn.Cloaked,

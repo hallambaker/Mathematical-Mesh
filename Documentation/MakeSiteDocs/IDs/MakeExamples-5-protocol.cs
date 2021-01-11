@@ -488,26 +488,42 @@ namespace ExampleGenerator {
 		public void _ProtocolConnect(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage(Connect.ConnectRequestWitness);
+				  DescribeRequest (Connect.ConnectRequest?[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Connect.ConnectRequest?[0].Traces[0]);
+				_Output.Write ("// This is missing here because the messages are not being fished out of the \n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage(Connect.ConnectRequestWitness);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage(Connect.AcknowledgeConnectionWitness);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  DescribeResponse (Connect.ConnectRequest?[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Alice reads her pending messages, notes that the witness value matches the one displayed\n{0}", _Indent);
-				_Output.Write ("earlier and approves the connection request.\n{0}", _Indent);
+				_Output.Write ("// Again missing here...\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage(Connect.AcknowledgeConnectionWitness);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice reads her pending messages, notes that there is a pending connection request with\n{0}", _Indent);
+				_Output.Write ("a witness value matches the one displayed earlier and approves the connection request.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("// here need description of the handling of the spool\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage(Connect.RespondConnectionWitness);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("// Now the device collects the result from the local delivery spool\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("This is then fetched...\n{0}", _Indent);
+				_Output.Write ("[Request]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Mention Can get a 'not yet ready' response]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Response]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("// has all the information needed to complete the transaction.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -524,7 +540,15 @@ namespace ExampleGenerator {
 		public void _ProtocolConnectPIN(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[This is identical to the previous version except that Alice generates a PIN \n{0}", _Indent);
+				_Output.Write ("code as described in section $$$ earlier. This is used to create an authenticated\n{0}", _Indent);
+				_Output.Write ("message as described in Mesh 4 Schema $$$]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage(Connect.ConnectPINMessagePin);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[is this example even necessary???]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -541,9 +565,21 @@ namespace ExampleGenerator {
 		public void _ProtocolConnectEARL(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("[To be specified]\n{0}", _Indent);
-				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("// Create a device profile during manufacture\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[The device profile]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("// Publish profile as EARL\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The QR code.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("// Device description provides the device profile and hailing methods [WiFi, poll]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("// Admin device posts claim\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("// device polls, discovers claim, requests connection\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		}

@@ -7,10 +7,6 @@ String
 String
 String
 String
-String
-String
-String
-String
 Function
 String
 String

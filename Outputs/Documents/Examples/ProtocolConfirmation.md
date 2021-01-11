@@ -4,7 +4,7 @@ The service sends out the following challenge:
 ~~~~
 {
   "RequestConfirmation":{
-    "MessageId":"NCSP-ACXT-MDPB-QLOC-TPGQ-TFNH-M7KR",
+    "MessageId":"NADS-LI53-GDCV-2WZL-GW3K-62QU-KW4X",
     "Sender":"console@example.com",
     "Recipient":"alice@example.com",
     "Text":"start"}}

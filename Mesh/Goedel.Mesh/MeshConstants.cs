@@ -247,7 +247,19 @@ namespace Goedel.Mesh {
                 _ => null
                 };
 
-        // File: MiscUnsorted
+        // File: IdentifierDerrivation
+
+        ///<summary>
+        ///The proposed IANA content identifier for the Mesh message type.
+        ///</summary>
+        public const string IanaTypeMeshEnvelopeId = "application/mmm/envelopeid";
+
+        ///<summary>
+        ///The proposed IANA content identifier for the Mesh message type.
+        ///</summary>
+        public const string IanaTypeMeshResponseId = "application/mmm/responseid";
+
+        // File: PinActionCodes
 
         ///<summary>
         ///Action info for device PIN
@@ -258,6 +270,8 @@ namespace Goedel.Mesh {
         ///Action info for contact PIN
         ///</summary>
         public const string MessagePINActionContact = "Contact";
+
+        // File: MiscUnsorted
 
         ///<summary>
         ///The proposed IANA content identifier for the Mesh message type.
@@ -273,16 +287,6 @@ namespace Goedel.Mesh {
         ///The proposed IANA content identifier for the Mesh message type.
         ///</summary>
         public const string IanaTypeMeshNonce = "application/mmm/nonce";
-
-        ///<summary>
-        ///The proposed IANA content identifier for the Mesh message type.
-        ///</summary>
-        public const string IanaTypeMeshEnvelopeId = "application/mmm/envelopeid";
-
-        ///<summary>
-        ///The proposed IANA content identifier for the Mesh message type.
-        ///</summary>
-        public const string IanaTypeMeshResponseId = "application/mmm/response";
 
         ///<summary>
         ///The proposed IANA content identifier for the Mesh message type.

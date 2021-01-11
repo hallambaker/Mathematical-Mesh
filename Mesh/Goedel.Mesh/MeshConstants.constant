@@ -77,15 +77,25 @@ File MessageStateLocal
 		Code Initial "Initial state (unread)"
 		Code Closed "Transaction associated with the message was completed"
 
+File IdentifierDerrivation
+	String IanaTypeMeshEnvelopeId "application/mmm/envelopeid"
+		Description
+			|The proposed IANA content identifier for the Mesh message type.
+	String IanaTypeMeshResponseId "application/mmm/responseid"
+		Description
+			|The proposed IANA content identifier for the Mesh message type.
 
-
-File MiscUnsorted
+File PinActionCodes
 	String MessagePINActionDevice "Device"
 		Description
 			|Action info for device PIN
 	String MessagePINActionContact "Contact"
 		Description
 			|Action info for contact PIN
+
+
+File MiscUnsorted
+
 	String IanaTypeMeshMessage "application/mmm/message"
 		Description
 			|The proposed IANA content identifier for the Mesh message type.
@@ -96,12 +106,7 @@ File MiscUnsorted
 		Description
 			|The proposed IANA content identifier for the Mesh message type.
 
-	String IanaTypeMeshEnvelopeId "application/mmm/envelopeid"
-		Description
-			|The proposed IANA content identifier for the Mesh message type.
-	String IanaTypeMeshResponseId "application/mmm/response"
-		Description
-			|The proposed IANA content identifier for the Mesh message type.
+
 	String IanaTypeMeshCapabilityId "application/mmm/capability/"
 		Description
 			|The proposed IANA content identifier for the Mesh message type.

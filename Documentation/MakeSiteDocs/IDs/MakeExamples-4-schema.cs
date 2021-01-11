@@ -119,12 +119,22 @@ namespace ExampleGenerator {
 		public void _SchemaCode3(CreateExamples Example) {
 
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("alg = UdfAlg (PIN)\n{0}", _Indent);
-				_Output.Write ("pinData = UdfBDS (PIN)\n{0}", _Indent);
+				_Output.Write ("alg =           UdfAlg (PIN)\n{0}", _Indent);
+				_Output.Write ("pinData =       UdfBDS (PIN)\n{0}", _Indent);
 				_Output.Write ("saltedPINData = MAC (Action, pinData)\n{0}", _Indent);
-				_Output.Write ("saltedPIN = UDFPresent (Authenticator_HMAC_SHA_2_512 + saltedPINData)\n{0}", _Indent);
-				_Output.Write ("PinId = UDFPresent (MAC (Account, saltedPINData))\n{0}", _Indent);
-				_Output.Write ("witnessData = Account.ToUTF8() + ClientNonce + PayloadDigest\n{0}", _Indent);
+				_Output.Write ("saltedPIN =     UDFPresent (HMAC_SHA_2_512 + saltedPINData)\n{0}", _Indent);
+				_Output.Write ("PinId =         UDFPresent (MAC (Account, saltedPINData))\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The issuer of the PIN code stores the value saltedPIN for retrieval using the \n{0}", _Indent);
+				_Output.Write ("key PinId.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The witness value for a Dare Envelope with payload digest PayloadDigest \n{0}", _Indent);
+				_Output.Write ("authenticated by a PIN code whose salted value is saltedPINData, issued \n{0}", _Indent);
+				_Output.Write ("by account Account is given by PinWitness() as follows:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("witnessData =   Account.ToUTF8() + ClientNonce + PayloadDigest\n{0}", _Indent);
 				_Output.Write ("witnessValue =  MAC (witnessData , saltedPINData)\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
 					}
@@ -359,7 +369,23 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaMessageIds(CreateExamples Example) {
 
-				_Output.Write ("[To be specified]\n{0}", _Indent);
+				 var message = Connect.ConnectRequestPIN;
+				 var messageId = message?.MessageId;
+				 var envelopeId = message?.EnvelopeId;
+				 var responseId = message?.GetResponseId();
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("MessageID \n{0}", _Indent);
+				_Output.Write ("    = {1}\n{0}", _Indent, messageId);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("EnvelopeID \n{0}", _Indent);
+				_Output.Write ("    = {1}\n{0}", _Indent, envelopeId);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("ResponseID \n{0}", _Indent);
+				_Output.Write ("    = {1}\n{0}", _Indent, responseId);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -373,7 +399,48 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaPINFunction(CreateExamples Example) {
 
-				_Output.Write ("[To be specified]\n{0}", _Indent);
+				 var message = Connect.ConnectRequestPIN;
+				 var account = message.AccountAddress;
+				 var pin = Connect.ConnectPINMessagePin.Pin;
+				 var action = MeshConstants.MessagePINActionDevice;
+				 var (code,key) = UDF.Parse(pin);
+				 var saltedPINData = action.ToUTF8().GetMAC(key, CryptoAlgorithmId.HMAC_SHA_2_512);
+				 var saltedPIN = MessagePin.SaltPIN (pin, action);
+				 var PinId = MessagePin.GetPinId(pin, account);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("For example, to generate saltedPIN for the pin\n{0}", _Indent);
+				_Output.Write ("{1} used to authenticate a {2} action:\n{0}", _Indent, pin, action);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("pin = {1}\n{0}", _Indent, pin);
+				_Output.Write ("action = message.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("alg = UdfAlg (PIN)\n{0}", _Indent);
+				_Output.Write ("    = {1}\n{0}", _Indent, code);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("hashalg = default (alg, HMAC_SHA_2_512)\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("pinData = UdfBDS (PIN)\n{0}", _Indent);
+				_Output.Write ("    = {1}\n{0}", _Indent, key);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("saltedPINData \n{0}", _Indent);
+				_Output.Write ("    = hashalg(pinData, hashalg);\n{0}", _Indent);
+				_Output.Write ("    = {1}\n{0}", _Indent, saltedPINData);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("saltedPIN = UDFPresent (hashalg + saltedPINData)\n{0}", _Indent);
+				_Output.Write ("    = {1}\n{0}", _Indent, saltedPIN);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The PinId binding the pin to the account {1} is\n{0}", _Indent, account);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Account =  {1} \n{0}", _Indent, account);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("PinId = UDFPresent (MAC (Account, saltedPINData))\n{0}", _Indent);
+				_Output.Write ("    = {1}\n{0}", _Indent, PinId);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -387,7 +454,12 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaPINWitness(CreateExamples Example) {
 
-				_Output.Write ("[To be specified]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("witnessData = Account.ToUTF8() + ClientNonce + PayloadDigest\n{0}", _Indent);
+				_Output.Write ("witnessValue =  MAC (witnessData , saltedPINData)\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -401,7 +473,11 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaClientAuthKeyAgreement(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("[To be specified]\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 

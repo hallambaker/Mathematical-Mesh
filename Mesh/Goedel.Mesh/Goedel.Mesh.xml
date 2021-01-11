@@ -3700,6 +3700,16 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshEnvelopeId">
+            <summary>
+            The proposed IANA content identifier for the Mesh message type.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshResponseId">
+            <summary>
+            The proposed IANA content identifier for the Mesh message type.
+            </summary>
+        </member>
         <member name="F:Goedel.Mesh.MeshConstants.MessagePINActionDevice">
             <summary>
             Action info for device PIN
@@ -3721,16 +3731,6 @@
             </summary>
         </member>
         <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshNonce">
-            <summary>
-            The proposed IANA content identifier for the Mesh message type.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshEnvelopeId">
-            <summary>
-            The proposed IANA content identifier for the Mesh message type.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshResponseId">
             <summary>
             The proposed IANA content identifier for the Mesh message type.
             </summary>

@@ -16,17 +16,34 @@ Service-Service (Post Transaction)
 
 
 
-## Check.DisableDeletedDevices
+# Check.DisableDeletedDevices
 
 Deleted devices do not lose their decryption capabilities.
 
-## Implement SSH  
+# Implement SSH  
 
-## Implement Mail  
+# Implement Mail  
 
+# Presentation issues
+
+Redact examples to remove the extended Base64 crap. 
+
+Show the inner decrypted message payloads instead.
+
+## bug in constants...
+
+These tables are coming out shitty:
+
+PinActionCodes
+IdentifierDerrivation
 
 
 ---------------------------------
+
+
+[Need to go through Schema Section 9 and Protocol Section 7. 
+Move all the message stuff into Protocol. Move all the MessagID 
+and PIN stuff into Schema.]
 
 
 
@@ -76,6 +93,16 @@ Missing example 94
 
 
 7.1.3. Validation
+
+[$$$$ This text merely needs to reference the Schema section
+describing the function.]
+
+The example does need the Response message though.
+
+
+
+
+
 
 Bob's client creates a PIN value and records it in his Local spool: 
 

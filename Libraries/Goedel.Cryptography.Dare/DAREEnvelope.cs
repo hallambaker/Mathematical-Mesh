@@ -52,7 +52,7 @@ namespace Goedel.Cryptography.Dare {
         public long Index => Header.Index;
 
         ///<summary>Convenience accessor for the envelope id.</summary>
-        public string EnvelopeID => Header.EnvelopeID;
+        public string EnvelopeId => Header.EnvelopeId;
 
         ///<summary>The payload digest value calculated during decoding.</summary> 
         public byte[] PayloadDigest;

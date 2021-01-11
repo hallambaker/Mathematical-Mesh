@@ -75,7 +75,7 @@ namespace Goedel.Mesh {
         public SpoolEntry(Spool spool, DareEnvelope envelope, SpoolEntry next) {
             Spool = spool;
             MessageStatus = MessageStatus.Open;
-            EnvelopeID = envelope.EnvelopeID;
+            EnvelopeID = envelope.EnvelopeId;
             AddEnvelope(envelope, next);
             }
 
@@ -337,7 +337,7 @@ namespace Goedel.Mesh {
                 return null;
                 }
 
-            if (SpoolEntryById.TryGetValue(envelope.EnvelopeID, out var spoolEntry)) {
+            if (SpoolEntryById.TryGetValue(envelope.EnvelopeId, out var spoolEntry)) {
                 spoolEntry.AddEnvelope(envelope, next);
 
                 }

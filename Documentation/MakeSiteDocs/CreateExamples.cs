@@ -265,9 +265,15 @@ namespace ExampleGenerator {
 
             Connect.ConnectRequest = Alice2.Example(
                 $"device request {AliceAccount}"
-                );
-            Connect.ResponseIdentifierEnvelope = null;
-            Connect.ResponseIdentifierMessage = null;
+                ) ;
+
+            var connectRequest = Connect.ConnectRequest[0].Result as ResultConnect;
+
+            Connect.ResponseIdentifierMessage = connectRequest.RequestConnection;
+            Connect.ResponseIdentifierEnvelope = Connect.ResponseIdentifierMessage.DareEnvelope;
+            
+
+            var x = Connect.ResponseIdentifierEnvelope.EnvelopeId;
 
             Connect.ConnectPending = Alice1.Example(
                 $"device pending"

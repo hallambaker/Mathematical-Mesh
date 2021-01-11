@@ -292,26 +292,42 @@ Alice accepts the challeng and returns the following response:
 
 #zfile CreateExamples ProtocolConnect "Examples\\ProtocolConnect.md" Example
 
-#% DescribeMessage(Connect.ConnectRequestWitness);
+#%  DescribeRequest (Connect.ConnectRequest?[0].Traces[0]);
 
 The request payload:
 
-#%  DescribeRequest (Connect.ConnectRequest?[0].Traces[0]);
+// This is missing here because the messages are not being fished out of the 
 
+#% DescribeMessage(Connect.ConnectRequestWitness);
 
-#% DescribeMessage(Connect.AcknowledgeConnectionWitness);
 
 The response payload:
 
 #%  DescribeResponse (Connect.ConnectRequest?[0].Traces[0]);
 
-Alice reads her pending messages, notes that the witness value matches the one displayed
-earlier and approves the connection request.
+// Again missing here...
+
+#% DescribeMessage(Connect.AcknowledgeConnectionWitness);
+
+
+
+Alice reads her pending messages, notes that there is a pending connection request with
+a witness value matches the one displayed earlier and approves the connection request.
+
+// here need description of the handling of the spool
 
 #% DescribeMessage(Connect.RespondConnectionWitness);
 
+// Now the device collects the result from the local delivery spool
 
-This is then fetched...
+[Request]
+
+[Mention Can get a 'not yet ready' response]
+
+
+[Response]
+
+// has all the information needed to complete the transaction.
 
 
 #end zfile
@@ -319,7 +335,15 @@ This is then fetched...
 
 #zfile CreateExamples ProtocolConnectPIN "Examples\\ProtocolConnectPIN.md" Example
 
+
+[This is identical to the previous version except that Alice generates a PIN 
+code as described in section $$$ earlier. This is used to create an authenticated
+message as described in Mesh 4 Schema $$$]
+
 #% DescribeMessage(Connect.ConnectPINMessagePin);
+
+[is this example even necessary???]
+
 
 
 #end zfile
@@ -327,9 +351,21 @@ This is then fetched...
 
 #zfile CreateExamples ProtocolConnectEARL "Examples\\ProtocolConnectEARL.md" Example
 
-~~~~
-[To be specified]
-~~~~
+// Create a device profile during manufacture
+
+[The device profile]
+
+// Publish profile as EARL
+
+The QR code.
+
+// Device description provides the device profile and hailing methods [WiFi, poll]
+
+// Admin device posts claim
+
+// device polls, discovers claim, requests connection
+
+
 
 #end zfile
 

@@ -435,7 +435,7 @@ namespace Goedel.Cryptography.Dare {
         ///Unique identifier
         /// </summary>
 
-		public virtual string						EnvelopeID  {get; set;}
+		public virtual string						EnvelopeId  {get; set;}
         /// <summary>
         ///The encryption algorithm as specified in JWE
         /// </summary>
@@ -565,10 +565,10 @@ namespace Goedel.Cryptography.Dare {
 				_writer.WriteObjectStart ();
 				}
 			((DareTrailer)this).SerializeX(_writer, false, ref _first);
-			if (EnvelopeID != null) {
+			if (EnvelopeId != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopeID", 1);
-					_writer.WriteString (EnvelopeID);
+				_writer.WriteToken ("EnvelopeId", 1);
+					_writer.WriteString (EnvelopeId);
 				}
 			if (EncryptionAlgorithm != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -704,8 +704,8 @@ namespace Goedel.Cryptography.Dare {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "EnvelopeID" : {
-					EnvelopeID = jsonReader.ReadString ();
+				case "EnvelopeId" : {
+					EnvelopeId = jsonReader.ReadString ();
 					break;
 					}
 				case "enc" : {

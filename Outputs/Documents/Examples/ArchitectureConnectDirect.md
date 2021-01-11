@@ -4,8 +4,8 @@ The connection request is initiated on the device being connected:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MAQP-HB2X-RGPO-MKXO-B5DS-2JPE-SWRI
-   Witness value = Z2WF-HACS-FSGQ-RCRD-O7CI-5OJX-ESD7
+<rsp>   Device UDF = MAHU-SPG5-UC6W-LP2E-WUZY-PVB4-TEDI
+   Witness value = VSJT-A2SA-K6GN-ZITJ-MZC2-5BZJ-YCQO
 </div>
 ~~~~
 
@@ -17,13 +17,13 @@ accepts the request, granting the new device the messaging and web roles:
 ~~~~
 <div="terminal">
 <cmd>Alice> device pending
-<rsp>MessageID: Z2WF-HACS-FSGQ-RCRD-O7CI-5OJX-ESD7
+<rsp>MessageID: VSJT-A2SA-K6GN-ZITJ-MZC2-5BZJ-YCQO
         Connection Request::
-        MessageID: Z2WF-HACS-FSGQ-RCRD-O7CI-5OJX-ESD7
+        MessageID: VSJT-A2SA-K6GN-ZITJ-MZC2-5BZJ-YCQO
         To:  From: 
-        Device:  MAQP-HB2X-RGPO-MKXO-B5DS-2JPE-SWRI
-        Witness: Z2WF-HACS-FSGQ-RCRD-O7CI-5OJX-ESD7
-<cmd>Alice> device accept Z2WF-HACS-FSGQ-RCRD-O7CI-5OJX-ESD7 /message /web
+        Device:  MAHU-SPG5-UC6W-LP2E-WUZY-PVB4-TEDI
+        Witness: VSJT-A2SA-K6GN-ZITJ-MZC2-5BZJ-YCQO
+<cmd>Alice> device accept VSJT-A2SA-K6GN-ZITJ-MZC2-5BZJ-YCQO /message /web
 </div>
 ~~~~
 
@@ -33,9 +33,9 @@ Alice can now synchronize her newly connected device to her account:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device complete
-<rsp>   Device UDF = MAQP-HB2X-RGPO-MKXO-B5DS-2JPE-SWRI
+<rsp>   Device UDF = MAHU-SPG5-UC6W-LP2E-WUZY-PVB4-TEDI
    Account = alice@example.com
-   Account UDF = MB45-LKLC-XVV6-2KDX-UX3D-D6IR-6GNN
+   Account UDF = MDT2-CV27-KXQC-UNRX-NUEQ-USYA-UYN4
 </div>
 ~~~~
 

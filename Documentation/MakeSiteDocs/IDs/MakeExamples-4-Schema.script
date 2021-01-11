@@ -77,12 +77,22 @@ static string MakeID(string udf, string content) {
 
 #zfile CreateExamples SchemaCode3 "Examples\\SchemaCode3.md" Example
 ~~~~
-alg = UdfAlg (PIN)
-pinData = UdfBDS (PIN)
+alg =           UdfAlg (PIN)
+pinData =       UdfBDS (PIN)
 saltedPINData = MAC (Action, pinData)
-saltedPIN = UDFPresent (Authenticator_HMAC_SHA_2_512 + saltedPINData)
-PinId = UDFPresent (MAC (Account, saltedPINData))
-witnessData = Account.ToUTF8() + ClientNonce + PayloadDigest
+saltedPIN =     UDFPresent (HMAC_SHA_2_512 + saltedPINData)
+PinId =         UDFPresent (MAC (Account, saltedPINData))
+~~~~
+
+The issuer of the PIN code stores the value saltedPIN for retrieval using the 
+key PinId.
+
+The witness value for a Dare Envelope with payload digest PayloadDigest 
+authenticated by a PIN code whose salted value is saltedPINData, issued 
+by account Account is given by PinWitness() as follows:
+
+~~~~
+witnessData =   Account.ToUTF8() + ClientNonce + PayloadDigest
 witnessValue =  MAC (witnessData , saltedPINData)
 ~~~~
 #end zfile
@@ -166,19 +176,85 @@ For example, the personal account profile Alice created is:
 #end zfile
 
 #zfile CreateExamples SchemaMessageIds "Examples\\SchemaMessageIds.md" Example
-[To be specified]
+#% var message = Connect.ConnectRequestPIN;
+#% var messageId = message?.MessageId;
+#% var envelopeId = message?.EnvelopeId;
+#% var responseId = message?.GetResponseId();
+
+~~~~
+MessageID 
+    = #{messageId}
+
+EnvelopeID 
+    = #{envelopeId}
+
+ResponseID 
+    = #{responseId}
+~~~~
+
+
 #end zfile
 
 #zfile CreateExamples SchemaPINFunction "Examples\\SchemaPINFunction.md" Example
-[To be specified]
+#% var message = Connect.ConnectRequestPIN;
+#% var account = message.AccountAddress;
+#% var pin = Connect.ConnectPINMessagePin.Pin;
+#% var action = MeshConstants.MessagePINActionDevice;
+#% var (code,key) = UDF.Parse(pin);
+#% var saltedPINData = action.ToUTF8().GetMAC(key, CryptoAlgorithmId.HMAC_SHA_2_512);
+#% var saltedPIN = MessagePin.SaltPIN (pin, action);
+#% var PinId = MessagePin.GetPinId(pin, account);
+
+
+For example, to generate saltedPIN for the pin
+#{pin} used to authenticate a #{action} action:
+
+~~~~
+pin = #{pin}
+action = message.
+
+alg = UdfAlg (PIN)
+    = #{code}
+
+hashalg = default (alg, HMAC_SHA_2_512)
+
+pinData = UdfBDS (PIN)
+    = #{key}
+
+saltedPINData 
+    = hashalg(pinData, hashalg);
+    = #{saltedPINData}
+
+saltedPIN = UDFPresent (hashalg + saltedPINData)
+    = #{saltedPIN}
+~~~~
+
+The PinId binding the pin to the account #{account} is
+
+~~~~
+Account =  #{account} 
+
+PinId = UDFPresent (MAC (Account, saltedPINData))
+    = #{PinId}
+~~~~
+
 #end zfile
 
 #zfile CreateExamples SchemaPINWitness "Examples\\SchemaPINWitness.md" Example
-[To be specified]
+
+~~~~
+witnessData = Account.ToUTF8() + ClientNonce + PayloadDigest
+witnessValue =  MAC (witnessData , saltedPINData)
+~~~~
+
 #end zfile
 
 #zfile CreateExamples SchemaClientAuthKeyAgreement "Examples\\SchemaClientAuthKeyAgreement.md" Example
+
+~~~~
 [To be specified]
+~~~~
+
 #end zfile
 
 

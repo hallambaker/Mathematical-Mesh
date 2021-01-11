@@ -157,7 +157,7 @@ namespace Goedel.Mesh.Server {
             using var spoolLocal = GetStoreLocal();
 
             foreach (var message in spoolLocal.Select(0, reverse: true)) {
-                if (message?.EnvelopeID == envelopeId) {
+                if (message?.EnvelopeId == envelopeId) {
                     return message;
                     }
 

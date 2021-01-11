@@ -79,7 +79,7 @@
 		Description
 			|A DARE Envelope Header. Since any field that is present in a trailer MAY be 
 			|placed in a header instead, the envelope header inherits from the trailer.
-		String EnvelopeID
+		String EnvelopeId
 			Description 
 				|Unique identifier
 		String EncryptionAlgorithm
