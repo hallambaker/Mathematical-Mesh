@@ -47,49 +47,8 @@ and PIN stuff into Schema.]
 
 
 
-# 4 Schema
-
-6.2. Message Response Identifier
-
-Missing example TBS
-
-6.3. Proof of Knowledge of PIN
-
-Missing example TBS
-
-
-8. Architecture
-$$$$$$$$$$$ This has plenty or areas that need to be upgraded to the single master/account approach.
-
-
-9.2. Completion
-
-Missing example 86
-
-9.5. Confirmation
-Confirmation messages are used to provide an improved form of second factor authentication capability. 
-
-Missing example 87
-
 
 #5 Protocol
-
-5.2.3. Request
-
-[No dump of the binding yet]
-
-5.2.4. Response
-
-[No dump of the binding yet]
-
-
-6.4. Messaging
-
-Service-Service (Post Transaction)
-
-Missing example 94
-
-
 
 
 7.1.3. Validation
@@ -98,8 +57,6 @@ Missing example 94
 describing the function.]
 
 The example does need the Response message though.
-
-
 
 
 

@@ -207,7 +207,7 @@ ResponseID
 
 
 For example, to generate saltedPIN for the pin
-#{pin} used to authenticate a #{action} action:
+#{pin} used to authenticate a an action of type #{action}:
 
 ~~~~
 pin = #{pin}
