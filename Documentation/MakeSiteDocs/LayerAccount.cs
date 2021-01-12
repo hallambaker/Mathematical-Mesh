@@ -69,7 +69,7 @@ namespace ExampleGenerator {
         public List<ExampleResult> ConnectPINPending;
 
         public DevicePreconfiguration ConnectStaticPreconfig;
-
+        public string ConnectEARL;
 
 
 
@@ -81,6 +81,7 @@ namespace ExampleGenerator {
         
         public MessageComplete ConnectPINCompleteMessage;
         public RequestConnection ConnectRequestPIN;
+
         public AcknowledgeConnection AcknowledgeConnectionPIN;
         public RespondConnection RespondConnectionPIN;
 
@@ -88,7 +89,7 @@ namespace ExampleGenerator {
         public RespondConnection AcknowledgeConnectionWitness;
         public RespondConnection RespondConnectionWitness;
 
-        public string ConnectEARL;
+        public string ConnectDynamicURI;
 
 
 

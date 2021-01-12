@@ -6,11 +6,11 @@ activated a second time by mistake:
 ~~~~
 {
   "MessagePin":{
-    "MessageId":"ACOQ-3BOU-7GKJ-B3NI-WRIO-GYYB-7GVH",
+    "MessageId":"ABM5-DVCA-KOAF-YPHM-PFWG-LNBI-MLGP",
     "Account":"alice@example.com",
-    "Expires":"2021-01-12T17:13:18Z",
+    "Expires":"2021-01-13T18:42:18Z",
     "Automatic":true,
-    "SaltedPin":"AATY-GTQC-5K65-M7XM-LUUD-SL5K-JLCR",
+    "SaltedPin":"AASJ-7OXP-TMIO-63ZC-Z7IE-PGIR-TPXX",
     "Action":"Device"}}
 ~~~~
 

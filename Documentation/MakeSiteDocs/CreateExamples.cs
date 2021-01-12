@@ -457,7 +457,7 @@ namespace ExampleGenerator {
                  );
             "Verify the confirmation response".TaskFunctionality();
 
-            var resultConfirmVerify = Confirm.ConfirmVerify.GetResultSent();
+            var resultConfirmVerify = Confirm.ConfirmVerify.GetResultReceived();
             Confirm.RequestConfirmation = resultConfirmSent?.Message as RequestConfirmation;
 
             // This is not working correctly here.
@@ -511,6 +511,9 @@ namespace ExampleGenerator {
                 $"group add {GroupAccount} {BobAccount}"
                  );
 
+            //#% var result = Group.GroupAddBob [0];
+            var addBob = Group.GroupAddBob[0].Traces[1].RequestObject as TransactRequest;
+            Group.GroupInvitation = addBob.Outbound[0].JsonObject as GroupInvitation;
 
             Group.GroupDecryptBobSuccess = Bob1.Example(
                 $"account sync  /auto",
@@ -547,7 +550,7 @@ namespace ExampleGenerator {
             var pinResult = Connect.ConnectPINCreate.GetResultPIN();
             var pin = pinResult.MessagePIN.Pin;
             Connect.ConnectPINMessagePin = pinResult.MessagePIN;
-            Connect.ConnectEARL = pinResult.MessagePIN.GetURI();
+            Connect.ConnectDynamicURI = pinResult.MessagePIN.GetURI();
 
             Connect.ConnectPINRequest = Alice3.Example(
                 $"device request {AliceAccount} /pin {pin}"
@@ -570,6 +573,9 @@ namespace ExampleGenerator {
                 );
 
             var connectPendingPIN = Connect.ConnectPINPending.GetResultPending();
+            var syncUpdates = Connect.ConnectPINPending[1].Traces[1].RequestObject as TransactRequest;
+
+            Connect.ConnectPINCompleteMessage = syncUpdates.Local[1].JsonObject as MessageComplete; // change here!!!
 
             Connect.ConnectPINComplete = Alice3.Example(
                 $"device complete",
@@ -601,6 +607,8 @@ namespace ExampleGenerator {
             var resultPublishDevice = Connect.ConnectStaticPrepare.GetResultPublishDevice();
 
             Connect.ConnectStaticPreconfig = resultPublishDevice.DevicePreconfiguration;
+
+            Connect.ConnectEARL = null;
 
             Connect.ConnectStaticInstall = Alice4.Example(
                 $"device install {resultPublishDevice.FileName}"

@@ -215,22 +215,31 @@ The response payload:
 
 #zfile CreateExamples ProtocolMessagePIN "Examples\\ProtocolMessagePIN.md" Example
 
-Bob's client creates a PIN value and records it in his Local spool:
+Alice connects a device using a QR code presented by her administrative device.
 
-#%  DescribeMessage (Contact.MessagePin);
+The administration device creates a PIN code and records it to the Local spool:
 
-The response from Alice's client is authenticated under the PIN:
+#%  DescribeMessage (Connect.ConnectPINMessagePin);
 
-#%  DescribeMessage (Contact.AliceResponse);
+This pin value is used to authenticate the connection request from the device:
 
-Bob's client can now check:
+#%  DescribeMessage (Connect.ConnectRequestPIN);
 
-~~~~
-Some math here
-~~~~
+The administration device can now use the PIN Identifier to retreive the 
+MessagePIN from the Local spool and use it to verify the request.
 
 #end zfile
 
+
+#zfile CreateExamples ProtocolMessageCompletion "Examples\\ProtocolMessageCompletion.md" Example
+
+After using the PIN code to authenticate connection of a device in the previous 
+example, the corresponding MessagePin is marked as having been used by appending 
+a completion message to the Local spool.
+
+#%  DescribeMessage (Connect.ConnectPINCompleteMessage);
+
+#end zfile
 
 
 
@@ -264,6 +273,8 @@ QR code is #{Contact.AliceStaticQRCode} yadda yaddda
 
 
 #zfile CreateExamples ProtocolGroupInvite "Examples\\ProtocolGroupInvite.md" Example
+
+
 #% Format(Group.GroupInvitation);
 #end zfile
 
@@ -271,14 +282,13 @@ QR code is #{Contact.AliceStaticQRCode} yadda yaddda
 
 #zfile CreateExamples ProtocolConfirmation "Examples\\ProtocolConfirmation.md" Example
 
-The service sends out the following challenge:
+The service sends out the following request:
 
 #% DescribeMessage(Confirm.RequestConfirmation);
 
-Alice accepts the challeng and returns the following response:
+Alice accepts the request and returns the following response:
 
 #% DescribeMessage(Confirm.ResponseConfirmation);
-
 
 
 
@@ -335,38 +345,20 @@ a witness value matches the one displayed earlier and approves the connection re
 
 #zfile CreateExamples ProtocolConnectPIN "Examples\\ProtocolConnectPIN.md" Example
 
+~~~~
+Account = {Connect.ConnectPINMessagePin.AccountAddress}
+Pin = #{Connect.ConnectPINMessagePin.Pin}
 
-[This is identical to the previous version except that Alice generates a PIN 
-code as described in section $$$ earlier. This is used to create an authenticated
-message as described in Mesh 4 Schema $$$]
-
-#% DescribeMessage(Connect.ConnectPINMessagePin);
-
-[is this example even necessary???]
-
-
+URI = #{Connect.ConnectDynamicURI}
+~~~~
 
 #end zfile
 
 
 #zfile CreateExamples ProtocolConnectEARL "Examples\\ProtocolConnectEARL.md" Example
-
-// Create a device profile during manufacture
-
-[The device profile]
-
-// Publish profile as EARL
-
-The QR code.
-
-// Device description provides the device profile and hailing methods [WiFi, poll]
-
-// Admin device posts claim
-
-// device polls, discovers claim, requests connection
-
-
-
+~~~~
+URI = 
+~~~~
 #end zfile
 
 

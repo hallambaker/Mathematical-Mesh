@@ -14,8 +14,6 @@
 6.4. Messaging
 Service-Service (Post Transaction)
 
-
-
 # Check.DisableDeletedDevices
 
 Deleted devices do not lose their decryption capabilities.
@@ -30,58 +28,14 @@ Redact examples to remove the extended Base64 crap.
 
 Show the inner decrypted message payloads instead.
 
-## bug in constants...
+# Preconfigured Device Description
 
-These tables are coming out shitty:
-
-PinActionCodes
-IdentifierDerrivation
-
-
----------------------------------
-
-
-[Need to go through Schema Section 9 and Protocol Section 7. 
-Move all the message stuff into Protocol. Move all the MessagID 
-and PIN stuff into Schema.]
+Should be a wrapped around the profile device, not a profile device itself.
 
 
 
 
 #5 Protocol
-
-
-7.1.3. Validation
-
-[$$$$ This text merely needs to reference the Schema section
-describing the function.]
-
-The example does need the Response message though.
-
-
-
-
-Bob's client creates a PIN value and records it in his Local spool: 
-
-Missing example 97
-The response from Alice's client is authenticated under the PIN: 
-
-Missing example 98
-Bob's client can now check: 
-
-Some math here
-
-7.2.2. PIN
-
-QR code is yadda yaddda 
-
-7.2.3. EARL
-
-QR code is yadda yaddda 
-
-7.4. Confirmation
-
-Missing example 100
 
 
 

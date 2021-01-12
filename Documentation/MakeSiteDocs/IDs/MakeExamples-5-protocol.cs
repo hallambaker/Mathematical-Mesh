@@ -364,19 +364,38 @@ namespace ExampleGenerator {
 		public void _ProtocolMessagePIN(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Bob's client creates a PIN value and records it in his Local spool:\n{0}", _Indent);
+				_Output.Write ("Alice connects a device using a QR code presented by her administrative device.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeMessage (Contact.MessagePin);
+				_Output.Write ("The administration device creates a PIN code and records it to the Local spool:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The response from Alice's client is authenticated under the PIN:\n{0}", _Indent);
+				  DescribeMessage (Connect.ConnectPINMessagePin);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeMessage (Contact.AliceResponse);
+				_Output.Write ("This pin value is used to authenticate the connection request from the device:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Bob's client can now check:\n{0}", _Indent);
+				  DescribeMessage (Connect.ConnectRequestPIN);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("Some math here\n{0}", _Indent);
-				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("The administration device can now use the PIN Identifier to retreive the \n{0}", _Indent);
+				_Output.Write ("MessagePIN from the Local spool and use it to verify the request.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolMessageCompletion
+		//
+		public static void ProtocolMessageCompletion(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolMessageCompletion.md");
+			Example._Output = _Output;
+			Example._ProtocolMessageCompletion(Example);
+			}
+		public void _ProtocolMessageCompletion(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("After using the PIN code to authenticate connection of a device in the previous \n{0}", _Indent);
+				_Output.Write ("example, the corresponding MessagePin is marked as having been used by appending \n{0}", _Indent);
+				_Output.Write ("a completion message to the Local spool.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeMessage (Connect.ConnectPINCompleteMessage);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -448,6 +467,8 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolGroupInvite(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				 Format(Group.GroupInvitation);
 					}
 		
@@ -463,14 +484,13 @@ namespace ExampleGenerator {
 		public void _ProtocolConfirmation(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The service sends out the following challenge:\n{0}", _Indent);
+				_Output.Write ("The service sends out the following request:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage(Confirm.RequestConfirmation);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Alice accepts the challeng and returns the following response:\n{0}", _Indent);
+				_Output.Write ("Alice accepts the request and returns the following response:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage(Confirm.ResponseConfirmation);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -540,16 +560,12 @@ namespace ExampleGenerator {
 		public void _ProtocolConnectPIN(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Account = {{Connect.ConnectPINMessagePin.AccountAddress}}\n{0}", _Indent);
+				_Output.Write ("Pin = {1}\n{0}", _Indent, Connect.ConnectPINMessagePin.Pin);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[This is identical to the previous version except that Alice generates a PIN \n{0}", _Indent);
-				_Output.Write ("code as described in section $$$ earlier. This is used to create an authenticated\n{0}", _Indent);
-				_Output.Write ("message as described in Mesh 4 Schema $$$]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage(Connect.ConnectPINMessagePin);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[is this example even necessary???]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("URI = {1}\n{0}", _Indent, Connect.ConnectDynamicURI);
+				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -564,23 +580,9 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolConnectEARL(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("// Create a device profile during manufacture\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[The device profile]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("// Publish profile as EARL\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The QR code.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("// Device description provides the device profile and hailing methods [WiFi, poll]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("// Admin device posts claim\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("// device polls, discovers claim, requests connection\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("URI = \n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
 					}
 		}
 	}

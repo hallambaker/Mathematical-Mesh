@@ -15,6 +15,9 @@ namespace Goedel.Mesh.Test {
         public static ResultSent GetResultSent(
             this List<ExampleResult> Results,
             int index = 0) => GetResult(Results, index) as ResultSent;
+        public static ResultReceived GetResultReceived(
+            this List<ExampleResult> Results,
+            int index = 0) => GetResult(Results, index) as ResultReceived;
         public static ResultEscrow GetResultEscrow(
             this List<ExampleResult> Results,
             int index = 0) => GetResult(Results, index) as ResultEscrow;

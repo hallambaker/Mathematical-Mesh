@@ -410,7 +410,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("For example, to generate saltedPIN for the pin\n{0}", _Indent);
-				_Output.Write ("{1} used to authenticate a {2} action:\n{0}", _Indent, pin, action);
+				_Output.Write ("{1} used to authenticate a an action of type {2}:\n{0}", _Indent, pin, action);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("pin = {1}\n{0}", _Indent, pin);
