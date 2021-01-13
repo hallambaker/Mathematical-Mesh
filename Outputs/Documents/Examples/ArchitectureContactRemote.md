@@ -9,9 +9,9 @@ Bob sends Alice a contact exchange request:
 ~~~~
 <div="terminal">
 <cmd>Bob> message contact alice@example.com
-<rsp>Envelope ID: MBGV-J2XR-A2RQ-TJA3-TQAG-F5F4-5XJ4
-Message ID: NC6H-T53E-BTUF-ZQH6-DTD6-GFG3-B6VS
-Response ID: MAXH-BHYT-Z7EU-MEKX-L5LV-UFXH-LHGV
+<rsp>Envelope ID: MBTY-PIFM-RJUU-3VHR-LXIC-5Y7W-SSBG
+Message ID: NBPI-ULGE-MSPK-FUE2-CBDB-WTNY-NJDZ
+Response ID: MA45-EX4L-C4TT-6NDI-MZLB-PFVT-XIWD
 </div>
 ~~~~
 
@@ -22,21 +22,21 @@ Alice checks his Mesh messages and approves Bob's request:
 <div="terminal">
 <cmd>Alice> account sync
 <cmd>Alice> message pending
-<rsp>MessageID: NC6H-T53E-BTUF-ZQH6-DTD6-GFG3-B6VS
+<rsp>MessageID: NBPI-ULGE-MSPK-FUE2-CBDB-WTNY-NJDZ
         Contact Request::
-        MessageID: NC6H-T53E-BTUF-ZQH6-DTD6-GFG3-B6VS
+        MessageID: NBPI-ULGE-MSPK-FUE2-CBDB-WTNY-NJDZ
         To: alice@example.com From: bob@example.com
-        PIN: ACHG-NUXX-FQIJ-W5AP-BXMS-BXZB-VVGA
-<cmd>Alice> message accept NC6H-T53E-BTUF-ZQH6-DTD6-GFG3-B6VS
+        PIN: ADHF-R2A7-SV2S-XUBQ-C7CU-HA6Y-JBVA
+<cmd>Alice> message accept NBPI-ULGE-MSPK-FUE2-CBDB-WTNY-NJDZ
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MCHZ-TWR3-D4HY-EDKL-XI6S-PEWG-TSOJ
-  Person MCHZ-TWR3-D4HY-EDKL-XI6S-PEWG-TSOJ
-  Anchor MCHZ-TWR3-D4HY-EDKL-XI6S-PEWG-TSOJ
+<rsp>Entry<CatalogedContact>: MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH
+  Person MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH
+  Anchor MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH
   Address alice@example.com
 
-Entry<CatalogedContact>: NCQ3-O46F-VGUV-GEPK-VHFV-2EHM-GI2P
+Entry<CatalogedContact>: NCU6-4E2P-OWZA-FGNT-VNM3-5HCJ-BQ43
   Person 
-  Anchor MDE7-UNCZ-KMM7-EORW-6CPQ-C4YQ-MSS5
+  Anchor MBQT-IL32-SE7H-T7RZ-E52B-TQ2F-XVLE
   Address bob@example.com
 
 </div>
@@ -49,14 +49,14 @@ Bob can now collect Alice's contact:
 <div="terminal">
 <cmd>Bob> account sync /auto
 <cmd>Bob> contact list
-<rsp>Entry<CatalogedContact>: MDE7-UNCZ-KMM7-EORW-6CPQ-C4YQ-MSS5
-  Person MDE7-UNCZ-KMM7-EORW-6CPQ-C4YQ-MSS5
-  Anchor MDE7-UNCZ-KMM7-EORW-6CPQ-C4YQ-MSS5
+<rsp>Entry<CatalogedContact>: MBQT-IL32-SE7H-T7RZ-E52B-TQ2F-XVLE
+  Person MBQT-IL32-SE7H-T7RZ-E52B-TQ2F-XVLE
+  Anchor MBQT-IL32-SE7H-T7RZ-E52B-TQ2F-XVLE
   Address bob@example.com
 
-Entry<CatalogedContact>: NAMN-BA46-SAQY-WIF5-F4WA-DGIW-VVVY
+Entry<CatalogedContact>: NARL-BULF-5F5W-ZN3K-F6ZN-LB5J-HWIW
   Person 
-  Anchor MCHZ-TWR3-D4HY-EDKL-XI6S-PEWG-TSOJ
+  Anchor MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH
   Address alice@example.com
 
 </div>

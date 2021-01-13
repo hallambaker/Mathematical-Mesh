@@ -12,14 +12,7 @@
 
 #method MakeSchemaExamples CreateExamples Example
 #% SchemaAliceProfile(Example);
-#% SchemaAliceDeviceCoffee(Example);
-#% SchemaAliceActivationCoffee(Example);
-#% SchemaConnectionCoffee(Example);
-#% SchemaAliceActivationWatch(Example);
 #% SchemaProfileService(Example);
-#% SchemaConnectionHost(Example);
-#% SchemaEntrySSH(Example);
-#% SchemaEntryMail(Example);
 #% SchemaEntryContact(Example);
 #% SchemaEntryCredential(Example);
 #% SchemaEntryBookmark(Example);
@@ -32,16 +25,23 @@
 #% SchemaClientAuthKeyAgreement(Example);
 #% SchemaDevice(Example);
 #% DevicePreconfiguration(Example);
-#% SchemaAccount(Example);
-#% SchemaService(Example);
-#% SchemaMessagePIN(Example);
-#% SchemaMessageCompletion(Example);
-#% SchemaMessageConnection(Example);
-#% SchemaMessageContact(Example);
-#% SchemaMessageConfirmation(Example);
+#!% SchemaMessagePIN(Example);
+#!% SchemaMessageConnection(Example);
+#!% SchemaMessageContact(Example);
+#!% SchemaMessageConfirmation(Example);
 #% SchemaCode1(Example);
 #% SchemaCode2(Example);
 #% SchemaCode3(Example);
+#% SchemaAliceDeviceCoffee(Example);
+#% SchemaAliceActivationCoffee(Example);
+#% SchemaConnectionCoffee(Example);
+#% SchemaAliceActivationWatch(Example);
+#!!!!! Missing
+#% SchemaEntrySSH(Example);
+#% SchemaEntryMail(Example);
+#% SchemaConnectionHost(Example);
+#% SchemaAccount(Example);
+#% SchemaService(Example);
 #end method
 
 
@@ -339,20 +339,7 @@ are further described in the section below.
 
 #end zfile
 
-#zfile CreateExamples SchemaMessageCompletion "Examples\\SchemaMessageCompletion.md" Example
 
-Having processed a message, a completion message is added to the spool so that other devices 
-can see that it has been read.
-
-For example, when Alice's administration device uses the PIN registered above to 
-authenticate a device connection request, a completion message is added to Alice's 
-inbound spool so that the PIN cannot be reused to authenticate a second device:
-
-#% DescribeMessage (Connect.ConnectPINCompleteMessage);
-
-
-
-#end zfile
 
 #zfile CreateExamples SchemaMessageConnection "Examples\\SchemaMessageConnection.md" Example
 
@@ -377,7 +364,7 @@ The service generates an AcknowledgeConnection message which is returned to the
 device requesting the connection (via the Connect transaction response) and
 adds it to the inbound spool of the account for Alice's approval (or not).
 
-#% DescribeMessage (Connect.AcknowledgeConnectionPIN);
+#% DescribeMessage (Connect.ConnectPINAcknowledgeConnection);
 
 Alice's administration device synchronizes to the service and receives the
 connection request acknowledgement from the service. Since the request is 

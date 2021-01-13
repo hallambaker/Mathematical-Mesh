@@ -371,10 +371,10 @@ namespace Goedel.Mesh.Shell {
                 }
 
             else if (MessagePIN != null) {
-                Builder.Append($"PIN={MessagePIN.SaltedPin}");
+                Builder.Append($"PIN={MessagePIN.Pin}");
 
                 if (MessagePIN.Expires != null) {
-                    Builder.Append($" (Expires={MessagePIN.Expires.ToRFC3339()})");
+                    Builder.Append($"\n (Expires={MessagePIN.Expires.ToRFC3339()})");
                     }
                 Builder.AppendLine();
                 }
@@ -449,7 +449,7 @@ namespace Goedel.Mesh.Shell {
             var Builder = StringBuilder();
             Builder.Append($"Device Profile UDF={DeviceUDF}\n");
             Builder.Append($"Personal Profile UDF={MeshUDF}\n");
-            Builder.AppendNotNull(Account, $"Account={Account}");
+            Builder.AppendNotNull(Account, $"Account={Account}\n");
             return Builder.ToString();
             }
         }
@@ -461,7 +461,7 @@ namespace Goedel.Mesh.Shell {
         /// Converts the value of this instance to a <see langword="String"/>.
         /// </summary>
         /// <returns>The current string.</returns>
-        public override string ToString() => CatalogEntry?.ToString() ?? "Empty\n";
+        public override string ToString() => CatalogEntry?.ToString()+"\n" ?? "Empty\n";
 
 
         }

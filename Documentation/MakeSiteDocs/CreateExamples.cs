@@ -45,60 +45,6 @@ namespace ExampleGenerator {
             Screen.WriteLine("Missing example!");
             }
 
-        /*
-         * Stuff needing to be fixed...
-         * 
-            ## Alice> account sync /auto
-
-            ERROR - Cannot access a closed file.
-            Alice> device accept RQUH-LNHP-XVR6-UHQ5-WSCZ-WCZC-Q5PK
-            ERROR - Cannot access a closed file
-
-            ## device complete
-
-            Gives no report on outcome [pending / accepted / refused]
-
-            ## Alice2> password get ftp.example.com
-
-            ERROR - No decryption key is available
-            Alice2> dare decode ciphertext.dare plaintext2.txt
-            ERROR - No decryption key is available
-
-            ## Alice> device delete TBS
-
-            ERROR - The feature has not been implemented
-
-
-            ## Alice2> dare decode ciphertext.dare plaintext2.txt
-
-            ERROR - No decryption key is available
-
-
-            ## Create SSH profile....
-
-
-            ## Alice> message accept NBKU-OVBZ-YZRN-FEB4-ARMW-VUVI-2JSG
-
-            ERROR - Cannot access a closed file.
-
-
-            ## Alice> message accept NBAC-LLBY-E4EU-7ZRF-I47O-ZYHZ-PBCW
-
-            ERROR - The specified message could not be found.
-
-
-            ## Alice> $message status {confirmResponseID}
-
-            ERROR - The command System.Object[] is not known.
-
-            ## Alice> group create groupw@example.com
-            ERROR - Cannot access a closed file.
-
-
-            ## Alice2> account recover /verify
-            ERROR - Expected {
-         * 
-         */
 
         /// <summary>
         /// 
@@ -552,19 +498,22 @@ namespace ExampleGenerator {
             Connect.ConnectPINMessagePin = pinResult.MessagePIN;
             Connect.ConnectDynamicURI = pinResult.MessagePIN.GetURI();
 
+
             Connect.ConnectPINRequest = Alice3.Example(
                 $"device request {AliceAccount} /pin {pin}"
                 );
 
             var connectRequest = Connect.ConnectPINRequest.GetResultConnect();
-            var connectRequestT = Connect.ConnectPINRequest[0].Traces[0].RequestObject;
-            var connectResponseT = Connect.ConnectPINRequest[0].Traces[0].ResponseObject;
+            Connect.ConnectPINRequestConnection = Connect.ConnectPINRequest[0].Traces[0];
+            Connect.ConnectPINResponseConnection = Connect.ConnectPINRequest[0].Traces[0];
 
             // decode the request message using the server encryption key??
             // decode the response message using the device key??
 
             Connect.ConnectRequestPIN = connectRequest.RequestConnection;
-            Connect.AcknowledgeConnectionPIN = connectRequest.AcknowledgeConnection;
+
+            var responseConnection = Connect.ConnectPINResponseConnection.ResponseObject as ConnectResponse;
+            Connect.ConnectPINAcknowledgeConnection = responseConnection.EnvelopedAcknowledgeConnection.Decode();
 
 
             Connect.ConnectPINPending = Alice1.Example(
@@ -586,6 +535,14 @@ namespace ExampleGenerator {
 
             var connectPINComplete = Connect.ConnectPINComplete.GetResultConnect();
             Connect.RespondConnectionPIN = connectPINComplete.RespondConnection;
+
+
+            Connect.ConnectPINActivationDevice = null;
+            Connect.ConnectPINCatalogedDevice = null;
+
+            Connect.ConnectPINRequestComplete = Connect.ConnectPINComplete[0].Traces[0];
+            Connect.ConnectPINRespondComplete = Connect.ConnectPINComplete[0].Traces[0];
+
 
             var watchMachine = connectPINComplete.CatalogedMachine;
             Connect.AliceProfileDeviceWatch = watchMachine.ProfileDevice;
@@ -619,9 +576,23 @@ namespace ExampleGenerator {
             Connect.ConnectStaticClaim = Maker1.Example(
                 $"account connect {resultPublishDevice.Uri}"
                 );
+
+             
+            Connect.RequestClaim = Connect.ConnectStaticClaim[0].Traces[0];
+            Connect.ResponseClaim = Connect.ConnectStaticClaim[0].Traces[0];
+
+            var requestClaim = Connect.RequestClaim.RequestObject as ClaimRequest;
+            Connect.MessageClaim = requestClaim.EnvelopedMessageClaim.Decode();
+
+
             Connect.ConnectStaticPollSuccess = Alice4.Example(
                 $"device complete"
                 );
+
+            Connect.RequestPollClaim = Connect.ConnectStaticPollSuccess[0].Traces[0];
+            Connect.ResponsePollClaim = Connect.ConnectStaticPollSuccess[0].Traces[0];
+
+
             var connectStaticPollSuccess = Connect.ConnectStaticPollSuccess.GetResultConnect();
             var coffeePotMachine = connectStaticPollSuccess?.CatalogedMachine;
             var coffeePotDevice = coffeePotMachine?.CatalogedDevice;

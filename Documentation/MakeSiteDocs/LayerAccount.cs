@@ -1,5 +1,6 @@
 ﻿using Goedel.Mesh;
 using Goedel.Mesh.Test;
+using Goedel.Test.Core;
 using Goedel.Utilities;
 using Goedel.IO;
 using System;
@@ -63,6 +64,24 @@ namespace ExampleGenerator {
         public List<ExampleResult> ConnectStaticPollSuccess;
 
 
+
+        public string ClaimUri;
+        public MessageClaim MessageClaim;
+        public Trace RequestClaim;
+        public Trace ResponseClaim;
+        public Trace RequestPollClaim;
+        public Trace ResponsePollClaim;
+
+        // The witness connection example.
+        public Trace ConnectPINRequestConnection;
+        //public AcknowledgeConnection WitnessAcknowledgeConnection;
+        public Trace ConnectPINResponseConnection;
+        public ActivationDevice ConnectPINActivationDevice;
+        public CatalogedDevice ConnectPINCatalogedDevice;
+        public Trace ConnectPINRequestComplete;
+        public Trace ConnectPINRespondComplete;
+
+
         public List<ExampleResult> ConnectPINCreate;
         public List<ExampleResult> ConnectPINRequest;
         public List<ExampleResult> ConnectPINComplete;
@@ -82,7 +101,7 @@ namespace ExampleGenerator {
         public MessageComplete ConnectPINCompleteMessage;
         public RequestConnection ConnectRequestPIN;
 
-        public AcknowledgeConnection AcknowledgeConnectionPIN;
+        //public AcknowledgeConnection AcknowledgeConnectionPIN;
         public RespondConnection RespondConnectionPIN;
 
         public RequestConnection ConnectRequestWitness;

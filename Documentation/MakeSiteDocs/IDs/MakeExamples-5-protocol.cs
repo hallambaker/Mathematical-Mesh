@@ -20,17 +20,11 @@ namespace ExampleGenerator {
 		// MakeProtocolExamples
 		//
 		public void MakeProtocolExamples (CreateExamples Example) {
-			 ProtocolHelloRequest(Example);
-			 ProtocolHelloResponse(Example);
 			 ProtocolHello(Example);
 			 ProtocolAccountCreate(Example);
 			 ProtocolCreateGroup(Example);
-			 ProtocolAccountDelete(Example);
 			 ProtocolStatus(Example);
-			 ProtocolDownload(Example);
-			 ProtocolUpload(Example);
 			 ProtocolPostClientService(Example);
-			 ProtocolPostServiceService(Example);
 			 ProtocolClaim(Example);
 			 ProtocolPollClaim(Example);
 			 ProtocolCryptoKeyShare(Example);
@@ -42,8 +36,15 @@ namespace ExampleGenerator {
 			 ProtocolGroupInvite(Example);
 			 ProtocolConfirmation(Example);
 			 ProtocolConnect(Example);
-			 ProtocolConnectPIN(Example);
 			 ProtocolConnectEARL(Example);
+			 ProtocolMessageCompletion(Example);
+			 ProtocolHelloRequest(Example);
+			 ProtocolHelloResponse(Example);
+			 ProtocolAccountDelete(Example);
+			 ProtocolPostServiceService(Example);
+			 ProtocolConnectPIN(Example);
+			 ProtocolDownload(Example);
+			 ProtocolUpload(Example);
 			}
 		
 
@@ -57,7 +58,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolHelloRequest(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
+				// This is to show the binding
 				_Output.Write ("\n{0}", _Indent);
 				  DescribeRequestBinding (Service.Hello?[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
@@ -74,7 +75,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolHelloResponse(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
+				// This is to show the binding
 				_Output.Write ("\n{0}", _Indent);
 				  DescribeResponseBinding (Service.Hello?[0].Traces[0]);
 				_Output.Write ("\n{0}", _Indent);
@@ -269,51 +270,6 @@ namespace ExampleGenerator {
 		
 
 		//
-		// ProtocolClaim
-		//
-		public static void ProtocolClaim(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\ProtocolClaim.md");
-			Example._Output = _Output;
-			Example._ProtocolClaim(Example);
-			}
-		public void _ProtocolClaim(CreateExamples Example) {
-
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The request payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Connect?.ConnectStaticPollFail?[0].Traces?[1]);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The response payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Connect?.ConnectStaticPollFail?[0].Traces?[1]);
-				_Output.Write ("\n{0}", _Indent);
-					}
-		
-
-		//
-		// ProtocolPollClaim
-		//
-		public static void ProtocolPollClaim(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\ProtocolPollClaim.md");
-			Example._Output = _Output;
-			Example._ProtocolPollClaim(Example);
-			}
-		public void _ProtocolPollClaim(CreateExamples Example) {
-
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The request payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Connect?.ConnectStaticClaim?[0].Traces?[1]);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The response payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Connect?.ConnectStaticClaim?[0].Traces?[1]);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-					}
-		
-
-		//
 		// ProtocolCryptoKeyShare
 		//
 		public static void ProtocolCryptoKeyShare(CreateExamples Example) { /* XFile  */
@@ -474,6 +430,68 @@ namespace ExampleGenerator {
 		
 
 		//
+		// ProtocolClaim
+		//
+		public static void ProtocolClaim(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolClaim.md");
+			Example._Output = _Output;
+			Example._ProtocolClaim(Example);
+			}
+		public void _ProtocolClaim(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("A device is preconfigured during manufacture and a Device Description published to the\n{0}", _Indent);
+				_Output.Write ("EARL:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Connect.ClaimUri);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The client claiming the publication creates a claim message specifying the \n{0}", _Indent);
+				_Output.Write ("resource being claimed and the address of the Mesh account making the claim.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage(Connect.MessageClaim);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The message is signed by the claimant to make a RequestClaim to the service:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeRequest(Connect.RequestClaim);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The publication is found and the claim is accepted, the publication  is returned\n{0}", _Indent);
+				_Output.Write ("in the response.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeResponse(Connect.ResponseClaim);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device waiting to be connected uses the PollClaim transaction to receive notification\n{0}", _Indent);
+				_Output.Write ("of a claim having been posted.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolPollClaim
+		//
+		public static void ProtocolPollClaim(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolPollClaim.md");
+			Example._Output = _Output;
+			Example._ProtocolPollClaim(Example);
+			}
+		public void _ProtocolPollClaim(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device in the example above periodically polls the service to which the device \n{0}", _Indent);
+				_Output.Write ("description is published to find if a claim has been registered.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The PollClaimRequest contains the account to which the document is published\n{0}", _Indent);
+				_Output.Write ("and the publication ID:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeRequest(Connect.RequestPollClaim);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response returns the latest claim made as signed message:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeResponse(Connect.ResponsePollClaim);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
 		// ProtocolConfirmation
 		//
 		public static void ProtocolConfirmation(CreateExamples Example) { /* XFile  */
@@ -498,58 +516,6 @@ namespace ExampleGenerator {
 		
 
 		//
-		// ProtocolConnect
-		//
-		public static void ProtocolConnect(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\ProtocolConnect.md");
-			Example._Output = _Output;
-			Example._ProtocolConnect(Example);
-			}
-		public void _ProtocolConnect(CreateExamples Example) {
-
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Connect.ConnectRequest?[0].Traces[0]);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The request payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("// This is missing here because the messages are not being fished out of the \n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage(Connect.ConnectRequestWitness);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The response payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Connect.ConnectRequest?[0].Traces[0]);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("// Again missing here...\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage(Connect.AcknowledgeConnectionWitness);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Alice reads her pending messages, notes that there is a pending connection request with\n{0}", _Indent);
-				_Output.Write ("a witness value matches the one displayed earlier and approves the connection request.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("// here need description of the handling of the spool\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage(Connect.RespondConnectionWitness);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("// Now the device collects the result from the local delivery spool\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[Request]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[Mention Can get a 'not yet ready' response]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[Response]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("// has all the information needed to complete the transaction.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-					}
-		
-
-		//
 		// ProtocolConnectPIN
 		//
 		public static void ProtocolConnectPIN(CreateExamples Example) { /* XFile  */
@@ -560,12 +526,131 @@ namespace ExampleGenerator {
 		public void _ProtocolConnectPIN(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("Account = {{Connect.ConnectPINMessagePin.AccountAddress}}\n{0}", _Indent);
-				_Output.Write ("Pin = {1}\n{0}", _Indent, Connect.ConnectPINMessagePin.Pin);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("URI = {1}\n{0}", _Indent, Connect.ConnectDynamicURI);
+				_Output.Write ("### Phase 1:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Connect.ConnectPINCreate);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The registration of this PIN value was shown earlier in section $$$\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The URI containing the account address and PIN is:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Connect.ConnectDynamicURI);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 2:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The onboarding device scans the QR code to obtain the account address and PIN code.\n{0}", _Indent);
+				_Output.Write ("The PIN code is used to authenticate a connection request:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Connect.ConnectPINRequest);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device issues a connection request to the service corresponding to the account. \n{0}", _Indent);
+				_Output.Write ("This specifies the device profile, the account to which the device is to be \n{0}", _Indent);
+				_Output.Write ("connected and the client nonce value:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequest (Connect.ConnectPINRequestConnection);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The service generates the service nonce value and uses it to create the \n{0}", _Indent);
+				_Output.Write ("AcknowledgeConnection message.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeMessage (Connect.ConnectPINAcknowledgeConnection);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The AcknowledgeConnection message is appended to the Inbound spool of the account\n{0}", _Indent);
+				_Output.Write ("to which connection was requested so that the user can approve the request. The\n{0}", _Indent);
+				_Output.Write ("ConnectResponse message is returned to the device containing the AcknowledgeConnection \n{0}", _Indent);
+				_Output.Write ("message and the profile of the account.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeResponse(Connect.ConnectPINResponseConnection);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device generates the witness value and presents it to the user as shown above.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 3:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The user synchronizes their pending messages:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Connect.ConnectPINPending);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The administration device determines that the device connection request is authenticated\n{0}", _Indent);
+				_Output.Write ("by a PIN code. The PIN code is retrieved and the message authenticated. This is shown in\n{0}", _Indent);
+				_Output.Write ("the PIN registration interation example in section $$$ above.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.ConnectPINActivationDevice);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The Cataloged device record is created from the public key values corresponding to the\n{0}", _Indent);
+				_Output.Write ("combination of the public keys in the device profile and those defined by the activation:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.ConnectPINCatalogedDevice);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The ActivationDevice and CatalogedDevice records are ???\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 4\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device periodically polls for completion of the connection request using the\n{0}", _Indent);
+				_Output.Write ("Complete transaction.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("To provide a final check on the process, the command line tool presents the UDF of \n{0}", _Indent);
+				_Output.Write ("the account profile to which the device has connected if successful:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Connect.ConnectPINComplete);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The completion request specified the device requesting completion:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequest (Connect.ConnectPINRequestComplete);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response contains the information the device requires to complete the connection\n{0}", _Indent);
+				_Output.Write ("to the mesh:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequest (Connect.ConnectPINRespondComplete);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolConnect
+		//
+		public static void ProtocolConnect(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolConnect.md");
+			Example._Output = _Output;
+			Example._ProtocolConnect(Example);
+			}
+		public void _ProtocolConnect(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 1:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("There are no first phase actions.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 2:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice enters the connection request on the device to be connected. This specifies the \n{0}", _Indent);
+				_Output.Write ("address of the account to which she wishes to connect:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Connect.ConnectRequest);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 3:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The user reviews their pending messages:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Connect.ConnectPending);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The administration device receives the AcknowledgeConnection message from the service \n{0}", _Indent);
+				_Output.Write ("and verifies that the signature is valid and the witness value correctly computed.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The user verifies that the witness value presented in the AcknowledgeConnection message\n{0}", _Indent);
+				_Output.Write ("matches the one presented on the device. Since they match, the request is accepted:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Connect.ConnectAccept);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 4\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device completes the connection as before:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Connect.ConnectComplete);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -580,9 +665,28 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolConnectEARL(CreateExamples Example) {
 
-				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("URI = \n{0}", _Indent);
-				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 1\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device is prepopulated with a Device description, this is shown in section $$$ of\n{0}", _Indent);
+				_Output.Write ("Schema.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 2\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The administration device scans the QR code and obtains the Device Description using\n{0}", _Indent);
+				_Output.Write ("the Claim transaction as shown in section $$$$.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 3\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Tha administration device creates the ActivationDevice and CatalogedDevice records\n{0}", _Indent);
+				_Output.Write ("and populates the service as before.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Phase 4\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device polls the publication service until a claim message is returned. This \n{0}", _Indent);
+				_Output.Write ("interaction is shown in section $$$$ above.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		}
 	}

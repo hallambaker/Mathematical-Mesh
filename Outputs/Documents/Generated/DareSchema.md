@@ -69,7 +69,7 @@ A DARE Envelope Header. Since any field that is present in a trailer MAY be
 placed in a header instead, the envelope header inherits from the trailer.
 
 <dl>
-<dt>EnvelopeID: String (Optional)
+<dt>EnvelopeId: String (Optional)
 <dd>Unique identifier
 <dt>EncryptionAlgorithm: String (Optional)
 <dd>The encryption algorithm as specified in JWE

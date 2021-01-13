@@ -7,9 +7,9 @@ registered account asking if she would like to log into the secure console:
 ~~~~
 <div="terminal">
 <cmd>Console> message confirm alice@example.com start
-<rsp>Envelope ID: MBSA-WCDX-YHZX-7DLU-H3X3-QJHA-XTV2
-Message ID: NBQW-47EI-Q2NL-N7UY-BUSA-47RX-AWVG
-Response ID: MDJE-DO7A-RBM7-3HSM-7VQA-XX65-HGO2
+<rsp>Envelope ID: MCDL-YDFD-GEC4-MJZO-FONM-AC2D-HNM7
+Message ID: NCHB-PAFY-23JU-UWSK-Q4NK-LEKY-MFZX
+Response ID: MBX5-PSU2-MPUA-IRVR-WIJL-CS4Q-5YUS
 </div>
 ~~~~
 
@@ -18,7 +18,7 @@ Alice checks her pending messages and accepts the request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message accept NBQW-47EI-Q2NL-N7UY-BUSA-47RX-AWVG
+<cmd>Alice> message accept NCHB-PAFY-23JU-UWSK-Q4NK-LEKY-MFZX
 </div>
 ~~~~
 
@@ -27,7 +27,7 @@ The secure console verifies the response and grants access:
 
 ~~~~
 <div="terminal">
-<cmd>Console> message status MDJE-DO7A-RBM7-3HSM-7VQA-XX65-HGO2
+<cmd>Console> message status MBX5-PSU2-MPUA-IRVR-WIJL-CS4Q-5YUS
 <rsp>Accept
 </div>
 ~~~~

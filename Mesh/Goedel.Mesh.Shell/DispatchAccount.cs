@@ -125,6 +125,7 @@ namespace Goedel.Mesh.Shell {
             var contextAccount = GetContextUser(options);
 
             var expire = TimeSpan.Parse(options.Expire.Value);
+            // ToDo: Allow other actions besides device.
 
             var messageConnectionPIN = contextAccount.GetPIN(MeshConstants.MessagePINActionDevice,
                         validity: expire.Ticks);

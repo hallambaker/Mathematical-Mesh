@@ -5,41 +5,41 @@ For example, the personal account profile Alice created is:
 {
   "ProfileUser":{
     "ProfileSignature":{
-      "Udf":"MCHZ-TWR3-D4HY-EDKL-XI6S-PEWG-TSOJ",
+      "Udf":"MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"xpCG27bZFsQzz8Lo0WT1d3o2s91AcvHXDuMTKQOsm9wPi
-  qHzfNOnIh6fD4XcwnlieAcC24C0F7IA"}}},
+          "Public":"c3l96hFNVbXzQa7dohgp_X9YIIzaR4U0dPCfyocquFWnZ
+  uiFdu9vl9UIgtYv-tjFVpmk6qRDj7mA"}}},
     "AccountAddress":"alice@example.com",
-    "ServiceUdf":"MDQO-BPWJ-7HTA-QLPW-4UN2-M5EZ-Q5WE",
+    "ServiceUdf":"MA36-TUJL-QRZJ-3M3L-SRBQ-BRYQ-W2YM",
     "AccountEncryption":{
-      "Udf":"MDFQ-BE4H-IYUB-XVQK-T4EF-C6O2-NY6Q",
+      "Udf":"MDLO-JJ4B-RBY5-VYD7-LJZY-S3RK-DBM2",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"Ltljh8tXk71Kf3ffL9gUtGKITpcIXSEa16xES_e0bodVz
-  1uBX5zsmp-CWLggfFSGXQDFHAn7MiyA"}}},
+          "Public":"4Mi9X8mXI9mGh_7sjGZP0aFPRXJNSFexPBnIAK1BN__SX
+  RxtWQTsXsgz1fl5Jc38ZYx7MVe2X9wA"}}},
     "AdministratorSignature":{
-      "Udf":"MBBH-HYL4-DQTM-YX7Q-5XNY-6RFE-UCZV",
+      "Udf":"MCCK-F2WZ-QAAC-C3NA-EVAW-SBL7-IHEQ",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"wV50T0q_qnewEDufWeLbReVrvKg7GqRijGknZLEtsZ-Oy
-  wisrusUZZPINWpHaGK9xRmp6Eu9ud4A"}}},
+          "Public":"8TSZ7DNTM7FugJqAFft4FJD4WdjA9omHUDa7tntnJBkQ4
+  kNW_tyS6QMGMYly4wHR1WFnUZvI5QmA"}}},
     "AccountAuthentication":{
-      "Udf":"MCFX-WXIO-ZF26-CCWI-GF2F-Y2H2-ZIYE",
+      "Udf":"MBB3-723K-DJKQ-G4HH-7PTN-5JXK-ZV6A",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"63zooolLGTsv3WNDtp2BfG5rGsgz0IzpbV2MMETla-yE4
-  OaHZj-17qju3f-K3LrqbkiqVfVibD4A"}}},
+          "Public":"l674_n9ihg91rjgPisb3XuA78E_8hWzsHtYfoFQvGB2kZ
+  3O1xSBFE2ppFjhS4hslA45yz7WpBzgA"}}},
     "AccountSignature":{
-      "Udf":"MBLX-QMMW-BSBB-AYXM-4UVH-OPHF-TOTE",
+      "Udf":"MDA6-ELE2-T2AM-52RT-AN3R-LUDS-GJGX",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"xtKVqxeAbGG2t49ezsJ0GkGWdE538231aq-091-tutHDp
-  BKlpfHbsQca7TP2EyP9kcubfIAFD-oA"}}}}}
+          "Public":"AHStW8KGpbroZt5ez-wvbC_FMr9AjqI8gLigC5p3whHcE
+  Q4jP9dW1xDwZ34j77qXNIfFEvOEWJMA"}}}}}
 ~~~~
 

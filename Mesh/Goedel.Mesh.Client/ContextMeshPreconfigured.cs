@@ -59,7 +59,7 @@ namespace Goedel.Mesh.Client {
 
             var claimResponse = MeshClient.PollClaim(claimRequest);
 
-            if (claimResponse == null) {
+            if (claimResponse?.EnvelopedMessage == null) {
                 return null;
                 }
 

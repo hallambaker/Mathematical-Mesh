@@ -22,14 +22,7 @@ namespace ExampleGenerator {
 		//
 		public void MakeSchemaExamples (CreateExamples Example) {
 			 SchemaAliceProfile(Example);
-			 SchemaAliceDeviceCoffee(Example);
-			 SchemaAliceActivationCoffee(Example);
-			 SchemaConnectionCoffee(Example);
-			 SchemaAliceActivationWatch(Example);
 			 SchemaProfileService(Example);
-			 SchemaConnectionHost(Example);
-			 SchemaEntrySSH(Example);
-			 SchemaEntryMail(Example);
 			 SchemaEntryContact(Example);
 			 SchemaEntryCredential(Example);
 			 SchemaEntryBookmark(Example);
@@ -42,16 +35,18 @@ namespace ExampleGenerator {
 			 SchemaClientAuthKeyAgreement(Example);
 			 SchemaDevice(Example);
 			 DevicePreconfiguration(Example);
-			 SchemaAccount(Example);
-			 SchemaService(Example);
-			 SchemaMessagePIN(Example);
-			 SchemaMessageCompletion(Example);
-			 SchemaMessageConnection(Example);
-			 SchemaMessageContact(Example);
-			 SchemaMessageConfirmation(Example);
 			 SchemaCode1(Example);
 			 SchemaCode2(Example);
 			 SchemaCode3(Example);
+			 SchemaAliceDeviceCoffee(Example);
+			 SchemaAliceActivationCoffee(Example);
+			 SchemaConnectionCoffee(Example);
+			 SchemaAliceActivationWatch(Example);
+			 SchemaEntrySSH(Example);
+			 SchemaEntryMail(Example);
+			 SchemaConnectionHost(Example);
+			 SchemaAccount(Example);
+			 SchemaService(Example);
 			}
 		
 
@@ -616,31 +611,6 @@ namespace ExampleGenerator {
 		
 
 		//
-		// SchemaMessageCompletion
-		//
-		public static void SchemaMessageCompletion(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaMessageCompletion.md");
-			Example._Output = _Output;
-			Example._SchemaMessageCompletion(Example);
-			}
-		public void _SchemaMessageCompletion(CreateExamples Example) {
-
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Having processed a message, a completion message is added to the spool so that other devices \n{0}", _Indent);
-				_Output.Write ("can see that it has been read.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("For example, when Alice's administration device uses the PIN registered above to \n{0}", _Indent);
-				_Output.Write ("authenticate a device connection request, a completion message is added to Alice's \n{0}", _Indent);
-				_Output.Write ("inbound spool so that the PIN cannot be reused to authenticate a second device:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (Connect.ConnectPINCompleteMessage);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-					}
-		
-
-		//
 		// SchemaMessageConnection
 		//
 		public static void SchemaMessageConnection(CreateExamples Example) { /* XFile  */
@@ -672,7 +642,7 @@ namespace ExampleGenerator {
 				_Output.Write ("device requesting the connection (via the Connect transaction response) and\n{0}", _Indent);
 				_Output.Write ("adds it to the inbound spool of the account for Alice's approval (or not).\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 DescribeMessage (Connect.AcknowledgeConnectionPIN);
+				 DescribeMessage (Connect.ConnectPINAcknowledgeConnection);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice's administration device synchronizes to the service and receives the\n{0}", _Indent);
 				_Output.Write ("connection request acknowledgement from the service. Since the request is \n{0}", _Indent);

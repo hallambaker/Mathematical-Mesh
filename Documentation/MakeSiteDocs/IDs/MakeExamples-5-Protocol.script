@@ -10,17 +10,11 @@
 #xclass ExampleGenerator CreateExamples
 
 #method MakeProtocolExamples CreateExamples Example
-#% ProtocolHelloRequest(Example);
-#% ProtocolHelloResponse(Example);
 #% ProtocolHello(Example);
 #% ProtocolAccountCreate(Example);
 #% ProtocolCreateGroup(Example);
-#% ProtocolAccountDelete(Example);
 #% ProtocolStatus(Example);
-#% ProtocolDownload(Example);
-#% ProtocolUpload(Example);
 #% ProtocolPostClientService(Example);
-#% ProtocolPostServiceService(Example);
 #% ProtocolClaim(Example);
 #% ProtocolPollClaim(Example);
 #% ProtocolCryptoKeyShare(Example);
@@ -32,26 +26,32 @@
 #% ProtocolGroupInvite(Example);
 #% ProtocolConfirmation(Example);
 #% ProtocolConnect(Example);
-#% ProtocolConnectPIN(Example);
 #% ProtocolConnectEARL(Example);
+#% ProtocolMessageCompletion(Example);
+#!!!!! Missing
+#% ProtocolHelloRequest(Example);
+#% ProtocolHelloResponse(Example);
+#% ProtocolAccountDelete(Example);
+#% ProtocolPostServiceService(Example);
+#% ProtocolConnectPIN(Example);
+#!!!!! Obsolete ???
+#% ProtocolDownload(Example);
+#% ProtocolUpload(Example);
 #end method
 
 #zfile CreateExamples ProtocolHelloRequest "Examples\\ProtocolHelloRequest.md" Example
-
+#! This is to show the binding
 
 #%  DescribeRequestBinding (Service.Hello?[0].Traces[0]);
 
 #end zfile
 
 #zfile CreateExamples ProtocolHelloResponse "Examples\\ProtocolHelloResponse.md" Example
-
+#! This is to show the binding
 
 #%  DescribeResponseBinding (Service.Hello?[0].Traces[0]);
 
 #end zfile
-
-
-
 
 
 #zfile CreateExamples ProtocolHello "Examples\\ProtocolHello.md" Example
@@ -160,35 +160,6 @@ The response payload:
 #end zfile
 
 
-
-
-#zfile CreateExamples ProtocolClaim "Examples\\ProtocolClaim.md" Example
-
-The request payload:
-
-#%  DescribeRequest (Connect?.ConnectStaticPollFail?[0].Traces?[1]);
-
-The response payload:
-
-#%  DescribeResponse (Connect?.ConnectStaticPollFail?[0].Traces?[1]);
-
-#end zfile
-
-#zfile CreateExamples ProtocolPollClaim "Examples\\ProtocolPollClaim.md" Example
-
-The request payload:
-
-#%  DescribeRequest (Connect?.ConnectStaticClaim?[0].Traces?[1]);
-
-The response payload:
-
-#%  DescribeResponse (Connect?.ConnectStaticClaim?[0].Traces?[1]);
-
-
-#end zfile
-
-
-
 #zfile CreateExamples ProtocolCryptoKeyShare "Examples\\ProtocolCryptoKeyShare.md" Example
 The request payload:
 
@@ -279,6 +250,47 @@ QR code is #{Contact.AliceStaticQRCode} yadda yaddda
 #end zfile
 
 
+#zfile CreateExamples ProtocolClaim "Examples\\ProtocolClaim.md" Example
+
+A device is preconfigured during manufacture and a Device Description published to the
+EARL:
+
+#{Connect.ClaimUri}
+
+The client claiming the publication creates a claim message specifying the 
+resource being claimed and the address of the Mesh account making the claim.
+
+#% DescribeMessage(Connect.MessageClaim);
+
+The message is signed by the claimant to make a RequestClaim to the service:
+
+#% DescribeRequest(Connect.RequestClaim);
+
+The publication is found and the claim is accepted, the publication  is returned
+in the response.
+
+#% DescribeResponse(Connect.ResponseClaim);
+
+The device waiting to be connected uses the PollClaim transaction to receive notification
+of a claim having been posted.
+
+#end zfile
+
+#zfile CreateExamples ProtocolPollClaim "Examples\\ProtocolPollClaim.md" Example
+
+The device in the example above periodically polls the service to which the device 
+description is published to find if a claim has been registered.
+
+The PollClaimRequest contains the account to which the document is published
+and the publication ID:
+
+#% DescribeRequest(Connect.RequestPollClaim);
+
+The response returns the latest claim made as signed message:
+
+#% DescribeResponse(Connect.ResponsePollClaim);
+
+#end zfile
 
 #zfile CreateExamples ProtocolConfirmation "Examples\\ProtocolConfirmation.md" Example
 
@@ -300,65 +312,151 @@ Alice accepts the request and returns the following response:
 
 
 
-#zfile CreateExamples ProtocolConnect "Examples\\ProtocolConnect.md" Example
-
-#%  DescribeRequest (Connect.ConnectRequest?[0].Traces[0]);
-
-The request payload:
-
-// This is missing here because the messages are not being fished out of the 
-
-#% DescribeMessage(Connect.ConnectRequestWitness);
+#zfile CreateExamples ProtocolConnectPIN "Examples\\ProtocolConnectPIN.md" Example
 
 
-The response payload:
+###### Phase 1:
 
-#%  DescribeResponse (Connect.ConnectRequest?[0].Traces[0]);
+#%  ConsoleExample (Connect.ConnectPINCreate);
 
-// Again missing here...
+The registration of this PIN value was shown earlier in section $$$
 
-#% DescribeMessage(Connect.AcknowledgeConnectionWitness);
+The URI containing the account address and PIN is:
+
+~~~~
+#{Connect.ConnectDynamicURI}
+~~~~
+
+###### Phase 2:
+
+The onboarding device scans the QR code to obtain the account address and PIN code.
+The PIN code is used to authenticate a connection request:
+
+#%  ConsoleExample (Connect.ConnectPINRequest);
+
+The device issues a connection request to the service corresponding to the account. 
+This specifies the device profile, the account to which the device is to be 
+connected and the client nonce value:
+
+#%  DescribeRequest (Connect.ConnectPINRequestConnection);
+
+The service generates the service nonce value and uses it to create the 
+AcknowledgeConnection message.
+
+#%  DescribeMessage (Connect.ConnectPINAcknowledgeConnection);
+
+The AcknowledgeConnection message is appended to the Inbound spool of the account
+to which connection was requested so that the user can approve the request. The
+ConnectResponse message is returned to the device containing the AcknowledgeConnection 
+message and the profile of the account.
+
+#% DescribeResponse(Connect.ConnectPINResponseConnection);
+
+The device generates the witness value and presents it to the user as shown above.
+
+###### Phase 3:
+
+The user synchronizes their pending messages:
+
+#%  ConsoleExample (Connect.ConnectPINPending);
+
+The administration device determines that the device connection request is authenticated
+by a PIN code. The PIN code is retrieved and the message authenticated. This is shown in
+the PIN registration interation example in section $$$ above.
+
+#%  Format (Connect.ConnectPINActivationDevice);
+
+The Cataloged device record is created from the public key values corresponding to the
+combination of the public keys in the device profile and those defined by the activation:
+
+#%  Format (Connect.ConnectPINCatalogedDevice);
+
+The ActivationDevice and CatalogedDevice records are ???
 
 
+###### Phase 4
 
-Alice reads her pending messages, notes that there is a pending connection request with
-a witness value matches the one displayed earlier and approves the connection request.
+The device periodically polls for completion of the connection request using the
+Complete transaction.
 
-// here need description of the handling of the spool
+To provide a final check on the process, the command line tool presents the UDF of 
+the account profile to which the device has connected if successful:
 
-#% DescribeMessage(Connect.RespondConnectionWitness);
+#%  ConsoleExample (Connect.ConnectPINComplete);
 
-// Now the device collects the result from the local delivery spool
+The completion request specified the device requesting completion:
 
-[Request]
+#%  DescribeRequest (Connect.ConnectPINRequestComplete);
 
-[Mention Can get a 'not yet ready' response]
+The response contains the information the device requires to complete the connection
+to the mesh:
 
-
-[Response]
-
-// has all the information needed to complete the transaction.
+#%  DescribeRequest (Connect.ConnectPINRespondComplete);
 
 
 #end zfile
 
 
-#zfile CreateExamples ProtocolConnectPIN "Examples\\ProtocolConnectPIN.md" Example
+#zfile CreateExamples ProtocolConnect "Examples\\ProtocolConnect.md" Example
 
-~~~~
-Account = {Connect.ConnectPINMessagePin.AccountAddress}
-Pin = #{Connect.ConnectPINMessagePin.Pin}
+###### Phase 1:
 
-URI = #{Connect.ConnectDynamicURI}
-~~~~
+There are no first phase actions.
+
+###### Phase 2:
+
+Alice enters the connection request on the device to be connected. This specifies the 
+address of the account to which she wishes to connect:
+
+#%  ConsoleExample (Connect.ConnectRequest);
+
+
+###### Phase 3:
+
+The user reviews their pending messages:
+
+#%  ConsoleExample (Connect.ConnectPending);
+
+The administration device receives the AcknowledgeConnection message from the service 
+and verifies that the signature is valid and the witness value correctly computed.
+
+The user verifies that the witness value presented in the AcknowledgeConnection message
+matches the one presented on the device. Since they match, the request is accepted:
+
+#%  ConsoleExample (Connect.ConnectAccept);
+
+###### Phase 4
+
+The device completes the connection as before:
+
+#%  ConsoleExample (Connect.ConnectComplete);
 
 #end zfile
 
 
 #zfile CreateExamples ProtocolConnectEARL "Examples\\ProtocolConnectEARL.md" Example
-~~~~
-URI = 
-~~~~
+
+###### Phase 1
+
+The device is prepopulated with a Device description, this is shown in section $$$ of
+Schema.
+
+###### Phase 2
+
+The administration device scans the QR code and obtains the Device Description using
+the Claim transaction as shown in section $$$$.
+
+###### Phase 3
+
+Tha administration device creates the ActivationDevice and CatalogedDevice records
+and populates the service as before.
+
+###### Phase 4
+
+The device polls the publication service until a claim message is returned. This 
+interaction is shown in section $$$$ above.
+
+
 #end zfile
 
 
