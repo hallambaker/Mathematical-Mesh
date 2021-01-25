@@ -14,6 +14,14 @@ using System.Collections.Generic;
 namespace Goedel.Test.Core {
 
 
+    public class MeshMachineTestWeb : MeshMachineTest {
+        public MeshMachineTestWeb(TestEnvironmentCommon testEnvironmentPerTest, string name = "Test") :
+            base(testEnvironmentPerTest, name) {
+            }
+
+        }
+
+
     /// <summary>
     /// Test machine. The cryptographic keys and persistence stores are only 
     /// stored as in-memory structures and never written to disk.
@@ -112,9 +120,9 @@ namespace Goedel.Test.Core {
             testEnvironmentCommon = testEnvironmentPerTest;
             }
 
-        public MeshMachineTest(MeshMachineTest existing) :
-            base(existing.DirectoryMaster) =>
-            testEnvironmentCommon = existing.testEnvironmentCommon;
+        //public MeshMachineTest(MeshMachineTest existing) :
+        //    base(existing.DirectoryMaster) =>
+        //    testEnvironmentCommon = existing.testEnvironmentCommon;
 
 
         public void Persist(KeyPair keyPair) {

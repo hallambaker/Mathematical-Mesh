@@ -167,6 +167,25 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
+        /// Return a randomly assigned UDP port.
+        /// </summary>
+        /// <returns>The randomly assigned port in the range 4096-65535</returns>
+        public static int GetRandomPort() {
+            var Bytes = GetRandomBytes(3);
+            int Result = Bytes[0] + 256 * Bytes[1];
+
+            if (Result < 4096) {
+                Result |= 256 * (Bytes[2] | 0x10);
+                }
+
+            if (Result > 65535) {
+                }
+
+            return Result;
+            }
+
+
+        /// <summary>
         /// Return a random positive integer that is strictly less than <paramref name="max"/>
         /// </summary>
         /// <param name="max">Maximum value to return.</param>

@@ -26,10 +26,15 @@ namespace Scratchpad {
 
             //ShellTests.Test().TestArchive();
 
-            ShellTests.Test().TestLog();
+            //ServiceDiscovery.Test().TestDNSMultiple(10000);
+
+            //ShellTests.Test().TestLog();
 
 
+            //ShellTests.Test().TestHello();
+            //ShellTestsHTTP.Test().TestHello();
 
+            GoedelProtocolService.Test().TestService();
 
             }
 

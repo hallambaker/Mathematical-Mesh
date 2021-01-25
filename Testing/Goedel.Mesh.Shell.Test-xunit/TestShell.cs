@@ -10,8 +10,11 @@ namespace Goedel.XUnit {
         // Use the new test environment (when defined.)
         public override TestEnvironmentCommon GetTestEnvironment() => new TestEnvironmentCommon();
 
+        public static new ShellTestsHTTP Test() => new ShellTestsHTTP();
+
+
         public override TestCLI GetTestCLI(string MachineName = null) {
-            var testShell = new TestShell(TestEnvironment, MachineName);
+            var testShell = new TestShell(TestEnvironment, MachineName, false);
             return new TestCLI(testShell);
             }
 

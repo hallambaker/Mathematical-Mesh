@@ -210,7 +210,7 @@ namespace Goedel.XUnit {
             foreach (var count in counts) {
                 for (var i = 0; i < count; i++) {
                     var bytes = Platform.GetRandomBytes(10, 80);
-                    var entry = bytes.ToStringBase64url();
+                    var entry = bytes.ToStringBase32();
                     Dispatch($"dare log {filename} {entry}");
                     entries.Add(entry);
                     }

@@ -32,7 +32,7 @@ namespace Goedel.Discovery {
         /// <param name="maxRead">Maximum number of data values to accept</param>
         public ClientUDP(IPAddress address, int port, int timeOut = 0, int maxRead = 0) {
             endPoint = new IPEndPoint(address, port);
-            udpClient = new UdpClient(Goedel.Discovery.Platform.GetRandomPort());
+            udpClient = new UdpClient();
             udpClient.Connect(endPoint);
 
             if (timeOut > 0) {

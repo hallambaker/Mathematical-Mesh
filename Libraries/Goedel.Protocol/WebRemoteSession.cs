@@ -55,7 +55,7 @@ namespace Goedel.Protocol {
                 Domain = null;
                 }
             else {
-                serviceDescription = DNSClient.ResolveService(domain, Service: service);
+                serviceDescription = DnsClient.ResolveService(domain, Service: service);
                 var Host = serviceDescription.Next();
                 uri = Host.HTTPEndpoint;
                 Domain = Host.Address;

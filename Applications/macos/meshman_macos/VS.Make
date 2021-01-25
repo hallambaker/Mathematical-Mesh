@@ -18,7 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Cryptography.Windows.dll
+    Goedel.Cryptography.macos.dll
 
 ToolTargets = 
 

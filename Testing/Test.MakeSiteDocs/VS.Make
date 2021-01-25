@@ -18,7 +18,9 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    MakeSiteDocs.exe
+    MakeSiteDocs.exe\
+    Goedel.Debug.dll\
+    Goedel.Mesh.Test.dll
 
 ToolTargets = 
 

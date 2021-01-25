@@ -60,15 +60,16 @@ namespace Goedel.Discovery {
     /// <summary>
     /// DNS client.
     /// </summary>
-    public abstract class DNSClient {
+    public abstract class DnsClient {
+
+        /// <summary>Default client context for DNS query (result is cached for reuse)</summary>
+        public static DnsClient Default => defaultClient ?? new DnsClientUDP().CacheValue(out defaultClient);
+        static DnsClient defaultClient = null;
 
         /// <summary>Return a DNS Client Context in which to make a set of queries.
         /// </summary>
         /// <returns>The DNS Client Context</returns>
         public abstract DNSContext GetContext();
-
-
-
 
 
         /// <summary>
@@ -82,9 +83,8 @@ namespace Goedel.Discovery {
         public static ServiceDescription ResolveService(string Address, string Service = null,
                     int? Port = null, DNSFallback Fallback = DNSFallback.Prefix) {
 
-            var TaskService = ResolveServiceAsync(Address, Service, Port, Fallback);
+            using var TaskService = ResolveServiceAsync(Address, Service, Port, Fallback);
             TaskService.Wait();
-
             return TaskService.Result;
 
             }
@@ -102,8 +102,9 @@ namespace Goedel.Discovery {
                         string Service = null,
                         int? Port = null, DNSFallback Fallback = DNSFallback.Prefix) {
 
-            var Context = Platform.DNSClient.GetContext();
-            return await Context.QueryServiceAsync(Address, Service, Port, Fallback);
+            using var Context = Default.GetContext();
+            var task = await Context.QueryServiceAsync(Address, Service, Port, Fallback);
+            return task;
             }
 
         }
@@ -114,8 +115,8 @@ namespace Goedel.Discovery {
     /// </summary>
     public abstract class DNSContext : Disposable {
 
-        /// <summary>The DNS client to use</summary>
-        public DNSClient DNSClient = Platform.DNSClient;
+        ///// <summary>The DNS client to use</summary>
+        //public DnsClient DNSClient = Goedel.Discovery.DNSClient.Default;
 
         /// <summary>Scoreboard of current requests.</summary>
         List<DNSRequest> pendingRequests = new List<DNSRequest>();
@@ -166,7 +167,7 @@ namespace Goedel.Discovery {
         public DNSContext(int timeout = 5000, int retry = 1000) {
             this.timeout = timeout;
             this.retry = retry;
-            iDCounter = Platform.GetRandom16();
+            iDCounter = (ushort) Goedel.Cryptography.Platform.GetRandomInteger(0x10000);
 
             taskTimeout = Task.Delay(this.timeout);
             taskRetry = Task.Delay(this.retry);

@@ -18,13 +18,15 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
+using Goedel.Utilities;
+using Goedel.Cryptography;
 
 namespace Goedel.Discovery {
 
     /// <summary>
     /// DNS client implementation
     /// </summary>
-    public partial class DNSClientUDP : DNSClient {
+    public partial class DnsClientUDP : DnsClient {
         /// <summary>
         /// List of IP addresses to contact.
         /// </summary>
@@ -46,7 +48,7 @@ namespace Goedel.Discovery {
         /// <summary>
         /// Default constructor using platform default DNS.
         /// </summary>
-        public DNSClientUDP() {
+        public DnsClientUDP() {
             ListIPAddress = GetHostDNS();
             Port = 53;
             }
@@ -55,7 +57,7 @@ namespace Goedel.Discovery {
         /// Constructor from server name.
         /// </summary>
         /// <param name="Server">Address of DNS server</param>
-        public DNSClientUDP(string Server) {
+        public DnsClientUDP(string Server) {
             if (Server != null) {
                 IPAddress.TryParse(Server, out var Address);
                 SetIPAddress(Address);
@@ -71,7 +73,7 @@ namespace Goedel.Discovery {
         /// Constructor from IP Address using default DNS port (53).
         /// </summary>
         /// <param name="IPAddress">Address of DNS server</param>
-        public DNSClientUDP(IPAddress IPAddress) :
+        public DnsClientUDP(IPAddress IPAddress) :
             this(IPAddress, 53) {
             }
 
@@ -79,7 +81,7 @@ namespace Goedel.Discovery {
         /// Constructor from list of IP Addresses
         /// </summary>
         /// <param name="ListIPAddress">List of addresses of DNS server</param>
-        public DNSClientUDP(List<IPAddress> ListIPAddress) {
+        public DnsClientUDP(List<IPAddress> ListIPAddress) {
             this.ListIPAddress = ListIPAddress;
             this.Port = 53;
             }
@@ -89,7 +91,7 @@ namespace Goedel.Discovery {
         /// </summary>
         /// <param name="IPAddress">Address of DNS server</param>
         /// <param name="Port">Port number</param>
-        public DNSClientUDP(IPAddress IPAddress, ushort Port) {
+        public DnsClientUDP(IPAddress IPAddress, ushort Port) {
             SetIPAddress(IPAddress);
             this.Port = Port;
             }
@@ -175,6 +177,15 @@ namespace Goedel.Discovery {
         UdpClient UdpClient = null;
 
         /// <summary>
+        /// The disposal method, frees the UdpClient if allocated.
+        /// </summary>
+        protected override void Disposing() {
+            base.Disposing();
+            UdpClient?.Dispose();
+            }
+
+
+        /// <summary>
         /// Default Constructor
         /// </summary>
         /// <param name="ListIPAddress">List of IP addresses to contact.</param>
@@ -234,7 +245,18 @@ namespace Goedel.Discovery {
 
 
         private static UdpClient GetUDPClient(IPAddress Address, int Port) {
-            UdpClient UdpClient = new UdpClient(Goedel.Discovery.Platform.GetRandomPort());
+            UdpClient UdpClient;
+            try {
+                // attempt to allocate a randomly allocated port
+                var port = Goedel.Cryptography.Platform.GetRandomPort();
+                UdpClient = new UdpClient(port);
+                }
+            catch  {
+                // port was already allocated, take a default port off the system.
+                UdpClient = new UdpClient();
+                }
+
+            
             UdpClient.Connect(Address, Port);
             return UdpClient;
             }

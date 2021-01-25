@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Configurations>Debug;Release;Focus</Configurations>
+    <Company>ThresholdMode.Com</Company>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Product>Meshman</Product>
+    <Description>Mesh command line tool.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Meshman</Title>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+    <ProjectReference Include="..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
+  </ItemGroup>
+
+</Project>

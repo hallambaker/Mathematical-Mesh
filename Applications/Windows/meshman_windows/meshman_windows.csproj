@@ -30,6 +30,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Libraries\Windows\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+      <ProjectReference Include="..\..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
     </ItemGroup>
 
   </Project>

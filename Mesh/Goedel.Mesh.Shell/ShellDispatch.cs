@@ -19,7 +19,7 @@ namespace Goedel.Mesh.Shell {
         //CommandLineInterpreter CommandLineInterpreter;
 
         ///<summary>The MeshMachine</summary>
-        public virtual IMeshMachineClient MeshMachine { get; }
+        public virtual IMeshMachineClient MeshMachine { get; set;  }
 
         ///<summary>Convenience accessor for the Mesh Host.</summary>
         public MeshHost MeshHost => MeshMachine?.MeshHost;

@@ -26,13 +26,16 @@ LinkFiles = \
     Goedel.Protocol.dll\
     Goedel.Test.dll\
     Goedel.Mesh.dll\
+    Goedel.ASN1.Test-xunit.dll\
     Goedel.Cryptography.Dare.Test-xunit.dll\
     Goedel.Cryptography.Jose.Test-xunit.dll\
     Goedel.Cryptography.Test-xunit.dll\
+    Goedel.Discovery.Test-xunit.dll\
     Goedel.Mesh.Protocol.Test-xunit.dll\
     Goedel.Mesh.Shell.Test-xunit.dll\
     Goedel.Mesh.Store.Test-xunit.dll\
     Goedel.Mesh.Test-xunit.dll\
+    Goedel.Protocol.Service.Test-xunit.dll\
     Goedel.Protocol.Test-xunit.dll\
     Goedel.Utilities.Test-xunit.dll\
     Test.Common.dll\

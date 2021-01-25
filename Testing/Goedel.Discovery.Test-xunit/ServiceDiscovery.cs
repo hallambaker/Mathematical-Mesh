@@ -11,13 +11,21 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestDNS() {
-            var Service1 = DNSClient.ResolveService("prismproof.org");
+            var Service1 = DnsClient.ResolveService("prismproof.org");
 
-            var Service2 = DNSClient.ResolveService("prismproof.org", "mmm");
+            var Service2 = DnsClient.ResolveService("prismproof.org", "mmm");
 
-            var Service3 = DNSClient.ResolveService("prismproof.org", "www", 80);
+            var Service3 = DnsClient.ResolveService("prismproof.org", "www", 80);
 
 
+            }
+
+        [Theory]
+        [InlineData(20)]
+        public void TestDNSMultiple(int count) {
+            for (var i = 0; i < count; i++) {
+                TestDNS();
+                }
             }
         }
     }

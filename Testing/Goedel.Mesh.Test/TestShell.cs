@@ -25,20 +25,26 @@ namespace Goedel.Mesh.Test {
         public override IMeshMachineClient MeshMachine => MeshMachineTest;
 
         public MeshMachineTest MeshMachineTest => meshMachineTest ??
-            new MeshMachineTest(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest);
+            (Direct ? new MeshMachineTest(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest) :
+                new MeshMachineTestWeb(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest));
         MeshMachineTest meshMachineTest;
 
         MeshService MeshClient => meshClient ??
             MeshPortalDirect.GetService(ServiceName).CacheValue(out meshClient);
         MeshService meshClient;
 
+
+        bool Direct { get; }
+
         /// <summary>
         /// Create a new test shell
         /// </summary>
         /// <param name="meshPortalDirect"></param>
-        public TestShell(TestEnvironmentCommon testEnvironment, string machineName = null) {
+        public TestShell(TestEnvironmentCommon testEnvironment, string machineName = null, 
+                    bool direct = true) {
             MachineName = machineName ?? MachineName;
             TestEnvironmentCommon = testEnvironment;
+            Direct = direct;
             }
 
 
