@@ -150,29 +150,6 @@ namespace Goedel.Mesh.Server {
 
 
 
-        ///// <summary>
-        ///// Server method implementing the transaction CreateGroup.
-        ///// </summary>
-        ///// <param name="request">The request object to send to the host.</param>
-        ///// <param name="jpcSession">The connection authentication context.</param>
-        ///// <returns>The response object from the service</returns>
-        //public override CreateGroupResponse CreateGroup(CreateGroupRequest request, 
-        //            JpcSession jpcSession = null) {
-
-        //    jpcSession ??= JpcSession;
-
-
-        //    try {
-        //        var accountEntry = new AccountGroup(request);
-        //        Mesh.AccountAdd(jpcSession, accountEntry);
-        //        return new CreateGroupResponse();
-        //        }
-        //    catch (System.Exception exception) {
-        //        return new CreateGroupResponse(exception);
-        //        }
-        //    }
-
-
         /// <summary>
         /// Server method implementing the transaction Download.
         /// </summary>

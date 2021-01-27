@@ -28,6 +28,25 @@ using System.IO;
 namespace Goedel.Protocol {
 
     /// <summary>
+    /// Enumeration describing the different connection modes
+    /// </summary>
+    public enum JpcConnection {
+        ///<summary>The client makes a direct call to the service API.</summary> 
+        Direct,
+        ///<summary>The client calls the service API through the 
+        ///serialization/deserialization interfaces.</summary> 
+        Serialized,
+        ///<summary>The client calls the service by means of a HTTP request.</summary> 
+        Http,
+        ///<summary>The client calls the service by means of a UDP request if
+        ///possible and otherwise uses HTTP</summary> 
+        Udp
+
+        }
+
+
+
+    /// <summary>
     /// Base class for a Host dispatcher.
     /// </summary>
     public abstract class JpcProvider {

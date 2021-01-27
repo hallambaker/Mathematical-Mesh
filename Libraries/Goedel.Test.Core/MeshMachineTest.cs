@@ -55,7 +55,7 @@ namespace Goedel.Test.Core {
                 CryptoKey keyAuthentication,
                 Connection assertionAccountConnection,
                 Profile profile = null) =>
-            testEnvironmentCommon.MeshLocalPortal.GetService(accountAddress);
+            testEnvironmentCommon.GetMeshClient(accountAddress);
 
 
         public static Contact ContactAlice = new ContactPerson(

@@ -32,8 +32,8 @@ namespace Goedel.Mesh.Test {
 
         public TestService(TestEnvironmentCommon TestEnvironmentCommon) {
 
-            var MeshLocalPortal = TestEnvironmentCommon.MeshLocalPortal;
-            var meshProvider = MeshLocalPortal.MeshServiceHost;
+
+            var meshProvider = TestEnvironmentCommon.MeshServiceHost;
 
             var monitorProvider = new ServiceManagementServiceProvider();
 

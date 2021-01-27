@@ -30,47 +30,6 @@ using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
 
-
-
-    //public delegate MeshPortal GetPortalDelegate(string serviceName, string directory = null);
-
-
-
-    /// <summary>
-    /// Describes a single instance of a named Mesh Service provider. 
-    /// <para>
-    /// In production use,
-    /// a MeshPortalRemote connects to an Internet service with the specified name and all
-    /// clients that connect to the same DNS service name will connect to the same 
-    /// Internet service regardless of which portal is used.</para>
-    /// <para>For test purposes a MeshLocalPortal connects to a local service provider
-    /// either calling the dispatch methods directly (MeshPortalDirect) or
-    /// using the wire encoding format to allow parameter serialization and deserialization 
-    /// to be tested (MeshPortalLocal). In this configuration, calls to different
-    /// MeshPortal instances result in dispatch to different Mesh services.</para>
-    /// </summary>
-    public abstract class MeshPortal {
-
-
-        //public static GetPortalDelegate GetPortal;
-
-        /// <summary>
-        /// Return a MeshService object for the named portal service.
-        /// </summary>
-        /// <param name="accountAddress">Address of the portal service.</param>
-        /// <returns>Mesh service object for API access to the service.</returns>
-        public abstract MeshService GetService(string accountAddress);
-
-
-        /// <summary>
-        /// May be set to the default MeshService by a calling application.
-        /// </summary>
-        public MeshService MeshServiceClient { get; set; }
-
-        }
-
-
-
     /// <summary>
 	/// The new base class for the client and service side APIs.
     /// </summary>		

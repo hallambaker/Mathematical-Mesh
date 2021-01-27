@@ -1274,63 +1274,6 @@
             <param name="account">The account to get.</param>
             <returns>The locked account entry if found, otherwise null.</returns>
         </member>
-        <member name="T:Goedel.Mesh.Server.MeshLocalPortal">
-            <summary>
-            Abstract interface to a local service provider.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Server.MeshLocalPortal.ServiceDirectory">
-            <summary>
-            File name for local access to the mesh store.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Server.MeshLocalPortal.ServiceName">
-            <summary>
-            The service name (default to mesh.prismproof.org)
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Server.MeshLocalPortal.MeshServiceHost">
-            <summary>
-            The local PublicMeshServiceHost.
-            </summary>
-        </member>
-        <member name="T:Goedel.Mesh.Server.MeshPortalDirect">
-            <summary>
-            Direct connection to service provider via API calls. 
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshPortalDirect.#ctor(System.String,System.String)">
-            <summary>
-            Create a new portal using the specified stores.
-            </summary>
-            <param name="serviceName">DNS service name</param>
-            <param name="serviceDirectory">File name for the Mesh Store.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshPortalDirect.GetService(System.String)">
-            <summary>
-            Return a MeshService object for the named portal service.
-            </summary>
-            <param name="accountAddress">The account to get.</param>
-        </member>
-        <member name="T:Goedel.Mesh.Server.MeshPortalLocal">
-            <summary>
-            Direct connection to service provider via JSON encoding, decoding and dispatch.
-            Useful for producing documentation and for testing.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshPortalLocal.#ctor(System.String,System.String)">
-            <summary>
-            Create a new portal using the specified stores.
-            </summary>
-            <param name="serviceName">DNS service name</param>
-            <param name="serviceDirectory">File name for the Mesh Store.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshPortalLocal.GetService(System.String)">
-            <summary>
-            Return a MeshService object for the named portal service.
-            </summary>
-            <param name="accountAddress">The account to get.</param>
-        </member>
         <member name="T:Goedel.Mesh.Server.NamespaceDoc">
             <summary>
             Mesh Service implementation

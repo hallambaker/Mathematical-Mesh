@@ -16,10 +16,9 @@ namespace Goedel.Mesh.Test {
 
     public partial class TestShell : Goedel.Mesh.Shell.Shell {
         static string ServiceName = "example.com";
-        public MeshLocalPortal MeshPortalDirect => TestEnvironmentCommon.MeshLocalPortal;
         public string MachineName = "Test";
 
-
+        public List<Trace> MeshProtocolMessages = new();
         public TestEnvironmentCommon TestEnvironmentCommon;
 
         public override IMeshMachineClient MeshMachine => MeshMachineTest;
@@ -30,7 +29,7 @@ namespace Goedel.Mesh.Test {
         MeshMachineTest meshMachineTest;
 
         MeshService MeshClient => meshClient ??
-            MeshPortalDirect.GetService(ServiceName).CacheValue(out meshClient);
+            GetMeshClient(ServiceName).CacheValue(out meshClient);
         MeshService meshClient;
 
 
@@ -48,6 +47,9 @@ namespace Goedel.Mesh.Test {
             }
 
 
+        public MeshService GetMeshClient(string accountAddress) =>
+            TestEnvironmentCommon.GetMeshClient(accountAddress, MeshProtocolMessages);
+            
 
         public override MeshService GetMeshClient(IAccountOptions Options) => MeshClient;
 
@@ -162,19 +164,12 @@ namespace Goedel.Mesh.Test {
             foreach (var cmd in commands) {
                 Count++;
                 CountTotal++;
-                var portalTest = Shell.MeshPortalDirect as MeshPortalTest;
-
                 try {
-
-
-                    if (portalTest != null) {
-                        portalTest.MeshProtocolMessages = null;
-                        }
-
+                    Shell.MeshProtocolMessages = null;
 
                     Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
                     result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
-                        Traces = portalTest?.MeshProtocolMessages
+                        Traces = Shell.MeshProtocolMessages
                         });
                     }
                 catch (Exception exception) {
@@ -186,7 +181,7 @@ namespace Goedel.Mesh.Test {
                         Reason = exception.Message
                         };
                     result.Add(new ExampleResult(this, cmd, cmdresult) {
-                        Traces = portalTest?.MeshProtocolMessages
+                        Traces = Shell.MeshProtocolMessages
                         });
                     }
                 }
@@ -205,18 +200,12 @@ namespace Goedel.Mesh.Test {
             foreach (var cmd in commands) {
                 Count++;
                 CountTotal++;
-                var portalTest = Shell.MeshPortalDirect as MeshPortalTest;
-
-
-
-                if (portalTest != null) {
-                    portalTest.MeshProtocolMessages = null;
-                    }
+                Shell.MeshProtocolMessages = null;
 
 
                 Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
                 result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
-                    Traces = portalTest?.MeshProtocolMessages
+                    Traces = Shell.MeshProtocolMessages
                     });
 
                 }

@@ -79,8 +79,7 @@ namespace Goedel.XUnit {
         public void ProtocolHello() {
 
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var meshClient = testEnvironmentCommon.MeshLocalPortal.GetService(ServiceName);
-
+            var meshClient = testEnvironmentCommon.GetMeshClient(ServiceName);
 
             var request = new HelloRequest();
             var response = meshClient.Hello(request, null);
