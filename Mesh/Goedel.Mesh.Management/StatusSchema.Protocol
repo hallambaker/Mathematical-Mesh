@@ -1,0 +1,38 @@
+﻿Protocol Goedel.Mesh.Management MeshServiceManagementProtocol MeshServiceManagementProtocol
+	Using Goedel.Mesh
+	Using Goedel.Cryptography.Dare
+	Using Goedel.Cryptography.Jose 
+
+	Description
+		|Web service providing server management interface.
+
+    Service ServiceManagementService "_wmsmp._tcp" "wsmp" WsmpRequest WsmpResponse
+		Description
+			|
+
+	Section 2 "Request Messages"
+		Description
+			|
+
+	Message WsmpRequest
+		Description
+			|Base class for all request messages.
+		External Goedel.Protocol.Request
+
+	Section 2 "Response Messages"
+		Description
+			|
+
+	Message WsmpResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.
+
+
+
+
+
+
+
+

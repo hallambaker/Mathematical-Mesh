@@ -36,6 +36,9 @@
     <None Update="Exceptions.exceptional">
       <Generator>exceptional</Generator>
     </None>
+    <None Update="StatusSchema.Protocol">
+      <Generator>Protogen</Generator>
+    </None>
   </ItemGroup>
   
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

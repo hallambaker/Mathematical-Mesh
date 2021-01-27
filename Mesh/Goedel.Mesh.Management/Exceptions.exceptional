@@ -1,0 +1,8 @@
+﻿
+Namespace Goedel.Protocol.Management
+    
+	Exception ServerNotSupported
+        Console "This platform does not support HTTP service."
+		Description
+			|This platform does not support HTTP service
+

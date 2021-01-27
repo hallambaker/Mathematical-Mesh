@@ -22,6 +22,7 @@ LinkFiles = \
     Goedel.Cryptography.Core.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.dll\
+    Goedel.Protocol.Service.dll\
     Goedel.Protocol.dll\
     Goedel.Test.Core.dll\
     Goedel.Test.dll\

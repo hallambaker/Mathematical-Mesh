@@ -67,7 +67,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// The provider to dispatch to.
         /// </summary>
-        public JPCProvider Provider;
+        public JpcProvider Provider;
 
         }
 
@@ -120,7 +120,7 @@ namespace Goedel.Protocol {
         /// at more than one server.</summary>
         public ProviderRegistration ProviderRegistration;
         /// <summary>The provider interface</summary>
-        public JPCInterface Interface;
+        public JpcInterface Interface;
 
         List<PortRegistration> Ports;
 
@@ -129,7 +129,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Interface">The provider interface.</param>
         /// <param name="ProviderRegistration">The provider.</param>
-        public InterfaceRegistration(JPCInterface Interface,
+        public InterfaceRegistration(JpcInterface Interface,
                     ProviderRegistration ProviderRegistration) {
             this.Interface = Interface;
             this.ProviderRegistration = ProviderRegistration;
@@ -151,17 +151,7 @@ namespace Goedel.Protocol {
             return HTTPPortRegistration;
             }
 
-        /// <summary>
-        /// Register a service at the standard HTTP port.
-        /// </summary>
-        /// <param name="Domain">DNS domain to register service to</param>
-        /// <returns>The port registration structure.</returns>
-        public HTTPPortRegistration AddService(string Domain) {
 
-            var URI = JPCProvider.WellKnownToURI(Domain, Interface.GetWellKnown,
-                Interface.GetDiscovery, false, true);
-            return AddHTTP(URI);
-            }
 
 
         /// <summary>
@@ -203,7 +193,7 @@ namespace Goedel.Protocol {
         /// <summary>The JPC Server</summary>
         public JPCServer JPCServer;
         /// <summary>The JPC Provider.</summary>
-        public JPCProvider JPCProvider;
+        public JpcProvider JPCProvider;
 
         List<InterfaceRegistration> Interfaces;
 
@@ -213,7 +203,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="JPCHost">Service provider to register</param>
         /// <param name="JPCServer">Server to register to.</param>
-        public ProviderRegistration(JPCProvider JPCHost, JPCServer JPCServer) {
+        public ProviderRegistration(JpcProvider JPCHost, JPCServer JPCServer) {
             this.JPCServer = JPCServer;
             this.JPCProvider = JPCHost;
             Interfaces = new List<InterfaceRegistration>();
@@ -224,7 +214,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Interface">Interface to add,</param>
         /// <returns>Registration of interface.</returns>
-        public InterfaceRegistration Add(JPCInterface Interface) {
+        public InterfaceRegistration Add(JpcInterface Interface) {
             var InterfaceRegistration = new InterfaceRegistration(Interface, this);
             Interfaces.Add(InterfaceRegistration);
 
@@ -280,7 +270,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="JPCHost">The Service provider to add.</param>
         /// <returns>Host registration object.</returns>
-        public ProviderRegistration Add(JPCProvider JPCHost) {
+        public ProviderRegistration Add(JpcProvider JPCHost) {
             var Registration = new ProviderRegistration(JPCHost, this);
             Hosts.Add(Registration);
             return Registration;

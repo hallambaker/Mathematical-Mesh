@@ -100,8 +100,9 @@ namespace Goedel.Mesh {
 
             //var Session = new WebRemoteSession(URI, Service, Account);
 
-            var Session = new WebRemoteSession(domain, MeshService.WellKnown, account);
-            var MeshServiceClient = new MeshServiceClient(Session);
+            var session = new WebRemoteSession(domain, MeshService.WellKnown, account);
+            var MeshServiceClient = new MeshServiceClient() {
+                JpcSession = session};
             return MeshServiceClient;
             }
 

@@ -6326,12 +6326,7 @@
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.MeshService.JpcSession">
-            <summary>
-            The active JpcSession.
-            </summary>		
-        </member>
-        <member name="P:Goedel.Mesh.MeshService.JPCInterface">
+        <member name="P:Goedel.Mesh.MeshService.JpcInterface">
             <summary>Base interface (used to create client wrapper stubs)</summary>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Hello(Goedel.Protocol.HelloRequest,Goedel.Protocol.JpcSession)">
@@ -7595,12 +7590,6 @@
             <summary>
             The active JpcSession.
             </summary>		
-        </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.#ctor(Goedel.Protocol.JPCRemoteSession)">
-            <summary>
-            Create a client connection to the specified service.
-            </summary>	
-            <param name="jpcRemoteSession">The remote session to connect to</param>
         </member>
         <member name="M:Goedel.Mesh.MeshServiceClient.Hello(Goedel.Protocol.HelloRequest,Goedel.Protocol.JpcSession)">
             <summary>

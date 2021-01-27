@@ -90,7 +90,7 @@ namespace Goedel.Mesh.Services {
     /// <summary>
 	/// The new base class for the client and service side APIs.
     /// </summary>		
-    public abstract partial class MeshPresence : Goedel.Protocol.JPCInterface {
+    public abstract partial class MeshPresence : Goedel.Protocol.JpcInterface {
 		
         /// <summary>
         /// Well Known service identifier.
@@ -112,13 +112,8 @@ namespace Goedel.Mesh.Services {
         /// </summary>
 		public override string GetDiscovery => Discovery;
 
-        /// <summary>
-        /// The active JpcSession.
-        /// </summary>		
-		public virtual JpcSession JpcSession {get; set;}
-
 		///<summary>Base interface (used to create client wrapper stubs)</summary>
-		protected virtual MeshPresence JPCInterface {get; set;}
+		protected virtual MeshPresence JpcInterface {get; set;}
 
 
         /// <summary>
@@ -129,7 +124,7 @@ namespace Goedel.Mesh.Services {
 		/// <returns>The response object from the service</returns>
         public virtual ThresholdSignResponse ThresholdSign (
                 ThresholdSignRequest request, JpcSession session=null) => 
-						JPCInterface.ThresholdSign (request, session ?? JpcSession);
+						JpcInterface.ThresholdSign (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  ThresholdAgreement.
@@ -139,7 +134,7 @@ namespace Goedel.Mesh.Services {
 		/// <returns>The response object from the service</returns>
         public virtual ThresholdAgreementResponse ThresholdAgreement (
                 ThresholdAgreementRequest request, JpcSession session=null) => 
-						JPCInterface.ThresholdAgreement (request, session ?? JpcSession);
+						JpcInterface.ThresholdAgreement (request, session ?? JpcSession);
 
         }
 
@@ -148,22 +143,14 @@ namespace Goedel.Mesh.Services {
     /// </summary>		
     public partial class MeshPresenceClient : MeshPresence {
  		
-		JPCRemoteSession JPCRemoteSession;
+		JpcRemoteSession JpcRemoteSession;
         /// <summary>
         /// The active JpcSession.
         /// </summary>		
 		public override JpcSession JpcSession {
-			get => JPCRemoteSession;
-			set => JPCRemoteSession = value as JPCRemoteSession; 
+			get => JpcRemoteSession;
+			set => JpcRemoteSession = value as JpcRemoteSession; 
 			}
-
-
-        /// <summary>
-		/// Create a client connection to the specified service.
-        /// </summary>	
-        /// <param name="jpcRemoteSession">The remote session to connect to</param>
-		public MeshPresenceClient (JPCRemoteSession jpcRemoteSession) =>
-			JPCRemoteSession = jpcRemoteSession;
 
 
 
@@ -176,7 +163,7 @@ namespace Goedel.Mesh.Services {
         public override ThresholdSignResponse ThresholdSign (
                 ThresholdSignRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("ThresholdSign", request);
+            var responseData = JpcRemoteSession.Post("ThresholdSign", request);
             var response = ThresholdSignResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -191,7 +178,7 @@ namespace Goedel.Mesh.Services {
         public override ThresholdAgreementResponse ThresholdAgreement (
                 ThresholdAgreementRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("ThresholdAgreement", request);
+            var responseData = JpcRemoteSession.Post("ThresholdAgreement", request);
             var response = ThresholdAgreementResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -203,7 +190,7 @@ namespace Goedel.Mesh.Services {
     /// <summary>
 	/// Service class for MeshPresence.
     /// </summary>		
-    public partial class MeshPresenceProvider : Goedel.Protocol.JPCProvider {
+    public partial class MeshPresenceProvider : Goedel.Protocol.JpcProvider {
 
 		/// <summary>
 		/// Interface object to dispatch requests to.

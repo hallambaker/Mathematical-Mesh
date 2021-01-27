@@ -113,7 +113,9 @@ namespace Goedel.Mesh.Server {
         /// <param name="accountAddress">The account to get.</param>
         public override MeshService GetService(string accountAddress) {
             var Session = new LocalRemoteSession(MeshServiceHost, accountAddress);
-            MeshServiceClient = new MeshServiceClient(Session);
+            MeshServiceClient = new MeshServiceClient() { 
+                JpcSession = Session
+                };
             return MeshServiceClient;
             }
 

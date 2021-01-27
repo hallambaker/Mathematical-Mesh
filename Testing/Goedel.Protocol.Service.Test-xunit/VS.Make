@@ -23,7 +23,11 @@ LinkFiles = \
     Goedel.Protocol.Service.dll\
     Goedel.Protocol.dll\
     Goedel.Test.Core.dll\
-    Goedel.Test.dll
+    Goedel.Test.dll\
+    Goedel.Mesh.Management.dll\
+    Goedel.Mesh.Server.dll\
+    Goedel.Mesh.dll\
+    Goedel.Mesh.Test.dll
 
 ToolTargets = 
 

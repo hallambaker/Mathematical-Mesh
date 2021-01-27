@@ -33,7 +33,7 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Manage JPC session to a remote Web Service.
     /// </summary>
-    public partial class WebRemoteSession : JPCRemoteSession {
+    public partial class WebRemoteSession : JpcRemoteSession {
         ServiceDescription serviceDescription = null;
         string uri;
 

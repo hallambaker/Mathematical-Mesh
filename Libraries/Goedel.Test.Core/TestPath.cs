@@ -176,7 +176,8 @@ namespace Goedel.Test.Core {
             //accountAddress.SplitAccountIDService(out var Service, out var Account);
 
             var Session = new TestSession(this, MeshServiceHost, accountAddress);
-            MeshServiceClient = new MeshServiceClient(Session);
+            MeshServiceClient = Session.GetWebClient<MeshServiceClient>();
+
             return MeshServiceClient;
             }
 
@@ -194,7 +195,7 @@ namespace Goedel.Test.Core {
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
         /// <param name="UDF">Authentication key identifier.</param>
-        public TestSession(MeshPortalTest meshPortalTest, JPCProvider host, string accountAddress) : base(host, accountAddress) {
+        public TestSession(MeshPortalTest meshPortalTest, JpcProvider host, string accountAddress) : base(host, accountAddress) {
 
 
             MeshPortalTest = meshPortalTest;

@@ -128,7 +128,7 @@ namespace Goedel.Mesh {
     /// <summary>
 	/// The new base class for the client and service side APIs.
     /// </summary>		
-    public abstract partial class MeshService : Goedel.Protocol.JPCInterface {
+    public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 		
         /// <summary>
         /// Well Known service identifier.
@@ -150,13 +150,8 @@ namespace Goedel.Mesh {
         /// </summary>
 		public override string GetDiscovery => Discovery;
 
-        /// <summary>
-        /// The active JpcSession.
-        /// </summary>		
-		public virtual JpcSession JpcSession {get; set;}
-
 		///<summary>Base interface (used to create client wrapper stubs)</summary>
-		protected virtual MeshService JPCInterface {get; set;}
+		protected virtual MeshService JpcInterface {get; set;}
 
 
         /// <summary>
@@ -167,7 +162,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual MeshHelloResponse Hello (
                 HelloRequest request, JpcSession session=null) => 
-						JPCInterface.Hello (request, session ?? JpcSession);
+						JpcInterface.Hello (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  BindAccount.
@@ -177,7 +172,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual BindResponse BindAccount (
                 BindRequest request, JpcSession session=null) => 
-						JPCInterface.BindAccount (request, session ?? JpcSession);
+						JpcInterface.BindAccount (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  UnbindAccount.
@@ -187,7 +182,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual UnbindResponse UnbindAccount (
                 UnbindRequest request, JpcSession session=null) => 
-						JPCInterface.UnbindAccount (request, session ?? JpcSession);
+						JpcInterface.UnbindAccount (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Connect.
@@ -197,7 +192,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual ConnectResponse Connect (
                 ConnectRequest request, JpcSession session=null) => 
-						JPCInterface.Connect (request, session ?? JpcSession);
+						JpcInterface.Connect (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Complete.
@@ -207,7 +202,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual CompleteResponse Complete (
                 CompleteRequest request, JpcSession session=null) => 
-						JPCInterface.Complete (request, session ?? JpcSession);
+						JpcInterface.Complete (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Status.
@@ -217,7 +212,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual StatusResponse Status (
                 StatusRequest request, JpcSession session=null) => 
-						JPCInterface.Status (request, session ?? JpcSession);
+						JpcInterface.Status (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Download.
@@ -227,7 +222,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual DownloadResponse Download (
                 DownloadRequest request, JpcSession session=null) => 
-						JPCInterface.Download (request, session ?? JpcSession);
+						JpcInterface.Download (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Transact.
@@ -237,7 +232,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual TransactResponse Transact (
                 TransactRequest request, JpcSession session=null) => 
-						JPCInterface.Transact (request, session ?? JpcSession);
+						JpcInterface.Transact (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Post.
@@ -247,7 +242,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual PostResponse Post (
                 PostRequest request, JpcSession session=null) => 
-						JPCInterface.Post (request, session ?? JpcSession);
+						JpcInterface.Post (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Claim.
@@ -257,7 +252,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual ClaimResponse Claim (
                 ClaimRequest request, JpcSession session=null) => 
-						JPCInterface.Claim (request, session ?? JpcSession);
+						JpcInterface.Claim (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  PollClaim.
@@ -267,7 +262,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual PollClaimResponse PollClaim (
                 PollClaimRequest request, JpcSession session=null) => 
-						JPCInterface.PollClaim (request, session ?? JpcSession);
+						JpcInterface.PollClaim (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Operate.
@@ -277,7 +272,7 @@ namespace Goedel.Mesh {
 		/// <returns>The response object from the service</returns>
         public virtual OperateResponse Operate (
                 OperateRequest request, JpcSession session=null) => 
-						JPCInterface.Operate (request, session ?? JpcSession);
+						JpcInterface.Operate (request, session ?? JpcSession);
 
         }
 
@@ -286,22 +281,14 @@ namespace Goedel.Mesh {
     /// </summary>		
     public partial class MeshServiceClient : MeshService {
  		
-		JPCRemoteSession JPCRemoteSession;
+		JpcRemoteSession JpcRemoteSession;
         /// <summary>
         /// The active JpcSession.
         /// </summary>		
 		public override JpcSession JpcSession {
-			get => JPCRemoteSession;
-			set => JPCRemoteSession = value as JPCRemoteSession; 
+			get => JpcRemoteSession;
+			set => JpcRemoteSession = value as JpcRemoteSession; 
 			}
-
-
-        /// <summary>
-		/// Create a client connection to the specified service.
-        /// </summary>	
-        /// <param name="jpcRemoteSession">The remote session to connect to</param>
-		public MeshServiceClient (JPCRemoteSession jpcRemoteSession) =>
-			JPCRemoteSession = jpcRemoteSession;
 
 
 
@@ -314,7 +301,7 @@ namespace Goedel.Mesh {
         public override MeshHelloResponse Hello (
                 HelloRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Hello", request);
+            var responseData = JpcRemoteSession.Post("Hello", request);
             var response = MeshHelloResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -329,7 +316,7 @@ namespace Goedel.Mesh {
         public override BindResponse BindAccount (
                 BindRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("BindAccount", request);
+            var responseData = JpcRemoteSession.Post("BindAccount", request);
             var response = BindResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -344,7 +331,7 @@ namespace Goedel.Mesh {
         public override UnbindResponse UnbindAccount (
                 UnbindRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("UnbindAccount", request);
+            var responseData = JpcRemoteSession.Post("UnbindAccount", request);
             var response = UnbindResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -359,7 +346,7 @@ namespace Goedel.Mesh {
         public override ConnectResponse Connect (
                 ConnectRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Connect", request);
+            var responseData = JpcRemoteSession.Post("Connect", request);
             var response = ConnectResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -374,7 +361,7 @@ namespace Goedel.Mesh {
         public override CompleteResponse Complete (
                 CompleteRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Complete", request);
+            var responseData = JpcRemoteSession.Post("Complete", request);
             var response = CompleteResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -389,7 +376,7 @@ namespace Goedel.Mesh {
         public override StatusResponse Status (
                 StatusRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Status", request);
+            var responseData = JpcRemoteSession.Post("Status", request);
             var response = StatusResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -404,7 +391,7 @@ namespace Goedel.Mesh {
         public override DownloadResponse Download (
                 DownloadRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Download", request);
+            var responseData = JpcRemoteSession.Post("Download", request);
             var response = DownloadResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -419,7 +406,7 @@ namespace Goedel.Mesh {
         public override TransactResponse Transact (
                 TransactRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Transact", request);
+            var responseData = JpcRemoteSession.Post("Transact", request);
             var response = TransactResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -434,7 +421,7 @@ namespace Goedel.Mesh {
         public override PostResponse Post (
                 PostRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Post", request);
+            var responseData = JpcRemoteSession.Post("Post", request);
             var response = PostResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -449,7 +436,7 @@ namespace Goedel.Mesh {
         public override ClaimResponse Claim (
                 ClaimRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Claim", request);
+            var responseData = JpcRemoteSession.Post("Claim", request);
             var response = ClaimResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -464,7 +451,7 @@ namespace Goedel.Mesh {
         public override PollClaimResponse PollClaim (
                 PollClaimRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("PollClaim", request);
+            var responseData = JpcRemoteSession.Post("PollClaim", request);
             var response = PollClaimResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -479,7 +466,7 @@ namespace Goedel.Mesh {
         public override OperateResponse Operate (
                 OperateRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Operate", request);
+            var responseData = JpcRemoteSession.Post("Operate", request);
             var response = OperateResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -491,7 +478,7 @@ namespace Goedel.Mesh {
     /// <summary>
 	/// Service class for MeshService.
     /// </summary>		
-    public partial class MeshServiceProvider : Goedel.Protocol.JPCProvider {
+    public partial class MeshServiceProvider : Goedel.Protocol.JpcProvider {
 
 		/// <summary>
 		/// Interface object to dispatch requests to.

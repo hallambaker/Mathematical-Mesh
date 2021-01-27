@@ -88,7 +88,7 @@ namespace Goedel.Mesh.Presence {
     /// <summary>
 	/// The new base class for the client and service side APIs.
     /// </summary>		
-    public abstract partial class MeshPresence : Goedel.Protocol.JPCInterface {
+    public abstract partial class MeshPresence : Goedel.Protocol.JpcInterface {
 		
         /// <summary>
         /// Well Known service identifier.
@@ -110,13 +110,8 @@ namespace Goedel.Mesh.Presence {
         /// </summary>
 		public override string GetDiscovery => Discovery;
 
-        /// <summary>
-        /// The active JpcSession.
-        /// </summary>		
-		public virtual JpcSession JpcSession {get; set;}
-
 		///<summary>Base interface (used to create client wrapper stubs)</summary>
-		protected virtual MeshPresence JPCInterface {get; set;}
+		protected virtual MeshPresence JpcInterface {get; set;}
 
 
         /// <summary>
@@ -127,7 +122,7 @@ namespace Goedel.Mesh.Presence {
 		/// <returns>The response object from the service</returns>
         public virtual AnnounceDeviceResponse AnnounceDevice (
                 AnnounceDeviceRequest request, JpcSession session=null) => 
-						JPCInterface.AnnounceDevice (request, session ?? JpcSession);
+						JpcInterface.AnnounceDevice (request, session ?? JpcSession);
 
         }
 
@@ -136,22 +131,14 @@ namespace Goedel.Mesh.Presence {
     /// </summary>		
     public partial class MeshPresenceClient : MeshPresence {
  		
-		JPCRemoteSession JPCRemoteSession;
+		JpcRemoteSession JpcRemoteSession;
         /// <summary>
         /// The active JpcSession.
         /// </summary>		
 		public override JpcSession JpcSession {
-			get => JPCRemoteSession;
-			set => JPCRemoteSession = value as JPCRemoteSession; 
+			get => JpcRemoteSession;
+			set => JpcRemoteSession = value as JpcRemoteSession; 
 			}
-
-
-        /// <summary>
-		/// Create a client connection to the specified service.
-        /// </summary>	
-        /// <param name="jpcRemoteSession">The remote session to connect to</param>
-		public MeshPresenceClient (JPCRemoteSession jpcRemoteSession) =>
-			JPCRemoteSession = jpcRemoteSession;
 
 
 
@@ -164,7 +151,7 @@ namespace Goedel.Mesh.Presence {
         public override AnnounceDeviceResponse AnnounceDevice (
                 AnnounceDeviceRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("AnnounceDevice", request);
+            var responseData = JpcRemoteSession.Post("AnnounceDevice", request);
             var response = AnnounceDeviceResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -176,7 +163,7 @@ namespace Goedel.Mesh.Presence {
     /// <summary>
 	/// Service class for MeshPresence.
     /// </summary>		
-    public partial class MeshPresenceProvider : Goedel.Protocol.JPCProvider {
+    public partial class MeshPresenceProvider : Goedel.Protocol.JpcProvider {
 
 		/// <summary>
 		/// Interface object to dispatch requests to.

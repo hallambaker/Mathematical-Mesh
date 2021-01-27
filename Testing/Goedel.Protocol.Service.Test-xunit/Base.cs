@@ -6,7 +6,7 @@ using Goedel.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Goedel.Protocol.Service;
+using Goedel.Mesh.Test;
 
 using Xunit;
 
@@ -21,7 +21,10 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestService() {
-            var testService = new TestService();
+            var TestEnvironmentCommon = new TestEnvironmentCommon();
+
+
+            var testService = new TestService(TestEnvironmentCommon);
 
             }
         }

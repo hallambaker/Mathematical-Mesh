@@ -28,7 +28,7 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         /// <param name="host">The host implementation</param>
         /// <param name="accountAddress">User account</param>
-        public DebugLocalSession(JPCProvider host, string accountAddress)
+        public DebugLocalSession(JpcProvider host, string accountAddress)
                 : base(host, accountAddress) {
             }
 

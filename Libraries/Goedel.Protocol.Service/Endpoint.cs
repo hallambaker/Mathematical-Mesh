@@ -10,6 +10,10 @@ namespace Goedel.Protocol.Service {
     public record Endpoint(
              string Protocol,
              int Instance = -1) {
+
+
+
+
         }
 
     public record HttpEndpoint(

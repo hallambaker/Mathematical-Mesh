@@ -89,7 +89,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="session">The authentication context.</param>
         public PublicMeshService(PublicMeshServiceProvider host, JpcSession session) {
             this.provider = host;
-            host.Interfaces.Add(this);
+            //host.Interfaces.Add(this);
             host.Service = this;
             this.JpcSession = session;
             }

@@ -28,21 +28,10 @@ using System.IO;
 namespace Goedel.Protocol {
 
     /// <summary>
-    /// Base class for a Host
+    /// Base class for a Host dispatcher.
     /// </summary>
-    public abstract class JPCProvider {
+    public abstract class JpcProvider {
 
-        /// <summary>
-        /// If set, all domain names are mapped onto 127.0.0.1
-        /// </summary>
-        public static bool LocalLoopback = false;
-
-
-
-        /// <summary>
-        /// The dispatch service.
-        /// </summary>
-        public List<JPCInterface> Interfaces = new List<JPCInterface>();
 
         /// <summary>
         /// Dispatch Class. Reads input from the provided reader and attempts to
@@ -55,35 +44,14 @@ namespace Goedel.Protocol {
         public abstract Goedel.Protocol.JsonObject Dispatch(JpcSession Session,
             JsonReader JSONReader);
 
-
-        /// <summary>
-        /// Construct a URI for a well known service.
-        /// </summary>
-        /// <param name="Domain">DNS domain name of the service.</param>
-        /// <param name="WellKnown">The well-known service identifier tag (see RFC 5785).</param>
-        /// <param name="TLS">If true, the https scheme is used, otherwise http is used.</param>
-        /// <param name="HostMode">If true, service is self hosted.</param>
-        /// <param name="Prefix">The service prefix type</param>
-        /// <returns>The formed URI</returns>
-        public static string WellKnownToURI(string Domain, string WellKnown,
-                            string Prefix, bool TLS, bool HostMode) {
-
-            var Address = DNS.Resolve(Domain, Prefix);
-
-            return (TLS ? "https://" : "http://") +
-                (HostMode ? Domain : Address) +
-                "/.well-known/" + WellKnown + "/";
-            }
-
-
-
         }
+
 
 
     /// <summary>
     /// Base class for all JPC server and client classes.
     /// </summary>
-    public abstract class JPCInterface {
+    public abstract class JpcInterface {
 
         /// <summary>
         /// The WellKnown service name for HTTP and DNS prefix use.
@@ -98,6 +66,12 @@ namespace Goedel.Protocol {
         public abstract string GetDiscovery {
             get;
             }
+
+        /// <summary>
+        /// The active JpcSession.
+        /// </summary>		
+		public virtual JpcSession JpcSession { get; set; }
+
 
         }
 
@@ -156,6 +130,22 @@ namespace Goedel.Protocol {
             accountAddress.SplitAccountIDService(out Domain, out Account);
             }
 
+
+        /// <summary>
+        /// Factory method returning a new JPC interface calling a service of
+        /// type <typeparamref name="T"/> with an initial <see cref="JpcSession"/> binding of
+        /// the calling instance. This binding MAY be updated through interaction with the 
+        /// service, e.g. to replace a HTTP/JSON binding authenticated by means of a direct
+        /// key exchange with a key exchange established in a referenced token.
+        /// </summary>
+        /// <typeparam name="T">Type of the instance to return.</typeparam>
+        /// <returns></returns>
+        public T GetWebClient<T>() where T : JpcInterface, new() => new T {
+            JpcSession = this
+            };
+
+
+
         }
 
     /// <summary>
@@ -192,14 +182,14 @@ namespace Goedel.Protocol {
     /// Direct connection between client and service host. Useful for debugging
     /// and for direct access to a service on the same machine.
     /// </summary>
-    public abstract partial class JPCRemoteSession : JpcSession {
+    public abstract partial class JpcRemoteSession : JpcSession {
 
 
         /// <summary>
         /// Create a direct session for the specified account.
         /// </summary>
         /// <param name="accountAddress">The account name</param>
-        public JPCRemoteSession(string accountAddress) : base(accountAddress) {
+        public JpcRemoteSession(string accountAddress) : base(accountAddress) {
             }
 
         /// <summary>
@@ -251,11 +241,11 @@ namespace Goedel.Protocol {
     /// might be the result of JSON encoding issues and to collect samples
     /// for documentation.
     /// </summary>
-    public partial class LocalRemoteSession : JPCRemoteSession {
+    public partial class LocalRemoteSession : JpcRemoteSession {
         /// <summary>
         /// The provider.
         /// </summary>
-        protected JPCProvider Host;
+        protected JpcProvider Host;
 
 
         /// <summary>
@@ -264,7 +254,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Host">The host implementation</param>
         /// <param name="accountAddress">The service account.</param>
-        public LocalRemoteSession(JPCProvider Host, string accountAddress) : base(accountAddress) =>
+        public LocalRemoteSession(JpcProvider Host, string accountAddress) : base(accountAddress) =>
                 this.Host = Host;
 
         /// <summary>

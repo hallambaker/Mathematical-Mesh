@@ -8,6 +8,17 @@ using Goedel.Utilities;
 
 namespace Goedel.Protocol.Service {
 
+
+
+    public interface IMonitorProvider {
+
+        ///<summary>The monitor class to be exposed.</summary> 
+        public Monitor Monitor { get; set; }
+
+        }
+
+
+
     /// <summary>
     /// Service monitoring class.
     /// </summary>

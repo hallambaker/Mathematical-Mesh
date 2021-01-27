@@ -89,12 +89,7 @@
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Services.MeshPresence.JpcSession">
-            <summary>
-            The active JpcSession.
-            </summary>		
-        </member>
-        <member name="P:Goedel.Mesh.Services.MeshPresence.JPCInterface">
+        <member name="P:Goedel.Mesh.Services.MeshPresence.JpcInterface">
             <summary>Base interface (used to create client wrapper stubs)</summary>
         </member>
         <member name="M:Goedel.Mesh.Services.MeshPresence.ThresholdSign(Goedel.Mesh.Services.ThresholdSignRequest,Goedel.Protocol.JpcSession)">
@@ -122,12 +117,6 @@
             <summary>
             The active JpcSession.
             </summary>		
-        </member>
-        <member name="M:Goedel.Mesh.Services.MeshPresenceClient.#ctor(Goedel.Protocol.JPCRemoteSession)">
-            <summary>
-            Create a client connection to the specified service.
-            </summary>	
-            <param name="jpcRemoteSession">The remote session to connect to</param>
         </member>
         <member name="M:Goedel.Mesh.Services.MeshPresenceClient.ThresholdSign(Goedel.Mesh.Services.ThresholdSignRequest,Goedel.Protocol.JpcSession)">
             <summary>

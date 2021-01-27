@@ -166,19 +166,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography.Test", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Debug", "Libraries\Goedel.Debug\Goedel.Debug.csproj", "{4A8C6FD3-B818-4517-8F2A-5A759315B7AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.Windows.Test-xunit", "Testing\Goedel.Cryptography.Windows.Test-xunit\Goedel.Cryptography.Windows.Test-xunit.csproj", "{60B17B43-2B43-4C1E-B971-CF1B6FF7F206}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography.Windows.Test-xunit", "Testing\Goedel.Cryptography.Windows.Test-xunit\Goedel.Cryptography.Windows.Test-xunit.csproj", "{60B17B43-2B43-4C1E-B971-CF1B6FF7F206}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.Platform.Test-xunit", "Testing\Goedel.Cryptography.Platform.Test-xunit\Goedel.Cryptography.Platform.Test-xunit.csproj", "{589167A8-A30F-4242-AC75-FAF4A7F8567A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography.Platform.Test-xunit", "Testing\Goedel.Cryptography.Platform.Test-xunit\Goedel.Cryptography.Platform.Test-xunit.csproj", "{589167A8-A30F-4242-AC75-FAF4A7F8567A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Any", "Any", "{D8DC1A4D-90D6-4710-8364-F5368CABC0D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "meshhost", "Applications\meshhost\meshhost.csproj", "{2108BCA9-6ED3-41E2-907C-348A1BAE8D5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "meshhost", "Applications\meshhost\meshhost.csproj", "{2108BCA9-6ED3-41E2-907C-348A1BAE8D5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "meshman", "meshman\meshman.csproj", "{DE4CF7A7-3FDD-48FA-9703-B9DFBDBC9C9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "meshman", "meshman\meshman.csproj", "{DE4CF7A7-3FDD-48FA-9703-B9DFBDBC9C9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol.Service", "Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj", "{AB1A8E04-E59D-4903-AE53-1DFE036EA724}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.Service", "Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj", "{AB1A8E04-E59D-4903-AE53-1DFE036EA724}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol.Service.Test-xunit", "Testing\Goedel.Protocol.Service.Test-xunit\Goedel.Protocol.Service.Test-xunit.csproj", "{35C84034-B8AE-4D53-9DAB-43CC1EF7B937}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.Service.Test-xunit", "Testing\Goedel.Protocol.Service.Test-xunit\Goedel.Protocol.Service.Test-xunit.csproj", "{35C84034-B8AE-4D53-9DAB-43CC1EF7B937}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Management", "Mesh\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj", "{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1704,6 +1706,30 @@ Global
 		{35C84034-B8AE-4D53-9DAB-43CC1EF7B937}.Windows|x64.Build.0 = Debug|Any CPU
 		{35C84034-B8AE-4D53-9DAB-43CC1EF7B937}.Windows|x86.ActiveCfg = Debug|Any CPU
 		{35C84034-B8AE-4D53-9DAB-43CC1EF7B937}.Windows|x86.Build.0 = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Debug|x64.Build.0 = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Debug|x86.Build.0 = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Focus|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Focus|Any CPU.Build.0 = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Focus|x64.ActiveCfg = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Focus|x64.Build.0 = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Focus|x86.ActiveCfg = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Focus|x86.Build.0 = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Release|x64.ActiveCfg = Release|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Release|x64.Build.0 = Release|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Release|x86.ActiveCfg = Release|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Release|x86.Build.0 = Release|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Windows|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Windows|Any CPU.Build.0 = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Windows|x64.ActiveCfg = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Windows|x64.Build.0 = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Windows|x86.ActiveCfg = Debug|Any CPU
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}.Windows|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1785,6 +1811,7 @@ Global
 		{DE4CF7A7-3FDD-48FA-9703-B9DFBDBC9C9A} = {D8DC1A4D-90D6-4710-8364-F5368CABC0D5}
 		{AB1A8E04-E59D-4903-AE53-1DFE036EA724} = {3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}
 		{35C84034-B8AE-4D53-9DAB-43CC1EF7B937} = {D1FDE60F-FECA-4925-BFDE-A3CC9F40FCE9}
+		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2} = {5EC1032D-6112-4154-B52F-2DA29CD605E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {480B9067-AB16-45B8-BFE3-8EF8803D9D07}

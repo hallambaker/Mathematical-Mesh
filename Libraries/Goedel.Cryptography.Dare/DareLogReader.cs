@@ -86,7 +86,11 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-
+        /// <summary>
+        /// Write the latest entries that match the search criteria to <paramref name="output"/>.
+        /// </summary>
+        /// <param name="output">Stream to write the matching entries to.</param>
+        /// <returns>The number of entries written.</returns>
         public int List(TextWriter output) {
             Sequence.Start();
 

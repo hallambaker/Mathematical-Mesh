@@ -113,8 +113,16 @@ namespace Goedel.Protocol.Service {
                 }
 
 
-            // Start the monitoring service
+            // Start the monitoring service and bind values to every provider returning the JPC interface.
             Monitor = new Monitor(ListenerCount, MaxDispatch);
+
+            foreach (var provider in providers) {
+                if (provider.JpcProvider is IMonitorProvider monitorProvider) {
+                    monitorProvider.Monitor = Monitor;
+                    }
+                }
+
+
             serviceTasks = new Task<Connection>[ListenerCount];
 
             httpListener.Start();
