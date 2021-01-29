@@ -5,7 +5,7 @@ using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Utilities;
 using Goedel.IO;
-using Goedel.Test;
+using Goedel.Protocol;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -14,12 +14,12 @@ using System.Collections.Generic;
 namespace Goedel.Test.Core {
 
 
-    public class MeshMachineTestWeb : MeshMachineTest {
-        public MeshMachineTestWeb(TestEnvironmentCommon testEnvironmentPerTest, string name = "Test") :
-            base(testEnvironmentPerTest, name) {
-            }
+    //public class MeshMachineTestWeb : MeshMachineTest {
+    //    public MeshMachineTestWeb(TestEnvironmentCommon testEnvironmentPerTest, string name = "Test") :
+    //        base(testEnvironmentPerTest, name) {
+    //        }
 
-        }
+    //    }
 
 
     /// <summary>
@@ -50,12 +50,9 @@ namespace Goedel.Test.Core {
         /// an inbound connection or requesting that a new account be created and optional
         /// otherwise.</param>
         /// <returns></returns>
-        public override MeshService GetMeshClient(
-                string accountAddress,
-                CryptoKey keyAuthentication,
-                Connection assertionAccountConnection,
-                Profile profile = null) =>
-            testEnvironmentCommon.GetMeshClient(accountAddress);
+        public override MeshServiceClient GetMeshClient(
+                string accountAddress) => throw new NYI();
+            //testEnvironmentCommon.GetMeshClient(jpcCredential);
 
 
         public static Contact ContactAlice = new ContactPerson(

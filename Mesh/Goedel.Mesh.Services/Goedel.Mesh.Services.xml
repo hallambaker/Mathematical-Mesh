@@ -89,15 +89,28 @@
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Services.MeshPresence.JpcInterface">
-            <summary>Base interface (used to create client wrapper stubs)</summary>
+        <member name="M:Goedel.Mesh.Services.MeshPresence.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="session">The client context.</param>
+            <param name="jsonReader">Reader for data object.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Services.MeshPresence.GetDirect(Goedel.Protocol.JpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.Services.MeshPresence.ThresholdSign(Goedel.Mesh.Services.ThresholdSignRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction  ThresholdSign.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.Services.MeshPresence.ThresholdAgreement(Goedel.Mesh.Services.ThresholdAgreementRequest,Goedel.Protocol.JpcSession)">
@@ -105,7 +118,7 @@
             Base method for implementing the transaction  ThresholdAgreement.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="T:Goedel.Mesh.Services.MeshPresenceClient">
@@ -113,44 +126,73 @@
             Client class for MeshPresence.
             </summary>		
         </member>
+        <member name="F:Goedel.Mesh.Services.MeshPresenceClient.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Services.MeshPresenceClient.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Services.MeshPresenceClient.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Services.MeshPresenceClient.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Services.MeshPresenceClient.JpcSession">
             <summary>
             The active JpcSession.
             </summary>		
         </member>
-        <member name="M:Goedel.Mesh.Services.MeshPresenceClient.ThresholdSign(Goedel.Mesh.Services.ThresholdSignRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.Services.MeshPresenceClient.ThresholdSign(Goedel.Mesh.Services.ThresholdSignRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.Services.MeshPresenceClient.ThresholdAgreement(Goedel.Mesh.Services.ThresholdAgreementRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.Services.MeshPresenceClient.ThresholdAgreement(Goedel.Mesh.Services.ThresholdAgreementRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="T:Goedel.Mesh.Services.MeshPresenceProvider">
+        <member name="T:Goedel.Mesh.Services.MeshPresenceDirect">
             <summary>
-            Service class for MeshPresence.
+            Direct API class for MeshPresence.
             </summary>		
         </member>
-        <member name="F:Goedel.Mesh.Services.MeshPresenceProvider.Service">
+        <member name="P:Goedel.Mesh.Services.MeshPresenceDirect.Service">
             <summary>
             Interface object to dispatch requests to.
             </summary>	
         </member>
-        <member name="M:Goedel.Mesh.Services.MeshPresenceProvider.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
+        <member name="P:Goedel.Mesh.Services.MeshPresenceDirect.JpcSession">
             <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="session">The client context.</param>
-            <param name="jsonReader">Reader for data object.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
+            The active JpcSession.
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Services.MeshPresenceDirect.ThresholdSign(Goedel.Mesh.Services.ThresholdSignRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Services.MeshPresenceDirect.ThresholdAgreement(Goedel.Mesh.Services.ThresholdAgreementRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
         </member>
         <member name="T:Goedel.Mesh.Services.ThresholdSignRequest">
              <summary>

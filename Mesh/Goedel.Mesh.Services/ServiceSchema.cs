@@ -112,42 +112,104 @@ namespace Goedel.Mesh.Services {
         /// </summary>
 		public override string GetDiscovery => Discovery;
 
-		///<summary>Base interface (used to create client wrapper stubs)</summary>
-		protected virtual MeshPresence JpcInterface {get; set;}
+		/// <summary>
+		/// Dispatch object request in specified authentication context.
+		/// </summary>			
+        /// <param name="session">The client context.</param>
+        /// <param name="jsonReader">Reader for data object.</param>
+        /// <returns>The response object returned by the corresponding dispatch.</returns>
+		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+								Goedel.Protocol.JsonReader jsonReader) {
+
+			jsonReader.StartObject ();
+			string token = jsonReader.ReadToken ();
+			JsonObject response = null;
+
+			switch (token) {
+				case "ThresholdSign" : {
+					var request = new ThresholdSignRequest();
+					request.Deserialize (jsonReader);
+					response = ThresholdSign (request, session);
+					break;
+					}
+				case "ThresholdAgreement" : {
+					var request = new ThresholdAgreementRequest();
+					request.Deserialize (jsonReader);
+					response = ThresholdAgreement (request, session);
+					break;
+					}
+				default : {
+					throw new Goedel.Protocol.UnknownOperation ();
+					}
+				}
+			jsonReader.EndObject ();
+			return response;
+			}
+
+        /// <summary>
+        /// Return a client tapping the service API directly without serialization bound to
+        /// the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+        /// </summary>
+        /// <param name="jpcSession">Session to which requests are to be bound.</param>
+        /// <returns>The direct client instance.</returns>
+		public override Goedel.Protocol.JpcClientInterface GetDirect (JpcSession jpcSession) =>
+				new MeshPresenceDirect () {
+						JpcSession = jpcSession,
+						Service = this
+						};
 
 
         /// <summary>
 		/// Base method for implementing the transaction  ThresholdSign.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual ThresholdSignResponse ThresholdSign (
-                ThresholdSignRequest request, JpcSession session=null) => 
-						JpcInterface.ThresholdSign (request, session ?? JpcSession);
+        public abstract ThresholdSignResponse ThresholdSign (
+                ThresholdSignRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  ThresholdAgreement.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual ThresholdAgreementResponse ThresholdAgreement (
-                ThresholdAgreementRequest request, JpcSession session=null) => 
-						JpcInterface.ThresholdAgreement (request, session ?? JpcSession);
+        public abstract ThresholdAgreementResponse ThresholdAgreement (
+                ThresholdAgreementRequest request, JpcSession session);
 
         }
 
     /// <summary>
 	/// Client class for MeshPresence.
     /// </summary>		
-    public partial class MeshPresenceClient : MeshPresence {
+    public partial class MeshPresenceClient :  Goedel.Protocol.JpcClientInterface {
+
+	    /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string WellKnown = "mmmp";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetWellKnown => WellKnown;
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string Discovery = "_mmmp._tcp";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetDiscovery => Discovery;
+
  		
 		JpcRemoteSession JpcRemoteSession;
         /// <summary>
         /// The active JpcSession.
         /// </summary>		
-		public override JpcSession JpcSession {
+		public virtual JpcSession JpcSession {
 			get => JpcRemoteSession;
 			set => JpcRemoteSession = value as JpcRemoteSession; 
 			}
@@ -158,39 +220,65 @@ namespace Goedel.Mesh.Services {
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override ThresholdSignResponse ThresholdSign (
-                ThresholdSignRequest request, JpcSession session=null) {
+        public virtual ThresholdSignResponse ThresholdSign (ThresholdSignRequest request) =>
+				JpcRemoteSession.Post("ThresholdSign", "ThresholdSignResponse", request) as ThresholdSignResponse;
 
-            var responseData = JpcRemoteSession.Post("ThresholdSign", request);
-            var response = ThresholdSignResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override ThresholdAgreementResponse ThresholdAgreement (
-                ThresholdAgreementRequest request, JpcSession session=null) {
+        public virtual ThresholdAgreementResponse ThresholdAgreement (ThresholdAgreementRequest request) =>
+				JpcRemoteSession.Post("ThresholdAgreement", "ThresholdAgreementResponse", request) as ThresholdAgreementResponse;
 
-            var responseData = JpcRemoteSession.Post("ThresholdAgreement", request);
-            var response = ThresholdAgreementResponse.FromJson(responseData.JsonReader(), true);
 
-            return response;
-            }
+		}
+
+    /// <summary>
+	/// Direct API class for MeshPresence.
+    /// </summary>		
+    public partial class MeshPresenceDirect: MeshPresenceClient {
+ 		
+		/// <summary>
+		/// Interface object to dispatch requests to.
+		/// </summary>	
+		public MeshPresence Service {get; set;}
+
+        /// <summary>
+        /// The active JpcSession.
+        /// </summary>		
+		public override JpcSession JpcSession {get; set;}
+
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override ThresholdSignResponse ThresholdSign (ThresholdSignRequest request) =>
+				Service.ThresholdSign (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override ThresholdAgreementResponse ThresholdAgreement (ThresholdAgreementRequest request) =>
+				Service.ThresholdAgreement (request, JpcSession);
+
 
 		}
 
 
+    /*
     /// <summary>
 	/// Service class for MeshPresence.
     /// </summary>		
-    public partial class MeshPresenceProvider : Goedel.Protocol.JpcProvider {
+    public partial class MeshPresenceDispatch : Goedel.Protocol.JpcDispatch {
 
 		/// <summary>
 		/// Interface object to dispatch requests to.
@@ -209,19 +297,19 @@ namespace Goedel.Mesh.Services {
 
 			jsonReader.StartObject ();
 			string token = jsonReader.ReadToken ();
-			JsonObject Response = null;
+			JsonObject response = null;
 
 			switch (token) {
 				case "ThresholdSign" : {
-					var Request = new ThresholdSignRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.ThresholdSign (Request, session);
+					var request = new ThresholdSignRequest();
+					request.Deserialize (jsonReader);
+					response = Service.ThresholdSign (request, session);
 					break;
 					}
 				case "ThresholdAgreement" : {
-					var Request = new ThresholdAgreementRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.ThresholdAgreement (Request, session);
+					var request = new ThresholdAgreementRequest();
+					request.Deserialize (jsonReader);
+					response = Service.ThresholdAgreement (request, session);
 					break;
 					}
 				default : {
@@ -229,11 +317,11 @@ namespace Goedel.Mesh.Services {
 					}
 				}
 			jsonReader.EndObject ();
-			return Response;
+			return response;
 			}
 
 		}
-
+		*/
 
 
 

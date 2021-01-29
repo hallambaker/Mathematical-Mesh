@@ -4,6 +4,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh.Client;
 using Goedel.Utilities;
+using Goedel.Protocol;
 
 using System.IO;
 
@@ -157,12 +158,10 @@ namespace Goedel.Mesh {
         /// an inbound connection or requesting that a new account be created and optional
         /// otherwise.</param>
         /// <returns></returns>
-        public virtual MeshService GetMeshClient(
-                string accountAddress,
-                CryptoKey keyAuthentication,
-                Connection assertionAccountConnection,
-                Profile profile = null) =>
-                    MeshService.GetService(accountAddress);
+        public virtual MeshServiceClient GetMeshClient(
+                string accountAddress) => throw new NYI();
+
+
 
         #endregion
 

@@ -4,24 +4,6 @@
         <name>Goedel.Mesh.Management</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Mesh.Management.ServiceManagementServiceProvider">
-            <summary>
-            Service class for ServiceManagementService.
-            </summary>		
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceManagementServiceProvider.Service">
-            <summary>
-            Interface object to dispatch requests to.
-            </summary>	
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceProvider.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="session">The client context.</param>
-            <param name="jsonReader">Reader for data object.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
-        </member>
         <member name="T:Goedel.Mesh.Management.MeshServiceManagementProtocol">
              <summary>
             
@@ -75,15 +57,63 @@
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagementService.JpcInterface">
-            <summary>Base interface (used to create client wrapper stubs)</summary>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementService.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="session">The client context.</param>
+            <param name="jsonReader">Reader for data object.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementService.GetDirect(Goedel.Protocol.JpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
         </member>
         <member name="T:Goedel.Mesh.Management.ServiceManagementServiceClient">
             <summary>
             Client class for ServiceManagementService.
             </summary>		
         </member>
+        <member name="F:Goedel.Mesh.Management.ServiceManagementServiceClient.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceClient.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceManagementServiceClient.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceClient.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Management.ServiceManagementServiceClient.JpcSession">
+            <summary>
+            The active JpcSession.
+            </summary>		
+        </member>
+        <member name="T:Goedel.Mesh.Management.ServiceManagementServiceDirect">
+            <summary>
+            Direct API class for ServiceManagementService.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceDirect.Service">
+            <summary>
+            Interface object to dispatch requests to.
+            </summary>	
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceDirect.JpcSession">
             <summary>
             The active JpcSession.
             </summary>		

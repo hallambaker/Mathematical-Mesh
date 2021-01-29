@@ -38,7 +38,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="accountAddress">The account to obtain a client for.</param>
         /// <returns>The client.</returns>
-        MeshService GetMeshClient (string accountAddress);
+        MeshServiceClient GetMeshClient (string accountAddress);
 
         }
 

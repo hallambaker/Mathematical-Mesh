@@ -42,7 +42,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="accountAddress">Address of the portal service.</param>
         /// <returns>Mesh service object for API access to the service.</returns>
-        public static MeshService GetService(string accountAddress) {
+        public static MeshServiceClient GetService(string accountAddress) {
             accountAddress.SplitAccountIDService(out var service, out var account);
             return GetService(service, account);
             }
@@ -53,7 +53,7 @@ namespace Goedel.Mesh {
         /// <param name="account">The account to get.</param>
         /// <param name="domain">The DNS name of the service to get the service from.</param> 
         /// <returns>The service instance</returns>
-        public static MeshService GetService(string domain, string account) {
+        public static MeshServiceClient GetService(string domain, string account) {
             //var URI = JPCProvider.WellKnownToURI(Service, MeshService.WellKnown, 
             //            MeshService.Discovery, false, true);
 

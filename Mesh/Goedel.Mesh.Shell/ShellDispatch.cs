@@ -192,10 +192,10 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">Options specifying the Mesh account id to bind to.</param>
         /// <returns>The Mesh Client.</returns>
-        public virtual MeshService GetMeshClient(IAccountOptions options) {
+        public virtual MeshServiceClient GetMeshClient(IAccountOptions options) {
             var accountAddress = options.AccountAddress .Value;
 
-            return MeshMachine.GetMeshClient(accountAddress, null, null);
+            return MeshMachine.GetMeshClient(accountAddress);
 
             }
 

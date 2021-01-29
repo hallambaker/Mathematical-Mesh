@@ -26,47 +26,47 @@ using Goedel.Utilities;
 using System.Collections.Generic;
 namespace Goedel.Mesh.Server {
 
-    /// <summary>
-    /// The host class. Receives a stream from the HTTP server caller and 
-    /// dispatches the specified server.
-    /// </summary>
-    public class PublicMeshServiceProvider : MeshServiceProvider {
+    ///// <summary>
+    ///// The host class. Receives a stream from the HTTP server caller and 
+    ///// dispatches the specified server.
+    ///// </summary>
+    //public class PublicMeshServiceProvider : MeshServiceDispatch {
 
 
-        IMeshMachine meshMachine;
+    //    IMeshMachine meshMachine;
 
-        ///<summary>The profile describing the service</summary>
-        public ProfileService ProfileService;
+    //    ///<summary>The profile describing the service</summary>
+    //    public ProfileService ProfileService;
 
-        ///<summary>The profile describing the host</summary>
-        public ProfileHost ProfileHost;
-
-
-        /// <summary>
-        /// Initialize a Mesh Service Provider.
-        /// </summary>
-        /// <param name="domain">The domain of the service provider.</param>
-        /// <param name="serviceDirectory">The mesh persistence store filename.</param>
-        public PublicMeshServiceProvider(string domain, string serviceDirectory) {
-
-            domain.Future();
-
-            meshMachine = new MeshMachineCoreServer(serviceDirectory);
-
-            Mesh = new MeshPersist(this, serviceDirectory);
-
-            // Dummy profiles for the service and host at this point
-            ProfileService = ProfileService.Generate(meshMachine);
-            ProfileHost = ProfileService.CreateHost(meshMachine);
-            }
-
-        /// <summary>
-        /// The mesh persistence provider.
-        /// </summary>
-        public MeshPersist Mesh { get; set; }
+    //    ///<summary>The profile describing the host</summary>
+    //    public ProfileHost ProfileHost;
 
 
-        }
+    //    /// <summary>
+    //    /// Initialize a Mesh Service Provider.
+    //    /// </summary>
+    //    /// <param name="domain">The domain of the service provider.</param>
+    //    /// <param name="serviceDirectory">The mesh persistence store filename.</param>
+    //    public PublicMeshServiceProvider(string domain, string serviceDirectory) {
+
+    //        domain.Future();
+
+    //        meshMachine = new MeshMachineCoreServer(serviceDirectory);
+
+    //        Mesh = new MeshPersist(this, serviceDirectory);
+
+    //        // Dummy profiles for the service and host at this point
+    //        ProfileService = ProfileService.Generate(meshMachine);
+    //        ProfileHost = ProfileService.CreateHost(meshMachine);
+    //        }
+
+    //    /// <summary>
+    //    /// The mesh persistence provider.
+    //    /// </summary>
+    //    public MeshPersist Mesh { get; set; }
+
+
+    //    }
 
 
     /// <summary>
@@ -75,23 +75,34 @@ namespace Goedel.Mesh.Server {
     /// work on to the <see cref="MeshPersist"/> instance <see cref="Mesh"/>
     /// </summary>
     public class PublicMeshService : MeshService {
-        PublicMeshServiceProvider provider;
+        IMeshMachine meshMachine;
+
+        ///<summary>The profile describing the service</summary>
+        public ProfileService ProfileService;
+
+        ///<summary>The profile describing the host</summary>
+        public ProfileHost ProfileHost;
 
         /// <summary>
         /// The mesh persistence provider.
         /// </summary>
-        public MeshPersist Mesh => provider.Mesh;
+        public MeshPersist Mesh  { get; set; }
 
         /// <summary>
         /// The mesh service dispatcher.
         /// </summary>
-        /// <param name="host">The service provider.</param>
-        /// <param name="session">The authentication context.</param>
-        public PublicMeshService(PublicMeshServiceProvider host, JpcSession session) {
-            this.provider = host;
-            //host.Interfaces.Add(this);
-            host.Service = this;
-            this.JpcSession = session;
+        /// <param name="domain">The domain of the service provider.</param>
+        /// <param name="serviceDirectory">The mesh persistence store filename.</param>
+        public PublicMeshService(string domain, string serviceDirectory) {
+            domain.Future();
+
+            meshMachine = new MeshMachineCoreServer(serviceDirectory);
+
+            Mesh = new MeshPersist(serviceDirectory);
+
+            // Dummy profiles for the service and host at this point
+            ProfileService = ProfileService.Generate(meshMachine);
+            ProfileHost = ProfileService.CreateHost(meshMachine);
             }
 
 
@@ -113,8 +124,8 @@ namespace Goedel.Mesh.Server {
                     Minor = 0,
                     Encodings = new List<Goedel.Protocol.Encoding>(),
                     },
-                EnvelopedProfileService = provider.ProfileService.EnvelopedProfileService,
-                EnvelopedProfileHost = provider.ProfileHost.EnvelopedProfileHost,
+                EnvelopedProfileService = ProfileService.EnvelopedProfileService,
+                EnvelopedProfileHost = ProfileHost.EnvelopedProfileHost,
                 Status = 201 // Must specify this explicitly since not derrived from MeshResponse.
                 };
 

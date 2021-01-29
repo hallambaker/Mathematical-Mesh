@@ -82,7 +82,7 @@ namespace Goedel.XUnit {
             var meshClient = testEnvironmentCommon.GetMeshClient(ServiceName);
 
             var request = new HelloRequest();
-            var response = meshClient.Hello(request, null);
+            var response = meshClient.Hello(request);
             response.Success().TestTrue();
             }
 

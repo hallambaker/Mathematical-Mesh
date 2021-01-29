@@ -6299,15 +6299,28 @@
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.MeshService.JpcInterface">
-            <summary>Base interface (used to create client wrapper stubs)</summary>
+        <member name="M:Goedel.Mesh.MeshService.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="session">The client context.</param>
+            <param name="jsonReader">Reader for data object.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshService.GetDirect(Goedel.Protocol.JpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Hello(Goedel.Protocol.HelloRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction  Hello.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.BindAccount(Goedel.Mesh.BindRequest,Goedel.Protocol.JpcSession)">
@@ -6315,7 +6328,7 @@
             Base method for implementing the transaction  BindAccount.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.UnbindAccount(Goedel.Mesh.UnbindRequest,Goedel.Protocol.JpcSession)">
@@ -6323,7 +6336,7 @@
             Base method for implementing the transaction  UnbindAccount.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Connect(Goedel.Mesh.ConnectRequest,Goedel.Protocol.JpcSession)">
@@ -6331,7 +6344,7 @@
             Base method for implementing the transaction  Connect.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Complete(Goedel.Mesh.CompleteRequest,Goedel.Protocol.JpcSession)">
@@ -6339,7 +6352,7 @@
             Base method for implementing the transaction  Complete.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Status(Goedel.Mesh.StatusRequest,Goedel.Protocol.JpcSession)">
@@ -6347,7 +6360,7 @@
             Base method for implementing the transaction  Status.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Download(Goedel.Mesh.DownloadRequest,Goedel.Protocol.JpcSession)">
@@ -6355,7 +6368,7 @@
             Base method for implementing the transaction  Download.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Transact(Goedel.Mesh.TransactRequest,Goedel.Protocol.JpcSession)">
@@ -6363,7 +6376,7 @@
             Base method for implementing the transaction  Transact.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
@@ -6371,7 +6384,7 @@
             Base method for implementing the transaction  Post.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Claim(Goedel.Mesh.ClaimRequest,Goedel.Protocol.JpcSession)">
@@ -6379,7 +6392,7 @@
             Base method for implementing the transaction  Claim.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.PollClaim(Goedel.Mesh.PollClaimRequest,Goedel.Protocol.JpcSession)">
@@ -6387,7 +6400,7 @@
             Base method for implementing the transaction  PollClaim.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Operate(Goedel.Mesh.OperateRequest,Goedel.Protocol.JpcSession)">
@@ -6395,7 +6408,7 @@
             Base method for implementing the transaction  Operate.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="T:Goedel.Mesh.MessageClaim">
@@ -7559,124 +7572,213 @@
             Client class for MeshService.
             </summary>		
         </member>
+        <member name="F:Goedel.Mesh.MeshServiceClient.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshServiceClient.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServiceClient.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshServiceClient.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.MeshServiceClient.JpcSession">
             <summary>
             The active JpcSession.
             </summary>		
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Hello(Goedel.Protocol.HelloRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Hello(Goedel.Protocol.HelloRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.BindAccount(Goedel.Mesh.BindRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.BindAccount(Goedel.Mesh.BindRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.UnbindAccount(Goedel.Mesh.UnbindRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.UnbindAccount(Goedel.Mesh.UnbindRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Connect(Goedel.Mesh.ConnectRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Connect(Goedel.Mesh.ConnectRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Complete(Goedel.Mesh.CompleteRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Complete(Goedel.Mesh.CompleteRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Status(Goedel.Mesh.StatusRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Status(Goedel.Mesh.StatusRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Download(Goedel.Mesh.DownloadRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Download(Goedel.Mesh.DownloadRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Transact(Goedel.Mesh.TransactRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Transact(Goedel.Mesh.TransactRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Post(Goedel.Mesh.PostRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Claim(Goedel.Mesh.ClaimRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Claim(Goedel.Mesh.ClaimRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.PollClaim(Goedel.Mesh.PollClaimRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.PollClaim(Goedel.Mesh.PollClaimRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Operate(Goedel.Mesh.OperateRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Operate(Goedel.Mesh.OperateRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="T:Goedel.Mesh.MeshServiceProvider">
+        <member name="T:Goedel.Mesh.MeshServiceDirect">
             <summary>
-            Service class for MeshService.
+            Direct API class for MeshService.
             </summary>		
         </member>
-        <member name="F:Goedel.Mesh.MeshServiceProvider.Service">
+        <member name="P:Goedel.Mesh.MeshServiceDirect.Service">
             <summary>
             Interface object to dispatch requests to.
             </summary>	
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceProvider.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
+        <member name="P:Goedel.Mesh.MeshServiceDirect.JpcSession">
             <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="session">The client context.</param>
-            <param name="jsonReader">Reader for data object.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
+            The active JpcSession.
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.Hello(Goedel.Protocol.HelloRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.BindAccount(Goedel.Mesh.BindRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.UnbindAccount(Goedel.Mesh.UnbindRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.Connect(Goedel.Mesh.ConnectRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.Complete(Goedel.Mesh.CompleteRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.Status(Goedel.Mesh.StatusRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.Download(Goedel.Mesh.DownloadRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.Transact(Goedel.Mesh.TransactRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.Post(Goedel.Mesh.PostRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.Claim(Goedel.Mesh.ClaimRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.PollClaim(Goedel.Mesh.PollClaimRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.Operate(Goedel.Mesh.OperateRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
         </member>
         <member name="T:Goedel.Mesh.MeshRequest">
              <summary>

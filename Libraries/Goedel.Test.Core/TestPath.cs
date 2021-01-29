@@ -77,23 +77,26 @@ namespace Goedel.Test.Core {
         /// The actual Mesh service. This MAY be accessed through a direct, serialized or 
         /// networked session provider.
         /// </summary>
-        public PublicMeshServiceProvider MeshServiceHost => meshServiceHost ??
-            new PublicMeshServiceProvider(ServiceName, ServiceDirectory).CacheValue(out meshServiceHost);
-        PublicMeshServiceProvider meshServiceHost;
+        //public PublicMeshServiceProvider MeshServiceHost => meshServiceHost ??
+        //    new PublicMeshServiceProvider(ServiceName, ServiceDirectory).CacheValue(out meshServiceHost);
+        //PublicMeshServiceProvider meshServiceHost;
 
 
+        // This stuff will all be thrown into the service dispatch.
+        public PublicMeshService MeshService => 
+            new PublicMeshService (ServiceName, ServiceDirectory).CacheValue(out meshService);
+        PublicMeshService meshService;
 
-        public MeshService GetMeshClient(string accountAddress, 
-                    List<Trace> meshProtocolMessages = null) {
+        public MeshServiceClient GetMeshClient(string accountAddress) {
 
-            switch (TestEnvironmentCommon.JpcConnection) {
-                case JpcConnection.Direct: {
-                    JpcSession session = Direct ? new DirectSession(accountAddress) :
-                                new TestSession(MeshServiceHost,
-                                        accountAddress, meshProtocolMessages);
-                    return new PublicMeshService(MeshServiceHost, session);
-                    }
-                }
+            //switch (TestEnvironmentCommon.JpcConnection) {
+            //    case JpcConnection.Direct: {
+            //        JpcSession session = Direct ? new DirectSession(accountAddress) :
+            //                    new TestSession(MeshServiceHost,
+            //                            accountAddress, meshProtocolMessages);
+            //        return new PublicMeshService(MeshServiceHost, session);
+            //        }
+            //    }
 
             throw new NYI();
             }
@@ -160,40 +163,6 @@ namespace Goedel.Test.Core {
 
         }
 
-    public partial class TestSession : LocalRemoteSession {
 
-        public List<Trace> MeshProtocolMessages;
 
-        /// <summary>
-        /// Create a remote session with authentication under the
-        /// specified credential.
-        /// </summary>
-        /// <param name="host">The host implementation</param>
-        /// <param name="Domain">Portal address</param>
-        /// <param name="Account">User account</param>
-        /// <param name="UDF">Authentication key identifier.</param>
-        public TestSession(JpcProvider host, string accountAddress, List<Trace> meshProtocolMessages) : base(host, accountAddress) {
-            MeshProtocolMessages = meshProtocolMessages;
-            Authenticated = true;
-            }
-
-        /// <summary>
-        /// Post a request and retrieve the response.
-        /// </summary>
-        /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
-        /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override Stream Post(MemoryStream data, JsonObject Request) {
-            var requestBytes = data.ToArray();
-
-            var JSONReader = new JsonReader(requestBytes);
-            var result = Host.Dispatch(this, JSONReader);
-            var responseBytes = result.GetBytes();
-
-            var trace = new Trace(requestBytes, responseBytes, Request) ;
-
-            MeshProtocolMessages.Add(trace);
-            return new MemoryStream(responseBytes);
-            }
-
-        }
     }

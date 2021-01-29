@@ -968,30 +968,6 @@
             </summary>
             <param name="request">The account creation request.</param>
         </member>
-        <member name="T:Goedel.Mesh.Server.PublicMeshServiceProvider">
-            <summary>
-            The host class. Receives a stream from the HTTP server caller and 
-            dispatches the specified server.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Server.PublicMeshServiceProvider.ProfileService">
-            <summary>The profile describing the service</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Server.PublicMeshServiceProvider.ProfileHost">
-            <summary>The profile describing the host</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshServiceProvider.#ctor(System.String,System.String)">
-            <summary>
-            Initialize a Mesh Service Provider.
-            </summary>
-            <param name="domain">The domain of the service provider.</param>
-            <param name="serviceDirectory">The mesh persistence store filename.</param>
-        </member>
-        <member name="P:Goedel.Mesh.Server.PublicMeshServiceProvider.Mesh">
-            <summary>
-            The mesh persistence provider.
-            </summary>
-        </member>
         <member name="T:Goedel.Mesh.Server.PublicMeshService">
             <summary>
             The session class implements the Mesh session. The implementations in this class are mostly 
@@ -999,17 +975,23 @@
             work on to the <see cref="T:Goedel.Mesh.Server.MeshPersist"/> instance <see cref="P:Goedel.Mesh.Server.PublicMeshService.Mesh"/>
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.Server.PublicMeshService.ProfileService">
+            <summary>The profile describing the service</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.PublicMeshService.ProfileHost">
+            <summary>The profile describing the host</summary>
+        </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.Mesh">
             <summary>
             The mesh persistence provider.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.Server.PublicMeshServiceProvider,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(System.String,System.String)">
             <summary>
             The mesh service dispatcher.
             </summary>
-            <param name="host">The service provider.</param>
-            <param name="session">The authentication context.</param>
+            <param name="domain">The domain of the service provider.</param>
+            <param name="serviceDirectory">The mesh persistence store filename.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Hello(Goedel.Protocol.HelloRequest,Goedel.Protocol.JpcSession)">
             <summary>
@@ -1114,9 +1096,6 @@
             The Mathematical Mesh persistence store.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Server.MeshPersist.Provider">
-            <summary>The mesh service provider.</summary>
-        </member>
         <member name="F:Goedel.Mesh.Server.MeshPersist.Container">
             <summary>The underlying persistence store for the account catalog.</summary>
         </member>
@@ -1129,7 +1108,7 @@
         <member name="P:Goedel.Mesh.Server.MeshPersist.ServiceSignatureKey">
             <summary>The service signature key.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(Goedel.Mesh.Server.PublicMeshServiceProvider,System.String)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(System.String)">
             <summary>
             Open or create the accounts persistence container.
             </summary>

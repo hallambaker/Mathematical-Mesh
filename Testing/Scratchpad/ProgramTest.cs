@@ -34,7 +34,8 @@ namespace Scratchpad {
             //ShellTests.Test().TestHello();
             //ShellTestsHTTP.Test().TestHello();
 
-            GoedelProtocolService.Test().TestService();
+            //GoedelProtocolService.Test().TestService();
+            Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
 
             }
 

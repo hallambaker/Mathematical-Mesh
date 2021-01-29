@@ -44,8 +44,7 @@ namespace Goedel.Mesh.Server {
     /// </summary>
     public class MeshPersist {
 
-        ///<summary>The mesh service provider.</summary>
-        protected PublicMeshServiceProvider Provider;
+
 
         ///<summary>The underlying persistence store for the account catalog.</summary>
         public PersistenceStore Container;
@@ -70,9 +69,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="directory">The directory in which all the service data is stored.</param>
         /// <param name="provider">The Mesh service provider.</param>
-        public MeshPersist(PublicMeshServiceProvider provider, string directory) {
-
-            Provider = provider;
+        public MeshPersist(string directory) {
 
             // Load/create the accounts catalog
             DirectoryRoot = directory;
@@ -607,7 +604,7 @@ namespace Goedel.Mesh.Server {
             if (jpcSession is DirectSession) {
                 return new AccountHandleVerified(accountEntry);
                 }
-            if (jpcSession is LocalRemoteSession) {
+            if (jpcSession is JpcSessionSerialized) {
                 return new AccountHandleVerified(accountEntry);
                 }
             // At this point we need to examine the actual information presented and the 

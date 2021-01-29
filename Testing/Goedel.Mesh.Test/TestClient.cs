@@ -22,9 +22,9 @@ namespace Goedel.Mesh.Test {
 
             var session = new WebRemoteSession(null, null, accountAddress);
 
-            var webClient = session.GetWebClient<ServiceManagementServiceClient>();
+            //var webClient = session.GetWebClient<ServiceManagementServiceClient>();
 
-
+            throw new NYI();
             }
 
 

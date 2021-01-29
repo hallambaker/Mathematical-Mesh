@@ -89,15 +89,28 @@
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Presence.MeshPresence.JpcInterface">
-            <summary>Base interface (used to create client wrapper stubs)</summary>
+        <member name="M:Goedel.Mesh.Presence.MeshPresence.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="session">The client context.</param>
+            <param name="jsonReader">Reader for data object.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Presence.MeshPresence.GetDirect(Goedel.Protocol.JpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.Presence.MeshPresence.AnnounceDevice(Goedel.Mesh.Presence.AnnounceDeviceRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction  AnnounceDevice.
             </summary>
             <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
+            <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="T:Goedel.Mesh.Presence.MeshPresenceClient">
@@ -105,36 +118,59 @@
             Client class for MeshPresence.
             </summary>		
         </member>
+        <member name="F:Goedel.Mesh.Presence.MeshPresenceClient.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Presence.MeshPresenceClient.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Presence.MeshPresenceClient.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Presence.MeshPresenceClient.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Presence.MeshPresenceClient.JpcSession">
             <summary>
             The active JpcSession.
             </summary>		
         </member>
-        <member name="M:Goedel.Mesh.Presence.MeshPresenceClient.AnnounceDevice(Goedel.Mesh.Presence.AnnounceDeviceRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.Presence.MeshPresenceClient.AnnounceDevice(Goedel.Mesh.Presence.AnnounceDeviceRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="T:Goedel.Mesh.Presence.MeshPresenceProvider">
+        <member name="T:Goedel.Mesh.Presence.MeshPresenceDirect">
             <summary>
-            Service class for MeshPresence.
+            Direct API class for MeshPresence.
             </summary>		
         </member>
-        <member name="F:Goedel.Mesh.Presence.MeshPresenceProvider.Service">
+        <member name="P:Goedel.Mesh.Presence.MeshPresenceDirect.Service">
             <summary>
             Interface object to dispatch requests to.
             </summary>	
         </member>
-        <member name="M:Goedel.Mesh.Presence.MeshPresenceProvider.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
+        <member name="P:Goedel.Mesh.Presence.MeshPresenceDirect.JpcSession">
             <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="session">The client context.</param>
-            <param name="jsonReader">Reader for data object.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
+            The active JpcSession.
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Presence.MeshPresenceDirect.AnnounceDevice(Goedel.Mesh.Presence.AnnounceDeviceRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
         </member>
         <member name="T:Goedel.Mesh.Presence.AnnounceDeviceRequest">
              <summary>

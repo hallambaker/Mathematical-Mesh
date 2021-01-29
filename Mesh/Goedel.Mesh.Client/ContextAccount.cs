@@ -66,8 +66,8 @@ namespace Goedel.Mesh.Client {
         public abstract Connection Connection { get; }
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
-        public virtual MeshService MeshClient => meshClient ?? GetMeshClient(AccountAddress).CacheValue(out meshClient);
-        MeshService meshClient;
+        public virtual MeshServiceClient MeshClient => meshClient ?? GetMeshClient(AccountAddress).CacheValue(out meshClient);
+        MeshServiceClient meshClient;
 
         ///<summary>The Account Address</summary>
         public abstract string AccountAddress { get; } 
@@ -241,9 +241,9 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="accountAddress">The account service identifier.</param>
         /// <returns>The Mesh service client</returns>
-        public MeshService GetMeshClient(string accountAddress) =>
-                    MeshMachine.GetMeshClient(accountAddress, KeyAccountAuthentication,
-                            Connection, Profile);
+        public MeshServiceClient GetMeshClient(string accountAddress) => throw new NYI();
+                    //MeshMachine.GetMeshClient(accountAddress, KeyAccountAuthentication,
+                    //        Connection, Profile);
 
 
         /// <summary>

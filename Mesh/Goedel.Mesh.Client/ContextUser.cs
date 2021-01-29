@@ -192,7 +192,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             // Attempt to register with service in question
-            var response = MeshClient.BindAccount(createRequest, MeshClient.JpcSession);
+            var response = MeshClient.BindAccount(createRequest);
             response.AssertSuccess(ServerOperationFailed.Throw);
 
             ActivationAccount.BindService(ProfileService);
@@ -589,7 +589,7 @@ namespace Goedel.Mesh.Client {
                 EnvelopedProfileAccount = profileGroup.EnvelopedProfileAccount
                 };
 
-            var createResponse = MeshClient.BindAccount(createRequest, MeshClient.JpcSession);
+            var createResponse = MeshClient.BindAccount(createRequest);
             createResponse.AssertSuccess();
 
             // create the group context

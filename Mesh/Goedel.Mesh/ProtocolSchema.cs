@@ -150,142 +150,254 @@ namespace Goedel.Mesh {
         /// </summary>
 		public override string GetDiscovery => Discovery;
 
-		///<summary>Base interface (used to create client wrapper stubs)</summary>
-		protected virtual MeshService JpcInterface {get; set;}
+		/// <summary>
+		/// Dispatch object request in specified authentication context.
+		/// </summary>			
+        /// <param name="session">The client context.</param>
+        /// <param name="jsonReader">Reader for data object.</param>
+        /// <returns>The response object returned by the corresponding dispatch.</returns>
+		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+								Goedel.Protocol.JsonReader jsonReader) {
+
+			jsonReader.StartObject ();
+			string token = jsonReader.ReadToken ();
+			JsonObject response = null;
+
+			switch (token) {
+				case "Hello" : {
+					var request = new HelloRequest();
+					request.Deserialize (jsonReader);
+					response = Hello (request, session);
+					break;
+					}
+				case "BindAccount" : {
+					var request = new BindRequest();
+					request.Deserialize (jsonReader);
+					response = BindAccount (request, session);
+					break;
+					}
+				case "UnbindAccount" : {
+					var request = new UnbindRequest();
+					request.Deserialize (jsonReader);
+					response = UnbindAccount (request, session);
+					break;
+					}
+				case "Connect" : {
+					var request = new ConnectRequest();
+					request.Deserialize (jsonReader);
+					response = Connect (request, session);
+					break;
+					}
+				case "Complete" : {
+					var request = new CompleteRequest();
+					request.Deserialize (jsonReader);
+					response = Complete (request, session);
+					break;
+					}
+				case "Status" : {
+					var request = new StatusRequest();
+					request.Deserialize (jsonReader);
+					response = Status (request, session);
+					break;
+					}
+				case "Download" : {
+					var request = new DownloadRequest();
+					request.Deserialize (jsonReader);
+					response = Download (request, session);
+					break;
+					}
+				case "Transact" : {
+					var request = new TransactRequest();
+					request.Deserialize (jsonReader);
+					response = Transact (request, session);
+					break;
+					}
+				case "Post" : {
+					var request = new PostRequest();
+					request.Deserialize (jsonReader);
+					response = Post (request, session);
+					break;
+					}
+				case "Claim" : {
+					var request = new ClaimRequest();
+					request.Deserialize (jsonReader);
+					response = Claim (request, session);
+					break;
+					}
+				case "PollClaim" : {
+					var request = new PollClaimRequest();
+					request.Deserialize (jsonReader);
+					response = PollClaim (request, session);
+					break;
+					}
+				case "Operate" : {
+					var request = new OperateRequest();
+					request.Deserialize (jsonReader);
+					response = Operate (request, session);
+					break;
+					}
+				default : {
+					throw new Goedel.Protocol.UnknownOperation ();
+					}
+				}
+			jsonReader.EndObject ();
+			return response;
+			}
+
+        /// <summary>
+        /// Return a client tapping the service API directly without serialization bound to
+        /// the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+        /// </summary>
+        /// <param name="jpcSession">Session to which requests are to be bound.</param>
+        /// <returns>The direct client instance.</returns>
+		public override Goedel.Protocol.JpcClientInterface GetDirect (JpcSession jpcSession) =>
+				new MeshServiceDirect () {
+						JpcSession = jpcSession,
+						Service = this
+						};
 
 
         /// <summary>
 		/// Base method for implementing the transaction  Hello.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual MeshHelloResponse Hello (
-                HelloRequest request, JpcSession session=null) => 
-						JpcInterface.Hello (request, session ?? JpcSession);
+        public abstract MeshHelloResponse Hello (
+                HelloRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  BindAccount.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual BindResponse BindAccount (
-                BindRequest request, JpcSession session=null) => 
-						JpcInterface.BindAccount (request, session ?? JpcSession);
+        public abstract BindResponse BindAccount (
+                BindRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  UnbindAccount.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual UnbindResponse UnbindAccount (
-                UnbindRequest request, JpcSession session=null) => 
-						JpcInterface.UnbindAccount (request, session ?? JpcSession);
+        public abstract UnbindResponse UnbindAccount (
+                UnbindRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  Connect.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual ConnectResponse Connect (
-                ConnectRequest request, JpcSession session=null) => 
-						JpcInterface.Connect (request, session ?? JpcSession);
+        public abstract ConnectResponse Connect (
+                ConnectRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  Complete.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual CompleteResponse Complete (
-                CompleteRequest request, JpcSession session=null) => 
-						JpcInterface.Complete (request, session ?? JpcSession);
+        public abstract CompleteResponse Complete (
+                CompleteRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  Status.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual StatusResponse Status (
-                StatusRequest request, JpcSession session=null) => 
-						JpcInterface.Status (request, session ?? JpcSession);
+        public abstract StatusResponse Status (
+                StatusRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  Download.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual DownloadResponse Download (
-                DownloadRequest request, JpcSession session=null) => 
-						JpcInterface.Download (request, session ?? JpcSession);
+        public abstract DownloadResponse Download (
+                DownloadRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  Transact.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual TransactResponse Transact (
-                TransactRequest request, JpcSession session=null) => 
-						JpcInterface.Transact (request, session ?? JpcSession);
+        public abstract TransactResponse Transact (
+                TransactRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  Post.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual PostResponse Post (
-                PostRequest request, JpcSession session=null) => 
-						JpcInterface.Post (request, session ?? JpcSession);
+        public abstract PostResponse Post (
+                PostRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  Claim.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual ClaimResponse Claim (
-                ClaimRequest request, JpcSession session=null) => 
-						JpcInterface.Claim (request, session ?? JpcSession);
+        public abstract ClaimResponse Claim (
+                ClaimRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  PollClaim.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual PollClaimResponse PollClaim (
-                PollClaimRequest request, JpcSession session=null) => 
-						JpcInterface.PollClaim (request, session ?? JpcSession);
+        public abstract PollClaimResponse PollClaim (
+                PollClaimRequest request, JpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  Operate.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
+		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual OperateResponse Operate (
-                OperateRequest request, JpcSession session=null) => 
-						JpcInterface.Operate (request, session ?? JpcSession);
+        public abstract OperateResponse Operate (
+                OperateRequest request, JpcSession session);
 
         }
 
     /// <summary>
 	/// Client class for MeshService.
     /// </summary>		
-    public partial class MeshServiceClient : MeshService {
+    public partial class MeshServiceClient :  Goedel.Protocol.JpcClientInterface {
+
+	    /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string WellKnown = "mmm";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetWellKnown => WellKnown;
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string Discovery = "_mmm._tcp";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetDiscovery => Discovery;
+
  		
 		JpcRemoteSession JpcRemoteSession;
         /// <summary>
         /// The active JpcSession.
         /// </summary>		
-		public override JpcSession JpcSession {
+		public virtual JpcSession JpcSession {
 			get => JpcRemoteSession;
 			set => JpcRemoteSession = value as JpcRemoteSession; 
 			}
@@ -296,189 +408,245 @@ namespace Goedel.Mesh {
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override MeshHelloResponse Hello (
-                HelloRequest request, JpcSession session=null) {
+        public virtual MeshHelloResponse Hello (HelloRequest request) =>
+				JpcRemoteSession.Post("Hello", "MeshHelloResponse", request) as MeshHelloResponse;
 
-            var responseData = JpcRemoteSession.Post("Hello", request);
-            var response = MeshHelloResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override BindResponse BindAccount (
-                BindRequest request, JpcSession session=null) {
+        public virtual BindResponse BindAccount (BindRequest request) =>
+				JpcRemoteSession.Post("BindAccount", "BindResponse", request) as BindResponse;
 
-            var responseData = JpcRemoteSession.Post("BindAccount", request);
-            var response = BindResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override UnbindResponse UnbindAccount (
-                UnbindRequest request, JpcSession session=null) {
+        public virtual UnbindResponse UnbindAccount (UnbindRequest request) =>
+				JpcRemoteSession.Post("UnbindAccount", "UnbindResponse", request) as UnbindResponse;
 
-            var responseData = JpcRemoteSession.Post("UnbindAccount", request);
-            var response = UnbindResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override ConnectResponse Connect (
-                ConnectRequest request, JpcSession session=null) {
+        public virtual ConnectResponse Connect (ConnectRequest request) =>
+				JpcRemoteSession.Post("Connect", "ConnectResponse", request) as ConnectResponse;
 
-            var responseData = JpcRemoteSession.Post("Connect", request);
-            var response = ConnectResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override CompleteResponse Complete (
-                CompleteRequest request, JpcSession session=null) {
+        public virtual CompleteResponse Complete (CompleteRequest request) =>
+				JpcRemoteSession.Post("Complete", "CompleteResponse", request) as CompleteResponse;
 
-            var responseData = JpcRemoteSession.Post("Complete", request);
-            var response = CompleteResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override StatusResponse Status (
-                StatusRequest request, JpcSession session=null) {
+        public virtual StatusResponse Status (StatusRequest request) =>
+				JpcRemoteSession.Post("Status", "StatusResponse", request) as StatusResponse;
 
-            var responseData = JpcRemoteSession.Post("Status", request);
-            var response = StatusResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override DownloadResponse Download (
-                DownloadRequest request, JpcSession session=null) {
+        public virtual DownloadResponse Download (DownloadRequest request) =>
+				JpcRemoteSession.Post("Download", "DownloadResponse", request) as DownloadResponse;
 
-            var responseData = JpcRemoteSession.Post("Download", request);
-            var response = DownloadResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override TransactResponse Transact (
-                TransactRequest request, JpcSession session=null) {
+        public virtual TransactResponse Transact (TransactRequest request) =>
+				JpcRemoteSession.Post("Transact", "TransactResponse", request) as TransactResponse;
 
-            var responseData = JpcRemoteSession.Post("Transact", request);
-            var response = TransactResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override PostResponse Post (
-                PostRequest request, JpcSession session=null) {
+        public virtual PostResponse Post (PostRequest request) =>
+				JpcRemoteSession.Post("Post", "PostResponse", request) as PostResponse;
 
-            var responseData = JpcRemoteSession.Post("Post", request);
-            var response = PostResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override ClaimResponse Claim (
-                ClaimRequest request, JpcSession session=null) {
+        public virtual ClaimResponse Claim (ClaimRequest request) =>
+				JpcRemoteSession.Post("Claim", "ClaimResponse", request) as ClaimResponse;
 
-            var responseData = JpcRemoteSession.Post("Claim", request);
-            var response = ClaimResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override PollClaimResponse PollClaim (
-                PollClaimRequest request, JpcSession session=null) {
+        public virtual PollClaimResponse PollClaim (PollClaimRequest request) =>
+				JpcRemoteSession.Post("PollClaim", "PollClaimResponse", request) as PollClaimResponse;
 
-            var responseData = JpcRemoteSession.Post("PollClaim", request);
-            var response = PollClaimResponse.FromJson(responseData.JsonReader(), true);
-
-            return response;
-            }
 
         /// <summary>
 		/// Implement the transaction
         /// </summary>		
         /// <param name="request">The request object.</param>
-		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override OperateResponse Operate (
-                OperateRequest request, JpcSession session=null) {
+        public virtual OperateResponse Operate (OperateRequest request) =>
+				JpcRemoteSession.Post("Operate", "OperateResponse", request) as OperateResponse;
 
-            var responseData = JpcRemoteSession.Post("Operate", request);
-            var response = OperateResponse.FromJson(responseData.JsonReader(), true);
 
-            return response;
-            }
+		}
+
+    /// <summary>
+	/// Direct API class for MeshService.
+    /// </summary>		
+    public partial class MeshServiceDirect: MeshServiceClient {
+ 		
+		/// <summary>
+		/// Interface object to dispatch requests to.
+		/// </summary>	
+		public MeshService Service {get; set;}
+
+        /// <summary>
+        /// The active JpcSession.
+        /// </summary>		
+		public override JpcSession JpcSession {get; set;}
+
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override MeshHelloResponse Hello (HelloRequest request) =>
+				Service.Hello (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override BindResponse BindAccount (BindRequest request) =>
+				Service.BindAccount (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override UnbindResponse UnbindAccount (UnbindRequest request) =>
+				Service.UnbindAccount (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override ConnectResponse Connect (ConnectRequest request) =>
+				Service.Connect (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override CompleteResponse Complete (CompleteRequest request) =>
+				Service.Complete (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override StatusResponse Status (StatusRequest request) =>
+				Service.Status (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override DownloadResponse Download (DownloadRequest request) =>
+				Service.Download (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override TransactResponse Transact (TransactRequest request) =>
+				Service.Transact (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override PostResponse Post (PostRequest request) =>
+				Service.Post (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override ClaimResponse Claim (ClaimRequest request) =>
+				Service.Claim (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override PollClaimResponse PollClaim (PollClaimRequest request) =>
+				Service.PollClaim (request, JpcSession);
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override OperateResponse Operate (OperateRequest request) =>
+				Service.Operate (request, JpcSession);
+
 
 		}
 
 
+    /*
     /// <summary>
 	/// Service class for MeshService.
     /// </summary>		
-    public partial class MeshServiceProvider : Goedel.Protocol.JpcProvider {
+    public partial class MeshServiceDispatch : Goedel.Protocol.JpcDispatch {
 
 		/// <summary>
 		/// Interface object to dispatch requests to.
@@ -497,79 +665,79 @@ namespace Goedel.Mesh {
 
 			jsonReader.StartObject ();
 			string token = jsonReader.ReadToken ();
-			JsonObject Response = null;
+			JsonObject response = null;
 
 			switch (token) {
 				case "Hello" : {
-					var Request = new HelloRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.Hello (Request, session);
+					var request = new HelloRequest();
+					request.Deserialize (jsonReader);
+					response = Service.Hello (request, session);
 					break;
 					}
 				case "BindAccount" : {
-					var Request = new BindRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.BindAccount (Request, session);
+					var request = new BindRequest();
+					request.Deserialize (jsonReader);
+					response = Service.BindAccount (request, session);
 					break;
 					}
 				case "UnbindAccount" : {
-					var Request = new UnbindRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.UnbindAccount (Request, session);
+					var request = new UnbindRequest();
+					request.Deserialize (jsonReader);
+					response = Service.UnbindAccount (request, session);
 					break;
 					}
 				case "Connect" : {
-					var Request = new ConnectRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.Connect (Request, session);
+					var request = new ConnectRequest();
+					request.Deserialize (jsonReader);
+					response = Service.Connect (request, session);
 					break;
 					}
 				case "Complete" : {
-					var Request = new CompleteRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.Complete (Request, session);
+					var request = new CompleteRequest();
+					request.Deserialize (jsonReader);
+					response = Service.Complete (request, session);
 					break;
 					}
 				case "Status" : {
-					var Request = new StatusRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.Status (Request, session);
+					var request = new StatusRequest();
+					request.Deserialize (jsonReader);
+					response = Service.Status (request, session);
 					break;
 					}
 				case "Download" : {
-					var Request = new DownloadRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.Download (Request, session);
+					var request = new DownloadRequest();
+					request.Deserialize (jsonReader);
+					response = Service.Download (request, session);
 					break;
 					}
 				case "Transact" : {
-					var Request = new TransactRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.Transact (Request, session);
+					var request = new TransactRequest();
+					request.Deserialize (jsonReader);
+					response = Service.Transact (request, session);
 					break;
 					}
 				case "Post" : {
-					var Request = new PostRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.Post (Request, session);
+					var request = new PostRequest();
+					request.Deserialize (jsonReader);
+					response = Service.Post (request, session);
 					break;
 					}
 				case "Claim" : {
-					var Request = new ClaimRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.Claim (Request, session);
+					var request = new ClaimRequest();
+					request.Deserialize (jsonReader);
+					response = Service.Claim (request, session);
 					break;
 					}
 				case "PollClaim" : {
-					var Request = new PollClaimRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.PollClaim (Request, session);
+					var request = new PollClaimRequest();
+					request.Deserialize (jsonReader);
+					response = Service.PollClaim (request, session);
 					break;
 					}
 				case "Operate" : {
-					var Request = new OperateRequest();
-					Request.Deserialize (jsonReader);
-					Response = Service.Operate (Request, session);
+					var request = new OperateRequest();
+					request.Deserialize (jsonReader);
+					response = Service.Operate (request, session);
 					break;
 					}
 				default : {
@@ -577,11 +745,11 @@ namespace Goedel.Mesh {
 					}
 				}
 			jsonReader.EndObject ();
-			return Response;
+			return response;
 			}
 
 		}
-
+		*/
 
 
 

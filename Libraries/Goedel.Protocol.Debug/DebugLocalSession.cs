@@ -13,7 +13,7 @@ namespace Goedel.Protocol.Debug {
     /// might be the result of JSON encoding issues and to collect samples
     /// for documentation.
     /// </summary>
-    public class DebugLocalSession : LocalRemoteSession {
+    public class DebugLocalSession : JpcSessionSerialized {
 
         /// <summary>
         /// Trace Dictionary for this session
@@ -28,7 +28,7 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         /// <param name="host">The host implementation</param>
         /// <param name="accountAddress">User account</param>
-        public DebugLocalSession(JpcProvider host, string accountAddress)
+        public DebugLocalSession(JpcInterface host, string accountAddress)
                 : base(host, accountAddress) {
             }
 

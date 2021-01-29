@@ -13,16 +13,6 @@ using Xunit;
 
 namespace Goedel.XUnit {
     public class MakeSiteDocs : CreateExamples {
-
-        //public virtual TestCLI Alice1 { get; private set; }
-        //public virtual TestCLI Alice2 { get; private set; }
-        //public virtual TestCLI Alice3 { get; private set; }
-        //public virtual TestCLI Alice4 { get; private set; }
-        //public virtual TestCLI Bob1 { get; private set; }
-        //public virtual TestCLI Mallet1 { get; private set; }
-        //public virtual TestCLI Console1 { get; private set; }
-        //public virtual TestCLI Maker1 { get; private set; }
-
         public static MakeSiteDocs Test() => new MakeSiteDocs();
 
 

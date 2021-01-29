@@ -24,13 +24,13 @@ namespace Goedel.Mesh.Test {
         public override IMeshMachineClient MeshMachine => MeshMachineTest;
 
         public MeshMachineTest MeshMachineTest => meshMachineTest ??
-            (Direct ? new MeshMachineTest(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest) :
-                new MeshMachineTestWeb(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest));
+           new MeshMachineTest(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest);
+                //new MeshMachineTestWeb(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest));
         MeshMachineTest meshMachineTest;
 
-        MeshService MeshClient => meshClient ??
+        MeshServiceClient MeshClient => meshClient ??
             GetMeshClient(ServiceName).CacheValue(out meshClient);
-        MeshService meshClient;
+        MeshServiceClient meshClient;
 
 
         bool Direct { get; }
@@ -47,11 +47,11 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        public MeshService GetMeshClient(string accountAddress) =>
-            TestEnvironmentCommon.GetMeshClient(accountAddress, MeshProtocolMessages);
+        public MeshServiceClient GetMeshClient(string accountAddress) =>
+            TestEnvironmentCommon.GetMeshClient(accountAddress);
             
 
-        public override MeshService GetMeshClient(IAccountOptions Options) => MeshClient;
+        public override MeshServiceClient GetMeshClient(IAccountOptions Options) => MeshClient;
 
         public ShellResult ShellResult;
 
@@ -165,7 +165,7 @@ namespace Goedel.Mesh.Test {
                 Count++;
                 CountTotal++;
                 try {
-                    Shell.MeshProtocolMessages = null;
+                    Shell.MeshProtocolMessages = new();
 
                     Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
                     result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
@@ -200,7 +200,7 @@ namespace Goedel.Mesh.Test {
             foreach (var cmd in commands) {
                 Count++;
                 CountTotal++;
-                Shell.MeshProtocolMessages = null;
+                Shell.MeshProtocolMessages = new();
 
 
                 Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);

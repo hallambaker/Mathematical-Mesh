@@ -111,8 +111,39 @@ namespace Goedel.Mesh.Management {
         /// </summary>
 		public override string GetDiscovery => Discovery;
 
-		///<summary>Base interface (used to create client wrapper stubs)</summary>
-		protected virtual ServiceManagementService JpcInterface {get; set;}
+		/// <summary>
+		/// Dispatch object request in specified authentication context.
+		/// </summary>			
+        /// <param name="session">The client context.</param>
+        /// <param name="jsonReader">Reader for data object.</param>
+        /// <returns>The response object returned by the corresponding dispatch.</returns>
+		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+								Goedel.Protocol.JsonReader jsonReader) {
+
+			jsonReader.StartObject ();
+			string token = jsonReader.ReadToken ();
+			JsonObject response = null;
+
+			switch (token) {
+				default : {
+					throw new Goedel.Protocol.UnknownOperation ();
+					}
+				}
+			jsonReader.EndObject ();
+			return response;
+			}
+
+        /// <summary>
+        /// Return a client tapping the service API directly without serialization bound to
+        /// the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+        /// </summary>
+        /// <param name="jpcSession">Session to which requests are to be bound.</param>
+        /// <returns>The direct client instance.</returns>
+		public override Goedel.Protocol.JpcClientInterface GetDirect (JpcSession jpcSession) =>
+				new ServiceManagementServiceDirect () {
+						JpcSession = jpcSession,
+						Service = this
+						};
 
 
         }
@@ -120,13 +151,34 @@ namespace Goedel.Mesh.Management {
     /// <summary>
 	/// Client class for ServiceManagementService.
     /// </summary>		
-    public partial class ServiceManagementServiceClient : ServiceManagementService {
+    public partial class ServiceManagementServiceClient :  Goedel.Protocol.JpcClientInterface {
+
+	    /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string WellKnown = "wsmp";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetWellKnown => WellKnown;
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public const string Discovery = "_wmsmp._tcp";
+
+        /// <summary>
+        /// Well Known service identifier.
+        /// </summary>
+		public override string GetDiscovery => Discovery;
+
  		
 		JpcRemoteSession JpcRemoteSession;
         /// <summary>
         /// The active JpcSession.
         /// </summary>		
-		public override JpcSession JpcSession {
+		public virtual JpcSession JpcSession {
 			get => JpcRemoteSession;
 			set => JpcRemoteSession = value as JpcRemoteSession; 
 			}
@@ -135,11 +187,31 @@ namespace Goedel.Mesh.Management {
 
 		}
 
+    /// <summary>
+	/// Direct API class for ServiceManagementService.
+    /// </summary>		
+    public partial class ServiceManagementServiceDirect: ServiceManagementServiceClient {
+ 		
+		/// <summary>
+		/// Interface object to dispatch requests to.
+		/// </summary>	
+		public ServiceManagementService Service {get; set;}
 
+        /// <summary>
+        /// The active JpcSession.
+        /// </summary>		
+		public override JpcSession JpcSession {get; set;}
+
+
+
+		}
+
+
+    /*
     /// <summary>
 	/// Service class for ServiceManagementService.
     /// </summary>		
-    public partial class ServiceManagementServiceProvider : Goedel.Protocol.JpcProvider {
+    public partial class ServiceManagementServiceDispatch : Goedel.Protocol.JpcDispatch {
 
 		/// <summary>
 		/// Interface object to dispatch requests to.
@@ -158,7 +230,7 @@ namespace Goedel.Mesh.Management {
 
 			jsonReader.StartObject ();
 			string token = jsonReader.ReadToken ();
-			JsonObject Response = null;
+			JsonObject response = null;
 
 			switch (token) {
 				default : {
@@ -166,11 +238,11 @@ namespace Goedel.Mesh.Management {
 					}
 				}
 			jsonReader.EndObject ();
-			return Response;
+			return response;
 			}
 
 		}
-
+		*/
 
 
 
