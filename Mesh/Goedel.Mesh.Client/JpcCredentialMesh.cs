@@ -19,7 +19,7 @@ namespace Goedel.Mesh.Client {
 
         public virtual JpcSession GetJpcSession(JpcConnection jpcConnection) =>
             jpcConnection switch {
-                JpcConnection.Direct => new DirectSession(AccountAddress),
+                JpcConnection.Direct => new JpcSessionDirect(AccountAddress),
                 JpcConnection.Serialized => GetSessionSerialized(this),
                 JpcConnection.Http => GetSessionHttp(this),
                 JpcConnection.Ticketed => GetSessionTicketed(this),

@@ -78,7 +78,7 @@ namespace Goedel.Protocol {
         public virtual JpcSession GetJpcSession(JpcConnection jpcConnection) =>
 
             jpcConnection switch {
-                JpcConnection.Direct => new DirectSession(AccountAddress),
+                JpcConnection.Direct => new JpcSessionDirect(AccountAddress),
                 JpcConnection.Serialized => GetSessionSerialized(this),
                 JpcConnection.Http => GetSessionHttp(this),
                 JpcConnection.Ticketed => GetSessionTicketed(this),
@@ -174,13 +174,13 @@ namespace Goedel.Protocol {
     /// Direct connection between client and service host. Useful for debugging
     /// and for direct access to a service on the same machine.
     /// </summary>
-    public partial class DirectSession : JpcSession {
+    public partial class JpcSessionDirect : JpcSession {
 
         /// <summary>
         /// Create a direct session for the specified account.
         /// </summary>
         /// <param name="accountAddress">The account name</param>
-        public DirectSession(string accountAddress) : base(accountAddress) => Authenticated = true;
+        public JpcSessionDirect(string accountAddress) : base(accountAddress) => Authenticated = true;
 
 
         }
@@ -288,7 +288,21 @@ namespace Goedel.Protocol {
             }
 
         }
+    public partial class JpcSessionHTTP : JpcRemoteSession {
+        public JpcSessionHTTP(string discovery, string domain, string account) :
+                base (account){
+            }
 
+        public override Stream Post(MemoryStream Data, JsonObject request) => throw new System.NotImplementedException();
+        }
+
+    public partial class JpcSessionTicketed : JpcRemoteSession {
+        public JpcSessionTicketed(JpcTicket ticket, string account) :
+                base(account) {
+            }
+        public override Stream Post(MemoryStream Data, JsonObject request) => throw new System.NotImplementedException();
+
+        }
 
     }
 

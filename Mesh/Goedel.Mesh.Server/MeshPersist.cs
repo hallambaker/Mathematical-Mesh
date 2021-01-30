@@ -601,7 +601,7 @@ namespace Goedel.Mesh.Server {
             // Goal: Allow an administrator device to regain control of the account
             // by creating Device entry public for itself.
 
-            if (jpcSession is DirectSession) {
+            if (jpcSession is JpcSessionDirect) {
                 return new AccountHandleVerified(accountEntry);
                 }
             if (jpcSession is JpcSessionSerialized) {

@@ -52,6 +52,10 @@ namespace Goedel.Protocol {
     /// </summary>
     public abstract class JpcInterface {
 
+
+        ///<summary>List of DNS domains serviced by this interface.</summary> 
+        public List<string> Domains { get; set; }
+
         /// <summary>
         /// The WellKnown service name for HTTP and DNS prefix use.
         /// </summary>

@@ -20,40 +20,134 @@
 //  
 //  
 using Goedel.Utilities;
+using System.Collections.Generic;
 
 namespace Goedel.Protocol {
-    public class JpcHostBroker {
 
 
+    public record JpcTicket (
+            byte[] Ticket,
+            byte[] UdpAddress,
+            byte[] TcpAddress,
+            string WebServiceEndpoint) {
 
-        public virtual T GetClient<T> (JpcCredential jpcCredential) where T : JpcInterface {
-
-
-            throw new NYI();
-            }
 
         }
+    
+    
+    public class JpcHostBroker {
+
+        protected Dictionary<string, JpcTicket> TicketByDiscoveryDomain { get; } =
+            new Dictionary<string, JpcTicket>();
+
+
+
+        public JpcHostBroker(string instance = "") {
+            }
+        static string GetAccountDiscoveryDomain(string discovery, string domain, string account) =>
+            $"{account}@{discovery}.{domain}";
+
+        public virtual T GetClient<T> (
+                string account, 
+                string discovery, 
+                string domain=null,
+                    JpcConnection jpcConnection = JpcConnection.Http) where T : JpcInterface, new() {
+            var result = new T();
+            
+
+            JpcSession session;
+            switch (jpcConnection) {
+                case JpcConnection.Http: {
+                    result.JpcSession = new JpcSessionHTTP(
+                            result.GetDiscovery, result.GetWellKnown, account);
+                    break;
+                    }
+                case JpcConnection.Ticketed: {
+                    var index = GetAccountDiscoveryDomain(result.GetDiscovery, result.GetWellKnown, account);
+                    if (TicketByDiscoveryDomain.TryGetValue(index, out var ticket)) {
+                        result.JpcSession = new JpcSessionTicketed(ticket, account);
+                        }
+                    else {
+                        result.JpcSession = new JpcSessionHTTP(
+                            result.GetDiscovery, result.GetWellKnown, account);
+                        }
+                    break;
+                    }
+                default: {
+                    throw new NYI();
+                    }
+                }
+
+            return result;
+            }
+
+        public virtual JpcSession GetSession(string account, string discovery, string domain = null) =>
+                new JpcSessionDirect(account);
+
+        }
+
 
 
     public class JpcHostBrokerDirect : JpcHostBroker {
 
+        ///<summary>Map </summary> 
+        protected Dictionary<string, JpcInterface> DirectHostByDiscoveryDomain { get; } = 
+            new Dictionary<string, JpcInterface>();
+
+
+        public JpcHostBrokerDirect(string instance = "") : base (instance) {
+            }
+
+
+        static string GetDiscoveryDomain(string discovery, string domain) =>
+            $"{discovery}.{domain}";
 
 
         public void Register(JpcInterface jpcInterface) {
-
+            var discovery = jpcInterface.GetDiscovery;
+            foreach (var domain in jpcInterface.Domains) {
+                var discoveryDomain = GetDiscoveryDomain(discovery, domain);
+                DirectHostByDiscoveryDomain.Add(discoveryDomain, jpcInterface);
+                }
 
 
             }
 
+        /// <summary>
+        /// Obtain a client of type <typeparamref name="T"/> with to the account 
+        /// <paramref name="account"/> at DNS domain <paramref name="domain"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the parameter to return.</typeparam>
+        /// <param name="account">The account name.</param>
+        /// <param name="discovery">The SRV discovery identifier.</param>
+        /// <param name="domain">The DNS domain.</param>
+        /// <returns></returns>
+        public override T GetClient<T>(string account, string discovery, string domain = null, 
+                    JpcConnection jpcConnection=JpcConnection.Http) {
+            var discoveryDomain = GetDiscoveryDomain(discovery, domain);
+            if (DirectHostByDiscoveryDomain.TryGetValue(discoveryDomain, out var directHost)) {
+                switch (jpcConnection) {
+                    case JpcConnection.Direct: {
+                        var session = new JpcSessionDirect(account);
 
-        public override T GetClient<T>(JpcCredential jpcCredential) {
+                        return directHost.GetDirect(session) as T;
+                        }
+                    case JpcConnection.Serialized: {
+                        var session = new JpcSessionSerialized(directHost, account);
+                        return new T() {
+                            JpcSession = session
+                            };
+                        }
+                    }
+                }
 
-
-            throw new NYI();
+            return base.GetClient<T>(account, discovery, domain);
             }
 
 
         }
+
+
 
 
 
