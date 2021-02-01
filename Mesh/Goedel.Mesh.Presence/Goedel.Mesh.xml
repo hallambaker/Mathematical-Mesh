@@ -138,11 +138,6 @@
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Presence.MeshPresenceClient.JpcSession">
-            <summary>
-            The active JpcSession.
-            </summary>		
-        </member>
         <member name="M:Goedel.Mesh.Presence.MeshPresenceClient.AnnounceDevice(Goedel.Mesh.Presence.AnnounceDeviceRequest)">
             <summary>
             Implement the transaction

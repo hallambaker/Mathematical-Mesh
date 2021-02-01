@@ -7592,11 +7592,6 @@
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.MeshServiceClient.JpcSession">
-            <summary>
-            The active JpcSession.
-            </summary>		
-        </member>
         <member name="M:Goedel.Mesh.MeshServiceClient.Hello(Goedel.Protocol.HelloRequest)">
             <summary>
             Implement the transaction

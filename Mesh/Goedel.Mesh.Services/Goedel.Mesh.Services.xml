@@ -146,11 +146,6 @@
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Services.MeshPresenceClient.JpcSession">
-            <summary>
-            The active JpcSession.
-            </summary>		
-        </member>
         <member name="M:Goedel.Mesh.Services.MeshPresenceClient.ThresholdSign(Goedel.Mesh.Services.ThresholdSignRequest)">
             <summary>
             Implement the transaction

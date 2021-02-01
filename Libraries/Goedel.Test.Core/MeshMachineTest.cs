@@ -28,7 +28,7 @@ namespace Goedel.Test.Core {
     /// </summary>
     public class MeshMachineTest : MeshMachineCore {
 
-
+        public List<Trace> MeshProtocolMessages = new();
         TestEnvironmentCommon testEnvironmentCommon;
 
         public string Name;
@@ -51,8 +51,8 @@ namespace Goedel.Test.Core {
         /// otherwise.</param>
         /// <returns></returns>
         public override MeshServiceClient GetMeshClient(
-                string accountAddress) => throw new NYI();
-            //testEnvironmentCommon.GetMeshClient(jpcCredential);
+                string accountAddress) =>
+                    testEnvironmentCommon.GetMeshClient(accountAddress, MeshProtocolMessages);
 
 
         public static Contact ContactAlice = new ContactPerson(

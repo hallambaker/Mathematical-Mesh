@@ -33,7 +33,7 @@ namespace Goedel.Protocol {
     /// documentation. All data is wrapped to fit a 72 character line.
     /// Large data items are replaced with ellipsis, etc.
     /// </summary>
-    public class JSONDebugWriter : JSONWriter {
+    public class JSONDebugWriter : JsonWriter {
 
         /// <summary>Threshold for redacting binary data blocks.</summary>
         static public int Threshold = 260;

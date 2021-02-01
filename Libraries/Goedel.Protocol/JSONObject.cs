@@ -106,7 +106,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Factory method used as default for ToString methods.
         /// </summary>
-        public static JSONWriterFactoryDelegate JSONWriterFactory { get; set; } = JSONWriter.JSONWriterFactory;
+        public static JSONWriterFactoryDelegate JSONWriterFactory { get; set; } = JsonWriter.JSONWriterFactory;
 
         ///<summary>The tag dictionary for decoding entries.</summary>
         public static Dictionary<string, JsonFactoryDelegate> TagDictionary => tagDictionary ??
@@ -187,7 +187,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>Data as string.</returns>
         public virtual string GetUTF8() {
-            var _JSONWriter = new JSONWriter();
+            var _JSONWriter = new JsonWriter();
             Serialize(_JSONWriter, true);
             return _JSONWriter.GetUTF8;
             }
@@ -198,7 +198,7 @@ namespace Goedel.Protocol {
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
         public virtual byte[] GetBytes(bool tag = true) {
-            var _JSONWriter = new JSONWriter();
+            var _JSONWriter = new JsonWriter();
             Serialize(_JSONWriter, tag);
             return _JSONWriter.GetBytes;
             }

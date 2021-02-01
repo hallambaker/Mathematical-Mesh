@@ -241,9 +241,8 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="accountAddress">The account service identifier.</param>
         /// <returns>The Mesh service client</returns>
-        public MeshServiceClient GetMeshClient(string accountAddress) => throw new NYI();
-                    //MeshMachine.GetMeshClient(accountAddress, KeyAccountAuthentication,
-                    //        Connection, Profile);
+        public MeshServiceClient GetMeshClient(string accountAddress) =>
+                    MeshMachine.GetMeshClient(accountAddress);
 
 
         /// <summary>

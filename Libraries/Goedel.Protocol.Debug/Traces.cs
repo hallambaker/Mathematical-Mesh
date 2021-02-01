@@ -250,13 +250,13 @@ namespace Goedel.Protocol.Debug {
         /// <returns>the formatted message</returns>
         public string StringJSON(bool Redact) {
             var Buffer = new MemoryStream();
-            JSONWriter JSONWriter;
+            JsonWriter JSONWriter;
 
             if (Redact) {
                 JSONWriter = new JSONDebugWriter(Buffer);
                 }
             else {
-                JSONWriter = new JSONWriter(Buffer);
+                JSONWriter = new JsonWriter(Buffer);
                 }
             Payload.Serialize(JSONWriter, true);
             return JSONWriter.GetUTF8;

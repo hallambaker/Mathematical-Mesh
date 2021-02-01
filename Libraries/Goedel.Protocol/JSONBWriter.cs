@@ -138,7 +138,7 @@ namespace Goedel.Protocol {
     /// efficient encoding of binary data and strings and encoding of floating point
     /// values without loss of precision.
     /// </summary>
-    public class JSONBWriter : JSONWriter {
+    public class JSONBWriter : JsonWriter {
 
 
 

@@ -31,7 +31,7 @@ namespace Goedel.Protocol {
     /// Factory delegate returning a JSONWriter
     /// </summary>
     /// <returns></returns>
-    public delegate JSONWriter JSONWriterFactoryDelegate();
+    public delegate JsonWriter JSONWriterFactoryDelegate();
 
     /// <summary>
     /// Base class for writers that format a JSON data object. This is usually
@@ -39,7 +39,7 @@ namespace Goedel.Protocol {
     /// support XML and ASN.1 encodings, these could be implemented as
     /// JSONWriter subclasses.
     /// </summary>
-    public class JSONWriter : Writer {
+    public class JsonWriter : Writer {
 
         /// <summary>The conversion format to be used for Base64 Binary encoding.</summary>
         public static ConversionFormat ConversionFormat = ConversionFormat.Draft;
@@ -72,20 +72,20 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Create a new JSON Writer.
         /// </summary>
-        public JSONWriter() => Output = new MemoryStream();
+        public JsonWriter() => Output = new MemoryStream();
 
         /// <summary>
         /// Create a new JSON Writer using the specified output buffer. If the buffer has
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">The output stream.</param>
-        public JSONWriter(Stream Output) => this.Output = Output;
+        public JsonWriter(Stream Output) => this.Output = Output;
 
 
         /// <summary>
         /// Create a new JSON Writer.
         /// </summary>
-        public static JSONWriter JSONWriterFactory() => new JSONWriter();
+        public static JsonWriter JSONWriterFactory() => new JsonWriter();
 
 
         private int OutputCol = 0;

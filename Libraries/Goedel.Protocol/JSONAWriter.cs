@@ -33,7 +33,7 @@ namespace Goedel.Protocol {
     /// <summary>
     /// JSON Writer for JSON-A, a format designed to improve human readability.
     /// </summary>
-    public class JSONAWriter : JSONWriter {
+    public class JSONAWriter : JsonWriter {
 
 
 

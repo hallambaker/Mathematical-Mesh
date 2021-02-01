@@ -62,7 +62,7 @@ namespace Goedel.Cryptography.Jose {
         /// the object type.</param>
         /// <returns>The encoded data.</returns>
         public byte[] ToJson(bool tag = false) {
-            var JSONWriter = new JSONWriter();
+            var JSONWriter = new JsonWriter();
             Serialize(JSONWriter, tag);
             return JSONWriter.GetBytes;
             }

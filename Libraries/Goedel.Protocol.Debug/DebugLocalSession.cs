@@ -62,7 +62,7 @@ namespace Goedel.Protocol.Debug {
         public override string Post(string tag, JsonObject request) {
 
             var Buffer = new MemoryStream();
-            var JSONWriter = new JSONWriter(Buffer);
+            var JSONWriter = new JsonWriter(Buffer);
 
             // Wrap the request object with the transaction name.
             JSONWriter.WriteObjectStart();

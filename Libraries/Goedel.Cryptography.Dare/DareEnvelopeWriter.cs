@@ -38,7 +38,7 @@ namespace Goedel.Cryptography.Dare {
         private readonly DareHeader dareHeader;
         //private readonly CryptoStack cryptoStack;
         private readonly CryptoStackStreamWriter cryptoStackStreamWriter;
-        private readonly JSONWriter outputStream;
+        private readonly JsonWriter outputStream;
         private readonly Stream writer;
         private bool disposed;
 
@@ -66,7 +66,7 @@ namespace Goedel.Cryptography.Dare {
             long contentLength = -1,
             byte[] cloaked = null,
             List<byte[]> dataSequences = null) : this(cryptoParameters,
-            new JSONWriter(outputStream), contentMeta, contentLength, cloaked, dataSequences) {
+            new JsonWriter(outputStream), contentMeta, contentLength, cloaked, dataSequences) {
             }
 
 
@@ -91,7 +91,7 @@ namespace Goedel.Cryptography.Dare {
         /// </param>
         public DareEnvelopeWriter(
             CryptoParameters cryptoParameters,
-            JSONWriter outputStream,
+            JsonWriter outputStream,
             ContentMeta contentMeta = null,
             long contentLength = -1,
             byte[] cloaked = null,

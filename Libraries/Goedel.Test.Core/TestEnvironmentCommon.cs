@@ -71,7 +71,7 @@ namespace Goedel.Test.Core {
 
 
         public static bool Direct = false;
-        public static JpcConnection JpcConnection;
+        public static JpcConnection JpcConnection = JpcConnection.Serialized;
 
         /// <summary>
         /// The actual Mesh service. This MAY be accessed through a direct, serialized or 
@@ -83,22 +83,47 @@ namespace Goedel.Test.Core {
 
 
         // This stuff will all be thrown into the service dispatch.
-        public PublicMeshService MeshService => 
-            new PublicMeshService (ServiceName, ServiceDirectory).CacheValue(out meshService);
+        //public PublicMeshService MeshService => 
+        //    new PublicMeshService (ServiceName, ServiceDirectory).CacheValue(out meshService);
+        //PublicMeshService meshService;
+
+
+        public JpcHostBrokerDirect JpcHostBroker = new JpcHostBrokerDirect();
         PublicMeshService meshService;
 
-        public MeshServiceClient GetMeshClient(string accountAddress) {
 
-            //switch (TestEnvironmentCommon.JpcConnection) {
-            //    case JpcConnection.Direct: {
-            //        JpcSession session = Direct ? new DirectSession(accountAddress) :
-            //                    new TestSession(MeshServiceHost,
-            //                            accountAddress, meshProtocolMessages);
-            //        return new PublicMeshService(MeshServiceHost, session);
-            //        }
-            //    }
+        static bool initializedBroker = false;
 
-            throw new NYI();
+        public MeshServiceClient GetMeshClient(string accountAddress, List<Trace> meshProtocolMessages) {
+            lock (this) {
+                if (!initializedBroker) {
+                    meshService = new PublicMeshService(ServiceName, ServiceDirectory);
+                    if (JpcConnection.IsDirect()) {
+                        JpcHostBroker.Register(meshService);
+                        }
+                    else {
+                        // need to bind service to the network endpoint(s) here.
+                        //JpcHostBroker ??= new JpcHostBroker();
+                        throw new NYI();
+                        }
+                    initializedBroker = true;
+                    }
+                }
+
+            JpcSession session = JpcConnection switch  {
+
+                JpcConnection.Direct => new JpcSessionDirect(accountAddress),
+                JpcConnection.Serialized => new TestSession(null, accountAddress, meshProtocolMessages),
+                JpcConnection.Http => new JpcSessionHTTP(accountAddress),
+                JpcConnection.Ticketed => new JpcSessionTicketed(null, accountAddress),
+                _ => throw new NYI()
+                };
+
+
+            return JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, ServiceName);
+            //return JpcHostBroker.GetClient<MeshServiceClient>(accountAddress, MeshService.Discovery,
+            //        ServiceName, JpcConnection);
+
             }
 
 

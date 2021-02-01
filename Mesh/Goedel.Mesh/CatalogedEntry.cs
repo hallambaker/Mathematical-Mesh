@@ -120,7 +120,7 @@ namespace Goedel.Mesh {
 
             switch (format) {
                 case CatalogedEntryFormat.Default: {
-                    var writer = new JSONWriter(stream);
+                    var writer = new JsonWriter(stream);
                     Serialize(writer, true);
                     return;
                     }

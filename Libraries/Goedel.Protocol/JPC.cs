@@ -70,10 +70,7 @@ namespace Goedel.Protocol {
             get;
             }
 
-        /// <summary>
-        /// The active JpcSession.
-        /// </summary>		
-		public virtual JpcSession JpcSession { get; set; }
+
 
         /// <summary>
         /// Dispatch Class. Reads input from the provided reader and attempts to
@@ -111,6 +108,14 @@ namespace Goedel.Protocol {
         public abstract string GetDiscovery {
             get;
             }
+
+        /// <summary>
+        /// The active JpcSession.
+        /// </summary>		
+        public virtual JpcSession JpcSession { get; set; }
+
+
+        public JpcRemoteSession JpcRemoteSession => JpcSession as JpcRemoteSession;
 
         }
     }

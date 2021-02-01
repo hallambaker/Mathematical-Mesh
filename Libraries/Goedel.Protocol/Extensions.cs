@@ -86,10 +86,10 @@ namespace Goedel.Protocol {
         /// <param name="dataEncoding">The encoding to use.</param>
         /// <param name="stream">The stream to be encoded.</param>
         /// <returns></returns>
-        public static JSONWriter GetWriter(this DataEncoding dataEncoding, Stream stream) {
+        public static JsonWriter GetWriter(this DataEncoding dataEncoding, Stream stream) {
             switch (dataEncoding) {
                 case DataEncoding.JSON: {
-                    return new JSONWriter(stream);
+                    return new JsonWriter(stream);
                     }
                 case DataEncoding.JSON_A: {
                     return new JSONAWriter(stream);
@@ -113,6 +113,15 @@ namespace Goedel.Protocol {
                 }
             throw new NYI();
             }
+
+        /// <summary>
+        /// Returns true if <paramref name="jpcConnection"/> is a direct (i.e. not networked) connection type.
+        /// </summary>
+        /// <param name="jpcConnection">The connection to test.</param>
+        /// <returns>Returns true if <paramref name="jpcConnection"/> is a direct (i.e. not networked) connection type,
+        /// otherwise false.</returns>
+        public static bool IsDirect(this JpcConnection jpcConnection) =>
+            (jpcConnection == JpcConnection.Direct) | (jpcConnection == JpcConnection.Serialized);
 
 
         //public static string ToWrapped (this JSONObject Object, bool Tag=false) {
@@ -151,7 +160,7 @@ namespace Goedel.Protocol {
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJsonA(this JsonObject Object, bool Tagged = true) {
-            JSONWriter JSONWriter = new JSONAWriter();
+            JsonWriter JSONWriter = new JSONAWriter();
             Object.Serialize(JSONWriter, Tagged);
             return JSONWriter.GetBytes;
             }
@@ -163,7 +172,7 @@ namespace Goedel.Protocol {
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJsonB(this JsonObject Object, bool Tagged = true) {
-            JSONWriter JSONWriter = new JSONBWriter();
+            JsonWriter JSONWriter = new JSONBWriter();
             Object.Serialize(JSONWriter, Tagged);
             return JSONWriter.GetBytes;
             }
@@ -177,7 +186,7 @@ namespace Goedel.Protocol {
         /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJsonC(this JsonObject Object, bool Tagged = true,
                     Dictionary<string, int> TagDictionary = null) {
-            JSONWriter JSONWriter = new JSONCWriter(TagDictionary: TagDictionary);
+            JsonWriter JSONWriter = new JSONCWriter(TagDictionary: TagDictionary);
             Object.Serialize(JSONWriter, Tagged);
             return JSONWriter.GetBytes;
             }
@@ -192,7 +201,7 @@ namespace Goedel.Protocol {
         public static byte[] GetJsonD(this JsonObject Object, bool Tagged = true,
                     Dictionary<string, int> TagDictionary = null) {
             // NYI: Implement the JSON D format.
-            JSONWriter JSONWriter = new JSONCWriter(TagDictionary: TagDictionary);
+            JsonWriter JSONWriter = new JSONCWriter(TagDictionary: TagDictionary);
             Object.Serialize(JSONWriter, Tagged);
             return JSONWriter.GetBytes;
             }

@@ -187,16 +187,6 @@ namespace Goedel.Mesh.Presence {
         /// </summary>
 		public override string GetDiscovery => Discovery;
 
- 		
-		JpcRemoteSession JpcRemoteSession;
-        /// <summary>
-        /// The active JpcSession.
-        /// </summary>		
-		public virtual JpcSession JpcSession {
-			get => JpcRemoteSession;
-			set => JpcRemoteSession = value as JpcRemoteSession; 
-			}
-
 
 
         /// <summary>

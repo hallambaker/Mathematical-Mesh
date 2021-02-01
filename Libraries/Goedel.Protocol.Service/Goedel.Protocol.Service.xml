@@ -1,251 +1,22 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Goedel.Mesh.Management</name>
+        <name>Goedel.Protocol.Service</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Mesh.Management.MeshServiceManagementProtocol">
-             <summary>
-            
-             Web service providing server management interface.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.MeshServiceManagementProtocol._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Management.MeshServiceManagementProtocol.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.MeshServiceManagementProtocol._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Management.MeshServiceManagementProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
-        </member>
-        <member name="T:Goedel.Mesh.Management.ServiceManagementService">
-            <summary>
-            The new base class for the client and service side APIs.
-            </summary>		
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceManagementService.WellKnown">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagementService.GetWellKnown">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceManagementService.Discovery">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagementService.GetDiscovery">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementService.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="session">The client context.</param>
-            <param name="jsonReader">Reader for data object.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementService.GetDirect(Goedel.Protocol.JpcSession)">
-            <summary>
-            Return a client tapping the service API directly without serialization bound to
-            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
-            </summary>
-            <param name="jpcSession">Session to which requests are to be bound.</param>
-            <returns>The direct client instance.</returns>
-        </member>
-        <member name="T:Goedel.Mesh.Management.ServiceManagementServiceClient">
-            <summary>
-            Client class for ServiceManagementService.
-            </summary>		
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceManagementServiceClient.WellKnown">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceClient.GetWellKnown">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceManagementServiceClient.Discovery">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceClient.GetDiscovery">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceClient.JpcSession">
-            <summary>
-            The active JpcSession.
-            </summary>		
-        </member>
-        <member name="T:Goedel.Mesh.Management.ServiceManagementServiceDirect">
-            <summary>
-            Direct API class for ServiceManagementService.
-            </summary>		
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceDirect.Service">
-            <summary>
-            Interface object to dispatch requests to.
-            </summary>	
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceDirect.JpcSession">
-            <summary>
-            The active JpcSession.
-            </summary>		
-        </member>
-        <member name="T:Goedel.Mesh.Management.WsmpRequest">
-             <summary>
-            
-             Base class for all request messages.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.WsmpRequest._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Management.WsmpRequest.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Management.WsmpRequest._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Management.WsmpRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Management.WsmpRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Management.WsmpRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Management.WsmpRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.Management.WsmpResponse">
-             <summary>
-            
-             Base class for all response messages. Contains only the
-             status code and status description fields.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.WsmpResponse._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Management.WsmpResponse.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Management.WsmpResponse._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Management.WsmpResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Management.WsmpResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Management.WsmpResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Management.WsmpResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Protocol.Management.ServerNotSupported">
+        <member name="T:Goedel.Protocol.Service.ServerNotSupported">
             <summary>
             This platform does not support HTTP service
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Management.ServerNotSupported.ExceptionFormatDelegate">
+        <member name="P:Goedel.Protocol.Service.ServerNotSupported.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Protocol.Management.ServerNotSupported.Templates">
+        <member name="F:Goedel.Protocol.Service.ServerNotSupported.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Protocol.Management.ServerNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Protocol.Service.ServerNotSupported.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -254,15 +25,190 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Protocol.Management.ServerNotSupported._Throw(System.Object)">
+        <member name="M:Goedel.Protocol.Service.ServerNotSupported._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Protocol.Management.ServerNotSupported.Throw">
+        <member name="F:Goedel.Protocol.Service.ServerNotSupported.Throw">
             <summary>
             The public fatory delegate
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.IMonitorProvider.Monitor">
+            <summary>The monitor class to be exposed.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Service.Monitor">
+            <summary>
+            Service monitoring class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Monitor.Total">
+            <summary>Total result since the Monitor was last restarted.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.Monitor.Recent">
+            <summary>Total results in the most recent sample interval.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Constructor returning a monitor instance for <paramref name="listeners"/>
+            listeners and <paramref name="dispatchers"/> dispatchers.
+            </summary>
+            <param name="listeners">The number of listener threads.</param>
+            <param name="dispatchers">The number of dispatcher threads.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.StartBusy">
+            <summary>
+            Mark the start of period when the service is blocked because no dispatcher threads are available.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.EndBusy">
+            <summary>
+            Mark the end of period when the service is blocked because no dispatcher threads are available.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.StartDispatch(System.Int32)">
+            <summary>
+            Mark the start of dispatch on thread <paramref name="dispatch"/>
+            </summary>
+            <param name="dispatch">Index of the thread that was started.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.EndDispatch(System.Int32)">
+            <summary>
+            Mark the end of dispatch on thread <paramref name="dispatch"/>
+            </summary>
+            <param name="dispatch">Index of the thread that was ended.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.MarkRecent">
+            <summary>
+            Mark the end of the 'Recent' period.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.GetStats">
+            <summary>
+            Return a snapshot of the server status for the total time since the 
+            collection period began and for the most recent collection interval.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.Service.MonitorResult">
+            <summary>
+            Class containing a set of monitor results.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.TimeBegin">
+            <summary>The time at which the result interval began</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.TimeEnd">
+            <summary>The time at which the next result interval began</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.TimeElapsed">
+            <summary>The elapsed time.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.ListenerRequests">
+            <summary>Number of listener events received</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.DispatcherRequests">
+            <summary>Number of dispatcher requests started.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.DispatcherBusy">
+            <summary>Time the dispatcher thread was busy in milliseconds</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.MonitorResult.Busy">
+            <summary>Time all threads were busy.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.MonitorResult.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Constructor creating a new result for <paramref name="listeners"/> and
+            <paramref name="dispatchers"/> dispatchers.
+            </summary>
+            <param name="listeners">The number of listener threads.</param>
+            <param name="dispatchers">The number of dispatcher threads.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.MonitorResult.Add(Goedel.Protocol.Service.MonitorResult)">
+            <summary>
+            Add the continguous result <paramref name="value"/> to the current result.
+            </summary>
+            <param name="value">The contiguous result data.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.MonitorResult.CopyClear">
+            <summary>
+            Create a copy of the current monitor result, clear the current values and return
+            the copy. This is performed 
+            </summary>
+            <returns>The copy of the original values.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.MonitorResult.Copy">
+            <summary>
+            Create a copy of the current monitor result and return
+            the copy. This is performed 
+            </summary>
+            <returns>The copy of the values.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Service.Provider">
+            <summary>
+            Service provider class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Provider.HTTPEndpoints">
+            <summary>The HTTP endpoints.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.Provider.UdpEndpoints">
+            <summary>The UDP endpoints</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.Provider.#ctor(System.Collections.Generic.List{Goedel.Protocol.Service.Endpoint},Goedel.Protocol.JpcInterface)">
+            <summary>
+            Constructor, returns an instance servicing the endpoints <paramref name="endpoints"/>
+            </summary>
+            <param name="endpoints">The endpoints to be serviced.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Service.MaxDispatch">
+            <summary>Maximum number of concurrent worker processes.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.Service.Timeout">
+            <summary>Timeout for action on a worker thread.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.Service.NullTask">
+            <summary>
+            Null task, simply runs to completion. This is used to allow gracefull shutdown of the
+            dispatch threads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.Connection">
+            <summary>
+            Base class for connection handlers
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Connection.Complete">
+            <summary>
+            Process the connection, dispatch the request and return the result.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.ConnectionHttp">
+            <summary>
+            Connection handler for HTTP request
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ConnectionHttp.Complete">
+            <summary>
+            Process the connection, dispatch the request and return the result.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.ConnectionUdp">
+            <summary>
+            Connection handler for UDP request
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ConnectionUdp.#ctor(System.Net.Sockets.UdpReceiveResult)">
+            <summary>
+            Constructor, process the request contained in <paramref name="buffer"/>.
+            </summary>
+            <param name="result">The UDP receive result</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ConnectionUdp.Complete">
+            <summary>
+            Process the connection, dispatch the request and return the result.
             </summary>
         </member>
     </members>

@@ -134,6 +134,13 @@ namespace Goedel.Protocol {
         /// </summary>
         public bool Authenticated;
 
+        ///<summary>The client interface.</summary> 
+        public JpcClientInterface JpcClientInterface;
+
+
+
+
+
         /// <summary>
         /// VerifiedAccount instance describing the verified account details. 
         /// </summary>
@@ -162,10 +169,13 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <typeparam name="T">Type of the instance to return.</typeparam>
         /// <returns></returns>
-        public T GetWebClient<T>() where T : JpcInterface, new() => new T {
-            JpcSession = this
-            };
-
+        public T GetWebClient<T>() where T : JpcClientInterface, new() {
+            var client = new T {
+                JpcSession = this
+                };
+            JpcClientInterface = client;
+            return client;
+            }
 
 
         }
@@ -201,16 +211,6 @@ namespace Goedel.Protocol {
         public JpcRemoteSession(string accountAddress) : base(accountAddress) {
             }
 
-        ///// <summary>
-        ///// Set the authentication key for use with the session
-        ///// </summary>
-        ///// <param name="UDF">Fingerprint of the authentication key.</param>
-        ///// <returns>True is successful. Otherwise, false.</returns>
-        //public override bool Authenticate(string UDF) {
-        //    this.UDF = UDF;
-        //    return false;
-        //    }
-
         /// <summary>
         /// Post the specified data to the remote service.
         /// </summary>
@@ -228,7 +228,7 @@ namespace Goedel.Protocol {
         public virtual string Post(string Tag, JsonObject request) {
 
             var Buffer = new MemoryStream();
-            var JSONWriter = new JSONWriter(Buffer);
+            var JSONWriter = new JsonWriter(Buffer);
 
             // Wrap the request object with the transaction name.
             JSONWriter.WriteObjectStart();
@@ -245,7 +245,19 @@ namespace Goedel.Protocol {
 
         public virtual JsonObject Post(string Tag, string TagResponse, JsonObject request) {
 
-            throw new NYI();
+            var buffer = new MemoryStream();
+            var jsonWriter = new JsonWriter(buffer);
+            jsonWriter.WriteObjectStart();
+            jsonWriter.WriteToken(Tag, 0);
+            request.Serialize(jsonWriter, false);
+            jsonWriter.WriteObjectEnd();
+
+            var ResponseBuffer = Post(buffer, request);
+
+            var reader = new JsonReader(ResponseBuffer);
+            var result = JsonObject.FromJson(reader, true);
+
+            return result;
             }
 
         }
@@ -260,7 +272,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// The provider.
         /// </summary>
-        protected JpcInterface Host;
+        public JpcInterface Host;
 
 
         /// <summary>
@@ -289,7 +301,9 @@ namespace Goedel.Protocol {
 
         }
     public partial class JpcSessionHTTP : JpcRemoteSession {
-        public JpcSessionHTTP(string discovery, string domain, string account) :
+
+
+        public JpcSessionHTTP(string account) :
                 base (account){
             }
 

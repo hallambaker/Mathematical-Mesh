@@ -97,6 +97,11 @@ namespace Goedel.Mesh {
         ///<summary>The file name of the host catalog.</summary>
 
         public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
+
+
+        JpcHostBroker JpcHostBroker { get; } = new JpcHostBroker();
+
+
         #endregion
 
 
@@ -159,7 +164,11 @@ namespace Goedel.Mesh {
         /// otherwise.</param>
         /// <returns></returns>
         public virtual MeshServiceClient GetMeshClient(
-                string accountAddress) => throw new NYI();
+                string accountAddress) {
+            var session = new JpcSessionHTTP(accountAddress);
+            return JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, null);
+
+            }
 
 
 

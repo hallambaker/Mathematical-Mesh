@@ -18,7 +18,7 @@ namespace Goedel.Mesh.Test {
         static string ServiceName = "example.com";
         public string MachineName = "Test";
 
-        public List<Trace> MeshProtocolMessages = new();
+
         public TestEnvironmentCommon TestEnvironmentCommon;
 
         public override IMeshMachineClient MeshMachine => MeshMachineTest;
@@ -48,7 +48,7 @@ namespace Goedel.Mesh.Test {
 
 
         public MeshServiceClient GetMeshClient(string accountAddress) =>
-            TestEnvironmentCommon.GetMeshClient(accountAddress);
+            MeshMachine.GetMeshClient(accountAddress);
             
 
         public override MeshServiceClient GetMeshClient(IAccountOptions Options) => MeshClient;
@@ -165,11 +165,11 @@ namespace Goedel.Mesh.Test {
                 Count++;
                 CountTotal++;
                 try {
-                    Shell.MeshProtocolMessages = new();
+                    Shell.MeshMachineTest.MeshProtocolMessages = new();
 
                     Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
                     result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
-                        Traces = Shell.MeshProtocolMessages
+                        Traces = Shell.MeshMachineTest.MeshProtocolMessages
                         });
                     }
                 catch (Exception exception) {
@@ -181,7 +181,7 @@ namespace Goedel.Mesh.Test {
                         Reason = exception.Message
                         };
                     result.Add(new ExampleResult(this, cmd, cmdresult) {
-                        Traces = Shell.MeshProtocolMessages
+                        Traces = Shell.MeshMachineTest.MeshProtocolMessages
                         });
                     }
                 }
@@ -200,12 +200,12 @@ namespace Goedel.Mesh.Test {
             foreach (var cmd in commands) {
                 Count++;
                 CountTotal++;
-                Shell.MeshProtocolMessages = new();
+                Shell.MeshMachineTest.MeshProtocolMessages = new();
 
 
                 Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
                 result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
-                    Traces = Shell.MeshProtocolMessages
+                    Traces = Shell.MeshMachineTest.MeshProtocolMessages
                     });
 
                 }
