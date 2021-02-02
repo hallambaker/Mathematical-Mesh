@@ -9,7 +9,7 @@ namespace Goedel.Protocol.Service {
 
     public record Endpoint(
              string Protocol,
-             int Instance = -1) {
+             string Instance = null) {
 
 
 
@@ -19,11 +19,11 @@ namespace Goedel.Protocol.Service {
     public record HttpEndpoint(
              string Domain,
              string Protocol,
-                int Instance = -1) : Endpoint (Protocol, Instance) {
+                string Instance = null) : Endpoint (Protocol, Instance) {
 
         public string Account(string username) => $"{username}@{Domain}";
 
-        string specializer = Instance > 0 ? $"/{Instance}" : "";
+        string specializer = Instance == null ? "" : $"/{Instance}";
         public string Uri() =>  $"http://+:15099/.well-known/{Protocol}{specializer}/";
         public string ServiceUri() => $"http://voodoo.hallambaker.com:15099/.well-known/{Protocol}{specializer}/";
         }
@@ -31,7 +31,7 @@ namespace Goedel.Protocol.Service {
 
     public record UdpEndpoint (
              string Protocol,
-             int Instance = -1,
+             string Instance = null,
              int Port = 0,
              AddressFamily AddressFamily= AddressFamily.InterNetwork) : Endpoint (Protocol, Instance) {
 

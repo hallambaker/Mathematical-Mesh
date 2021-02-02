@@ -6,7 +6,7 @@ using Goedel.Mesh.Server;
 using Goedel.Protocol;
 using Goedel.Utilities;
 using Goedel.Test.Core;
-
+using Goedel.Protocol.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -50,9 +50,13 @@ namespace Goedel.Mesh.Test {
             new PublicMeshService(ServiceName, ServiceDirectory).CacheValue (out meshService);
         PublicMeshService meshService;
 
-
+        Service Service;
 
         public MeshServiceClient GetMeshClient(string accountAddress, List<Trace> meshProtocolMessages) {
+
+            if (!JpcConnection.IsDirect()) {
+                Service ??= StartService();
+                }
 
             JpcSession session = JpcConnection switch  {
                 JpcConnection.Direct => new JpcSessionDirect(MeshService, accountAddress),
@@ -66,7 +70,19 @@ namespace Goedel.Mesh.Test {
             }
 
 
+        Service StartService() {
 
+            var instance = 69;
+
+            var httpEndpoint = new HttpEndpoint(ServiceName, MeshService.GetWellKnown, instance);
+            var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, instance);
+            var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
+
+            using var provider = new Provider(endpoints, MeshService);
+
+            var providers = new List<Provider> { provider };
+            return new Service(providers);
+            }
 
 
 
