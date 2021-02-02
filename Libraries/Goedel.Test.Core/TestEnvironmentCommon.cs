@@ -88,39 +88,55 @@ namespace Goedel.Test.Core {
         //PublicMeshService meshService;
 
 
-        public JpcHostBrokerDirect JpcHostBroker = new JpcHostBrokerDirect();
+        public JpcHostBroker JpcHostBroker = new JpcHostBroker();
+        public PublicMeshService MeshService => meshService ??
+            new PublicMeshService(ServiceName, ServiceDirectory).CacheValue (out meshService);
         PublicMeshService meshService;
-
 
         static bool initializedBroker = false;
 
         public MeshServiceClient GetMeshClient(string accountAddress, List<Trace> meshProtocolMessages) {
-            lock (this) {
-                if (!initializedBroker) {
-                    meshService = new PublicMeshService(ServiceName, ServiceDirectory);
-                    if (JpcConnection.IsDirect()) {
-                        JpcHostBroker.Register(meshService);
-                        }
-                    else {
-                        // need to bind service to the network endpoint(s) here.
-                        //JpcHostBroker ??= new JpcHostBroker();
-                        throw new NYI();
-                        }
-                    initializedBroker = true;
-                    }
-                }
+            //lock (this) {
+
+
+
+
+            //    if (!initializedBroker) {
+            //        if (JpcConnection.IsDirect()) {
+                        
+            //            }
+
+            //        //if (JpcConnection.IsDirect()) {
+            //        //    JpcHostBroker.Register(meshService);
+            //        //    }
+            //        //else {
+            //        //    // need to bind service to the network endpoint(s) here.
+            //        //    //JpcHostBroker ??= new JpcHostBroker();
+            //        //    throw new NYI();
+            //        //    }
+            //        initializedBroker = true;
+            //        }
+            //    }
+
+            
+            //if (JpcConnection.IsDirect()) {
+            //    meshService = new PublicMeshService(ServiceName, ServiceDirectory);
+            //    }
 
             JpcSession session = JpcConnection switch  {
 
-                JpcConnection.Direct => new JpcSessionDirect(accountAddress),
-                JpcConnection.Serialized => new TestSession(null, accountAddress, meshProtocolMessages),
+                JpcConnection.Direct => new JpcSessionDirect(MeshService, accountAddress),
+                JpcConnection.Serialized => new TestSession(MeshService, accountAddress, meshProtocolMessages),
                 JpcConnection.Http => new JpcSessionHTTP(accountAddress),
                 JpcConnection.Ticketed => new JpcSessionTicketed(null, accountAddress),
                 _ => throw new NYI()
                 };
 
 
-            return JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, ServiceName);
+            return session.GetWebClient<MeshServiceClient>();
+
+
+                ///<summary></summary> JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, ServiceName);
             //return JpcHostBroker.GetClient<MeshServiceClient>(accountAddress, MeshService.Discovery,
             //        ServiceName, JpcConnection);
 

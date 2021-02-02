@@ -48,44 +48,44 @@ namespace Goedel.Protocol {
 
         }
 
-    public delegate JpcSession JpcSessionFactoryDelegate(
-                JpcCredential jpcCredential);
+    //public delegate JpcSession JpcSessionFactoryDelegate(
+    //            JpcCredential jpcCredential);
 
 
 
 
-    public abstract class JpcCredential {
+    //public abstract class JpcCredential {
 
-        ///<summary>The account address (Account@Domain or @callsign)</summary>
-        public string AccountAddress { get; }
+    //    ///<summary>The account address (Account@Domain or @callsign)</summary>
+    //    public string AccountAddress { get; }
 
-        ///<summary>The account portion of <see cref="AccountAddress"/></summary>
-        public string Account { get; }
+    //    ///<summary>The account portion of <see cref="AccountAddress"/></summary>
+    //    public string Account { get; }
 
-        ///<summary>The domain portion of <see cref="AccountAddress"/></summary>
-        public string Domain { get; }
-
-
-        public static JpcSessionFactoryDelegate GetSessionSerialized => throw new NYI();
-        public static JpcSessionFactoryDelegate GetSessionHttp => throw new NYI();
-        public static JpcSessionFactoryDelegate GetSessionTicketed => throw new NYI();
-
-        public JpcCredential(string accountAddress) {
-            AccountAddress = accountAddress;
-            }
+    //    ///<summary>The domain portion of <see cref="AccountAddress"/></summary>
+    //    public string Domain { get; }
 
 
-        public virtual JpcSession GetJpcSession(JpcConnection jpcConnection) =>
+    //    public static JpcSessionFactoryDelegate GetSessionSerialized => throw new NYI();
+    //    public static JpcSessionFactoryDelegate GetSessionHttp => throw new NYI();
+    //    public static JpcSessionFactoryDelegate GetSessionTicketed => throw new NYI();
 
-            jpcConnection switch {
-                JpcConnection.Direct => new JpcSessionDirect(AccountAddress),
-                JpcConnection.Serialized => GetSessionSerialized(this),
-                JpcConnection.Http => GetSessionHttp(this),
-                JpcConnection.Ticketed => GetSessionTicketed(this),
-                _ => throw new NYI()
-                };
+    //    public JpcCredential(string accountAddress) {
+    //        AccountAddress = accountAddress;
+    //        }
 
-        }
+
+    //    public virtual JpcSession GetJpcSession(JpcConnection jpcConnection) =>
+
+    //        jpcConnection switch {
+    //            JpcConnection.Direct => new JpcSessionDirect(AccountAddress),
+    //            JpcConnection.Serialized => GetSessionSerialized(this),
+    //            JpcConnection.Http => GetSessionHttp(this),
+    //            JpcConnection.Ticketed => GetSessionTicketed(this),
+    //            _ => throw new NYI()
+    //            };
+
+    //    }
 
     //public class JpcCredentialDirect : JpcCredential {
     //    public JpcDispatch Host { get; }
@@ -169,7 +169,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <typeparam name="T">Type of the instance to return.</typeparam>
         /// <returns></returns>
-        public T GetWebClient<T>() where T : JpcClientInterface, new() {
+        public virtual T GetWebClient<T>() where T : JpcClientInterface, new() {
             var client = new T {
                 JpcSession = this
                 };
@@ -185,16 +185,23 @@ namespace Goedel.Protocol {
     /// and for direct access to a service on the same machine.
     /// </summary>
     public partial class JpcSessionDirect : JpcSession {
+        JpcInterface JpcInterface;
 
         /// <summary>
         /// Create a direct session for the specified account.
         /// </summary>
         /// <param name="accountAddress">The account name</param>
-        public JpcSessionDirect(string accountAddress) : base(accountAddress) => Authenticated = true;
+        public JpcSessionDirect(JpcInterface jpcInterface, string accountAddress) : base(accountAddress) {
+            Authenticated = true;
+            JpcInterface = jpcInterface;
+            }
+        public override T GetWebClient<T>()  {
+
+            return JpcInterface.GetDirect(this) as T;
+            }
 
 
         }
-
 
 
     /// <summary>
@@ -272,18 +279,20 @@ namespace Goedel.Protocol {
         /// <summary>
         /// The provider.
         /// </summary>
-        public JpcInterface Host;
+        public JpcInterface Host { get; }
 
 
         /// <summary>
         /// Create a remote session with authentication under the
         /// specified credential.
         /// </summary>
-        /// <param name="Host">The host implementation</param>
+        /// <param name="host">The host implementation</param>
         /// <param name="accountAddress">The service account.</param>
-        public JpcSessionSerialized(JpcInterface Host, string accountAddress) : base(accountAddress) =>
-                this.Host = Host;
+        public JpcSessionSerialized(JpcInterface host, string accountAddress) : base(accountAddress) {
+            Host = host;
+            Host.AssertNotNull(NYI.Throw);
 
+            }
         /// <summary>
         /// Post a request and retrieve the response.
         /// </summary>

@@ -47,38 +47,6 @@ namespace Goedel.Protocol {
         static string GetAccountDiscoveryDomain(string discovery, string domain, string account) =>
             $"{account}@{discovery}.{domain}";
 
-        //public virtual T GetClient<T> (
-        //        string account, 
-        //        string discovery, 
-        //        string domain=null,
-        //            JpcConnection jpcConnection = JpcConnection.Http) where T : JpcClientInterface, new() {
-        //    var client = new T();
-
-        //    JpcSession session;
-        //    switch (jpcConnection) {
-        //        case JpcConnection.Http: {
-        //            client.JpcSession = new JpcSessionHTTP(
-        //                    client.GetDiscovery, client.GetWellKnown, account);
-        //            break;
-        //            }
-        //        case JpcConnection.Ticketed: {
-        //            var index = GetAccountDiscoveryDomain(client.GetDiscovery, client.GetWellKnown, account);
-        //            if (TicketByDiscoveryDomain.TryGetValue(index, out var ticket)) {
-        //                client.JpcSession = new JpcSessionTicketed(ticket, account);
-        //                }
-        //            else {
-        //                client.JpcSession = new JpcSessionHTTP(
-        //                    client.GetDiscovery, client.GetWellKnown, account);
-        //                }
-        //            break;
-        //            }
-        //        default: {
-        //            throw new NYI();
-        //            }
-        //        }
-
-        //    return client;
-        //    }
 
         public virtual T GetClient<T>(JpcSession session, string discovery, string domain = null)
                 where T : JpcClientInterface, new() {
@@ -86,7 +54,7 @@ namespace Goedel.Protocol {
             switch (session) {
 
                 case JpcRemoteSession remoteSession: {
-
+                    throw new NYI();
                     return session.GetWebClient<T>();
                     }
 
@@ -97,8 +65,8 @@ namespace Goedel.Protocol {
 
 
 
-        public virtual JpcSession GetSession(string account, string discovery, string domain = null) =>
-                new JpcSessionDirect(account);
+        //public virtual JpcSession GetSession(string account, string discovery, string domain = null) =>
+        //        new JpcSessionDirect(account);
 
         }
 
@@ -128,38 +96,7 @@ namespace Goedel.Protocol {
                 var discoveryDomain = GetDiscoveryDomain(discovery, domain);
                 DirectHostByDiscoveryDomain.Add(discoveryDomain, jpcInterface);
                 }
-
-
             }
-
-        ///// <summary>
-        ///// Obtain a client of type <typeparamref name="T"/> with to the account 
-        ///// <paramref name="account"/> at DNS domain <paramref name="domain"/>.
-        ///// </summary>
-        ///// <typeparam name="T">The type of the parameter to return.</typeparam>
-        ///// <param name="account">The account name.</param>
-        ///// <param name="discovery">The SRV discovery identifier.</param>
-        ///// <param name="domain">The DNS domain.</param>
-        ///// <returns></returns>
-        //public override T GetClient<T>(string account, string discovery, string domain = null, 
-        //            JpcConnection jpcConnection=JpcConnection.Http) {
-        //    var discoveryDomain = GetDiscoveryDomain(discovery, domain);
-        //    if (DirectHostByDiscoveryDomain.TryGetValue(discoveryDomain, out var directHost)) {
-        //        switch (jpcConnection) {
-        //            case JpcConnection.Direct: {
-        //                var session = new JpcSessionDirect(account);
-
-        //                return directHost.GetDirect(session) as T;
-        //                }
-        //            case JpcConnection.Serialized: {
-        //                var session = new JpcSessionSerialized(directHost, account);
-        //                return session.GetWebClient<T>();
-        //                }
-        //            }
-        //        }
-
-        //    return base.GetClient<T>(account, discovery, domain);
-        //    }
 
 
         public override T GetClient<T>(JpcSession session, string discovery, string domain = null)  {
@@ -173,7 +110,8 @@ namespace Goedel.Protocol {
                         }
 
                     case JpcSessionSerialized serialized: {
-                        serialized.Host = directHost;
+                        //serialized.Host = directHost;
+                        serialized.Host.AssertNotNull(NYI.Throw);
                         return session.GetWebClient<T>();
                         }
 

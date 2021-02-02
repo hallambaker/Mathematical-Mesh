@@ -6,21 +6,21 @@ using System.IO;
 
 namespace Goedel.Test.Core {
 
-    /// <summary>
-    /// Test credential used to create a test session.
-    /// </summary>
-    public class JpcCredentialTest : JpcCredential {
-        public JpcInterface Host;
+    ///// <summary>
+    ///// Test credential used to create a test session.
+    ///// </summary>
+    //public class JpcCredentialTest : JpcCredential {
+    //    public JpcInterface Host;
 
-        public List<Trace> MeshProtocolMessages { get; }
+    //    public List<Trace> MeshProtocolMessages { get; }
 
-        public JpcCredentialTest(JpcInterface host, string accountAddress, List<Trace> meshProtocolMessages) :
-            base(accountAddress) {
-            MeshProtocolMessages = meshProtocolMessages;
-            }
+    //    public JpcCredentialTest(JpcInterface host, string accountAddress, List<Trace> meshProtocolMessages) :
+    //        base(accountAddress) {
+    //        MeshProtocolMessages = meshProtocolMessages;
+    //        }
 
 
-        }
+    //    }
 
 
     /// <summary>
@@ -29,8 +29,8 @@ namespace Goedel.Test.Core {
     /// </summary>
     public partial class TestSession : JpcSessionSerialized {
 
-        public static JpcSession JpcSessionFactory(JpcCredential jpcCredential) =>
-                new TestSession(jpcCredential as JpcCredentialTest);
+        //public static JpcSession JpcSessionFactory(JpcCredential jpcCredential) =>
+        //        new TestSession(jpcCredential as JpcCredentialTest);
 
 
         public List<Trace> MeshProtocolMessages;
@@ -48,11 +48,11 @@ namespace Goedel.Test.Core {
             Authenticated = true;
             }
 
-        public TestSession(JpcCredentialTest jpcCredentialTest) : this(
-                        jpcCredentialTest.Host, 
-                        jpcCredentialTest.AccountAddress, 
-                        jpcCredentialTest.MeshProtocolMessages) {
-            }
+        //public TestSession(JpcCredentialTest jpcCredentialTest) : this(
+        //                jpcCredentialTest.Host, 
+        //                jpcCredentialTest.AccountAddress, 
+        //                jpcCredentialTest.MeshProtocolMessages) {
+        //    }
 
 
         /// <summary>

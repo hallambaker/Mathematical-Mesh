@@ -33,9 +33,7 @@ namespace Goedel.Mesh.Test {
         public TestService(TestEnvironmentCommon TestEnvironmentCommon) {
 
 
-            var meshProvider = new PublicMeshService(
-                    TestEnvironmentCommon.ServiceName, 
-                    TestEnvironmentCommon.ServiceDirectory);
+            var meshProvider = TestEnvironmentCommon.MeshService;
 
             var monitorProvider = new ServiceManagementServiceProvider();
 
