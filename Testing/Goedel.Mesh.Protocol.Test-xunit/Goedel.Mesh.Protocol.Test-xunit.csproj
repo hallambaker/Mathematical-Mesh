@@ -34,6 +34,7 @@
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />

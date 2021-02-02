@@ -33,6 +33,7 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
     <ProjectReference Include="..\Goedel.Utilities.Test-xunit\Goedel.Utilities.Test-xunit.csproj" />
   </ItemGroup>
 

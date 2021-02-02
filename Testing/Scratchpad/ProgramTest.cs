@@ -36,7 +36,12 @@ namespace Scratchpad {
 
             //GoedelProtocolService.Test().TestService();
             //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
-            TestService.Test().ProtocolHello();
+            //TestService.Test().ProtocolHello();
+
+
+
+            // This is probably failing because the code is not properly marking messages as read.
+            Goedel.XUnit.MakeSiteDocs.Test().FullTest();
             }
 
 
