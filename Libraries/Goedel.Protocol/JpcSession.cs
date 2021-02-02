@@ -191,10 +191,17 @@ namespace Goedel.Protocol {
         /// Create a direct session for the specified account.
         /// </summary>
         /// <param name="accountAddress">The account name</param>
+        /// <param name="jpcInterface">The interfact to which the direct session is bound</param>
         public JpcSessionDirect(JpcInterface jpcInterface, string accountAddress) : base(accountAddress) {
             Authenticated = true;
             JpcInterface = jpcInterface;
             }
+
+        /// <summary>
+        /// Return a client bound to the interface using the session.
+        /// </summary>
+        /// <typeparam name="T">The client type</typeparam>
+        /// <returns>The client</returns>
         public override T GetWebClient<T>()  {
 
             return JpcInterface.GetDirect(this) as T;
@@ -249,7 +256,15 @@ namespace Goedel.Protocol {
             return ResponseBuffer.GetUTF8();
             }
 
-
+        /// <summary>
+        /// Post a transaction of type <paramref name="Tag"/> with request data 
+        /// <paramref name="request"/> to the service expecting a response of type
+        /// <paramref name="TagResponse"/>
+        /// </summary>
+        /// <param name="Tag">The transaction tag.</param>
+        /// <param name="TagResponse">The response type tag.</param>
+        /// <param name="request">The request data.</param>
+        /// <returns>The response data.</returns>
         public virtual JsonObject Post(string Tag, string TagResponse, JsonObject request) {
 
             var buffer = new MemoryStream();
@@ -309,20 +324,49 @@ namespace Goedel.Protocol {
             }
 
         }
+
+    /// <summary>
+    /// Session of type HTTP.
+    /// </summary>
     public partial class JpcSessionHTTP : JpcRemoteSession {
 
-
+        /// <summary>
+        /// Return a session  bound to the account <paramref name="account"/>.
+        /// </summary>
+        /// <param name="account">The account address</param>
         public JpcSessionHTTP(string account) :
                 base (account){
             }
 
+        /// <summary>
+        /// Post the specified data to the remote service.
+        /// </summary>
+        /// <param name="Data">Input data</param>
+        /// <param name="request">The request</param>
+        /// <returns>The response data</returns>
         public override Stream Post(MemoryStream Data, JsonObject request) => throw new System.NotImplementedException();
         }
 
+    /// <summary>
+    /// Ticketed session.
+    /// </summary>
     public partial class JpcSessionTicketed : JpcRemoteSession {
+
+        /// <summary>
+        /// Return a session  bound to the account <paramref name="account"/>.
+        /// </summary>
+        /// <param name="account">The account address</param>
+        /// <param name="ticket">The ticket data</param>
         public JpcSessionTicketed(JpcTicket ticket, string account) :
                 base(account) {
             }
+
+        /// <summary>
+        /// Post the specified data to the remote service.
+        /// </summary>
+        /// <param name="Data">Input data</param>
+        /// <param name="request">The request</param>
+        /// <returns>The response data</returns>
         public override Stream Post(MemoryStream Data, JsonObject request) => throw new System.NotImplementedException();
 
         }

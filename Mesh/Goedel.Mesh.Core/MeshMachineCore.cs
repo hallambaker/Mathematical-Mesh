@@ -99,7 +99,7 @@ namespace Goedel.Mesh {
         public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
 
 
-        JpcHostBroker JpcHostBroker { get; } = new JpcHostBroker();
+        //JpcHostBroker JpcHostBroker { get; } = new JpcHostBroker();
 
 
         #endregion
@@ -150,23 +150,17 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Return a MeshService client for the service ID <paramref name="accountAddress"/>
-        /// using the authentication key <paramref name="keyAuthentication"/> and credential
-        /// <paramref name="assertionAccountConnection"/>. 
+        /// Return a MeshService client for the service ID <paramref name="accountAddress"/>. 
         /// </summary>
         /// <param name="accountAddress">The service identifier to connect to.</param>
-        /// <param name="keyAuthentication">The private key to be used for authentication
-        /// (encryption).</param>
-        /// <param name="assertionAccountConnection">The credential binding the device
-        /// to the account.</param>
-        /// <param name="profile">The profile. This is required when requesting
-        /// an inbound connection or requesting that a new account be created and optional
-        /// otherwise.</param>
+
         /// <returns></returns>
         public virtual MeshServiceClient GetMeshClient(
                 string accountAddress) {
             var session = new JpcSessionHTTP(accountAddress);
-            return JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, null);
+            return session.GetWebClient<MeshServiceClient>();
+
+                //JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, null);
 
             }
 

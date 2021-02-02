@@ -68,7 +68,6 @@ namespace Goedel.Mesh.Server {
         /// Open or create the accounts persistence container.
         /// </summary>
         /// <param name="directory">The directory in which all the service data is stored.</param>
-        /// <param name="provider">The Mesh service provider.</param>
         public MeshPersist(string directory) {
 
             // Load/create the accounts catalog

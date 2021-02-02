@@ -45,7 +45,6 @@ namespace Goedel.Mesh.Test {
 
         public JpcConnection JpcConnection = JpcConnection.Serialized;
 
-        public JpcHostBroker JpcHostBroker = new JpcHostBroker();
         public PublicMeshService MeshService => meshService ??
             new PublicMeshService(ServiceName, ServiceDirectory).CacheValue (out meshService);
         PublicMeshService meshService;
@@ -72,10 +71,10 @@ namespace Goedel.Mesh.Test {
 
         Service StartService() {
 
-            var instance = 69;
 
-            var httpEndpoint = new HttpEndpoint(ServiceName, MeshService.GetWellKnown, instance);
-            var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, instance);
+
+            var httpEndpoint = new HttpEndpoint(ServiceName, MeshService.GetWellKnown, Test);
+            var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, Test);
             var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
 
             using var provider = new Provider(endpoints, MeshService);

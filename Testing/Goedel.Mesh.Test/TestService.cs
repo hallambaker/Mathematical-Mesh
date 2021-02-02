@@ -17,7 +17,7 @@ namespace Goedel.Mesh.Test {
 
         static string Protocol => "mmm";
 
-        static int Instance => 69;
+        static string Instance => "69";
 
 
         static string Alice => "alice";
