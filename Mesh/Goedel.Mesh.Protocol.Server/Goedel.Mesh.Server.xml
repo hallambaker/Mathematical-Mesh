@@ -1113,7 +1113,6 @@
             Open or create the accounts persistence container.
             </summary>
             <param name="directory">The directory in which all the service data is stored.</param>
-            <param name="provider">The Mesh service provider.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountAdd(Goedel.Protocol.JpcSession,Goedel.Mesh.Server.AccountEntry)">
             <summary>

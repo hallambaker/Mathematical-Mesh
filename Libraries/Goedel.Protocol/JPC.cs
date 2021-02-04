@@ -91,6 +91,10 @@ namespace Goedel.Protocol {
         /// <returns>The direct client instance.</returns>
         public abstract Goedel.Protocol.JpcClientInterface GetDirect(JpcSession jpcSession);
 
+
+        public abstract JpcSession GetSession();
+
+
         }
 
     public abstract class JpcClientInterface {

@@ -68,6 +68,10 @@ namespace Goedel.Mesh.Server {
             }
 
 
+
+        public override JpcSession GetSession() => new JpcSessionHost();
+
+
         /// <summary>
         /// Respond with the 'hello' version and encoding info. This request does not 
         /// require authentication or authorization since it is the method a client

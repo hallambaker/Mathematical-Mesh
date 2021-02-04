@@ -2,11 +2,20 @@
 using System.Threading;
 using System.Net.Sockets;
 using Goedel.Protocol;
+using Goedel.Discovery;
 using Goedel.Utilities;
 using Goedel.Cryptography;
 
 namespace Goedel.Protocol.Service {
 
+#pragma warning disable CS1591
+#pragma warning disable CS1572
+#pragma warning disable CS1573
+
+    /// <summary>
+    /// Record describing a listener endpoint.
+    /// </summary>
+    /// <param name="Protocol">Directory to store persistence data.</param>
     public record Endpoint(
              string Protocol,
              string Instance = null) {
@@ -19,13 +28,18 @@ namespace Goedel.Protocol.Service {
     public record HttpEndpoint(
              string Domain,
              string Protocol,
-                string Instance = null) : Endpoint (Protocol, Instance) {
+             string Instance = null) : Endpoint (Protocol, Instance) {
 
         public string Account(string username) => $"{username}@{Domain}";
 
         string specializer = Instance == null ? "" : $"/{Instance}";
-        public string Uri() =>  $"http://+:15099/.well-known/{Protocol}{specializer}/";
-        public string ServiceUri() => $"http://voodoo.hallambaker.com:15099/.well-known/{Protocol}{specializer}/";
+        public string GetUri() =>  $"http://+:15099/.well-known/{Protocol}{specializer}/";
+
+        // used for testing.
+        public string GetServiceUri() => WebServiceEndpoint.GetEndpoint(Domain, Protocol, null, Instance);
+            
+            
+            //$"http://voodoo.hallambaker.com:15099/.well-known/{Protocol}{specializer}/";
         }
 
 

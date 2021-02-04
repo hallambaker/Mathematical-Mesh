@@ -124,11 +124,7 @@ namespace Goedel.Protocol {
             (jpcConnection == JpcConnection.Direct) | (jpcConnection == JpcConnection.Serialized);
 
 
-        //public static string ToWrapped (this JSONObject Object, bool Tag=false) {
-        //    var JSONDebugWriter = new JSONDebugWriter();
-        //    Object.Serialize(JSONDebugWriter, Tag);
-        //    return JSONDebugWriter.GetUTF8;
-        //    }
+
 
         /// <summary>
         /// Create a JSONReader for the specified data

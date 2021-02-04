@@ -12,7 +12,7 @@ namespace Goedel.Protocol.Service {
     /// </summary>
     public class Provider : Disposable {
 
-        public JpcInterface JpcProvider { get; }
+        public JpcInterface JpcInterface { get; }
 
         ///<summary>The HTTP endpoints.</summary> 
         public List<HttpEndpoint> HTTPEndpoints { get; } = new List<HttpEndpoint>();
@@ -25,7 +25,7 @@ namespace Goedel.Protocol.Service {
         /// </summary>
         /// <param name="endpoints">The endpoints to be serviced.</param>
         public Provider(List<Endpoint> endpoints, JpcInterface jpcProvider) {
-            JpcProvider = jpcProvider;
+            JpcInterface = jpcProvider;
 
             foreach (var endpoint in endpoints) {
                 switch (endpoint) {

@@ -51,17 +51,18 @@ namespace Goedel.Mesh.Test {
 
         Service Service;
 
-        public MeshServiceClient GetMeshClient(string accountAddress, List<Trace> meshProtocolMessages) {
+        public MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) {
 
             if (!JpcConnection.IsDirect()) {
                 Service ??= StartService();
                 }
 
             JpcSession session = JpcConnection switch  {
-                JpcConnection.Direct => new JpcSessionDirect(MeshService, accountAddress),
-                JpcConnection.Serialized => new TestSession(MeshService, accountAddress, meshProtocolMessages),
-                JpcConnection.Http => new JpcSessionHTTP(accountAddress),
-                JpcConnection.Ticketed => new JpcSessionTicketed(null, accountAddress),
+                JpcConnection.Direct => new JpcSessionDirect(MeshService, meshCredential.AccountAddress),
+                JpcConnection.Serialized => new TestSession(MeshService, 
+                        meshCredential.AccountAddress, meshCredential.MeshProtocolMessages),
+                JpcConnection.Http => new JpcSessionHTTP(meshCredential.AccountAddress, Test),
+                JpcConnection.Ticketed => new JpcSessionTicketed(null, meshCredential.AccountAddress),
                 _ => throw new NYI()
                 };
 

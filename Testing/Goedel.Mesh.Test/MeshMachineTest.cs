@@ -52,8 +52,12 @@ namespace Goedel.Mesh.Test {
         /// otherwise.</param>
         /// <returns></returns>
         public override MeshServiceClient GetMeshClient(
-                string accountAddress) =>
-                    testEnvironmentCommon.GetMeshClient(accountAddress, MeshProtocolMessages);
+                string accountAddress) {
+
+            var meshCredential = new MeshCredentialTraced(accountAddress, MeshProtocolMessages);
+
+            return testEnvironmentCommon.GetMeshClient(meshCredential);
+            }
 
 
         public static Contact ContactAlice = new ContactPerson(

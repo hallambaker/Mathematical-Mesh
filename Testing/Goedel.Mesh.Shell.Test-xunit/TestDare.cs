@@ -77,7 +77,7 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void TestArchive() => TestSequence(true);
+        public void TestArchive() => TestSequence();
 
         int[] counts = { 10, 20 };
 
@@ -89,9 +89,8 @@ namespace Goedel.XUnit {
         string archive3 = "../CommonData/Archive3";
 
         [Theory]
-        [InlineData(true, 100)]
+        [InlineData(100)]
         public void TestSequence(
-                    bool archive = true,
                     int count = 10,
                     string encrypt = null,
                     string sign = null,

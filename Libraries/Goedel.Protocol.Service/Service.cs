@@ -9,6 +9,10 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 
 namespace Goedel.Protocol.Service {
+
+    /// <summary>
+    /// Service provider managing HTTP and UDP listeners.
+    /// </summary>
     public class Service : Disposable {
 
 
@@ -21,10 +25,11 @@ namespace Goedel.Protocol.Service {
 
         bool active = true;
 
+        /////<summary>Maximum number of concurrent dispatch threads</summary> 
+        //public int Concurrent => concurrent;
 
-        public int Concurrent => concurrent;
+        //private int concurrent = 0;
 
-        private int concurrent = 0;
 
         private Thread serviceThread;
 
@@ -47,18 +52,12 @@ namespace Goedel.Protocol.Service {
         string[] dispatchTaskResource;
         bool[] dispatchTaskActive;
 
-
-        public DateTime ServiceStarted { get;  }
-
-
-
-
+        ///<summary>Service instrumentation.</summary> 
         public Monitor Monitor ;
 
-
-
-
-
+        /// <summary>
+        /// Disposal routine, perform clean termination of all active threads.
+        /// </summary>
         protected override void Disposing() {
 
             // Set the state to inactive
@@ -73,9 +72,29 @@ namespace Goedel.Protocol.Service {
 
             }
 
+        Dictionary<string, Provider> providerMap = new Dictionary<string, Provider>();
 
+        public Provider GetProvider(string domain, int port, string resource) {
 
+            var test = $"http://+:{port}{resource}";
+            if (providerMap.TryGetValue(test, out var provider)) {
+                return provider;
+                }
 
+            test = $"http://{domain}:{port}{resource}";
+            if (providerMap.TryGetValue(test, out provider)) {
+                return provider;
+                }
+            return null;
+            }
+
+        /// <summary>
+        /// Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
+        /// </summary>
+        /// <param name="providers">The services to be served.</param>
+        /// <param name="maxCores">Maximum number of dispatch threads.</param>
+        /// <remarks>Constructor returns after the service has been started and listener threads 
+        /// initialized.</remarks>
         public Service(List<Provider> providers, int maxCores = 0) {
 
             cancellationTokenSource = new CancellationTokenSource();
@@ -105,9 +124,10 @@ namespace Goedel.Protocol.Service {
 
             foreach (var provider in providers) {    
                 foreach (var endpoint in provider.HTTPEndpoints) {
-                    var uri = endpoint.Uri();
+                    var uri = endpoint.GetUri();
                     Screen.WriteLine($"Connect to URI {uri}");
                     httpListener.Prefixes.Add(uri);
+                    providerMap.Add(uri, provider);
                     }
                 udpListenerCount += provider.UdpEndpoints.Count;
                 }
@@ -117,7 +137,7 @@ namespace Goedel.Protocol.Service {
             Monitor = new Monitor(ListenerCount, MaxDispatch);
 
             foreach (var provider in providers) {
-                if (provider.JpcProvider is IMonitorProvider monitorProvider) {
+                if (provider.JpcInterface is IMonitorProvider monitorProvider) {
                     monitorProvider.Monitor = Monitor;
                     }
                 }
@@ -311,89 +331,5 @@ namespace Goedel.Protocol.Service {
 
         }
 
-    /// <summary>
-    /// Base class for connection handlers
-    /// </summary>
-    public abstract class Connection {
-        public string Resource { get; protected set; } = null;
-        public int Slot;
-        public Service Service;
 
-        /// <summary>
-        /// Process the connection, dispatch the request and return the result.
-        /// </summary>
-        public abstract void Complete();
-
-        }
-
-    /// <summary>
-    /// Connection handler for HTTP request
-    /// </summary>
-    public class ConnectionHttp : Connection  {
-        HttpListenerContext ListenerContext { get; }
-        public ConnectionHttp(HttpListenerContext listenerContext) {
-            ListenerContext = listenerContext;
-            }
-
-        /// <summary>
-        /// Process the connection, dispatch the request and return the result.
-        /// </summary>
-        public override void Complete() {
-            Service.Monitor.StartDispatch(Slot);
-
-
-            var response = ListenerContext.Response;
-            response.StatusCode = (int)HttpStatusCode.OK;
-            response.StatusDescription = "OK";
-            response.KeepAlive = true;
-
-            var result = "Result".ToUTF8();
-
-
-            response.ContentLength64 = result.Length;
-            using (var stream = response.OutputStream) {
-                stream.Write(result, 0, result.Length);
-                stream.Close();
-                }
-
-
-            // Which resource is the request directed at?
-
-
-            // Is the content length too long?
-
-
-            // Get body
-
-
-            // Authenticate
-
-
-
-
-            Service.Monitor.EndDispatch(Slot);
-            }
-        }
-
-    /// <summary>
-    /// Connection handler for UDP request
-    /// </summary>
-    public class ConnectionUdp : Connection {
-        byte[] Buffer { get; }
-
-        /// <summary>
-        /// Constructor, process the request contained in <paramref name="buffer"/>.
-        /// </summary>
-        /// <param name="result">The UDP receive result</param>
-        public ConnectionUdp(UdpReceiveResult result) {
-            Buffer = result.Buffer;
-            }
-
-        /// <summary>
-        /// Process the connection, dispatch the request and return the result.
-        /// </summary>
-        public override void Complete() {
-            }
-
-        }
     }

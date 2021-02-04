@@ -48,7 +48,7 @@ namespace Goedel.Mesh.Test {
             client.Headers.Add(HttpRequestHeader.UserAgent, "MeshTestClient");
             client.Headers.Add(HttpRequestHeader.CacheControl, "no-store,no-transform");
             
-            var uri = HttpEndpoint.ServiceUri();
+            var uri = HttpEndpoint.GetServiceUri();
 
 
             Screen.WriteLine($"Connect to {uri}");

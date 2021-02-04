@@ -2347,6 +2347,13 @@
             </summary>
             <returns>The client instance.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor(Goedel.Mesh.CatalogedDevice,Goedel.Cryptography.IKeyLocate)">
+            <summary>
+            Create a credential for the device/profile <paramref name="catalogedDevice"/>.
+            </summary>
+            <param name="catalogedDevice">The device catalog entry.</param>
+            <param name="keyLocate">The key locator to be used to obtain keys.</param>
+        </member>
         <member name="T:Goedel.Mesh.Client.MeshHost">
             <summary>
             Manages the host catalog, i.e. the catalog of Meshes that the device is 

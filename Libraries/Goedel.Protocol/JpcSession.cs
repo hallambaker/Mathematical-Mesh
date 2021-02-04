@@ -1,5 +1,4 @@
-﻿//  Copyright © 2015 by Comodo Group Inc.
-//  Copyright © 2021 Threshold Secrets Llc
+﻿//  Copyright © 2021 Threshold Secrets Llc
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +22,9 @@
 
 using System.Collections.Generic;
 using System.IO;
-
+using System.Net;
 using Goedel.Utilities;
-
+using Goedel.Discovery;
 namespace Goedel.Protocol {
 
 
@@ -45,74 +44,13 @@ namespace Goedel.Protocol {
         ///previously issued by the service by means of either the HTTP or the UDP 
         ///transport.</summary> 
         Ticketed
-
         }
-
-    //public delegate JpcSession JpcSessionFactoryDelegate(
-    //            JpcCredential jpcCredential);
-
-
-
-
-    //public abstract class JpcCredential {
-
-    //    ///<summary>The account address (Account@Domain or @callsign)</summary>
-    //    public string AccountAddress { get; }
-
-    //    ///<summary>The account portion of <see cref="AccountAddress"/></summary>
-    //    public string Account { get; }
-
-    //    ///<summary>The domain portion of <see cref="AccountAddress"/></summary>
-    //    public string Domain { get; }
-
-
-    //    public static JpcSessionFactoryDelegate GetSessionSerialized => throw new NYI();
-    //    public static JpcSessionFactoryDelegate GetSessionHttp => throw new NYI();
-    //    public static JpcSessionFactoryDelegate GetSessionTicketed => throw new NYI();
-
-    //    public JpcCredential(string accountAddress) {
-    //        AccountAddress = accountAddress;
-    //        }
-
-
-    //    public virtual JpcSession GetJpcSession(JpcConnection jpcConnection) =>
-
-    //        jpcConnection switch {
-    //            JpcConnection.Direct => new JpcSessionDirect(AccountAddress),
-    //            JpcConnection.Serialized => GetSessionSerialized(this),
-    //            JpcConnection.Http => GetSessionHttp(this),
-    //            JpcConnection.Ticketed => GetSessionTicketed(this),
-    //            _ => throw new NYI()
-    //            };
-
-    //    }
-
-    //public class JpcCredentialDirect : JpcCredential {
-    //    public JpcDispatch Host { get; }
-
-    //    public JpcCredentialDirect(JpcDispatch host, string accountAddress) :
-    //                base(accountAddress) {
-    //        Host = host;
-    //        }
-
-
-    //    public override JpcSession GetJpcSession(JpcConnection jpcConnection) =>
-
-    //jpcConnection switch {
-    //    JpcConnection.Direct => new DirectSession(AccountAddress),
-    //    JpcConnection.Serialized => GetSessionSerialized(this),
-    //    _ => throw new NYI()
-    //    };
-
-
-    //    }
-
 
 
     /// <summary>
     /// The session class describes the caller of a method.
     /// </summary>
-    public abstract class JpcSession {
+    public abstract class JpcSession : Disposable {
 
         ///<summary>The service identifier (Account@Domain)</summary>
         public string AccountAddress;
@@ -156,7 +94,7 @@ namespace Goedel.Protocol {
         /// at the service (e.g. alice@example.com).</param>
         public JpcSession(string accountAddress) {
             AccountAddress = accountAddress;
-            accountAddress.SplitAccountIDService(out Domain, out Account);
+            accountAddress?.SplitAccountIDService(out Domain, out Account);
             }
 
 
@@ -179,6 +117,9 @@ namespace Goedel.Protocol {
 
 
         }
+
+
+
 
     /// <summary>
     /// Direct connection between client and service host. Useful for debugging
@@ -228,55 +169,55 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Post the specified data to the remote service.
         /// </summary>
-        /// <param name="Data">Input data</param>
+        /// <param name="data">Input data</param>
         /// <param name="request">The request</param>
         /// <returns>The response data</returns>
-        public abstract Stream Post(MemoryStream Data, JsonObject request);
+        public abstract Stream Post(MemoryStream data, JsonObject request);
 
         /// <summary>
         /// Construct a Post string.
         /// </summary>
-        /// <param name="Tag">Operation to perform.</param>
+        /// <param name="tag">Operation to perform.</param>
         /// <param name="request">Request data.</param>
         /// <returns>string returned in response.</returns>
-        public virtual string Post(string Tag, JsonObject request) {
+        public virtual string Post(string tag, JsonObject request) {
 
-            var Buffer = new MemoryStream();
-            var JSONWriter = new JsonWriter(Buffer);
+            var buffer = new MemoryStream();
+            var JSONWriter = new JsonWriter(buffer);
 
             // Wrap the request object with the transaction name.
             JSONWriter.WriteObjectStart();
-            JSONWriter.WriteToken(Tag, 0);
+            JSONWriter.WriteToken(tag, 0);
             request.Serialize(JSONWriter, false);
             JSONWriter.WriteObjectEnd();
 
             // Send the request
-            var ResponseBuffer = Post(Buffer, request);
+            var responseBuffer = Post(buffer, request);
 
-            return ResponseBuffer.GetUTF8();
+            return responseBuffer.GetUTF8();
             }
 
         /// <summary>
-        /// Post a transaction of type <paramref name="Tag"/> with request data 
+        /// Post a transaction of type <paramref name="tag"/> with request data 
         /// <paramref name="request"/> to the service expecting a response of type
-        /// <paramref name="TagResponse"/>
+        /// <paramref name="tagResponse"/>
         /// </summary>
-        /// <param name="Tag">The transaction tag.</param>
-        /// <param name="TagResponse">The response type tag.</param>
+        /// <param name="tag">The transaction tag.</param>
+        /// <param name="tagResponse">The response type tag.</param>
         /// <param name="request">The request data.</param>
         /// <returns>The response data.</returns>
-        public virtual JsonObject Post(string Tag, string TagResponse, JsonObject request) {
+        public virtual JsonObject Post(string tag, string tagResponse, JsonObject request) {
 
             var buffer = new MemoryStream();
             var jsonWriter = new JsonWriter(buffer);
             jsonWriter.WriteObjectStart();
-            jsonWriter.WriteToken(Tag, 0);
+            jsonWriter.WriteToken(tag, 0);
             request.Serialize(jsonWriter, false);
             jsonWriter.WriteObjectEnd();
 
-            var ResponseBuffer = Post(buffer, request);
+            var responseBuffer = Post(buffer, request);
 
-            var reader = new JsonReader(ResponseBuffer);
+            var reader = new JsonReader(responseBuffer);
             var result = JsonObject.FromJson(reader, true);
 
             return result;
@@ -311,12 +252,12 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Post a request and retrieve the response.
         /// </summary>
-        /// <param name="Data">StreamBuffer object containing JSON encoded request.</param>
+        /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
         /// <param name="requestObject">The request object.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override Stream Post(MemoryStream Data, JsonObject requestObject) {
+        public override Stream Post(MemoryStream data, JsonObject requestObject) {
 
-            var DataText = Data.GetUTF8();
+            var DataText = data.GetUTF8();
             var JSONReader = new JsonReader(DataText);
 
             var result = Host.Dispatch(this, JSONReader);
@@ -330,21 +271,42 @@ namespace Goedel.Protocol {
     /// </summary>
     public partial class JpcSessionHTTP : JpcRemoteSession {
 
+        string Instance { get; }
+
+        WebClient webClient;
+
+        protected override void Disposing() {
+            webClient?.Dispose();
+            }
+
+
         /// <summary>
         /// Return a session  bound to the account <paramref name="account"/>.
         /// </summary>
         /// <param name="account">The account address</param>
-        public JpcSessionHTTP(string account) :
-                base (account){
-            }
+        /// <param name="instance">The remote instance identifier.</param>
+        public JpcSessionHTTP(string account, string instance = null) :
+                base(account) => Instance = instance;
 
         /// <summary>
         /// Post the specified data to the remote service.
         /// </summary>
-        /// <param name="Data">Input data</param>
+        /// <param name="data">Input data</param>
         /// <param name="request">The request</param>
         /// <returns>The response data</returns>
-        public override Stream Post(MemoryStream Data, JsonObject request) => throw new System.NotImplementedException();
+        public override Stream Post(MemoryStream data, JsonObject request) {
+            // Get the Web client
+            var uri = WebServiceEndpoint.GetEndpoint(Domain, JpcClientInterface.GetWellKnown,
+                    JpcClientInterface.GetDiscovery, Instance);
+
+            webClient ??=  new WebClient();
+
+
+            // Prepare the request
+            var requestData = data.GetBuffer();
+            var responseData = webClient.UploadData(uri, requestData);
+            return new MemoryStream(responseData);
+            }
         }
 
     /// <summary>

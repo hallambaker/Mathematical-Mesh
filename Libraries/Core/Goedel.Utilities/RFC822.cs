@@ -74,47 +74,30 @@ namespace Goedel.Utilities {
             }
 
 
-
-        ///// <summary>
-        ///// Extract the Account and Portal components from the specified AccountID.
-        ///// </summary>
-        ///// <param name="AccountID">The AccountID to split.</param>
-        ///// <param name="Service">The portal address.</param>
-        ///// <param name="Account">The account name.</param>
-        //public static void SplitAccountID(this string AccountID,
-        //    out string Service,
-        //    out string Account) {
-        //    Account = null;
-        //    Service = null;
-        //    int At = AccountID.LastIndexOf('@');
-        //    if (At < 0) {
-        //        return;
-        //        }
-
-        //    Account = AccountID.Substring(0, At);
-        //    Service = AccountID.Substring(At + 1);
-        //    }
-
         /// <summary>
         /// Parse a string that may contain an account identifier to extract the service and 
         /// account components.
         /// </summary>
-        /// <param name="Identifier">The AccountID to split.</param>
-        /// <param name="Service">The portal address.</param>
-        /// <param name="Account">The account name.</param>
-        public static void SplitAccountIDService(this string Identifier,
-            out string Service,
-            out string Account) {
-            Account = null;
-
-            int At = Identifier.LastIndexOf('@');
-            if (At < 0) {
-                Service = Identifier;
+        /// <param name="identifier">The AccountID to split.</param>
+        /// <param name="service">The portal address.</param>
+        /// <param name="account">The account name.</param>
+        public static void SplitAccountIDService(this string identifier,
+                out string service,
+                out string account) {
+            account = null;
+            service = null;
+            if (identifier == null) {
                 return;
                 }
 
-            Account = Identifier.Substring(0, At);
-            Service = Identifier.Substring(At + 1);
+            var at = identifier.LastIndexOf('@');
+            if (at < 0) {
+                service = identifier;
+                return;
+                }
+
+            account = identifier.Substring(0, at);
+            service = identifier.Substring(at + 1);
             }
 
 
@@ -122,16 +105,16 @@ namespace Goedel.Utilities {
         /// Parse a string that may contain an account identifier to extract the service and 
         /// account components.
         /// </summary>
-        /// <param name="Identifier">The AccountID to split.</param>
-        public static string GetService(this string Identifier) {
+        /// <param name="identifier">The AccountID to split.</param>
+        public static string GetService(this string identifier) {
 
-            int At = Identifier.LastIndexOf('@');
+            int At = identifier.LastIndexOf('@');
             if (At < 0) {
-                return Identifier;
+                return identifier;
                 }
 
 
-            return Identifier.Substring(At + 1);
+            return identifier.Substring(At + 1);
             }
 
         }
