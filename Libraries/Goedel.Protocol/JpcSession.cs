@@ -86,6 +86,8 @@ namespace Goedel.Protocol {
             new VerifiedAccount() { AccountAddress = AccountAddress };
 
 
+        public JpcSession() {
+            }
 
         /// <summary>
         /// Constructor for a session with service <paramref name="accountAddress"/>.

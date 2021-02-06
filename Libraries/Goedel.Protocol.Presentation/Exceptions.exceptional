@@ -1,0 +1,57 @@
+﻿
+Namespace Goedel.Protocol
+    
+	Exception Dechunking
+        Console "Key could not be read."
+		Description
+			|A dechunking exception occurred.
+
+		Exception UnknownOperation
+			Console "The requested operation is not known to this server."
+			Description
+				|The requested operation is not known to this server.
+
+		Exception MessageTooBig
+			Console "Message is too big"
+			Description
+				|Message exceeds permitted size limit
+
+	Exception ConnectionFail
+		Console "Connection to host [{0}] Failed."
+		Description
+			|Could not reach the specified host
+
+
+	Exception CannotCreateAbstract
+		Console "Deserialzer encountered tag describing abstract type"
+		Description
+			|A serialized data stream contains a type tag describing an abstract type that cannot be constructed.
+
+	Exception UnknownTag
+		Console "Deserialzer encountered unknown tag"
+		Description
+			|An unknown tag was encountered.
+
+	Exception TagRequired
+		Console "Cannot deserialize untagged abstract data."
+		Description
+			|Attempt to deserialize untagged data to unknown type.
+	
+	Exception InvalidInput
+		Console "Deserialzer encountered invalid input"
+		Description
+			|The input is not valid in the specified encoding.
+	
+	Exception BadPartLength
+		Console "Data length did not match data presented."
+		Description
+			|Data length did not match data presented.
+	
+	
+	Exception StreamMarkerError
+		Console "Stream reader error, position not correctly marked."
+		Description
+			|Stream reader error, position not correctly marked.
+
+	Exception DictionaryInitialization
+		Console "An attempt was made to deserialize an object without initializing the dictionary"
