@@ -11,7 +11,36 @@ Deleted devices do not lose their decryption capabilities.
 
 ## Binding
 
-Web binding.
+Parse Messages
+
+Key Agreement
+
+Encryption
+
+Credentials
+
+Meah Binding
+
+
+# Applications
+
+Meshman
+
+Meshhost
+
+
+# Callsign
+
+Registry service
+
+Protocol
+
+Lookup protocol
+
+
+
+
+
 
 
 ## Functionality 

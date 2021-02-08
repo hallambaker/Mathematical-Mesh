@@ -27,7 +27,23 @@ namespace Goedel.Protocol.Presentation {
     public delegate byte[] dispatchDelegate(byte[] request, JpcSession jpcSession);
 
 
-    public class ListenerHost {
+    public class ConnectionHost : Connection {
+
+
+        public ListenerHost ListenerHost;
+
+        public byte[] ConnectionId;
+
+        public PacketClient Process(byte[] data) {
+
+            throw new NYI();
+            }
+
+        }
+
+
+
+    public class ListenerHost : Disposable{
 
         public Dictionary<IPAddress, PortHistory> DictionaryIPAddressToPortHistory = new();
         public Dictionary<PortID, PortHistory> DictionaryPortIdToPortHistory = new ();
@@ -38,103 +54,177 @@ namespace Goedel.Protocol.Presentation {
         public Dictionary<byte[], ConnectionHost> DictionaryConnectionIdToKey = new();
 
 
-        public PacketHost Process(byte[] data) {
+        public PacketHost Process(PortID portID , byte[] data) {
 
             data.AssertNotNull(NYI.Throw);
 
             var packetType = (ClientPacketType)(data[0] & (byte)ClientPacketType.Mask);
             return packetType switch {
-                ClientPacketType.Initial => ProcessInitial(data),
-                ClientPacketType.Cloaked => ProcessCloaked(data),
-                ClientPacketType.Answer => ProcessAnswer(data),
-                ClientPacketType.Write => ProcessWrite(data),
+                ClientPacketType.Initial => ProcessInitial(portID, data),
+                ClientPacketType.Cloaked => ProcessCloaked(portID, data),
+                ClientPacketType.Answer => ProcessAnswer(portID, data),
+                ClientPacketType.Post => ProcessPost(portID, data),
                 _ => throw new NYI()
                 };
 
 
             }
 
-        protected virtual PacketHostInitial ProcessInitial(byte[] data) {
+        static bool acceptToggle;
+        protected virtual bool Accept(PortID portID) {
+            portID.Future();
 
-            var packet = new PacketHostInitial(data);
-            throw new NYI();
-            }
+            acceptToggle = !acceptToggle;
 
-        PacketHostCloaked ProcessCloaked(byte[] data) {
-            throw new NYI();
-            }
-
-        PacketHostAnswer ProcessAnswer(byte[] data) {
-            throw new NYI();
-            }
-
-        PacketHostWrite ProcessWrite(byte[] data) {
-            throw new NYI();
-            }
-        }
-
-    public class PacketHostInitial : PacketHost {
-
-        public PacketHostInitial(byte[] data) {
-
-            /*
-            Client ephemeral algorithm
-            Client ephemeral key  {CE, ce}
-            Account Profile
-            Device Connection
-            Payload (plaintext)
-
-             */
-
-            }
-
-        public virtual HostPacketChallenge Challenge(byte[] data) {
-            throw new NYI();
-            }
-        public virtual HostPacketComplete Complete(byte[] data) {
-            throw new NYI();
-            }
-        public virtual HostPacketAbort Abort(byte[] data) {
-            throw new NYI();
+            return acceptToggle;
             }
 
 
-        }
+        protected virtual PacketHost ProcessInitial(PortID portID, byte[] data) {
+            var packet = new PacketHostInitial(portID, data);
 
+            if (Accept(portID)) {
+                return new HostPacketChallenge(packet);
+                }
+            else {
+                return new HostPacketComplete(packet);
+                }
+            }
 
-    public class PacketHostCloaked : PacketHost {
-        public virtual HostPacketChallenge Challenge(byte[] data) {
-            throw new NYI();
+        /// <summary>
+        /// Process a cloaked request packet.
+        /// </summary>
+        /// <param name="portID"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        protected virtual PacketHost ProcessCloaked(PortID portID, byte[] data) {
+            var packet = new PacketHostCloaked(portID, data);
+
+            if (Accept(portID)) {
+                return new HostPacketChallenge(packet);
+                }
+            else {
+                return new HostPacketComplete(packet);
+                }
             }
-        public virtual HostPacketComplete Complete(byte[] data) {
-            throw new NYI();
+
+        protected virtual PacketHost ProcessAnswer(PortID portID, byte[] data) {
+            var packet = new PacketHostAnswer(portID, data);
+
+            return new HostPacketComplete(packet);
             }
-        public virtual HostPacketAbort Abort(byte[] data) {
-            throw new NYI();
+
+        protected virtual PacketHost ProcessPost(PortID portID, byte[] data) {
+            var packet = new PacketHostPost(portID, data);
+
+            return new PacketHostData(packet);
             }
 
         }
 
-    public class PacketHostAnswer : PacketHost {
 
-        public virtual HostPacketWrite Write(byte[] data) {
-            throw new NYI();
+    public class PacketHost {
+
+
+        public PacketHost() {
+
             }
-        public virtual HostPacketAbort Abort(byte[] data) {
-            throw new NYI();
+
+
+        }
+    public class PacketHostIn : PacketHost {
+        PortID PortID;
+        public PacketHostIn(PortID portID) {
+            PortID = portID;
+            }
+
+
+        public static PacketHost Parse(PortID portID, byte[] data) {
+
+            data.AssertNotNull(NYI.Throw);
+
+            var packetType = (ClientPacketType)(data[0] & (byte)ClientPacketType.Mask);
+            return packetType switch {
+
+                _ => throw new NYI()
+                };
+
+
+
             }
         }
 
-    public class PacketHostWrite : PacketHost {
 
-        public virtual HostPacketWrite Write(byte[] data) {
-            throw new NYI();
+    public class PacketHostOut: PacketHost {
+        }
+    public class PacketHostInitial : PacketHostIn {
+
+        public PacketHostInitial(PortID portID, byte[] data) :base (portID){
+            // parse data
+
             }
-        public virtual HostPacketAbort Abort(byte[] data) {
-            throw new NYI();
+
+
+        }
+
+
+    public class PacketHostCloaked : PacketHostIn {
+
+        public PacketHostCloaked(PortID portID, byte[] data) : base(portID) {
+            // parse data
+
             }
 
         }
 
+    public class PacketHostAnswer : PacketHostIn {
+
+        public PacketHostAnswer(PortID portID, byte[] data) : base(portID) {
+            // parse data
+
+            // validate challenge
+
+
+            }
+        }
+
+    public class PacketHostPost : PacketHostIn {
+        byte[] payload;
+        public PacketHostPost(PortID portID, byte[] data) : base(portID) {
+            // parse data
+
+            // associate to connection
+
+
+            }
+
+        }
+
+    public class HostPacketChallenge : PacketHost {
+        public HostPacketChallenge(PacketHostInitial packetHost) {
+            }
+
+        public HostPacketChallenge(PacketHostCloaked packetHost) {
+            }
+
+
+        }
+    public class HostPacketComplete : PacketHost {
+        public HostPacketComplete(PacketHostInitial packetHost) {
+            }
+        public HostPacketComplete(PacketHostCloaked packetHost) {
+            }
+        public HostPacketComplete(PacketHostAnswer packetHost) {
+            }
+        }
+    public class PacketHostData : PacketHost {
+
+        public PacketHostData(PacketHostPost packetHost) {
+            }
+
+        }
+    public class HostPacketAbort : PacketHost {
+
+        }
 
     }
