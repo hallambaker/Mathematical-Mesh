@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Collections.Generic;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.Protocol;
 
@@ -54,21 +56,25 @@ namespace Goedel.Protocol.Presentation {
         public Dictionary<byte[], ConnectionHost> DictionaryConnectionIdToKey = new();
 
 
-        public PacketHost Process(PortID portID , byte[] data) {
 
-            data.AssertNotNull(NYI.Throw);
+        public PacketHost Parse(PortID portID, byte[] packet) {
+            // check inputs
+            packet.AssertNotNull(NYI.Throw);
+            (packet.Length > 0).AssertTrue(NYI.Throw);
 
-            var packetType = (ClientPacketType)(data[0] & (byte)ClientPacketType.Mask);
-            return packetType switch {
-                ClientPacketType.Initial => ProcessInitial(portID, data),
-                ClientPacketType.Cloaked => ProcessCloaked(portID, data),
-                ClientPacketType.Answer => ProcessAnswer(portID, data),
-                ClientPacketType.Post => ProcessPost(portID, data),
-                _ => throw new NYI()
+            return packet[0] switch {
+                byte b when ((b & 0b1000_0000) != 0) =>
+                        new PacketHostInitial(portID, packet),
+                (byte)ClientPacketType.Initial =>
+                        new PacketHostInitial(portID, packet),
+                (byte)ClientPacketType.Cloaked =>
+                        new PacketHostInitial(portID, packet),
+                (byte)ClientPacketType.Answer =>
+                        new PacketHostInitial(portID, packet),
+                _ => new PacketHostUnknown(portID, packet)
                 };
-
-
             }
+
 
         static bool acceptToggle;
         protected virtual bool Accept(PortID portID) {
@@ -133,35 +139,38 @@ namespace Goedel.Protocol.Presentation {
 
         }
     public class PacketHostIn : PacketHost {
-        PortID PortID;
+
+        public byte[] Payload { get; set; }
+        public PortID PortID;
         public PacketHostIn(PortID portID) {
             PortID = portID;
+
+
+            
+            
             }
 
-
-        public static PacketHost Parse(PortID portID, byte[] data) {
-
-            data.AssertNotNull(NYI.Throw);
-
-            var packetType = (ClientPacketType)(data[0] & (byte)ClientPacketType.Mask);
-            return packetType switch {
-
-                _ => throw new NYI()
-                };
-
-
-
-            }
         }
 
 
     public class PacketHostOut: PacketHost {
         }
+
+
+
+
     public class PacketHostInitial : PacketHostIn {
 
         public PacketHostInitial(PortID portID, byte[] data) :base (portID){
-            // parse data
 
+            var buffer = new MemoryStream(data);
+            buffer.Position++; // ignore the first byte.
+            var reader = new JsonBcdReader(buffer);
+
+            // Read the data
+            Payload= reader.ReadBinary();
+
+            // ignore the padding.
             }
 
 
@@ -189,7 +198,7 @@ namespace Goedel.Protocol.Presentation {
         }
 
     public class PacketHostPost : PacketHostIn {
-        byte[] payload;
+        
         public PacketHostPost(PortID portID, byte[] data) : base(portID) {
             // parse data
 
@@ -199,6 +208,17 @@ namespace Goedel.Protocol.Presentation {
             }
 
         }
+
+    public class PacketHostUnknown : PacketHostIn {
+
+        public PacketHostUnknown(PortID portID, byte[] data) : base(portID) {
+            // parse data
+
+            }
+
+
+        }
+
 
     public class HostPacketChallenge : PacketHost {
         public HostPacketChallenge(PacketHostInitial packetHost) {

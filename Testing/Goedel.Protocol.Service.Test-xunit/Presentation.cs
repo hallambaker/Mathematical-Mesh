@@ -25,22 +25,34 @@ namespace Goedel.XUnit {
             var protocol = "mmm";
             var endpoint = "example.com";
 
+
+            using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Immediate);
+            using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest,
+                            portID, protocol, endpoint);
+
+
+
             var test1 = new byte[100];
 
             // create packet
-            var packet = new PacketClientInitial(test1);
+            var packetOut = connectionClient.SerializeInitial(test1);
 
-            // parse packet
-            var parsed = PacketHostIn.Parse(portID, packet.Data);
 
-            // verify result
-            (parsed as PacketHostInitial).TestNotNull();
+            var packetInitial = listenerHostTest.Parse(portID, packetOut);
 
 
 
-            // create packet
-            var packetCloaked = new PacketClientCloaked(
-                    clientCredential, hostCredential, protocol, endpoint, test1);
+            //// parse packet
+            //var parsed = PacketHostIn.Parse(portID, packet.Data);
+
+            //// verify result
+            //(parsed as PacketHostInitial).TestNotNull();
+
+
+
+            //// create packet
+            //var packetCloaked = new PacketClientCloaked(
+            //        clientCredential, hostCredential, protocol, endpoint, test1);
 
             }
 
@@ -67,7 +79,7 @@ namespace Goedel.XUnit {
 
             var portID = new PortID();
 
-            var presentationCredential = new PresentationCredentialTest();
+            var clientCredential = new PresentationCredentialTest();
             var hostCredential = new PresentationCredentialTest();
 
             var test1 = new byte[100];
@@ -78,7 +90,7 @@ namespace Goedel.XUnit {
             using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Immediate);
 
             // using client connection
-            using var connectionClient = new ConnectionClientTest(presentationCredential, listenerHostTest, 
+            using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest, 
                             portID, null);
 
             var resp1 = connectionClient.Write(test1);
@@ -94,7 +106,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestConnectionDeferred() {
             var portID = new PortID();
-            var presentationCredential = new PresentationCredentialTest();
+            var clientCredential = new PresentationCredentialTest();
             var hostCredential = new PresentationCredentialTest();
 
             var test1 = new byte[100];
@@ -105,7 +117,7 @@ namespace Goedel.XUnit {
             using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Deferred);
 
             // using client connection
-            using var connectionClient = new ConnectionClientTest(presentationCredential, listenerHostTest, portID, null);
+            using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest, portID, null);
 
             var resp1 = connectionClient.Write(test1);
             (resp1 as PacketClientChallenge).TestNotNull();
@@ -122,7 +134,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestConnectionRefused() {
             var portID = new PortID();
-            var presentationCredential = new PresentationCredentialTest();
+            var clientCredential = new PresentationCredentialTest();
             var hostCredential = new PresentationCredentialTest();
 
             var test1 = new byte[100];
@@ -133,7 +145,7 @@ namespace Goedel.XUnit {
             using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Refused);
 
             // using client connection
-            using var connectionClient = new ConnectionClientTest(presentationCredential, listenerHostTest, portID, null);
+            using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest, portID, null);
 
             // These are wrong as we should throw an exception.
             var resp1 = connectionClient.Write(test1);
