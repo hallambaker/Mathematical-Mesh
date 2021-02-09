@@ -172,6 +172,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         public override DHDomain DHDomain => PublicKey.DHDomain;
 
+        ///<summary>The length of a signature in bytes.</summary> 
+        public override int LengthSignature => throw new NYI();
+
+
         #region // PKIX data formats
         /// <summary>
         /// Return private key parameters in PKIX structure

@@ -20,10 +20,10 @@ namespace Goedel.XUnit {
         public void TestParseClient () {
 
             var portID = new PortID();
-            var presentationCredential = new PresentationCredentialTest();
-
-
-            var hostKeyExchange = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
+            var clientCredential = new PresentationCredentialTest();
+            var hostCredential = new PresentationCredentialTest();
+            var protocol = "mmm";
+            var endpoint = "example.com";
 
             var test1 = new byte[100];
 
@@ -31,12 +31,16 @@ namespace Goedel.XUnit {
             var packet = new PacketClientInitial(test1);
 
             // parse packet
-            var parsed = PacketHostIn.Parse(portID, packet.GetData());
-
+            var parsed = PacketHostIn.Parse(portID, packet.Data);
 
             // verify result
             (parsed as PacketHostInitial).TestNotNull();
 
+
+
+            // create packet
+            var packetCloaked = new PacketClientCloaked(
+                    clientCredential, hostCredential, protocol, endpoint, test1);
 
             }
 
@@ -64,13 +68,14 @@ namespace Goedel.XUnit {
             var portID = new PortID();
 
             var presentationCredential = new PresentationCredentialTest();
+            var hostCredential = new PresentationCredentialTest();
 
             var test1 = new byte[100];
             var test2 = new byte[100];
             var test3 = new byte[100];
             // Create host
 
-            using var listenerHostTest = new ListenerHostTest(ListenerMode.Immediate);
+            using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Immediate);
 
             // using client connection
             using var connectionClient = new ConnectionClientTest(presentationCredential, listenerHostTest, 
@@ -90,13 +95,14 @@ namespace Goedel.XUnit {
         public void TestConnectionDeferred() {
             var portID = new PortID();
             var presentationCredential = new PresentationCredentialTest();
+            var hostCredential = new PresentationCredentialTest();
 
             var test1 = new byte[100];
             var test2 = new byte[100];
             var test3 = new byte[100];
             // Create host
 
-            using var listenerHostTest = new ListenerHostTest(ListenerMode.Deferred);
+            using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Deferred);
 
             // using client connection
             using var connectionClient = new ConnectionClientTest(presentationCredential, listenerHostTest, portID, null);
@@ -117,13 +123,14 @@ namespace Goedel.XUnit {
         public void TestConnectionRefused() {
             var portID = new PortID();
             var presentationCredential = new PresentationCredentialTest();
+            var hostCredential = new PresentationCredentialTest();
 
             var test1 = new byte[100];
             var test2 = new byte[100];
             var test3 = new byte[100];
             // Create host
 
-            using var listenerHostTest = new ListenerHostTest(ListenerMode.Refused);
+            using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Refused);
 
             // using client connection
             using var connectionClient = new ConnectionClientTest(presentationCredential, listenerHostTest, portID, null);
@@ -143,13 +150,13 @@ namespace Goedel.XUnit {
 
     public class PresentationCredentialTest : PresentationCredential {
 
-        protected override KeyPair ClientKeySignPrivate { get; }
+        protected override KeyPairAdvanced KeySignPrivate { get; }
 
-        protected override KeyPair ClientKeyExchangePrivate { get; }
+        protected override KeyPairAdvanced KeyExchangePrivate { get; }
 
-        public override KeyPair ClientKeySignPublic { get; }
+        public override KeyPairAdvanced KeySignPublic { get; }
 
-        public override KeyPair clientKeyExchangePublic { get; }
+        public override KeyPairAdvanced KeyExchangePublic { get; }
 
 
         public PresentationCredentialTest(KeyPair clientKeySign=null, KeyPair clientKeyExchange = null) {
@@ -158,11 +165,18 @@ namespace Goedel.XUnit {
             clientKeyExchange ??= KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
 
 
-            ClientKeySignPublic = clientKeySign.KeyPairPublic();
-            ClientKeySignPublic = clientKeyExchange.KeyPairPublic();
+            KeySignPublic = clientKeySign.KeyPairPublic() as KeyPairAdvanced;
+            KeySignPublic = clientKeyExchange.KeyPairPublic() as KeyPairAdvanced;
 
-            ClientKeySignPrivate = clientKeySign;
-            ClientKeyExchangePrivate = clientKeyExchange;
+            KeySignPrivate = clientKeySign as KeyPairAdvanced;
+            KeyExchangePrivate = clientKeyExchange as KeyPairAdvanced;
+            }
+
+
+
+        public override void WriteClientCredential(JsonWriter jsonWriter) {
+            // Do nothing for now!
+
             }
 
         }
@@ -176,8 +190,10 @@ namespace Goedel.XUnit {
 
     public class ListenerHostTest : ListenerHost {
         ListenerMode ListenerMode { get; }
-
-        public ListenerHostTest(ListenerMode listenerMode) {
+        public PresentationCredentialTest HostCredential { get; }
+        public ListenerHostTest(PresentationCredentialTest hostCredential, 
+                    ListenerMode listenerMode) {
+            HostCredential = hostCredential;
             ListenerMode = listenerMode;
             }
 
@@ -185,16 +201,25 @@ namespace Goedel.XUnit {
         }
 
     public class ConnectionClientTest : ConnectionClient {
+
+
         PresentationCredentialTest PresentationCredentialTest;
-        public ConnectionClientTest(PresentationCredentialTest presentationCredentialTest,
-                    ListenerHostTest listenerHost, PortID portID, KeyPair servicePublic = null) :
-                    base(presentationCredentialTest, portID, servicePublic) {
+        public ConnectionClientTest(
+            
+                    PresentationCredentialTest presentationCredentialTest,
+                    ListenerHostTest listenerHost,
+                    PortID portID,
+                    string protocol = "mmm",
+                    string endpoint = "example.com") :
+                    base(presentationCredentialTest, listenerHost.HostCredential, 
+                        protocol, endpoint, portID) {
             PresentationCredentialTest = presentationCredentialTest;
             }
 
         public virtual PacketClient Post(PacketClientOut packetClientOut) {
             throw new NYI();
             }
+
         }
 
     }

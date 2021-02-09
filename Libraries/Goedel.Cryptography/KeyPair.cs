@@ -49,8 +49,8 @@ namespace Goedel.Cryptography {
         public bool ForcePublicParameters { get; set; } = false;
 
 
-
-
+        ///<summary>The length of a signature in bytes.</summary> 
+        public abstract int LengthSignature { get; }
 
         /// <summary>
         /// Sign a precomputed digest

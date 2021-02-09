@@ -71,6 +71,10 @@ namespace Goedel.Cryptography {
         ///<summary>If true, the key only has access to public key values.</summary>
         public override bool PublicOnly => provider.PublicOnly;
 
+        ///<summary>The length of a signature in bytes.</summary> 
+        public override int LengthSignature => publicParameters.Modulus.Length;
+
+
         #endregion
 
 

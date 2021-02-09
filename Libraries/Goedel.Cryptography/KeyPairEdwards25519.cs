@@ -41,6 +41,10 @@ namespace Goedel.Cryptography {
         /// The byte encoding of the public key
         /// </summary>
         public override byte[] PublicData => PublicKey.Encoding;
+
+
+        ///<summary>The length of a signature in bytes.</summary> 
+        public override int LengthSignature => 64;
         #endregion
 
 

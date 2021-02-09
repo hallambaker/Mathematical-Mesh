@@ -29,18 +29,28 @@ namespace Goedel.Protocol.Presentation {
 
 
     public class ConnectionClient : Connection {
-        public KeyPair ServicePublic { get; }
+        PresentationCredential ClientCredential { get; }
+        PresentationCredential HostCredential { get; set; }
 
         public ClientState ClientState { get; private set; }
 
-        PacketClientChallenge packetClientChallenge;
-        PresentationCredential PresentationCredential;
+        PacketClientChallenge packetClientChallenge { get; set; }
 
+        string Protocol { get; }
+        string Endpoint { get; }
 
-        public ConnectionClient(PresentationCredential presentationCredential ,PortID portID, KeyPair servicePublic=null) {
-            ServicePublic = servicePublic;
+        PortID PortID;
+        public ConnectionClient(PresentationCredential presentationCredential ,
+                            PresentationCredential hostCredential,
+                            string protocol,
+                            string endpoint,
+                            PortID portID) {
             ClientState = ClientState.Start;
-            PresentationCredential = presentationCredential;
+            ClientCredential = presentationCredential;
+            HostCredential = hostCredential;
+            Protocol = protocol;
+            Endpoint = endpoint;
+            PortID = portID;
             }
 
         public virtual PacketClient Post(PacketClientOut packetClientOut) {
@@ -93,13 +103,14 @@ namespace Goedel.Protocol.Presentation {
         public PacketClient Open(byte[] payload) {
             PacketClientOut packet;
 
-            if (ServicePublic == null) {
+            if (HostCredential == null) {
 
                 packet = new PacketClientInitial(payload);
 
                 }
             else {
-                packet = new PacketClientCloaked(PresentationCredential, payload);
+                packet = new PacketClientCloaked(ClientCredential, HostCredential, 
+                    Protocol, Endpoint, payload);
 
                 }
 
@@ -137,6 +148,146 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
+
+        /// <summary>
+        /// Serialize an initial request packet for this connection;
+        /// </summary>
+        /// <param name="payload">The payload data.</param>
+        /// <returns>The serialized data.</returns>
+        public byte[] SerializeInitial(byte[] payload) {
+
+            var buffer = new MemoryStream(Constants.MinimumPacketSize);
+            buffer.WriteByte((byte)ClientPacketType.Initial);
+
+            var writer = new JSONBWriter(buffer);
+            writer.WriteBinary(payload);
+
+            if (buffer.Position < Constants.MinimumPacketSize) {
+                buffer.Write(Constants.ZeroArray, 0, Constants.MinimumPacketSize - buffer.Position);
+                }
+
+            return buffer.ToArray();
+            }
+
+
+        KeyPairAdvanced ClientEphemeral { get; set; }
+        KeyAgreementResult KeyAgreementResult { get; set; }
+        public byte[] SerializeCloaked(byte[] payload) {
+            ClientEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+            KeyAgreementResult = ClientEphemeral.Agreement(HostCredential.KeyExchangePublic);
+            return SerializeExchange(payload);
+            }
+
+        public byte[] SerializeAnswer(byte[] payload, byte[] answerData) {
+            return SerializeExchange(payload, answerData);
+            }
+
+
+
+        public byte[] SerializeData(byte[] payload) {
+
+            using var buffer = new MemoryStream(Constants.MinimumPacketSize);
+
+            // Create the nonce value, set the top bit and write out to the buffer.
+            var nonce = Platform.GetRandomBytes(16);
+            nonce[0] |= 0b1000_0000;
+            buffer.Write(nonce);
+
+            // skip over the authentication tag length
+
+
+            var encryptedLength = Constants.MinimumPacketSize - buffer.Position;
+
+            using var plaintextBuffer = new MemoryStream((int)encryptedLength);
+            using var plaintextWriter = new JSONBWriter(plaintextBuffer);
+
+            // write the connection ticket specified by the service.
+
+            // write out the client stream number
+
+            // write out the packet serial number
+
+            // write out the payload
+            plaintextWriter.WriteBinary(payload);
+
+            // pad the remainder of the packet
+
+
+            // get the key
+
+
+            // encrypt
+
+
+            buffer.Write(plaintextBuffer.ToArray()); // Hack, not encrypting yet
+
+            throw new NYI();
+            }
+
+
+
+        protected byte[] SerializeExchange(
+                byte[] payload,
+                byte[] Answer = null) {
+
+            using var buffer = new MemoryStream(Constants.MinimumPacketSize);
+
+
+            if (Answer == null) {
+                buffer.WriteByte((byte)ClientPacketType.Cloaked);
+                }
+            else {
+                buffer.WriteByte((byte)ClientPacketType.Answer);
+                }
+
+            using var writer = new JSONBWriter(buffer);
+
+            // Write out the nonce
+            writer.WriteBinary(Platform.GetRandomBytes(16));
+
+            // Mark the position in the stream and reserve space for the signature.
+            var signaturePoint = buffer.Position;
+            writer.WriteBinary(Constants.ZeroArray, 0, ClientCredential.KeySignPublic.LengthSignature);
+
+            // If this is an answer, write out the 
+            if (Answer != null) {
+                writer.WriteBinary(Answer);
+                }
+
+            // Write out the host key we are talking to (nb does not disclose the service)
+            writer.WriteString(HostCredential.KeyExchangePublic.KeyIdentifier);
+
+            // Write out the ephemeral public key encoding, the key algorithm is implicit in the key id
+            writer.WriteBinary(ClientEphemeral.IKeyAdvancedPublic.Encoding);
+
+            var blockSize = 16; // hack: make this the symmetric cipher length...
+            var encryptedLength = blockSize *
+                ((Constants.MinimumPacketSize - buffer.Position + blockSize - 1) / blockSize);
+
+            using var plaintextBuffer = new MemoryStream((int)encryptedLength);
+            using var plaintextWriter = new JSONBWriter(plaintextBuffer);
+            // now write out the encrypted stuff
+
+            // The client credential
+            ClientCredential.WriteClientCredential(plaintextWriter);
+            plaintextWriter.WriteString(Protocol);
+            plaintextWriter.WriteString(Endpoint);
+            plaintextWriter.WriteBinary(payload);
+
+            // padd the remainder of the plaintext buffer with zeros
+            plaintextBuffer.Write(Constants.ZeroArray, 0, encryptedLength - plaintextBuffer.Position);
+
+            // now encrypt the plaintextwriter data
+            // hack: not encrypting yet
+
+            // now add the ciphertext to the buffer
+            buffer.Write(plaintextBuffer.ToArray());
+
+            return buffer.ToArray();
+            }
+
+
+
         }
 
 
@@ -168,21 +319,26 @@ namespace Goedel.Protocol.Presentation {
         Post = 0b11,
 
         ///<summary>Mask used to identify the control bits in the first byte of a packet.</summary> 
-        Mask = Post
+        Mask = Post,
 
-
+        ///<summary>Mask used to identify the control bits in the first byte of a packet.</summary> 
+        MaskRest = 0xff ^ Post
         }
 
 
 
     public abstract class PresentationCredential {
-        protected abstract KeyPair ClientKeySignPrivate { get; }
+        protected abstract KeyPairAdvanced KeySignPrivate { get; }
 
-        protected abstract KeyPair ClientKeyExchangePrivate { get; }
+        protected abstract KeyPairAdvanced KeyExchangePrivate { get; }
 
-        public abstract KeyPair ClientKeySignPublic { get; }
+        public abstract KeyPairAdvanced KeySignPublic { get; }
 
-        public abstract KeyPair clientKeyExchangePublic { get; }
+        public abstract KeyPairAdvanced KeyExchangePublic { get; }
+
+
+        public abstract void WriteClientCredential(JsonWriter jsonWriter);
+
 
         }
 
@@ -190,45 +346,183 @@ namespace Goedel.Protocol.Presentation {
     public class PacketClient {
         }
     public class PacketClientOut : PacketClient {
-        public virtual byte[] GetData() => throw new NYI();
+        public virtual byte[] Data => throw new NYI();
 
-        }
-    public class PacketClientInitial : PacketClientOut {
+        protected static byte[] GetData(
+                PresentationCredential clientCredential,
+                PresentationCredential hostCredential,
+                string protocol,
+                string endpoint,
+                KeyPairAdvanced clientEphemeral,
+                KeyAgreementResult keyAgreementResult,
+                byte[] payload,
+                byte[] Answer = null){
 
-        byte[] Payload { get; }
+            using var buffer = new MemoryStream(Constants.MinimumPacketSize);
 
-        public PacketClientInitial(byte[] payload) {
-            Payload = payload;
+
+            if (Answer == null) {
+                buffer.WriteByte((byte)ClientPacketType.Cloaked);
+                }
+            else {
+                buffer.WriteByte((byte)ClientPacketType.Answer);
+                }
+
+            using var writer = new JSONBWriter(buffer);
+
+            // Write out the nonce
+            writer.WriteBinary(Platform.GetRandomBytes(16));
+
+            // Mark the position in the stream and reserve space for the signature.
+            var signaturePoint = buffer.Position;
+            writer.WriteBinary(Constants.ZeroArray, 0, clientCredential.KeySignPublic.LengthSignature);
+
+            // If this is an answer, write out the 
+            if (Answer != null) {
+                writer.WriteBinary(Answer);
+                }
+
+            // Write out the host key we are talking to (nb does not disclose the service)
+            writer.WriteString(hostCredential.KeyExchangePublic.KeyIdentifier);
+
+            // Write out the ephemeral public key encoding, the key algorithm is implicit in the key id
+            writer.WriteBinary(clientEphemeral.IKeyAdvancedPublic.Encoding);
+
+            var blockSize = 16; // hack: make this the symmetric cipher length...
+            var encryptedLength = blockSize *
+                ((Constants.MinimumPacketSize - buffer.Position + blockSize - 1) / blockSize);
+
+            using var plaintextBuffer = new MemoryStream((int)encryptedLength);
+            using var plaintextWriter = new JSONBWriter(plaintextBuffer);
+            // now write out the encrypted stuff
+
+            // The client credential
+            clientCredential.WriteClientCredential(plaintextWriter);
+            plaintextWriter.WriteString(protocol);
+            plaintextWriter.WriteString(endpoint);
+            plaintextWriter.WriteBinary(payload);
+
+            // padd the remainder of the plaintext buffer with zeros
+            plaintextBuffer.Write(Constants.ZeroArray, 0, encryptedLength - plaintextBuffer.Position);
+
+            // now encrypt the plaintextwriter data
+            // hack: not encrypting yet
+
+            // now add the ciphertext to the buffer
+            buffer.Write(plaintextBuffer.ToArray());
+
+            return buffer.ToArray();
             }
 
-        public override byte[] GetData() {
+
+        }
+
+    /// <summary>
+    /// Initial packet. This contains only the packet type identifier and the plaintext payload.
+    /// Since neither the request, nor the response packet can be encrypted, the payload is
+    /// typically limited to a Hello request for the protocol version and host capabilities.
+    /// </summary>
+    public class PacketClientInitial : PacketClientOut {
+
+        public override byte[] Data { get; }
+
+        public PacketClientInitial(byte[] payload)  {
+
+
 
             var buffer = new MemoryStream(Constants.MinimumPacketSize);
             buffer.WriteByte((byte)ClientPacketType.Initial);
 
             var writer = new JSONBWriter(buffer);
-            writer.WriteBinary(Payload);
+            writer.WriteBinary(payload);
 
             if (buffer.Position < Constants.MinimumPacketSize) {
                 buffer.Write(Constants.ZeroArray, 0, Constants.MinimumPacketSize - buffer.Position);
                 }
 
-            return buffer.ToArray();
+            Data = buffer.ToArray();
             }
         }
 
     public class PacketClientCloaked : PacketClientOut {
-        KeyPair clientEphemeral;
+        public KeyPairAdvanced ClientEphemeral { get; }
+        public KeyAgreementResult KeyAgreementResult { get; }
 
-        public PacketClientCloaked(PresentationCredential presentationCredential,
+        public override byte[] Data { get; }
+
+        public PacketClientCloaked(
+                            PresentationCredential clientCredential,
+                            PresentationCredential hostCredential,
+                            string protocol,
+                            string endpoint,
+                            byte[] payload) : base() {
+
+            ClientEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+            KeyAgreementResult = ClientEphemeral.Agreement(hostCredential.KeyExchangePublic);
+
+            Data = GetData(
+                                clientCredential, hostCredential, protocol, endpoint,
+                                ClientEphemeral,
+                                KeyAgreementResult,
+                                payload);
+            }
+
+
+
+
+        }
+
+    public class PacketClientAnswer : PacketClientOut {
+        //public KeyPairAdvanced clientEphemeral { get; }
+        //public KeyAgreementResult keyAgreementResult { get; }
+
+        public override byte[] Data { get; }
+
+        public PacketClientAnswer(
+                            PresentationCredential clientCredential,
+                            PresentationCredential hostCredential,
+                            string protocol,
+                            string endpoint,
+                            PacketClientCloaked packetClientCloaked,
                             byte[] payload) {
+            Data = GetData(
+                                clientCredential, hostCredential, protocol, endpoint,
+                                packetClientCloaked.ClientEphemeral,
+                                packetClientCloaked.KeyAgreementResult,
+                                payload);
+            }
 
-            clientEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
 
+        public PacketClientAnswer(
+                    PresentationCredential clientCredential,
+                    PresentationCredential hostCredential,
+                    string protocol,
+                    string endpoint,
+                    byte[] payload) {
+            var clientEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+            var keyAgreementResult = clientEphemeral.Agreement(hostCredential.KeyExchangePublic);
+            Data = GetData(
+                    clientCredential, hostCredential, protocol, endpoint,
+                    clientEphemeral,
+                    keyAgreementResult,
+                    payload);
+            }
+
+
+        public class PacketClientData : PacketClientOut {
+
+
+            public PacketClientData() {
+
+                }
 
             }
 
+
         }
+
+
+
 
     public class PacketClientIn : PacketClient {
 
