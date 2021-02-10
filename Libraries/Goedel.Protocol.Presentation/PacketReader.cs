@@ -16,10 +16,21 @@ namespace Goedel.Protocol.Presentation {
         public int Position { get; set; } = 0;
         public byte[] Data;
 
+        public static PacketReader Factory(byte[] data) => new PacketReaderGCM(data);
+
+
         public PacketReader(byte[] data) => Data = data;
 
 
-        byte ReadByte() => Data[Position++];
+
+        public byte ReadByte() => Data[Position++];
+
+
+        public (PacketTag, long) ReadTag {
+            var 
+
+            }
+
 
 
         int ReadInteger() => throw new NYI();
@@ -32,39 +43,25 @@ namespace Goedel.Protocol.Presentation {
 
 
 
-        byte[] Decrypt (byte[] iv, byte[]key) => throw new NYI();
+        public virtual PacketReader Decrypt (byte[] iv, byte[]key) => throw new NYI();
 
 
+        public virtual PacketReader Unwrap (byte[] iv, byte[] key) => throw new NYI();
 
-        //public static int ModifierToLength(int c) => c & 0x01 switch {
-        //    0 => 1,
-        //    1 => 2,
-        //    _ => throw new NYI(),
-        //    };
-
-        //ulong GetInteger(int Code) {
-        //    ulong Result = 0;
-
-        //    var Count = ModifierToLength(Code);
-        //    for (var i = 0; i < Count; i++) {
-        //        var c = ReadByte();
-        //        Result = (Result << 8) | c;
-        //        }
-        //    return Result;
-        //    }
-
-        //Token LexerInteger(int Code, bool Positive) {
-        //    ResultInt64 = Positive ? (long)GetInteger(Code) : -(long)GetInteger(Code);
-        //    return Token.Integer;
-        //    }
-
-        //Token LexerString(int Code, bool Terminal) {
-        //    var Length = (int)GetInteger(Code);
-        //    var Buffer = ByteInput.ReadBinary(Length);
-        //    ResultString = Buffer.ToUTF8();
-        //    this.Terminal = Terminal;
-        //    return Token.String;
-        //    }
 
         }
+
+    public class PacketReaderGCM : PacketReader {
+
+        public PacketReaderGCM(byte[] data) : base(data) { }
+
+
+        public override PacketReader Decrypt(byte[] iv, byte[] key) => throw new NYI();
+
+
+        public override PacketReader Unwrap(byte[] iv, byte[] key) => throw new NYI();
+
+
+        }
+
     }

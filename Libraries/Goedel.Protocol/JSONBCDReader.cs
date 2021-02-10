@@ -19,25 +19,16 @@ namespace Goedel.Protocol {
         /// Returns a factory delegate that returns a reader of this type.
         /// </summary>
         public static new JSONReaderFactoryDelegate JSONReaderFactory => ReaderFactoryMethod;
-        static JsonReader ReaderFactoryMethod(byte[] Data) => new JsonBcdReader(Data);
+        static JsonReader ReaderFactoryMethod(byte[] data) => new JsonBcdReader(data);
 
-
-        //IDisposable disposable1;
-        //IDisposable disposable2;
-        //protected override void Disposing() {
-        //    disposable1?.Dispose();
-        //    disposable2?.Dispose();
-
-        //    base.Disposing();
-        //    }
 
         IBinaryStream ByteInput => CharacterInput as IBinaryStream;
 
         /// <summary>
         /// Construct a JSONReader from a byte Stream.
         /// </summary>
-        /// <param name="Input">The stream to be read.</param>
-        public JsonBcdReader(Stream Input) : base(Input) { }
+        /// <param name="input">The stream to be read.</param>
+        public JsonBcdReader(Stream input) : base(input) { }
 
         /// <summary>
         /// Construct a JSONReader from a byte array.
@@ -46,8 +37,8 @@ namespace Goedel.Protocol {
         public JsonBcdReader(byte[] Input) : base(Input) { }
 
         static int ModifierToLength(int c) {
-            var Code = c & 0x03;
-            return Code switch
+            var code = c & 0x03;
+            return code switch
                 {
                     0 => 1,
                     1 => 2,
@@ -192,45 +183,45 @@ namespace Goedel.Protocol {
             throw new UnknownTag();
             }
 
-        ulong GetInteger(int Code) {
-            ulong Result = 0;
+        ulong GetInteger(int code) {
+            ulong result = 0;
 
-            var Count = ModifierToLength(Code);
-            for (var i = 0; i < Count; i++) {
+            var count = ModifierToLength(code);
+            for (var i = 0; i < count; i++) {
                 var c = ByteInput.ReadByte();
-                Result = (Result << 8) | c;
+                result = (result << 8) | c;
                 }
-            return Result;
+            return result;
             }
 
-        Token LexerInteger(int Code, bool Positive) {
-            ResultInt64 = Positive ? (long)GetInteger(Code) : -(long)GetInteger(Code);
+        Token LexerInteger(int code, bool positive) {
+            ResultInt64 = positive ? (long)GetInteger(code) : -(long)GetInteger(code);
             return Token.Integer;
             }
 
 
-        Token LexerTag(int Code, bool Terminal) {
-            var Length = (int)GetInteger(Code);
-            var Buffer = ByteInput.ReadBinary(Length);
-            ResultString = Buffer.ToUTF8();
-            this.Terminal = Terminal;
+        Token LexerTag(int code, bool terminal) {
+            var length = (int)GetInteger(code);
+            var buffer = ByteInput.ReadBinary(length);
+            ResultString = buffer.ToUTF8();
+            Terminal = terminal;
             return Token.Tag;
             }
 
-        Token LexerString(int Code, bool Terminal) {
-            var Length = (int)GetInteger(Code);
-            var Buffer = ByteInput.ReadBinary(Length);
-            ResultString = Buffer.ToUTF8();
-            this.Terminal = Terminal;
+        Token LexerString(int code, bool terminal) {
+            var length = (int)GetInteger(code);
+            var buffer = ByteInput.ReadBinary(length);
+            ResultString = buffer.ToUTF8();
+            Terminal = terminal;
             return Token.String;
             }
 
         int lengthRemainingRead = -1;
         int binaryBuffer = -1;
 
-        Token LexerBinary(int Code, bool Terminal) {
-            lengthRemainingRead = (int)GetInteger(Code);
-            this.Terminal = Terminal;
+        Token LexerBinary(int code, bool terminal) {
+            lengthRemainingRead = (int)GetInteger(code);
+            Terminal = terminal;
             return Token.Binary;
             }
 
@@ -269,22 +260,22 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Read a partial binary value.
         /// </summary>
-        /// <param name="Data">Buffer to write the data read to.</param>
-        /// <param name="Offset">Byte offset from start of <paramref name="Data"/></param>
-        /// <param name="Count">Number of bytes to be read.</param>
+        /// <param name="data">Buffer to write the data read to.</param>
+        /// <param name="offset">Byte offset from start of <paramref name="data"/></param>
+        /// <param name="count">Number of bytes to be read.</param>
         /// <returns>Number of bytes read or 0 if the end of the stream is reached.</returns>
 
         public virtual int ReadBinaryData(
-            byte[] Data, int Offset, int Count) {
-            int Length;
+            byte[] data, int offset, int count) {
+            int length;
 
             if (binaryBuffer >= 0) {
-                Length = Math.Min(Count, ResultBinary.Length - binaryBuffer);
+                length = Math.Min(count, ResultBinary.Length - binaryBuffer);
 
-                Buffer.BlockCopy(ResultBinary, binaryBuffer, Data, Offset, Length);
-                binaryBuffer += Length;
+                Buffer.BlockCopy(ResultBinary, binaryBuffer, data, offset, length);
+                binaryBuffer += length;
 
-                return Length;
+                return length;
                 }
 
 
@@ -300,14 +291,14 @@ namespace Goedel.Protocol {
                 }
 
             // reduce the read count to the smaller of count and the remaining data.
-            Length = Math.Min(Count, lengthRemainingRead);
+            length = Math.Min(count, lengthRemainingRead);
 
-            lengthRemainingRead -= Length;
-            var Read = ByteInput.ReadBinary(Data, Offset, Length);
+            lengthRemainingRead -= length;
+            var read = ByteInput.ReadBinary(data, offset, length);
 
             //Console.WriteLine("Read ${Read} bytes");
 
-            return Read;
+            return read;
             }
 
 
@@ -316,16 +307,16 @@ namespace Goedel.Protocol {
 
         static Token LexerReal64() => throw new NYI();
 
-        static Token LexerBigInteger(bool Positive) => throw new NYI();
+        static Token LexerBigInteger(bool positive) => throw new NYI();
 
         // JSON-C (currently unused)
-        static Token LexerTagCode(int Code) => throw new NYI();
+        static Token LexerTagCode(int code) => throw new NYI();
 
-        static void LexerTagDefinition(int Code) => throw new NYI();
+        static void LexerTagDefinition(int code) => throw new NYI();
 
-        static Token LexerTagCodeDefinition(int Code) => throw new NYI();
+        static Token LexerTagCodeDefinition(int code) => throw new NYI();
 
-        static void LexerDictionaryDefinition(int Code) => throw new NYI();
+        static void LexerDictionaryDefinition(int code) => throw new NYI();
 
         static void ReadDictionary() { }
 
@@ -376,10 +367,10 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Attempt to read a binary object in incremental mode.
         /// </summary>
-        /// <param name="Chunk">The data read.</param>
+        /// <param name="chunk">The data read.</param>
         /// <returns>True if there is more data to be read</returns>
-        public override bool ReadBinaryIncremental(out byte[] Chunk) {
-            Chunk = ReadBinary();
+        public override bool ReadBinaryIncremental(out byte[] chunk) {
+            chunk = ReadBinary();
             return !Terminal;
             }
 

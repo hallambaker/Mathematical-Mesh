@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 
 using Goedel.Protocol;
 using Goedel.Utilities;
-
+using Goedel.Cryptography;
 namespace Goedel.Protocol.Presentation {
 
     public enum PacketTag {
@@ -22,12 +22,18 @@ namespace Goedel.Protocol.Presentation {
 
         }
 
-    public abstract class PacketWriter {
+    public class PacketWriter {
 
         public int Position { get; set; } = 0;
         public byte[] Data;
 
+        public const int SizeNonce = 16;
+        public const int SizeIv = 12;
+        public const int SizeTag = 16;
+        public const int SizeKey= 32;
 
+        public readonly static byte[] TagIv = "IV".ToUTF8();
+        public readonly static byte[] TagKey = "Key".ToUTF8();
         public static PacketWriter Factory(int packetSize = 1200) => new PacketWriterGCM(packetSize);
 
         public PacketWriter(int packetSize=1200) => Data = new byte[packetSize];
@@ -148,38 +154,75 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="iv">The encryption initialization vector</param>
         /// <param name="key">The encryption key</param>
         /// <param name="data">The plaintext data</param>
-        public abstract void Encrypt(byte[] iv, byte[] key, PacketWriter data);
-
-        public abstract byte[] Wrap(byte[] nonce, byte[] iv, byte[] key);
+        public virtual void Encrypt(byte[] iv, byte[] key, PacketWriter data) => throw new NYI();
 
 
+        /// <summary>
+        /// Wrap the packet 
+        /// </summary>
+        /// <param name="nonce"></param>
+        /// <param name="iv"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public virtual byte[] Wrap(byte[] nonce, byte[] iv, byte[] key) => throw new NYI();
+
+        public static void Derive(byte[] ikm, out byte[] nonce, out byte[]iv, out byte[] key) {
+            nonce = Platform.GetRandomBytes(SizeNonce);
+            nonce[0] |= 0b1000_0000;
+
+            Derive2(ikm, nonce, out iv, out key);
+
+
+            }
+
+        public static void Derive2(byte[] ikm, byte[] nonce, out byte[] iv, out byte[] key) {
+            var keyDerive = new KeyDeriveHKDF(ikm, nonce);
+            iv = keyDerive.Derive(TagIv, SizeIv);
+            key = keyDerive.Derive(TagKey, SizeKey);
+            }
         }
 
 
     public class PacketWriterGCM : PacketWriter {
 
-        public int SizeIv = 12;
-        public int SizeTag = 16;
-
         public PacketWriterGCM(int packetSize = 1200) : base(packetSize) { }
 
-        public override void Encrypt(byte[] iv, byte[] key, PacketWriter data) => 
-            throw new NotImplementedException();
-        
-        
-        
-        
-        public override byte[] Wrap(byte[] nonce, byte[] iv, byte[] key) {
-            var result = new byte[Data.Length];
+        public override void Encrypt(byte[] iv, byte[] key, PacketWriter data) {
 
-            // Copy the nonce.
-            Buffer.BlockCopy(nonce, 0, result, 0, nonce.Length);
+            // to do - make everything in the packet that is not encrypted data,
+            // authenticated data.
 
             var aes = new AesGcm(key);
             var ivSpan = new ReadOnlySpan<byte>(iv);
-            var count = ivSpan.Length;
 
-            var TagSpan = new Span<byte>(result, count, SizeIv);
+            var TagSpan = new Span<byte>(Data, Position, SizeIv);
+            Position += SizeIv;
+
+            var length = Data.Length - Position;
+            var ciphertextSpan = new Span<byte>(Data, Position, length);
+            var plaintextSpan = new ReadOnlySpan<byte>(data.Data, 0, length);
+
+            aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, TagSpan);
+            Position += length;
+            }
+        
+        
+        public byte[] Wrap(byte[] ikm) {
+
+            Derive(ikm, out var nonce, out var iv, out var key);
+
+            var result = new byte[Data.Length];
+
+            // Copy the nonce.
+            // NB, it is the responsibility of the caller to set the top bit to ensure the
+            // packet is correctly identified as a data packet.
+            Buffer.BlockCopy(nonce, 0, result, 0, nonce.Length);
+            var count = nonce.Length;
+
+            var aes = new AesGcm(key);
+            var ivSpan = new ReadOnlySpan<byte>(iv);
+
+            var tagSpan = new Span<byte>(result, count, SizeIv);
             count += SizeIv;
 
             var length = result.Length - count;
@@ -187,7 +230,7 @@ namespace Goedel.Protocol.Presentation {
             var ciphertextSpan = new Span<byte>(result, count, length);
             var plaintextSpan = new ReadOnlySpan<byte>(Data, 0, length);
 
-            aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, TagSpan);
+            aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, tagSpan);
 
             return result;
             }
