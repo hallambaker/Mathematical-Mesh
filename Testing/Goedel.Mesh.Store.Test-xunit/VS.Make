@@ -26,6 +26,7 @@ LinkFiles = \
     Goedel.Test.dll\
     Goedel.Mesh.Core.dll\
     Goedel.Mesh.dll\
+    Goedel.Mesh.Test.dll\
     Goedel.Utilities.Test-xunit.dll
 
 ToolTargets = 

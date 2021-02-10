@@ -21,11 +21,15 @@
 //  
 using Goedel.Cryptography;
 using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
 
 namespace Goedel.Mesh.Client {
 
-
-    public class MeshCredential : JpcCredential {
+    /// <summary>
+    /// JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
+    /// assertion).
+    /// </summary>
+    public class MeshCredential : PresentationCredential {
 
         ProfileAccount ProfileAccount => CatalogedDevice.ProfileUser;
 
@@ -33,13 +37,19 @@ namespace Goedel.Mesh.Client {
 
         CatalogedDevice CatalogedDevice { get; }
 
-
-
-
-
         ConnectionDevice ConnectionDevice { get; }
 
+        protected override KeyPairAdvanced KeySignPrivate => throw new System.NotImplementedException();
 
+        protected override KeyPairAdvanced KeyExchangePrivate => throw new System.NotImplementedException();
+
+        public override KeyPairAdvanced KeySignPublic => throw new System.NotImplementedException();
+
+        public override KeyPairAdvanced KeyExchangePublic => throw new System.NotImplementedException();
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public MeshCredential() {
             }
 
@@ -57,6 +67,9 @@ namespace Goedel.Mesh.Client {
 
             KeyLocate = keyLocate;
             }
+
+        public override void WriteClientCredential(JsonWriter jsonWriter) => throw new System.NotImplementedException();
+        public override void WriteCredential(PacketWriter writer) => throw new System.NotImplementedException();
 
         // authenticate gubbins goes here...
 

@@ -1,0 +1,384 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Protocol.Presentation</name>
+    </assembly>
+    <members>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeInitial(System.Byte[])">
+            <summary>
+            Serialize an initial request packet for this connection;
+            </summary>
+            <param name="payload">The payload data.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.ClientPacketType">
+            <summary>
+            The client packet types. Two bits in the first byte of the nonce value are used to specify 
+            the packet type to the host. The set of packet types is intentionally closed.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.Initial">
+            <summary>Used to make a plaintext request to establish a new connection to the host.
+            This MUST used in cases where the client does not have the public key of the host.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.Cloaked">
+            <summary>Used to make an encrypted request to establish a new connection to the host.
+            This MAY be used in cases where the client has the public key of the host.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.Answer">
+            <summary>Used to respond to a challenge from the host or service. Challenges are sent
+            by the host in response to the Initial and Cloaked packets and in cases where a failure occurs
+            and the Host opts to offer the opportunity to resynchronze. Challenges are sent by the 
+            service in cases where a handoff is being performed.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.Post">
+            <summary>Used for all packets that are not control packets.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.Mask">
+            <summary>Mask used to identify the control bits in the first byte of a packet.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.MaskRest">
+            <summary>Mask used to identify the control bits in the first byte of a packet.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketClientInitial">
+            <summary>
+            Initial packet. This contains only the packet type identifier and the plaintext payload.
+            Since neither the request, nor the response packet can be encrypted, the payload is
+            typically limited to a Hello request for the protocol version and host capabilities.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ListenerHost.ProcessCloaked(Goedel.Protocol.Presentation.PortID,System.Byte[])">
+            <summary>
+            Process a cloaked request packet.
+            </summary>
+            <param name="portID"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketReader">
+            <summary>
+            Presentation packet reader class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PacketReader.Position">
+            <summary>Reader position.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketReader.Packet">
+            <summary>Buffer from which data is read.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.Factory(System.Byte[])">
+            <summary>Factory method returning a reader of the default decryption algorithm and mode.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.#ctor(System.Byte[])">
+            <summary>
+            Constructor, returns a reader instance for the packet <paramref name="packet"/>.
+            </summary>
+            <param name="packet">The packet data.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadByte">
+            <summary>
+            Read the next byte in the packet.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadSpan(System.Int32)">
+            <summary>
+            Return a Span containing the next <paramref name="length"/> bytes.
+            </summary>
+            <param name="length">The number of bytes to return.</param>
+            <returns>The span.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadTag">
+            <summary>
+            Read a tag/length specifier from the stream.
+            </summary>
+            <returns>The tagged data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadInteger">
+            <summary>
+            Read an integer from the stream.
+            </summary>
+            <returns>The data that was read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadBinarySpan">
+            <summary>
+            Read a binary from the stream.
+            </summary>
+            <returns>A span describing the data that was read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadString">
+            <summary>
+            Read a UTF8 encoded string from the stream.
+            </summary>
+            <returns>The data that was read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.Decrypt(System.Byte[])">
+            <summary>
+            Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
+            nonce at the current position in the packet to provide the necessary keying material.
+            </summary>
+            <param name="ikm">The primary key.</param>
+            <returns>A reader for the decrypted data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.Unwrap(System.Byte[],System.Byte[])">
+            <summary>
+            Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="ikm"/> and 
+            the nonce at the start of the packet to provide the necessary keying material.
+            </summary>
+            <param name="ikm">The primary key.</param>
+            <param name="packet">The data to decrypt</param>
+            <returns>A reader for the decrypted data.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketReaderGCM">
+            <summary>
+            Packet reader using AES in GCM mode for decryption.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PacketReaderGCM.SizeIv">
+            <summary>Initialization vector size in bytes. Currently fixed at 12 bytes.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PacketReaderGCM.SizeTag">
+            <summary>Tag size in bytes. Currently fixed at 16 bytes.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReaderGCM.#ctor(System.Byte[])">
+            <summary>
+            Constructor, returns a reader instance for the packet <paramref name="packet"/>.
+            </summary>
+            <param name="packet">The packet data.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReaderGCM.Decrypt(System.Byte[])">
+            <summary>
+            Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
+            nonce at the current position in the packet to provide the necessary keying material.
+            </summary>
+            <param name="ikm">The primary key.</param>
+            <returns>A reader for the decrypted data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReaderGCM.Unwrap(System.Byte[],System.Byte[])">
+            <summary>
+            Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="ikm"/> and 
+            the nonce at the start of the packet to provide the necessary keying material.
+            </summary>
+            <param name="ikm">The primary key.</param>
+            <param name="packet">The data to decrypt</param>
+            <returns>A reader for the decrypted data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.Byte)">
+            <summary>
+            Write a byte to the packet
+            </summary>
+            <param name="b"></param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.WriteTag(Goedel.Protocol.Presentation.PacketTag,System.Int64)">
+            <summary>
+            Write out a Tag-Length value using the shortest possible production
+            to <paramref name="Output"/>.
+            </summary>
+            <param name="Output">The output stream to write to.</param>
+            <param name="tag">Base code.</param>
+            <param name="data">Length of data to follow.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.Int32)">
+             <summary>
+            Write the positive integer <paramref name="data"/> to the packet
+             </summary>
+             <param name="data">The data to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.Byte[])">
+            <summary>
+            Write the binary data <paramref name="data"/> to the packet.
+            </summary>
+            <param name="data">The data to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+             Write the binary data  <paramref name="data"/> to the packet beginning
+             at position <paramref name="offset"/> for <paramref name="count"/> bytes.
+            </summary>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="count"></param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.String)">
+             <summary>
+            Write the string <paramref name="data"/> to the packet
+             </summary>
+             <param name="data">The data to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.SkipBinary(System.Int32)">
+            <summary>
+            Skip forward to reserve space for a data item of <paramref name="length"/>
+            bytes.
+            </summary>
+            <param name="length">Length of the data item to reserve space for.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter)">
+            <summary>
+            Fill out the remainder of the packet with data from <paramref name="data"/> encrypted
+            under <paramref name="iv"/>, <paramref name="key"/>. This form of encryption is used
+            to append encrypted payloads to control packets.
+            </summary>
+            <param name="iv">The encryption initialization vector</param>
+            <param name="key">The encryption key</param>
+            <param name="data">The plaintext data</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Wrap(System.Byte[])">
+            <summary>
+            Wrap the packet 
+            </summary>
+            <param name="nonce"></param>
+            <param name="iv"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.PacketSizeExceeded">
+            <summary>
+            The packet was too small to contain the data
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.PacketSizeExceeded.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.PacketSizeExceeded.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PacketSizeExceeded.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PacketSizeExceeded._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Protocol.PacketSizeExceeded.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.DataEncoding">
+            <summary>Data encoding forms</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.JSON">
+            <summary>JSON encoding in UTF8</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.JSON_A">
+            <summary>JSON easy to edit format in UTF8</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.JSON_B">
+            <summary>JSON-B encoding in UTF8 plus binary extensions</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.JSON_C">
+            <summary>JSON-C encoding in UTF8 plus binary extensions</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.JSON_D">
+            <summary>JSON-D encoding in UTF8 plus binary extensions</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.ASN_1">
+            <summary>ASN-1</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.RFC822">
+            <summary>RFC 822 style message header</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.IsSuccess(System.Int32)">
+            <summary>
+            Report if a protocol status cude indicates success.
+            </summary>
+            <param name="Code">The code to be reported on.</param>
+            <returns>True if the code is in the range 100-299 inclusive, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.IsError(System.Int32)">
+            <summary>
+            Report if a protocol status cude indicates failure.
+            </summary>
+            <param name="Code">The code to be reported on.</param>
+            <returns>True if the code is in the range 300-499 inclusive, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetBytes(Goedel.Protocol.JsonObject,Goedel.Protocol.DataEncoding,System.Boolean)">
+            <summary>Convert object to bytes in specified encoding.</summary>
+            <param name="jsonObject">The object to convert.</param>
+            <param name="dataEncoding">The encoding to convert to (defaults to JSON).</param>
+            <param name="tagged">It true, tag the output value with the object type.</param>
+            <returns>The encoded data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetWriter(Goedel.Protocol.DataEncoding,System.IO.Stream)">
+            <summary>
+            Return the most capable writer available for the specified encoding.
+            </summary>
+            <param name="dataEncoding">The encoding to use.</param>
+            <param name="stream">The stream to be encoded.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.IsDirect(Goedel.Protocol.JpcConnection)">
+            <summary>
+            Returns true if <paramref name="jpcConnection"/> is a direct (i.e. not networked) connection type.
+            </summary>
+            <param name="jpcConnection">The connection to test.</param>
+            <returns>Returns true if <paramref name="jpcConnection"/> is a direct (i.e. not networked) connection type,
+            otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.JsonReader(System.Byte[])">
+            <summary>
+            Create a JSONReader for the specified data
+            </summary>
+            <param name="Data">The data to be read as a UTF8 data stream.</param>
+            <returns>The JSONReader</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.JsonReader(System.String)">
+            <summary>
+            Create a JSONReader for the specified data
+            </summary>
+            <param name="Data">The data to be read as a UTF8 data stream.</param>
+            <returns>The JSONReader</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetJson(Goedel.Protocol.JsonObject,System.Boolean)">
+            <summary>
+            Convert object to byte sequence in JSON form.
+            </summary>
+            <param name="Object">The object to convert</param>
+            <param name="Tagged">If true, serialization is tagged with the object type.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetJsonA(Goedel.Protocol.JsonObject,System.Boolean)">
+            <summary>
+            Convert object to byte sequence in JSON form.
+            </summary>
+            <param name="Object">The object to convert</param>
+            <param name="Tagged">If true, serialization is tagged with the object type.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetJsonB(Goedel.Protocol.JsonObject,System.Boolean)">
+            <summary>
+            Convert object to byte sequence in JSON form.
+            </summary>
+            <param name="Object">The object to convert</param>
+            <param name="Tagged">If true, serialization is tagged with the object type.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetJsonC(Goedel.Protocol.JsonObject,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Convert object to byte sequence in JSON form.
+            </summary>
+            <param name="Object">The object to convert</param>
+            <param name="Tagged">If true, serialization is tagged with the object type.</param>
+            <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetJsonD(Goedel.Protocol.JsonObject,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Convert object to byte sequence in JSON form using JSON-D encoding
+            </summary>
+            <param name="Object">The object to convert</param>
+            <param name="Tagged">If true, serialization is tagged with the object type.</param>
+            <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+    </members>
+</doc>

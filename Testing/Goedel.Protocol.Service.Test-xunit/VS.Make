@@ -20,6 +20,7 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Protocol.Debug.dll\
+    Goedel.Protocol.Presentation.dll\
     Goedel.Protocol.Service.dll\
     Goedel.Protocol.dll\
     Goedel.Test.Core.dll\

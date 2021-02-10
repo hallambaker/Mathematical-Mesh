@@ -6,10 +6,24 @@ using System.Threading.Tasks;
 
 using Goedel.Utilities;
 namespace Goedel.Discovery {
+
+    /// <summary>
+    /// Describes a service endpoint for HTTP and HTTPS transport.
+    /// </summary>
     public class WebServiceEndpoint {
 
-        static int Port => 15099;
+        static int port => 15099;
 
+        /// <summary>
+        /// Return a host endpoint to allow a client to access the service <paramref name="srv"/>
+        /// at domain <paramref name="domain"/>.
+        /// </summary>
+        /// <param name="domain">Service name.</param>
+        /// <param name="wellKnown">Protocol identifier.</param>
+        /// <param name="srv">DNS protocol identifier.</param>
+        /// <param name="instance">Optional instance used to identify a sepcific instance
+        /// of the service on a host.</param>
+        /// <returns>The service endpoint.</returns>
         public static string GetEndpoint(
                     string domain,
 

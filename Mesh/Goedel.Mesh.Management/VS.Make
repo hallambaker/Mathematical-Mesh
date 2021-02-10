@@ -22,6 +22,7 @@ LinkFiles = \
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.dll\
+    Goedel.Protocol.Service.dll\
     Goedel.Mesh.dll
 
 ToolTargets = \

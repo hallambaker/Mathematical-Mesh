@@ -24,7 +24,8 @@ LinkFiles = \
     Goedel.Cryptography.Jose.dll\
     Goedel.Cryptography.dll\
     Goedel.Protocol.dll\
-    Goedel.Test.Core.dll
+    Goedel.Test.Core.dll\
+    Goedel.Mesh.Test.dll
 
 ToolTargets = \
 	TestExample.cs

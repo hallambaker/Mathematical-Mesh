@@ -2347,6 +2347,17 @@
             </summary>
             <returns>The client instance.</returns>
         </member>
+        <member name="T:Goedel.Mesh.Client.MeshCredential">
+            <summary>
+            JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
+            assertion).
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor(Goedel.Mesh.CatalogedDevice,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Create a credential for the device/profile <paramref name="catalogedDevice"/>.

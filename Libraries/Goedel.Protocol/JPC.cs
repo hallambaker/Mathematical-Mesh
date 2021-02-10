@@ -26,32 +26,10 @@ using System.IO;
 
 namespace Goedel.Protocol {
 
-
-
-    ///// <summary>
-    ///// Base class for a Host dispatcher. (kill this soon)
-    ///// </summary>
-    //public abstract class JpcDispatch {
-
-
-    //    /// <summary>
-    //    /// Dispatch Class. Reads input from the provided reader and attempts to
-    //    /// dispatch a method in response. Note that the calling routine may throw 
-    //    /// an error. This must be caught and processed by the host dispatch class.
-    //    /// </summary>
-    //    /// <param name="Session">The service session that is to handle the request.</param>
-    //    /// <param name="JSONReader">The input stream to be read</param>
-    //    /// <returns>The response to the request.</returns>
-    //    public abstract Goedel.Protocol.JsonObject Dispatch(JpcSession Session,
-    //        JsonReader JSONReader);
-
-    //    }
-
     /// <summary>
-    /// Base class for all JPC server and client classes.
+    /// Base class for all JPC server classes.
     /// </summary>
     public abstract class JpcInterface {
-
 
         ///<summary>List of DNS domains serviced by this interface.</summary> 
         public List<string> Domains { get; set; }
@@ -69,8 +47,6 @@ namespace Goedel.Protocol {
         public abstract string GetDiscovery {
             get;
             }
-
-
 
         /// <summary>
         /// Dispatch Class. Reads input from the provided reader and attempts to
@@ -91,12 +67,18 @@ namespace Goedel.Protocol {
         /// <returns>The direct client instance.</returns>
         public abstract Goedel.Protocol.JpcClientInterface GetDirect(JpcSession jpcSession);
 
-
+        /// <summary>
+        /// Return a JpcSession for the service.
+        /// </summary>
+        /// <returns></returns>
         public abstract JpcSession GetSession();
 
 
         }
 
+    /// <summary>
+    /// Base class for all JPC client classes.
+    /// </summary>
     public abstract class JpcClientInterface {
 
         /// <summary>
@@ -118,7 +100,7 @@ namespace Goedel.Protocol {
         /// </summary>		
         public virtual JpcSession JpcSession { get; set; }
 
-
+        ///<summary>The active JpcSession as a remote session.</summary> 
         public JpcRemoteSession JpcRemoteSession => JpcSession as JpcRemoteSession;
 
         }

@@ -7,31 +7,40 @@ using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 namespace Goedel.Protocol.Presentation {
 
+    /// <summary>
+    /// Client side connection state.
+    /// </summary>
+    public enum ClientState {
+        ///<summary>Initial state, sending either Initial or Cloaked.</summary> 
+        Start,
+        ///<summary>Host challenge received, sending answer.</summary> 
+        Challenge,
+        ///<summary>Connection established, sending packets.</summary> 
+        Write,
+        ///<summary>Connection terminated, cannot be used further.</summary> 
+        Abort
+        }
+
+
+
+    /// <summary>
+    /// Base class for connections
+    /// </summary>
     public class Connection : Disposable {
         }
 
-
-    public enum ClientState {
-
-
-        Start,
-
-        Challenge,
-
-        Write,
-
-        Abort
-
-        }
-
-
-
-
-
+    /// <summary>
+    /// Client connection class.
+    /// </summary>
     public class ConnectionClient : Connection {
+
+        /// <summary>The credential to be presented by the client.</summary>
         PresentationCredential ClientCredential { get; }
+
+        /// <summary>The credential to be presented by the host.</summary>
         PresentationCredential HostCredential { get; set; }
 
+        ///<summary>The client state.</summary> 
         public ClientState ClientState { get; private set; }
 
         PacketClientChallenge packetClientChallenge { get; set; }
@@ -40,18 +49,31 @@ namespace Goedel.Protocol.Presentation {
         string Endpoint { get; }
 
         PortID PortID;
-        public ConnectionClient(PresentationCredential presentationCredential ,
-                            PresentationCredential hostCredential,
-                            string protocol,
+
+        /// <summary>
+        /// Constructor, establish a client connection for the service 
+        /// <paramref name="protocol"/> at address <paramref name="endpoint"/>.
+        /// </summary>
+        /// <param name="protocol">The service protocol.</param>
+        /// <param name="endpoint">The service address.</param>
+        /// <param name="portID">The port identifier.</param>
+        /// <param name="clientCredential">The client credential.</param>
+        /// <param name="hostCredential">The host credential (if known).</param>
+        /// <param name="payload">The payload to be sent in the initial packet.</param>
+        public ConnectionClient(string protocol,
                             string endpoint,
-                            PortID portID) {
+                            PortID portID,
+                            PresentationCredential clientCredential,
+                            PresentationCredential hostCredential=null,
+                            byte[] payload=null) {
             ClientState = ClientState.Start;
-            ClientCredential = presentationCredential;
+            ClientCredential = clientCredential;
             HostCredential = hostCredential;
             Protocol = protocol;
             Endpoint = endpoint;
             PortID = portID;
             }
+
 
         public virtual PacketClient Post(PacketClientOut packetClientOut) {
             throw new NYI();
@@ -323,23 +345,6 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>Mask used to identify the control bits in the first byte of a packet.</summary> 
         MaskRest = 0xff ^ Post
-        }
-
-
-
-    public abstract class PresentationCredential {
-        protected abstract KeyPairAdvanced KeySignPrivate { get; }
-
-        protected abstract KeyPairAdvanced KeyExchangePrivate { get; }
-
-        public abstract KeyPairAdvanced KeySignPublic { get; }
-
-        public abstract KeyPairAdvanced KeyExchangePublic { get; }
-
-
-        public abstract void WriteClientCredential(JsonWriter jsonWriter);
-
-
         }
 
 

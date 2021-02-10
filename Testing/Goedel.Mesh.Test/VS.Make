@@ -27,6 +27,7 @@ LinkFiles = \
     Goedel.Test.Core.dll\
     Goedel.Test.dll\
     Goedel.Mesh.Client.dll\
+    Goedel.Mesh.Management.dll\
     Goedel.Mesh.Shell.dll\
     Goedel.Mesh.dll
 

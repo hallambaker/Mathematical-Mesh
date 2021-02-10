@@ -191,6 +191,7 @@ namespace Goedel.XUnit {
 
             }
 
+        public override void WriteCredential(PacketWriter writer) => throw new NotImplementedException();
         }
 
 
@@ -223,12 +224,12 @@ namespace Goedel.XUnit {
                     PortID portID,
                     string protocol = "mmm",
                     string endpoint = "example.com") :
-                    base(presentationCredentialTest, listenerHost.HostCredential, 
-                        protocol, endpoint, portID) {
+                    base(protocol, endpoint,
+                        portID, presentationCredentialTest, listenerHost.HostCredential) {
             PresentationCredentialTest = presentationCredentialTest;
             }
 
-        public virtual PacketClient Post(PacketClientOut packetClientOut) {
+        public override PacketClient Post(PacketClientOut packetClientOut) {
             throw new NYI();
             }
 
