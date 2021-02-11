@@ -73,7 +73,7 @@ namespace Goedel.Protocol.Presentation {
         /// Read an integer from the stream.
         /// </summary>
         /// <returns>The data that was read.</returns>
-        int ReadInteger() {
+        public int ReadInteger() {
             var (packetTag, data) = ReadTag();
             (packetTag == PacketTag.Integer).AssertTrue(NYI.Throw);
             return (int) data;
@@ -83,7 +83,7 @@ namespace Goedel.Protocol.Presentation {
         /// Read a binary from the stream.
         /// </summary>
         /// <returns>A span describing the data that was read.</returns>
-        Span<byte> ReadBinarySpan() {
+        public Span<byte> ReadBinarySpan() {
             var (packetTag, length) = ReadTag();
             (packetTag == PacketTag.Binary).AssertTrue(NYI.Throw);
             return ReadSpan((int) length);
@@ -93,12 +93,14 @@ namespace Goedel.Protocol.Presentation {
         /// Read a UTF8 encoded string from the stream.
         /// </summary>
         /// <returns>The data that was read.</returns>
-        string ReadString() {
+        public string ReadString() {
             var (packetTag, length) = ReadTag();
             (packetTag == PacketTag.String).AssertTrue(NYI.Throw);
             return ReadSpan((int)length).ToString();
             }
 
+
+        public byte[] ReadBinary() => ReadBinarySpan().ToArray();
 
         /// <summary>
         /// Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
@@ -138,18 +140,18 @@ namespace Goedel.Protocol.Presentation {
         public PacketReaderGCM(byte[] packet) : base(packet) { }
 
         /// <summary>
-        /// Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
+        /// Decrypt the remainder of the packet using the primary key <paramref name="key"/> and the 
         /// nonce at the current position in the packet to provide the necessary keying material.
         /// </summary>
-        /// <param name="ikm">The primary key.</param>
+        /// <param name="key">The primary key.</param>
         /// <returns>A reader for the decrypted data.</returns>
-        public override PacketReader Decrypt(byte[] ikm) {
+        public override PacketReader Decrypt(byte[] key) {
 
-            var nonce = new byte[Constants.SizeNonceAesGcm];
-            Buffer.BlockCopy(Packet, Position, nonce, 0, nonce.Length);
-            Position += nonce.Length;
+            var iv = new byte[Constants.SizeIvAesGcm];
+            Buffer.BlockCopy(Packet, Position, iv, 0, iv.Length);
+            Position += iv.Length;
 
-            Constants.Derive2(ikm, nonce, out var iv, out var key);
+            //Constants.Derive2(ikm, nonce, out var iv, out var key);
 
             var aes = new AesGcm(key);
             var ivSpan = new ReadOnlySpan<byte>(iv);
@@ -170,18 +172,18 @@ namespace Goedel.Protocol.Presentation {
             }
 
         /// <summary>
-        /// Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="ikm"/> and 
+        /// Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="key"/> and 
         /// the nonce at the start of the packet to provide the necessary keying material.
         /// </summary>
-        /// <param name="ikm">The primary key.</param>
+        /// <param name="key">The primary key.</param>
         /// <param name="packet">The data to decrypt</param>
         /// <returns>A reader for the decrypted data.</returns>
-        public static new PacketReader Unwrap(byte[] ikm, byte[] packet) {
-            var nonce = new byte[Constants.SizeNonceAesGcm];
-            Buffer.BlockCopy(packet, 0, nonce, 0, Constants.SizeNonceAesGcm);
+        public static new PacketReader Unwrap(byte[] key, byte[] packet) {
+            var iv = new byte[Constants.SizeNonceAesGcm];
+            Buffer.BlockCopy(packet, 0, iv, 0, Constants.SizeIvAesGcm);
             var position = Constants.SizeNonceAesGcm;
 
-            Constants.Derive2(ikm, nonce, out var iv, out var key);
+            //Constants.Derive2(ikm, nonce, out var iv, out var key);
 
             var aes = new AesGcm(key);
             var ivSpan = new ReadOnlySpan<byte>(iv);

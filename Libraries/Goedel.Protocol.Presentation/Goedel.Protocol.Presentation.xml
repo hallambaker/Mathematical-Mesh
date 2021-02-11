@@ -4,6 +4,54 @@
         <name>Goedel.Protocol.Presentation</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Protocol.Presentation.ClientState">
+            <summary>
+            Client side connection state.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientState.Start">
+            <summary>Initial state, sending either Initial or Cloaked.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientState.Challenge">
+            <summary>Host challenge received, sending answer.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientState.Write">
+            <summary>Connection established, sending packets.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientState.Abort">
+            <summary>Connection terminated, cannot be used further.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.Connection">
+            <summary>
+            Base class for connections
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.ConnectionClient">
+            <summary>
+            Client connection class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.ConnectionClient.ClientCredential">
+            <summary>The credential to be presented by the client.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.ConnectionClient.HostCredential">
+            <summary>The credential to be presented by the host.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.ConnectionClient.ClientState">
+            <summary>The client state.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.#ctor(System.String,System.String,Goedel.Protocol.Presentation.PortID,Goedel.Protocol.Presentation.PresentationCredential,Goedel.Protocol.Presentation.PresentationCredential,System.Byte[])">
+            <summary>
+            Constructor, establish a client connection for the service 
+            <paramref name="protocol"/> at address <paramref name="endpoint"/>.
+            </summary>
+            <param name="protocol">The service protocol.</param>
+            <param name="endpoint">The service address.</param>
+            <param name="portID">The port identifier.</param>
+            <param name="clientCredential">The client credential.</param>
+            <param name="hostCredential">The host credential (if known).</param>
+            <param name="payload">The payload to be sent in the initial packet.</param>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeInitial(System.Byte[])">
             <summary>
             Serialize an initial request packet for this connection;
@@ -46,6 +94,55 @@
             Since neither the request, nor the response packet can be encrypted, the payload is
             typically limited to a Hello request for the protocol version and host capabilities.
             </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.Constants">
+            <summary>
+            Constants class
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.MinimumPacketSize">
+            <summary>The minimum packet size.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.SizeNonceAesGcm">
+            <summary>Size of packet nonce to be used in AES-GCM packet.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.SizeIvAesGcm">
+            <summary>Size of initialization vector / AES nonce to be used in AES-GCM packet.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.SizeTagAesGcm">
+            <summary>Size of authentication tag to be used in AES-GCM packet.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.SizeKeyAesGcm">
+            <summary>Size of key to be used in AES-GCM packet.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.TagIv">
+            <summary>The KDF info tag to be used to derive initialization vectors.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.TagKey">
+            <summary>The KDF info tag to be used to derive keys.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.Derive(System.Byte[],System.Byte[]@,System.Byte[]@,System.Byte[]@)">
+            <summary>
+            Using the primary key <paramref name="ikm"/> and generated nonce <paramref name="nonce"/>,
+            derive key <paramref name="key"/> and initialization vector <paramref name="iv"/>.
+            </summary>
+            <param name="ikm">The primary key.</param>
+            <param name="nonce">The generated nonce.</param>
+            <param name="iv">The generated initialization vector.</param>
+            <param name="key">The generated key.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.Derive2(System.Byte[],System.Byte[],System.Byte[]@,System.Byte[]@)">
+            <summary>
+            Using the primary key <paramref name="ikm"/> and provided nonce <paramref name="nonce"/>,
+            derive key <paramref name="key"/> and initialization vector <paramref name="iv"/>.
+            </summary>
+            <param name="ikm">The primary key.</param>
+            <param name="nonce">The nonce.</param>
+            <param name="iv">The generated initialization vector.</param>
+            <param name="key">The generated key.</param>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ZeroArray">
+            <summary>Obsolete, remove</summary> 
         </member>
         <member name="M:Goedel.Protocol.Presentation.ListenerHost.ProcessCloaked(Goedel.Protocol.Presentation.PortID,System.Byte[])">
             <summary>
@@ -148,20 +245,78 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReaderGCM.Decrypt(System.Byte[])">
             <summary>
-            Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
+            Decrypt the remainder of the packet using the primary key <paramref name="key"/> and the 
             nonce at the current position in the packet to provide the necessary keying material.
             </summary>
-            <param name="ikm">The primary key.</param>
+            <param name="key">The primary key.</param>
             <returns>A reader for the decrypted data.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReaderGCM.Unwrap(System.Byte[],System.Byte[])">
             <summary>
-            Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="ikm"/> and 
+            Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="key"/> and 
             the nonce at the start of the packet to provide the necessary keying material.
             </summary>
-            <param name="ikm">The primary key.</param>
+            <param name="key">The primary key.</param>
             <param name="packet">The data to decrypt</param>
             <returns>A reader for the decrypted data.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketTag">
+            <summary>
+            Packet tag types
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketTag.Integer">
+            <summary>Integer field</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketTag.String">
+            <summary>String field</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketTag.Binary">
+            <summary>Binary field</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketTag.Ipv4">
+            <summary>IPv4 address</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketTag.Ipv6">
+            <summary>IPv6 Address</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketTag.Port">
+            <summary>IP port number</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketTag.Extensions">
+            <summary>List of extensions follow</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketTag.Tag">
+            <summary>Extension identifier</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketWriter">
+            <summary>
+            Base class for packet writers.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PacketWriter.Position">
+            <summary>Position of the writer within the packet.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketWriter.Packet">
+            <summary>The Packet data</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Factory(System.Int32)">
+            <summary>Factory method, returns a packet writer for the default encryption algorithm.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.#ctor(System.Int32)">
+            <summary>
+            Constructor, create a packet writer with a packet size of 
+            <paramref name="packetSize"/>.
+            </summary>
+            <param name="packetSize">The number of bytes in the packet to be created.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.LengthLength(System.Int64)">
+            <summary>
+            Return the number of bytes taken to specify tag/length production of length
+            <paramref name="data"/>.
+            </summary>
+            <param name="data">The data item to size.</param>
+            <returns>Number of bytes required for the encoding.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.Byte)">
             <summary>
@@ -171,10 +326,8 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.WriteTag(Goedel.Protocol.Presentation.PacketTag,System.Int64)">
             <summary>
-            Write out a Tag-Length value using the shortest possible production
-            to <paramref name="Output"/>.
+            Write out a Tag-Length value using the shortest possible production.
             </summary>
-            <param name="Output">The output stream to write to.</param>
             <param name="tag">Base code.</param>
             <param name="data">Length of data to follow.</param>
         </member>
@@ -214,22 +367,74 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter)">
             <summary>
-            Fill out the remainder of the packet with data from <paramref name="data"/> encrypted
-            under <paramref name="iv"/>, <paramref name="key"/>. This form of encryption is used
-            to append encrypted payloads to control packets.
+            Fill out the remainder of the packet by using the value <paramref name="ikm"/>
+            and a generated nonce to encrypt the data specified in <paramref name="packet"/>
             </summary>
-            <param name="iv">The encryption initialization vector</param>
-            <param name="key">The encryption key</param>
-            <param name="data">The plaintext data</param>
+            <param name="ikm">The primary key.</param>
+            <param name="packet">The plaintext data</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Wrap(System.Byte[])">
             <summary>
-            Wrap the packet 
+            Wrap a data packet payload to create an encrypted data packet.
             </summary>
-            <param name="nonce"></param>
-            <param name="iv"></param>
-            <param name="key"></param>
-            <returns></returns>
+            <param name="ikm">The primary key.</param>
+            <returns>The wrapped data packet.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketWriterGCM">
+            <summary>
+            Encrypting packet writer.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterGCM.#ctor(System.Int32)">
+            <summary>
+            Constructor, create a packet writer with a packet size of 
+            <paramref name="packetSize"/>.
+            </summary>
+            <param name="packetSize">The number of bytes in the packet to be created.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterGCM.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter)">
+            <summary>
+            Fill out the remainder of the packet by using the value <paramref name="key"/>
+            and a generated nonce to encrypt the data specified in <paramref name="writerIn"/>
+            </summary>
+            <param name="key">The primary key.</param>
+            <param name="writerIn">The plaintext data</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterGCM.Wrap(System.Byte[])">
+            <summary>
+            Wrap a data packet payload to create an encrypted data packet.
+            </summary>
+            <param name="key">The primary key.</param>
+            <returns>The wrapped data packet.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PresentationCredential">
+            <summary>
+            Base class for presentation credential
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PresentationCredential.KeySignPrivate">
+            <summary>The signature key to sign under the credential.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PresentationCredential.KeyExchangePrivate">
+            <summary>The private key exchange key.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PresentationCredential.KeySignPublic">
+            <summary>The signature verification key under the credential</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PresentationCredential.KeyExchangePublic">
+            <summary>The public key exchange key.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PresentationCredential.WriteClientCredential(Goedel.Protocol.JsonWriter)">
+            <summary>
+            Obsolete, to be removed.
+            </summary>
+            <param name="jsonWriter"></param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PresentationCredential.WriteCredential(Goedel.Protocol.Presentation.PacketWriter)">
+            <summary>
+            Write credential type specifier and credential to packet.
+            </summary>
+            <param name="writer">The packet writer</param>
         </member>
         <member name="T:Goedel.Protocol.PacketSizeExceeded">
             <summary>
@@ -263,122 +468,37 @@
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Protocol.DataEncoding">
-            <summary>Data encoding forms</summary>
-        </member>
-        <member name="F:Goedel.Protocol.DataEncoding.JSON">
-            <summary>JSON encoding in UTF8</summary>
-        </member>
-        <member name="F:Goedel.Protocol.DataEncoding.JSON_A">
-            <summary>JSON easy to edit format in UTF8</summary>
-        </member>
-        <member name="F:Goedel.Protocol.DataEncoding.JSON_B">
-            <summary>JSON-B encoding in UTF8 plus binary extensions</summary>
-        </member>
-        <member name="F:Goedel.Protocol.DataEncoding.JSON_C">
-            <summary>JSON-C encoding in UTF8 plus binary extensions</summary>
-        </member>
-        <member name="F:Goedel.Protocol.DataEncoding.JSON_D">
-            <summary>JSON-D encoding in UTF8 plus binary extensions</summary>
-        </member>
-        <member name="F:Goedel.Protocol.DataEncoding.ASN_1">
-            <summary>ASN-1</summary>
-        </member>
-        <member name="F:Goedel.Protocol.DataEncoding.RFC822">
-            <summary>RFC 822 style message header</summary>
-        </member>
-        <member name="M:Goedel.Protocol.Extensions.IsSuccess(System.Int32)">
+        <member name="T:Goedel.Protocol.InvalidClientState">
             <summary>
-            Report if a protocol status cude indicates success.
+            The client is in an invalid state for the requested operation.
             </summary>
-            <param name="Code">The code to be reported on.</param>
-            <returns>True if the code is in the range 100-299 inclusive, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Extensions.IsError(System.Int32)">
+        <member name="P:Goedel.Protocol.InvalidClientState.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.InvalidClientState.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.InvalidClientState.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Report if a protocol status cude indicates failure.
-            </summary>
-            <param name="Code">The code to be reported on.</param>
-            <returns>True if the code is in the range 300-499 inclusive, otherwise false.</returns>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Protocol.Extensions.GetBytes(Goedel.Protocol.JsonObject,Goedel.Protocol.DataEncoding,System.Boolean)">
-            <summary>Convert object to bytes in specified encoding.</summary>
-            <param name="jsonObject">The object to convert.</param>
-            <param name="dataEncoding">The encoding to convert to (defaults to JSON).</param>
-            <param name="tagged">It true, tag the output value with the object type.</param>
-            <returns>The encoded data.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Extensions.GetWriter(Goedel.Protocol.DataEncoding,System.IO.Stream)">
+        <member name="M:Goedel.Protocol.InvalidClientState._Throw(System.Object)">
             <summary>
-            Return the most capable writer available for the specified encoding.
+            The public fatory delegate
             </summary>
-            <param name="dataEncoding">The encoding to use.</param>
-            <param name="stream">The stream to be encoded.</param>
-            <returns></returns>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="M:Goedel.Protocol.Extensions.IsDirect(Goedel.Protocol.JpcConnection)">
+        <member name="F:Goedel.Protocol.InvalidClientState.Throw">
             <summary>
-            Returns true if <paramref name="jpcConnection"/> is a direct (i.e. not networked) connection type.
+            The public fatory delegate
             </summary>
-            <param name="jpcConnection">The connection to test.</param>
-            <returns>Returns true if <paramref name="jpcConnection"/> is a direct (i.e. not networked) connection type,
-            otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Extensions.JsonReader(System.Byte[])">
-            <summary>
-            Create a JSONReader for the specified data
-            </summary>
-            <param name="Data">The data to be read as a UTF8 data stream.</param>
-            <returns>The JSONReader</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Extensions.JsonReader(System.String)">
-            <summary>
-            Create a JSONReader for the specified data
-            </summary>
-            <param name="Data">The data to be read as a UTF8 data stream.</param>
-            <returns>The JSONReader</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Extensions.GetJson(Goedel.Protocol.JsonObject,System.Boolean)">
-            <summary>
-            Convert object to byte sequence in JSON form.
-            </summary>
-            <param name="Object">The object to convert</param>
-            <param name="Tagged">If true, serialization is tagged with the object type.</param>
-            <returns>Data as byte sequence.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Extensions.GetJsonA(Goedel.Protocol.JsonObject,System.Boolean)">
-            <summary>
-            Convert object to byte sequence in JSON form.
-            </summary>
-            <param name="Object">The object to convert</param>
-            <param name="Tagged">If true, serialization is tagged with the object type.</param>
-            <returns>Data as byte sequence.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Extensions.GetJsonB(Goedel.Protocol.JsonObject,System.Boolean)">
-            <summary>
-            Convert object to byte sequence in JSON form.
-            </summary>
-            <param name="Object">The object to convert</param>
-            <param name="Tagged">If true, serialization is tagged with the object type.</param>
-            <returns>Data as byte sequence.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Extensions.GetJsonC(Goedel.Protocol.JsonObject,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Int32})">
-            <summary>
-            Convert object to byte sequence in JSON form.
-            </summary>
-            <param name="Object">The object to convert</param>
-            <param name="Tagged">If true, serialization is tagged with the object type.</param>
-            <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
-            <returns>Data as byte sequence.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Extensions.GetJsonD(Goedel.Protocol.JsonObject,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Int32})">
-            <summary>
-            Convert object to byte sequence in JSON form using JSON-D encoding
-            </summary>
-            <param name="Object">The object to convert</param>
-            <param name="Tagged">If true, serialization is tagged with the object type.</param>
-            <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
-            <returns>Data as byte sequence.</returns>
         </member>
     </members>
 </doc>

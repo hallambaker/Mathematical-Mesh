@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 
 using Goedel.Protocol;
 using Goedel.Utilities;
+using Goedel.Cryptography;
 
 namespace Goedel.Protocol.Presentation {
 
@@ -20,23 +21,14 @@ namespace Goedel.Protocol.Presentation {
         String = 1,
         ///<summary>Binary field</summary> 
         Binary = 2,
-        ///<summary>IPv4 address</summary> 
-        Ipv4 = 3,
-        ///<summary>IPv6 Address</summary> 
-        Ipv6 = 4,
-        ///<summary>IP port number</summary> 
-        Port = 5,
         ///<summary>List of extensions follow</summary> 
-        Extensions = 6,
-        ///<summary>Extension identifier</summary> 
-        Tag = 7,
-
+        Extensions = 3,
         }
 
     /// <summary>
     /// Base class for packet writers.
     /// </summary>
-    public class PacketWriter {
+    public class PacketWriter : Disposable {
 
         ///<summary>Position of the writer within the packet.</summary> 
         public int Position { get; set; } = 0;
@@ -46,7 +38,7 @@ namespace Goedel.Protocol.Presentation {
 
 
         ///<summary>Factory method, returns a packet writer for the default encryption algorithm.</summary> 
-        public static PacketWriter Factory(int packetSize = 1200) => new PacketWriterGCM(packetSize);
+        public static PacketWriter Factory(int packetSize = 1200) => new PacketWriterAesGcm(packetSize);
 
         /// <summary>
         /// Constructor, create a packet writer with a packet size of 
@@ -139,8 +131,15 @@ namespace Goedel.Protocol.Presentation {
         /// Write the binary data <paramref name="data"/> to the packet.
         /// </summary>
         /// <param name="data">The data to write</param>
-        public void Write(byte[] data) =>
+        public void Write(byte[] data) {
+            if (data == null) {
+                WriteTag(PacketTag.Binary, 0);
+                }
+            else {
                 Write(PacketTag.Binary, data, 0, data.Length);
+                }
+            }
+
 
         /// <summary>
         ///  Write the binary data  <paramref name="data"/> to the packet beginning
@@ -160,6 +159,39 @@ namespace Goedel.Protocol.Presentation {
             var buffer = data.ToUTF8();
             Write(PacketTag.Binary, buffer, 0, buffer.Length);
             }
+
+
+        /// <summary>
+        ///Write the positive EncryptedPacketIdentifier <paramref name="data"/> to the packet
+        /// </summary>
+        /// <param name="data">The data to write</param>
+        public void Write(EncryptedPacketIdentifier data)
+                    => Write((int)data);
+
+        /// <summary>
+        ///Write the positive EncryptedPacketIdentifier <paramref name="data"/> to the packet
+        /// </summary>
+        /// <param name="data">The data to write</param>
+        public void Write(PlaintextPacketType data)
+                    => Write((byte)data);
+
+
+
+        public void WriteOptions(List<PacketExtension> extensions=null) {
+
+            if (extensions == null) {
+                WriteTag(PacketTag.Extensions, 0);
+                }
+
+            WriteTag(PacketTag.Extensions, extensions.Count);
+
+            foreach (var option in extensions) {
+                Write(option.Tag);
+                Write(option.Value);
+                }
+
+            }
+
 
         /// <summary>
         /// Skip forward to reserve space for a data item of <paramref name="length"/>
@@ -190,7 +222,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Encrypting packet writer.
     /// </summary>
-    public class PacketWriterGCM : PacketWriter {
+    public class PacketWriterAesGcm : PacketWriter {
 
 
 
@@ -199,26 +231,23 @@ namespace Goedel.Protocol.Presentation {
         /// <paramref name="packetSize"/>.
         /// </summary>
         /// <param name="packetSize">The number of bytes in the packet to be created.</param>
-        public PacketWriterGCM(int packetSize = 1200) : base(packetSize) { }
+        public PacketWriterAesGcm(int packetSize = 1200) : base(packetSize) { }
 
         /// <summary>
-        /// Fill out the remainder of the packet by using the value <paramref name="ikm"/>
+        /// Fill out the remainder of the packet by using the value <paramref name="key"/>
         /// and a generated nonce to encrypt the data specified in <paramref name="writerIn"/>
         /// </summary>
-        /// <param name="ikm">The primary key.</param>
+        /// <param name="key">The primary key.</param>
         /// <param name="writerIn">The plaintext data</param>
-        public override void Encrypt(byte[] ikm, PacketWriter writerIn) {
-
-            Constants.Derive(ikm, out var nonce, out var iv, out var key);
-            // packet is correctly identified as a data packet.
-            Buffer.BlockCopy(nonce, 0, Packet, Position, nonce.Length);
-            Position += nonce.Length;
-
-            // to do - make everything in the packet that is not encrypted data,
-            // authenticated data.
+        public override void Encrypt(byte[] key, PacketWriter writerIn) {
 
             var aes = new AesGcm(key);
+
+            var iv = Platform.GetRandomBytes(Constants.SizeIvAesGcm);
             var ivSpan = new ReadOnlySpan<byte>(iv);
+
+            Buffer.BlockCopy(iv, 0, Packet, 0, iv.Length);
+            Position+= iv.Length;
 
             // Set up the authentication span so it covers the start of the 
             // packet up to the tag.
@@ -238,22 +267,27 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Wrap a data packet payload to create an encrypted data packet.
         /// </summary>
-        /// <param name="ikm">The primary key.</param>
+        /// <param name="key">The primary key.</param>
         /// <returns>The wrapped data packet.</returns>
-        public override byte[] Wrap(byte[] ikm) {
+        public override byte[] Wrap(byte[] key) {
 
-            Constants.Derive(ikm, out var nonce, out var iv, out var key);
+            //Constants.Derive(ikm, out var nonce, out var iv, out var key);
 
             var result = new byte[Packet.Length];
 
             // Copy the nonce.
             // NB, it is the responsibility of the caller to set the top bit to ensure the
             // packet is correctly identified as a data packet.
-            Buffer.BlockCopy(nonce, 0, result, 0, nonce.Length);
-            var count = nonce.Length;
+
 
             var aes = new AesGcm(key);
+
+            var iv = Platform.GetRandomBytes(Constants.SizeIvAesGcm);
             var ivSpan = new ReadOnlySpan<byte>(iv);
+
+            Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
+            var count = iv.Length;
+
 
             var tagSpan = new Span<byte>(result, count, Constants.SizeIvAesGcm);
             count += Constants.SizeIvAesGcm;

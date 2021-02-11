@@ -9,6 +9,73 @@ using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation {
 
+
+    /// <summary>
+    /// Identifiers used within encrypted data packets.
+    /// </summary>
+    public enum EncryptedPacketIdentifier {
+        ///<summary>Packet contains a complete message.</summary> 
+        Atomic = 0,
+
+        ///<summary>Heartbeat packet, the outbound port and IP address to which the sender 
+        ///directs it.</summary> 
+        Heartbeat = 1,
+
+        ///<summary>Packet contains a part of a message.</summary> 
+        Serialized = 2,
+
+        ///<summary>Packet contains a part of a message in a streamed connection.</summary> 
+        Streamed = 3,
+
+        ///<summary>Packet contains a tunnelled message.</summary> 
+        Tunnelled = 64
+        }
+
+
+    /// <summary>
+    /// The packet types passed as plaintext.
+    /// </summary>
+    public enum PlaintextPacketType {
+
+
+        ///<summary>Report an error to the sender.</summary> 
+        Error = 0,
+
+        ///<summary>Plaintext request to establish a new connection to the host. This is 
+        ///only used in cases where the client does not have the public key of the host.</summary> 
+        Initial = 1,
+
+        ///<summary>Encrypted request to establish a new connection to the host.
+        ///This MAY be used in cases where the client has the public key of the host.</summary> 
+        ClientExchange =2,
+
+        ///<summary>Present a challenge to a client requesting a connection.</summary> 
+        HostChallenge = 3,
+
+        ///<summary>Present host ephemeral key used to complete a connection.</summary> 
+        HostExchange = 4,
+
+        ///<summary>Establish a new binding for the specified connection identifier.</summary> 
+        Rebind = 5
+
+        }
+
+    /// <summary>
+    /// Error response codes.
+    /// </summary>
+    public enum ErrorCode {
+        
+        ///<summary>The request could not be bound to an inbound connection. This could be because
+        ///the source address has changed.</summary> 
+        UnknownConnection = 0,
+
+        ///<summary>The request was refused for reasons reserved to the responder.</summary> 
+        Refused = 1
+
+
+        }
+
+
     /// <summary>
     /// Constants class
     /// </summary>

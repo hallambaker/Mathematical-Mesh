@@ -5,3 +5,8 @@ Namespace Goedel.Protocol
         Console "The packet was too small to contain the data."
 		Description
 			|The packet was too small to contain the data
+
+	Exception InvalidClientState
+        Console "The client is in an invalid state for the requested operation."
+		Description
+			|The client is in an invalid state for the requested operation.
