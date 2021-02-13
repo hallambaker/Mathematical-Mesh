@@ -52,17 +52,20 @@ namespace Goedel.Protocol.Presentation {
         ///This MAY be used in cases where the client has the public key of the host.</summary> 
         ClientExchange =2,
 
+        ///<summary>Client completion of key exchange.</summary> 
+        ClientComplete = 3,
+
         ///<summary>Present a challenge to a client requesting a connection.</summary> 
-        HostChallenge = 3,
+        HostChallenge = 4,
+
+        ///<summary>Present a challenge to a client requesting a connection.</summary> 
+        HostExchange = 5,
 
         ///<summary>Host completion of key exchange.</summary> 
-        HostComplete = 4,
-
-        ///<summary>Client completion of key exchange.</summary> 
-        ClientComplete = 5,
+        HostComplete = 6,
 
         ///<summary>Establish a new binding for the specified connection identifier.</summary> 
-        Rebind = 6
+        Rebind = 7
 
         }
 

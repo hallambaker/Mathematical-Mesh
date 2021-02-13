@@ -23,6 +23,8 @@ using Goedel.Cryptography;
 using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 
+using System.Collections.Generic;
+
 namespace Goedel.Mesh.Client {
 
     /// <summary>
@@ -46,6 +48,8 @@ namespace Goedel.Mesh.Client {
         public override KeyPairAdvanced KeySignPublic => throw new System.NotImplementedException();
 
         public override KeyPairAdvanced KeyExchangePublic => throw new System.NotImplementedException();
+
+        public override List<PacketExtension> GetCredentials => throw new System.NotImplementedException();
 
         /// <summary>
         /// Default constructor

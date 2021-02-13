@@ -15,6 +15,7 @@ Host->Client: HostExchange
 
 Client->Host: ClientComplete
     Encrypt (ClientEphemeral.HostCredential)
+        Protocol+Address
         ClientCredential
         Encrypt (ClientEphemeral.HostCredential+HostEphemeral.ClientCredential)
             Payload
@@ -35,6 +36,7 @@ Host->Client: HostChallenge
 Client->Host: ClientComplete
     Extension: Answer
     Encrypt (ClientEphemeral.HostCredential)
+        Protocol+Address
         ClientCredential
         Encrypt (ClientEphemeral.HostCredential+HostEphemeral.ClientCredential)
             Payload
@@ -45,9 +47,9 @@ Client->Host: ClientComplete
 Client->Host:   ClientExchange
     ClientEphemeral
     Encrypt (ClientEphemeral.HostCredential)
+        Protocol+Address
         ClientCredential
         Payload
-
 
 Host->Client: HostComplete
     HostEphemeral
@@ -59,6 +61,7 @@ Host->Client: HostComplete
 Client->Host:   ClientExchange 
     ClientEphemeral
     Encrypt (ClientEphemeral.HostCredential)
+        Protocol+Address
         ClientCredential
         Payload
 
@@ -70,6 +73,7 @@ Host->Client: HostChallenge
 Client->Host: ClientComplete
     Extension: Answer
     Encrypt (ClientEphemeral.HostCredential)
+        Protocol+Address
         ClientCredential
         Encrypt (ClientEphemeral.HostCredential+HostEphemeral.ClientCredential)
             Payload

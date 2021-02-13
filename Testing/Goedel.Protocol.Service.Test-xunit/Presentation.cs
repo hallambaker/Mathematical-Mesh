@@ -172,6 +172,7 @@ namespace Goedel.XUnit {
 
         public override KeyPairAdvanced KeyExchangePublic { get; }
 
+        public override List<PacketExtension> GetCredentials => throw new NotImplementedException();
 
         public PresentationCredentialTest(KeyPair clientKeySign=null, KeyPair clientKeyExchange = null) {
 

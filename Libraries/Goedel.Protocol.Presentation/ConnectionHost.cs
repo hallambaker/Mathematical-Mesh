@@ -27,6 +27,9 @@ namespace Goedel.Protocol.Presentation {
             // Write the packet tag
             plaintextWriter.Write(PlaintextPacketType.HostChallenge);
 
+            "Need to create at least one ephemeral/challenge here".TaskFunctionality(true);
+            "Nonce should be a ticket for the ephemeral.".TaskFunctionality(true);
+
             // Construct extensions containing a nonce challenge and the host credentials
             var challenge = new PacketExtension() {
                 Tag = Constants.ExtensionChallengeNonce,
@@ -60,7 +63,7 @@ namespace Goedel.Protocol.Presentation {
 
 
             var outerWriter = new PacketWriterAesGcm();
-            outerWriter.Write(PlaintextPacketType.HostComplete);
+            outerWriter.Write(PlaintextPacketType.HostExchange);
 
             outerWriter.Write(HostEphemeral.IKeyAdvancedPublic.Encoding);
             outerWriter.WriteExtensions();
@@ -70,6 +73,23 @@ namespace Goedel.Protocol.Presentation {
             return outerWriter.Packet;
             }
 
-        }
+
+        public byte[] SerializeHostComplete(byte[] payload = null) {
+            var innerWriter = new PacketWriter();
+            Write(innerWriter, payload, null);
+
+            var outerWriter = new PacketWriterAesGcm();
+            HostEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+
+
+
+            outerWriter.Write(PlaintextPacketType.HostComplete);
+
+            outerWriter.Encrypt(Key, innerWriter);
+
+            return outerWriter.Packet;
+            }
+
+    }
 
     }
