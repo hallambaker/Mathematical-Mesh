@@ -4,12 +4,78 @@
         <name>Goedel.Protocol.Presentation</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Protocol.Presentation.Connection">
+            <summary>
+            Base class for connections
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Connection.Key">
+            <summary>The shared session key.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Connection.SerializeData(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Serialize a data packet.
+            </summary>
+            <param name="payload"></param>
+            <param name="extensions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Connection.ClientKeyExchange(Goedel.Cryptography.KeyPairAdvanced,System.Byte[],System.Byte[]@,System.Byte[]@)">
+            <summary>
+            Perform a key exchange to the host credential only. This is performed by the client during
+            connection establishment.
+            </summary>
+            <param name="privateKey">The private key</param>
+            <param name="publicKeyData">The public key in wire format.</param>
+            <param name="keyClientHost">Session key used to encrypt/authenticate messages from the client
+            to the host.</param>
+            <param name="keyHostClient">Session key used to encrypt/authenticate messages from the host
+            to the client.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Connection.ClientKeyExchange(Goedel.Cryptography.KeyPairAdvanced,Goedel.Cryptography.KeyPairAdvanced,System.Byte[]@,System.Byte[]@)">
+            <summary>
+            Perform a key exchange to the host credential only. This is performed by the client during
+            connection establishment.
+            </summary>
+            <param name="privateKey">The private key</param>
+            <param name="keyPublic">The public key.</param>
+            <param name="keyClientHost">Session key used to encrypt/authenticate messages from the client
+            to the host.</param>
+            <param name="keyHostClient">Session key used to encrypt/authenticate messages from the host
+            to the client.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Connection.MutualKeyExchange(Goedel.Cryptography.KeyPairAdvanced,System.Byte[],System.Byte[]@,System.Byte[]@)">
+            <summary>
+            Perform a key exchange to the host and client credentials. This is performed during
+            connection establishment after both sides have obtained an ephemeral to validate their
+            keys against.
+            </summary>
+            <param name="privateKey">The private key</param>
+            <param name="publicKeyData">The public key in wire format.</param>
+            <param name="keyClientHost">Session key used to encrypt/authenticate messages from the client
+            to the host.</param>
+            <param name="keyHostClient">Session key used to encrypt/authenticate messages from the host
+            to the client.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Connection.MutualKeyExchange(Goedel.Cryptography.KeyPairAdvanced,Goedel.Cryptography.KeyPairAdvanced,System.Byte[]@,System.Byte[]@)">
+            <summary>
+            Perform a key exchange to the host and client credentials. This is performed during
+            connection establishment after both sides have obtained an ephemeral to validate their
+            keys against.
+            </summary>
+            <param name="privateKey">The private key</param>
+            <param name="publicKey">The public key in wire format.</param>
+            <param name="keyClientHost">Session key used to encrypt/authenticate messages from the client
+            to the host.</param>
+            <param name="keyHostClient">Session key used to encrypt/authenticate messages from the host
+            to the client.</param>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.ClientState">
             <summary>
             Client side connection state.
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientState.Start">
+        <member name="F:Goedel.Protocol.Presentation.ClientState.Initial">
             <summary>Initial state, sending either Initial or Cloaked.</summary> 
         </member>
         <member name="F:Goedel.Protocol.Presentation.ClientState.Challenge">
@@ -20,11 +86,6 @@
         </member>
         <member name="F:Goedel.Protocol.Presentation.ClientState.Abort">
             <summary>Connection terminated, cannot be used further.</summary> 
-        </member>
-        <member name="T:Goedel.Protocol.Presentation.Connection">
-            <summary>
-            Base class for connections
-            </summary>
         </member>
         <member name="T:Goedel.Protocol.Presentation.ConnectionClient">
             <summary>
@@ -40,7 +101,7 @@
         <member name="P:Goedel.Protocol.Presentation.ConnectionClient.ClientState">
             <summary>The client state.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.#ctor(System.String,System.String,Goedel.Protocol.Presentation.PortID,Goedel.Protocol.Presentation.PresentationCredential,Goedel.Protocol.Presentation.PresentationCredential,System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.#ctor(System.String,System.String,Goedel.Protocol.Presentation.PortId,Goedel.Protocol.Presentation.PresentationCredential,Goedel.Protocol.Presentation.PresentationCredential)">
             <summary>
             Constructor, establish a client connection for the service 
             <paramref name="protocol"/> at address <paramref name="endpoint"/>.
@@ -50,50 +111,151 @@
             <param name="portID">The port identifier.</param>
             <param name="clientCredential">The client credential.</param>
             <param name="hostCredential">The host credential (if known).</param>
-            <param name="payload">The payload to be sent in the initial packet.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.Open(Goedel.Protocol.JsonObject)">
+            <summary>
+            Establish a connection to the identified host. 
+            </summary>
+            <param name="jsonObject">The record to be sent.</param>
+            <returns>The record returned.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.Write(Goedel.Protocol.JsonObject)">
+            <summary>
+            Write the record <paramref name="jsonObject"/> to the connection. 
+            </summary>
+            <param name="jsonObject">The record to be sent.</param>
+            <returns>The record returned.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.Write(System.Byte[],System.Boolean)">
+            <summary>
+            Write the payload data <paramref name="data"/> to the connection.
+            </summary>
+            <param name="data">The data to write.</param>
+            <param name="plaintext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.PostPacket(System.Byte[])">
+            <summary>
+            Post a packet to the interface.
+            </summary>
+            <param name="data">The packet to post.</param>
+            <returns>Response packet.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeInitial(System.Byte[])">
             <summary>
-            Serialize an initial request packet for this connection;
+            Serialize an initial request packet for this connection. Note that the initial 
+            packet contains no information that is private to the client. Only an ephemeral
+            key is generated and presented.
             </summary>
             <param name="payload">The payload data.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.ClientPacketType">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeClientExchange(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
-            The client packet types. Two bits in the first byte of the nonce value are used to specify 
-            the packet type to the host. The set of packet types is intentionally closed.
+             Serialize a client key exchange request made by a client that knows the host credential
+             but does not have a host ephemeral to challenge its own private key. The payload
+             <paramref name="payload"/> if specified is encrypted to the host credential only.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="packetExtensions">Extensions, including answer data responding to a 
+            challenge puzzle presented by the host or another party.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeClientComplete(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+             Serialize a client key exchange request made by a client that knows the host credential
+             and has received a recent host ephemeral to challenge its own private key. The payload
+             <paramref name="payload"/> if specified is encrypted to both the client and host credentials.
+             The client credentials are encrypted to the host credentials but not authenticated to the
+             client making the request.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="packetExtensions">Extensions, including answer data responding to a 
+            challenge puzzle presented by the host or another party.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.ConnectionHost.HostCredential">
+            <summary>The host credentials. There is exactly one set of host 
+            credentials for a given PortId at a given time. This MAY however
+            contain multiple keys (e.g. for different algorithms.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.SerializeChallenge(System.Byte[])">
+            <summary>
+            Create a challenge and return it to the recipient together with the host credentials.
+            </summary>
+            <param name="payload">Packet payload (if used)</param>
+            <returns>The packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.SerializeHostExchange(System.Byte[])">
+            <summary>
+            Create a packet to complete mutually authenticated exchange.
+            </summary>
+            <param name="payload">Optional payload data to be mutually encrypted.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.EncryptedPacketIdentifier">
+            <summary>
+            Identifiers used within encrypted data packets.
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.Initial">
-            <summary>Used to make a plaintext request to establish a new connection to the host.
-            This MUST used in cases where the client does not have the public key of the host.</summary> 
+        <member name="F:Goedel.Protocol.Presentation.EncryptedPacketIdentifier.Atomic">
+            <summary>Packet contains a complete message.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.Cloaked">
-            <summary>Used to make an encrypted request to establish a new connection to the host.
+        <member name="F:Goedel.Protocol.Presentation.EncryptedPacketIdentifier.Heartbeat">
+            <summary>Heartbeat packet, the outbound port and IP address to which the sender 
+            directs it.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.EncryptedPacketIdentifier.Serialized">
+            <summary>Packet contains a part of a message.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.EncryptedPacketIdentifier.Streamed">
+            <summary>Packet contains a part of a message in a streamed connection.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.EncryptedPacketIdentifier.Mezzanine">
+            <summary>Mezzanine packet containing an inner packet with the client credentials.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.EncryptedPacketIdentifier.Tunnelled">
+            <summary>Packet contains a tunnelled message.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PlaintextPacketType">
+            <summary>
+            The packet types passed as plaintext.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.Error">
+            <summary>Report an error to the sender.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.Initial">
+            <summary>Plaintext request to establish a new connection to the host. This is 
+            only used in cases where the client does not have the public key of the host.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.ClientExchange">
+            <summary>Encrypted request to establish a new connection to the host.
             This MAY be used in cases where the client has the public key of the host.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.Answer">
-            <summary>Used to respond to a challenge from the host or service. Challenges are sent
-            by the host in response to the Initial and Cloaked packets and in cases where a failure occurs
-            and the Host opts to offer the opportunity to resynchronze. Challenges are sent by the 
-            service in cases where a handoff is being performed.</summary> 
+        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.HostChallenge">
+            <summary>Present a challenge to a client requesting a connection.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.Post">
-            <summary>Used for all packets that are not control packets.</summary> 
+        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.HostComplete">
+            <summary>Host completion of key exchange.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.Mask">
-            <summary>Mask used to identify the control bits in the first byte of a packet.</summary> 
+        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.ClientComplete">
+            <summary>Client completion of key exchange.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientPacketType.MaskRest">
-            <summary>Mask used to identify the control bits in the first byte of a packet.</summary> 
+        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.Rebind">
+            <summary>Establish a new binding for the specified connection identifier.</summary> 
         </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketClientInitial">
+        <member name="T:Goedel.Protocol.Presentation.ErrorCode">
             <summary>
-            Initial packet. This contains only the packet type identifier and the plaintext payload.
-            Since neither the request, nor the response packet can be encrypted, the payload is
-            typically limited to a Hello request for the protocol version and host capabilities.
+            Error response codes.
             </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ErrorCode.UnknownConnection">
+            <summary>The request could not be bound to an inbound connection. This could be because
+            the source address has changed.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ErrorCode.Refused">
+            <summary>The request was refused for reasons reserved to the responder.</summary> 
         </member>
         <member name="T:Goedel.Protocol.Presentation.Constants">
             <summary>
@@ -121,6 +283,30 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.TagKey">
             <summary>The KDF info tag to be used to derive keys.</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.TagKeyClientHost">
+            <summary>The KDF info tag to be used to derive keys.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.TagKeyHostClient">
+            <summary>The KDF info tag to be used to derive keys.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionChallengeNonce">
+            <summary>Proof of work challenge</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionChallengePOW">
+            <summary>Proof of work challenge</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionPkixX509">
+            <summary>PKIX Certificate</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionPkixOcsp">
+            <summary>PKIX OCSP Token</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionMeshProfile">
+            <summary>Mesh Profile</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionMeshConnection">
+            <summary>Mesh Connection</summary> 
+        </member>
         <member name="M:Goedel.Protocol.Presentation.Constants.Derive(System.Byte[],System.Byte[]@,System.Byte[]@,System.Byte[]@)">
             <summary>
             Using the primary key <paramref name="ikm"/> and generated nonce <paramref name="nonce"/>,
@@ -144,13 +330,160 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.ZeroArray">
             <summary>Obsolete, remove</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ListenerHost.ProcessCloaked(Goedel.Protocol.Presentation.PortID,System.Byte[])">
+        <member name="F:Goedel.Protocol.Presentation.Listener.DictionaryIPAddressToHistory">
+            <summary>Dictionary tracking inbound abuse by IP address</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Listener.DictionaryPortIdToHistory">
+            <summary>Dictionary tracking inbound abuse by IP address and port</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Listener.DictionaryPortIdToConnection">
+            <summary>Dictionary used for binding, maps connection Id to connection</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Listener.DictionaryIdToConnection">
+            <summary>Dictionary used for rebinding, maps connection Id to connection</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.Packet">
             <summary>
-            Process a cloaked request packet.
+            A Parsed Packet.
             </summary>
-            <param name="portID"></param>
-            <param name="data"></param>
-            <returns></returns>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Packet.Payload">
+            <summary>The packet payload.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Packet.SourcePortId">
+            <summary>The source address and port.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Packet.ExtensionsPlaintext">
+            <summary>Options specified in the packet plaintext.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Packet.ExtensionsCiphertext">
+            <summary>Options specified in the packet ciphertext.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Packet.EncryptedPacketIdentifier">
+            <summary>The inner data packet type.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Packet.#ctor(Goedel.Protocol.Presentation.PortId)">
+            <summary>
+            Constructor, return packet bound to port <paramref name="portId"/>.
+            </summary>
+            <param name="portId">The source address and port.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Packet.ReadExtensions(Goedel.Protocol.Presentation.PacketReader)">
+            <summary>
+            Read a list of extensions from <paramref name="reader"/>.
+            </summary>
+            <param name="reader">Reader bound to the packet being read</param>
+            <returns>>The list of extensions read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Packet.ReadEncrypted(Goedel.Protocol.Presentation.PacketReader)">
+            <summary>
+            Read an inner encrypted data packet from <paramref name="reader"/>.
+            </summary>
+            <param name="reader">Reader bound to the packet being read</param>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketExtension">
+            <summary>
+            Packet options (to be specified).
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketExtension.Tag">
+            <summary>Registered extension tag</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketExtension.Value">
+            <summary>Extension value</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketUnknown">
+            <summary>
+            Unknown packet type.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketUnknown.#ctor(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Constructor, return packet bound to port <paramref name="portId"/> containing data
+            <paramref name="data"/>.
+            </summary>
+            <param name="portId">The source address and port.</param>
+            <param name="data">The packet data.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketData">
+            <summary>
+            Encrypted and authenticated data packet.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketData.#ctor(Goedel.Protocol.Presentation.PortId,Goedel.Protocol.Presentation.PacketReader)">
+            <summary>
+            Constructor, parse a decrypted data packet received from <paramref name="portId"/>
+            bound to the reader <paramref name="reader"/>.
+            </summary>
+            <param name="portId">The packet source identifier.</param>
+            <param name="reader">Reader for decrypted packet data.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketError">
+            <summary>
+            Error packet, MAY be returned in response to an unexpected request.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PacketError.ErrorCode">
+            <summary>The returned error code.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PacketError.DestinationAddress">
+            <summary>The address to which the packet was sent, i.e. the external
+            port address of the recipient.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketError.#ctor(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Constructor, parse a plaintext data packet <paramref name="data"/> 
+            received from <paramref name="portId"/>.
+            </summary>
+            <param name="portId">The packet source identifier.</param>
+            <param name="data">The packet data.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketInitial">
+            <summary>
+            Initial packet, sent to obtain host information to begin connection establishment
+            when the host credentials are not known.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketInitial.#ctor(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Constructor, parse a plaintext data packet <paramref name="data"/> 
+            received from <paramref name="portId"/>.
+            </summary>
+            <param name="portId">The packet source identifier.</param>
+            <param name="data">The packet data.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketClientExchange">
+            <summary>
+            Client exchange packet, establishes a channel encrypted to the host credential alone.
+            It is not possible to authenticate to the client credential at this point as we do
+            not have a host challenge.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PacketClientExchange.HostKeyIdentifier">
+            <summary>Host key identifier given by the client. Used to allow use of multiple
+            host keys with different algorithms, etc. etc.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PacketClientExchange.ClientEphemeral">
+            <summary>Client ephemeral key in binary form. MUST be compatible with the host 
+            key algorithm.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketClientExchange.KeyAgreementResult">
+            <summary>Result of the client side key agreement.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketClientExchange.#ctor(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Constructor, parse plaintext parts of data packet <paramref name="packet"/> 
+            received from <paramref name="portId"/>.
+            </summary>
+            <param name="portId">The packet source identifier.</param>
+            <param name="packet">The packet data.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketClientExchange.Decrypt(Goedel.Cryptography.KeyPairAdvanced)">
+            <summary>
+            Decrypt the inner packet data using the private key <paramref name="privateKeyAgreement"/>
+            </summary>
+            <param name="privateKeyAgreement">The decryption key to be used to obtain information
+            from the encrypted payload.</param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketReader">
             <summary>
@@ -226,24 +559,24 @@
             <param name="packet">The data to decrypt</param>
             <returns>A reader for the decrypted data.</returns>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketReaderGCM">
+        <member name="T:Goedel.Protocol.Presentation.PacketReaderAesGcm">
             <summary>
             Packet reader using AES in GCM mode for decryption.
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketReaderGCM.SizeIv">
+        <member name="P:Goedel.Protocol.Presentation.PacketReaderAesGcm.SizeIv">
             <summary>Initialization vector size in bytes. Currently fixed at 12 bytes.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketReaderGCM.SizeTag">
+        <member name="P:Goedel.Protocol.Presentation.PacketReaderAesGcm.SizeTag">
             <summary>Tag size in bytes. Currently fixed at 16 bytes.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReaderGCM.#ctor(System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.#ctor(System.Byte[])">
             <summary>
             Constructor, returns a reader instance for the packet <paramref name="packet"/>.
             </summary>
             <param name="packet">The packet data.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReaderGCM.Decrypt(System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Decrypt(System.Byte[])">
             <summary>
             Decrypt the remainder of the packet using the primary key <paramref name="key"/> and the 
             nonce at the current position in the packet to provide the necessary keying material.
@@ -251,7 +584,7 @@
             <param name="key">The primary key.</param>
             <returns>A reader for the decrypted data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReaderGCM.Unwrap(System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Unwrap(System.Byte[],System.Byte[])">
             <summary>
             Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="key"/> and 
             the nonce at the start of the packet to provide the necessary keying material.
@@ -274,20 +607,8 @@
         <member name="F:Goedel.Protocol.Presentation.PacketTag.Binary">
             <summary>Binary field</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.PacketTag.Ipv4">
-            <summary>IPv4 address</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.PacketTag.Ipv6">
-            <summary>IPv6 Address</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.PacketTag.Port">
-            <summary>IP port number</summary> 
-        </member>
         <member name="F:Goedel.Protocol.Presentation.PacketTag.Extensions">
             <summary>List of extensions follow</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.PacketTag.Tag">
-            <summary>Extension identifier</summary> 
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketWriter">
             <summary>
@@ -358,6 +679,18 @@
              </summary>
              <param name="data">The data to write</param>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(Goedel.Protocol.Presentation.EncryptedPacketIdentifier)">
+             <summary>
+            Write the positive EncryptedPacketIdentifier <paramref name="data"/> to the packet
+             </summary>
+             <param name="data">The data to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(Goedel.Protocol.Presentation.PlaintextPacketType)">
+             <summary>
+            Write the positive EncryptedPacketIdentifier <paramref name="data"/> to the packet
+             </summary>
+             <param name="data">The data to write</param>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.SkipBinary(System.Int32)">
             <summary>
             Skip forward to reserve space for a data item of <paramref name="length"/>
@@ -365,7 +698,7 @@
             </summary>
             <param name="length">Length of the data item to reserve space for.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter,System.Boolean)">
             <summary>
             Fill out the remainder of the packet by using the value <paramref name="ikm"/>
             and a generated nonce to encrypt the data specified in <paramref name="packet"/>
@@ -380,27 +713,28 @@
             <param name="ikm">The primary key.</param>
             <returns>The wrapped data packet.</returns>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketWriterGCM">
+        <member name="T:Goedel.Protocol.Presentation.PacketWriterAesGcm">
             <summary>
             Encrypting packet writer.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterGCM.#ctor(System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.#ctor(System.Int32)">
             <summary>
             Constructor, create a packet writer with a packet size of 
             <paramref name="packetSize"/>.
             </summary>
             <param name="packetSize">The number of bytes in the packet to be created.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterGCM.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter,System.Boolean)">
             <summary>
             Fill out the remainder of the packet by using the value <paramref name="key"/>
             and a generated nonce to encrypt the data specified in <paramref name="writerIn"/>
             </summary>
             <param name="key">The primary key.</param>
             <param name="writerIn">The plaintext data</param>
+            <param name="pad">If true, pad packet to fill remaining space.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterGCM.Wrap(System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.Wrap(System.Byte[])">
             <summary>
             Wrap a data packet payload to create an encrypted data packet.
             </summary>
@@ -423,6 +757,9 @@
         </member>
         <member name="P:Goedel.Protocol.Presentation.PresentationCredential.KeyExchangePublic">
             <summary>The public key exchange key.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PresentationCredential.GetCredentials">
+            <summary>List of extension entries presenting credentials.</summary> 
         </member>
         <member name="M:Goedel.Protocol.Presentation.PresentationCredential.WriteClientCredential(Goedel.Protocol.JsonWriter)">
             <summary>

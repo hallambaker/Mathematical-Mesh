@@ -24,7 +24,7 @@ namespace Goedel.Protocol.Presentation {
         public byte[] Packet;
 
         ///<summary>Factory method returning a reader of the default decryption algorithm and mode.</summary> 
-        public static PacketReader Factory(byte[] data) => new PacketReaderGCM(data);
+        public static PacketReader Factory(byte[] data) => new PacketReaderAesGcm(data);
 
         /// <summary>
         /// Constructor, returns a reader instance for the packet <paramref name="packet"/>.
@@ -118,14 +118,14 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="ikm">The primary key.</param>
         /// <param name="packet">The data to decrypt</param>
         /// <returns>A reader for the decrypted data.</returns>
-        public static PacketReader Unwrap(byte[] ikm, byte[] packet) => PacketReaderGCM.Unwrap(ikm, packet);
+        public static PacketReader Unwrap(byte[] ikm, byte[] packet) => PacketReaderAesGcm.Unwrap(ikm, packet);
 
         }
 
     /// <summary>
     /// Packet reader using AES in GCM mode for decryption.
     /// </summary>
-    public class PacketReaderGCM : PacketReader {
+    public class PacketReaderAesGcm : PacketReader {
 
         ///<summary>Initialization vector size in bytes. Currently fixed at 12 bytes.</summary> 
         public virtual int SizeIv => 12;
@@ -137,7 +137,7 @@ namespace Goedel.Protocol.Presentation {
         /// Constructor, returns a reader instance for the packet <paramref name="packet"/>.
         /// </summary>
         /// <param name="packet">The packet data.</param>
-        public PacketReaderGCM(byte[] packet) : base(packet) { }
+        public PacketReaderAesGcm(byte[] packet) : base(packet) { }
 
         /// <summary>
         /// Decrypt the remainder of the packet using the primary key <paramref name="key"/> and the 

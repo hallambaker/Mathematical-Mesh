@@ -27,6 +27,9 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Packet contains a part of a message in a streamed connection.</summary> 
         Streamed = 3,
 
+        ///<summary>Mezzanine packet containing an inner packet with the client credentials.</summary> 
+        Mezzanine = 4,
+
         ///<summary>Packet contains a tunnelled message.</summary> 
         Tunnelled = 64
         }
@@ -52,11 +55,14 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Present a challenge to a client requesting a connection.</summary> 
         HostChallenge = 3,
 
-        ///<summary>Present host ephemeral key used to complete a connection.</summary> 
-        HostExchange = 4,
+        ///<summary>Host completion of key exchange.</summary> 
+        HostComplete = 4,
+
+        ///<summary>Client completion of key exchange.</summary> 
+        ClientComplete = 5,
 
         ///<summary>Establish a new binding for the specified connection identifier.</summary> 
-        Rebind = 5
+        Rebind = 6
 
         }
 
@@ -98,6 +104,37 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>The KDF info tag to be used to derive keys.</summary> 
         public readonly static byte[] TagKey = "Key".ToUTF8();
+
+
+
+        ///<summary>The KDF info tag to be used to derive keys.</summary> 
+        public readonly static byte[] TagKeyClientHost = "ClientHost".ToUTF8();
+
+        ///<summary>The KDF info tag to be used to derive keys.</summary> 
+        public readonly static byte[] TagKeyHostClient = "HostClient".ToUTF8();
+
+
+
+        ///<summary>Proof of work challenge</summary> 
+        public const string ExtensionChallengeNonce = "NONCE";
+
+        ///<summary>Proof of work challenge</summary> 
+        public const string ExtensionChallengePOW = "POW";
+
+
+
+        ///<summary>PKIX Certificate</summary> 
+        public const string ExtensionPkixX509 = "PKIXC";
+
+        ///<summary>PKIX OCSP Token</summary> 
+        public const string ExtensionPkixOcsp = "PKIXO";
+
+        ///<summary>Mesh Profile</summary> 
+        public const string ExtensionMeshProfile = "MMMP";
+
+        ///<summary>Mesh Connection</summary> 
+        public const string ExtensionMeshConnection = "MMMC";
+
 
         /// <summary>
         /// Using the primary key <paramref name="ikm"/> and generated nonce <paramref name="nonce"/>,

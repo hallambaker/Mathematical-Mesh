@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 
+using System.Collections.Generic;
 
 namespace Goedel.Protocol.Presentation {
 
@@ -20,6 +21,11 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>The public key exchange key.</summary> 
         public abstract KeyPairAdvanced KeyExchangePublic { get; }
+
+        ///<summary>List of extension entries presenting credentials.</summary> 
+        public abstract List<PacketExtension> GetCredentials { get; }
+
+
 
         /// <summary>
         /// Obsolete, to be removed.

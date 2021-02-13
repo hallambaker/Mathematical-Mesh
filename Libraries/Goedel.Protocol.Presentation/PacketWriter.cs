@@ -176,8 +176,12 @@ namespace Goedel.Protocol.Presentation {
                     => Write((byte)data);
 
 
+        public void WriteExtensions(int count) {
+            WriteTag(PacketTag.Extensions, count);
+            }
 
-        public void WriteOptions(List<PacketExtension> extensions=null) {
+
+        public void WriteExtensions(List<PacketExtension> extensions=null) {
 
             if (extensions == null) {
                 WriteTag(PacketTag.Extensions, 0);
@@ -206,7 +210,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="ikm">The primary key.</param>
         /// <param name="packet">The plaintext data</param>
-        public virtual void Encrypt(byte[] ikm, PacketWriter packet) => throw new NYI();
+        public virtual void Encrypt(byte[] ikm, PacketWriter packet, bool pad = true) => throw new NYI();
 
 
         /// <summary>
@@ -239,7 +243,8 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="key">The primary key.</param>
         /// <param name="writerIn">The plaintext data</param>
-        public override void Encrypt(byte[] key, PacketWriter writerIn) {
+        /// <param name="pad">If true, pad packet to fill remaining space.</param>
+        public override void Encrypt(byte[] key, PacketWriter writerIn, bool pad=true) {
 
             var aes = new AesGcm(key);
 
@@ -256,7 +261,7 @@ namespace Goedel.Protocol.Presentation {
             var TagSpan = new Span<byte>(Packet, Position, Constants.SizeIvAesGcm);
             Position += Constants.SizeIvAesGcm;
 
-            var length = Packet.Length - Position;
+            var length = pad ? Packet.Length - Position : Position;
             var ciphertextSpan = new Span<byte>(Packet, Position, length);
             var plaintextSpan = new ReadOnlySpan<byte>(writerIn.Packet, 0, length);
 

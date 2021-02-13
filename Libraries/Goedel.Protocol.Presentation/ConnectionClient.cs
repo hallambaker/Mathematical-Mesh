@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
 namespace Goedel.Protocol.Presentation {
 
     /// <summary>
@@ -23,42 +23,6 @@ namespace Goedel.Protocol.Presentation {
         Abort
         }
 
-
-
-    /// <summary>
-    /// Base class for connections
-    /// </summary>
-    public class Connection : Disposable {
-
-        ///<summary>The shared session key.</summary> 
-        public byte[] Key { get; set; }
-
-
-        /// <summary>
-        /// Serialize a data packet.
-        /// </summary>
-        /// <param name="payload"></param>
-        /// <param name="extensions"></param>
-        /// <returns></returns>
-        public byte[] SerializeData(byte[] payload, List<PacketExtension> extensions=null) {
-
-            using var writer = new PacketWriterAesGcm();
-
-            // write the control packet type
-            writer.Write(EncryptedPacketIdentifier.Atomic);
-
-            // write any packet options.
-            writer.WriteOptions(extensions);
-
-            // write the payload
-            writer.Write(payload);
-
-            // encrypt the result and return.
-            return writer.Wrap(Key);
-            }
-
-        }
-
     /// <summary>
     /// Client connection class.
     /// </summary>
@@ -73,13 +37,16 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The client state.</summary> 
         public ClientState ClientState { get; private set; }
 
-        PacketClientChallenge packetClientChallenge { get; set; }
 
         string Protocol { get; }
         string Endpoint { get; }
 
 
+        KeyPairAdvanced ClientEphemeral { get; set; }
+        KeyAgreementResult ClientKeyAgreementResult { get; set; }
 
+        byte[] KeyOut;
+        byte[] KeyIn;
 
 
         PortId PortID;
@@ -167,69 +134,123 @@ namespace Goedel.Protocol.Presentation {
 
 
         /// <summary>
-        /// Serialize an initial request packet for this connection;
+        /// Serialize an initial request packet for this connection. Note that the initial 
+        /// packet contains no information that is private to the client. Only an ephemeral
+        /// key is generated and presented.
         /// </summary>
         /// <param name="payload">The payload data.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeInitial(byte[] payload) {
-            this.Future(); // prevent spurious error.
+            ClientEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) 
+                        as KeyPairAdvanced;
 
-            var writer = new PacketWriter();
+            var plaintextWriter = new PacketWriter();
+            plaintextWriter.Write(PlaintextPacketType.Initial);
 
-            // Hack: should add in options here.
-            writer.Write(PlaintextPacketType.Initial);
-            writer.Write(payload);
+            // Write out the extensions. In this case we only have one client ephemeral being offered:
+            plaintextWriter.WriteExtensions(1);
 
-            return writer.Packet;
-            }
-
-
-        PacketWriter WritePayload(byte[] payload) {
-            var writer = new PacketWriter();
-
-            return writer;
-            }
-
-        KeyPairAdvanced ClientEphemeral { get; set; }
-        KeyAgreementResult KeyAgreementResult { get; set; }
-
-        /// <summary>
-        ///  Serialize a client credential request packet with payload <paramref name="payload"/>.
-        /// </summary>
-        /// <param name="payload">The payload data.</param>
-        /// <param name="answerData">Answer data responding to a challenge puzzle presented by 
-        /// the host or another party.</param>
-        /// <returns>The serialized data.</returns>
-        public byte[] SerializeClientExchange(byte[] payload, byte[] answerData=null) {
-            var plaintextWriter = WritePayload(payload);
-
-            ClientEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
-            KeyAgreementResult = ClientEphemeral.Agreement(HostCredential.KeyExchangePublic);
-            var keyDerive = KeyAgreementResult.KeyDerive;
-            var key = keyDerive.Derive(Constants.TagKey, Constants.SizeKeyAesGcm);
-
-            
-
-
-            // Write out the host key we are talking to (nb does not disclose the service)
-            plaintextWriter.Write(HostCredential.KeyExchangePublic.KeyIdentifier);
+            var algorithm = ClientEphemeral.CryptoAlgorithmId.ToJoseID();
+            plaintextWriter.Write(algorithm);
 
             // Write out the ephemeral public key encoding, the key algorithm is implicit in the key id
             plaintextWriter.Write(ClientEphemeral.IKeyAdvancedPublic.Encoding);
 
-            // Write out the challenge response data (if specified).
-            plaintextWriter.Write(answerData);
+            ///<summary>Write out the payload.</summary> 
+            plaintextWriter.Write(payload);
 
-            // Write out the set of options associated with the packet.
-            plaintextWriter.WriteOptions();
-
-            // write the encrypted packet
-            var writer = new PacketWriterAesGcm();
-            writer.Write(PlaintextPacketType.ClientExchange);
-            writer.Encrypt(key, plaintextWriter);
-
-            return writer.Packet;
+            return plaintextWriter.Packet;
             }
+
+
+
+
+
+        /// <summary>
+        ///  Serialize a client key exchange request made by a client that knows the host credential
+        ///  but does not have a host ephemeral to challenge its own private key. The payload
+        ///  <paramref name="payload"/> if specified is encrypted to the host credential only.
+        /// </summary>
+        /// <param name="payload">The payload data.</param>
+        /// <param name="packetExtensions">Extensions, including answer data responding to a 
+        /// challenge puzzle presented by the host or another party.</param>
+        /// <returns>The serialized data.</returns>
+        public byte[] SerializeClientExchange(byte[] payload, List<PacketExtension> packetExtensions=null) {
+            var innerWriter = new PacketWriter();
+            Write(innerWriter, payload, null);
+
+            var outerWriter = new PacketWriterAesGcm();
+            outerWriter.Write(PlaintextPacketType.ClientExchange);
+
+            ClientEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+            ClientKeyAgreementResult = ClientEphemeral.Agreement(HostCredential.KeyExchangePublic);
+            var keyDerive = ClientKeyAgreementResult.KeyDerive;
+            var key = keyDerive.Derive(Constants.TagKey, Constants.SizeKeyAesGcm);
+
+            // Write out the host key we are talking to (nb does not disclose the service)
+            outerWriter.Write(HostCredential.KeyExchangePublic.KeyIdentifier);
+
+            // No need to write out the ephemeral key algorithm, it is implicit in the key identifier
+
+            // Write out the ephemeral public key encoding, the key algorithm is implicit in the key id
+            outerWriter.Write(ClientEphemeral.IKeyAdvancedPublic.Encoding);
+
+            // Write out the set of extensions associated with the packet.
+            outerWriter.WriteExtensions(packetExtensions);
+
+            // Encrypt the inner packet and write to the outer.
+            outerWriter.Encrypt(key, innerWriter);
+
+            return outerWriter.Packet;
+            }
+
+
+        /// <summary>
+        ///  Serialize a client key exchange request made by a client that knows the host credential
+        ///  and has received a recent host ephemeral to challenge its own private key. The payload
+        ///  <paramref name="payload"/> if specified is encrypted to both the client and host credentials.
+        ///  The client credentials are encrypted to the host credentials but not authenticated to the
+        ///  client making the request.
+        /// </summary>
+        /// <param name="payload">The payload data.</param>
+        /// <param name="packetExtensions">Extensions, including answer data responding to a 
+        /// challenge puzzle presented by the host or another party.</param>
+        /// <returns>The serialized data.</returns>
+        public byte[] SerializeClientComplete(byte[] payload, List<PacketExtension> packetExtensions = null) {
+            var innerWriter = new PacketWriter();
+            Write(innerWriter, payload, null);
+
+            // Add the client credentials into the Mezanine. 
+            var mezanineWriter = new PacketWriterAesGcm();
+            mezanineWriter.Write(EncryptedPacketIdentifier.Mezzanine);
+            mezanineWriter.WriteExtensions(ClientCredential.GetCredentials);
+            mezanineWriter.Encrypt(null, innerWriter, false);
+
+            var outerWriter = new PacketWriterAesGcm();
+            outerWriter.Write(PlaintextPacketType.ClientExchange);
+
+            ClientEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+            ClientKeyAgreementResult = ClientEphemeral.Agreement(HostCredential.KeyExchangePublic);
+            var keyDerive = ClientKeyAgreementResult.KeyDerive;
+            var key = keyDerive.Derive(Constants.TagKey, Constants.SizeKeyAesGcm);
+
+            // Write out the host key we are talking to (nb does not disclose the service)
+            outerWriter.Write(HostCredential.KeyExchangePublic.KeyIdentifier);
+
+            // No need to write out the ephemeral key algorithm, it is implicit in the key identifier
+
+            // Write out the ephemeral public key encoding, the key algorithm is implicit in the key id
+            outerWriter.Write(ClientEphemeral.IKeyAdvancedPublic.Encoding);
+
+            // Write out the set of extensions associated with the packet.
+            outerWriter.WriteExtensions(packetExtensions);
+
+            // Encrypt the inner packet and write to the outer.
+            outerWriter.Encrypt(key, mezanineWriter);
+
+            return outerWriter.Packet;
+            }
+
 
 
 

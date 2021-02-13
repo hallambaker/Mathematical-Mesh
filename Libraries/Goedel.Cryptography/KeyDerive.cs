@@ -83,7 +83,7 @@ namespace Goedel.Cryptography {
         /// <param name="ikm">The input Keying material</param>
         /// <param name="salt">A salt to vary the key derivation by application</param>
         /// <param name="algorithm">The MAC algorithm to use</param>
-        public KeyDeriveHKDF(byte[] ikm, string salt = null,
+        public KeyDeriveHKDF(byte[] ikm, string salt,
                 CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) :
                         this(ikm, salt?.ToBytes(), algorithm) {
             }
