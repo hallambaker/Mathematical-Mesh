@@ -8,8 +8,35 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public class Connection : Disposable {
 
-        ///<summary>The shared session key.</summary> 
-        public byte[] Key { get; set; }
+        ///<summary>Key for encrypting outgoing packets under the key established 
+        ///to the host credential alone</summary> 
+        protected byte[] ClientKeyOut;
+
+        ///<summary>Key for decrypting incomming packets under the key established 
+        ///to the host credential alone</summary> 
+        protected byte[] ClientKeyIn;
+
+        ///<summary>Key for encrypting outgoing packets under the key established 
+        ///to the host and client credentials,</summary> 
+        protected byte[] MutualKeyOut;
+
+        ///<summary>Key for decrypting incomming packets under the key established 
+        ///to the host and client credentials,</summary> 
+        protected byte[] MutualKeyIn;
+
+
+        ///<summary>The host credentials. There is exactly one set of host 
+        ///credentials for a given PortId at a given time. This MAY however
+        ///contain multiple keys (e.g. for different algorithms.</summary> 
+        public PresentationCredential HostCredential => Listener.HostCredential;
+
+        Listener Listener { get; init; }
+
+        /// <summary>
+        /// Base constructor.
+        /// </summary>
+        /// <param name="listener">Listgener to which this connection is bound.</param>
+        public Connection(Listener listener) => Listener = listener;
 
 
         /// <summary>
@@ -24,9 +51,16 @@ namespace Goedel.Protocol.Presentation {
             Write(writer, payload, extensions);
 
             // encrypt the result and return.
-            return writer.Wrap(Key);
+            return writer.Wrap(MutualKeyOut);
             }
 
+        /// <summary>
+        /// Write the payload <paramref name="payload"/> with extensions <paramref name="extensions"/>
+        /// to the writer <paramref name="writer"/>.
+        /// </summary>
+        /// <param name="writer">Packet writer to which the data is to be written.</param>
+        /// <param name="payload">The payload data.</param>
+        /// <param name="extensions">Extensions (if used).</param>
         public static void Write(PacketWriter writer, byte[] payload,
                 List<PacketExtension> extensions = null) {
             // write the control packet type
@@ -39,9 +73,7 @@ namespace Goedel.Protocol.Presentation {
             writer.Write(payload);
             }
 
-        KeyAgreementResult ClientKeyAgreementResult;
-        KeyAgreementResult HostKeyAgreementResult;
-
+        KeyAgreementResult clientKeyAgreementResult;
 
         /// <summary>
         /// Perform a key exchange to the host credential only. This is performed by the client during
@@ -76,9 +108,9 @@ namespace Goedel.Protocol.Presentation {
                         KeyPairAdvanced keyPublic,
                         out byte[] keyClientHost,
                         out byte[] keyHostClient) {
-            ClientKeyAgreementResult = privateKey.Agreement(keyPublic);
+            clientKeyAgreementResult = privateKey.Agreement(keyPublic);
 
-            var keyDerive = ClientKeyAgreementResult.KeyDerive;
+            var keyDerive = clientKeyAgreementResult.KeyDerive;
 
             keyClientHost = keyDerive.Derive(Constants.TagKeyClientHost, Constants.SizeKeyAesGcm);
             keyHostClient = keyDerive.Derive(Constants.TagKeyHostClient, Constants.SizeKeyAesGcm);
@@ -122,10 +154,10 @@ namespace Goedel.Protocol.Presentation {
                 out byte[] keyHostClient) {
 
 
-            HostKeyAgreementResult = privateKey.Agreement(publicKey);
+            var hostKeyAgreementResult = privateKey.Agreement(publicKey);
 
             // Concatenate the IKMs from the two key agreements to create the key derrivation function
-            var ikm = ClientKeyAgreementResult.IKM.Concatenate(HostKeyAgreementResult.IKM);
+            var ikm = clientKeyAgreementResult.IKM.Concatenate(hostKeyAgreementResult.IKM);
             var keyDerive = new KeyDeriveHKDF(ikm);
 
             // Derrive the keys to be used to encrypt inbound and outbound data

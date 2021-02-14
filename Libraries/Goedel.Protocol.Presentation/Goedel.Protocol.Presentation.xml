@@ -164,15 +164,16 @@
             <param name="ciphertextExtensions">Ciphertext extensions, including channel configuration.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeClientExchange(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeClientExchange(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
              Serialize a client key exchange request made by a client that knows the host credential
              but does not have a host ephemeral to challenge its own private key. The payload
              <paramref name="payload"/> if specified is encrypted to the host credential only.
             </summary>
             <param name="payload">The payload data.</param>
-            <param name="packetExtensions">Extensions, including answer data responding to a 
+            <param name="plaintextExtensions">Plaintext extensions, including answer data responding to a 
             challenge puzzle presented by the host or another party.</param>
+            <param name="ciphertextExtensions">Ciphertext extensions, including channel configuration.</param>
             <returns>The serialized data.</returns>
         </member>
         <member name="P:Goedel.Protocol.Presentation.ConnectionHost.HostCredential">
@@ -234,14 +235,17 @@
             <summary>Encrypted request to establish a new connection to the host.
             This MAY be used in cases where the client has the public key of the host.</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.ClientComplete">
+            <summary>Client completion of key exchange.</summary> 
+        </member>
         <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.HostChallenge">
+            <summary>Present a challenge to a client requesting a connection.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.HostExchange">
             <summary>Present a challenge to a client requesting a connection.</summary> 
         </member>
         <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.HostComplete">
             <summary>Host completion of key exchange.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.ClientComplete">
-            <summary>Client completion of key exchange.</summary> 
         </member>
         <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.Rebind">
             <summary>Establish a new binding for the specified connection identifier.</summary> 

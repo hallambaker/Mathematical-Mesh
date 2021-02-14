@@ -11,10 +11,10 @@ namespace Goedel.Protocol.Presentation {
     public abstract class PresentationCredential {
 
         ///<summary>The signature key to sign under the credential.</summary> 
-        protected abstract KeyPairAdvanced KeySignPrivate { get; }
+        public abstract KeyPairAdvanced KeySignPrivate { get; }
 
         ///<summary>The private key exchange key.</summary> 
-        protected abstract KeyPairAdvanced KeyExchangePrivate { get; }
+        public abstract KeyPairAdvanced KeyExchangePrivate { get; }
 
         ///<summary>The signature verification key under the credential</summary> 
         public abstract KeyPairAdvanced KeySignPublic { get; }

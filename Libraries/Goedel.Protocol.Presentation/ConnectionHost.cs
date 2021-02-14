@@ -3,29 +3,45 @@ using Goedel.Cryptography;
 using System.Collections.Generic;
 
 namespace Goedel.Protocol.Presentation {
+
+    /// <summary>
+    /// Host (i.e. responder) end of a listener connection.
+    /// </summary>
     public class ConnectionHost : Connection {
 
-        ///<summary>The host credentials. There is exactly one set of host 
-        ///credentials for a given PortId at a given time. This MAY however
-        ///contain multiple keys (e.g. for different algorithms.</summary> 
-        public PresentationCredential HostCredential { get; init;  }
+
+
+        ///<summary>The client credential</summary> 
+        public PresentationCredential ClientCredential { get; set; }
+
 
         KeyPairAdvanced HostEphemeral { get; set; }
         KeyAgreementResult HostKeyAgreementResult { get; set; }
 
+        /// <summary>
+        /// Base constructor.
+        /// </summary>
+        /// <param name="listener">Listgener to which this connection is bound.</param>
+        public ConnectionHost(Listener listener) : base(listener) { }
 
 
 
         /// <summary>
         /// Create a challenge and return it to the recipient together with the host credentials.
+        /// The payload is always sent enclair. Thus this packet format MUST NOT be used for 
+        /// messages other than regular client 
         /// </summary>
         /// <param name="payload">Packet payload (if used)</param>
+        /// <param name="plaintextExtensions">Extensions to be presented in the plaintext segment.</param>
         /// <returns>The packet.</returns>
-        public byte[] SerializeChallenge(byte[] payload=null) {
+        public byte[] SerializeChallenge(byte[] payload=null,
+                    List<PacketExtension> plaintextExtensions = null) {
             var plaintextWriter = new PacketWriter();
 
             // Write the packet tag
             plaintextWriter.Write(PlaintextPacketType.HostChallenge);
+
+            HostEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
 
             "Need to create at least one ephemeral/challenge here".TaskFunctionality(true);
             "Nonce should be a ticket for the ephemeral.".TaskFunctionality(true);
@@ -37,6 +53,9 @@ namespace Goedel.Protocol.Presentation {
                 };
             var extensions = new List<PacketExtension> { challenge };
             extensions.AddRange(HostCredential.GetCredentials);
+            if (plaintextExtensions != null) {
+                extensions.AddRange(plaintextExtensions);
+                }
             plaintextWriter.WriteExtensions(extensions);
 
             // Write the payload (if specified)
@@ -47,45 +66,73 @@ namespace Goedel.Protocol.Presentation {
 
 
         /// <summary>
-        /// Create a packet to complete mutually authenticated exchange.
+        /// Create a packet to begin a mutually authenticated exchange.
         /// </summary>
+        /// <param name="clientEphemeral">The client ephemeral key (public)</param>
         /// <param name="payload">Optional payload data to be mutually encrypted.</param>
+        /// <param name="plaintextExtensions">Extensions to be presented in the plaintext segment.</param>
+        /// <param name="ciphertextExtensions">Extensions to be presented in the ciphertext segment.</param>
         /// <returns></returns>
-        public byte[] SerializeHostExchange(byte[] payload=null) {
-            var innerWriter = new PacketWriter();
-            Write(innerWriter, payload, null);
+        public byte[] SerializeHostExchange(
+                    byte[] clientEphemeral,
+
+                    byte[] payload=null,
+                    
+                    List<PacketExtension> plaintextExtensions = null,
+                    List<PacketExtension> ciphertextExtensions = null) {
 
 
             HostEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
-            HostKeyAgreementResult = HostEphemeral.Agreement(HostCredential.KeyExchangePublic);
-            var keyDerive = HostKeyAgreementResult.KeyDerive;
-            Key = keyDerive.Derive(Constants.TagKey, Constants.SizeKeyAesGcm);
 
+            ClientKeyExchange(HostCredential.KeyExchangePrivate, clientEphemeral,
+                    out ClientKeyOut, out ClientKeyIn);
+            MutualKeyExchange(HostEphemeral, ClientCredential.KeyExchangePublic,
+                out MutualKeyOut, out MutualKeyIn);
+
+            var innerWriter = new PacketWriter();
+            Write(innerWriter, payload, ciphertextExtensions);
 
             var outerWriter = new PacketWriterAesGcm();
             outerWriter.Write(PlaintextPacketType.HostExchange);
 
             outerWriter.Write(HostEphemeral.IKeyAdvancedPublic.Encoding);
-            outerWriter.WriteExtensions();
+            outerWriter.WriteExtensions(plaintextExtensions);
 
-            outerWriter.Encrypt(Key, innerWriter);
+            "Need to identify the key".TaskFunctionality(true);
+
+            outerWriter.Encrypt(MutualKeyOut, innerWriter);
 
             return outerWriter.Packet;
             }
 
+        /// <summary>
+        /// Create a packet to complete mutually authenticated exchange.
+        /// </summary>
+        /// <param name="clientEphemeral">The client ephemeral key (public)</param>
+        /// <param name="payload">Optional payload data to be mutually encrypted.</param>
+        /// <param name="plaintextExtensions">Extensions to be presented in the plaintext segment.</param>
+        /// <param name="ciphertextExtensions">Extensions to be presented in the ciphertext segment.</param>
+        /// <returns></returns>
+        public byte[] SerializeHostComplete(
+                    byte[] clientEphemeral,
+                    byte[] payload = null,
+                    List<PacketExtension> plaintextExtensions = null,
+                    List<PacketExtension> ciphertextExtensions = null) {
 
-        public byte[] SerializeHostComplete(byte[] payload = null) {
+            ClientKeyExchange(HostCredential.KeyExchangePrivate, clientEphemeral,
+                    out ClientKeyOut, out ClientKeyIn);
+            MutualKeyExchange(HostEphemeral, ClientCredential.KeyExchangePublic,
+                out MutualKeyOut, out MutualKeyIn);
+
             var innerWriter = new PacketWriter();
-            Write(innerWriter, payload, null);
+            Write(innerWriter, payload, ciphertextExtensions);
 
             var outerWriter = new PacketWriterAesGcm();
             HostEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
 
-
-
             outerWriter.Write(PlaintextPacketType.HostComplete);
 
-            outerWriter.Encrypt(Key, innerWriter);
+            outerWriter.Encrypt(MutualKeyOut, innerWriter);
 
             return outerWriter.Packet;
             }

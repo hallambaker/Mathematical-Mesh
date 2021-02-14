@@ -52,7 +52,10 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Dictionary used for rebinding, maps connection Id to connection</summary> 
         public Dictionary<byte[], Connection> DictionaryIdToConnection = new();
 
-
+        ///<summary>The host credentials. There is exactly one set of host 
+        ///credentials for a given PortId at a given time. This MAY however
+        ///contain multiple keys (e.g. for different algorithms.</summary> 
+        public PresentationCredential HostCredential { get; set; } 
 
         public Listener (PresentationCredential credential) {
             }
@@ -101,10 +104,12 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
+
+        // Need to move this into the connection class.
         public Packet GetPacketData(PortId sourceId, byte[] packet) {
 
             if (DictionaryPortIdToConnection.TryGetValue(sourceId, out var connection)) {
-                var reader = PacketReaderAesGcm.Unwrap(connection.Key, packet);
+                var reader = PacketReaderAesGcm.Unwrap(connection, packet);
                 return new PacketData(sourceId, reader);
                 }
             else {
