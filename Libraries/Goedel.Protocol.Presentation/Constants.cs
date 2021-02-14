@@ -42,30 +42,30 @@ namespace Goedel.Protocol.Presentation {
 
 
         ///<summary>Report an error to the sender.</summary> 
-        Error = 0,
+        Error = 0x80,
 
         ///<summary>Plaintext request to establish a new connection to the host. This is 
         ///only used in cases where the client does not have the public key of the host.</summary> 
-        Initial = 1,
+        Initial = 0x81,
 
         ///<summary>Encrypted request to establish a new connection to the host.
         ///This MAY be used in cases where the client has the public key of the host.</summary> 
-        ClientExchange =2,
+        ClientExchange = 0x82,
 
         ///<summary>Client completion of key exchange.</summary> 
-        ClientComplete = 3,
+        ClientComplete = 0x83,
 
         ///<summary>Present a challenge to a client requesting a connection.</summary> 
-        HostChallenge = 4,
+        HostChallenge = 0x84,
 
         ///<summary>Present a challenge to a client requesting a connection.</summary> 
-        HostExchange = 5,
+        HostExchange = 0x85,
 
         ///<summary>Host completion of key exchange.</summary> 
-        HostComplete = 6,
+        HostComplete = 0x86,
 
         ///<summary>Establish a new binding for the specified connection identifier.</summary> 
-        Rebind = 7
+        Rebind = 0x87
 
         }
 

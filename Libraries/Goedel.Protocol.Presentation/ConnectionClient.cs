@@ -58,11 +58,13 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="portID">The port identifier.</param>
         /// <param name="clientCredential">The client credential.</param>
         /// <param name="hostCredential">The host credential (if known).</param>
-        public ConnectionClient(string protocol,
-                            string endpoint,
-                            PortId portID,
-                            PresentationCredential clientCredential,
-                            PresentationCredential hostCredential=null) {
+        public ConnectionClient(
+                    Listener listener,
+                    string protocol,
+                    string endpoint,
+                    PortId portID,
+                    PresentationCredential clientCredential,
+                    PresentationCredential hostCredential=null) : base(listener){
             ClientState = ClientState.Initial;
             ClientCredential = clientCredential;
             HostCredential = hostCredential;
@@ -113,7 +115,7 @@ namespace Goedel.Protocol.Presentation {
                 ClientState.Initial => HostCredential == null ?
                     SerializeInitial(data) : SerializeClientExchange(data),
                 ClientState.Challenge => SerializeClientExchange(data),
-                ClientState.Write => SerializeData(data),
+                ClientState.Write => SerializePacketData(data),
                 _ => throw new InvalidClientState()
                 };
 
@@ -137,8 +139,10 @@ namespace Goedel.Protocol.Presentation {
         /// key is generated and presented.
         /// </summary>
         /// <param name="payload">The payload data.</param>
+        /// <param name="plaintextExtensions">Extensions to be presented in the plaintext segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeInitial(byte[] payload = null) {
+        public byte[] SerializeInitial(byte[] payload = null,
+                    List<PacketExtension> plaintextExtensions = null) {
             ClientEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) 
                         as KeyPairAdvanced;
 
@@ -146,10 +150,14 @@ namespace Goedel.Protocol.Presentation {
             plaintextWriter.Write(PlaintextPacketType.Initial);
 
             // Write out the extensions. In this case we only have one client ephemeral being offered:
-            plaintextWriter.WriteExtensions(1);
-            var algorithm = ClientEphemeral.CryptoAlgorithmId.ToJoseID();
-            plaintextWriter.Write(algorithm);
-            plaintextWriter.Write(ClientEphemeral.IKeyAdvancedPublic.Encoding);
+            plaintextExtensions ??= new();
+
+            var ephemeral = new PacketExtension() {
+                Tag = ClientEphemeral.CryptoAlgorithmId.ToJoseID(),
+                Value = ClientEphemeral.IKeyAdvancedPublic.Encoding
+                };
+            plaintextExtensions.Add(ephemeral);
+
 
             ///<summary>Write out the payload.</summary> 
             plaintextWriter.Write(payload);

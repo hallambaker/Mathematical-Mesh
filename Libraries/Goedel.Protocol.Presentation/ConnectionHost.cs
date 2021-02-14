@@ -1,6 +1,7 @@
 ﻿using Goedel.Utilities;
 using Goedel.Cryptography;
 using System.Collections.Generic;
+using Goedel.Cryptography.Jose;
 
 namespace Goedel.Protocol.Presentation {
 
@@ -51,7 +52,11 @@ namespace Goedel.Protocol.Presentation {
                 Tag = Constants.ExtensionChallengeNonce,
                 Value = Platform.GetRandomBytes(16)
                 };
-            var extensions = new List<PacketExtension> { challenge };
+            var ephemeral = new PacketExtension() {
+                Tag = HostEphemeral.CryptoAlgorithmId.ToJoseID(),
+                Value = HostEphemeral.IKeyAdvancedPublic.Encoding
+                };
+            var extensions = new List<PacketExtension> { challenge, ephemeral };
             extensions.AddRange(HostCredential.GetCredentials);
             if (plaintextExtensions != null) {
                 extensions.AddRange(plaintextExtensions);

@@ -40,12 +40,12 @@ namespace Goedel.Protocol.Presentation {
 
 
         /// <summary>
-        /// Serialize a data packet.
+        /// Serialize ane mutually encrypt a data packet.
         /// </summary>
         /// <param name="payload"></param>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        public byte[] SerializeData(byte[] payload, List<PacketExtension> extensions=null) {
+        public byte[] SerializePacketData(byte[] payload, List<PacketExtension> extensions=null) {
 
             using var writer = new PacketWriterAesGcm();
             Write(writer, payload, extensions);
@@ -53,6 +53,21 @@ namespace Goedel.Protocol.Presentation {
             // encrypt the result and return.
             return writer.Wrap(MutualKeyOut);
             }
+
+
+        /// <summary>
+        /// Deserialize a mutually encrypted data packet.
+        /// </summary>
+        /// <param name="sourceId"></param>
+        /// <param name="packet"></param>
+        /// <returns></returns>
+        public PacketData ParsePacketData(PortId sourceId, byte[] packet) {
+            var reader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet);
+            return new PacketData(sourceId, reader);
+
+            }
+
+
 
         /// <summary>
         /// Write the payload <paramref name="payload"/> with extensions <paramref name="extensions"/>

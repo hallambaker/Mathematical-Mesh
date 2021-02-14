@@ -72,50 +72,203 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
-        public virtual void Process(PortId portId, byte[] packet) =>
-            Process(Parse(portId, packet));
 
 
+        public virtual void Process(PortId portID, byte[] packet) {
 
-        public virtual void Process(Packet packet) {
+            packet.AssertNotNull(NYI.Throw);
+            (packet.Length > 0).AssertTrue(NYI.Throw);
+
+            switch (packet[0])  {
+                case byte b when ((b & 0b1000_0000) == 0): {
+                    var parsed = ParsePacketData(portID, packet);
+                    ProcessPacketData(parsed);
+                    break;
+                    }
+                case (byte)PlaintextPacketType.Error: {
+                    var parsed = ParsePacketError(portID, packet);
+                    ProcessError(parsed);
+                    break;
+                    }
+                case (byte)PlaintextPacketType.Initial: {
+                    var parsed = ParsePacketInitial(portID, packet);
+                    ProcessPacketInitial(parsed);
+                    break;
+                    }
+                case (byte)PlaintextPacketType.ClientExchange: {
+                    var parsed = ParsePacketClientExchange(portID, packet);
+                    ProcessPacketClientExchange(parsed);
+                    break;
+                    }
+                case (byte)PlaintextPacketType.ClientComplete: {
+                    var parsed = ParsePacketClientComplete(portID, packet);
+                    ProcessPacketClientComplete(parsed);
+                    break;
+                    }
+                case (byte)PlaintextPacketType.HostChallenge: {
+                    var parsed = ParsePacketHostChallenge(portID, packet);
+                    ProcessPacketHostChallenge(parsed);
+                    break;
+                    }
+                case (byte)PlaintextPacketType.HostExchange: {
+                    var parsed = ParsePacketHostExchange(portID, packet);
+                    ProcessPacketHostExchange(parsed);
+                    break;
+                    }
+                case (byte)PlaintextPacketType.HostComplete: {
+                    var parsed = ParsePacketHostComplete(portID, packet);
+                    ProcessPacketHostComplete(parsed);
+                    break;
+                    }
+
+                default: {
+                    ProcessBad(portID, packet);
+                    break;
+                    }
+                };
+
+        }
+        public virtual void ProcessBad(PortId portID, byte[] packet) {
+            }
+
+        public virtual void ProcessPacketData(Packet packet) {
             }
 
 
+        public virtual void ProcessError(Packet packet) {
+            }
+
+        public virtual void ProcessPacketInitial(Packet packet) {
+            if (packet is not PacketInitial packetInitial) {
+                ProcessError(packet);
+                }
+            else 
+                {
+                
+                }
+            }
+
+        public virtual void ProcessPacketClientExchange(Packet packet) {
+            }
+
+        public virtual void ProcessPacketClientComplete(Packet packet) {
+            }
+        public virtual void ProcessPacketHostChallenge(Packet packet) {
+            }
+        public virtual void ProcessPacketHostExchange(Packet packet) {
+            }
+        public virtual void ProcessPacketHostComplete(Packet packet) {
+            }
 
 
+        /// <summary>
+        /// Parse a packet and retru
+        /// </summary>
+        /// <param name="sourceId">Identifier of the source from which the packet was received.</param>
+        /// <param name="packet">The data packet.</param>
+        /// <returns>The parsed packet.</returns>
 
-        public Packet Parse(PortId portID, byte[] packet) {
+        public virtual Packet Parse(PortId sourceId, byte[] packet) {
 
 
             packet.AssertNotNull(NYI.Throw);
             (packet.Length > 0).AssertTrue(NYI.Throw);
 
             return packet[0] switch {
-                byte b when ((b & 0b1000_0000) != 0) => GetPacketData(portID, packet),
-                (byte)PlaintextPacketType.Initial => new PacketInitial(portID, packet),
-                (byte)PlaintextPacketType.Error => new PacketError(portID, packet),
-                (byte)PlaintextPacketType.ClientExchange => new PacketClientExchange(portID, packet),
-                (byte)PlaintextPacketType.HostChallenge => new PacketHostChallenge(portID, packet),
-                (byte)PlaintextPacketType.HostComplete => new PacketHostExchange(portID, packet),
-                (byte)PlaintextPacketType.Rebind => new PacketRebind(portID, packet),
+                byte b when ((b & 0b1000_0000) == 0) => ParsePacketData(sourceId, packet),
+                (byte)PlaintextPacketType.Initial => new PacketInitial(sourceId, packet),
+                (byte)PlaintextPacketType.Error => new PacketError(sourceId, packet),
+                (byte)PlaintextPacketType.ClientExchange => new PacketClientExchange(sourceId, packet),
+                (byte)PlaintextPacketType.HostChallenge => new PacketHostChallenge(sourceId, packet),
+                (byte)PlaintextPacketType.HostComplete => new PacketHostExchange(sourceId, packet),
+                (byte)PlaintextPacketType.Rebind => new PacketRebind(sourceId, packet),
 
-                _ => new PacketUnknown(portID, packet)
+                _ => new PacketUnknown(sourceId, packet)
                 };
 
             }
 
-
-        // Need to move this into the connection class.
-        public Packet GetPacketData(PortId sourceId, byte[] packet) {
+        /// <summary>
+        /// Parse a packet containing PacketData.
+        /// </summary>
+        /// <param name="sourceId">Identifier of the source from which the packet was received.</param>
+        /// <param name="packet">The data packet.</param>
+        /// <returns>The parsed packet.</returns>
+        public virtual Packet ParsePacketData(PortId sourceId, byte[] packet) {
 
             if (DictionaryPortIdToConnection.TryGetValue(sourceId, out var connection)) {
-                var reader = PacketReaderAesGcm.Unwrap(connection, packet);
-                return new PacketData(sourceId, reader);
+                return connection.ParsePacketData(sourceId, packet);
                 }
             else {
                 return new PacketUnknown(sourceId, packet);
-
                 }
+            }
+
+        /// <summary>
+        /// Parse a packet containing PacketData.
+        /// </summary>
+        /// <param name="sourceId">Identifier of the source from which the packet was received.</param>
+        /// <param name="packet">The data packet.</param>
+        /// <returns>The parsed packet.</returns>
+        public virtual Packet ParsePacketError(PortId sourceId, byte[] packet) {
+            throw new NYI();
+            }
+
+        /// <summary>
+        /// Parse a packet containing PacketData.
+        /// </summary>
+        /// <param name="sourceId">Identifier of the source from which the packet was received.</param>
+        /// <param name="packet">The data packet.</param>
+        /// <returns>The parsed packet.</returns>
+        public virtual Packet ParsePacketInitial(PortId sourceId, byte[] packet) {
+            throw new NYI();
+            }
+
+        /// <summary>
+        /// Parse a packet containing PacketData.
+        /// </summary>
+        /// <param name="sourceId">Identifier of the source from which the packet was received.</param>
+        /// <param name="packet">The data packet.</param>
+        /// <returns>The parsed packet.</returns>
+        public virtual Packet ParsePacketClientExchange(PortId sourceId, byte[] packet) {
+            throw new NYI();
+            }
+        /// <summary>
+        /// Parse a packet containing PacketData.
+        /// </summary>
+        /// <param name="sourceId">Identifier of the source from which the packet was received.</param>
+        /// <param name="packet">The data packet.</param>
+        /// <returns>The parsed packet.</returns>
+        public virtual Packet ParsePacketClientComplete(PortId sourceId, byte[] packet) {
+            throw new NYI();
+            }
+
+        /// <summary>
+        /// Parse a packet containing PacketData.
+        /// </summary>
+        /// <param name="sourceId">Identifier of the source from which the packet was received.</param>
+        /// <param name="packet">The data packet.</param>
+        /// <returns>The parsed packet.</returns>
+        public virtual Packet ParsePacketHostChallenge(PortId sourceId, byte[] packet) {
+            throw new NYI();
+            }
+        /// <summary>
+        /// Parse a packet containing PacketData.
+        /// </summary>
+        /// <param name="sourceId">Identifier of the source from which the packet was received.</param>
+        /// <param name="packet">The data packet.</param>
+        /// <returns>The parsed packet.</returns>
+        public virtual Packet ParsePacketHostExchange(PortId sourceId, byte[] packet) {
+            throw new NYI();
+            }
+        /// <summary>
+        /// Parse a packet containing PacketData.
+        /// </summary>
+        /// <param name="sourceId">Identifier of the source from which the packet was received.</param>
+        /// <param name="packet">The data packet.</param>
+        /// <returns>The parsed packet.</returns>
+        public virtual Packet ParsePacketHostComplete(PortId sourceId, byte[] packet) {
+            throw new NYI();
             }
 
 
