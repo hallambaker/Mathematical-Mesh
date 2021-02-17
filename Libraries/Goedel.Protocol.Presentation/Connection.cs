@@ -28,8 +28,9 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The host credentials. There is exactly one set of host 
         ///credentials for a given PortId at a given time. This MAY however
         ///contain multiple keys (e.g. for different algorithms.</summary> 
-        public PresentationCredential HostCredential => Listener.HostCredential;
+        public PresentationCredential ListenerCredential => Listener.HostCredential;
 
+        ///<summary>The listener to which this connection is bound.</summary> 
         protected Listener Listener { get;  init; }
 
         /// <summary>
@@ -184,7 +185,14 @@ namespace Goedel.Protocol.Presentation {
             keyHostClient = keyDerive.Derive(Constants.TagKeyHostClient, Constants.SizeKeyAesGcm * 8);
             }
 
-        public abstract Packet Parse(PortId portID, byte[] packet);
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+        /// and return the parsed packet data.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data.</param>
+        /// <returns>The parsed packet.</returns>
+        public abstract Packet Parse(PortId sourceId, byte[] packet);
 
 
         }

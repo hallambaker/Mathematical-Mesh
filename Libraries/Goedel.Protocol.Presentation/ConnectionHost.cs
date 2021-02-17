@@ -10,11 +10,16 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public class ConnectionHost : Connection {
 
+        ///<summary>The client credential</summary> 
+        public PresentationCredential HostCredential => Listener.HostCredential;
 
 
         ///<summary>The client credential</summary> 
         public PresentationCredential ClientCredential { get; set; }
 
+        byte[] ClientEphemeral { get; set; }
+
+        KeyPairAdvanced HostKey { get; set; }
 
         KeyPairAdvanced HostEphemeral { get; set; }
         KeyAgreementResult HostKeyAgreementResult { get; set; }
@@ -60,7 +65,7 @@ namespace Goedel.Protocol.Presentation {
                 Value = HostEphemeral.IKeyAdvancedPublic.Encoding
                 };
             var extensions = new List<PacketExtension> { challenge, ephemeral };
-            extensions.AddRange(HostCredential.GetCredentials);
+            extensions.AddRange(ListenerCredential.GetCredentials);
             if (plaintextExtensions != null) {
                 extensions.AddRange(plaintextExtensions);
                 }
@@ -86,7 +91,7 @@ namespace Goedel.Protocol.Presentation {
                     List<PacketExtension> ciphertextExtensions = null) {
 
             // Identify the keys and ephemerals to be used in the exchange
-            var (clientEphemeral, hostPrivate) = HostCredential.MatchEphemeral(
+            var (clientEphemeral, hostPrivate) = ListenerCredential.MatchEphemeral(
                     ClientPacket.ExtensionsPlaintext);
             HostEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
 
@@ -96,7 +101,7 @@ namespace Goedel.Protocol.Presentation {
                 Value = HostEphemeral.IKeyAdvancedPublic.Encoding
                 };
             var pExtensions = new List<PacketExtension> { ephemeral };
-            pExtensions.AddRange(HostCredential.GetCredentials);
+            pExtensions.AddRange(ListenerCredential.GetCredentials);
 
             if (plaintextExtensions != null) {
                 pExtensions.AddRange(plaintextExtensions);
@@ -135,7 +140,7 @@ namespace Goedel.Protocol.Presentation {
                     List<PacketExtension> plaintextExtensions = null,
                     List<PacketExtension> ciphertextExtensions = null) {
 
-            ClientKeyExchange(HostCredential.KeyExchangePrivate, clientEphemeral,
+            ClientKeyExchange(ListenerCredential.KeyExchangePrivate, clientEphemeral,
                     out ClientKeyIn, out ClientKeyOut);
             MutualKeyExchange(HostEphemeral, ClientCredential.KeyExchangePublic,
                 out MutualKeyIn, out MutualKeyOut);
@@ -153,6 +158,13 @@ namespace Goedel.Protocol.Presentation {
             return outerWriter.Packet;
             }
 
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+        /// and return the parsed packet data.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data.</param>
+        /// <returns>The parsed packet.</returns>
         public override Packet Parse(PortId sourceId, byte[] packet) {
             return packet[0] switch {
                 byte b when ((b & 0b1000_0000) == 0) => ParsePacketData(sourceId, packet),
@@ -166,14 +178,66 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
-
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+        /// as a packet of type <see cref="PacketClientExchange"/>and return the parsed packet data.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data.</param>
+        /// <returns>The parsed packet.</returns>
         public PacketClientExchange ParsePacketClientExchange(PortId sourceId, byte[] packet) {
-            throw new NYI();
+            var outerReader = new PacketReaderAesGcm(packet) { Position = 1 };
+            var keyIdentifier = outerReader.ReadString();
+            var ephemeral = outerReader.ReadBinary();
+            var extensions = outerReader.ReadExtensions();
+
+            (ClientEphemeral, HostKey) = HostCredential.MatchEphemeral(extensions);
+            ClientKeyExchange(HostKey, ClientEphemeral, out ClientKeyIn, out ClientKeyOut);
+
+            var innerReader = outerReader.Decrypt(ClientKeyIn);
+
+            // Read the inner encrypted packet.
+            var result = new PacketClientExchange(sourceId) {
+                ExtensionsPlaintext = extensions
+                };
+            result.ReadEncrypted(innerReader);
+
+            return result;
+
+
+
             }
 
-
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+        /// as a packet of type <see cref="PacketClientComplete"/>and return the parsed packet data.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data.</param>
+        /// <returns>The parsed packet.</returns>
         public PacketClientComplete ParsePacketClientComplete(PortId sourceId, byte[] packet) {
-            throw new NYI();
+
+            var outerReader = new PacketReaderAesGcm(packet) { Position = 1 };
+            var keyIdentifier = outerReader.ReadString();
+            var ephemeral = outerReader.ReadBinary();
+            var extensions = outerReader.ReadExtensions();
+
+            // Encrypt the inner packet and write to the outer.
+            var mezzanineReader = outerReader.Decrypt(ClientKeyIn);
+            var mezzaninePacketId = mezzanineReader.ReadByte();
+            var mezzanineExtensions = mezzanineReader.ReadExtensions();
+
+            " set up MutualKeyIn, MutualKeyOut".TaskFunctionality(true);
+
+            var innerReader = mezzanineReader.Decrypt(MutualKeyIn);
+
+            // Read the inner encrypted packet.
+            var result = new PacketClientComplete(sourceId) {
+                ExtensionsPlaintext = extensions
+                };
+            result.ReadEncrypted(innerReader);
+
+            return result;
             }
 
         }

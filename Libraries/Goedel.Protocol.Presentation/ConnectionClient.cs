@@ -222,7 +222,6 @@ namespace Goedel.Protocol.Presentation {
         ///  The client credentials are encrypted to the host credentials but not authenticated to the
         ///  client making the request.
         /// </summary>
-        /// <param name="hostEphemeral">The host ephemeral data.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensions">Plaintext extensions, including answer data responding to a 
         /// challenge puzzle presented by the host or another party.</param>
@@ -268,7 +267,13 @@ namespace Goedel.Protocol.Presentation {
             return outerWriter.Packet;
             }
 
-
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+        /// and return the parsed packet data.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data.</param>
+        /// <returns>The parsed packet.</returns>
         public override Packet Parse(PortId sourceId, byte[] packet) {
             return packet[0] switch {
                 byte b when ((b & 0b1000_0000) == 0) => ParsePacketData(sourceId, packet),
@@ -280,7 +285,13 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
-
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+        /// as a packet of type <see cref="PacketHostExchange"/>and return the parsed packet data.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data.</param>
+        /// <returns>The parsed packet.</returns>
         public PacketHostExchange ParsePacketHostExchange(PortId sourceId, byte[] packet) {
 
 
@@ -309,8 +320,30 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+        /// as a packet of type <see cref="PacketHostComplete"/>and return the parsed packet data.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data.</param>
+        /// <returns>The parsed packet.</returns>
         public PacketHostComplete ParsePacketHostComplete(PortId sourceId, byte[] packet) {
-            throw new NYI();
+            var outerReader = new PacketReaderAesGcm(packet) { Position = 1 };
+            var keyIdentifier = outerReader.ReadString();
+            var ephemeral = outerReader.ReadBinary();
+            var extensions = outerReader.ReadExtensions();
+
+            " set up MutualKeyIn, MutualKeyOut".TaskFunctionality(true);
+
+            var innerReader = outerReader.Decrypt(MutualKeyIn);
+
+            // Read the inner encrypted packet.
+            var result = new PacketHostComplete(sourceId) {
+                ExtensionsPlaintext = extensions
+                };
+            result.ReadEncrypted(innerReader);
+
+            return result;
             }
 
 

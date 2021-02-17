@@ -33,12 +33,10 @@ namespace Goedel.Protocol.Presentation {
 
 
         /// <summary>
-        /// Constructor, return packet bound to port <paramref name="portId"/>.
+        /// Constructor, return packet bound to port <paramref name="sourceId"/>.
         /// </summary>
-        /// <param name="portId">The source address and port.</param>
-        public Packet(PortId portId) {
-            SourcePortId = portId;
-            }
+        /// <param name="sourceId">The source address and port.</param>
+        public Packet(PortId sourceId) => SourcePortId = sourceId;
 
 
 
@@ -105,12 +103,12 @@ namespace Goedel.Protocol.Presentation {
     public class PacketUnknown : Packet {
 
         /// <summary>
-        /// Constructor, return packet bound to port <paramref name="portId"/> containing data
+        /// Constructor, return packet bound to port <paramref name="sourceId"/> containing data
         /// <paramref name="data"/>.
         /// </summary>
-        /// <param name="portId">The source address and port.</param>
+        /// <param name="sourceId">The source address and port.</param>
         /// <param name="data">The packet data.</param>
-        public PacketUnknown(PortId portId, byte[] data) : base(portId)
+        public PacketUnknown(PortId sourceId, byte[] data) : base(sourceId)
                 => Payload = data;
 
         }
@@ -119,18 +117,13 @@ namespace Goedel.Protocol.Presentation {
     /// Encrypted and authenticated data packet.
     /// </summary>
     public class PacketData : Packet {
-
-
-
         /// <summary>
-        /// Constructor, parse a decrypted data packet received from <paramref name="portId"/>
+        /// Constructor, parse a decrypted data packet received from <paramref name="sourceId"/>
         /// bound to the reader <paramref name="reader"/>.
         /// </summary>
-        /// <param name="portId">The packet source identifier.</param>
+        /// <param name="sourceId">The packet source identifier.</param>
         /// <param name="reader">Reader for decrypted packet data.</param>
-        public PacketData(PortId portId, PacketReader reader) : base(portId) {
-            ReadEncrypted(reader);
-            }
+        public PacketData(PortId sourceId, PacketReader reader) : base(sourceId) => ReadEncrypted(reader);
 
 
         }
@@ -148,11 +141,11 @@ namespace Goedel.Protocol.Presentation {
 
         /// <summary>
         /// Constructor, parse a plaintext data packet <paramref name="data"/> 
-        /// received from <paramref name="portId"/>.
+        /// received from <paramref name="sourceId"/>.
         /// </summary>
-        /// <param name="portId">The packet source identifier.</param>
+        /// <param name="sourceId">The packet source identifier.</param>
         /// <param name="data">The packet data.</param>
-        public PacketError(PortId portId, byte[] data) : base(portId) {
+        public PacketError(PortId sourceId, byte[] data) : base(sourceId) {
 
             var reader = new PacketReader(data);
             reader.Position++; // skip the packet identifier byte (already read)
@@ -180,11 +173,11 @@ namespace Goedel.Protocol.Presentation {
 
         /// <summary>
         /// Constructor, parse a plaintext data packet <paramref name="data"/> 
-        /// received from <paramref name="portId"/>.
+        /// received from <paramref name="sourceId"/>.
         /// </summary>
-        /// <param name="portId">The packet source identifier.</param>
+        /// <param name="sourceId">The packet source identifier.</param>
         /// <param name="data">The packet data.</param>
-        public PacketInitial(PortId portId, byte[] data) : base(portId) {
+        public PacketInitial(PortId sourceId, byte[] data) : base(sourceId) {
 
             var reader = new PacketReader(data) {
                 Position = 1 // skip the packet identifier byte (already read)
@@ -210,61 +203,19 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public class PacketClientExchange : Packet {
 
-        ///<summary>Host key identifier given by the client. Used to allow use of multiple
-        ///host keys with different algorithms, etc. etc.</summary> 
-        public string HostKeyIdentifier { get; }
-
-        ///<summary>Client ephemeral key in binary form. MUST be compatible with the host 
-        ///key algorithm.</summary> 
-        public byte[] ClientEphemeral { get; }
-
-        ///<summary>Result of the client side key agreement.</summary> 
-        public KeyAgreementResult KeyAgreementResult;
-
-        PacketReader outerReader;
-
         /// <summary>
-        /// Constructor, parse plaintext parts of data packet <paramref name="packet"/> 
-        /// received from <paramref name="portId"/>.
+        /// Constructor, for data packet
+        /// received from <paramref name="sourceId"/>.
         /// </summary>
-        /// <param name="portId">The packet source identifier.</param>
-        /// <param name="packet">The packet data.</param>
-        public PacketClientExchange(PortId portId, byte[] packet) : base(portId) {
-
-            outerReader = new PacketReaderAesGcm(packet) {
-                Position = 1 // skip first byte.
-                };
-
-            HostKeyIdentifier = outerReader.ReadString();
-            ClientEphemeral = outerReader.ReadBinary();
-
-            // Read the extensions. This MAY include a proof of work challenge.
-            ExtensionsPlaintext = outerReader.ReadExtensions();
+        /// <param name="sourceId">The packet source identifier.</param>
+        public PacketClientExchange(PortId sourceId) : base(sourceId) {
             }
 
-        /// <summary>
-        /// Decrypt the inner packet data using the private key <paramref name="privateKeyAgreement"/>
-        /// </summary>
-        /// <param name="privateKeyAgreement">The decryption key to be used to obtain information
-        /// from the encrypted payload.</param>
-        public void Decrypt(KeyPairAdvanced privateKeyAgreement) {
-            if (KeyAgreementResult != null) {
-                return; // payload already decrypted.
-                }
-
-            KeyAgreementResult = privateKeyAgreement.Agreement(null);
-            var keyDerive = KeyAgreementResult.KeyDerive;
-            var key = keyDerive.Derive(Constants.TagKey, Constants.SizeKeyAesGcm);
-
-            var innerReader = outerReader.Decrypt(key);
-
-            ReadEncrypted(innerReader);
-            }
         }
 
     public class PacketClientComplete : Packet {
 
-        public PacketClientComplete(PortId portId) : base(portId) {
+        public PacketClientComplete(PortId sourceId) : base(sourceId) {
             }
 
         }
@@ -272,14 +223,14 @@ namespace Goedel.Protocol.Presentation {
 
     public class PacketHostChallenge : Packet {
 
-        public PacketHostChallenge(PortId portId, byte[] data) : base(portId) {
+        public PacketHostChallenge(PortId sourceId) : base(sourceId) {
             }
 
         }
 
     public class PacketHostExchange : Packet {
 
-        public PacketHostExchange(PortId portId) : base(portId) {
+        public PacketHostExchange(PortId sourceId) : base(sourceId) {
             }
 
         }
@@ -287,14 +238,14 @@ namespace Goedel.Protocol.Presentation {
 
     public class PacketHostComplete : Packet {
 
-        public PacketHostComplete(PortId portId) : base(portId) {
+        public PacketHostComplete(PortId sourceId) : base(sourceId) {
             }
 
         }
 
     public class PacketRebind : Packet {
 
-        public PacketRebind(PortId portId, byte[] data) : base(portId) {
+        public PacketRebind(PortId portId) : base(portId) {
             }
 
         }
