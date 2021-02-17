@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
+
+using Goedel.Utilities;
+
 namespace Goedel.Protocol.Presentation {
 
     /// <summary>
@@ -44,8 +47,8 @@ namespace Goedel.Protocol.Presentation {
 
         KeyPairAdvanced ClientEphemeral { get; set; }
 
-
-
+        byte[] HostEphemeral { get; set; }
+        KeyPairAdvanced ClientKey { get; set; }
 
         PortId PortID;
 
@@ -65,6 +68,7 @@ namespace Goedel.Protocol.Presentation {
                     PortId portID,
                     PresentationCredential clientCredential,
                     PresentationCredential hostCredential=null) : base(listener){
+            Listener = listener;
             ClientState = ClientState.Initial;
             ClientCredential = clientCredential;
             HostCredential = hostCredential;
@@ -73,64 +77,64 @@ namespace Goedel.Protocol.Presentation {
             PortID = portID;
             }
 
-        /// <summary>
-        /// Establish a connection to the identified host. 
-        /// </summary>
-        /// <param name="jsonObject">The record to be sent.</param>
-        /// <returns>The record returned.</returns>
-        public virtual async Task<JsonObject> Open(JsonObject jsonObject=null) {
+        ///// <summary>
+        ///// Establish a connection to the identified host. 
+        ///// </summary>
+        ///// <param name="jsonObject">The record to be sent.</param>
+        ///// <returns>The record returned.</returns>
+        //public virtual async Task<JsonObject> Open(JsonObject jsonObject=null) {
 
-            var data = jsonObject.GetJsonB(true);
-            var response = Write(data);
-            await response;
+        //    var data = jsonObject.GetJsonB(true);
+        //    var response = Write(data);
+        //    await response;
 
-            var reader = new JsonBcdReader(response.Result.Data);
-            return JsonObject.FromJson(reader, true);
-            }
+        //    var reader = new JsonBcdReader(response.Result.Data);
+        //    return JsonObject.FromJson(reader, true);
+        //    }
 
-        /// <summary>
-        /// Write the record <paramref name="jsonObject"/> to the connection. 
-        /// </summary>
-        /// <param name="jsonObject">The record to be sent.</param>
-        /// <returns>The record returned.</returns>
+        ///// <summary>
+        ///// Write the record <paramref name="jsonObject"/> to the connection. 
+        ///// </summary>
+        ///// <param name="jsonObject">The record to be sent.</param>
+        ///// <returns>The record returned.</returns>
 
-        public virtual async Task<JsonObject> Write(JsonObject jsonObject) {
+        //public virtual async Task<JsonObject> Write(JsonObject jsonObject) {
 
-            var data = jsonObject.GetJsonB(true);
-            var response = Write(data);
-            await response;
+        //    var data = jsonObject.GetJsonB(true);
+        //    var response = Write(data);
+        //    await response;
 
-            var reader = new JsonBcdReader(response.Result.Data);
-            return JsonObject.FromJson(reader, true);
-            }
+        //    var reader = new JsonBcdReader(response.Result.Data);
+        //    return JsonObject.FromJson(reader, true);
+        //    }
 
-        /// <summary>
-        /// Write the payload data <paramref name="data"/> to the connection.
-        /// </summary>
-        /// <param name="data">The data to write.</param>
-        /// <param name="plaintext"></param>
-        /// <returns></returns>
-        public virtual async Task<PacketClientIn> Write(byte[] data, bool plaintext = false) {
-            byte[] requestPacket = ClientState switch {
-                ClientState.Initial => HostCredential == null ?
-                    SerializeInitial(data) : SerializeClientExchange(data),
-                ClientState.Challenge => SerializeClientExchange(data),
-                ClientState.Write => SerializePacketData(data),
-                _ => throw new InvalidClientState()
-                };
+        ///// <summary>
+        ///// Write the payload data <paramref name="data"/> to the connection.
+        ///// </summary>
+        ///// <param name="data">The data to write.</param>
+        ///// <param name="plaintext"></param>
+        ///// <returns></returns>
+        //public virtual async Task<Packet> Write(byte[] data, bool plaintext = false) {
+        //    byte[] requestPacket = ClientState switch {
+        //        ClientState.Initial => HostCredential == null ?
+        //            SerializeInitial(data) : SerializeClientExchange(data),
+        //        ClientState.Challenge => SerializeClientExchange(data),
+        //        ClientState.Write => SerializePacketData(data),
+        //        _ => throw new InvalidClientState()
+        //        };
 
-            var response = PostPacket(requestPacket);
-            await response;
-            return response.Result;
-            }
+        //    var response = PostPacket(requestPacket);
+        //    await response;
+        //    return response.Result;
+        //    }
 
 
-        /// <summary>
-        /// Post a packet to the interface.
-        /// </summary>
-        /// <param name="data">The packet to post.</param>
-        /// <returns>Response packet.</returns>
-        public abstract Task<PacketClientIn> PostPacket(byte[] data) ;
+        ///// <summary>
+        ///// Post a packet to the interface.
+        ///// </summary>
+        ///// <param name="data">The packet to post.</param>
+        ///// <returns>Response packet.</returns>
+        //public abstract Task<Packet> PostPacket(byte[] data) ;
 
 
         /// <summary>
@@ -146,10 +150,7 @@ namespace Goedel.Protocol.Presentation {
             ClientEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) 
                         as KeyPairAdvanced;
 
-            var plaintextWriter = new PacketWriter();
-            plaintextWriter.Write(PlaintextPacketType.Initial);
-
-            // Write out the extensions. In this case we only have one client ephemeral being offered:
+            // Compile the extensions. In this case we only have one client ephemeral being offered:
             plaintextExtensions ??= new();
 
             var ephemeral = new PacketExtension() {
@@ -158,6 +159,9 @@ namespace Goedel.Protocol.Presentation {
                 };
             plaintextExtensions.Add(ephemeral);
 
+            var plaintextWriter = new PacketWriter();
+            plaintextWriter.Write(PlaintextPacketType.Initial);
+            plaintextWriter.WriteExtensions(plaintextExtensions);
 
             ///<summary>Write out the payload.</summary> 
             plaintextWriter.Write(payload);
@@ -224,15 +228,14 @@ namespace Goedel.Protocol.Presentation {
         /// challenge puzzle presented by the host or another party.</param>
         /// <param name="ciphertextExtensions">Ciphertext extensions, including channel configuration.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeClientComplete(byte[] hostEphemeral,
+        public byte[] SerializeClientComplete(
                     byte[] payload = null,
                     List<PacketExtension> plaintextExtensions = null,
                     List<PacketExtension> ciphertextExtensions = null) {
             
             // perform the key exchanges.
-            ClientKeyExchange(ClientEphemeral, HostCredential.KeyExchangePublic,
-                out ClientKeyOut, out ClientKeyIn);
-            MutualKeyExchange (ClientCredential.KeyExchangePrivate, hostEphemeral,
+
+            MutualKeyExchange (ClientCredential.KeyExchangePrivate, HostEphemeral,
                 out MutualKeyOut, out MutualKeyIn);
 
             var innerWriter = new PacketWriter();
@@ -266,33 +269,51 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
+        public override Packet Parse(PortId sourceId, byte[] packet) {
+            return packet[0] switch {
+                byte b when ((b & 0b1000_0000) == 0) => ParsePacketData(sourceId, packet),
+                (byte)PlaintextPacketType.HostExchange => ParsePacketHostExchange(sourceId, packet),
+                (byte)PlaintextPacketType.HostComplete => ParsePacketHostComplete(sourceId, packet),
+
+                _ => new PacketUnknown(sourceId, packet)
+                };
+
+            }
 
 
-        }
+        public PacketHostExchange ParsePacketHostExchange(PortId sourceId, byte[] packet) {
 
 
 
+            var outerReader = new PacketReaderAesGcm(packet) { Position = 1 };
+
+            var keyIdentifier = outerReader.ReadString();
+            var extensions = outerReader.ReadExtensions();
+
+            (HostEphemeral, ClientKey) = ClientCredential.MatchEphemeral(extensions);
+
+            HostCredential = Listener.GetPresentationCredential(extensions);
+            var hostPublic = HostCredential.MatchPublic(keyIdentifier);
+
+            ClientKeyExchange(ClientEphemeral, hostPublic, out ClientKeyOut, out ClientKeyIn);
+
+            var innerReader = outerReader.Decrypt(ClientKeyIn);
+            var result = new PacketHostExchange(sourceId) {
+                ExtensionsPlaintext = extensions
+                };
+            result.ReadEncrypted(innerReader);
 
 
 
+            return result;
+
+            }
+
+        public PacketHostComplete ParsePacketHostComplete(PortId sourceId, byte[] packet) {
+            throw new NYI();
+            }
 
 
-
-
-    public class PacketClientIn  {
-
-        public virtual byte[] Data { get; }
-
-
-        }
-
-    public class PacketClientChallenge : PacketClientIn {
-        }
-    public class PacketClientComplete : PacketClientIn {
-        }
-    public class PacketClientData : PacketClientIn {
-        }
-    public class PacketClientAbort : PacketClientIn {
         }
 
 

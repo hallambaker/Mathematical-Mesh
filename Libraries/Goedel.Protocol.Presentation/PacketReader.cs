@@ -96,11 +96,34 @@ namespace Goedel.Protocol.Presentation {
         public string ReadString() {
             var (packetTag, length) = ReadTag();
             (packetTag == PacketTag.String).AssertTrue(NYI.Throw);
-            return ReadSpan((int)length).ToString();
+            return ReadSpan((int)length).ToArray().ToUTF8();
             }
 
 
         public byte[] ReadBinary() => ReadBinarySpan().ToArray();
+
+
+        /// <summary>
+        /// Read a list of extensions from <paramref name="reader"/>.
+        /// </summary>
+        /// <param name="reader">Reader bound to the packet being read</param>
+        /// <returns>>The list of extensions read.</returns>
+        public List<PacketExtension> ReadExtensions() {
+            var (etag, count) = ReadTag();
+            if (count == 0) {
+                return null;
+                }
+            var result = new List<PacketExtension>();
+            for (var i = 0; i < count; i++) {
+                var tag = ReadString();
+                var value = ReadBinary();
+                var extension = new PacketExtension() { Tag = tag, Value = value };
+                result.Add(extension);
+                }
+
+            return result;
+            }
+
 
         /// <summary>
         /// Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
@@ -108,7 +131,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="ikm">The primary key.</param>
         /// <returns>A reader for the decrypted data.</returns>
-        public virtual PacketReader Decrypt(byte[] ikm) => throw new NYI();
+        public virtual PacketReader Decrypt(byte[] ikm, bool pad = true) => throw new NYI();
 
 
         /// <summary>
@@ -145,28 +168,27 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="key">The primary key.</param>
         /// <returns>A reader for the decrypted data.</returns>
-        public override PacketReader Decrypt(byte[] key) {
+        public override PacketReader Decrypt(byte[] key, bool pad = true) {
 
-            var iv = new byte[Constants.SizeIvAesGcm];
-            Buffer.BlockCopy(Packet, Position, iv, 0, iv.Length);
-            Position += iv.Length;
-
-            //Constants.Derive2(ikm, nonce, out var iv, out var key);
+            Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
             var aes = new AesGcm(key);
-            var ivSpan = new ReadOnlySpan<byte>(iv);
+
+            var ivSpan = new ReadOnlySpan<byte>(Packet, Position, Constants.SizeIvAesGcm);
+            Position += Constants.SizeIvAesGcm;
 
             var authSpan = new Span<byte>(Packet, 0, Position);
-            var TagSpan = new Span<byte>(Packet, Position, SizeIv);
-            Position += SizeIv;
 
-            var length = Packet.Length - Position;
+            var tagSpan = new Span<byte>(Packet, Position, Constants.SizeIvAesGcm);
+            Position += Constants.SizeIvAesGcm;
+
+            var length = pad ? Packet.Length - Position : Position;
             var dataOut = new byte[length];
 
-            var ciphertextSpan = new Span<byte>(Packet, Position, length);
-            var plaintextSpan = new ReadOnlySpan<byte>(dataOut, 0, length);
+            var ciphertextSpan = new ReadOnlySpan<byte>(Packet, Position, length);
+            var plaintextSpan = new Span<byte>(dataOut, 0, length);
 
-            aes.Decrypt(ivSpan, plaintextSpan, ciphertextSpan, TagSpan, authSpan);
+            aes.Decrypt(ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
 
             return new PacketReader(dataOut);
             }

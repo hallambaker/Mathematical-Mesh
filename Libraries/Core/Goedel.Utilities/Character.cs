@@ -12,13 +12,13 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Convert a list of strings to a comma separated string.
         /// </summary>
-        /// <param name="Texts">The input strings.</param>
+        /// <param name="texts">The input strings.</param>
         /// <returns>If Texts is not null, the string values separated by commas, otherwise null.</returns>
-        public static string ToCommaSeparated(this List<string> Texts) {
-            if (Texts == null) {
+        public static string ToCommaSeparated(this List<string> texts) {
+            if (texts == null) {
                 return null;
                 }
-            return string.Join(", ", Texts);
+            return string.Join(", ", texts);
 
 
             }
@@ -37,24 +37,33 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Convert UTF8 encoded bytes to string
         /// </summary>
-        /// <param name="Data">The encoded bytes to convert.</param>
+        /// <param name="data">The encoded bytes to convert.</param>
         /// <returns>The resulting string.</returns>
-        public static string ToUTF8(this byte[] Data) => Encoding.UTF8.GetString(Data, 0, Data.Length);
+        public static string ToUTF8(this byte[] data) => Encoding.UTF8.GetString(data, 0, data.Length);
+
+
+        /// <summary>
+        /// Convert UTF8 encoded bytes to string
+        /// </summary>
+        /// <param name="data">The encoded bytes to convert.</param>
+        /// <returns>The resulting string.</returns>
+        public static string ToUTF8(this Span<byte>data) => Encoding.UTF8.GetString(data);
+
 
         /// <summary>
         /// Convert Text to UTF8 encoded bytes
         /// </summary>
-        /// <param name="Text">Text to convert</param>
+        /// <param name="text">Text to convert</param>
         /// <returns>The encoded bytes</returns>
-        public static byte[] ToBytes(this string Text) => Encoding.UTF8.GetBytes(Text);
+        public static byte[] ToBytes(this string text) => Encoding.UTF8.GetBytes(text);
 
         /// <summary>
         /// Convert integer to ASCII character if in the range 1-127, otherwise
         /// return .
         /// </summary>
-        /// <param name="In">The character to convert</param>
+        /// <param name="c">The character to convert</param>
         /// <returns>ASCII character if 0 &lt; In &lt; 128, otherwise '.'</returns>
-        public static char ToASCII(this int In) => (In > 0 & In < 128) ? (char)In : '.';
+        public static char ToASCII(this int c) => (c > 0 & c < 128) ? (char)c : '.';
 
         /// <summary>Test to see if an input character is a Base64 character.
         /// </summary>
@@ -91,36 +100,36 @@ namespace Goedel.Utilities {
         /// Count the number of bytes that are required to encode
         /// a string in UTF8.
         /// </summary>
-        /// <param name="Text">Input string</param>
+        /// <param name="text">Input string</param>
         /// <returns>Number of bytes required to encode the string.</returns>
-        public static int CountUTF8(this string Text) => UTF8Encoding.GetByteCount(Text);
+        public static int CountUTF8(this string text) => UTF8Encoding.GetByteCount(text);
 
         /// <summary>
         /// Convert a string to a UTF byte array
         /// </summary>
-        /// <param name="Text">Text to convert</param>
+        /// <param name="text">Text to convert</param>
         /// <returns>UTF8 character data as array</returns>
-        public static byte[] ToUTF8(this string Text) => UTF8Encoding.GetBytes(Text);
+        public static byte[] ToUTF8(this string text) => UTF8Encoding.GetBytes(text);
 
         /// <summary>
         /// Convert a string to a UTF byte array
         /// </summary>
-        /// <param name="Text">Text to convert</param>
-        /// <param name="Buffer">Output buffer to write result to.</param>
-        /// <param name="Position">Starting position to write data to.</param>
+        /// <param name="text">Text to convert</param>
+        /// <param name="buffer">Output buffer to write result to.</param>
+        /// <param name="position">Starting position to write data to.</param>
         /// <returns>Number of characters converted</returns>
-        public static int ToUTF8(this string Text, byte[] Buffer, int Position) =>
-            UTF8Encoding.GetBytes(Text, 0, Text.Length, Buffer, Position);
+        public static int ToUTF8(this string text, byte[] buffer, int position) =>
+            UTF8Encoding.GetBytes(text, 0, text.Length, buffer, position);
 
 
         /// <summary>
         /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
         /// </summary>
-        /// <param name="In">String to be escaped</param>
+        /// <param name="c">String to be escaped</param>
         /// <returns>The escaped string</returns>
-        public static string CEscape(this string In) {
+        public static string CEscape(this string text) {
             var Result = new StringBuilder();
-            foreach (char c in In) {
+            foreach (char c in text) {
                 switch (c) {
                     case '\n': Result.Append("\n"); break;
                     case '\r': Result.Append("\r"); break;
@@ -136,12 +145,12 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
         /// </summary>
-        /// <param name="In">String to be escaped</param>
+        /// <param name="c">String to be escaped</param>
         /// <returns>The escaped string</returns>
-        public static string XMLEscape(this string In) {
+        public static string XMLEscape(this string text) {
             var Result = new StringBuilder();
 
-            foreach (char c in In) {
+            foreach (char c in text) {
                 switch (c) {
                     case '…': Result.Append("..."); break;
                     case '‘': Result.Append("'"); break;
@@ -166,12 +175,12 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
         /// </summary>
-        /// <param name="In">String to be escaped</param>
+        /// <param name="c">String to be escaped</param>
         /// <returns>The escaped string</returns>
-        public static string XMLEscapeStrict(this string In) {
+        public static string XMLEscapeStrict(this string text) {
             var Result = new StringBuilder();
 
-            foreach (char c in In) {
+            foreach (char c in text) {
                 switch (c) {
                     case '…': Result.Append("..."); break;
                     case '‘': Result.Append("'"); break;
@@ -196,12 +205,12 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
         /// </summary>
-        /// <param name="In">String to be escaped</param>
+        /// <param name="c">String to be escaped</param>
         /// <returns>The escaped string</returns>
-        public static string XMLEscapeRFCBullies(this string In) {
+        public static string XMLEscapeRFCBullies(this string text) {
             var Result = new StringBuilder();
 
-            foreach (char c in In) {
+            foreach (char c in text) {
                 switch (c) {
                     case '…': Result.Append("..."); break;
                     case '‘': Result.Append("'"); break;
@@ -267,12 +276,12 @@ namespace Goedel.Utilities {
         /// Escape text using XML acharacter entity sequences &amp;lt;, &amp;gt;, &amp;amp;
         /// &amp;quot; and &amp;nbsp;.
         /// </summary>
-        /// <param name="In">String to be escaped</param>
+        /// <param name="c">String to be escaped</param>
         /// <returns>The escaped string</returns>
-        public static string XMLAttributeEscape(this string In) {
+        public static string XMLAttributeEscape(this string text) {
             var Result = new StringBuilder();
 
-            foreach (char c in In) {
+            foreach (char c in text) {
                 switch (c) {
                     case '<': Result.Append("&lt;"); break;
                     case '>': Result.Append("&gt;"); break;

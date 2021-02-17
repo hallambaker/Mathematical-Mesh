@@ -14,9 +14,17 @@ using Xunit;
 
 namespace Goedel.XUnit {
 
+
+
+
     public partial class GoedelProtocolService {
 
         public static GoedelProtocolService Test() => new GoedelProtocolService();
+
+        static GoedelProtocolService() {
+            _ = Goedel.Cryptography.Core.Initialization.Initialized;
+            }
+
 
 
         [Fact]
@@ -27,5 +35,10 @@ namespace Goedel.XUnit {
             var testService = new TestService(TestEnvironmentCommon);
 
             }
+
+
+        byte[] MakePayload(int size = 100) => new byte[size];
+
+
         }
     }

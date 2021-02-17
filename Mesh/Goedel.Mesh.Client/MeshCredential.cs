@@ -41,9 +41,9 @@ namespace Goedel.Mesh.Client {
 
         ConnectionDevice ConnectionDevice { get; }
 
-        protected override KeyPairAdvanced KeySignPrivate => throw new System.NotImplementedException();
+        public override KeyPairAdvanced KeySignPrivate => throw new System.NotImplementedException();
 
-        protected override KeyPairAdvanced KeyExchangePrivate => throw new System.NotImplementedException();
+        public override KeyPairAdvanced KeyExchangePrivate => throw new System.NotImplementedException();
 
         public override KeyPairAdvanced KeySignPublic => throw new System.NotImplementedException();
 
@@ -74,6 +74,7 @@ namespace Goedel.Mesh.Client {
 
         public override void WriteClientCredential(JsonWriter jsonWriter) => throw new System.NotImplementedException();
         public override void WriteCredential(PacketWriter writer) => throw new System.NotImplementedException();
+        public override KeyPairAdvanced MatchPublic(string keyIdentifier) => throw new System.NotImplementedException();
 
         // authenticate gubbins goes here...
 

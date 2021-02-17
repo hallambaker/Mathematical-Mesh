@@ -4,6 +4,7 @@ using Goedel.Test;
 using Goedel.Utilities;
 using Goedel.Protocol.Presentation;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,170 +19,178 @@ namespace Goedel.XUnit {
 
 
 
-        [Fact]
-        public void TestParseClient () {
+        //[Fact]
+        //public void TestParseClient() {
 
-            var portID = new PortId();
-            var clientCredential = new PresentationCredentialTest();
-            var hostCredential = new PresentationCredentialTest();
-            var protocol = "mmm";
-            var endpoint = "example.com";
-
-
-            using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Immediate);
-            using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest,
-                            portID, protocol, endpoint);
+        //    var portID = new PortId();
+        //    var clientCredential = new PresentationCredentialTest();
+        //    var hostCredential = new PresentationCredentialTest();
+        //    var protocol = "mmm";
+        //    var endpoint = "example.com";
 
 
-
-            var test1 = new byte[100];
-
-            // create packet
-            var packetOut = connectionClient.SerializeInitial(test1);
-
-
-            var packetInitial = listenerHostTest.Parse(portID, packetOut);
+        //    using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Immediate);
+        //    using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest,
+        //                    portID, protocol, endpoint);
 
 
 
-            //// parse packet
-            //var parsed = PacketHostIn.Parse(portID, packet.Data);
+        //    var test1 = new byte[100];
 
-            //// verify result
-            //(parsed as PacketHostInitial).TestNotNull();
-
+        //    // create packet
+        //    var packetOut = connectionClient.SerializeInitial(test1);
 
 
-            //// create packet
-            //var packetCloaked = new PacketClientCloaked(
-            //        clientCredential, hostCredential, protocol, endpoint, test1);
-
-            }
+        //    var packetInitial = listenerHostTest.Parse(portID, packetOut);
 
 
 
-        [Fact]
-        public void TestParseHost() {
+        //    //// parse packet
+        //    //var parsed = PacketHostIn.Parse(portID, packet.Data);
 
-            // create packet
-
-
-
-
-            // parse packet
-
-            // verify result
+        //    //// verify result
+        //    //(parsed as PacketHostInitial).TestNotNull();
 
 
-            }
+
+        //    //// create packet
+        //    //var packetCloaked = new PacketClientCloaked(
+        //    //        clientCredential, hostCredential, protocol, endpoint, test1);
+
+        //    }
 
 
-        [Fact]
-        public void TestConnectionImmediate () {
 
-            var portID = new PortId();
+        //[Fact]
+        //public void TestParseHost() {
 
-            var clientCredential = new PresentationCredentialTest();
-            var hostCredential = new PresentationCredentialTest();
-
-            var test1 = new byte[100];
-            var test2 = new byte[100];
-            var test3 = new byte[100];
-            // Create host
-
-            using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Immediate);
-
-            // using client connection
-            using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest, 
-                            portID, null);
-
-            var resp1 = connectionClient.Write(test1);
-            //(resp1 as PacketClientComplete).TestNotNull();
-            
-            var resp2 = connectionClient.Write(test2);
-            //(resp2 as PacketClientData).TestNotNull();
-
-            var resp3 = connectionClient.Write(test3);
-            //(resp3 as PacketClientData).TestNotNull();
-            }
-
-        [Fact]
-        public void TestConnectionDeferred() {
-            var portID = new PortId();
-            var clientCredential = new PresentationCredentialTest();
-            var hostCredential = new PresentationCredentialTest();
-
-            var test1 = new byte[100];
-            var test2 = new byte[100];
-            var test3 = new byte[100];
-            // Create host
-
-            using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Deferred);
-
-            // using client connection
-            using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest, portID, null);
-
-            var resp1 = connectionClient.Write(test1);
-            //(resp1 as PacketClientChallenge).TestNotNull();
-
-            var resp2 = connectionClient.Write(test2);
-            //(resp2 as PacketClientComplete).TestNotNull();
-
-            var resp3 = connectionClient.Write(test3);
-            //(resp3 as PacketClientData).TestNotNull();
-
-            }
+        //    // create packet
 
 
-        [Fact]
-        public void TestConnectionRefused() {
-            var portID = new PortId();
-            var clientCredential = new PresentationCredentialTest();
-            var hostCredential = new PresentationCredentialTest();
 
-            var test1 = new byte[100];
-            var test2 = new byte[100];
-            var test3 = new byte[100];
-            // Create host
 
-            using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Refused);
+        //    // parse packet
 
-            // using client connection
-            using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest, portID, null);
+        //    // verify result
 
-            // These are wrong as we should throw an exception.
-            var resp1 = connectionClient.Write(test1);
-            //(resp1 as PacketClientAbort).TestNotNull();
 
-            var resp2 = connectionClient.Write(test2);
-            //(resp2 as PacketClientAbort).TestNotNull();
+        //    }
 
-            var resp3 = connectionClient.Write(test3);
-            //(resp3 as PacketClientAbort).TestNotNull();
-            }
+
+        //[Fact]
+        //public void TestConnectionImmediate () {
+
+        //    var portID = new PortId();
+
+        //    var clientCredential = new PresentationCredentialTest();
+        //    var hostCredential = new PresentationCredentialTest();
+
+        //    var test1 = new byte[100];
+        //    var test2 = new byte[100];
+        //    var test3 = new byte[100];
+        //    // Create host
+
+        //    using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Immediate);
+
+        //    // using client connection
+        //    using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest, 
+        //                    portID, null);
+
+        //    var resp1 = connectionClient.Write(test1);
+        //    //(resp1 as PacketClientComplete).TestNotNull();
+
+        //    var resp2 = connectionClient.Write(test2);
+        //    //(resp2 as PacketClientData).TestNotNull();
+
+        //    var resp3 = connectionClient.Write(test3);
+        //    //(resp3 as PacketClientData).TestNotNull();
+        //    }
+
+        //[Fact]
+        //public void TestConnectionDeferred() {
+        //    var portID = new PortId();
+        //    var clientCredential = new PresentationCredentialTest();
+        //    var hostCredential = new PresentationCredentialTest();
+
+        //    var test1 = new byte[100];
+        //    var test2 = new byte[100];
+        //    var test3 = new byte[100];
+        //    // Create host
+
+        //    using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Deferred);
+
+        //    // using client connection
+        //    using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest, portID, null);
+
+        //    var resp1 = connectionClient.Write(test1);
+        //    //(resp1 as PacketClientChallenge).TestNotNull();
+
+        //    var resp2 = connectionClient.Write(test2);
+        //    //(resp2 as PacketClientComplete).TestNotNull();
+
+        //    var resp3 = connectionClient.Write(test3);
+        //    //(resp3 as PacketClientData).TestNotNull();
+
+        //    }
+
+
+        //[Fact]
+        //public void TestConnectionRefused() {
+        //    var portID = new PortId();
+        //    var clientCredential = new PresentationCredentialTest();
+        //    var hostCredential = new PresentationCredentialTest();
+
+        //    var test1 = new byte[100];
+        //    var test2 = new byte[100];
+        //    var test3 = new byte[100];
+        //    // Create host
+
+        //    using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Refused);
+
+        //    // using client connection
+        //    using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest, portID, null);
+
+        //    // These are wrong as we should throw an exception.
+        //    var resp1 = connectionClient.Write(test1);
+        //    //(resp1 as PacketClientAbort).TestNotNull();
+
+        //    var resp2 = connectionClient.Write(test2);
+        //    //(resp2 as PacketClientAbort).TestNotNull();
+
+        //    var resp3 = connectionClient.Write(test3);
+        //    //(resp3 as PacketClientAbort).TestNotNull();
+        //    }
+        //}
         }
-
 
     public class PresentationCredentialTest : PresentationCredential {
 
-        protected override KeyPairAdvanced KeySignPrivate { get; }
+        public override KeyPairAdvanced KeySignPrivate { get; }
 
-        protected override KeyPairAdvanced KeyExchangePrivate { get; }
+        public override KeyPairAdvanced KeyExchangePrivate { get; }
 
         public override KeyPairAdvanced KeySignPublic { get; }
 
         public override KeyPairAdvanced KeyExchangePublic { get; }
 
-        public override List<PacketExtension> GetCredentials => throw new NotImplementedException();
+        public override List<PacketExtension> GetCredentials {
+            get {
+                var credential = new PacketExtension() {
+                    Tag = "C-" + KeyExchangePublic.CryptoAlgorithmId.ToJoseID(),
+                    Value = KeyExchangePublic.IKeyAdvancedPublic.Encoding
+                    };
+                return new List<PacketExtension> { credential };
+                }
+            }
 
-        public PresentationCredentialTest(KeyPair clientKeySign=null, KeyPair clientKeyExchange = null) {
+        public PresentationCredentialTest(KeyPair clientKeySign = null, KeyPair clientKeyExchange = null) {
 
             clientKeySign ??= KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Device);
             clientKeyExchange ??= KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
 
 
             KeySignPublic = clientKeySign.KeyPairPublic() as KeyPairAdvanced;
-            KeySignPublic = clientKeyExchange.KeyPairPublic() as KeyPairAdvanced;
+            KeyExchangePublic = clientKeyExchange.KeyPairPublic() as KeyPairAdvanced;
 
             KeySignPrivate = clientKeySign as KeyPairAdvanced;
             KeyExchangePrivate = clientKeyExchange as KeyPairAdvanced;
@@ -195,6 +204,12 @@ namespace Goedel.XUnit {
             }
 
         public override void WriteCredential(PacketWriter writer) => throw new NotImplementedException();
+        public override KeyPairAdvanced MatchPublic(string keyIdentifier) {
+            if (keyIdentifier == KeyExchangePublic.KeyIdentifier) {
+                return KeyExchangePublic;
+                }
+            throw new NYI();
+            }
         }
 
 
@@ -204,15 +219,32 @@ namespace Goedel.XUnit {
         Refused
         }
 
-    public class ListenerHostTest : Listener{
+    public class ListenerHostTest : Listener {
         ListenerMode ListenerMode { get; }
         public PresentationCredentialTest HostCredential { get; }
-        public ListenerHostTest(PresentationCredentialTest hostCredential, 
-                    ListenerMode listenerMode) :base(hostCredential) {
+        public ListenerHostTest(PresentationCredentialTest hostCredential,
+                    ListenerMode listenerMode = ListenerMode.Immediate) : base(hostCredential) {
             HostCredential = hostCredential;
             ListenerMode = listenerMode;
             }
 
+
+        public override PresentationCredential GetPresentationCredential(List<PacketExtension> extensions) {
+
+            foreach (var extension in extensions) {
+                if (extension.Tag == "C-X448") {
+
+                    return new PresentationCredentialTest(null,
+                        new KeyPairX448(extension.Value, KeySecurity.Public));
+                    }
+                }
+            throw new NYI();
+            }
+
+        public override ConnectionHost ConnectionHostFactory(Packet packet) =>
+                    new ConnectionHost(this) {
+                        ClientPacket = packet
+                        };
 
         }
 
@@ -221,18 +253,17 @@ namespace Goedel.XUnit {
 
         PresentationCredentialTest PresentationCredentialTest;
         public ConnectionClientTest(
-            
+
                     PresentationCredentialTest presentationCredentialTest,
                     ListenerHostTest listenerHost,
                     PortId portID,
                     string protocol = "mmm",
                     string endpoint = "example.com") :
-                    base(protocol, endpoint,
+                    base(listenerHost, protocol, endpoint,
                         portID, presentationCredentialTest, listenerHost.HostCredential) {
             PresentationCredentialTest = presentationCredentialTest;
             }
 
-        public override Task<PacketClientIn> PostPacket(byte[] data) => throw new NYI();
         }
 
     }

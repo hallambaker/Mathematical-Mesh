@@ -1,4 +1,5 @@
 ﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 
 using System.Collections.Generic;
 
@@ -9,6 +10,10 @@ namespace Goedel.Protocol.Presentation {
     /// Base class for presentation credential
     /// </summary>
     public abstract class PresentationCredential {
+
+        // ToDo: It should not be necessary to access these keys directly.
+        // Instead use matching to identify the most approrpriate algorithm.
+
 
         ///<summary>The signature key to sign under the credential.</summary> 
         public abstract KeyPairAdvanced KeySignPrivate { get; }
@@ -39,6 +44,27 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="writer">The packet writer</param>
         public abstract void WriteCredential(PacketWriter writer);
+
+
+        public abstract KeyPairAdvanced MatchPublic(string keyIdentifier);
+
+
+        /// <summary>
+        /// Return a (public, private) key pair that can be used to perform a key exchange
+        /// from the credential key exchange key(s) and the ephemeral keys presented in the
+        /// list of extensions <paramref name="extensions"/>.
+        /// </summary>
+        /// <param name="extensions">List of extensions specifying an ephemeral key.</param>
+        /// <returns>The key exchange parameters (if found).</returns>
+        public (byte[], KeyPairAdvanced) MatchEphemeral(List<PacketExtension> extensions) {
+
+            var tag = KeyExchangePublic.CryptoAlgorithmId.ToJoseID();
+            return (Packet.GetExtension(extensions, tag), KeyExchangePrivate);
+
+            }
+
+
+
         }
 
 

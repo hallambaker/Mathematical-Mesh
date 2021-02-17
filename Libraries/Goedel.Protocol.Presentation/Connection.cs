@@ -6,7 +6,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Base class for connections
     /// </summary>
-    public class Connection : Disposable {
+    public abstract class Connection : Disposable {
 
         ///<summary>Key for encrypting outgoing packets under the key established 
         ///to the host credential alone</summary> 
@@ -30,7 +30,7 @@ namespace Goedel.Protocol.Presentation {
         ///contain multiple keys (e.g. for different algorithms.</summary> 
         public PresentationCredential HostCredential => Listener.HostCredential;
 
-        Listener Listener { get; init; }
+        protected Listener Listener { get;  init; }
 
         /// <summary>
         /// Base constructor.
@@ -88,6 +88,10 @@ namespace Goedel.Protocol.Presentation {
             writer.Write(payload);
             }
 
+
+
+
+
         KeyAgreementResult clientKeyAgreementResult;
 
         /// <summary>
@@ -127,8 +131,8 @@ namespace Goedel.Protocol.Presentation {
 
             var keyDerive = clientKeyAgreementResult.KeyDerive;
 
-            keyClientHost = keyDerive.Derive(Constants.TagKeyClientHost, Constants.SizeKeyAesGcm);
-            keyHostClient = keyDerive.Derive(Constants.TagKeyHostClient, Constants.SizeKeyAesGcm);
+            keyClientHost = keyDerive.Derive(Constants.TagKeyClientHost, Constants.SizeKeyAesGcm*8);
+            keyHostClient = keyDerive.Derive(Constants.TagKeyHostClient, Constants.SizeKeyAesGcm*8);
             }
 
 
@@ -176,10 +180,11 @@ namespace Goedel.Protocol.Presentation {
             var keyDerive = new KeyDeriveHKDF(ikm);
 
             // Derrive the keys to be used to encrypt inbound and outbound data
-            keyClientHost = keyDerive.Derive(Constants.TagKeyClientHost, Constants.SizeKeyAesGcm);
-            keyHostClient = keyDerive.Derive(Constants.TagKeyHostClient, Constants.SizeKeyAesGcm);
+            keyClientHost = keyDerive.Derive(Constants.TagKeyClientHost, Constants.SizeKeyAesGcm * 8);
+            keyHostClient = keyDerive.Derive(Constants.TagKeyHostClient, Constants.SizeKeyAesGcm * 8);
             }
 
+        public abstract Packet Parse(PortId portID, byte[] packet);
 
 
         }

@@ -40,26 +40,7 @@ namespace Goedel.Protocol.Presentation {
             SourcePortId = portId;
             }
 
-        /// <summary>
-        /// Read a list of extensions from <paramref name="reader"/>.
-        /// </summary>
-        /// <param name="reader">Reader bound to the packet being read</param>
-        /// <returns>>The list of extensions read.</returns>
-        public static List<PacketExtension> ReadExtensions(PacketReader reader) {
-            var count = reader.ReadByte();
-            if (count == 0) {
-                return null;
-                }
-            var result = new List<PacketExtension>();
-            for (var i = 0; i < count; i++) {
-                var tag = reader.ReadString();
-                var value = reader.ReadBinary();
-                var extension = new PacketExtension() { Tag = tag, Value = value };
-                result.Add(extension);
-                }
 
-            return result;
-            }
 
 
         /// <summary>
@@ -73,13 +54,35 @@ namespace Goedel.Protocol.Presentation {
 
             switch (EncryptedPacketIdentifier) {
                 case EncryptedPacketIdentifier.Atomic: {
-                    ExtensionsCiphertext = ReadExtensions(reader);
+                    ExtensionsCiphertext = reader.ReadExtensions();
                     Payload = reader.ReadBinary();
                     return;
                     }
                 }
 
             throw new NYI();
+            }
+
+
+        /// <summary>
+        /// Return the extension from the list <paramref name="extensions"/> with the 
+        /// tag <paramref name="tag"/> if found, otherwise null.
+        /// </summary>
+        /// <param name="extensions">List of extensions to search.</param>
+        /// <param name="tag">The tag to be matched.</param>
+        /// <returns>The value portion of the matching tag.</returns>
+        public static byte[] GetExtension(List<PacketExtension> extensions, string tag) {
+            if (extensions == null) {
+                return null;
+                }
+            
+            foreach (var extension in extensions ) {
+                if (extension.Tag == tag) {
+                    return extension.Value;
+                    }
+                }
+
+            return null;
             }
 
 
@@ -161,7 +164,7 @@ namespace Goedel.Protocol.Presentation {
             DestinationAddress = reader.ReadBinary();
 
             // Read any options
-            ExtensionsPlaintext = ReadExtensions(reader);
+            ExtensionsPlaintext = reader.ReadExtensions();
 
             // Read the payload (if any) 
             Payload = reader.ReadBinary();
@@ -189,7 +192,7 @@ namespace Goedel.Protocol.Presentation {
 
             // Read the extensions. These will usually include ephemeral keys for one or more 
             // key exchange algorithmssupported by the client.
-            ExtensionsPlaintext = ReadExtensions(reader);
+            ExtensionsPlaintext = reader.ReadExtensions();
 
             // Read the payload (if any)
             Payload = reader.ReadBinary();
@@ -197,12 +200,7 @@ namespace Goedel.Protocol.Presentation {
 
         }
 
-    public class PacketHostChallenge : Packet {
 
-        public PacketHostChallenge(PortId portId, byte[] data) : base(portId) {
-            }
-
-        }
 
 
     /// <summary>
@@ -241,7 +239,7 @@ namespace Goedel.Protocol.Presentation {
             ClientEphemeral = outerReader.ReadBinary();
 
             // Read the extensions. This MAY include a proof of work challenge.
-            ExtensionsPlaintext = ReadExtensions(outerReader);
+            ExtensionsPlaintext = outerReader.ReadExtensions();
             }
 
         /// <summary>
@@ -264,11 +262,32 @@ namespace Goedel.Protocol.Presentation {
             }
         }
 
+    public class PacketClientComplete : Packet {
 
+        public PacketClientComplete(PortId portId) : base(portId) {
+            }
+
+        }
+
+
+    public class PacketHostChallenge : Packet {
+
+        public PacketHostChallenge(PortId portId, byte[] data) : base(portId) {
+            }
+
+        }
 
     public class PacketHostExchange : Packet {
 
-        public PacketHostExchange(PortId portId, byte[] data) : base(portId) {
+        public PacketHostExchange(PortId portId) : base(portId) {
+            }
+
+        }
+
+
+    public class PacketHostComplete : Packet {
+
+        public PacketHostComplete(PortId portId) : base(portId) {
             }
 
         }

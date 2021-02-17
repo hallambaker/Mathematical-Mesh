@@ -16,13 +16,13 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public enum PacketTag {
         ///<summary>Integer field</summary> 
-        Integer =0,
+        Integer =0x00,
         ///<summary>String field</summary> 
-        String = 1,
+        String = 0x10,
         ///<summary>Binary field</summary> 
-        Binary = 2,
+        Binary = 0x20,
         ///<summary>List of extensions follow</summary> 
-        Extensions = 3,
+        Extensions = 0x30,
         }
 
     /// <summary>
@@ -157,7 +157,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="data">The data to write</param>
         public void Write(string data) {
             var buffer = data.ToUTF8();
-            Write(PacketTag.Binary, buffer, 0, buffer.Length);
+            Write(PacketTag.String, buffer, 0, buffer.Length);
             }
 
 
@@ -166,7 +166,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="data">The data to write</param>
         public void Write(EncryptedPacketIdentifier data)
-                    => Write((int)data);
+                    => Write((byte)data);
 
         /// <summary>
         ///Write the positive EncryptedPacketIdentifier <paramref name="data"/> to the packet
@@ -185,9 +185,11 @@ namespace Goedel.Protocol.Presentation {
 
             if (extensions == null) {
                 WriteTag(PacketTag.Extensions, 0);
+                return;
                 }
 
             WriteTag(PacketTag.Extensions, extensions.Count);
+
 
             foreach (var option in extensions) {
                 Write(option.Tag);
@@ -245,13 +247,13 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="writerIn">The plaintext data</param>
         /// <param name="pad">If true, pad packet to fill remaining space.</param>
         public override void Encrypt(byte[] key, PacketWriter writerIn, bool pad=true) {
-
+            Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
             var aes = new AesGcm(key);
 
             var iv = Platform.GetRandomBytes(Constants.SizeIvAesGcm);
             var ivSpan = new ReadOnlySpan<byte>(iv);
 
-            Buffer.BlockCopy(iv, 0, Packet, 0, iv.Length);
+            Buffer.BlockCopy(iv, 0, Packet, Position, iv.Length);
             Position+= iv.Length;
 
             // Set up the authentication span so it covers the start of the 

@@ -24,6 +24,9 @@ namespace Scratchpad {
     partial class Program {
         static void Main() {
 
+            GoedelProtocolService.Test().InitialImmediateTest();
+
+
             //ShellTests.Test().TestArchive();
 
             //ServiceDiscovery.Test().TestDNSMultiple(10000);
@@ -32,7 +35,7 @@ namespace Scratchpad {
 
 
             //ShellTests.Test().TestHello();
-            ShellTestsHTTP.Test().TestHello();
+            //ShellTestsHTTP.Test().TestHello();
 
             //GoedelProtocolService.Test().TestService();
             //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
