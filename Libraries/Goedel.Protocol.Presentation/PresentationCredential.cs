@@ -48,6 +48,23 @@ namespace Goedel.Protocol.Presentation {
 
         public abstract KeyPairAdvanced MatchPublic(string keyIdentifier);
 
+        public abstract KeyPairAdvanced MatchPrivate(string keyIdentifier);
+
+        /// <summary>
+        /// Return a (public, private) key pair that can be used to perform a key exchange
+        /// from the credential key exchange key(s) and the ephemeral keys presented in the
+        /// list of extensions <paramref name="extensions"/>.
+        /// </summary>
+        /// <param name="extensions">List of extensions specifying an ephemeral key.</param>
+        /// <returns>The key exchange parameters (if found).</returns>
+        public (KeyPairAdvanced, KeyPairAdvanced) GetEphemeral() {
+
+            var tag = KeyExchangePublic.CryptoAlgorithmId.ToJoseID();
+            return (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced, 
+                        KeyExchangePrivate);
+
+            }
+
 
         /// <summary>
         /// Return a (public, private) key pair that can be used to perform a key exchange
@@ -63,6 +80,22 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
+
+
+        /// <summary>
+        /// Return a (public, private) key pair that can be used to perform a key exchange
+        /// from the credential key exchange key(s) and the ephemeral keys presented in the
+        /// list of extensions <paramref name="extensions"/>.
+        /// </summary>
+        /// <param name="extensions">List of extensions specifying an ephemeral key.</param>
+        /// <returns>The key exchange parameters (if found).</returns>
+        public (byte[], KeyPairAdvanced) MatchEphemeral(List<PacketExtension> extensions,
+                    string keyIdentifier) {
+
+            var tag = KeyExchangePublic.CryptoAlgorithmId.ToJoseID();
+            return (Packet.GetExtension(extensions, tag), KeyExchangePrivate);
+
+            }
 
 
         }

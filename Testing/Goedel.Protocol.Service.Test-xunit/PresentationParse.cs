@@ -22,11 +22,11 @@ namespace Goedel.XUnit {
             var clientCredential = new PresentationCredentialTest();
             var hostCredential = new PresentationCredentialTest();
 
-            var payload1 = MakePayload(100);
-            var payload2 = MakePayload(100);
-            var payload3 = MakePayload(100);
-            var payload4 = MakePayload(100);
-            var payload5 = MakePayload(100);
+            var payload1 = MakePayload();
+            var payload2 = MakePayload();
+            var payload3 = MakePayload();
+            var payload4 = MakePayload();
+            var payload5 = MakePayload();
 
             using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Refused);
 
@@ -35,21 +35,23 @@ namespace Goedel.XUnit {
 
             
             // Client: Initial message
-            var clientInitialData = connectionClient.SerializeInitial(payload1);
+            var clientInitialData = connectionClient.SerializeClientInitial(payload1);
 
             // Host: Get initial, respond host exchange.
             var clientInitialPacket = listenerHostTest.Parse(portID, clientInitialData) as PacketInitial;
             var connectionHost = listenerHostTest.MakeConnection(clientInitialPacket);
             var hostExchangeData = connectionHost.SerializeHostExchange(payload2);
-            // need to extract the ephemeral here!!
+            clientInitialPacket.Payload.TestEqual(payload1);
 
             // Client: Complete 
             var hostExchangePacket = connectionClient.ParsePacketHostExchange(portID, hostExchangeData);
             var clientCompleteData = connectionClient.SerializeClientComplete(payload3);
+            hostExchangePacket.Payload.TestEqual(payload2);
 
             // Host: send data
-            var clientCompletePacket = listenerHostTest.ParsePacketClientComplete(portID, hostExchangeData);
+            var clientCompletePacket = connectionHost.ParsePacketClientComplete(portID, clientCompleteData);
             var hostData = connectionHost.SerializePacketData(payload4);
+            clientCompletePacket.Payload.TestEqual(payload3);
 
             // Client: receive data 
             var hostDataPacket = connectionClient.ParsePacketData(portID, hostData);

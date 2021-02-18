@@ -1,0 +1,83 @@
+﻿
+
+
+Client 
+
+	ClientInitial
+		Initial
+		Plaintext
+			ClientEphemerals
+			Payload
+
+	ClientExchange
+		Initial
+			HostCredential
+		Plaintext
+			HostKeyID
+			ClientEphemeral
+		Mezzanine
+			ClientCredential
+			Payload
+
+	ClientComplete
+		Respond
+			HostExchange
+		Mezzanine
+			ClientKeyID
+			ClientCredential
+		Encrypted
+			Payload
+
+	ClientCompleteDeferred
+		Respond
+			HostChallenge1
+			HostChallenge2
+		Plaintext
+			HostKeyID
+			ClientEphemeral
+			Response
+		Mezzanine
+			ClientKeyID
+			ClientCredential
+		Encrypted
+			Payload
+	
+
+
+Host
+	HostExchange
+		Respond
+			ClientInitial
+		Plaintext
+			HostKeyID
+			HostCredential
+			HostEphemerals
+		Mezzanine
+			Payload
+	
+	HostChallenge1
+		Respond
+			ClientInitial
+		Plaintext
+			HostEphemerals
+			HostCredential
+			Challenge
+			Payload
+
+	HostChallenge2
+		Respond
+			ClientExchange
+		Plaintext
+			HostEphemerals
+			Challenge
+			Payload
+
+	HostComplete
+		Respond
+			ClientExchange
+		Mezzanine
+			ClientKeyID
+			HostEphemeral
+		Encrypted
+			Payload
+

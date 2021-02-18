@@ -152,11 +152,49 @@ namespace Goedel.Protocol.Presentation {
             HostEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
 
             outerWriter.Write(PlaintextPacketType.HostComplete);
-
+            outerWriter.WriteExtensions(plaintextExtensions);
             outerWriter.Encrypt(MutualKeyOut, innerWriter);
 
             return outerWriter.Packet;
             }
+
+
+
+        /// <summary>
+        /// Create a packet to complete mutually authenticated exchange.
+        /// </summary>
+        /// <param name="payload">Optional payload data to be mutually encrypted.</param>
+        /// <param name="plaintextExtensions">Extensions to be presented in the plaintext segment.</param>
+        /// <param name="ciphertextExtensions">Extensions to be presented in the ciphertext segment.</param>
+        /// <returns></returns>
+        public byte[] SerializeHostChallenge(
+                    byte[] payload = null,
+                    List<PacketExtension> plaintextExtensions = null,
+                    List<PacketExtension> ciphertextExtensions = null) {
+
+            throw new NYI();
+
+
+            //ClientKeyExchange(ListenerCredential.KeyExchangePrivate, clientEphemeral,
+            //        out ClientKeyIn, out ClientKeyOut);
+            //MutualKeyExchange(HostEphemeral, ClientCredential.KeyExchangePublic,
+            //    out MutualKeyIn, out MutualKeyOut);
+
+            //var innerWriter = new PacketWriter();
+            //Write(innerWriter, payload, ciphertextExtensions);
+
+            //var outerWriter = new PacketWriterAesGcm();
+            //HostEphemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+
+            //outerWriter.Write(PlaintextPacketType.HostComplete);
+            //outerWriter.WriteExtensions(plaintextExtensions);
+            //outerWriter.Encrypt(MutualKeyOut, innerWriter);
+
+            //return outerWriter.Packet;
+            }
+
+
+
 
         /// <summary>
         /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
@@ -168,9 +206,11 @@ namespace Goedel.Protocol.Presentation {
         public override Packet Parse(PortId sourceId, byte[] packet) {
             return packet[0] switch {
                 byte b when ((b & 0b1000_0000) == 0) => ParsePacketData(sourceId, packet),
-                (byte)PlaintextPacketType.ClientExchange => ParsePacketClientExchange(sourceId, packet),
-                (byte)PlaintextPacketType.ClientComplete => ParsePacketClientComplete(sourceId, packet),
 
+                (byte)PlaintextPacketType.ClientComplete => 
+                    ParsePacketClientComplete(sourceId, packet),
+                (byte)PlaintextPacketType.ClientCompleteDeferred => 
+                    ParsePacketClientCompleteDeferred(sourceId, packet),
 
 
                 _ => new PacketUnknown(sourceId, packet)
@@ -178,35 +218,16 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
-        /// <summary>
-        /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
-        /// as a packet of type <see cref="PacketClientExchange"/>and return the parsed packet data.
-        /// </summary>
-        /// <param name="sourceId">The packet source.</param>
-        /// <param name="packet">The packet data.</param>
-        /// <returns>The parsed packet.</returns>
-        public PacketClientExchange ParsePacketClientExchange(PortId sourceId, byte[] packet) {
-            var outerReader = new PacketReaderAesGcm(packet) { Position = 1 };
-            var keyIdentifier = outerReader.ReadString();
-            var ephemeral = outerReader.ReadBinary();
-            var extensions = outerReader.ReadExtensions();
 
-            (ClientEphemeral, HostKey) = HostCredential.MatchEphemeral(extensions);
+
+        public void Connect(PacketClientExchange packetClientExchange) {
+
             ClientKeyExchange(HostKey, ClientEphemeral, out ClientKeyIn, out ClientKeyOut);
-
-            var innerReader = outerReader.Decrypt(ClientKeyIn);
-
-            // Read the inner encrypted packet.
-            var result = new PacketClientExchange(sourceId) {
-                ExtensionsPlaintext = extensions
-                };
-            result.ReadEncrypted(innerReader);
-
-            return result;
-
-
+            var innerReader = packetClientExchange.OuterReader.Decrypt(ClientKeyIn);
+            packetClientExchange.ReadEncrypted(innerReader);
 
             }
+
 
         /// <summary>
         /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
@@ -222,12 +243,22 @@ namespace Goedel.Protocol.Presentation {
             var ephemeral = outerReader.ReadBinary();
             var extensions = outerReader.ReadExtensions();
 
-            // Encrypt the inner packet and write to the outer.
-            var mezzanineReader = outerReader.Decrypt(ClientKeyIn);
-            var mezzaninePacketId = mezzanineReader.ReadByte();
-            var mezzanineExtensions = mezzanineReader.ReadExtensions();
+            // Identify the host key chosen for the client key exchange.
+            var hostPrivate = HostCredential.MatchPrivate(keyIdentifier);
+            ClientKeyExchange(hostPrivate, ephemeral, out ClientKeyIn, out ClientKeyOut);
 
-            " set up MutualKeyIn, MutualKeyOut".TaskFunctionality(true);
+
+            // Read the client credentials from the mezzanine.
+            var mezzanineReader = outerReader.Decrypt(ClientKeyIn);
+            var _ = mezzanineReader.ReadByte();
+            var clientkeyIdentifier = mezzanineReader.ReadString();
+            var mezzanineExtensions = mezzanineReader.ReadExtensions();
+            
+
+            ClientCredential = Listener.GetPresentationCredential(mezzanineExtensions);
+            var clientPublic = HostCredential.MatchPublic(clientkeyIdentifier);
+
+            MutualKeyExchange(HostKey, ephemeral, out MutualKeyIn, out MutualKeyOut);
 
             var innerReader = mezzanineReader.Decrypt(MutualKeyIn);
 
@@ -239,6 +270,50 @@ namespace Goedel.Protocol.Presentation {
 
             return result;
             }
+
+
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+        /// as a packet of type <see cref="PacketClientComplete"/>and return the parsed packet data.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data.</param>
+        /// <returns>The parsed packet.</returns>
+        public PacketClientComplete ParsePacketClientCompleteDeferred(PortId sourceId, byte[] packet) {
+
+            var outerReader = new PacketReaderAesGcm(packet) { Position = 1 };
+            var keyIdentifier = outerReader.ReadString();
+            var ephemeral = outerReader.ReadBinary();
+            var extensions = outerReader.ReadExtensions();
+
+            // Identify the host key chosen for the client key exchange.
+            var hostPrivate = HostCredential.MatchPrivate(keyIdentifier);
+            ClientKeyExchange(hostPrivate, ephemeral, out ClientKeyIn, out ClientKeyOut);
+
+
+            // Read the client credentials from the mezzanine.
+            var mezzanineReader = outerReader.Decrypt(ClientKeyIn);
+            var _ = mezzanineReader.ReadByte();
+            var clientkeyIdentifier = mezzanineReader.ReadString();
+            var mezzanineExtensions = mezzanineReader.ReadExtensions();
+
+
+            ClientCredential = Listener.GetPresentationCredential(mezzanineExtensions);
+            var clientPublic = HostCredential.MatchPublic(clientkeyIdentifier);
+
+            MutualKeyExchange(HostKey, ephemeral, out MutualKeyIn, out MutualKeyOut);
+
+            var innerReader = mezzanineReader.Decrypt(MutualKeyIn);
+
+            // Read the inner encrypted packet.
+            var result = new PacketClientComplete(sourceId) {
+                ExtensionsPlaintext = extensions
+                };
+            result.ReadEncrypted(innerReader);
+
+            return result;
+            }
+
 
         }
 

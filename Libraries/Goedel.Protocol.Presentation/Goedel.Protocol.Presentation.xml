@@ -25,10 +25,13 @@
             <summary>Key for decrypting incomming packets under the key established 
             to the host and client credentials,</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.Connection.HostCredential">
+        <member name="P:Goedel.Protocol.Presentation.Connection.ListenerCredential">
             <summary>The host credentials. There is exactly one set of host 
             credentials for a given PortId at a given time. This MAY however
             contain multiple keys (e.g. for different algorithms.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Connection.Listener">
+            <summary>The listener to which this connection is bound.</summary> 
         </member>
         <member name="M:Goedel.Protocol.Presentation.Connection.#ctor(Goedel.Protocol.Presentation.Listener)">
             <summary>
@@ -111,6 +114,15 @@
             <param name="keyHostClient">Session key used to encrypt/authenticate messages from the host
             to the client.</param>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.Connection.Parse(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+            and return the parsed packet data.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data.</param>
+            <returns>The parsed packet.</returns>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.ClientState">
             <summary>
             Client side connection state.
@@ -183,17 +195,55 @@
              The client credentials are encrypted to the host credentials but not authenticated to the
              client making the request.
             </summary>
-            <param name="hostEphemeral">The host ephemeral data.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensions">Plaintext extensions, including answer data responding to a 
             challenge puzzle presented by the host or another party.</param>
             <param name="ciphertextExtensions">Ciphertext extensions, including channel configuration.</param>
             <returns>The serialized data.</returns>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.Parse(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+            and return the parsed packet data.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data.</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.ParsePacketHostExchange(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+            as a packet of type <see cref="T:Goedel.Protocol.Presentation.PacketHostExchange"/>and return the parsed packet data.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data.</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.ParsePacketHostComplete(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+            as a packet of type <see cref="T:Goedel.Protocol.Presentation.PacketHostComplete"/>and return the parsed packet data.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data.</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.ParsePacketHostChallenge(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+            as a packet of type <see cref="T:Goedel.Protocol.Presentation.PacketHostExchange"/>and return the parsed packet data.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data.</param>
+            <returns>The parsed packet.</returns>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.ConnectionHost">
             <summary>
             Host (i.e. responder) end of a listener connection.
             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.ConnectionHost.HostCredential">
+            <summary>The client credential</summary> 
         </member>
         <member name="P:Goedel.Protocol.Presentation.ConnectionHost.ClientCredential">
             <summary>The client credential</summary> 
@@ -232,6 +282,33 @@
             <param name="plaintextExtensions">Extensions to be presented in the plaintext segment.</param>
             <param name="ciphertextExtensions">Extensions to be presented in the ciphertext segment.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.SerializeHostChallenge(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Create a packet to complete mutually authenticated exchange.
+            </summary>
+            <param name="payload">Optional payload data to be mutually encrypted.</param>
+            <param name="plaintextExtensions">Extensions to be presented in the plaintext segment.</param>
+            <param name="ciphertextExtensions">Extensions to be presented in the ciphertext segment.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.Parse(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+            and return the parsed packet data.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data.</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.ParsePacketClientComplete(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from the source <paramref name="sourceId"/>
+            as a packet of type <see cref="T:Goedel.Protocol.Presentation.PacketClientComplete"/>and return the parsed packet data.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data.</param>
+            <returns>The parsed packet.</returns>
         </member>
         <member name="T:Goedel.Protocol.Presentation.EncryptedPacketIdentifier">
             <summary>
@@ -466,62 +543,6 @@
             <param name="packet">The data packet.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParsePacketData(Goedel.Protocol.Presentation.PortId,System.Byte[])">
-            <summary>
-            Parse a packet containing PacketData.
-            </summary>
-            <param name="sourceId">Identifier of the source from which the packet was received.</param>
-            <param name="packet">The data packet.</param>
-            <returns>The parsed packet.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParsePacketError(Goedel.Protocol.Presentation.PortId,System.Byte[])">
-            <summary>
-            Parse a packet containing PacketData.
-            </summary>
-            <param name="sourceId">Identifier of the source from which the packet was received.</param>
-            <param name="packet">The data packet.</param>
-            <returns>The parsed packet.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParsePacketInitial(Goedel.Protocol.Presentation.PortId,System.Byte[])">
-            <summary>
-            Parse a packet containing PacketData.
-            </summary>
-            <param name="sourceId">Identifier of the source from which the packet was received.</param>
-            <param name="packet">The data packet.</param>
-            <returns>The parsed packet.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParsePacketClientExchange(Goedel.Protocol.Presentation.PortId,System.Byte[])">
-            <summary>
-            Parse a packet containing PacketData.
-            </summary>
-            <param name="sourceId">Identifier of the source from which the packet was received.</param>
-            <param name="packet">The data packet.</param>
-            <returns>The parsed packet.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParsePacketClientComplete(Goedel.Protocol.Presentation.PortId,System.Byte[])">
-            <summary>
-            Parse a packet containing PacketData.
-            </summary>
-            <param name="sourceId">Identifier of the source from which the packet was received.</param>
-            <param name="packet">The data packet.</param>
-            <returns>The parsed packet.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParsePacketHostChallenge(Goedel.Protocol.Presentation.PortId,System.Byte[])">
-            <summary>
-            Parse a packet containing PacketData.
-            </summary>
-            <param name="sourceId">Identifier of the source from which the packet was received.</param>
-            <param name="packet">The data packet.</param>
-            <returns>The parsed packet.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParsePacketHostComplete(Goedel.Protocol.Presentation.PortId,System.Byte[])">
-            <summary>
-            Parse a packet containing PacketData.
-            </summary>
-            <param name="sourceId">Identifier of the source from which the packet was received.</param>
-            <param name="packet">The data packet.</param>
-            <returns>The parsed packet.</returns>
-        </member>
         <member name="T:Goedel.Protocol.Presentation.Packet">
             <summary>
             A Parsed Packet.
@@ -544,9 +565,9 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.Packet.#ctor(Goedel.Protocol.Presentation.PortId)">
             <summary>
-            Constructor, return packet bound to port <paramref name="portId"/>.
+            Constructor, return packet bound to port <paramref name="sourceId"/>.
             </summary>
-            <param name="portId">The source address and port.</param>
+            <param name="sourceId">The source address and port.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Packet.ReadEncrypted(Goedel.Protocol.Presentation.PacketReader)">
             <summary>
@@ -581,10 +602,10 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketUnknown.#ctor(Goedel.Protocol.Presentation.PortId,System.Byte[])">
             <summary>
-            Constructor, return packet bound to port <paramref name="portId"/> containing data
+            Constructor, return packet bound to port <paramref name="sourceId"/> containing data
             <paramref name="data"/>.
             </summary>
-            <param name="portId">The source address and port.</param>
+            <param name="sourceId">The source address and port.</param>
             <param name="data">The packet data.</param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketData">
@@ -594,10 +615,10 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketData.#ctor(Goedel.Protocol.Presentation.PortId,Goedel.Protocol.Presentation.PacketReader)">
             <summary>
-            Constructor, parse a decrypted data packet received from <paramref name="portId"/>
+            Constructor, parse a decrypted data packet received from <paramref name="sourceId"/>
             bound to the reader <paramref name="reader"/>.
             </summary>
-            <param name="portId">The packet source identifier.</param>
+            <param name="sourceId">The packet source identifier.</param>
             <param name="reader">Reader for decrypted packet data.</param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketError">
@@ -615,9 +636,9 @@
         <member name="M:Goedel.Protocol.Presentation.PacketError.#ctor(Goedel.Protocol.Presentation.PortId,System.Byte[])">
             <summary>
             Constructor, parse a plaintext data packet <paramref name="data"/> 
-            received from <paramref name="portId"/>.
+            received from <paramref name="sourceId"/>.
             </summary>
-            <param name="portId">The packet source identifier.</param>
+            <param name="sourceId">The packet source identifier.</param>
             <param name="data">The packet data.</param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketInitial">
@@ -629,9 +650,9 @@
         <member name="M:Goedel.Protocol.Presentation.PacketInitial.#ctor(Goedel.Protocol.Presentation.PortId,System.Byte[])">
             <summary>
             Constructor, parse a plaintext data packet <paramref name="data"/> 
-            received from <paramref name="portId"/>.
+            received from <paramref name="sourceId"/>.
             </summary>
-            <param name="portId">The packet source identifier.</param>
+            <param name="sourceId">The packet source identifier.</param>
             <param name="data">The packet data.</param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketClientExchange">
@@ -641,31 +662,12 @@
             not have a host challenge.
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientExchange.HostKeyIdentifier">
-            <summary>Host key identifier given by the client. Used to allow use of multiple
-            host keys with different algorithms, etc. etc.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientExchange.ClientEphemeral">
-            <summary>Client ephemeral key in binary form. MUST be compatible with the host 
-            key algorithm.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.PacketClientExchange.KeyAgreementResult">
-            <summary>Result of the client side key agreement.</summary> 
-        </member>
         <member name="M:Goedel.Protocol.Presentation.PacketClientExchange.#ctor(Goedel.Protocol.Presentation.PortId,System.Byte[])">
             <summary>
-            Constructor, parse plaintext parts of data packet <paramref name="packet"/> 
-            received from <paramref name="portId"/>.
+            Constructor, for data packet
+            received from <paramref name="sourceId"/>.
             </summary>
-            <param name="portId">The packet source identifier.</param>
-            <param name="packet">The packet data.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketClientExchange.Decrypt(Goedel.Cryptography.KeyPairAdvanced)">
-            <summary>
-            Decrypt the inner packet data using the private key <paramref name="privateKeyAgreement"/>
-            </summary>
-            <param name="privateKeyAgreement">The decryption key to be used to obtain information
-            from the encrypted payload.</param>
+            <param name="sourceId">The packet source identifier.</param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketReader">
             <summary>
@@ -962,7 +964,25 @@
             </summary>
             <param name="writer">The packet writer</param>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.PresentationCredential.GetEphemeral">
+            <summary>
+            Return a (public, private) key pair that can be used to perform a key exchange
+            from the credential key exchange key(s) and the ephemeral keys presented in the
+            list of extensions <paramref name="extensions"/>.
+            </summary>
+            <param name="extensions">List of extensions specifying an ephemeral key.</param>
+            <returns>The key exchange parameters (if found).</returns>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.PresentationCredential.MatchEphemeral(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Return a (public, private) key pair that can be used to perform a key exchange
+            from the credential key exchange key(s) and the ephemeral keys presented in the
+            list of extensions <paramref name="extensions"/>.
+            </summary>
+            <param name="extensions">List of extensions specifying an ephemeral key.</param>
+            <returns>The key exchange parameters (if found).</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PresentationCredential.MatchEphemeral(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.String)">
             <summary>
             Return a (public, private) key pair that can be used to perform a key exchange
             from the credential key exchange key(s) and the ephemeral keys presented in the

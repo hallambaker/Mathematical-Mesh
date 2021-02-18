@@ -125,7 +125,7 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
         /// </summary>
-        /// <param name="c">String to be escaped</param>
+        /// <param name="text">String to be escaped</param>
         /// <returns>The escaped string</returns>
         public static string CEscape(this string text) {
             var Result = new StringBuilder();
@@ -145,7 +145,7 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
         /// </summary>
-        /// <param name="c">String to be escaped</param>
+        /// <param name="text">String to be escaped</param>
         /// <returns>The escaped string</returns>
         public static string XMLEscape(this string text) {
             var Result = new StringBuilder();
@@ -175,7 +175,7 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
         /// </summary>
-        /// <param name="c">String to be escaped</param>
+        /// <param name="text">String to be escaped</param>
         /// <returns>The escaped string</returns>
         public static string XMLEscapeStrict(this string text) {
             var Result = new StringBuilder();
@@ -205,7 +205,7 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
         /// </summary>
-        /// <param name="c">String to be escaped</param>
+        /// <param name="text">String to be escaped</param>
         /// <returns>The escaped string</returns>
         public static string XMLEscapeRFCBullies(this string text) {
             var Result = new StringBuilder();
@@ -276,7 +276,7 @@ namespace Goedel.Utilities {
         /// Escape text using XML acharacter entity sequences &amp;lt;, &amp;gt;, &amp;amp;
         /// &amp;quot; and &amp;nbsp;.
         /// </summary>
-        /// <param name="c">String to be escaped</param>
+        /// <param name="text">String to be escaped</param>
         /// <returns>The escaped string</returns>
         public static string XMLAttributeEscape(this string text) {
             var Result = new StringBuilder();

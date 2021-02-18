@@ -203,13 +203,34 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public class PacketClientExchange : Packet {
 
+        byte[] ClientEphemeral { get; set; }
+
+        KeyPairAdvanced HostKey { get; set; }
+
+        public PacketReader OuterReader { get; init; }
+
+        public PresentationCredential HostCredential { get; set; }
         /// <summary>
         /// Constructor, for data packet
         /// received from <paramref name="sourceId"/>.
         /// </summary>
         /// <param name="sourceId">The packet source identifier.</param>
-        public PacketClientExchange(PortId sourceId) : base(sourceId) {
+        public PacketClientExchange(PortId sourceId, byte[] packet) : base(sourceId) {
+
+
+            OuterReader = new PacketReaderAesGcm(packet) { Position = 1 };
+            var keyIdentifier = OuterReader.ReadString();
+            var ephemeral = OuterReader.ReadBinary();
+            var ExtensionsPlaintext = OuterReader.ReadExtensions();
+
+            (ClientEphemeral, HostKey) = HostCredential.MatchEphemeral(ExtensionsPlaintext);
+
             }
+
+
+
+
+
 
         }
 
@@ -220,7 +241,12 @@ namespace Goedel.Protocol.Presentation {
 
         }
 
+    public class PacketClientCompleteDeferred : Packet {
 
+        public PacketClientCompleteDeferred(PortId sourceId) : base(sourceId) {
+            }
+
+        }
     public class PacketHostChallenge : Packet {
 
         public PacketHostChallenge(PortId sourceId) : base(sourceId) {

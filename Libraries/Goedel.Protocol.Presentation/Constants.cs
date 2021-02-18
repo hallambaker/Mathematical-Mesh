@@ -46,7 +46,7 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>Plaintext request to establish a new connection to the host. This is 
         ///only used in cases where the client does not have the public key of the host.</summary> 
-        Initial = 0x81,
+        ClientInitial = 0x81,
 
         ///<summary>Encrypted request to establish a new connection to the host.
         ///This MAY be used in cases where the client has the public key of the host.</summary> 
@@ -55,17 +55,20 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Client completion of key exchange.</summary> 
         ClientComplete = 0x83,
 
-        ///<summary>Present a challenge to a client requesting a connection.</summary> 
-        HostChallenge = 0x84,
+        ///<summary>Client completion of key exchange.</summary> 
+        ClientCompleteDeferred = 0x84,
 
         ///<summary>Present a challenge to a client requesting a connection.</summary> 
-        HostExchange = 0x85,
+        HostChallenge = 0x85,
+
+        ///<summary>Present a challenge to a client requesting a connection.</summary> 
+        HostExchange = 0x86,
 
         ///<summary>Host completion of key exchange.</summary> 
-        HostComplete = 0x86,
+        HostComplete = 0x87,
 
         ///<summary>Establish a new binding for the specified connection identifier.</summary> 
-        Rebind = 0x87
+        Rebind = 0x88
 
         }
 
