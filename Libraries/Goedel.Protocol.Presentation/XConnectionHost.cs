@@ -8,14 +8,14 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Host (i.e. responder) end of a listener connection.
     /// </summary>
-    public class ConnectionHost : Connection {
+    public class XConnectionHost : XConnection {
 
         ///<summary>The client credential</summary> 
-        public PresentationCredential HostCredential => Listener.HostCredential;
+        public XPresentationCredential HostCredential => Listener.HostCredential;
 
 
         ///<summary>The client credential</summary> 
-        public PresentationCredential ClientCredential { get; set; }
+        public XPresentationCredential ClientCredential { get; set; }
 
         byte[] ClientEphemeral { get; set; }
 
@@ -25,13 +25,13 @@ namespace Goedel.Protocol.Presentation {
         KeyAgreementResult HostKeyAgreementResult { get; set; }
 
 
-        public Packet ClientPacket { get; init; }
+        public XPacket ClientPacket { get; init; }
 
         /// <summary>
         /// Base constructor.
         /// </summary>
         /// <param name="listener">Listgener to which this connection is bound.</param>
-        public ConnectionHost(Listener listener) : base(listener) { }
+        public XConnectionHost(XListener listener) : base(listener) { }
 
 
 
@@ -203,7 +203,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data.</param>
         /// <returns>The parsed packet.</returns>
-        public override Packet Parse(PortId sourceId, byte[] packet) {
+        public override XPacket Parse(PortId sourceId, byte[] packet) {
             return packet[0] switch {
                 byte b when ((b & 0b1000_0000) == 0) => ParsePacketData(sourceId, packet),
 

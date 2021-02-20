@@ -29,13 +29,13 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Client connection class.
     /// </summary>
-    public abstract class ConnectionClient : Connection {
+    public abstract class XConnectionClient : XConnection {
 
         /// <summary>The credential to be presented by the client.</summary>
-        PresentationCredential ClientCredential { get; }
+        XPresentationCredential ClientCredential { get; }
 
         /// <summary>The credential to be presented by the host.</summary>
-        PresentationCredential HostCredential { get; set; }
+        XPresentationCredential HostCredential { get; set; }
 
         ///<summary>The client state.</summary> 
         public ClientState ClientState { get; private set; }
@@ -61,13 +61,13 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="portID">The port identifier.</param>
         /// <param name="clientCredential">The client credential.</param>
         /// <param name="hostCredential">The host credential (if known).</param>
-        public ConnectionClient(
-                    Listener listener,
+        public XConnectionClient(
+                    XListener listener,
                     string protocol,
                     string endpoint,
                     PortId portID,
-                    PresentationCredential clientCredential,
-                    PresentationCredential hostCredential=null) : base(listener){
+                    XPresentationCredential clientCredential,
+                    XPresentationCredential hostCredential=null) : base(listener){
             Listener = listener;
             ClientState = ClientState.Initial;
             ClientCredential = clientCredential;
@@ -239,7 +239,7 @@ namespace Goedel.Protocol.Presentation {
 
 
             // the client exchange has already been performed, complete the 
-            MutualKeyExchange (clientEphemeral, hostPublic,  out MutualKeyOut, out MutualKeyIn);
+            //MutualKeyExchange (clientEphemeral, hostPublic,  out MutualKeyOut, out MutualKeyIn);
 
             var innerWriter = new PacketWriter();
             Write(innerWriter, payload, ciphertextExtensions);
@@ -248,7 +248,7 @@ namespace Goedel.Protocol.Presentation {
             var mezanineWriter = new PacketWriterAesGcm();
             mezanineWriter.Write(EncryptedPacketIdentifier.Mezzanine);
             mezanineWriter.Write(ClientCredential.KeyExchangePrivate.KeyIdentifier);
-            mezanineWriter.Write();
+            //mezanineWriter.Write();
 
 
             mezanineWriter.WriteExtensions(ClientCredential.GetCredentials);
@@ -262,8 +262,8 @@ namespace Goedel.Protocol.Presentation {
             // Write out the host key we are talking to (nb does not disclose the service)
             outerWriter.Write(hostPublic.KeyIdentifier);
 
-            // Write out the ephemeral public key encoding, the key algorithm is implicit in the key id
-            outerWriter.Write(clientEphemeral.IKeyAdvancedPublic.Encoding);
+            //// Write out the ephemeral public key encoding, the key algorithm is implicit in the key id
+            //outerWriter.Write(clientEphemeral.IKeyAdvancedPublic.Encoding);
 
             // Write out the set of extensions associated with the packet.
             outerWriter.WriteExtensions(plaintextExtensions);
@@ -298,7 +298,7 @@ namespace Goedel.Protocol.Presentation {
 
 
             // the client exchange has already been performed, complete the 
-            MutualKeyExchange(clientEphemeral, hostPublic, out MutualKeyOut, out MutualKeyIn);
+            //MutualKeyExchange(clientEphemeral, hostPublic, out MutualKeyOut, out MutualKeyIn);
 
             var innerWriter = new PacketWriter();
             Write(innerWriter, payload, ciphertextExtensions);
@@ -307,7 +307,7 @@ namespace Goedel.Protocol.Presentation {
             var mezanineWriter = new PacketWriterAesGcm();
             mezanineWriter.Write(EncryptedPacketIdentifier.Mezzanine);
             mezanineWriter.Write(ClientCredential.KeyExchangePrivate.KeyIdentifier);
-            mezanineWriter.Write();
+            //mezanineWriter.Write();
 
 
             mezanineWriter.WriteExtensions(ClientCredential.GetCredentials);
@@ -322,7 +322,7 @@ namespace Goedel.Protocol.Presentation {
             outerWriter.Write(hostPublic.KeyIdentifier);
 
             // Write out the ephemeral public key encoding, the key algorithm is implicit in the key id
-            outerWriter.Write(clientEphemeral.IKeyAdvancedPublic.Encoding);
+            //outerWriter.Write(clientEphemeral.IKeyAdvancedPublic.Encoding);
 
             // Write out the set of extensions associated with the packet.
             outerWriter.WriteExtensions(plaintextExtensions);
@@ -341,7 +341,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data.</param>
         /// <returns>The parsed packet.</returns>
-        public override Packet Parse(PortId sourceId, byte[] packet) {
+        public override XPacket Parse(PortId sourceId, byte[] packet) {
             return packet[0] switch {
                 byte b when ((b & 0b1000_0000) == 0) => ParsePacketData(sourceId, packet),
                 (byte)PlaintextPacketType.HostExchange => ParsePacketHostExchange(sourceId, packet),

@@ -185,5 +185,27 @@ namespace Goedel.Utilities {
             return Buffer;
             }
 
+
+        /// <summary>
+        /// Return element number <paramref name="index"/> from <paramref name="list"/>
+        /// if it exists, otherwise the default for the list element type.
+        /// </summary>
+        /// <typeparam name="T">The list element type.</typeparam>
+        /// <param name="list">The list to extract from (may be null).</param>
+        /// <param name="index">The element to extract (if present).</param>
+        /// <returns>The extracted element or null if either <paramref name="list"/> is null
+        /// or <paramref name="index"/> is greater than the number of elements.</returns>
+        public static T SafeIndex<T>(this List<T> list, int index=0) =>
+            list == null || list.Count <= index ? default : list[index];
+
+
+        public static void AddRangeSafe<T>(this List<T> first, List<T> second) {
+            if (second != null) {
+                first.AddRange(second);
+                }
+            
+            }
+
+
         }
     }

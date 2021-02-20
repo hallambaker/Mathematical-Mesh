@@ -9,7 +9,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Base class for presentation credential
     /// </summary>
-    public abstract class PresentationCredential {
+    public abstract class XPresentationCredential {
 
         // ToDo: It should not be necessary to access these keys directly.
         // Instead use matching to identify the most approrpriate algorithm.
@@ -76,7 +76,7 @@ namespace Goedel.Protocol.Presentation {
         public (byte[], KeyPairAdvanced) MatchEphemeral(List<PacketExtension> extensions) {
 
             var tag = KeyExchangePublic.CryptoAlgorithmId.ToJoseID();
-            return (Packet.GetExtension(extensions, tag), KeyExchangePrivate);
+            return (XPacket.GetExtension(extensions, tag), KeyExchangePrivate);
 
             }
 
@@ -93,7 +93,7 @@ namespace Goedel.Protocol.Presentation {
                     string keyIdentifier) {
 
             var tag = KeyExchangePublic.CryptoAlgorithmId.ToJoseID();
-            return (Packet.GetExtension(extensions, tag), KeyExchangePrivate);
+            return (XPacket.GetExtension(extensions, tag), KeyExchangePrivate);
 
             }
 

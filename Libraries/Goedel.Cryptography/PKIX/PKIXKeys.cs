@@ -86,6 +86,8 @@
         /// </summary>
         public IPkixPublicKey PublicParameters => this;
 
+        byte[] IKeyPublicDH.Shared { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        byte[] IKeyPublicDH.Public { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         }
 
     public partial class PKIXPrivateKeyDH : IPKIXPrivateKey, IKeyPrivateDH {
@@ -124,6 +126,10 @@
                 return _PKIXPublicKeyDH;
                 }
             }
+
+        byte[] IKeyPrivateDH.Shared { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        byte[] IKeyPrivateDH.Public { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        byte[] IKeyPrivateDH.Private { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         PKIXPublicKeyDH _PKIXPublicKeyDH = null;
 

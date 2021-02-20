@@ -6,7 +6,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Base class for connections
     /// </summary>
-    public abstract class Connection : Disposable {
+    public abstract class XConnection : Disposable {
 
         ///<summary>Key for encrypting outgoing packets under the key established 
         ///to the host credential alone</summary> 
@@ -28,16 +28,16 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The host credentials. There is exactly one set of host 
         ///credentials for a given PortId at a given time. This MAY however
         ///contain multiple keys (e.g. for different algorithms.</summary> 
-        public PresentationCredential ListenerCredential => Listener.HostCredential;
+        public XPresentationCredential ListenerCredential => Listener.HostCredential;
 
         ///<summary>The listener to which this connection is bound.</summary> 
-        protected Listener Listener { get;  init; }
+        protected XListener Listener { get;  init; }
 
         /// <summary>
         /// Base constructor.
         /// </summary>
         /// <param name="listener">Listgener to which this connection is bound.</param>
-        public Connection(Listener listener) => Listener = listener;
+        public XConnection(XListener listener) => Listener = listener;
 
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data.</param>
         /// <returns>The parsed packet.</returns>
-        public abstract Packet Parse(PortId sourceId, byte[] packet);
+        public abstract XPacket Parse(PortId sourceId, byte[] packet);
 
 
         }

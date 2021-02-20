@@ -163,7 +163,7 @@ namespace Goedel.XUnit {
         //}
         }
 
-    public class PresentationCredentialTest : PresentationCredential {
+    public class PresentationCredentialTest : XPresentationCredential {
 
         public override KeyPairAdvanced KeySignPrivate { get; }
 
@@ -210,6 +210,8 @@ namespace Goedel.XUnit {
                 }
             throw new NYI();
             }
+
+        public override KeyPairAdvanced MatchPrivate(string keyIdentifier) => throw new NotImplementedException();
         }
 
 
@@ -219,7 +221,7 @@ namespace Goedel.XUnit {
         Refused
         }
 
-    public class ListenerHostTest : Listener {
+    public class ListenerHostTest : XListener {
         ListenerMode ListenerMode { get; }
         public PresentationCredentialTest HostCredential { get; }
         public ListenerHostTest(PresentationCredentialTest hostCredential,
@@ -229,7 +231,7 @@ namespace Goedel.XUnit {
             }
 
 
-        public override PresentationCredential GetPresentationCredential(List<PacketExtension> extensions) {
+        public override XPresentationCredential GetPresentationCredential(List<PacketExtension> extensions) {
 
             foreach (var extension in extensions) {
                 if (extension.Tag == "C-X448") {
@@ -241,14 +243,14 @@ namespace Goedel.XUnit {
             throw new NYI();
             }
 
-        public override ConnectionHost ConnectionHostFactory(Packet packet) =>
-                    new ConnectionHost(this) {
+        public override XConnectionHost ConnectionHostFactory(XPacket packet) =>
+                    new XConnectionHost(this) {
                         ClientPacket = packet
                         };
 
         }
 
-    public class ConnectionClientTest : ConnectionClient {
+    public class ConnectionClientTest : XConnectionClient {
 
 
         PresentationCredentialTest PresentationCredentialTest;

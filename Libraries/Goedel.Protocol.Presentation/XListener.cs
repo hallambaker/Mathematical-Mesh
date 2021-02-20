@@ -55,7 +55,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Listener class, process incoming packets and deliver responses to waiting tasks.
     /// </summary>
-    public abstract class Listener : Disposable {
+    public abstract class XListener : Disposable {
 
         ///<summary>Dictionary tracking inbound abuse by IP address</summary> 
         public Dictionary<IPAddress, PortHistory> DictionaryIPAddressToHistory = new();
@@ -64,15 +64,15 @@ namespace Goedel.Protocol.Presentation {
         public Dictionary<PortId, PortHistory> DictionaryPortIdToHistory = new();
 
         ///<summary>Dictionary used for binding, maps connection Id to connection</summary> 
-        public Dictionary<PortId, Connection> DictionaryPortIdToConnection = new();
+        public Dictionary<PortId, XConnection> DictionaryPortIdToConnection = new();
 
         ///<summary>Dictionary used for rebinding, maps connection Id to connection</summary> 
-        public Dictionary<byte[], Connection> DictionaryIdToConnection = new();
+        public Dictionary<byte[], XConnection> DictionaryIdToConnection = new();
 
         ///<summary>The host credentials. There is exactly one set of host 
         ///credentials for a given PortId at a given time. This MAY however
         ///contain multiple keys (e.g. for different algorithms.</summary> 
-        public PresentationCredential HostCredential { get; set; }
+        public XPresentationCredential HostCredential { get; set; }
 
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Goedel.Protocol.Presentation {
         /// <paramref name="hostCredential"/>.
         /// </summary>
         /// <param name="hostCredential">The host credential.</param>
-        public Listener(PresentationCredential hostCredential) => HostCredential = hostCredential;
+        public XListener(XPresentationCredential hostCredential) => HostCredential = hostCredential;
 
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="protocol">The protocol specifier.</param>
         /// <param name="address">The host address.</param>
         /// <returns>Task which completes when the connection is established.</returns>
-        public virtual Task<ConnectionClient> Open(string protocol, string address) {
+        public virtual Task<XConnectionClient> Open(string protocol, string address) {
 
             throw new NYI();
             }
@@ -102,26 +102,33 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="protocol">The protocol specifier.</param>
         /// <param name="address">The host address.</param>
         /// <returns>Task which completes when the connection request is received.</returns>
-        public virtual Task<ConnectionHost> Accept(string protocol, string address) {
+        public virtual Task<XConnectionHost> Accept(string protocol, string address) {
 
             throw new NYI();
             }
 
-        public abstract ConnectionHost ConnectionHostFactory(Packet packet);
+        public abstract XConnectionHost ConnectionHostFactory(XPacket packet);
 
 
 
-        public virtual ConnectionHost MakeConnection(PortId sourceId, Packet packet) {
+
+
+
+
+
+
+
+        public virtual XConnectionHost MakeConnection(PortId sourceId, XPacket packet) {
             var connection = MakeConnection(packet);
             DictionaryPortIdToConnection.Add(sourceId, connection);
             return connection;
 
             }
 
-        public abstract PresentationCredential GetPresentationCredential(List<PacketExtension> extensions);
+        public abstract XPresentationCredential GetPresentationCredential(List<PacketExtension> extensions);
 
 
-        public virtual ConnectionHost MakeConnection(Packet packet) => ConnectionHostFactory(packet);
+        public virtual XConnectionHost MakeConnection(XPacket packet) => ConnectionHostFactory(packet);
 
 
         #region // Process
@@ -188,14 +195,14 @@ namespace Goedel.Protocol.Presentation {
         public virtual void ProcessBad(PortId portID, byte[] packet) {
             }
 
-        public virtual void ProcessPacketData(Packet packet) {
+        public virtual void ProcessPacketData(XPacket packet) {
             }
 
 
-        public virtual void ProcessError(Packet packet) {
+        public virtual void ProcessError(XPacket packet) {
             }
 
-        public virtual void ProcessPacketInitial(Packet packet) {
+        public virtual void ProcessPacketInitial(XPacket packet) {
             if (packet is not PacketInitial packetInitial) {
                 ProcessError(packet);
                 }
@@ -204,16 +211,16 @@ namespace Goedel.Protocol.Presentation {
                 }
             }
 
-        public virtual void ProcessPacketClientExchange(Packet packet) {
+        public virtual void ProcessPacketClientExchange(XPacket packet) {
             }
 
-        public virtual void ProcessPacketClientComplete(Packet packet) {
+        public virtual void ProcessPacketClientComplete(XPacket packet) {
             }
-        public virtual void ProcessPacketHostChallenge(Packet packet) {
+        public virtual void ProcessPacketHostChallenge(XPacket packet) {
             }
-        public virtual void ProcessPacketHostExchange(Packet packet) {
+        public virtual void ProcessPacketHostExchange(XPacket packet) {
             }
-        public virtual void ProcessPacketHostComplete(Packet packet) {
+        public virtual void ProcessPacketHostComplete(XPacket packet) {
             }
 
         #endregion
@@ -225,7 +232,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The data packet.</param>
         /// <returns>The parsed packet.</returns>
 
-        public virtual Packet Parse(PortId sourceId, byte[] packet) {
+        public virtual XPacket Parse(PortId sourceId, byte[] packet) {
 
             packet.AssertNotNull(NYI.Throw);
             (packet.Length > 0).AssertTrue(NYI.Throw);

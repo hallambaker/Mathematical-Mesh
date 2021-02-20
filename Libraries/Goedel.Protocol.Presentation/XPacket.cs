@@ -14,7 +14,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// A Parsed Packet.
     /// </summary>
-    public class Packet {
+    public class XPacket {
         ///<summary>The packet payload.</summary> 
         public byte[] Payload { get; set; }
 
@@ -36,7 +36,7 @@ namespace Goedel.Protocol.Presentation {
         /// Constructor, return packet bound to port <paramref name="sourceId"/>.
         /// </summary>
         /// <param name="sourceId">The source address and port.</param>
-        public Packet(PortId sourceId) => SourcePortId = sourceId;
+        public XPacket(PortId sourceId) => SourcePortId = sourceId;
 
 
 
@@ -100,7 +100,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Unknown packet type.
     /// </summary>
-    public class PacketUnknown : Packet {
+    public class PacketUnknown : XPacket {
 
         /// <summary>
         /// Constructor, return packet bound to port <paramref name="sourceId"/> containing data
@@ -116,7 +116,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Encrypted and authenticated data packet.
     /// </summary>
-    public class PacketData : Packet {
+    public class PacketData : XPacket {
         /// <summary>
         /// Constructor, parse a decrypted data packet received from <paramref name="sourceId"/>
         /// bound to the reader <paramref name="reader"/>.
@@ -131,7 +131,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Error packet, MAY be returned in response to an unexpected request.
     /// </summary>
-    public class PacketError : Packet {
+    public class PacketError : XPacket {
         ///<summary>The returned error code.</summary> 
         public ErrorCode ErrorCode { get; }
 
@@ -169,7 +169,7 @@ namespace Goedel.Protocol.Presentation {
     /// Initial packet, sent to obtain host information to begin connection establishment
     /// when the host credentials are not known.
     /// </summary>
-    public class PacketInitial : Packet {
+    public class PacketInitial : XPacket {
 
         /// <summary>
         /// Constructor, parse a plaintext data packet <paramref name="data"/> 
@@ -201,7 +201,7 @@ namespace Goedel.Protocol.Presentation {
     /// It is not possible to authenticate to the client credential at this point as we do
     /// not have a host challenge.
     /// </summary>
-    public class PacketClientExchange : Packet {
+    public class PacketClientExchange : XPacket {
 
         byte[] ClientEphemeral { get; set; }
 
@@ -209,7 +209,7 @@ namespace Goedel.Protocol.Presentation {
 
         public PacketReader OuterReader { get; init; }
 
-        public PresentationCredential HostCredential { get; set; }
+        public XPresentationCredential HostCredential { get; set; }
         /// <summary>
         /// Constructor, for data packet
         /// received from <paramref name="sourceId"/>.
@@ -234,27 +234,27 @@ namespace Goedel.Protocol.Presentation {
 
         }
 
-    public class PacketClientComplete : Packet {
+    public class PacketClientComplete : XPacket {
 
         public PacketClientComplete(PortId sourceId) : base(sourceId) {
             }
 
         }
 
-    public class PacketClientCompleteDeferred : Packet {
+    public class PacketClientCompleteDeferred : XPacket {
 
         public PacketClientCompleteDeferred(PortId sourceId) : base(sourceId) {
             }
 
         }
-    public class PacketHostChallenge : Packet {
+    public class PacketHostChallenge : XPacket {
 
         public PacketHostChallenge(PortId sourceId) : base(sourceId) {
             }
 
         }
 
-    public class PacketHostExchange : Packet {
+    public class PacketHostExchange : XPacket {
 
         public PacketHostExchange(PortId sourceId) : base(sourceId) {
             }
@@ -262,14 +262,14 @@ namespace Goedel.Protocol.Presentation {
         }
 
 
-    public class PacketHostComplete : Packet {
+    public class PacketHostComplete : XPacket {
 
         public PacketHostComplete(PortId sourceId) : base(sourceId) {
             }
 
         }
 
-    public class PacketRebind : Packet {
+    public class PacketRebind : XPacket {
 
         public PacketRebind(PortId portId) : base(portId) {
             }

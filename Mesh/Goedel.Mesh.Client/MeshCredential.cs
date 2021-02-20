@@ -31,7 +31,7 @@ namespace Goedel.Mesh.Client {
     /// JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
     /// assertion).
     /// </summary>
-    public class MeshCredential : PresentationCredential {
+    public class MeshCredential : XPresentationCredential {
 
         ProfileAccount ProfileAccount => CatalogedDevice.ProfileUser;
 
@@ -75,6 +75,7 @@ namespace Goedel.Mesh.Client {
         public override void WriteClientCredential(JsonWriter jsonWriter) => throw new System.NotImplementedException();
         public override void WriteCredential(PacketWriter writer) => throw new System.NotImplementedException();
         public override KeyPairAdvanced MatchPublic(string keyIdentifier) => throw new System.NotImplementedException();
+        public override KeyPairAdvanced MatchPrivate(string keyIdentifier) => throw new System.NotImplementedException();
 
         // authenticate gubbins goes here...
 
