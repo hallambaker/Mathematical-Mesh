@@ -198,7 +198,13 @@ namespace Goedel.Utilities {
         public static T SafeIndex<T>(this List<T> list, int index=0) =>
             list == null || list.Count <= index ? default : list[index];
 
-
+        /// <summary>
+        /// If the list <paramref name="second"/> is not null, append the entries to the list
+        /// <paramref name="first"/>. Otherwise, do nothing.
+        /// </summary>
+        /// <typeparam name="T">The type of the list entries.</typeparam>
+        /// <param name="first">The list to add to.</param>
+        /// <param name="second">The list of items to be added if not null.</param>
         public static void AddRangeSafe<T>(this List<T> first, List<T> second) {
             if (second != null) {
                 first.AddRange(second);

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Focus;Windows</Configurations>
+    <Configurations>Debug;Release;Focus;Windows;Yaschema</Configurations>
     <Company>ThresholdMode.Com</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Command</Product>
@@ -12,10 +12,14 @@
     <Title>Goedel.Command</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Command.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Yaschema|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Command.xml</DocumentationFile>
   </PropertyGroup>
 

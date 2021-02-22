@@ -179,8 +179,8 @@ namespace Goedel.Protocol.Presentation {
 
             var authSpan = new Span<byte>(Packet, 0, Position);
 
-            var tagSpan = new Span<byte>(Packet, Position, Constants.SizeIvAesGcm);
-            Position += Constants.SizeIvAesGcm;
+            var tagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
+            Position += Constants.SizeTagAesGcm;
 
             var length = pad ? Packet.Length - Position : Position;
             var dataOut = new byte[length];

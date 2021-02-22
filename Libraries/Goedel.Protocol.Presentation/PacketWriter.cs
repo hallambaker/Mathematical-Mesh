@@ -35,7 +35,9 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The Packet data</summary> 
         public byte[] Packet;
 
-
+        ///<summary>Size of the largest encrypted block that can be inserted into
+        ///the writer.</summary> 
+        public virtual int RemainingSpace => Packet.Length - Position;
 
         ///<summary>Factory method, returns a packet writer for the default encryption algorithm.</summary> 
         public static PacketWriter Factory(int packetSize = 1200) => new PacketWriterAesGcm(packetSize);
@@ -175,12 +177,10 @@ namespace Goedel.Protocol.Presentation {
         public void Write(PlaintextPacketType data)
                     => Write((byte)data);
 
-
-        public void WriteExtensions(int count) {
-            WriteTag(PacketTag.Extensions, count);
-            }
-
-
+        /// <summary>
+        /// Write the list of extensions <paramref name="extensions"/> to the packet.
+        /// </summary>
+        /// <param name="extensions">The extensions to write.</param>
         public void WriteExtensions(List<PacketExtension> extensions=null) {
 
             if (extensions == null) {
@@ -212,6 +212,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="ikm">The primary key.</param>
         /// <param name="packet">The plaintext data</param>
+        /// <param name="pad">If true, fill the entire remainder of the packet.</param>
         public virtual void Encrypt(byte[] ikm, PacketWriter packet, bool pad = true) => throw new NYI();
 
 
@@ -230,7 +231,10 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public class PacketWriterAesGcm : PacketWriter {
 
-
+        ///<summary>Size of the largest encrypted block that can be inserted into
+        ///the writer.</summary> 
+        public override int RemainingSpace => Packet.Length - Position 
+                    - Constants.SizeIvAesGcm - Constants.SizeTagAesGcm;
 
         /// <summary>
         /// Constructor, create a packet writer with a packet size of 
@@ -260,8 +264,8 @@ namespace Goedel.Protocol.Presentation {
             // packet up to the tag.
             var authSpan = new Span<byte>(Packet, 0, Position);
 
-            var TagSpan = new Span<byte>(Packet, Position, Constants.SizeIvAesGcm);
-            Position += Constants.SizeIvAesGcm;
+            var TagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
+            Position += Constants.SizeTagAesGcm;
 
             var length = pad ? Packet.Length - Position : Position;
             var ciphertextSpan = new Span<byte>(Packet, Position, length);

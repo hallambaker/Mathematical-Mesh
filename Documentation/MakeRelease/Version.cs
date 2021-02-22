@@ -92,6 +92,7 @@ namespace Goedel.Tool.Version {
 
     	public virtual void Init (_Choice parent) {
             _Parent = parent;
+            _Base ??= parent?._Base;
 			}
 
         
