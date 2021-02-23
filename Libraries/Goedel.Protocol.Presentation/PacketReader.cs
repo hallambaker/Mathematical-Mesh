@@ -162,12 +162,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The packet data.</param>
         public PacketReaderAesGcm(byte[] packet) : base(packet) { }
 
-        /// <summary>
-        /// Decrypt the remainder of the packet using the primary key <paramref name="key"/> and the 
-        /// nonce at the current position in the packet to provide the necessary keying material.
-        /// </summary>
-        /// <param name="key">The primary key.</param>
-        /// <returns>A reader for the decrypted data.</returns>
+        ///<inheritdoc/>
         public override PacketReader Decrypt(byte[] key, bool pad = true) {
 
             Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");

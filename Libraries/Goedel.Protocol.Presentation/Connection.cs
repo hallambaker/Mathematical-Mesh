@@ -1,21 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
-using Goedel.Protocol;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
+
 namespace Goedel.Protocol.Presentation {
-
-    /// <summary>
-    /// Base class for presentation listeners.
-    /// </summary>
-    public abstract partial class Listener {
-        }
-
     /// <summary>
     /// Base class for presentation connections.
     /// </summary>
@@ -56,6 +44,10 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>The packet that the connection is a response to.</summary> 
         public Packet PacketIn { get; set; }
+
+
+        ///<summary>Completion task source.</summary> 
+        public TaskCompletionSource TaskCompletion { get; set; }
 
 
         /// <summary>
@@ -152,75 +144,6 @@ namespace Goedel.Protocol.Presentation {
         public virtual void MutualKeyExchange(out byte[] ephemeral, out string keyId) {
             keyId = null;
             ephemeral = null;
-            }
-
-        }
-
-    /// <summary>
-    /// Presentation client connection. Tracks the state of a client connection.
-    /// </summary>
-    public partial class ConnectionClient : Connection {
-        ///<summary>Symmetric key used to decrypt received mezzanine data.</summary> 
-        public override byte[] ClientKeyIn => ClientKeyHostToClient;
-        ///<summary>Symmetric key used to encrypt sent mezzanine data.</summary> 
-        public override byte[] ClientKeyOut => ClientKeyClientToHost;
-        ///<summary>Symmetric key used to decrypt received inner data.</summary> 
-        public override byte[] MutualKeyIn => MutualKeyHostToClient;
-        ///<summary>Symmetric key used to encrypt sent inner data.</summary> 
-        public override byte[] MutualKeyOut => MutualKeyClientToHost;
-        ///<summary>The host credential</summary> 
-        public override Credential HostCredential => CredentialOther;
-        ///<summary>The client credential</summary> 
-        public override Credential ClientCredential => CredentialSelf;
-        }
-
-    /// <summary>
-    /// Presentation host connection. Tracks the state of a host connection.
-    /// </summary>
-    public partial class ConnectionHost : Connection {
-        ///<summary>Symmetric key used to decrypt received mezzanine data.</summary> 
-        public override byte[] ClientKeyIn => ClientKeyClientToHost;
-        ///<summary>Symmetric key used to encrypt sent mezzanine data.</summary> 
-        public override byte[] ClientKeyOut => ClientKeyHostToClient;
-        ///<summary>Symmetric key used to decrypt received inner data.</summary> 
-        public override byte[] MutualKeyIn => MutualKeyClientToHost;
-        ///<summary>Symmetric key used to encrypt sent inner data.</summary>
-        public override byte[] MutualKeyOut => MutualKeyHostToClient;
-        ///<summary>The host credential</summary> 
-        public override Credential HostCredential => CredentialSelf;
-        ///<summary>The client credential</summary> 
-        public override Credential ClientCredential => CredentialOther;
-        }
-
-    /// <summary>
-    /// Base class for presentation credentials.
-    /// </summary>
-    public abstract class Credential {
-        }
-
-
-
-
-
-    /// <summary>
-    /// Base class for packet classes.
-    /// </summary>
-    public class Packet {
-        ///<summary>The packet payload.</summary> 
-        public byte[] Payload { get; set; }
-
-        ///<summary>The source address and port.</summary> 
-        public PortId SourcePortId;
-
-        ///<summary>Options specified in the packet plaintext.</summary> 
-        public List<PacketExtension> PlaintextExtensions { get; set; }
-
-
-
-        /// <summary>
-        /// Perform key exchanges and complete parsing of the packet
-        /// </summary>
-        public virtual void Complete() {
             }
 
         }

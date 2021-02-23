@@ -231,25 +231,14 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public class PacketWriterAesGcm : PacketWriter {
 
-        ///<summary>Size of the largest encrypted block that can be inserted into
-        ///the writer.</summary> 
+        ///<inheritdoc/>
         public override int RemainingSpace => Packet.Length - Position 
                     - Constants.SizeIvAesGcm - Constants.SizeTagAesGcm;
 
-        /// <summary>
-        /// Constructor, create a packet writer with a packet size of 
-        /// <paramref name="packetSize"/>.
-        /// </summary>
-        /// <param name="packetSize">The number of bytes in the packet to be created.</param>
+        ///<inheritdoc/>
         public PacketWriterAesGcm(int packetSize = 1200) : base(packetSize) { }
 
-        /// <summary>
-        /// Fill out the remainder of the packet by using the value <paramref name="key"/>
-        /// and a generated nonce to encrypt the data specified in <paramref name="writerIn"/>
-        /// </summary>
-        /// <param name="key">The primary key.</param>
-        /// <param name="writerIn">The plaintext data</param>
-        /// <param name="pad">If true, pad packet to fill remaining space.</param>
+        ///<inheritdoc/>
         public override void Encrypt(byte[] key, PacketWriter writerIn, bool pad=true) {
             Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
             var aes = new AesGcm(key);
@@ -275,11 +264,7 @@ namespace Goedel.Protocol.Presentation {
             Position += length;
             }
 
-        /// <summary>
-        /// Wrap a data packet payload to create an encrypted data packet.
-        /// </summary>
-        /// <param name="key">The primary key.</param>
-        /// <returns>The wrapped data packet.</returns>
+        ///<inheritdoc/>
         public override byte[] Wrap(byte[] key) {
 
             //Constants.Derive(ikm, out var nonce, out var iv, out var key);

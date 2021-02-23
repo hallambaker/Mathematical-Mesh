@@ -4,11 +4,6 @@
         <name>Goedel.Protocol.Presentation</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Protocol.Presentation.Listener">
-            <summary>
-            Base class for presentation listeners.
-            </summary>
-        </member>
         <member name="T:Goedel.Protocol.Presentation.Connection">
             <summary>
             Base class for presentation connections.
@@ -56,6 +51,9 @@
         </member>
         <member name="P:Goedel.Protocol.Presentation.Connection.PacketIn">
             <summary>The packet that the connection is a response to.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Connection.TaskCompletion">
+            <summary>Completion task source.</summary> 
         </member>
         <member name="M:Goedel.Protocol.Presentation.Connection.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
@@ -114,9 +112,29 @@
             <param name="ephemeral">The ephemeral generated.</param>
             <param name="keyId">Client key identifier</param>
         </member>
+        <member name="T:Goedel.Protocol.Presentation.ClientState">
+            <summary>
+            Client side connection state.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientState.Initial">
+            <summary>Initial state, sending either Initial or Cloaked.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientState.Challenge">
+            <summary>Host challenge received, sending answer.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientState.Write">
+            <summary>Connection established, sending packets.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientState.Abort">
+            <summary>Connection terminated, cannot be used further.</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Presentation.ConnectionClient">
             <summary>
             Presentation client connection. Tracks the state of a client connection.
+            </summary>
+            <summary>
+            Client connection class. Tracks the state of a client connection.
             </summary>
         </member>
         <member name="P:Goedel.Protocol.Presentation.ConnectionClient.ClientKeyIn">
@@ -136,6 +154,91 @@
         </member>
         <member name="P:Goedel.Protocol.Presentation.ConnectionClient.ClientCredential">
             <summary>The client credential</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ConnectionClient.clientState">
+            <summary>The current state of this client.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeXpacketClientInitial(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Create a serialised packet of type ClientInitial packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeXpacketClientExchange(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Create a serialised packet of type ClientExchange packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <param name="mezanineExtensionsIn">Additional extensions to be presented
+            in the mezzanine segment.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeXpacketClientComplete(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Create a serialised packet of type ClientComplete packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <param name="mezanineExtensionsIn">Additional extensions to be presented
+            in the mezzanine segment.</param>
+            <param name="ciphertextExtensions">Additional extensions to be presented 
+            in the encrypted segment.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeXpacketClientCompleteDeferred(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Create a serialised packet of type ClientCompleteDeferred packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <param name="mezanineExtensionsIn">Additional extensions to be presented
+            in the mezzanine segment.</param>
+            <param name="ciphertextExtensions">Additional extensions to be presented 
+            in the encrypted segment.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.ParseXpacketHostExchange(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+            as a HostExchange packet.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.ParseXpacketHostChallenge1(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+            as a HostChallenge1 packet.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.ParseXpacketHostChallenge2(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+            as a HostChallenge2 packet.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.ParseXpacketHostComplete(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+            as a HostComplete packet.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data</param>
+            <returns>The parsed packet.</returns>
         </member>
         <member name="T:Goedel.Protocol.Presentation.ConnectionHost">
             <summary>
@@ -160,26 +263,77 @@
         <member name="P:Goedel.Protocol.Presentation.ConnectionHost.ClientCredential">
             <summary>The client credential</summary> 
         </member>
-        <member name="T:Goedel.Protocol.Presentation.Credential">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.SerializeXpacketHostExchange(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
-            Base class for presentation credentials.
+            Create a serialised packet of type HostExchange packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <param name="mezanineExtensionsIn">Additional extensions to be presented
+            in the mezzanine segment.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.SerializeXpacketHostChallenge1(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Create a serialised packet of type HostChallenge1 packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.SerializeXpacketHostChallenge2(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Create a serialised packet of type HostChallenge2 packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.SerializeXpacketHostComplete(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Create a serialised packet of type HostComplete packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <param name="mezanineExtensionsIn">Additional extensions to be presented
+            in the mezzanine segment.</param>
+            <param name="ciphertextExtensions">Additional extensions to be presented 
+            in the encrypted segment.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.ParseXpacketClientComplete(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+            as a ClientComplete packet.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.ParseXpacketClientCompleteDeferred(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+            as a ClientCompleteDeferred packet.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.CompleteClientExchange(Goedel.Protocol.Presentation.XpacketClientExchange)">
+            <summary>
+            Perform key exchanges and complete parsing of the packet
             </summary>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.Packet">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.CompleteClientComplete(Goedel.Protocol.Presentation.XpacketClientComplete)">
             <summary>
-            Base class for packet classes.
+            Perform key exchanges and complete parsing of the packet
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Presentation.Packet.Payload">
-            <summary>The packet payload.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.Packet.SourcePortId">
-            <summary>The source address and port.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.Packet.PlaintextExtensions">
-            <summary>Options specified in the packet plaintext.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Packet.Complete">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.CompleteClientCompleteDeferred(Goedel.Protocol.Presentation.XpacketClientCompleteDeferred)">
             <summary>
             Perform key exchanges and complete parsing of the packet
             </summary>
@@ -327,6 +481,84 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.ZeroArray">
             <summary>Obsolete, remove</summary> 
         </member>
+        <member name="T:Goedel.Protocol.Presentation.Credential">
+            <summary>
+            Base class for presentation credentials.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.Listener">
+            <summary>
+            Base class for presentation listeners.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.GetConnectionClient(Goedel.Protocol.Presentation.PortId,System.Byte[],Goedel.Protocol.Presentation.Credential)">
+            <summary>
+            Request establishment of a client connection to the endpoint 
+            <paramref name="destinationId"/> 
+            </summary>
+            <param name="destinationId">The endpoint to connect to.</param>
+            <param name="payload">Optional payload. Note that this is sent enclair if
+            <paramref name="hostCredential"/> is null.</param>
+            <param name="hostCredential">The host credential. If not null, the payload 
+            is sent encrypted under this credential.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.Accept(Goedel.Protocol.Presentation.Packet,System.Byte[])">
+            <summary>
+            Accept the inbound connection request described in <paramref name="packetRequest"/>.
+            </summary>
+            <param name="packetRequest">Parsed inbound request packet.</param>
+            <param name="payload">Optional payload response. This is always encryted under the host credential
+            at minimum.</param>
+            <returns>The host connection. This may be used to wait for inbound requests from the 
+            connection.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.Challenge(Goedel.Protocol.Presentation.Packet,System.Byte[])">
+            <summary>
+            Defer creation of a host connection by sending a challenge to the source.
+            </summary>
+            <param name="packetRequest">Parsed inbound request packet.</param>
+            <param name="payload">Optional payload response. This is always returned enclair.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.Reject(Goedel.Protocol.Presentation.Packet,System.Byte[])">
+            <summary>
+            Refuse an inbound connection.
+            </summary>
+            <param name="packetRequest">Parsed inbound request packet.</param>
+            <param name="payload">Optional payload response. This is always returned enclair.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseXpacketClientInitial(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+            as a ClientInitial packet.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseXpacketClientExchange(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+            as a ClientExchange packet.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.Packet">
+            <summary>
+            Base class for packet classes.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Packet.Payload">
+            <summary>The packet payload.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Packet.SourcePortId">
+            <summary>The source address and port.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Packet.PlaintextExtensions">
+            <summary>Options specified in the packet plaintext.</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Presentation.PacketReader">
             <summary>
             Presentation packet reader class.
@@ -441,6 +673,106 @@
             <param name="key">The primary key.</param>
             <param name="packet">The data to decrypt</param>
             <returns>A reader for the decrypted data.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.XpacketClientInitial">
+            <summary>
+            Parsed ClientInitial packet
+            </summary>   
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.XpacketClientExchange">
+            <summary>
+            Parsed ClientExchange packet
+            </summary>   
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientExchange.Reader">
+            <summary>Packet reader used to complete reading of the packet.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientExchange.MezzanineExtensions">
+            <summary>Options specified in the packet mezzanine.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientExchange.ClientEphemeral">
+            <summary>Host chosen ephemeral key.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientExchange.HostKeyId">
+            <summary>Client Key Identifier.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.XpacketClientComplete">
+            <summary>
+            Parsed ClientComplete packet
+            </summary>   
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientComplete.Reader">
+            <summary>Packet reader used to complete reading of the packet.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientComplete.MezzanineExtensions">
+            <summary>Options specified in the packet mezzanine.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientComplete.CiphertextExtensions">
+            <summary>Options specified in the packet ciphertext.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientComplete.ClientKeyId">
+            <summary>Host Key Identifier.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.XpacketClientCompleteDeferred">
+            <summary>
+            Parsed ClientCompleteDeferred packet
+            </summary>   
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientCompleteDeferred.Reader">
+            <summary>Packet reader used to complete reading of the packet.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientCompleteDeferred.MezzanineExtensions">
+            <summary>Options specified in the packet mezzanine.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientCompleteDeferred.CiphertextExtensions">
+            <summary>Options specified in the packet ciphertext.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientCompleteDeferred.ClientEphemeral">
+            <summary>Host chosen ephemeral key.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientCompleteDeferred.HostKeyId">
+            <summary>Client Key Identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketClientCompleteDeferred.ClientKeyId">
+            <summary>Host Key Identifier.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.XpacketHostExchange">
+            <summary>
+            Parsed HostExchange packet
+            </summary>   
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketHostExchange.MezzanineExtensions">
+            <summary>Options specified in the packet mezzanine.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketHostExchange.HostKeyId">
+            <summary>Client Key Identifier.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.XpacketHostChallenge1">
+            <summary>
+            Parsed HostChallenge1 packet
+            </summary>   
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.XpacketHostChallenge2">
+            <summary>
+            Parsed HostChallenge2 packet
+            </summary>   
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.XpacketHostComplete">
+            <summary>
+            Parsed HostComplete packet
+            </summary>   
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketHostComplete.MezzanineExtensions">
+            <summary>Options specified in the packet mezzanine.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketHostComplete.CiphertextExtensions">
+            <summary>Options specified in the packet ciphertext.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketHostComplete.HostEphemeral">
+            <summary>Client chosen ephemeral key.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.XpacketHostComplete.ClientKeyId">
+            <summary>Host Key Identifier.</summary> 
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketTag">
             <summary>
@@ -723,23 +1055,6 @@
             <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data.</param>
             <returns>The parsed packet.</returns>
-        </member>
-        <member name="T:Goedel.Protocol.Presentation.ClientState">
-            <summary>
-            Client side connection state.
-            </summary>
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientState.Initial">
-            <summary>Initial state, sending either Initial or Cloaked.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientState.Challenge">
-            <summary>Host challenge received, sending answer.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientState.Write">
-            <summary>Connection established, sending packets.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientState.Abort">
-            <summary>Connection terminated, cannot be used further.</summary> 
         </member>
         <member name="T:Goedel.Protocol.Presentation.XConnectionClient">
             <summary>

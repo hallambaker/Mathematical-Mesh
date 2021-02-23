@@ -12,19 +12,7 @@ using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation {
 
-    /// <summary>
-    /// Client side connection state.
-    /// </summary>
-    public enum ClientState {
-        ///<summary>Initial state, sending either Initial or Cloaked.</summary> 
-        Initial,
-        ///<summary>Host challenge received, sending answer.</summary> 
-        Challenge,
-        ///<summary>Connection established, sending packets.</summary> 
-        Write,
-        ///<summary>Connection terminated, cannot be used further.</summary> 
-        Abort
-        }
+
 
     /// <summary>
     /// Client connection class.
