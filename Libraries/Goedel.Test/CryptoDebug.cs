@@ -155,7 +155,7 @@ namespace Goedel.Test.Core {
                 AgreementEd25519 = PrivateKey.Agreement(PublicKeyEd.IKeyAdvancedPublic as CurveEdwards25519Public)
                 };
 
-            EncryptionKey = result.KeyDerive.Derive(KDFInfo, Length: 256);
+            EncryptionKey = result.KeyDerive.Derive(KDFInfo, 256);
             KeyAgreement = result.IKM;
 
             var exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, MasterKey);

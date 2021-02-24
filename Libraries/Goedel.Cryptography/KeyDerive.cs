@@ -1,12 +1,13 @@
 ﻿using Goedel.Utilities;
 
+using System;
+
 namespace Goedel.Cryptography {
 
     /// <summary>
     /// Base class for key derivation functions
     /// </summary>
     public abstract class KeyDerive {
-
         /// <summary>Salt used to derive keys to authenticate messages send by the client, i.e. the initiator
         /// to the server.</summary>
         public static readonly byte[] KeyedUDFMaster = "KeyedUDFMaster".ToBytes();
@@ -16,49 +17,13 @@ namespace Goedel.Cryptography {
 
 
 
-        /// <summary>Salt used to derive keys to authenticate messages send by the client, i.e. the initiator
-        /// to the server.</summary>
-        public static readonly byte[] SaltClientToServerAuthenticate = "ClientToServerAuthenticate".ToBytes();
-        /// <summary>Salt used to derive keys to authenticate messages send by the server, i.e. the responder
-        /// to the client.</summary>
-        public static readonly byte[] SaltServerToClientAuthenticate = "ServerToClientAuthenticate".ToBytes();
-        /// <summary>Salt used to derive keys to encrypt messages send by the client, i.e. the initiator
-        /// to the server.</summary>
-        public static readonly byte[] SaltClientToServerEncrypt = "ClientToServerEncrypt".ToBytes();
-        /// <summary>Salt used to derive keys to encrypt messages send by the server, i.e. the responder
-        /// to the client.</summary>
-        public static readonly byte[] SaltServerToClientEncrypt = "ServerToClientEncrypt".ToBytes();
-
-
-
-        /// <summary>Key used to authenticate messages send by the client, i.e. the initiator
-        /// to the server.</summary>
-        /// <param name="Length">The key length in bits</param>
-        /// <returns>The key value</returns>
-        public virtual byte[] ClientToServerAuthenticate(int Length) => Derive(SaltClientToServerAuthenticate, Length);
-        /// <summary>Key used to authenticate messages send by the server, i.e. the responder
-        /// to the client.</summary>
-        /// <param name="Length">The key length in bits</param>
-        /// <returns>The key value</returns>
-        public virtual byte[] ClientToServerToClientAuthenticate(int Length) => Derive(SaltServerToClientAuthenticate, Length);
-        /// <summary>Key used to encrypt messages send by the client, i.e. the initiator
-        /// to the server.</summary>
-        /// <param name="Length">The key length in bits</param>
-        /// <returns>The key value</returns>
-        public virtual byte[] ClientToServerEncrypt(int Length) => Derive(SaltClientToServerEncrypt, Length);
-        /// <summary>Key used to encrypt messages send by the server, i.e. the responder
-        /// to the client.</summary>
-        /// <param name="Length">The key length in bits</param>
-        /// <returns>The key value</returns>
-        public virtual byte[] ServerToClientEncrypt(int Length) => Derive(SaltServerToClientEncrypt, Length);
-
         /// <summary>
         /// Key Derivation function
         /// </summary>
-        /// <param name="Info">The information to be used to vary this key</param>
-        /// <param name="Length">The length of the key to extract in bits</param>
+        /// <param name="info">The information to be used to vary this key</param>
+        /// <param name="length">The length of the key to extract in bits</param>
         /// <returns>The key agreement result.</returns>
-        public abstract byte[] Derive(byte[] Info, int Length = 0);
+        public abstract byte[] Derive(byte[] info, int length = 0);
 
         }
 
@@ -69,7 +34,7 @@ namespace Goedel.Cryptography {
     public class KeyDeriveHKDF : KeyDerive {
 
         //CryptoProviderAuthentication Provider;
-        CryptoAlgorithmId algorithm;
+        CryptoAlgorithmId Algorithm { get; init; }
 
         /// <summary>The Pseudorandom key constructed from the IKM and salt</summary>
         public byte[] PRK { get; set; }
@@ -97,23 +62,16 @@ namespace Goedel.Cryptography {
         /// <param name="algorithm">The MAC algorithm to use</param>
         public KeyDeriveHKDF(byte[] ikm, byte[] salt = null,
                 CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) {
-            this.algorithm = algorithm;
-            PRK = Extract(this.algorithm, ikm, salt);
+            Algorithm = algorithm;
+            PRK = Extract(Algorithm, ikm, salt);
             }
 
-        /// <summary>
-        /// Key Derivation function
-        /// </summary>
-        /// <param name="Info">The information to be used to vary this key</param>
-        /// <param name="Length">The length of the key to extract</param>
-        /// <returns>The derrived key.</returns>
-        public override byte[] Derive(byte[] Info, int Length = 0) {
-            Length = Length == 0 ? DefaultLength : Length;
+        ///<inheritdoc/>
+        public override byte[] Derive(byte[] info, int length = 0) {
+            length = length == 0 ? DefaultLength : length;
 
-            return Expand(algorithm, PRK, Length, Info);
+            return Expand(Algorithm, PRK, length, info);
             }
-
-        static readonly byte[] NullKey = new byte[0];
 
         /// <summary>
         /// Construct a HKDF instance for algorithm <paramref name="algorithm"/>, generate
@@ -156,15 +114,15 @@ namespace Goedel.Cryptography {
         /// The extraction function
         /// </summary>
         /// <param name="algorithm">The MAC algorithm to use</param>
-        /// <param name="IKM">The initial keying material</param>
-        /// <param name="Salt">Salt to be used to vary the derived key across domains.</param>
+        /// <param name="ikm">The initial keying material</param>
+        /// <param name="salt">Salt to be used to vary the derived key across domains.</param>
         /// <returns>The extracted value.</returns>
         public static byte[] Extract(CryptoAlgorithmId algorithm,
-                    byte[] IKM, byte[] Salt = null) {
+                    byte[] ikm, byte[] salt = null) {
             var (size, _) = algorithm.GetKeySize();
 
-            var Key = Salt ?? new byte[size / 8];
-            return IKM.GetMAC(Key, cryptoAlgorithmID: algorithm);
+            var Key = salt ?? new byte[size / 8];
+            return ikm.GetMAC(Key, cryptoAlgorithmID: algorithm);
             }
 
         /// <summary>
@@ -179,7 +137,7 @@ namespace Goedel.Cryptography {
             byte[] prk, int length, byte[] info = null) {
 
             var (size, _) = algorithm.GetKeySize();
-            info ??= NullKey;
+            info ??= Array.Empty<byte>();
 
             var result = new byte[length / 8];
 

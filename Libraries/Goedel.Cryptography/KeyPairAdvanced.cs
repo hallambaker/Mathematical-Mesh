@@ -269,7 +269,7 @@ namespace Goedel.Cryptography {
 
             // Console.Write($"PRK Encrypt is {IKM.ToStringBase16()}");
 
-            var EncryptionKey = KeyDerive.Derive(salt, Length: 256);
+            var EncryptionKey = KeyDerive.Derive(salt, length: 256);
             //Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
 
             exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, key);
@@ -292,7 +292,7 @@ namespace Goedel.Cryptography {
                     byte[] salt = null) {
 
 
-            var EncryptionKey = KeyDerive.Derive(salt, Length: 256);
+            var EncryptionKey = KeyDerive.Derive(salt, length: 256);
 
             //Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
 

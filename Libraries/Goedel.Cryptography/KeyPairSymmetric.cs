@@ -65,7 +65,7 @@ namespace Goedel.Cryptography {
             byte[] info = null) {
 
             var keyDerive = new KeyDeriveHKDF(SecretValue, (byte[])null);
-            var encryptionKey = keyDerive.Derive(info, Length: 256);
+            var encryptionKey = keyDerive.Derive(info, 256);
             exchange = Platform.KeyWrapRFC3394.Wrap(encryptionKey, key);
 
 
@@ -93,7 +93,7 @@ namespace Goedel.Cryptography {
                     byte[] info = null) {
 
             var keyDerive = new KeyDeriveHKDF(SecretValue, (byte[])null);
-            var encryptionKey = keyDerive.Derive(info, Length: 256);
+            var encryptionKey = keyDerive.Derive(info, 256);
 
             var result = Platform.KeyWrapRFC3394.Unwrap(encryptionKey, encryptedKey);
 

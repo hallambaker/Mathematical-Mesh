@@ -19,8 +19,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //  
-//  #% var InheritsOverride = "override"; // "virtual"
-
+//  
+//  This file was automatically generated at 2/24/2021 12:20:57 PM
+//   
+//  Changes to this file may be overwritten without warning
+//  
+//  Generator:  protogen version 3.0.0.566
+//      Goedel Script Version : 0.1   Generated 
+//      Goedel Schema Version : 0.1   Generated
+//  
+//      Copyright : © 2015-2019
+//  
+//  Build Platform: Win32NT 10.0.18362.0
+//  
+//  
 using System;
 using System.IO;
 using System.Collections;

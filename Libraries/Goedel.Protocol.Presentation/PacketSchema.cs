@@ -1,5 +1,38 @@
 ﻿
-
+//  © 2021 by Phill Hallam-Baker
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//  
+//  
+//  This file was automatically generated at 2/24/2021 11:52:39 AM
+//   
+//  Changes to this file may be overwritten without warning
+//  
+//  Generator:  yaschema version 3.0.0.658
+//      Goedel Script Version : 0.1   Generated 
+//      Goedel Schema Version : 0.1   Generated
+//  
+//      Copyright : © 2021
+//  
+//  Build Platform: Win32NT 10.0.18362.0
+//  
+//  
 using System;
 using System.IO;
 using System.Net;
@@ -28,7 +61,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeXpacketClientInitial (
+        public byte[] SerializeClientInitial (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null                ) {
 
@@ -59,7 +92,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="mezanineExtensionsIn">Additional extensions to be presented
         /// in the mezzanine segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeXpacketClientExchange (
+        public byte[] SerializeClientExchange (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 List<PacketExtension> mezanineExtensionsIn = null                ) {
@@ -99,7 +132,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="ciphertextExtensions">Additional extensions to be presented 
         /// in the encrypted segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeXpacketClientComplete (
+        public byte[] SerializeClientComplete (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 List<PacketExtension> mezanineExtensionsIn = null,
@@ -143,7 +176,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="ciphertextExtensions">Additional extensions to be presented 
         /// in the encrypted segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeXpacketClientCompleteDeferred (
+        public byte[] SerializeClientCompleteDeferred (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 List<PacketExtension> mezanineExtensionsIn = null,
@@ -190,8 +223,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The packet data</param>
         /// <returns>The parsed packet.</returns>
 
-        public XpacketHostExchange ParseXpacketHostExchange (PortId sourceId, byte[] packet) {
-            var result = new XpacketHostExchange () {
+        public  PacketHostExchange ParseHostExchange (PortId sourceId, byte[] packet) {
+            var result = new PacketHostExchange () {
                 SourcePortId = sourceId
                 };
 
@@ -199,6 +232,7 @@ namespace Goedel.Protocol.Presentation {
             var outerReader = new PacketReaderAesGcm(packet);
             result.HostKeyId = outerReader.ReadString ();
             result.PlaintextExtensions = outerReader.ReadExtensions();
+            CredentialOther = CredentialSelf.GetCredentials (result.PlaintextExtensions);
             ClientKeyExchange (result.HostKeyId);
             // Mezzanine
             var mezanineReader = outerReader.Decrypt (ClientKeyIn);
@@ -216,14 +250,15 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The packet data</param>
         /// <returns>The parsed packet.</returns>
 
-        public XpacketHostChallenge1 ParseXpacketHostChallenge1 (PortId sourceId, byte[] packet) {
-            var result = new XpacketHostChallenge1 () {
+        public  PacketHostChallenge1 ParseHostChallenge1 (PortId sourceId, byte[] packet) {
+            var result = new PacketHostChallenge1 () {
                 SourcePortId = sourceId
                 };
 
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet);
             result.PlaintextExtensions = outerReader.ReadExtensions();
+            CredentialOther = CredentialSelf.GetCredentials (result.PlaintextExtensions);
             // Only have plaintext
             result.Payload = outerReader.ReadBinary();
 
@@ -238,8 +273,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The packet data</param>
         /// <returns>The parsed packet.</returns>
 
-        public XpacketHostChallenge2 ParseXpacketHostChallenge2 (PortId sourceId, byte[] packet) {
-            var result = new XpacketHostChallenge2 () {
+        public  PacketHostChallenge2 ParseHostChallenge2 (PortId sourceId, byte[] packet) {
+            var result = new PacketHostChallenge2 () {
                 SourcePortId = sourceId
                 };
 
@@ -260,8 +295,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The packet data</param>
         /// <returns>The parsed packet.</returns>
 
-        public XpacketHostComplete ParseXpacketHostComplete (PortId sourceId, byte[] packet) {
-            var result = new XpacketHostComplete () {
+        public  PacketHostComplete ParseHostComplete (PortId sourceId, byte[] packet) {
+            var result = new PacketHostComplete () {
                 SourcePortId = sourceId
                 };
 
@@ -298,7 +333,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="mezanineExtensionsIn">Additional extensions to be presented
         /// in the mezzanine segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeXpacketHostExchange (
+        public byte[] SerializeHostExchange (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 List<PacketExtension> mezanineExtensionsIn = null                ) {
@@ -334,7 +369,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeXpacketHostChallenge1 (
+        public byte[] SerializeHostChallenge1 (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null                ) {
 
@@ -365,7 +400,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeXpacketHostChallenge2 (
+        public byte[] SerializeHostChallenge2 (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null                ) {
 
@@ -399,7 +434,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="ciphertextExtensions">Additional extensions to be presented 
         /// in the encrypted segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeXpacketHostComplete (
+        public byte[] SerializeHostComplete (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 List<PacketExtension> mezanineExtensionsIn = null,
@@ -440,8 +475,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The packet data</param>
         /// <returns>The parsed packet.</returns>
 
-        public XpacketClientComplete ParseXpacketClientComplete (PortId sourceId, byte[] packet) {
-            var result = new XpacketClientComplete () {
+        public  PacketClientComplete ParseClientComplete (PortId sourceId, byte[] packet) {
+            var result = new PacketClientComplete () {
                 SourcePortId = sourceId
                 };
 
@@ -462,8 +497,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The packet data</param>
         /// <returns>The parsed packet.</returns>
 
-        public XpacketClientCompleteDeferred ParseXpacketClientCompleteDeferred (PortId sourceId, byte[] packet) {
-            var result = new XpacketClientCompleteDeferred () {
+        public  PacketClientCompleteDeferred ParseClientCompleteDeferred (PortId sourceId, byte[] packet) {
+            var result = new PacketClientCompleteDeferred () {
                 SourcePortId = sourceId
                 };
 
@@ -481,25 +516,27 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Perform key exchanges and complete parsing of the packet
         /// </summary>
-        public void CompleteClientExchange (XpacketClientExchange result) {
+        public void CompleteClientExchange (PacketClientExchange result) {
             var outerReader = result.Reader;
             ClientKeyExchange (result.ClientEphemeral, result.HostKeyId);
             // Mezzanine
             var mezanineReader = outerReader.Decrypt (ClientKeyIn);
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
+            CredentialOther = CredentialSelf.GetCredentials(result.MezzanineExtensions);
             result.Payload = mezanineReader.ReadBinary();
             }
 
         /// <summary>
         /// Perform key exchanges and complete parsing of the packet
         /// </summary>
-        public void CompleteClientComplete (XpacketClientComplete result) {
+        public void CompleteClientComplete (PacketClientComplete result) {
             var outerReader = result.Reader;
             // Mezzanine
             var mezanineReader = outerReader.Decrypt (ClientKeyIn);
             result.ClientKeyId = outerReader.ReadString ();
             MutualKeyExchange (result.ClientKeyId);
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
+            CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);
             // Encrypted inside Mezzanine
             var innerReader = mezanineReader.Decrypt (MutualKeyIn);
             result.CiphertextExtensions = innerReader.ReadExtensions();
@@ -509,7 +546,7 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Perform key exchanges and complete parsing of the packet
         /// </summary>
-        public void CompleteClientCompleteDeferred (XpacketClientCompleteDeferred result) {
+        public void CompleteClientCompleteDeferred (PacketClientCompleteDeferred result) {
             var outerReader = result.Reader;
             ClientKeyExchange (result.ClientEphemeral, result.HostKeyId);
             // Mezzanine
@@ -517,6 +554,7 @@ namespace Goedel.Protocol.Presentation {
             result.ClientKeyId = outerReader.ReadString ();
             MutualKeyExchange (result.ClientKeyId);
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
+            CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);
             // Encrypted inside Mezzanine
             var innerReader = mezanineReader.Decrypt (MutualKeyIn);
             result.CiphertextExtensions = innerReader.ReadExtensions();
@@ -535,8 +573,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The packet data</param>
         /// <returns>The parsed packet.</returns>
 
-        public XpacketClientInitial ParseXpacketClientInitial (PortId sourceId, byte[] packet) {
-            var result = new XpacketClientInitial () {
+        public static PacketClientInitial ParseClientInitial (PortId sourceId, byte[] packet) {
+            var result = new PacketClientInitial () {
                 SourcePortId = sourceId
                 };
 
@@ -557,8 +595,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The packet data</param>
         /// <returns>The parsed packet.</returns>
 
-        public XpacketClientExchange ParseXpacketClientExchange (PortId sourceId, byte[] packet) {
-            var result = new XpacketClientExchange () {
+        public static PacketClientExchange ParseClientExchange (PortId sourceId, byte[] packet) {
+            var result = new PacketClientExchange () {
                 SourcePortId = sourceId
                 };
 
@@ -578,7 +616,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Parsed ClientInitial packet
     /// </summary>   
-    public partial class XpacketClientInitial : Packet {
+    public partial class PacketClientInitial : Packet {
 
 
 
@@ -590,7 +628,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Parsed ClientExchange packet
     /// </summary>   
-    public partial class XpacketClientExchange : Packet {
+    public partial class PacketClientExchange : Packet {
 
         ///<summary>Packet reader used to complete reading of the packet.</summary> 
         public PacketReader Reader{ get; set; }
@@ -610,7 +648,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Parsed ClientComplete packet
     /// </summary>   
-    public partial class XpacketClientComplete : Packet {
+    public partial class PacketClientComplete : Packet {
 
         ///<summary>Packet reader used to complete reading of the packet.</summary> 
         public PacketReader Reader{ get; set; }
@@ -630,7 +668,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Parsed ClientCompleteDeferred packet
     /// </summary>   
-    public partial class XpacketClientCompleteDeferred : Packet {
+    public partial class PacketClientCompleteDeferred : Packet {
 
         ///<summary>Packet reader used to complete reading of the packet.</summary> 
         public PacketReader Reader{ get; set; }
@@ -654,7 +692,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Parsed HostExchange packet
     /// </summary>   
-    public partial class XpacketHostExchange : Packet {
+    public partial class PacketHostExchange : Packet {
 
         ///<summary>Options specified in the packet mezzanine.</summary> 
         public List<PacketExtension> MezzanineExtensions{ get; set; }
@@ -670,7 +708,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Parsed HostChallenge1 packet
     /// </summary>   
-    public partial class XpacketHostChallenge1 : Packet {
+    public partial class PacketHostChallenge1 : Packet {
 
 
 
@@ -682,7 +720,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Parsed HostChallenge2 packet
     /// </summary>   
-    public partial class XpacketHostChallenge2 : Packet {
+    public partial class PacketHostChallenge2 : Packet {
 
 
 
@@ -694,7 +732,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Parsed HostComplete packet
     /// </summary>   
-    public partial class XpacketHostComplete : Packet {
+    public partial class PacketHostComplete : Packet {
 
         ///<summary>Options specified in the packet mezzanine.</summary> 
         public List<PacketExtension> MezzanineExtensions{ get; set; }

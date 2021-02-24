@@ -31,25 +31,13 @@ namespace Goedel.Mesh.Client {
     /// JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
     /// assertion).
     /// </summary>
-    public class MeshCredential : XPresentationCredential {
-
-        ProfileAccount ProfileAccount => CatalogedDevice.ProfileUser;
+    public class MeshCredential  {
 
         IKeyLocate KeyLocate { get; }
 
         CatalogedDevice CatalogedDevice { get; }
 
         ConnectionDevice ConnectionDevice { get; }
-
-        public override KeyPairAdvanced KeySignPrivate => throw new System.NotImplementedException();
-
-        public override KeyPairAdvanced KeyExchangePrivate => throw new System.NotImplementedException();
-
-        public override KeyPairAdvanced KeySignPublic => throw new System.NotImplementedException();
-
-        public override KeyPairAdvanced KeyExchangePublic => throw new System.NotImplementedException();
-
-        public override List<PacketExtension> GetCredentials => throw new System.NotImplementedException();
 
         /// <summary>
         /// Default constructor
@@ -64,21 +52,26 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogedDevice">The device catalog entry.</param>
         /// <param name="keyLocate">The key locator to be used to obtain keys.</param>
         public MeshCredential(
-                    CatalogedDevice catalogedDevice, 
-                    IKeyLocate keyLocate) {
+                    CatalogedDevice catalogedDevice,
+                    IKeyLocate keyLocate)  {
             CatalogedDevice = catalogedDevice;
             ConnectionDevice = CatalogedDevice.EnvelopedConnectionUser.Decode();
 
             KeyLocate = keyLocate;
             }
 
-        public override void WriteClientCredential(JsonWriter jsonWriter) => throw new System.NotImplementedException();
-        public override void WriteCredential(PacketWriter writer) => throw new System.NotImplementedException();
-        public override KeyPairAdvanced MatchPublic(string keyIdentifier) => throw new System.NotImplementedException();
-        public override KeyPairAdvanced MatchPrivate(string keyIdentifier) => throw new System.NotImplementedException();
+        ///<inheritdoc/>
+        //public override void AddCredentials(List<PacketExtension> extensions) => throw new System.NotImplementedException();
+        /////<inheritdoc/>
+        //public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) => throw new System.NotImplementedException();
 
-        // authenticate gubbins goes here...
+        /////<inheritdoc/>
+        //public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) => throw new System.NotImplementedException();
 
+        /////<inheritdoc/>
+        //public override void AddEphemerals(List<PacketExtension> extensions) => throw new System.NotImplementedException();
 
+        /////<inheritdoc/>
+        //public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId = null) => throw new System.NotImplementedException();
         }
     }

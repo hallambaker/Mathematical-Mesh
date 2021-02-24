@@ -163,109 +163,109 @@ namespace Goedel.XUnit {
         //}
         }
 
-    public class PresentationCredentialTest : XPresentationCredential {
+    //public class PresentationCredentialTest : XPresentationCredential {
 
-        public override KeyPairAdvanced KeySignPrivate { get; }
+    //    public override KeyPairAdvanced KeySignPrivate { get; }
 
-        public override KeyPairAdvanced KeyExchangePrivate { get; }
+    //    public override KeyPairAdvanced KeyExchangePrivate { get; }
 
-        public override KeyPairAdvanced KeySignPublic { get; }
+    //    public override KeyPairAdvanced KeySignPublic { get; }
 
-        public override KeyPairAdvanced KeyExchangePublic { get; }
+    //    public override KeyPairAdvanced KeyExchangePublic { get; }
 
-        public override List<PacketExtension> GetCredentials {
-            get {
-                var credential = new PacketExtension() {
-                    Tag = "C-" + KeyExchangePublic.CryptoAlgorithmId.ToJoseID(),
-                    Value = KeyExchangePublic.IKeyAdvancedPublic.Encoding
-                    };
-                return new List<PacketExtension> { credential };
-                }
-            }
+    //    public override List<PacketExtension> GetCredentials {
+    //        get {
+    //            var credential = new PacketExtension() {
+    //                Tag = "C-" + KeyExchangePublic.CryptoAlgorithmId.ToJoseID(),
+    //                Value = KeyExchangePublic.IKeyAdvancedPublic.Encoding
+    //                };
+    //            return new List<PacketExtension> { credential };
+    //            }
+    //        }
 
-        public PresentationCredentialTest(KeyPair clientKeySign = null, KeyPair clientKeyExchange = null) {
+    //    public PresentationCredentialTest(KeyPair clientKeySign = null, KeyPair clientKeyExchange = null) {
 
-            clientKeySign ??= KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Device);
-            clientKeyExchange ??= KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
-
-
-            KeySignPublic = clientKeySign.KeyPairPublic() as KeyPairAdvanced;
-            KeyExchangePublic = clientKeyExchange.KeyPairPublic() as KeyPairAdvanced;
-
-            KeySignPrivate = clientKeySign as KeyPairAdvanced;
-            KeyExchangePrivate = clientKeyExchange as KeyPairAdvanced;
-            }
+    //        clientKeySign ??= KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Device);
+    //        clientKeyExchange ??= KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
 
 
+    //        KeySignPublic = clientKeySign.KeyPairPublic() as KeyPairAdvanced;
+    //        KeyExchangePublic = clientKeyExchange.KeyPairPublic() as KeyPairAdvanced;
 
-        public override void WriteClientCredential(JsonWriter jsonWriter) {
-            // Do nothing for now!
-
-            }
-
-        public override void WriteCredential(PacketWriter writer) => throw new NotImplementedException();
-        public override KeyPairAdvanced MatchPublic(string keyIdentifier) {
-            if (keyIdentifier == KeyExchangePublic.KeyIdentifier) {
-                return KeyExchangePublic;
-                }
-            throw new NYI();
-            }
-
-        public override KeyPairAdvanced MatchPrivate(string keyIdentifier) => throw new NotImplementedException();
-        }
+    //        KeySignPrivate = clientKeySign as KeyPairAdvanced;
+    //        KeyExchangePrivate = clientKeyExchange as KeyPairAdvanced;
+    //        }
 
 
-    public enum ListenerMode {
-        Immediate,
-        Deferred,
-        Refused
-        }
 
-    public class ListenerHostTest : XListener {
-        ListenerMode ListenerMode { get; }
-        public PresentationCredentialTest HostCredential { get; }
-        public ListenerHostTest(PresentationCredentialTest hostCredential,
-                    ListenerMode listenerMode = ListenerMode.Immediate) : base(hostCredential) {
-            HostCredential = hostCredential;
-            ListenerMode = listenerMode;
-            }
+    //    public override void WriteClientCredential(JsonWriter jsonWriter) {
+    //        // Do nothing for now!
 
+    //        }
 
-        public override XPresentationCredential GetPresentationCredential(List<PacketExtension> extensions) {
+    //    public override void WriteCredential(PacketWriter writer) => throw new NotImplementedException();
+    //    public override KeyPairAdvanced MatchPublic(string keyIdentifier) {
+    //        if (keyIdentifier == KeyExchangePublic.KeyIdentifier) {
+    //            return KeyExchangePublic;
+    //            }
+    //        throw new NYI();
+    //        }
 
-            foreach (var extension in extensions) {
-                if (extension.Tag == "C-X448") {
-
-                    return new PresentationCredentialTest(null,
-                        new KeyPairX448(extension.Value, KeySecurity.Public));
-                    }
-                }
-            throw new NYI();
-            }
-
-        public override XConnectionHost ConnectionHostFactory(XPacket packet) =>
-                    new XConnectionHost(this) {
-                        ClientPacket = packet
-                        };
-
-        }
-
-    public class ConnectionClientTest : XConnectionClient {
+    //    public override KeyPairAdvanced MatchPrivate(string keyIdentifier) => throw new NotImplementedException();
+    //    }
 
 
-        PresentationCredentialTest PresentationCredentialTest;
-        public ConnectionClientTest(
+    //public enum ListenerMode {
+    //    Immediate,
+    //    Deferred,
+    //    Refused
+    //    }
 
-                    PresentationCredentialTest presentationCredentialTest,
-                    ListenerHostTest listenerHost,
-                    PortId portID,
-                    string protocol = "mmm",
-                    string endpoint = "example.com") :
-                    base(listenerHost, protocol, endpoint,
-                        portID, presentationCredentialTest, listenerHost.HostCredential) {
-            PresentationCredentialTest = presentationCredentialTest;
-            }
+    //public class ListenerHostTest : XListener {
+    //    ListenerMode ListenerMode { get; }
+    //    public PresentationCredentialTest HostCredential { get; }
+    //    public ListenerHostTest(PresentationCredentialTest hostCredential,
+    //                ListenerMode listenerMode = ListenerMode.Immediate) : base(hostCredential) {
+    //        HostCredential = hostCredential;
+    //        ListenerMode = listenerMode;
+    //        }
 
-        }
+
+    //    public override XPresentationCredential GetPresentationCredential(List<PacketExtension> extensions) {
+
+    //        foreach (var extension in extensions) {
+    //            if (extension.Tag == "C-X448") {
+
+    //                return new PresentationCredentialTest(null,
+    //                    new KeyPairX448(extension.Value, KeySecurity.Public));
+    //                }
+    //            }
+    //        throw new NYI();
+    //        }
+
+    //    public override XConnectionHost ConnectionHostFactory(XPacket packet) =>
+    //                new XConnectionHost(this) {
+    //                    ClientPacket = packet
+    //                    };
+
+    //    }
+
+    //public class ConnectionClientTest : XConnectionClient {
+
+
+    //    PresentationCredentialTest PresentationCredentialTest;
+    //    public ConnectionClientTest(
+
+    //                PresentationCredentialTest presentationCredentialTest,
+    //                ListenerHostTest listenerHost,
+    //                PortId portID,
+    //                string protocol = "mmm",
+    //                string endpoint = "example.com") :
+    //                base(listenerHost, protocol, endpoint,
+    //                    portID, presentationCredentialTest, listenerHost.HostCredential) {
+    //        PresentationCredentialTest = presentationCredentialTest;
+    //        }
+
+    //    }
 
     }

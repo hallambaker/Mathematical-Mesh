@@ -19,8 +19,8 @@ namespace Goedel.XUnit {
         [Fact]
         public void InitialImmediateTest() {
             var portID = new PortId();
-            var clientCredential = new PresentationCredentialTest();
-            var hostCredential = new PresentationCredentialTest();
+            var clientCredential = new TestCredential();
+            var hostCredential = new TestCredential();
 
             var payload1 = MakePayload();
             var payload2 = MakePayload();
@@ -28,39 +28,42 @@ namespace Goedel.XUnit {
             var payload4 = MakePayload();
             var payload5 = MakePayload();
 
-            using var listenerHostTest = new ListenerHostTest(hostCredential, ListenerMode.Refused);
+            using var listenerHost = new TestListener(hostCredential);
 
             // using client connection
-            using var connectionClient = new ConnectionClientTest(clientCredential, listenerHostTest, portID, null);
+            using var connectionClient = new TestConnectionClient(clientCredential);
 
-            
-            // Client: Initial message
+
+            //// Client: Initial message
             var clientInitialData = connectionClient.SerializeClientInitial(payload1);
 
-            // Host: Get initial, respond host exchange.
-            var clientInitialPacket = listenerHostTest.Parse(portID, clientInitialData) as PacketInitial;
-            var connectionHost = listenerHostTest.MakeConnection(clientInitialPacket);
-            var hostExchangeData = connectionHost.SerializeHostExchange(payload2);
+            //// Host: Get initial, respond host exchange.
+            var clientInitialPacket = Listener.ParseClientInitial(portID, clientInitialData) ;
             clientInitialPacket.Payload.TestEqual(payload1);
+            var connectionHost = new TestConnectionHost(listenerHost, clientInitialPacket);
+            var hostExchangeData = connectionHost.SerializeHostExchange(payload2);
+
 
             // Client: Complete 
-            var hostExchangePacket = connectionClient.ParsePacketHostExchange(portID, hostExchangeData);
-            var clientCompleteData = connectionClient.SerializeClientComplete(payload3);
+            var hostExchangePacket = connectionClient.ParseHostExchange(portID, hostExchangeData);
             hostExchangePacket.Payload.TestEqual(payload2);
+            var clientCompleteData = connectionClient.SerializeClientComplete(payload3);
 
-            // Host: send data
-            var clientCompletePacket = connectionHost.ParsePacketClientComplete(portID, clientCompleteData);
-            var hostData = connectionHost.SerializePacketData(payload4);
+
+            //// Host: send data
+            var clientCompletePacket = connectionHost.ParseClientComplete(portID, clientCompleteData);
             clientCompletePacket.Payload.TestEqual(payload3);
+            //var hostData = connectionHost.SerializePacketData(payload4);
+            
 
-            // Client: receive data 
-            var hostDataPacket = connectionClient.ParsePacketData(portID, hostData);
-            var clientData = connectionClient.SerializePacketData(payload5);
-            hostDataPacket.Payload.TestEqual(payload4);
+            //// Client: receive data 
+            //var hostDataPacket = connectionClient.ParsePacketData(portID, hostData);
+            //var clientData = connectionClient.SerializePacketData(payload5);
+            //hostDataPacket.Payload.TestEqual(payload4);
 
-            // Host: back atcha
-            var clientDataPacket = connectionHost.ParsePacketData(portID, hostData);
-            clientDataPacket.Payload.TestEqual(payload5);
+            //// Host: back atcha
+            //var clientDataPacket = connectionHost.ParsePacketData(portID, hostData);
+            //clientDataPacket.Payload.TestEqual(payload5);
 
             }
 

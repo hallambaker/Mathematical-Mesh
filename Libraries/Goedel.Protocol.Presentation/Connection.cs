@@ -1,13 +1,34 @@
-﻿using System.Collections.Generic;
+﻿//  Copyright © 2021 by Threshold Secrets Llc.
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-
+using Goedel.Utilities;
+using Goedel.Cryptography;
 
 namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Base class for presentation connections.
     /// </summary>
-    public abstract class Connection {
+    public abstract class Connection : Disposable{
 
         ///<summary>Symmetric key used to encrypt/decrypt mezzanine data sent by the client to 
         ///the host.</summary> 
@@ -50,15 +71,17 @@ namespace Goedel.Protocol.Presentation {
         public TaskCompletionSource TaskCompletion { get; set; }
 
 
+        List<KeyPairAdvanced> ephemeralsOffered;
+
+
         /// <summary>
         /// Generate a set of ephemerals for the supported algorithms to offer for 
         /// key agreement and add to <paramref name="extensions"/>.
         /// </summary>
         /// <param name="extensions">List of extensions to add the ephemerals to.</param>
         public virtual void AddEphemerals(
-            List<PacketExtension> extensions) {
-
-            }
+            List<PacketExtension> extensions) =>
+                    CredentialSelf.AddEphemerals(extensions, ref ephemeralsOffered);
 
         /// <summary>
         /// Add the credentials specified in <see cref="CredentialSelf"/> to 
@@ -66,9 +89,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="extensions">List of extensions to add the ephemerals to.</param>
         public virtual void AddCredentials(
-            List<PacketExtension> extensions) {
-
-            }
+            List<PacketExtension> extensions) => CredentialSelf.AddCredentials(extensions);
 
         /// <summary>
         /// Add a challenge value over the current state to <paramref name="extensions"/>
@@ -88,63 +109,145 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
+        KeyAgreementResult clientKeyAgreementResult;
+        KeyAgreementResult mutualKeyAgreementResult;
+        /// <summary>
+        /// Perform a key exchange to the host credential only. 
+        /// </summary>
+        /// <param name="privateKey">The private key</param>
+        /// <param name="keyPublic">The public key.</param>
+        public void ClientKeyExchange(
+                        KeyPairAdvanced privateKey,
+                        KeyPairAdvanced keyPublic) {
+            clientKeyAgreementResult = privateKey.Agreement(keyPublic);
 
-        public virtual void ClientKeyExchange(string keyId) {
+            var keyDerive = clientKeyAgreementResult.KeyDerive;
+
+            Screen.WriteLine($"Key Agreement {privateKey.KeyIdentifier}.{keyPublic.KeyIdentifier}");
+            Screen.WriteLine($"     {clientKeyAgreementResult.IKM.ToStringBase16()}");
+
+            ClientKeyClientToHost = keyDerive.Derive(Constants.TagKeyClientHost, Constants.SizeKeyAesGcm * 8);
+            ClientKeyHostToClient = keyDerive.Derive(Constants.TagKeyHostClient, Constants.SizeKeyAesGcm * 8);
             }
-
-        public virtual void ClientKeyExchange(byte[] ephemeral, string keyId) {
-            }
-
-
-        public virtual void MutualKeyExchange(string keyId) {
-            }
-
-        public virtual void MutualKeyExchange(byte[] ephemeral, string keyId) {
-            }
-
-
 
 
         /// <summary>
-        /// Perform a key exchange to the host credential using a nonce chosen from the
-        /// set of nonces chosen by the client.
+        /// Perform a client key exchange to the host credential using an ephemeral chosen from the
+        /// set of ephemerals chosen by the client.
         /// </summary>
         /// <param name="keyId">Host key identifier</param>
-        public virtual void ClientKeyExchange(out string keyId) {
-            keyId = null;
+        public void ClientKeyExchange(out string keyId) {
+            var (privateKey, publicEphemeral) = HostCredential.SelectKey(PacketIn.PlaintextExtensions);
+            keyId = privateKey.KeyIdentifier;
+            ClientKeyExchange(privateKey, publicEphemeral);
             }
 
         /// <summary>
-        /// Perform a key exchange to the host credential selecting a key and generating a
+        /// Perform a client key exchange to the host credential using the ephemeral chosen by the
+        /// client.
+        /// </summary>
+        /// <param name="ephemeral"></param>
+        /// <param name="keyId"></param>
+        public virtual void ClientKeyExchange(byte[] ephemeral, string keyId) {
+            var (privateKey, publicEphemeral) = HostCredential.SelectKey(keyId, ephemeral);
+            ClientKeyExchange(privateKey, publicEphemeral);
+            }
+
+
+        /// <summary>
+        /// Perform a client key exchange to the key <paramref name="keyId"/> using the first compatible 
+        /// ephemeral previously offered.
+        /// </summary>
+        /// <param name="keyId">Host key identifier</param>
+        public virtual void ClientKeyExchange(string keyId) {
+            var (privateEphemeral, publickey) = HostCredential.SelectKey();
+            ClientKeyExchange(privateEphemeral, publickey);
+            }
+
+
+        /// <summary>
+        /// Perform a client key exchange to the host credential selecting a key and generating a
         /// compatible ephemeral returned as <paramref name="ephemeral"/>.
         /// </summary>
         /// <param name="ephemeral">The ephemeral generated.</param>
         /// <param name="keyId">Host key identifier</param>
         public virtual void ClientKeyExchange(out byte[] ephemeral, out string keyId) {
-            keyId = null;
-            ephemeral = null;
+            var (privateEphemeral, publickey) = HostCredential.SelectKey();
+            ClientKeyExchange(privateEphemeral, publickey);
+
+            keyId = publickey.KeyIdentifier;
+            ephemeral = privateEphemeral.IKeyAdvancedPublic.Encoding;
             }
 
+
+
         /// <summary>
-        /// Perform a key exchange to the client credential using a nonce chosen from the
+        /// Complete a mutual key exchange to the client credential and previous client exchange. 
+        /// </summary>
+        /// <param name="privateKey">The private key</param>
+        /// <param name="keyPublic">The public key.</param>
+        public void MutualKeyExchange(
+                        KeyPairAdvanced privateKey,
+                        KeyPairAdvanced keyPublic) {
+            mutualKeyAgreementResult = privateKey.Agreement(keyPublic);
+
+            var ikm = clientKeyAgreementResult.IKM.Concatenate(mutualKeyAgreementResult.IKM);
+
+            var keyDerive = new KeyDeriveHKDF(ikm);
+
+            ClientKeyClientToHost = keyDerive.Derive(Constants.TagKeyClientHost, Constants.SizeKeyAesGcm * 8);
+            ClientKeyHostToClient = keyDerive.Derive(Constants.TagKeyHostClient, Constants.SizeKeyAesGcm * 8);
+            }
+
+
+        /// <summary>
+        /// Complete a mutual key exchange to the client credential using an ephemeral chosen from the
         /// set of nonces chosen by the host to complete a mutual key exchange.
         /// </summary>
         /// <param name="keyId">Client key identifier</param>
         public virtual void MutualKeyExchange(out string keyId) {
-            keyId = null;
+            var (privateKey, publicEphemeral) = ClientCredential.SelectKey(PacketIn.PlaintextExtensions);
+            keyId = privateKey.KeyIdentifier;
+            MutualKeyExchange(privateKey, publicEphemeral);
             }
 
         /// <summary>
-        /// Perform a key exchange to the client credential selecting a key and generating a
+        /// Complete a mutual key exchange to the host credential using the ephemeral chosen by the
+        /// host.
+        /// </summary>
+        /// <param name="ephemeral"></param>
+        /// <param name="keyId"></param>
+        public virtual void MutualKeyExchange(byte[] ephemeral, string keyId) {
+            var (privateKey, publicEphemeral) = ClientCredential.SelectKey(keyId, ephemeral);
+            ClientKeyExchange(privateKey, publicEphemeral);
+            }
+
+        /// <summary>
+        /// Complete a mutual key exchange to the key <paramref name="keyId"/> using the first compatible 
+        /// ephemeral previously offered.
+        /// </summary>
+        /// <param name="keyId">Host key identifier</param>
+        public virtual void MutualKeyExchange(string keyId) {
+            var (privateEphemeral, publickey) = ClientCredential.SelectKey();
+            ClientKeyExchange(privateEphemeral, publickey);
+            }
+
+        /// <summary>
+        /// Complete a mutual key exchange to the client credential selecting a key and generating a
         /// compatible ephemeral returned as <paramref name="ephemeral"/> to complete a 
         /// mutual key exchange..
         /// </summary>
         /// <param name="ephemeral">The ephemeral generated.</param>
         /// <param name="keyId">Client key identifier</param>
         public virtual void MutualKeyExchange(out byte[] ephemeral, out string keyId) {
-            keyId = null;
-            ephemeral = null;
+            var (privateEphemeral, publickey) = ClientCredential.SelectKey();
+            ClientKeyExchange(privateEphemeral, publickey);
+
+            keyId = publickey.KeyIdentifier;
+            ephemeral = privateEphemeral.IKeyAdvancedPublic.Encoding;
             }
+
+
 
         }
 
