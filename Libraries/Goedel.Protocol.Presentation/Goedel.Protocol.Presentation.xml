@@ -367,15 +367,6 @@
             <param name="packet">The packet data</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.ParseClientCompleteDeferred(Goedel.Protocol.Presentation.PortId,System.Byte[])">
-            <summary>
-            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-            as a ClientCompleteDeferred packet.
-            </summary>
-            <param name="sourceId">The packet source.</param>
-            <param name="packet">The packet data</param>
-            <returns>The parsed packet.</returns>
-        </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionHost.CompleteClientExchange(Goedel.Protocol.Presentation.PacketClientExchange)">
             <summary>
             Perform key exchanges and complete parsing of the packet
@@ -694,6 +685,15 @@
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a ClientExchange packet.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientCompleteDeferred(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+            as a ClientCompleteDeferred packet.
             </summary>
             <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>

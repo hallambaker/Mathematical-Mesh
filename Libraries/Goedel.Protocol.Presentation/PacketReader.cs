@@ -173,8 +173,11 @@ namespace Goedel.Protocol.Presentation {
             Position += Constants.SizeIvAesGcm;
 
             var authSpan = new Span<byte>(Packet, 0, Position);
+            Screen.WriteLine($"AuthSpan {0}  {Position}");
 
             var tagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
+            Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
+
             Position += Constants.SizeTagAesGcm;
 
             var length = pad ? Packet.Length - Position : Position;
@@ -183,9 +186,10 @@ namespace Goedel.Protocol.Presentation {
             var ciphertextSpan = new ReadOnlySpan<byte>(Packet, Position, length);
             var plaintextSpan = new Span<byte>(dataOut, 0, length);
 
+            Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
             aes.Decrypt(ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
 
-            return new PacketReader(dataOut);
+            return new PacketReaderAesGcm(dataOut);
             }
 
         /// <summary>

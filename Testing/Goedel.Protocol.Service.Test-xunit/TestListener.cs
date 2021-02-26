@@ -36,12 +36,15 @@ using System.Threading.Tasks;
 namespace Goedel.XUnit {
     public class TestListener : Listener {
         #region // Properties
+
+        public static string ChallengeTag = "Challenge";
+
         #endregion
         #region // Constructors
 
         ///<inheritdoc/>
         public TestListener(Credential credentialSelf) : base(credentialSelf) {
-
+            //AnonymousConnection = new TestConnectionHost (
             }
         #endregion
 
@@ -63,6 +66,49 @@ namespace Goedel.XUnit {
         #endregion
 
         #region // Methods
+
+        Dictionary<string, ConnectionHost> PendingChallenges { get; }  = new();
+
+        public ConnectionHost GetConnectionHost(Packet packetRequest) {
+
+            if (packetRequest is PacketClientCompleteDeferred packetClientCompleteDeferred) {
+                var challengeId = TestConnectionHost.GetChallenge(packetClientCompleteDeferred.PlaintextExtensions);
+                PendingChallenges.TryGetValue(challengeId, out var connection).AssertTrue(NYI.Throw);
+                connection.CompleteClientCompleteDeferred(packetClientCompleteDeferred);
+                return connection;
+                }
+
+            return new TestConnectionHost(this, packetRequest);
+
+            }
+
+        public byte[] SerializeChallenge(Packet packetRequest, byte[] payload = null) {
+
+            var connection = new TestConnectionHost(this, packetRequest);
+
+            var challenge = connection.MakeChallenge(packetRequest);
+            var challengeExtensions = new List<PacketExtension> {
+                new PacketExtension () {
+                    Tag = TestListener.ChallengeTag,
+                    Value = challenge.ToBytes()
+                    }
+                };
+
+            // stash the challenge connection here.
+            PendingChallenges.Add(challenge, connection);
+
+            var packet = (packetRequest) switch {
+
+                PacketClientInitial => connection.SerializeHostChallenge1 (payload, challengeExtensions),
+                PacketClientExchange => connection.SerializeHostChallenge2 (payload, challengeExtensions),
+                _ => throw new NYI()
+                };
+
+
+            return packet;
+            }
+
+
         #endregion
         }
 
@@ -118,10 +164,13 @@ namespace Goedel.XUnit {
 
             if (ephmeralsOffered != null) {
                 ephemeral = ephmeralsOffered[0];
+                Screen.WriteLine($"Re-Offer of = {ephemeral}");
+
                 }
             else {
                 ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
                 ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
+                Screen.WriteLine($"Make Offer of = {ephemeral}");
                 }
 
             var extension = new PacketExtension() {
@@ -138,7 +187,9 @@ namespace Goedel.XUnit {
         public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
             foreach (var extension in extensions) {
                 if (extension.Tag == "X448") {
-                    return (KeyExchange, new KeyPairX448(extension.Value, KeySecurity.Public));
+                    var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
+                    Screen.WriteLine($"Select = {ephemeral}");
+                    return (KeyExchange, ephemeral);
                     }
                 }
             throw new NYI();
@@ -174,6 +225,22 @@ namespace Goedel.XUnit {
             CredentialSelf = credential;
             }
 
+        /// <summary>
+        /// Add a response value over the current state to <paramref name="extensions"/>
+        /// </summary>
+        /// <param name="extensions">List of extensions to add the ephemerals to.</param>
+        public override void AddResponse(
+                List<PacketExtension> extensions) {
+            foreach (var extension in PacketIn.PlaintextExtensions) {
+
+                if (extension.Tag == TestListener.ChallengeTag) {
+                    extensions.Add(extension);
+                    }
+                }
+
+            }
+
+
         public override Task<byte[]> Transact(byte[] payload) => throw new NotImplementedException();
         }
 
@@ -181,6 +248,47 @@ namespace Goedel.XUnit {
     public class TestConnectionHost : ConnectionHost {
         public override Task<byte[]> Receive() => throw new NotImplementedException();
         public override void Reply(byte[] payload) => throw new NotImplementedException();
+
+        byte[] ephemeral;
+
+
+        /// <summary>
+        /// Add a challenge value over the current state to <paramref name="extensions"/>
+        /// </summary>
+        /// <param name="extensions">List of extensions to add the ephemerals to.</param>
+        public override void AddChallenge(
+                List<PacketExtension> extensions) {
+
+            }
+
+        public static string GetChallenge(List<PacketExtension> packetExtensions) {
+            foreach (var extension in packetExtensions) {
+                if (extension.Tag == TestListener.ChallengeTag) {
+                    return extension.Value.ToUTF8();
+                    }
+                }
+            throw new NYI();
+            }
+        
+        
+        public string MakeChallenge(Packet packetRequest) {
+
+            ephemeral = packetRequest switch {
+                PacketClientInitial => packetRequest.PlaintextExtensions[0].Value,
+                PacketClientExchange clientExchange => clientExchange.ClientEphemeral
+                };
+
+
+            return UDF.Nonce(128);
+            }
+
+        public bool VerifyChallenge(Packet packetRequest) {
+            ephemeral.TestEqual(packetRequest.PlaintextExtensions[0].Value);
+
+            ephemeral = null;
+
+            return true;
+            }
 
 
         public TestConnectionHost(
@@ -192,7 +300,10 @@ namespace Goedel.XUnit {
                 // We have accepted the connection, cause the client exchange to be performed.
                 CompleteClientExchange(packetClientExchange);
                 }
-
+            if (packetIn is PacketClientCompleteDeferred packetClientCompleteDeferred) {
+                // We have accepted the connection, cause the client exchange to be performed.
+                CompleteClientCompleteDeferred(packetClientCompleteDeferred);
+                }
             //CredentialSelf = credential;
             }
 

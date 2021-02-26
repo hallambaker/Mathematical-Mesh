@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/24/2021 11:52:39 AM
+//  This file was automatically generated at 2/24/2021 5:52:14 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  yaschema version 3.0.0.658
+//  Generator:  yaschema version 3.0.0.664
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -113,6 +113,8 @@ namespace Goedel.Protocol.Presentation {
             mezanineExtensions.AddRangeSafe(mezanineExtensionsIn);
             mezanineWriter.WriteExtensions(mezanineExtensions);
             mezanineWriter.Write(payload);
+
+            Screen.WriteLine("Encrypt here.");
             outerWriter.Encrypt(ClientKeyOut, mezanineWriter);
 
             // Return the outermost packet
@@ -227,7 +229,7 @@ namespace Goedel.Protocol.Presentation {
             var result = new PacketHostExchange () {
                 SourcePortId = sourceId
                 };
-
+            PacketIn=result;
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet);
             result.HostKeyId = outerReader.ReadString ();
@@ -254,7 +256,7 @@ namespace Goedel.Protocol.Presentation {
             var result = new PacketHostChallenge1 () {
                 SourcePortId = sourceId
                 };
-
+            PacketIn=result;
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet);
             result.PlaintextExtensions = outerReader.ReadExtensions();
@@ -277,7 +279,7 @@ namespace Goedel.Protocol.Presentation {
             var result = new PacketHostChallenge2 () {
                 SourcePortId = sourceId
                 };
-
+            PacketIn=result;
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet);
             result.PlaintextExtensions = outerReader.ReadExtensions();
@@ -299,16 +301,16 @@ namespace Goedel.Protocol.Presentation {
             var result = new PacketHostComplete () {
                 SourcePortId = sourceId
                 };
-
+            PacketIn=result;
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet);
             result.PlaintextExtensions = outerReader.ReadExtensions();
             // Mezzanine
             var mezanineReader = outerReader.Decrypt (ClientKeyIn);
-            result.ClientKeyId = outerReader.ReadString ();
-            result.HostEphemeral = outerReader.ReadBinary ();
-            MutualKeyExchange (result.HostEphemeral, result.ClientKeyId);
+            result.ClientKeyId = mezanineReader.ReadString ();
+            result.HostEphemeral = mezanineReader.ReadBinary ();
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
+            MutualKeyExchange (result.HostEphemeral, result.ClientKeyId);
             // Encrypted inside Mezzanine
             var innerReader = mezanineReader.Decrypt (MutualKeyIn);
             result.CiphertextExtensions = innerReader.ReadExtensions();
@@ -479,7 +481,7 @@ namespace Goedel.Protocol.Presentation {
             var result = new PacketClientComplete () {
                 SourcePortId = sourceId
                 };
-
+            PacketIn=result;
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet);
             result.PlaintextExtensions = outerReader.ReadExtensions();
@@ -488,30 +490,7 @@ namespace Goedel.Protocol.Presentation {
 
             return result;
             }
-
-        /// <summary>
-        /// Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-        /// as a ClientCompleteDeferred packet.
-        /// </summary>
-        /// <param name="sourceId">The packet source.</param>
-        /// <param name="packet">The packet data</param>
-        /// <returns>The parsed packet.</returns>
-
-        public  PacketClientCompleteDeferred ParseClientCompleteDeferred (PortId sourceId, byte[] packet) {
-            var result = new PacketClientCompleteDeferred () {
-                SourcePortId = sourceId
-                };
-
-            // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet);
-            result.HostKeyId = outerReader.ReadString ();
-            result.ClientEphemeral = outerReader.ReadBinary ();
-            result.PlaintextExtensions = outerReader.ReadExtensions();
-            // Parsing the inner packet is deferred until plaintext is parsed.
-            result.Reader = outerReader;
-
-            return result;
-            }
+        // Skip Client packet ClientCompleteDeferred (initial packets parsed by the listener)
 
         /// <summary>
         /// Perform key exchanges and complete parsing of the packet
@@ -522,7 +501,7 @@ namespace Goedel.Protocol.Presentation {
             // Mezzanine
             var mezanineReader = outerReader.Decrypt (ClientKeyIn);
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
-            CredentialOther = CredentialSelf.GetCredentials(result.MezzanineExtensions);
+            CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);
             result.Payload = mezanineReader.ReadBinary();
             }
 
@@ -533,10 +512,10 @@ namespace Goedel.Protocol.Presentation {
             var outerReader = result.Reader;
             // Mezzanine
             var mezanineReader = outerReader.Decrypt (ClientKeyIn);
-            result.ClientKeyId = outerReader.ReadString ();
-            MutualKeyExchange (result.ClientKeyId);
+            result.ClientKeyId = mezanineReader.ReadString ();
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
             CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);
+            MutualKeyExchange (result.ClientKeyId);
             // Encrypted inside Mezzanine
             var innerReader = mezanineReader.Decrypt (MutualKeyIn);
             result.CiphertextExtensions = innerReader.ReadExtensions();
@@ -551,10 +530,10 @@ namespace Goedel.Protocol.Presentation {
             ClientKeyExchange (result.ClientEphemeral, result.HostKeyId);
             // Mezzanine
             var mezanineReader = outerReader.Decrypt (ClientKeyIn);
-            result.ClientKeyId = outerReader.ReadString ();
-            MutualKeyExchange (result.ClientKeyId);
+            result.ClientKeyId = mezanineReader.ReadString ();
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
             CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);
+            MutualKeyExchange (result.ClientKeyId);
             // Encrypted inside Mezzanine
             var innerReader = mezanineReader.Decrypt (MutualKeyIn);
             result.CiphertextExtensions = innerReader.ReadExtensions();
@@ -577,7 +556,6 @@ namespace Goedel.Protocol.Presentation {
             var result = new PacketClientInitial () {
                 SourcePortId = sourceId
                 };
-
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet);
             result.PlaintextExtensions = outerReader.ReadExtensions();
@@ -599,7 +577,29 @@ namespace Goedel.Protocol.Presentation {
             var result = new PacketClientExchange () {
                 SourcePortId = sourceId
                 };
+            // The plaintext part
+            var outerReader = new PacketReaderAesGcm(packet);
+            result.HostKeyId = outerReader.ReadString ();
+            result.ClientEphemeral = outerReader.ReadBinary ();
+            result.PlaintextExtensions = outerReader.ReadExtensions();
+            // Parsing the inner packet is deferred until plaintext is parsed.
+            result.Reader = outerReader;
 
+            return result;
+            }
+
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+        /// as a ClientCompleteDeferred packet.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data</param>
+        /// <returns>The parsed packet.</returns>
+
+        public static PacketClientCompleteDeferred ParseClientCompleteDeferred (PortId sourceId, byte[] packet) {
+            var result = new PacketClientCompleteDeferred () {
+                SourcePortId = sourceId
+                };
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet);
             result.HostKeyId = outerReader.ReadString ();

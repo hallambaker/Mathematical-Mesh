@@ -24,8 +24,13 @@ namespace Scratchpad {
     partial class Program {
         static void Main() {
 
-            GoedelProtocolService.Test().InitialImmediateTest();
+            //GoedelProtocolService.Test().InitialImmediateTest();
 
+            //GoedelProtocolService.Test().ClientImmediateTest();
+
+            //GoedelProtocolService.Test().InitialDeferredTest();
+
+            GoedelProtocolService.Test().ClientDeferredTest();
 
             //ShellTests.Test().TestArchive();
 

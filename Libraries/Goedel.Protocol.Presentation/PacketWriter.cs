@@ -252,13 +252,22 @@ namespace Goedel.Protocol.Presentation {
             // Set up the authentication span so it covers the start of the 
             // packet up to the tag.
             var authSpan = new Span<byte>(Packet, 0, Position);
+            Screen.WriteLine($"AuthSpan {0}  {Position}");
 
             var TagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
+            Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
+
             Position += Constants.SizeTagAesGcm;
+
 
             var length = pad ? Packet.Length - Position : Position;
             var ciphertextSpan = new Span<byte>(Packet, Position, length);
             var plaintextSpan = new ReadOnlySpan<byte>(writerIn.Packet, 0, length);
+
+
+            Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
+
+
 
             aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, TagSpan, authSpan);
             Position += length;

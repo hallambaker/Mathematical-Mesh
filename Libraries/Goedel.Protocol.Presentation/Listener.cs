@@ -117,6 +117,9 @@ namespace Goedel.Protocol.Presentation {
                     Packet packetRequest,
                     byte[] payload = null);
 
+
+
+
         /// <summary>
         /// Refuse an inbound connection.
         /// </summary>
