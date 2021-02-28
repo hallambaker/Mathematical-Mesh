@@ -85,7 +85,9 @@ namespace Goedel.Protocol {
         public virtual VerifiedAccount VerifiedAccount => !Authenticated ? null :
             new VerifiedAccount() { AccountAddress = AccountAddress };
 
-
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public JpcSession() {
             }
 
@@ -277,6 +279,7 @@ namespace Goedel.Protocol {
 
         WebClient webClient;
 
+        ///<inheritdoc/>
         protected override void Disposing() {
             webClient?.Dispose();
             }

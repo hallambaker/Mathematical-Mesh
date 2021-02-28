@@ -18,6 +18,7 @@ namespace Goedel.XUnit {
         public void TestRFC8032(TestVectorAsymmetric Test) => Test.Test();
 
         [Theory]
+        [InlineData(CryptoAlgorithmId.RSAExch)]
         [InlineData(CryptoAlgorithmId.DH)]
         [InlineData(CryptoAlgorithmId.Ed25519)]
         [InlineData(CryptoAlgorithmId.Ed448)]

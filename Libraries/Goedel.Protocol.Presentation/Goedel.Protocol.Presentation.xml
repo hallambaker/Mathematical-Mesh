@@ -202,6 +202,14 @@
         <member name="F:Goedel.Protocol.Presentation.ConnectionClient.clientState">
             <summary>The current state of this client.</summary> 
         </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionClient.Transact(System.Byte[])">
+            <summary>
+            Perform a request/response transation with request payload <paramref name="payload"/>
+            and return the result.
+            </summary>
+            <param name="payload">The binary payload</param>
+            <returns>The binar</returns>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionClient.SerializeClientInitial(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
             Create a serialised packet of type ClientInitial packet.
@@ -315,6 +323,18 @@
             Constructor for a connection host instance connected to <paramref name="listener"/>
             </summary>
             <param name="listener">The listener this connection is to service.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.Receive">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionHost.Reply(System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="payload"></param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionHost.SerializeHostExchange(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
@@ -558,8 +578,6 @@
             <paramref name="extensions"/> and return the private key and ephemeral
             chosen.
             </summary>
-            <param name="keyId">If specified, the first ephemeral in the list compatible
-            with the specified key will be used.</param> 
             <param name="extensions">List of extensions offering ephemeral keys to
             perform a key agreement against.</param>
             <returns>The private key and public key.</returns>
@@ -771,9 +789,9 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadBinarySpan">
             <summary>
-            Read a binary from the stream.
+            Read binary from the stream and return as a span.
             </summary>
-            <returns>A span describing the data that was read.</returns>
+            <returns>A span containing the data that was read.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadString">
             <summary>
@@ -781,11 +799,16 @@
             </summary>
             <returns>The data that was read.</returns>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadBinary">
+            <summary>
+            Read binary from the stream and return as a byte array.
+            </summary>
+            <returns>A byte array containing the data that was read.</returns>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadExtensions">
             <summary>
-            Read a list of extensions from <paramref name="reader"/>.
+            Read a list of extensions.
             </summary>
-            <param name="reader">Reader bound to the packet being read</param>
             <returns>>The list of extensions read.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.Decrypt(System.Byte[],System.Boolean)">
@@ -794,6 +817,7 @@
             nonce at the current position in the packet to provide the necessary keying material.
             </summary>
             <param name="ikm">The primary key.</param>
+            <param name="pad">If true the data is padded to consume the remainder of the data.</param>
             <returns>A reader for the decrypted data.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.Unwrap(System.Byte[],System.Byte[])">

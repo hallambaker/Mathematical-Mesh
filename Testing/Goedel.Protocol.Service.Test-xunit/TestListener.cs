@@ -275,7 +275,8 @@ namespace Goedel.XUnit {
 
             ephemeral = packetRequest switch {
                 PacketClientInitial => packetRequest.PlaintextExtensions[0].Value,
-                PacketClientExchange clientExchange => clientExchange.ClientEphemeral
+                PacketClientExchange clientExchange => clientExchange.ClientEphemeral,
+                _ => throw new NYI()
                 };
 
 

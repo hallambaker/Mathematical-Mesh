@@ -24,13 +24,17 @@ namespace Scratchpad {
     partial class Program {
         static void Main() {
 
+            //TestAsymmetric.Test().EncryptTest(CryptoAlgorithmId.RSAExch);
+
+            KeyFileTest.Test().TestWritePEMRSA();
+
             //GoedelProtocolService.Test().InitialImmediateTest();
 
             //GoedelProtocolService.Test().ClientImmediateTest();
 
             //GoedelProtocolService.Test().InitialDeferredTest();
 
-            GoedelProtocolService.Test().ClientDeferredTest();
+            //GoedelProtocolService.Test().ClientDeferredTest();
 
             //ShellTests.Test().TestArchive();
 

@@ -70,8 +70,6 @@ namespace Goedel.Protocol.Presentation {
         /// <paramref name="extensions"/> and return the private key and ephemeral
         /// chosen.
         /// </summary>
-        /// <param name="keyId">If specified, the first ephemeral in the list compatible
-        /// with the specified key will be used.</param> 
         /// <param name="extensions">List of extensions offering ephemeral keys to
         /// perform a key agreement against.</param>
 

@@ -9,7 +9,9 @@ using Goedel.Utilities;
 namespace Goedel.Protocol.Service {
 
 
-
+    /// <summary>
+    /// Monitor provider interface. Used by a provider to advertise availability of a monitor.
+    /// </summary>
     public interface IMonitorProvider {
 
         ///<summary>The monitor class to be exposed.</summary> 

@@ -4,6 +4,14 @@
         <name>Goedel.Mesh.Management</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Mesh.Management.ServiceManagementServiceProvider">
+            <summary>
+            Management service provider.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceProvider.Monitor">
+            <summary>The monitor being reported.</summary> 
+        </member>
         <member name="T:Goedel.Mesh.Management.MeshServiceManagementProtocol">
              <summary>
             

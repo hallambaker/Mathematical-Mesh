@@ -170,8 +170,11 @@ namespace Goedel.Cryptography {
             algorithmID.Keep();
             keySize = keySize == 0 ? 2048 : keySize;
 
-            var cspParameters = new CspParameters() { Flags = CspProviderFlags.CreateEphemeralKey };
-            var rsa = new RSACryptoServiceProvider(keySize, cspParameters);
+            //var cspParameters = new CspParameters() { Flags = CspProviderFlags.CreateEphemeralKey };
+            //var rsa = new RSACryptoServiceProvider(keySize, cspParameters);
+
+
+            var rsa = new RSACryptoServiceProvider(keySize);
             return new KeyPairRSA(rsa, keySecurity, keyUses);
             }
 
@@ -211,19 +214,23 @@ namespace Goedel.Cryptography {
         ///  <param name="keyPair">The key, (if found).</param>
         /// <returns>The located key (if found).</returns>
         public static bool Locate(string UDF, out KeyPair keyPair) {
-            var cspParameters = new CspParameters() {
-                Flags = CspProviderFlags.UseExistingKey,
-                KeyContainerName = UDF
-                };
-            try {
-                var rsa = new RSACryptoServiceProvider(cspParameters);
-                keyPair = new KeyPairRSA(rsa);
-                return true;
-                }
-            catch {
-                keyPair = null;
-                return false;
-                }
+            keyPair = null;
+            return false;
+            //"Get rid of the CSP stuff!".TaskFunctionality(true);
+
+            ////var cspParameters = new CspParameters() {
+            ////    Flags = CspProviderFlags.UseExistingKey,
+            ////    KeyContainerName = UDF
+            ////    };
+            //try {
+            //    var rsa = new RSACryptoServiceProvider();
+            //    keyPair = new KeyPairRSA(rsa);
+            //    return true;
+            //    }
+            //catch {
+            //    keyPair = null;
+            //    return false;
+            //    }
             }
 
         ///// <summary>

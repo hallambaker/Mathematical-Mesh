@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Goedel.ASN1.Test-xunit\Goedel.ASN1.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Dare.Test-xunit\Goedel.Cryptography.Dare.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Jose.Test-xunit\Goedel.Cryptography.Jose.Test-xunit.csproj" />
+    <ProjectReference Include="..\Goedel.Cryptography.Keyfile.Test-xunit\Goedel.Cryptography.Keyfile.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Test-xunit\Goedel.Cryptography.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Discovery.Test-xunit\Goedel.Discovery.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Protocol.Test-xunit\Goedel.Mesh.Protocol.Test-xunit.csproj" />

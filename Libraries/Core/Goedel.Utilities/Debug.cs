@@ -19,9 +19,14 @@ namespace Goedel.Utilities {
             if (caller == "TaskFunctionality") {
                 return;
                 }
+            if (arg == null || arg.Length == 0) {
+                Console.WriteLine(format);
+                }
+            else {
+                Console.WriteLine(format, arg);
+                }
 
-
-            Console.WriteLine(format, arg);
+           
 
 
             }

@@ -80,9 +80,9 @@ namespace Goedel.Protocol.Presentation {
             }
 
         /// <summary>
-        /// Read a binary from the stream.
+        /// Read binary from the stream and return as a span.
         /// </summary>
-        /// <returns>A span describing the data that was read.</returns>
+        /// <returns>A span containing the data that was read.</returns>
         public Span<byte> ReadBinarySpan() {
             var (packetTag, length) = ReadTag();
             (packetTag == PacketTag.Binary).AssertTrue(NYI.Throw);
@@ -99,14 +99,16 @@ namespace Goedel.Protocol.Presentation {
             return ReadSpan((int)length).ToArray().ToUTF8();
             }
 
-
+        /// <summary>
+        /// Read binary from the stream and return as a byte array.
+        /// </summary>
+        /// <returns>A byte array containing the data that was read.</returns>
         public byte[] ReadBinary() => ReadBinarySpan().ToArray();
 
 
         /// <summary>
-        /// Read a list of extensions from <paramref name="reader"/>.
+        /// Read a list of extensions.
         /// </summary>
-        /// <param name="reader">Reader bound to the packet being read</param>
         /// <returns>>The list of extensions read.</returns>
         public List<PacketExtension> ReadExtensions() {
             var (etag, count) = ReadTag();
@@ -130,6 +132,7 @@ namespace Goedel.Protocol.Presentation {
         /// nonce at the current position in the packet to provide the necessary keying material.
         /// </summary>
         /// <param name="ikm">The primary key.</param>
+        /// <param name="pad">If true the data is padded to consume the remainder of the data.</param>
         /// <returns>A reader for the decrypted data.</returns>
         public virtual PacketReader Decrypt(byte[] ikm, bool pad = true) => throw new NYI();
 

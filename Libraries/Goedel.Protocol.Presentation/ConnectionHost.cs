@@ -51,8 +51,16 @@ namespace Goedel.Protocol.Presentation {
             CredentialSelf = Listener?.CredentialSelf;
             }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public abstract Task<byte[]> Receive();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="payload"></param>
         public abstract void Reply(byte[] payload);
         }
 

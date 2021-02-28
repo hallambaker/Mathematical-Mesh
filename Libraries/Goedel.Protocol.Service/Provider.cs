@@ -12,6 +12,7 @@ namespace Goedel.Protocol.Service {
     /// </summary>
     public class Provider : Disposable {
 
+        ///<summary>The provider interface.</summary> 
         public JpcInterface JpcInterface { get; }
 
         ///<summary>The HTTP endpoints.</summary> 
@@ -24,6 +25,7 @@ namespace Goedel.Protocol.Service {
         /// Constructor, returns an instance servicing the endpoints <paramref name="endpoints"/>
         /// </summary>
         /// <param name="endpoints">The endpoints to be serviced.</param>
+        /// <param name="jpcProvider">The service provider.</param>
         public Provider(List<Endpoint> endpoints, JpcInterface jpcProvider) {
             JpcInterface = jpcProvider;
 

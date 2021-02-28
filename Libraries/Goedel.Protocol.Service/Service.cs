@@ -47,7 +47,6 @@ namespace Goedel.Protocol.Service {
         private int httpListenerCount = 1;
         private int ListenerCount => udpListenerCount + httpListenerCount;
 
-        Task nullTask;
         Task[] dispatchTasks;
         string[] dispatchTaskResource;
         bool[] dispatchTaskActive;
@@ -74,6 +73,13 @@ namespace Goedel.Protocol.Service {
 
         Dictionary<string, Provider> providerMap = new Dictionary<string, Provider>();
 
+        /// <summary>
+        /// Return a provider.
+        /// </summary>
+        /// <param name="domain">Domain to which the provider is bound.</param>
+        /// <param name="port">Port to which the provider is bound.</param>
+        /// <param name="resource">Protocol serviced.</param>
+        /// <returns>The provider.</returns>
         public Provider GetProvider(string domain, int port, string resource) {
 
             var test = $"http://+:{port}{resource}";

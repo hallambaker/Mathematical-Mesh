@@ -232,13 +232,6 @@ namespace Goedel.Utilities {
                 }
             }
 
-        public static void False(this bool condition, ThrowDelegate throwDelegate,
-                    params object[] args) {
-            if (condition) {
-                throw throwDelegate(args);
-                }
-            }
-
         /// <summary>Throw an exception if <paramref name="condition"/> is false. 
         /// (test, NYIException.Throw, "test was false").AssertTrue();
         /// </summary>

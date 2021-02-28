@@ -56,6 +56,7 @@ namespace Goedel.Mesh.Test {
                 var responseData = client.UploadData(uri, requestData);
                 }
             catch (Exception e) {
+                e.Future();
                 // deal with whatever issue here.
 
 
