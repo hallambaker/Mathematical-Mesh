@@ -1017,6 +1017,9 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionUser">
             <summary>The connection device</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAccount">
+            <summary>The connection device</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ActivationDevice">
             <summary>The device activation</summary>
         </member>
@@ -2353,17 +2356,52 @@
             assertion).
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.MeshCredential.Profile">
+            <summary>The profile to which this credential is bound</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.MeshCredential.Connection">
+            <summary>The connection binding the device presenting the credential to 
+            <see cref="P:Goedel.Mesh.Client.MeshCredential.Profile"/></summary> 
+        </member>
         <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor">
             <summary>
             Default constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor(Goedel.Mesh.CatalogedDevice,Goedel.Cryptography.IKeyLocate)">
+        <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor(System.Byte[])">
+            <summary>
+            Create a Mesh credential from public key data described in <paramref name="data"/>
+            </summary>
+            <param name="data">JSON-B encoded connection credential.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor(Goedel.Mesh.Client.ContextUser)">
             <summary>
             Create a credential for the device/profile <paramref name="catalogedDevice"/>.
             </summary>
-            <param name="catalogedDevice">The device catalog entry.</param>
+            <param name="contextUser">The user context used to construct this credential</param>
             <param name="keyLocate">The key locator to be used to obtain keys.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.AddCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.SelectKey(System.String,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.SelectKey">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Client.MeshHost">
             <summary>

@@ -126,9 +126,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="count">The number of bytes to be written to the current stream.</param>
         public override void Write(byte[] buffer,
             int offset,
-            int count) {
-            writer.Write(buffer, offset, count);
-            }
+            int count) => writer.Write(buffer, offset, count);
 
         /// <summary>
         ///     Closes the current stream, completes calculation of cryptographic values (MAC/Digest)
@@ -220,9 +218,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         ///     The class specific disposal routine.
         /// </summary>
-        protected virtual void Disposing() {
-            Close();
-            }
+        protected virtual void Disposing() => Close();
 
         /// <summary>
         ///     Destructor.

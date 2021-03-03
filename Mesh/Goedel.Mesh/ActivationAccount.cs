@@ -22,6 +22,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
+using Goedel.Protocol;
 
 using System.Collections.Generic;
 using System.Text;
@@ -248,8 +249,21 @@ namespace Goedel.Mesh {
 
             var connectionDevice = activationDevice.ConnectionUser;
             connectionDevice.AssertNotNull(Internal.Throw);
-            connectionDevice.Envelope(AdministratorSignatureKey);
+            connectionDevice.Envelope(AdministratorSignatureKey, objectEncoding: 
+                        ObjectEncoding.JSON_B);
             connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
+
+            var connectionAccount = new ConnectionAccount() {
+                Account = profileUser?.AccountAddress,
+                Subject = connectionDevice.Subject,
+                Authority = connectionDevice.Authority,
+                Authentication = connectionDevice.Authentication
+                };
+
+            connectionAccount.Strip();
+            connectionAccount.Envelope(AdministratorSignatureKey, objectEncoding:
+                        ObjectEncoding.JSON_B);
+            connectionAccount.DareEnvelope.Strip();
 
             // Wrap the connectionDevice and activationDevice in envelopes
 
@@ -257,7 +271,8 @@ namespace Goedel.Mesh {
                 //Udf = activationAccount.ProfileSignature.Udf,
                 EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
-                EnvelopedConnectionUser = connectionDevice.EnvelopedConnectionDevice,
+                EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice,
+                EnvelopedConnectionAccount = connectionAccount.EnvelopedConnectionAccount,
                 EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
                 EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
                 DeviceUdf = profileDevice.Udf
@@ -351,10 +366,8 @@ namespace Goedel.Mesh {
         /// <returns>The bound key pair.</returns>
         public static KeyPair DeviceBindSignature(
                     ProfileDevice profileDevice,
-                    IKeyCollection keyCollection) {
-            return KeyPair.FactorySignature(profileDevice.ProfileSignature.CryptoKey.CryptoAlgorithmId,
+                    IKeyCollection keyCollection) => KeyPair.FactorySignature(profileDevice.ProfileSignature.CryptoKey.CryptoAlgorithmId,
                             KeySecurity.ExportableStored, keyCollection);
-            }
 
 
         /// <summary>

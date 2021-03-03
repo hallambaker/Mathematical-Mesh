@@ -25,6 +25,21 @@ using Goedel.Utilities;
 using System.Text;
 
 namespace Goedel.Mesh {
+    public partial class ConnectionAccount {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ConnectionAccount> EnvelopedConnectionAccount =>
+            envelopedConnectionDevice ?? new Enveloped<ConnectionAccount>(DareEnvelope).
+                    CacheValue(out envelopedConnectionDevice);
+        Enveloped<ConnectionAccount> envelopedConnectionDevice;
+
+
+        public void Strip() {
+            if (Authentication != null) {
+                Authentication.Udf = null;
+                }
+            }
+
+        }
     public partial class ConnectionDevice {
 
         ///<summary>Typed enveloped data</summary> 
@@ -61,8 +76,8 @@ namespace Goedel.Mesh {
             //        builder.AppendIndent(indent, $"   KeysOnlineSignature: {online.UDF} ");
             //        }
             //    }
-            builder.AppendIndent(indent, $"KeyEncryption:       {DeviceEncryption.Udf} ");
-            builder.AppendIndent(indent, $"KeyAuthentication:   {DeviceAuthentication.Udf} ");
+            builder.AppendIndent(indent, $"KeyEncryption:       {Encryption.Udf} ");
+            builder.AppendIndent(indent, $"KeyAuthentication:   {Authentication.Udf} ");
 
             }
         }

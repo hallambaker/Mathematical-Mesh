@@ -167,12 +167,7 @@ namespace Goedel.Cryptography {
                 int bits = 0,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Ed448,
                 CryptoAlgorithmId algorithmDigest = CryptoAlgorithmId.SHA_2_512) :
-                    base (CreateKey (out var keyPair, keySecurity, bits, algorithmSign, algorithmDigest), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
-            SigningKey = keyPair;
-
-
-
-            }
+                    base(CreateKey(out var keyPair, keySecurity, bits, algorithmSign, algorithmDigest), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) => SigningKey = keyPair;
 
 
         static byte[] CreateKey(

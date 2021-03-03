@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System;
 
 using Xunit;
-
+#pragma warning disable IDE0060
 namespace Goedel.XUnit {
     public partial class TestContainers {
         static TestContainers() {

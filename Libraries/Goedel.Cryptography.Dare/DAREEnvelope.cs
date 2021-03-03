@@ -16,7 +16,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-        static Dictionary<string, JsonFactoryDelegate> thisTagDictionary =
+        static Dictionary<string, JsonFactoryDelegate> ThisTagDictionary =
             new Dictionary<string, JsonFactoryDelegate>()
                 {
                 {"DareEnvelope", Factory}
@@ -26,7 +26,7 @@ namespace Goedel.Cryptography.Dare {
         /// The module initializer. This is called during initialization of the module.
         /// </summary>
         [ModuleInitializer]
-        internal static void Initialize() => AddDictionary(ref thisTagDictionary);
+        internal static void Initialize() => AddDictionary(ref ThisTagDictionary);
 
         /// <summary>
         /// Tag identifying this class
@@ -246,8 +246,8 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
         public new void SerializeX(Writer writer,
-            bool wrap,
-            ref bool first) {
+                    bool wrap,
+                    ref bool first) {
             first = false;
             writer.WriteArrayStart();
             if (Header != null) {
@@ -699,6 +699,18 @@ namespace Goedel.Cryptography.Dare {
             //return true; // Hack: perform the actual check here and return a boolean.
             }
 
+
+
+        public void Strip() {
+            if (Trailer != null) {
+                Trailer.PayloadDigest = null;
+                }
+
+            if (Header != null) {
+                Header.ContentMeta= null;
+                Header.ContentMetaData = null;
+                }
+            }
         #endregion
         }
     }

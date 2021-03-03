@@ -13,20 +13,22 @@ using System.Threading.Tasks;
 
 using Xunit;
 namespace Goedel.XUnit {
-    public partial class GoedelProtocolService {
+    public partial class TestPresentationGeneric {
+
+
+
 
 
         [Fact]
         public void InitialImmediateTest() {
             var portID = new PortId();
-            var clientCredential = new TestCredential();
-            var hostCredential = new TestCredential();
+            var clientCredential = GetInitiatorCredential();
+            var hostCredential = GetResponderCredential();
 
             var payload1 = MakePayload();
             var payload2 = MakePayload();
             var payload3 = MakePayload();
-            var payload4 = MakePayload();
-            var payload5 = MakePayload();
+
 
             using var listenerHost = new TestListener(hostCredential);
 
@@ -54,26 +56,18 @@ namespace Goedel.XUnit {
             var clientCompletePacket = connectionHost.ParseClientComplete(portID, clientCompleteData);
             connectionHost.CompleteClientComplete(clientCompletePacket);
             clientCompletePacket.Payload.TestEqual(payload3);
-            //var hostData = connectionHost.SerializePacketData(payload4);
-            
 
-            //// Client: receive data 
-            //var hostDataPacket = connectionClient.ParsePacketData(portID, hostData);
-            //var clientData = connectionClient.SerializePacketData(payload5);
-            //hostDataPacket.Payload.TestEqual(payload4);
-
-            //// Host: back atcha
-            //var clientDataPacket = connectionHost.ParsePacketData(portID, hostData);
-            //clientDataPacket.Payload.TestEqual(payload5);
+            TestPacketData(connectionClient, connectionHost);
 
             }
+
 
 
         [Fact]
         public void InitialDeferredTest() {
             var portID = new PortId();
-            var clientCredential = new TestCredential();
-            var hostCredential = new TestCredential();
+            var clientCredential = GetInitiatorCredential();
+            var hostCredential = GetResponderCredential();
 
             var payload1 = MakePayload();
             var payload2 = MakePayload();
@@ -106,14 +100,18 @@ namespace Goedel.XUnit {
             //connectionHost.CompleteClientCompleteDeferred(clientCompletePacket);
             clientCompletePacket.Payload.TestEqual(payload3);
 
+
+            TestPacketData(connectionClient, connectionHost, false);
+            TestPacketData(connectionClient, connectionHost);
+
             }
 
 
         [Fact]
         public void ClientImmediateTest() {
             var portID = new PortId();
-            var clientCredential = new TestCredential();
-            var hostCredential = new TestCredential();
+            var clientCredential = GetInitiatorCredential();
+            var hostCredential = GetResponderCredential();
 
             var payload1 = MakePayload();
             var payload2 = MakePayload();
@@ -144,14 +142,16 @@ namespace Goedel.XUnit {
             // Client: complete the process
             var hostCompletePacket = connectionClient.ParseHostComplete(portID, hostCompleteData);
             hostCompletePacket.Payload.TestEqual(payload2);
+
+            TestPacketData(connectionClient, connectionHost);
             }
 
 
         [Fact]
         public void ClientDeferredTest() {
             var portID = new PortId();
-            var clientCredential = new TestCredential();
-            var hostCredential = new TestCredential();
+            var clientCredential = GetInitiatorCredential();
+            var hostCredential = GetResponderCredential();
 
             var payload1 = MakePayload();
             var payload2 = MakePayload();
@@ -185,8 +185,39 @@ namespace Goedel.XUnit {
             var clientCompletePacket = Listener.ParseClientCompleteDeferred(portID, ClientCompleteData);
             var connectionHost = listenerHost.GetConnectionHost(clientCompletePacket);
             clientCompletePacket.Payload.TestEqual(payload3);
+
+            TestPacketData(connectionClient, connectionHost);
             }
 
+        /// <summary>
+        /// Complete the test by sending and returning the client data.
+        /// </summary>
+        /// <param name="connectionClient"></param>
+        /// <param name="connectionHost"></param>
+        /// <param name="hostStart"></param>
+        void TestPacketData(
+                        SessionInitiator connectionClient,
+                        SessionResponder connectionHost,
+                        bool hostStart = true) {
+
+            var payload4 = MakePayload();
+            var payload5 = MakePayload();
+
+            if (hostStart) {
+                var hostData = connectionHost.SerializePacketData(payload4);
+                // Client: receive data 
+                var hostDataPacket = connectionClient.ParsePacketData(connectionHost.SourcePortId, hostData);
+                hostDataPacket.Payload.TestEqual(payload4);
+                }
+
+            var clientData = connectionClient.SerializePacketData(payload5);
+
+            // Host: back atcha
+            var clientDataPacket = connectionHost.ParsePacketData(connectionHost.SourcePortId, clientData);
+            clientDataPacket.Payload.TestEqual(payload5);
+
+
+            }
 
 
 

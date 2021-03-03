@@ -1,5 +1,6 @@
-﻿//   Copyright © 2015 by Comodo Group Inc.
-//  
+﻿//  Copyright © 2015 by Comodo Group Inc.
+//  Copyright © 2020 Threshold Secrets llc
+
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -197,8 +198,19 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
-        public virtual byte[] GetBytes(bool tag = true) {
-            var _JSONWriter = new JsonWriter();
+        public virtual byte[] GetBytes(bool tag = true,
+                    ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
+
+
+
+            var _JSONWriter = objectEncoding switch {
+                ObjectEncoding.JSON_B => new JsonBWriter(),
+
+                _ => new JsonWriter()
+                };
+
+
+                
             Serialize(_JSONWriter, tag);
             return _JSONWriter.GetBytes;
             }

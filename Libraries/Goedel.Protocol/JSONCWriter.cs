@@ -34,7 +34,7 @@ namespace Goedel.Protocol {
     /// JSON Writer for JSON-C, which extends the JSON-B format to add support 
     /// for compression.
     /// </summary>
-    public class JSONCWriter : JSONBWriter {
+    public class JSONCWriter : JsonBWriter {
 
         Dictionary<string, int> TagDictionary;
 

@@ -11,13 +11,13 @@ using Goedel.Mesh.Management;
 namespace Goedel.Mesh.Test {
     public class TestClient {
 
-        HttpEndpoint HttpEndpoint;
+        HttpEndpoint httpEndpoint;
         bool Created { get; set; } = false;
 
 
         public TestClient(string accountAddress, List<Endpoint> endpoints) {
 
-            HttpEndpoint = endpoints[0] as HttpEndpoint;
+            httpEndpoint = endpoints[0] as HttpEndpoint;
 
 
             var session = new WebRemoteSession(null, null, accountAddress);
@@ -48,7 +48,7 @@ namespace Goedel.Mesh.Test {
             client.Headers.Add(HttpRequestHeader.UserAgent, "MeshTestClient");
             client.Headers.Add(HttpRequestHeader.CacheControl, "no-store,no-transform");
             
-            var uri = HttpEndpoint.GetServiceUri();
+            var uri = httpEndpoint.GetServiceUri();
 
 
             Screen.WriteLine($"Connect to {uri}");

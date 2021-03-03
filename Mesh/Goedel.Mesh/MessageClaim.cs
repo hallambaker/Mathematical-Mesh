@@ -65,13 +65,8 @@ namespace Goedel.Mesh {
         public bool Verify(
                 string serviceAuthenticator,
                 string deviceAuthenticator,
-                int length = 100) {
-            return CatalogedPublication.Verify(Sender, deviceAuthenticator, DeviceAuthenticate, length) &&
-                CatalogedPublication.Verify(Sender, serviceAuthenticator, ServiceAuthenticate, length);
-            // Hack: should this raise an exception?
-
-
-            }
+                int length = 100) => CatalogedPublication.Verify(Sender, deviceAuthenticator, DeviceAuthenticate, length) &&
+                CatalogedPublication.Verify(Sender, serviceAuthenticator, ServiceAuthenticate, length);// Hack: should this raise an exception?
 
 
         }

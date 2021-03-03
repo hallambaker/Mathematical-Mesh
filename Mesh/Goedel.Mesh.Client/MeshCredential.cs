@@ -19,11 +19,19 @@
 //  THE SOFTWARE.
 //  
 //  
-using Goedel.Cryptography;
 using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
 
+using Goedel.Utilities;
+using Goedel.Protocol.Presentation;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
 
 namespace Goedel.Mesh.Client {
 
@@ -31,13 +39,31 @@ namespace Goedel.Mesh.Client {
     /// JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
     /// assertion).
     /// </summary>
-    public class MeshCredential  {
+    public class MeshCredential : Credential {
 
-        IKeyLocate KeyLocate { get; }
+        public const string CredentialTag = "MMM";
 
-        CatalogedDevice CatalogedDevice { get; }
+        //IKeyLocate KeyLocate { get; }
 
-        ConnectionDevice ConnectionDevice { get; }
+        //CatalogedDevice CatalogedDevice { get; }
+
+
+
+
+        ///<summary>The profile to which this credential is bound</summary> 
+        public Profile Profile { get; init;  }
+
+        ///<summary>The connection binding the device presenting the credential to 
+        ///<see cref="Profile"/></summary> 
+        public Connection Connection { get; init; }
+
+
+        public ContextUser ContextUser { get; init; }
+
+
+        KeyPairAdvanced AuthenticationPrivate => ContextUser.DeviceAuthentication as KeyPairAdvanced;
+
+        KeyPairAdvanced AuthenticationPublic => Connection.Authentication.GetKeyPair() as KeyPairAdvanced;
 
         /// <summary>
         /// Default constructor
@@ -45,33 +71,131 @@ namespace Goedel.Mesh.Client {
         public MeshCredential() {
             }
 
+        /// <summary>
+        /// Create a Mesh credential from public key data described in <paramref name="data"/>
+        /// </summary>
+        /// <param name="data">JSON-B encoded connection credential.</param>
+        public MeshCredential(byte[] data) {
+            var reader = new JsonReader(data);
+
+            var temp = data.ToUTF8();
+            Screen.WriteLine(temp);
+
+            var envelope = new DareEnvelope();
+            envelope.Deserialize(reader);
+
+
+            var enveloped = new Enveloped<Connection>(envelope);
+
+            //var temp2 = enveloped.Body.ToUTF8();
+            //Screen.WriteLine(temp2);
+
+            Connection = enveloped.Decode();
+
+
+            }
 
         /// <summary>
         /// Create a credential for the device/profile <paramref name="catalogedDevice"/>.
         /// </summary>
-        /// <param name="catalogedDevice">The device catalog entry.</param>
+        /// <param name="contextUser">The user context used to construct this credential</param>
         /// <param name="keyLocate">The key locator to be used to obtain keys.</param>
         public MeshCredential(
-                    CatalogedDevice catalogedDevice,
-                    IKeyLocate keyLocate)  {
-            CatalogedDevice = catalogedDevice;
-            ConnectionDevice = CatalogedDevice.EnvelopedConnectionUser.Decode();
+                    ContextUser contextUser)  {
+            //CatalogedDevice = catalogedDevice;
+            Connection = contextUser.ConnectionAccount;
 
-            KeyLocate = keyLocate;
+            ContextUser = contextUser;
+
+            //KeyLocate = keyLocate;
             }
 
-        /////<inheritdoc/>
-        //public override void AddCredentials(List<PacketExtension> extensions) => throw new System.NotImplementedException();
-        /////<inheritdoc/>
-        //public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) => throw new System.NotImplementedException();
+        ///<inheritdoc/>
+        public override void AddEphemerals(
+                    List<PacketExtension> extensions,
+                    ref List<KeyPairAdvanced> ephmeralsOffered) {
+            KeyPairAdvanced ephemeral;
 
-        /////<inheritdoc/>
-        //public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) => throw new System.NotImplementedException();
+            if (ephmeralsOffered != null) {
+                ephemeral = ephmeralsOffered[0];
+                Screen.WriteLine($"Re-Offer of = {ephemeral}");
 
-        /////<inheritdoc/>
-        //public override void AddEphemerals(List<PacketExtension> extensions) => throw new System.NotImplementedException();
+                }
+            else {
+                ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+                ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
+                Screen.WriteLine($"Make Offer of = {ephemeral}");
+                }
 
-        /////<inheritdoc/>
-        //public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId = null) => throw new System.NotImplementedException();
+            var extension = new PacketExtension() {
+                Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
+                Value = ephemeral.IKeyAdvancedPublic.Encoding
+                };
+
+
+            extensions.Add(extension);
+            }
+
+        ///<inheritdoc/>
+        public override void AddCredentials(
+                    List<PacketExtension> extensions) {
+            Screen.WriteLine($"Add credentials {Connection.DareEnvelope.GetJson().ToUTF8()}");
+            Screen.WriteLine($"Add credentials {Connection.GetJson().ToUTF8()}");
+
+            Screen.WriteLine($"Add credentials Length {Connection.GetJsonB().Length}");
+
+
+            extensions.Add(new PacketExtension() {
+                Tag = CredentialTag,
+                Value = Connection.DareEnvelope.GetJson(false)
+                }) ;
+            
+            
+            }
+        ///<inheritdoc/>
+
+        ///<inheritdoc/>
+        public override Credential GetCredentials(
+                    List<PacketExtension> extensions) {
+            foreach (var extension in extensions) {
+                if (extension.Tag == CredentialTag) {
+                    return new MeshCredential(extension.Value);
+                    }
+                }
+
+            throw new NYI();
+            }
+
+        ///<inheritdoc/>
+        public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
+                    List<PacketExtension> extensions) {
+            foreach (var extension in extensions) {
+                if (extension.Tag == "X448") {
+                    var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
+                    Screen.WriteLine($"Select = {ephemeral}");
+                    return (AuthenticationPrivate, ephemeral);
+                    }
+                }
+            throw new NYI();
+            }
+
+        ///<inheritdoc/>
+            public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
+                    string keyId, 
+                    byte[] ephemeral) =>
+                    (AuthenticationPrivate, new KeyPairX448(ephemeral, KeySecurity.Public));
+
+        ///<inheritdoc/>
+        public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey() {
+            var ephemeralKey = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+            
+
+            return (ephemeralKey, AuthenticationPublic);
+            }
+
+        ///<inheritdoc/>
+        public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
+                    List<KeyPairAdvanced> ephemerals, 
+                    string keyId) => (ephemerals[0], AuthenticationPublic);
         }
     }

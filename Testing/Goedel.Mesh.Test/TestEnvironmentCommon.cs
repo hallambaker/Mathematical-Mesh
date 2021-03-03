@@ -49,12 +49,12 @@ namespace Goedel.Mesh.Test {
             new PublicMeshService(ServiceName, ServiceDirectory).CacheValue (out meshService);
         PublicMeshService meshService;
 
-        Service Service;
+        Service service;
 
         public MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) {
 
             if (!JpcConnection.IsDirect()) {
-                Service ??= StartService();
+                service ??= StartService();
                 }
 
             JpcSession session = JpcConnection switch  {
@@ -107,6 +107,9 @@ namespace Goedel.Mesh.Test {
             Directory.CreateDirectory(Path);
             Directory.CreateDirectory(ServiceDirectory);
             }
+
+
+        public MeshMachineTest GetMeshMachine (string device) => new MeshMachineTest(this, device);
 
         public string MachinePath(string machineName) => System.IO.Path.Combine(Path, machineName);
 

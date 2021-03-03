@@ -38,9 +38,7 @@ namespace Goedel.Cryptography.Dare {
                 bool digest = true,
                 FileStatus fileStatus = FileStatus.Overwrite,
                 SequenceType containerType = SequenceType.Unknown) :
-                        this(new JbcdStream(fileName, fileStatus), archive, digest, containerType) {
-            Sequence.DisposeJBCDStream = Sequence.JbcdStream;
-            }
+                        this(new JbcdStream(fileName, fileStatus), archive, digest, containerType) => Sequence.DisposeJBCDStream = Sequence.JbcdStream;
 
 
         /// <summary>

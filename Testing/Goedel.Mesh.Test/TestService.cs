@@ -145,13 +145,9 @@ namespace Goedel.Mesh.Test {
 
         static int WorkTooSlow(TestClient client, int index) => WorkSuccess(client, index);
 
-        static int WorkBadFormat(TestClient client, int index) {
-            return WorkSuccess(client, index);
-            }
+        static int WorkBadFormat(TestClient client, int index) => WorkSuccess(client, index);
 
-        static int WorkUnauthorized(TestClient client, int index) {
-            return WorkSuccess(client, index);
-            }
+        static int WorkUnauthorized(TestClient client, int index) => WorkSuccess(client, index);
 
         }
     }

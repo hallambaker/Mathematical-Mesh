@@ -28,7 +28,9 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Base class for presentation connections.
     /// </summary>
-    public abstract class Connection : Disposable{
+    public abstract class Session : Disposable{
+
+        #region // Properties
 
         ///<summary>Symmetric key used to encrypt/decrypt mezzanine data sent by the client to 
         ///the host.</summary> 
@@ -72,8 +74,15 @@ namespace Goedel.Protocol.Presentation {
 
 
         List<KeyPairAdvanced> ephemeralsOffered;
+        #endregion
 
+        #region // Destructor
+        #endregion
 
+        #region // Constructors
+        #endregion
+
+        #region // Methods - Serialization
         /// <summary>
         /// Generate a set of ephemerals for the supported algorithms to offer for 
         /// key agreement and add to <paramref name="extensions"/>.
@@ -108,6 +117,48 @@ namespace Goedel.Protocol.Presentation {
                 List<PacketExtension> extensions) {
 
             }
+
+        #endregion
+        #region // Methods - PacketData Serializer/Deserializer
+
+        /// <summary>
+        /// Serialize and mutually encrypt a data packet.
+        /// </summary>
+        /// <param name="payload"></param>
+        /// <param name="ciphertextExtensions"></param>
+        public virtual byte[] SerializePacketData(
+                byte[] payload = null,
+                List<PacketExtension> ciphertextExtensions = null) {
+            using var writer = new PacketWriterAesGcm();
+            writer.WriteExtensions(ciphertextExtensions);
+            writer.Write(payload);
+
+            // encrypt the result and return.
+            return writer.Wrap(MutualKeyOut);
+            }
+
+        /// <summary>
+        /// Parse the data in <paramref name="packet"/> and return the resulting packet.
+        /// </summary>
+        /// <param name="sourceId">The data source.</param>
+        /// <param name="packet">The encrypted packet</param>
+        /// <returns>Packet specifying the decrypted payload and extensions (if specified).</returns>
+
+        public virtual Packet ParsePacketData(PortId sourceId, byte[] packet) {
+            var innerReader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet);
+
+            var result = new PacketData() {
+                SourcePortId = sourceId,
+                };
+
+            result.CiphertextExtensions = innerReader.ReadExtensions();
+            result.Payload = innerReader.ReadBinary();
+
+            return result;
+            }
+
+        #endregion
+        #region // Methods - Key Agreement
 
         KeyAgreementResult clientKeyAgreementResult;
         KeyAgreementResult mutualKeyAgreementResult;
@@ -248,6 +299,7 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
+        #endregion
 
         }
 

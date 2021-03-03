@@ -12,7 +12,8 @@ using System;
 
 using Xunit;
 
-#pragma warning disable IDE0059
+#pragma warning disable IDE0060
+#pragma warning disable IDE0051
 
 namespace Goedel.XUnit {
 

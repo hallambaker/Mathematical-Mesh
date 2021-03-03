@@ -28,10 +28,9 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void KeyShareTestDirectAll() {
+        public void KeyShareTestDirectAll() =>
             //TestAll(KeyShareTestDirect);
             TestAll(KeyShareTestCapability);
-            }
 
         static IKeyAdvancedPrivate Accumulate(params IKeyAdvancedPrivate[] keys) {
             var keyAccumulator = keys[0];

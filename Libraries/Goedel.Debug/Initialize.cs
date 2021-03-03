@@ -18,11 +18,9 @@ namespace Goedel.Cryptography.Test {
         /// </summary>
 
         [ModuleInitializer]
-        internal static void Initialize() {
+        internal static void Initialize() =>
             // Force initialization of dependent modules.
             Initialized = Goedel.Cryptography.Initialization.Initialized;
-
-            }
 
 
         }

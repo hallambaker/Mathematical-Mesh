@@ -208,11 +208,7 @@ namespace Goedel.Cryptography.Dare {
         /// Perform the steps necessary to 
         /// </summary>
         /// <param name="header"></param>
-        public virtual void SetKeyExchange(DareHeader header) {
-
-            header.Recipients = KeyExchange();
-
-            }
+        public virtual void SetKeyExchange(DareHeader header) => header.Recipients = KeyExchange();
 
 
         /// <summary>

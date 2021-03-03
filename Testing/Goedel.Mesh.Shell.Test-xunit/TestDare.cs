@@ -9,6 +9,8 @@ using Goedel.Cryptography.Dare;
 using System.Collections.Generic;
 using Xunit;
 
+#pragma warning disable IDE0060
+
 namespace Goedel.XUnit {
     public partial class ShellTests {
 
@@ -160,9 +162,7 @@ namespace Goedel.XUnit {
 
             (index ? original.IndexFrame > 0 : original.IndexFrame == 0).TestTrue();
 
-
-
-            string getItem (SortedDictionary<string, string> entries, int index) {
+            static string getItem (SortedDictionary<string, string> entries, int index) {
                 var count = 0;
                 foreach (var entry in entries) {
                     if (count++ == index) {

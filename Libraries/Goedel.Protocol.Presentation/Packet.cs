@@ -57,4 +57,14 @@ namespace Goedel.Protocol.Presentation {
 
         }
 
+    /// <summary>
+    /// Packet data exchanged after negotiation has been completed.
+    /// </summary>
+    public class PacketData : Packet {
+
+        ///<summary>Options specified in the packet ciphertext.</summary> 
+        public List<PacketExtension> CiphertextExtensions { get; set; }
+
+        }
+
     }

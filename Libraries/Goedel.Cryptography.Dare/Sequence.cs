@@ -1103,13 +1103,11 @@ namespace Goedel.Cryptography.Dare {
         static bool VerifyFinal(
                 Sequence sequence,
                 DarePolicy darePolicy,
-                SequenceFrameIndex frameIndex) {
+                SequenceFrameIndex frameIndex) =>
 
             // here perform policy checks on the very last frame.
 
-            return true;
-
-            }
+            true;
 
 
         static bool Verify(

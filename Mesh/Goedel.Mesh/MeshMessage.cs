@@ -74,16 +74,14 @@ namespace Goedel.Mesh {
 
 
 
-        /// <summary>
-        /// Encode the message using the signature key <paramref name="signingKey"/>.
-        /// </summary>
-        /// <param name="signingKey">The signature key.</param>
-        /// <param name="encryptionKey">The encryption key.</param>
-        /// <returns>The enveloped, signed message.</returns>
-        public override DareEnvelope Envelope(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
+        ///<inheritdoc/>
+        public override DareEnvelope Envelope(
+                    CryptoKey signingKey = null, 
+                    CryptoKey encryptionKey = null,
+                    ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
 
             MessageId ??= UDF.Nonce(); // Add a message ID unless one is already defined.
-            return base.Envelope(signingKey, encryptionKey);
+            return base.Envelope(signingKey, encryptionKey, objectEncoding);
             }
 
         /// <summary>
@@ -98,7 +96,7 @@ namespace Goedel.Mesh {
 
 
 
-        ///<summary>Returns the envelope ID corresponding to the MessageID</summary>
+        ///<inheritdoc/>
         public override string EnvelopeId => GetEnvelopeId(MessageId);
 
 
@@ -281,9 +279,7 @@ namespace Goedel.Mesh {
         /// <param name="pin">The pin code presented to the user.</param>
         /// <param name="action">The action to which the pin code is bound.</param>
         /// <returns>UDF presentation of the salted PIN.</returns>
-        public static string SaltPIN(string pin, string action) {
-            return UDF.SymmetricKeyMac(action.ToUTF8(), pin);
-            }
+        public static string SaltPIN(string pin, string action) => UDF.SymmetricKeyMac(action.ToUTF8(), pin);
 
 
         /// <summary>

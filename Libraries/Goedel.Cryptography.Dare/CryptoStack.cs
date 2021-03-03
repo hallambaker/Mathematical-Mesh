@@ -219,7 +219,7 @@ namespace Goedel.Cryptography.Dare {
                 out var transformMac, out var transformDigest);
 
             if (packagingFormat == PackagingFormat.EDS & extraSalt != null) {
-                JSONBWriter.WriteBinary(stream, extraSalt);
+                JsonBWriter.WriteBinary(stream, extraSalt);
                 }
 
 

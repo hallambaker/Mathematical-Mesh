@@ -31,21 +31,21 @@ namespace Goedel.Protocol {
     /// efficient encoding of binary data and strings and encoding of floating point
     /// values without loss of precision.
     /// </summary>
-    public class JSONBWriter : JsonWriter {
+    public class JsonBWriter : JsonWriter {
 
 
 
         /// <summary>
         /// Create a new JSON Writer.
         /// </summary>
-        public JSONBWriter() => Output = new MemoryStream();
+        public JsonBWriter() => Output = new MemoryStream();
 
         /// <summary>
         /// Create a new JSON Writer using the specified output buffer. If the buffer has
         /// an output stream defined, text will be written to the stream.
         /// </summary>
         /// <param name="Output">Output buffer</param> 
-        public JSONBWriter(MemoryStream Output) => this.Output = Output;
+        public JsonBWriter(MemoryStream Output) => this.Output = Output;
 
         /// <summary>
         /// Create a new JSON Writer using the specified output buffer. If the buffer has
@@ -54,7 +54,7 @@ namespace Goedel.Protocol {
         /// memory stream.
         /// </summary>
         /// <param name="Output">Output buffer</param> 
-        public JSONBWriter(Stream Output) => this.Output = Output;
+        public JsonBWriter(Stream Output) => this.Output = Output;
 
 
 

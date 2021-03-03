@@ -100,14 +100,6 @@
 
 
 
-	Structure Connection
-		Inherits Assertion
-		String SubjectUdf
-			Description
-				|UDF of the connection target.
-		String AuthorityUdf
-			Description
-				|UDF of the connection source.
 
 	Structure Activation
 		Inherits Assertion
@@ -226,13 +218,9 @@
 				|Key used to sign data under the account.
 
 	Structure ProfileHost
-		Inherits Profile
-		Struct KeyData KeyAuthentication
-			Description
-				|Key used to authenticate service connections.
-		Struct KeyData KeyEncryption
-			Description
-				|Key used to pass encrypted data to the device such as a
+		Inherits ProfileDevice
+		Description 
+			|Profile of a Mesh Host providing one or more Mesh Services.
 
 
 	Section 3 "Connection Assertions"
@@ -241,23 +229,43 @@
 			|interactions between devices and the service currently servicing
 			|the account. They SHOULD NOT be visible to external parties.
 
+
+	Structure Connection
+		Inherits Assertion
+		String Subject
+			Description
+				|UDF of the connection target.
+		String Authority
+			Description
+				|UDF of the connection source.
+		Struct KeyData Authentication
+			Description
+				|The authentication key for use of the device under the profile
+
+
+	Structure ConnectionAccount
+		Inherits Connection
+		Description
+			|Stripped down connection assertion
+		String Account
+			Description
+				|UDF of the connection target.
+
 	Structure ConnectionDevice
 		Inherits Connection
 		Description
 			|Connection assertion used to authenticate service requests made
 			|by a device.
-		String AccountAddress
+		String Account
 			Description
 				|The account address
-		Struct KeyData DeviceSignature
+		Struct KeyData Signature
 			Description
 				|The signature key for use of the device under the profile
-		Struct KeyData DeviceEncryption
+		Struct KeyData Encryption
 			Description
 				|The encryption key for use of the device under the profile
-		Struct KeyData DeviceAuthentication
-			Description
-				|The authentication key for use of the device under the profile
+
 
 	Structure ConnectionApplication
 		Inherits Connection
@@ -572,7 +580,11 @@
 		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile
-		Struct Enveloped<ConnectionDevice> EnvelopedConnectionUser
+		
+		Struct Enveloped<ConnectionAccount> EnvelopedConnectionAccount
+			Description
+				|Slim version of ConnectionDevice used by the presentation layer
+		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
 		Struct Enveloped<ActivationDevice> EnvelopedActivationDevice

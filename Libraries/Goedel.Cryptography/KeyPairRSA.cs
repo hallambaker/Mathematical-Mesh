@@ -214,6 +214,7 @@ namespace Goedel.Cryptography {
         ///  <param name="keyPair">The key, (if found).</param>
         /// <returns>The located key (if found).</returns>
         public static bool Locate(string UDF, out KeyPair keyPair) {
+            UDF.Future();
             keyPair = null;
             return false;
             //"Get rid of the CSP stuff!".TaskFunctionality(true);

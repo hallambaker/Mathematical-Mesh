@@ -103,13 +103,13 @@ namespace Goedel.Cryptography {
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryDHPublicKeyDelegate KeyPairPublicFactory = KeyPairDH.KeyPairPublicFactory;
+        public static FactoryDHPublicKeyDelegate KeyPairPublicFactory { get; set; }  = KeyPairDH.KeyPairPublicFactory;
 
         /// <summary>
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryDHPrivateKeyDelegate KeyPairPrivateFactory = KeyPairDH.KeyPairPrivateFactory;
+        public static FactoryDHPrivateKeyDelegate KeyPairPrivateFactory { get; set; } = KeyPairDH.KeyPairPrivateFactory;
 
         /// <summary>The supported key uses (e.g. signing, encryption)</summary>
         public override KeyUses KeyUses { get; } = KeyUses.Encrypt;

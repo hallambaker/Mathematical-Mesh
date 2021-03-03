@@ -55,7 +55,8 @@ namespace Goedel.Mesh {
     /// <typeparam name="T">The type of the wrapped data item.</typeparam>
     public partial class Enveloped<T> : DareEnvelope where T : MeshItem {
 
-        T EnvelopedObject => JsonObject as T;
+        ///<summary>The enveloped object cast to the generic type.</summary> 
+        public T EnvelopedObject => JsonObject as T;
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -110,7 +111,8 @@ namespace Goedel.Mesh {
                     T data,
                     CryptoKey signingKey = null,
                     CryptoKey encryptionKey = null,
-                    ContentMeta contentMeta = null) : base(
+                    ContentMeta contentMeta = null,
+                    ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(
                         new CryptoParameters(signer: signingKey, recipient: encryptionKey), 
                         data.GetBytes(), contentMeta: contentMeta) {
             }

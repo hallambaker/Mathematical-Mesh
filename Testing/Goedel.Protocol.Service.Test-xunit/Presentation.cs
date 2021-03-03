@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 using Xunit;
 namespace Goedel.XUnit {
-    public partial class GoedelProtocolService {
+    public partial class TestPresentationGeneric {
 
 
 

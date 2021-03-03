@@ -59,7 +59,7 @@ namespace Goedel.Mesh {
             var keyAuthenticate = SecretSeed.GenerateContributionKeyPair(
                     MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
 
-            KeyAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
+            BaseAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
             }
 
         /// <summary>

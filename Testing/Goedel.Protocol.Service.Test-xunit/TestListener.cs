@@ -37,7 +37,7 @@ namespace Goedel.XUnit {
     public class TestListener : Listener {
         #region // Properties
 
-        public static string ChallengeTag = "Challenge";
+        public const string ChallengeTag = "Challenge";
 
         #endregion
         #region // Constructors
@@ -51,7 +51,7 @@ namespace Goedel.XUnit {
         #region // Override Methods
 
         ///<inheritdoc/>
-        public override ConnectionHost Accept(
+        public override SessionResponder Accept(
                     Packet packetRequest,
                     byte[] payload = null) => new TestConnectionHost(this, packetRequest);
 
@@ -59,7 +59,7 @@ namespace Goedel.XUnit {
         public override void Challenge(Packet packetRequest, byte[] payload = null) => throw new NotImplementedException();
 
         ///<inheritdoc/>
-        public override ConnectionClient GetConnectionClient(PortId destinationId, byte[] payload = null, Credential hostCredential = null) => throw new NotImplementedException();
+        public override SessionInitiator GetConnectionClient(PortId destinationId, byte[] payload = null, Credential hostCredential = null) => throw new NotImplementedException();
 
         ///<inheritdoc/>
         public override void Reject(Packet packetRequest, byte[] payload = null) => throw new NotImplementedException();
@@ -67,9 +67,9 @@ namespace Goedel.XUnit {
 
         #region // Methods
 
-        Dictionary<string, ConnectionHost> PendingChallenges { get; }  = new();
+        Dictionary<string, SessionResponder> PendingChallenges { get; }  = new();
 
-        public ConnectionHost GetConnectionHost(Packet packetRequest) {
+        public SessionResponder GetConnectionHost(Packet packetRequest) {
 
             if (packetRequest is PacketClientCompleteDeferred packetClientCompleteDeferred) {
                 var challengeId = TestConnectionHost.GetChallenge(packetClientCompleteDeferred.PlaintextExtensions);
@@ -113,117 +113,12 @@ namespace Goedel.XUnit {
         }
 
 
-    public class TestCredential : Credential {
 
-        const string credentialTag = "TestCredential";
-
-        KeyPairAdvanced KeySign;
-        KeyPairAdvanced KeyExchange;
-
-        public TestCredential() {
-            KeySign = KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Device) as KeyPairAdvanced;
-            KeyExchange = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
-            }
-
-        public TestCredential(byte[] encodedCredential) {
-
-            KeyExchange = new KeyPairX448(encodedCredential, KeySecurity.Public);
-            }
-
-        ///<inheritdoc/>
-        public override void AddCredentials(List<PacketExtension> extensions) =>
-                extensions.Add(new PacketExtension() {
-                    Tag = credentialTag,
-                    Value = KeyExchange.IKeyAdvancedPublic.Encoding
-                    });
-
-
-
-        /// <summary>
-        /// Add an extension containing this credential to <paramref name="extensions"/>.
-        /// </summary>
-        /// <param name="extensions">List of extensions to add the credential to.</param>
-        public override  Credential GetCredentials(
-                    List<PacketExtension> extensions
-                    ) {
-            foreach (var extension in extensions) {
-                if (extension.Tag == credentialTag) {
-                    return new TestCredential(extension.Value);
-                    }
-                }
-            throw new NYI();
-
-            }
-
-
-        ///<inheritdoc/>
-        public override void AddEphemerals(List<PacketExtension> extensions, 
-                        ref List<KeyPairAdvanced> ephmeralsOffered) {
-
-            KeyPairAdvanced ephemeral;
-
-            if (ephmeralsOffered != null) {
-                ephemeral = ephmeralsOffered[0];
-                Screen.WriteLine($"Re-Offer of = {ephemeral}");
-
-                }
-            else {
-                ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
-                ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
-                Screen.WriteLine($"Make Offer of = {ephemeral}");
-                }
-
-            var extension = new PacketExtension() {
-                Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
-                Value = ephemeral.IKeyAdvancedPublic.Encoding
-                };
-
-
-            extensions.Add(extension);
-
-            }
-
-        ///<inheritdoc/>
-        public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
-            foreach (var extension in extensions) {
-                if (extension.Tag == "X448") {
-                    var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
-                    Screen.WriteLine($"Select = {ephemeral}");
-                    return (KeyExchange, ephemeral);
-                    }
-                }
-            throw new NYI();
-            }
-
-        ///<inheritdoc/>
-        public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) =>
-                    (KeyExchange, new KeyPairX448(ephemeral, KeySecurity.Public));
-
-        ///<inheritdoc/>
-        public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey() {
-
-
-            var ephemeralKey = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
-            return (ephemeralKey, KeyExchange);
-
-            }
-
-        public override (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
-                    List<KeyPairAdvanced> ephemerals,
-                    string keyId) {
-            return (ephemerals[0], KeyExchange);
-            }
-
-        }
-
-
-    public class TestConnectionClient : ConnectionClient {
+    public class TestConnectionClient : SessionInitiator {
 
         public TestConnectionClient(
                         Credential credential
-                        ) {
-            CredentialSelf = credential;
-            }
+                        ) => CredentialSelf = credential;
 
         /// <summary>
         /// Add a response value over the current state to <paramref name="extensions"/>
@@ -245,7 +140,7 @@ namespace Goedel.XUnit {
         }
 
 
-    public class TestConnectionHost : ConnectionHost {
+    public class TestConnectionHost : SessionResponder {
         public override Task<byte[]> Receive() => throw new NotImplementedException();
         public override void Reply(byte[] payload) => throw new NotImplementedException();
 
@@ -295,7 +190,7 @@ namespace Goedel.XUnit {
         public TestConnectionHost(
                 Listener listener,
                 Packet packetIn
-                ) : base(listener) {
+                ) : base(listener, packetIn.SourcePortId) {
             PacketIn = packetIn;
             if (packetIn is PacketClientExchange packetClientExchange) {
                 // We have accepted the connection, cause the client exchange to be performed.

@@ -5,6 +5,8 @@
 
 using System.IO;
 
+using Goedel.Utilities;
+
 namespace Goedel.Command {
     /// <summary>Base class for Command line parser types. This could do with
     /// some decrufting to remove implementation artifacts.</summary>
@@ -359,6 +361,7 @@ namespace Goedel.Command {
 
         ///<summary>Base constructor</summary>
         public _Enumeration(DescribeEntryEnumerate description, string value = null) {
+            value.Future();
             Description = description;
             }
 

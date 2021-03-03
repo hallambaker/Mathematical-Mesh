@@ -464,7 +464,7 @@ namespace Goedel.Cryptography.Dare {
 
             this.payloadLength = payloadLength;
             if (payloadLength >= 0 & packagingFormat != PackagingFormat.Direct) {
-                JSONBWriter.WriteTag(output, JSONBCD.DataTerm, payloadLength);
+                JsonBWriter.WriteTag(output, JSONBCD.DataTerm, payloadLength);
                 specifiedLength = true;
                 //Console.Write($"Written tag for {PayloadLength}");
                 }
@@ -522,7 +522,7 @@ namespace Goedel.Cryptography.Dare {
                 //Console.Write($"  Have {count} bytes to stream");
                 }
             else {
-                JSONBWriter.WriteTag(output, final ? JSONBCD.DataTerm : JSONBCD.DataChunk,
+                JsonBWriter.WriteTag(output, final ? JSONBCD.DataTerm : JSONBCD.DataChunk,
                     count);
                 output.Write(buffer, offset, count);
 
@@ -577,7 +577,7 @@ namespace Goedel.Cryptography.Dare {
                 MacValue = Mac?.Hash;
                 Mac?.Dispose();
                 if (packagingFormat == PackagingFormat.EDS) {
-                    JSONBWriter.WriteBinary(output, MacValue);
+                    JsonBWriter.WriteBinary(output, MacValue);
                     }
                 }
             }

@@ -168,7 +168,7 @@ namespace Goedel.Protocol.Presentation {
         ///<inheritdoc/>
         public override PacketReader Decrypt(byte[] key, bool pad = true) {
 
-            Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
+            //Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
             var aes = new AesGcm(key);
 
@@ -176,10 +176,10 @@ namespace Goedel.Protocol.Presentation {
             Position += Constants.SizeIvAesGcm;
 
             var authSpan = new Span<byte>(Packet, 0, Position);
-            Screen.WriteLine($"AuthSpan {0}  {Position}");
+            //Screen.WriteLine($"AuthSpan {0}  {Position}");
 
             var tagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
-            Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
+            //Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
 
             Position += Constants.SizeTagAesGcm;
 
@@ -189,7 +189,7 @@ namespace Goedel.Protocol.Presentation {
             var ciphertextSpan = new ReadOnlySpan<byte>(Packet, Position, length);
             var plaintextSpan = new Span<byte>(dataOut, 0, length);
 
-            Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
+            //Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
             aes.Decrypt(ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
 
             return new PacketReaderAesGcm(dataOut);
@@ -203,21 +203,26 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The data to decrypt</param>
         /// <returns>A reader for the decrypted data.</returns>
         public static new PacketReader Unwrap(byte[] key, byte[] packet) {
-            var iv = new byte[Constants.SizeNonceAesGcm];
-            Buffer.BlockCopy(packet, 0, iv, 0, Constants.SizeIvAesGcm);
-            var position = Constants.SizeNonceAesGcm;
 
-            //Constants.Derive2(ikm, nonce, out var iv, out var key);
+            Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
             var aes = new AesGcm(key);
-            var ivSpan = new ReadOnlySpan<byte>(iv);
+            var ivSpan = new ReadOnlySpan<byte>(packet, 0, Constants.SizeIvAesGcm);
+            var position = ivSpan.Length;
 
-            var tagSpan = new ReadOnlySpan<byte>(packet, position, Constants.SizeIvAesGcm);
-            position += Constants.SizeIvAesGcm;
+            Screen.WriteLine($"IvSpan {0}  {ivSpan.Length}");
+
+            var tagSpan = new ReadOnlySpan<byte>(packet, position, Constants.SizeTagAesGcm);
+            Screen.WriteLine($"position {position} {tagSpan.Length}");
+
+            position += tagSpan.Length;
 
             var length = packet.Length - position;
             var result = new byte[length];
             var ciphertextSpan = new ReadOnlySpan<byte>(packet, position, length);
+
+            Screen.WriteLine($"Ciphertext {position} {length}");
+
             var plaintextSpan = new Span<byte>(result, 0, length);
 
             aes.Decrypt(ivSpan, ciphertextSpan, tagSpan, plaintextSpan);

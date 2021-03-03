@@ -23,38 +23,33 @@ namespace Scratchpad {
 
     partial class Program {
         static void Main() {
-
+            Screen.WriteLine($"Start test  {DateTime.Now}");
             //TestAsymmetric.Test().EncryptTest(CryptoAlgorithmId.RSAExch);
 
-            KeyFileTest.Test().TestWritePEMRSA();
+            //KeyFileTest.Test().TestWritePEMRSA();
 
-            //GoedelProtocolService.Test().InitialImmediateTest();
 
-            //GoedelProtocolService.Test().ClientImmediateTest();
+            TestPresentationMesh.Test().InitialImmediateTest();
+            TestPresentationMesh.Test().ClientImmediateTest();
+            TestPresentationMesh.Test().InitialDeferredTest();
+            TestPresentationMesh.Test().ClientDeferredTest();
 
-            //GoedelProtocolService.Test().InitialDeferredTest();
-
-            //GoedelProtocolService.Test().ClientDeferredTest();
 
             //ShellTests.Test().TestArchive();
-
             //ServiceDiscovery.Test().TestDNSMultiple(10000);
-
             //ShellTests.Test().TestLog();
-
-
             //ShellTests.Test().TestHello();
             //ShellTestsHTTP.Test().TestHello();
-
             //GoedelProtocolService.Test().TestService();
             //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
             //TestService.Test().ProtocolHello();
 
 
+            // This is probably failing because the code is not properly marking messages as read.//Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
-            // This is probably failing because the code is not properly marking messages as read.
-            //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
             }
+
+
 
 
 

@@ -46,6 +46,10 @@ namespace Goedel.Mesh.Client {
         ///<summary>The connection device</summary>
         public ConnectionDevice ConnectionUser => CatalogedDevice?.ConnectionUser;
 
+
+        ///<summary>The connection device</summary>
+        public ConnectionAccount ConnectionAccount => CatalogedDevice?.ConnectionAccount;
+
         ///<summary>The device activation</summary>
         public ActivationDevice ActivationDevice { get; private set; }
 
@@ -64,10 +68,10 @@ namespace Goedel.Mesh.Client {
         public RespondConnection RespondConnection;
 
         // device key accessors
-        KeyPair DeviceDecrypt { get; }
-        KeyPair DeviceSignature => ActivationDevice.DeviceSignature;
-        KeyPair DeviceEncryption => ActivationDevice.DeviceEncryption;
-        KeyPair DeviceAuthentication => ActivationDevice.DeviceAuthentication;
+        public KeyPair DeviceDecrypt { get; }
+        public KeyPair DeviceSignature => ActivationDevice.DeviceSignature;
+        public KeyPair DeviceEncryption => ActivationDevice.DeviceEncryption;
+        public KeyPair DeviceAuthentication => ActivationDevice.DeviceAuthentication;
 
         
 
@@ -112,11 +116,11 @@ namespace Goedel.Mesh.Client {
 
 
             // Some validation checks
-            (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionUser.DeviceSignature.Udf,
+            (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionUser.Signature.Udf,
                     KeyActivationFailed.Throw);
-            (DeviceEncryption.KeyIdentifier).AssertEqual(ConnectionUser.DeviceEncryption.Udf,
+            (DeviceEncryption.KeyIdentifier).AssertEqual(ConnectionUser.Encryption.Udf,
                     KeyActivationFailed.Throw);
-            (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionUser.DeviceAuthentication.Udf,
+            (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionUser.Authentication.Udf,
                     KeyActivationFailed.Throw);
             }
 
@@ -738,9 +742,9 @@ namespace Goedel.Mesh.Client {
 
             // Create and sign the connection
             connectionDevice = new ConnectionDevice() {
-                DeviceSignature = profileDevice.BaseSignature,
-                DeviceEncryption = profileDevice.BaseEncryption,
-                DeviceAuthentication = profileDevice.BaseEncryption
+                Signature = profileDevice.BaseSignature,
+                Encryption = profileDevice.BaseEncryption,
+                Authentication = profileDevice.BaseEncryption
                 };
             connectionDevice.Envelope(KeyAdministratorSign);
 

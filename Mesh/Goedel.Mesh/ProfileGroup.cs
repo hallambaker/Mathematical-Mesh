@@ -43,11 +43,10 @@ namespace Goedel.Mesh {
         /// <param name="activationAccount">The activation used to create the account data.</param>
         public ProfileGroup(
                     string accountAddress,
-                    ActivationAccount activationAccount): base (accountAddress, activationAccount) {
+                    ActivationAccount activationAccount) : base(accountAddress, activationAccount) =>
 
             // Sign the profile
             Envelope(activationAccount.ProfileSignatureKey);
-            }
 
 
         }

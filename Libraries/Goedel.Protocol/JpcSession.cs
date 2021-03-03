@@ -130,7 +130,7 @@ namespace Goedel.Protocol {
     /// and for direct access to a service on the same machine.
     /// </summary>
     public partial class JpcSessionDirect : JpcSession {
-        JpcInterface JpcInterface;
+        JpcInterface jpcInterface;
 
         /// <summary>
         /// Create a direct session for the specified account.
@@ -139,7 +139,7 @@ namespace Goedel.Protocol {
         /// <param name="jpcInterface">The interfact to which the direct session is bound</param>
         public JpcSessionDirect(JpcInterface jpcInterface, string accountAddress) : base(accountAddress) {
             Authenticated = true;
-            JpcInterface = jpcInterface;
+            this.jpcInterface = jpcInterface;
             }
 
         /// <summary>
@@ -147,10 +147,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <typeparam name="T">The client type</typeparam>
         /// <returns>The client</returns>
-        public override T GetWebClient<T>()  {
-
-            return JpcInterface.GetDirect(this) as T;
-            }
+        public override T GetWebClient<T>() => jpcInterface.GetDirect(this) as T;
 
 
         }
@@ -280,9 +277,7 @@ namespace Goedel.Protocol {
         WebClient webClient;
 
         ///<inheritdoc/>
-        protected override void Disposing() {
-            webClient?.Dispose();
-            }
+        protected override void Disposing() => webClient?.Dispose();
 
 
         /// <summary>

@@ -11,9 +11,7 @@ namespace Goedel.XUnit {
     public partial class GoedelCryptography {
 
 
-        static GoedelCryptography() {
-            Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
-            }
+        static GoedelCryptography() => Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
 
 
         public static GoedelCryptography Test() => new GoedelCryptography();

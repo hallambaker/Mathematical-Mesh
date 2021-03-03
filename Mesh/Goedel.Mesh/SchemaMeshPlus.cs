@@ -44,11 +44,14 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="signingKey">Optional signature key.</param>
         /// <param name="encryptionKey">Optional encryption key.</param>
+        /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
         /// <returns>Envelope containing the signed profile. Also updates the property
         /// <see cref="DareEnvelope"/></returns>
         public virtual DareEnvelope Envelope(
                     CryptoKey signingKey = null,
-                    CryptoKey encryptionKey = null) {
+                    CryptoKey encryptionKey = null,
+                    ObjectEncoding objectEncoding = ObjectEncoding.JSON
+                    ) {
 
             var contentMeta = new ContentMeta() {
                 UniqueId = _PrimaryKey,

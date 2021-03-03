@@ -88,9 +88,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="contextuser"></param>
         /// <param name="activationAccount"></param>
         public ContextGroup(ContextUser contextuser, ActivationAccount activationAccount) :
-                    base (activationAccount) {
-            ContextUser = contextuser;
-            }
+                    base(activationAccount) => ContextUser = contextuser;
 
 
         /// <summary>

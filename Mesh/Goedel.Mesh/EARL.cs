@@ -45,10 +45,7 @@ namespace Goedel.Mesh {
                     string domain = null,
                     string outputDirectory = null,
                     string log = null,
-                    string recipient = null) {
-
-            throw new NYI();
-            }
+                    string recipient = null) => throw new NYI();
 
 
         }

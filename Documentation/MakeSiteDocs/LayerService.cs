@@ -24,10 +24,7 @@ namespace ExampleGenerator {
             set => CreateExamples.Secret1 = value;
             }
 
-        public ExampleSet(CreateExamples createExamples) {
-            CreateExamples = createExamples;
-
-            }
+        public ExampleSet(CreateExamples createExamples) => CreateExamples = createExamples;
         }
 
     public partial class CreateExamples {
@@ -52,13 +49,7 @@ namespace ExampleGenerator {
         public ShellSequence ShellSequence;
 
 
-        public void LayerService() {
-            DoCommandsService();
-
-            
-
-            //DoCommandsServicedAccount();
-            }
+        public void LayerService() => DoCommandsService();//DoCommandsServicedAccount();
 
 
         #region // Tests

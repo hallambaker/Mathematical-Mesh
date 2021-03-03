@@ -98,9 +98,9 @@ namespace Goedel.Mesh {
 
             // Create the (unsigned) ConnectionUser
             ConnectionUser = new ConnectionDevice() {
-                DeviceEncryption = new KeyData(deviceEncryption),
-                DeviceSignature = new KeyData(deviceSignature),
-                DeviceAuthentication = new KeyData(deviceAuthentication)
+                Encryption = new KeyData(deviceEncryption),
+                Signature = new KeyData(deviceSignature),
+                Authentication = new KeyData(deviceAuthentication)
                 };
             }
 

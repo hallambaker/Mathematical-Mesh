@@ -18,9 +18,7 @@ namespace ExampleGenerator {
         public bool GitHub = true;
         public string Preformat => GitHub ? "````" : "~~~~";
 
-        static CreateExamples() {
-            Initialization.Initialized.AssertTrue(Goedel.Utilities.NYI.Throw);
-            }
+        static CreateExamples() => Initialization.Initialized.AssertTrue(Goedel.Utilities.NYI.Throw);
 
         static void Main() {
             Screen.WriteLine("Make Document Set");

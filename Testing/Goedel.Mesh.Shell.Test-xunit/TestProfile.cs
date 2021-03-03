@@ -7,6 +7,8 @@ using System.Threading;
 using Xunit;
 
 #pragma warning disable IDE0059
+#pragma warning disable IDE0060
+
 namespace Goedel.XUnit {
     public partial class ShellTests {
         static string AliceAccount => "alice@example.com";
@@ -263,9 +265,7 @@ namespace Goedel.XUnit {
             CheckCanSuper(device2).TestTrue();
             }
 
-        static bool CheckCanSuper(Mesh.Test.TestCLI device2) {
-            return true;
-            }
+        static bool CheckCanSuper(Mesh.Test.TestCLI device2) => true;
 
 
         [Fact]
@@ -291,9 +291,7 @@ namespace Goedel.XUnit {
             CheckCanAdmin(device2).TestTrue();
             }
 
-        static bool CheckCanAdmin(Mesh.Test.TestCLI device2) {
-            return true;
-            }
+        static bool CheckCanAdmin(Mesh.Test.TestCLI device2) => true;
 
 
         [Fact]
@@ -319,9 +317,7 @@ namespace Goedel.XUnit {
             CheckCanMessage(device2).TestTrue();
             }
 
-        static bool CheckCanMessage(Mesh.Test.TestCLI device2) {
-            return true;
-            }
+        static bool CheckCanMessage(Mesh.Test.TestCLI device2) => true;
 
         [Fact]
         public void TestCreateWeb() {
@@ -346,9 +342,7 @@ namespace Goedel.XUnit {
             CheckCanWeb(device2).TestTrue();
             }
 
-        static bool CheckCanWeb(Mesh.Test.TestCLI device2) {
-            return true;
-            }
+        static bool CheckCanWeb(Mesh.Test.TestCLI device2) => true;
 
         [Fact]
         public void TestCreateDevice() {
@@ -373,9 +367,7 @@ namespace Goedel.XUnit {
             CheckCanDevice(device2).TestTrue();
             }
 
-        static bool CheckCanDevice(Mesh.Test.TestCLI device2) {
-            return true;
-            }
+        static bool CheckCanDevice(Mesh.Test.TestCLI device2) => true;
 
 
         bool TestAuthCreate(Mesh.Test.TestCLI device1, Mesh.Test.TestCLI device2, string auth) {

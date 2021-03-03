@@ -49,9 +49,7 @@ namespace Goedel.Protocol.Service {
         /// specified by <paramref name="listenerContext"/>.
         /// </summary>
         /// <param name="listenerContext">The HTTP request context.</param>
-        public ConnectionHttp(HttpListenerContext listenerContext) {
-            ListenerContext = listenerContext;
-            }
+        public ConnectionHttp(HttpListenerContext listenerContext) => ListenerContext = listenerContext;
 
         /// <summary>
         /// Process the connection, dispatch the request and return the result.
@@ -110,9 +108,7 @@ namespace Goedel.Protocol.Service {
         /// Constructor, process the request contained in <paramref name="result"/>.
         /// </summary>
         /// <param name="result">The UDP receive result</param>
-        public ConnectionUdp(UdpReceiveResult result) {
-            Buffer = result.Buffer;
-            }
+        public ConnectionUdp(UdpReceiveResult result) => Buffer = result.Buffer;
 
         /// <summary>
         /// Process the connection, dispatch the request and return the result.

@@ -58,9 +58,7 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Constructor, initialize the last challenge time to now.
         /// </summary>
-        public PortHistory() {
-            LastChallenge = DateTime.Now;
-            }
+        public PortHistory() => LastChallenge = DateTime.Now;
         }
 
 
@@ -77,9 +75,7 @@ namespace Goedel.Protocol.Presentation {
         /// Base constructor, populate the common properties.
         /// </summary>
         /// <param name="credentialSelf">The credential used by the listener.</param>
-        public Listener(Credential credentialSelf) {
-            CredentialSelf = credentialSelf;
-            }
+        public Listener(Credential credentialSelf) => CredentialSelf = credentialSelf;
 
         /// <summary>
         /// Request establishment of a client connection to the endpoint 
@@ -91,7 +87,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="hostCredential">The host credential. If not null, the payload 
         /// is sent encrypted under this credential.</param>
         /// <returns></returns>
-        public abstract ConnectionClient GetConnectionClient(
+        public abstract SessionInitiator GetConnectionClient(
                     PortId destinationId,
                     byte[] payload = null,
                     Credential hostCredential = null);
@@ -104,7 +100,7 @@ namespace Goedel.Protocol.Presentation {
         /// at minimum.</param>
         /// <returns>The host connection. This may be used to wait for inbound requests from the 
         /// connection.</returns>
-        public abstract ConnectionHost Accept(
+        public abstract SessionResponder Accept(
                     Packet packetRequest,
                     byte[] payload = null);
 

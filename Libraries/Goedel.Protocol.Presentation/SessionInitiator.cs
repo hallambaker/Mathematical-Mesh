@@ -44,7 +44,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Presentation client connection. Tracks the state of a client connection.
     /// </summary>
-    public abstract partial class ConnectionClient : Connection {
+    public abstract partial class SessionInitiator : Session {
         ///<inheritdoc/>
         public override byte[] ClientKeyIn => ClientKeyHostToClient;
         ///<inheritdoc/>

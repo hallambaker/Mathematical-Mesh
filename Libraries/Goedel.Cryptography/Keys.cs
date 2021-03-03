@@ -211,12 +211,10 @@ namespace Goedel.Cryptography {
         /// <param name="keyId">The key identifier to check.</param>
         /// <returns>True if keyId is sufficiently long and matches the leading characters of the
         /// key identifier.</returns>
-        public bool MatchKeyIdentifier(string keyId) {
+        public bool MatchKeyIdentifier(string keyId) =>
             // Hack: should do a proper check on shorter key ids.
-            
-            return keyId == KeyIdentifier;
 
-            }
+            keyId == KeyIdentifier;
 
 
         /// <summary>

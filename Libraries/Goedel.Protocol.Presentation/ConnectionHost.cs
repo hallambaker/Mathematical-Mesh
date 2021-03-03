@@ -24,7 +24,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Presentation host connection. Tracks the state of a host connection.
     /// </summary>
-    public abstract partial class ConnectionHost : Connection {
+    public abstract partial class SessionResponder : Session {
         ///<inheritdoc/> 
         public override byte[] ClientKeyIn => ClientKeyClientToHost;
         ///<inheritdoc/>
@@ -42,13 +42,19 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The listener this connection host services</summary> 
         public Listener Listener { get; }
 
+        ///<summary>The source port identifier.</summary> 
+        public PortId SourcePortId { get; }
+
+
         /// <summary>
         /// Constructor for a connection host instance connected to <paramref name="listener"/>
         /// </summary>
         /// <param name="listener">The listener this connection is to service.</param>
-        public ConnectionHost(Listener listener) {
+        /// <param name="portId">The source port on which this connection was received.</param>
+        public SessionResponder(Listener listener, PortId portId) {
             Listener = listener;
             CredentialSelf = Listener?.CredentialSelf;
+            SourcePortId = portId;
             }
 
         /// <summary>
@@ -62,6 +68,11 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="payload"></param>
         public abstract void Reply(byte[] payload);
+
+
+
+
+
         }
 
     }

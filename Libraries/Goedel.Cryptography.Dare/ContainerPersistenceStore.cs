@@ -160,7 +160,7 @@ namespace Goedel.Cryptography.Dare {
         public void FastReadContainer() {
             foreach (var frameIndex in Container) {
                 var contentMeta = frameIndex.Header.ContentMeta;
-                var containertInfo = frameIndex.Header.SequenceInfo;
+                //var containerInfo = frameIndex.Header.SequenceInfo;
 
                 var uniqueID = contentMeta.UniqueId;
 
@@ -539,7 +539,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="uniqueID">The unique identifier of the object instance to locate.</param>
         /// <returns>True if found, otherwise false.</returns>
         public IPersistenceEntry Get(string uniqueID) {
-            var found = ObjectIndex.TryGetValue(uniqueID, out var result);
+            ObjectIndex.TryGetValue(uniqueID, out var result);
             return result;
             }
 
@@ -548,7 +548,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="uniqueID">The unique identifier of the object instance to locate.</param>
         /// <returns>True if found, otherwise false.</returns>
-        public bool Contains(string uniqueID) => ObjectIndex.TryGetValue(uniqueID, out var result);
+        public bool Contains(string uniqueID) => ObjectIndex.TryGetValue(uniqueID, out var _);
 
         /// <summary>
         /// The last object instance that matches the specified key/value condition.

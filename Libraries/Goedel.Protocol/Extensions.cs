@@ -95,7 +95,7 @@ namespace Goedel.Protocol {
                     return new JSONAWriter(stream);
                     }
                 case DataEncoding.JSON_B: {
-                    return new JSONBWriter(stream);
+                    return new JsonBWriter(stream);
                     }
                 case DataEncoding.JSON_C: {
                     return new JSONCWriter(stream);
@@ -168,7 +168,7 @@ namespace Goedel.Protocol {
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
         public static byte[] GetJsonB(this JsonObject Object, bool Tagged = true) {
-            JsonWriter JSONWriter = new JSONBWriter();
+            JsonWriter JSONWriter = new JsonBWriter();
             Object.Serialize(JSONWriter, Tagged);
             return JSONWriter.GetBytes;
             }

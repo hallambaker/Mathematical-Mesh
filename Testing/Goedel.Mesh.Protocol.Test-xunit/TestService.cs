@@ -13,7 +13,7 @@ using Goedel.Mesh.Test;
 using Xunit;
 
 #pragma warning disable IDE0059
-
+#pragma warning disable IDE0060
 namespace Goedel.XUnit {
 
 
@@ -37,9 +37,7 @@ namespace Goedel.XUnit {
         // Encrypt: Encrypt connection request
         // Encrypt: Encrypt confirmation request
 
-        static TestService() {
-            Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
-            }
+        static TestService() => Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
 
 
         public static TestService Test() => new TestService();
@@ -674,9 +672,9 @@ namespace Goedel.XUnit {
             }
 
         public static bool Verify(ConnectionDevice first, ConnectionDevice second) {
-            (first.DeviceSignature.Udf == second.DeviceSignature.Udf).TestTrue();
-            (first.DeviceEncryption.Udf == second.DeviceEncryption.Udf).TestTrue();
-            (first.DeviceAuthentication.Udf == second.DeviceAuthentication.Udf).TestTrue();
+            (first.Signature.Udf == second.Signature.Udf).TestTrue();
+            (first.Encryption.Udf == second.Encryption.Udf).TestTrue();
+            (first.Authentication.Udf == second.Authentication.Udf).TestTrue();
             return true;
             }
 

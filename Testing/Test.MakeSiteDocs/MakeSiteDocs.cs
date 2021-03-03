@@ -92,7 +92,7 @@ namespace Goedel.XUnit {
             ServiceConnect();
             CreateAliceAccount();
             EncodeDecodeFile();
-            ConnectDeviceCompare(out var deviceId);
+            ConnectDeviceCompare(out _);
 
 
 

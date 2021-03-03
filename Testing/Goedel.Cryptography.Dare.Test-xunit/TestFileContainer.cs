@@ -38,7 +38,7 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestFileContainer16() {
-            byte[] bytes = new byte[0];
+            byte[] bytes = Array.Empty<Byte>();
 
             var policy = TestEnvironmentCommon.MakePolicy();
             ReadWriteContainer("TestFilePlaintext_0", bytes, policy);
@@ -76,7 +76,7 @@ namespace Goedel.XUnit {
         public void TestFileContainerEncrypted16() {
             var policy = TestEnvironmentCommon.MakePolicy(encryptId: CryptoAlgorithmId.X448);
 
-            byte[] bytes = new byte[0];
+            byte[] bytes = Array.Empty<Byte>();
             ReadWriteContainer("TestFileEncrypted_0", bytes, policy);
 
             int length = 1;
@@ -165,7 +165,7 @@ namespace Goedel.XUnit {
                     DarePolicy policy = null, bool independent = false) {
 
             var policyNill = policy == null ? "_null" : "";
-            policy = policy ?? TestEnvironmentCommon.MakePolicy();
+            policy ??= TestEnvironmentCommon.MakePolicy();
 
             var testData = new byte[entries][];
             for (var i = 0; i < entries; i++) {
