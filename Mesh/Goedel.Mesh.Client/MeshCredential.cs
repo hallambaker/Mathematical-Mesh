@@ -76,10 +76,10 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="data">JSON-B encoded connection credential.</param>
         public MeshCredential(byte[] data) {
-            var reader = new JsonReader(data);
+            var reader = new JsonBcdReader(data);
 
-            var temp = data.ToUTF8();
-            Screen.WriteLine(temp);
+            //var temp = data.ToUTF8();
+            //Screen.WriteLine(temp);
 
             var envelope = new DareEnvelope();
             envelope.Deserialize(reader);
@@ -135,13 +135,13 @@ namespace Goedel.Mesh.Client {
 
             if (ephmeralsOffered != null) {
                 ephemeral = ephmeralsOffered[0];
-                Screen.WriteLine($"Re-Offer of = {ephemeral}");
+                //Screen.WriteLine($"Re-Offer of = {ephemeral}");
 
                 }
             else {
                 ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
                 ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
-                Screen.WriteLine($"Make Offer of = {ephemeral}");
+                //Screen.WriteLine($"Make Offer of = {ephemeral}");
                 }
 
             var extension = new PacketExtension() {
@@ -160,13 +160,13 @@ namespace Goedel.Mesh.Client {
             //Screen.WriteLine($"Add credentials {Connection.GetJson().ToUTF8()}");
 
             //Screen.WriteLine($"Add credentials Length {Connection.GetJsonB().Length}");
-            var value = Connection.DareEnvelope.GetJson(false);
+            var value = Connection.DareEnvelope.GetJsonB(false);
 
             extensions.Add(new PacketExtension() {
                 Tag = CredentialTag,
                 Value = value
                 }) ;
-            Screen.WriteLine($"  Packed {value.Length}");
+            //Screen.WriteLine($"  Packed {value.Length}");
 
             }
         ///<inheritdoc/>

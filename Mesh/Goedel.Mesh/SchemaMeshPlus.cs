@@ -114,7 +114,10 @@ namespace Goedel.Mesh {
             var plaintext = envelope.GetPlaintext(keyCollection);
 
             //Console.WriteLine(plaintext.ToUTF8());
-            var result = FromJson(plaintext.JsonReader(), true);
+
+            var reader = new JsonBcdReader(plaintext);
+
+            var result = FromJson(reader, true);
             result.DareEnvelope = envelope;
             result.KeyCollection = keyCollection;
             return result;

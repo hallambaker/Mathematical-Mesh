@@ -114,7 +114,7 @@ namespace Goedel.Mesh {
                     ContentMeta contentMeta = null,
                     ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(
                         new CryptoParameters(signer: signingKey, recipient: encryptionKey), 
-                        data.GetBytes(), contentMeta: contentMeta) {
+                        data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
             }
 
         /// <summary>
