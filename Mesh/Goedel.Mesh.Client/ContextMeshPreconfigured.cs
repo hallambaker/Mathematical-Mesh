@@ -141,12 +141,12 @@ namespace Goedel.Mesh.Client {
             var profileDeviceRecovered = devicePreconfiguration.EnvelopedProfileDevice.Decode();
             profileDeviceRecovered.Validate();
             (profileDeviceRecovered.Udf == profileDevice.Udf).AssertTrue(InvalidProfile.Throw);
-            (profileDeviceRecovered.BaseAuthentication.Udf == 
-                    profileDevice.BaseAuthentication.Udf).AssertTrue(InvalidProfile.Throw);
-            (profileDeviceRecovered.BaseEncryption.Udf ==
-                    profileDevice.BaseEncryption.Udf).AssertTrue(InvalidProfile.Throw);
-            (profileDeviceRecovered.BaseSignature.Udf ==
-                    profileDevice.BaseSignature.Udf).AssertTrue(InvalidProfile.Throw);
+            (profileDeviceRecovered.Authentication.Udf == 
+                    profileDevice.Authentication.Udf).AssertTrue(InvalidProfile.Throw);
+            (profileDeviceRecovered.Encryption.Udf ==
+                    profileDevice.Encryption.Udf).AssertTrue(InvalidProfile.Throw);
+            (profileDeviceRecovered.Signature.Udf ==
+                    profileDevice.Signature.Udf).AssertTrue(InvalidProfile.Throw);
 
 
             // Persist the seed to the platform protected key store.

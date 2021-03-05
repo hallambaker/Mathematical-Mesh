@@ -22,7 +22,10 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
+using Goedel.Protocol;
 
+
+using System.Collections.Generic;
 namespace Goedel.Mesh {
     public partial class ProfileService {
 
@@ -36,6 +39,9 @@ namespace Goedel.Mesh {
         Enveloped<ProfileService> envelopedProfileService;
 
 
+        KeyPair KeySignature { get; }
+        KeyPair KeyEncryption { get; }
+        
 
         /// <summary>
         /// Blank constructor for use by deserializers.
@@ -103,6 +109,9 @@ namespace Goedel.Mesh {
         /// <param name="keySign">The offline signature key.</param>
         /// <param name="keyEncrypt">The service encryption key.</param>
         public ProfileService(KeyPair keySign, KeyPair keyEncrypt) {
+            KeySignature = keySign;
+            KeyEncryption = keyEncrypt;
+
             ProfileSignature = new KeyData(keySign.KeyPairPublic());
             ServiceEncryption = new KeyData(keyEncrypt.KeyPairPublic());
             }
@@ -135,15 +144,9 @@ namespace Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Create a host under this service.
-        /// </summary>
-        /// <param name="meshMachine">The machine.</param>
-        /// <param name="algorithmSign">The signature algorithm.</param>
-        /// <returns>The host profile.</returns>
-        public static ProfileHost CreateHost(IMeshMachine meshMachine,
-                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) => 
-                        ProfileHost.Generate(algorithmSign);
+        public void Sign(Connection connection, ObjectEncoding objectEncoding) =>
+            connection.Envelope(KeySignature, objectEncoding:
+                        objectEncoding);
 
         }
 

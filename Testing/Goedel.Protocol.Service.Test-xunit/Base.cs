@@ -59,21 +59,19 @@ namespace Goedel.XUnit {
         public PublicMeshService MeshService { get; }
 
         // we have to set the connection up!
-        public Connection ConnectionResponder => throw new NYI();
+        //public Connection ConnectionResponder => throw new NYI();
 
-        public ProfileHost ProfileResponder => MeshService.ProfileHost;
+        //public ProfileHost ProfileResponder => MeshService.ProfileHost;
 
-
-        public ProfileHost ProfileHost => null;
 
         public Enveloped<ProfileService> ServiceProfile { get; }
         public Enveloped<ConnectionHost> ServiceConnection { get; }
 
         public MeshCredential InitiatorCredential { get; }
 
-
+        public MeshCredential ResponderCredential { get; }
         public override Credential GetInitiatorCredential() => InitiatorCredential;
-        public override Credential GetResponderCredential() => new TestCredential();
+        public override Credential GetResponderCredential() => ResponderCredential;
 
 
         public static TestPresentationGeneric Test() => new TestPresentationMesh();
@@ -99,7 +97,9 @@ namespace Goedel.XUnit {
 
             // create the client credential
             InitiatorCredential = new MeshCredentialTraced(ContextInitiator);
-
+            ResponderCredential = new MeshCredentialTraced(
+                testEnvironmentCommon.MeshService.ConnectionAccount,
+                testEnvironmentCommon.MeshService.ActivationDevice.DeviceAuthentication);
 
             }
 

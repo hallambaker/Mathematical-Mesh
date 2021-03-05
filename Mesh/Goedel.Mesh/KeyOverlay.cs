@@ -108,9 +108,14 @@ namespace Goedel.Mesh {
                     MeshActor actor,
                     MeshKeyOperation operation,
                     IKeyCollection keyCollection = null,
-                    KeySecurity keySecurity = KeySecurity.Ephemeral) =>
-            new KeyData(GenerateContributionKeyPair(secretSeed, type, actor, operation,
+                    KeySecurity keySecurity = KeySecurity.Ephemeral) {
+
+            //Screen.WriteLine($"{type}={actor}-{operation}::{secretSeed}");
+
+
+            return new KeyData(GenerateContributionKeyPair(secretSeed, type, actor, operation,
                 keyCollection, keySecurity));
+            }
 
         /// <summary>
         /// Derive a base private key of type <paramref name="type"/> for the
@@ -135,6 +140,8 @@ namespace Goedel.Mesh {
                 MeshKeyOperation operation,
                 IKeyCollection keyCollection = null,
                 KeySecurity keySecurity = KeySecurity.Ephemeral) {
+            //Screen.WriteLine($"{type}=={actor}-{operation}::{secretSeed}");
+
 
             var keyName = type.ToLabel() + actor.ToLabel() + operation.ToLabel();
             var keyUses = GetMeshKeyType(operation);
@@ -181,8 +188,11 @@ namespace Goedel.Mesh {
                 MeshActor actor,
                 MeshKeyOperation operation) {
 
+            //Screen.WriteLine($"{MeshKeyType.Base}==={actor}-{operation}::{activationSeed.PrivateValue}");
+
             var baseKey = baseSeed.GenerateContributionKeyPair(
                 MeshKeyType.Base, actor, operation) as KeyPairAdvanced;
+
             return activationSeed.ActivatePrivate(baseKey, actor, operation);
             }
 

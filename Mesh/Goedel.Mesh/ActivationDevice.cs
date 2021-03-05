@@ -27,6 +27,35 @@ using Goedel.Utilities;
 using System.Text;
 
 namespace Goedel.Mesh {
+
+
+    public partial class ActivationHost : ActivationDevice {
+        public override MeshActor MeshActor => MeshActor.Host;
+
+
+        /// <summary>
+        /// Construct a new <see cref="ActivationDevice"/> instance for the profile
+        /// <paramref name="profileDevice"/>.
+        /// If the value <paramref name="masterSecret"/> is
+        /// specified, it is used as the seed value. Otherwise, a seed value of
+        /// length <paramref name="bits"/> is generated.
+        /// The public key value is calculated for the public key pairs and the corresponding
+        /// <see cref="ConnectionUser"/> generated for the public values.
+        /// </summary>
+        /// <param name="profileDevice">The base profile that the activation activates.</param>
+        /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
+        /// a seed value of <paramref name="bits"/> length is generated.</param>
+        /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
+        /// is null.</param>
+        public ActivationHost(
+                    ProfileHost profileDevice,
+                    byte[] masterSecret = null,
+                    int bits = 256) : base(profileDevice, masterSecret, bits) {
+            }
+
+
+        }
+
     public partial class ActivationDevice {
 
         ///<summary>Typed enveloped data</summary> 
@@ -54,6 +83,8 @@ namespace Goedel.Mesh {
         ///<summary>The device authentication key for use under the profile</summary>
         public KeyPair DeviceAuthentication { get; private set; }
 
+
+        public virtual MeshActor MeshActor => MeshActor.Device;
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -87,14 +118,14 @@ namespace Goedel.Mesh {
 
 
             var deviceEncryption = ActivationSeed.ActivatePublic(
-                    profileDevice.BaseEncryption.GetKeyPairAdvanced(), 
-                            MeshActor.Device, MeshKeyOperation.Encrypt);
+                    profileDevice.Encryption.GetKeyPairAdvanced(), 
+                            MeshActor, MeshKeyOperation.Encrypt);
             var deviceSignature = ActivationSeed.ActivatePublic(
-                    profileDevice.BaseSignature.GetKeyPairAdvanced(), 
-                            MeshActor.Device, MeshKeyOperation.Sign);
+                    profileDevice.Signature.GetKeyPairAdvanced(), 
+                            MeshActor, MeshKeyOperation.Sign);
             var deviceAuthentication = ActivationSeed.ActivatePublic(
-                    profileDevice.BaseAuthentication.GetKeyPairAdvanced(), 
-                            MeshActor.Device, MeshKeyOperation.Authenticate);
+                    profileDevice.Authentication.GetKeyPairAdvanced(), 
+                            MeshActor, MeshKeyOperation.Authenticate);
 
             // Create the (unsigned) ConnectionUser
             ConnectionUser = new ConnectionDevice() {
@@ -114,11 +145,11 @@ namespace Goedel.Mesh {
                 PrivateKeyUDF deviceKeySeed) {
             ActivationSeed = new PrivateKeyUDF(ActivationKey);
             DeviceEncryption = ActivationSeed.ActivatePrivate(
-                deviceKeySeed, MeshActor.Device, MeshKeyOperation.Encrypt);
+                deviceKeySeed, MeshActor, MeshKeyOperation.Encrypt);
             DeviceSignature = ActivationSeed.ActivatePrivate(
-                deviceKeySeed, MeshActor.Device, MeshKeyOperation.Sign);
+                deviceKeySeed, MeshActor, MeshKeyOperation.Sign);
             DeviceAuthentication = ActivationSeed.ActivatePrivate(
-                deviceKeySeed, MeshActor.Device, MeshKeyOperation.Authenticate);
+                deviceKeySeed, MeshActor, MeshKeyOperation.Authenticate);
 
             }
 

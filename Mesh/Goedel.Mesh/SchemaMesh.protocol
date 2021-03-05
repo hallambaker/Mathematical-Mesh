@@ -148,19 +148,20 @@
 		String Description
 			Description
 				|Description of the device
-		Struct KeyData BaseEncryption
+		Struct KeyData Encryption
 			Description
 				|Base key contribution for encryption keys. 
 				|Also used to decrypt activation data sent to the device
 				|during connection to an account.
-		Struct KeyData BaseAuthentication
+		Struct KeyData Signature
+			Description
+				|Base key contribution for signature keys. 
+		Struct KeyData Authentication
 			Description
 				|Base key contribution for authentication keys. 
 				|Also used to authenticate the device
 				|during connection to an account.
-		Struct KeyData BaseSignature
-			Description
-				|Base key contribution for signature keys. 
+
 
 	Structure ProfileAccount
 		Description

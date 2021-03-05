@@ -156,6 +156,10 @@ namespace Goedel.Test.Core {
                     }
 
                 if (extension.Tag == MeshCredential.CredentialTag) {
+
+                    //var valueString = extension.Value.ToUTF8();
+
+
                     return new MeshCredential(extension.Value);
                     }
 
@@ -170,6 +174,10 @@ namespace Goedel.Test.Core {
             ContextUser contextUser) : base(contextUser) {
             }
 
+
+        public MeshCredentialTraced(Connection connection,
+                    KeyPair authenticationPrivate) : base(connection, authenticationPrivate) {
+            }
 
         public MeshCredentialTraced(
             string accountAddress, List<Trace> meshProtocolMessages

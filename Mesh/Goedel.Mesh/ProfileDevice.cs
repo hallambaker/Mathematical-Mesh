@@ -60,11 +60,11 @@ namespace Goedel.Mesh {
         /// Generate profile specific keys.
         /// </summary>
         protected override void Generate() {
-            BaseSignature = SecretSeed.GenerateContributionKeyData(
-                    MeshKeyType, MeshActor, MeshKeyOperation.Sign);
-            BaseEncryption = SecretSeed.GenerateContributionKeyData(
+            Encryption = SecretSeed.GenerateContributionKeyData(
                     MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
-            BaseAuthentication = SecretSeed.GenerateContributionKeyData(
+            Signature = SecretSeed.GenerateContributionKeyData(
+                    MeshKeyType, MeshActor, MeshKeyOperation.Sign);
+            Authentication = SecretSeed.GenerateContributionKeyData(
                     MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
             }
 
@@ -107,9 +107,9 @@ namespace Goedel.Mesh {
         /// <returns></returns>
         public override void Validate() {
             base.Validate();
-            BaseSignature.GetKeyPair().PublicOnly.AssertTrue(InvalidProfile.Throw);
-            BaseEncryption.GetKeyPair().PublicOnly.AssertTrue(InvalidProfile.Throw);
-            BaseAuthentication.GetKeyPair().PublicOnly.AssertTrue(InvalidProfile.Throw);
+            Signature.GetKeyPair().PublicOnly.AssertTrue(InvalidProfile.Throw);
+            Encryption.GetKeyPair().PublicOnly.AssertTrue(InvalidProfile.Throw);
+            Authentication.GetKeyPair().PublicOnly.AssertTrue(InvalidProfile.Throw);
             }
 
 
@@ -143,9 +143,9 @@ namespace Goedel.Mesh {
             indent++;
             builder.AppendIndent(indent, $"ProfileSignature: {ProfileSignature.Udf} ");
 
-            builder.AppendIndent(indent, $"KeySignature:        {BaseSignature.Udf} ");
-            builder.AppendIndent(indent, $"KeyEncryption:       {BaseEncryption.Udf} ");
-            builder.AppendIndent(indent, $"KeyAuthentication:   {BaseAuthentication.Udf} ");
+            builder.AppendIndent(indent, $"KeySignature:        {Signature.Udf} ");
+            builder.AppendIndent(indent, $"KeyEncryption:       {Encryption.Udf} ");
+            builder.AppendIndent(indent, $"KeyAuthentication:   {Authentication.Udf} ");
 
             }
         }

@@ -383,6 +383,22 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.ActivationHost.#ctor(Goedel.Mesh.ProfileHost,System.Byte[],System.Int32)">
+            <summary>
+            Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
+            <paramref name="profileDevice"/>.
+            If the value <paramref name="masterSecret"/> is
+            specified, it is used as the seed value. Otherwise, a seed value of
+            length <paramref name="bits"/> is generated.
+            The public key value is calculated for the public key pairs and the corresponding
+            <see cref="!:ConnectionUser"/> generated for the public values.
+            </summary>
+            <param name="profileDevice">The base profile that the activation activates.</param>
+            <param name="masterSecret">If not null, specifies the seed value. Otherwise,
+            a seed value of <paramref name="bits"/> length is generated.</param>
+            <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
+            is null.</param>
+        </member>
         <member name="T:Goedel.Mesh.ActivationDevice">
              <summary>
             
@@ -7004,23 +7020,23 @@
             Description of the device
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ProfileDevice.BaseEncryption">
+        <member name="P:Goedel.Mesh.ProfileDevice.Encryption">
              <summary>
             Base key contribution for encryption keys. 
             Also used to decrypt activation data sent to the device
             during connection to an account.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ProfileDevice.BaseAuthentication">
+        <member name="P:Goedel.Mesh.ProfileDevice.Signature">
+             <summary>
+            Base key contribution for signature keys. 
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileDevice.Authentication">
              <summary>
             Base key contribution for authentication keys. 
             Also used to authenticate the device
             during connection to an account.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ProfileDevice.BaseSignature">
-             <summary>
-            Base key contribution for signature keys. 
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileDevice._Tag">
@@ -7168,11 +7184,6 @@
             </summary>
             <param name="secretSeed">The secret seed value.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileHost.Generate">
-            <summary>
-            Generate profile specific keys.
-            </summary>
-        </member>
         <member name="M:Goedel.Mesh.ProfileHost.Generate(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32,Goedel.Cryptography.Jose.PrivateKeyUDF)">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
@@ -7184,6 +7195,14 @@
             <param name="algorithmAuthenticate">The signature algorithm</param>
             <param name="bits">The size of key to generate in bits/</param>
             <returns>The created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileHost.CreateHost(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Create a host under this service.
+            </summary>
+            <param name="meshMachine">The machine.</param>
+            <param name="algorithmSign">The signature algorithm.</param>
+            <returns>The host profile.</returns>
         </member>
         <member name="P:Goedel.Mesh.ProfileHost._Tag">
             <summary>
@@ -7297,14 +7316,6 @@
             <param name="algorithmSign">The signature algorithm.</param>
             <param name="algorithmEncrypt">The encryption algorithm.</param>
             <returns>The service profile.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ProfileService.CreateHost(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Create a host under this service.
-            </summary>
-            <param name="meshMachine">The machine.</param>
-            <param name="algorithmSign">The signature algorithm.</param>
-            <returns>The host profile.</returns>
         </member>
         <member name="P:Goedel.Mesh.ProfileService.ServiceAuthentication">
              <summary>

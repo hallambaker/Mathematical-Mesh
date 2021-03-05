@@ -136,7 +136,7 @@ namespace Goedel.Mesh.Client {
                 accountAddress, pin);
 
             meshHost.KeyCollection.LocatePrivateKeyPair(
-                            profileDevice.BaseAuthentication.Udf, out var keyAuthentication);
+                            profileDevice.Authentication.Udf, out var keyAuthentication);
 
             requestConnection.Envelope(keyAuthentication);
 

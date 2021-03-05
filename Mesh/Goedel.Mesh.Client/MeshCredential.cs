@@ -61,7 +61,7 @@ namespace Goedel.Mesh.Client {
         public ContextUser ContextUser { get; init; }
 
 
-        KeyPairAdvanced AuthenticationPrivate => ContextUser.DeviceAuthentication as KeyPairAdvanced;
+        KeyPairAdvanced AuthenticationPrivate { get; init; }
 
         KeyPairAdvanced AuthenticationPublic => Connection.Authentication.GetKeyPair() as KeyPairAdvanced;
 
@@ -103,12 +103,29 @@ namespace Goedel.Mesh.Client {
         public MeshCredential(
                     ContextUser contextUser)  {
             //CatalogedDevice = catalogedDevice;
-            Connection = contextUser.ConnectionAccount;
-
             ContextUser = contextUser;
+            Connection = contextUser.ConnectionAccount;
+            AuthenticationPrivate = contextUser.DeviceAuthentication as KeyPairAdvanced;
+
 
             //KeyLocate = keyLocate;
             }
+
+
+        /// <summary>
+        /// Create a credential for the device/profile <paramref name="catalogedDevice"/>.
+        /// </summary>
+        /// <param name="contextUser">The user context used to construct this credential</param>
+        /// <param name="keyLocate">The key locator to be used to obtain keys.</param>
+        public MeshCredential(
+            Connection connection,
+                    KeyPair authenticationPrivate) {
+            Connection = connection;
+            AuthenticationPrivate = authenticationPrivate as KeyPairAdvanced;
+
+            }
+
+
 
         ///<inheritdoc/>
         public override void AddEphemerals(
@@ -139,18 +156,18 @@ namespace Goedel.Mesh.Client {
         ///<inheritdoc/>
         public override void AddCredentials(
                     List<PacketExtension> extensions) {
-            Screen.WriteLine($"Add credentials {Connection.DareEnvelope.GetJson().ToUTF8()}");
-            Screen.WriteLine($"Add credentials {Connection.GetJson().ToUTF8()}");
+            //Screen.WriteLine($"Add credentials {Connection.DareEnvelope.GetJson().ToUTF8()}");
+            //Screen.WriteLine($"Add credentials {Connection.GetJson().ToUTF8()}");
 
-            Screen.WriteLine($"Add credentials Length {Connection.GetJsonB().Length}");
-
+            //Screen.WriteLine($"Add credentials Length {Connection.GetJsonB().Length}");
+            var value = Connection.DareEnvelope.GetJson(false);
 
             extensions.Add(new PacketExtension() {
                 Tag = CredentialTag,
-                Value = Connection.DareEnvelope.GetJson(false)
+                Value = value
                 }) ;
-            
-            
+            Screen.WriteLine($"  Packed {value.Length}");
+
             }
         ///<inheritdoc/>
 

@@ -52,15 +52,15 @@ namespace Goedel.Mesh {
                     PrivateKeyUDF secretSeed): base(secretSeed) {
             }
 
-        /// <summary>
-        /// Generate profile specific keys.
-        /// </summary>
-        protected override void Generate() {
-            var keyAuthenticate = SecretSeed.GenerateContributionKeyPair(
-                    MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
+        ///// <summary>
+        ///// Generate profile specific keys.
+        ///// </summary>
+        //protected override void Generate() {
+        //    var keyAuthenticate = SecretSeed.GenerateContributionKeyPair(
+        //            MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
 
-            BaseAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
-            }
+        //    BaseAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
+        //    }
 
         /// <summary>
         /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
@@ -72,7 +72,7 @@ namespace Goedel.Mesh {
         /// <param name="algorithmAuthenticate">The signature algorithm</param>
         /// <param name="bits">The size of key to generate in bits/</param>
         /// <returns>The created profile.</returns>
-        public static ProfileHost Generate(
+        public static new ProfileHost Generate(
                     CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                     CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
@@ -84,6 +84,14 @@ namespace Goedel.Mesh {
             return new ProfileHost(secretSeed);
             }
 
-
+        /// <summary>
+        /// Create a host under this service.
+        /// </summary>
+        /// <param name="meshMachine">The machine.</param>
+        /// <param name="algorithmSign">The signature algorithm.</param>
+        /// <returns>The host profile.</returns>
+        public static ProfileHost CreateHost(IMeshMachine meshMachine,
+                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) =>
+                        Generate(algorithmSign);
         }
     }

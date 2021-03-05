@@ -61,7 +61,8 @@ namespace Goedel.Mesh {
                 };
 
             DareEnvelope = new Enveloped<MeshItem>(this,
-                        signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta);
+                        signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
+                        objectEncoding: objectEncoding);
             DareEnvelope.Header.EnvelopeId = EnvelopeId;
 
             return DareEnvelope;

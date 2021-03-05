@@ -43,6 +43,10 @@ namespace Goedel.Mesh.Server {
         ///<summary>The profile describing the host</summary>
         public ProfileHost ProfileHost;
 
+        public ActivationDevice ActivationDevice { get; }
+
+        public ConnectionAccount ConnectionAccount { get; }
+
         /// <summary>
         /// The mesh persistence provider.
         /// </summary>
@@ -64,7 +68,44 @@ namespace Goedel.Mesh.Server {
 
             // Dummy profiles for the service and host at this point
             ProfileService = ProfileService.Generate(meshMachine);
-            ProfileHost = ProfileService.CreateHost(meshMachine);
+
+            // here we need to generate the activation record for the host and the connection for that record
+
+
+
+            ProfileHost = ProfileHost.CreateHost(meshMachine);
+
+
+            // create an activation record and a connection record.
+
+            ActivationDevice = new ActivationHost(ProfileHost);
+
+
+            //Screen.WriteLine($"$$$$ Seed {ActivationDevice.ActivationSeed}");
+            //Screen.WriteLine($"$$$$ Suth {ActivationDevice.ConnectionUser.Authentication.Udf}");
+            // activate
+            ActivationDevice.Activate(ProfileHost.SecretSeed);
+
+            //Screen.WriteLine($"$$$$ Suth {ActivationDevice.DeviceAuthentication}");
+
+
+
+            var connectionDevice = ActivationDevice.Connection;
+
+            // Sign the connection and connection slim
+
+            ConnectionAccount = new ConnectionAccount() {
+                Account = "@example",
+                Subject = connectionDevice.Subject,
+                Authority = connectionDevice.Authority,
+                Authentication = connectionDevice.Authentication
+                };
+
+            ConnectionAccount.Strip();
+
+            ProfileService.Sign(ConnectionAccount, ObjectEncoding.JSON_B);
+
+            ConnectionAccount.DareEnvelope.Strip();
             }
 
 

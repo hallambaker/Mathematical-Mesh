@@ -238,7 +238,7 @@ namespace Goedel.Mesh {
 
             // encrypt the activationAccount under the base encryption key.
             activationDevice.AssertNotNull(Internal.Throw);
-            activationDevice.Envelope(AdministratorSignatureKey, profileDevice.BaseEncryption.CryptoKey);
+            activationDevice.Envelope(AdministratorSignatureKey, profileDevice.Encryption.CryptoKey);
             activationDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
             // encrypt the activationAccount under the device encryption key.

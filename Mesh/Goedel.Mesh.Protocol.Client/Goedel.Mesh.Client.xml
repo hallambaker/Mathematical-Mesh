@@ -2381,6 +2381,13 @@
             <param name="contextUser">The user context used to construct this credential</param>
             <param name="keyLocate">The key locator to be used to obtain keys.</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor(Goedel.Mesh.Connection,Goedel.Cryptography.KeyPair)">
+            <summary>
+            Create a credential for the device/profile <paramref name="catalogedDevice"/>.
+            </summary>
+            <param name="contextUser">The user context used to construct this credential</param>
+            <param name="keyLocate">The key locator to be used to obtain keys.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.MeshCredential.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
             <inheritdoc/>
         </member>

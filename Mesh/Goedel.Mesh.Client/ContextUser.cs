@@ -742,9 +742,9 @@ namespace Goedel.Mesh.Client {
 
             // Create and sign the connection
             connectionDevice = new ConnectionDevice() {
-                Signature = profileDevice.BaseSignature,
-                Encryption = profileDevice.BaseEncryption,
-                Authentication = profileDevice.BaseEncryption
+                Signature = profileDevice.Signature,
+                Encryption = profileDevice.Encryption,
+                Authentication = profileDevice.Encryption
                 };
             connectionDevice.Envelope(KeyAdministratorSign);
 
@@ -780,7 +780,7 @@ namespace Goedel.Mesh.Client {
 
             // Decode the Profile Device
             var profileDevice = ProfileDevice.Decode(envelopedProfileDevice);
-            var deviceEncrypt = profileDevice.BaseEncryption.GetKeyPair();
+            var deviceEncrypt = profileDevice.Encryption.GetKeyPair();
 
             // Approve the request
             // Have to add in the Mesh profile here and Account Assertion
@@ -1009,7 +1009,7 @@ namespace Goedel.Mesh.Client {
                 respondConnection.Result = MeshConstants.TransactionResultReject;
                 }
 
-            var deviceEncrypt = request.MessageConnectionRequest.ProfileDevice.BaseEncryption.GetKeyPair();
+            var deviceEncrypt = request.MessageConnectionRequest.ProfileDevice.Encryption.GetKeyPair();
 
             transactRequest.InboundComplete(MessageStatus.Closed, request, respondConnection);
             transactRequest.LocalMessage(respondConnection, deviceEncrypt);

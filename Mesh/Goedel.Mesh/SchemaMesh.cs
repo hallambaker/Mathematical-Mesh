@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 3/3/2021 5:34:26 PM
+//  This file was automatically generated at 3/5/2021 4:44:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1206,19 +1206,19 @@ namespace Goedel.Mesh {
         ///during connection to an account.
         /// </summary>
 
-		public virtual KeyData						BaseEncryption  {get; set;}
+		public virtual KeyData						Encryption  {get; set;}
+        /// <summary>
+        ///Base key contribution for signature keys. 
+        /// </summary>
+
+		public virtual KeyData						Signature  {get; set;}
         /// <summary>
         ///Base key contribution for authentication keys. 
         ///Also used to authenticate the device
         ///during connection to an account.
         /// </summary>
 
-		public virtual KeyData						BaseAuthentication  {get; set;}
-        /// <summary>
-        ///Base key contribution for signature keys. 
-        /// </summary>
-
-		public virtual KeyData						BaseSignature  {get; set;}
+		public virtual KeyData						Authentication  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1268,20 +1268,20 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Description", 1);
 					_writer.WriteString (Description);
 				}
-			if (BaseEncryption != null) {
+			if (Encryption != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("BaseEncryption", 1);
-					BaseEncryption.Serialize (_writer, false);
+				_writer.WriteToken ("Encryption", 1);
+					Encryption.Serialize (_writer, false);
 				}
-			if (BaseAuthentication != null) {
+			if (Signature != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("BaseAuthentication", 1);
-					BaseAuthentication.Serialize (_writer, false);
+				_writer.WriteToken ("Signature", 1);
+					Signature.Serialize (_writer, false);
 				}
-			if (BaseSignature != null) {
+			if (Authentication != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("BaseSignature", 1);
-					BaseSignature.Serialize (_writer, false);
+				_writer.WriteToken ("Authentication", 1);
+					Authentication.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -1320,24 +1320,24 @@ namespace Goedel.Mesh {
 					Description = jsonReader.ReadString ();
 					break;
 					}
-				case "BaseEncryption" : {
+				case "Encryption" : {
 					// An untagged structure
-					BaseEncryption = new KeyData ();
-					BaseEncryption.Deserialize (jsonReader);
+					Encryption = new KeyData ();
+					Encryption.Deserialize (jsonReader);
  
 					break;
 					}
-				case "BaseAuthentication" : {
+				case "Signature" : {
 					// An untagged structure
-					BaseAuthentication = new KeyData ();
-					BaseAuthentication.Deserialize (jsonReader);
+					Signature = new KeyData ();
+					Signature.Deserialize (jsonReader);
  
 					break;
 					}
-				case "BaseSignature" : {
+				case "Authentication" : {
 					// An untagged structure
-					BaseSignature = new KeyData ();
-					BaseSignature.Deserialize (jsonReader);
+					Authentication = new KeyData ();
+					Authentication.Deserialize (jsonReader);
  
 					break;
 					}
