@@ -1,10 +1,12 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.Mesh;
 using System;
 using System.Collections.Generic;
 using System.IO;
+
 
 namespace Goedel.Mesh.Client {
 

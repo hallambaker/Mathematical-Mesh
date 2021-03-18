@@ -1,6 +1,6 @@
 ﻿using Goedel.Mesh.Client;
 using Goedel.Utilities;
-
+using Goedel.Cryptography.Dare;
 using System.Text;
 
 namespace Goedel.Mesh.Shell {

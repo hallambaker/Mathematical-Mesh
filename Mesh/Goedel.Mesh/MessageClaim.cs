@@ -20,6 +20,7 @@
 
 using Goedel.Cryptography;
 using Goedel.Utilities;
+using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh {
     public partial class MessageClaim {

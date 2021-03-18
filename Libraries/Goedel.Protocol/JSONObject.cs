@@ -73,6 +73,12 @@ namespace Goedel.Protocol {
         /// </summary>
         public virtual string _PrimaryKey => null;
 
+
+        public object EnvelopedData;
+
+
+        public object KeyLocate;
+
         /// <summary>
         /// Secondary keys describing the object
         /// </summary>

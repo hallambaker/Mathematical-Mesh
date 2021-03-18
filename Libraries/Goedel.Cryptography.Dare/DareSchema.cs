@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 3/5/2021 5:43:13 PM
+//  This file was automatically generated at 3/18/2021 2:32:52 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -82,7 +82,9 @@ namespace Goedel.Cryptography.Dare {
 			{"X509Certificate", X509Certificate._Factory},
 			{"DareRecipient", DareRecipient._Factory},
 			{"DarePolicy", DarePolicy._Factory},
-			{"FileEntry", FileEntry._Factory}			};
+			{"FileEntry", FileEntry._Factory},
+			{"Witness", Witness._Factory},
+			{"Proof", Proof._Factory}			};
 
         [ModuleInitializer]
         internal static void _Initialize() => AddDictionary(ref _tagDictionary);
@@ -2061,6 +2063,328 @@ namespace Goedel.Cryptography.Dare {
 					}
 				case "Attributes" : {
 					Attributes = jsonReader.ReadInteger32 ();
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Entry containing the latest apex value of a specified append only log.
+	/// </summary>
+	public partial class Witness : Dare {
+        /// <summary>
+        ///Globally unique log identifier
+        /// </summary>
+
+		public virtual string						Id  {get; set;}
+        /// <summary>
+        ///The issuer of the log
+        /// </summary>
+
+		public virtual string						Issuer  {get; set;}
+        /// <summary>
+        ///The Apex hash value
+        /// </summary>
+
+		public virtual byte[]						Apex  {get; set;}
+		bool								__Index = false;
+		private int						_Index;
+        /// <summary>
+        ///Specifies the index number assigned to the entry in the log.
+        /// </summary>
+
+		public virtual int						Index {
+			get => _Index;
+			set {_Index = value; __Index = true; }
+			}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "Witness";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new Witness();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (Id != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Id", 1);
+					_writer.WriteString (Id);
+				}
+			if (Issuer != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Issuer", 1);
+					_writer.WriteString (Issuer);
+				}
+			if (Apex != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Apex", 1);
+					_writer.WriteBinary (Apex);
+				}
+			if (__Index){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Index", 1);
+					_writer.WriteInteger32 (Index);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new Witness FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as Witness;
+				}
+		    var Result = new Witness ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Id" : {
+					Id = jsonReader.ReadString ();
+					break;
+					}
+				case "Issuer" : {
+					Issuer = jsonReader.ReadString ();
+					break;
+					}
+				case "Apex" : {
+					Apex = jsonReader.ReadBinary ();
+					break;
+					}
+				case "Index" : {
+					Index = jsonReader.ReadInteger32 ();
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Provides a proof that the payload with digest [hash] in the log described by 
+	/// SignedWitness occurs at the index [Index]
+	/// </summary>
+	public partial class Proof : Dare {
+        /// <summary>
+        ///The signed apex under which this proof chain is established
+        /// </summary>
+
+		public virtual DareEnvelope						SignedWitness  {get; set;}
+        /// <summary>
+        ///
+        /// </summary>
+
+		public virtual byte[]						Hash  {get; set;}
+		bool								__Index = false;
+		private int						_Index;
+        /// <summary>
+        ///Specifies the index number assigned to the entry in the log.
+        /// </summary>
+
+		public virtual int						Index {
+			get => _Index;
+			set {_Index = value; __Index = true; }
+			}
+        /// <summary>
+        ///The list of entries from which the proof path is computed.
+        /// </summary>
+
+		public virtual List<byte[]>				Path  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "Proof";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new Proof();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (SignedWitness != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("SignedWitness", 1);
+					SignedWitness.Serialize (_writer, false);
+				}
+			if (Hash != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Hash", 1);
+					_writer.WriteBinary (Hash);
+				}
+			if (__Index){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Index", 1);
+					_writer.WriteInteger32 (Index);
+				}
+			if (Path != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Path", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Path) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteBinary (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new Proof FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as Proof;
+				}
+		    var Result = new Proof ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "SignedWitness" : {
+					// An untagged structure
+					SignedWitness = new DareEnvelope ();
+					SignedWitness.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "Hash" : {
+					Hash = jsonReader.ReadBinary ();
+					break;
+					}
+				case "Index" : {
+					Index = jsonReader.ReadInteger32 ();
+					break;
+					}
+				case "Path" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Path = new List <byte[]> ();
+					while (_Going) {
+						byte[] _Item = jsonReader.ReadBinary ();
+						Path.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
 					break;
 					}
 				default : {

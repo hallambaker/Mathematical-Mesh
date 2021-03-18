@@ -29,7 +29,7 @@ using System.Collections.Generic;
 using System.IO;
 
 
-namespace Goedel.Mesh {
+namespace Goedel.Cryptography.Dare {
 
     /// <summary>
     /// Envelope validation levels
@@ -53,7 +53,7 @@ namespace Goedel.Mesh {
     /// Typed DareEnvelope.
     /// </summary>
     /// <typeparam name="T">The type of the wrapped data item.</typeparam>
-    public partial class Enveloped<T> : DareEnvelope where T : MeshItem {
+    public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
 
         ///<summary>The enveloped object cast to the generic type.</summary> 
         public T EnvelopedObject => JsonObject as T;
@@ -100,13 +100,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Constructor returining an envelope containing the object <paramref name="data"/>
         /// optionally encrypted under <paramref name="encryptionKey"/> and signed under
-        /// <paramref name="signingKey"/>. The constructor does not update the field
-        /// <see cref="MeshItem.DareEnvelope"/>.
+        /// <paramref name="signingKey"/>.
         /// </summary>
         /// <param name="data">The object to be enveloped.</param>
         /// <param name="signingKey">The signature key.</param>
         /// <param name="encryptionKey">The encryption key.</param>
         /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+        /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
         public Enveloped(
                     T data,
                     CryptoKey signingKey = null,
@@ -115,19 +115,32 @@ namespace Goedel.Mesh {
                     ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(
                         new CryptoParameters(signer: signingKey, recipient: encryptionKey), 
                         data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
+            data.EnvelopedData = this;
             }
 
         /// <summary>
-        /// Convenience accessor
+        /// Convenience accessor creating an envelope around <paramref name="data"/> encoded in
+        /// encoding <paramref name="objectEncoding"/>. If present, the data is signed under 
+        /// <paramref name="signingKey"/>. If present, the data is encrypted under 
+        /// <paramref name="encryptionKey"/>.
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">The object to be enveloped.</param>
+        /// <param name="signingKey">The signature key.</param>
+        /// <param name="encryptionKey">The encryption key.</param>
+        /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+        /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
         /// <returns></returns>
-        public static Enveloped<T> Envelope(T data) => new Enveloped<T>(data.DareEnvelope);
+        public static Enveloped<T> Envelope(T data,
+                    CryptoKey signingKey = null,
+                    CryptoKey encryptionKey = null,
+                    ContentMeta contentMeta = null,
+                    ObjectEncoding objectEncoding = ObjectEncoding.JSON) => 
+            new Enveloped<T>(data, signingKey, encryptionKey, contentMeta, objectEncoding);
 
 
         /// <summary>
         /// Decrypt and deserialize the envelope to obtain the typed contents and set the value of 
-        /// <see cref="MeshItem.DareEnvelope"/> to this.
+        /// <see cref="JsonObject.EnvelopedData"/> to the original envelope data.
         /// </summary>
         /// <param name="keyCollection">Key collection to be used to find decryption keys and
         /// roots of trust for verification keys.</param>
@@ -139,8 +152,15 @@ namespace Goedel.Mesh {
                 return EnvelopedObject;
                 }
 
-            var result = MeshItem.Decode(this, keyCollection);
-            result.DareEnvelope = this;
+            //var result = MeshItem.Decode(this, keyCollection);
+
+            //var plaintext = GetPlaintext(keyCollection);
+            //var reader = new JsonBcdReader(plaintext);
+            var result = DecodeJsonObject();
+
+            result.KeyLocate = keyCollection;
+
+            result.EnvelopedData = this;
 
             return result as T;
             }

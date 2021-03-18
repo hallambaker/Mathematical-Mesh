@@ -4122,90 +4122,6 @@
             </summary>
             <param name="persistenceStore">The persistence store to enumerate.</param>
         </member>
-        <member name="T:Goedel.Mesh.EnvelopeValidation">
-            <summary>
-            Envelope validation levels
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.EnvelopeValidation.None">
-            <summary>Perform no validation of the envelope or its contents.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.EnvelopeValidation.Digest">
-            <summary>Verify that the calculated payload digest matches the purported
-            digest.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.EnvelopeValidation.Signature">
-            <summary>Verify that the signature is valid according to the specified 
-            public key parameters.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.EnvelopeValidation.Trusted">
-            <summary>Verify that the signature is valid according to the specified 
-            public key parameters and that there is a valid chain of trust under a 
-            specified root of trust.</summary> 
-        </member>
-        <member name="T:Goedel.Mesh.Enveloped`1">
-            <summary>
-            Typed DareEnvelope.
-            </summary>
-            <typeparam name="T">The type of the wrapped data item.</typeparam>
-        </member>
-        <member name="P:Goedel.Mesh.Enveloped`1.EnvelopedObject">
-            <summary>The enveloped object cast to the generic type.</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.Enveloped`1.#ctor">
-            <summary>
-            Constructor for use by deserializers.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Enveloped`1.#ctor(Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Construct a typed copy of the envelope <paramref name="enveloped"/> with the same
-            Header, Body, Trailer and JSONObject.
-            </summary>
-            <param name="enveloped">The envelope to copy.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Enveloped`1.#ctor(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
-            <summary>
-            Constructor returning a typed envelope. 
-            </summary>
-            <param name="cryptoParameters">Specifies the cryptographic enhancements to
-            be applied to this message.</param>
-            <param name="contentMeta">The content metadata</param>
-            <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
-            create the message body. Otherwise the body is specified by calls to the Process method.</param>
-            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-                as an EDSS header entry.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Enveloped`1.#ctor(`0,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
-            <summary>
-            Constructor returining an envelope containing the object <paramref name="data"/>
-            optionally encrypted under <paramref name="encryptionKey"/> and signed under
-            <paramref name="signingKey"/>. The constructor does not update the field
-            <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/>.
-            </summary>
-            <param name="data">The object to be enveloped.</param>
-            <param name="signingKey">The signature key.</param>
-            <param name="encryptionKey">The encryption key.</param>
-            <param name="contentMeta">The value of the ContentMeta Header tag.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Enveloped`1.Envelope(`0)">
-            <summary>
-            Convenience accessor
-            </summary>
-            <param name="data"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.Enveloped`1.Decode(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.EnvelopeValidation)">
-            <summary>
-            Decrypt and deserialize the envelope to obtain the typed contents and set the value of 
-            <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/> to this.
-            </summary>
-            <param name="keyCollection">Key collection to be used to find decryption keys and
-            roots of trust for verification keys.</param>
-            <param name="validation">Validation to be performed after decoding.</param>
-            <returns>The decoded data.</returns>
-        </member>
         <member name="T:Goedel.Mesh.Internal">
             <summary>
             An internal assertion check failed.
@@ -11192,6 +11108,9 @@
             The DareEnvelope encapsulation of this object instance.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshItem.KeyCollection">
+            <summary>The key collection that was used to decode this object instance.</summary>
+        </member>
         <member name="P:Goedel.Mesh.MeshItem.EnvelopeId">
             <summary>The envelope Identifier.</summary> 
         </member>
@@ -11204,9 +11123,6 @@
             <param name="objectEncoding">The encoding to use to compute the inner object.</param>
             <returns>Envelope containing the signed profile. Also updates the property
             <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/></returns>
-        </member>
-        <member name="F:Goedel.Mesh.MeshItem.KeyCollection">
-            <summary>The key collection that was used to decode this object instance.</summary>
         </member>
         <member name="F:Goedel.Mesh.MeshItem.Status">
             <summary>Reports the status of the item. </summary>

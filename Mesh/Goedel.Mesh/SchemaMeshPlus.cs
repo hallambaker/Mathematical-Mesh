@@ -34,7 +34,17 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The DareEnvelope encapsulation of this object instance.
         /// </summary>
-        public virtual DareEnvelope DareEnvelope { get; set; }
+        public virtual DareEnvelope DareEnvelope {
+            get => EnvelopedData as DareEnvelope;
+            set => EnvelopedData = value;
+            }
+
+        ///<summary>The key collection that was used to decode this object instance.</summary>
+        public virtual IKeyCollection KeyCollection {
+            get => KeyLocate as IKeyCollection;
+            set => KeyLocate = value;
+            }
+
 
         ///<summary>The envelope Identifier.</summary> 
         public virtual string EnvelopeId => _PrimaryKey;
@@ -60,7 +70,7 @@ namespace Goedel.Mesh {
                 MessageType = _Tag
                 };
 
-            DareEnvelope = new Enveloped<MeshItem>(this,
+            EnvelopedData = new Enveloped<MeshItem>(this,
                         signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
                         objectEncoding: objectEncoding);
             DareEnvelope.Header.EnvelopeId = EnvelopeId;
@@ -68,14 +78,13 @@ namespace Goedel.Mesh {
             return DareEnvelope;
             }
 
-        ///<summary>The key collection that was used to decode this object instance.</summary>
-        public IKeyCollection KeyCollection;
+
 
         /////<summary>Initialization property, used to force initialization of the 
         /////Json parser dictionaries.</summary>
         //public static object Initialize => null;
 
-        ///<summary>Reports the status of the item. </summary>
+            ///<summary>Reports the status of the item. </summary>
         public MessageStatus Status = MessageStatus.None;
 
         //static MeshItem() => AddDictionary(ref _TagDictionary);
@@ -118,7 +127,7 @@ namespace Goedel.Mesh {
             var reader = new JsonBcdReader(plaintext);
 
             var result = FromJson(reader, true);
-            result.DareEnvelope = envelope;
+            result.EnvelopedData = envelope;
             result.KeyCollection = keyCollection;
             return result;
 

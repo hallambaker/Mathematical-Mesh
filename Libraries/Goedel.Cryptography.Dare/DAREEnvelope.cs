@@ -550,26 +550,26 @@ namespace Goedel.Cryptography.Dare {
             inputStream.CopyTo(dareEnvelopeWriter);
             }
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new DareEnvelope FromJson(JsonReader jsonReader,
-            bool tagged = true) {
-            if (jsonReader == null) {
-                return null;
-                }
-            if (tagged) {
-                var Out = jsonReader.ReadTaggedObject(TagDictionary);
-                return Out as DareEnvelope;
-                }
-            var result = new DareEnvelope();
-            result.Deserialize(jsonReader);
-            result.PostDecode();
-            return result;
-            }
+        ///// <summary>
+        ///// Deserialize a tagged stream
+        ///// </summary>
+        ///// <param name="jsonReader">The input stream</param>
+        ///// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        ///// <returns>The created object.</returns>		
+        //public static new DareEnvelope FromJson(JsonReader jsonReader,
+        //    bool tagged = true) {
+        //    if (jsonReader == null) {
+        //        return null;
+        //        }
+        //    if (tagged) {
+        //        var Out = jsonReader.ReadTaggedObject(TagDictionary);
+        //        return Out as DareEnvelope;
+        //        }
+        //    var result = new DareEnvelope();
+        //    result.Deserialize(jsonReader);
+        //    result.PostDecode();
+        //    return result;
+        //    }
 
         /// <summary>
         /// Decode a tagged JSONObject using keys from <paramref name="keyCollection"/> to decrypt
@@ -581,7 +581,11 @@ namespace Goedel.Cryptography.Dare {
             var plaintext = GetPlaintext(keyCollection);
 
             Console.WriteLine(plaintext.ToUTF8());
-            var result = FromJson(plaintext.JsonReader(), true);
+
+            var reader = plaintext.JsonReader();
+
+
+            var result = reader.ReadTaggedObject(TagDictionary);
             return result;
             }
 

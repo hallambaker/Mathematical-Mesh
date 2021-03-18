@@ -100,7 +100,7 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The last sequence index found.</summary> 
         public SequenceIndex SequenceIndex { get; set; }
 
-
+        public DareTrailer TrailerLast { get; set; }
 
         /// <summary>The current frame header as binary data</summary>
         public virtual byte[] HeaderBytes {
@@ -308,12 +308,16 @@ namespace Goedel.Cryptography.Dare {
 
             long frameCount = 1;
             DareHeader finalHeader;
+            DareTrailer finalTrailer;
             if (position1 < jbcdStream.Length) {
                 finalHeader = jbcdStream.ReadLastFrameHeader();
                 frameCount = finalHeader.SequenceInfo.Index + 1;
+                // need to set finalTrailer here!
+                finalTrailer = null;
                 }
             else {
                 finalHeader = sequenceHeaderFirst;
+                finalTrailer = frameZero.Trailer;
                 }
 
             var sequenceInfo = sequenceHeaderFirst.SequenceInfo;
@@ -393,6 +397,7 @@ namespace Goedel.Cryptography.Dare {
             sequence.KeyLocate = keyCollection;
             sequence.FrameZero = frameZero;
             sequence.HeaderFinal = finalHeader;
+            sequence.TrailerLast = finalTrailer;
             sequence.PositionFinalFrameStart = positionFinalFrameStart;
             sequence.FillDictionary(finalHeader.SequenceInfo, position1, positionFinalFrameStart);
             sequence.KeyCollection = keyCollection;
@@ -517,6 +522,8 @@ namespace Goedel.Cryptography.Dare {
                 Body = payload,
                 Trailer = Trailer
                 };
+
+            sequence.TrailerLast = Trailer;
 
             return sequence;
             }
@@ -976,6 +983,8 @@ namespace Goedel.Cryptography.Dare {
             var trailerData = trailer?.GetBytes(false);
             JbcdStream.WriteWrappedFrameEnd(trailerData);
             contextWrite.CommitFrame(trailer);
+
+            TrailerLast = trailer;
             }
 
         /// <summary>

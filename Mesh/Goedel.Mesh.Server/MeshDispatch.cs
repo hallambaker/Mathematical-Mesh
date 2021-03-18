@@ -43,8 +43,10 @@ namespace Goedel.Mesh.Server {
         ///<summary>The profile describing the host</summary>
         public ProfileHost ProfileHost;
 
+        ///<summary>The host activation record.</summary> 
         public ActivationDevice ActivationDevice { get; }
 
+        ///<summary>The host connection record.</summary> 
         public ConnectionAccount ConnectionAccount { get; }
 
         /// <summary>

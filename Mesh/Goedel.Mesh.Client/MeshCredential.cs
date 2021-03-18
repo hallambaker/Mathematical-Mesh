@@ -41,6 +41,8 @@ namespace Goedel.Mesh.Client {
     /// </summary>
     public class MeshCredential : Credential {
 
+
+        ///<summary>Extension tag identifying a Mesh credential.</summary> 
         public const string CredentialTag = "MMM";
 
         //IKeyLocate KeyLocate { get; }
@@ -57,7 +59,7 @@ namespace Goedel.Mesh.Client {
         ///<see cref="Profile"/></summary> 
         public Connection Connection { get; init; }
 
-
+        ///<summary>The user context to which the credential is bound.</summary> 
         public ContextUser ContextUser { get; init; }
 
 
@@ -96,10 +98,9 @@ namespace Goedel.Mesh.Client {
             }
 
         /// <summary>
-        /// Create a credential for the device/profile <paramref name="catalogedDevice"/>.
+        /// Create a credential for the context <paramref name="contextUser"/>.
         /// </summary>
         /// <param name="contextUser">The user context used to construct this credential</param>
-        /// <param name="keyLocate">The key locator to be used to obtain keys.</param>
         public MeshCredential(
                     ContextUser contextUser)  {
             //CatalogedDevice = catalogedDevice;
@@ -113,10 +114,10 @@ namespace Goedel.Mesh.Client {
 
 
         /// <summary>
-        /// Create a credential for the device/profile <paramref name="catalogedDevice"/>.
+        /// Create a credential for the connection <paramref name="connection"/>.
         /// </summary>
-        /// <param name="contextUser">The user context used to construct this credential</param>
-        /// <param name="keyLocate">The key locator to be used to obtain keys.</param>
+        /// <param name="connection">The user context used to construct this credential</param>
+        /// <param name="authenticationPrivate">The authentication private key.</param>
         public MeshCredential(
             Connection connection,
                     KeyPair authenticationPrivate) {

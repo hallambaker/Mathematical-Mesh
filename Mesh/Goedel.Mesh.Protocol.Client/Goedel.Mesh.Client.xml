@@ -1036,6 +1036,18 @@
             This is only populated when the context is returned as the result of completing 
             device connection</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.DeviceDecrypt">
+            <summary>Device decryption key in account context.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.DeviceSignature">
+            <summary>Device signature key in account context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.DeviceEncryption">
+            <summary>Device decryption key in account context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.DeviceAuthentication">
+            <summary>Device authentication key in account context.</summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
             Constructor, creates a <see cref="T:Goedel.Mesh.Client.ContextUser"/> instance for the catalog entry 
@@ -2356,12 +2368,18 @@
             assertion).
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.Client.MeshCredential.CredentialTag">
+            <summary>Extension tag identifying a Mesh credential.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.MeshCredential.Profile">
             <summary>The profile to which this credential is bound</summary> 
         </member>
         <member name="P:Goedel.Mesh.Client.MeshCredential.Connection">
             <summary>The connection binding the device presenting the credential to 
             <see cref="P:Goedel.Mesh.Client.MeshCredential.Profile"/></summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.MeshCredential.ContextUser">
+            <summary>The user context to which the credential is bound.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor">
             <summary>
@@ -2376,17 +2394,16 @@
         </member>
         <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor(Goedel.Mesh.Client.ContextUser)">
             <summary>
-            Create a credential for the device/profile <paramref name="catalogedDevice"/>.
+            Create a credential for the context <paramref name="contextUser"/>.
             </summary>
             <param name="contextUser">The user context used to construct this credential</param>
-            <param name="keyLocate">The key locator to be used to obtain keys.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshCredential.#ctor(Goedel.Mesh.Connection,Goedel.Cryptography.KeyPair)">
             <summary>
-            Create a credential for the device/profile <paramref name="catalogedDevice"/>.
+            Create a credential for the connection <paramref name="connection"/>.
             </summary>
-            <param name="contextUser">The user context used to construct this credential</param>
-            <param name="keyLocate">The key locator to be used to obtain keys.</param>
+            <param name="connection">The user context used to construct this credential</param>
+            <param name="authenticationPrivate">The authentication private key.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshCredential.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
             <inheritdoc/>

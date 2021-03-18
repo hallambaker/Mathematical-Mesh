@@ -67,10 +67,16 @@ namespace Goedel.Mesh.Client {
         ///device connection</summary> 
         public RespondConnection RespondConnection;
 
-        // device key accessors
+        ///<summary>Device decryption key in account context.</summary> 
         public KeyPair DeviceDecrypt { get; }
+
+        ///<summary>Device signature key in account context.</summary>
         public KeyPair DeviceSignature => ActivationDevice.DeviceSignature;
+
+        ///<summary>Device decryption key in account context.</summary>
         public KeyPair DeviceEncryption => ActivationDevice.DeviceEncryption;
+
+        ///<summary>Device authentication key in account context.</summary>
         public KeyPair DeviceAuthentication => ActivationDevice.DeviceAuthentication;
 
         

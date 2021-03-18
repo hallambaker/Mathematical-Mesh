@@ -433,6 +433,11 @@
             <param name="packet">The packet data</param>
             <returns>The parsed packet.</returns>
         </member>
+        <member name="T:Goedel.Protocol.Presentation.NamespaceDoc">
+            <summary>
+            Support library for FRED presentation layer.
+            </summary>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.PacketExtension">
             <summary>
             Packet options (to be specified).

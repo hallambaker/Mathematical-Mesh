@@ -351,3 +351,36 @@
 			Description
 				|The file attribues as a bitmapped integer.
 
+	Structure Witness
+		Description
+			|Entry containing the latest apex value of a specified append only log.
+		String Id
+			Description
+				|Globally unique log identifier
+		String Issuer
+			Description
+				|The issuer of the log
+		Binary Apex
+			Description
+				|The Apex hash value
+		Integer Index
+			Description
+				|Specifies the index number assigned to the entry in the log.
+
+	Structure Proof
+		Description
+			|Provides a proof that the payload with digest [hash] in the log described by 
+			|SignedWitness occurs at the index [Index]
+		Struct DareEnvelope SignedWitness
+			Description
+				|The signed apex under which this proof chain is established
+		Binary Hash
+			Description
+				|
+		Integer Index
+			Description
+				|Specifies the index number assigned to the entry in the log.
+		Binary Path
+			Multiple
+			Description
+				|The list of entries from which the proof path is computed.

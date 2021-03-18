@@ -10,6 +10,7 @@ using Goedel.Mesh.Test;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Server;
 using Xunit;
+using Goedel.Cryptography.Dare;
 
 using Goedel.Mesh;
 
@@ -74,7 +75,7 @@ namespace Goedel.XUnit {
         public override Credential GetResponderCredential() => ResponderCredential;
 
 
-        public static TestPresentationGeneric Test() => new TestPresentationMesh();
+        public static new TestPresentationGeneric Test() => new TestPresentationMesh();
 
         //public KeyCollectionTest KeyCollection  = new KeyCollectionTest ()
 
