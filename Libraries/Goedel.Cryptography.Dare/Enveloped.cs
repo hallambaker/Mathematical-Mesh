@@ -154,9 +154,9 @@ namespace Goedel.Cryptography.Dare {
 
             //var result = MeshItem.Decode(this, keyCollection);
 
-            //var plaintext = GetPlaintext(keyCollection);
+            var plaintext = GetPlaintext(keyCollection);
             //var reader = new JsonBcdReader(plaintext);
-            var result = DecodeJsonObject();
+            var result = DecodeJsonObject(keyCollection);
 
             result.KeyLocate = keyCollection;
 

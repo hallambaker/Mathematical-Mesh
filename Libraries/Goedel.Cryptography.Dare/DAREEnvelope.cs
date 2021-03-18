@@ -582,7 +582,7 @@ namespace Goedel.Cryptography.Dare {
 
             Console.WriteLine(plaintext.ToUTF8());
 
-            var reader = plaintext.JsonReader();
+            var reader = new JsonBcdReader(plaintext);
 
 
             var result = reader.ReadTaggedObject(TagDictionary);

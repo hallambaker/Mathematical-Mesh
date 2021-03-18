@@ -4,22 +4,13 @@
 
 Deleted devices do not lose their decryption capabilities.
 
-## Implement SSH  [73]
-
-
 # ToDo
 
 ## Binding
 
 Parse Messages
 
-Key Agreement
-
-Encryption
-
-Credentials
-
-Meah Binding
+Mesh Binding
 
 
 # Applications
@@ -36,11 +27,6 @@ Registry service
 Protocol
 
 Lookup protocol
-
-
-
-
-
 
 
 ## Functionality 
@@ -66,6 +52,13 @@ Lookup protocol
 
 * Add OpenPGP key / pull private key / pull public key
 
+# Nice to hace
+
+* Improve speed of JSON-BCD parser
+
+* Implement JSON-C compression/decompression
+
+* 
 
 
 
@@ -81,21 +74,3 @@ Provide simple service + restart capability
 
 
 
-
-
-
-## Mesh Notary Service
-
-Local Notary Service
-
-Notarize
-Verify
-
-Inter-notary accreditation
-
-## Mesh Name Service
-
-Register name
-Synchronize log
-
-Business Model

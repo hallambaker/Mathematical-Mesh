@@ -28,12 +28,13 @@ namespace Scratchpad {
 
             //KeyFileTest.Test().TestWritePEMRSA();
 
+            TestService.Test().MeshCatalogAccount();
 
-            
-            TestPresentationMesh.Test().InitialImmediateTest();
-            TestPresentationMesh.Test().ClientImmediateTest();
-            TestPresentationMesh.Test().InitialDeferredTest();
-            TestPresentationMesh.Test().ClientDeferredTest();
+
+            //TestPresentationMesh.Test().InitialImmediateTest();
+            //TestPresentationMesh.Test().ClientImmediateTest();
+            //TestPresentationMesh.Test().InitialDeferredTest();
+            //TestPresentationMesh.Test().ClientDeferredTest();
 
 
             //ShellTests.Test().TestArchive();
