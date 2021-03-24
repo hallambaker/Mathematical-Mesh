@@ -7,6 +7,7 @@ using System.Net.Sockets;
 
 using Goedel.Protocol;
 using Goedel.Utilities;
+using Goedel.Protocol.Presentation;
 
 namespace Goedel.Protocol.Service {
     /// <summary>
@@ -49,7 +50,15 @@ namespace Goedel.Protocol.Service {
         /// specified by <paramref name="listenerContext"/>.
         /// </summary>
         /// <param name="listenerContext">The HTTP request context.</param>
-        public ConnectionHttp(HttpListenerContext listenerContext) => ListenerContext = listenerContext;
+        public ConnectionHttp(Listener listener, HttpListenerContext listenerContext) {
+            ListenerContext = listenerContext;
+
+
+            // here need to refactor this so that the initial acceptance of a connection is handled appropriately.
+            // The connection needs to be bound to the packet data in some sort of dictionary
+            // that probably needs to happen in the server arm that dispatches this...
+            var responder = listener.Accept();
+            }
 
         /// <summary>
         /// Process the connection, dispatch the request and return the result.

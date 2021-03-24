@@ -26,7 +26,7 @@ namespace Goedel.XUnit {
         public const string Domain = "localhost";
         public string Protocol => TestProvider.GetWellKnown;
         public const string Instance = "69";
-
+        Listener TestListener;
 
         ServiceManagementService TestProvider;
 
@@ -42,7 +42,8 @@ namespace Goedel.XUnit {
                         Domain, Instance);
 
             var providers = new List<Provider> { provider };
-            using var server = new Service(providers);
+            TestListener = new TestListener(hostCredential);
+            using var server = new Service(TestListener, providers);
 
 
             var meshServiceBinding = new MeshSession(clientCredential, Domain, Protocol, Instance, PresentationType.Http);

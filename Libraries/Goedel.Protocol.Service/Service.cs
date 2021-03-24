@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 
 using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 namespace Goedel.Protocol.Service {
@@ -40,6 +41,10 @@ namespace Goedel.Protocol.Service {
         private HttpListener httpListener=null;
 
         private UdpClient[] udpListeners;
+
+        public Listener FredListener;
+
+
 
         private CancellationTokenSource cancellationTokenSource;
         private CancellationToken cancellationToken ;
@@ -101,7 +106,9 @@ namespace Goedel.Protocol.Service {
         /// <param name="maxCores">Maximum number of dispatch threads.</param>
         /// <remarks>Constructor returns after the service has been started and listener threads 
         /// initialized.</remarks>
-        public Service(List<Provider> providers, int maxCores = 0) {
+        public Service(Listener fredListener, List<Provider> providers, int maxCores = 0) {
+
+            FredListener = fredListener;
 
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
@@ -326,7 +333,7 @@ namespace Goedel.Protocol.Service {
             await connection;
 
             // prepare the result for dispatch to a processing queue.
-            return new ConnectionHttp(connection.Result);
+            return new ConnectionHttp(FredListener, connection.Result);
             }
         async Task<Connection> Process(UdpClient UdpClient) {
             var connection = UdpClient.ReceiveAsync();

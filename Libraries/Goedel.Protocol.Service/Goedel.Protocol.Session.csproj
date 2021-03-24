@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" />
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
   </ItemGroup>
 

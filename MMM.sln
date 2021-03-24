@@ -176,7 +176,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "meshhost", "Applications\me
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "meshman", "meshman\meshman.csproj", "{DE4CF7A7-3FDD-48FA-9703-B9DFBDBC9C9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.Service", "Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj", "{AB1A8E04-E59D-4903-AE53-1DFE036EA724}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.Session", "Libraries\Goedel.Protocol.Service\Goedel.Protocol.Session.csproj", "{AB1A8E04-E59D-4903-AE53-1DFE036EA724}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.Service.Test-xunit", "Testing\Goedel.Protocol.Service.Test-xunit\Goedel.Protocol.Service.Test-xunit.csproj", "{35C84034-B8AE-4D53-9DAB-43CC1EF7B937}"
 EndProject
@@ -184,7 +184,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Management", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.Presentation", "Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj", "{2F4E3947-E0BE-4B27-BFC1-0541C8CA7B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Session", "Mesh\Goedel.Mesh.Session\Goedel.Mesh.Session.csproj", "{D6B2C355-C735-482C-9A30-60C709DA39A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Session", "Mesh\Goedel.Mesh.Session\Goedel.Mesh.Session.csproj", "{D6B2C355-C735-482C-9A30-60C709DA39A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
