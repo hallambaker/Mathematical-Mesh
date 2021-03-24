@@ -32,6 +32,11 @@ namespace Goedel.Protocol.Presentation {
 
         #region // Properties
 
+        public const int MinPacketSize = 1200;
+
+        public int PacketQuanta { get; set; } = 64;
+
+
         ///<summary>Symmetric key used to encrypt/decrypt mezzanine data sent by the client to 
         ///the host.</summary> 
         public byte[] ClientKeyClientToHost { get; set; }
@@ -121,15 +126,21 @@ namespace Goedel.Protocol.Presentation {
         #endregion
         #region // Methods - PacketData Serializer/Deserializer
 
+        public int QuantizePacketLength(int length) =>
+            length < MinPacketSize ? MinPacketSize :
+                    PacketQuanta * ((length + PacketQuanta) / PacketQuanta);
+
         /// <summary>
         /// Serialize and mutually encrypt a data packet.
         /// </summary>
         /// <param name="payload"></param>
         /// <param name="ciphertextExtensions"></param>
+        /// <param name="packetSize">The number of bytes in the packet to be created.</param>
         public virtual byte[] SerializePacketData(
                 byte[] payload = null,
-                List<PacketExtension> ciphertextExtensions = null) {
-            using var writer = new PacketWriterAesGcm();
+                List<PacketExtension> ciphertextExtensions = null,
+                int packetSize = 1200) {
+            using var writer = new PacketWriterAesGcm(packetSize);
             writer.WriteExtensions(ciphertextExtensions);
             writer.Write(payload);
 

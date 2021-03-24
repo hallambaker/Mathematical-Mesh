@@ -182,7 +182,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.Service.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Management", "Mesh\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj", "{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Protocol.Presentation", "Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj", "{2F4E3947-E0BE-4B27-BFC1-0541C8CA7B23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.Presentation", "Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj", "{2F4E3947-E0BE-4B27-BFC1-0541C8CA7B23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Session", "Mesh\Goedel.Mesh.Session\Goedel.Mesh.Session.csproj", "{D6B2C355-C735-482C-9A30-60C709DA39A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1756,6 +1758,30 @@ Global
 		{2F4E3947-E0BE-4B27-BFC1-0541C8CA7B23}.Windows|x64.Build.0 = Debug|Any CPU
 		{2F4E3947-E0BE-4B27-BFC1-0541C8CA7B23}.Windows|x86.ActiveCfg = Debug|Any CPU
 		{2F4E3947-E0BE-4B27-BFC1-0541C8CA7B23}.Windows|x86.Build.0 = Debug|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Debug|x64.Build.0 = Debug|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Debug|x86.Build.0 = Debug|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Focus|Any CPU.ActiveCfg = Focus|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Focus|Any CPU.Build.0 = Focus|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Focus|x64.ActiveCfg = Focus|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Focus|x64.Build.0 = Focus|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Focus|x86.ActiveCfg = Focus|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Focus|x86.Build.0 = Focus|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Release|x64.ActiveCfg = Release|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Release|x64.Build.0 = Release|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Release|x86.ActiveCfg = Release|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Release|x86.Build.0 = Release|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Windows|Any CPU.ActiveCfg = Windows|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Windows|Any CPU.Build.0 = Windows|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Windows|x64.ActiveCfg = Windows|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Windows|x64.Build.0 = Windows|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Windows|x86.ActiveCfg = Windows|Any CPU
+		{D6B2C355-C735-482C-9A30-60C709DA39A0}.Windows|x86.Build.0 = Windows|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1839,6 +1865,7 @@ Global
 		{35C84034-B8AE-4D53-9DAB-43CC1EF7B937} = {D1FDE60F-FECA-4925-BFDE-A3CC9F40FCE9}
 		{7ABDF4E7-8F7E-41AF-BDF0-18C88FA054C2} = {5EC1032D-6112-4154-B52F-2DA29CD605E3}
 		{2F4E3947-E0BE-4B27-BFC1-0541C8CA7B23} = {3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}
+		{D6B2C355-C735-482C-9A30-60C709DA39A0} = {5EC1032D-6112-4154-B52F-2DA29CD605E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {480B9067-AB16-45B8-BFE3-8EF8803D9D07}

@@ -143,6 +143,23 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
+
+        /// <summary>
+        /// Write the binary data contained in <paramref name="span"/> to the packet.
+        /// </summary>
+        /// <param name="span">The data to write</param>
+        public void Write(Span<byte> span) {
+            if (span == null) {
+                WriteTag(PacketTag.Binary, 0);
+                }
+            else {
+                var data = span.ToArray();
+                Write(PacketTag.Binary, data, 0, data.Length);
+                }
+            }
+
+
+
         /// <summary>
         ///  Write the binary data  <paramref name="data"/> to the packet beginning
         ///  at position <paramref name="offset"/> for <paramref name="count"/> bytes.

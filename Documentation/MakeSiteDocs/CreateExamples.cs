@@ -518,8 +518,10 @@ namespace ExampleGenerator {
 
             Connect.ConnectPINPending = Alice1.Example(
                 $"message pending",
-                $"account sync /auto"
+                $"account sync /auto"  // Failing because object already created
                 );
+
+            // this is probably failing because previous auto complete actions are not being marked closed.
 
             var connectPendingPIN = Connect.ConnectPINPending.GetResultPending();
             var syncUpdates = Connect.ConnectPINPending[1].Traces[1].RequestObject as TransactRequest;

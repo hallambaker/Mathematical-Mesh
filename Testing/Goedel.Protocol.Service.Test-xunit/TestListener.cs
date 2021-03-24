@@ -136,8 +136,7 @@ namespace Goedel.XUnit {
             }
 
 
-        public override Task<byte[]> Transact(byte[] payload) => throw new NotImplementedException();
-        }
+         }
 
 
     public class TestConnectionHost : SessionResponder {

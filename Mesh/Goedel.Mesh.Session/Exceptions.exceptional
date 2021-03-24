@@ -1,0 +1,8 @@
+﻿
+Namespace $rootnamespace$
+
+	Exception TBS
+		Console "Exception TBS"
+		Description
+			|TBS
+

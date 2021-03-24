@@ -595,7 +595,7 @@
             Presentation client connection. Tracks the state of a client connection.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.SerializeClientInitial(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.SerializeClientInitial(System.Span{System.Byte},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
             Create a serialised packet of type ClientInitial packet.
             </summary>
@@ -697,14 +697,6 @@
         </member>
         <member name="F:Goedel.Protocol.Presentation.SessionInitiator.clientState">
             <summary>The current state of this client.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.Transact(System.Byte[])">
-            <summary>
-            Perform a request/response transation with request payload <paramref name="payload"/>
-            and return the result.
-            </summary>
-            <param name="payload">The binary payload</param>
-            <returns>The binar</returns>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketClientInitial">
             <summary>
@@ -881,6 +873,12 @@
             </summary>
             <param name="data">The data to write</param>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.Span{System.Byte})">
+            <summary>
+            Write the binary data contained in <paramref name="span"/> to the packet.
+            </summary>
+            <param name="span">The data to write</param>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.Byte[],System.Int32,System.Int32)">
             <summary>
              Write the binary data  <paramref name="data"/> to the packet beginning
@@ -1031,12 +1029,13 @@
             </summary>
             <param name="extensions">List of extensions to add the ephemerals to.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Session.SerializePacketData(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Protocol.Presentation.Session.SerializePacketData(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Int32)">
             <summary>
             Serialize and mutually encrypt a data packet.
             </summary>
             <param name="payload"></param>
             <param name="ciphertextExtensions"></param>
+            <param name="packetSize">The number of bytes in the packet to be created.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Session.ParsePacketData(Goedel.Protocol.Presentation.PortId,System.Byte[])">
             <summary>

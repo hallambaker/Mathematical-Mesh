@@ -218,22 +218,22 @@ namespace Goedel.Cryptography {
     /// This is used as a building block in key wrapping and derrivation functions.</summary>
     public struct Block {
 
-        byte[] Data;
+        byte[] data;
 
         /// <summary>
         /// Constructor from binary data.
         /// </summary>
         /// <param name="Data">The data to process</param>
-        public Block(byte[] Data) => this.Data = Data;
+        public Block(byte[] Data) => this.data = Data;
 
         /// <summary>
         /// Constructor from integer data.
         /// </summary>
         /// <param name="Value">Data value to initialize the value field.</param>
         public Block(int Value) {
-            this.Data = new byte[8];
+            this.data = new byte[8];
             for (var i = 0; i < 8; i++) {
-                Data[i] = (byte)(Value & 0xff);
+                data[i] = (byte)(Value & 0xff);
                 }
             }
 
@@ -243,8 +243,8 @@ namespace Goedel.Cryptography {
         /// <param name="Source">The source value.</param>
         /// <param name="Index">Offset within the block.</param>
         public Block(byte[] Source, int Index) {
-            Data = new byte[8];
-            Array.Copy(Source, Index * 8, Data, 0, 8);
+            data = new byte[8];
+            Array.Copy(Source, Index * 8, data, 0, 8);
             }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Goedel.Cryptography {
         /// <param name="Value">The sentry value to check.</param>
         /// <returns>True if the sentry value is correct, false otherwise.</returns>
         public bool Verify(int Value) {
-            foreach (var Byte in Data) {
+            foreach (var Byte in data) {
                 if (Byte != Value) {
                     return false;
                     }
@@ -269,8 +269,8 @@ namespace Goedel.Cryptography {
         /// <param name="Right">The LSB</param>
         /// <param name="Result">The array to write the result to.</param>
         public static void Concat(Block Left, Block Right, byte[] Result) {
-            Array.Copy(Left.Data, 0, Result, 0, 8);
-            Array.Copy(Right.Data, 0, Result, 8, 8);
+            Array.Copy(Left.data, 0, Result, 0, 8);
+            Array.Copy(Right.data, 0, Result, 8, 8);
             return;
             }
 
@@ -282,7 +282,7 @@ namespace Goedel.Cryptography {
 
             //var Result = new byte[8];
             for (var i = 0; i < 8; i++) {
-                Data[i] = (byte)(Data[i] ^ (Mask >> 56));
+                data[i] = (byte)(data[i] ^ (Mask >> 56));
                 Mask <<= 8;
                 }
             }
@@ -292,14 +292,14 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Source">The cipher block to extract from</param>
         /// <returns>The result</returns>
-        public void MSB(byte[] Source) => Array.Copy(Source, 0, Data, 0, 8);
+        public void MSB(byte[] Source) => Array.Copy(Source, 0, data, 0, 8);
 
         /// <summary>
         /// Extract the LSB from a cipher block.
         /// </summary>
         /// <param name="Source">The cipher block to extract from</param>
         /// <returns>The result</returns>
-        public void LSB(byte[] Source) => Array.Copy(Source, 8, Data, 0, 8);
+        public void LSB(byte[] Source) => Array.Copy(Source, 8, data, 0, 8);
 
         /// <summary>
         /// Convert the result to an array
@@ -310,7 +310,7 @@ namespace Goedel.Cryptography {
         public static byte[] ToByte(Block[] Blocks, int Offset = 0) {
             var Result = new byte[(Blocks.Length - Offset) * 8];
             for (var i = Offset; i < Blocks.Length; i++) {
-                Array.Copy(Blocks[i].Data, 0, Result, 8 * (i - Offset), 8);
+                Array.Copy(Blocks[i].data, 0, Result, 8 * (i - Offset), 8);
                 }
             return Result;
             }
@@ -320,6 +320,6 @@ namespace Goedel.Cryptography {
         /// Convert block value to hexadecimal string
         /// </summary>
         /// <returns>The text string representing the block value</returns>
-        public override string ToString() => BaseConvert.ToStringBase16(Data);
+        public override string ToString() => BaseConvert.ToStringBase16(data);
         }
     }

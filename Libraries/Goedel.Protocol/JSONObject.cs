@@ -203,23 +203,35 @@ namespace Goedel.Protocol {
         /// Convert object to byte sequence in JSON form.
         /// </summary>
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
+        /// <param name="objectEncoding">The object encoding to use for serialization.</param>
         /// <returns>Data as byte sequence.</returns>
         public virtual byte[] GetBytes(bool tag = true,
                     ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
 
 
 
-            var _JSONWriter = objectEncoding switch {
-                ObjectEncoding.JSON_B => new JsonBWriter(),
-
-                _ => new JsonWriter()
-                };
+            var _JSONWriter = GetJsonWriter(objectEncoding);
 
 
-                
+
+
             Serialize(_JSONWriter, tag);
             return _JSONWriter.GetBytes;
             }
+
+        /// <summary>
+        /// Return a JsonWriter for the encoding <paramref name="objectEncoding"/>.
+        /// </summary>
+        /// <param name="objectEncoding">The object encoding to use for serialization.</param>
+        /// <returns>The JsonWriter.</returns>
+        public static JsonWriter GetJsonWriter (ObjectEncoding objectEncoding) => objectEncoding switch {
+            ObjectEncoding.JSON_B => new JsonBWriter(),
+            ObjectEncoding.JSON_C => new JsonBWriter(),
+            ObjectEncoding.JSON_D => new JsonBWriter(),
+            _ => new JsonWriter()
+            };
+
+
 
         /// <summary>
         /// Serialize to the specified Writer.

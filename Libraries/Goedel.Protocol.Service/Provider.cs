@@ -6,7 +6,23 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 
 namespace Goedel.Protocol.Service {
-    
+
+
+    public enum PresentationType {
+        
+        ///<summary>HTTP/Fred binding.</summary> 
+        Http = 0b001,
+
+        ///<summary>UDP/Fred binding.</summary> 
+        Udp = 0b010,
+
+
+        ///<summary>All supported provider types.</summary> 
+        All = Http | Udp
+
+        }
+
+
     /// <summary>
     /// Service provider class.
     /// </summary>
@@ -43,15 +59,32 @@ namespace Goedel.Protocol.Service {
                 }
             }
 
+        /// <summary>
+        /// Constructor, returns a provider of the service <paramref name="instance"/> offering
+        /// the transports specified by <paramref name="presentationTypes"/> at the domain 
+        /// <paramref name="domain"/>.
+        /// </summary>
+        /// <param name="jpcProvider">The provider instance.</param>
+        /// <param name="presentationTypes">The presentations supported.</param>
+        /// <param name="domain">The DNS domain.</param>
+        /// <param name="instance">The instance specifier</param>
+        public Provider(
+                    JpcInterface jpcProvider, 
+                    PresentationType presentationTypes,
+                    string domain, 
+                    string instance = null) {
+            JpcInterface = jpcProvider;
+            if ((presentationTypes & PresentationType.Http) > 0) {
+                HTTPEndpoints.Add(new HttpEndpoint(domain, jpcProvider.GetWellKnown, instance));
+                }
+            if ((presentationTypes & PresentationType.Udp) > 0) {
+                UdpEndpoints.Add(new UdpEndpoint(domain, instance));
+                }
+            }
+
+
         }
 
-
-    //public class MonitorProvider : Provider {
-    //    public Monitor Monitor { get; set; }
-    //    public MonitorProvider(List<Endpoint> endpoints, JPCProvider jpcProvider) {
-    //        }
-
-    //    }
 
 
     }

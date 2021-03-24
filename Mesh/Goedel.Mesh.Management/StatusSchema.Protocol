@@ -1,4 +1,4 @@
-﻿Protocol Goedel.Mesh.Management MeshServiceManagementProtocol MeshServiceManagementProtocol
+﻿Protocol Goedel.Mesh.Management ServiceManagement ServiceManagement
 	Using Goedel.Mesh
 	Using Goedel.Cryptography.Dare
 	Using Goedel.Cryptography.Jose 
@@ -30,9 +30,16 @@
 			|status code and status description fields.
 
 
+    Transaction Public ServiceStatus ServiceStatusRequest ServiceStatusResponse
 
 
+	Message ServiceStatusRequest
+		Inherits WsmpRequest
 
-
-
-
+	Message ServiceStatusResponse
+		Inherits WsmpResponse
+		DateTime Start
+		DateTime End
+		Integer Started
+		Integer Completed
+		Integer Pending

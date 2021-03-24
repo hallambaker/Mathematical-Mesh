@@ -75,7 +75,7 @@ namespace Goedel.XUnit {
         public override Credential GetResponderCredential() => ResponderCredential;
 
 
-        public static new TestPresentationGeneric Test() => new TestPresentationMesh();
+        public static new TestPresentationMesh Test() => new TestPresentationMesh();
 
         //public KeyCollectionTest KeyCollection  = new KeyCollectionTest ()
 

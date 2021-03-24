@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 3/18/2021 11:43:24 AM
+//  This file was automatically generated at 3/24/2021 12:25:42 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.566
+//  Generator:  protogen version 3.0.0.585
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -130,7 +130,7 @@ namespace Goedel.Mesh.Services {
         /// <param name="session">The client context.</param>
         /// <param name="jsonReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+		public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
 								Goedel.Protocol.JsonReader jsonReader) {
 
 			jsonReader.StartObject ();
@@ -164,7 +164,7 @@ namespace Goedel.Mesh.Services {
         /// </summary>
         /// <param name="jpcSession">Session to which requests are to be bound.</param>
         /// <returns>The direct client instance.</returns>
-		public override Goedel.Protocol.JpcClientInterface GetDirect (JpcSession jpcSession) =>
+		public override Goedel.Protocol.JpcClientInterface GetDirect (IJpcSession jpcSession) =>
 				new MeshPresenceDirect () {
 						JpcSession = jpcSession,
 						Service = this
@@ -178,7 +178,7 @@ namespace Goedel.Mesh.Services {
 		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
         public abstract ThresholdSignResponse ThresholdSign (
-                ThresholdSignRequest request, JpcSession session);
+                ThresholdSignRequest request, IJpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  ThresholdAgreement.
@@ -187,7 +187,7 @@ namespace Goedel.Mesh.Services {
 		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
         public abstract ThresholdAgreementResponse ThresholdAgreement (
-                ThresholdAgreementRequest request, JpcSession session);
+                ThresholdAgreementRequest request, IJpcSession session);
 
         }
 
@@ -224,7 +224,7 @@ namespace Goedel.Mesh.Services {
         /// <param name="request">The request object.</param>
 		/// <returns>The response object</returns>
         public virtual ThresholdSignResponse ThresholdSign (ThresholdSignRequest request) =>
-				JpcRemoteSession.Post("ThresholdSign", "ThresholdSignResponse", request) as ThresholdSignResponse;
+				JpcSession.Post("ThresholdSign", request) as ThresholdSignResponse;
 
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Goedel.Mesh.Services {
         /// <param name="request">The request object.</param>
 		/// <returns>The response object</returns>
         public virtual ThresholdAgreementResponse ThresholdAgreement (ThresholdAgreementRequest request) =>
-				JpcRemoteSession.Post("ThresholdAgreement", "ThresholdAgreementResponse", request) as ThresholdAgreementResponse;
+				JpcSession.Post("ThresholdAgreement", request) as ThresholdAgreementResponse;
 
 
 		}
@@ -247,12 +247,6 @@ namespace Goedel.Mesh.Services {
 		/// Interface object to dispatch requests to.
 		/// </summary>	
 		public MeshPresence Service {get; set;}
-
-        /// <summary>
-        /// The active JpcSession.
-        /// </summary>		
-		public override JpcSession JpcSession {get; set;}
-
 
 
         /// <summary>
@@ -294,7 +288,7 @@ namespace Goedel.Mesh.Services {
         /// <param name="session">The client context.</param>
         /// <param name="jsonReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+		public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
 								Goedel.Protocol.JsonReader jsonReader) {
 
 			jsonReader.StartObject ();

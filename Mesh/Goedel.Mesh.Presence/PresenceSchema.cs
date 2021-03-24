@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 3/18/2021 11:43:24 AM
+//  This file was automatically generated at 3/24/2021 12:25:42 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.566
+//  Generator:  protogen version 3.0.0.585
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -128,7 +128,7 @@ namespace Goedel.Mesh.Presence {
         /// <param name="session">The client context.</param>
         /// <param name="jsonReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+		public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
 								Goedel.Protocol.JsonReader jsonReader) {
 
 			jsonReader.StartObject ();
@@ -156,7 +156,7 @@ namespace Goedel.Mesh.Presence {
         /// </summary>
         /// <param name="jpcSession">Session to which requests are to be bound.</param>
         /// <returns>The direct client instance.</returns>
-		public override Goedel.Protocol.JpcClientInterface GetDirect (JpcSession jpcSession) =>
+		public override Goedel.Protocol.JpcClientInterface GetDirect (IJpcSession jpcSession) =>
 				new MeshPresenceDirect () {
 						JpcSession = jpcSession,
 						Service = this
@@ -170,7 +170,7 @@ namespace Goedel.Mesh.Presence {
 		/// <param name="session">The request context.</param>
 		/// <returns>The response object from the service</returns>
         public abstract AnnounceDeviceResponse AnnounceDevice (
-                AnnounceDeviceRequest request, JpcSession session);
+                AnnounceDeviceRequest request, IJpcSession session);
 
         }
 
@@ -207,7 +207,7 @@ namespace Goedel.Mesh.Presence {
         /// <param name="request">The request object.</param>
 		/// <returns>The response object</returns>
         public virtual AnnounceDeviceResponse AnnounceDevice (AnnounceDeviceRequest request) =>
-				JpcRemoteSession.Post("AnnounceDevice", "AnnounceDeviceResponse", request) as AnnounceDeviceResponse;
+				JpcSession.Post("AnnounceDevice", request) as AnnounceDeviceResponse;
 
 
 		}
@@ -221,12 +221,6 @@ namespace Goedel.Mesh.Presence {
 		/// Interface object to dispatch requests to.
 		/// </summary>	
 		public MeshPresence Service {get; set;}
-
-        /// <summary>
-        /// The active JpcSession.
-        /// </summary>		
-		public override JpcSession JpcSession {get; set;}
-
 
 
         /// <summary>
@@ -259,7 +253,7 @@ namespace Goedel.Mesh.Presence {
         /// <param name="session">The client context.</param>
         /// <param name="jsonReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+		public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
 								Goedel.Protocol.JsonReader jsonReader) {
 
 			jsonReader.StartObject ();

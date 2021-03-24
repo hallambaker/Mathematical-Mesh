@@ -20,7 +20,7 @@ namespace Goedel.Mesh.Test {
             httpEndpoint = endpoints[0] as HttpEndpoint;
 
 
-            var session = new WebRemoteSession(null, null, accountAddress);
+            //var session = new WebRemoteSession(null, null, accountAddress);
 
             //var webClient = session.GetWebClient<ServiceManagementServiceClient>();
 

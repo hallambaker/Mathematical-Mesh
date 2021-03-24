@@ -62,13 +62,13 @@ namespace Goedel.Protocol.Presentation {
         ClientState clientState;
 
 
-        /// <summary>
-        /// Perform a request/response transation with request payload <paramref name="payload"/>
-        /// and return the result.
-        /// </summary>
-        /// <param name="payload">The binary payload</param>
-        /// <returns>The binar</returns>
-        public abstract Task<byte[]> Transact(byte[] payload);
+        ///// <summary>
+        ///// Perform a request/response transation with request payload <paramref name="payload"/>
+        ///// and return the result.
+        ///// </summary>
+        ///// <param name="payload">The binary payload</param>
+        ///// <returns>The binar</returns>
+        //public abstract Task<byte[]> Transact(byte[] payload);
 
 
         }

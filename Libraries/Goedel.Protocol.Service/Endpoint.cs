@@ -32,8 +32,12 @@ namespace Goedel.Protocol.Service {
 
         public string Account(string username) => $"{username}@{Domain}";
 
-        string specializer = Instance == null ? "" : $"/{Instance}";
-        public string GetUri() =>  $"http://+:15099/.well-known/{Protocol}{specializer}/";
+        public static string Specializer(string instance) => instance == null ? "" : $"{instance}/";
+
+        public string GetUri() => GetUri("+", Protocol, Instance);  
+
+        public static string GetUri(string domain, string protocol, string instance) =>
+            $"http://{domain}:15099/.well-known/{protocol}/{Specializer(instance)}";
 
         // used for testing.
         public string GetServiceUri() => WebServiceEndpoint.GetEndpoint(Domain, Protocol, null, Instance);

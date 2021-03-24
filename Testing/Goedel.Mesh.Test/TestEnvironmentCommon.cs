@@ -61,8 +61,8 @@ namespace Goedel.Mesh.Test {
                 JpcConnection.Direct => new JpcSessionDirect(MeshService, meshCredential.AccountAddress),
                 JpcConnection.Serialized => new TestSession(MeshService, 
                         meshCredential.AccountAddress, meshCredential.MeshProtocolMessages),
-                JpcConnection.Http => new JpcSessionHTTP(meshCredential.AccountAddress, Test),
-                JpcConnection.Ticketed => new JpcSessionTicketed(null, meshCredential.AccountAddress),
+                //JpcConnection.Http => new JpcSessionHTTP(meshCredential.AccountAddress, Test),
+                //JpcConnection.Ticketed => new JpcSessionTicketed(null, meshCredential.AccountAddress),
                 _ => throw new NYI()
                 };
 

@@ -157,8 +157,12 @@ namespace Goedel.Mesh {
         /// <returns></returns>
         public virtual MeshServiceClient GetMeshClient(
                 string accountAddress) {
-            var session = new JpcSessionHTTP(accountAddress);
-            return session.GetWebClient<MeshServiceClient>();
+
+
+            throw new NYI();
+
+            //var session = new JpcSessionHTTP(accountAddress);
+            //return session.GetWebClient<MeshServiceClient>();
 
                 //JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, null);
 

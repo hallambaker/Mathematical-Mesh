@@ -62,7 +62,7 @@ namespace Goedel.Protocol.Presentation {
         /// in the plaintext segment.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeClientInitial (
-                byte[] payload = null,
+                Span<byte> payload,
                 List<PacketExtension> plaintextExtensionsIn = null                ) {
 
             // The plaintext part

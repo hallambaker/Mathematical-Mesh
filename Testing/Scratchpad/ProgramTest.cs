@@ -26,9 +26,9 @@ namespace Scratchpad {
             Screen.WriteLine($"Start test  {DateTime.Now}");
             //TestAsymmetric.Test().EncryptTest(CryptoAlgorithmId.RSAExch);
 
-            //KeyFileTest.Test().TestWritePEMRSA();
+            TestPresentationMesh.Test().TestMeshService();
 
-            TestService.Test().MeshCatalogAccount();
+            //TestService.Test().MeshCatalogAccount();
 
 
             //TestPresentationMesh.Test().InitialImmediateTest();
@@ -43,7 +43,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestHello();
             //ShellTestsHTTP.Test().TestHello();
             //GoedelProtocolService.Test().TestService();
-            //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+            Goedel.XUnit.MakeSiteDocs.Test().FullTest();
             //TestService.Test().ProtocolHello();
 
 

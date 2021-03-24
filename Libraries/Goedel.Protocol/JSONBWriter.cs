@@ -35,27 +35,14 @@ namespace Goedel.Protocol {
 
 
 
-        /// <summary>
-        /// Create a new JSON Writer.
-        /// </summary>
-        public JsonBWriter() => Output = new MemoryStream();
 
         /// <summary>
-        /// Create a new JSON Writer using the specified output buffer. If the buffer has
-        /// an output stream defined, text will be written to the stream.
+        /// Create a new writer instance with the output <paramref name="Output"/>. 
+        /// If <paramref name="Output"/> is null, a memory stream is created and
+        /// used as the output.
         /// </summary>
         /// <param name="Output">Output buffer</param> 
-        public JsonBWriter(MemoryStream Output) => this.Output = Output;
-
-        /// <summary>
-        /// Create a new JSON Writer using the specified output buffer. If the buffer has
-        /// an output stream defined, text will be written to the stream. Note that
-        /// the property GetBytes will return null unless the specified stream is a 
-        /// memory stream.
-        /// </summary>
-        /// <param name="Output">Output buffer</param> 
-        public JsonBWriter(Stream Output) => this.Output = Output;
-
+        public JsonBWriter(Stream Output =null) => this.Output = Output ?? new MemoryStream();
 
 
         /// <summary>

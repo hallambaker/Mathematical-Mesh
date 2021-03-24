@@ -56,7 +56,7 @@ namespace Goedel.Protocol {
         /// <param name="Session">The service session that is to handle the request.</param>
         /// <param name="JSONReader">The input stream to be read</param>
         /// <returns>The response to the request.</returns>
-        public abstract Goedel.Protocol.JsonObject Dispatch(JpcSession Session,
+        public abstract Goedel.Protocol.JsonObject Dispatch(IJpcSession Session,
             JsonReader JSONReader);
 
         /// <summary>
@@ -65,13 +65,13 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="jpcSession">Session to which requests are to be bound.</param>
         /// <returns>The direct client instance.</returns>
-        public abstract Goedel.Protocol.JpcClientInterface GetDirect(JpcSession jpcSession);
+        public abstract Goedel.Protocol.JpcClientInterface GetDirect(IJpcSession jpcSession);
 
         /// <summary>
         /// Return a JpcSession for the service.
         /// </summary>
         /// <returns></returns>
-        public abstract JpcSession GetSession();
+        public abstract IJpcSession GetSession();
 
 
         }
@@ -98,10 +98,17 @@ namespace Goedel.Protocol {
         /// <summary>
         /// The active JpcSession.
         /// </summary>		
-        public virtual JpcSession JpcSession { get; set; }
+        public virtual IJpcSession JpcSession { get; set; }
+
+
+
+        public JpcClientInterface(IJpcSession jpcSession = null) =>
+            JpcSession = jpcSession;
+
+
 
         ///<summary>The active JpcSession as a remote session.</summary> 
-        public JpcRemoteSession JpcRemoteSession => JpcSession as JpcRemoteSession;
+        public IJpcSession JpcRemoteSession => JpcSession;
 
         }
     }

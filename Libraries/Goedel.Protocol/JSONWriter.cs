@@ -70,16 +70,12 @@ namespace Goedel.Protocol {
         public string GetUTF8 => (Output as MemoryStream)?.ToArray().ToUTF8();
 
         /// <summary>
-        /// Create a new JSON Writer.
+        /// Create a new writer instance with the output <paramref name="Output"/>. 
+        /// If <paramref name="Output"/> is null, a memory stream is created and
+        /// used as the output.
         /// </summary>
-        public JsonWriter() => Output = new MemoryStream();
-
-        /// <summary>
-        /// Create a new JSON Writer using the specified output buffer. If the buffer has
-        /// an output stream defined, text will be written to the stream.
-        /// </summary>
-        /// <param name="Output">The output stream.</param>
-        public JsonWriter(Stream Output) => this.Output = Output;
+        /// <param name="Output">Output buffer</param> 
+        public JsonWriter(Stream Output = null) => this.Output = Output ?? new MemoryStream();
 
 
         /// <summary>
@@ -88,7 +84,7 @@ namespace Goedel.Protocol {
         public static JsonWriter JSONWriterFactory() => new JsonWriter();
 
 
-        private int OutputCol = 0;
+        private int outputCol = 0;
 
         /// <summary>
         /// Write Tag to the stream
@@ -101,7 +97,7 @@ namespace Goedel.Protocol {
             Output.Write(Tag);
             Output.Write("\": ");
 
-            OutputCol = IndentIn + 4 + Tag.Length;
+            outputCol = IndentIn + 4 + Tag.Length;
             }
 
         /// <summary>Write 32 bit integer.</summary>
@@ -177,7 +173,7 @@ namespace Goedel.Protocol {
             var Length = count < 0 ? buffer.Length : count;
             Output.Write("\"");
             Output.Write(BaseConvert.ToStringBase64url(buffer, offset, Length, ConversionFormat,
-                outputCol: OutputCol, outputMax: 63));
+                outputCol: outputCol, outputMax: 63));
             Output.Write("\"");
             }
 

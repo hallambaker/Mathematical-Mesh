@@ -53,38 +53,38 @@ namespace Goedel.Protocol.Debug {
             return null;
             }
 
-        /// <summary>
-        /// Post a request and retrieve the response.
-        /// </summary>
-        /// <param name="tag">Command</param>
-        /// <param name="request">JSON encoded request.</param>
-        /// <returns>JSON encoded response.</returns>
-        public override string Post(string tag, JsonObject request) {
+        ///// <summary>
+        ///// Post a request and retrieve the response.
+        ///// </summary>
+        ///// <param name="tag">Command</param>
+        ///// <param name="request">JSON encoded request.</param>
+        ///// <returns>JSON encoded response.</returns>
+        //public override string Post(string tag, JsonObject request) {
 
-            var Buffer = new MemoryStream();
-            var JSONWriter = new JsonWriter(Buffer);
+        //    var Buffer = new MemoryStream();
+        //    var JSONWriter = new JsonWriter(Buffer);
 
-            // Wrap the request object with the transaction name.
-            JSONWriter.WriteObjectStart();
-            JSONWriter.WriteToken(tag, 0);
-            request.Serialize(JSONWriter, false);
-            JSONWriter.WriteObjectEnd();
+        //    // Wrap the request object with the transaction name.
+        //    JSONWriter.WriteObjectStart();
+        //    JSONWriter.WriteToken(tag, 0);
+        //    request.Serialize(JSONWriter, false);
+        //    JSONWriter.WriteObjectEnd();
 
-            // Now prepare a reader so that the data can be unpacked
-            var DataText = Buffer.GetUTF8();
-            var JSONReader = new JsonReader(DataText);
+        //    // Now prepare a reader so that the data can be unpacked
+        //    var DataText = Buffer.GetUTF8();
+        //    var JSONReader = new JsonReader(DataText);
 
-            // Send the request
-            var ResultObject = Host.Dispatch(this, JSONReader);
+        //    // Send the request
+        //    var ResultObject = Host.Dispatch(this, JSONReader);
 
-            if (Traces != null) {
-                Traces.Request(request);
-                Traces.Response("200 OK", ResultObject);
-                }
+        //    if (Traces != null) {
+        //        Traces.Request(request);
+        //        Traces.Response("200 OK", ResultObject);
+        //        }
 
-            // Return the response as a string for disassembly
-            return ResultObject.ToString();
-            }
+        //    // Return the response as a string for disassembly
+        //    return ResultObject.ToString();
+        //    }
 
         }
 
