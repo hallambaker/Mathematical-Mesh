@@ -39,7 +39,8 @@ namespace Goedel.Protocol.Presentation {
     /// The packet types passed as plaintext.
     /// </summary>
     public enum PlaintextPacketType {
-
+        ///<summary>Data packet (for internal use).</summary> 
+        Data = 0x00,
 
         ///<summary>Report an error to the sender.</summary> 
         Error = 0x80,

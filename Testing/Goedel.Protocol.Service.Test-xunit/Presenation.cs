@@ -42,6 +42,7 @@ namespace Goedel.XUnit {
             //// Host: Get initial, respond host exchange.
             var clientInitialPacket = Listener.ParseClientInitial(portID, clientInitialData) ;
             clientInitialPacket.Payload.TestEqual(payload1);
+
             var connectionHost = listenerHost.GetConnectionHost(clientInitialPacket);
             var hostExchangeData = connectionHost.SerializeHostExchange(payload2);
 

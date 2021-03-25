@@ -92,6 +92,10 @@ namespace Goedel.Protocol.Presentation {
                     byte[] payload = null,
                     Credential hostCredential = null);
 
+
+
+
+
         /// <summary>
         /// Accept the inbound connection request described in <paramref name="packetRequest"/>.
         /// </summary>
@@ -100,18 +104,18 @@ namespace Goedel.Protocol.Presentation {
         /// at minimum.</param>
         /// <returns>The host connection. This may be used to wait for inbound requests from the 
         /// connection.</returns>
-        public abstract SessionResponder Accept(
+        public virtual SessionResponder Accept(
                     Packet packetRequest,
-                    byte[] payload = null);
+                    byte[] payload = null) => throw new NYI();
 
         /// <summary>
         /// Defer creation of a host connection by sending a challenge to the source.
         /// </summary>
         /// <param name="packetRequest">Parsed inbound request packet.</param>
         /// <param name="payload">Optional payload response. This is always returned enclair.</param>
-        public abstract void Challenge(
+        public virtual SessionResponder Challenge(
                     Packet packetRequest,
-                    byte[] payload = null);
+                    byte[] payload = null) => throw new NYI();
 
 
 
@@ -124,6 +128,73 @@ namespace Goedel.Protocol.Presentation {
         public abstract void Reject(
                     Packet packetRequest,
                     byte[] payload = null);
+
+
+
+
+
+        // ****************************************
+        // These are to be transferred to the generator.
+
+        ///// <summary>
+        ///// Create a serialised packet of type HostChallenge1 packet.
+        ///// </summary>
+        ///// <param name="payload">The payload data.</param>
+        ///// <param name="plaintextExtensionsIn">Additional extensions to be presented 
+        ///// in the plaintext segment.</param>
+        ///// <returns>The serialized data.</returns>
+        //public byte[] SerializeHostChallenge1(
+        //        byte[] payload = null,
+        //        List<PacketExtension> plaintextExtensionsIn = null) {
+
+        //    // The plaintext part
+        //    var outerWriter = new PacketWriterAesGcm();
+        //    // Plaintext fields..
+        //    var plaintextExtensions = new List<PacketExtension>();
+        //    AddEphemerals(plaintextExtensions);
+        //    AddChallenge(plaintextExtensions);
+        //    AddCredentials(plaintextExtensions);
+        //    plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
+        //    outerWriter.WriteExtensions(plaintextExtensions);
+
+
+        //    // Only have plaintext
+        //    outerWriter.Write(payload);
+
+        //    // Return the outermost packet
+        //    return outerWriter.Packet;
+        //    }
+
+
+        ///// <summary>
+        ///// Create a serialised packet of type HostChallenge2 packet.
+        ///// </summary>
+        ///// <param name="payload">The payload data.</param>
+        ///// <param name="plaintextExtensionsIn">Additional extensions to be presented 
+        ///// in the plaintext segment.</param>
+        ///// <returns>The serialized data.</returns>
+        //public byte[] SerializeHostChallenge2(
+        //        byte[] payload = null,
+        //        List<PacketExtension> plaintextExtensionsIn = null) {
+
+        //    // The plaintext part
+        //    var outerWriter = new PacketWriterAesGcm();
+        //    // Plaintext fields..
+        //    var plaintextExtensions = new List<PacketExtension>();
+        //    AddEphemerals(plaintextExtensions);
+        //    AddChallenge(plaintextExtensions);
+        //    plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
+        //    outerWriter.WriteExtensions(plaintextExtensions);
+
+
+        //    // Only have plaintext
+        //    outerWriter.Write(payload);
+
+        //    // Return the outermost packet
+        //    return outerWriter.Packet;
+        //    }
+
+
 
         }
     }

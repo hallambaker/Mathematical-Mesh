@@ -36,7 +36,7 @@ namespace Goedel.Protocol.Service {
 
 
 
-        private Task<Connection>[] serviceTasks;
+        private Task<ServiceRequest>[] serviceTasks;
 
         private HttpListener httpListener=null;
 
@@ -156,7 +156,7 @@ namespace Goedel.Protocol.Service {
                 }
 
 
-            serviceTasks = new Task<Connection>[ListenerCount];
+            serviceTasks = new Task<ServiceRequest>[ListenerCount];
 
             httpListener.Start();
 
@@ -176,6 +176,12 @@ namespace Goedel.Protocol.Service {
             serviceThread = new Thread (WaitService);
             serviceThread.Start();
             }
+
+
+
+        // The choreography here is flawed but leave as is for now. Need to have a three stage 
+        // scheme in which we first construct the complete request, then dispatch it on
+        // a managed queue and finally release it.
 
 
         void WaitService() {
@@ -239,7 +245,7 @@ namespace Goedel.Protocol.Service {
 
 
         // Dispatch completion of the specified connection.
-        void Dispatch(Connection connection) {
+        void Dispatch(ServiceRequest connection) {
 
             // First purge all finished tasks and check to see if there is an outstanding request competing for the same resource
 
@@ -328,18 +334,23 @@ namespace Goedel.Protocol.Service {
             }
 
 
-        async Task<Connection> Process(HttpListener httpListener) {
-            var connection = httpListener.GetContextAsync();
-            await connection;
+        async Task<ServiceRequest> Process(HttpListener httpListener) {
+            while (true) {
+                var connection = httpListener.GetContextAsync();
+                await connection;
 
-            // prepare the result for dispatch to a processing queue.
-            return new ConnectionHttp(FredListener, connection.Result);
+                // prepare the result for dispatch to a processing queue.
+                var request =  new ServiceRequestHttp(this, connection.Result);
+                if (!request.Refused) {
+                    return request;
+                    }
+                }
             }
-        async Task<Connection> Process(UdpClient UdpClient) {
+        async Task<ServiceRequest> Process(UdpClient UdpClient) {
             var connection = UdpClient.ReceiveAsync();
 
             await connection;
-            return new ConnectionUdp(connection.Result);
+            return new ServiceRequestUdp(connection.Result);
             }
 
         }

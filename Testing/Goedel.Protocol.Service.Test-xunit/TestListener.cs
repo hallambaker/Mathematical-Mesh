@@ -50,13 +50,13 @@ namespace Goedel.XUnit {
 
         #region // Override Methods
 
-        ///<inheritdoc/>
-        public override SessionResponder Accept(
-                    Packet packetRequest,
-                    byte[] payload = null) => new TestConnectionHost(this, packetRequest);
+        /////<inheritdoc/>
+        //public override SessionResponder Accept(
+        //            Packet packetRequest,
+        //            byte[] payload = null) => new TestConnectionHost(this, packetRequest);
 
-        ///<inheritdoc/>
-        public override void Challenge(Packet packetRequest, byte[] payload = null) => throw new NotImplementedException();
+        /////<inheritdoc/>
+        //public override void Challenge(Packet packetRequest, byte[] payload = null) => throw new NotImplementedException();
 
         ///<inheritdoc/>
         public override SessionInitiator GetConnectionClient(PortId destinationId, byte[] payload = null, Credential hostCredential = null) => throw new NotImplementedException();
