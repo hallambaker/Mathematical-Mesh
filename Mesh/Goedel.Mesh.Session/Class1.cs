@@ -1,4 +1,4 @@
-﻿//  Copyright © 2021 by Threshold Secrets Llc.
+﻿//  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -17,27 +17,35 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
+//  
 
+using Goedel.Protocol;
+using Goedel.Protocol.Service;
+using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 using System;
-using System.Collections;
+using System.IO;
+using System.Net;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Goedel.Protocol.Presentation;
-using Goedel.Protocol.Service;
 
 namespace Goedel.Mesh.Session {
-    public class MeshHost : Service {
 
+        #region // Properties
+        #endregion
 
-        public MeshHost(Credential credential, List<Provider> providers, int maxCores = 0) : 
-                    base (new MeshListener(credential), providers, maxCores) {
-            }
+        #region // Destructor
+        #endregion
 
+        #region // Constructors
+        #endregion
 
+        #region // Implement Interface: Ixxx
+        #endregion
 
-
+        #region // Methods 
+        #endregion
         }
     }

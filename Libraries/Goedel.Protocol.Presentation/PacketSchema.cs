@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/24/2021 5:52:14 PM
+//  This file was automatically generated at 3/26/2021 5:08:46 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  yaschema version 3.0.0.664
+//  Generator:  yaschema version 3.0.0.677
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -49,7 +49,7 @@ namespace Goedel.Protocol.Presentation {
 	/// <summary>
     /// Client connection class. Tracks the state of a client connection.
     /// </summary>
-    public partial class SessionInitiator : Session {
+    public partial class  SessionInitiator : Session {
 
 
         // Serialize Client packet ClientInitial
@@ -60,13 +60,17 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
+        /// <param name="buffer">Buffer provided by caller</param>
+        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeClientInitial (
-                Span<byte> payload,
-                List<PacketExtension> plaintextExtensionsIn = null                ) {
+                byte[] payload = null,
+                List<PacketExtension> plaintextExtensionsIn = null,
+                byte[] buffer=null,
+                int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm();
+            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
             AddEphemerals (plaintextExtensions);
@@ -91,14 +95,18 @@ namespace Goedel.Protocol.Presentation {
         /// in the plaintext segment.</param>
         /// <param name="mezanineExtensionsIn">Additional extensions to be presented
         /// in the mezzanine segment.</param>
+        /// <param name="buffer">Buffer provided by caller</param>
+        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeClientExchange (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
-                List<PacketExtension> mezanineExtensionsIn = null                ) {
+                List<PacketExtension> mezanineExtensionsIn = null,
+                byte[] buffer=null,
+                int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm();
+            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
             // Plaintext fields..
             ClientKeyExchange (out var ephemeral, out var clientKeyId);
             outerWriter.Write (clientKeyId);
@@ -113,8 +121,6 @@ namespace Goedel.Protocol.Presentation {
             mezanineExtensions.AddRangeSafe(mezanineExtensionsIn);
             mezanineWriter.WriteExtensions(mezanineExtensions);
             mezanineWriter.Write(payload);
-
-            Screen.WriteLine("Encrypt here.");
             outerWriter.Encrypt(ClientKeyOut, mezanineWriter);
 
             // Return the outermost packet
@@ -133,15 +139,19 @@ namespace Goedel.Protocol.Presentation {
         /// in the mezzanine segment.</param>
         /// <param name="ciphertextExtensions">Additional extensions to be presented 
         /// in the encrypted segment.</param>
+        /// <param name="buffer">Buffer provided by caller</param>
+        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeClientComplete (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 List<PacketExtension> mezanineExtensionsIn = null,
-                List<PacketExtension> ciphertextExtensions = null                ) {
+                List<PacketExtension> ciphertextExtensions = null,
+                byte[] buffer=null,
+                int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm();
+            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
             // There are no plaintext fields.
             outerWriter.WriteExtensions(plaintextExtensionsIn);
 
@@ -177,15 +187,19 @@ namespace Goedel.Protocol.Presentation {
         /// in the mezzanine segment.</param>
         /// <param name="ciphertextExtensions">Additional extensions to be presented 
         /// in the encrypted segment.</param>
+        /// <param name="buffer">Buffer provided by caller</param>
+        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeClientCompleteDeferred (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 List<PacketExtension> mezanineExtensionsIn = null,
-                List<PacketExtension> ciphertextExtensions = null                ) {
+                List<PacketExtension> ciphertextExtensions = null,
+                byte[] buffer=null,
+                int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm();
+            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
             ClientKeyExchange (out var ephemeral, out var clientKeyId);
@@ -223,15 +237,22 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data</param>
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+        /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public  PacketHostExchange ParseHostExchange (PortId sourceId, byte[] packet) {
+        public  PacketHostExchange ParseHostExchange (
+                PortId sourceId, 
+                byte[] packet,
+                int position=0,
+                int count = -1) {
             var result = new PacketHostExchange () {
                 SourcePortId = sourceId
                 };
             PacketIn=result;
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet);
+            var outerReader = new PacketReaderAesGcm(packet, position, count);
             result.HostKeyId = outerReader.ReadString ();
             result.PlaintextExtensions = outerReader.ReadExtensions();
             CredentialOther = CredentialSelf.GetCredentials (result.PlaintextExtensions);
@@ -250,15 +271,22 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data</param>
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+        /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public  PacketHostChallenge1 ParseHostChallenge1 (PortId sourceId, byte[] packet) {
+        public  PacketHostChallenge1 ParseHostChallenge1 (
+                PortId sourceId, 
+                byte[] packet,
+                int position=0,
+                int count = -1) {
             var result = new PacketHostChallenge1 () {
                 SourcePortId = sourceId
                 };
             PacketIn=result;
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet);
+            var outerReader = new PacketReaderAesGcm(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
             CredentialOther = CredentialSelf.GetCredentials (result.PlaintextExtensions);
             // Only have plaintext
@@ -273,15 +301,22 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data</param>
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+        /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public  PacketHostChallenge2 ParseHostChallenge2 (PortId sourceId, byte[] packet) {
+        public  PacketHostChallenge2 ParseHostChallenge2 (
+                PortId sourceId, 
+                byte[] packet,
+                int position=0,
+                int count = -1) {
             var result = new PacketHostChallenge2 () {
                 SourcePortId = sourceId
                 };
             PacketIn=result;
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet);
+            var outerReader = new PacketReaderAesGcm(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
             // Only have plaintext
             result.Payload = outerReader.ReadBinary();
@@ -295,15 +330,22 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data</param>
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+        /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public  PacketHostComplete ParseHostComplete (PortId sourceId, byte[] packet) {
+        public  PacketHostComplete ParseHostComplete (
+                PortId sourceId, 
+                byte[] packet,
+                int position=0,
+                int count = -1) {
             var result = new PacketHostComplete () {
                 SourcePortId = sourceId
                 };
             PacketIn=result;
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet);
+            var outerReader = new PacketReaderAesGcm(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
             // Mezzanine
             var mezanineReader = outerReader.Decrypt (ClientKeyIn);
@@ -334,14 +376,18 @@ namespace Goedel.Protocol.Presentation {
         /// in the plaintext segment.</param>
         /// <param name="mezanineExtensionsIn">Additional extensions to be presented
         /// in the mezzanine segment.</param>
+        /// <param name="buffer">Buffer provided by caller</param>
+        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeHostExchange (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
-                List<PacketExtension> mezanineExtensionsIn = null                ) {
+                List<PacketExtension> mezanineExtensionsIn = null,
+                byte[] buffer=null,
+                int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm();
+            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
             ClientKeyExchange (out var clientKeyId);
@@ -370,13 +416,17 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
+        /// <param name="buffer">Buffer provided by caller</param>
+        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeHostChallenge1 (
                 byte[] payload = null,
-                List<PacketExtension> plaintextExtensionsIn = null                ) {
+                List<PacketExtension> plaintextExtensionsIn = null,
+                byte[] buffer=null,
+                int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm();
+            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
             AddEphemerals (plaintextExtensions);
@@ -401,13 +451,17 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
+        /// <param name="buffer">Buffer provided by caller</param>
+        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeHostChallenge2 (
                 byte[] payload = null,
-                List<PacketExtension> plaintextExtensionsIn = null                ) {
+                List<PacketExtension> plaintextExtensionsIn = null,
+                byte[] buffer=null,
+                int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm();
+            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
             AddEphemerals (plaintextExtensions);
@@ -435,15 +489,19 @@ namespace Goedel.Protocol.Presentation {
         /// in the mezzanine segment.</param>
         /// <param name="ciphertextExtensions">Additional extensions to be presented 
         /// in the encrypted segment.</param>
+        /// <param name="buffer">Buffer provided by caller</param>
+        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeHostComplete (
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 List<PacketExtension> mezanineExtensionsIn = null,
-                List<PacketExtension> ciphertextExtensions = null                ) {
+                List<PacketExtension> ciphertextExtensions = null,
+                byte[] buffer=null,
+                int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm();
+            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
             // There are no plaintext fields.
             outerWriter.WriteExtensions(plaintextExtensionsIn);
 
@@ -467,43 +525,10 @@ namespace Goedel.Protocol.Presentation {
 
 
         // Skip Client packet ClientInitial (initial packets parsed by the listener)
+
         // Skip Client packet ClientExchange (initial packets parsed by the listener)
 
-        /// <summary>
-        /// Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-        /// as a ClientComplete packet.
-        /// </summary>
-        /// <param name="sourceId">The packet source.</param>
-        /// <param name="packet">The packet data</param>
-        /// <returns>The parsed packet.</returns>
-
-        public  PacketClientComplete ParseClientComplete (PortId sourceId, byte[] packet) {
-            var result = new PacketClientComplete () {
-                SourcePortId = sourceId
-                };
-            PacketIn=result;
-            // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet);
-            result.PlaintextExtensions = outerReader.ReadExtensions();
-            // Parsing the inner packet is deferred until plaintext is parsed.
-            result.Reader = outerReader;
-
-            return result;
-            }
-        // Skip Client packet ClientCompleteDeferred (initial packets parsed by the listener)
-
-        /// <summary>
-        /// Perform key exchanges and complete parsing of the packet
-        /// </summary>
-        public void CompleteClientExchange (PacketClientExchange result) {
-            var outerReader = result.Reader;
-            ClientKeyExchange (result.ClientEphemeral, result.HostKeyId);
-            // Mezzanine
-            var mezanineReader = outerReader.Decrypt (ClientKeyIn);
-            result.MezzanineExtensions = mezanineReader.ReadExtensions();
-            CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);
-            result.Payload = mezanineReader.ReadBinary();
-            }
+        // Perform initial parse as static listener, only complete decrypt in session context
 
         /// <summary>
         /// Perform key exchanges and complete parsing of the packet
@@ -521,6 +546,7 @@ namespace Goedel.Protocol.Presentation {
             result.CiphertextExtensions = innerReader.ReadExtensions();
             result.Payload = innerReader.ReadBinary();
             }
+        // Perform initial parse as static listener, only complete decrypt in session context
 
         /// <summary>
         /// Perform key exchanges and complete parsing of the packet
@@ -550,14 +576,21 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data</param>
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+        /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public static PacketClientInitial ParseClientInitial (PortId sourceId, byte[] packet) {
+        public static PacketClientInitial ParseClientInitial (
+                PortId sourceId, 
+                byte[] packet,
+                int position=0,
+                int count = -1) {
             var result = new PacketClientInitial () {
                 SourcePortId = sourceId
                 };
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet);
+            var outerReader = new PacketReaderAesGcm(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
             // Only have plaintext
             result.Payload = outerReader.ReadBinary();
@@ -571,16 +604,51 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data</param>
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+        /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public static PacketClientExchange ParseClientExchange (PortId sourceId, byte[] packet) {
+        public static PacketClientExchange ParseClientExchange (
+                PortId sourceId, 
+                byte[] packet,
+                int position=0,
+                int count = -1) {
             var result = new PacketClientExchange () {
                 SourcePortId = sourceId
                 };
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet);
+            var outerReader = new PacketReaderAesGcm(packet, position, count);
             result.HostKeyId = outerReader.ReadString ();
             result.ClientEphemeral = outerReader.ReadBinary ();
+            result.PlaintextExtensions = outerReader.ReadExtensions();
+            // Parsing the inner packet is deferred until plaintext is parsed.
+            result.Reader = outerReader;
+
+            return result;
+            }
+
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+        /// as a ClientComplete packet.
+        /// </summary>
+        /// <param name="sourceId">The packet source.</param>
+        /// <param name="packet">The packet data</param>
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+        /// If less than 0, <paramref name="packet"/> is read to the end.</param>
+        /// <returns>The parsed packet.</returns>
+
+        public static PacketClientComplete ParseClientComplete (
+                PortId sourceId, 
+                byte[] packet,
+                int position=0,
+                int count = -1) {
+            var result = new PacketClientComplete () {
+                SourcePortId = sourceId
+                };
+            // The plaintext part
+            var outerReader = new PacketReaderAesGcm(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
             // Parsing the inner packet is deferred until plaintext is parsed.
             result.Reader = outerReader;
@@ -594,14 +662,21 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="sourceId">The packet source.</param>
         /// <param name="packet">The packet data</param>
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+        /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public static PacketClientCompleteDeferred ParseClientCompleteDeferred (PortId sourceId, byte[] packet) {
+        public static PacketClientCompleteDeferred ParseClientCompleteDeferred (
+                PortId sourceId, 
+                byte[] packet,
+                int position=0,
+                int count = -1) {
             var result = new PacketClientCompleteDeferred () {
                 SourcePortId = sourceId
                 };
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet);
+            var outerReader = new PacketReaderAesGcm(packet, position, count);
             result.HostKeyId = outerReader.ReadString ();
             result.ClientEphemeral = outerReader.ReadBinary ();
             result.PlaintextExtensions = outerReader.ReadExtensions();

@@ -54,7 +54,7 @@ namespace Goedel.XUnit {
 
 
             //// Host: send data
-            var clientCompletePacket = connectionHost.ParseClientComplete(portID, clientCompleteData);
+            var clientCompletePacket = Listener.ParseClientComplete(portID, clientCompleteData);
             connectionHost.CompleteClientComplete(clientCompletePacket);
             clientCompletePacket.Payload.TestEqual(payload3);
 

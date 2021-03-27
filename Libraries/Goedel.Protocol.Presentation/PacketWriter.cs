@@ -47,7 +47,12 @@ namespace Goedel.Protocol.Presentation {
         /// <paramref name="packetSize"/>.
         /// </summary>
         /// <param name="packetSize">The number of bytes in the packet to be created.</param>
-        public PacketWriter(int packetSize=1200) => Packet = new byte[packetSize];
+        /// <param name="buffer">Buffer provided by caller</param>
+        /// <param name="position">Offset within packet at which first byte is to be written.</param>
+        public PacketWriter(int packetSize = 1200, byte[] buffer = null, int position = 0) {
+            Packet = buffer ?? new byte[packetSize];
+            Position = position;
+            }
 
         /// <summary>
         /// Return the number of bytes taken to specify tag/length production of length
@@ -253,7 +258,10 @@ namespace Goedel.Protocol.Presentation {
                     - Constants.SizeIvAesGcm - Constants.SizeTagAesGcm;
 
         ///<inheritdoc/>
-        public PacketWriterAesGcm(int packetSize = 1200) : base(packetSize) { }
+        public PacketWriterAesGcm(
+                    int packetSize = 1200, 
+                    byte[] buffer = null, 
+                    int position = 0) : base(packetSize, buffer, position) { }
 
         ///<inheritdoc/>
         public override void Encrypt(byte[] key, PacketWriter writerIn, bool pad=true) {

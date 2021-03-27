@@ -4,120 +4,6 @@
         <name>Goedel.Protocol.Presentation</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Protocol.Presentation.SessionResponder">
-            <summary>
-            Presentation host connection. Tracks the state of a host connection.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.SessionResponder.ClientKeyIn">
-            <inheritdoc/> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.SessionResponder.ClientKeyOut">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.SessionResponder.MutualKeyIn">
-            <inheritdoc/> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.SessionResponder.MutualKeyOut">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.SessionResponder.HostCredential">
-            <inheritdoc/> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.SessionResponder.ClientCredential">
-            <inheritdoc/> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.SessionResponder.Listener">
-            <summary>The listener this connection host services</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.SessionResponder.SourcePortId">
-            <summary>The source port identifier.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.#ctor(Goedel.Protocol.Presentation.Listener,Goedel.Protocol.Presentation.PortId)">
-            <summary>
-            Constructor for a connection host instance connected to <paramref name="listener"/>
-            </summary>
-            <param name="listener">The listener this connection is to service.</param>
-            <param name="portId">The source port on which this connection was received.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.Receive">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.Reply(System.Byte[])">
-            <summary>
-            
-            </summary>
-            <param name="payload"></param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.SerializeHostExchange(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
-            <summary>
-            Create a serialised packet of type HostExchange packet.
-            </summary>
-            <param name="payload">The payload data.</param>
-            <param name="plaintextExtensionsIn">Additional extensions to be presented 
-            in the plaintext segment.</param>
-            <param name="mezanineExtensionsIn">Additional extensions to be presented
-            in the mezzanine segment.</param>
-            <returns>The serialized data.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.SerializeHostChallenge1(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
-            <summary>
-            Create a serialised packet of type HostChallenge1 packet.
-            </summary>
-            <param name="payload">The payload data.</param>
-            <param name="plaintextExtensionsIn">Additional extensions to be presented 
-            in the plaintext segment.</param>
-            <returns>The serialized data.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.SerializeHostChallenge2(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
-            <summary>
-            Create a serialised packet of type HostChallenge2 packet.
-            </summary>
-            <param name="payload">The payload data.</param>
-            <param name="plaintextExtensionsIn">Additional extensions to be presented 
-            in the plaintext segment.</param>
-            <returns>The serialized data.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.SerializeHostComplete(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
-            <summary>
-            Create a serialised packet of type HostComplete packet.
-            </summary>
-            <param name="payload">The payload data.</param>
-            <param name="plaintextExtensionsIn">Additional extensions to be presented 
-            in the plaintext segment.</param>
-            <param name="mezanineExtensionsIn">Additional extensions to be presented
-            in the mezzanine segment.</param>
-            <param name="ciphertextExtensions">Additional extensions to be presented 
-            in the encrypted segment.</param>
-            <returns>The serialized data.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.ParseClientComplete(Goedel.Protocol.Presentation.PortId,System.Byte[])">
-            <summary>
-            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-            as a ClientComplete packet.
-            </summary>
-            <param name="sourceId">The packet source.</param>
-            <param name="packet">The packet data</param>
-            <returns>The parsed packet.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.CompleteClientExchange(Goedel.Protocol.Presentation.PacketClientExchange)">
-            <summary>
-            Perform key exchanges and complete parsing of the packet
-            </summary>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.CompleteClientComplete(Goedel.Protocol.Presentation.PacketClientComplete)">
-            <summary>
-            Perform key exchanges and complete parsing of the packet
-            </summary>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.CompleteClientCompleteDeferred(Goedel.Protocol.Presentation.PacketClientCompleteDeferred)">
-            <summary>
-            Perform key exchanges and complete parsing of the packet
-            </summary>
-        </member>
         <member name="T:Goedel.Protocol.Presentation.EncryptedPacketIdentifier">
             <summary>
             Identifiers used within encrypted data packets.
@@ -146,6 +32,9 @@
             <summary>
             The packet types passed as plaintext.
             </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.Data">
+            <summary>Data packet (for internal use).</summary> 
         </member>
         <member name="F:Goedel.Protocol.Presentation.PlaintextPacketType.Error">
             <summary>Report an error to the sender.</summary> 
@@ -406,31 +295,52 @@
             <param name="packetRequest">Parsed inbound request packet.</param>
             <param name="payload">Optional payload response. This is always returned enclair.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientInitial(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientInitial(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a ClientInitial packet.
             </summary>
             <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+            If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientExchange(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientExchange(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a ClientExchange packet.
             </summary>
             <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+            If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientCompleteDeferred(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientComplete(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
+            as a ClientComplete packet.
+            </summary>
+            <param name="sourceId">The packet source.</param>
+            <param name="packet">The packet data</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+            If less than 0, <paramref name="packet"/> is read to the end.</param>
+            <returns>The parsed packet.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientCompleteDeferred(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a ClientCompleteDeferred packet.
             </summary>
             <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+            If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
         <member name="T:Goedel.Protocol.Presentation.NamespaceDoc">
@@ -485,11 +395,13 @@
         <member name="M:Goedel.Protocol.Presentation.PacketReader.Factory(System.Byte[])">
             <summary>Factory method returning a reader of the default decryption algorithm and mode.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReader.#ctor(System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.#ctor(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Constructor, returns a reader instance for the packet <paramref name="packet"/>.
             </summary>
             <param name="packet">The packet data.</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadByte">
             <summary>
@@ -569,11 +481,8 @@
         <member name="P:Goedel.Protocol.Presentation.PacketReaderAesGcm.SizeTag">
             <summary>Tag size in bytes. Currently fixed at 16 bytes.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.#ctor(System.Byte[])">
-            <summary>
-            Constructor, returns a reader instance for the packet <paramref name="packet"/>.
-            </summary>
-            <param name="packet">The packet data.</param>
+        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.#ctor(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Decrypt(System.Byte[],System.Boolean)">
             <inheritdoc/>
@@ -595,16 +504,18 @@
             Presentation client connection. Tracks the state of a client connection.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.SerializeClientInitial(System.Span{System.Byte},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.SerializeClientInitial(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
             Create a serialised packet of type ClientInitial packet.
             </summary>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.SerializeClientExchange(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.SerializeClientExchange(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
             Create a serialised packet of type ClientExchange packet.
             </summary>
@@ -613,9 +524,11 @@
             in the plaintext segment.</param>
             <param name="mezanineExtensionsIn">Additional extensions to be presented
             in the mezzanine segment.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.SerializeClientComplete(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.SerializeClientComplete(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
             Create a serialised packet of type ClientComplete packet.
             </summary>
@@ -626,9 +539,11 @@
             in the mezzanine segment.</param>
             <param name="ciphertextExtensions">Additional extensions to be presented 
             in the encrypted segment.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.SerializeClientCompleteDeferred(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.SerializeClientCompleteDeferred(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
             Create a serialised packet of type ClientCompleteDeferred packet.
             </summary>
@@ -639,42 +554,56 @@
             in the mezzanine segment.</param>
             <param name="ciphertextExtensions">Additional extensions to be presented 
             in the encrypted segment.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostExchange(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostExchange(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a HostExchange packet.
             </summary>
             <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+            If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostChallenge1(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostChallenge1(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a HostChallenge1 packet.
             </summary>
             <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+            If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostChallenge2(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostChallenge2(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a HostChallenge2 packet.
             </summary>
             <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+            If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostComplete(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostComplete(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a HostComplete packet.
             </summary>
             <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+            If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
         <member name="P:Goedel.Protocol.Presentation.SessionInitiator.ClientKeyIn">
@@ -697,6 +626,114 @@
         </member>
         <member name="F:Goedel.Protocol.Presentation.SessionInitiator.clientState">
             <summary>The current state of this client.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.SessionResponder">
+            <summary>
+            Presentation host connection. Tracks the state of a host connection.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.SessionResponder.SerializeHostExchange(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+            <summary>
+            Create a serialised packet of type HostExchange packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <param name="mezanineExtensionsIn">Additional extensions to be presented
+            in the mezzanine segment.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.SessionResponder.SerializeHostChallenge1(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+            <summary>
+            Create a serialised packet of type HostChallenge1 packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.SessionResponder.SerializeHostChallenge2(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+            <summary>
+            Create a serialised packet of type HostChallenge2 packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.SessionResponder.SerializeHostComplete(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+            <summary>
+            Create a serialised packet of type HostComplete packet.
+            </summary>
+            <param name="payload">The payload data.</param>
+            <param name="plaintextExtensionsIn">Additional extensions to be presented 
+            in the plaintext segment.</param>
+            <param name="mezanineExtensionsIn">Additional extensions to be presented
+            in the mezzanine segment.</param>
+            <param name="ciphertextExtensions">Additional extensions to be presented 
+            in the encrypted segment.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.SessionResponder.CompleteClientComplete(Goedel.Protocol.Presentation.PacketClientComplete)">
+            <summary>
+            Perform key exchanges and complete parsing of the packet
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.SessionResponder.CompleteClientCompleteDeferred(Goedel.Protocol.Presentation.PacketClientCompleteDeferred)">
+            <summary>
+            Perform key exchanges and complete parsing of the packet
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.SessionResponder.ClientKeyIn">
+            <inheritdoc/> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.SessionResponder.ClientKeyOut">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.SessionResponder.MutualKeyIn">
+            <inheritdoc/> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.SessionResponder.MutualKeyOut">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.SessionResponder.HostCredential">
+            <inheritdoc/> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.SessionResponder.ClientCredential">
+            <inheritdoc/> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.SessionResponder.Listener">
+            <summary>The listener this connection host services</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.SessionResponder.SourcePortId">
+            <summary>The source port identifier.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.SessionResponder.#ctor(Goedel.Protocol.Presentation.Listener,Goedel.Protocol.Presentation.PortId)">
+            <summary>
+            Constructor for a connection host instance connected to <paramref name="listener"/>
+            </summary>
+            <param name="listener">The listener this connection is to service.</param>
+            <param name="portId">The source port on which this connection was received.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.SessionResponder.Receive">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.SessionResponder.Reply(System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="payload"></param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketClientInitial">
             <summary>
@@ -833,12 +870,14 @@
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Factory(System.Int32)">
             <summary>Factory method, returns a packet writer for the default encryption algorithm.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.#ctor(System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.#ctor(System.Int32,System.Byte[],System.Int32)">
             <summary>
             Constructor, create a packet writer with a packet size of 
             <paramref name="packetSize"/>.
             </summary>
             <param name="packetSize">The number of bytes in the packet to be created.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.LengthLength(System.Int64)">
             <summary>
@@ -943,7 +982,7 @@
         <member name="P:Goedel.Protocol.Presentation.PacketWriterAesGcm.RemainingSpace">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.#ctor(System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.#ctor(System.Int32,System.Byte[],System.Int32)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter,System.Boolean)">
@@ -956,6 +995,12 @@
             <summary>
             Base class for presentation connections.
             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Session.SourceIdSize">
+            <summary>The size of a source ID tag.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Session.PacketQuanta">
+            <summary>Packet Quantization</summary> 
         </member>
         <member name="P:Goedel.Protocol.Presentation.Session.ClientKeyClientToHost">
             <summary>Symmetric key used to encrypt/decrypt mezzanine data sent by the client to 
@@ -1028,6 +1073,36 @@
             Add a response value over the current state to <paramref name="extensions"/>
             </summary>
             <param name="extensions">List of extensions to add the ephemerals to.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Session.MakeTagKeyExchange(Goedel.Protocol.Presentation.PlaintextPacketType)">
+            <summary>
+            Prepare a buffer to hold a key exchange request.
+            </summary>
+            <param name="plaintextPacketType">The request type.</param>
+            <returns>The allocated buffer and offset at which to write the first byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Session.GetSourceId(System.Byte[])">
+            <summary>
+            Process the initial bytes of the buffer to get the source ID value according to the 
+            source ID processing mode specified for the session.
+            </summary>
+            <param name="buffer"></param>
+            <returns>The retrieved sourceId and position in the buffer.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Session.SetSourceId(System.Byte[],System.UInt64)">
+            <summary>
+            Set the initial bytes of <paramref name="buffer"/> to specify 
+            </summary>
+            <param name="buffer">Buffer to prefix the source ID entry to.</param>
+            <param name="sourceId">The source ID</param>
+            <returns>The number of bytes written.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Session.QuantizePacketLength(System.Int32)">
+            <summary>
+            Quantize the packet length so it is a fixed multiple of 64 bits.
+            </summary>
+            <param name="length">The minimum length to return.</param>
+            <returns>The Quantized length.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Session.SerializePacketData(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Int32)">
             <summary>

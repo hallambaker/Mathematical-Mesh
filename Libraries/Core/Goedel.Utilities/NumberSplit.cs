@@ -112,13 +112,15 @@ namespace Goedel.Utilities {
         /// <param name="Data">The data to convert</param>
         /// <param name="Count">The number of bytes to convert.</param>
         /// <returns>The integer value.</returns>
-        public static long BigEndianInt(this byte[] Data, int Count) {
-            long Result = 0;
+        public static ulong BigEndianInt(this byte[] Data, int Count) {
+            ulong Result = 0;
             for (var i = 0; i < Count; i++) {
-                Count = (Count << 8) | Data[i];
+                Result = (Result << 8) | Data[i];
                 }
             return Result;
             }
+
+
 
 
         /// <summary>
@@ -126,7 +128,8 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="Data">Input</param>
         /// <returns>Output array</returns>
-        public static byte[] BigEndian(this int Data) => new byte[] { Data.Byte3(), Data.Byte2(), Data.Byte1(), Data.Byte0() };
+        public static byte[] BigEndian(this int Data) => 
+                    new byte[] { Data.Byte3(), Data.Byte2(), Data.Byte1(), Data.Byte0() };
 
 
         /// <summary>

@@ -87,11 +87,15 @@ namespace Goedel.Mesh.Session {
                 string tag,
                 JsonObject request) {
 
-            Span<byte> span = null;
+            
+
+            byte[] span = null;
             if (request != null) {
                 span = SerializePayload(tag, request, out var stream);
                 }
-            var encoded = SerializeClientInitial(span, null);
+
+            var (buffer, position) = MakeTagKeyExchange(PlaintextPacketType.ClientInitial);
+            var encoded = SerializeClientInitial(span, null, buffer, position);
 
 
             Screen.WriteLine($"Wait on URI {Uri}");
@@ -115,7 +119,7 @@ namespace Goedel.Mesh.Session {
 
             // now wrap the presentation around it.
 
-            var result = Transact(span.ToArray());
+            var result = Transact(span);
 
             
 
@@ -124,7 +128,10 @@ namespace Goedel.Mesh.Session {
             throw new NYI();
             }
 
-        private Span<byte> SerializePayload(string tag, JsonObject request, out MemoryStream stream) {
+
+
+
+        private byte[] SerializePayload(string tag, JsonObject request, out MemoryStream stream) {
             stream = new MemoryStream();
             var writer = JsonObject.GetJsonWriter(ObjectEncoding);
             writer.WriteObjectStart();
@@ -135,7 +142,7 @@ namespace Goedel.Mesh.Session {
             writer.WriteObjectEnd();
 
             // avoid the copy by using a Span.
-            return new Span<byte>(stream.GetBuffer(), 0, (int)stream.Position);
+            return stream.ToArray();
             }
 
         private JsonObject ParsePayload(byte[] responseData) {

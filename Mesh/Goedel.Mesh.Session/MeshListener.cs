@@ -38,11 +38,22 @@ namespace Goedel.Mesh.Session {
 
         public override SessionInitiator GetConnectionClient(PortId destinationId, byte[] payload = null, Credential hostCredential = null) => throw new NotImplementedException();
         public override void Reject(Packet packetRequest, byte[] payload = null) => throw new NotImplementedException();
+
+
+        SessionResponder sessionResponderChallenge = null;
+
+        ///<inheritdoc/>
+        public override SessionResponder Challenge(
+            Packet packetRequest,
+            byte[] payload = null) => sessionResponderChallenge ??
+                    new MeshSessionResponder(this, packetRequest);
+
+
         }
 
 
 
-    public class MeshConnectionHost : SessionResponder {
+    public class MeshSessionResponder : SessionResponder {
 
         public override Task<byte[]> Receive() => throw new NotImplementedException();
         public override void Reply(byte[] payload) => throw new NotImplementedException();
@@ -90,19 +101,19 @@ namespace Goedel.Mesh.Session {
             }
 
 
-        public MeshConnectionHost(
+        public MeshSessionResponder(
                 Listener listener,
                 Packet packetIn
                 ) : base(listener, packetIn.SourcePortId) {
-            PacketIn = packetIn;
-            if (packetIn is PacketClientExchange packetClientExchange) {
-                // We have accepted the connection, cause the client exchange to be performed.
-                CompleteClientExchange(packetClientExchange);
-                }
-            if (packetIn is PacketClientCompleteDeferred packetClientCompleteDeferred) {
-                // We have accepted the connection, cause the client exchange to be performed.
-                CompleteClientCompleteDeferred(packetClientCompleteDeferred);
-                }
+            //PacketIn = packetIn;
+            //if (packetIn is PacketClientExchange packetClientExchange) {
+            //    // We have accepted the connection, cause the client exchange to be performed.
+            //    CompleteClientExchange(packetClientExchange);
+            //    }
+            //if (packetIn is PacketClientCompleteDeferred packetClientCompleteDeferred) {
+            //    // We have accepted the connection, cause the client exchange to be performed.
+            //    CompleteClientCompleteDeferred(packetClientCompleteDeferred);
+            //    }
             //CredentialSelf = credential;
             }
 

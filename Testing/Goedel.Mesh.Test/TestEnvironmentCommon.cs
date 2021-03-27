@@ -10,6 +10,7 @@ using Goedel.Protocol.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Goedel.Mesh.Session;
 
 
 namespace Goedel.Mesh.Test {
@@ -81,7 +82,7 @@ namespace Goedel.Mesh.Test {
             using var provider = new Provider(endpoints, MeshService);
 
             var providers = new List<Provider> { provider };
-            return new Service(providers);
+            return new MeshHost(null, providers);
             }
 
 

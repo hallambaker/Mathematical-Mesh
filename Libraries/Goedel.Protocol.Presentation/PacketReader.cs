@@ -20,6 +20,9 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Reader position.</summary> 
         public int Position { get; set; } = 0;
 
+
+        public int Last;
+
         ///<summary>Buffer from which data is read.</summary> 
         public byte[] Packet;
 
@@ -30,7 +33,15 @@ namespace Goedel.Protocol.Presentation {
         /// Constructor, returns a reader instance for the packet <paramref name="packet"/>.
         /// </summary>
         /// <param name="packet">The packet data.</param>
-        public PacketReader(byte[] packet) => Packet = packet;
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.</param>
+        public PacketReader(byte[] packet, 
+                int position=0,
+                int count = -1) {
+            Packet = packet;
+            Position = position;
+            Last = count < 0 ? packet.Length : position + count;
+            }
 
         /// <summary>
         /// Read the next byte in the packet.
@@ -159,11 +170,10 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Tag size in bytes. Currently fixed at 16 bytes.</summary> 
         public virtual int SizeTag => 16;
 
-        /// <summary>
-        /// Constructor, returns a reader instance for the packet <paramref name="packet"/>.
-        /// </summary>
-        /// <param name="packet">The packet data.</param>
-        public PacketReaderAesGcm(byte[] packet) : base(packet) { }
+        ///<inheritdoc/>
+        public PacketReaderAesGcm(byte[] packet, 
+                int position=0,
+                int count = -1) : base(packet, position, count) { }
 
         ///<inheritdoc/>
         public override PacketReader Decrypt(byte[] key, bool pad = true) {

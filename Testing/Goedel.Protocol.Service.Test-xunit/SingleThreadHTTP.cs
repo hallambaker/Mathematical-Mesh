@@ -11,10 +11,9 @@ using System.Collections.Generic;
 using Goedel.Mesh.Test;
 using System.Threading;
 using Goedel.Mesh;
-
+using Goedel.Mesh.Session;
 using Goedel.Mesh.Management;
 using Goedel.Protocol.Service;
-using Goedel.Mesh.Session;
 
 using Xunit;
 using System.IO;
@@ -42,8 +41,7 @@ namespace Goedel.XUnit {
                         Domain, Instance);
 
             var providers = new List<Provider> { provider };
-            TestListener = new TestListener(hostCredential);
-            using var server = new Service(TestListener, providers);
+            using var server = new MeshHost(hostCredential, providers);
 
 
             var meshServiceBinding = new MeshSession(clientCredential, Domain, Protocol, Instance, PresentationType.Http);

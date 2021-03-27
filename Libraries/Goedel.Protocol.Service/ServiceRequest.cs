@@ -93,13 +93,28 @@ namespace Goedel.Protocol.Service {
         Packet PacketClient;
         Packet PacketResponse;
 
+        public int SourceIdSize { get; } = 8;
+        /// <summary>
+        /// Process the initial bytes of the buffer to get the source ID value according to the 
+        /// source ID processing mode specified for the session.
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <returns>The retrieved sourceId and position in the buffer.</returns>
+        public virtual (ulong, int) GetSourceId(byte[] buffer) =>
+            (buffer.BigEndianInt(SourceIdSize), SourceIdSize);
+
+
         protected virtual void ProcessBuffer() {
 
-            Trimmed = GetTrimmed(Buffer, 0, Count);
+
+            var (sourceId, offset) = GetSourceId(Buffer);
+
+
+            Trimmed = GetTrimmed(Buffer, offset, Count- offset);
 
 
             PlaintextPayload = false;
-            switch (Trimmed[0]) {
+            switch (sourceId) {
                 case (byte)PlaintextPacketType.ClientInitial: {
                     ProcessClientInitial();
                     break;
@@ -116,8 +131,8 @@ namespace Goedel.Protocol.Service {
                     ProcessClientComplete();
                     break;
                     }
-                case var b when (b < 0x80): {
-                    ProcessClientData();
+                default: {
+                    ProcessClientData(sourceId);
                     break;
                     }
                 }
@@ -125,20 +140,22 @@ namespace Goedel.Protocol.Service {
             var memoryStream = new MemoryStream(PacketClient.Payload);
             var reader = new JsonBcdReader(memoryStream);
 
+            byte[] responseBytes = null;
+            if (PacketClient?.Payload.Length > 0) {
+                var provider = Service.GetProvider(null, 0, null);
 
-            var provider = Service.GetProvider(null, 0, null);
+                provider.AssertNotNull(NYI.Throw);
 
-            provider.AssertNotNull(NYI.Throw);
+                try {
+                    response = provider.JpcInterface.Dispatch(session, reader);
+                    }
+                catch {
+                    // here make error response wrapper
 
-            try {
-                response = provider.JpcInterface.Dispatch(session, reader);
+                    }
+
+                responseBytes = response.GetBytes(true, ObjectEncoding);
                 }
-            catch {
-                // here make error response wrapper
-
-                }
-
-            var responseBytes = response.GetBytes(true, ObjectEncoding);
 
             switch (responsePacket) {
                 case PlaintextPacketType.HostChallenge: {
@@ -155,6 +172,12 @@ namespace Goedel.Protocol.Service {
                 }
 
             }
+
+
+
+
+        ///<inheritdoc/>
+
 
 
         protected byte[] GetTrimmed(byte[] input, int offset, int length) {
@@ -175,7 +198,7 @@ namespace Goedel.Protocol.Service {
             responsePacket = PlaintextPacketType.Data;
 
             }
-        void ProcessClientData() {
+        void ProcessClientData(ulong SourceId) {
 
             responsePacket = PlaintextPacketType.Data;
             }
@@ -263,10 +286,10 @@ namespace Goedel.Protocol.Service {
 
 
         ///<inheritdoc/>
-        protected override void ReturnResponse(byte[] chunk, int offset, int length) {
+        protected override void ReturnResponse(byte[] chunk) {
             var response = ListenerContext.Response;
 
-            response.OutputStream.Write(chunk, offset , length);
+            response.OutputStream.Write(chunk);
             response.StatusCode = (int)HttpStatusCode.OK;
             response.StatusDescription = "OK";
             response.KeepAlive = true;
@@ -289,6 +312,7 @@ namespace Goedel.Protocol.Service {
             ListenerContext.Response.KeepAlive = true;
             ListenerContext.Response.Close();
             }
+
 
         }
 
@@ -316,7 +340,7 @@ namespace Goedel.Protocol.Service {
             }
 
         ///<inheritdoc/>
-        protected override void ReturnResponse(byte[] chunk, int offset, int length) {
+        protected override void ReturnResponse(byte[] chunk) {
             throw new NYI();
             }
         }

@@ -32,9 +32,13 @@ namespace Goedel.Protocol.Presentation {
 
         #region // Properties
 
-        public const int MinPacketSize = 1200;
+        ///<summary>The size of a source ID tag.</summary> 
+        public int SourceIdSize { get; } = 8;
 
+        ///<summary>Packet Quantization</summary> 
         public int PacketQuanta { get; set; } = 64;
+
+
 
 
         ///<summary>Symmetric key used to encrypt/decrypt mezzanine data sent by the client to 
@@ -126,8 +130,50 @@ namespace Goedel.Protocol.Presentation {
         #endregion
         #region // Methods - PacketData Serializer/Deserializer
 
+
+        /// <summary>
+        /// Prepare a buffer to hold a key exchange request.
+        /// </summary>
+        /// <param name="plaintextPacketType">The request type.</param>
+        /// <returns>The allocated buffer and offset at which to write the first byte.</returns>
+        public (byte[] buffer, int position) MakeTagKeyExchange(PlaintextPacketType plaintextPacketType) {
+
+            var buffer = new byte[Constants.MinimumPacketSize];
+            buffer[SourceIdSize - 1] = (byte)plaintextPacketType;
+            return (buffer, SourceIdSize);
+
+            }
+
+        /// <summary>
+        /// Process the initial bytes of the buffer to get the source ID value according to the 
+        /// source ID processing mode specified for the session.
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <returns>The retrieved sourceId and position in the buffer.</returns>
+        public virtual (ulong,int) GetSourceId(byte[] buffer) => 
+            (buffer.BigEndianInt(SourceIdSize), SourceIdSize);
+
+
+        /// <summary>
+        /// Set the initial bytes of <paramref name="buffer"/> to specify 
+        /// </summary>
+        /// <param name="buffer">Buffer to prefix the source ID entry to.</param>
+        /// <param name="sourceId">The source ID</param>
+        /// <returns>The number of bytes written.</returns>
+        public virtual int SetSourceId(byte[] buffer, ulong sourceId) {
+            buffer.SetBigEndian(sourceId);
+            return SourceIdSize;
+            }
+
+
+
+        /// <summary>
+        /// Quantize the packet length so it is a fixed multiple of 64 bits.
+        /// </summary>
+        /// <param name="length">The minimum length to return.</param>
+        /// <returns>The Quantized length.</returns>
         public int QuantizePacketLength(int length) =>
-            length < MinPacketSize ? MinPacketSize :
+            length < Constants.MinimumPacketSize ? Constants.MinimumPacketSize :
                     PacketQuanta * ((length + PacketQuanta) / PacketQuanta);
 
         /// <summary>

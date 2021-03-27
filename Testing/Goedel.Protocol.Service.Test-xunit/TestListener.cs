@@ -190,15 +190,15 @@ namespace Goedel.XUnit {
                 Listener listener,
                 Packet packetIn
                 ) : base(listener, packetIn.SourcePortId) {
-            PacketIn = packetIn;
-            if (packetIn is PacketClientExchange packetClientExchange) {
-                // We have accepted the connection, cause the client exchange to be performed.
-                CompleteClientExchange(packetClientExchange);
-                }
-            if (packetIn is PacketClientCompleteDeferred packetClientCompleteDeferred) {
-                // We have accepted the connection, cause the client exchange to be performed.
-                CompleteClientCompleteDeferred(packetClientCompleteDeferred);
-                }
+            //PacketIn = packetIn;
+            //if (packetIn is PacketClientExchange packetClientExchange) {
+            //    // We have accepted the connection, cause the client exchange to be performed.
+            //    CompleteClientExchange(packetClientExchange);
+            //    }
+            //if (packetIn is PacketClientCompleteDeferred packetClientCompleteDeferred) {
+            //    // We have accepted the connection, cause the client exchange to be performed.
+            //    CompleteClientCompleteDeferred(packetClientCompleteDeferred);
+            //    }
             //CredentialSelf = credential;
             }
 
