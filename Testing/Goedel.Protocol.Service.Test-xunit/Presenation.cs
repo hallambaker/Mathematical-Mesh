@@ -207,14 +207,14 @@ namespace Goedel.XUnit {
             if (hostStart) {
                 var hostData = connectionHost.SerializePacketData(payload4);
                 // Client: receive data 
-                var hostDataPacket = connectionClient.ParsePacketData(connectionHost.SourcePortId, hostData);
+                var hostDataPacket = connectionClient.ParsePacketData(connectionHost.SourcePortId, hostData, 0);
                 hostDataPacket.Payload.TestEqual(payload4);
                 }
 
             var clientData = connectionClient.SerializePacketData(payload5);
 
             // Host: back atcha
-            var clientDataPacket = connectionHost.ParsePacketData(connectionHost.SourcePortId, clientData);
+            var clientDataPacket = connectionHost.ParsePacketData(connectionHost.SourcePortId, clientData, 0);
             clientDataPacket.Payload.TestEqual(payload5);
 
 

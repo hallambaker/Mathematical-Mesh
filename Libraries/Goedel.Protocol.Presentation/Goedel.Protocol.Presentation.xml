@@ -4,6 +4,14 @@
         <name>Goedel.Protocol.Presentation</name>
     </assembly>
     <members>
+        <member name="M:Goedel.Protocol.Presentation.SourceId.GetSourceId(System.Byte[])">
+            <summary>
+            Process the initial bytes of the buffer to get the source ID value according to the 
+            source ID processing mode specified for the session.
+            </summary>
+            <param name="buffer"></param>
+            <returns>The retrieved sourceId and position in the buffer.</returns>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.EncryptedPacketIdentifier">
             <summary>
             Identifiers used within encrypted data packets.
@@ -253,6 +261,12 @@
         <member name="P:Goedel.Protocol.Presentation.Listener.CredentialSelf">
             <summary>Private credential of self.</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Listener.DictionarySessionsInbound">
+            <summary>Dictionary mapping inbound source Ids to sessions.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Listener.DictionarySessionsOutbound">
+            <summary>Dictionary mapping outbound source Ids to sessions.</summary>       
+        </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.#ctor(Goedel.Protocol.Presentation.Credential)">
             <summary>
             Base constructor, populate the common properties.
@@ -270,16 +284,6 @@
             <param name="hostCredential">The host credential. If not null, the payload 
             is sent encrypted under this credential.</param>
             <returns></returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.Accept(Goedel.Protocol.Presentation.Packet,System.Byte[])">
-            <summary>
-            Accept the inbound connection request described in <paramref name="packetRequest"/>.
-            </summary>
-            <param name="packetRequest">Parsed inbound request packet.</param>
-            <param name="payload">Optional payload response. This is always encryted under the host credential
-            at minimum.</param>
-            <returns>The host connection. This may be used to wait for inbound requests from the 
-            connection.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.Challenge(Goedel.Protocol.Presentation.Packet,System.Byte[])">
             <summary>
@@ -487,7 +491,7 @@
         <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Decrypt(System.Byte[],System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Unwrap(System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Unwrap(System.Byte[],System.Byte[],System.Int32)">
             <summary>
             Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="key"/> and 
             the nonce at the start of the packet to provide the necessary keying material.
@@ -1081,22 +1085,6 @@
             <param name="plaintextPacketType">The request type.</param>
             <returns>The allocated buffer and offset at which to write the first byte.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Session.GetSourceId(System.Byte[])">
-            <summary>
-            Process the initial bytes of the buffer to get the source ID value according to the 
-            source ID processing mode specified for the session.
-            </summary>
-            <param name="buffer"></param>
-            <returns>The retrieved sourceId and position in the buffer.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Session.SetSourceId(System.Byte[],System.UInt64)">
-            <summary>
-            Set the initial bytes of <paramref name="buffer"/> to specify 
-            </summary>
-            <param name="buffer">Buffer to prefix the source ID entry to.</param>
-            <param name="sourceId">The source ID</param>
-            <returns>The number of bytes written.</returns>
-        </member>
         <member name="M:Goedel.Protocol.Presentation.Session.QuantizePacketLength(System.Int32)">
             <summary>
             Quantize the packet length so it is a fixed multiple of 64 bits.
@@ -1104,7 +1092,7 @@
             <param name="length">The minimum length to return.</param>
             <returns>The Quantized length.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Session.SerializePacketData(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Session.SerializePacketData(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Int32,System.Byte[],System.Int32)">
             <summary>
             Serialize and mutually encrypt a data packet.
             </summary>
@@ -1112,7 +1100,7 @@
             <param name="ciphertextExtensions"></param>
             <param name="packetSize">The number of bytes in the packet to be created.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Session.ParsePacketData(Goedel.Protocol.Presentation.PortId,System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.Session.ParsePacketData(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32)">
             <summary>
             Parse the data in <paramref name="packet"/> and return the resulting packet.
             </summary>

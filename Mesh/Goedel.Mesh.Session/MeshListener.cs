@@ -25,7 +25,7 @@ using Goedel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System.Threading;
 
 namespace Goedel.Mesh.Session {
     public class MeshListener : Listener {
@@ -36,7 +36,15 @@ namespace Goedel.Mesh.Session {
             }
 
 
-        public override SessionInitiator GetConnectionClient(PortId destinationId, byte[] payload = null, Credential hostCredential = null) => throw new NotImplementedException();
+        public override SessionInitiator GetConnectionClient(
+                    PortId destinationId, 
+                    byte[] payload = null, 
+                    Credential hostCredential = null) => throw new NotImplementedException();
+        
+        
+        
+        
+        
         public override void Reject(Packet packetRequest, byte[] payload = null) => throw new NotImplementedException();
 
 
@@ -54,6 +62,11 @@ namespace Goedel.Mesh.Session {
 
 
     public class MeshSessionResponder : SessionResponder {
+
+
+        static ulong sessionIdCount = 0;
+
+        public ulong SessionId;
 
         public override Task<byte[]> Receive() => throw new NotImplementedException();
         public override void Reply(byte[] payload) => throw new NotImplementedException();
@@ -105,6 +118,11 @@ namespace Goedel.Mesh.Session {
                 Listener listener,
                 Packet packetIn
                 ) : base(listener, packetIn.SourcePortId) {
+
+            // need to assign a unique SessionId here.
+
+            SessionId = Interlocked.Increment(ref sessionIdCount);
+
             //PacketIn = packetIn;
             //if (packetIn is PacketClientExchange packetClientExchange) {
             //    // We have accepted the connection, cause the client exchange to be performed.

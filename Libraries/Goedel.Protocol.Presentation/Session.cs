@@ -77,7 +77,7 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The packet that the connection is a response to.</summary> 
         public Packet PacketIn { get; set; }
 
-
+        public SourceId SourceId { get; protected set; }
         ///<summary>Completion task source.</summary> 
         public TaskCompletionSource TaskCompletion { get; set; }
 
@@ -131,6 +131,19 @@ namespace Goedel.Protocol.Presentation {
         #region // Methods - PacketData Serializer/Deserializer
 
 
+        public (byte[] buffer, int position) InitializeBuffer(int payloadSize) {
+            var length = QuantizePacketLength(payloadSize + 256);
+
+            var buffer = new byte[length];
+
+            SourceId.WriteSourceId(buffer);
+
+            return (buffer, SourceIdSize);
+
+            }
+
+
+
         /// <summary>
         /// Prepare a buffer to hold a key exchange request.
         /// </summary>
@@ -144,26 +157,26 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
-        /// <summary>
-        /// Process the initial bytes of the buffer to get the source ID value according to the 
-        /// source ID processing mode specified for the session.
-        /// </summary>
-        /// <param name="buffer"></param>
-        /// <returns>The retrieved sourceId and position in the buffer.</returns>
-        public virtual (ulong,int) GetSourceId(byte[] buffer) => 
-            (buffer.BigEndianInt(SourceIdSize), SourceIdSize);
+        ///// <summary>
+        ///// Process the initial bytes of the buffer to get the source ID value according to the 
+        ///// source ID processing mode specified for the session.
+        ///// </summary>
+        ///// <param name="buffer"></param>
+        ///// <returns>The retrieved sourceId and position in the buffer.</returns>
+        //public virtual (ulong,int) GetSourceId(byte[] buffer) => 
+        //    (buffer.BigEndianInt(SourceIdSize), SourceIdSize);
 
 
-        /// <summary>
-        /// Set the initial bytes of <paramref name="buffer"/> to specify 
-        /// </summary>
-        /// <param name="buffer">Buffer to prefix the source ID entry to.</param>
-        /// <param name="sourceId">The source ID</param>
-        /// <returns>The number of bytes written.</returns>
-        public virtual int SetSourceId(byte[] buffer, ulong sourceId) {
-            buffer.SetBigEndian(sourceId);
-            return SourceIdSize;
-            }
+        ///// <summary>
+        ///// Set the initial bytes of <paramref name="buffer"/> to specify 
+        ///// </summary>
+        ///// <param name="buffer">Buffer to prefix the source ID entry to.</param>
+        ///// <param name="sourceId">The source ID</param>
+        ///// <returns>The number of bytes written.</returns>
+        //public virtual int SetSourceId(byte[] buffer, ulong sourceId) {
+        //    buffer.SetBigEndian(sourceId);
+        //    return SourceIdSize;
+        //    }
 
 
 
@@ -185,8 +198,10 @@ namespace Goedel.Protocol.Presentation {
         public virtual byte[] SerializePacketData(
                 byte[] payload = null,
                 List<PacketExtension> ciphertextExtensions = null,
-                int packetSize = 1200) {
-            using var writer = new PacketWriterAesGcm(packetSize);
+                int packetSize = 1200,
+                byte[]buffer=null,
+                int position =-1) {
+            using var writer = new PacketWriterAesGcm(packetSize, buffer, position);
             writer.WriteExtensions(ciphertextExtensions);
             writer.Write(payload);
 
@@ -201,8 +216,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The encrypted packet</param>
         /// <returns>Packet specifying the decrypted payload and extensions (if specified).</returns>
 
-        public virtual Packet ParsePacketData(PortId sourceId, byte[] packet) {
-            var innerReader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet);
+        public virtual Packet ParsePacketData(PortId sourceId, byte[] packet, int offset) {
+            var innerReader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet, offset);
 
             var result = new PacketData() {
                 SourcePortId = sourceId,

@@ -19,33 +19,66 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Protocol;
-using Goedel.Protocol.Service;
-using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 using System;
-using System.IO;
-using System.Net;
-using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using Goedel.Utilities;
 
-namespace Goedel.Mesh.Session {
-
+namespace Goedel.Protocol.Presentation {
+    public struct SourceId {
         #region // Properties
+
+        static ulong counter = 0;
+
+        public const int SourceIdSize = 8;
+
+        public ulong Value { get; }
         #endregion
 
         #region // Destructor
         #endregion
 
         #region // Constructors
+
+
+
+
+        public SourceId(ulong value) {
+            Value = value;
+            }
+
         #endregion
 
-        #region // Implement Interface: Ixxx
-        #endregion
 
         #region // Methods 
+
+        public int WriteSourceId(byte[] buffer) {
+            buffer.SetBigEndian(Value);
+            return SourceIdSize;
+            }
+
+        /// <summary>
+        /// Process the initial bytes of the buffer to get the source ID value according to the 
+        /// source ID processing mode specified for the session.
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <returns>The retrieved sourceId and position in the buffer.</returns>
+        public static (SourceId, int) GetSourceId(byte[] buffer) =>
+            (new SourceId(buffer.BigEndianInt(SourceId.SourceIdSize)), SourceId.SourceIdSize);
+
+
+        public static SourceId GetSourceId() =>
+                new SourceId(Interlocked.Increment(ref counter));
+
+
         #endregion
+
+        }
+
+
+
+
 
     }

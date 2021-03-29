@@ -24,6 +24,7 @@ namespace Goedel.Protocol.Service {
     /// Base class for connection handlers
     /// </summary>
     public abstract class ServiceRequest {
+        #region // Properties
 
         ///<summary>The maximum request size</summary> 
         public const int MaxRequest = 0x10000;
@@ -51,6 +52,11 @@ namespace Goedel.Protocol.Service {
 
         public bool Refused { get; protected set; } = false;
 
+        #endregion
+
+
+
+
         /// <summary>
         /// Process the connection, dispatch the request and return the result.
         /// </summary>
@@ -62,10 +68,6 @@ namespace Goedel.Protocol.Service {
 
 
 
-        long GetSourceId() {
-
-            throw new NYI();
-            }
 
 
         /// <summary>
@@ -93,28 +95,28 @@ namespace Goedel.Protocol.Service {
         Packet PacketClient;
         Packet PacketResponse;
 
-        public int SourceIdSize { get; } = 8;
-        /// <summary>
-        /// Process the initial bytes of the buffer to get the source ID value according to the 
-        /// source ID processing mode specified for the session.
-        /// </summary>
-        /// <param name="buffer"></param>
-        /// <returns>The retrieved sourceId and position in the buffer.</returns>
-        public virtual (ulong, int) GetSourceId(byte[] buffer) =>
-            (buffer.BigEndianInt(SourceIdSize), SourceIdSize);
+        //public int SourceIdSize { get; } = 8;
+        ///// <summary>
+        ///// Process the initial bytes of the buffer to get the source ID value according to the 
+        ///// source ID processing mode specified for the session.
+        ///// </summary>
+        ///// <param name="buffer"></param>
+        ///// <returns>The retrieved sourceId and position in the buffer.</returns>
+        //public virtual (ulong, int) GetSourceId(byte[] buffer) =>
+        //    (buffer.BigEndianInt(SourceIdSize), SourceIdSize);
 
 
         protected virtual void ProcessBuffer() {
 
 
-            var (sourceId, offset) = GetSourceId(Buffer);
+            var (sourceId, offset) = SourceId.GetSourceId(Buffer);
 
 
             Trimmed = GetTrimmed(Buffer, offset, Count- offset);
 
 
             PlaintextPayload = false;
-            switch (sourceId) {
+            switch (sourceId.Value) {
                 case (byte)PlaintextPacketType.ClientInitial: {
                     ProcessClientInitial();
                     break;
@@ -160,7 +162,11 @@ namespace Goedel.Protocol.Service {
             switch (responsePacket) {
                 case PlaintextPacketType.HostChallenge: {
                     var tempResponder = Listener.Challenge(PacketClient, responseBytes);
-                    var responsePacket = tempResponder.SerializeHostChallenge1(responseBytes);
+
+                    var (buffer, position) = tempResponder.MakeTagKeyExchange(PlaintextPacketType.HostChallenge);
+
+
+                    var responsePacket = tempResponder.SerializeHostChallenge1(responseBytes, null, buffer, position);
                     ReturnResponse(responsePacket);
 
 
@@ -198,9 +204,16 @@ namespace Goedel.Protocol.Service {
             responsePacket = PlaintextPacketType.Data;
 
             }
-        void ProcessClientData(ulong SourceId) {
+        void ProcessClientData(SourceId SourceId) {
+
+            // identify the source connection
+
 
             responsePacket = PlaintextPacketType.Data;
+
+            // map the source id here
+            //PacketClient = ParsePacketData(null, Trimmed);
+
             }
 
         void ProcessClientExchange() {

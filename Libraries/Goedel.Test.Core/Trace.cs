@@ -171,7 +171,10 @@ namespace Goedel.Test.Core {
 
 
         public MeshCredentialTraced(
-            ContextUser contextUser) : base(contextUser) {
+                    ContextUser contextUser) : base(
+                            contextUser.ConnectionAccount,
+                            contextUser.DeviceAuthentication as KeyPairAdvanced) {
+
             }
 
 

@@ -212,13 +212,15 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="key">The primary key.</param>
         /// <param name="packet">The data to decrypt</param>
         /// <returns>A reader for the decrypted data.</returns>
-        public static new PacketReader Unwrap(byte[] key, byte[] packet) {
+        public static new PacketReader Unwrap(byte[] key, byte[] packet, int offset) {
+
+            // Hack: This needs to be rewritten with the tag at the end!
 
             Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
             var aes = new AesGcm(key);
-            var ivSpan = new ReadOnlySpan<byte>(packet, 0, Constants.SizeIvAesGcm);
-            var position = ivSpan.Length;
+            var ivSpan = new ReadOnlySpan<byte>(packet, offset, Constants.SizeIvAesGcm);
+            var position = offset + ivSpan.Length;
 
             Screen.WriteLine($"IvSpan {0}  {ivSpan.Length}");
 

@@ -46,12 +46,23 @@ namespace Goedel.Mesh.Session {
         public string Protocol { get; }
         public string Instance { get; }
 
+        public bool Connected { get; private set; } = false;
+
+
 
         public ObjectEncoding ObjectEncoding { get; set; } =
             ObjectEncoding.JSON;
 
         public string Uri { get; }
 
+
+
+
+
+
+
+
+        public Packet PacketChallenge;
 
         WebClient WebClient { get; set; }
 
@@ -85,9 +96,9 @@ namespace Goedel.Mesh.Session {
 
         public JsonObject Initialize(
                 string tag,
-                JsonObject request) {
+                JsonObject request,
+                Credential credential=null) {
 
-            
 
             byte[] span = null;
             if (request != null) {
@@ -104,10 +115,48 @@ namespace Goedel.Mesh.Session {
             result.Wait();
 
             var responseData = result.Result;
-            var response = ParsePayload(responseData);
+
+            // strip off and save the session  Id here.
+
+            var (sourceId, offset) = SourceId.GetSourceId(responseData);
+            SourceId = sourceId;
+
+            Packet packet=null;
+            switch (sourceId.Value) {
+                case (byte)PlaintextPacketType.HostChallenge: {
+                    packet = ProcessChallenge(responseData, offset);
+                    break;
+                    }
+
+                case (byte)PlaintextPacketType.HostComplete: {
+                    // This can't happen at the moment as we don't have a credential to send out.
+                    
+                    throw new NYI();
+                    //break;
+                    }
+
+                }
+
+
+            //var packet = Parse
+
+
+
+            var response = packet?.Payload == null || packet.Payload.Length == 0 ? null :
+                            ParsePayload(packet.Payload);
 
             return response;
             }
+
+
+        public Packet ProcessChallenge(byte[] packet, int offset) {
+
+            // vary according to the challenge sent out...
+
+            PacketChallenge = ParseHostChallenge1(default, packet, offset);
+            return PacketChallenge;
+            }
+
 
 
         ///<inheritdoc/>
@@ -115,21 +164,54 @@ namespace Goedel.Mesh.Session {
                 string tag,
                 JsonObject request) {
 
-            var span = SerializePayload(tag, request, out var stream);
+            // Serialize request
+            byte[] span = null;
+            if (request != null) {
+                span = SerializePayload(tag, request, out var stream);
+                }
 
-            // now wrap the presentation around it.
+            byte[] encoded = null;
+            if (Connected) {
+                var (buffer, offset) =  InitializeBuffer(span.Length);
+                encoded = SerializePacketData(span, buffer: buffer, position: offset);
 
-            var result = Transact(span);
+                }
+            else {
+                var (buffer, position) = MakeTagKeyExchange(PlaintextPacketType.ClientComplete);
+                encoded = SerializeClientComplete(span, buffer:buffer, position:position);
+                }
 
-            
 
+            // Transact
+            var result = Transact(encoded);
+            result.Wait();
+            var responsepacketData = result.Result;
 
+            // Parse the response
+            var (sourceId, offset2) = SourceId.GetSourceId(responsepacketData);
 
-            throw new NYI();
+            // check the sourceId is for us here???
+
+            var packet = ParsePacketData(default, responsepacketData, offset2);
+            if (!Connected) {
+                GetSourceId();
+                }
+
+            JsonObject response = null;
+            if (packet?.Payload.Length > 0) {
+                response = JsonObject.From(packet.Payload);
+                }
+            return response;
             }
 
 
+        void GetSourceId() {
 
+            // need to scan the encrypted attributes to get the source Id.
+
+            Connected = true;
+            throw new NYI();
+            }
 
         private byte[] SerializePayload(string tag, JsonObject request, out MemoryStream stream) {
             stream = new MemoryStream();

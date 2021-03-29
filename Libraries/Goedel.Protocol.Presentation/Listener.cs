@@ -67,15 +67,28 @@ namespace Goedel.Protocol.Presentation {
     /// Base class for presentation listeners.
     /// </summary>
     public abstract partial class Listener : Disposable {
-
+        #region // Properties
         ///<summary>Private credential of self.</summary> 
         public virtual Credential CredentialSelf { get; }
+
+        #endregion
+        #region // Constructors
+
+        ///<summary>Dictionary mapping inbound source Ids to sessions.</summary> 
+        public Dictionary<SourceId, Session> DictionarySessionsInbound = new();
+
+        ///<summary>Dictionary mapping outbound source Ids to sessions.</summary>       
+        public Dictionary<SourceId, Session> DictionarySessionsOutbound = new();
 
         /// <summary>
         /// Base constructor, populate the common properties.
         /// </summary>
         /// <param name="credentialSelf">The credential used by the listener.</param>
         public Listener(Credential credentialSelf) => CredentialSelf = credentialSelf;
+        
+        
+        
+        #endregion
 
         /// <summary>
         /// Request establishment of a client connection to the endpoint 
@@ -96,17 +109,19 @@ namespace Goedel.Protocol.Presentation {
 
 
 
-        /// <summary>
-        /// Accept the inbound connection request described in <paramref name="packetRequest"/>.
-        /// </summary>
-        /// <param name="packetRequest">Parsed inbound request packet.</param>
-        /// <param name="payload">Optional payload response. This is always encryted under the host credential
-        /// at minimum.</param>
-        /// <returns>The host connection. This may be used to wait for inbound requests from the 
-        /// connection.</returns>
-        public virtual SessionResponder Accept(
-                    Packet packetRequest,
-                    byte[] payload = null) => throw new NYI();
+        ///// <summary>
+        ///// Accept the inbound connection request described in <paramref name="packetRequest"/>.
+        ///// </summary>
+        ///// <param name="packetRequest">Parsed inbound request packet.</param>
+        ///// <returns>The host connection. This may be used to wait for inbound requests from the 
+        ///// connection.</returns>
+        //public virtual SessionResponder Accept(
+        //            Packet packetRequest) => throw new NYI();
+
+
+
+
+
 
         /// <summary>
         /// Defer creation of a host connection by sending a challenge to the source.
