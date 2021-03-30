@@ -58,6 +58,11 @@ namespace Goedel.Protocol.Presentation {
         ///<inheritdoc/>
         public override Credential ClientCredential => CredentialSelf;
 
+
+        //public SessionInitiator(StreamId localStreamId, StreamId RemoteStreamId)  { }
+
+
+
         ///<summary>The current state of this client.</summary> 
         ClientState clientState;
 

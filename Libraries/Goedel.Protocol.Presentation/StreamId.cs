@@ -27,14 +27,26 @@ using System.Collections.Generic;
 using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation {
-    public struct SourceId {
+    public struct StreamId {
         #region // Properties
+
+        public const string PrimaryTag = "StreamId";
+
 
         static ulong counter = 0;
 
         public const int SourceIdSize = 8;
 
         public ulong Value { get; }
+
+
+
+
+        public PacketExtension PacketExtension => new PacketExtension() {
+            Tag = PrimaryTag,
+            Value = Value.BigEndian ()
+            };
+
         #endregion
 
         #region // Destructor
@@ -45,7 +57,7 @@ namespace Goedel.Protocol.Presentation {
 
 
 
-        public SourceId(ulong value) {
+        public StreamId(ulong value) {
             Value = value;
             }
 
@@ -65,12 +77,12 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="buffer"></param>
         /// <returns>The retrieved sourceId and position in the buffer.</returns>
-        public static (SourceId, int) GetSourceId(byte[] buffer) =>
-            (new SourceId(buffer.BigEndianInt(SourceId.SourceIdSize)), SourceId.SourceIdSize);
+        public static (StreamId, int) GetSourceId(byte[] buffer) =>
+            (new StreamId(buffer.BigEndianInt(StreamId.SourceIdSize)), StreamId.SourceIdSize);
 
 
-        public static SourceId GetSourceId() =>
-                new SourceId(Interlocked.Increment(ref counter));
+        public static StreamId GetStreamId() =>
+                new StreamId(Interlocked.Increment(ref counter));
 
 
         #endregion

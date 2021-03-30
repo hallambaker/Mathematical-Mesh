@@ -4,14 +4,6 @@
         <name>Goedel.Protocol.Presentation</name>
     </assembly>
     <members>
-        <member name="M:Goedel.Protocol.Presentation.SourceId.GetSourceId(System.Byte[])">
-            <summary>
-            Process the initial bytes of the buffer to get the source ID value according to the 
-            source ID processing mode specified for the session.
-            </summary>
-            <param name="buffer"></param>
-            <returns>The retrieved sourceId and position in the buffer.</returns>
-        </member>
         <member name="T:Goedel.Protocol.Presentation.EncryptedPacketIdentifier">
             <summary>
             Identifiers used within encrypted data packets.
@@ -285,7 +277,15 @@
             is sent encrypted under this credential.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.Challenge(Goedel.Protocol.Presentation.Packet,System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.Listener.Accept(Goedel.Protocol.Presentation.Packet)">
+            <summary>
+            Accept the inbound connection request described in <paramref name="packetRequest"/>.
+            </summary>
+            <param name="packetRequest">Parsed inbound request packet.</param>
+            <returns>The host connection. This may be used to wait for inbound requests from the 
+            connection.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.GetTemporaryResponder(Goedel.Protocol.Presentation.Packet)">
             <summary>
             Defer creation of a host connection by sending a challenge to the source.
             </summary>
@@ -299,7 +299,7 @@
             <param name="packetRequest">Parsed inbound request packet.</param>
             <param name="payload">Optional payload response. This is always returned enclair.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientInitial(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientInitial(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a ClientInitial packet.
@@ -311,7 +311,7 @@
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientExchange(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientExchange(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a ClientExchange packet.
@@ -323,7 +323,7 @@
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientComplete(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientComplete(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a ClientComplete packet.
@@ -335,7 +335,7 @@
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientCompleteDeferred(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientCompleteDeferred(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a ClientCompleteDeferred packet.
@@ -562,7 +562,7 @@
             <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostExchange(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostExchange(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a HostExchange packet.
@@ -574,7 +574,7 @@
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostChallenge1(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostChallenge1(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a HostChallenge1 packet.
@@ -586,7 +586,7 @@
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostChallenge2(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostChallenge2(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a HostChallenge2 packet.
@@ -598,7 +598,7 @@
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostComplete(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostComplete(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
             as a HostComplete packet.
@@ -717,10 +717,7 @@
         <member name="P:Goedel.Protocol.Presentation.SessionResponder.Listener">
             <summary>The listener this connection host services</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.SessionResponder.SourcePortId">
-            <summary>The source port identifier.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.SessionResponder.#ctor(Goedel.Protocol.Presentation.Listener,Goedel.Protocol.Presentation.PortId)">
+        <member name="M:Goedel.Protocol.Presentation.SessionResponder.#ctor(Goedel.Protocol.Presentation.Listener)">
             <summary>
             Constructor for a connection host instance connected to <paramref name="listener"/>
             </summary>
@@ -1049,6 +1046,12 @@
         <member name="P:Goedel.Protocol.Presentation.Session.PacketIn">
             <summary>The packet that the connection is a response to.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Presentation.Session.LocalStreamId">
+            <summary>The local stream Id, this is generated localy and MAY contain hidden structure.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.Session.RemoteStreamId">
+            <summary>Remote stream Id, an opaque blob.</summary> 
+        </member>
         <member name="P:Goedel.Protocol.Presentation.Session.TaskCompletion">
             <summary>Completion task source.</summary> 
         </member>
@@ -1100,7 +1103,7 @@
             <param name="ciphertextExtensions"></param>
             <param name="packetSize">The number of bytes in the packet to be created.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Session.ParsePacketData(Goedel.Protocol.Presentation.PortId,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Session.ParsePacketData(System.Byte[],System.Int32)">
             <summary>
             Parse the data in <paramref name="packet"/> and return the resulting packet.
             </summary>
@@ -1199,6 +1202,14 @@
         </member>
         <member name="F:Goedel.Protocol.Presentation.ClientState.Abort">
             <summary>Connection terminated, cannot be used further.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.StreamId.GetSourceId(System.Byte[])">
+            <summary>
+            Process the initial bytes of the buffer to get the source ID value according to the 
+            source ID processing mode specified for the session.
+            </summary>
+            <param name="buffer"></param>
+            <returns>The retrieved sourceId and position in the buffer.</returns>
         </member>
         <member name="T:Goedel.Protocol.PacketSizeExceeded">
             <summary>

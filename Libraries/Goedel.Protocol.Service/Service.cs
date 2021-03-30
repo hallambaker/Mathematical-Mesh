@@ -144,7 +144,7 @@ namespace Goedel.Protocol.Service {
                     }
                 udpListenerCount += provider.UdpEndpoints.Count;
                 }
-
+            udpListenerCount = 0; // Hack - disable UDP for now, is throwing errors.
 
             // Start the monitoring service and bind values to every provider returning the JPC interface.
             Monitor = new Monitor(ListenerCount, MaxDispatch);
@@ -155,22 +155,21 @@ namespace Goedel.Protocol.Service {
                     }
                 }
 
-
             serviceTasks = new Task<ServiceRequest>[ListenerCount];
 
             httpListener.Start();
 
             WaitHttpRequest();
-            // set up the UDP clients...
+            //set up the UDP clients...
             udpListeners = new UdpClient[udpListenerCount];
-            var listener = 0;
-            foreach (var provider in providers) {
-                foreach (var endpoint in provider.UdpEndpoints) {
-                    udpListeners[listener] = endpoint.GetClient();
-                    WaitUdpListener(listener);
-                    listener++;
-                    }
-                }
+            var listener = 1;
+            //foreach (var provider in providers) {
+            //    foreach (var endpoint in provider.UdpEndpoints) {
+            //        udpListeners[listener] = endpoint.GetClient();
+            //        WaitUdpListener(listener);
+            //        listener++;
+            //        }
+            //    }
 
             // start the asynchronous services before returning.
             serviceThread = new Thread (WaitService);
@@ -190,7 +189,7 @@ namespace Goedel.Protocol.Service {
                 try {
                     Task.WaitAny(serviceTasks, cancellationToken);
 
-                    // Dispatch a processing unit to the next available slot.
+                    //Dispatch a processing unit to the next available slot.
                     for (var listener = 0; listener < udpListenerCount + 1; listener++) {
                         if (serviceTasks[listener].IsCompleted) {
                             Dispatch(serviceTasks[listener].Result);

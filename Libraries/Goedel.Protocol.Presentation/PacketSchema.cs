@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 3/26/2021 5:08:46 PM
+//  This file was automatically generated at 3/30/2021 4:50:21 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  yaschema version 3.0.0.677
+//  Generator:  yaschema version 3.0.0.678
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -243,12 +243,12 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The parsed packet.</returns>
 
         public  PacketHostExchange ParseHostExchange (
-                PortId sourceId, 
+                //PortId sourceId, 
                 byte[] packet,
                 int position=0,
                 int count = -1) {
             var result = new PacketHostExchange () {
-                SourcePortId = sourceId
+                //SourcePortId = sourceId
                 };
             PacketIn=result;
             // The plaintext part
@@ -277,12 +277,12 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The parsed packet.</returns>
 
         public  PacketHostChallenge1 ParseHostChallenge1 (
-                PortId sourceId, 
+                //PortId sourceId, 
                 byte[] packet,
                 int position=0,
                 int count = -1) {
             var result = new PacketHostChallenge1 () {
-                SourcePortId = sourceId
+                //SourcePortId = sourceId
                 };
             PacketIn=result;
             // The plaintext part
@@ -307,12 +307,12 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The parsed packet.</returns>
 
         public  PacketHostChallenge2 ParseHostChallenge2 (
-                PortId sourceId, 
+                //PortId sourceId, 
                 byte[] packet,
                 int position=0,
                 int count = -1) {
             var result = new PacketHostChallenge2 () {
-                SourcePortId = sourceId
+                //SourcePortId = sourceId
                 };
             PacketIn=result;
             // The plaintext part
@@ -336,12 +336,12 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The parsed packet.</returns>
 
         public  PacketHostComplete ParseHostComplete (
-                PortId sourceId, 
+                //PortId sourceId, 
                 byte[] packet,
                 int position=0,
                 int count = -1) {
             var result = new PacketHostComplete () {
-                SourcePortId = sourceId
+                //SourcePortId = sourceId
                 };
             PacketIn=result;
             // The plaintext part
@@ -582,12 +582,12 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The parsed packet.</returns>
 
         public static PacketClientInitial ParseClientInitial (
-                PortId sourceId, 
+                //PortId sourceId, 
                 byte[] packet,
                 int position=0,
                 int count = -1) {
             var result = new PacketClientInitial () {
-                SourcePortId = sourceId
+                //SourcePortId = sourceId
                 };
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet, position, count);
@@ -610,12 +610,12 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The parsed packet.</returns>
 
         public static PacketClientExchange ParseClientExchange (
-                PortId sourceId, 
+                //PortId sourceId, 
                 byte[] packet,
                 int position=0,
                 int count = -1) {
             var result = new PacketClientExchange () {
-                SourcePortId = sourceId
+                //SourcePortId = sourceId
                 };
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet, position, count);
@@ -640,12 +640,12 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The parsed packet.</returns>
 
         public static PacketClientComplete ParseClientComplete (
-                PortId sourceId, 
+                //PortId sourceId, 
                 byte[] packet,
                 int position=0,
                 int count = -1) {
             var result = new PacketClientComplete () {
-                SourcePortId = sourceId
+                //SourcePortId = sourceId
                 };
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet, position, count);
@@ -668,12 +668,12 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The parsed packet.</returns>
 
         public static PacketClientCompleteDeferred ParseClientCompleteDeferred (
-                PortId sourceId, 
+                //PortId sourceId, 
                 byte[] packet,
                 int position=0,
                 int count = -1) {
             var result = new PacketClientCompleteDeferred () {
-                SourcePortId = sourceId
+                //SourcePortId = sourceId
                 };
             // The plaintext part
             var outerReader = new PacketReaderAesGcm(packet, position, count);

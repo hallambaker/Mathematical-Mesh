@@ -17,7 +17,7 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -77,10 +77,17 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The packet that the connection is a response to.</summary> 
         public Packet PacketIn { get; set; }
 
-        public SourceId SourceId { get; protected set; }
+        ///<summary>The local stream Id, this is generated localy and MAY contain hidden structure.</summary> 
+        public StreamId LocalStreamId { get; protected set; }
+
+        ///<summary>Remote stream Id, an opaque blob.</summary> 
+        public byte[] RemoteStreamId { get; protected set; }
         ///<summary>Completion task source.</summary> 
         public TaskCompletionSource TaskCompletion { get; set; }
 
+
+
+        public PacketExtension StreamIdentifier { get; }
 
         List<KeyPairAdvanced> ephemeralsOffered;
         #endregion
@@ -89,6 +96,11 @@ namespace Goedel.Protocol.Presentation {
         #endregion
 
         #region // Constructors
+
+        //public Session(StreamId localStreamId, StreamId RemoteStreamId) {
+        //    }
+
+
         #endregion
 
         #region // Methods - Serialization
@@ -136,9 +148,11 @@ namespace Goedel.Protocol.Presentation {
 
             var buffer = new byte[length];
 
-            SourceId.WriteSourceId(buffer);
+            //RemoteStreamId.WriteSourceId(buffer);
 
-            return (buffer, SourceIdSize);
+            Buffer.BlockCopy(RemoteStreamId, 0, buffer, 0, RemoteStreamId.Length);
+
+            return (buffer, RemoteStreamId.Length);
 
             }
 
@@ -216,11 +230,11 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The encrypted packet</param>
         /// <returns>Packet specifying the decrypted payload and extensions (if specified).</returns>
 
-        public virtual Packet ParsePacketData(PortId sourceId, byte[] packet, int offset) {
+        public virtual Packet ParsePacketData(byte[] packet, int offset) {
             var innerReader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet, offset);
 
             var result = new PacketData() {
-                SourcePortId = sourceId,
+                //SourcePortId = sourceId,
                 };
 
             result.CiphertextExtensions = innerReader.ReadExtensions();

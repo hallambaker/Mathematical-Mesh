@@ -75,10 +75,10 @@ namespace Goedel.Protocol.Presentation {
         #region // Constructors
 
         ///<summary>Dictionary mapping inbound source Ids to sessions.</summary> 
-        public Dictionary<SourceId, Session> DictionarySessionsInbound = new();
+        public Dictionary<StreamId, Session> DictionarySessionsInbound = new();
 
         ///<summary>Dictionary mapping outbound source Ids to sessions.</summary>       
-        public Dictionary<SourceId, Session> DictionarySessionsOutbound = new();
+        public Dictionary<StreamId, Session> DictionarySessionsOutbound = new();
 
         /// <summary>
         /// Base constructor, populate the common properties.
@@ -105,18 +105,25 @@ namespace Goedel.Protocol.Presentation {
                     byte[] payload = null,
                     Credential hostCredential = null);
 
+        public abstract List<PacketExtension> MakeChallenge(
+            Packet packetRequest,
+            byte[] payload = null);
+
+        public abstract bool VerifyChallenge(
+            Packet packetRequest);
 
 
 
 
-        ///// <summary>
-        ///// Accept the inbound connection request described in <paramref name="packetRequest"/>.
-        ///// </summary>
-        ///// <param name="packetRequest">Parsed inbound request packet.</param>
-        ///// <returns>The host connection. This may be used to wait for inbound requests from the 
-        ///// connection.</returns>
-        //public virtual SessionResponder Accept(
-        //            Packet packetRequest) => throw new NYI();
+
+        /// <summary>
+        /// Accept the inbound connection request described in <paramref name="packetRequest"/>.
+        /// </summary>
+        /// <param name="packetRequest">Parsed inbound request packet.</param>
+        /// <returns>The host connection. This may be used to wait for inbound requests from the 
+        /// connection.</returns>
+        public abstract SessionResponder Accept(
+                    Packet packetRequest);
 
 
 
@@ -128,10 +135,8 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="packetRequest">Parsed inbound request packet.</param>
         /// <param name="payload">Optional payload response. This is always returned enclair.</param>
-        public virtual SessionResponder Challenge(
-                    Packet packetRequest,
-                    byte[] payload = null) => throw new NYI();
-
+        public virtual SessionResponder GetTemporaryResponder(
+                    Packet packetRequest) => throw new NYI();
 
 
 

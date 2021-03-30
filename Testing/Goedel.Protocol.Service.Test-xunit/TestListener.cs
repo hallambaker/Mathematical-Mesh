@@ -108,6 +108,10 @@ namespace Goedel.XUnit {
             return packet;
             }
 
+        public override List<PacketExtension> MakeChallenge(Packet packetRequest, byte[] payload = null) => throw new NotImplementedException();
+        public override bool VerifyChallenge(Packet packetRequest) => throw new NotImplementedException();
+        public override SessionResponder Accept(Packet packetRequest) => throw new NotImplementedException();
+
 
         #endregion
         }
@@ -189,7 +193,7 @@ namespace Goedel.XUnit {
         public TestConnectionHost(
                 Listener listener,
                 Packet packetIn
-                ) : base(listener, packetIn.SourcePortId) {
+                ) : base(listener) {
             //PacketIn = packetIn;
             //if (packetIn is PacketClientExchange packetClientExchange) {
             //    // We have accepted the connection, cause the client exchange to be performed.

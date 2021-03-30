@@ -40,7 +40,7 @@ namespace Goedel.XUnit {
             var clientInitialData = connectionClient.SerializeClientInitial(payload1);
 
             //// Host: Get initial, respond host exchange.
-            var clientInitialPacket = Listener.ParseClientInitial(portID, clientInitialData) ;
+            var clientInitialPacket = Listener.ParseClientInitial(clientInitialData) ;
             clientInitialPacket.Payload.TestEqual(payload1);
 
             var connectionHost = listenerHost.GetConnectionHost(clientInitialPacket);
@@ -48,13 +48,13 @@ namespace Goedel.XUnit {
 
 
             // Client: Complete 
-            var hostExchangePacket = connectionClient.ParseHostExchange(portID, hostExchangeData);
+            var hostExchangePacket = connectionClient.ParseHostExchange(hostExchangeData);
             hostExchangePacket.Payload.TestEqual(payload2);
             var clientCompleteData = connectionClient.SerializeClientComplete(payload3);
 
 
             //// Host: send data
-            var clientCompletePacket = Listener.ParseClientComplete(portID, clientCompleteData);
+            var clientCompletePacket = Listener.ParseClientComplete(clientCompleteData);
             connectionHost.CompleteClientComplete(clientCompletePacket);
             clientCompletePacket.Payload.TestEqual(payload3);
 
@@ -86,17 +86,17 @@ namespace Goedel.XUnit {
             var clientInitialData = connectionClient.SerializeClientInitial(payload1);
 
             //// Host: Get initial, respond challenge
-            var clientInitialPacket = Listener.ParseClientInitial(portID, clientInitialData);
+            var clientInitialPacket = Listener.ParseClientInitial(clientInitialData);
             clientInitialPacket.Payload.TestEqual(payload1);
             var hostChallengeData = listenerHost.SerializeChallenge(clientInitialPacket, payload2);
 
             // Respond to the challenge.
-            var hostChallengePacket = connectionClient.ParseHostChallenge1(portID, hostChallengeData);
+            var hostChallengePacket = connectionClient.ParseHostChallenge1(hostChallengeData);
             hostChallengePacket.Payload.TestEqual(payload2);
             var ClientCompleteData = connectionClient.SerializeClientCompleteDeferred(payload3);
 
             // Host: Complete the exchange
-            var clientCompletePacket = Listener.ParseClientCompleteDeferred(portID, ClientCompleteData);
+            var clientCompletePacket = Listener.ParseClientCompleteDeferred(ClientCompleteData);
             var connectionHost = listenerHost.GetConnectionHost(clientCompletePacket);
             //connectionHost.CompleteClientCompleteDeferred(clientCompletePacket);
             clientCompletePacket.Payload.TestEqual(payload3);
@@ -132,7 +132,7 @@ namespace Goedel.XUnit {
             var clientInitialData = connectionClient.SerializeClientExchange(payload1);
 
             //// Host: Get initial, respond host exchange.
-            var clientExchangePacket = Listener.ParseClientExchange(portID, clientInitialData);
+            var clientExchangePacket = Listener.ParseClientExchange(clientInitialData);
 
             var connectionHost = listenerHost.GetConnectionHost(clientExchangePacket);
 
@@ -141,7 +141,7 @@ namespace Goedel.XUnit {
             var hostCompleteData = connectionHost.SerializeHostComplete(payload2);
 
             // Client: complete the process
-            var hostCompletePacket = connectionClient.ParseHostComplete(portID, hostCompleteData);
+            var hostCompletePacket = connectionClient.ParseHostComplete(hostCompleteData);
             hostCompletePacket.Payload.TestEqual(payload2);
 
             TestPacketData(connectionClient, connectionHost);
@@ -172,18 +172,18 @@ namespace Goedel.XUnit {
             var clientInitialData = connectionClient.SerializeClientExchange(payload1);
 
             //// Host: Get initial, respond host exchange.
-            var clientExchangePacket = Listener.ParseClientExchange(portID, clientInitialData);
+            var clientExchangePacket = Listener.ParseClientExchange(clientInitialData);
             clientExchangePacket.Payload.TestNull(); // Didn't complete so payload is lost
 
             var hostChallengeData = listenerHost.SerializeChallenge(clientExchangePacket, payload2);
 
             // Respond to the challenge.
-            var hostChallengePacket = connectionClient.ParseHostChallenge2(portID, hostChallengeData);
+            var hostChallengePacket = connectionClient.ParseHostChallenge2(hostChallengeData);
             hostChallengePacket.Payload.TestEqual(payload2);
             var ClientCompleteData = connectionClient.SerializeClientCompleteDeferred(payload3);
 
             // Host: Complete the exchange
-            var clientCompletePacket = Listener.ParseClientCompleteDeferred(portID, ClientCompleteData);
+            var clientCompletePacket = Listener.ParseClientCompleteDeferred(ClientCompleteData);
             var connectionHost = listenerHost.GetConnectionHost(clientCompletePacket);
             clientCompletePacket.Payload.TestEqual(payload3);
 
@@ -207,14 +207,14 @@ namespace Goedel.XUnit {
             if (hostStart) {
                 var hostData = connectionHost.SerializePacketData(payload4);
                 // Client: receive data 
-                var hostDataPacket = connectionClient.ParsePacketData(connectionHost.SourcePortId, hostData, 0);
+                var hostDataPacket = connectionClient.ParsePacketData(hostData, 0);
                 hostDataPacket.Payload.TestEqual(payload4);
                 }
 
             var clientData = connectionClient.SerializePacketData(payload5);
 
             // Host: back atcha
-            var clientDataPacket = connectionHost.ParsePacketData(connectionHost.SourcePortId, clientData, 0);
+            var clientDataPacket = connectionHost.ParsePacketData(clientData, 0);
             clientDataPacket.Payload.TestEqual(payload5);
 
 

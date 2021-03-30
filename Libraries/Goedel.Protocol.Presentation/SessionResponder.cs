@@ -42,8 +42,8 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The listener this connection host services</summary> 
         public Listener Listener { get; }
 
-        ///<summary>The source port identifier.</summary> 
-        public PortId SourcePortId { get; }
+        /////<summary>The source port identifier.</summary> 
+        //public PortId SourcePortId { get; }
 
 
         /// <summary>
@@ -51,10 +51,10 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="listener">The listener this connection is to service.</param>
         /// <param name="portId">The source port on which this connection was received.</param>
-        public SessionResponder(Listener listener, PortId portId) {
+        public SessionResponder(Listener listener)  {
             Listener = listener;
             CredentialSelf = Listener?.CredentialSelf;
-            SourcePortId = portId;
+            //SourcePortId = portId;
             }
 
         /// <summary>

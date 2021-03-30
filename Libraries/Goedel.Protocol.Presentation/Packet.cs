@@ -37,11 +37,25 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Packet options (to be specified).
     /// </summary>
-    public record PacketExtension {
+    public struct PacketExtension {
         ///<summary>Registered extension tag</summary> 
         public string Tag;
         ///<summary>Extension value</summary> 
         public byte[] Value;
+
+
+
+        public static byte[] GetExtensionByTag(List<PacketExtension> packetExtensions, string PrimaryTag) {
+            foreach (var extension in packetExtensions) {
+                if (extension.Tag == PrimaryTag) {
+
+                    return extension.Value;
+                    }
+                }
+            return null;
+            }
+
+
         }
 
 

@@ -109,35 +109,47 @@ namespace Goedel.Protocol.Service {
         protected virtual void ProcessBuffer() {
 
 
-            var (sourceId, offset) = SourceId.GetSourceId(Buffer);
+            var (sourceId, offset) = StreamId.GetSourceId(Buffer);
 
 
             Trimmed = GetTrimmed(Buffer, offset, Count- offset);
 
+            SessionResponder sessionResponder=null;
 
             PlaintextPayload = false;
-            switch (sourceId.Value) {
-                case (byte)PlaintextPacketType.ClientInitial: {
-                    ProcessClientInitial();
-                    break;
-                    }
-                case (byte)PlaintextPacketType.ClientExchange: {
-                    ProcessClientExchange();
-                    break;
-                    }
-                case (byte)PlaintextPacketType.ClientCompleteDeferred: {
-                    ProcessClientCompleteDeferred();
-                    break;
-                    }
-                case (byte)PlaintextPacketType.ClientComplete: {
-                    ProcessClientComplete();
-                    break;
-                    }
-                default: {
-                    ProcessClientData(sourceId);
-                    break;
-                    }
+            sessionResponder = (PlaintextPacketType)sourceId.Value switch {
+                PlaintextPacketType.ClientInitial => ProcessClientInitial(),
+                PlaintextPacketType.ClientExchange => ProcessClientExchange(),
+                PlaintextPacketType.ClientCompleteDeferred => ProcessClientCompleteDeferred(),
+                PlaintextPacketType.ClientComplete => ProcessClientComplete(),
+                _ => ProcessClientData(sourceId)
+                };
+
+            if (sessionResponder == null) {
+                return; // 
                 }
+
+                //case (byte)PlaintextPacketType.ClientInitial: {
+                //    ;
+                //    break;
+                //    }
+                //case (byte)PlaintextPacketType.ClientExchange: {
+                //    ProcessClientExchange();
+                //    break;
+                //    }
+                //case (byte)PlaintextPacketType.ClientCompleteDeferred: {
+                //    sessionResponder = ProcessClientCompleteDeferred();
+                //    break;
+                //    }
+                //case (byte)PlaintextPacketType.ClientComplete: {
+                //    ProcessClientComplete();
+                //    break;
+                //    }
+                //default: {
+                //    sessionResponder = ProcessClientData(sourceId);
+                //    break;
+                //    }
+                //}
 
             var memoryStream = new MemoryStream(PacketClient.Payload);
             var reader = new JsonBcdReader(memoryStream);
@@ -161,19 +173,25 @@ namespace Goedel.Protocol.Service {
 
             switch (responsePacket) {
                 case PlaintextPacketType.HostChallenge: {
-                    var tempResponder = Listener.Challenge(PacketClient, responseBytes);
 
-                    var (buffer, position) = tempResponder.MakeTagKeyExchange(PlaintextPacketType.HostChallenge);
+                    var challenge = Listener.MakeChallenge(PacketClient, responseBytes);
+
+                    var (buffer, position) = sessionResponder.MakeTagKeyExchange(PlaintextPacketType.HostChallenge);
 
 
-                    var responsePacket = tempResponder.SerializeHostChallenge1(responseBytes, null, buffer, position);
+                    var responsePacket = sessionResponder.SerializeHostChallenge1(responseBytes, challenge, buffer, position);
                     ReturnResponse(responsePacket);
 
 
                     break;
                     }
+                case PlaintextPacketType.Data: {
 
-
+                    break;
+                    }
+                default: {
+                    throw new NYI();
+                    }
 
                 }
 
@@ -195,16 +213,17 @@ namespace Goedel.Protocol.Service {
 
 
 
-        void ProcessClientInitial() {
+        SessionResponder ProcessClientInitial() {
             PlaintextPayload = true;
             responsePacket = PlaintextPacketType.HostChallenge;
-            PacketClient = Listener.ParseClientInitial(null, Trimmed);
+            PacketClient = Listener.ParseClientInitial(Trimmed);
+            return Listener.GetTemporaryResponder(PacketClient); ;
             }
-        void ProcessClientComplete() {
+        SessionResponder ProcessClientComplete() {
             responsePacket = PlaintextPacketType.Data;
-
+            throw new NYI();
             }
-        void ProcessClientData(SourceId SourceId) {
+        SessionResponder ProcessClientData(StreamId SourceId) {
 
             // identify the source connection
 
@@ -213,14 +232,33 @@ namespace Goedel.Protocol.Service {
 
             // map the source id here
             //PacketClient = ParsePacketData(null, Trimmed);
+            throw new NYI();
 
             }
 
-        void ProcessClientExchange() {
+        SessionResponder ProcessClientExchange() {
             throw new NYI();
             }
-        void ProcessClientCompleteDeferred() {
-            throw new NYI();
+        SessionResponder ProcessClientCompleteDeferred() {
+
+            PacketClient = Listener.ParseClientCompleteDeferred( Trimmed);
+            // verify the challenge here
+
+            if (Listener.VerifyChallenge(PacketClient)) {
+
+
+                
+
+                responsePacket = PlaintextPacketType.Data;
+                return Listener.Accept(PacketClient);
+                }
+            else {
+                responsePacket = PlaintextPacketType.Error;
+
+                return null;
+                }
+
+
             }
 
 

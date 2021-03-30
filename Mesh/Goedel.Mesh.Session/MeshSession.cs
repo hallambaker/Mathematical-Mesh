@@ -82,6 +82,7 @@ namespace Goedel.Mesh.Session {
             Instance = instance;
             CredentialSelf = clientCredential;
 
+            LocalStreamId = StreamId.GetStreamId();
 
             Uri = HttpEndpoint.GetUri(Domain, Protocol, Instance);
 
@@ -118,8 +119,8 @@ namespace Goedel.Mesh.Session {
 
             // strip off and save the session  Id here.
 
-            var (sourceId, offset) = SourceId.GetSourceId(responseData);
-            SourceId = sourceId;
+            var (sourceId, offset) = StreamId.GetSourceId(responseData);
+            LocalStreamId = sourceId;
 
             Packet packet=null;
             switch (sourceId.Value) {
@@ -153,7 +154,7 @@ namespace Goedel.Mesh.Session {
 
             // vary according to the challenge sent out...
 
-            PacketChallenge = ParseHostChallenge1(default, packet, offset);
+            PacketChallenge = ParseHostChallenge1(packet, offset);
             return PacketChallenge;
             }
 
@@ -177,8 +178,8 @@ namespace Goedel.Mesh.Session {
 
                 }
             else {
-                var (buffer, position) = MakeTagKeyExchange(PlaintextPacketType.ClientComplete);
-                encoded = SerializeClientComplete(span, buffer:buffer, position:position);
+                var (buffer, position) = MakeTagKeyExchange(PlaintextPacketType.ClientCompleteDeferred);
+                encoded = SerializeClientCompleteDeferred(span, buffer:buffer, position:position);
                 }
 
 
@@ -188,11 +189,11 @@ namespace Goedel.Mesh.Session {
             var responsepacketData = result.Result;
 
             // Parse the response
-            var (sourceId, offset2) = SourceId.GetSourceId(responsepacketData);
+            var (sourceId, offset2) = StreamId.GetSourceId(responsepacketData);
 
             // check the sourceId is for us here???
 
-            var packet = ParsePacketData(default, responsepacketData, offset2);
+            var packet = ParsePacketData(responsepacketData, offset2);
             if (!Connected) {
                 GetSourceId();
                 }

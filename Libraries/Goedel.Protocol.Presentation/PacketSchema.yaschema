@@ -1,6 +1,13 @@
 ﻿Namespace Goedel.Protocol.Presentation Packets
 
 
+// Traces
+
+// ClientInitial -> HostExchange -> ClientComplete -> Data
+// ClientInitial -> HostChallenge1 -> ClientCompleteDeferred -> Data
+// ClientExchange -> HostComplete -> Data -> Data
+// ClientExchange -> HostChallenge2 -> ClientCompleteDeferred -> Data
+
 Client 
 
 	ClientInitial

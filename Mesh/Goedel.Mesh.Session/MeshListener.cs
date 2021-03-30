@@ -37,25 +37,51 @@ namespace Goedel.Mesh.Session {
 
 
         public override SessionInitiator GetConnectionClient(
-                    PortId destinationId, 
-                    byte[] payload = null, 
+                    PortId destinationId,
+                    byte[] payload = null,
                     Credential hostCredential = null) => throw new NotImplementedException();
-        
-        
-        
-        
-        
+
+
+
+
+
         public override void Reject(Packet packetRequest, byte[] payload = null) => throw new NotImplementedException();
 
 
         SessionResponder sessionResponderChallenge = null;
 
         ///<inheritdoc/>
-        public override SessionResponder Challenge(
-            Packet packetRequest,
-            byte[] payload = null) => sessionResponderChallenge ??
-                    new MeshSessionResponder(this, packetRequest);
+        public override SessionResponder GetTemporaryResponder(
+            Packet packetRequest) => sessionResponderChallenge ??
+                    new MeshSessionResponder(this).CacheValue(out sessionResponderChallenge);
 
+
+        public override List<PacketExtension> MakeChallenge(
+                Packet packetRequest,
+                byte[] payload = null) {
+            var bytes = Platform.GetRandomBytes(16);
+            var challenge = new PacketExtension() {
+                Tag = ChallengeTag,
+                Value = bytes
+                };
+            return new List<PacketExtension> { challenge };
+            }
+
+
+        public override bool VerifyChallenge(
+                Packet packetRequest) => true;
+
+
+        public override SessionResponder Accept(
+                Packet packetRequest) {
+            // extract the session id of the client
+
+            // create the mesh responder 
+
+
+            // register the responder.            
+            throw new NYI();
+            }
 
         }
 
@@ -64,9 +90,9 @@ namespace Goedel.Mesh.Session {
     public class MeshSessionResponder : SessionResponder {
 
 
-        static ulong sessionIdCount = 0;
+        ///<summary>The source Id to be used by this responder when returning packets.</summary> 
 
-        public ulong SessionId;
+        public StreamId SourceId;
 
         public override Task<byte[]> Receive() => throw new NotImplementedException();
         public override void Reply(byte[] payload) => throw new NotImplementedException();
@@ -112,26 +138,37 @@ namespace Goedel.Mesh.Session {
 
             return true;
             }
+        
+        public MeshSessionResponder(
+                Listener listener): base (listener) {
 
-
+            }
         public MeshSessionResponder(
                 Listener listener,
                 Packet packetIn
-                ) : base(listener, packetIn.SourcePortId) {
+                ) : base(listener) {
 
             // need to assign a unique SessionId here.
 
-            SessionId = Interlocked.Increment(ref sessionIdCount);
+            LocalStreamId = StreamId.GetStreamId();
 
-            //PacketIn = packetIn;
-            //if (packetIn is PacketClientExchange packetClientExchange) {
-            //    // We have accepted the connection, cause the client exchange to be performed.
-            //    CompleteClientExchange(packetClientExchange);
-            //    }
-            //if (packetIn is PacketClientCompleteDeferred packetClientCompleteDeferred) {
-            //    // We have accepted the connection, cause the client exchange to be performed.
-            //    CompleteClientCompleteDeferred(packetClientCompleteDeferred);
-            //    }
+
+
+            PacketIn = packetIn;
+            if (packetIn is PacketClientExchange packetClientExchange) {
+                // We have accepted the connection, cause the client exchange to be performed.
+                //CompleteClientExchange(packetClientExchange);
+                }
+            if (packetIn is PacketClientCompleteDeferred packetClientCompleteDeferred) {
+                // We have accepted the connection, cause the client exchange to be performed.
+                CompleteClientCompleteDeferred(packetClientCompleteDeferred);
+
+                RemoteStreamId = PacketExtension.GetExtensionByTag(
+                        packetClientCompleteDeferred.CiphertextExtensions, StreamId.PrimaryTag);
+
+
+
+                }
             //CredentialSelf = credential;
             }
 
