@@ -39,7 +39,7 @@ namespace Goedel.Mesh.Session {
     public class MeshSession : SessionInitiator, IJpcSession {
 
         #region // Properties
-        ///<inheritdoc/>
+
         public VerifiedAccount VerifiedAccount { get; }
 
         public string Domain { get; }
@@ -48,19 +48,9 @@ namespace Goedel.Mesh.Session {
 
         public bool Connected { get; private set; } = false;
 
-
-
-        public ObjectEncoding ObjectEncoding { get; set; } =
-            ObjectEncoding.JSON;
+        public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON;
 
         public string Uri { get; }
-
-
-
-
-
-
-
 
         public Packet PacketChallenge;
 
@@ -106,11 +96,17 @@ namespace Goedel.Mesh.Session {
                 span = SerializePayload(tag, request, out var stream);
                 }
 
-            var (buffer, position) = MakeTagKeyExchange(PlaintextPacketType.ClientInitial);
-            var encoded = SerializeClientInitial(span, null, buffer, position);
+            var plaintextExtensions = new List<PacketExtension> {
+                    LocalStreamId.PacketExtension };
+
+            //var (buffer, position) = MakeTagKeyExchange(PlaintextPacketType.ClientInitial);
+            var buffer = new byte[Constants.MinimumPacketSize];
+            var encoded = SerializeClientInitial(
+                LocalStreamId.GetValue(), StreamId.ClientInitial, 
+                span, plaintextExtensions, buffer, 0);
 
 
-            Screen.WriteLine($"Wait on URI {Uri}");
+            //Screen.WriteLine($"Wait on URI {Uri}");
 
             var result = Transact(encoded);
             result.Wait();
@@ -122,29 +118,60 @@ namespace Goedel.Mesh.Session {
             var (sourceId, offset) = StreamId.GetSourceId(responseData);
             LocalStreamId = sourceId;
 
-            Packet packet=null;
-            switch (sourceId.Value) {
-                case (byte)PlaintextPacketType.HostChallenge: {
-                    packet = ProcessChallenge(responseData, offset);
+            // here get the next byte and dispatch on it.
+
+            var messageType = responseData[offset++];
+            switch (messageType) {
+                case Constants.TagHostChallenge1: {
+                    PacketChallenge = ParseHostChallenge1(responseData, offset);
                     break;
                     }
-
-                case (byte)PlaintextPacketType.HostComplete: {
-                    // This can't happen at the moment as we don't have a credential to send out.
-                    
-                    throw new NYI();
-                    //break;
+                case Constants.TagHostChallenge2: {
+                    PacketChallenge = ParseHostChallenge2(responseData, offset);
+                    break;
                     }
-
+                case Constants.TagHostComplete: {
+                    PacketChallenge = ParseHostComplete(responseData, offset);
+                    break;
+                    }
+                case Constants.TagHostExchange: {
+                    PacketChallenge = ParseHostExchange(responseData, offset);
+                    break;
+                    }
+                default: {
+                    throw new NYI();
+                    }
                 }
+
+
+
+
+            
+
+
+
+            //switch (sourceId.Value) {
+            //    case (byte)PlaintextPacketType.HostChallenge: {
+            //        PacketChallenge  = ProcessChallenge(responseData, offset);
+            //        break;
+            //        }
+
+            //    case (byte)PlaintextPacketType.HostComplete: {
+            //        // This can't happen at the moment as we don't have a credential to send out.
+                    
+            //        throw new NYI();
+            //        //break;
+            //        }
+
+            //    }
 
 
             //var packet = Parse
 
 
 
-            var response = packet?.Payload == null || packet.Payload.Length == 0 ? null :
-                            ParsePayload(packet.Payload);
+            var response = PacketChallenge ?.Payload == null || PacketChallenge .Payload.Length == 0 ? null :
+                            ParsePayload(PacketChallenge .Payload);
 
             return response;
             }
@@ -171,15 +198,20 @@ namespace Goedel.Mesh.Session {
                 span = SerializePayload(tag, request, out var stream);
                 }
 
-            byte[] encoded = null;
+            byte[] encoded;
             if (Connected) {
                 var (buffer, offset) =  InitializeBuffer(span.Length);
                 encoded = SerializePacketData(span, buffer: buffer, position: offset);
 
                 }
             else {
-                var (buffer, position) = MakeTagKeyExchange(PlaintextPacketType.ClientCompleteDeferred);
-                encoded = SerializeClientCompleteDeferred(span, buffer:buffer, position:position);
+                var buffer = new byte[Constants.MinimumPacketSize];
+
+                var ciphertextExtensions = new List<PacketExtension> {
+                    LocalStreamId.PacketExtension };
+                encoded = SerializeClientCompleteDeferred(
+                    LocalStreamId.GetValue(), PacketChallenge.SourceId,span,
+                    ciphertextExtensions: ciphertextExtensions, buffer: buffer);
                 }
 
 

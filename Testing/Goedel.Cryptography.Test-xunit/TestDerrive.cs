@@ -121,7 +121,7 @@ namespace Goedel.XUnit {
             var KDF = new KeyDeriveHKDF(IKM, Salt, ID);
             var OKM = KDF.Derive(Info, L * 8);
 
-            Screen.WriteLine("PRK = {0}", KDF.PRK.ToStringBase16());
+            //Screen.WriteLine("PRK = {0}", KDF.PRK.ToStringBase16());
 
             KDF.PRK.TestEqual(Result_PRK);
             OKM.TestEqual(Result_OKM);

@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Test {
             var uri = httpEndpoint.GetServiceUri();
 
 
-            Screen.WriteLine($"Connect to {uri}");
+            //Screen.WriteLine($"Connect to {uri}");
             try {
                 var responseData = client.UploadData(uri, requestData);
                 }

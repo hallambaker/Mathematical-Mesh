@@ -462,7 +462,7 @@ namespace Goedel.Mesh {
         /// <param name="newActivation">Device to which the access right is granted.</param>
         /// <param name="right">The right granted.</param>
         void GrantStore(ActivationAccount newActivation, Right right) {
-            Screen.WriteLine($"Grant right {right.Name}/{right.Resource}");
+            //Screen.WriteLine($"Grant right {right.Name}/{right.Resource}");
 
 
             // This is failing because we do not populate DictionaryStoreEncryptionKey

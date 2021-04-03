@@ -75,7 +75,7 @@ namespace Goedel.Mesh.Client {
                     CatalogedPreconfigured.ServiceAuthenticator,
                     CatalogedPreconfigured.DeviceAuthenticator).AssertTrue(RefusedPINInvalid.Throw);
 
-            Console.WriteLine($"Have been claimed by {messageClaim.Sender}");
+            //Screen.WriteLine($"Have been claimed by {messageClaim.Sender}");
 
             // Create a pending connection entry.
             var profileDevice = CatalogedPreconfigured.ProfileDevice;

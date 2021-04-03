@@ -86,13 +86,13 @@ namespace Goedel.Test.Core {
 
             if (ephmeralsOffered != null) {
                 ephemeral = ephmeralsOffered[0];
-                Screen.WriteLine($"Re-Offer of = {ephemeral}");
+                //Screen.WriteLine($"Re-Offer of = {ephemeral}");
 
                 }
             else {
                 ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
                 ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
-                Screen.WriteLine($"Make Offer of = {ephemeral}");
+                //Screen.WriteLine($"Make Offer of = {ephemeral}");
                 }
 
             var extension = new PacketExtension() {
@@ -110,7 +110,7 @@ namespace Goedel.Test.Core {
             foreach (var extension in extensions) {
                 if (extension.Tag == "X448") {
                     var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
-                    Screen.WriteLine($"Select = {ephemeral}");
+                    //Screen.WriteLine($"Select = {ephemeral}");
                     return (keyExchange, ephemeral);
                     }
                 }

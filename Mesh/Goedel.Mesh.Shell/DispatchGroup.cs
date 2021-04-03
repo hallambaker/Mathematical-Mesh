@@ -17,7 +17,7 @@ namespace Goedel.Mesh.Shell {
             var contextAccount = GetContextUser(options);
             var contextGroup = contextAccount.CreateGroup(groupID);
 
-            Screen.WriteLine($"Group Encryption key is {contextGroup.ProfileGroup.AccountEncryptionKey.KeyIdentifier}");
+            //Screen.WriteLine($"Group Encryption key is {contextGroup.ProfileGroup.AccountEncryptionKey.KeyIdentifier}");
 
 
             return new ResultCreateAccount() {

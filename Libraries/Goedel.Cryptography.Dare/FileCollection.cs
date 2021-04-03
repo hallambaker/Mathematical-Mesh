@@ -210,10 +210,10 @@ namespace Goedel.Cryptography.Dare {
                 Positions = new List<IndexPosition>(),
                 };
 
-            Screen.WriteLine($"Start index {DictionaryByPath.Count} items");
+            //Screen.WriteLine($"Start index {DictionaryByPath.Count} items");
             foreach (var item in DictionaryByPath) {
                 var entry = item.Value;
-                Screen.WriteLine($"    {entry.Index} {entry.Path}");
+                //Screen.WriteLine($"    {entry.Index} {entry.Path}");
 
                 var position = new IndexPosition() {
                     Index = (int) entry.Index,

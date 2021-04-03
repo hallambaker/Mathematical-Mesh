@@ -74,6 +74,24 @@ namespace Goedel.Mesh.Session {
 
         public override SessionResponder Accept(
                 Packet packetRequest) {
+
+            var responder = new MeshSessionResponder(this);
+
+            switch (packetRequest) {
+                case PacketClientCompleteDeferred packetClientCompleteDeferred: {
+                    responder.CompleteClientCompleteDeferred(packetClientCompleteDeferred);
+                    break;
+                    }
+
+                default: {
+                    throw new NYI();
+                    }
+                //case PacketClientExchange packetClientExchange: {
+                //    responder.CompleteClientComplete(packetClientExchange);
+                //    break;
+                //    }
+                }
+
             // extract the session id of the client
 
             // create the mesh responder 

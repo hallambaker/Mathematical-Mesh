@@ -82,31 +82,31 @@ namespace Goedel.XUnit {
 
             }
 
-        public byte[] SerializeChallenge(Packet packetRequest, byte[] payload = null) {
+        //public byte[] SerializeChallenge(Packet packetRequest, byte[] payload = null) {
 
-            var connection = new TestConnectionHost(this, packetRequest);
+        //    var connection = new TestConnectionHost(this, packetRequest);
 
-            var challenge = connection.MakeChallenge(packetRequest);
-            var challengeExtensions = new List<PacketExtension> {
-                new PacketExtension () {
-                    Tag = TestListener.ChallengeTag,
-                    Value = challenge.ToBytes()
-                    }
-                };
+        //    var challenge = connection.MakeChallenge(packetRequest);
+        //    var challengeExtensions = new List<PacketExtension> {
+        //        new PacketExtension () {
+        //            Tag = TestListener.ChallengeTag,
+        //            Value = challenge.ToBytes()
+        //            }
+        //        };
 
-            // stash the challenge connection here.
-            PendingChallenges.Add(challenge, connection);
+        //    // stash the challenge connection here.
+        //    PendingChallenges.Add(challenge, connection);
 
-            var packet = (packetRequest) switch {
+        //    var packet = (packetRequest) switch {
 
-                PacketClientInitial => connection.SerializeHostChallenge1 (payload, challengeExtensions),
-                PacketClientExchange => connection.SerializeHostChallenge2 (payload, challengeExtensions),
-                _ => throw new NYI()
-                };
+        //        PacketClientInitial => connection.SerializeHostChallenge1 (payload, challengeExtensions),
+        //        PacketClientExchange => connection.SerializeHostChallenge2 (payload, challengeExtensions),
+        //        _ => throw new NYI()
+        //        };
 
 
-            return packet;
-            }
+        //    return packet;
+        //    }
 
         public override List<PacketExtension> MakeChallenge(Packet packetRequest, byte[] payload = null) => throw new NotImplementedException();
         public override bool VerifyChallenge(Packet packetRequest) => throw new NotImplementedException();

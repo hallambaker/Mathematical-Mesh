@@ -583,8 +583,8 @@ namespace Goedel.XUnit {
         static void ReportDevices(ContextUser contextUser) {
             var catalogDevice = contextUser.GetStore(CatalogDevice.Label) as CatalogDevice;
 
-            Console.WriteLine();
-            Console.WriteLine(catalogDevice.Report());
+            Screen.WriteLine("");
+            Screen.WriteLine(catalogDevice.Report());
 
             }
 

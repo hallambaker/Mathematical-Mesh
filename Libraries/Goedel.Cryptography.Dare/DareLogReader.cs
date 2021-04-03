@@ -205,7 +205,7 @@ namespace Goedel.Cryptography.Dare {
                     }
 
                 // unpack the file
-                Screen.WriteLine($"File: {fileEntry.Path} Position is {fileEntry.Index}");
+                //Screen.WriteLine($"File: {fileEntry.Path} Position is {fileEntry.Index}");
                 var containerDataReader = Sequence.GetSequenceFrameIndex(fileEntry.Index);
                 containerDataReader.CopyToFile(Sequence, destination);
                 }

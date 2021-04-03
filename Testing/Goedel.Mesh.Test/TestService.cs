@@ -89,12 +89,12 @@ namespace Goedel.Mesh.Test {
             var loopResult = Parallel.For(0, count, options, (i, loopState) => {
                 
                 Interlocked.Increment(ref threadCount);
-                Screen.WriteLine($"Start thread {i}/{threadCount}");
+                //Screen.WriteLine($"Start thread {i}/{threadCount}");
 
                 workDelegate(clients[0], i);
 
                 Interlocked.Decrement(ref threadCount);
-                Screen.WriteLine($"End thread {i}/{threadCount}");
+                //Screen.WriteLine($"End thread {i}/{threadCount}");
             });
 
 

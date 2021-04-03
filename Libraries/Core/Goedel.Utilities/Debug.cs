@@ -31,6 +31,10 @@ namespace Goedel.Utilities {
 
             }
 
+        /// <summary>
+        /// Write a blank line to the output
+        /// </summary>
+        public static void WriteLine () => Console.WriteLine();
 
         }
     }

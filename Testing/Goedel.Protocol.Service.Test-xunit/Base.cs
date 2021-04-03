@@ -82,6 +82,7 @@ namespace Goedel.XUnit {
         public TestPresentationMesh() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var meshMachine = testEnvironmentCommon.GetMeshMachine("test");
+            Console.Write("");
 
             ContextInitiator = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                         DeviceAliceAdmin, AccountAlice, "main");

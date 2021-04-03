@@ -82,13 +82,10 @@ namespace Goedel.Protocol.Service {
 
         //int offset;
 
-        JsonObject request;
         JsonObject response;
         IJpcSession session;
 
         PlaintextPacketType responsePacket;
-
-        byte[] Trimmed;
 
         Listener Listener => Service.FredListener;
 
@@ -112,15 +109,13 @@ namespace Goedel.Protocol.Service {
             var (sourceId, offset) = StreamId.GetSourceId(Buffer);
 
 
-            Trimmed = GetTrimmed(Buffer, offset, Count- offset);
-
             SessionResponder sessionResponder=null;
 
             PlaintextPayload = false;
             sessionResponder = (PlaintextPacketType)sourceId.Value switch {
                 PlaintextPacketType.ClientInitial => ProcessClientInitial(),
                 PlaintextPacketType.ClientExchange => ProcessClientExchange(),
-                PlaintextPacketType.ClientCompleteDeferred => ProcessClientCompleteDeferred(),
+                PlaintextPacketType.ClientCompleteDeferred => ProcessClientCompleteDeferred(offset),
                 PlaintextPacketType.ClientComplete => ProcessClientComplete(),
                 _ => ProcessClientData(sourceId)
                 };
@@ -176,10 +171,12 @@ namespace Goedel.Protocol.Service {
 
                     var challenge = Listener.MakeChallenge(PacketClient, responseBytes);
 
-                    var (buffer, position) = sessionResponder.MakeTagKeyExchange(PlaintextPacketType.HostChallenge);
+                    var buffer = new byte[Constants.MinimumPacketSize];
 
+                    var responsePacket = sessionResponder.SerializeHostChallenge1(
+                                StreamId.GetClientCompleteDeferred(), PacketClient.SourceId,
+                                responseBytes, challenge, buffer);
 
-                    var responsePacket = sessionResponder.SerializeHostChallenge1(responseBytes, challenge, buffer, position);
                     ReturnResponse(responsePacket);
 
 
@@ -204,19 +201,19 @@ namespace Goedel.Protocol.Service {
 
 
 
-        protected byte[] GetTrimmed(byte[] input, int offset, int length) {
-            var result = new byte[length];
+        //protected byte[] GetTrimmed(byte[] input, int offset, int length) {
+        //    var result = new byte[length];
 
-            System.Buffer.BlockCopy(input, offset, result, 0, length);
-            return result;
-            }
+        //    System.Buffer.BlockCopy(input, offset, result, 0, length);
+        //    return result;
+        //    }
 
 
 
         SessionResponder ProcessClientInitial() {
             PlaintextPayload = true;
             responsePacket = PlaintextPacketType.HostChallenge;
-            PacketClient = Listener.ParseClientInitial(Trimmed);
+            PacketClient = Listener.ParseClientInitial(Buffer, StreamId.SourceIdMaxSize);
             return Listener.GetTemporaryResponder(PacketClient); ;
             }
         SessionResponder ProcessClientComplete() {
@@ -239,9 +236,9 @@ namespace Goedel.Protocol.Service {
         SessionResponder ProcessClientExchange() {
             throw new NYI();
             }
-        SessionResponder ProcessClientCompleteDeferred() {
+        SessionResponder ProcessClientCompleteDeferred(int offset) {
 
-            PacketClient = Listener.ParseClientCompleteDeferred( Trimmed);
+            PacketClient = Listener.ParseClientCompleteDeferred(Buffer, offset);
             // verify the challenge here
 
             if (Listener.VerifyChallenge(PacketClient)) {

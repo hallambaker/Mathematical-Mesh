@@ -71,7 +71,7 @@ namespace Goedel.XUnit {
         public void KeyShareTestCapability(CryptoAlgorithmId cryptoAlgorithmId) {
 
             var keyBase = KeyPair.Factory(cryptoAlgorithmId, keySecurity: KeySecurity.Exportable) as KeyPairAdvanced;
-            Console.WriteLine($"Base Private = {keyBase.IKeyAdvancedPrivate.Private}");
+            Screen.WriteLine($"Base Private = {keyBase.IKeyAdvancedPrivate.Private}");
 
             var capabilityGenerate = new CapabilityKeyGenerate() {
                 KeyData = new KeyData(keyBase, true)

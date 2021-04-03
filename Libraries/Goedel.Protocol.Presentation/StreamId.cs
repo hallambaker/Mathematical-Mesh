@@ -37,9 +37,18 @@ namespace Goedel.Protocol.Presentation {
 
         public const int SourceIdSize = 8;
 
+        public const int SourceIdMaxSize = 16;
+
         public ulong Value { get; }
 
 
+        public readonly static byte[] ClientInitial = new byte[SourceIdMaxSize];
+
+        readonly static byte[] ClientCompleteDeferred = 
+            ((ulong) PlaintextPacketType.ClientCompleteDeferred).BigEndian();
+
+        readonly static byte[] ClientComplete =
+            ((ulong)PlaintextPacketType.ClientComplete).BigEndian();
 
 
         public PacketExtension PacketExtension => new PacketExtension() {
@@ -65,6 +74,14 @@ namespace Goedel.Protocol.Presentation {
 
 
         #region // Methods 
+
+        public static byte[] GetClientCompleteDeferred() => ClientCompleteDeferred;
+
+        public static byte[] GetClientComplete() => ClientComplete;
+
+
+
+        public byte[]  GetValue () => Value.BigEndian();
 
         public int WriteSourceId(byte[] buffer) {
             buffer.SetBigEndian(Value);

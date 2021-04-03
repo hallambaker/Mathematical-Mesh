@@ -67,7 +67,9 @@ namespace Goedel.Protocol.Presentation {
         public byte[] Payload { get; set; }
 
         ///<summary>The source address and port.</summary> 
-        public PortId SourcePortId;
+        public byte[] SourceId;
+
+
 
         ///<summary>Options specified in the packet plaintext.</summary> 
         public List<PacketExtension> PlaintextExtensions { get; set; }

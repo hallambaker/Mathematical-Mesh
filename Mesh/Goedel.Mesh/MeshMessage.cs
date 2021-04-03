@@ -268,7 +268,7 @@ namespace Goedel.Mesh {
             Action = action;
             MessageId = GetPinId(SaltedPin, accountAddress);
 
-            Console.WriteLine($"Created Pin: {Account} / {SaltedPin} => {MessageId}");
+            //Screen.WriteLine($"Created Pin: {Account} / {SaltedPin} => {MessageId}");
             }
 
 
@@ -337,7 +337,7 @@ namespace Goedel.Mesh {
                     string accountAddress) {
             var result = UDF.SymmetricKeyMac(accountAddress.ToUTF8(), pin);
 
-            Console.WriteLine($"{pin} + {accountAddress}  -> PinUDF = {result}");
+            //ScreenConsole.WriteLine($"{pin} + {accountAddress}  -> PinUDF = {result}");
 
             return result;
             }
@@ -356,12 +356,12 @@ namespace Goedel.Mesh {
                     DareEnvelope envelope,
                     byte[] clientNonce) {
 
-            Screen.WriteLine($"PIN Witness {pin} on {accountAddress}");
+            //Screen.WriteLine($"PIN Witness {pin} on {accountAddress}");
 
-            Screen.WriteLine($"clientNonce {clientNonce.ToStringBase16FormatHex()}");
+            //Screen.WriteLine($"clientNonce {clientNonce.ToStringBase16FormatHex()}");
             var digest = envelope.Trailer.PayloadDigest;
 
-            Screen.WriteLine($"clientNonce {digest.ToStringBase16FormatHex()}");
+            //Screen.WriteLine($"clientNonce {digest.ToStringBase16FormatHex()}");
             return UDF.PinWitness(pin, accountAddress.ToUTF8(), clientNonce, digest);
             }
         }

@@ -158,18 +158,18 @@ namespace Goedel.Protocol.Presentation {
 
 
 
-        /// <summary>
-        /// Prepare a buffer to hold a key exchange request.
-        /// </summary>
-        /// <param name="plaintextPacketType">The request type.</param>
-        /// <returns>The allocated buffer and offset at which to write the first byte.</returns>
-        public (byte[] buffer, int position) MakeTagKeyExchange(PlaintextPacketType plaintextPacketType) {
+        ///// <summary>
+        ///// Prepare a buffer to hold a key exchange request.
+        ///// </summary>
+        ///// <param name="plaintextPacketType">The request type.</param>
+        ///// <returns>The allocated buffer and offset at which to write the first byte.</returns>
+        //public (byte[] buffer, int position) MakeTagKeyExchange(PlaintextPacketType plaintextPacketType) {
 
-            var buffer = new byte[Constants.MinimumPacketSize];
-            buffer[SourceIdSize - 1] = (byte)plaintextPacketType;
-            return (buffer, SourceIdSize);
+        //    var buffer = new byte[Constants.MinimumPacketSize];
+        //    buffer[SourceIdSize - 1] = (byte)plaintextPacketType;
+        //    return (buffer, SourceIdSize);
 
-            }
+        //    }
 
         ///// <summary>
         ///// Process the initial bytes of the buffer to get the source ID value according to the 
@@ -260,8 +260,8 @@ namespace Goedel.Protocol.Presentation {
 
             var keyDerive = clientKeyAgreementResult.KeyDerive;
 
-            Screen.WriteLine($"Key Agreement {privateKey.KeyIdentifier}.{keyPublic.KeyIdentifier}");
-            Screen.WriteLine($"     {clientKeyAgreementResult.IKM.ToStringBase16()}");
+            //Screen.WriteLine($"Key Agreement {privateKey.KeyIdentifier}.{keyPublic.KeyIdentifier}");
+            //Screen.WriteLine($"     {clientKeyAgreementResult.IKM.ToStringBase16()}");
 
             ClientKeyClientToHost = keyDerive.Derive(Constants.TagKeyClientHost, Constants.SizeKeyAesGcm * 8);
             ClientKeyHostToClient = keyDerive.Derive(Constants.TagKeyHostClient, Constants.SizeKeyAesGcm * 8);

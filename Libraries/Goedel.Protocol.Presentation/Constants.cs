@@ -39,15 +39,18 @@ namespace Goedel.Protocol.Presentation {
     /// The packet types passed as plaintext.
     /// </summary>
     public enum PlaintextPacketType {
+        ///<summary>Plaintext request to establish a new connection to the host. This is 
+        ///only used in cases where the client does not have the public key of the host.</summary> 
+        ClientInitial = 0x00,
+
+
         ///<summary>Data packet (for internal use).</summary> 
-        Data = 0x00,
+        Data = 0x01,
 
         ///<summary>Report an error to the sender.</summary> 
         Error = 0x80,
 
-        ///<summary>Plaintext request to establish a new connection to the host. This is 
-        ///only used in cases where the client does not have the public key of the host.</summary> 
-        ClientInitial = 0x81,
+
 
         ///<summary>Encrypted request to establish a new connection to the host.
         ///This MAY be used in cases where the client has the public key of the host.</summary> 
@@ -143,8 +146,10 @@ namespace Goedel.Protocol.Presentation {
         public const string ExtensionMeshConnection = "MMMC";
 
 
-
-
+        public const byte TagHostExchange = 1;
+        public const byte TagHostChallenge1 = 2;
+        public const byte TagHostChallenge2 = 3;
+        public const byte TagHostComplete = 4;
 
         /// <summary>
         /// Using the primary key <paramref name="ikm"/> and generated nonce <paramref name="nonce"/>,

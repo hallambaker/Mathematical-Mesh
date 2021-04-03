@@ -22,7 +22,7 @@ namespace Goedel.Mesh.Shell {
 
             var cryptoParameters = GetCryptoParameters(keyLocate, options);
 
-            System.Console.WriteLine($"***Encrypt to {cryptoParameters.EncryptionKeys?[0].KeyIdentifier}");
+            //Screen.WriteLine($"***Encrypt to {cryptoParameters.EncryptionKeys?[0].KeyIdentifier}");
             var ContentInfo = new ContentMeta() {
                 Filename = inputFile,
                 ContentType = contentType

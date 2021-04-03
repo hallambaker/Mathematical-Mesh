@@ -190,7 +190,7 @@ namespace Goedel.Mesh {
             foreach (var extension in extensions) {
                 if (extension.Tag == "X448") {
                     var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
-                    Screen.WriteLine($"Select = {ephemeral}");
+                    //Screen.WriteLine($"Select = {ephemeral}");
                     return (AuthenticationPrivate, ephemeral);
                     }
                 }

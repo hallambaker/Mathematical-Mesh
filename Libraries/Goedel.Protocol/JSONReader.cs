@@ -380,7 +380,7 @@ namespace Goedel.Protocol {
                 Lookahead = true;
                 }
             if (Trace) {
-                Screen.WriteLine("Peek {0} \"{1}\"", TokenType, ResultString);
+                //Screen.WriteLine("Peek {0} \"{1}\"", TokenType, ResultString);
                 }
             }
 
@@ -407,7 +407,7 @@ namespace Goedel.Protocol {
             Lookahead = false;
 
             if (Trace) {
-                Screen.WriteLine($"Got  {TokenType} \"{ResultString}\"");
+                //Screen.WriteLine($"Got  {TokenType} \"{ResultString}\"");
                 }
             }
 

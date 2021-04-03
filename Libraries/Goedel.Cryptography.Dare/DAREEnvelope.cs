@@ -580,7 +580,7 @@ namespace Goedel.Cryptography.Dare {
         public JsonObject DecodeJsonObject(IKeyLocate keyCollection = null) {
             var plaintext = GetPlaintext(keyCollection);
 
-            Console.WriteLine(plaintext.ToUTF8());
+            //Console.WriteLine(plaintext.ToUTF8());
 
             var reader = new JsonBcdReader(plaintext);
 

@@ -15,6 +15,7 @@ Client
 		Plaintext
 			ClientEphemerals
 			Payload
+			
 
 	ClientExchange
 		Initial
@@ -25,6 +26,7 @@ Client
 		Mezzanine
 			ClientCredential
 			Payload
+			
 
 	ClientComplete
 		Respond
@@ -34,6 +36,7 @@ Client
 			ClientCredential
 		Encrypted
 			Payload
+			
 
 	ClientCompleteDeferred
 		Respond

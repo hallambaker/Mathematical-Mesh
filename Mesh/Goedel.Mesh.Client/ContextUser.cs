@@ -875,7 +875,7 @@ namespace Goedel.Mesh.Client {
         public List<ProcessResult> ProcessAutomatics() {
             var results = new List<ProcessResult>();
 
-            Screen.WriteLine($"ProcessAutomatics");
+            //Screen.WriteLine($"ProcessAutomatics");
 
 
             // This is failing the second time round.
@@ -890,13 +890,13 @@ namespace Goedel.Mesh.Client {
                 // Must enforce this from now on. 
                 //spoolEntry.Open.AssertTrue(Internal.Throw);
 
-                Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageId}: Status {spoolEntry.MessageStatus}");
+                //Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageId}: Status {spoolEntry.MessageStatus}");
 
                 if (!spoolEntry.Closed) {
                     switch (meshMessage) {
                         case AcknowledgeConnection acknowledgeConnection: {
                             if (acknowledgeConnection.MessageConnectionRequest.PinId != null) {
-                                Screen.WriteLine($"    {acknowledgeConnection.MessageConnectionRequest.PinId}");
+                                //Screen.WriteLine($"    {acknowledgeConnection.MessageConnectionRequest.PinId}");
                                 results.Add(ProcessAutomatic(acknowledgeConnection));
                                 }
                             break;

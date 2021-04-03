@@ -192,9 +192,9 @@ namespace Goedel.XUnit {
                 System.Array.Resize(ref Result, Expected.Length);
                 }
 
-            Screen.WriteLine("Key = {0}", Key.ToStringBase16());
-            Screen.WriteLine("Data = {0}", Data.ToStringBase16());
-            Screen.WriteLine("Result = {0}", Result.ToStringBase16());
+            //Screen.WriteLine("Key = {0}", Key.ToStringBase16());
+            //Screen.WriteLine("Data = {0}", Data.ToStringBase16());
+            //Screen.WriteLine("Result = {0}", Result.ToStringBase16());
 
             Result.IsEqualTo(Expected).TestTrue();
             }
