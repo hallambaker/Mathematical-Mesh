@@ -188,7 +188,7 @@ namespace Goedel.Protocol.Presentation {
             var authSpan = new Span<byte>(Packet, 0, Position);
             Screen.WriteLine($"AuthSpan {0}  {Position}");
 
-            var length = (pad ? Packet.Length - Position : Position) - Constants.SizeTagAesGcm;
+            var length = (pad ? Last - Position : Position) - Constants.SizeTagAesGcm;
             var dataOut = new byte[length];
 
             var ciphertextSpan = new ReadOnlySpan<byte>(Packet, Position, length);

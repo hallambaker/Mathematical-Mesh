@@ -213,7 +213,7 @@ namespace Goedel.Protocol.Service {
         SessionResponder ProcessClientInitial() {
             PlaintextPayload = true;
             responsePacket = PlaintextPacketType.HostChallenge;
-            PacketClient = Listener.ParseClientInitial(Buffer, StreamId.SourceIdMaxSize);
+            PacketClient = Listener.ParseClientInitial(Buffer, StreamId.SourceIdMaxSize, Count- StreamId.SourceIdMaxSize);
             return Listener.GetTemporaryResponder(PacketClient); ;
             }
         SessionResponder ProcessClientComplete() {
@@ -238,7 +238,7 @@ namespace Goedel.Protocol.Service {
             }
         SessionResponder ProcessClientCompleteDeferred(int offset) {
 
-            PacketClient = Listener.ParseClientCompleteDeferred(Buffer, offset);
+            PacketClient = Listener.ParseClientCompleteDeferred(Buffer, offset, Count-offset);
             // verify the challenge here
 
             if (Listener.VerifyChallenge(PacketClient)) {
