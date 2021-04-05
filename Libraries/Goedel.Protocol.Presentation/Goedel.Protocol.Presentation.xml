@@ -256,9 +256,6 @@
         <member name="F:Goedel.Protocol.Presentation.Listener.DictionarySessionsInbound">
             <summary>Dictionary mapping inbound source Ids to sessions.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Listener.DictionarySessionsOutbound">
-            <summary>Dictionary mapping outbound source Ids to sessions.</summary>       
-        </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.#ctor(Goedel.Protocol.Presentation.Credential)">
             <summary>
             Base constructor, populate the common properties.

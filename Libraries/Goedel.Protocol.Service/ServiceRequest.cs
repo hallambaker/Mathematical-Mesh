@@ -183,6 +183,9 @@ namespace Goedel.Protocol.Service {
                     break;
                     }
                 case PlaintextPacketType.Data: {
+                    var responsePacket = sessionResponder.SerializePacketData(
+                        responseBytes);
+                    ReturnResponse(responsePacket);
 
                     break;
                     }
@@ -337,10 +340,13 @@ namespace Goedel.Protocol.Service {
         protected override void ReturnResponse(byte[] chunk) {
             var response = ListenerContext.Response;
 
-            response.OutputStream.Write(chunk);
+
             response.StatusCode = (int)HttpStatusCode.OK;
             response.StatusDescription = "OK";
             response.KeepAlive = true;
+            response.OutputStream.Write(chunk);
+
+
             response.Close();
 
             Service.Monitor.EndDispatch(Slot);

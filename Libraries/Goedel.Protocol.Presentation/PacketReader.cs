@@ -178,7 +178,7 @@ namespace Goedel.Protocol.Presentation {
         ///<inheritdoc/>
         public override PacketReader Decrypt(byte[] key, bool pad = true) {
 
-            Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
+            //Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
             var aes = new AesGcm(key);
 
@@ -186,7 +186,7 @@ namespace Goedel.Protocol.Presentation {
             Position += Constants.SizeIvAesGcm;
 
             var authSpan = new Span<byte>(Packet, 0, Position);
-            Screen.WriteLine($"AuthSpan {0}  {Position}");
+            //Screen.WriteLine($"AuthSpan {0}  {Position}");
 
             var length = (pad ? Last - Position : Position) - Constants.SizeTagAesGcm;
             var dataOut = new byte[length];
@@ -197,10 +197,10 @@ namespace Goedel.Protocol.Presentation {
             Position += length;
 
             var tagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
-            Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
+            //Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
 
 
-            Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
+            //Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
             aes.Decrypt(ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
 
             return new PacketReaderAesGcm(dataOut);
@@ -217,13 +217,13 @@ namespace Goedel.Protocol.Presentation {
 
             // Hack: This needs to be rewritten with the tag at the end!
 
-            //Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
+            Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
             var aes = new AesGcm(key);
             var ivSpan = new ReadOnlySpan<byte>(packet, offset, Constants.SizeIvAesGcm);
             var position = offset + ivSpan.Length;
 
-            //Screen.WriteLine($"IvSpan {0}  {ivSpan.Length}");
+            Screen.WriteLine($"IvSpan {0}  {ivSpan.Length}");
 
             var tagSpan = new ReadOnlySpan<byte>(packet, position, Constants.SizeTagAesGcm);
             //Screen.WriteLine($"position {position} {tagSpan.Length}");
@@ -234,7 +234,7 @@ namespace Goedel.Protocol.Presentation {
             var result = new byte[length];
             var ciphertextSpan = new ReadOnlySpan<byte>(packet, position, length);
 
-            //Screen.WriteLine($"Ciphertext {position} {length}");
+            Screen.WriteLine($"Ciphertext {position} {length}");
 
             var plaintextSpan = new Span<byte>(result, 0, length);
 

@@ -201,7 +201,7 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The Quantized length.</returns>
         public int QuantizePacketLength(int length) =>
             length < Constants.MinimumPacketSize ? Constants.MinimumPacketSize :
-                    PacketQuanta * ((length + PacketQuanta) / PacketQuanta);
+                    PacketQuanta * ((length + 200+ PacketQuanta) / PacketQuanta);
 
         /// <summary>
         /// Serialize and mutually encrypt a data packet.
@@ -212,10 +212,17 @@ namespace Goedel.Protocol.Presentation {
         public virtual byte[] SerializePacketData(
                 byte[] payload = null,
                 List<PacketExtension> ciphertextExtensions = null,
-                int packetSize = 1200,
+                int packetSize = -1,
                 byte[]buffer=null,
-                int position =-1) {
+                int position =0) {
+
+            packetSize = payload == null ? Constants.MinimumPacketSize :
+                QuantizePacketLength(payload.Length);
+
+            buffer ??= new byte[packetSize];
+
             using var writer = new PacketWriterAesGcm(packetSize, buffer, position);
+            writer.Write(RemoteStreamId);
             writer.WriteExtensions(ciphertextExtensions);
             writer.Write(payload);
 

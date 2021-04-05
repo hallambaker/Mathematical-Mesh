@@ -55,6 +55,13 @@ namespace Goedel.XUnit {
             var request = new ServiceStatusRequest();
             var response = clientAlice.ServiceStatus(request);
 
+
+
+            var response2 = clientAlice.ServiceStatus(request);
+
+            var response3 = clientAlice.ServiceStatus(request);
+
+
             // Start the service
 
 

@@ -95,13 +95,13 @@ namespace Goedel.Mesh.Session {
                 //    }
                 }
 
-            // extract the session id of the client
+            // register the responder.    
+            if (DictionarySessionsInbound.TryGetValue(responder.LocalStreamId, out var session)) {
+                DictionarySessionsInbound.Remove(responder.LocalStreamId);
+                DictionarySessionsInbound.Add(responder.LocalStreamId, responder);
+                }
 
-            // create the mesh responder 
-
-
-            // register the responder.            
-            throw new NYI();
+            return responder;
             }
 
         }

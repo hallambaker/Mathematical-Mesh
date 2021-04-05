@@ -278,7 +278,7 @@ namespace Goedel.Protocol.Presentation {
 
         ///<inheritdoc/>
         public override void Encrypt(byte[] key, PacketWriter writerIn, bool pad=true) {
-            Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
+            //Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
             var aes = new AesGcm(key);
 
             var iv = Platform.GetRandomBytes(Constants.SizeIvAesGcm);
@@ -290,17 +290,17 @@ namespace Goedel.Protocol.Presentation {
             // Set up the authentication span so it covers the start of the 
             // packet up to the tag.
             var authSpan = new Span<byte>(Packet, 0, Position);
-            Screen.WriteLine($"AuthSpan {0}  {Position}");
+            //Screen.WriteLine($"AuthSpan {0}  {Position}");
 
             var length = (pad ? Packet.Length - Position : Position) - Constants.SizeTagAesGcm;
             var ciphertextSpan = new Span<byte>(Packet, Position, length);
             var plaintextSpan = new ReadOnlySpan<byte>(writerIn.Packet, 0, length);
             Position += length;
 
-            Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
+            //Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
 
             var TagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
-            Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
+            //Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
 
             aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, TagSpan, authSpan);
             Position += length;
@@ -310,7 +310,7 @@ namespace Goedel.Protocol.Presentation {
         public override byte[] Wrap(byte[] key) {
 
             //Constants.Derive(ikm, out var nonce, out var iv, out var key);
-            //Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
+            Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
 
             var result = new byte[Packet.Length];
 
