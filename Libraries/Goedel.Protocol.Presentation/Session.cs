@@ -81,7 +81,7 @@ namespace Goedel.Protocol.Presentation {
         public StreamId LocalStreamId { get; protected set; }
 
         ///<summary>Remote stream Id, an opaque blob.</summary> 
-        public byte[] RemoteStreamId { get; protected set; }
+        public byte[] RemoteStreamId { get; set; }
         ///<summary>Completion task source.</summary> 
         public TaskCompletionSource TaskCompletion { get; set; }
 
@@ -221,13 +221,12 @@ namespace Goedel.Protocol.Presentation {
 
             buffer ??= new byte[packetSize];
 
-            using var writer = new PacketWriterAesGcm(packetSize, buffer, position);
-            writer.Write(RemoteStreamId);
+            using var writer = new PacketWriterAesGcm(packetSize, buffer, 0);
             writer.WriteExtensions(ciphertextExtensions);
             writer.Write(payload);
 
             // encrypt the result and return.
-            return writer.Wrap(MutualKeyOut);
+            return writer.Wrap(RemoteStreamId, MutualKeyOut);
             }
 
         /// <summary>

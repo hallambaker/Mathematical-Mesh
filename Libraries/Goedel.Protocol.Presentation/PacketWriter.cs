@@ -256,7 +256,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="ikm">The primary key.</param>
         /// <returns>The wrapped data packet.</returns>
-        public virtual byte[] Wrap(byte[] ikm) => throw new NYI();
+        public virtual byte[] Wrap(byte[] streamId, byte[] ikm) => throw new NYI();
 
 
         }
@@ -307,7 +307,7 @@ namespace Goedel.Protocol.Presentation {
             }
 
         ///<inheritdoc/>
-        public override byte[] Wrap(byte[] key) {
+        public override byte[] Wrap(byte[] streamId, byte[] key) {
 
             //Constants.Derive(ikm, out var nonce, out var iv, out var key);
             Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
@@ -318,25 +318,30 @@ namespace Goedel.Protocol.Presentation {
             // NB, it is the responsibility of the caller to set the top bit to ensure the
             // packet is correctly identified as a data packet.
 
+            Buffer.BlockCopy(streamId, 0, result, 0, streamId.Length);
+            var count = streamId.Length;
+
 
             var aes = new AesGcm(key);
+
+
 
             var iv = Platform.GetRandomBytes(Constants.SizeIvAesGcm);
             var ivSpan = new ReadOnlySpan<byte>(iv);
 
-            Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
-            var count = iv.Length;
-            Screen.WriteLine($"IvSpan {0}  {ivSpan.Length}");
+            Buffer.BlockCopy(iv, 0, result, count, iv.Length);
+            count += iv.Length;
+            Screen.WriteLine($"IvSpan {count}  {ivSpan.Length}");
 
-            var tagSpan = new Span<byte>(result, count, Constants.SizeTagAesGcm);
-            Screen.WriteLine($"TagSpan {count} {tagSpan.Length}");
-            count += tagSpan.Length;
-      
-            var length = result.Length - count;
+            var length = result.Length - count - Constants.SizeTagAesGcm;
+            var ciphertextSpan = new Span<byte>(result, count, length);
+            count += length;
 
             Screen.WriteLine($"Ciphertext {count} {length}");
 
-            var ciphertextSpan = new Span<byte>(result, count, length);
+            var tagSpan = new Span<byte>(result, count, Constants.SizeTagAesGcm);
+            Screen.WriteLine($"TagSpan {count} {tagSpan.Length}");
+
             var plaintextSpan = new ReadOnlySpan<byte>(Packet, 0, length);
 
             aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, tagSpan);

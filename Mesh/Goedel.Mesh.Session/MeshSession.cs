@@ -215,8 +215,8 @@ namespace Goedel.Mesh.Session {
 
             byte[] encoded;
             if (Connected) {
-                var (buffer, offset) =  InitializeBuffer(span.Length);
-                encoded = SerializePacketData(span, buffer: buffer, position: offset);
+                //var (buffer, offset) =  InitializeBuffer(span.Length);
+                encoded = SerializePacketData(span);
 
                 }
             else {

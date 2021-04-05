@@ -971,7 +971,7 @@
             <param name="packet">The plaintext data</param>
             <param name="pad">If true, fill the entire remainder of the packet.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Wrap(System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Wrap(System.Byte[],System.Byte[])">
             <summary>
             Wrap a data packet payload to create an encrypted data packet.
             </summary>
@@ -992,7 +992,7 @@
         <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter,System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.Wrap(System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.Wrap(System.Byte[],System.Byte[])">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.Presentation.Session">

@@ -83,6 +83,7 @@ namespace Goedel.Mesh.Session {
             switch (packetRequest) {
                 case PacketClientCompleteDeferred packetClientCompleteDeferred: {
                     responder.CompleteClientCompleteDeferred(packetClientCompleteDeferred);
+                    responder.RemoteStreamId = packetClientCompleteDeferred.SourceId;
                     break;
                     }
 

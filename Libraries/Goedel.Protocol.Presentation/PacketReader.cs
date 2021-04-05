@@ -223,18 +223,17 @@ namespace Goedel.Protocol.Presentation {
             var ivSpan = new ReadOnlySpan<byte>(packet, offset, Constants.SizeIvAesGcm);
             var position = offset + ivSpan.Length;
 
-            Screen.WriteLine($"IvSpan {0}  {ivSpan.Length}");
+            Screen.WriteLine($"IvSpan {offset}  {ivSpan.Length}");
+
+            var length = packet.Length - position - Constants.SizeTagAesGcm;
+            var ciphertextSpan = new ReadOnlySpan<byte>(packet, position, length);
+            Screen.WriteLine($"Ciphertext {position} {ciphertextSpan.Length}");
+            position += length;
 
             var tagSpan = new ReadOnlySpan<byte>(packet, position, Constants.SizeTagAesGcm);
-            //Screen.WriteLine($"position {position} {tagSpan.Length}");
+            Screen.WriteLine($"TagSpan {position} {tagSpan.Length}");
 
-            position += tagSpan.Length;
-
-            var length = packet.Length - position;
             var result = new byte[length];
-            var ciphertextSpan = new ReadOnlySpan<byte>(packet, position, length);
-
-            Screen.WriteLine($"Ciphertext {position} {length}");
 
             var plaintextSpan = new Span<byte>(result, 0, length);
 
