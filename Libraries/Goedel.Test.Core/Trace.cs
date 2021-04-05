@@ -79,7 +79,8 @@ namespace Goedel.Test.Core {
 
 
         ///<inheritdoc/>
-        public override void AddEphemerals(List<PacketExtension> extensions,
+        public override void AddEphemerals(
+                        List<PacketExtension> extensions,
                         ref List<KeyPairAdvanced> ephmeralsOffered) {
 
             KeyPairAdvanced ephemeral;

@@ -1061,7 +1061,7 @@
         <member name="P:Goedel.Protocol.Presentation.Session.TaskCompletion">
             <summary>Completion task source.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Session.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Protocol.Presentation.Session.AddEphemerals(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
             Generate a set of ephemerals for the supported algorithms to offer for 
             key agreement and add to <paramref name="extensions"/>.

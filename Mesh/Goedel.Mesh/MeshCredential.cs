@@ -65,7 +65,7 @@ namespace Goedel.Mesh {
 
         KeyPairAdvanced AuthenticationPrivate { get; init; }
 
-        KeyPairAdvanced AuthenticationPublic => Connection.Authentication.GetKeyPair() as KeyPairAdvanced;
+        public KeyPairAdvanced AuthenticationPublic => Connection.Authentication.GetKeyPair() as KeyPairAdvanced;
 
         /// <summary>
         /// Default constructor
@@ -136,13 +136,13 @@ namespace Goedel.Mesh {
 
             if (ephmeralsOffered != null) {
                 ephemeral = ephmeralsOffered[0];
-                //Screen.WriteLine($"Re-Offer of = {ephemeral}");
+                Screen.WriteLine($"Re-Offer of = {ephemeral}");
 
                 }
             else {
                 ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
                 ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
-                //Screen.WriteLine($"Make Offer of = {ephemeral}");
+                Screen.WriteLine($"Make Offer of = {ephemeral}");
                 }
 
             var extension = new PacketExtension() {

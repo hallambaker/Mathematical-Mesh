@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/3/2021 1:05:17 PM
+//  This file was automatically generated at 4/4/2021 3:58:01 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  yaschema version 3.0.0.694
+//  Generator:  yaschema version 3.0.0.699
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -76,7 +76,7 @@ namespace Goedel.Protocol.Presentation {
             outerWriter.WriteStreamId(destinationId);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
-            AddEphemerals (plaintextExtensions);
+            AddEphemerals (destinationId, plaintextExtensions);
             plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
             outerWriter.WriteExtensions(plaintextExtensions);
 
@@ -228,6 +228,8 @@ namespace Goedel.Protocol.Presentation {
             // Mezzanine
             var mezanineWriter = new PacketWriterAesGcm(outerWriter.RemainingSpace);
             var mezanineExtensions = new List<PacketExtension>();
+
+            // This is the horror show?
             MutualKeyExchange (out var clientKeyId);
             mezanineWriter.Write (clientKeyId);
             AddCredentials (mezanineExtensions);
@@ -404,7 +406,7 @@ namespace Goedel.Protocol.Presentation {
             var plaintextExtensions = new List<PacketExtension>();
             ClientKeyExchange (out var clientKeyId);
             outerWriter.Write (clientKeyId);
-            AddEphemerals (plaintextExtensions);
+            AddEphemerals (destinationId, plaintextExtensions);
             AddCredentials (plaintextExtensions);
             plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
             outerWriter.WriteExtensions(plaintextExtensions);
@@ -446,7 +448,7 @@ namespace Goedel.Protocol.Presentation {
             outerWriter.Write(Constants.TagHostChallenge1);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
-            AddEphemerals (plaintextExtensions);
+            AddEphemerals (destinationId, plaintextExtensions);
             AddChallenge (plaintextExtensions);
             AddCredentials (plaintextExtensions);
             plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
@@ -486,7 +488,7 @@ namespace Goedel.Protocol.Presentation {
             outerWriter.Write(Constants.TagHostChallenge2);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
-            AddEphemerals (plaintextExtensions);
+            AddEphemerals (destinationId, plaintextExtensions);
             AddChallenge (plaintextExtensions);
             plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
             outerWriter.WriteExtensions(plaintextExtensions);

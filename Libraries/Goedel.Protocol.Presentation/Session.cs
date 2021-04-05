@@ -110,7 +110,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="extensions">List of extensions to add the ephemerals to.</param>
         public virtual void AddEphemerals(
-            List<PacketExtension> extensions) =>
+             byte[] sourceId, List<PacketExtension> extensions) =>
                     CredentialSelf.AddEphemerals(extensions, ref ephemeralsOffered);
 
         /// <summary>
@@ -310,6 +310,9 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="keyId">Host key identifier</param>
         public virtual void ClientKeyExchange(out byte[] ephemeral, out string keyId) {
             var (privateEphemeral, publickey) = HostCredential.SelectKey();
+
+            Screen.WriteLine($"Client key exchange at client Ephemeral={privateEphemeral} Host={publickey}");
+
             ClientKeyExchange(privateEphemeral, publickey);
 
             keyId = publickey.KeyIdentifier;

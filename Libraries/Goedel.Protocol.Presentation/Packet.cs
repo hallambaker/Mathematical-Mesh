@@ -55,7 +55,9 @@ namespace Goedel.Protocol.Presentation {
             return null;
             }
 
-
+        public void Dump() {
+            Screen.WriteLine($"    {Tag} -> {Value.ToStringBase16()}");
+            }
         }
 
 
@@ -73,6 +75,18 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>Options specified in the packet plaintext.</summary> 
         public List<PacketExtension> PlaintextExtensions { get; set; }
+
+
+
+        public virtual void Dump() {
+            if (PlaintextExtensions != null) {
+                Screen.WriteLine("Plaintext extensions");
+                foreach (var extension in PlaintextExtensions) {
+                    extension.Dump();
+                    }
+                }
+
+            }
 
         }
 

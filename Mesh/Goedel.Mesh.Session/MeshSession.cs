@@ -144,7 +144,7 @@ namespace Goedel.Mesh.Session {
                 }
 
 
-
+            PacketChallenge.Dump();
 
             
 
@@ -176,6 +176,21 @@ namespace Goedel.Mesh.Session {
             return response;
             }
 
+
+
+
+        /////<inheritdoc/>
+        //public override void AddEphemerals(byte[] destinationId, List<PacketExtension> extensions) =>
+        //            CredentialSelf.AddEphemerals( extensions, ref ephemeralsOffered);
+
+        /////<inheritdoc/>
+        //public override void MutualKeyExchange(string keyId) {
+
+        //    // reconstitute the ephemeral from the stream id.
+
+        //    var (privateEphemeral, publickey) = ClientCredential.SelectKey(ephemeralsOffered, keyId);
+        //    MutualKeyExchange(privateEphemeral, publickey);
+        //    }
 
         public Packet ProcessChallenge(byte[] packet, int offset) {
 

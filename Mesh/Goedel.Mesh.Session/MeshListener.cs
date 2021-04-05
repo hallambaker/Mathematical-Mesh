@@ -24,7 +24,6 @@ using Goedel.Utilities;
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Threading;
 
 namespace Goedel.Mesh.Session {
@@ -75,7 +74,11 @@ namespace Goedel.Mesh.Session {
         public override SessionResponder Accept(
                 Packet packetRequest) {
 
-            var responder = new MeshSessionResponder(this);
+            // this is failing because there is no means of knowing which ephemeral was given away.
+
+
+
+            var responder = new MeshSessionResponder(this, packetRequest);
 
             switch (packetRequest) {
                 case PacketClientCompleteDeferred packetClientCompleteDeferred: {
@@ -100,96 +103,6 @@ namespace Goedel.Mesh.Session {
             // register the responder.            
             throw new NYI();
             }
-
-        }
-
-
-
-    public class MeshSessionResponder : SessionResponder {
-
-
-        ///<summary>The source Id to be used by this responder when returning packets.</summary> 
-
-        public StreamId SourceId;
-
-        public override Task<byte[]> Receive() => throw new NotImplementedException();
-        public override void Reply(byte[] payload) => throw new NotImplementedException();
-
-        byte[] ephemeral;
-
-
-        /// <summary>
-        /// Add a challenge value over the current state to <paramref name="extensions"/>
-        /// </summary>
-        /// <param name="extensions">List of extensions to add the ephemerals to.</param>
-        public override void AddChallenge(
-                List<PacketExtension> extensions) {
-
-            }
-
-        public static string GetChallenge(List<PacketExtension> packetExtensions) {
-            foreach (var extension in packetExtensions) {
-                if (extension.Tag == MeshListener.ChallengeTag) {
-                    return extension.Value.ToUTF8();
-                    }
-                }
-            throw new NYI();
-            }
-
-
-        public string MakeChallenge(Packet packetRequest) {
-
-            ephemeral = packetRequest switch {
-                PacketClientInitial => packetRequest.PlaintextExtensions[0].Value,
-                PacketClientExchange clientExchange => clientExchange.ClientEphemeral,
-                _ => throw new NYI()
-                };
-
-
-            return UDF.Nonce(128);
-            }
-
-        public bool VerifyChallenge(Packet packetRequest) {
-            //ephemeral.TestEqual(packetRequest.PlaintextExtensions[0].Value);
-
-            ephemeral = null;
-
-            return true;
-            }
-        
-        public MeshSessionResponder(
-                Listener listener): base (listener) {
-
-            }
-        public MeshSessionResponder(
-                Listener listener,
-                Packet packetIn
-                ) : base(listener) {
-
-            // need to assign a unique SessionId here.
-
-            LocalStreamId = StreamId.GetStreamId();
-
-
-
-            PacketIn = packetIn;
-            if (packetIn is PacketClientExchange packetClientExchange) {
-                // We have accepted the connection, cause the client exchange to be performed.
-                //CompleteClientExchange(packetClientExchange);
-                }
-            if (packetIn is PacketClientCompleteDeferred packetClientCompleteDeferred) {
-                // We have accepted the connection, cause the client exchange to be performed.
-                CompleteClientCompleteDeferred(packetClientCompleteDeferred);
-
-                RemoteStreamId = PacketExtension.GetExtensionByTag(
-                        packetClientCompleteDeferred.CiphertextExtensions, StreamId.PrimaryTag);
-
-
-
-                }
-            //CredentialSelf = credential;
-            }
-
 
         }
 
