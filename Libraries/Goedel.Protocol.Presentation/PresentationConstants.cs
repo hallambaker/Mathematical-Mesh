@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 4/6/2021 12:36:38 PM
+//  This file was automatically generated at 4/6/2021 12:47:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -59,7 +59,7 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Message timeout</summary>
         Timeout = 408,
         ///<summary>Too many requests</summary>
-        Timeout = 429,
+        TooManyRequests = 429,
         ///<summary>The service is unavailable</summary>
         ServiceUnavailable = 503        }
 

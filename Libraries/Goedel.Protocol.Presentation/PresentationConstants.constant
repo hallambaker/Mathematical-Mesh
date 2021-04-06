@@ -42,7 +42,7 @@ File PresentationConstants
 		Integer Timeout 408						"Message timeout"
 			Description
 				|
-		Integer Timeout 429						"Too many requests"
+		Integer TooManyRequests 429						"Too many requests"
 			Description
 				|
 		Integer ServiceUnavailable 503			"The service is unavailable"

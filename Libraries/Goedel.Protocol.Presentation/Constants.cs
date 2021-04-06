@@ -97,10 +97,10 @@ namespace Goedel.Protocol.Presentation {
 
 
         ///<summary>The KDF info tag to be used to derive keys.</summary> 
-        public readonly static byte[] TagKeyInitiatorResponder = "InitiatorResponder".ToUTF8();
+        public readonly static byte[] ByteKeyInitiatorResponder = TagKeyInitiatorResponder.ToUTF8();
 
         ///<summary>The KDF info tag to be used to derive keys.</summary> 
-        public readonly static byte[] TagKeyResponderInitiator = "ResponderInitiator".ToUTF8();
+        public readonly static byte[] ByteKeyResponderInitiator = TagKeyResponderInitiator.ToUTF8();
 
 
 

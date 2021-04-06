@@ -1,9 +1,43 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Goedel.Cryptography.Linux</name>
+        <name>Goedel.Cryptography.Windows</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Cryptography.Windows.DPAPI">
+            <summary>
+            Provide access to the Windows Data Protection API. This binds data to the user's
+            public key so that th user's password is required to unlock it.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Windows.DPAPI.KeyType">
+            <summary>The key type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Windows.DPAPI.KeyType.UserKey">
+            <summary>Key is bound to user</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Windows.DPAPI.KeyType.MachineKey">
+            <summary>Key is bound to machine</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.DPAPI.Encrypt(System.Byte[],Goedel.Cryptography.Windows.DPAPI.KeyType,System.String,System.Byte[])">
+            <summary>
+            Encrypt data using DAPI
+            </summary>
+            <param name="KeyType">The Key type, user or machine</param>
+            <param name="PlainTextBytes">The data to be encrypted</param>
+            <param name="EntropyBytes">Additional Key material used to salt the key</param>
+            <param name="Description">Description of the stored data</param>
+            <returns>The encrypted data.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.DPAPI.Decrypt(System.Byte[],System.String@,System.Byte[])">
+            <summary>
+            Decrypt data stored using the Data Protection API
+            </summary>
+            <param name="CipherTextBytes">The encrypted data</param>
+            <param name="Description">Description of the encrypted data</param>
+            <param name="EntropyBytes">Additional Key material</param>
+            <returns>The decrypted data.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Windows.DecryptionFailed">
             <summary>
             Encrypted data could not be decrypted. 
@@ -45,42 +79,6 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Cryptography.Windows.EncryptionFailed.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Windows.EncryptionFailed.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Windows.EncryptionFailed._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="F:Goedel.Cryptography.Windows.EncryptionFailed.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Windows.InsufficientMemory">
-            <summary>
-            Memory allocation failed.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Windows.InsufficientMemory.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Windows.InsufficientMemory.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Windows.InsufficientMemory.#ctorr>
         <member name="F:Goedel.Cryptography.Windows.EncryptionFailed.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>

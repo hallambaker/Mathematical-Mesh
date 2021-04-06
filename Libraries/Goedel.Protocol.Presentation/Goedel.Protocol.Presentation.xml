@@ -58,6 +58,9 @@
             <summary>
             Constants class
             </summary>
+            <summary>
+            Constants specified in hallambaker-mesh-schema
+            </summary>
         </member>
         <member name="F:Goedel.Protocol.Presentation.Constants.MinimumPacketSize">
             <summary>The minimum packet size.</summary> 
@@ -80,10 +83,10 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.TagKey">
             <summary>The KDF info tag to be used to derive keys.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.TagKeyInitiatorResponder">
+        <member name="F:Goedel.Protocol.Presentation.Constants.ByteKeyInitiatorResponder">
             <summary>The KDF info tag to be used to derive keys.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.TagKeyResponderInitiator">
+        <member name="F:Goedel.Protocol.Presentation.Constants.ByteKeyResponderInitiator">
             <summary>The KDF info tag to be used to derive keys.</summary> 
         </member>
         <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionChallengeNonce">
@@ -126,6 +129,76 @@
         </member>
         <member name="F:Goedel.Protocol.Presentation.Constants.ZeroArray">
             <summary>Obsolete, remove</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToClientInitial(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.ClientInitial)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToHostMessageTags(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.HostMessageTags)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToErrorCodes(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.ErrorCodes)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.TagKeyInitiatorResponder">
+            <summary>InitiatorResponder</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.TagKeyResponderInitiator">
+            <summary>ResponderInitiator</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToExtensionTags(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.ExtensionTags)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
         </member>
         <member name="T:Goedel.Protocol.Presentation.Credential">
             <summary>
@@ -960,6 +1033,69 @@
         <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.Wrap(System.Byte[],System.Byte[])">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Protocol.Presentation.ClientInitial">
+            <summary>Inbound spool message state</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientInitial.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientInitial.ClientInitialHello">
+            <summary>Initial contact message without key exchange</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientInitial.ClientInitialExchange">
+            <summary>Initial contact message with key exchange</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ClientInitial.PacketError">
+            <summary>Error response</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.HostMessageTags">
+            <summary>Host response messages</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.HostMessageTags.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.HostMessageTags.TagHostExchange">
+            <summary>Host exchange message</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.HostMessageTags.TagHostChallenge1">
+            <summary>Host challenge type 1</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.HostMessageTags.TagHostChallenge2">
+            <summary>Host challenge type 2</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.HostMessageTags.TagHostComplete">
+            <summary>Host exchange completetion</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.ErrorCodes">
+            <summary>Response error codes</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ErrorCodes.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ErrorCodes.BadRequest">
+            <summary>Bad request</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ErrorCodes.Unauthorized">
+            <summary>Unauthorized</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ErrorCodes.Forbidden">
+            <summary>Forbidden</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ErrorCodes.Timeout">
+            <summary>Message timeout</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ErrorCodes.TooManyRequests">
+            <summary>Too many requests</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ErrorCodes.ServiceUnavailable">
+            <summary>The service is unavailable</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.ExtensionTags">
+            <summary>Presentation extension tags</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.Unknown">
+            <summary>Undefined type</summary>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.Session">
             <summary>
             Base class for presentation connections.
@@ -1234,417 +1370,6 @@
         <member name="F:Goedel.Protocol.InvalidClientState.Throw">
             <summary>
             The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Mesh.StateSpoolInbound">
-            <summary>Inbound spool message state</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolInbound.Unknown">
-            <summary>Undefined type</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolInbound.Initial">
-            <summary>Initial state (unread)</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolInbound.Read">
-            <summary>Message was read</summary>
-        </member>
-        <member name="T:Goedel.Mesh.StateSpoolOutbound">
-            <summary>Outbound spool message state</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolOutbound.Unknown">
-            <summary>Undefined type</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolOutbound.Initial">
-            <summary>Initial state (not sent)</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolOutbound.Sent">
-            <summary>Message was sent</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolOutbound.Received">
-            <summary>Message was sent and receipt acknowledged</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolOutbound.Refused">
-            <summary>Message was refused</summary>
-        </member>
-        <member name="T:Goedel.Mesh.StateSpoolLocal">
-            <summary>Local spool message state</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolLocal.Unknown">
-            <summary>Undefined type</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolLocal.Initial">
-            <summary>Initial state (unread)</summary>
-        </member>
-        <member name="F:Goedel.Mesh.StateSpoolLocal.Closed">
-            <summary>Transaction associated with the message was completed</summary>
-        </member>
-        <member name="T:Goedel.Mesh.MeshKeyType">
-            <summary>Types of cryptographic key that may be created</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyType.Unknown">
-            <summary>Undefined type</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyType.Complete">
-            <summary>Complete Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyType.Base">
-            <summary>Base Key Contribution</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyType.Activation">
-            <summary>Activation Key Contribution</summary>
-        </member>
-        <member name="T:Goedel.Mesh.MeshActor">
-            <summary>Actors for which a cryptographic key may be created</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshActor.Unknown">
-            <summary>Undefined type</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshActor.Account">
-            <summary>Account</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshActor.Member">
-            <summary>Group Member</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshActor.Device">
-            <summary>Device Profile</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshActor.Service">
-            <summary>Service Profile</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshActor.Host">
-            <summary>Host Profile</summary>
-        </member>
-        <member name="T:Goedel.Mesh.MeshKeyOperation">
-            <summary>Operations for which a cryptographic key may be created</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyOperation.Unknown">
-            <summary>Undefined type</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyOperation.Encrypt">
-            <summary>Encryption key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyOperation.Sign">
-            <summary>Signature key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyOperation.Authenticate">
-            <summary>Authentication key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyOperation.Profile">
-            <summary>Profile Signature key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyOperation.AdminEncrypt">
-            <summary>Administrator Encryption key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyOperation.AdminSign">
-            <summary>Administrator Signature key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshKeyOperation.Escrow">
-            <summary>Escrow Encryption key</summary>
-        </member>
-        <member name="T:Goedel.Mesh.MeshConstants">
-            <summary>
-            Constants specified in hallambaker-mesh-schema
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Access">
-            <summary>Access Catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Application">
-            <summary>Application Catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Bookmark">
-            <summary>Bookmark Catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Contact">
-            <summary>Contact Catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Credential">
-            <summary>Credential Catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Device">
-            <summary>Device Catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Member">
-            <summary>Member Catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Network">
-            <summary>Network Catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Publication">
-            <summary>Publication Catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Task">
-            <summary>Task Catalog</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Local">
-            <summary>Local Spool</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Inbound">
-            <summary>Inbound Spool</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Outbound">
-            <summary>Outbound Spool</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Archive">
-            <summary>Archive Spool</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolInboundInitialTag">
-            <summary>Jose enumeration tag for StateSpoolInbound.Initial</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolInboundReadTag">
-            <summary>Jose enumeration tag for StateSpoolInbound.Read</summary>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToStateSpoolInbound(System.String)">
-            <summary>
-            Convert the string <paramref name="text"/> to the corresponding enumeration
-            value.
-            </summary>
-            <param name="text">The string to convert.</param>
-            <returns>The enumeration value.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToLabel(Goedel.Mesh.StateSpoolInbound)">
-            <summary>
-            Convert the enumerated value <paramref name="data"/> to the corresponding string
-            value.
-            </summary>
-            <param name="data">The enumerated value.</param>
-            <returns>The text value.</returns>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolOutboundInitialTag">
-            <summary>Jose enumeration tag for StateSpoolOutbound.Initial</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolOutboundSentTag">
-            <summary>Jose enumeration tag for StateSpoolOutbound.Sent</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolOutboundReceivedTag">
-            <summary>Jose enumeration tag for StateSpoolOutbound.Received</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolOutboundRefusedTag">
-            <summary>Jose enumeration tag for StateSpoolOutbound.Refused</summary>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToStateSpoolOutbound(System.String)">
-            <summary>
-            Convert the string <paramref name="text"/> to the corresponding enumeration
-            value.
-            </summary>
-            <param name="text">The string to convert.</param>
-            <returns>The enumeration value.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToLabel(Goedel.Mesh.StateSpoolOutbound)">
-            <summary>
-            Convert the enumerated value <paramref name="data"/> to the corresponding string
-            value.
-            </summary>
-            <param name="data">The enumerated value.</param>
-            <returns>The text value.</returns>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolLocalInitialTag">
-            <summary>Jose enumeration tag for StateSpoolLocal.Initial</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolLocalClosedTag">
-            <summary>Jose enumeration tag for StateSpoolLocal.Closed</summary>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToStateSpoolLocal(System.String)">
-            <summary>
-            Convert the string <paramref name="text"/> to the corresponding enumeration
-            value.
-            </summary>
-            <param name="text">The string to convert.</param>
-            <returns>The enumeration value.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToLabel(Goedel.Mesh.StateSpoolLocal)">
-            <summary>
-            Convert the enumerated value <paramref name="data"/> to the corresponding string
-            value.
-            </summary>
-            <param name="data">The enumerated value.</param>
-            <returns>The text value.</returns>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshEnvelopeId">
-            <summary>
-            The proposed IANA content identifier for the Mesh message type.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshResponseId">
-            <summary>
-            The proposed IANA content identifier for the Mesh message type.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MessagePINActionDevice">
-            <summary>
-            Action info for device PIN
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MessagePINActionContact">
-            <summary>
-            Action info for contact PIN
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshMessage">
-            <summary>
-            The proposed IANA content identifier for the Mesh message type.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshObject">
-            <summary>
-            The proposed IANA content identifier for the Mesh message type.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshNonce">
-            <summary>
-            The proposed IANA content identifier for the Mesh message type.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshCapabilityId">
-            <summary>
-            The proposed IANA content identifier for the Mesh message type.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshAuthenticator">
-            <summary>
-            The proposed IANA content identifier for the Mesh message type.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshConnectURI">
-            <summary>
-            The proposed IANA URI scheme.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.ServiceAuthenticatorInfo">
-            <summary>
-            HKDF info tag for deriving Service Authenticator from IKM
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.DeviceAuthenticatorInfo">
-            <summary>
-            HKDF info tag for deriving Device Authenticator from IKM
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.PrefixCatalogedGroup">
-            <summary>
-            Prefix to be applied to form the ID of a mesh group in the catalog.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.KeyDerivationKeyName(Goedel.Mesh.MeshKeyType,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation)">
-            <summary>
-            Derivation of the key name from the context in which it is to be used.
-            </summary>
-            <param name="intype">The type of key to create.</param>
-            <param name="inactor">The actor to create the key for.</param>
-            <param name="inoperation">The operation for which the key is to be used.</param>
-            <returns></returns>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyTypeCompleteTag">
-            <summary>Jose enumeration tag for MeshKeyType.Complete</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyTypeBaseTag">
-            <summary>Jose enumeration tag for MeshKeyType.Base</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyTypeActivationTag">
-            <summary>Jose enumeration tag for MeshKeyType.Activation</summary>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToMeshKeyType(System.String)">
-            <summary>
-            Convert the string <paramref name="text"/> to the corresponding enumeration
-            value.
-            </summary>
-            <param name="text">The string to convert.</param>
-            <returns>The enumeration value.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToLabel(Goedel.Mesh.MeshKeyType)">
-            <summary>
-            Convert the enumerated value <paramref name="data"/> to the corresponding string
-            value.
-            </summary>
-            <param name="data">The enumerated value.</param>
-            <returns>The text value.</returns>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshActorAccountTag">
-            <summary>Jose enumeration tag for MeshActor.Account</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshActorMemberTag">
-            <summary>Jose enumeration tag for MeshActor.Member</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshActorDeviceTag">
-            <summary>Jose enumeration tag for MeshActor.Device</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshActorServiceTag">
-            <summary>Jose enumeration tag for MeshActor.Service</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshActorHostTag">
-            <summary>Jose enumeration tag for MeshActor.Host</summary>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToMeshActor(System.String)">
-            <summary>
-            Convert the string <paramref name="text"/> to the corresponding enumeration
-            value.
-            </summary>
-            <param name="text">The string to convert.</param>
-            <returns>The enumeration value.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToLabel(Goedel.Mesh.MeshActor)">
-            <summary>
-            Convert the enumerated value <paramref name="data"/> to the corresponding string
-            value.
-            </summary>
-            <param name="data">The enumerated value.</param>
-            <returns>The text value.</returns>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationEncryptTag">
-            <summary>Jose enumeration tag for MeshKeyOperation.Encrypt</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationSignTag">
-            <summary>Jose enumeration tag for MeshKeyOperation.Sign</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationAuthenticateTag">
-            <summary>Jose enumeration tag for MeshKeyOperation.Authenticate</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationProfileTag">
-            <summary>Jose enumeration tag for MeshKeyOperation.Profile</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationAdminEncryptTag">
-            <summary>Jose enumeration tag for MeshKeyOperation.AdminEncrypt</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationAdminSignTag">
-            <summary>Jose enumeration tag for MeshKeyOperation.AdminSign</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MeshKeyOperationEscrowTag">
-            <summary>Jose enumeration tag for MeshKeyOperation.Escrow</summary>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToMeshKeyOperation(System.String)">
-            <summary>
-            Convert the string <paramref name="text"/> to the corresponding enumeration
-            value.
-            </summary>
-            <param name="text">The string to convert.</param>
-            <returns>The enumeration value.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshConstants.ToLabel(Goedel.Mesh.MeshKeyOperation)">
-            <summary>
-            Convert the enumerated value <paramref name="data"/> to the corresponding string
-            value.
-            </summary>
-            <param name="data">The enumerated value.</param>
-            <returns>The text value.</returns>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.TransactionResultAccept">
-            <summary>
-            Transaction result tag Accept
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.TransactionResultReject">
-            <summary>
-            Transaction result tag Reject
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.TransactionResultPending">
-            <summary>
-            Transaction result tag Pending
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshConstants.TransactionResultExpired">
-            <summary>
-            Transaction result tag Expired
             </summary>
         </member>
     </members>

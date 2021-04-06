@@ -269,8 +269,8 @@ namespace Goedel.Protocol.Presentation {
             //Screen.WriteLine($"Key Agreement {privateKey.KeyIdentifier}.{keyPublic.KeyIdentifier}");
             //Screen.WriteLine($"     {clientKeyAgreementResult.IKM.ToStringBase16()}");
 
-            ClientKeyClientToHost = keyDerive.Derive(Constants.TagKeyInitiatorResponder, Constants.SizeKeyAesGcm * 8);
-            ClientKeyHostToClient = keyDerive.Derive(Constants.TagKeyResponderInitiator, Constants.SizeKeyAesGcm * 8);
+            ClientKeyClientToHost = keyDerive.Derive(Constants.ByteKeyInitiatorResponder, Constants.SizeKeyAesGcm * 8);
+            ClientKeyHostToClient = keyDerive.Derive(Constants.ByteKeyResponderInitiator, Constants.SizeKeyAesGcm * 8);
             }
 
 
@@ -341,8 +341,8 @@ namespace Goedel.Protocol.Presentation {
 
             var keyDerive = new KeyDeriveHKDF(ikm);
 
-            MutualKeyClientToHost = keyDerive.Derive(Constants.TagKeyInitiatorResponder, Constants.SizeKeyAesGcm * 8);
-            MutualKeyHostToClient = keyDerive.Derive(Constants.TagKeyResponderInitiator, Constants.SizeKeyAesGcm * 8);
+            MutualKeyClientToHost = keyDerive.Derive(Constants.ByteKeyInitiatorResponder, Constants.SizeKeyAesGcm * 8);
+            MutualKeyHostToClient = keyDerive.Derive(Constants.ByteKeyResponderInitiator, Constants.SizeKeyAesGcm * 8);
             }
 
 

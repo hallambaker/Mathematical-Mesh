@@ -1,5 +1,5 @@
 ﻿
-Namespace $rootnamespace$
+Namespace Goedel.Mesh.Session
 
 	Exception TBS
 		Console "Exception TBS"
