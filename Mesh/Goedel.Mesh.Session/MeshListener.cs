@@ -74,7 +74,7 @@ namespace Goedel.Mesh.Session {
         public override SessionResponder Accept(
                 Packet packetRequest) {
 
-            // this is failing because there is no means of knowing which ephemeral was given away.
+
 
 
 
@@ -101,6 +101,10 @@ namespace Goedel.Mesh.Session {
                 DictionarySessionsInbound.Remove(responder.LocalStreamId);
                 DictionarySessionsInbound.Add(responder.LocalStreamId, responder);
                 }
+
+
+            // need to set a flag here so that we can send out the stream id on the connection!
+
 
             return responder;
             }

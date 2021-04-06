@@ -24,9 +24,13 @@ LinkFiles = \
     Goedel.Cryptography.dll
 
 ToolTargets = \
-	Exceptions.cs
+	Exceptions.cs\
+	PresentationConstants.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
+PresentationConstants.cs : PresentationConstants.constant 
+	constant PresentationConstants.constant  /cs  PresentationConstants.cs
 
 
 

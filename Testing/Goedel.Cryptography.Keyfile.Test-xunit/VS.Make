@@ -21,7 +21,8 @@ LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Cryptography.KeyFile.dll\
     Goedel.Cryptography.dll\
-    Goedel.Test.Core.dll
+    Goedel.Test.Core.dll\
+    Goedel.Mesh.Test.dll
 
 ToolTargets = 
 

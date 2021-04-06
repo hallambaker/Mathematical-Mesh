@@ -10,33 +10,12 @@ using Goedel.Utilities;
 namespace Goedel.Protocol.Presentation {
 
 
-    /// <summary>
-    /// Identifiers used within encrypted data packets.
-    /// </summary>
-    public enum EncryptedPacketIdentifier {
-        ///<summary>Packet contains a complete message.</summary> 
-        Atomic = 0,
 
-        ///<summary>Heartbeat packet, the outbound port and IP address to which the sender 
-        ///directs it.</summary> 
-        Heartbeat = 1,
-
-        ///<summary>Packet contains a part of a message.</summary> 
-        Serialized = 2,
-
-        ///<summary>Packet contains a part of a message in a streamed connection.</summary> 
-        Streamed = 3,
-
-        ///<summary>Mezzanine packet containing an inner packet with the client credentials.</summary> 
-        Mezzanine = 4,
-
-        ///<summary>Packet contains a tunnelled message.</summary> 
-        Tunnelled = 64
-        }
 
 
     /// <summary>
-    /// The packet types passed as plaintext.
+    /// The packet types passed as plaintext. This is actually redundant as far as the 
+    /// specification goes as these are now at the option of the sender.
     /// </summary>
     public enum PlaintextPacketType {
         ///<summary>Plaintext request to establish a new connection to the host. This is 
@@ -95,7 +74,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Constants class
     /// </summary>
-    public static class Constants {
+    public static partial class Constants {
 
         ///<summary>The minimum packet size.</summary> 
         public const int MinimumPacketSize = 1200;
@@ -118,10 +97,10 @@ namespace Goedel.Protocol.Presentation {
 
 
         ///<summary>The KDF info tag to be used to derive keys.</summary> 
-        public readonly static byte[] TagKeyClientHost = "ClientHost".ToUTF8();
+        public readonly static byte[] TagKeyInitiatorResponder = "InitiatorResponder".ToUTF8();
 
         ///<summary>The KDF info tag to be used to derive keys.</summary> 
-        public readonly static byte[] TagKeyHostClient = "HostClient".ToUTF8();
+        public readonly static byte[] TagKeyResponderInitiator = "ResponderInitiator".ToUTF8();
 
 
 

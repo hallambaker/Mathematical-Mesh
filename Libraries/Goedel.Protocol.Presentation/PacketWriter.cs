@@ -199,20 +199,6 @@ namespace Goedel.Protocol.Presentation {
 
 
         /// <summary>
-        ///Write the positive EncryptedPacketIdentifier <paramref name="data"/> to the packet
-        /// </summary>
-        /// <param name="data">The data to write</param>
-        public void Write(EncryptedPacketIdentifier data)
-                    => Write((byte)data);
-
-        /// <summary>
-        ///Write the positive EncryptedPacketIdentifier <paramref name="data"/> to the packet
-        /// </summary>
-        /// <param name="data">The data to write</param>
-        public void Write(PlaintextPacketType data)
-                    => Write((byte)data);
-
-        /// <summary>
         /// Write the list of extensions <paramref name="extensions"/> to the packet.
         /// </summary>
         /// <param name="extensions">The extensions to write.</param>

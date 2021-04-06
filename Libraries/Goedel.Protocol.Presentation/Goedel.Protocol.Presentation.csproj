@@ -32,12 +32,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="PresentationConstants.cs">
+      <DependentUpon>PresentationConstants.constant</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
       
   <ItemGroup>
     <None Update="Exceptions.exceptional">
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
+    </None>
+    <None Update="PresentationConstants.constant">
+      <LastGenOutput>MeshConstants.cs</LastGenOutput>
+      <Generator>Constant</Generator>
     </None>
     
   </ItemGroup>

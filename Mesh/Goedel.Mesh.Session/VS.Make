@@ -18,19 +18,16 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.IO.dll\
     Goedel.Utilities.dll\
     Goedel.Protocol.Presentation.dll\
-    Goedel.Protocol.dll
+    Goedel.Protocol.Session.dll\
+    Goedel.Protocol.dll\
+    Goedel.Mesh.dll
 
 ToolTargets = \
-	Exceptions.cs\
-	StatusSchema.cs
+	Exceptions.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
-
-StatusSchema.cs : StatusSchema.Protocol 
-	protogen StatusSchema.Protocol  /cs  StatusSchema.cs
 
 
 
@@ -48,5 +45,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Protocol.Session.dll
+	powershell publishtarget Goedel.Mesh.Session.dll
 

@@ -1,0 +1,102 @@
+﻿Namespace Goedel.Protocol.Presentation Constants
+	|Constants specified in hallambaker-mesh-schema
+
+File PresentationConstants
+
+	Enum ClientInitial "Inbound spool message state"
+		Integer ClientInitialHello	1 		"Initial contact message without key exchange"
+			Description
+				|
+		Integer ClientInitialExchange	2	"Initial contact message with key exchange"
+			Description
+				|
+		Integer PacketError 3				"Error response"
+			Description
+				|
+
+	Enum HostMessageTags "Host response messages"
+		Integer TagHostExchange 1 "Host exchange message"
+			Description
+				|
+		Integer TagHostChallenge1 2 "Host challenge type 1"
+			Description
+				|
+		Integer TagHostChallenge2 3 "Host challenge type 2"
+			Description
+				|
+		Integer TagHostComplete 4 "Host exchange completetion"
+			Description
+				|
+
+	Enum ErrorCodes "Response error codes"
+		Integer BadRequest	400 				"Bad request"
+			Description
+				|The message was not understood by the receiver.
+		Integer Unauthorized 401				"Unauthorized"
+			Description
+				|The request was not authorized.
+		Integer Forbidden 403					"Forbidden"
+			Description
+				|The request is not authorized, resubmission under different authentication
+				|will not be acceptable.
+		Integer Timeout 408						"Message timeout"
+			Description
+				|
+		Integer Timeout 429						"Too many requests"
+			Description
+				|
+		Integer ServiceUnavailable 503			"The service is unavailable"
+			Description
+				|
+
+	Code TagKeyInitiatorResponder "InitiatorResponder"
+		Description
+			|
+	Code TagKeyResponderInitiator "ResponderInitiator"
+		Description
+			|
+
+	Enum ExtensionTags "Presentation extension tags"
+		Tag PkixX509		"PKIXC"
+			Description
+				|A PKIX Certificate
+		Tag PkixOcsp		"PKIXO"
+			Description
+				|A PKIX OCSP token validating the credential presented.
+		Tag MeshProfile		"MMMP"
+			Description
+				|A Mathematical Mesh Profile Credential.
+		Tag MeshConnection	"MMMC"
+			Description
+				|A Mathematical Mesh Connection Credential.
+		Tag StreamId		"SID"
+			Description
+				|Declare a persistent stream identifier
+		Tag OneTimeStreamId		"OTSID"
+			Description
+				|Declare a set of one-time use stream identifiers of equal length, 
+		Tag Challenge		"Challenge"
+			Description
+				|Declare a challenge tag to be returned verbatim.
+		Tag ChallengeProofOfWork		"ProofOfWork"
+			Description
+				|Declare a challenge tag to be returned with a proof of work.
+		Tag X448			"X448"
+			Description
+				|Ephemeral key for X448 key exchange.
+		Tag RTSRV			"RTSRV"
+			Description
+				|Request a new stream connection to the specified transactional (request/response)
+				|service
+		Tag GTSRV			"GTSRV"
+			Description
+				|Grant a new stream connection to the specified transactional (request/response)
+				|service with the specified stream ID
+		Tag RSSRV			"RSSRV"
+			Description
+				|Request a new stream connection accepting messages in the specified protocol.
+		Tag GSSRV			"GSSRV"
+			Description
+				|Grant a new stream connection accepting messages in the specified protocol
+				|with the specified stream ID
+
