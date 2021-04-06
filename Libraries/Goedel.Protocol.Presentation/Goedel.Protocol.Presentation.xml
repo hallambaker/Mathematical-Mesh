@@ -184,6 +184,9 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.TagKeyResponderInitiator">
             <summary>ResponderInitiator</summary>
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.StreamId">
+            <summary>SID</summary>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.Constants.ToExtensionTags(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -538,7 +541,7 @@
         <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Decrypt(System.Byte[],System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Unwrap(System.Byte[],System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Unwrap(System.Byte[],System.Byte[],System.Int32,System.Int32)">
             <summary>
             Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="key"/> and 
             the nonce at the start of the packet to provide the necessary keying material.
@@ -1156,6 +1159,9 @@
         <member name="P:Goedel.Protocol.Presentation.Session.RemoteStreamId">
             <summary>Remote stream Id, an opaque blob.</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Session.ReturnStreamId">
+            <summary>When not null, contains the return address to be sent as an an extension.</summary> 
+        </member>
         <member name="P:Goedel.Protocol.Presentation.Session.TaskCompletion">
             <summary>Completion task source.</summary> 
         </member>
@@ -1200,7 +1206,7 @@
             <param name="ciphertextExtensions"></param>
             <param name="packetSize">The number of bytes in the packet to be created.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Session.ParsePacketData(System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Session.ParsePacketData(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the data in <paramref name="packet"/> and return the resulting packet.
             </summary>

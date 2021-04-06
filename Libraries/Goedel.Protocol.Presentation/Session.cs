@@ -82,6 +82,13 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>Remote stream Id, an opaque blob.</summary> 
         public byte[] RemoteStreamId { get; set; }
+
+        ///<summary>When not null, contains the return address to be sent as an an extension.</summary> 
+        public byte[] ReturnStreamId = null;
+        
+        
+        
+        
         ///<summary>Completion task source.</summary> 
         public TaskCompletionSource TaskCompletion { get; set; }
 
@@ -158,41 +165,6 @@ namespace Goedel.Protocol.Presentation {
 
 
 
-        ///// <summary>
-        ///// Prepare a buffer to hold a key exchange request.
-        ///// </summary>
-        ///// <param name="plaintextPacketType">The request type.</param>
-        ///// <returns>The allocated buffer and offset at which to write the first byte.</returns>
-        //public (byte[] buffer, int position) MakeTagKeyExchange(PlaintextPacketType plaintextPacketType) {
-
-        //    var buffer = new byte[Constants.MinimumPacketSize];
-        //    buffer[SourceIdSize - 1] = (byte)plaintextPacketType;
-        //    return (buffer, SourceIdSize);
-
-        //    }
-
-        ///// <summary>
-        ///// Process the initial bytes of the buffer to get the source ID value according to the 
-        ///// source ID processing mode specified for the session.
-        ///// </summary>
-        ///// <param name="buffer"></param>
-        ///// <returns>The retrieved sourceId and position in the buffer.</returns>
-        //public virtual (ulong,int) GetSourceId(byte[] buffer) => 
-        //    (buffer.BigEndianInt(SourceIdSize), SourceIdSize);
-
-
-        ///// <summary>
-        ///// Set the initial bytes of <paramref name="buffer"/> to specify 
-        ///// </summary>
-        ///// <param name="buffer">Buffer to prefix the source ID entry to.</param>
-        ///// <param name="sourceId">The source ID</param>
-        ///// <returns>The number of bytes written.</returns>
-        //public virtual int SetSourceId(byte[] buffer, ulong sourceId) {
-        //    buffer.SetBigEndian(sourceId);
-        //    return SourceIdSize;
-        //    }
-
-
 
         /// <summary>
         /// Quantize the packet length so it is a fixed multiple of 64 bits.
@@ -236,8 +208,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The encrypted packet</param>
         /// <returns>Packet specifying the decrypted payload and extensions (if specified).</returns>
 
-        public virtual Packet ParsePacketData(byte[] packet, int offset) {
-            var innerReader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet, offset);
+        public virtual Packet ParsePacketData(byte[] packet, int offset, int count) {
+            var innerReader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet, offset, count);
 
             var result = new PacketData() {
                 //SourcePortId = sourceId,

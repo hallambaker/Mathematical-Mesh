@@ -213,7 +213,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="key">The primary key.</param>
         /// <param name="packet">The data to decrypt</param>
         /// <returns>A reader for the decrypted data.</returns>
-        public static new PacketReader Unwrap(byte[] key, byte[] packet, int offset) {
+        public static new PacketReader Unwrap(byte[] key, byte[] packet, int offset, int count) {
 
             // Hack: This needs to be rewritten with the tag at the end!
 
@@ -221,13 +221,16 @@ namespace Goedel.Protocol.Presentation {
 
             var aes = new AesGcm(key);
             var ivSpan = new ReadOnlySpan<byte>(packet, offset, Constants.SizeIvAesGcm);
-            var position = offset + ivSpan.Length;
-
             Screen.WriteLine($"IvSpan {offset}  {ivSpan.Length}");
 
-            var length = packet.Length - position - Constants.SizeTagAesGcm;
+            var position = offset + ivSpan.Length;
+
+            
+
+            var length = count - position - Constants.SizeTagAesGcm;
             var ciphertextSpan = new ReadOnlySpan<byte>(packet, position, length);
             Screen.WriteLine($"Ciphertext {position} {ciphertextSpan.Length}");
+
             position += length;
 
             var tagSpan = new ReadOnlySpan<byte>(packet, position, Constants.SizeTagAesGcm);

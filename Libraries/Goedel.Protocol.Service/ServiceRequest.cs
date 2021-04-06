@@ -117,34 +117,13 @@ namespace Goedel.Protocol.Service {
                 PlaintextPacketType.ClientExchange => ProcessClientExchange(),
                 PlaintextPacketType.ClientCompleteDeferred => ProcessClientCompleteDeferred(offset),
                 PlaintextPacketType.ClientComplete => ProcessClientComplete(),
-                _ => ProcessClientData(sourceId)
+                _ => ProcessClientData(sourceId, offset)
                 };
 
             if (sessionResponder == null) {
                 return; // 
                 }
 
-                //case (byte)PlaintextPacketType.ClientInitial: {
-                //    ;
-                //    break;
-                //    }
-                //case (byte)PlaintextPacketType.ClientExchange: {
-                //    ProcessClientExchange();
-                //    break;
-                //    }
-                //case (byte)PlaintextPacketType.ClientCompleteDeferred: {
-                //    sessionResponder = ProcessClientCompleteDeferred();
-                //    break;
-                //    }
-                //case (byte)PlaintextPacketType.ClientComplete: {
-                //    ProcessClientComplete();
-                //    break;
-                //    }
-                //default: {
-                //    sessionResponder = ProcessClientData(sourceId);
-                //    break;
-                //    }
-                //}
 
             var memoryStream = new MemoryStream(PacketClient.Payload);
             var reader = new JsonBcdReader(memoryStream);
@@ -183,8 +162,15 @@ namespace Goedel.Protocol.Service {
                     break;
                     }
                 case PlaintextPacketType.Data: {
-                    var responsePacket = sessionResponder.SerializePacketData(
-                        responseBytes);
+                    List<PacketExtension> packetExtensions=null;
+                    if (sessionResponder.ReturnStreamId != null) {
+                        var returnExtension = new PacketExtension() {
+                            Tag = Constants.StreamId, Value = sessionResponder.ReturnStreamId
+                            };
+                        packetExtensions = new List<PacketExtension> { returnExtension };
+                        }
+
+                    var responsePacket = sessionResponder.SerializePacketData(responseBytes, packetExtensions);
                     ReturnResponse(responsePacket);
 
                     break;
@@ -223,12 +209,18 @@ namespace Goedel.Protocol.Service {
             responsePacket = PlaintextPacketType.Data;
             throw new NYI();
             }
-        SessionResponder ProcessClientData(StreamId SourceId) {
+        SessionResponder ProcessClientData(StreamId SourceId, int offset) {
 
             // identify the source connection
 
 
             responsePacket = PlaintextPacketType.Data;
+
+            if (Listener.DictionarySessionsInbound.TryGetValue(SourceId, out var responder)) {
+                PacketClient = responder.ParsePacketData(Buffer, offset, Count);
+                return responder;
+                }
+
 
             // map the source id here
             //PacketClient = ParsePacketData(null, Trimmed);

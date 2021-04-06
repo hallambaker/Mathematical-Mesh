@@ -238,11 +238,9 @@ namespace Goedel.Mesh.Session {
             // Parse the response
             var (sourceId, offset2) = StreamId.GetSourceId(responsepacketData);
 
-            // check the sourceId is for us here???
-
-            var packet = ParsePacketData(responsepacketData, offset2);
+            var packet = ParsePacketData(responsepacketData, offset2, responsepacketData.Length);
             if (!Connected) {
-                GetSourceId();
+                GetSourceId(packet as PacketData);
                 }
 
             JsonObject response = null;
@@ -253,12 +251,13 @@ namespace Goedel.Mesh.Session {
             }
 
 
-        void GetSourceId() {
-
+        void GetSourceId(PacketData packet) {
+            RemoteStreamId = PacketExtension.GetExtensionByTag(packet?.CiphertextExtensions,
+                    Constants.StreamId);
             // need to scan the encrypted attributes to get the source Id.
 
             Connected = true;
-            throw new NYI();
+
             }
 
         private byte[] SerializePayload(string tag, JsonObject request, out MemoryStream stream) {

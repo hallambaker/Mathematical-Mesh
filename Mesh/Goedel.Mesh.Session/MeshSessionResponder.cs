@@ -35,6 +35,7 @@ namespace Goedel.Mesh.Session {
 
         public StreamId SourceId;
 
+
         public override Task<byte[]> Receive() => throw new NotImplementedException();
         public override void Reply(byte[] payload) => throw new NotImplementedException();
 
@@ -109,7 +110,7 @@ namespace Goedel.Mesh.Session {
             // need to assign a unique SessionId here.
 
             LocalStreamId = StreamId.GetStreamId();
-
+            ReturnStreamId = LocalStreamId.GetValue();
 
 
             PacketIn = packetIn;

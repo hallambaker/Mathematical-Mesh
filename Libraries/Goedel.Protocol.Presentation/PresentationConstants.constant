@@ -56,46 +56,66 @@ File PresentationConstants
 		Description
 			|
 
+
+	Code StreamId "SID"
+		Description
+			|
+
 	Enum ExtensionTags "Presentation extension tags"
-		Tag PkixX509		"PKIXC"
+		Tag PkixX509			"PKIXC"
 			Description
 				|A PKIX Certificate
-		Tag PkixOcsp		"PKIXO"
+		Tag PkixOcsp			"PKIXO"
 			Description
 				|A PKIX OCSP token validating the credential presented.
-		Tag MeshProfile		"MMMP"
+		Tag MeshProfile			"MMMP"
 			Description
 				|A Mathematical Mesh Profile Credential.
-		Tag MeshConnection	"MMMC"
+		Tag MeshConnection		"MMMC"
 			Description
 				|A Mathematical Mesh Connection Credential.
-		Tag StreamId		"SID"
+		Tag StreamId			"SID"
 			Description
 				|Declare a persistent stream identifier
 		Tag OneTimeStreamId		"OTSID"
 			Description
 				|Declare a set of one-time use stream identifiers of equal length, 
-		Tag Challenge		"Challenge"
+		Tag Challenge			"Challenge"
 			Description
 				|Declare a challenge tag to be returned verbatim.
 		Tag ChallengeProofOfWork		"ProofOfWork"
 			Description
 				|Declare a challenge tag to be returned with a proof of work.
-		Tag X448			"X448"
+		Tag X448				"X448"
 			Description
 				|Ephemeral key for X448 key exchange.
-		Tag RTSRV			"RTSRV"
+		Tag AesGcm				"AESGCM"
+			Description
+				|Use AES-GCM for response packet encryption
+		Tag AesCfb				"AESCFB"
+			Description
+				|Use AES-CFB for response packet encryption (default)
+		Tag FlowControlStream	"FCS"
+			Description
+				|Use stream flow control
+		Tag FlowControlFrame	"FCF"
+			Description
+				|Use frame flow control
+		Tag FlowControlEncrypted	"FCAES"
+			Description
+				|Use AES encryption of flow control data (default)
+		Tag RTSRV				"RTSRV"
 			Description
 				|Request a new stream connection to the specified transactional (request/response)
 				|service
-		Tag GTSRV			"GTSRV"
+		Tag GTSRV				"GTSRV"
 			Description
 				|Grant a new stream connection to the specified transactional (request/response)
 				|service with the specified stream ID
-		Tag RSSRV			"RSSRV"
+		Tag RSSRV				"RSSRV"
 			Description
 				|Request a new stream connection accepting messages in the specified protocol.
-		Tag GSSRV			"GSSRV"
+		Tag GSSRV				"GSSRV"
 			Description
 				|Grant a new stream connection accepting messages in the specified protocol
 				|with the specified stream ID

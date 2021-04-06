@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 4/6/2021 12:47:54 PM
+//  This file was automatically generated at 4/6/2021 5:54:22 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -153,6 +153,9 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>ResponderInitiator</summary>
         public const string TagKeyResponderInitiator = "TagKeyResponderInitiator";
+
+        ///<summary>SID</summary>
+        public const string StreamId = "StreamId";
 
 
 

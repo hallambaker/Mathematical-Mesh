@@ -75,7 +75,7 @@ namespace Goedel.Protocol.Presentation {
         #region // Constructors
 
         ///<summary>Dictionary mapping inbound source Ids to sessions.</summary> 
-        public Dictionary<StreamId, Session> DictionarySessionsInbound = new();
+        public Dictionary<StreamId, SessionResponder> DictionarySessionsInbound = new();
 
         /////<summary>Dictionary mapping outbound source Ids to sessions.</summary>       
         //public Dictionary<StreamId, Session> DictionarySessionsOutbound = new();

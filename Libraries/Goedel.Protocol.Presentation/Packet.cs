@@ -46,6 +46,9 @@ namespace Goedel.Protocol.Presentation {
 
 
         public static byte[] GetExtensionByTag(List<PacketExtension> packetExtensions, string PrimaryTag) {
+            if (packetExtensions == null) {
+                return null;
+                }
             foreach (var extension in packetExtensions) {
                 if (extension.Tag == PrimaryTag) {
 

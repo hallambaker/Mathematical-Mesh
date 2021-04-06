@@ -310,20 +310,21 @@ namespace Goedel.Protocol.Presentation {
 
             var aes = new AesGcm(key);
 
-
-
             var iv = Platform.GetRandomBytes(Constants.SizeIvAesGcm);
             var ivSpan = new ReadOnlySpan<byte>(iv);
 
             Buffer.BlockCopy(iv, 0, result, count, iv.Length);
-            count += iv.Length;
             Screen.WriteLine($"IvSpan {count}  {ivSpan.Length}");
+
+            count += iv.Length;
+            
 
             var length = result.Length - count - Constants.SizeTagAesGcm;
             var ciphertextSpan = new Span<byte>(result, count, length);
-            count += length;
-
             Screen.WriteLine($"Ciphertext {count} {length}");
+
+            count += length;
+            
 
             var tagSpan = new Span<byte>(result, count, Constants.SizeTagAesGcm);
             Screen.WriteLine($"TagSpan {count} {tagSpan.Length}");

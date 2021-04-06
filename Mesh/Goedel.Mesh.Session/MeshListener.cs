@@ -29,6 +29,8 @@ using System.Threading;
 namespace Goedel.Mesh.Session {
     public class MeshListener : Listener {
 
+
+
         public const string ChallengeTag = "Challenge";
 
         public MeshListener(Credential credential) : base(credential) {
@@ -75,9 +77,6 @@ namespace Goedel.Mesh.Session {
                 Packet packetRequest) {
 
 
-
-
-
             var responder = new MeshSessionResponder(this, packetRequest);
 
             switch (packetRequest) {
@@ -99,10 +98,10 @@ namespace Goedel.Mesh.Session {
             // register the responder.    
             if (DictionarySessionsInbound.TryGetValue(responder.LocalStreamId, out var session)) {
                 DictionarySessionsInbound.Remove(responder.LocalStreamId);
-                DictionarySessionsInbound.Add(responder.LocalStreamId, responder);
+                
                 }
 
-
+            DictionarySessionsInbound.Add(responder.LocalStreamId, responder);
             // need to set a flag here so that we can send out the stream id on the connection!
 
 
