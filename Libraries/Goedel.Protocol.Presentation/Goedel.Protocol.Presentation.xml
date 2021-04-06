@@ -107,6 +107,18 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionMeshConnection">
             <summary>Mesh Connection</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.TagHostExchange">
+            <summary></summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.TagHostChallenge1">
+            <summary></summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.TagHostChallenge2">
+            <summary></summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.TagHostComplete">
+            <summary></summary> 
+        </member>
         <member name="M:Goedel.Protocol.Presentation.Constants.Derive(System.Byte[],System.Byte[]@,System.Byte[]@,System.Byte[]@)">
             <summary>
             Using the primary key <paramref name="ikm"/> and generated nonce <paramref name="nonce"/>,
@@ -327,6 +339,23 @@
             is sent encrypted under this credential.</param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.MakeChallenge(Goedel.Protocol.Presentation.Packet,System.Byte[])">
+            <summary>
+            Create a challenge value over the packet <paramref name="packetRequest"/> and
+            payload <paramref name="payload"/> and return as a list of packet extensions.
+            </summary>
+            <param name="packetRequest">The packet request.</param>
+            <param name="payload">The payload.</param>
+            <returns>List of challenge tokens.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Listener.VerifyChallenge(Goedel.Protocol.Presentation.Packet)">
+            <summary>
+            Verify the challenge data in <paramref name="packetRequest"/> returning true if
+            verification succeeds, false otherwise.
+            </summary>
+            <param name="packetRequest">The packet to be validated.</param>
+            <returns>True if challenge was valid, otherwise false.</returns>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.Accept(Goedel.Protocol.Presentation.Packet)">
             <summary>
             Accept the inbound connection request described in <paramref name="packetRequest"/>.
@@ -413,6 +442,21 @@
         <member name="F:Goedel.Protocol.Presentation.PacketExtension.Value">
             <summary>Extension value</summary> 
         </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketExtension.GetExtensionByTag(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.String)">
+            <summary>
+            Convenience method scans the list <paramref name="packetExtensions"/> and returns the
+            first matching the tag <paramref name="PrimaryTag"/>.
+            </summary>
+            <param name="packetExtensions">The extensions to scan. If this is a null pointer the
+            null value is returned.</param>
+            <param name="PrimaryTag">The tag to find.</param>
+            <returns>The first value matching the specified tag if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketExtension.Dump">
+            <summary>
+            Debug routine, print the tag value to the screen.
+            </summary>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.Packet">
             <summary>
             Base class for packet classes.
@@ -443,8 +487,12 @@
         <member name="P:Goedel.Protocol.Presentation.PacketReader.Position">
             <summary>Reader position.</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketReader.Last">
+            <summary>The length of the valid portion of the buffer <see cref="T:System.Buffer"/>.</summary> 
+        </member>
         <member name="F:Goedel.Protocol.Presentation.PacketReader.Packet">
-            <summary>Buffer from which data is read.</summary> 
+            <summary>Buffer from which data is read. This MAY be longer than needed, the lenght to be used
+            is specified by <see cref="F:Goedel.Protocol.Presentation.PacketReader.Last"/></summary> 
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.Factory(System.Byte[])">
             <summary>Factory method returning a reader of the default decryption algorithm and mode.</summary> 
@@ -515,15 +563,6 @@
             <param name="pad">If true the data is padded to consume the remainder of the data.</param>
             <returns>A reader for the decrypted data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReader.Unwrap(System.Byte[],System.Byte[])">
-            <summary>
-            Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="ikm"/> and 
-            the nonce at the start of the packet to provide the necessary keying material.
-            </summary>
-            <param name="ikm">The primary key.</param>
-            <param name="packet">The data to decrypt</param>
-            <returns>A reader for the decrypted data.</returns>
-        </member>
         <member name="T:Goedel.Protocol.Presentation.PacketReaderAesGcm">
             <summary>
             Packet reader using AES in GCM mode for decryption.
@@ -548,6 +587,9 @@
             </summary>
             <param name="key">The primary key.</param>
             <param name="packet">The data to decrypt</param>
+            <param name="offset">The starting point of the encrypted portion of the buffer (i.e. start
+            of the initialization vector)</param>
+            <param name="last">The last byte in the buffer to read.</param>
             <returns>A reader for the decrypted data.</returns>
         </member>
         <member name="T:Goedel.Protocol.Presentation.SessionInitiator">
@@ -562,6 +604,8 @@
             <summary>
             Create a serialised packet of type ClientInitial packet.
             </summary>
+            <param name="sourceId">The source identifier.</param>
+            <param name="destinationId">The destination identifier.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
@@ -573,6 +617,8 @@
             <summary>
             Create a serialised packet of type ClientExchange packet.
             </summary>
+            <param name="sourceId">The source identifier.</param>
+            <param name="destinationId">The destination identifier.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
@@ -586,6 +632,8 @@
             <summary>
             Create a serialised packet of type ClientComplete packet.
             </summary>
+            <param name="sourceId">The source identifier.</param>
+            <param name="destinationId">The destination identifier.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
@@ -601,6 +649,8 @@
             <summary>
             Create a serialised packet of type ClientCompleteDeferred packet.
             </summary>
+            <param name="sourceId">The source identifier.</param>
+            <param name="destinationId">The destination identifier.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
@@ -690,6 +740,8 @@
             <summary>
             Create a serialised packet of type HostExchange packet.
             </summary>
+            <param name="sourceId">The source identifier.</param>
+            <param name="destinationId">The destination identifier.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
@@ -703,6 +755,8 @@
             <summary>
             Create a serialised packet of type HostChallenge1 packet.
             </summary>
+            <param name="sourceId">The source identifier.</param>
+            <param name="destinationId">The destination identifier.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
@@ -714,6 +768,8 @@
             <summary>
             Create a serialised packet of type HostChallenge2 packet.
             </summary>
+            <param name="sourceId">The source identifier.</param>
+            <param name="destinationId">The destination identifier.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
@@ -725,6 +781,8 @@
             <summary>
             Create a serialised packet of type HostComplete packet.
             </summary>
+            <param name="sourceId">The source identifier.</param>
+            <param name="destinationId">The destination identifier.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/4/2021 3:58:01 PM
+//  This file was automatically generated at 4/6/2021 7:23:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  yaschema version 3.0.0.699
+//  Generator:  yaschema version 3.0.0.701
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -57,6 +57,8 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Create a serialised packet of type ClientInitial packet.
         /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <param name="destinationId">The destination identifier.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
@@ -94,6 +96,8 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Create a serialised packet of type ClientExchange packet.
         /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <param name="destinationId">The destination identifier.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
@@ -140,6 +144,8 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Create a serialised packet of type ClientComplete packet.
         /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <param name="destinationId">The destination identifier.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
@@ -192,6 +198,8 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Create a serialised packet of type ClientCompleteDeferred packet.
         /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <param name="destinationId">The destination identifier.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
@@ -228,8 +236,6 @@ namespace Goedel.Protocol.Presentation {
             // Mezzanine
             var mezanineWriter = new PacketWriterAesGcm(outerWriter.RemainingSpace);
             var mezanineExtensions = new List<PacketExtension>();
-
-            // This is the horror show?
             MutualKeyExchange (out var clientKeyId);
             mezanineWriter.Write (clientKeyId);
             AddCredentials (mezanineExtensions);
@@ -381,6 +387,8 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Create a serialised packet of type HostExchange packet.
         /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <param name="destinationId">The destination identifier.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
@@ -428,6 +436,8 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Create a serialised packet of type HostChallenge1 packet.
         /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <param name="destinationId">The destination identifier.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
@@ -468,6 +478,8 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Create a serialised packet of type HostChallenge2 packet.
         /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <param name="destinationId">The destination identifier.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
@@ -507,6 +519,8 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Create a serialised packet of type HostComplete packet.
         /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <param name="destinationId">The destination identifier.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>

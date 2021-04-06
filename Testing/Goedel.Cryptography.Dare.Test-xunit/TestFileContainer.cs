@@ -150,14 +150,14 @@ namespace Goedel.XUnit {
             DareLogWriter.ArchiveFile(fileName, policy, testData, null);
 
             // Read Container
-            DareLogReader.File(fileName, policy.KeyLocate,
+            DareLogReader.File(fileName, policy.KeyLocation,
                         out var ReadData, out var ContentMetaOut);
 
             // Check for equality
             ReadData.IsEqualTo(testData).TestTrue();
 
 
-            Sequence.VerifyPolicy(fileName, policy.KeyLocate);
+            Sequence.VerifyPolicy(fileName, policy.KeyLocation);
             }
 
 
@@ -186,15 +186,15 @@ namespace Goedel.XUnit {
 
             // Test retrieval by index number. Note that since record 0 has the 
             // container header data, the data items run through [1..Entries]
-            using (var reader = new DareLogReader(filename, policy.KeyLocate)) {
+            using (var reader = new DareLogReader(filename, policy.KeyLocation)) {
                 for (var i = 0; i < entries; i++) {
 
-                    reader.Read(policy?.KeyLocate, out var ReadData, out var ContentMeta, index: i + 1);
+                    reader.Read(policy?.KeyLocation, out var ReadData, out var ContentMeta, index: i + 1);
                     ReadData.IsEqualTo(testData[i]).TestTrue();
                     }
                 }
 
-            Sequence.VerifyPolicy(filename, policy.KeyLocate);
+            Sequence.VerifyPolicy(filename, policy.KeyLocation);
             }
 
 

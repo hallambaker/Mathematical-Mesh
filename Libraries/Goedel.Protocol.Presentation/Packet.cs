@@ -44,7 +44,14 @@ namespace Goedel.Protocol.Presentation {
         public byte[] Value;
 
 
-
+        /// <summary>
+        /// Convenience method scans the list <paramref name="packetExtensions"/> and returns the
+        /// first matching the tag <paramref name="PrimaryTag"/>.
+        /// </summary>
+        /// <param name="packetExtensions">The extensions to scan. If this is a null pointer the
+        /// null value is returned.</param>
+        /// <param name="PrimaryTag">The tag to find.</param>
+        /// <returns>The first value matching the specified tag if found, otherwise null.</returns>
         public static byte[] GetExtensionByTag(List<PacketExtension> packetExtensions, string PrimaryTag) {
             if (packetExtensions == null) {
                 return null;
@@ -58,6 +65,9 @@ namespace Goedel.Protocol.Presentation {
             return null;
             }
 
+        /// <summary>
+        /// Debug routine, print the tag value to the screen.
+        /// </summary>
         public void Dump() {
             Screen.WriteLine($"    {Tag} -> {Value.ToStringBase16()}");
             }

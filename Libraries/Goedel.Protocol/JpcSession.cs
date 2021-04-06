@@ -119,7 +119,13 @@ namespace Goedel.Protocol {
             return client;
             }
 
-        public JsonObject Post(string tag, JsonObject request) => 
+        /// <summary>
+        /// Post a transaction request and return the resulting object.
+        /// </summary>
+        /// <param name="tag">The transaction identifier.</param>
+        /// <param name="request">The request data.</param>
+        /// <returns>The transaction result.</returns>
+        public virtual JsonObject Post(string tag, JsonObject request) => 
                     throw new System.NotImplementedException();
         }
 
@@ -199,16 +205,16 @@ namespace Goedel.Protocol {
         //    return responseBuffer.GetUTF8();
         //    }
 
-        /// <summary>
-        /// Post a transaction of type <paramref name="tag"/> with request data 
-        /// <paramref name="request"/> to the service expecting a response of type
-        /// <paramref name="tagResponse"/>
-        /// </summary>
-        /// <param name="tag">The transaction tag.</param>
-        /// <param name="tagResponse">The response type tag.</param>
-        /// <param name="request">The request data.</param>
-        /// <returns>The response data.</returns>
-        public abstract JsonObject Post(string tag, JsonObject request);
+        ///// <summary>
+        ///// Post a transaction of type <paramref name="tag"/> with request data 
+        ///// <paramref name="request"/> to the service expecting a response of type
+        ///// <paramref name="tagResponse"/>
+        ///// </summary>
+        ///// <param name="tag">The transaction tag.</param>
+        ///// <param name="tagResponse">The response type tag.</param>
+        ///// <param name="request">The request data.</param>
+        ///// <returns>The response data.</returns>
+        //public abstract JsonObject Post(string tag, JsonObject request);
 
         }
 

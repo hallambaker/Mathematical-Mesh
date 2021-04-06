@@ -102,8 +102,8 @@ namespace Goedel.Protocol {
 
 
 
-        public JpcClientInterface(IJpcSession jpcSession = null) =>
-            JpcSession = jpcSession;
+        //public JpcClientInterface(IJpcSession jpcSession = null) =>
+        //    JpcSession = jpcSession;
 
 
 

@@ -124,10 +124,13 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Mesh Connection</summary> 
         public const string ExtensionMeshConnection = "MMMC";
 
-
+        ///<summary></summary> 
         public const byte TagHostExchange = 1;
-        public const byte TagHostChallenge1 = 2;
+        ///<summary></summary> 
+        public const  byte TagHostChallenge1 = 2;
+        ///<summary></summary> 
         public const byte TagHostChallenge2 = 3;
+        ///<summary></summary> 
         public const byte TagHostComplete = 4;
 
         /// <summary>

@@ -108,10 +108,23 @@ namespace Goedel.Protocol.Presentation {
                     byte[] payload = null,
                     Credential hostCredential = null);
 
+        /// <summary>
+        /// Create a challenge value over the packet <paramref name="packetRequest"/> and
+        /// payload <paramref name="payload"/> and return as a list of packet extensions.
+        /// </summary>
+        /// <param name="packetRequest">The packet request.</param>
+        /// <param name="payload">The payload.</param>
+        /// <returns>List of challenge tokens.</returns>
         public abstract List<PacketExtension> MakeChallenge(
             Packet packetRequest,
             byte[] payload = null);
 
+        /// <summary>
+        /// Verify the challenge data in <paramref name="packetRequest"/> returning true if
+        /// verification succeeds, false otherwise.
+        /// </summary>
+        /// <param name="packetRequest">The packet to be validated.</param>
+        /// <returns>True if challenge was valid, otherwise false.</returns>
         public abstract bool VerifyChallenge(
             Packet packetRequest);
 

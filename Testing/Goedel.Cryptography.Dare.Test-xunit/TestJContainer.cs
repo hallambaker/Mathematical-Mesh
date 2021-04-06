@@ -194,7 +194,7 @@ namespace Goedel.XUnit {
                     CryptoParameters cryptoParametersEntry = null,
                     IKeyLocate keyLocate = null) {
 
-            var keyCollection = keyLocate ?? policy?.KeyLocate;
+            var keyCollection = keyLocate ?? policy?.KeyLocation;
             //var KeyCollection = policy?.KeyLocate ?? CryptoParametersEntry?.KeyLocate;
 
             reOpen = reOpen == 0 ? records : reOpen;

@@ -20,10 +20,11 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Reader position.</summary> 
         public int Position { get; set; } = 0;
 
-
+        ///<summary>The length of the valid portion of the buffer <see cref="Buffer"/>.</summary> 
         public int Last;
 
-        ///<summary>Buffer from which data is read.</summary> 
+        ///<summary>Buffer from which data is read. This MAY be longer than needed, the lenght to be used
+        ///is specified by <see cref="Last"/></summary> 
         public byte[] Packet;
 
         ///<summary>Factory method returning a reader of the default decryption algorithm and mode.</summary> 
@@ -148,14 +149,14 @@ namespace Goedel.Protocol.Presentation {
         public virtual PacketReader Decrypt(byte[] ikm, bool pad = true) => throw new NYI();
 
 
-        /// <summary>
-        /// Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="ikm"/> and 
-        /// the nonce at the start of the packet to provide the necessary keying material.
-        /// </summary>
-        /// <param name="ikm">The primary key.</param>
-        /// <param name="packet">The data to decrypt</param>
-        /// <returns>A reader for the decrypted data.</returns>
-        public static PacketReader Unwrap(byte[] ikm, byte[] packet) => PacketReaderAesGcm.Unwrap(ikm, packet);
+        ///// <summary>
+        ///// Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="ikm"/> and 
+        ///// the nonce at the start of the packet to provide the necessary keying material.
+        ///// </summary>
+        ///// <param name="ikm">The primary key.</param>
+        ///// <param name="packet">The data to decrypt</param>
+        ///// <returns>A reader for the decrypted data.</returns>
+        //public static PacketReader Unwrap(byte[] ikm, byte[] packet) => PacketReaderAesGcm.Unwrap(ikm, packet);
 
         }
 
@@ -212,8 +213,11 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="key">The primary key.</param>
         /// <param name="packet">The data to decrypt</param>
+        /// <param name="offset">The starting point of the encrypted portion of the buffer (i.e. start
+        /// of the initialization vector)</param>
+        /// <param name="last">The last byte in the buffer to read.</param>
         /// <returns>A reader for the decrypted data.</returns>
-        public static new PacketReader Unwrap(byte[] key, byte[] packet, int offset, int count) {
+        public static PacketReader Unwrap(byte[] key, byte[] packet, int offset, int last) {
 
             // Hack: This needs to be rewritten with the tag at the end!
 
@@ -227,7 +231,7 @@ namespace Goedel.Protocol.Presentation {
 
             
 
-            var length = count - position - Constants.SizeTagAesGcm;
+            var length = last - position - Constants.SizeTagAesGcm;
             var ciphertextSpan = new ReadOnlySpan<byte>(packet, position, length);
             Screen.WriteLine($"Ciphertext {position} {ciphertextSpan.Length}");
 

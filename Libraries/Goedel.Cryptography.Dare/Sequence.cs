@@ -100,6 +100,7 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The last sequence index found.</summary> 
         public SequenceIndex SequenceIndex { get; set; }
 
+        ///<summary>The trailer section of the last envelope in the sequence.</summary> 
         public DareTrailer TrailerLast { get; set; }
 
         /// <summary>The current frame header as binary data</summary>
@@ -515,7 +516,7 @@ namespace Goedel.Cryptography.Dare {
             sequence.AppendFrame(headerBytes, payload, trailerBytes);
             sequence.FrameCount++;
 
-            sequence.KeyCollection = keyLocate ?? policy?.KeyLocate;
+            sequence.KeyCollection = keyLocate ?? policy?.KeyLocation;
 
             sequence.FrameZero = new DareEnvelope() {
                 Header = sequenceHeaderFirst,

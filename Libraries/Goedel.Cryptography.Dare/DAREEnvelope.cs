@@ -550,27 +550,6 @@ namespace Goedel.Cryptography.Dare {
             inputStream.CopyTo(dareEnvelopeWriter);
             }
 
-        ///// <summary>
-        ///// Deserialize a tagged stream
-        ///// </summary>
-        ///// <param name="jsonReader">The input stream</param>
-        ///// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        ///// <returns>The created object.</returns>		
-        //public static new DareEnvelope FromJson(JsonReader jsonReader,
-        //    bool tagged = true) {
-        //    if (jsonReader == null) {
-        //        return null;
-        //        }
-        //    if (tagged) {
-        //        var Out = jsonReader.ReadTaggedObject(TagDictionary);
-        //        return Out as DareEnvelope;
-        //        }
-        //    var result = new DareEnvelope();
-        //    result.Deserialize(jsonReader);
-        //    result.PostDecode();
-        //    return result;
-        //    }
-
         /// <summary>
         /// Decode a tagged JSONObject using keys from <paramref name="keyCollection"/> to decrypt
         /// if necessary.
@@ -684,27 +663,12 @@ namespace Goedel.Cryptography.Dare {
 
             return message;
 
-            //// Hack: This routine should return a result structure showing how the data is signed and by whom
-            ////[i.e. include the algorithm, digest method, scope, etc.
-
-
-            ////keyCollection ??= KeyCollection.Default;
-
-            //using (var jsonBcdReader = new JsonBcdReader(inputStream)) {
-            //    //var Message = DecodeHeader(JSONBCDReader);
-
-            //    //var Decoder = Message.Header.GetDecoder(
-            //    //            JSONBCDReader, out var Reader,
-            //    //            KeyCollection: keyCollection);
-
-            //    //Decoder.Close();
-            //    }
-
-            //return true; // Hack: perform the actual check here and return a boolean.
             }
 
 
-
+        /// <summary>
+        /// Strip the envelope of all unnecessary convenience data.
+        /// </summary>
         public void Strip() {
             if (Trailer != null) {
                 Trailer.PayloadDigest = null;

@@ -15,7 +15,7 @@ namespace Goedel.Cryptography.Dare {
         public bool Encrypt => EncryptKeys != null;
 
         ///<summary>Key collection to be used to resolve keys.</summary> 
-        public IKeyLocate KeyLocate { get; set; }
+        public  IKeyLocate KeyLocation { get; set; }
 
 
         /////<summary></summary> 
@@ -47,7 +47,7 @@ namespace Goedel.Cryptography.Dare {
                 CryptoAlgorithmId encrypt=CryptoAlgorithmId.NULL,
                 CryptoAlgorithmId digest = CryptoAlgorithmId.NULL) {
             
-            KeyLocate = keyLocate;
+            KeyLocation = keyLocate;
             EncryptionAlgorithm = encrypt.ToJoseID();
             DigestAlgorithm = digest.ToJoseID();
 
@@ -79,7 +79,7 @@ namespace Goedel.Cryptography.Dare {
                 CryptoAlgorithmId encrypt = CryptoAlgorithmId.NULL,
                 CryptoAlgorithmId digest = CryptoAlgorithmId.NULL) {
 
-            KeyLocate = keyLocate;
+            KeyLocation = keyLocate;
             EncryptionAlgorithm = encrypt.ToJoseID();
             DigestAlgorithm = digest.ToJoseID();
 
