@@ -63,7 +63,7 @@ namespace Goedel.Mesh.Session {
 
         static DateTime EphemeralsExpire;
 
-        static TimeSpan EphemeralValidity = new TimeSpan(1, 0, 0);
+        static TimeSpan EphemeralValidity = new(1, 0, 0);
 
 
 

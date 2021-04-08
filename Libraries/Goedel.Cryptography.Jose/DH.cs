@@ -34,7 +34,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
-        public virtual PKIXPublicKeyDH PKIXParameters => new PKIXPublicKeyDH() {
+        public virtual PKIXPublicKeyDH PKIXParameters => new() {
             Public = Public,
             Domain = DHDomain.GetByUDF(Domain)
             };
@@ -86,7 +86,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
-        public virtual PKIXPrivateKeyDH DHPrivateKey => new PKIXPrivateKeyDH() {
+        public virtual PKIXPrivateKeyDH DHPrivateKey => new() {
             Public = Public,
             Private = Private,
             Domain = DHDomain.GetByUDF(Domain)

@@ -47,8 +47,8 @@ namespace Goedel.Command {
         /// </summary>
         public bool Not { get; set; }
 
-        StringBuilder BuildValue = new StringBuilder();
-        StringBuilder BuildFlag = new StringBuilder();
+        StringBuilder BuildValue = new();
+        StringBuilder BuildFlag = new();
 
         /// <summary>
         /// Reset the value buffers to start a new parse.

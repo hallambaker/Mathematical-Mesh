@@ -81,7 +81,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Create a new JSON Writer.
         /// </summary>
-        public static JsonWriter JSONWriterFactory() => new JsonWriter();
+        public static JsonWriter JSONWriterFactory() => new();
 
 
         private int outputCol = 0;

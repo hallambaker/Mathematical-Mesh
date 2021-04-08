@@ -135,7 +135,7 @@ namespace Goedel.Cryptography.Dare {
                     CryptoKey encryptionKey = null,
                     ContentMeta contentMeta = null,
                     ObjectEncoding objectEncoding = ObjectEncoding.JSON) => 
-            new Enveloped<T>(data, signingKey, encryptionKey, contentMeta, objectEncoding);
+            new(data, signingKey, encryptionKey, contentMeta, objectEncoding);
 
 
         /// <summary>

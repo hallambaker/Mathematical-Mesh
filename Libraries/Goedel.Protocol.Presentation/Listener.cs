@@ -150,7 +150,6 @@ namespace Goedel.Protocol.Presentation {
         /// Defer creation of a host connection by sending a challenge to the source.
         /// </summary>
         /// <param name="packetRequest">Parsed inbound request packet.</param>
-        /// <param name="payload">Optional payload response. This is always returned enclair.</param>
         public virtual SessionResponder GetTemporaryResponder(
                     Packet packetRequest) => throw new NYI();
 

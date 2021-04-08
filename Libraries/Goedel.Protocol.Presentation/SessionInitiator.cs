@@ -23,24 +23,6 @@ using System.Threading.Tasks;
 namespace Goedel.Protocol.Presentation {
 
 
-
-
-
-    /// <summary>
-    /// Client side connection state.
-    /// </summary>
-    public enum ClientState {
-        ///<summary>Initial state, sending either Initial or Cloaked.</summary> 
-        Initial,
-        ///<summary>Host challenge received, sending answer.</summary> 
-        Challenge,
-        ///<summary>Connection established, sending packets.</summary> 
-        Write,
-        ///<summary>Connection terminated, cannot be used further.</summary> 
-        Abort
-        }
-
-
     /// <summary>
     /// Presentation client connection. Tracks the state of a client connection.
     /// </summary>
@@ -57,24 +39,6 @@ namespace Goedel.Protocol.Presentation {
         public override Credential HostCredential => CredentialOther;
         ///<inheritdoc/>
         public override Credential ClientCredential => CredentialSelf;
-
-
-        //public SessionInitiator(StreamId localStreamId, StreamId RemoteStreamId)  { }
-
-
-
-        ///<summary>The current state of this client.</summary> 
-        ClientState clientState;
-
-
-        ///// <summary>
-        ///// Perform a request/response transation with request payload <paramref name="payload"/>
-        ///// and return the result.
-        ///// </summary>
-        ///// <param name="payload">The binary payload</param>
-        ///// <returns>The binar</returns>
-        //public abstract Task<byte[]> Transact(byte[] payload);
-
 
         }
 

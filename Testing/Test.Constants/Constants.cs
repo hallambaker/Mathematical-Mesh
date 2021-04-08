@@ -26,8 +26,8 @@ namespace Test.Common {
 
         public static string MailAccount = "alice@example.com";
 
-        public static List<string> STARTTLS = new List<string> { "STARTTLS" };
-        public static List<string> TLS = new List<string> { "TLS" };
+        public static List<string> STARTTLS = new() { "STARTTLS" };
+        public static List<string> TLS = new() { "TLS" };
         //public static Connection ConnectionSubmit = new Connection(
         //    "smtp.example.com", 587, "_submission._tcp", STARTTLS);
         //public static Connection ConnectionIMAP = new Connection(

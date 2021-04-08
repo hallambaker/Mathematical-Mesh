@@ -28,7 +28,7 @@ namespace Goedel.XUnit {
         static StoreTests() {
             }
 
-        public static StoreTests Test() => new StoreTests();
+        public static StoreTests Test() => new();
 
 
         [Fact]

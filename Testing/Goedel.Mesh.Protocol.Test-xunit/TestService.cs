@@ -40,7 +40,7 @@ namespace Goedel.XUnit {
         static TestService() => Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
 
 
-        public static TestService Test() => new TestService();
+        public static TestService Test() => new();
         static string AccountAlice = "alice@example.com";
         static string ServiceName = "example.com";
         static string AccountBob = "bob@example.com";
@@ -58,12 +58,12 @@ namespace Goedel.XUnit {
         public static Contact ContactBob => MeshMachineTest.ContactBob;
 
 
-        CatalogedCredential password1 = new CatalogedCredential() {
+        CatalogedCredential password1 = new() {
             Username = "fred",
             Password = "password",
             Service = "example.com"
             };
-        CatalogedCredential password2 = new CatalogedCredential() {
+        CatalogedCredential password2 = new() {
             Username = "fred",
             Password = "password",
             Service = "example.net"

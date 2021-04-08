@@ -52,7 +52,7 @@ namespace Goedel.XUnit {
         /// Dictionary mapping tags to factory methods
         /// </summary>
         public static Dictionary<string, JsonFactoryDelegate> _TagDictionary =
-                new Dictionary<string, JsonFactoryDelegate>() {
+                new() {
 
             {"MultiInstance", MultiInstance._Factory},
             {"MultiArray", MultiArray._Factory},

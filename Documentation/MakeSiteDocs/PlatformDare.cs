@@ -77,7 +77,7 @@ namespace ExampleGenerator {
     public partial class CreateExamples {
 
 
-        public ExampleDare Dare = new ExampleDare();
+        public ExampleDare Dare = new();
 
 
         StringWriter consoleWriter;

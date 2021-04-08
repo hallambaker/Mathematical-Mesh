@@ -155,7 +155,7 @@ namespace Goedel.Cryptography {
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) =>
-            new KeyPairEd448(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
+            new(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
 
 
 

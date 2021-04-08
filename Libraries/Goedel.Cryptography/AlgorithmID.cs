@@ -12,7 +12,7 @@ namespace Goedel.Cryptography {
         /// Mapping of XML DigSig entries to CryptoAlgorithmID
         /// </summary>
         static readonly Dictionary<string, CryptoAlgorithmId> XMLToID =
-            new Dictionary<string, CryptoAlgorithmId> {
+            new() {
                     {"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256", CryptoAlgorithmId.RSASign |CryptoAlgorithmId.SHA_2_256 },
                     {"http://www.w3.org/2001/04/xmldsig-more#rsa-sha512", CryptoAlgorithmId.RSASign |CryptoAlgorithmId.SHA_2_512 },
                     {"http://www.w3.org/2001/04/xmlenc#aes128-cbc", CryptoAlgorithmId.AES128CBC },
@@ -31,7 +31,7 @@ namespace Goedel.Cryptography {
             };
 
         static readonly Dictionary<CryptoAlgorithmId, string> IDToXML =
-            new Dictionary<CryptoAlgorithmId, string>();
+            new();
 
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// 
         static readonly Dictionary<string, CryptoAlgorithmId> OIDToID =
-            new Dictionary<string, CryptoAlgorithmId> {
+            new() {
                     { PKIX.Constants.OIDS__sha256WithRSAEncryption, CryptoAlgorithmId.RSASign_SHA_2_256},
                     { PKIX.Constants.OIDS__sha512WithRSAEncryption, CryptoAlgorithmId.RSASign_SHA_2_512},
                     { PKIX.Constants.OIDS__rsaEncryption, CryptoAlgorithmId.RSAExch_P15},
@@ -60,7 +60,7 @@ namespace Goedel.Cryptography {
             };
 
         static readonly Dictionary<CryptoAlgorithmId, HashAlgorithmName> IDtoHashAlgorithmName =
-            new Dictionary<CryptoAlgorithmId, HashAlgorithmName> {
+            new() {
                     { CryptoAlgorithmId.SHA_1_DEPRECATED, HashAlgorithmName.SHA1},
                     { CryptoAlgorithmId.SHA_2_256, HashAlgorithmName.SHA256},
                     { CryptoAlgorithmId.SHA_2_512, HashAlgorithmName.SHA512}
@@ -80,8 +80,9 @@ namespace Goedel.Cryptography {
 
 
         static readonly Dictionary<CryptoAlgorithmId, string> IDToOID =
-            new Dictionary<CryptoAlgorithmId, string>();
+            new();
 
+        //public static Dictionary<CryptoAlgorithmId, HashAlgorithmName> IDtoHashAlgorithmName1 => IDtoHashAlgorithmName;
 
         static AlgorithmID() {
 

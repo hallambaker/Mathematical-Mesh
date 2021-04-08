@@ -12,7 +12,7 @@ namespace Goedel.Cryptography.Jose {
         /// Lookup  identifier by Jose name or commonly used alias
         /// </summary>
         public static readonly Dictionary<string, CryptoAlgorithmId> UpperToID =
-            new Dictionary<string, CryptoAlgorithmId>() {
+            new() {
                 {"AES",     CryptoAlgorithmId.AES256 },
                 {"AES256",  CryptoAlgorithmId.AES256 },
                 {"AES128",  CryptoAlgorithmId.AES128 },
@@ -36,7 +36,7 @@ namespace Goedel.Cryptography.Jose {
         /// Lookup identifier by Jose name.
         /// </summary>
         public static readonly Dictionary<string, CryptoAlgorithmId> StringToID =
-            new Dictionary<string, CryptoAlgorithmId> {
+            new() {
                 //SHA-256	alg (Private)
                 { "S256", CryptoAlgorithmId.SHA_2_256},
                 //SHA-512	alg (Private)
@@ -149,7 +149,7 @@ namespace Goedel.Cryptography.Jose {
         /// Lookup Jose Name by identifier.
         /// </summary>
         public static readonly Dictionary<CryptoAlgorithmId, string> IdToString =
-            new Dictionary<CryptoAlgorithmId, string>();
+            new();
 
         // This is called as a one time initializer
         static AlgorithmID() {

@@ -102,7 +102,7 @@ namespace Goedel.Mesh.Session {
             //var (buffer, position) = MakeTagKeyExchange(PlaintextPacketType.ClientInitial);
             var buffer = new byte[Constants.MinimumPacketSize];
             var encoded = SerializeClientInitial(
-                LocalStreamId.GetValue(), StreamId.ClientInitial, 
+                LocalStreamId.GetValue(), Constants.StreamIdClientInitial, 
                 span, plaintextExtensions, buffer, 0);
 
 

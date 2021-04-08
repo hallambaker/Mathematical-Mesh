@@ -992,7 +992,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Montgomery curve parameters for Curve25519S
         /// </summary>
-        public static readonly DomainParameters Curve25519 = new DomainParameters(
+        public static readonly DomainParameters Curve25519 = new(
                 Curve25519Prime,
                 486662,
                 9,
@@ -1022,7 +1022,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Montgomery parameters for Curve 448
         /// </summary>
-        public static readonly DomainParameters Curve448 = new DomainParameters(
+        public static readonly DomainParameters Curve448 = new(
                 BigInteger.Pow(2, 448) - BigInteger.Pow(2, 224) - 1,
                 156326,
                 5,

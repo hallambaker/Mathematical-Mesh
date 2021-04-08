@@ -10,9 +10,6 @@ using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 using Goedel.Test;
 
-#pragma warning disable IDE0059
-
-
 namespace Goedel.XUnit {
     public partial class TestGoedelCryptography {
 
@@ -42,7 +39,7 @@ namespace Goedel.XUnit {
 
         // Make test with fixed value so as to be repeatable.
 
-        public bool Test(UdfAlgorithmIdentifier udfAlgorithmIdentifier, MeshKeyOperation operation, int bits = 256) {
+        public static bool Test(UdfAlgorithmIdentifier udfAlgorithmIdentifier, MeshKeyOperation operation, int bits = 256) {
 
             (var actor, var keytype) = udfAlgorithmIdentifier.GetMeshKeyType();
 
@@ -229,7 +226,7 @@ namespace Goedel.XUnit {
 
 
 
-        public bool Test(KeyUses keyUses, KeyPair privateKey, KeyPair publicKey = null) {
+        public static bool Test(KeyUses keyUses, KeyPair privateKey, KeyPair publicKey = null) {
             publicKey ??= privateKey.KeyPairPublic();
 
             (keyUses == publicKey.KeyUses).TestTrue();
@@ -274,7 +271,7 @@ namespace Goedel.XUnit {
 
             }
 
-        public bool TestAny(KeyPair privateKey, KeyPair publicKey) =>
+        public static bool TestAny(KeyPair privateKey, KeyPair publicKey) =>
             TestSign(privateKey, publicKey) & TestEncrypt(privateKey, publicKey);
         }
 
@@ -354,28 +351,28 @@ namespace Goedel.XUnit {
 
         #region // Direct tests
 
-        public static TestVectorUDFKeyGen TEST1 = new TestVectorUDFKeyGen() {
+        public static TestVectorUDFKeyGen TEST1 { get; } = new() {
             Seed = "test1",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.Ed25519,
             KeyUses = KeyUses.Sign,
             ResultUDF = "MB2W-MYKD-RT2Q-VZD4-76ER-ER5O-3WH2"
             };
 
-        public static TestVectorUDFKeyGen TEST2 = new TestVectorUDFKeyGen() {
+        public static TestVectorUDFKeyGen TEST2 { get; } = new() {
             Seed = "test2",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.Ed448,
             KeyUses = KeyUses.Sign,
             ResultUDF = "MAHJ-HXR2-YQVB-J5BB-6JFA-A4NF-XX65"
             };
 
-        public static TestVectorUDFKeyGen TEST3 = new TestVectorUDFKeyGen() {
+        public static TestVectorUDFKeyGen TEST3 { get; } = new() {
             Seed = "test3",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.X25519,
             KeyUses = KeyUses.Encrypt,
             ResultUDF = "MDID-WXVE-4ZC7-JJYZ-CEWP-DN3W-BIFG"
             };
 
-        public static TestVectorUDFKeyGen TEST4 = new TestVectorUDFKeyGen() {
+        public static TestVectorUDFKeyGen TEST4 { get; } = new() {
             Seed = "test4",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.X448,
             KeyUses = KeyUses.Encrypt,
@@ -388,7 +385,7 @@ namespace Goedel.XUnit {
         #region // KeyGen tests
 
 
-        public static TestVectorUDFKeyGenUdfKey TEST_KG_Device = new TestVectorUDFKeyGenUdfKey() {
+        public static TestVectorUDFKeyGenUdfKey TEST_KG_Device { get; } = new() {
             Seed = "test1",
             SeedA = "test1a",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileDevice,
@@ -400,7 +397,7 @@ namespace Goedel.XUnit {
             };
 
         // will fail as 
-        public static TestVectorUDFKeyGenUdfKey TEST_KG_User = new TestVectorUDFKeyGenUdfKey() {
+        public static TestVectorUDFKeyGenUdfKey TEST_KG_User { get; } = new() {
             Seed = "test1",
             SeedA = "test1a",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileAccount,
@@ -411,7 +408,7 @@ namespace Goedel.XUnit {
             };
 
 
-        public static TestVectorUDFKeyGenUdfKey TEST_KG_Service = new TestVectorUDFKeyGenUdfKey() {
+        public static TestVectorUDFKeyGenUdfKey TEST_KG_Service { get; } = new() {
             Seed = "test1",
             SeedA = "test1a",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileService,

@@ -97,7 +97,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Dictionary mapping store names to encryption keys.</summary> 
         public Dictionary<string, KeyPair> DictionaryStoreEncryptionKey =
-            new Dictionary<string, KeyPair>();
+            new();
 
         PrivateKeyUDF secretSeed;
 

@@ -174,7 +174,7 @@ namespace Goedel.Cryptography.Standard {
         /// </summary>
         public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
-        static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
+        static CryptoAlgorithm _CryptoAlgorithm = new(
                     _CryptoAlgorithmID, _AlgorithmClass, Factory, 256);
 
 
@@ -228,7 +228,7 @@ namespace Goedel.Cryptography.Standard {
         public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
-        static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
+        static CryptoAlgorithm _CryptoAlgorithm = new(
                     _CryptoAlgorithmID, _AlgorithmClass, Factory, 512);
 
 

@@ -120,7 +120,7 @@ namespace Goedel.Mesh.Test {
     public partial class TestCLI : CommandLineInterpreter {
         public TestShell Shell;
 
-        public List<Result> Results = new List<Result>();
+        public List<Result> Results = new();
         public Result Last => Results[^1];
 
 

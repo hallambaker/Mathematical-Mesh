@@ -58,8 +58,8 @@ namespace Goedel.Registry {
     /// </summary>
     public class XMLTextWriter {
 
-        Stack<string> StackIndent = new Stack<string>();
-        Stack<string> StackTag = new Stack<string>();
+        Stack<string> StackIndent = new();
+        Stack<string> StackTag = new();
 
         /// <summary>Tracks the indentation level.</summary>
         public int Stack => StackIndent.Count;

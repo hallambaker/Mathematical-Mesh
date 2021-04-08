@@ -104,7 +104,7 @@ namespace Goedel.IO {
         /// <param name="fileStatus">The file status</param>
         /// <returns>The result</returns>
         public static FileStream FileStream(this string fileName, FileStatus fileStatus) =>
-            new FileStream(fileName, fileStatus.FileMode(), fileStatus.FileAccess(),
+            new(fileName, fileStatus.FileMode(), fileStatus.FileAccess(),
                 fileStatus.FileShare());
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Goedel.IO {
         /// <param name="filename">The file name</param>
         /// <returns>A file stream</returns>
         public static FileStream OpenFileRead(this string filename) => 
-                new FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+                new(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
 
         /// <summary>
         /// Open a file for read access in shared mode, allowing concurrent 
@@ -212,7 +212,7 @@ namespace Goedel.IO {
         /// <param name="filename">The file name</param>
         /// <returns>A file stream</returns>
         public static FileStream OpenFileReadShared(this string filename) => 
-            new FileStream(filename, System.IO.FileMode.Open, 
+            new(filename, System.IO.FileMode.Open, 
                 System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite);
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Goedel.IO {
         /// <param name="filename">The new file name.</param>
         /// <returns>File stream to write to the file.</returns>
         public static FileStream OpenFileNew(this string filename) =>
-            new FileStream(filename, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            new(filename, System.IO.FileMode.Create, System.IO.FileAccess.Write);
 
         /// <summary>
         /// Open an existing file for exclusive write access, or create new file.
@@ -275,7 +275,7 @@ namespace Goedel.IO {
         /// <param name="filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
         public static FileStream OpenFileWrite(this string filename) =>
-            new FileStream(filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
+            new(filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
 
         /// <summary>
         /// Open an existing file for exclusive write access, or create new file.
@@ -283,7 +283,7 @@ namespace Goedel.IO {
         /// <param name="filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
         public static FileStream OpenFileReadWrite(this string filename) =>
-            new FileStream(filename, System.IO.FileMode.OpenOrCreate,
+            new(filename, System.IO.FileMode.OpenOrCreate,
                 System.IO.FileAccess.ReadWrite);
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Goedel.IO {
         /// <param name="filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
         public static FileStream OpenFileWriteShare(this string filename) =>
-            new FileStream(filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write,
+            new(filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write,
                 System.IO.FileShare.Read);
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace Goedel.IO {
         /// <param name="filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
         public static FileStream OpenFileAppend(this string filename) =>
-            new FileStream(filename, System.IO.FileMode.Append, System.IO.FileAccess.Write,
+            new(filename, System.IO.FileMode.Append, System.IO.FileAccess.Write,
                 System.IO.FileShare.Read);
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Goedel.IO {
         /// <param name="Filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
         public static FileStream OpenFileAppendShare(this string Filename) =>
-            new FileStream(Filename, System.IO.FileMode.Append, System.IO.FileAccess.Write,
+            new(Filename, System.IO.FileMode.Append, System.IO.FileAccess.Write,
                 System.IO.FileShare.ReadWrite);
 
         /// <summary>

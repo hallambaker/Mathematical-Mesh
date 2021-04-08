@@ -139,7 +139,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Data">The data to be read as a UTF8 data stream.</param>
         /// <returns>The JSONReader</returns>
-        public static JsonReader JsonReader(this string Data) => new JsonReader(Data);
+        public static JsonReader JsonReader(this string Data) => new(Data);
 
         /// <summary>
         /// Convert object to byte sequence in JSON form.

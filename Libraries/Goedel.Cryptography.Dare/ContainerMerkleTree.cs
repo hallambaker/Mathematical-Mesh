@@ -86,7 +86,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Dictionary mapping the frame index to the corresponding digest value.
         /// </summary>
-        public Dictionary<long, byte[]> FrameDigestDictionary = new Dictionary<long, byte[]>();
+        public Dictionary<long, byte[]> FrameDigestDictionary = new();
 
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="parameters">The RSA Parameters in .NET format.</param>
         /// <returns>The private key in Goedel format.</returns> 
-        public static PkixPrivateKeyRsa GetPkixPrivateKeyRSA(this RSAParameters parameters) => new PkixPrivateKeyRsa() {
+        public static PkixPrivateKeyRsa GetPkixPrivateKeyRSA(this RSAParameters parameters) => new() {
 
             Modulus = parameters.Modulus,
             PublicExponent = parameters.Exponent,
@@ -47,7 +47,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="privateKey">RSA key  in System.Security.Cryptography form</param>
         /// <returns>The RSA parameters in PKIX format.</returns>
-        public static RSAParameters GetRsaParameters(this PkixPrivateKeyRsa privateKey) => new RSAParameters {
+        public static RSAParameters GetRsaParameters(this PkixPrivateKeyRsa privateKey) => new() {
             Modulus = privateKey.Modulus,
             Exponent = privateKey.PublicExponent,
             D = privateKey.PrivateExponent,
@@ -63,7 +63,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="parameters">Input parameters  in System.Security.Cryptography form</param>
         /// <returns>The public key in Goedel format.</returns>
-        public static PkixPublicKeyRsa GetPkixPublicKeyRsa(this RSAParameters parameters) => new PkixPublicKeyRsa() {
+        public static PkixPublicKeyRsa GetPkixPublicKeyRsa(this RSAParameters parameters) => new() {
 
             Modulus = parameters.Modulus,
             PublicExponent = parameters.Exponent
@@ -74,7 +74,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="publicKey">The RSA public key</param>
         /// <returns>The RSA parameters in System.Security.Cryotography. format.</returns>
-        public static RSAParameters GetRsaParameters(this PkixPublicKeyRsa publicKey) => new RSAParameters {
+        public static RSAParameters GetRsaParameters(this PkixPublicKeyRsa publicKey) => new() {
             Modulus = publicKey.Modulus,
             Exponent = publicKey.PublicExponent,
             };
@@ -119,7 +119,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Oid">OID structure in System.Security.Cryptography form</param>
         /// <returns>Portable OID structure</returns>
-        public static AlgorithmIdentifier AlgorithmIdentifier(this Oid Oid) => new AlgorithmIdentifier(Oid.ToString());
+        public static AlgorithmIdentifier AlgorithmIdentifier(this Oid Oid) => new(Oid.ToString());
 
         /// <summary>
         /// Convert .NET Distinguished Name to portable list of names.

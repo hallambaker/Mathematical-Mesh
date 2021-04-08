@@ -20,7 +20,7 @@ namespace Goedel.XUnit {
 
 
 
-        public static TestDareArchive Test() => new TestDareArchive();
+        public static TestDareArchive Test() => new();
         /// <summary>
         /// Test a single plaintext singleton containers.
         /// </summary>
@@ -139,7 +139,7 @@ namespace Goedel.XUnit {
                 }
             }
 
-        static Random Random = new Random();
+        static Random Random = new();
 
         static byte[] CreateBytes(int length) => CryptoCatalog.GetBytes(length);
 

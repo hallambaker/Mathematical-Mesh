@@ -362,7 +362,7 @@ namespace Goedel.Mesh {
         /// <param name="self">If true, the contact is for the owner of the account.</param>
         /// <returns>The cataloged contact.</returns>
         public CatalogedContact CatalogedContact(bool self = false) =>
-            new CatalogedContact(this, self);
+            new(this, self);
 
         }
 

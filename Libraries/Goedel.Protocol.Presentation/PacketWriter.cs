@@ -241,6 +241,7 @@ namespace Goedel.Protocol.Presentation {
         /// Wrap a data packet payload to create an encrypted data packet.
         /// </summary>
         /// <param name="ikm">The primary key.</param>
+        /// <param name="streamId">The stream identifier.</param>
         /// <returns>The wrapped data packet.</returns>
         public virtual byte[] Wrap(byte[] streamId, byte[] ikm) => throw new NYI();
 

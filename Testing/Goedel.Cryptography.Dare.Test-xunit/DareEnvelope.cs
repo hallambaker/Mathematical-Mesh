@@ -18,7 +18,7 @@ using Xunit;
 namespace Goedel.XUnit {
 
     public partial class TestDare {
-        public static TestDare Test() => new TestDare();
+        public static TestDare Test() => new();
 
         static CryptoParameters CryptoParametersNull = new CryptoParametersTest();
 

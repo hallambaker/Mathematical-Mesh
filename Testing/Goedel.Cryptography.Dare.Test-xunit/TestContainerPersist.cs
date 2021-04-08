@@ -24,7 +24,7 @@ namespace Goedel.XUnit {
 
 
 
-        public static TestPersist Test() => new TestPersist();
+        public static TestPersist Test() => new();
 
         static string FileTest = "TestStore.jcx";
         static string AccountIDAlice = "alice@whatever";
@@ -33,7 +33,7 @@ namespace Goedel.XUnit {
 
         // create new
         readonly static DateTime Now = DateTime.Now;
-        readonly static TestItem AccountAlice = new TestItem() {
+        readonly static TestItem AccountAlice = new() {
             AccountID = AccountIDAlice,
             Status = "Open",
             Created = Now,
@@ -41,7 +41,7 @@ namespace Goedel.XUnit {
             UserProfileUDF = UDF.PresentationBase32(AccountIDAlice.ToBytes())
             };
 
-        readonly static TestItem AccountBob = new TestItem() {
+        readonly static TestItem AccountBob = new() {
             AccountID = AccountIDBob,
             Status = "Open",
             Created = Now,

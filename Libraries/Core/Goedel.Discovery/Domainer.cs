@@ -10,7 +10,7 @@ namespace Goedel.Discovery {
         // if (DictionaryType.ContainsKey("RR") {
         //    int value = dictionary["RR"];
         //    }
-        static Dictionary<string, ushort> DictionaryType = new Dictionary<string, ushort>() {
+        static Dictionary<string, ushort> DictionaryType = new() {
             {"A", 1},
             {"NS", 2},
             {"MD", 3},
@@ -70,7 +70,7 @@ namespace Goedel.Discovery {
             {"*", 255} // End of list * = ALL
 			};
 
-        static Dictionary<ushort, string> DictionaryCode = new Dictionary<ushort, string>() {
+        static Dictionary<ushort, string> DictionaryCode = new() {
             {1, "A"},
             {2, "NS"},
             {3, "MD"},

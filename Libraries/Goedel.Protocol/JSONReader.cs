@@ -329,10 +329,10 @@ namespace Goedel.Protocol {
         /// Delegate method for creating structured readers
         /// </summary>
         public static JSONReaderFactoryDelegate JSONReaderFactory => _JSONReaderFactoryByte;
-        static JsonReader _JSONReaderFactoryByte(byte[] Data) => new JsonReader(Data);
+        static JsonReader _JSONReaderFactoryByte(byte[] Data) => new(Data);
 
 
-        StringBuilder StringBuilder = new StringBuilder();
+        StringBuilder StringBuilder = new();
 
         /// <summary>
         /// The underlying character stream.

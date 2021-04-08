@@ -278,7 +278,7 @@ namespace Goedel.Cryptography {
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmId algorithmID = CryptoAlgorithmId.NULL) =>
-            new KeyPairDH(keySize, keySecurity);
+            new(keySize, keySecurity);
 
 
 

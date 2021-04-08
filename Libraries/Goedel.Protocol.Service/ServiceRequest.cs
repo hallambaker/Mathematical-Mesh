@@ -12,11 +12,15 @@ using Goedel.Protocol.Presentation;
 
 namespace Goedel.Protocol.Service {
 
-
+    /// <summary>
+    /// Describe the result of request source analysis.
+    /// </summary>
     public enum RequestQuality {
-        
+        ///<summary>The request comes from an acceptable (non blocked source).</summary> 
         OK,
+        ///<summary>The request is not acceptable respond giving (Reason TBS)</summary> 
         Reason,
+        ///<summary>The request is not acceptable and should be ignored without response.</summary> 
         Abort
         }
 
@@ -44,12 +48,14 @@ namespace Goedel.Protocol.Service {
         ///<summary></summary> 
         public Service Service;
 
-
+        ///<summary>The buffer to receive the input request.</summary> 
         protected byte[] Buffer = new byte[MaxRequest];
+
+        ///<summary>Number of bytes read into the input buffer.</summary> 
         protected int Count = 0;
 
 
-
+        ///<summary>If true, the request was refused.</summary> 
         public bool Refused { get; protected set; } = false;
 
         #endregion
@@ -63,11 +69,12 @@ namespace Goedel.Protocol.Service {
         public abstract void Complete();
 
 
-
+        /// <summary>
+        /// Determine  quality of request received from <paramref name="iPEndPoint"/>
+        /// </summary>
+        /// <param name="iPEndPoint">The request origin.</param>
+        /// <returns>The quality of the request.</returns>
         protected RequestQuality AbuseCheckIpSource(IPEndPoint iPEndPoint) => RequestQuality.OK;
-
-
-
 
 
         /// <summary>
@@ -75,10 +82,6 @@ namespace Goedel.Protocol.Service {
         /// </summary>
         /// <param name="requestQuality"></param>
         public abstract void Abort(RequestQuality requestQuality);
-
-
-        bool PlaintextPayload;
-
 
         //int offset;
 
@@ -89,29 +92,17 @@ namespace Goedel.Protocol.Service {
 
         Listener Listener => Service.FredListener;
 
-        Packet PacketClient;
-        Packet PacketResponse;
+        Packet packetClient;
 
-        //public int SourceIdSize { get; } = 8;
-        ///// <summary>
-        ///// Process the initial bytes of the buffer to get the source ID value according to the 
-        ///// source ID processing mode specified for the session.
-        ///// </summary>
-        ///// <param name="buffer"></param>
-        ///// <returns>The retrieved sourceId and position in the buffer.</returns>
-        //public virtual (ulong, int) GetSourceId(byte[] buffer) =>
-        //    (buffer.BigEndianInt(SourceIdSize), SourceIdSize);
-
-
+        /// <summary>
+        /// Process the buffer containing inbound data.
+        /// </summary>
         protected virtual void ProcessBuffer() {
 
 
             var (sourceId, offset) = StreamId.GetSourceId(Buffer);
-
-
             SessionResponder sessionResponder=null;
 
-            PlaintextPayload = false;
             sessionResponder = (PlaintextPacketType)sourceId.Value switch {
                 PlaintextPacketType.ClientInitial => ProcessClientInitial(),
                 PlaintextPacketType.ClientExchange => ProcessClientExchange(),
@@ -125,11 +116,11 @@ namespace Goedel.Protocol.Service {
                 }
 
 
-            var memoryStream = new MemoryStream(PacketClient.Payload);
+            var memoryStream = new MemoryStream(packetClient.Payload);
             var reader = new JsonBcdReader(memoryStream);
 
             byte[] responseBytes = null;
-            if (PacketClient?.Payload.Length > 0) {
+            if (packetClient?.Payload.Length > 0) {
                 var provider = Service.GetProvider(null, 0, null);
 
                 provider.AssertNotNull(NYI.Throw);
@@ -148,12 +139,12 @@ namespace Goedel.Protocol.Service {
             switch (responsePacket) {
                 case PlaintextPacketType.HostChallenge: {
 
-                    var challenge = Listener.MakeChallenge(PacketClient, responseBytes);
+                    var challenge = Listener.MakeChallenge(packetClient, responseBytes);
 
                     var buffer = new byte[Constants.MinimumPacketSize];
 
                     var responsePacket = sessionResponder.SerializeHostChallenge1(
-                                StreamId.GetClientCompleteDeferred(), PacketClient.SourceId,
+                                StreamId.GetClientCompleteDeferred(), packetClient.SourceId,
                                 responseBytes, challenge, buffer);
 
                     ReturnResponse(responsePacket);
@@ -186,24 +177,11 @@ namespace Goedel.Protocol.Service {
 
 
 
-        ///<inheritdoc/>
-
-
-
-        //protected byte[] GetTrimmed(byte[] input, int offset, int length) {
-        //    var result = new byte[length];
-
-        //    System.Buffer.BlockCopy(input, offset, result, 0, length);
-        //    return result;
-        //    }
-
-
-
         SessionResponder ProcessClientInitial() {
-            PlaintextPayload = true;
             responsePacket = PlaintextPacketType.HostChallenge;
-            PacketClient = Listener.ParseClientInitial(Buffer, StreamId.SourceIdMaxSize, Count- StreamId.SourceIdMaxSize);
-            return Listener.GetTemporaryResponder(PacketClient); ;
+            packetClient = Listener.ParseClientInitial(Buffer, Constants.SizeReservedInitialStreamId, 
+                Count- Constants.SizeReservedInitialStreamId);
+            return Listener.GetTemporaryResponder(packetClient); ;
             }
         SessionResponder ProcessClientComplete() {
             responsePacket = PlaintextPacketType.Data;
@@ -217,7 +195,7 @@ namespace Goedel.Protocol.Service {
             responsePacket = PlaintextPacketType.Data;
 
             if (Listener.DictionarySessionsInbound.TryGetValue(SourceId, out var responder)) {
-                PacketClient = responder.ParsePacketData(Buffer, offset, Count);
+                packetClient = responder.ParsePacketData(Buffer, offset, Count);
                 return responder;
                 }
 
@@ -233,16 +211,16 @@ namespace Goedel.Protocol.Service {
             }
         SessionResponder ProcessClientCompleteDeferred(int offset) {
 
-            PacketClient = Listener.ParseClientCompleteDeferred(Buffer, offset, Count-offset);
+            packetClient = Listener.ParseClientCompleteDeferred(Buffer, offset, Count-offset);
             // verify the challenge here
 
-            if (Listener.VerifyChallenge(PacketClient)) {
+            if (Listener.VerifyChallenge(packetClient)) {
 
 
                 
 
                 responsePacket = PlaintextPacketType.Data;
-                return Listener.Accept(PacketClient);
+                return Listener.Accept(packetClient);
                 }
             else {
                 responsePacket = PlaintextPacketType.Error;
@@ -258,8 +236,11 @@ namespace Goedel.Protocol.Service {
             }
 
 
-
-        protected abstract void ReturnResponse(byte[] chunk);
+        /// <summary>
+        /// Return a response containing the payload <paramref name="payload"/>
+        /// </summary>
+        /// <param name="payload">The payload data to return.</param>
+        protected abstract void ReturnResponse(byte[] payload);
 
 
         }
@@ -280,6 +261,7 @@ namespace Goedel.Protocol.Service {
         /// Constructor returning an instance to process the request 
         /// specified by <paramref name="listenerContext"/>.
         /// </summary>
+        /// <param name="service">The service to process the request.</param>
         /// <param name="listenerContext">The HTTP request context.</param>
         public ServiceRequestHttp(Service service, HttpListenerContext listenerContext) {
 
@@ -366,7 +348,7 @@ namespace Goedel.Protocol.Service {
     /// Connection handler for UDP request
     /// </summary>
     public class ServiceRequestUdp : ServiceRequest {
-        byte[] Buffer { get; }
+
 
         /// <summary>
         /// Constructor, process the request contained in <paramref name="result"/>.

@@ -28,7 +28,7 @@ namespace Goedel.XUnit {
 
 
         public const string KeyUserProfileUDF = "UserProfileUDF";
-        readonly static List<string> Keys = new List<string> { KeyUserProfileUDF };
+        readonly static List<string> Keys = new() { KeyUserProfileUDF };
 
         /// <summary>
         /// Secondary keys describing the object
@@ -39,7 +39,7 @@ namespace Goedel.XUnit {
         /// Secondary key/values pairs describing the object
         /// </summary>
         public override List<KeyValuePair<string, string>> _KeyValues =>
-            new List<KeyValuePair<string, string>>() {
+            new() {
                 new KeyValuePair<string, string> (KeyUserProfileUDF, UserProfileUDF)
                 };
 

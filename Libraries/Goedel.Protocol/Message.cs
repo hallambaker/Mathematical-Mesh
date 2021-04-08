@@ -143,13 +143,13 @@ Content-Length: {2}
     public class BoundResponse : BoundMessage {
 
         /// <summary>Constant for invalid Mac response.</summary>
-        public static BoundResponse ErrorBadMac = new BoundResponse(401, "Not Authorized");
+        public static BoundResponse ErrorBadMac = new(401, "Not Authorized");
 
         /// <summary>Constant for invalid message error.</summary>
-        public static BoundResponse ErrorUnknown = new BoundResponse(500, "Internal Server Error");
+        public static BoundResponse ErrorUnknown = new(500, "Internal Server Error");
 
         /// <summary>Constant for bad request.</summary>
-        public static BoundResponse ErrorSyntax = new BoundResponse(400, "Bad Request");
+        public static BoundResponse ErrorSyntax = new(400, "Bad Request");
 
 
         /// <summary>The status value (defaults to 200)</summary>

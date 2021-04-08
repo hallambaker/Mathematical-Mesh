@@ -139,7 +139,7 @@ namespace Goedel.Cryptography {
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) =>
-            new KeyPairX448(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
+            new(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
 
         ///// <summary>
         ///// Generate a key co-generation contribution and return the new composite public

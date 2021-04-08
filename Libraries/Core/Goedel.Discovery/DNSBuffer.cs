@@ -58,7 +58,7 @@ namespace Goedel.Discovery {
         /// <summary>The underlying buffer.</summary>
         public DNSBuffer Buffer;
 
-        ASCIIEncoding ASCIIEncoding = new ASCIIEncoding();
+        ASCIIEncoding ASCIIEncoding = new();
 
         /// <summary>Return the buffer data window as a byte array.</summary>
         public byte[] Bytes {
@@ -410,7 +410,7 @@ namespace Goedel.Discovery {
 
         /// <summary>Read Domain name value</summary>
         /// <returns>The value read</returns>
-        public Domain ReadDomain() => new Domain(ReadName());
+        public Domain ReadDomain() => new(ReadName());
 
         /// <summary>Read name value</summary>
         /// <returns>The value read</returns>

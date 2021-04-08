@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Goedel.XUnit {
     public class MakeSiteDocs : CreateExamples {
-        public static MakeSiteDocs Test() => new MakeSiteDocs();
+        public static MakeSiteDocs Test() => new();
 
 
         public MakeSiteDocs() {

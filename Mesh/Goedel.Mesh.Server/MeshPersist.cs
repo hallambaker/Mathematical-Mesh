@@ -618,7 +618,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The account to access.</param>
         /// <returns>The access handle.</returns>
         AccountHandleUnverified GetAccountUnverified(string account) =>
-            new AccountHandleUnverified(GetAccountLocked(account));
+            new(GetAccountLocked(account));
 
 
         /// <summary>

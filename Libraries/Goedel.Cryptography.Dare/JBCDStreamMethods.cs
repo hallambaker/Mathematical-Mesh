@@ -718,7 +718,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="DataLength">The number of bytes to be read.</param>
         /// <returns>The bounded stream reader.</returns>
         public StreamReaderBounded FramerGetReader(long DataPosition, long DataLength) =>
-            new StreamReaderBounded(StreamRead, DataPosition, DataLength);
+            new(StreamRead, DataPosition, DataLength);
 
         /// <summary>
         /// Skip all remaining records in the frame and move to the next record.

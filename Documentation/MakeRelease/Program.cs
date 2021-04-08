@@ -9,7 +9,7 @@ namespace Goedel.Tool.Version {
         static string PathDistribution = "prismproof\\Downloads";
         //static string PathSummary = "Sources\\" + PathDistribution;
 
-        public Distribution Distribution = new Distribution();
+        public Distribution Distribution = new();
 
         static void Main() {
             var _ = new Program();
@@ -68,7 +68,7 @@ namespace Goedel.Tool.Version {
         public Version Latest;
 
 
-        public SortedSet<Version> Versions = new SortedSet<Version>(new Version());
+        public SortedSet<Version> Versions = new(new Version());
 
         }
 
@@ -76,7 +76,7 @@ namespace Goedel.Tool.Version {
         public int Major = 0;
         public int Minor = 8;
         public int Revision = 0;
-        public List<Platform> Platforms = new List<Platform>();
+        public List<Platform> Platforms = new();
 
         public bool Stable = false;
 
@@ -131,14 +131,14 @@ namespace Goedel.Tool.Version {
 
 
     public partial class Platform {
-        static Dictionary<string, string> MapPlatform = new Dictionary<string, string> {
+        static Dictionary<string, string> MapPlatform = new() {
                 { "windows", "Windows" },
                 { "osx", "macOS" },
                 { "linux", "Linux" },
                 { "any", "Universal" },
             };
         public string PlatformName;
-        public List<File> Files = new List<File>();
+        public List<File> Files = new();
 
         public void Parse() {
             MapPlatform.TryGetValue(Name, out PlatformName);
@@ -159,7 +159,7 @@ namespace Goedel.Tool.Version {
         public Platform Platform;
 
 
-        static Dictionary<string, string> MapRID = new Dictionary<string, string> {
+        static Dictionary<string, string> MapRID = new() {
             { "win-x64", "Intel & AMD 64 bit (Windows 7 or later)"},
             { "win10-arm", "Windows ARM, 64 bit (Windows 10 only)"},
             { "osx-x64", "macOS (OSX) (Sierra (10.12) or later)"},

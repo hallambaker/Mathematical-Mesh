@@ -13,8 +13,8 @@ namespace Goedel.Test {
     /// </summary>
     public static class AssertTest {
 
-        public static bool FlagFailure = true;
-        public static int TestsFailed = 0;
+        public static bool FlagFailure { get; set; } = true;
+        public static int TestsFailed { get; set; } = 0;
 
 
         /// <summary>Throw an exception if the specified object is not null. 

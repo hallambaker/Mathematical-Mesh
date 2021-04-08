@@ -101,7 +101,7 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new Store(directory, storeId, policy, cryptoParameters, keyCollection, meshClient);
+            new(directory, storeId, policy, cryptoParameters, keyCollection, meshClient);
 
 
         /// <summary>

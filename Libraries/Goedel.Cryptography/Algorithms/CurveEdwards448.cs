@@ -39,13 +39,13 @@ namespace Goedel.Cryptography.Algorithms {
         #region // computed curve points
         /// <summary>The base point for the subgroup</summary>
         static readonly CurveEdwards448 BasePoint =
-            new CurveEdwards448(DomainParameters.Curve448.By, false);
+            new(DomainParameters.Curve448.By, false);
 
         /// <summary>The base point for the subgroup</summary>
         public static CurveEdwards448 Base => BasePoint.Copy();
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
-        static readonly CurveEdwards448 NeutralPoint = new CurveEdwards448() { X = 0, Y = 1, Z = 1 };
+        static readonly CurveEdwards448 NeutralPoint = new() { X = 0, Y = 1, Z = 1 };
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
         public static CurveEdwards448 Neutral => NeutralPoint.Copy();
@@ -93,7 +93,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Crete a new point with the same parameters as this.
         /// </summary>
         /// <returns>The copied point.</returns>
-        public CurveEdwards448 Copy() => new CurveEdwards448() { X = X, Y = Y, Z = Z };
+        public CurveEdwards448 Copy() => new() { X = X, Y = Y, Z = Z };
 
 
         /// <summary>

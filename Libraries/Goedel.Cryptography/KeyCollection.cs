@@ -84,7 +84,7 @@ namespace Goedel.Cryptography {
     public abstract class KeyCollection : IKeyLocate {
 
         ///<summary>Lock used to ensure exclusive access during updates.</summary>
-        Object exclusiveAccess = new Object();
+        Object exclusiveAccess = new();
 
         /// <summary>
         /// The default collection.
@@ -94,19 +94,19 @@ namespace Goedel.Cryptography {
         //static KeyCollection _Default = null;
 
         ///<summary>Key pairs by UDF value.</summary>
-        protected Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
+        protected Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new();
 
         ///<summary>Key pairs by SIN value.</summary>
-        protected Dictionary<string, KeyPair> DictionaryKeyPairBySINEncrypt = new Dictionary<string, KeyPair>();
+        protected Dictionary<string, KeyPair> DictionaryKeyPairBySINEncrypt = new();
         
         ///<summary>Encryption keypairs by account identifier.</summary>
-        protected Dictionary<string, KeyPair> DictionaryKeyPairByAccountEncrypt = new Dictionary<string, KeyPair>();
+        protected Dictionary<string, KeyPair> DictionaryKeyPairByAccountEncrypt = new();
         
         ///<summary>Signature keypairs by SIN</summary>
-        protected Dictionary<string, KeyPair> DictionaryKeyPairBySINSign = new Dictionary<string, KeyPair>();
+        protected Dictionary<string, KeyPair> DictionaryKeyPairBySINSign = new();
 
         ///<summary>Signature keypairs by Account</summary>
-        protected Dictionary<string, KeyPair> DictionaryKeyPairByAccountSign = new Dictionary<string, KeyPair>();
+        protected Dictionary<string, KeyPair> DictionaryKeyPairByAccountSign = new();
 
 
         //Dictionary<string, KeyPair> DictionaryKeyPairPrivateByUDF = new Dictionary<string, KeyPair>();

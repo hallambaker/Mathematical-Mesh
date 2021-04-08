@@ -109,7 +109,7 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        Dictionary<string, KeyPair> dictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
+        Dictionary<string, KeyPair> dictionaryKeyPairByUDF = new();
 
 
 

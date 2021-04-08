@@ -122,7 +122,7 @@ namespace Goedel.Cryptography.Dare {
     public class StoreIndex : IPersistenceIndex {
 
         Dictionary<string, ContainerStoreIndexEntry> Dictionary =
-                    new Dictionary<string, ContainerStoreIndexEntry>();
+                    new();
 
 
         /// <summary>

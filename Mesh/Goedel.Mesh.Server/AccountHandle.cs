@@ -85,7 +85,7 @@ namespace Goedel.Mesh.Server {
 
         ///<summary>Convenience accessor for DareEnvelope returning a typed envelope.</summary> 
         public Enveloped<ProfileAccount> EnvelopedProfileAccount =>
-                new Enveloped<ProfileAccount>(AccountUser.EnvelopedProfileUser);
+                new(AccountUser.EnvelopedProfileUser);
 
         /// <summary>
         /// Constructor.
@@ -103,7 +103,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <returns></returns>
         public CatalogPublication GetCatalogPublication() =>
-            new CatalogPublication(AccountEntry.Directory);
+            new(AccountEntry.Directory);
 
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <returns></returns>
         public CatalogAccess GetCatalogCapability() =>
-            new CatalogAccess(AccountEntry.Directory);
+            new(AccountEntry.Directory);
 
         /// <summary>
         /// Post a message to the spool associated with the account. This is the only operation
@@ -173,7 +173,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <returns>The store handle</returns>
         public Store GetStoreLocal() =>
-            new Store(AccountEntry.Directory, SpoolLocal.Label);
+            new(AccountEntry.Directory, SpoolLocal.Label);
         }
 
     /// <summary>
@@ -205,7 +205,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="label">The store to open</param>
         /// <returns></returns>
         public Store GetStore(string label) =>
-            new Store(AccountEntry.Directory, label);
+            new(AccountEntry.Directory, label);
 
         /// <summary>
         /// Append the envelopes <paramref name="envelopes"/> to the store named

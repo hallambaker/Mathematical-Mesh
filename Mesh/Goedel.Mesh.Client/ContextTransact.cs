@@ -113,7 +113,7 @@ namespace Goedel.Mesh.Client {
         /// Begin a transaction.
         /// </summary>
         /// <returns></returns>
-        public TransactAccount TransactBegin() => new TransactAccount(this);
+        public TransactAccount TransactBegin() => new(this);
 
         /// <summary>
         /// Perform the transaction described by <paramref name="transact"/>. If the
@@ -184,7 +184,7 @@ namespace Goedel.Mesh.Client {
         /// Begin a transaction.
         /// </summary>
         /// <returns>The transaction handle</returns>
-        public new TransactUser TransactBegin() => new TransactUser(this);
+        public new TransactUser TransactBegin() => new(this);
         }
 
 
@@ -194,7 +194,7 @@ namespace Goedel.Mesh.Client {
         /// Begin a transaction.
         /// </summary>
         /// <returns>The transaction handle</returns>
-        public new TransactGroup TransactBegin() => new TransactGroup(this);
+        public new TransactGroup TransactBegin() => new(this);
         }
 
     /// <summary>
@@ -309,7 +309,7 @@ namespace Goedel.Mesh.Client {
                 ContextAccount.TryFindKeyEncryption(recipient, out cryptoKey);
 
         /// <summary>The transaction request message being assembled</summary>
-        public TransactRequest TransactRequest = new TransactRequest();
+        public TransactRequest TransactRequest = new();
 
         /// <summary>List of completion references to be added to the local spool</summary>
         public List<Reference> LocalReferences;

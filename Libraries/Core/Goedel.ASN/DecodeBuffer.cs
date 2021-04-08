@@ -28,7 +28,7 @@ namespace Goedel.ASN {
         byte[] Input;
         int ReadPointer = 0;
         int ReadLimit;
-        List<StackEntry> Stack = new List<StackEntry>();
+        List<StackEntry> Stack = new();
 
         /// <summary>
         /// Create a decode buffer from the specified byte array

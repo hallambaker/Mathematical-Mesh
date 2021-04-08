@@ -101,7 +101,7 @@ namespace Goedel.Cryptography.Dare {
         /// Prepare the sequence information for a new frame to be added to the sequence.
         /// </summary>
         /// <returns>The new sequence information</returns>
-        public SequenceInfo PrepareSequenceInfo() => new SequenceInfo() {
+        public SequenceInfo PrepareSequenceInfo() => new() {
             Index = (int)frameCount++
             };
 

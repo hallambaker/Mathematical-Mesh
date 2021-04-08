@@ -15,7 +15,7 @@ namespace Goedel.Cryptography.Dare {
     public static class ContainerMasterStore {
 
         static Dictionary<string, ContainerPersistenceStoreThreadSafe> DictionaryChildren =
-                    new Dictionary<string, ContainerPersistenceStoreThreadSafe>();
+                    new();
 
 
         static ContainerPersistenceStoreThreadSafe GetPersistenceStore(string ID, bool ReadOnly = false) {
@@ -261,7 +261,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The reader/writer lock
         /// </summary>
-        public ReaderWriterLockSlim ReaderWriterLock = new ReaderWriterLockSlim();
+        public ReaderWriterLockSlim ReaderWriterLock = new();
 
         /// <summary>
         /// The identifier assigned by the persistence store directory.
@@ -297,7 +297,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Pinned">If true, maintain the persistence store in memory
         /// even when there are no outstanding access handles.</param>
         /// <returns>The read handle</returns>
-        public ContainerPersistenceStoreHandleRead GetHandleRead(bool Pinned = true) => new ContainerPersistenceStoreHandleRead(this, Pinned);
+        public ContainerPersistenceStoreHandleRead GetHandleRead(bool Pinned = true) => new(this, Pinned);
 
         /// <summary>
         /// Return a write handle for the persistence store
@@ -305,7 +305,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Pinned">If true, maintain the persistence store in memory
         /// even when there are no outstanding access handles.</param>
         /// <returns>The read handle</returns>
-        public ContainerPersistenceStoreHandleWrite GetHandleWrite(bool Pinned = true) => new ContainerPersistenceStoreHandleWrite(this, Pinned);
+        public ContainerPersistenceStoreHandleWrite GetHandleWrite(bool Pinned = true) => new(this, Pinned);
 
         }
 

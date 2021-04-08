@@ -8,11 +8,11 @@ namespace Goedel.XUnit {
 
     public partial class ShellTestsHTTP : ShellTests {
         // Use the new test environment (when defined.)
-        public override TestEnvironmentCommon GetTestEnvironment() => new TestEnvironmentCommon() {
+        public override TestEnvironmentCommon GetTestEnvironment() => new() {
             JpcConnection = Protocol.JpcConnection.Http
             };
 
-        public static new ShellTestsHTTP Test() => new ShellTestsHTTP();
+        public static new ShellTestsHTTP Test() => new();
 
 
         public override TestCLI GetTestCLI(string MachineName = null) {
@@ -30,7 +30,7 @@ namespace Goedel.XUnit {
 
 
         #region // The test environment specific calls
-        public virtual TestEnvironmentCommon GetTestEnvironment() => new TestEnvironmentCommon();
+        public virtual TestEnvironmentCommon GetTestEnvironment() => new();
 
         public virtual TestCLI GetTestCLI(string MachineName = null) {
             var testShell = new TestShell(TestEnvironment, MachineName);

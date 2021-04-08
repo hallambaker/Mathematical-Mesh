@@ -65,6 +65,9 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.MinimumPacketSize">
             <summary>The minimum packet size.</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.SizeReservedInitialStreamId">
+            <summary>The number of bytes reserved for the initial stream identifier (all zeros)</summary> 
+        </member>
         <member name="F:Goedel.Protocol.Presentation.Constants.SizeNonceAesGcm">
             <summary>Size of packet nonce to be used in AES-GCM packet.</summary> 
         </member>
@@ -82,6 +85,9 @@
         </member>
         <member name="F:Goedel.Protocol.Presentation.Constants.TagKey">
             <summary>The KDF info tag to be used to derive keys.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.StreamIdClientInitial">
+            <summary>Fixed constant containing the reserved client initial stream identifier.</summary> 
         </member>
         <member name="F:Goedel.Protocol.Presentation.Constants.ByteKeyInitiatorResponder">
             <summary>The KDF info tag to be used to derive keys.</summary> 
@@ -369,7 +375,6 @@
             Defer creation of a host connection by sending a challenge to the source.
             </summary>
             <param name="packetRequest">Parsed inbound request packet.</param>
-            <param name="payload">Optional payload response. This is always returned enclair.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.Reject(Goedel.Protocol.Presentation.Packet,System.Byte[])">
             <summary>
@@ -380,10 +385,8 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientInitial(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-            as a ClientInitial packet.
+            Parse the packet <paramref name="packet"/> as a ClientInitial packet.
             </summary>
-            <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
             <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
@@ -392,10 +395,8 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientExchange(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-            as a ClientExchange packet.
+            Parse the packet <paramref name="packet"/> as a ClientExchange packet.
             </summary>
-            <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
             <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
@@ -404,10 +405,8 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientComplete(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-            as a ClientComplete packet.
+            Parse the packet <paramref name="packet"/> as a ClientComplete packet.
             </summary>
-            <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
             <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
@@ -416,10 +415,8 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientCompleteDeferred(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-            as a ClientCompleteDeferred packet.
+            Parse the packet <paramref name="packet"/> as a ClientCompleteDeferred packet.
             </summary>
-            <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
             <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
@@ -470,6 +467,11 @@
         </member>
         <member name="P:Goedel.Protocol.Presentation.Packet.PlaintextExtensions">
             <summary>Options specified in the packet plaintext.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Packet.Dump">
+            <summary>
+            Debug output, remove for final release.
+            </summary>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketData">
             <summary>
@@ -664,10 +666,8 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostExchange(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-            as a HostExchange packet.
+            Parse the packet <paramref name="packet"/> as a HostExchange packet.
             </summary>
-            <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
             <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
@@ -676,10 +676,8 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostChallenge1(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-            as a HostChallenge1 packet.
+            Parse the packet <paramref name="packet"/> as a HostChallenge1 packet.
             </summary>
-            <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
             <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
@@ -688,10 +686,8 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostChallenge2(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-            as a HostChallenge2 packet.
+            Parse the packet <paramref name="packet"/> as a HostChallenge2 packet.
             </summary>
-            <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
             <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
@@ -700,10 +696,8 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.SessionInitiator.ParseHostComplete(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> received from <paramref name="sourceId"/>
-            as a HostComplete packet.
+            Parse the packet <paramref name="packet"/> as a HostComplete packet.
             </summary>
-            <param name="sourceId">The packet source.</param>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
             <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
@@ -727,9 +721,6 @@
         </member>
         <member name="P:Goedel.Protocol.Presentation.SessionInitiator.ClientCredential">
             <inheritdoc/>
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.SessionInitiator.clientState">
-            <summary>The current state of this client.</summary> 
         </member>
         <member name="T:Goedel.Protocol.Presentation.SessionResponder">
             <summary>
@@ -830,7 +821,6 @@
             Constructor for a connection host instance connected to <paramref name="listener"/>
             </summary>
             <param name="listener">The listener this connection is to service.</param>
-            <param name="portId">The source port on which this connection was received.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.SessionResponder.Receive">
             <summary>
@@ -1075,6 +1065,7 @@
             Wrap a data packet payload to create an encrypted data packet.
             </summary>
             <param name="ikm">The primary key.</param>
+            <param name="streamId">The stream identifier.</param>
             <returns>The wrapped data packet.</returns>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketWriterAesGcm">
@@ -1220,15 +1211,13 @@
         <member name="F:Goedel.Protocol.Presentation.Session.ReturnStreamId">
             <summary>When not null, contains the return address to be sent as an an extension.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.Session.TaskCompletion">
-            <summary>Completion task source.</summary> 
-        </member>
         <member name="M:Goedel.Protocol.Presentation.Session.AddEphemerals(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
             Generate a set of ephemerals for the supported algorithms to offer for 
             key agreement and add to <paramref name="extensions"/>.
             </summary>
             <param name="extensions">List of extensions to add the ephemerals to.</param>
+            <param name="sourceId">The source identifier assigned to the return packet.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Session.AddCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
@@ -1263,13 +1252,16 @@
             <param name="payload"></param>
             <param name="ciphertextExtensions"></param>
             <param name="packetSize">The number of bytes in the packet to be created.</param>
+            <param name="buffer">Optional buffer passed in for use by the method.</param>
+            <param name="position">Start point for writing to the buffer.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Session.ParsePacketData(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Parse the data in <paramref name="packet"/> and return the resulting packet.
             </summary>
-            <param name="sourceId">The data source.</param>
             <param name="packet">The encrypted packet</param>
+            <param name="offset">Offset at which to begin reading.</param>
+            <param name="last">Last byte in the buffer to parse.</param>
             <returns>Packet specifying the decrypted payload and extensions (if specified).</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Session.ClientKeyExchange(Goedel.Cryptography.KeyPairAdvanced,Goedel.Cryptography.KeyPairAdvanced)">
@@ -1347,22 +1339,41 @@
             <param name="ephemeral">The ephemeral generated.</param>
             <param name="keyId">Client key identifier</param>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.ClientState">
+        <member name="T:Goedel.Protocol.Presentation.StreamId">
             <summary>
-            Client side connection state.
+            Structure managing stream ids
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientState.Initial">
-            <summary>Initial state, sending either Initial or Cloaked.</summary> 
+        <member name="F:Goedel.Protocol.Presentation.StreamId.Counter">
+            <summary>Counter used to allocate unique IDs</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientState.Challenge">
-            <summary>Host challenge received, sending answer.</summary> 
+        <member name="F:Goedel.Protocol.Presentation.StreamId.SourceIdSize">
+            <summary>Size of fixed length Ids generated by this struct.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientState.Write">
-            <summary>Connection established, sending packets.</summary> 
+        <member name="P:Goedel.Protocol.Presentation.StreamId.Value">
+            <summary>The stream Id value as an unsigned 64 bit integer.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientState.Abort">
-            <summary>Connection terminated, cannot be used further.</summary> 
+        <member name="P:Goedel.Protocol.Presentation.StreamId.PacketExtension">
+            <summary>Factory method, creates a packet extension wrapping the stream identifier.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.StreamId.#ctor(System.UInt64)">
+            <summary>
+            Create an instance with the stream Id value <paramref name="value"/>.
+            </summary>
+            <param name="value">The stream identifier value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.StreamId.GetClientCompleteDeferred">
+            <summary>
+            Return a new stream identifier that is identifiable as being for a packet of type 
+            <see cref="F:Goedel.Protocol.Presentation.StreamId.ClientCompleteDeferred"/>
+            </summary>
+            <returns>The stream identifier.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.StreamId.GetValue">
+            <summary>
+            Return the stream identifier value as a byte sequence.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.StreamId.GetSourceId(System.Byte[])">
             <summary>
@@ -1371,6 +1382,12 @@
             </summary>
             <param name="buffer"></param>
             <returns>The retrieved sourceId and position in the buffer.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.StreamId.GetStreamId">
+            <summary>
+            Factory method returing a new unique stream identifier.
+            </summary>
+            <returns>The stream identifier created.</returns>
         </member>
         <member name="T:Goedel.Protocol.PacketSizeExceeded">
             <summary>

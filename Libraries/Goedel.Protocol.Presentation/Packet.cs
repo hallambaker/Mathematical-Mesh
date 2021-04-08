@@ -90,7 +90,9 @@ namespace Goedel.Protocol.Presentation {
         public List<PacketExtension> PlaintextExtensions { get; set; }
 
 
-
+        /// <summary>
+        /// Debug output, remove for final release.
+        /// </summary>
         public virtual void Dump() {
             if (PlaintextExtensions != null) {
                 Screen.WriteLine("Plaintext extensions");

@@ -79,6 +79,10 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The minimum packet size.</summary> 
         public const int MinimumPacketSize = 1200;
 
+
+        ///<summary>The number of bytes reserved for the initial stream identifier (all zeros)</summary> 
+        public const int SizeReservedInitialStreamId = 16;
+
         ///<summary>Size of packet nonce to be used in AES-GCM packet.</summary> 
         public const int SizeNonceAesGcm= 16;
         ///<summary>Size of initialization vector / AES nonce to be used in AES-GCM packet.</summary> 
@@ -94,7 +98,8 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The KDF info tag to be used to derive keys.</summary> 
         public readonly static byte[] TagKey = "Key".ToUTF8();
 
-
+        ///<summary>Fixed constant containing the reserved client initial stream identifier.</summary> 
+        public readonly static byte[] StreamIdClientInitial = new byte[Constants.SizeReservedInitialStreamId];
 
         ///<summary>The KDF info tag to be used to derive keys.</summary> 
         public readonly static byte[] ByteKeyInitiatorResponder = TagKeyInitiatorResponder.ToUTF8();

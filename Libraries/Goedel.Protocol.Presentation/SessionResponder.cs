@@ -50,11 +50,9 @@ namespace Goedel.Protocol.Presentation {
         /// Constructor for a connection host instance connected to <paramref name="listener"/>
         /// </summary>
         /// <param name="listener">The listener this connection is to service.</param>
-        /// <param name="portId">The source port on which this connection was received.</param>
         public SessionResponder(Listener listener)  {
             Listener = listener;
             CredentialSelf = Listener?.CredentialSelf;
-            //SourcePortId = portId;
             }
 
         /// <summary>

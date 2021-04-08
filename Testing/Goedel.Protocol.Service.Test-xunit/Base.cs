@@ -24,7 +24,7 @@ namespace Goedel.XUnit {
         public virtual Credential GetInitiatorCredential() => new TestCredential();
         public virtual Credential GetResponderCredential() => new TestCredential();
 
-        public static TestPresentationGeneric Test() => new TestPresentationGeneric();
+        public static TestPresentationGeneric Test() => new();
 
         static TestPresentationGeneric() => _ = Goedel.Cryptography.Core.Initialization.Initialized;
 
@@ -75,7 +75,7 @@ namespace Goedel.XUnit {
         public override Credential GetResponderCredential() => ResponderCredential;
 
 
-        public static new TestPresentationMesh Test() => new TestPresentationMesh();
+        public static new TestPresentationMesh Test() => new();
 
         //public KeyCollectionTest KeyCollection  = new KeyCollectionTest ()
 

@@ -66,18 +66,18 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Index of items by _PrimaryKey
         /// </summary>
-        public Dictionary<string, StoreEntry> ObjectIndex = new Dictionary<string, StoreEntry>();
+        public Dictionary<string, StoreEntry> ObjectIndex = new();
 
         /// <summary>
         /// Index of items by _PrimaryKey
         /// </summary>
-        public Dictionary<string, StoreEntry> DeletedObjects = new Dictionary<string, StoreEntry>();
+        public Dictionary<string, StoreEntry> DeletedObjects = new();
 
         /// <summary>
         /// Dictionary mapping keywords to index for that keyword.
         /// </summary>
         public Dictionary<string, StoreIndex> IndexDictionary =
-                                new Dictionary<string, StoreIndex>();
+                                new();
 
         #region --- IEnumerable Implementation 
         ///<summary>Return an enumerator over a set of catalog items</summary>

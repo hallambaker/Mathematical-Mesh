@@ -14,14 +14,14 @@ namespace Goedel.Cryptography.KeyFile {
         int armor3 = 0;
         int armor4 = 0;
 
-        StringBuilder buildTag1 = new StringBuilder();
-        StringBuilder buildTag2 = new StringBuilder();
-        StringBuilder buildBase64 = new StringBuilder();
+        StringBuilder buildTag1 = new();
+        StringBuilder buildTag2 = new();
+        StringBuilder buildBase64 = new();
 
         //StringBuilder BuildHeader = new StringBuilder();
 
         /// <summary>List of headers</summary>
-        public List<Header> Headers = new List<Header>();
+        public List<Header> Headers = new();
         Header currentHeader;
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Goedel.Cryptography.KeyFile {
             }
 
 
-        StringBuilder BuildTagBegin = new StringBuilder();
+        StringBuilder BuildTagBegin = new();
 
         /// <summary>
         /// Verify the initial BEGIN tag
@@ -98,7 +98,7 @@ namespace Goedel.Cryptography.KeyFile {
                 }
             }
 
-        StringBuilder buildTagEnd = new StringBuilder();
+        StringBuilder buildTagEnd = new();
         /// <summary>
         /// Verify the final End tag
         /// </summary>
@@ -124,7 +124,7 @@ namespace Goedel.Cryptography.KeyFile {
             }
 
 
-        StringBuilder buildHeaderValue = new StringBuilder();
+        StringBuilder buildHeaderValue = new();
         /// <summary>
         /// Do nothing
         /// </summary>

@@ -14,7 +14,7 @@ namespace Goedel.XUnit {
         static GoedelCryptography() => Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
 
 
-        public static GoedelCryptography Test() => new GoedelCryptography();
+        public static GoedelCryptography Test() => new();
 
         readonly static byte[] NIST_Plaintext =
                         ("6bc1bee22e409f96e93d7e117393172a"
@@ -23,7 +23,7 @@ namespace Goedel.XUnit {
                         + "f69f2445df4f9b17ad2b417be66c3710.").FromBase16();
 
 
-        List<TestVectorAES> testVectors_AES_NIST = new List<TestVectorAES>() {
+        List<TestVectorAES> testVectors_AES_NIST = new() {
             // TestCase 2:1/2
             new TestVectorAES() {
                 ID = CryptoAlgorithmId.AES128CBCNone,

@@ -91,14 +91,14 @@ namespace Goedel.Cryptography {
         /// Return a PKIX SubjectPublicKeyInfo structure for the public key.
         /// </summary>
         public override SubjectPublicKeyInfo KeyInfoData =>
-                new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
+                new(CryptoConfig.MapNameToOID("RSA"),
                         PkixPublicKeyRsa.DER());
 
         /// <summary>
         /// Return a PKIX SubjectPublicKeyInfo structure for the private key.
         /// </summary>
         public override SubjectPublicKeyInfo PrivateKeyInfoData =>
-                new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
+                new(CryptoConfig.MapNameToOID("RSA"),
                         PkixPrivateKeyRSA.DER());
 
         /// <summary>

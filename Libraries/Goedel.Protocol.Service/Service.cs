@@ -76,7 +76,7 @@ namespace Goedel.Protocol.Service {
 
             }
 
-        Dictionary<string, Provider> providerMap = new Dictionary<string, Provider>();
+        Dictionary<string, Provider> providerMap = new();
 
         /// <summary>
         /// Return a provider.

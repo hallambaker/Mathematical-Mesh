@@ -87,28 +87,11 @@ namespace Goedel.Protocol.Presentation {
         public byte[] ReturnStreamId = null;
         
         
-        
-        
-        ///<summary>Completion task source.</summary> 
-        public TaskCompletionSource TaskCompletion { get; set; }
-
-
-
-        public PacketExtension StreamIdentifier { get; }
 
         List<KeyPairAdvanced> ephemeralsOffered;
         #endregion
 
-        #region // Destructor
-        #endregion
 
-        #region // Constructors
-
-        //public Session(StreamId localStreamId, StreamId RemoteStreamId) {
-        //    }
-
-
-        #endregion
 
         #region // Methods - Serialization
         /// <summary>
@@ -116,6 +99,7 @@ namespace Goedel.Protocol.Presentation {
         /// key agreement and add to <paramref name="extensions"/>.
         /// </summary>
         /// <param name="extensions">List of extensions to add the ephemerals to.</param>
+        /// <param name="sourceId">The source identifier assigned to the return packet.</param>
         public virtual void AddEphemerals(
              byte[] sourceId, List<PacketExtension> extensions) =>
                     CredentialSelf.AddEphemerals(extensions, ref ephemeralsOffered);
@@ -150,22 +134,6 @@ namespace Goedel.Protocol.Presentation {
         #region // Methods - PacketData Serializer/Deserializer
 
 
-        public (byte[] buffer, int position) InitializeBuffer(int payloadSize) {
-            var length = QuantizePacketLength(payloadSize + 256);
-
-            var buffer = new byte[length];
-
-            //RemoteStreamId.WriteSourceId(buffer);
-
-            Buffer.BlockCopy(RemoteStreamId, 0, buffer, 0, RemoteStreamId.Length);
-
-            return (buffer, RemoteStreamId.Length);
-
-            }
-
-
-
-
         /// <summary>
         /// Quantize the packet length so it is a fixed multiple of 64 bits.
         /// </summary>
@@ -181,6 +149,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="payload"></param>
         /// <param name="ciphertextExtensions"></param>
         /// <param name="packetSize">The number of bytes in the packet to be created.</param>
+        /// <param name="buffer">Optional buffer passed in for use by the method.</param>
+        /// <param name="position">Start point for writing to the buffer.</param>
         public virtual byte[] SerializePacketData(
                 byte[] payload = null,
                 List<PacketExtension> ciphertextExtensions = null,
@@ -204,12 +174,13 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Parse the data in <paramref name="packet"/> and return the resulting packet.
         /// </summary>
-        /// <param name="sourceId">The data source.</param>
         /// <param name="packet">The encrypted packet</param>
+        /// <param name="offset">Offset at which to begin reading.</param>
+        /// <param name="last">Last byte in the buffer to parse.</param>
         /// <returns>Packet specifying the decrypted payload and extensions (if specified).</returns>
 
-        public virtual Packet ParsePacketData(byte[] packet, int offset, int count) {
-            var innerReader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet, offset, count);
+        public virtual Packet ParsePacketData(byte[] packet, int offset, int last) {
+            var innerReader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet, offset, last);
 
             var result = new PacketData() {
                 //SourcePortId = sourceId,

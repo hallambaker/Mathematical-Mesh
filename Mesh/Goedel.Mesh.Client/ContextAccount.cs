@@ -98,11 +98,11 @@ namespace Goedel.Mesh.Client {
         public virtual string StoresDirectory { get; set; }
 
         ///<summary>Dictionary locating the stores connected to the context.</summary>
-        protected Dictionary<string, SyncStatus> DictionaryStores = new Dictionary<string, SyncStatus>();
+        protected Dictionary<string, SyncStatus> DictionaryStores = new();
 
         ///<summary>List of catalogs</summary>
         public virtual Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;
-        Dictionary<string, StoreFactoryDelegate> catalogDelegates = new Dictionary<string, StoreFactoryDelegate>() {
+        Dictionary<string, StoreFactoryDelegate> catalogDelegates = new() {
              // All contexts have a capability catalog:
             {CatalogAccess.Label, CatalogAccess.Factory},
             {CatalogPublication.Label, CatalogPublication.Factory}
@@ -111,7 +111,7 @@ namespace Goedel.Mesh.Client {
         public virtual Dictionary<string, StoreFactoryDelegate> DictionarySpoolDelegates => StaticSpoolDelegates;
 
         ///<summary>List of spools, these are the same for each type of account.</summary>
-        protected static Dictionary<string, StoreFactoryDelegate> StaticSpoolDelegates = new Dictionary<string, StoreFactoryDelegate>() {
+        protected static Dictionary<string, StoreFactoryDelegate> StaticSpoolDelegates = new() {
             {SpoolInbound.Label, SpoolInbound.Factory},
             {SpoolOutbound.Label, SpoolOutbound.Factory},
             {SpoolLocal.Label, SpoolLocal.Factory},

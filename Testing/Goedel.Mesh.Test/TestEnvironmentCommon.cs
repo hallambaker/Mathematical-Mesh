@@ -110,7 +110,7 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        public MeshMachineTest GetMeshMachine (string device) => new MeshMachineTest(this, device);
+        public MeshMachineTest GetMeshMachine (string device) => new(this, device);
 
         public string MachinePath(string machineName) => System.IO.Path.Combine(Path, machineName);
 

@@ -28,8 +28,12 @@ using System.Text;
 
 namespace Goedel.Mesh {
 
-
+    /// <summary>
+    /// Activation class binding a host to a service.
+    /// </summary>
     public partial class ActivationHost : ActivationDevice {
+
+        ///<inheritdoc/>
         public override MeshActor MeshActor => MeshActor.Host;
 
 
@@ -40,7 +44,7 @@ namespace Goedel.Mesh {
         /// specified, it is used as the seed value. Otherwise, a seed value of
         /// length <paramref name="bits"/> is generated.
         /// The public key value is calculated for the public key pairs and the corresponding
-        /// <see cref="ConnectionUser"/> generated for the public values.
+        /// <see cref="Connection"/> generated for the public values.
         /// </summary>
         /// <param name="profileDevice">The base profile that the activation activates.</param>
         /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
@@ -83,7 +87,7 @@ namespace Goedel.Mesh {
         ///<summary>The device authentication key for use under the profile</summary>
         public KeyPair DeviceAuthentication { get; private set; }
 
-
+        ///<inheritdoc/>
         public virtual MeshActor MeshActor => MeshActor.Device;
 
         /// <summary>
@@ -114,8 +118,6 @@ namespace Goedel.Mesh {
             ProfileDevice = profileDevice;
 
             AccountUdf = profileDevice.Udf;
-
-
 
             var deviceEncryption = ActivationSeed.ActivatePublic(
                     profileDevice.Encryption.GetKeyPairAdvanced(), 
@@ -166,8 +168,7 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"Activation Account");
             indent++;
             DareEnvelope.Report(builder, indent);
-            indent++;
-
+            //indent++;
             //builder.AppendIndent(indent, $"KeySignature:     {ProfileSignature} ");
             }
         }

@@ -12,8 +12,8 @@ namespace Goedel.FSR {
     /// String builder stripping leading and trailing whitespace.
     /// </summary>
     public class Accumulate {
-        StringBuilder current = new StringBuilder();
-        StringBuilder whiteSpace = new StringBuilder();
+        StringBuilder current = new();
+        StringBuilder whiteSpace = new();
 
 
         bool haveCharacter = false;

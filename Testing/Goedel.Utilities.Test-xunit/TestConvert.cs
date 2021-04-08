@@ -10,7 +10,7 @@ using Xunit;
 namespace Goedel.XUnit {
 
     public class Utilities {
-        public static Utilities Test() => new Utilities();
+        public static Utilities Test() => new();
 
         class TestVectorBaseConvert {
             public byte[] Data;

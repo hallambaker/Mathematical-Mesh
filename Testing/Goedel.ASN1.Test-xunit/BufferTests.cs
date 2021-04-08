@@ -10,7 +10,7 @@ using Xunit;
 namespace Goedel.XUnit {
 
     public class BufferTests {
-        public static BufferTests Test() => new BufferTests();
+        public static BufferTests Test() => new();
 
 
         [Fact]

@@ -261,10 +261,8 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Post a transaction of type <paramref name="tag"/> with request data 
         /// <paramref name="request"/> to the service expecting a response of type
-        /// <paramref name="tagResponse"/>
         /// </summary>
         /// <param name="tag">The transaction tag.</param>
-        /// <param name="tagResponse">The response type tag.</param>
         /// <param name="request">The request data.</param>
         /// <returns>The response data.</returns>
         public override JsonObject Post(string tag, JsonObject request) {

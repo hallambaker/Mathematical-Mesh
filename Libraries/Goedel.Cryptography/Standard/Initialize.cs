@@ -14,7 +14,7 @@ namespace Goedel.Cryptography {
         /// Cryptographic random number generator.
         /// </summary>
         private static RNGCryptoServiceProvider RNGCryptoServiceProvider =
-            new RNGCryptoServiceProvider();
+            new();
 
 
 

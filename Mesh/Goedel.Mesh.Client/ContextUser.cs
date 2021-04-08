@@ -373,7 +373,7 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>Dictionarry used to create stores</summary>
         public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => StaticCatalogDelegates;
-        static Dictionary<string, StoreFactoryDelegate> StaticCatalogDelegates = new Dictionary<string, StoreFactoryDelegate>() {
+        static Dictionary<string, StoreFactoryDelegate> StaticCatalogDelegates = new() {
             {CatalogCredential.Label, CatalogCredential.Factory},
             {CatalogContact.Label, CatalogContact.Factory},
             {CatalogTask.Label, CatalogTask.Factory},
@@ -387,7 +387,7 @@ namespace Goedel.Mesh.Client {
             {CatalogPublication.Label, CatalogPublication.Factory}
             };
 
-        static SortedSet<string> ServiceCatalogs = new SortedSet<string>() {
+        static SortedSet<string> ServiceCatalogs = new() {
             CatalogAccess.Label,
             CatalogPublication.Label
             };

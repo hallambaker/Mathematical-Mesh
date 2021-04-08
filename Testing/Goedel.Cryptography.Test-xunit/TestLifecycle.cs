@@ -10,7 +10,7 @@ namespace Goedel.XUnit {
 
         public MeshMachineTest MeshMachine;
 
-        public static TestLifecycle Test() => new TestLifecycle();
+        public static TestLifecycle Test() => new();
         public TestLifecycle() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
 

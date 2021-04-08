@@ -30,7 +30,7 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// The tract dictionary, maps labels to traces.
         /// </summary>
-        public Dictionary<string, TracePoint> Traces = new Dictionary<string, TracePoint>();
+        public Dictionary<string, TracePoint> Traces = new();
 
         /// <summary>
         /// Set the level of detail for trace messages
@@ -94,7 +94,7 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         /// <param name="Payload">The message Payload</param>
         /// <returns>The trace message entry</returns>
-        public TraceMessage Request(JsonObject Payload) => new TraceMessage(Current, Payload, DateTime.Now, true);
+        public TraceMessage Request(JsonObject Payload) => new(Current, Payload, DateTime.Now, true);
 
 
         /// <summary>

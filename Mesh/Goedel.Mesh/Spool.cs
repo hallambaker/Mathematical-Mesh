@@ -321,7 +321,7 @@ namespace Goedel.Mesh {
                     DateTime? notBefore = null,
                     DateTime? notOnOrAfter = null,
                     SpoolEntry last = null,
-                    long maxResults = -1) => new SpoolEnumeratorRaw(this,
+                    long maxResults = -1) => new(this,
                         select, notBefore, notOnOrAfter, last, maxResults);
 
 

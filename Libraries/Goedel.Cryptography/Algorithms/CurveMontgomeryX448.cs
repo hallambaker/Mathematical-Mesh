@@ -34,7 +34,7 @@ namespace Goedel.Cryptography.Algorithms {
         #region // computed curve points
         /// <summary>The base point for the subgroup</summary>
         static readonly CurveX448 BasePoint =
-            new CurveX448(
+            new(
                 DomainParameters.Curve448.U,
                 DomainParameters.Curve448.V);
 
@@ -89,7 +89,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Crete a new point with the same parameters as this.
         /// </summary>
         /// <returns>The new point</returns>
-        public CurveX448 Copy() => new CurveX448(U, Odd);
+        public CurveX448 Copy() => new(U, Odd);
 
 
         /// <summary>

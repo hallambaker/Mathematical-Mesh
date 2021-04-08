@@ -70,7 +70,7 @@ namespace Goedel.Protocol {
         /// <param name="accountAddress">The account name to be authenticated.</param>
         /// <returns>True if the account name is verified, otherwise false.</returns>
         public virtual VerifiedAccount VerifyAccount(string accountAddress) =>
-            new VerifiedAccount() { AccountAddress = accountAddress };
+            new() { AccountAddress = accountAddress };
 
         }
 

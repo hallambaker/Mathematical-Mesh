@@ -9,9 +9,9 @@ namespace Goedel.Cryptography.KeyFile {
     /// authorized_keys file.
     /// </summary>
     public partial class AuthKeysFileLex {
-        StringBuilder BuildTag1 = new StringBuilder();
-        StringBuilder BuildTag2 = new StringBuilder();
-        StringBuilder BuildBase64 = new StringBuilder();
+        StringBuilder BuildTag1 = new();
+        StringBuilder BuildTag2 = new();
+        StringBuilder BuildBase64 = new();
 
         /// <summary>
         /// Add characters to the algorithm

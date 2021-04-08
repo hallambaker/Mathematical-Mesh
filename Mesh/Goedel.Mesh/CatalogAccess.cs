@@ -44,19 +44,19 @@ namespace Goedel.Mesh {
 
         ///<summary>Dictionary for locating capabilities for use.</summary>
         public Dictionary<string, CapabilityDecrypt> DictionaryDecryptByKeyId =
-                new Dictionary<string, CapabilityDecrypt>();
+                new();
 
         ///<summary>Dictionary for locating capabilities for use.</summary>
         public Dictionary<string, CapabilitySign> DictionarySignByAccountAddress =
-                new Dictionary<string, CapabilitySign>();
+                new();
 
         ///<summary>Dictionary for locating capabilities for use.</summary>
         public Dictionary<string, CapabilityKeyGenerate> DictionaryKeyGenerate =
-                new Dictionary<string, CapabilityKeyGenerate>();
+                new();
 
         ///<summary>Dictionary for locating capabilities for use.</summary>
         public Dictionary<string, CapabilityFairExchange> DictionaryFairExchange =
-                new Dictionary<string, CapabilityFairExchange>();
+                new();
 
         #endregion
         #region // Factory methods and constructors

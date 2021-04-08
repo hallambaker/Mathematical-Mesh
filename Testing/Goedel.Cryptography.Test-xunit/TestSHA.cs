@@ -11,12 +11,12 @@ namespace Goedel.XUnit {
     public partial class TestGoedelCryptography {
 
 
-        public static TestGoedelCryptography Test() => new TestGoedelCryptography();
+        public static TestGoedelCryptography Test() => new();
 
 
         // http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA_All.pdf
         // https://www.di-mgt.com.au/sha_testvectors.html
-        List<TestVectorSHA> TestVectors_SHA_NIST = new List<TestVectorSHA>() {
+        List<TestVectorSHA> TestVectors_SHA_NIST = new() {
 
             new TestVectorSHA() {
                 ID = CryptoAlgorithmId.SHA_1_DEPRECATED,

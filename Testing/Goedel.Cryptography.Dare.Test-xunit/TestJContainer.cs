@@ -15,7 +15,7 @@ namespace Goedel.XUnit {
 
     public partial class TestContainers {
 
-        public static TestContainers Test() => new TestContainers();
+        public static TestContainers Test() => new();
 
         [Fact]
         public void ContainerTestList0() => TestContainer($"ContainerList", SequenceType.List, 0);

@@ -265,7 +265,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Account access administration rights</summary> 
         public static List<Right> RightsGrantUser =
-                    new List<Right>() {
+                    new() {
                         // Needed to create and publish device connection
                         new Right (Resource.Store, Access.GrantReadWrite, CatalogDevice.Label),
                         new Right (Resource.Store, Access.GrantReadWrite, CatalogContact.Label),
@@ -282,7 +282,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Super administrator rights.</summary> 
         public readonly static List<Right> RightsSuperAdministrator =
-                    new List<Right>() {
+                    new() {
                         new Right (Resource.ProfileRoot, Access.Sign),
                         new Right (Resource.ProfileAdmin, Access.Sign| Access.GrantSign),
                         new Right (Resource.Store,Access.ReadWrite, CatalogDevice.Label),
@@ -302,7 +302,7 @@ namespace Goedel.Mesh {
         ///limited to the ability to read the network and application catalogs, both of
         ///which will require additional grants to be of use.</summary> 
         public readonly static List<Right> RightsDevce =
-                    new List<Right>() {
+                    new() {
                         new Right (Resource.Store, Access.ReadWrite, CatalogNetwork.Label),
                         new Right (Resource.Store, Access.ReadWrite, CatalogApplication.Label)
                         };
@@ -343,7 +343,7 @@ namespace Goedel.Mesh {
         ///SSH authenticator under the account. Which may be a device specific key plus
         ///a credential or the account key.</summary> 
         public readonly static List<Right> RightsSSH =
-                    new List<Right>() {
+                    new() {
                         new Right (Resource.Ssh, Access.Authenticate, "*"),
                         };
 
@@ -365,7 +365,7 @@ namespace Goedel.Mesh {
         ///the group but does not automatically gain the ability to access group materials
         ///themselves.</summary> 
         public readonly static List<Right> RightsGroupAdministrator =
-                    new List<Right>() {
+                    new() {
                         new Right(Resource.Account, Access.GrantReadWrite),
                         new Right(Resource.Store, Access.GrantReadWrite, CatalogPublication.Label),
                         new Right (Resource.Store, Access.ReadWrite, CatalogMember.Label),
@@ -374,14 +374,14 @@ namespace Goedel.Mesh {
         ///<summary>Rights granted to a group member. A group member can read/update the group
         ///publications catalog and decrypt data encrypted under the group key.</summary> 
         public readonly static List<Right> RightsGroupMember =
-                    new List<Right>() {
+                    new() {
                         new Right(Resource.Account, Access.Decrypt),
                         new Right(Resource.Store, Access.ReadWrite, CatalogPublication.Label),
                         };
 
         ///<summary>Dictionary mapping rights identifier to rights description.</summary> 
         public readonly static Dictionary<string, List<Right>> DictionaryRights =
-            new Dictionary<string, List<Right>> {
+            new() {
                 [IdRightsSuper] = RightsSuperAdministrator,
                 [IdRightsAdmin] = RightsAdministrator,
                 [IdRightsDevice] = RightsDevce,

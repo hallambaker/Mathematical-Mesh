@@ -160,7 +160,7 @@ namespace Goedel.Cryptography {
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) =>
-            new KeyPairEd25519(Platform.GetRandomBits(256), keyType, keyUses, cryptoAlgorithmID);
+            new(Platform.GetRandomBits(256), keyType, keyUses, cryptoAlgorithmID);
 
         /// <summary>
         /// Factory method to produce a key pair from key parameters.

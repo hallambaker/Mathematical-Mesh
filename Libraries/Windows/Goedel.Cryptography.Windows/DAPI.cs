@@ -84,7 +84,7 @@ namespace Goedel.Cryptography.Windows {
 
         // Null values
         static IntPtr NullPtr = ((IntPtr)((int)(0)));
-        static DATA_BLOB NullBlob = new DATA_BLOB();
+        static DATA_BLOB NullBlob = new();
         //readonly byte[] EmptyBytes = new byte[0];
 
         // DPAPI key initialization flags.

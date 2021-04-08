@@ -151,7 +151,7 @@ namespace Goedel.Cryptography.Dare {
         /// Get a trailer for an empty payload.
         /// </summary>
         /// <returns>The trailer with a null digest value.</returns>
-        public DareTrailer GetNullTrailer() => new DareTrailer() {
+        public DareTrailer GetNullTrailer() => new() {
             PayloadDigest = DigestProvider.NullDigest
             };
 

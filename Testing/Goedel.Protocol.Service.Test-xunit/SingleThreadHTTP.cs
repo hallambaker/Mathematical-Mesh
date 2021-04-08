@@ -23,11 +23,10 @@ namespace Goedel.XUnit {
 
 
         public const string Domain = "localhost";
-        public string Protocol => TestProvider.GetWellKnown;
+        public string Protocol => testProvider.GetWellKnown;
         public const string Instance = "69";
-        Listener TestListener;
 
-        ServiceManagementService TestProvider;
+        ServiceManagementService testProvider;
 
         [Fact]
         public void TestMeshService() {
@@ -36,8 +35,8 @@ namespace Goedel.XUnit {
             var hostCredential = GetResponderCredential();
 
 
-            TestProvider = new TestServiceStatus();
-            var provider = new Provider(TestProvider, PresentationType.All,
+            testProvider = new TestServiceStatus();
+            var provider = new Provider(testProvider, PresentationType.All,
                         Domain, Instance);
 
             var providers = new List<Provider> { provider };
@@ -80,13 +79,9 @@ namespace Goedel.XUnit {
 
     public class TestServiceStatus : ServiceManagementService {
         public override JpcSession GetSession() => throw new NotImplementedException();
-        public override ServiceStatusResponse ServiceStatus(ServiceStatusRequest request, IJpcSession session) {
-
-            return new ServiceStatusResponse() {
-                Start = DateTime.Now
-                };
-
-            }
+        public override ServiceStatusResponse ServiceStatus(ServiceStatusRequest request, IJpcSession session) => new() {
+            Start = DateTime.Now
+            };
 
         }
 

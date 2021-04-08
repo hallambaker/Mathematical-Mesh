@@ -173,7 +173,7 @@ namespace Goedel.Cryptography {
         public CryptoStream GetEncryptionStream(
                         Stream Output,
                         byte[] Key, byte[] IV,
-                        CryptoStreamMode mode) => new CryptoStream(Output,
+                        CryptoStreamMode mode) => new(Output,
                             CreateEncryptor(Key, IV), mode);
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Goedel.Cryptography {
         public CryptoStream GetDecryptionStream(
                         Stream Output,
                         byte[] Key, byte[] IV,
-                        CryptoStreamMode mode) => new CryptoStream(Output,
+                        CryptoStreamMode mode) => new(Output,
                             CreateDecryptor(Key, IV), mode);
 
 

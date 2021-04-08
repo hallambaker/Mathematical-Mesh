@@ -92,10 +92,10 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>Dictionary mapping mesh UDF to Context.</summary>
-        protected Dictionary<string, ContextAccount> DictionaryUDFContextMesh = new Dictionary<string, ContextAccount>();
+        protected Dictionary<string, ContextAccount> DictionaryUDFContextMesh = new();
 
         ///<summary>Dictionary mapping mesh local name to Context.</summary>
-        protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new Dictionary<string, ContextAccount>();
+        protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new();
 
         void Register(ContextAccount contextMesh) {
             var machine = contextMesh.CatalogedMachine;

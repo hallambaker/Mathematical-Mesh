@@ -119,7 +119,7 @@ namespace Goedel.Discovery {
         //public DnsClient DNSClient = Goedel.Discovery.DNSClient.Default;
 
         /// <summary>Scoreboard of current requests.</summary>
-        List<DNSRequest> pendingRequests = new List<DNSRequest>();
+        List<DNSRequest> pendingRequests = new();
 
         /// <summary>The timeout value</summary>
         int timeout;

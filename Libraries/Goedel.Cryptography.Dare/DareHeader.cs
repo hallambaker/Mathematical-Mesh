@@ -126,7 +126,7 @@ namespace Goedel.Cryptography.Dare {
         public CryptoStackEncode BindEncoder(
             CryptoParameters cryptoParameters,
             byte[] cloaked = null,
-            List<byte[]> dataSequences = null) => new CryptoStackEncode(
+            List<byte[]> dataSequences = null) => new(
                 cryptoParameters, this, cloaked, dataSequences);
 
 

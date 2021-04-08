@@ -183,7 +183,7 @@ namespace Goedel.Cryptography.KeyFile {
         public byte[] Modulus;
 
         /// <summary>The RSA Key Pair</summary>
-        public PkixPublicKeyRsa RSAPublicKey => new PkixPublicKeyRsa() {
+        public PkixPublicKeyRsa RSAPublicKey => new() {
             Modulus = Modulus,
             PublicExponent = Exponent
             };

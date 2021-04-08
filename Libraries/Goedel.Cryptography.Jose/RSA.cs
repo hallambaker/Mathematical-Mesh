@@ -37,7 +37,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
-        public virtual PkixPublicKeyRsa PKIXPublicKeyRSA => new PkixPublicKeyRsa() {
+        public virtual PkixPublicKeyRsa PKIXPublicKeyRSA => new() {
             Modulus = N,
             PublicExponent = E
             };
@@ -107,7 +107,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
-        public virtual PkixPrivateKeyRsa PKIXPrivateKeyRSA => new PkixPrivateKeyRsa() {
+        public virtual PkixPrivateKeyRsa PKIXPrivateKeyRSA => new() {
             Modulus = N,
             PublicExponent = E,
             PrivateExponent = D,

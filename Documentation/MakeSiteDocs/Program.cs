@@ -56,7 +56,7 @@ namespace ExampleGenerator {
         #endregion
 
 
-        public Dictionary<string, string> ToDoList = new Dictionary<string, string>();
+        public Dictionary<string, string> ToDoList = new();
 
         public const string TestDir1 = "TestDir1";
         public const string TestDir2 = "TestOut";

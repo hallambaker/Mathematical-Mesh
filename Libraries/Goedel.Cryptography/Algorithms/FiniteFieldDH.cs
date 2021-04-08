@@ -430,7 +430,7 @@ namespace Goedel.Cryptography.Algorithms {
         public BigInteger Agreement { get; set; }
 
         /// <summary>Wrap as an ASN.1 Structure</summary>
-        public AgreementDH ASNAgreement => new AgreementDH() {
+        public AgreementDH ASNAgreement => new() {
             Result = Agreement.ToByteArray()
             };
 

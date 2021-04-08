@@ -383,6 +383,14 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.ActivationHost">
+            <summary>
+            Activation class binding a host to a service.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationHost.MeshActor">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.ActivationHost.#ctor(Goedel.Mesh.ProfileHost,System.Byte[],System.Int32)">
             <summary>
             Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
@@ -391,7 +399,7 @@
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
             The public key value is calculated for the public key pairs and the corresponding
-            <see cref="!:ConnectionUser"/> generated for the public values.
+            <see cref="T:Goedel.Mesh.Connection"/> generated for the public values.
             </summary>
             <param name="profileDevice">The base profile that the activation activates.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
@@ -424,6 +432,9 @@
         </member>
         <member name="P:Goedel.Mesh.ActivationDevice.DeviceAuthentication">
             <summary>The device authentication key for use under the profile</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationDevice.MeshActor">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.ActivationDevice.#ctor">
             <summary>

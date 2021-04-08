@@ -80,23 +80,23 @@ namespace ExampleGenerator {
         }
 
     public partial class Derive {
-        public DerivedKeyEC X25519 = new DerivedKeyEC(UdfAlgorithmIdentifier.X25519);
-        public DerivedKeyEC X448 = new DerivedKeyEC(UdfAlgorithmIdentifier.X448);
-        public DerivedKeyEC Ed25519 = new DerivedKeyEC(UdfAlgorithmIdentifier.Ed25519);
-        public DerivedKeyEC Ed448 = new DerivedKeyEC(UdfAlgorithmIdentifier.Ed448);
+        public DerivedKeyEC X25519 = new(UdfAlgorithmIdentifier.X25519);
+        public DerivedKeyEC X448 = new(UdfAlgorithmIdentifier.X448);
+        public DerivedKeyEC Ed25519 = new(UdfAlgorithmIdentifier.Ed25519);
+        public DerivedKeyEC Ed448 = new(UdfAlgorithmIdentifier.Ed448);
 
-        public DerivedKeyNIST P256 = new DerivedKeyNIST(UdfAlgorithmIdentifier.P256);
-        public DerivedKeyNIST P384 = new DerivedKeyNIST(UdfAlgorithmIdentifier.P384);
-        public DerivedKeyNIST P521 = new DerivedKeyNIST(UdfAlgorithmIdentifier.P521);
+        public DerivedKeyNIST P256 = new(UdfAlgorithmIdentifier.P256);
+        public DerivedKeyNIST P384 = new(UdfAlgorithmIdentifier.P384);
+        public DerivedKeyNIST P521 = new(UdfAlgorithmIdentifier.P521);
 
-        public DerivedKeyRSA RSA2048 = new DerivedKeyRSA(UdfAlgorithmIdentifier.RSA2048);
-        public DerivedKeyRSA RSA3072 = new DerivedKeyRSA(UdfAlgorithmIdentifier.RSA3072);
-        public DerivedKeyRSA RSA4096 = new DerivedKeyRSA(UdfAlgorithmIdentifier.RSA4096);
+        public DerivedKeyRSA RSA2048 = new(UdfAlgorithmIdentifier.RSA2048);
+        public DerivedKeyRSA RSA3072 = new(UdfAlgorithmIdentifier.RSA3072);
+        public DerivedKeyRSA RSA4096 = new(UdfAlgorithmIdentifier.RSA4096);
 
         public DerivedKeyRSA Any_RSA2048 =
-            new DerivedKeyRSA(UdfAlgorithmIdentifier.Any, UdfAlgorithmIdentifier.RSA2048);
+            new(UdfAlgorithmIdentifier.Any, UdfAlgorithmIdentifier.RSA2048);
         public DerivedKeyEC Any_x25519 =
-            new DerivedKeyEC(UdfAlgorithmIdentifier.Any, UdfAlgorithmIdentifier.X25519);
+            new(UdfAlgorithmIdentifier.Any, UdfAlgorithmIdentifier.X25519);
 
         }
 

@@ -9,7 +9,7 @@ namespace Goedel.Mesh.Shell {
     public static class MimeMapping {
 
         ///<summary>Dictionary mapping file extension to IANA content type.</summary>
-        public static Dictionary<string, string> MimeMap = new Dictionary<string, string> {
+        public static Dictionary<string, string> MimeMap = new() {
                 { ".saml", "application/samlassertion+xml"},
                 { ".dns", "application/dns"},
                 { ".json", "application/json"},

@@ -151,7 +151,7 @@ namespace Goedel.ASN {
         /// </summary>
         /// <param name="Array">Array to convert</param>
         /// <returns>Result of conversion</returns>
-        public static BigInteger ToBigInteger(this byte[] Array) => new BigInteger(Array);
+        public static BigInteger ToBigInteger(this byte[] Array) => new(Array);
 
         }
 

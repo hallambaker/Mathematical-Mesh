@@ -32,7 +32,7 @@ namespace Goedel.Mesh.Client {
         /////<summary></summary>
         //public CatalogedPending DefaultPendingEntry { get; private set; }
 
-        Dictionary<string, CatalogedMachine> DictionaryLocal2Connection = new Dictionary<string, CatalogedMachine>();
+        Dictionary<string, CatalogedMachine> DictionaryLocal2Connection = new();
 
         /////<summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
         //static PersistHost() {

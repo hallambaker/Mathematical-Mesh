@@ -15,7 +15,7 @@ namespace Goedel.XUnit {
 
     public partial class GoedelProtocol {
 
-        public static GoedelProtocol Test => new GoedelProtocol();
+        public static GoedelProtocol Test => new();
 
 
 
@@ -112,7 +112,7 @@ namespace Goedel.XUnit {
 
 
         #region // Test Data
-        static MultiInstance TestDataBasic = new MultiInstance() {
+        static MultiInstance TestDataBasic = new() {
             FieldBoolean = true,
             FieldInteger = 1,
             FieldDateTime = DateTime.Now,
@@ -120,7 +120,7 @@ namespace Goedel.XUnit {
             FieldBinary = new byte[] { 0, 1, 2, 3, 4 }
             };
 
-        static MultiArray TestDataArray = new MultiArray() {
+        static MultiArray TestDataArray = new() {
             FieldBoolean = true,
             FieldInteger = 1,
             FieldDateTime = DateTime.Now,
@@ -133,7 +133,7 @@ namespace Goedel.XUnit {
             ArrayBinary = new List<byte[]> { "One".ToBytes(), "Two".ToBytes() }
             };
 
-        static MultiInstance Struct1 = new MultiInstance() {
+        static MultiInstance Struct1 = new() {
             FieldBoolean = true,
             FieldInteger = 1,
             FieldDateTime = DateTime.Now,
@@ -141,7 +141,7 @@ namespace Goedel.XUnit {
             FieldBinary = new byte[] { 0, 1, 2, 3, 4 }
             };
 
-        static MultiInstance Struct2 = new MultiInstance() {
+        static MultiInstance Struct2 = new() {
             FieldBoolean = true,
             FieldInteger = 1,
             FieldDateTime = DateTime.Now,
@@ -149,7 +149,7 @@ namespace Goedel.XUnit {
             FieldBinary = new byte[] { 0, 1, 2, 3, 4 }
             };
 
-        static MultiArray Struct3 = new MultiArray() {
+        static MultiArray Struct3 = new() {
             FieldBoolean = true,
             FieldInteger = 1,
             FieldDateTime = DateTime.Now,
@@ -159,7 +159,7 @@ namespace Goedel.XUnit {
             };
 
 
-        static MultiStruct TestDataStruct = new MultiStruct() {
+        static MultiStruct TestDataStruct = new() {
             FieldBoolean = true,
             FieldInteger = 1,
             FieldDateTime = DateTime.Now,

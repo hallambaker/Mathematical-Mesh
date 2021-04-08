@@ -61,8 +61,8 @@ namespace Goedel.Command {
         // Private variables
         bool pending = false; // if true, there is an incomplete value to be added.
         int escapeCount = 0;
-        List<string> arguments = new List<string>();
-        StringBuilder buildValue = new StringBuilder();
+        List<string> arguments = new();
+        StringBuilder buildValue = new();
 
         /// <summary>
         /// Reset the value buffers to start a new parse.

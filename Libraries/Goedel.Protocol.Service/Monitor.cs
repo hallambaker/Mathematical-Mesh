@@ -122,10 +122,10 @@ namespace Goedel.Protocol.Service {
     /// </summary>
     public class MonitorResult {
         ///<summary>The time at which the result interval began</summary> 
-        public DateTime TimeBegin => new DateTime(timeBegin);
+        public DateTime TimeBegin => new(timeBegin);
 
         ///<summary>The time at which the next result interval began</summary> 
-        public DateTime TimeEnd => new DateTime(timeEnd);
+        public DateTime TimeEnd => new(timeEnd);
 
         ///<summary>The elapsed time.</summary> 
         public long TimeElapsed => 

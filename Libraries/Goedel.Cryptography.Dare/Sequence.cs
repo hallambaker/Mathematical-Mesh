@@ -612,14 +612,14 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="reverse">If true, read the sequence from the end.</param>
         /// <returns>The enumerator.</returns>
         public SequenceEnumeratorRaw Select(int minIndex, bool reverse = false) =>
-            new SequenceEnumeratorRaw(this, minIndex, reverse);
+            new(this, minIndex, reverse);
 
 
         /// <summary>
         /// Dictionary of frame index to frame position.
         /// </summary>
         public Dictionary<long, long> FrameIndexToPositionDictionary =
-            new Dictionary<long, long>();
+            new();
 
         /// <summary>
         /// Register a frame in the sequence access dictionaries.
@@ -689,7 +689,7 @@ namespace Goedel.Cryptography.Dare {
         /// position.
         /// </summary>
         /// <returns>The initialized instance.</returns>
-        public virtual SequenceInfo MakeSequenceInfo() => new SequenceInfo() {
+        public virtual SequenceInfo MakeSequenceInfo() => new() {
             Index = (int)FrameCount++
             };
 

@@ -39,7 +39,7 @@ namespace Goedel.Cryptography.Jose {
             }
 
         /// <summary>The JSONReader.</summary>
-        public virtual JsonReader JSONReader => new JsonReader(Data);
+        public virtual JsonReader JSONReader => new(Data);
 
 
         /// <summary>Caches the CryptoData instance</summary>

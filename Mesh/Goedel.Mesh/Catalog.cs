@@ -49,7 +49,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Enumerate the catalog as the cataloged type.</summary>
         public AsCatalogedType<T> AsCatalogedType =>
-                new AsCatalogedType<T>(PersistenceStore);
+                new(PersistenceStore);
 
 
         /// <summary>

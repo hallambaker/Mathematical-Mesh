@@ -17,7 +17,7 @@ namespace Goedel.Cryptography.Dare {
         /// Dictionary mapping tags to factory methods
         /// </summary>
         static Dictionary<string, JsonFactoryDelegate> ThisTagDictionary =
-            new Dictionary<string, JsonFactoryDelegate>()
+            new()
                 {
                 {"DareEnvelope", Factory}
                 };

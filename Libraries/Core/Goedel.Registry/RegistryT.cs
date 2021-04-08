@@ -99,11 +99,11 @@ namespace Goedel.Registry {
     /// <typeparam name="T">The parse tree type.</typeparam>
     public class Registry<T> where T : class {
         /// <summary>The input sources</summary>
-        public List<Source> Files = new List<Source>();
+        public List<Source> Files = new();
         /// <summary>The types</summary>
-        public List<TYPE<T>> Types = new List<TYPE<T>>();
+        public List<TYPE<T>> Types = new();
         /// <summary>The identifiers.</summary>
-        public List<ID<T>> IDs = new List<ID<T>>();
+        public List<ID<T>> IDs = new();
 
         /// <summary>Construct new registry.</summary>
         public Registry() {
@@ -250,7 +250,7 @@ namespace Goedel.Registry {
         /// <summary>The type label</summary>
         public string Label;
         /// <summary>List of all references.</summary>
-        public List<ID<T>> IDs = new List<ID<T>>();
+        public List<ID<T>> IDs = new();
         }
 
     /// <summary>
