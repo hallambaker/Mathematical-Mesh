@@ -1,0 +1,56 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#using Goedel.Utilities
+#using Goedel.Cryptography
+#using Goedel.Cryptography.Dare
+#% #pragma warning disable IDE0022
+#% #pragma warning disable IDE0060
+#% #pragma warning disable IDE1006
+#xclass ExampleGenerator CreateExamples
+
+#method MakePresentationExamples CreateExamples Example
+#% PresentationFirstContact(Example);
+#% PresentationZeroRoundTrip(Example);
+#% PresentationFirstContactDeferred(Example);
+#% PresentationZeroRoundTripDeferred(Example);
+#% PresentationTicketed(Example);
+#end method
+
+#zfile CreateExamples PresentationFirstContact "Examples\\PresentationFirstContact.md" Example
+
+Key exchange example TBS
+
+#end zfile
+
+
+#zfile CreateExamples PresentationZeroRoundTrip "Examples\\PresentationZeroRoundTrip.md" Example
+
+Key exchange example TBS
+
+#end zfile
+
+
+#zfile CreateExamples PresentationFirstContactDeferred "Examples\\PresentationFirstContactDeferred.md" Example
+
+Key exchange example TBS
+
+#end zfile
+
+
+#zfile CreateExamples PresentationZeroRoundTripDeferred "Examples\\PresentationZeroRoundTripDeferred.md" Example
+
+Key exchange example TBS
+
+#end zfile
+
+
+#zfile CreateExamples PresentationTicketed "Examples\\PresentationTicketed.md" Example
+
+Key exchange example TBS
+
+#end zfile
+
+
+
+#end xclass

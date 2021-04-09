@@ -189,6 +189,8 @@ namespace ExampleGenerator {
             MakeSchemaExamples(this);
             Console.WriteLine($"***** Protocol");
             MakeProtocolExamples(this);
+            Console.WriteLine($"***** Presentation");
+            MakePresentationExamples(this);
             Console.WriteLine($"***** Cryptography");
             MakeCryptographyExamples(this);
 

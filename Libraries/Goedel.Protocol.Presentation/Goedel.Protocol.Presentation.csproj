@@ -32,6 +32,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+      <Compile Update="PacketSchema.cs">
+        <DependentUpon>PacketSchema.yaschema</DependentUpon>
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+      </Compile>
     <Compile Update="PresentationConstants.cs">
       <DependentUpon>PresentationConstants.constant</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -48,7 +53,10 @@
       <LastGenOutput>MeshConstants.cs</LastGenOutput>
       <Generator>Constant</Generator>
     </None>
-    
+    <None Update="PacketSchema.yaschema">
+      <LastGenOutput>PacketSchema.cs</LastGenOutput>
+      <Generator>Constant</Generator>
+    </None>   
   </ItemGroup>
   
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

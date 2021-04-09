@@ -43,6 +43,7 @@ ToolTargets = \
 	IDs\MakeExamples-2-UDF.cs\
 	IDs\MakeExamples-3-Dare.cs\
 	IDs\MakeExamples-4-Schema.cs\
+	IDs\MakeExamples-6-Presentation.cs\
 	IDs\MakeExamples-5-Protocol.cs\
 	IDs\MakeExamples-8-Cryptography.cs\
 	Web\CommandsetAccount.cs\
@@ -77,6 +78,9 @@ IDs\MakeExamples-3-Dare.cs : IDs\MakeExamples-3-Dare.script
 
 IDs\MakeExamples-4-Schema.cs : IDs\MakeExamples-4-Schema.script 
 	gscript IDs\MakeExamples-4-Schema.script  IDs\MakeExamples-4-Schema.cs
+
+IDs\MakeExamples-6-Presentation.cs : IDs\MakeExamples-6-Presentation.script 
+	gscript IDs\MakeExamples-6-Presentation.script  IDs\MakeExamples-6-Presentation.cs
 
 IDs\MakeExamples-5-Protocol.cs : IDs\MakeExamples-5-Protocol.script 
 	gscript IDs\MakeExamples-5-Protocol.script  IDs\MakeExamples-5-Protocol.cs

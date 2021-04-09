@@ -68,6 +68,12 @@
       <AutoGen>True</AutoGen>
     </Compile>
 
+    <Compile Update="IDs\MakeExamples-6-Presentation.cs">
+      <DependentUpon>MakeExamples-6-Presentation.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
     <Compile Update="IDs\MakeExamples-5-protocol.cs">
       <DependentUpon>MakeExamples-5-protocol.script</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -181,6 +187,11 @@
 
     <None Update="IDs\MakeExamples-4-Schema.script">
       <LastGenOutput>MakeExamples-4-schema.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+
+    <None Update="IDs\MakeExamples-6-Presentation.script">
+      <LastGenOutput>MakeExamples-6-Presentation.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
 

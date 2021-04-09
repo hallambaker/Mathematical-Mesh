@@ -12,8 +12,8 @@ address of the account to which she wishes to connect:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MCDZ-IZFY-PWT3-36UP-4L6Q-5QMJ-YWWY
-   Witness value = WGAZ-BX2A-7G72-J5U3-SGGT-UB3W-TV4L
+<rsp>   Device UDF = MDF3-IT6U-NCYJ-RI52-FMTG-OVVJ-FYIW
+   Witness value = BJLL-ZGN2-5B3S-G3UE-7QBZ-DKRW-F2RG
 </div>
 ~~~~
 
@@ -26,12 +26,12 @@ The user reviews their pending messages:
 ~~~~
 <div="terminal">
 <cmd>Alice> device pending
-<rsp>MessageID: WGAZ-BX2A-7G72-J5U3-SGGT-UB3W-TV4L
+<rsp>MessageID: BJLL-ZGN2-5B3S-G3UE-7QBZ-DKRW-F2RG
         Connection Request::
-        MessageID: WGAZ-BX2A-7G72-J5U3-SGGT-UB3W-TV4L
+        MessageID: BJLL-ZGN2-5B3S-G3UE-7QBZ-DKRW-F2RG
         To:  From: 
-        Device:  MCDZ-IZFY-PWT3-36UP-4L6Q-5QMJ-YWWY
-        Witness: WGAZ-BX2A-7G72-J5U3-SGGT-UB3W-TV4L
+        Device:  MDF3-IT6U-NCYJ-RI52-FMTG-OVVJ-FYIW
+        Witness: BJLL-ZGN2-5B3S-G3UE-7QBZ-DKRW-F2RG
 </div>
 ~~~~
 
@@ -44,7 +44,7 @@ matches the one presented on the device. Since they match, the request is accept
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device accept WGAZ-BX2A-7G72-J5U3-SGGT-UB3W-TV4L /message /web
+<cmd>Alice> device accept BJLL-ZGN2-5B3S-G3UE-7QBZ-DKRW-F2RG /message /web
 </div>
 ~~~~
 
@@ -56,9 +56,9 @@ The device completes the connection as before:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device complete
-<rsp>   Device UDF = MCDZ-IZFY-PWT3-36UP-4L6Q-5QMJ-YWWY
+<rsp>   Device UDF = MDF3-IT6U-NCYJ-RI52-FMTG-OVVJ-FYIW
    Account = alice@example.com
-   Account UDF = MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH
+   Account UDF = MCVL-63JV-H35G-USOR-72YS-YWVV-UHNF
 </div>
 ~~~~
 

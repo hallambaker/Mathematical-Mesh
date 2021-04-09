@@ -4,43 +4,73 @@ The request payload:
 
 ~~~~
 {
-  "BindRequest":{
-    "AccountAddress":"groupw@example.com",
-    "EnvelopedProfileAccount":[{
-        "EnvelopeId":"MBND-NF5R-BEOZ-EHDY-PXM3-XTDU-HK5T",
-        "dig":"S512",
-        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQk5ELU5GNVItQk
-  VPWi1FSERZLVBYTTMtWFREVS1ISzVUIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
-  sZUdyb3VwIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJD
-  cmVhdGVkIjogIjIwMjEtMDEtMTNUMTY6Mzg6MjhaIn0"},
-      "ewogICJQcm9maWxlR3JvdXAiOiB7CiAgICAiUHJvZmlsZVNpZ25hdHVyZS
-  I6IHsKICAgICAgIlVkZiI6ICJNQk5ELU5GNVItQkVPWi1FSERZLVBYTTMtWFREVS1
-  ISzVUIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1Ymxp
-  Y0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgI
-  CJQdWJsaWMiOiAiTkdXV01jYUI4alY5WjJQOFVyd2lpYUFEdVhDUmhhbGVSX0NDZF
-  B1eURXZnBTTVBGM0IxZgogIG1faVd1NTdFbDR0RGR0Uk8wR3ZISjFPQSJ9fX0sCiA
-  gICAiQWNjb3VudEFkZHJlc3MiOiAiZ3JvdXB3QGV4YW1wbGUuY29tIiwKICAgICJB
-  Y2NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQjQ0LUk3VFQtQTNKR
-  S1ONUxLLVNLVFktV0pENi1VUkdaIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOi
-  B7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg
-  0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJKSEkwU0l4SDJObWVJYzFkbGdra2dm
-  VVhCeXpibW5rWkw1cFNoNkFGd2t1UkNOTThMUVVnCiAgbEgwOEYtRi14UWNDS3M1T
-  ndDZ0x6ejBBIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIjogewogIC
-  AgICAiVWRmIjogIk1DSzMtWk1QWS1DUUxHLUQyWUMtTlJJNS1OTzRBLUdKTVgiLAo
-  gICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUNE
-  SCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpY
-  yI6ICJfNnJodzBlQUstUE1kTm5zQWJMM3NtX3FVNVZBQVJIcG5JQ2hfZy1ueDFOaG
-  psNHU5R29rCiAgLWRPUHdmeXpOUTEtVnJSdUU2RG8wR01BIn19fX19",
+  "TransactRequest":{
+    "Updates":[{
+        "Container":"MMM_Member",
+        "Envelopes":[[{
+              "dig":"S512",
+              "policy":{
+                "enc":"none",
+                "dig":"none",
+                "Sealed":true},
+              "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24v
+  bW1tLWNhdGFsb2cifQ",
+              "SequenceInfo":{
+                "DataEncoding":"JSON",
+                "ContainerType":"Merkle",
+                "Index":0}},
+            "",
+            {
+              "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_
+  SpIdNs6c5H0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
+              "TreeDigest":"FEHy24Y6cLModDXWH31kVc2a3TdhjXPooKHpL
+  Ab2JbsO1YQnJolmowXAYHhkOGY0kg3jrKNTjds0myf4Dw1sdg"}
+            ]
+          ]},
       {
-        "signatures":[{
-            "alg":"S512",
-            "kid":"MBND-NF5R-BEOZ-EHDY-PXM3-XTDU-HK5T",
-            "signature":"pXHiPRR5N9QZieJEiaoxW8J6bn0p8arf1LtY4U6L
-  ROXZpW9ru2eb-7vA4-qDm6d11gUEDOKyhp-AP-zPo1BeiRo7kFuUU6xczM5zCIjnD
-  EQXJuXiLF1FMUfcL9V9l9bAeaPiy7VEtgdEtzobLAaFQxIA"}
-          ],
-        "PayloadDigest":"SFNO6ZCeXo0y3hSACwFeQmGB6ahSrVMDsRDwERcy
-  6lPnAtyPjtP6ht2dVv89ZxFOVBON1q-UKkhjZxTtrnsirg"}
+        "Container":"MMM_Access",
+        "Envelopes":[[{
+              "dig":"S512",
+              "policy":{
+                "enc":"none",
+                "dig":"none",
+                "Sealed":true},
+              "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24v
+  bW1tLWNhdGFsb2cifQ",
+              "SequenceInfo":{
+                "DataEncoding":"JSON",
+                "ContainerType":"Merkle",
+                "Index":0}},
+            "",
+            {
+              "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_
+  SpIdNs6c5H0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
+              "TreeDigest":"FEHy24Y6cLModDXWH31kVc2a3TdhjXPooKHpL
+  Ab2JbsO1YQnJolmowXAYHhkOGY0kg3jrKNTjds0myf4Dw1sdg"}
+            ]
+          ]},
+      {
+        "Container":"MMM_Publication",
+        "Envelopes":[[{
+              "dig":"S512",
+              "policy":{
+                "enc":"none",
+                "dig":"none",
+                "Sealed":true},
+              "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24v
+  bW1tLWNhdGFsb2cifQ",
+              "SequenceInfo":{
+                "DataEncoding":"JSON",
+                "ContainerType":"Merkle",
+                "Index":0}},
+            "",
+            {
+              "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_
+  SpIdNs6c5H0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
+              "TreeDigest":"FEHy24Y6cLModDXWH31kVc2a3TdhjXPooKHpL
+  Ab2JbsO1YQnJolmowXAYHhkOGY0kg3jrKNTjds0myf4Dw1sdg"}
+            ]
+          ]}
       ]}}
 ~~~~
 
@@ -50,7 +80,7 @@ The response payload:
 
 ~~~~
 {
-  "BindResponse":{
+  "TransactResponse":{
     "Status":201,
     "StatusDescription":"Operation completed successfully"}}
 ~~~~

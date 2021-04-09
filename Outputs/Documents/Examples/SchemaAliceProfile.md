@@ -5,41 +5,41 @@ For example, the personal account profile Alice created is:
 {
   "ProfileUser":{
     "ProfileSignature":{
-      "Udf":"MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH",
+      "Udf":"MCVL-63JV-H35G-USOR-72YS-YWVV-UHNF",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"c3l96hFNVbXzQa7dohgp_X9YIIzaR4U0dPCfyocquFWnZ
-  uiFdu9vl9UIgtYv-tjFVpmk6qRDj7mA"}}},
+          "Public":"67U-pZ3ISnZnx2d5mu712U79GiZ9n5M_VXiboaw9yVzYb
+  4w9u_e_rM138_OJgdgBDqmPOjm_Dm6A"}}},
     "AccountAddress":"alice@example.com",
-    "ServiceUdf":"MA36-TUJL-QRZJ-3M3L-SRBQ-BRYQ-W2YM",
+    "ServiceUdf":"MASP-POBA-6F7O-V63D-JQLF-4C4V-E5HV",
     "AccountEncryption":{
-      "Udf":"MDLO-JJ4B-RBY5-VYD7-LJZY-S3RK-DBM2",
+      "Udf":"MAVJ-FRGR-AEE6-FWDQ-XSAG-XRGJ-7YDY",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"4Mi9X8mXI9mGh_7sjGZP0aFPRXJNSFexPBnIAK1BN__SX
-  RxtWQTsXsgz1fl5Jc38ZYx7MVe2X9wA"}}},
+          "Public":"y63mgc9nPBS8XmVfEPB_3mdX-EWEDPzDLe1X9Z6G_TPox
+  -a2Pf9b9D4M0XYvno9MlXEmyqQj38WA"}}},
     "AdministratorSignature":{
-      "Udf":"MCCK-F2WZ-QAAC-C3NA-EVAW-SBL7-IHEQ",
+      "Udf":"MCZT-RE4W-4U2X-TCMM-7IBH-74OU-SGQQ",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"8TSZ7DNTM7FugJqAFft4FJD4WdjA9omHUDa7tntnJBkQ4
-  kNW_tyS6QMGMYly4wHR1WFnUZvI5QmA"}}},
+          "Public":"FlRwHsOzgBT75oxkjlspm1v80ldAWeAet9MN9zp8hj0hm
+  fuTaF_EecV2nDiWo6mqrZeqUPGb2ToA"}}},
     "AccountAuthentication":{
-      "Udf":"MBB3-723K-DJKQ-G4HH-7PTN-5JXK-ZV6A",
+      "Udf":"MDBD-GQES-BIBZ-XCPM-UPPR-MDJZ-CNZ4",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"l674_n9ihg91rjgPisb3XuA78E_8hWzsHtYfoFQvGB2kZ
-  3O1xSBFE2ppFjhS4hslA45yz7WpBzgA"}}},
+          "Public":"hLyVuccvmAMm6KS1jbT4DKWeK0ib20MhIjBfv1FDfOzsn
+  B68qpuVZ1BwewcRziqZrrwiUR5Y8UOA"}}},
     "AccountSignature":{
-      "Udf":"MDA6-ELE2-T2AM-52RT-AN3R-LUDS-GJGX",
+      "Udf":"MCSJ-HV47-CXCW-WOAO-UWMJ-6FUY-ZCDY",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"AHStW8KGpbroZt5ez-wvbC_FMr9AjqI8gLigC5p3whHcE
-  Q4jP9dW1xDwZ34j77qXNIfFEvOEWJMA"}}}}}
+          "Public":"IG523ryaeXiqri568efMJUs-3Q2z9quacg9Dxk_MSItNv
+  km8MFObDgdl7_VlSNryVRruOwOCKeaA"}}}}}
 ~~~~
 
