@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Client {
         public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
 
         ///<summary>The profile</summary>
-        public ProfileUser ProfileUser { get; private set; }
+        public ProfileUser ProfileUser { get; set; }
 
         ///<summary>The connection device</summary>
         public ConnectionDevice ConnectionUser => CatalogedDevice?.ConnectionUser;

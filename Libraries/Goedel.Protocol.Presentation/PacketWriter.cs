@@ -337,12 +337,5 @@ namespace Goedel.Protocol.Presentation {
             return result;
             }
 
-
-
-
-
-
-
-
         }
     }

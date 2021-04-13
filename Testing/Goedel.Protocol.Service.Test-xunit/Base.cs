@@ -48,7 +48,7 @@ namespace Goedel.XUnit {
 
         public string DeviceAliceAdmin = "Alice Admin";
         static string AccountAlice = "alice@example.com";
-
+        static string AccountMallet= "mallet@example.com";
 
         public ContextUser ContextInitiator { get; }
 
@@ -59,14 +59,6 @@ namespace Goedel.XUnit {
 
         public PublicMeshService MeshService { get; }
 
-        // we have to set the connection up!
-        //public Connection ConnectionResponder => throw new NYI();
-
-        //public ProfileHost ProfileResponder => MeshService.ProfileHost;
-
-
-        public Enveloped<ProfileService> ServiceProfile { get; }
-        public Enveloped<ConnectionHost> ServiceConnection { get; }
 
         public MeshCredential InitiatorCredential { get; }
 
@@ -78,6 +70,10 @@ namespace Goedel.XUnit {
         public static new TestPresentationMesh Test() => new();
 
         //public KeyCollectionTest KeyCollection  = new KeyCollectionTest ()
+
+
+
+
 
         public TestPresentationMesh() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
@@ -105,7 +101,14 @@ namespace Goedel.XUnit {
 
             }
 
+        public Listener CreateMeshListener() {
 
+            // Service is MeshService
+            // 
+
+
+            throw new NYI();
+            }
 
         }
     }

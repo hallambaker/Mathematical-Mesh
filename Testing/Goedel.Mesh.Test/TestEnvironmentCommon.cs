@@ -16,20 +16,24 @@ using Goedel.Mesh.Session;
 namespace Goedel.Mesh.Test {
 
 
+    public class TestEnvironmentRdp : TestEnvironmentCommon {
+
+        public override MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) => 
+            base.GetMeshClient(meshCredential);
+
+        public override Service StartService() => 
+            base.StartService();
+
+
+        }
+
+
+
     /// <summary>
     /// Test environment for one test with one service with one or more devices.
     /// </summary>
     public class TestEnvironmentCommon  {
 
-        //static TestEnvironmentCommon() {
-        //    Cryptography.Cryptography.Initialize();
-        //    var _ = Goedel.Mesh.Client.ConnectionItem.Initialize;
-        //    _ = Goedel.Mesh.MeshProtocol.Initialize;
-        //    _ = Goedel.Mesh.MeshItem.Initialize;
-        //    _ = Goedel.Mesh.Server.CatalogItem.Initialize;
-
-
-        //    }
 
 
         public string ServiceName = "example.com";
@@ -52,7 +56,7 @@ namespace Goedel.Mesh.Test {
 
         Service service;
 
-        public MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) {
+        public virtual MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) {
 
             if (!JpcConnection.IsDirect()) {
                 service ??= StartService();
@@ -71,7 +75,7 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        Service StartService() {
+        public virtual Service StartService() {
 
 
 
@@ -82,7 +86,7 @@ namespace Goedel.Mesh.Test {
             using var provider = new Provider(endpoints, MeshService);
 
             var providers = new List<Provider> { provider };
-            return new MeshHost(null, providers);
+            return new MeshHostProvider(null, providers);
             }
 
 

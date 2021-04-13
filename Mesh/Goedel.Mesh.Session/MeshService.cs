@@ -29,10 +29,10 @@ using Goedel.Protocol.Presentation;
 using Goedel.Protocol.Service;
 
 namespace Goedel.Mesh.Session {
-    public class MeshHost : Service {
+    public class MeshHostProvider : Service {
 
 
-        public MeshHost(Credential credential, List<Provider> providers, int maxCores = 0) : 
+        public MeshHostProvider(Credential credential, List<Provider> providers, int maxCores = 0) : 
                     base (new MeshListener(credential), providers, maxCores) {
             }
 

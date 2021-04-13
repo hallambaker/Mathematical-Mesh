@@ -68,7 +68,10 @@ Namespace Goedel.Mesh.Client
 		Description
 			|The connection request did not complete
 
-
+		Exception ConnectionAccessControlFail
+			Console "Access control failed"
+			Description
+				|Access control failed
 
 		Exception ConnectionRefused
 			Console "The connection request was refused"

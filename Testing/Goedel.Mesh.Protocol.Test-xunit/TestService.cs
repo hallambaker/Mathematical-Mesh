@@ -40,7 +40,6 @@ namespace Goedel.XUnit {
         static TestService() => Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
 
 
-        public static TestService Test() => new();
         static string AccountAlice = "alice@example.com";
         static string ServiceName = "example.com";
         static string AccountBob = "bob@example.com";
@@ -76,7 +75,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void ProtocolHello() {
 
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
             var meshClient = machineAdminAlice.GetMeshClient(ServiceName);
 
@@ -88,7 +87,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshServiceEncryptCredential() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
             var machineAdminBob = new MeshMachineTest(testEnvironmentCommon, DeviceBobAdmin);
 
@@ -127,7 +126,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshServiceFull() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
             var machineAdminBob = new MeshMachineTest(testEnvironmentCommon, DeviceBobAdmin);
 
@@ -243,7 +242,7 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void MeshDeviceConnectApprove() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
@@ -267,7 +266,7 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void MeshDeviceConnectPIN() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAdmin = MeshMachineTest.GenerateAccountUser(
                 testEnvironmentCommon, DeviceAliceAdmin, AccountAlice, "main");
 
@@ -293,7 +292,7 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void MeshDeviceConnectDynamicQR() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
 
             var contextAdmin = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon, DeviceAliceAdmin, AccountAlice,
                 "main");
@@ -321,7 +320,7 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void MeshDeviceConnectStaticQR() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
 
 
             var contextQ = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon, DeviceQ, AccountQ,
@@ -354,7 +353,7 @@ namespace Goedel.XUnit {
         public void MeshEscrowRecover() {
 
             // Create mesh
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAliceOriginal = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
@@ -409,7 +408,7 @@ namespace Goedel.XUnit {
 
         (ContextUser, ContextUser) CreateConnectGrant(string roles) {
 
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
@@ -430,7 +429,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshCatalogAccount() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
             }
@@ -438,7 +437,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshCatalogMultipleDevice() {
             // Test service, devices for Alice, Bob
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
             }
@@ -446,7 +445,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshMessageContact() {
             // Test service, devices for Alice, Bob
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
             var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
@@ -480,7 +479,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshMessageConfirm() {
             // Test service, devices for Alice, Bob
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
             var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
@@ -518,7 +517,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshCatalogGroup() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
             var plaintext = Platform.GetRandomBytes(1000);
 
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,

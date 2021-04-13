@@ -3,7 +3,7 @@ cd %~dp0
 set Root=../../..
 set DocSource=../Word
 
-
+::Set DocSource=C:\Users\hallam\OneDrive\Documents
 
 echo Generate schemas etc.
 cd Generated 
@@ -28,7 +28,7 @@ copy ..\favicon.png .
 
 ::rfctool %DocSource%\hallambaker-mesh-3-dare.docx /auto /cache=bib.xml
 
-rfctool %DocSource%\hallambaker-mesh-6-presentation.docx  /auto /cache=bib.xml
+rfctool %DocSource%\hallambaker-mesh-6-rdp.docx  /auto /cache=bib.xml
 
 ::rfctool %DocSource%\hallambaker-mesh-5-protocol.docx  /auto /cache=bib.xml
 

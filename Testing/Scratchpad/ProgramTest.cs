@@ -24,9 +24,17 @@ namespace Scratchpad {
     partial class Program {
         static void Main() {
             Screen.WriteLine($"Start test  {DateTime.Now}");
+
+
+            // Need to build out TestEnvironmentRdp as a listener
+            TestPresentationMesh.Test().TestCreateAccount();
+
+
+
+
             //TestAsymmetric.Test().EncryptTest(CryptoAlgorithmId.RSAExch);
 
-            TestPresentationMesh.Test().TestMeshService();
+
 
             //TestService.Test().MeshCatalogAccount();
 
@@ -43,7 +51,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestHello();
             //ShellTestsHTTP.Test().TestHello();
             //GoedelProtocolService.Test().TestService();
-            Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+            //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
             //TestService.Test().ProtocolHello();
 
 
