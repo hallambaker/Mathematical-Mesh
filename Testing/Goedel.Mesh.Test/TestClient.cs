@@ -7,6 +7,7 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 using Goedel.Protocol.Service;
 using Goedel.Mesh.Management;
+using Goedel.Protocol.Presentation;
 
 namespace Goedel.Mesh.Test {
     public class TestClient {

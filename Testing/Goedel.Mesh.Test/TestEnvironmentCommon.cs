@@ -11,19 +11,49 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Goedel.Mesh.Session;
-
+using Goedel.Protocol.Presentation;
 
 namespace Goedel.Mesh.Test {
 
 
     public class TestEnvironmentRdp : TestEnvironmentCommon {
+        
+        // This is a horror show right here....
+        
+        public const string Domain = "localhost";
+        public string Protocol => MeshService.GetWellKnown;
+        public const string Instance = "69";
 
-        public override MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) => 
-            base.GetMeshClient(meshCredential);
 
-        public override Service StartService() => 
-            base.StartService();
+        public override MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) {
+            StartService();
 
+            var meshServiceBinding = new RdpConnection(meshCredential, Domain, Instance, PresentationType.Http, Protocol);
+            meshServiceBinding.Initialize(null, null);
+
+            var client = new MeshServiceClient() {
+                JpcSession = meshServiceBinding
+                };
+
+            return client;
+            }
+
+        public override Service StartService() {
+
+            var httpEndpoint = new HttpEndpoint(ServiceName, MeshService.GetWellKnown, Test);
+            var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, Test);
+            var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
+
+            using var provider = new Provider(endpoints, MeshService);
+
+            var providers = new List<Provider> { provider };
+            return new RdpService(null, providers);
+
+
+            var service = base.StartService();
+
+
+            }
 
         }
 
@@ -86,7 +116,7 @@ namespace Goedel.Mesh.Test {
             using var provider = new Provider(endpoints, MeshService);
 
             var providers = new List<Provider> { provider };
-            return new MeshHostProvider(null, providers);
+            return new RdpService(null, providers);
             }
 
 

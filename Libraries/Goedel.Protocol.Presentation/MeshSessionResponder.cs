@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Goedel.Mesh.Session {
+namespace Goedel.Protocol.Presentation {
     public class MeshSessionResponder : SessionResponder {
 
 
@@ -68,67 +68,52 @@ namespace Goedel.Mesh.Session {
 
 
 
-        public static string GetChallenge(List<PacketExtension> packetExtensions) {
-            foreach (var extension in packetExtensions) {
-                if (extension.Tag == MeshListener.ChallengeTag) {
-                    return extension.Value.ToUTF8();
-                    }
-                }
-            throw new NYI();
-            }
+        //public static string GetChallenge(List<PacketExtension> packetExtensions) {
+        //    foreach (var extension in packetExtensions) {
+        //        if (extension.Tag == Constants.ExtensionChallengeNonce) {
+        //            return extension.Value.ToUTF8();
+        //            }
+        //        }
+        //    throw new NYI();
+        //    }
 
 
-        public string MakeChallenge(Packet packetRequest) {
+        //public string MakeChallenge(Packet packetRequest) {
 
-            ephemeral = packetRequest switch {
-                PacketClientInitial => packetRequest.PlaintextExtensions[0].Value,
-                PacketClientExchange clientExchange => clientExchange.ClientEphemeral,
-                _ => throw new NYI()
-                };
+        //    ephemeral = packetRequest switch {
+        //        PacketClientInitial => packetRequest.PlaintextExtensions[0].Value,
+        //        PacketClientExchange clientExchange => clientExchange.ClientEphemeral,
+        //        _ => throw new NYI()
+        //        };
 
 
-            return UDF.Nonce(128);
-            }
+        //    return UDF.Nonce(128);
+        //    }
 
-        public bool VerifyChallenge(Packet packetRequest) {
-            //ephemeral.TestEqual(packetRequest.PlaintextExtensions[0].Value);
+        //public bool VerifyChallenge(Packet packetRequest) {
+        //    //ephemeral.TestEqual(packetRequest.PlaintextExtensions[0].Value);
 
-            ephemeral = null;
+        //    ephemeral = null;
 
-            return true;
-            }
+        //    return true;
+        //    }
         
-        public MeshSessionResponder(
-                Listener listener): base (listener) {
-
-            }
+        /// <summary>
+        /// Constructor, create a responder connection for <paramref name="listener"/>
+        /// </summary>
+        /// <param name="listener">The listener managing the connection.</param>
+        /// <param name="packetIn">The received packet.</param>
         public MeshSessionResponder(
                 Listener listener,
-                Packet packetIn
+                Packet packetIn=null
                 ) : base(listener) {
 
-            // need to assign a unique SessionId here.
+            if (packetIn != null) {
+                LocalStreamId = StreamId.GetStreamId();
+                ReturnStreamId = LocalStreamId.GetValue();
 
-            LocalStreamId = StreamId.GetStreamId();
-            ReturnStreamId = LocalStreamId.GetValue();
-
-
-            PacketIn = packetIn;
-            //if (packetIn is PacketClientExchange packetClientExchange) {
-            //    // We have accepted the connection, cause the client exchange to be performed.
-            //    //CompleteClientExchange(packetClientExchange);
-            //    }
-            //if (packetIn is PacketClientCompleteDeferred packetClientCompleteDeferred) {
-            //    // We have accepted the connection, cause the client exchange to be performed.
-            //    CompleteClientCompleteDeferred(packetClientCompleteDeferred);
-
-            //    RemoteStreamId = PacketExtension.GetExtensionByTag(
-            //            packetClientCompleteDeferred.CiphertextExtensions, StreamId.PrimaryTag);
-
-
-
-            //    }
-            //CredentialSelf = credential;
+                PacketIn = packetIn;
+                }
             }
 
         // should create just one set of ephemerals, hand them out to everyone for an hour and then rotate them.
@@ -196,8 +181,7 @@ namespace Goedel.Mesh.Session {
             //var (privateEphemeral, publickey) = ClientCredential.SelectKey(ephemeralsOffered, keyId);
 
             var privateEphemeral = EphemeralsCurrent[0];
-            MutualKeyExchange(privateEphemeral, 
-                    (CredentialOther as MeshCredential).AuthenticationPublic);
+            MutualKeyExchange(privateEphemeral, CredentialOther.AuthenticationPublic);
             }
 
 

@@ -28,7 +28,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Base class for presentation connections.
     /// </summary>
-    public abstract class Session : Disposable{
+    public abstract class Session : Disposable {
 
         #region // Properties
 
@@ -85,8 +85,10 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>When not null, contains the return address to be sent as an an extension.</summary> 
         public byte[] ReturnStreamId = null;
-        
-        
+
+
+        public RdpStream RdpStream { get; set; }
+
 
         List<KeyPairAdvanced> ephemeralsOffered;
         #endregion
@@ -141,22 +143,26 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The Quantized length.</returns>
         public int QuantizePacketLength(int length) =>
             length < Constants.MinimumPacketSize ? Constants.MinimumPacketSize :
-                    PacketQuanta * ((length + 200+ PacketQuanta) / PacketQuanta);
+                    PacketQuanta * ((length + 200 + PacketQuanta) / PacketQuanta);
+
 
         /// <summary>
         /// Serialize and mutually encrypt a data packet.
         /// </summary>
+        /// <param name="destinationStream">The remote stream identifier.</param>
         /// <param name="payload"></param>
         /// <param name="ciphertextExtensions"></param>
         /// <param name="packetSize">The number of bytes in the packet to be created.</param>
         /// <param name="buffer">Optional buffer passed in for use by the method.</param>
         /// <param name="position">Start point for writing to the buffer.</param>
         public virtual byte[] SerializePacketData(
+                
                 byte[] payload = null,
                 List<PacketExtension> ciphertextExtensions = null,
                 int packetSize = -1,
                 byte[]buffer=null,
-                int position =0) {
+                int position =0,
+                byte[] destinationStream = null) {
 
             packetSize = payload == null ? Constants.MinimumPacketSize :
                 QuantizePacketLength(payload.Length);
@@ -167,8 +173,9 @@ namespace Goedel.Protocol.Presentation {
             writer.WriteExtensions(ciphertextExtensions);
             writer.Write(payload);
 
+           
             // encrypt the result and return.
-            return writer.Wrap(RemoteStreamId, MutualKeyOut);
+            return writer.Wrap(destinationStream ?? RemoteStreamId, MutualKeyOut);
             }
 
         /// <summary>

@@ -25,15 +25,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Goedel.Protocol.Presentation;
 using Goedel.Protocol.Service;
+using Goedel.Protocol.Presentation;
 
-namespace Goedel.Mesh.Session {
-    public class MeshHostProvider : Service {
+namespace Goedel.Protocol.Service {
 
+    /// <summary>
+    /// RDP Service provider managing HTTP and UDP listeners using Mesh credentials.
+    /// </summary>
+    public class RdpService : Goedel.Protocol.Service.Service {
 
-        public MeshHostProvider(Credential credential, List<Provider> providers, int maxCores = 0) : 
-                    base (new MeshListener(credential), providers, maxCores) {
+        /// <summary>
+        /// Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
+        /// </summary>
+        /// <param name="credential">The responder credential</param>
+        /// <param name="providers">The services to be served.</param>
+        /// <param name="maxCores">Maximum number of dispatch threads.</param>
+        /// <remarks>Constructor returns after the service has been started and listener threads 
+        /// initialized.</remarks>
+        public RdpService(Credential credential, List<Provider> providers, int maxCores = 0) : 
+                    base (new RdpListener(credential), providers, maxCores) {
             }
 
 

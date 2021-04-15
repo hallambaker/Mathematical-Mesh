@@ -30,6 +30,9 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public abstract class Credential {
 
+        public abstract KeyPairAdvanced AuthenticationPublic { get; }
+
+
         /// <summary>
         /// Generate a set of ephemerals for the supported algorithms to offer for 
         /// key agreement and add to <paramref name="extensions"/>.
@@ -109,6 +112,11 @@ namespace Goedel.Protocol.Presentation {
                 List<KeyPairAdvanced> ephemerals,
                 string keyId);
 
+
+
+        public abstract SessionResponder GetTemporaryResponder(
+                    Listener listener,
+                    Packet packetRequest);
 
         }
 

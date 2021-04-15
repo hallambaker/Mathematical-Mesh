@@ -55,7 +55,7 @@
     </None>
     <None Update="PacketSchema.yaschema">
       <LastGenOutput>PacketSchema.cs</LastGenOutput>
-      <Generator>Constant</Generator>
+      <Generator>yaschema</Generator>
     </None>   
   </ItemGroup>
   

@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 using Goedel.Protocol;
-using Goedel.Protocol.Service;
+//using Goedel.Protocol.Service;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
@@ -30,13 +30,15 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Goedel.Mesh.Session {
+namespace Goedel.Protocol.Presentation {
+
+
 
     /// <summary>
     /// This class contains some material that should move to Goedel.Protocol.Presentation
     /// and some that should go to Goedel.Mesh. 
     /// </summary>
-    public class MeshSession : SessionInitiator, IJpcSession {
+    public class RdpConnection : SessionInitiator, IJpcSession {
 
         #region // Properties
 
@@ -63,12 +65,12 @@ namespace Goedel.Mesh.Session {
         #endregion
         #region // Constructors
 
-        public MeshSession(Credential clientCredential, string domain,
-                    string protocol, string instance = null,
-                    PresentationType presentationTypes = PresentationType.All) {
+        public RdpConnection(Credential clientCredential, string domain,
+                    string instance = null, PresentationType presentationTypes = PresentationType.All,
+                    string protocol = null) {
 
             Domain = domain;
-            Protocol = protocol;
+            Protocol = protocol ?? Constants.ProtocolIdRud;
             Instance = instance;
             CredentialSelf = clientCredential;
 
@@ -83,7 +85,6 @@ namespace Goedel.Mesh.Session {
 
         #endregion
         #region // Implement Inteface IJpcSession
-
 
         public JsonObject Initialize(
                 string tag,
@@ -146,51 +147,12 @@ namespace Goedel.Mesh.Session {
 
             PacketChallenge.Dump();
 
-            
-
-
-
-            //switch (sourceId.Value) {
-            //    case (byte)PlaintextPacketType.HostChallenge: {
-            //        PacketChallenge  = ProcessChallenge(responseData, offset);
-            //        break;
-            //        }
-
-            //    case (byte)PlaintextPacketType.HostComplete: {
-            //        // This can't happen at the moment as we don't have a credential to send out.
-                    
-            //        throw new NYI();
-            //        //break;
-            //        }
-
-            //    }
-
-
-            //var packet = Parse
-
-
 
             var response = PacketChallenge ?.Payload == null || PacketChallenge .Payload.Length == 0 ? null :
                             ParsePayload(PacketChallenge .Payload);
 
             return response;
             }
-
-
-
-
-        /////<inheritdoc/>
-        //public override void AddEphemerals(byte[] destinationId, List<PacketExtension> extensions) =>
-        //            CredentialSelf.AddEphemerals( extensions, ref ephemeralsOffered);
-
-        /////<inheritdoc/>
-        //public override void MutualKeyExchange(string keyId) {
-
-        //    // reconstitute the ephemeral from the stream id.
-
-        //    var (privateEphemeral, publickey) = ClientCredential.SelectKey(ephemeralsOffered, keyId);
-        //    MutualKeyExchange(privateEphemeral, publickey);
-        //    }
 
         public Packet ProcessChallenge(byte[] packet, int offset) {
 
@@ -284,16 +246,23 @@ namespace Goedel.Mesh.Session {
         #endregion
         #region // Override Methods
 
-
         public Task<byte[]> Transact(byte[] payload) =>
                     WebClient.UploadDataTaskAsync(Uri, payload);
-            
-
-
-
 
         #endregion
         #region // Methods
+
+
+        /// <summary>
+        /// Return a client bound to the connection via the relevant protocol
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetClient<T>() where T : JpcClientInterface, new() => new() {
+            JpcSession = this
+            };
+
+
         #endregion
         }
     }

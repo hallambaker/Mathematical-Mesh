@@ -34,7 +34,7 @@ PresentationConstants.cs : PresentationConstants.constant
 	constant PresentationConstants.constant  /cs  PresentationConstants.cs
 
 PacketSchema.cs : PacketSchema.yaschema 
-	constant PacketSchema.yaschema  /cs  PacketSchema.cs
+	yaschema PacketSchema.yaschema  /cs  PacketSchema.cs
 
 
 

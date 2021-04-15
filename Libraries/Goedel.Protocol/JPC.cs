@@ -95,6 +95,10 @@ namespace Goedel.Protocol {
             get;
             }
 
+
+
+
+
         /// <summary>
         /// The active JpcSession.
         /// </summary>		

@@ -42,7 +42,8 @@ namespace Goedel.Protocol.Service {
 
         private UdpClient[] udpListeners;
 
-        public Listener FredListener;
+        ///<summary>The RDP Listener.</summary> 
+        public Listener Listener;
 
 
 
@@ -102,13 +103,14 @@ namespace Goedel.Protocol.Service {
         /// <summary>
         /// Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
         /// </summary>
+        /// <param name="rdpListener">The RDP listener layer.</param>
         /// <param name="providers">The services to be served.</param>
         /// <param name="maxCores">Maximum number of dispatch threads.</param>
         /// <remarks>Constructor returns after the service has been started and listener threads 
         /// initialized.</remarks>
-        public Service(Listener fredListener, List<Provider> providers, int maxCores = 0) {
+        public Service(Listener rdpListener, List<Provider> providers, int maxCores = 0) {
 
-            FredListener = fredListener;
+            Listener = rdpListener;
 
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;

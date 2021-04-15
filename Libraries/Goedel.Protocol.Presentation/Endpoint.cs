@@ -6,11 +6,27 @@ using Goedel.Discovery;
 using Goedel.Utilities;
 using Goedel.Cryptography;
 
-namespace Goedel.Protocol.Service {
+namespace Goedel.Protocol.Presentation {
 
 #pragma warning disable CS1591
 #pragma warning disable CS1572
 #pragma warning disable CS1573
+
+
+    public enum PresentationType {
+
+        ///<summary>HTTP/Fred binding.</summary> 
+        Http = 0b001,
+
+        ///<summary>UDP/Fred binding.</summary> 
+        Udp = 0b010,
+
+
+        ///<summary>All supported provider types.</summary> 
+        All = Http | Udp
+
+        }
+
 
     /// <summary>
     /// Record describing a listener endpoint.

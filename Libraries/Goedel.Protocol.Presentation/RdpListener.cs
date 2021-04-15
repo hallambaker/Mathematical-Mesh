@@ -19,34 +19,27 @@
 //  THE SOFTWARE.
 
 using Goedel.Cryptography;
-using Goedel.Protocol.Presentation;
+//using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Goedel.Mesh.Session {
-    public class MeshListener : Listener {
+namespace Goedel.Protocol.Presentation {
 
+    /// <summary>
+    /// RDP Listener class, accepts connections from multiple sources and passes them to
+    /// the specified service.
+    /// </summary>
+    public class RdpListener : Listener {
 
-
-        public const string ChallengeTag = "Challenge";
-
-        public MeshListener(Credential credential) : base(credential) {
+        /// <summary>
+        /// Base constructor, populate the common properties.
+        /// </summary>
+        /// <param name="credential">The credential used by the listener.</param>
+        public RdpListener(Credential credential) : base(credential) {
             }
-
-
-        public override SessionInitiator GetConnectionClient(
-                    PortId destinationId,
-                    byte[] payload = null,
-                    Credential hostCredential = null) => throw new NotImplementedException();
-
-
-
-
-
-        public override void Reject(Packet packetRequest, byte[] payload = null) => throw new NotImplementedException();
 
 
         SessionResponder sessionResponderChallenge = null;
@@ -56,23 +49,23 @@ namespace Goedel.Mesh.Session {
             Packet packetRequest) => sessionResponderChallenge ??
                     new MeshSessionResponder(this).CacheValue(out sessionResponderChallenge);
 
-
+        ///<inheritdoc/>
         public override List<PacketExtension> MakeChallenge(
                 Packet packetRequest,
                 byte[] payload = null) {
             var bytes = Platform.GetRandomBytes(16);
             var challenge = new PacketExtension() {
-                Tag = ChallengeTag,
+                Tag = Constants.ExtensionChallengeNonce,
                 Value = bytes
                 };
             return new List<PacketExtension> { challenge };
             }
 
-
+        ///<inheritdoc/>
         public override bool VerifyChallenge(
                 Packet packetRequest) => true;
 
-
+        ///<inheritdoc/>
         public override SessionResponder Accept(
                 Packet packetRequest) {
 
@@ -89,10 +82,6 @@ namespace Goedel.Mesh.Session {
                 default: {
                     throw new NYI();
                     }
-                //case PacketClientExchange packetClientExchange: {
-                //    responder.CompleteClientComplete(packetClientExchange);
-                //    break;
-                //    }
                 }
 
             // register the responder.    

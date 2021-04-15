@@ -56,7 +56,9 @@ File PresentationConstants
 		Description
 			|
 
-
+	Code ProtocolIdRud "RUD"
+		Description
+			|
 	Code StreamId "SID"
 		Description
 			|

@@ -110,7 +110,7 @@ namespace Goedel.Protocol.Presentation {
 
 
         ///<summary>Proof of work challenge</summary> 
-        public const string ExtensionChallengeNonce = "NONCE";
+        public const string ExtensionChallengeNonce = "Challenge";
 
         ///<summary>Proof of work challenge</summary> 
         public const string ExtensionChallengePOW = "POW";

@@ -202,6 +202,9 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.TagKeyResponderInitiator">
             <summary>ResponderInitiator</summary>
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ProtocolIdRud">
+            <summary>RUD</summary>
+        </member>
         <member name="F:Goedel.Protocol.Presentation.Constants.StreamId">
             <summary>SID</summary>
         </member>
@@ -286,6 +289,27 @@
             perform a key agreement against.</param>
             <returns>The ephemeral private key and credential public key.</returns>
         </member>
+        <member name="F:Goedel.Protocol.Presentation.PresentationType.Http">
+            <summary>HTTP/Fred binding.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PresentationType.Udp">
+            <summary>UDP/Fred binding.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PresentationType.All">
+            <summary>All supported provider types.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.Endpoint">
+            <summary>
+            Record describing a listener endpoint.
+            </summary>
+            <param name="Protocol">Directory to store persistence data.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Endpoint.#ctor(System.String,System.String)">
+            <summary>
+            Record describing a listener endpoint.
+            </summary>
+            <param name="Protocol">Directory to store persistence data.</param>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.PortId">
             <summary>
             Port identifier. Specifies an IP address and port number.
@@ -333,18 +357,6 @@
             </summary>
             <param name="credentialSelf">The credential used by the listener.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.GetConnectionClient(Goedel.Protocol.Presentation.PortId,System.Byte[],Goedel.Protocol.Presentation.Credential)">
-            <summary>
-            Request establishment of a client connection to the endpoint 
-            <paramref name="destinationId"/> 
-            </summary>
-            <param name="destinationId">The endpoint to connect to.</param>
-            <param name="payload">Optional payload. Note that this is sent enclair if
-            <paramref name="hostCredential"/> is null.</param>
-            <param name="hostCredential">The host credential. If not null, the payload 
-            is sent encrypted under this credential.</param>
-            <returns></returns>
-        </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.MakeChallenge(Goedel.Protocol.Presentation.Packet,System.Byte[])">
             <summary>
             Create a challenge value over the packet <paramref name="packetRequest"/> and
@@ -375,13 +387,6 @@
             Defer creation of a host connection by sending a challenge to the source.
             </summary>
             <param name="packetRequest">Parsed inbound request packet.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.Reject(Goedel.Protocol.Presentation.Packet,System.Byte[])">
-            <summary>
-            Refuse an inbound connection.
-            </summary>
-            <param name="packetRequest">Parsed inbound request packet.</param>
-            <param name="payload">Optional payload response. This is always returned enclair.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientInitial(System.Byte[],System.Int32,System.Int32)">
             <summary>
@@ -422,6 +427,28 @@
             <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.MeshSessionResponder.SourceId">
+            <summary>The source Id to be used by this responder when returning packets.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.MeshSessionResponder.AddChallenge(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Add a challenge value over the current state to <paramref name="extensions"/>
+            </summary>
+            <param name="extensions">List of extensions to add the ephemerals to.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.MeshSessionResponder.#ctor(Goedel.Protocol.Presentation.Listener,Goedel.Protocol.Presentation.Packet)">
+            <summary>
+            Constructor, create a responder connection for <paramref name="listener"/>
+            </summary>
+            <param name="listener">The listener managing the connection.</param>
+            <param name="packetIn">The received packet.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.MeshSessionResponder.AddEphemerals(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.MeshSessionResponder.MutualKeyExchange(System.String)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.Presentation.NamespaceDoc">
             <summary>
@@ -1148,6 +1175,108 @@
         <member name="F:Goedel.Protocol.Presentation.ExtensionTags.Unknown">
             <summary>Undefined type</summary>
         </member>
+        <member name="T:Goedel.Protocol.Presentation.RdpConnection">
+            <summary>
+            This class contains some material that should move to Goedel.Protocol.Presentation
+            and some that should go to Goedel.Mesh. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpConnection.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpConnection.Post(System.String,Goedel.Protocol.JsonObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpConnection.GetClient``1">
+            <summary>
+            Return a client bound to the connection via the relevant protocol
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.RdpListener">
+            <summary>
+            RDP Listener class, accepts connections from multiple sources and passes them to
+            the specified service.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpListener.#ctor(Goedel.Protocol.Presentation.Credential)">
+            <summary>
+            Base constructor, populate the common properties.
+            </summary>
+            <param name="credential">The credential used by the listener.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpListener.GetTemporaryResponder(Goedel.Protocol.Presentation.Packet)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpListener.MakeChallenge(Goedel.Protocol.Presentation.Packet,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpListener.VerifyChallenge(Goedel.Protocol.Presentation.Packet)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpListener.Accept(Goedel.Protocol.Presentation.Packet)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.RdpStream">
+            <summary>
+            An RDP Stream
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.RdpStream.RdpConnection">
+            <summary>The underlying connection</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.RdpStream.ChildStreams">
+            <summary>The child streams formed from this stream that MAY be rekeyed under this.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.RdpStream.LocalStreamId">
+            <summary>The local stream Id, this is generated localy and MAY contain hidden structure.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpStream.ForwardSecrecy(System.Boolean)">
+            <summary>
+            Perform a forward secrecy operation on the stream. If <paramref name="recurse"/> is
+            true, the child streams will be marked to perform a rekey operation.
+            </summary>
+            <param name="recurse"></param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpStream.MakeStreamClient(Goedel.Protocol.Presentation.Credential)">
+            <summary>
+            Request creation of a transactional stream in the client role.
+            </summary>
+            <param name="credential">Optional additional credential to be presented.</param>
+            <returns>The created stream.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpStream.MakeStreamSender(Goedel.Protocol.Presentation.Credential)">
+            <summary>
+            Request creation of an asynchronous stream in the sender role.
+            </summary>
+            <param name="credential">Optional additional credential to be presented.</param>
+            <returns>The created stream.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpStream.MakeStreamService(Goedel.Protocol.Presentation.TransactionPostDelegate)">
+            <summary>
+            Request creation of a transactional stream in the server role
+            </summary>
+            <param name="transactionPostDelegate">Optional delegate to be called when a request is received.</param>
+            <returns>The created stream.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpStream.MakeStreamReceiver(Goedel.Protocol.Presentation.AsynchronousReceiveDelegate)">
+            <summary>
+            Request creation of an asynchronous stream in the receiver role.
+            </summary>
+            <param name="asynchronousReceiveDelegate">Optional delegate to be called when data is received.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RdpStream.Flush">
+            <summary>
+            Cause queued requests to be flushed.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.RdpStreamClient">
+            <summary>
+            The client side of an RDP transactional stream.
+            </summary>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.Session">
             <summary>
             Base class for presentation connections.
@@ -1245,10 +1374,11 @@
             <param name="length">The minimum length to return.</param>
             <returns>The Quantized length.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Session.SerializePacketData(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Int32,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Session.SerializePacketData(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Int32,System.Byte[],System.Int32,System.Byte[])">
             <summary>
             Serialize and mutually encrypt a data packet.
             </summary>
+            <param name="destinationStream">The remote stream identifier.</param>
             <param name="payload"></param>
             <param name="ciphertextExtensions"></param>
             <param name="packetSize">The number of bytes in the packet to be created.</param>

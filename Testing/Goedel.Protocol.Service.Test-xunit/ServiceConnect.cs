@@ -23,7 +23,7 @@ namespace Goedel.XUnit {
 
 
         public const string Domain = "localhost";
-        public string Protocol => testProvider.GetWellKnown;
+        //public string Protocol => ServiceManagementService.WellKnown;
         public const string Instance = "69";
 
         ServiceManagementService testProvider;
@@ -39,12 +39,14 @@ namespace Goedel.XUnit {
             var provider = new Provider(testProvider, PresentationType.All, Domain, Instance);
 
             var providers = new List<Provider> { provider };
-            using var server = new Goedel.Mesh.Session.MeshHostProvider(hostCredential, providers);
+            using var server = new Goedel.Protocol.Service.RdpService(hostCredential, providers);
 
 
-            var meshServiceBinding = new MeshSession(clientCredential, Domain, Protocol, Instance, PresentationType.Http);
+            var meshServiceBinding = new RdpConnection(clientCredential, Domain, Instance,
+                        PresentationType.Http, ServiceManagementService.WellKnown);
             meshServiceBinding.Initialize(null, null);
 
+            //var x = ServiceManagementServiceClient.WellKnown;
 
             var clientAlice = new ServiceManagementServiceClient() {
                 JpcSession = meshServiceBinding
@@ -63,6 +65,30 @@ namespace Goedel.XUnit {
 
             }
 
+        [Fact]
+        public void TestMeshMultiService() {
+
+
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+
+            var clientCredential = GetInitiatorCredential();
+            var hostCredential = GetResponderCredential();
+
+            var meshService = testEnvironmentCommon.MeshService;
+            var meshProvider = new Provider(testProvider, PresentationType.All, Domain, Instance);
+
+            testProvider = new TestServiceStatus();
+            var provider = new Provider(testProvider, PresentationType.All, Domain, Instance);
+
+            var providers = new List<Provider> { meshProvider, provider };
+
+
+
+
+            var Connection = new RdpConnection(clientCredential, Domain, Instance, PresentationType.Http);
+            var statusClient = Connection.GetClient<ServiceManagementServiceClient>();
+            var meshClient = Connection.GetClient<MeshServiceClient>();
+            }
         [Fact]
 
         public void TestCreateAccount() {
@@ -86,8 +112,15 @@ namespace Goedel.XUnit {
 
             return contextUser;
             }
+        [Fact]
 
+        public void TestMultipleServices() {
 
+            // create a Mesh client
+            // create a status client to same endpoint.
+
+            throw new NYI();
+            }
 
         [Fact]
 

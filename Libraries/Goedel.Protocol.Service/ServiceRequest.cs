@@ -90,7 +90,7 @@ namespace Goedel.Protocol.Service {
 
         PlaintextPacketType responsePacket;
 
-        Listener Listener => Service.FredListener;
+        Listener Listener => Service.Listener;
 
         Packet packetClient;
 
@@ -231,9 +231,6 @@ namespace Goedel.Protocol.Service {
 
             }
 
-
-        void ProcessDispatch() {
-            }
 
 
         /// <summary>

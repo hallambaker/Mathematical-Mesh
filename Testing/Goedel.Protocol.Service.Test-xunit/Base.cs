@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Goedel.Mesh.Test;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Server;
+using Goedel.Mesh.Session;
 using Xunit;
 using Goedel.Cryptography.Dare;
 
@@ -19,36 +20,36 @@ namespace Goedel.XUnit {
 
 
 
-    public partial class TestPresentationGeneric {
+    //public partial class TestPresentationGeneric {
 
-        public virtual Credential GetInitiatorCredential() => new TestCredential();
-        public virtual Credential GetResponderCredential() => new TestCredential();
+    //    public virtual Credential GetInitiatorCredential() => new TestCredential();
+    //    public virtual Credential GetResponderCredential() => new TestCredential();
 
-        public static TestPresentationGeneric Test() => new();
+    //    public static TestPresentationGeneric Test() => new();
 
-        static TestPresentationGeneric() => _ = Goedel.Cryptography.Core.Initialization.Initialized;
-
-
-
-        //[Fact]
-        //public void TestService() {
-        //    var TestEnvironmentCommon = new TestEnvironmentCommon();
+    //    static TestPresentationGeneric() => _ = Goedel.Cryptography.Core.Initialization.Initialized;
 
 
-        //    var testService = new TestService(TestEnvironmentCommon);
 
-        //    }
-
-
-        byte[] MakePayload(int size = 100) => new byte[size];
+    //    //[Fact]
+    //    //public void TestService() {
+    //    //    var TestEnvironmentCommon = new TestEnvironmentCommon();
 
 
-        }
+    //    //    var testService = new TestService(TestEnvironmentCommon);
+
+    //    //    }
+
+
+    //    byte[] MakePayload(int size = 100) => new byte[size];
+
+
+    //    }
     public partial class TestPresentationMesh : TestPresentationGeneric {
 
         public string DeviceAliceAdmin = "Alice Admin";
         static string AccountAlice = "alice@example.com";
-        static string AccountMallet= "mallet@example.com";
+        static string AccountMallet = "mallet@example.com";
 
         public ContextUser ContextInitiator { get; }
 
@@ -63,8 +64,8 @@ namespace Goedel.XUnit {
         public MeshCredential InitiatorCredential { get; }
 
         public MeshCredential ResponderCredential { get; }
-        public override Credential GetInitiatorCredential() => InitiatorCredential;
-        public override Credential GetResponderCredential() => ResponderCredential;
+        public  Credential GetInitiatorCredential() => InitiatorCredential;
+        public  Credential GetResponderCredential() => ResponderCredential;
 
 
         public static new TestPresentationMesh Test() => new();

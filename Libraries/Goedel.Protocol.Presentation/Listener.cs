@@ -77,12 +77,6 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Dictionary mapping inbound source Ids to sessions.</summary> 
         public Dictionary<StreamId, SessionResponder> DictionarySessionsInbound = new();
 
-        /////<summary>Dictionary mapping outbound source Ids to sessions.</summary>       
-        //public Dictionary<StreamId, Session> DictionarySessionsOutbound = new();
-
-
-
-
         /// <summary>
         /// Base constructor, populate the common properties.
         /// </summary>
@@ -92,21 +86,6 @@ namespace Goedel.Protocol.Presentation {
         
         
         #endregion
-
-        /// <summary>
-        /// Request establishment of a client connection to the endpoint 
-        /// <paramref name="destinationId"/> 
-        /// </summary>
-        /// <param name="destinationId">The endpoint to connect to.</param>
-        /// <param name="payload">Optional payload. Note that this is sent enclair if
-        /// <paramref name="hostCredential"/> is null.</param>
-        /// <param name="hostCredential">The host credential. If not null, the payload 
-        /// is sent encrypted under this credential.</param>
-        /// <returns></returns>
-        public abstract SessionInitiator GetConnectionClient(
-                    PortId destinationId,
-                    byte[] payload = null,
-                    Credential hostCredential = null);
 
         /// <summary>
         /// Create a challenge value over the packet <paramref name="packetRequest"/> and
@@ -128,10 +107,6 @@ namespace Goedel.Protocol.Presentation {
         public abstract bool VerifyChallenge(
             Packet packetRequest);
 
-
-
-
-
         /// <summary>
         /// Accept the inbound connection request described in <paramref name="packetRequest"/>.
         /// </summary>
@@ -141,11 +116,6 @@ namespace Goedel.Protocol.Presentation {
         public abstract SessionResponder Accept(
                     Packet packetRequest);
 
-
-
-
-
-
         /// <summary>
         /// Defer creation of a host connection by sending a challenge to the source.
         /// </summary>
@@ -153,16 +123,6 @@ namespace Goedel.Protocol.Presentation {
         public virtual SessionResponder GetTemporaryResponder(
                     Packet packetRequest) => throw new NYI();
 
-
-
-        /// <summary>
-        /// Refuse an inbound connection.
-        /// </summary>
-        /// <param name="packetRequest">Parsed inbound request packet.</param>
-        /// <param name="payload">Optional payload response. This is always returned enclair.</param>
-        public abstract void Reject(
-                    Packet packetRequest,
-                    byte[] payload = null);
 
 
         }
