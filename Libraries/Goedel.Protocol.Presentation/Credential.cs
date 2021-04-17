@@ -114,7 +114,7 @@ namespace Goedel.Protocol.Presentation {
 
 
 
-        public abstract SessionResponder GetTemporaryResponder(
+        public abstract ConnectionResponder GetTemporaryResponder(
                     Listener listener,
                     Packet packetRequest);
 

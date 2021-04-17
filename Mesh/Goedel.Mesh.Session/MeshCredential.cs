@@ -33,13 +33,13 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace Goedel.Mesh.Session {
+namespace Goedel.Mesh.Credential {
 
     /// <summary>
     /// JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
     /// assertion).
     /// </summary>
-    public class MeshCredential : Credential {
+    public class MeshCredential : Goedel.Protocol.Presentation.Credential {
 
         ///<summary>Extension tag identifying a Mesh credential.</summary> 
         public const string CredentialTag = "MMM";
@@ -105,7 +105,7 @@ namespace Goedel.Mesh.Session {
             }
 
         ///<inheritdoc/>
-        public override SessionResponder GetTemporaryResponder(
+        public override ConnectionResponder GetTemporaryResponder(
                     Listener listener,
                     Packet packetRequest) =>
                     new MeshSessionResponder(listener, packetRequest);
@@ -155,7 +155,7 @@ namespace Goedel.Mesh.Session {
             }
 
         ///<inheritdoc/>
-        public override Credential GetCredentials(
+        public override Goedel.Protocol.Presentation.Credential GetCredentials(
                     List<PacketExtension> extensions) {
             foreach (var extension in extensions) {
                 if (extension.Tag == CredentialTag) {

@@ -42,10 +42,10 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
-        SessionResponder sessionResponderChallenge = null;
+        ConnectionResponder sessionResponderChallenge = null;
 
         ///<inheritdoc/>
-        public override SessionResponder GetTemporaryResponder(
+        public override ConnectionResponder GetTemporaryResponder(
             Packet packetRequest) => sessionResponderChallenge ??
                     new MeshSessionResponder(this).CacheValue(out sessionResponderChallenge);
 
@@ -66,7 +66,7 @@ namespace Goedel.Protocol.Presentation {
                 Packet packetRequest) => true;
 
         ///<inheritdoc/>
-        public override SessionResponder Accept(
+        public override ConnectionResponder Accept(
                 Packet packetRequest) {
 
 

@@ -20,7 +20,7 @@
 
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
-namespace Goedel.Mesh.Session {
+namespace Goedel.Mesh.Credential {
     /// <summary>
     /// Desctiption of the 
     /// </summary>

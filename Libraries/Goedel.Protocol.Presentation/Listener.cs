@@ -75,7 +75,7 @@ namespace Goedel.Protocol.Presentation {
         #region // Constructors
 
         ///<summary>Dictionary mapping inbound source Ids to sessions.</summary> 
-        public Dictionary<StreamId, SessionResponder> DictionarySessionsInbound = new();
+        public Dictionary<StreamId, ConnectionResponder> DictionarySessionsInbound = new();
 
         /// <summary>
         /// Base constructor, populate the common properties.
@@ -113,14 +113,14 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packetRequest">Parsed inbound request packet.</param>
         /// <returns>The host connection. This may be used to wait for inbound requests from the 
         /// connection.</returns>
-        public abstract SessionResponder Accept(
+        public abstract ConnectionResponder Accept(
                     Packet packetRequest);
 
         /// <summary>
         /// Defer creation of a host connection by sending a challenge to the source.
         /// </summary>
         /// <param name="packetRequest">Parsed inbound request packet.</param>
-        public virtual SessionResponder GetTemporaryResponder(
+        public virtual ConnectionResponder GetTemporaryResponder(
                     Packet packetRequest) => throw new NYI();
 
 

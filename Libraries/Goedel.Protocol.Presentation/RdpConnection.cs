@@ -38,31 +38,12 @@ namespace Goedel.Protocol.Presentation {
     /// This class contains some material that should move to Goedel.Protocol.Presentation
     /// and some that should go to Goedel.Mesh. 
     /// </summary>
-    public class RdpConnection : SessionInitiator, IJpcSession {
-
-        #region // Properties
-
-        public VerifiedAccount VerifiedAccount { get; }
-
-        public string Domain { get; }
-        public string Protocol { get; }
-        public string Instance { get; }
-
-        public bool Connected { get; private set; } = false;
-
-        public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON;
-
-        public string Uri { get; }
-
-        public Packet PacketChallenge;
-
-        WebClient WebClient { get; set; }
+    public class RdpConnection : ConnectionInitiator //, IJpcSession 
+        {
 
 
-        ///<inheritdoc/>
-        protected override void Disposing() => WebClient?.Dispose();
 
-        #endregion
+
         #region // Constructors
 
         public RdpConnection(Credential clientCredential, string domain,
@@ -163,18 +144,14 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
+        public StreamId GetStreamId() => StreamId.GetStreamId();
 
-        ///<inheritdoc/>
-        public JsonObject Post(
-                string tag,
-                JsonObject request) {
+        // this bit need to go to the STREAM part...
 
-            // Serialize request
-            byte[] span = null;
-            if (request != null) {
-                span = SerializePayload(tag, request, out var stream);
-                }
 
+
+
+        public Packet Post(byte[] span, List<PacketExtension> ciphertextExtensions=null) {
             byte[] encoded;
             if (Connected) {
                 //var (buffer, offset) =  InitializeBuffer(span.Length);
@@ -184,10 +161,10 @@ namespace Goedel.Protocol.Presentation {
             else {
                 var buffer = new byte[Constants.MinimumPacketSize];
 
-                var ciphertextExtensions = new List<PacketExtension> {
-                    LocalStreamId.PacketExtension };
+                ciphertextExtensions ??= new List<PacketExtension>();
+                ciphertextExtensions.Add(LocalStreamId.PacketExtension);
                 encoded = SerializeClientCompleteDeferred(
-                    LocalStreamId.GetValue(), PacketChallenge.SourceId,span,
+                    LocalStreamId.GetValue(), PacketChallenge.SourceId, span,
                     ciphertextExtensions: ciphertextExtensions, buffer: buffer);
                 }
 
@@ -205,13 +182,8 @@ namespace Goedel.Protocol.Presentation {
                 GetSourceId(packet as PacketData);
                 }
 
-            JsonObject response = null;
-            if (packet?.Payload.Length > 0) {
-                response = JsonObject.From(packet.Payload);
-                }
-            return response;
+            return packet;
             }
-
 
         void GetSourceId(PacketData packet) {
             RemoteStreamId = PacketExtension.GetExtensionByTag(packet?.CiphertextExtensions,
@@ -250,19 +222,6 @@ namespace Goedel.Protocol.Presentation {
                     WebClient.UploadDataTaskAsync(Uri, payload);
 
         #endregion
-        #region // Methods
 
-
-        /// <summary>
-        /// Return a client bound to the connection via the relevant protocol
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public T GetClient<T>() where T : JpcClientInterface, new() => new() {
-            JpcSession = this
-            };
-
-
-        #endregion
         }
     }

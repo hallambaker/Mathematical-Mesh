@@ -182,7 +182,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Management", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.Presentation", "Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj", "{2F4E3947-E0BE-4B27-BFC1-0541C8CA7B23}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Session", "Mesh\Goedel.Mesh.Session\Goedel.Mesh.Session.csproj", "{D6B2C355-C735-482C-9A30-60C709DA39A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Credential", "Mesh\Goedel.Mesh.Session\Goedel.Mesh.Credential.csproj", "{D6B2C355-C735-482C-9A30-60C709DA39A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -31,9 +31,8 @@ namespace Goedel.Mesh.Test {
             var meshServiceBinding = new RdpConnection(meshCredential, Domain, Instance, PresentationType.Http, Protocol);
             meshServiceBinding.Initialize(null, null);
 
-            var client = new MeshServiceClient() {
-                JpcSession = meshServiceBinding
-                };
+            var client = meshServiceBinding.GetClient<MeshServiceClient>();
+
 
             return client;
             }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Goedel.Mesh.Session</name>
+        <name>Goedel.Mesh.Credential</name>
     </assembly>
     <members>
         <member name="T:Goedel.Mesh.Session.TBS">
@@ -36,68 +36,68 @@
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Session.MeshCredential">
+        <member name="T:Goedel.Mesh.Credential.MeshCredential">
             <summary>
             JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
             assertion).
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Session.MeshCredential.CredentialTag">
+        <member name="F:Goedel.Mesh.Credential.MeshCredential.CredentialTag">
             <summary>Extension tag identifying a Mesh credential.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Session.MeshCredential.Profile">
+        <member name="P:Goedel.Mesh.Credential.MeshCredential.Profile">
             <summary>The profile to which this credential is bound</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Session.MeshCredential.Connection">
+        <member name="P:Goedel.Mesh.Credential.MeshCredential.Connection">
             <summary>The connection binding the device presenting the credential to 
-            <see cref="P:Goedel.Mesh.Session.MeshCredential.Profile"/></summary> 
+            <see cref="P:Goedel.Mesh.Credential.MeshCredential.Profile"/></summary> 
         </member>
-        <member name="P:Goedel.Mesh.Session.MeshCredential.AuthenticationPublic">
+        <member name="P:Goedel.Mesh.Credential.MeshCredential.AuthenticationPublic">
             <summary>The public authentication key.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.#ctor">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.#ctor">
             <summary>
             Default constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.#ctor(System.Byte[])">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.#ctor(System.Byte[])">
             <summary>
             Create a Mesh credential from public key data described in <paramref name="data"/>
             </summary>
             <param name="data">JSON-B encoded connection credential.</param>
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.#ctor(Goedel.Mesh.Connection,Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.#ctor(Goedel.Mesh.Connection,Goedel.Cryptography.KeyPair)">
             <summary>
             Create a credential for the connection <paramref name="connection"/>.
             </summary>
             <param name="connection">The user context used to construct this credential</param>
             <param name="authenticationPrivate">The authentication private key.</param>
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.GetTemporaryResponder(Goedel.Protocol.Presentation.Listener,Goedel.Protocol.Presentation.Packet)">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.GetTemporaryResponder(Goedel.Protocol.Presentation.Listener,Goedel.Protocol.Presentation.Packet)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.AddCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.AddCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.SelectKey(System.String,System.Byte[])">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.SelectKey(System.String,System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.SelectKey">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.SelectKey">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Session.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
+        <member name="M:Goedel.Mesh.Credential.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
             <inheritdoc/>
         </member>
-        <member name="T:Goedel.Mesh.Session.NamespaceDoc">
+        <member name="T:Goedel.Mesh.Credential.NamespaceDoc">
             <summary>
             Desctiption of the 
             </summary>

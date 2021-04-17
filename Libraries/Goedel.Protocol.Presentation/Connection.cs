@@ -28,7 +28,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Base class for presentation connections.
     /// </summary>
-    public abstract class Session : Disposable {
+    public abstract class Connection : Disposable {
 
         #region // Properties
 

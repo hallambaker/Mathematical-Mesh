@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Goedel.Mesh.Test;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Server;
-using Goedel.Mesh.Session;
+using Goedel.Mesh.Credential;
 using Xunit;
 using Goedel.Cryptography.Dare;
 
@@ -53,7 +53,7 @@ namespace Goedel.XUnit {
 
         public ContextUser ContextInitiator { get; }
 
-        public Connection ConnectionInnitiator => ContextInitiator.Connection;
+        public Mesh.Connection ConnectionInnitiator => ContextInitiator.Connection;
         public ProfileUser ProfileInitiator => ContextInitiator.ProfileUser;
 
 

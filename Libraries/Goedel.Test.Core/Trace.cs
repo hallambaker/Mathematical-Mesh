@@ -2,7 +2,7 @@
 using Goedel.Utilities;
 using Goedel.Mesh.Client;
 using Goedel.Mesh;
-using Goedel.Mesh.Session;
+using Goedel.Mesh.Credential;
 using Goedel.Cryptography;
 using System.Collections.Generic;
 using Goedel.Protocol.Presentation;
@@ -180,7 +180,7 @@ namespace Goedel.Test.Core {
             }
 
 
-        public MeshCredentialTraced(Connection connection,
+        public MeshCredentialTraced(Mesh.Connection connection,
                     KeyPair authenticationPrivate) : base(connection, authenticationPrivate) {
             }
 

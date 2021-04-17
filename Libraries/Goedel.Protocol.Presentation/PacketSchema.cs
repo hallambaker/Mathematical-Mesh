@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/8/2021 1:07:32 PM
+//  This file was automatically generated at 4/15/2021 5:25:38 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  yaschema version 3.0.0.703
+//  Generator:  yaschema version 3.0.0.704
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -49,7 +49,7 @@ namespace Goedel.Protocol.Presentation {
 	/// <summary>
     /// Client connection class. Tracks the state of a client connection.
     /// </summary>
-    public partial class  SessionInitiator : Session {
+    public partial class  ConnectionInitiator : Connection {
 
 
         // Serialize Client packet ClientInitial
@@ -372,7 +372,7 @@ namespace Goedel.Protocol.Presentation {
 
 		}
 
-    public partial class SessionResponder : Session {
+    public partial class ConnectionResponder : Connection {
 
         // Serialize Host packet HostExchange
 
@@ -414,7 +414,7 @@ namespace Goedel.Protocol.Presentation {
 
             // Mezzanine
             var mezanineWriter = new PacketWriterAesGcm(outerWriter.RemainingSpace);
-            mezanineWriter.WriteExtensions(plaintextExtensionsIn);
+            mezanineWriter.WriteExtensions(mezanineExtensionsIn);
             mezanineWriter.Write(sourceId);
             mezanineWriter.Write(payload);
             outerWriter.Encrypt(ClientKeyOut, mezanineWriter);
@@ -546,7 +546,7 @@ namespace Goedel.Protocol.Presentation {
             MutualKeyExchange (out var ephemeral, out var clientKeyId);
             mezanineWriter.Write (clientKeyId);
             mezanineWriter.Write (ephemeral);
-            mezanineWriter.WriteExtensions(plaintextExtensionsIn);
+            mezanineWriter.WriteExtensions(mezanineExtensionsIn);
             // Encrypted inside Mezzanine
             var innerWriter = new PacketWriter(mezanineWriter.RemainingSpace);
             innerWriter.WriteExtensions(ciphertextExtensions);

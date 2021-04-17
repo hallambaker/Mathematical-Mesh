@@ -24,7 +24,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Presentation host connection. Tracks the state of a host connection.
     /// </summary>
-    public abstract partial class SessionResponder : Session {
+    public abstract partial class ConnectionResponder : Connection {
         ///<inheritdoc/> 
         public override byte[] ClientKeyIn => ClientKeyClientToHost;
         ///<inheritdoc/>
@@ -50,7 +50,7 @@ namespace Goedel.Protocol.Presentation {
         /// Constructor for a connection host instance connected to <paramref name="listener"/>
         /// </summary>
         /// <param name="listener">The listener this connection is to service.</param>
-        public SessionResponder(Listener listener)  {
+        public ConnectionResponder(Listener listener)  {
             Listener = listener;
             CredentialSelf = Listener?.CredentialSelf;
             }

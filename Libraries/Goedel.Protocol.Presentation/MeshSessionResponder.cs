@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Goedel.Protocol.Presentation {
-    public class MeshSessionResponder : SessionResponder {
+    public class MeshSessionResponder : ConnectionResponder {
 
 
         ///<summary>The source Id to be used by this responder when returning packets.</summary> 

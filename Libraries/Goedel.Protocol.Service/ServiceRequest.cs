@@ -101,7 +101,7 @@ namespace Goedel.Protocol.Service {
 
 
             var (sourceId, offset) = StreamId.GetSourceId(Buffer);
-            SessionResponder sessionResponder=null;
+            ConnectionResponder sessionResponder=null;
 
             sessionResponder = (PlaintextPacketType)sourceId.Value switch {
                 PlaintextPacketType.ClientInitial => ProcessClientInitial(),
@@ -177,17 +177,17 @@ namespace Goedel.Protocol.Service {
 
 
 
-        SessionResponder ProcessClientInitial() {
+        ConnectionResponder ProcessClientInitial() {
             responsePacket = PlaintextPacketType.HostChallenge;
             packetClient = Listener.ParseClientInitial(Buffer, Constants.SizeReservedInitialStreamId, 
                 Count- Constants.SizeReservedInitialStreamId);
             return Listener.GetTemporaryResponder(packetClient); ;
             }
-        SessionResponder ProcessClientComplete() {
+        ConnectionResponder ProcessClientComplete() {
             responsePacket = PlaintextPacketType.Data;
             throw new NYI();
             }
-        SessionResponder ProcessClientData(StreamId SourceId, int offset) {
+        ConnectionResponder ProcessClientData(StreamId SourceId, int offset) {
 
             // identify the source connection
 
@@ -206,10 +206,10 @@ namespace Goedel.Protocol.Service {
 
             }
 
-        SessionResponder ProcessClientExchange() {
+        ConnectionResponder ProcessClientExchange() {
             throw new NYI();
             }
-        SessionResponder ProcessClientCompleteDeferred(int offset) {
+        ConnectionResponder ProcessClientCompleteDeferred(int offset) {
 
             packetClient = Listener.ParseClientCompleteDeferred(Buffer, offset, Count-offset);
             // verify the challenge here

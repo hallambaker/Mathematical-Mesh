@@ -48,9 +48,7 @@ namespace Goedel.XUnit {
 
             //var x = ServiceManagementServiceClient.WellKnown;
 
-            var clientAlice = new ServiceManagementServiceClient() {
-                JpcSession = meshServiceBinding
-                };
+            var clientAlice = meshServiceBinding.GetClient<ServiceManagementServiceClient>();
 
 
             var request = new ServiceStatusRequest();

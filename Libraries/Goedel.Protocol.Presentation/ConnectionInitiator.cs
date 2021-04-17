@@ -19,6 +19,8 @@
 //  THE SOFTWARE.
 
 using System.Threading.Tasks;
+using System.Net;
+
 
 namespace Goedel.Protocol.Presentation {
 
@@ -26,7 +28,9 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Presentation client connection. Tracks the state of a client connection.
     /// </summary>
-    public abstract partial class SessionInitiator : Session {
+    public abstract partial class ConnectionInitiator : Connection {
+
+        #region // Properties
         ///<inheritdoc/>
         public override byte[] ClientKeyIn => ClientKeyHostToClient;
         ///<inheritdoc/>
@@ -39,6 +43,62 @@ namespace Goedel.Protocol.Presentation {
         public override Credential HostCredential => CredentialOther;
         ///<inheritdoc/>
         public override Credential ClientCredential => CredentialSelf;
+
+
+        ///<summary>The verified account.</summary> 
+        public VerifiedAccount VerifiedAccount { get; set; }
+
+        ///<summary>The connection domain.</summary> 
+        public string Domain { get; set; }
+        public string Protocol { get; set; }
+        public string Instance { get; set; }
+
+        ///<summary>If true, the connection is connected to the remote endpoint.</summary> 
+        public bool Connected { get; protected set; } = false;
+
+        ///<summary>The object encoding for use in the connection</summary> 
+        public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON;
+
+        ///<summary>Reusable packet challenge</summary> 
+        public Packet PacketChallenge;
+
+
+        public RdpStream RdpStreamInitial { get; set; }
+
+
+        public string Uri { get; set; }
+
+
+
+        protected WebClient WebClient { get; set; }
+
+
+        ///<inheritdoc/>
+        protected override void Disposing() => WebClient?.Dispose();
+
+
+        #endregion
+
+
+
+
+        #region // Methods
+
+
+        /// <summary>
+        /// Return a client bound to the connection via the relevant protocol
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetClient<T>(Credential credential=null) where T : JpcClientInterface, new() {
+
+            var sessionStream = RdpStreamInitial.MakeStreamClient(credential);
+            return new() {
+                JpcSession = sessionStream
+                };
+            }
+
+        #endregion
 
         }
 
