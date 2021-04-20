@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 4/16/2021 2:39:54 PM
+//  This file was automatically generated at 4/19/2021 11:32:56 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -23,28 +23,32 @@ namespace Goedel.Protocol.Presentation {
 
 
     ///<summary>Inbound spool message state</summary>
-    public enum ClientInitial {
-        ///<summary>Undefined type</summary>
-        Unknown = -1,
-        ///<summary>Initial contact message without key exchange</summary>
-        ClientInitialHello = 1,
-        ///<summary>Initial contact message with key exchange</summary>
-        ClientInitialExchange = 2,
-        ///<summary>Error response</summary>
-        PacketError = 3        }
-
-    ///<summary>Host response messages</summary>
-    public enum HostMessageTags {
+    public enum InitiatorMessageType {
         ///<summary>Undefined type</summary>
         Unknown = -1,
         ///<summary>Host exchange message</summary>
-        TagHostExchange = 1,
+        Error = 0,
+        ///<summary>Data message</summary>
+        Data = 1,
+        ///<summary>Initial contact message without key exchange</summary>
+        InitiatorHello = 2,
+        ///<summary>Initial contact message with key exchange</summary>
+        InitiatorExchange = 3,
+        ///<summary>Initial contact message with key exchange</summary>
+        InitiatorComplete = 4        }
+
+    ///<summary>Host response messages</summary>
+    public enum ResponderMessageType {
+        ///<summary>Undefined type</summary>
+        Unknown = -1,
+        ///<summary>Host exchange message</summary>
+        Error = 0,
+        ///<summary>Host exchange message</summary>
+        Data = 1,
+        ///<summary>Host exchange message</summary>
+        ResponderChallenge = 2,
         ///<summary>Host challenge type 1</summary>
-        TagHostChallenge1 = 2,
-        ///<summary>Host challenge type 2</summary>
-        TagHostChallenge2 = 3,
-        ///<summary>Host exchange completetion</summary>
-        TagHostComplete = 4        }
+        ResponderComplete = 3        }
 
     ///<summary>Response error codes</summary>
     public enum ErrorCodes {
@@ -63,10 +67,61 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The service is unavailable</summary>
         ServiceUnavailable = 503        }
 
+    ///<summary>Stream and packet encryption options</summary>
+    public enum EncryptionOptions {
+        ///<summary>Undefined type</summary>
+        Unknown = -1,
+        ///<summary>AESGCM</summary>
+        AesGcm,
+        ///<summary>AESCFB</summary>
+        AesCfb,
+        ///<summary>AESheader</summary>
+        EncryptPacketHeader,
+        ///<summary>OTSIDr</summary>
+        RequireOneTimeId        }
+
     ///<summary>Presentation extension tags</summary>
     public enum ExtensionTags {
         ///<summary>Undefined type</summary>
-        Unknown = -1        }
+        Unknown = -1,
+        ///<summary>X448</summary>
+        X448,
+        ///<summary>PKIXC</summary>
+        PkixX509,
+        ///<summary>PKIXO</summary>
+        PkixOcsp,
+        ///<summary>MMMP</summary>
+        MeshProfile,
+        ///<summary>MMMC</summary>
+        MeshConnection,
+        ///<summary>SID</summary>
+        StreamId,
+        ///<summary>OTSID</summary>
+        OneTimeStreamId,
+        ///<summary>Challenge</summary>
+        Challenge,
+        ///<summary>ProofOfWork</summary>
+        ChallengeProofOfWork,
+        ///<summary>Refuse</summary>
+        Refuse,
+        ///<summary>Unknown</summary>
+        NotKnown,
+        ///<summary>Authorize</summary>
+        Authorize,
+        ///<summary>Encrypt</summary>
+        Encrypt,
+        ///<summary>Close</summary>
+        CloseStream,
+        ///<summary>CloseConnection</summary>
+        CloseConnection,
+        ///<summary>Client</summary>
+        StreamClient,
+        ///<summary>Service</summary>
+        StreamService,
+        ///<summary>Sender</summary>
+        StreamSender,
+        ///<summary>Receive</summary>
+        StreamReceiver        }
 
 
     ///<summary>
@@ -84,9 +139,9 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static ClientInitial ToClientInitial (this string text) =>
+        public static InitiatorMessageType ToInitiatorMessageType (this string text) =>
             text switch {
-                _ => ClientInitial.Unknown
+                _ => InitiatorMessageType.Unknown
                 };
 
         /// <summary>
@@ -95,7 +150,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="data">The enumerated value.</param>
         /// <returns>The text value.</returns>
-        public static string ToLabel (this ClientInitial data) =>
+        public static string ToLabel (this InitiatorMessageType data) =>
             data switch {
                 _ => null
                 };
@@ -108,9 +163,9 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static HostMessageTags ToHostMessageTags (this string text) =>
+        public static ResponderMessageType ToResponderMessageType (this string text) =>
             text switch {
-                _ => HostMessageTags.Unknown
+                _ => ResponderMessageType.Unknown
                 };
 
         /// <summary>
@@ -119,7 +174,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="data">The enumerated value.</param>
         /// <returns>The text value.</returns>
-        public static string ToLabel (this HostMessageTags data) =>
+        public static string ToLabel (this ResponderMessageType data) =>
             data switch {
                 _ => null
                 };
@@ -157,10 +212,85 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>RUD</summary>
         public const string ProtocolIdRud = "ProtocolIdRud";
 
-        ///<summary>SID</summary>
-        public const string StreamId = "StreamId";
+
+        ///<summary>Jose enumeration tag for EncryptionOptions.AesGcm</summary>
+        public const string  EncryptionOptionsAesGcmTag = "AesGcm";
+        ///<summary>Jose enumeration tag for EncryptionOptions.AesCfb</summary>
+        public const string  EncryptionOptionsAesCfbTag = "AesCfb";
+        ///<summary>Jose enumeration tag for EncryptionOptions.EncryptPacketHeader</summary>
+        public const string  EncryptionOptionsEncryptPacketHeaderTag = "EncryptPacketHeader";
+        ///<summary>Jose enumeration tag for EncryptionOptions.RequireOneTimeId</summary>
+        public const string  EncryptionOptionsRequireOneTimeIdTag = "RequireOneTimeId";
+
+        /// <summary>
+        /// Convert the string <paramref name="text"/> to the corresponding enumeration
+        /// value.
+        /// </summary>
+        /// <param name="text">The string to convert.</param>
+        /// <returns>The enumeration value.</returns>
+        public static EncryptionOptions ToEncryptionOptions (this string text) =>
+            text switch {
+                EncryptionOptionsAesGcmTag => EncryptionOptions.AesGcm,
+                EncryptionOptionsAesCfbTag => EncryptionOptions.AesCfb,
+                EncryptionOptionsEncryptPacketHeaderTag => EncryptionOptions.EncryptPacketHeader,
+                EncryptionOptionsRequireOneTimeIdTag => EncryptionOptions.RequireOneTimeId,
+                _ => EncryptionOptions.Unknown
+                };
+
+        /// <summary>
+        /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+        /// value.
+        /// </summary>
+        /// <param name="data">The enumerated value.</param>
+        /// <returns>The text value.</returns>
+        public static string ToLabel (this EncryptionOptions data) =>
+            data switch {
+                EncryptionOptions.AesGcm => EncryptionOptionsAesGcmTag,
+                EncryptionOptions.AesCfb => EncryptionOptionsAesCfbTag,
+                EncryptionOptions.EncryptPacketHeader => EncryptionOptionsEncryptPacketHeaderTag,
+                EncryptionOptions.RequireOneTimeId => EncryptionOptionsRequireOneTimeIdTag,
+                _ => null
+                };
 
 
+        ///<summary>Jose enumeration tag for ExtensionTags.X448</summary>
+        public const string  ExtensionTagsX448Tag = "X448";
+        ///<summary>Jose enumeration tag for ExtensionTags.PkixX509</summary>
+        public const string  ExtensionTagsPkixX509Tag = "PkixX509";
+        ///<summary>Jose enumeration tag for ExtensionTags.PkixOcsp</summary>
+        public const string  ExtensionTagsPkixOcspTag = "PkixOcsp";
+        ///<summary>Jose enumeration tag for ExtensionTags.MeshProfile</summary>
+        public const string  ExtensionTagsMeshProfileTag = "MeshProfile";
+        ///<summary>Jose enumeration tag for ExtensionTags.MeshConnection</summary>
+        public const string  ExtensionTagsMeshConnectionTag = "MeshConnection";
+        ///<summary>Jose enumeration tag for ExtensionTags.StreamId</summary>
+        public const string  ExtensionTagsStreamIdTag = "StreamId";
+        ///<summary>Jose enumeration tag for ExtensionTags.OneTimeStreamId</summary>
+        public const string  ExtensionTagsOneTimeStreamIdTag = "OneTimeStreamId";
+        ///<summary>Jose enumeration tag for ExtensionTags.Challenge</summary>
+        public const string  ExtensionTagsChallengeTag = "Challenge";
+        ///<summary>Jose enumeration tag for ExtensionTags.ChallengeProofOfWork</summary>
+        public const string  ExtensionTagsChallengeProofOfWorkTag = "ChallengeProofOfWork";
+        ///<summary>Jose enumeration tag for ExtensionTags.Refuse</summary>
+        public const string  ExtensionTagsRefuseTag = "Refuse";
+        ///<summary>Jose enumeration tag for ExtensionTags.NotKnown</summary>
+        public const string  ExtensionTagsNotKnownTag = "NotKnown";
+        ///<summary>Jose enumeration tag for ExtensionTags.Authorize</summary>
+        public const string  ExtensionTagsAuthorizeTag = "Authorize";
+        ///<summary>Jose enumeration tag for ExtensionTags.Encrypt</summary>
+        public const string  ExtensionTagsEncryptTag = "Encrypt";
+        ///<summary>Jose enumeration tag for ExtensionTags.CloseStream</summary>
+        public const string  ExtensionTagsCloseStreamTag = "CloseStream";
+        ///<summary>Jose enumeration tag for ExtensionTags.CloseConnection</summary>
+        public const string  ExtensionTagsCloseConnectionTag = "CloseConnection";
+        ///<summary>Jose enumeration tag for ExtensionTags.StreamClient</summary>
+        public const string  ExtensionTagsStreamClientTag = "StreamClient";
+        ///<summary>Jose enumeration tag for ExtensionTags.StreamService</summary>
+        public const string  ExtensionTagsStreamServiceTag = "StreamService";
+        ///<summary>Jose enumeration tag for ExtensionTags.StreamSender</summary>
+        public const string  ExtensionTagsStreamSenderTag = "StreamSender";
+        ///<summary>Jose enumeration tag for ExtensionTags.StreamReceiver</summary>
+        public const string  ExtensionTagsStreamReceiverTag = "StreamReceiver";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -170,6 +300,25 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The enumeration value.</returns>
         public static ExtensionTags ToExtensionTags (this string text) =>
             text switch {
+                ExtensionTagsX448Tag => ExtensionTags.X448,
+                ExtensionTagsPkixX509Tag => ExtensionTags.PkixX509,
+                ExtensionTagsPkixOcspTag => ExtensionTags.PkixOcsp,
+                ExtensionTagsMeshProfileTag => ExtensionTags.MeshProfile,
+                ExtensionTagsMeshConnectionTag => ExtensionTags.MeshConnection,
+                ExtensionTagsStreamIdTag => ExtensionTags.StreamId,
+                ExtensionTagsOneTimeStreamIdTag => ExtensionTags.OneTimeStreamId,
+                ExtensionTagsChallengeTag => ExtensionTags.Challenge,
+                ExtensionTagsChallengeProofOfWorkTag => ExtensionTags.ChallengeProofOfWork,
+                ExtensionTagsRefuseTag => ExtensionTags.Refuse,
+                ExtensionTagsNotKnownTag => ExtensionTags.NotKnown,
+                ExtensionTagsAuthorizeTag => ExtensionTags.Authorize,
+                ExtensionTagsEncryptTag => ExtensionTags.Encrypt,
+                ExtensionTagsCloseStreamTag => ExtensionTags.CloseStream,
+                ExtensionTagsCloseConnectionTag => ExtensionTags.CloseConnection,
+                ExtensionTagsStreamClientTag => ExtensionTags.StreamClient,
+                ExtensionTagsStreamServiceTag => ExtensionTags.StreamService,
+                ExtensionTagsStreamSenderTag => ExtensionTags.StreamSender,
+                ExtensionTagsStreamReceiverTag => ExtensionTags.StreamReceiver,
                 _ => ExtensionTags.Unknown
                 };
 
@@ -181,6 +330,25 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The text value.</returns>
         public static string ToLabel (this ExtensionTags data) =>
             data switch {
+                ExtensionTags.X448 => ExtensionTagsX448Tag,
+                ExtensionTags.PkixX509 => ExtensionTagsPkixX509Tag,
+                ExtensionTags.PkixOcsp => ExtensionTagsPkixOcspTag,
+                ExtensionTags.MeshProfile => ExtensionTagsMeshProfileTag,
+                ExtensionTags.MeshConnection => ExtensionTagsMeshConnectionTag,
+                ExtensionTags.StreamId => ExtensionTagsStreamIdTag,
+                ExtensionTags.OneTimeStreamId => ExtensionTagsOneTimeStreamIdTag,
+                ExtensionTags.Challenge => ExtensionTagsChallengeTag,
+                ExtensionTags.ChallengeProofOfWork => ExtensionTagsChallengeProofOfWorkTag,
+                ExtensionTags.Refuse => ExtensionTagsRefuseTag,
+                ExtensionTags.NotKnown => ExtensionTagsNotKnownTag,
+                ExtensionTags.Authorize => ExtensionTagsAuthorizeTag,
+                ExtensionTags.Encrypt => ExtensionTagsEncryptTag,
+                ExtensionTags.CloseStream => ExtensionTagsCloseStreamTag,
+                ExtensionTags.CloseConnection => ExtensionTagsCloseConnectionTag,
+                ExtensionTags.StreamClient => ExtensionTagsStreamClientTag,
+                ExtensionTags.StreamService => ExtensionTagsStreamServiceTag,
+                ExtensionTags.StreamSender => ExtensionTagsStreamSenderTag,
+                ExtensionTags.StreamReceiver => ExtensionTagsStreamReceiverTag,
                 _ => null
                 };
 

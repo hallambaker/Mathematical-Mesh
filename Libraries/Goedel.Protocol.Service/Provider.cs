@@ -59,14 +59,14 @@ namespace Goedel.Protocol.Service {
         /// <param name="instance">The instance specifier</param>
         public Provider(
                     JpcInterface jpcProvider, 
-                    PresentationType presentationTypes,
+                    TransportType presentationTypes,
                     string domain, 
                     string instance = null) {
             JpcInterface = jpcProvider;
-            if ((presentationTypes & PresentationType.Http) > 0) {
+            if ((presentationTypes & TransportType.Http) > 0) {
                 HTTPEndpoints.Add(new HttpEndpoint(domain, jpcProvider.GetWellKnown, instance));
                 }
-            if ((presentationTypes & PresentationType.Udp) > 0) {
+            if ((presentationTypes & TransportType.Udp) > 0) {
                 UdpEndpoints.Add(new UdpEndpoint(domain, instance));
                 }
             }

@@ -49,14 +49,14 @@ namespace Goedel.Protocol.Presentation {
 
 
         readonly static byte[] ClientCompleteDeferred = 
-            ((ulong) PlaintextPacketType.ClientCompleteDeferred).BigEndian();
+            ((ulong)InitiatorMessageType.InitiatorExchange).BigEndian();
 
-        readonly static byte[] ClientComplete =
-            ((ulong)PlaintextPacketType.ClientComplete).BigEndian();
+        //readonly static byte[] ClientComplete =
+        //    ((ulong)PlaintextPacketType.ClientComplete).BigEndian();
 
         ///<summary>Factory method, creates a packet extension wrapping the stream identifier.</summary> 
         public PacketExtension PacketExtension => new() {
-            Tag = Constants.StreamId,
+            Tag = Constants.ExtensionTagsStreamIdTag,
             Value = Value.BigEndian ()
             };
 

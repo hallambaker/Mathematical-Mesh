@@ -36,15 +36,15 @@ namespace Goedel.XUnit {
 
 
             testProvider = new TestServiceStatus();
-            var provider = new Provider(testProvider, PresentationType.All, Domain, Instance);
+            var provider = new Provider(testProvider, TransportType.All, Domain, Instance);
 
             var providers = new List<Provider> { provider };
             using var server = new Goedel.Protocol.Service.RdpService(hostCredential, providers);
 
 
-            var meshServiceBinding = new RdpConnection(clientCredential, Domain, Instance,
-                        PresentationType.Http, ServiceManagementService.WellKnown);
-            meshServiceBinding.Initialize(null, null);
+            var meshServiceBinding = new ConnectionInitiator(clientCredential, Domain, Instance,
+                        TransportType.Http);
+            //meshServiceBinding.Initialize(null, null);
 
             //var x = ServiceManagementServiceClient.WellKnown;
 
@@ -73,19 +73,43 @@ namespace Goedel.XUnit {
             var hostCredential = GetResponderCredential();
 
             var meshService = testEnvironmentCommon.MeshService;
-            var meshProvider = new Provider(testProvider, PresentationType.All, Domain, Instance);
 
             testProvider = new TestServiceStatus();
-            var provider = new Provider(testProvider, PresentationType.All, Domain, Instance);
+
+            var meshProvider = new Provider(meshService, TransportType.All, Domain, Instance);
+            var provider = new Provider(testProvider, TransportType.All, Domain, Instance);
 
             var providers = new List<Provider> { meshProvider, provider };
 
+            using var server = new Goedel.Protocol.Service.RdpService(hostCredential, providers);
 
 
+            var Connection = new ConnectionInitiator(clientCredential, Domain, Instance, TransportType.Http);
+            //Connection.Initialize(null, null);
 
-            var Connection = new RdpConnection(clientCredential, Domain, Instance, PresentationType.Http);
+
             var statusClient = Connection.GetClient<ServiceManagementServiceClient>();
             var meshClient = Connection.GetClient<MeshServiceClient>();
+
+            // no messages sent out until here where we initialize the stream and the protocol at
+            // the same time.
+            var helloRequest = new HelloRequest() { };
+            var response1 = meshClient.Hello(helloRequest);
+
+            // An ordinary request
+            var response2 = meshClient.Hello(helloRequest);
+
+            // Try to start a different service 
+            var serviceStatusRequest = new ServiceStatusRequest() { };
+            var response3 = statusClient.ServiceStatus(serviceStatusRequest);
+
+            // Another ordinary request
+            var response4 = meshClient.Hello(helloRequest);
+
+            // An ordinary request on the new client.
+            var response5 = statusClient.ServiceStatus(serviceStatusRequest);
+
+
             }
         [Fact]
 

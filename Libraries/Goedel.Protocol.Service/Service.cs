@@ -140,7 +140,7 @@ namespace Goedel.Protocol.Service {
             foreach (var provider in providers) {    
                 foreach (var endpoint in provider.HTTPEndpoints) {
                     var uri = endpoint.GetUri();
-                    //Screen.WriteLine($"Connect to URI {uri}");
+                    Screen.WriteLine($"Connect to URI {uri}");
                     httpListener.Prefixes.Add(uri);
                     providerMap.Add(uri, provider);
                     }

@@ -28,8 +28,8 @@ namespace Goedel.Mesh.Test {
         public override MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) {
             StartService();
 
-            var meshServiceBinding = new RdpConnection(meshCredential, Domain, Instance, PresentationType.Http, Protocol);
-            meshServiceBinding.Initialize(null, null);
+            var meshServiceBinding = new ConnectionInitiator(meshCredential, Domain, Instance, TransportType.Http, Protocol);
+            //meshServiceBinding.Initialize(null, null);
 
             var client = meshServiceBinding.GetClient<MeshServiceClient>();
 

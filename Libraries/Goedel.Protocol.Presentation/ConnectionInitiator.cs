@@ -19,8 +19,8 @@
 //  THE SOFTWARE.
 
 using System.Threading.Tasks;
-using System.Net;
 
+using System.Net;
 
 namespace Goedel.Protocol.Presentation {
 
@@ -28,7 +28,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Presentation client connection. Tracks the state of a client connection.
     /// </summary>
-    public abstract partial class ConnectionInitiator : Connection {
+    public partial class ConnectionInitiator : Connection {
 
         #region // Properties
         ///<inheritdoc/>
@@ -50,11 +50,9 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>The connection domain.</summary> 
         public string Domain { get; set; }
-        public string Protocol { get; set; }
         public string Instance { get; set; }
 
-        ///<summary>If true, the connection is connected to the remote endpoint.</summary> 
-        public bool Connected { get; protected set; } = false;
+
 
         ///<summary>The object encoding for use in the connection</summary> 
         public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON;
@@ -66,18 +64,49 @@ namespace Goedel.Protocol.Presentation {
         public RdpStream RdpStreamInitial { get; set; }
 
 
-        public string Uri { get; set; }
+        ///<summary>The Web Client</summary> 
+        public WebClient WebClient { get; set; }
 
 
+        #endregion
+        #region // Constructors
 
-        protected WebClient WebClient { get; set; }
+        /// <summary>
+        /// Return an instance of a client connecting to host <paramref name="domain"/> using
+        /// device credential <paramref name="initiatorCredential"/> with client protocol binding
+        /// <paramref name="protocol"/>.
+        /// </summary>
+        /// <param name="initiatorCredential">The device credential of the initiator</param>
+        /// <param name="domain">The domain of the responder being connected to.</param>
+        /// <param name="instance"></param>
+        /// <param name="transportTypes">The transport types.</param>
+        /// <param name="protocol">The service protocol to return a client stream for.</param>
+        public ConnectionInitiator (
+                    Credential initiatorCredential, 
+                    string domain,
+                    string instance = null, 
+                    TransportType transportTypes = TransportType.All,
+                    string protocol=null) {
+
+            Domain = domain;
+            Instance = instance;
+            CredentialSelf = initiatorCredential;
+            WebClient = new WebClient();
+
+            RdpStreamInitial = new RdpStreamClient(null, protocol, CredentialSelf, this) {
+                StreamState = StreamState.Initial
+                };
+            }
+
+
+        #endregion
+
 
 
         ///<inheritdoc/>
         protected override void Disposing() => WebClient?.Dispose();
 
 
-        #endregion
 
 
 

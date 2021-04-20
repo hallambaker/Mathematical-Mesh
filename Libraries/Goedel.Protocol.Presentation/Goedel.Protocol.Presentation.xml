@@ -247,9 +247,9 @@
             <typeparam name="T"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeClientInitial(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorHello(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
-            Create a serialised packet of type ClientInitial packet.
+            Create a serialised packet of type InitiatorHello packet.
             </summary>
             <param name="sourceId">The source identifier.</param>
             <param name="destinationId">The destination identifier.</param>
@@ -260,24 +260,9 @@
             <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeClientExchange(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorExchange(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
-            Create a serialised packet of type ClientExchange packet.
-            </summary>
-            <param name="sourceId">The source identifier.</param>
-            <param name="destinationId">The destination identifier.</param>
-            <param name="payload">The payload data.</param>
-            <param name="plaintextExtensionsIn">Additional extensions to be presented 
-            in the plaintext segment.</param>
-            <param name="mezanineExtensionsIn">Additional extensions to be presented
-            in the mezzanine segment.</param>
-            <param name="buffer">Buffer provided by caller</param>
-            <param name="position">Offset within packet at which first byte is to be written.</param>
-            <returns>The serialized data.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeClientComplete(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
-            <summary>
-            Create a serialised packet of type ClientComplete packet.
+            Create a serialised packet of type InitiatorExchange packet.
             </summary>
             <param name="sourceId">The source identifier.</param>
             <param name="destinationId">The destination identifier.</param>
@@ -286,15 +271,13 @@
             in the plaintext segment.</param>
             <param name="mezanineExtensionsIn">Additional extensions to be presented
             in the mezzanine segment.</param>
-            <param name="ciphertextExtensions">Additional extensions to be presented 
-            in the encrypted segment.</param>
             <param name="buffer">Buffer provided by caller</param>
             <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeClientCompleteDeferred(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorComplete(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
-            Create a serialised packet of type ClientCompleteDeferred packet.
+            Create a serialised packet of type InitiatorComplete packet.
             </summary>
             <param name="sourceId">The source identifier.</param>
             <param name="destinationId">The destination identifier.</param>
@@ -309,9 +292,9 @@
             <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.ParseHostExchange(System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.ParseResponderChallenge(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> as a HostExchange packet.
+            Parse the packet <paramref name="packet"/> as a ResponderChallenge packet.
             </summary>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
@@ -319,29 +302,9 @@
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.ParseHostChallenge1(System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.ParseResponderComplete(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> as a HostChallenge1 packet.
-            </summary>
-            <param name="packet">The packet data</param>
-            <param name="position">Start position at which reading of the packet should start.</param>
-            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
-            If less than 0, <paramref name="packet"/> is read to the end.</param>
-            <returns>The parsed packet.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.ParseHostChallenge2(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Parse the packet <paramref name="packet"/> as a HostChallenge2 packet.
-            </summary>
-            <param name="packet">The packet data</param>
-            <param name="position">Start position at which reading of the packet should start.</param>
-            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
-            If less than 0, <paramref name="packet"/> is read to the end.</param>
-            <returns>The parsed packet.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.ParseHostComplete(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Parse the packet <paramref name="packet"/> as a HostComplete packet.
+            Parse the packet <paramref name="packet"/> as a ResponderComplete packet.
             </summary>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
@@ -440,36 +403,6 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.ByteKeyResponderInitiator">
             <summary>The KDF info tag to be used to derive keys.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionChallengeNonce">
-            <summary>Proof of work challenge</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionChallengePOW">
-            <summary>Proof of work challenge</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionPkixX509">
-            <summary>PKIX Certificate</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionPkixOcsp">
-            <summary>PKIX OCSP Token</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionMeshProfile">
-            <summary>Mesh Profile</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionMeshConnection">
-            <summary>Mesh Connection</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.TagHostExchange">
-            <summary></summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.TagHostChallenge1">
-            <summary></summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.TagHostChallenge2">
-            <summary></summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.TagHostComplete">
-            <summary></summary> 
-        </member>
         <member name="M:Goedel.Protocol.Presentation.Constants.Derive(System.Byte[],System.Byte[]@,System.Byte[]@,System.Byte[]@)">
             <summary>
             Using the primary key <paramref name="ikm"/> and generated nonce <paramref name="nonce"/>,
@@ -493,7 +426,7 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.ZeroArray">
             <summary>Obsolete, remove</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToClientInitial(System.String)">
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToInitiatorMessageType(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
             value.
@@ -501,7 +434,7 @@
             <param name="text">The string to convert.</param>
             <returns>The enumeration value.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.ClientInitial)">
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.InitiatorMessageType)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.
@@ -509,7 +442,7 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToHostMessageTags(System.String)">
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToResponderMessageType(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
             value.
@@ -517,7 +450,7 @@
             <param name="text">The string to convert.</param>
             <returns>The enumeration value.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.HostMessageTags)">
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.ResponderMessageType)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.
@@ -550,8 +483,90 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.ProtocolIdRud">
             <summary>RUD</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.StreamId">
-            <summary>SID</summary>
+        <member name="F:Goedel.Protocol.Presentation.Constants.EncryptionOptionsAesGcmTag">
+            <summary>Jose enumeration tag for EncryptionOptions.AesGcm</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.EncryptionOptionsAesCfbTag">
+            <summary>Jose enumeration tag for EncryptionOptions.AesCfb</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.EncryptionOptionsEncryptPacketHeaderTag">
+            <summary>Jose enumeration tag for EncryptionOptions.EncryptPacketHeader</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.EncryptionOptionsRequireOneTimeIdTag">
+            <summary>Jose enumeration tag for EncryptionOptions.RequireOneTimeId</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToEncryptionOptions(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.EncryptionOptions)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsX448Tag">
+            <summary>Jose enumeration tag for ExtensionTags.X448</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsPkixX509Tag">
+            <summary>Jose enumeration tag for ExtensionTags.PkixX509</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsPkixOcspTag">
+            <summary>Jose enumeration tag for ExtensionTags.PkixOcsp</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsMeshProfileTag">
+            <summary>Jose enumeration tag for ExtensionTags.MeshProfile</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsMeshConnectionTag">
+            <summary>Jose enumeration tag for ExtensionTags.MeshConnection</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamIdTag">
+            <summary>Jose enumeration tag for ExtensionTags.StreamId</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsOneTimeStreamIdTag">
+            <summary>Jose enumeration tag for ExtensionTags.OneTimeStreamId</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsChallengeTag">
+            <summary>Jose enumeration tag for ExtensionTags.Challenge</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsChallengeProofOfWorkTag">
+            <summary>Jose enumeration tag for ExtensionTags.ChallengeProofOfWork</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsRefuseTag">
+            <summary>Jose enumeration tag for ExtensionTags.Refuse</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsNotKnownTag">
+            <summary>Jose enumeration tag for ExtensionTags.NotKnown</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsAuthorizeTag">
+            <summary>Jose enumeration tag for ExtensionTags.Authorize</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsEncryptTag">
+            <summary>Jose enumeration tag for ExtensionTags.Encrypt</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsCloseStreamTag">
+            <summary>Jose enumeration tag for ExtensionTags.CloseStream</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsCloseConnectionTag">
+            <summary>Jose enumeration tag for ExtensionTags.CloseConnection</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamClientTag">
+            <summary>Jose enumeration tag for ExtensionTags.StreamClient</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamServiceTag">
+            <summary>Jose enumeration tag for ExtensionTags.StreamService</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamSenderTag">
+            <summary>Jose enumeration tag for ExtensionTags.StreamSender</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamReceiverTag">
+            <summary>Jose enumeration tag for ExtensionTags.StreamReceiver</summary>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Constants.ToExtensionTags(System.String)">
             <summary>
@@ -733,9 +748,9 @@
             </summary>
             <param name="packetRequest">Parsed inbound request packet.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientInitial(System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseInitiatorHello(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> as a ClientInitial packet.
+            Parse the packet <paramref name="packet"/> as a InitiatorHello packet.
             </summary>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
@@ -743,9 +758,9 @@
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientExchange(System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseInitiatorExchange(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> as a ClientExchange packet.
+            Parse the packet <paramref name="packet"/> as a InitiatorExchange packet.
             </summary>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
@@ -753,19 +768,9 @@
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientComplete(System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.Listener.ParseInitiatorComplete(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Parse the packet <paramref name="packet"/> as a ClientComplete packet.
-            </summary>
-            <param name="packet">The packet data</param>
-            <param name="position">Start position at which reading of the packet should start.</param>
-            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
-            If less than 0, <paramref name="packet"/> is read to the end.</param>
-            <returns>The parsed packet.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.ParseClientCompleteDeferred(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Parse the packet <paramref name="packet"/> as a ClientCompleteDeferred packet.
+            Parse the packet <paramref name="packet"/> as a InitiatorComplete packet.
             </summary>
             <param name="packet">The packet data</param>
             <param name="position">Start position at which reading of the packet should start.</param>
@@ -971,24 +976,9 @@
             Presentation host connection. Tracks the state of a host connection.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.SerializeHostExchange(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.SerializeResponderChallenge(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
-            Create a serialised packet of type HostExchange packet.
-            </summary>
-            <param name="sourceId">The source identifier.</param>
-            <param name="destinationId">The destination identifier.</param>
-            <param name="payload">The payload data.</param>
-            <param name="plaintextExtensionsIn">Additional extensions to be presented 
-            in the plaintext segment.</param>
-            <param name="mezanineExtensionsIn">Additional extensions to be presented
-            in the mezzanine segment.</param>
-            <param name="buffer">Buffer provided by caller</param>
-            <param name="position">Offset within packet at which first byte is to be written.</param>
-            <returns>The serialized data.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.SerializeHostChallenge1(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
-            <summary>
-            Create a serialised packet of type HostChallenge1 packet.
+            Create a serialised packet of type ResponderChallenge packet.
             </summary>
             <param name="sourceId">The source identifier.</param>
             <param name="destinationId">The destination identifier.</param>
@@ -999,22 +989,9 @@
             <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.SerializeHostChallenge2(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.SerializeResponderComplete(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
-            Create a serialised packet of type HostChallenge2 packet.
-            </summary>
-            <param name="sourceId">The source identifier.</param>
-            <param name="destinationId">The destination identifier.</param>
-            <param name="payload">The payload data.</param>
-            <param name="plaintextExtensionsIn">Additional extensions to be presented 
-            in the plaintext segment.</param>
-            <param name="buffer">Buffer provided by caller</param>
-            <param name="position">Offset within packet at which first byte is to be written.</param>
-            <returns>The serialized data.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.SerializeHostComplete(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
-            <summary>
-            Create a serialised packet of type HostComplete packet.
+            Create a serialised packet of type ResponderComplete packet.
             </summary>
             <param name="sourceId">The source identifier.</param>
             <param name="destinationId">The destination identifier.</param>
@@ -1029,12 +1006,7 @@
             <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.CompleteClientComplete(Goedel.Protocol.Presentation.PacketClientComplete)">
-            <summary>
-            Perform key exchanges and complete parsing of the packet
-            </summary>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.CompleteClientCompleteDeferred(Goedel.Protocol.Presentation.PacketClientCompleteDeferred)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.CompleteInitiatorComplete(Goedel.Protocol.Presentation.PacketInitiatorComplete)">
             <summary>
             Perform key exchanges and complete parsing of the packet
             </summary>
@@ -1078,104 +1050,71 @@
             </summary>
             <param name="payload"></param>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketClientInitial">
+        <member name="T:Goedel.Protocol.Presentation.PacketInitiatorHello">
             <summary>
-            Parsed ClientInitial packet
+            Parsed InitiatorHello packet
             </summary>   
         </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketClientExchange">
+        <member name="T:Goedel.Protocol.Presentation.PacketInitiatorExchange">
             <summary>
-            Parsed ClientExchange packet
+            Parsed InitiatorExchange packet
             </summary>   
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientExchange.Reader">
+        <member name="P:Goedel.Protocol.Presentation.PacketInitiatorExchange.Reader">
             <summary>Packet reader used to complete reading of the packet.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientExchange.MezzanineExtensions">
+        <member name="P:Goedel.Protocol.Presentation.PacketInitiatorExchange.MezzanineExtensions">
             <summary>Options specified in the packet mezzanine.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientExchange.ClientEphemeral">
+        <member name="P:Goedel.Protocol.Presentation.PacketInitiatorExchange.ClientEphemeral">
             <summary>Host chosen ephemeral key.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientExchange.HostKeyId">
+        <member name="P:Goedel.Protocol.Presentation.PacketInitiatorExchange.HostKeyId">
             <summary>Client Key Identifier.</summary> 
         </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketClientComplete">
+        <member name="T:Goedel.Protocol.Presentation.PacketInitiatorComplete">
             <summary>
-            Parsed ClientComplete packet
+            Parsed InitiatorComplete packet
             </summary>   
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientComplete.Reader">
+        <member name="P:Goedel.Protocol.Presentation.PacketInitiatorComplete.Reader">
             <summary>Packet reader used to complete reading of the packet.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientComplete.MezzanineExtensions">
+        <member name="P:Goedel.Protocol.Presentation.PacketInitiatorComplete.MezzanineExtensions">
             <summary>Options specified in the packet mezzanine.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientComplete.CiphertextExtensions">
+        <member name="P:Goedel.Protocol.Presentation.PacketInitiatorComplete.CiphertextExtensions">
             <summary>Options specified in the packet ciphertext.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientComplete.ClientKeyId">
-            <summary>Host Key Identifier.</summary> 
-        </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketClientCompleteDeferred">
-            <summary>
-            Parsed ClientCompleteDeferred packet
-            </summary>   
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientCompleteDeferred.Reader">
-            <summary>Packet reader used to complete reading of the packet.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientCompleteDeferred.MezzanineExtensions">
-            <summary>Options specified in the packet mezzanine.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientCompleteDeferred.CiphertextExtensions">
-            <summary>Options specified in the packet ciphertext.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientCompleteDeferred.ClientEphemeral">
+        <member name="P:Goedel.Protocol.Presentation.PacketInitiatorComplete.ClientEphemeral">
             <summary>Host chosen ephemeral key.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientCompleteDeferred.HostKeyId">
+        <member name="P:Goedel.Protocol.Presentation.PacketInitiatorComplete.HostKeyId">
             <summary>Client Key Identifier.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketClientCompleteDeferred.ClientKeyId">
+        <member name="P:Goedel.Protocol.Presentation.PacketInitiatorComplete.ClientKeyId">
             <summary>Host Key Identifier.</summary> 
         </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketHostExchange">
+        <member name="T:Goedel.Protocol.Presentation.PacketResponderChallenge">
             <summary>
-            Parsed HostExchange packet
+            Parsed ResponderChallenge packet
             </summary>   
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketHostExchange.MezzanineExtensions">
+        <member name="T:Goedel.Protocol.Presentation.PacketResponderComplete">
+            <summary>
+            Parsed ResponderComplete packet
+            </summary>   
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PacketResponderComplete.MezzanineExtensions">
             <summary>Options specified in the packet mezzanine.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketHostExchange.HostKeyId">
-            <summary>Client Key Identifier.</summary> 
-        </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketHostChallenge1">
-            <summary>
-            Parsed HostChallenge1 packet
-            </summary>   
-        </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketHostChallenge2">
-            <summary>
-            Parsed HostChallenge2 packet
-            </summary>   
-        </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketHostComplete">
-            <summary>
-            Parsed HostComplete packet
-            </summary>   
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketHostComplete.MezzanineExtensions">
-            <summary>Options specified in the packet mezzanine.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketHostComplete.CiphertextExtensions">
+        <member name="P:Goedel.Protocol.Presentation.PacketResponderComplete.CiphertextExtensions">
             <summary>Options specified in the packet ciphertext.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketHostComplete.HostEphemeral">
+        <member name="P:Goedel.Protocol.Presentation.PacketResponderComplete.HostEphemeral">
             <summary>Client chosen ephemeral key.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketHostComplete.ClientKeyId">
+        <member name="P:Goedel.Protocol.Presentation.PacketResponderComplete.ClientKeyId">
             <summary>Host Key Identifier.</summary> 
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketTag">
@@ -1229,6 +1168,18 @@
             </summary>
             <param name="data">The data item to size.</param>
             <returns>Number of bytes required for the encoding.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(Goedel.Protocol.Presentation.InitiatorMessageType)">
+            <summary>
+            Write InitiatorMessageType as a byte to the packet
+            </summary>
+            <param name="b"></param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(Goedel.Protocol.Presentation.ResponderMessageType)">
+            <summary>
+            Write ResponderMessageType as a byte to the packet
+            </summary>
+            <param name="b"></param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.Byte)">
             <summary>
@@ -1329,38 +1280,44 @@
         <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.Wrap(System.Byte[],System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.ClientInitial">
+        <member name="T:Goedel.Protocol.Presentation.InitiatorMessageType">
             <summary>Inbound spool message state</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientInitial.Unknown">
+        <member name="F:Goedel.Protocol.Presentation.InitiatorMessageType.Unknown">
             <summary>Undefined type</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientInitial.ClientInitialHello">
-            <summary>Initial contact message without key exchange</summary>
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientInitial.ClientInitialExchange">
-            <summary>Initial contact message with key exchange</summary>
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.ClientInitial.PacketError">
-            <summary>Error response</summary>
-        </member>
-        <member name="T:Goedel.Protocol.Presentation.HostMessageTags">
-            <summary>Host response messages</summary>
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.HostMessageTags.Unknown">
-            <summary>Undefined type</summary>
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.HostMessageTags.TagHostExchange">
+        <member name="F:Goedel.Protocol.Presentation.InitiatorMessageType.Error">
             <summary>Host exchange message</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.HostMessageTags.TagHostChallenge1">
+        <member name="F:Goedel.Protocol.Presentation.InitiatorMessageType.Data">
+            <summary>Data message</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.InitiatorMessageType.InitiatorHello">
+            <summary>Initial contact message without key exchange</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.InitiatorMessageType.InitiatorExchange">
+            <summary>Initial contact message with key exchange</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.InitiatorMessageType.InitiatorComplete">
+            <summary>Initial contact message with key exchange</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.ResponderMessageType">
+            <summary>Host response messages</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ResponderMessageType.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ResponderMessageType.Error">
+            <summary>Host exchange message</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ResponderMessageType.Data">
+            <summary>Host exchange message</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ResponderMessageType.ResponderChallenge">
+            <summary>Host exchange message</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ResponderMessageType.ResponderComplete">
             <summary>Host challenge type 1</summary>
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.HostMessageTags.TagHostChallenge2">
-            <summary>Host challenge type 2</summary>
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.HostMessageTags.TagHostComplete">
-            <summary>Host exchange completetion</summary>
         </member>
         <member name="T:Goedel.Protocol.Presentation.ErrorCodes">
             <summary>Response error codes</summary>
@@ -1386,11 +1343,86 @@
         <member name="F:Goedel.Protocol.Presentation.ErrorCodes.ServiceUnavailable">
             <summary>The service is unavailable</summary>
         </member>
+        <member name="T:Goedel.Protocol.Presentation.EncryptionOptions">
+            <summary>Stream and packet encryption options</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.EncryptionOptions.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.EncryptionOptions.AesGcm">
+            <summary>AESGCM</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.EncryptionOptions.AesCfb">
+            <summary>AESCFB</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.EncryptionOptions.EncryptPacketHeader">
+            <summary>AESheader</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.EncryptionOptions.RequireOneTimeId">
+            <summary>OTSIDr</summary>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.ExtensionTags">
             <summary>Presentation extension tags</summary>
         </member>
         <member name="F:Goedel.Protocol.Presentation.ExtensionTags.Unknown">
             <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.X448">
+            <summary>X448</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.PkixX509">
+            <summary>PKIXC</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.PkixOcsp">
+            <summary>PKIXO</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.MeshProfile">
+            <summary>MMMP</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.MeshConnection">
+            <summary>MMMC</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.StreamId">
+            <summary>SID</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.OneTimeStreamId">
+            <summary>OTSID</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.Challenge">
+            <summary>Challenge</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.ChallengeProofOfWork">
+            <summary>ProofOfWork</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.Refuse">
+            <summary>Refuse</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.NotKnown">
+            <summary>Unknown</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.Authorize">
+            <summary>Authorize</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.Encrypt">
+            <summary>Encrypt</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.CloseStream">
+            <summary>Close</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.CloseConnection">
+            <summary>CloseConnection</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.StreamClient">
+            <summary>Client</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.StreamService">
+            <summary>Service</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.StreamSender">
+            <summary>Sender</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.StreamReceiver">
+            <summary>Receive</summary>
         </member>
         <member name="T:Goedel.Protocol.Presentation.RdpConnection">
             <summary>

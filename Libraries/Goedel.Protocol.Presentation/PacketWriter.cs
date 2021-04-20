@@ -78,6 +78,19 @@ namespace Goedel.Protocol.Presentation {
 
 
         /// <summary>
+        /// Write InitiatorMessageType as a byte to the packet
+        /// </summary>
+        /// <param name="b"></param>
+        public void Write(InitiatorMessageType b) => Packet[Position++] = (byte)b;
+
+        /// <summary>
+        /// Write ResponderMessageType as a byte to the packet
+        /// </summary>
+        /// <param name="b"></param>
+        public void Write(ResponderMessageType b) => Packet[Position++] = (byte)b;
+
+
+        /// <summary>
         /// Write a byte to the packet
         /// </summary>
         /// <param name="b"></param>

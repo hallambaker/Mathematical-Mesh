@@ -40,6 +40,24 @@ namespace Goedel.Protocol.Presentation {
     public delegate void AsynchronousReceiveDelegate(DataGram dataGram);
 
 
+    ///<summary>Stream connection states.</summary> 
+    public enum StreamState {
+        ///<summary>No attempt has been made to begin a connection.</summary> 
+        Initial,
+
+        ///<summary>The initiator has contacted the responder and received a challenge back.</summary> 
+        Challenged,
+
+        ///<summary>The initiator has established a connection to the service and is 
+        ///attempting to create a new stream.</summary> 
+        Child,
+
+        ///<summary>The stream is fully connected.</summary> 
+
+        Data
+
+
+        }
 
 
     /// <summary>
@@ -48,17 +66,21 @@ namespace Goedel.Protocol.Presentation {
     public class RdpStream {
         #region // Properties
         ///<summary>The underlying connection</summary> 
-        public virtual RdpConnection RdpConnection { get; }
+        public virtual ConnectionInitiator RdpConnection { get; }
+
+        ///<summary>The state of the stream</summary> 
+        public StreamState StreamState { get; set; }
+
+
 
         ///<summary>The child streams formed from this stream that MAY be rekeyed under this.</summary> 
         public List<RdpStream> ChildStreams;
 
 
-
+        ///<summary>The parent stream from which this one was created. If null, this is 
+        ///the original stream.</summary> 
         public RdpStream RdpStreamParent { get; }
 
-
-        public bool Connected { get; private set; } = false;
 
         public string Protocol;
 
@@ -68,8 +90,13 @@ namespace Goedel.Protocol.Presentation {
         public StreamId LocalStreamId { get; protected set; }
 
 
+        public string Uri;
+
         byte[] RemoteStreamId;
 
+
+        byte[] challengeNonce;
+        byte[] challengePoW;
 
         #endregion
         #region // Constructors
@@ -86,8 +113,11 @@ namespace Goedel.Protocol.Presentation {
                 RdpStream parent,
                 string protocol,
                 Credential credential= null,
-                RdpConnection rdpConnection=null) {
+                ConnectionInitiator rdpConnection=null) {
+            
+            
             Protocol = protocol;
+            Uri = HttpEndpoint.GetUri(RdpConnection.Domain, protocol, RdpConnection.Instance);
 
             if (parent != null) {
                 parent.AddChild(this);
@@ -107,7 +137,7 @@ namespace Goedel.Protocol.Presentation {
         #region // Methods
 
 
-        public JsonObject Post(
+        public async Task<JsonObject> Post(
             string tag,
             JsonObject request) {
 
@@ -117,7 +147,7 @@ namespace Goedel.Protocol.Presentation {
                 span = SerializePayload(tag, request, out var stream);
                 }
 
-            var packet = Post(span);
+            var packet = await PostWeb(span);
 
             JsonObject response = null;
             if (packet?.Payload.Length > 0) {
@@ -126,45 +156,158 @@ namespace Goedel.Protocol.Presentation {
             return response;
             }
 
-        public Packet Post(byte[] span, List<PacketExtension> ciphertextExtensions = null) {
-            byte[] encoded;
-            if (Connected) {
-                //var (buffer, offset) =  InitializeBuffer(span.Length);
-                encoded = RdpConnection.SerializePacketData(span);
+        void InitializeStream(
+                     ref List<PacketExtension> extensions) {
+
+            extensions ??= new List<PacketExtension>();
+            extensions.Add(LocalStreamId.PacketExtension);
+
+            string streamType = this switch {
+                RdpStreamClient => Constants.ExtensionTagsStreamClientTag,
+                RdpStreamService => Constants.ExtensionTagsStreamServiceTag,
+                RdpStreamSender => Constants.ExtensionTagsStreamSenderTag,
+                RdpStreamReceiver => Constants.ExtensionTagsStreamReceiverTag,
+
+                _ => null
+                };
+
+            extensions.Add(new() {
+                Tag = streamType,
+                Value = Protocol.ToUTF8()
+                }) ;
+            }
+
+
+        public async Task<Packet> PostWeb(byte[] span, List<PacketExtension> extensions = null) {
+            byte[] encoded = null;
+
+            switch (StreamState) {
+                case StreamState.Initial: {
+                    return await PostWebHello(span, extensions);
+                    }
+                case StreamState.Challenged: 
+                case StreamState.Child: {
+                    if (RdpConnection.Connected) {
+                        return await PostWebChild(span, extensions);
+                        }
+                    else {
+                        return await PostWebComplete(span, extensions);
+                        }
+                    }
+                case StreamState.Data: {
+                    return await PostWebData(span, extensions);
+                    }
+                }
+
+            throw new NYI();
+            }
+
+
+        async Task<Packet> PostWebHello(byte[] span, List<PacketExtension> extensions = null) {
+            InitializeStream(ref extensions);
+
+            var encoded = RdpConnection.SerializeInitiatorHello(
+                LocalStreamId.GetValue(), RdpConnection.PacketChallenge.SourceId, span,
+                plaintextExtensionsIn: extensions);
+
+            var responsepacketData = await RdpConnection.WebClient.UploadDataTaskAsync(Uri, encoded);
+            var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
+            var code = PacketReader.ReadResponderMessageType(responsepacketData, ref position);
+
+            switch (code) {
+
+                case ResponderMessageType.ResponderChallenge: {
+                    StreamState = StreamState.Challenged;
+                    var packet = RdpConnection.ParseResponderChallenge(responsepacketData, position);
+                    Process(packet);
+                    return packet;
+                    }
 
                 }
-            else {
-                var buffer = new byte[Constants.MinimumPacketSize];
+            throw new NYI(); // state change not valid.
+            }
 
-                ciphertextExtensions ??= new List<PacketExtension>();
-                ciphertextExtensions.Add(LocalStreamId.PacketExtension);
-                encoded = RdpConnection.SerializeClientCompleteDeferred(
-                    LocalStreamId.GetValue(), RdpConnection.PacketChallenge.SourceId, span,
-                    ciphertextExtensions: ciphertextExtensions, buffer: buffer);
-                Connected = true;
-                }
+        async Task<Packet> PostWebComplete(byte[] span, List<PacketExtension> extensions = null) {
+            StreamState = StreamState.Data;
+            InitializeStream(ref extensions);
+            var encoded = RdpConnection.SerializeInitiatorComplete(
+                LocalStreamId.GetValue(), RdpConnection.PacketChallenge.SourceId, span,
+                ciphertextExtensions: extensions);
 
+            var responsepacketData = await RdpConnection.WebClient.UploadDataTaskAsync(Uri, encoded);
+            var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
 
-            // Transact
-            var result = RdpConnection.Transact(encoded);
-            result.Wait();
-            var responsepacketData = result.Result;
+            var packet = RdpConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
 
-            // Parse the response
-            var (sourceId, offset2) = StreamId.GetSourceId(responsepacketData);
-
-            var packet = RdpConnection.ParsePacketData(responsepacketData, offset2, responsepacketData.Length);
-            if (!Connected) {
-                GetSourceId(packet as PacketData);
-                }
-
+            Process(packet);
             return packet;
+            }
+
+
+        async Task<Packet> PostWebChild(byte[] span, List<PacketExtension> extensions = null) {
+            StreamState = StreamState.Data;
+            InitializeStream(ref extensions);
+            var encoded = RdpConnection.SerializePacketData(span, destinationStream: RemoteStreamId,
+                ciphertextExtensions: extensions);
+
+            var responsepacketData = await RdpConnection.WebClient.UploadDataTaskAsync(Uri, encoded);
+            var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
+
+            var packet = RdpConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
+            Process(packet);
+            return packet;
+            }
+
+        async Task<Packet> PostWebData(byte[] span, List<PacketExtension> extensions = null) {
+            StreamState = StreamState.Data;
+            var encoded = RdpConnection.SerializePacketData(span, destinationStream: RemoteStreamId,
+                ciphertextExtensions: extensions);
+
+            var responsepacketData = await RdpConnection.WebClient.UploadDataTaskAsync(Uri, encoded);
+            var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
+
+            var packet = RdpConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
+            Process(packet);
+            return packet;
+            }
+
+
+
+        void Process(PacketData packetData) {
+            RemoteStreamId = PacketExtension.GetExtensionByTag(packetData?.CiphertextExtensions,
+                    Constants.ExtensionTagsStreamIdTag);
+
+
+            }
+
+        void Process(PacketResponderChallenge packetResponderChallenge) {
+            if (packetResponderChallenge.PlaintextExtensions != null) {
+                foreach (var extension in packetResponderChallenge.PlaintextExtensions) {
+                    switch (extension.Tag) {
+                        case Constants.ExtensionTagsChallengeTag: {
+                            challengeNonce = extension.Value;
+                            break;
+                            }
+                        case Constants.ExtensionTagsChallengeProofOfWorkTag: {
+                            challengePoW = extension.Value;
+                            break;
+                            }
+                        }
+                    }
+                }
+
+            // get the challenge out
+            var challenge = PacketExtension.GetExtensionByTag(packetResponderChallenge?.PlaintextExtensions,
+                    Constants.ExtensionTagsChallengeTag);
+
+            // get the stream id for the response.
+            RemoteStreamId = packetResponderChallenge.SourceId;
+
             }
 
         void GetSourceId(PacketData packet) {
             RemoteStreamId = PacketExtension.GetExtensionByTag(packet?.CiphertextExtensions,
-                    Constants.StreamId);
-            Connected = true;
+                    Constants.ExtensionTagsStreamIdTag);
 
             }
 
@@ -266,8 +409,8 @@ namespace Goedel.Protocol.Presentation {
         public RdpStreamClient(
                 RdpStream parent,
                 string protocol,
-                Credential credential,
-                RdpConnection rdpConnection = null) : base(parent, protocol, credential, rdpConnection) {
+                Credential credential = null,
+                ConnectionInitiator rdpConnection = null) : base(parent, protocol, credential, rdpConnection) {
 
 
 
@@ -295,15 +438,11 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="parent">The parent stream</param>
         /// <param name="protocol">The stream protocol</param>
         /// <param name="credential">Optional additional credential.</param>
-        /// <param name="rdpConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
 
         public RdpStreamService(
                 RdpStream parent,
                 string protocol,
-                Credential credential,
-                RdpConnection rdpConnection = null) : base(parent, protocol, credential, rdpConnection) {
-
-
+                Credential credential = null) : base(parent, protocol, credential) {
 
             }
         #endregion
@@ -334,13 +473,11 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="parent">The parent stream</param>
         /// <param name="protocol">The stream protocol</param>
         /// <param name="credential">Optional additional credential.</param>
-        /// <param name="rdpConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
 
         public RdpStreamSender(
                 RdpStream parent,
                 string protocol,
-                Credential credential,
-                RdpConnection rdpConnection = null) : base(parent, protocol, credential, rdpConnection) {
+                Credential credential=null) : base(parent, protocol, credential) {
 
 
 
@@ -369,13 +506,11 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="parent">The parent stream</param>
         /// <param name="protocol">The stream protocol</param>
         /// <param name="credential">Optional additional credential.</param>
-        /// <param name="rdpConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
 
         public RdpStreamReceiver(
                 RdpStream parent,
                 string protocol,
-                Credential credential,
-                RdpConnection rdpConnection = null) : base(parent, protocol, credential, rdpConnection) {
+                Credential credential = null) : base(parent, protocol, credential) {
 
 
 

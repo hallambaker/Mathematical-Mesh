@@ -109,34 +109,34 @@ namespace Goedel.Protocol.Presentation {
 
 
 
-        ///<summary>Proof of work challenge</summary> 
-        public const string ExtensionChallengeNonce = "Challenge";
+        /////<summary>Proof of work challenge</summary> 
+        //public const string ExtensionTagsChallengeTag = "Challenge";
 
-        ///<summary>Proof of work challenge</summary> 
-        public const string ExtensionChallengePOW = "POW";
+        /////<summary>Proof of work challenge</summary> 
+        //public const string ExtensionTagsChallengeProofOfWorkTag = "POW";
 
 
 
-        ///<summary>PKIX Certificate</summary> 
-        public const string ExtensionPkixX509 = "PKIXC";
+        /////<summary>PKIX Certificate</summary> 
+        //public const string ExtensionTagsPkixX509Tag = "PKIXC";
 
-        ///<summary>PKIX OCSP Token</summary> 
-        public const string ExtensionPkixOcsp = "PKIXO";
+        /////<summary>PKIX OCSP Token</summary> 
+        //public const string ExtensionTagsPkixOcspTag = "PKIXO";
 
-        ///<summary>Mesh Profile</summary> 
-        public const string ExtensionMeshProfile = "MMMP";
+        /////<summary>Mesh Profile</summary> 
+        //public const string ExtensionTagsMeshProfileTag = "MMMP";
 
-        ///<summary>Mesh Connection</summary> 
-        public const string ExtensionMeshConnection = "MMMC";
+        /////<summary>Mesh Connection</summary> 
+        //public const string ExtensionTagsMeshConnectionTag = "MMMC";
 
-        ///<summary></summary> 
-        public const byte TagHostExchange = 1;
-        ///<summary></summary> 
-        public const  byte TagHostChallenge1 = 2;
-        ///<summary></summary> 
-        public const byte TagHostChallenge2 = 3;
-        ///<summary></summary> 
-        public const byte TagHostComplete = 4;
+        /////<summary></summary> 
+        //public const byte TagHostExchange = 1;
+        /////<summary></summary> 
+        //public const  byte TagHostChallenge1 = 2;
+        /////<summary></summary> 
+        //public const byte TagHostChallenge2 = 3;
+        /////<summary></summary> 
+        //public const byte TagHostComplete = 4;
 
         /// <summary>
         /// Using the primary key <paramref name="ikm"/> and generated nonce <paramref name="nonce"/>,

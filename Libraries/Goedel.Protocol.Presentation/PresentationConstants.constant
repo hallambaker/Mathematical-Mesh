@@ -3,28 +3,36 @@
 
 File PresentationConstants
 
-	Enum ClientInitial "Inbound spool message state"
-		Integer ClientInitialHello	1 		"Initial contact message without key exchange"
+	Enum InitiatorMessageType "Inbound spool message state"
+		Integer Error 0 "Host exchange message"
 			Description
 				|
-		Integer ClientInitialExchange	2	"Initial contact message with key exchange"
+		Integer Data 1 "Data message"
 			Description
 				|
-		Integer PacketError 3				"Error response"
+		Integer InitiatorHello	2 		"Initial contact message without key exchange"
+			Description
+				|
+		Integer InitiatorExchange	3	"Initial contact message with key exchange"
+			Description
+				|
+		Integer InitiatorComplete	4	"Initial contact message with key exchange"
 			Description
 				|
 
-	Enum HostMessageTags "Host response messages"
-		Integer TagHostExchange 1 "Host exchange message"
+	Enum ResponderMessageType "Host response messages"
+		Integer Error 0 "Host exchange message"
 			Description
 				|
-		Integer TagHostChallenge1 2 "Host challenge type 1"
+
+		Integer Data 1 "Host exchange message"
 			Description
 				|
-		Integer TagHostChallenge2 3 "Host challenge type 2"
+
+		Integer ResponderChallenge 2 "Host exchange message"
 			Description
 				|
-		Integer TagHostComplete 4 "Host exchange completetion"
+		Integer ResponderComplete 3 "Host challenge type 1"
 			Description
 				|
 
@@ -59,66 +67,94 @@ File PresentationConstants
 	Code ProtocolIdRud "RUD"
 		Description
 			|
-	Code StreamId "SID"
-		Description
-			|
+
+	Enum EncryptionOptions "Stream and packet encryption options"
+		// Packet encryption description options 
+		Code AesGcm					"AESGCM"
+			Description
+				|Use AES-GCM for response packet encryption with 16 byte authentication tag
+		Code AesCfb					"AESCFB"
+			Description
+				|Use AES-CFB for response packet encryption with 16 byte authentication tag
+		Code EncryptPacketHeader	"AESheader"
+			Description
+				|Use AES encryption of flow control data
+		Code RequireOneTimeId		"OTSIDr"
+			Description
+				|Use AES encryption of flow control data
 
 	Enum ExtensionTags "Presentation extension tags"
-		Tag PkixX509			"PKIXC"
-			Description
-				|A PKIX Certificate
-		Tag PkixOcsp			"PKIXO"
-			Description
-				|A PKIX OCSP token validating the credential presented.
-		Tag MeshProfile			"MMMP"
-			Description
-				|A Mathematical Mesh Profile Credential.
-		Tag MeshConnection		"MMMC"
-			Description
-				|A Mathematical Mesh Connection Credential.
-		Tag StreamId			"SID"
-			Description
-				|Declare a persistent stream identifier
-		Tag OneTimeStreamId		"OTSID"
-			Description
-				|Declare a set of one-time use stream identifiers of equal length, 
-		Tag Challenge			"Challenge"
-			Description
-				|Declare a challenge tag to be returned verbatim.
-		Tag ChallengeProofOfWork		"ProofOfWork"
-			Description
-				|Declare a challenge tag to be returned with a proof of work.
-		Tag X448				"X448"
+
+		// Key exchange related
+		Code X448					"X448"
 			Description
 				|Ephemeral key for X448 key exchange.
-		Tag AesGcm				"AESGCM"
+		Code PkixX509				"PKIXC"
 			Description
-				|Use AES-GCM for response packet encryption
-		Tag AesCfb				"AESCFB"
+				|A PKIX Certificate
+		Code PkixOcsp				"PKIXO"
 			Description
-				|Use AES-CFB for response packet encryption (default)
-		Tag FlowControlStream	"FCS"
+				|A PKIX OCSP token validating the credential presented.
+		Code MeshProfile			"MMMP"
 			Description
-				|Use stream flow control
-		Tag FlowControlFrame	"FCF"
+				|A Mathematical Mesh Profile Credential.
+		Code MeshConnection			"MMMC"
 			Description
-				|Use frame flow control
-		Tag FlowControlEncrypted	"FCAES"
+				|A Mathematical Mesh Connection Credential.
+
+		// Advertise stream identifiers.
+		Code StreamId				"SID"
 			Description
-				|Use AES encryption of flow control data (default)
-		Tag RTSRV				"RTSRV"
+				|Declare a persistent stream identifier that MAY be used as a response to the
+				|stream 
+		Code OneTimeStreamId		"OTSID"
 			Description
-				|Request a new stream connection to the specified transactional (request/response)
-				|service
-		Tag GTSRV				"GTSRV"
+				|Declare a set of one-time use stream identifiers of equal length, 
+		
+		// Present challenges
+		Code Challenge				"Challenge"
 			Description
-				|Grant a new stream connection to the specified transactional (request/response)
-				|service with the specified stream ID
-		Tag RSSRV				"RSSRV"
+				|Declare a challenge Code to be returned verbatim.
+		Code ChallengeProofOfWork	"ProofOfWork"
 			Description
-				|Request a new stream connection accepting messages in the specified protocol.
-		Tag GSSRV				"GSSRV"
+				|Declare a challenge Code to be returned with a proof of work.
+		
+
+		// Response to extension tags 
+		Code Refuse					"Refuse"
 			Description
-				|Grant a new stream connection accepting messages in the specified protocol
-				|with the specified stream ID
+				|
+		Code NotKnown				"Unknown"
+			Description
+				|
+		Code Authorize				"Authorize"
+			Description
+				|
+				
+		// Stream description options (only valid when declaring new stream)
+		Code Encrypt				"Encrypt"
+			Description
+				|The stream encryption options
+		Code CloseStream			"Close"
+			Description
+				|
+		Code CloseConnection		"CloseConnection"
+			Description
+				|
+
+		Code StreamClient			"Client"
+			Description
+				|When specified in a datagram, requests that the recipient offer a transactional
+				|service for the specified service and that the payload of the current datagram
+				|be presented to that packet as a request.
+		Code StreamService			"Service"
+			Description
+				|Announces creation of a client stream to which requests MAY be submitted. All 
+				|Stream ID announcements following the Service announcement are 
+		Code StreamSender			"Sender"
+			Description
+				|
+		Code StreamReceiver			"Receive"
+			Description
+				|
 

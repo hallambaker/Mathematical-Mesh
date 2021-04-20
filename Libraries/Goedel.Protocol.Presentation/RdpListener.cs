@@ -55,7 +55,7 @@ namespace Goedel.Protocol.Presentation {
                 byte[] payload = null) {
             var bytes = Platform.GetRandomBytes(16);
             var challenge = new PacketExtension() {
-                Tag = Constants.ExtensionChallengeNonce,
+                Tag = Constants.ExtensionTagsChallengeTag,
                 Value = bytes
                 };
             return new List<PacketExtension> { challenge };
@@ -73,8 +73,8 @@ namespace Goedel.Protocol.Presentation {
             var responder = new MeshSessionResponder(this, packetRequest);
 
             switch (packetRequest) {
-                case PacketClientCompleteDeferred packetClientCompleteDeferred: {
-                    responder.CompleteClientCompleteDeferred(packetClientCompleteDeferred);
+                case PacketInitiatorComplete packetClientCompleteDeferred: {
+                    responder.CompleteInitiatorComplete(packetClientCompleteDeferred);
                     responder.RemoteStreamId = packetClientCompleteDeferred.SourceId;
                     break;
                     }

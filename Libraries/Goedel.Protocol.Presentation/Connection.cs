@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Net;
 
 using Goedel.Utilities;
 using Goedel.Cryptography;
@@ -38,7 +39,8 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Packet Quantization</summary> 
         public int PacketQuanta { get; set; } = 64;
 
-
+        ///<summary>If true, the connection is connected to the remote endpoint.</summary> 
+        public bool Connected => mutualKeyAgreementResult != null;
 
 
         ///<summary>Symmetric key used to encrypt/decrypt mezzanine data sent by the client to 
@@ -132,6 +134,14 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
+        /// <summary>
+        /// Create a new stream identifier for the connection.
+        /// </summary>
+        /// <returns>The stream identifier.</returns>
+        public virtual StreamId GetStreamId() => StreamId.GetStreamId();
+
+
+
         #endregion
         #region // Methods - PacketData Serializer/Deserializer
 
@@ -186,7 +196,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="last">Last byte in the buffer to parse.</param>
         /// <returns>Packet specifying the decrypted payload and extensions (if specified).</returns>
 
-        public virtual Packet ParsePacketData(byte[] packet, int offset, int last) {
+        public virtual PacketData ParsePacketData(byte[] packet, int offset, int last) {
             var innerReader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet, offset, last);
 
             var result = new PacketData() {

@@ -1,227 +1,202 @@
-﻿//  Copyright © 2021 by Threshold Secrets Llc.
-//  
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//  
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//  
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+﻿////  Copyright © 2021 by Threshold Secrets Llc.
+////  
+////  Permission is hereby granted, free of charge, to any person obtaining a copy
+////  of this software and associated documentation files (the "Software"), to deal
+////  in the Software without restriction, including without limitation the rights
+////  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+////  copies of the Software, and to permit persons to whom the Software is
+////  furnished to do so, subject to the following conditions:
+////  
+////  The above copyright notice and this permission notice shall be included in
+////  all copies or substantial portions of the Software.
+////  
+////  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+////  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+////  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+////  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+////  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+////  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+////  THE SOFTWARE.
 
-using Goedel.Protocol;
-//using Goedel.Protocol.Service;
-using Goedel.Protocol.Presentation;
-using Goedel.Utilities;
+//using Goedel.Protocol;
+////using Goedel.Protocol.Service;
+//using Goedel.Protocol.Presentation;
+//using Goedel.Utilities;
 
-using System;
-using System.IO;
-using System.Net;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+//using System;
+//using System.IO;
+//using System.Net;
+//using System.Collections.Generic;
+//using System.Threading;
+//using System.Threading.Tasks;
 
-namespace Goedel.Protocol.Presentation {
+//namespace Goedel.Protocol.Presentation {
 
 
 
-    /// <summary>
-    /// This class contains some material that should move to Goedel.Protocol.Presentation
-    /// and some that should go to Goedel.Mesh. 
-    /// </summary>
-    public class RdpConnection : ConnectionInitiator //, IJpcSession 
-        {
+//    /// <summary>
+//    /// This class contains some material that should move to Goedel.Protocol.Presentation
+//    /// and some that should go to Goedel.Mesh. 
+//    /// </summary>
+//    public class RdpConnection : ConnectionInitiator //, IJpcSession 
+//        {
 
 
 
 
-        #region // Constructors
 
-        public RdpConnection(Credential clientCredential, string domain,
-                    string instance = null, PresentationType presentationTypes = PresentationType.All,
-                    string protocol = null) {
 
-            Domain = domain;
-            Protocol = protocol ?? Constants.ProtocolIdRud;
-            Instance = instance;
-            CredentialSelf = clientCredential;
+//        #region // Implement Inteface IJpcSession
 
-            LocalStreamId = StreamId.GetStreamId();
+//        //public JsonObject Initialize(
+//        //        string tag,
+//        //        JsonObject request,
+//        //        Credential credential=null) {
 
-            Uri = HttpEndpoint.GetUri(Domain, Protocol, Instance);
 
-            WebClient = new WebClient();
+//        //    byte[] span = null;
+//        //    if (request != null) {
+//        //        span = SerializePayload(tag, request, out var stream);
+//        //        }
 
-            }
+//        //    var plaintextExtensions = new List<PacketExtension> {
+//        //            LocalStreamId.PacketExtension };
 
+//        //    //var (buffer, position) = MakeTagKeyExchange(PlaintextPacketType.ClientInitial);
+//        //    var buffer = new byte[Constants.MinimumPacketSize];
+//        //    var encoded = SerializeInitiatorHello(
+//        //        LocalStreamId.GetValue(), Constants.StreamIdClientInitial, 
+//        //        span, plaintextExtensions, buffer, 0);
 
-        #endregion
-        #region // Implement Inteface IJpcSession
 
-        public JsonObject Initialize(
-                string tag,
-                JsonObject request,
-                Credential credential=null) {
+//        //    Screen.WriteLine($"Wait on URI {Uri}");
 
+//        //    var result = Transact(encoded);
+//        //    result.Wait();
 
-            byte[] span = null;
-            if (request != null) {
-                span = SerializePayload(tag, request, out var stream);
-                }
+//        //    var responseData = result.Result;
 
-            var plaintextExtensions = new List<PacketExtension> {
-                    LocalStreamId.PacketExtension };
+//        //    // strip off and save the session  Id here.
 
-            //var (buffer, position) = MakeTagKeyExchange(PlaintextPacketType.ClientInitial);
-            var buffer = new byte[Constants.MinimumPacketSize];
-            var encoded = SerializeClientInitial(
-                LocalStreamId.GetValue(), Constants.StreamIdClientInitial, 
-                span, plaintextExtensions, buffer, 0);
+//        //    var (sourceId, offset) = StreamId.GetSourceId(responseData);
+//        //    LocalStreamId = sourceId;
 
+//        //    // here get the next byte and dispatch on it.
 
-            //Screen.WriteLine($"Wait on URI {Uri}");
+//        //    var messageType = (ResponderMessageType) responseData[offset++];
+//        //    switch (messageType) {
+//        //        case ResponderMessageType.ResponderChallenge: {
+//        //            PacketChallenge = ParseResponderChallenge(responseData, offset);
+//        //            break;
+//        //            }
 
-            var result = Transact(encoded);
-            result.Wait();
+//        //        case ResponderMessageType.ResponderComplete: {
+//        //            PacketChallenge = ParseResponderComplete(responseData, offset);
+//        //            break;
+//        //            }
 
-            var responseData = result.Result;
+//        //        default: {
+//        //            throw new NYI();
+//        //            }
+//        //        }
 
-            // strip off and save the session  Id here.
 
-            var (sourceId, offset) = StreamId.GetSourceId(responseData);
-            LocalStreamId = sourceId;
+//        //    PacketChallenge.Dump();
 
-            // here get the next byte and dispatch on it.
 
-            var messageType = responseData[offset++];
-            switch (messageType) {
-                case Constants.TagHostChallenge1: {
-                    PacketChallenge = ParseHostChallenge1(responseData, offset);
-                    break;
-                    }
-                case Constants.TagHostChallenge2: {
-                    PacketChallenge = ParseHostChallenge2(responseData, offset);
-                    break;
-                    }
-                case Constants.TagHostComplete: {
-                    PacketChallenge = ParseHostComplete(responseData, offset);
-                    break;
-                    }
-                case Constants.TagHostExchange: {
-                    PacketChallenge = ParseHostExchange(responseData, offset);
-                    break;
-                    }
-                default: {
-                    throw new NYI();
-                    }
-                }
+//        //    var response = PacketChallenge ?.Payload == null || PacketChallenge .Payload.Length == 0 ? null :
+//        //                    ParsePayload(PacketChallenge .Payload);
 
+//        //    return response;
+//        //    }
 
-            PacketChallenge.Dump();
+//        //public Packet ProcessChallenge(byte[] packet, int offset) {
 
+//        //    // vary according to the challenge sent out...
 
-            var response = PacketChallenge ?.Payload == null || PacketChallenge .Payload.Length == 0 ? null :
-                            ParsePayload(PacketChallenge .Payload);
+//        //    PacketChallenge = ParseResponderChallenge(packet, offset);
+//        //    return PacketChallenge;
+//        //    }
 
-            return response;
-            }
 
-        public Packet ProcessChallenge(byte[] packet, int offset) {
 
-            // vary according to the challenge sent out...
 
-            PacketChallenge = ParseHostChallenge1(packet, offset);
-            return PacketChallenge;
-            }
+//        // this bit need to go to the STREAM part...
 
 
-        public StreamId GetStreamId() => StreamId.GetStreamId();
 
-        // this bit need to go to the STREAM part...
 
+//        //public Packet Post(byte[] span, List<PacketExtension> ciphertextExtensions=null) {
+//        //    byte[] encoded;
+//        //    if (Connected) {
+//        //        //var (buffer, offset) =  InitializeBuffer(span.Length);
+//        //        encoded = SerializePacketData(span);
 
+//        //        }
+//        //    else {
+//        //        var buffer = new byte[Constants.MinimumPacketSize];
 
+//        //        ciphertextExtensions ??= new List<PacketExtension>();
+//        //        ciphertextExtensions.Add(LocalStreamId.PacketExtension);
+//        //        encoded = SerializeInitiatorComplete(
+//        //            LocalStreamId.GetValue(), PacketChallenge.SourceId, span,
+//        //            ciphertextExtensions: ciphertextExtensions, buffer: buffer);
+//        //        }
 
-        public Packet Post(byte[] span, List<PacketExtension> ciphertextExtensions=null) {
-            byte[] encoded;
-            if (Connected) {
-                //var (buffer, offset) =  InitializeBuffer(span.Length);
-                encoded = SerializePacketData(span);
 
-                }
-            else {
-                var buffer = new byte[Constants.MinimumPacketSize];
+//        //    // Transact
+//        //    var result = Transact(encoded);
+//        //    result.Wait();
+//        //    var responsepacketData = result.Result;
 
-                ciphertextExtensions ??= new List<PacketExtension>();
-                ciphertextExtensions.Add(LocalStreamId.PacketExtension);
-                encoded = SerializeClientCompleteDeferred(
-                    LocalStreamId.GetValue(), PacketChallenge.SourceId, span,
-                    ciphertextExtensions: ciphertextExtensions, buffer: buffer);
-                }
+//        //    // Parse the response
+//        //    var (sourceId, offset2) = StreamId.GetSourceId(responsepacketData);
 
+//        //    var packet = ParsePacketData(responsepacketData, offset2, responsepacketData.Length);
+//        //    if (!Connected) {
+//        //        GetSourceId(packet as PacketData);
+//        //        }
 
-            // Transact
-            var result = Transact(encoded);
-            result.Wait();
-            var responsepacketData = result.Result;
+//        //    return packet;
+//        //    }
 
-            // Parse the response
-            var (sourceId, offset2) = StreamId.GetSourceId(responsepacketData);
+//        //void GetSourceId(PacketData packet) {
+//        //    RemoteStreamId = PacketExtension.GetExtensionByTag(packet?.CiphertextExtensions,
+//        //            Constants.ExtensionTagsStreamIdTag);
+//        //    // need to scan the encrypted attributes to get the source Id.
 
-            var packet = ParsePacketData(responsepacketData, offset2, responsepacketData.Length);
-            if (!Connected) {
-                GetSourceId(packet as PacketData);
-                }
+//        //    Connected = true;
 
-            return packet;
-            }
+//        //    }
 
-        void GetSourceId(PacketData packet) {
-            RemoteStreamId = PacketExtension.GetExtensionByTag(packet?.CiphertextExtensions,
-                    Constants.StreamId);
-            // need to scan the encrypted attributes to get the source Id.
+//        //private byte[] SerializePayload(string tag, JsonObject request, out MemoryStream stream) {
+//        //    stream = new MemoryStream();
+//        //    var writer = JsonObject.GetJsonWriter(ObjectEncoding);
+//        //    writer.WriteObjectStart();
 
-            Connected = true;
+//        //    bool first = true;
+//        //    request.Serialize(writer, true, ref first);
+//        //    writer.WriteToken(tag, 0);
+//        //    writer.WriteObjectEnd();
 
-            }
+//        //    // avoid the copy by using a Span.
+//        //    return stream.ToArray();
+//        //    }
 
-        private byte[] SerializePayload(string tag, JsonObject request, out MemoryStream stream) {
-            stream = new MemoryStream();
-            var writer = JsonObject.GetJsonWriter(ObjectEncoding);
-            writer.WriteObjectStart();
+//        //private JsonObject ParsePayload(byte[] responseData) {
+//        //    using var reader = new JsonBcdReader(responseData);
+//        //    return JsonObject.FromJson(reader, true);
+//        //    }
 
-            bool first = true;
-            request.Serialize(writer, true, ref first);
-            writer.WriteToken(tag, 0);
-            writer.WriteObjectEnd();
 
-            // avoid the copy by using a Span.
-            return stream.ToArray();
-            }
 
-        private JsonObject ParsePayload(byte[] responseData) {
-            using var reader = new JsonBcdReader(responseData);
-            return JsonObject.FromJson(reader, true);
-            }
+//        #endregion
+//        #region // Override Methods
 
+//        //public Task<byte[]> Transact(byte[] payload) =>
+//        //            WebClient.UploadDataTaskAsync(Uri, payload);
 
+//        #endregion
 
-        #endregion
-        #region // Override Methods
-
-        public Task<byte[]> Transact(byte[] payload) =>
-                    WebClient.UploadDataTaskAsync(Uri, payload);
-
-        #endregion
-
-        }
-    }
+//        }
+//    }

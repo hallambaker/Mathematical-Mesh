@@ -88,7 +88,7 @@ namespace Goedel.Protocol.Service {
         JsonObject response;
         IJpcSession session;
 
-        PlaintextPacketType responsePacket;
+        ResponderMessageType responsePacket;
 
         Listener Listener => Service.Listener;
 
@@ -103,11 +103,9 @@ namespace Goedel.Protocol.Service {
             var (sourceId, offset) = StreamId.GetSourceId(Buffer);
             ConnectionResponder sessionResponder=null;
 
-            sessionResponder = (PlaintextPacketType)sourceId.Value switch {
-                PlaintextPacketType.ClientInitial => ProcessClientInitial(),
-                PlaintextPacketType.ClientExchange => ProcessClientExchange(),
-                PlaintextPacketType.ClientCompleteDeferred => ProcessClientCompleteDeferred(offset),
-                PlaintextPacketType.ClientComplete => ProcessClientComplete(),
+            sessionResponder = (InitiatorMessageType)sourceId.Value switch {
+                InitiatorMessageType.InitiatorHello => ProcessClientInitial(),
+                InitiatorMessageType.InitiatorExchange => ProcessClientCompleteDeferred(offset),
                 _ => ProcessClientData(sourceId, offset)
                 };
 
@@ -137,13 +135,13 @@ namespace Goedel.Protocol.Service {
                 }
 
             switch (responsePacket) {
-                case PlaintextPacketType.HostChallenge: {
+                case ResponderMessageType.ResponderChallenge: {
 
                     var challenge = Listener.MakeChallenge(packetClient, responseBytes);
 
                     var buffer = new byte[Constants.MinimumPacketSize];
 
-                    var responsePacket = sessionResponder.SerializeHostChallenge1(
+                    var responsePacket = sessionResponder.SerializeResponderChallenge(
                                 StreamId.GetClientCompleteDeferred(), packetClient.SourceId,
                                 responseBytes, challenge, buffer);
 
@@ -152,11 +150,11 @@ namespace Goedel.Protocol.Service {
 
                     break;
                     }
-                case PlaintextPacketType.Data: {
+                case ResponderMessageType.Data: {
                     List<PacketExtension> packetExtensions=null;
                     if (sessionResponder.ReturnStreamId != null) {
                         var returnExtension = new PacketExtension() {
-                            Tag = Constants.StreamId, Value = sessionResponder.ReturnStreamId
+                            Tag = Constants.ExtensionTagsStreamIdTag, Value = sessionResponder.ReturnStreamId
                             };
                         packetExtensions = new List<PacketExtension> { returnExtension };
                         }
@@ -178,13 +176,13 @@ namespace Goedel.Protocol.Service {
 
 
         ConnectionResponder ProcessClientInitial() {
-            responsePacket = PlaintextPacketType.HostChallenge;
-            packetClient = Listener.ParseClientInitial(Buffer, Constants.SizeReservedInitialStreamId, 
+            responsePacket = ResponderMessageType.ResponderChallenge;
+            packetClient = Listener.ParseInitiatorHello(Buffer, Constants.SizeReservedInitialStreamId, 
                 Count- Constants.SizeReservedInitialStreamId);
             return Listener.GetTemporaryResponder(packetClient); ;
             }
         ConnectionResponder ProcessClientComplete() {
-            responsePacket = PlaintextPacketType.Data;
+            responsePacket = ResponderMessageType.Data;
             throw new NYI();
             }
         ConnectionResponder ProcessClientData(StreamId SourceId, int offset) {
@@ -192,7 +190,7 @@ namespace Goedel.Protocol.Service {
             // identify the source connection
 
 
-            responsePacket = PlaintextPacketType.Data;
+            responsePacket = ResponderMessageType.Data;
 
             if (Listener.DictionarySessionsInbound.TryGetValue(SourceId, out var responder)) {
                 packetClient = responder.ParsePacketData(Buffer, offset, Count);
@@ -211,7 +209,7 @@ namespace Goedel.Protocol.Service {
             }
         ConnectionResponder ProcessClientCompleteDeferred(int offset) {
 
-            packetClient = Listener.ParseClientCompleteDeferred(Buffer, offset, Count-offset);
+            packetClient = Listener.ParseInitiatorComplete(Buffer, offset, Count-offset);
             // verify the challenge here
 
             if (Listener.VerifyChallenge(packetClient)) {
@@ -219,11 +217,11 @@ namespace Goedel.Protocol.Service {
 
                 
 
-                responsePacket = PlaintextPacketType.Data;
+                responsePacket = ResponderMessageType.Data;
                 return Listener.Accept(packetClient);
                 }
             else {
-                responsePacket = PlaintextPacketType.Error;
+                responsePacket = ResponderMessageType.Error;
 
                 return null;
                 }

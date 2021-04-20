@@ -27,7 +27,7 @@ namespace Scratchpad {
 
 
             // Need to build out TestEnvironmentRdp as a listener
-            TestPresentationMesh.Test().TestCreateAccount();
+            TestPresentationMesh.Test().TestMeshMultiService();
 
 
 

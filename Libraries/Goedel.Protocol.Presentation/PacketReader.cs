@@ -91,6 +91,15 @@ namespace Goedel.Protocol.Presentation {
             return (int) data;
             }
 
+
+        public static ResponderMessageType ReadResponderMessageType(
+                    byte[] buffer,
+                    ref int position) => (ResponderMessageType) buffer[position++];
+
+        public static InitiatorMessageType ReadInitiatorMessageType(
+            byte[] buffer,
+            ref int position) => (InitiatorMessageType)buffer[position++];
+
         /// <summary>
         /// Read binary from the stream and return as a span.
         /// </summary>

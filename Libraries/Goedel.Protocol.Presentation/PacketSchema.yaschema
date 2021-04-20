@@ -10,14 +10,13 @@
 
 Client 
 
-	ClientInitial
+	InitiatorHello
 		Initial
 		Plaintext
 			ClientEphemerals
 			Payload
-			
 
-	ClientExchange
+	InitiatorExchange
 		Initial
 			HostCredential
 		Plaintext
@@ -27,18 +26,7 @@ Client
 			ClientCredential
 			Payload
 			
-
-	ClientComplete
-		Respond
-			HostExchange
-		Mezzanine
-			ClientKeyID
-			ClientCredential
-		Encrypted
-			Payload
-			
-
-	ClientCompleteDeferred
+	InitiatorComplete
 		Respond
 			HostChallenge1
 			HostChallenge2
@@ -55,17 +43,8 @@ Client
 
 
 Host
-	HostExchange
-		Respond
-			ClientInitial
-		Plaintext
-			HostKeyID
-			HostCredential
-			HostEphemerals
-		Mezzanine
-			Payload
 	
-	HostChallenge1
+	ResponderChallenge
 		Respond
 			ClientInitial
 		Plaintext
@@ -74,15 +53,8 @@ Host
 			Challenge
 			Payload
 
-	HostChallenge2
-		Respond
-			ClientExchange
-		Plaintext
-			HostEphemerals
-			Challenge
-			Payload
 
-	HostComplete
+	ResponderComplete
 		Respond
 			ClientExchange
 		Mezzanine

@@ -13,7 +13,7 @@ namespace Goedel.Protocol.Presentation {
 #pragma warning disable CS1573
 
 
-    public enum PresentationType {
+    public enum TransportType {
 
         ///<summary>HTTP/Fred binding.</summary> 
         Http = 0b001,
