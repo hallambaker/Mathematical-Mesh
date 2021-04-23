@@ -89,9 +89,6 @@ namespace Goedel.Protocol.Presentation {
         public byte[] ReturnStreamId = null;
 
 
-        public RdpStream RdpStream { get; set; }
-
-
         List<KeyPairAdvanced> ephemeralsOffered;
         #endregion
 
@@ -130,9 +127,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="extensions">List of extensions to add the ephemerals to.</param>
         public virtual void AddResponse(
-                List<PacketExtension> extensions) {
-
-            }
+                List<PacketExtension> extensions) { }
 
         /// <summary>
         /// Create a new stream identifier for the connection.

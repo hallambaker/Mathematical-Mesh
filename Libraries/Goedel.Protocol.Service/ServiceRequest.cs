@@ -103,11 +103,27 @@ namespace Goedel.Protocol.Service {
             var (sourceId, offset) = StreamId.GetSourceId(Buffer);
             ConnectionResponder sessionResponder=null;
 
-            sessionResponder = (InitiatorMessageType)sourceId.Value switch {
-                InitiatorMessageType.InitiatorHello => ProcessClientInitial(),
-                InitiatorMessageType.InitiatorExchange => ProcessClientCompleteDeferred(offset),
-                _ => ProcessClientData(sourceId, offset)
-                };
+
+            if (sourceId.Value == 0) {
+                offset = Constants.SizeReservedInitialStreamId;
+                var messageType = PacketReader.ReadInitiatorMessageType(Buffer, ref offset);
+
+                switch (messageType) {
+                    case InitiatorMessageType.InitiatorHello: {
+                        sessionResponder = ProcessClientInitial(offset);
+                        break;
+                        }
+                    case InitiatorMessageType.InitiatorComplete: {
+                        sessionResponder = ProcessClientComplete(offset);
+                        break;
+                        }
+                    }
+
+                }
+            else {
+                ProcessClientData(sourceId, offset);
+                }
+
 
             if (sessionResponder == null) {
                 return; // 
@@ -175,16 +191,13 @@ namespace Goedel.Protocol.Service {
 
 
 
-        ConnectionResponder ProcessClientInitial() {
+        ConnectionResponder ProcessClientInitial(int offset) {
             responsePacket = ResponderMessageType.ResponderChallenge;
-            packetClient = Listener.ParseInitiatorHello(Buffer, Constants.SizeReservedInitialStreamId, 
-                Count- Constants.SizeReservedInitialStreamId);
+            packetClient = Listener.ParseInitiatorHello(Buffer, offset, 
+                Count- offset);
             return Listener.GetTemporaryResponder(packetClient); ;
             }
-        ConnectionResponder ProcessClientComplete() {
-            responsePacket = ResponderMessageType.Data;
-            throw new NYI();
-            }
+
         ConnectionResponder ProcessClientData(StreamId SourceId, int offset) {
 
             // identify the source connection
@@ -207,7 +220,7 @@ namespace Goedel.Protocol.Service {
         ConnectionResponder ProcessClientExchange() {
             throw new NYI();
             }
-        ConnectionResponder ProcessClientCompleteDeferred(int offset) {
+        ConnectionResponder ProcessClientComplete(int offset) {
 
             packetClient = Listener.ParseInitiatorComplete(Buffer, offset, Count-offset);
             // verify the challenge here

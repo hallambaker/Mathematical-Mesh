@@ -26,6 +26,7 @@ using System.IO;
 using System.Threading.Tasks;
 
 
+
 namespace Goedel.Protocol.Presentation {
 
 
@@ -95,8 +96,8 @@ namespace Goedel.Protocol.Presentation {
         byte[] RemoteStreamId;
 
 
-        byte[] challengeNonce;
-        byte[] challengePoW;
+        public byte[] ChallengeNonce;
+        public byte[] ChallengePoW;
 
         #endregion
         #region // Constructors
@@ -114,17 +115,18 @@ namespace Goedel.Protocol.Presentation {
                 string protocol,
                 Credential credential= null,
                 ConnectionInitiator rdpConnection=null) {
-            
-            
-            Protocol = protocol;
-            Uri = HttpEndpoint.GetUri(RdpConnection.Domain, protocol, RdpConnection.Instance);
-
+            RdpStreamParent = parent;
             if (parent != null) {
                 parent.AddChild(this);
                 }
+            RdpConnection = rdpConnection ?? parent?.RdpConnection;
 
-            RdpStreamParent = parent;
-            RdpConnection = rdpConnection ?? parent.RdpConnection;
+            Protocol = protocol;
+            Uri = HttpEndpoint.GetUri(RdpConnection.Domain, protocol, RdpConnection.Instance);
+
+
+
+
             Credential = credential;
             LocalStreamId = RdpConnection.GetStreamId();
             }
@@ -137,7 +139,7 @@ namespace Goedel.Protocol.Presentation {
         #region // Methods
 
 
-        public async Task<JsonObject> Post(
+        public async Task<JsonObject> PostAsync(
             string tag,
             JsonObject request) {
 
@@ -175,6 +177,19 @@ namespace Goedel.Protocol.Presentation {
                 Tag = streamType,
                 Value = Protocol.ToUTF8()
                 }) ;
+
+
+            if (Credential != null) {
+                extensions.Add(new() {
+                    Tag = Credential.Tag,
+                    Value = Credential.Value
+                    });
+
+
+
+
+                }
+
             }
 
 
@@ -207,7 +222,7 @@ namespace Goedel.Protocol.Presentation {
             InitializeStream(ref extensions);
 
             var encoded = RdpConnection.SerializeInitiatorHello(
-                LocalStreamId.GetValue(), RdpConnection.PacketChallenge.SourceId, span,
+                LocalStreamId.GetValue(), Constants.StreamIdClientInitial, span,
                 plaintextExtensionsIn: extensions);
 
             var responsepacketData = await RdpConnection.WebClient.UploadDataTaskAsync(Uri, encoded);
@@ -231,7 +246,7 @@ namespace Goedel.Protocol.Presentation {
             StreamState = StreamState.Data;
             InitializeStream(ref extensions);
             var encoded = RdpConnection.SerializeInitiatorComplete(
-                LocalStreamId.GetValue(), RdpConnection.PacketChallenge.SourceId, span,
+                LocalStreamId.GetValue(), Constants.StreamIdClientInitial, span,
                 ciphertextExtensions: extensions);
 
             var responsepacketData = await RdpConnection.WebClient.UploadDataTaskAsync(Uri, encoded);
@@ -285,11 +300,11 @@ namespace Goedel.Protocol.Presentation {
                 foreach (var extension in packetResponderChallenge.PlaintextExtensions) {
                     switch (extension.Tag) {
                         case Constants.ExtensionTagsChallengeTag: {
-                            challengeNonce = extension.Value;
+                            ChallengeNonce = extension.Value;
                             break;
                             }
                         case Constants.ExtensionTagsChallengeProofOfWorkTag: {
-                            challengePoW = extension.Value;
+                            ChallengePoW = extension.Value;
                             break;
                             }
                         }
@@ -336,6 +351,7 @@ namespace Goedel.Protocol.Presentation {
 
 
         private void AddChild(RdpStream child) {
+            ChildStreams ??= new();
             ChildStreams.Add(child);
             }
 
@@ -347,9 +363,11 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Request creation of a transactional stream in the client role.
         /// </summary>
+        /// <param name="protocol">The protocol identifier</param>
         /// <param name="credential">Optional additional credential to be presented.</param>
         /// <returns>The created stream.</returns>
-        public RdpStreamClient MakeStreamClient(Credential credential=null) => throw new NYI();
+        public RdpStreamClient MakeStreamClient(string protocol, Credential credential = null) =>
+            new RdpStreamClient(this, protocol, credential);
 
 
         /// <summary>
@@ -418,13 +436,19 @@ namespace Goedel.Protocol.Presentation {
 
         #endregion
         #region // Methods
+
+
+
+
         public VerifiedAccount VerifiedAccount => throw new System.NotImplementedException();
 
-        public JsonObject Post(string tag, JsonObject request) => throw new System.NotImplementedException();
+        public JsonObject Post(string tag, JsonObject request) {
+            var task = PostAsync(tag, request);
+            task.Wait();
+            return task.Result;
+            }
 
-
-        public async Task<JsonObject> PostAsync(string tag, JsonObject request) => throw new System.NotImplementedException();
-        #endregion
+       #endregion
         }
 
 

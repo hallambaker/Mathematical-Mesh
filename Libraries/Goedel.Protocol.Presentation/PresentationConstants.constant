@@ -102,6 +102,10 @@ File PresentationConstants
 			Description
 				|A Mathematical Mesh Connection Credential.
 
+		Code ClaimId				"Claim"
+			Description
+				|Claim the specified personna.
+
 		// Advertise stream identifiers.
 		Code StreamId				"SID"
 			Description

@@ -42,9 +42,6 @@
             assertion).
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Credential.MeshCredential.CredentialTag">
-            <summary>Extension tag identifying a Mesh credential.</summary> 
-        </member>
         <member name="P:Goedel.Mesh.Credential.MeshCredential.Profile">
             <summary>The profile to which this credential is bound</summary> 
         </member>

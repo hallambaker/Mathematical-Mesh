@@ -30,6 +30,11 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public abstract class Credential {
 
+        public abstract string Tag { get; }
+
+        public abstract byte[] Value { get; }
+
+
         public abstract KeyPairAdvanced AuthenticationPublic { get; }
 
 

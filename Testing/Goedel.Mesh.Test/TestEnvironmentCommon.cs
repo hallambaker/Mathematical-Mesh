@@ -25,7 +25,7 @@ namespace Goedel.Mesh.Test {
         public const string Instance = "69";
 
 
-        public override MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) {
+        public override MeshServiceClient GetMeshClient( MeshCredentialTraced meshCredential) {
             StartService();
 
             var meshServiceBinding = new ConnectionInitiator(meshCredential, Domain, Instance, TransportType.Http, Protocol);

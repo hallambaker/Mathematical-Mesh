@@ -157,7 +157,7 @@ namespace Goedel.Test.Core {
                 //    return new TestCredential(extension.Value);
                 //    }
 
-                if (extension.Tag == MeshCredential.CredentialTag) {
+                if (extension.Tag == Constants.ExtensionTagsMeshConnectionTag) {
 
                     //var valueString = extension.Value.ToUTF8();
 

@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 4/19/2021 11:32:56 AM
+//  This file was automatically generated at 4/23/2021 11:20:29 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -94,6 +94,8 @@ namespace Goedel.Protocol.Presentation {
         MeshProfile,
         ///<summary>MMMC</summary>
         MeshConnection,
+        ///<summary>Claim</summary>
+        ClaimId,
         ///<summary>SID</summary>
         StreamId,
         ///<summary>OTSID</summary>
@@ -263,6 +265,8 @@ namespace Goedel.Protocol.Presentation {
         public const string  ExtensionTagsMeshProfileTag = "MeshProfile";
         ///<summary>Jose enumeration tag for ExtensionTags.MeshConnection</summary>
         public const string  ExtensionTagsMeshConnectionTag = "MeshConnection";
+        ///<summary>Jose enumeration tag for ExtensionTags.ClaimId</summary>
+        public const string  ExtensionTagsClaimIdTag = "ClaimId";
         ///<summary>Jose enumeration tag for ExtensionTags.StreamId</summary>
         public const string  ExtensionTagsStreamIdTag = "StreamId";
         ///<summary>Jose enumeration tag for ExtensionTags.OneTimeStreamId</summary>
@@ -305,6 +309,7 @@ namespace Goedel.Protocol.Presentation {
                 ExtensionTagsPkixOcspTag => ExtensionTags.PkixOcsp,
                 ExtensionTagsMeshProfileTag => ExtensionTags.MeshProfile,
                 ExtensionTagsMeshConnectionTag => ExtensionTags.MeshConnection,
+                ExtensionTagsClaimIdTag => ExtensionTags.ClaimId,
                 ExtensionTagsStreamIdTag => ExtensionTags.StreamId,
                 ExtensionTagsOneTimeStreamIdTag => ExtensionTags.OneTimeStreamId,
                 ExtensionTagsChallengeTag => ExtensionTags.Challenge,
@@ -335,6 +340,7 @@ namespace Goedel.Protocol.Presentation {
                 ExtensionTags.PkixOcsp => ExtensionTagsPkixOcspTag,
                 ExtensionTags.MeshProfile => ExtensionTagsMeshProfileTag,
                 ExtensionTags.MeshConnection => ExtensionTagsMeshConnectionTag,
+                ExtensionTags.ClaimId => ExtensionTagsClaimIdTag,
                 ExtensionTags.StreamId => ExtensionTagsStreamIdTag,
                 ExtensionTags.OneTimeStreamId => ExtensionTagsOneTimeStreamIdTag,
                 ExtensionTags.Challenge => ExtensionTagsChallengeTag,

@@ -41,8 +41,11 @@ namespace Goedel.Mesh.Credential {
     /// </summary>
     public class MeshCredential : Goedel.Protocol.Presentation.Credential {
 
-        ///<summary>Extension tag identifying a Mesh credential.</summary> 
-        public const string CredentialTag = "MMM";
+
+        public override string Tag => Constants.ExtensionTagsMeshConnectionTag;
+
+
+        public override byte[] Value => Connection.DareEnvelope.GetJsonB(false);
 
         ///<summary>The profile to which this credential is bound</summary> 
         public Profile Profile { get; init;  }
@@ -144,11 +147,11 @@ namespace Goedel.Mesh.Credential {
             //Screen.WriteLine($"Add credentials {Connection.GetJson().ToUTF8()}");
 
             //Screen.WriteLine($"Add credentials Length {Connection.GetJsonB().Length}");
-            var value = Connection.DareEnvelope.GetJsonB(false);
+
 
             extensions.Add(new PacketExtension() {
-                Tag = CredentialTag,
-                Value = value
+                Tag = Tag,
+                Value = Value
                 }) ;
             //Screen.WriteLine($"  Packed {value.Length}");
 
@@ -158,7 +161,7 @@ namespace Goedel.Mesh.Credential {
         public override Goedel.Protocol.Presentation.Credential GetCredentials(
                     List<PacketExtension> extensions) {
             foreach (var extension in extensions) {
-                if (extension.Tag == CredentialTag) {
+                if (extension.Tag == Tag) {
                     return new MeshCredential(extension.Value);
                     }
                 }

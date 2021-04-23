@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 using System.Threading.Tasks;
-
+using System.Collections.Generic;
 using System.Net;
 
 namespace Goedel.Protocol.Presentation {
@@ -64,6 +64,14 @@ namespace Goedel.Protocol.Presentation {
         public RdpStream RdpStreamInitial { get; set; }
 
 
+        ///<inheritdoc/>
+        public override void AddResponse(
+                List<PacketExtension> extensions) => extensions.Add(new PacketExtension() {
+                    Tag = Constants.ExtensionTagsChallengeTag,
+                    Value = RdpStreamInitial.ChallengeNonce
+                    });
+
+
         ///<summary>The Web Client</summary> 
         public WebClient WebClient { get; set; }
 
@@ -93,7 +101,10 @@ namespace Goedel.Protocol.Presentation {
             CredentialSelf = initiatorCredential;
             WebClient = new WebClient();
 
-            RdpStreamInitial = new RdpStreamClient(null, protocol, CredentialSelf, this) {
+
+            // Create the initial stream NB Do NOT re-present the credential used to
+            // initialize the connection.
+            RdpStreamInitial = new RdpStreamClient(null, protocol, null, this) {
                 StreamState = StreamState.Initial
                 };
             }
@@ -121,10 +132,10 @@ namespace Goedel.Protocol.Presentation {
         /// <returns></returns>
         public T GetClient<T>(Credential credential=null) where T : JpcClientInterface, new() {
 
-            var sessionStream = RdpStreamInitial.MakeStreamClient(credential);
-            return new() {
-                JpcSession = sessionStream
-                };
+            var client = new T();
+            client.JpcSession = RdpStreamInitial.MakeStreamClient(client.GetWellKnown, credential);
+
+            return client;
             }
 
         #endregion

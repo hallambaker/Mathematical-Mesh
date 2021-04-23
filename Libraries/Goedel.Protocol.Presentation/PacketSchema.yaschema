@@ -15,21 +15,10 @@ Client
 		Plaintext
 			ClientEphemerals
 			Payload
-
-	InitiatorExchange
-		Initial
-			HostCredential
-		Plaintext
-			HostKeyID
-			ClientEphemeral
-		Mezzanine
-			ClientCredential
-			Payload
 			
 	InitiatorComplete
 		Respond
-			HostChallenge1
-			HostChallenge2
+			ResponderChallenge
 		Plaintext
 			HostKeyID
 			ClientEphemeral
@@ -46,20 +35,11 @@ Host
 	
 	ResponderChallenge
 		Respond
-			ClientInitial
+			InitiatorHello
 		Plaintext
 			HostEphemerals
 			HostCredential
 			Challenge
 			Payload
 
-
-	ResponderComplete
-		Respond
-			ClientExchange
-		Mezzanine
-			ClientKeyID
-			HostEphemeral
-		Encrypted
-			Payload
 

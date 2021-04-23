@@ -9,52 +9,6 @@ using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation {
 
-
-
-
-
-    /// <summary>
-    /// The packet types passed as plaintext. This is actually redundant as far as the 
-    /// specification goes as these are now at the option of the sender.
-    /// </summary>
-    public enum PlaintextPacketType {
-        ///<summary>Plaintext request to establish a new connection to the host. This is 
-        ///only used in cases where the client does not have the public key of the host.</summary> 
-        ClientInitial = 0x00,
-
-
-        ///<summary>Data packet (for internal use).</summary> 
-        Data = 0x01,
-
-        ///<summary>Report an error to the sender.</summary> 
-        Error = 0x80,
-
-
-
-        ///<summary>Encrypted request to establish a new connection to the host.
-        ///This MAY be used in cases where the client has the public key of the host.</summary> 
-        ClientExchange = 0x82,
-
-        ///<summary>Client completion of key exchange.</summary> 
-        ClientComplete = 0x83,
-
-        ///<summary>Client completion of key exchange.</summary> 
-        ClientCompleteDeferred = 0x84,
-
-        ///<summary>Present a challenge to a client requesting a connection.</summary> 
-        HostChallenge = 0x85,
-
-        ///<summary>Present a challenge to a client requesting a connection.</summary> 
-        HostExchange = 0x86,
-
-        ///<summary>Host completion of key exchange.</summary> 
-        HostComplete = 0x87,
-
-        ///<summary>Establish a new binding for the specified connection identifier.</summary> 
-        Rebind = 0x88
-
-        }
-
     /// <summary>
     /// Error response codes.
     /// </summary>
@@ -108,36 +62,6 @@ namespace Goedel.Protocol.Presentation {
         public readonly static byte[] ByteKeyResponderInitiator = TagKeyResponderInitiator.ToUTF8();
 
 
-
-        /////<summary>Proof of work challenge</summary> 
-        //public const string ExtensionTagsChallengeTag = "Challenge";
-
-        /////<summary>Proof of work challenge</summary> 
-        //public const string ExtensionTagsChallengeProofOfWorkTag = "POW";
-
-
-
-        /////<summary>PKIX Certificate</summary> 
-        //public const string ExtensionTagsPkixX509Tag = "PKIXC";
-
-        /////<summary>PKIX OCSP Token</summary> 
-        //public const string ExtensionTagsPkixOcspTag = "PKIXO";
-
-        /////<summary>Mesh Profile</summary> 
-        //public const string ExtensionTagsMeshProfileTag = "MMMP";
-
-        /////<summary>Mesh Connection</summary> 
-        //public const string ExtensionTagsMeshConnectionTag = "MMMC";
-
-        /////<summary></summary> 
-        //public const byte TagHostExchange = 1;
-        /////<summary></summary> 
-        //public const  byte TagHostChallenge1 = 2;
-        /////<summary></summary> 
-        //public const byte TagHostChallenge2 = 3;
-        /////<summary></summary> 
-        //public const byte TagHostComplete = 4;
-
         /// <summary>
         /// Using the primary key <paramref name="ikm"/> and generated nonce <paramref name="nonce"/>,
         /// derive key <paramref name="key"/> and initialization vector <paramref name="iv"/>.
@@ -151,8 +75,6 @@ namespace Goedel.Protocol.Presentation {
             nonce[0] |= 0b1000_0000;
 
             Derive2(ikm, nonce, out iv, out key);
-
-
             }
 
         /// <summary>
@@ -171,9 +93,5 @@ namespace Goedel.Protocol.Presentation {
             key = keyDerive.Derive(TagKey, SizeKeyAesGcm);
             }
 
-
-
-        ///<summary>Obsolete, remove</summary> 
-        public static readonly byte[] ZeroArray = new byte[MinimumPacketSize];
         }
     }
