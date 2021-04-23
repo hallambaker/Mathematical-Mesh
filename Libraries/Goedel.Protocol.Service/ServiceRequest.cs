@@ -121,7 +121,7 @@ namespace Goedel.Protocol.Service {
 
                 }
             else {
-                ProcessClientData(sourceId, offset);
+                sessionResponder = ProcessClientData(sourceId, offset);
                 }
 
 
@@ -199,23 +199,39 @@ namespace Goedel.Protocol.Service {
             }
 
         ConnectionResponder ProcessClientData(StreamId SourceId, int offset) {
-
-            // identify the source connection
-
-
             responsePacket = ResponderMessageType.Data;
 
-            if (Listener.DictionarySessionsInbound.TryGetValue(SourceId, out var responder)) {
-                packetClient = responder.ParsePacketData(Buffer, offset, Count);
-                return responder;
+            if (!Listener.DictionarySessionsInbound.TryGetValue(SourceId, out var responder)) {
+
+                throw new NYI();
                 }
 
+            var packet = responder.ParsePacketData(Buffer, offset, Count);
+            packetClient = packet;
+            // now check to see if there is a sub-stream to be created.
 
-            // map the source id here
-            //PacketClient = ParsePacketData(null, Trimmed);
-            throw new NYI();
+            if (packet.CiphertextExtensions != null) {
+                foreach (var extension in packet.CiphertextExtensions) {
+                    switch (extension.Tag) {
+                        case Constants.ExtensionTagsStreamClientTag: {
+                            return Listener.Accept(packetClient);
+
+                            }
+
+                        }
+
+                    }
+                }
+
+            return responder;
+
 
             }
+
+        ConnectionResponder MakeNewStream() {
+            throw new NYI();
+            }
+
 
         ConnectionResponder ProcessClientExchange() {
             throw new NYI();

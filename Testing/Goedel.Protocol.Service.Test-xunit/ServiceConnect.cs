@@ -107,6 +107,7 @@ namespace Goedel.XUnit {
             var response4 = meshClient.Hello(helloRequest);
 
             // An ordinary request on the new client.
+            // failing because we are not fishing out the session id on the stream assignment...
             var response5 = statusClient.ServiceStatus(serviceStatusRequest);
 
 
