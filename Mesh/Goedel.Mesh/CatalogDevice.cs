@@ -158,8 +158,11 @@ namespace Goedel.Mesh {
         public ConnectionDevice ConnectionUser =>
                     EnvelopedConnectionDevice.Decode(KeyCollection);
 
+        /// <summary>
+        /// The account connection assertion.
+        /// </summary>
         public ConnectionAccount ConnectionAccount =>
-            EnvelopedConnectionAccount.Decode(KeyCollection);
+                    EnvelopedConnectionAccount.Decode(KeyCollection);
 
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationDevice"/>

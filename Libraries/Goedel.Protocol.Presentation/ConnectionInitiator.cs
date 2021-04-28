@@ -23,12 +23,10 @@ using System.Collections.Generic;
 using System.Net;
 
 namespace Goedel.Protocol.Presentation {
-
-
     /// <summary>
     /// Presentation client connection. Tracks the state of a client connection.
     /// </summary>
-    public partial class ConnectionInitiator : Connection {
+    public partial class ConnectionInitiator : RudConnection {
 
         #region // Properties
         ///<inheritdoc/>
@@ -50,25 +48,27 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>The connection domain.</summary> 
         public string Domain { get; set; }
+
+        ///<summary>The connection instance specifier (to allow multiple services
+        ///to be run for testing, etc.</summary> 
         public string Instance { get; set; }
 
 
 
-        ///<summary>The object encoding for use in the connection</summary> 
-        public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON;
+
 
         ///<summary>Reusable packet challenge</summary> 
         public Packet PacketChallenge;
 
-
-        public RdpStream RdpStreamInitial { get; set; }
+        ///<summary>The primary RUD stream.</summary> 
+        public RudStream RudStreamInitial { get; set; }
 
 
         ///<inheritdoc/>
         public override void AddResponse(
                 List<PacketExtension> extensions) => extensions.Add(new PacketExtension() {
                     Tag = Constants.ExtensionTagsChallengeTag,
-                    Value = RdpStreamInitial.ChallengeNonce
+                    Value = RudStreamInitial.ChallengeNonce
                     });
 
 
@@ -104,24 +104,19 @@ namespace Goedel.Protocol.Presentation {
 
             // Create the initial stream NB Do NOT re-present the credential used to
             // initialize the connection.
-            RdpStreamInitial = new RdpStreamClient(null, protocol, null, this) {
+            RudStreamInitial = new RudStreamClient(null, protocol, null, this) {
                 StreamState = StreamState.Initial
                 };
             }
 
 
         #endregion
-
-
+        #region // Destructor
 
         ///<inheritdoc/>
         protected override void Disposing() => WebClient?.Dispose();
 
-
-
-
-
-
+        #endregion
         #region // Methods
 
 
@@ -133,7 +128,7 @@ namespace Goedel.Protocol.Presentation {
         public T GetClient<T>(Credential credential=null) where T : JpcClientInterface, new() {
 
             var client = new T();
-            client.JpcSession = RdpStreamInitial.MakeStreamClient(client.GetWellKnown, credential);
+            client.JpcSession = RudStreamInitial.MakeStreamClient(client.GetWellKnown, credential);
 
             return client;
             }

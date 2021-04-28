@@ -9,27 +9,12 @@ using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation {
 
-    /// <summary>
-    /// Error response codes.
-    /// </summary>
-    public enum ErrorCode {
-        
-        ///<summary>The request could not be bound to an inbound connection. This could be because
-        ///the source address has changed.</summary> 
-        UnknownConnection = 0,
-
-        ///<summary>The request was refused for reasons reserved to the responder.</summary> 
-        Refused = 1
-
-
-        }
-
 
     /// <summary>
     /// Constants class
     /// </summary>
     public static partial class Constants {
-
+        #region // Properties
         ///<summary>The minimum packet size.</summary> 
         public const int MinimumPacketSize = 1200;
 
@@ -60,7 +45,8 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>The KDF info tag to be used to derive keys.</summary> 
         public readonly static byte[] ByteKeyResponderInitiator = TagKeyResponderInitiator.ToUTF8();
-
+        #endregion
+        #region // Methods 
 
         /// <summary>
         /// Using the primary key <paramref name="ikm"/> and generated nonce <paramref name="nonce"/>,
@@ -92,6 +78,6 @@ namespace Goedel.Protocol.Presentation {
             iv = keyDerive.Derive(TagIv, SizeIvAesGcm);
             key = keyDerive.Derive(TagKey, SizeKeyAesGcm);
             }
-
+        #endregion
         }
     }

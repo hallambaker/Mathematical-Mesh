@@ -37,16 +37,16 @@ namespace Goedel.Mesh.Test {
             return client;
             }
 
-        public override Service StartService() {
+        public override RudService StartService() {
 
             var httpEndpoint = new HttpEndpoint(ServiceName, MeshService.GetWellKnown, Test);
             var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, Test);
             var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
 
-            using var provider = new Provider(endpoints, MeshService);
+            using var provider = new RudProvider(endpoints, MeshService);
 
-            var providers = new List<Provider> { provider };
-            return new RdpService(null, providers);
+            var providers = new List<RudProvider> { provider };
+            return new RudService(providers, null);
 
 
             var service = base.StartService();
@@ -83,7 +83,7 @@ namespace Goedel.Mesh.Test {
             new PublicMeshService(ServiceName, ServiceDirectory).CacheValue (out meshService);
         PublicMeshService meshService;
 
-        Service service;
+        RudService service;
 
         public virtual MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) {
 
@@ -104,7 +104,7 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        public virtual Service StartService() {
+        public virtual RudService StartService() {
 
 
 
@@ -112,10 +112,10 @@ namespace Goedel.Mesh.Test {
             var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, Test);
             var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
 
-            using var provider = new Provider(endpoints, MeshService);
+            using var provider = new RudProvider(endpoints, MeshService);
 
-            var providers = new List<Provider> { provider };
-            return new RdpService(null, providers);
+            var providers = new List<RudProvider> { provider };
+            return new RudService(providers, null);
             }
 
 

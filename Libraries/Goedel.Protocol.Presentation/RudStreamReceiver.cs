@@ -19,36 +19,47 @@
 //  THE SOFTWARE.
 
 using Goedel.Utilities;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
+//using Goedel.Protocol.Service;
 using System.Threading.Tasks;
-using Goedel.Protocol.Service;
-using Goedel.Protocol.Presentation;
 
-namespace Goedel.Protocol.Service {
 
+
+namespace Goedel.Protocol.Presentation {
     /// <summary>
-    /// RDP Service provider managing HTTP and UDP listeners using Mesh credentials.
+    /// RUD stream receiver class. Provides methods to send control messages and to receive
+    /// notice of receipt of a datagtram.
     /// </summary>
-    public class RdpService : Goedel.Protocol.Service.Service {
+    public class RudStreamReceiver: RudStream {
+        #region // Constructors
 
         /// <summary>
-        /// Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
+        /// Initialize a new stream instance as a child of <paramref name="parent"/> to support
+        /// protocol <paramref name="protocol"/> 
         /// </summary>
-        /// <param name="credential">The responder credential</param>
-        /// <param name="providers">The services to be served.</param>
-        /// <param name="maxCores">Maximum number of dispatch threads.</param>
-        /// <remarks>Constructor returns after the service has been started and listener threads 
-        /// initialized.</remarks>
-        public RdpService(Credential credential, List<Provider> providers, int maxCores = 0) : 
-                    base (new RdpListener(credential), providers, maxCores) {
+        /// <param name="parent">The parent stream</param>
+        /// <param name="protocol">The stream protocol</param>
+        /// <param name="credential">Optional additional credential.</param>
+
+        public RudStreamReceiver(
+                RudStream parent,
+                string protocol,
+                Credential credential = null) : base(parent, protocol, credential) {
+
+
+
             }
+        #endregion
 
 
+        #region // Methods
+        public async Task<DataGram> AsyncReceive() => throw new NYI();
 
+        public async void SendControlDatagram(DataGram dataGram) {
+
+            }
+        #endregion
 
         }
+
+
     }

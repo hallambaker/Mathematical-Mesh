@@ -46,7 +46,7 @@ namespace Goedel.Protocol.Service {
         public int Slot;
 
         ///<summary></summary> 
-        public Service Service;
+        public RudService Service;
 
         ///<summary>The buffer to receive the input request.</summary> 
         protected byte[] Buffer = new byte[MaxRequest];
@@ -60,7 +60,7 @@ namespace Goedel.Protocol.Service {
 
         #endregion
 
-
+        #region // Methods 
 
 
         /// <summary>
@@ -101,8 +101,9 @@ namespace Goedel.Protocol.Service {
 
 
             var (sourceId, offset) = StreamId.GetSourceId(Buffer);
-            ConnectionResponder sessionResponder=null;
 
+
+            RudStream stream = null;
 
             if (sourceId.Value == 0) {
                 offset = Constants.SizeReservedInitialStreamId;
@@ -110,19 +111,22 @@ namespace Goedel.Protocol.Service {
 
                 switch (messageType) {
                     case InitiatorMessageType.InitiatorHello: {
-                        sessionResponder = ProcessClientInitial(offset);
+                        stream = ProcessClientInitial(offset);
                         break;
                         }
                     case InitiatorMessageType.InitiatorComplete: {
-                        sessionResponder = ProcessClientComplete(offset);
+                        stream = ProcessClientComplete(offset);
                         break;
                         }
                     }
 
                 }
             else {
-                sessionResponder = ProcessClientData(sourceId, offset);
+                stream = ProcessClientData(sourceId, offset);
                 }
+
+
+            var sessionResponder = stream?.RudConnection as ConnectionResponder;
 
 
             if (sessionResponder == null) {
@@ -175,7 +179,8 @@ namespace Goedel.Protocol.Service {
                         packetExtensions = new List<PacketExtension> { returnExtension };
                         }
 
-                    var responsePacket = sessionResponder.SerializePacketData(responseBytes, packetExtensions);
+                    var responsePacket = sessionResponder.SerializePacketData(
+                        stream.RemoteStreamId, payload: responseBytes, ciphertextExtensions: packetExtensions);
                     ReturnResponse(responsePacket);
 
                     break;
@@ -191,52 +196,69 @@ namespace Goedel.Protocol.Service {
 
 
 
-        ConnectionResponder ProcessClientInitial(int offset) {
+        RudStream ProcessClientInitial(int offset) {
             responsePacket = ResponderMessageType.ResponderChallenge;
             packetClient = Listener.ParseInitiatorHello(Buffer, offset, 
                 Count- offset);
             return Listener.GetTemporaryResponder(packetClient); ;
             }
 
-        ConnectionResponder ProcessClientData(StreamId SourceId, int offset) {
+        RudStream ProcessClientData(StreamId SourceId, int offset) {
+
+
             responsePacket = ResponderMessageType.Data;
 
-            if (!Listener.DictionarySessionsInbound.TryGetValue(SourceId, out var responder)) {
-
+            // Is the stream unknown?
+            if (!Listener.DictionaryStreamsInbound.TryGetValue(SourceId, out var stream)) {
+                // NYI: Need better handling of unknown steams, return error message?
                 throw new NYI();
                 }
+
+
+            var responder = stream.RudConnection; 
 
             var packet = responder.ParsePacketData(Buffer, offset, Count);
             packetClient = packet;
             // now check to see if there is a sub-stream to be created.
 
+
+            var streamChild = Listener.AcceptStream(packet.CiphertextExtensions, parentStream: stream);
+            if (streamChild != null) {
+                return streamChild;
+                }
+
+
             if (packet.CiphertextExtensions != null) {
                 foreach (var extension in packet.CiphertextExtensions) {
                     switch (extension.Tag) {
-                        case Constants.ExtensionTagsStreamClientTag: {
-                            return Listener.Accept(packetClient);
+                        case Constants.ExtensionTagsRollTag: {
 
+                            break;
                             }
+                        case Constants.ExtensionTagsCloseStreamTag: {
 
+                            break;
+                            }
+                        case Constants.ExtensionTagsCloseConnectionTag: {
+
+                            break;
+                            }
                         }
 
                     }
                 }
-
-            return responder;
-
-
+            return stream;
             }
 
-        ConnectionResponder MakeNewStream() {
-            throw new NYI();
-            }
+        //ConnectionResponder MakeNewStream() {
+        //    throw new NYI();
+        //    }
 
 
-        ConnectionResponder ProcessClientExchange() {
-            throw new NYI();
-            }
-        ConnectionResponder ProcessClientComplete(int offset) {
+        //ConnectionResponder ProcessClientExchange() {
+        //    throw new NYI();
+        //    }
+        RudStream ProcessClientComplete(int offset) {
 
             packetClient = Listener.ParseInitiatorComplete(Buffer, offset, Count-offset);
             // verify the challenge here
@@ -247,7 +269,7 @@ namespace Goedel.Protocol.Service {
                 
 
                 responsePacket = ResponderMessageType.Data;
-                return Listener.Accept(packetClient);
+                return Listener.AcceptConnection(packetClient);
                 }
             else {
                 responsePacket = ResponderMessageType.Error;
@@ -266,7 +288,7 @@ namespace Goedel.Protocol.Service {
         /// <param name="payload">The payload data to return.</param>
         protected abstract void ReturnResponse(byte[] payload);
 
-
+        #endregion
         }
 
 
@@ -274,9 +296,11 @@ namespace Goedel.Protocol.Service {
     /// Connection handler for HTTP request
     /// </summary>
     public class ServiceRequestHttp : ServiceRequest {
+        #region // Properties
         HttpListenerContext ListenerContext { get; }
 
-
+        #endregion
+        #region // Constructors
 
 
 
@@ -287,7 +311,7 @@ namespace Goedel.Protocol.Service {
         /// </summary>
         /// <param name="service">The service to process the request.</param>
         /// <param name="listenerContext">The HTTP request context.</param>
-        public ServiceRequestHttp(Service service, HttpListenerContext listenerContext) {
+        public ServiceRequestHttp(RudService service, HttpListenerContext listenerContext) {
 
             Service = service;
             ListenerContext = listenerContext;
@@ -300,7 +324,8 @@ namespace Goedel.Protocol.Service {
                 }
 
             }
-
+        #endregion
+        #region // Methods 
         /// <summary>
         /// Process the connection, dispatch the request and return the result.
         /// </summary>
@@ -365,7 +390,7 @@ namespace Goedel.Protocol.Service {
             ListenerContext.Response.Close();
             }
 
-
+        #endregion
         }
 
     /// <summary>
@@ -373,13 +398,14 @@ namespace Goedel.Protocol.Service {
     /// </summary>
     public class ServiceRequestUdp : ServiceRequest {
 
-
+        #region // Constructors
         /// <summary>
         /// Constructor, process the request contained in <paramref name="result"/>.
         /// </summary>
         /// <param name="result">The UDP receive result</param>
         public ServiceRequestUdp(UdpReceiveResult result) => Buffer = result.Buffer;
-
+        #endregion
+        #region // Methods 
         /// <summary>
         /// Process the connection, dispatch the request and return the result.
         /// </summary>
@@ -395,6 +421,8 @@ namespace Goedel.Protocol.Service {
         protected override void ReturnResponse(byte[] chunk) {
             throw new NYI();
             }
+
+        #endregion
         }
 
 

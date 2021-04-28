@@ -41,10 +41,10 @@ namespace Goedel.Mesh.Credential {
     /// </summary>
     public class MeshCredential : Goedel.Protocol.Presentation.Credential {
 
-
+        ///<summary>Tag to describe the credential in a <see cref="PacketExtension"/></summary> 
         public override string Tag => Constants.ExtensionTagsMeshConnectionTag;
 
-
+        ///<summary>The binary credential value.</summary> 
         public override byte[] Value => Connection.DareEnvelope.GetJsonB(false);
 
         ///<summary>The profile to which this credential is bound</summary> 
@@ -107,11 +107,11 @@ namespace Goedel.Mesh.Credential {
 
             }
 
-        ///<inheritdoc/>
-        public override ConnectionResponder GetTemporaryResponder(
-                    Listener listener,
-                    Packet packetRequest) =>
-                    new MeshSessionResponder(listener, packetRequest);
+        /////<inheritdoc/>
+        //public override ConnectionResponder GetTemporaryResponder(
+        //            Listener listener,
+        //            Packet packetRequest) =>
+        //            new ConnectionResponder(listener, packetRequest);
 
 
         ///<inheritdoc/>
@@ -142,20 +142,10 @@ namespace Goedel.Mesh.Credential {
 
         ///<inheritdoc/>
         public override void AddCredentials(
-                    List<PacketExtension> extensions) {
-            //Screen.WriteLine($"Add credentials {Connection.DareEnvelope.GetJson().ToUTF8()}");
-            //Screen.WriteLine($"Add credentials {Connection.GetJson().ToUTF8()}");
-
-            //Screen.WriteLine($"Add credentials Length {Connection.GetJsonB().Length}");
-
-
-            extensions.Add(new PacketExtension() {
-                Tag = Tag,
-                Value = Value
-                }) ;
-            //Screen.WriteLine($"  Packed {value.Length}");
-
-            }
+                    List<PacketExtension> extensions) => extensions.Add(new PacketExtension() {
+                        Tag = Tag,
+                        Value = Value
+                        });
 
         ///<inheritdoc/>
         public override Goedel.Protocol.Presentation.Credential GetCredentials(

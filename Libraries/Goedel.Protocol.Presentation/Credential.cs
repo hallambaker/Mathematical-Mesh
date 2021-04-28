@@ -29,14 +29,19 @@ namespace Goedel.Protocol.Presentation {
     /// Base class for presentation credentials.
     /// </summary>
     public abstract class Credential {
+        #region // Properties
 
+        ///<summary><see cref="PacketExtension"/> tag for credential type.</summary> 
         public abstract string Tag { get; }
 
+        ///<summary><see cref="PacketExtension"/> binary data.</summary> 
         public abstract byte[] Value { get; }
 
-
+        ///<summary>The public key to use for authentication.</summary> 
         public abstract KeyPairAdvanced AuthenticationPublic { get; }
 
+        #endregion
+        #region // Methods 
 
         /// <summary>
         /// Generate a set of ephemerals for the supported algorithms to offer for 
@@ -51,7 +56,6 @@ namespace Goedel.Protocol.Presentation {
                     ref List<KeyPairAdvanced> ephmeralsOffered
                     );
 
-
         /// <summary>
         /// Add an extension containing this credential to <paramref name="extensions"/>.
         /// </summary>
@@ -60,10 +64,6 @@ namespace Goedel.Protocol.Presentation {
                     List<PacketExtension> extensions
                     );
 
-
-
-
-
         /// <summary>
         /// Add an extension containing this credential to <paramref name="extensions"/>.
         /// </summary>
@@ -71,7 +71,6 @@ namespace Goedel.Protocol.Presentation {
         public abstract Credential GetCredentials(
                     List<PacketExtension> extensions
                     );
-
 
         /// <summary>
         /// Select a private key compatible with the ephemeral keys offered in 
@@ -117,12 +116,7 @@ namespace Goedel.Protocol.Presentation {
                 List<KeyPairAdvanced> ephemerals,
                 string keyId);
 
-
-
-        public abstract ConnectionResponder GetTemporaryResponder(
-                    Listener listener,
-                    Packet packetRequest);
-
+        #endregion
         }
 
     }

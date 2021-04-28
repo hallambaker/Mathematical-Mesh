@@ -32,7 +32,9 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedConnectionDevice);
         Enveloped<ConnectionAccount> envelopedConnectionDevice;
 
-
+        /// <summary>
+        /// Minimize the connection data to remove unnecessary data.
+        /// </summary>
         public void Strip() {
             if (Authentication != null) {
                 Authentication.Udf = null;

@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 4/23/2021 11:20:29 AM
+//  This file was automatically generated at 4/28/2021 5:46:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -100,6 +100,8 @@ namespace Goedel.Protocol.Presentation {
         StreamId,
         ///<summary>OTSID</summary>
         OneTimeStreamId,
+        ///<summary>Roll</summary>
+        Roll,
         ///<summary>Challenge</summary>
         Challenge,
         ///<summary>ProofOfWork</summary>
@@ -118,12 +120,14 @@ namespace Goedel.Protocol.Presentation {
         CloseConnection,
         ///<summary>Client</summary>
         StreamClient,
-        ///<summary>Service</summary>
-        StreamService,
+        ///<summary>Receiver</summary>
+        StreamReceiver,
+        ///<summary>New</summary>
+        StreamNew,
         ///<summary>Sender</summary>
         StreamSender,
-        ///<summary>Receive</summary>
-        StreamReceiver        }
+        ///<summary>Service</summary>
+        StreamService        }
 
 
     ///<summary>
@@ -271,6 +275,8 @@ namespace Goedel.Protocol.Presentation {
         public const string  ExtensionTagsStreamIdTag = "StreamId";
         ///<summary>Jose enumeration tag for ExtensionTags.OneTimeStreamId</summary>
         public const string  ExtensionTagsOneTimeStreamIdTag = "OneTimeStreamId";
+        ///<summary>Jose enumeration tag for ExtensionTags.Roll</summary>
+        public const string  ExtensionTagsRollTag = "Roll";
         ///<summary>Jose enumeration tag for ExtensionTags.Challenge</summary>
         public const string  ExtensionTagsChallengeTag = "Challenge";
         ///<summary>Jose enumeration tag for ExtensionTags.ChallengeProofOfWork</summary>
@@ -289,12 +295,14 @@ namespace Goedel.Protocol.Presentation {
         public const string  ExtensionTagsCloseConnectionTag = "CloseConnection";
         ///<summary>Jose enumeration tag for ExtensionTags.StreamClient</summary>
         public const string  ExtensionTagsStreamClientTag = "StreamClient";
-        ///<summary>Jose enumeration tag for ExtensionTags.StreamService</summary>
-        public const string  ExtensionTagsStreamServiceTag = "StreamService";
-        ///<summary>Jose enumeration tag for ExtensionTags.StreamSender</summary>
-        public const string  ExtensionTagsStreamSenderTag = "StreamSender";
         ///<summary>Jose enumeration tag for ExtensionTags.StreamReceiver</summary>
         public const string  ExtensionTagsStreamReceiverTag = "StreamReceiver";
+        ///<summary>Jose enumeration tag for ExtensionTags.StreamNew</summary>
+        public const string  ExtensionTagsStreamNewTag = "StreamNew";
+        ///<summary>Jose enumeration tag for ExtensionTags.StreamSender</summary>
+        public const string  ExtensionTagsStreamSenderTag = "StreamSender";
+        ///<summary>Jose enumeration tag for ExtensionTags.StreamService</summary>
+        public const string  ExtensionTagsStreamServiceTag = "StreamService";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -312,6 +320,7 @@ namespace Goedel.Protocol.Presentation {
                 ExtensionTagsClaimIdTag => ExtensionTags.ClaimId,
                 ExtensionTagsStreamIdTag => ExtensionTags.StreamId,
                 ExtensionTagsOneTimeStreamIdTag => ExtensionTags.OneTimeStreamId,
+                ExtensionTagsRollTag => ExtensionTags.Roll,
                 ExtensionTagsChallengeTag => ExtensionTags.Challenge,
                 ExtensionTagsChallengeProofOfWorkTag => ExtensionTags.ChallengeProofOfWork,
                 ExtensionTagsRefuseTag => ExtensionTags.Refuse,
@@ -321,9 +330,10 @@ namespace Goedel.Protocol.Presentation {
                 ExtensionTagsCloseStreamTag => ExtensionTags.CloseStream,
                 ExtensionTagsCloseConnectionTag => ExtensionTags.CloseConnection,
                 ExtensionTagsStreamClientTag => ExtensionTags.StreamClient,
-                ExtensionTagsStreamServiceTag => ExtensionTags.StreamService,
-                ExtensionTagsStreamSenderTag => ExtensionTags.StreamSender,
                 ExtensionTagsStreamReceiverTag => ExtensionTags.StreamReceiver,
+                ExtensionTagsStreamNewTag => ExtensionTags.StreamNew,
+                ExtensionTagsStreamSenderTag => ExtensionTags.StreamSender,
+                ExtensionTagsStreamServiceTag => ExtensionTags.StreamService,
                 _ => ExtensionTags.Unknown
                 };
 
@@ -343,6 +353,7 @@ namespace Goedel.Protocol.Presentation {
                 ExtensionTags.ClaimId => ExtensionTagsClaimIdTag,
                 ExtensionTags.StreamId => ExtensionTagsStreamIdTag,
                 ExtensionTags.OneTimeStreamId => ExtensionTagsOneTimeStreamIdTag,
+                ExtensionTags.Roll => ExtensionTagsRollTag,
                 ExtensionTags.Challenge => ExtensionTagsChallengeTag,
                 ExtensionTags.ChallengeProofOfWork => ExtensionTagsChallengeProofOfWorkTag,
                 ExtensionTags.Refuse => ExtensionTagsRefuseTag,
@@ -352,9 +363,10 @@ namespace Goedel.Protocol.Presentation {
                 ExtensionTags.CloseStream => ExtensionTagsCloseStreamTag,
                 ExtensionTags.CloseConnection => ExtensionTagsCloseConnectionTag,
                 ExtensionTags.StreamClient => ExtensionTagsStreamClientTag,
-                ExtensionTags.StreamService => ExtensionTagsStreamServiceTag,
-                ExtensionTags.StreamSender => ExtensionTagsStreamSenderTag,
                 ExtensionTags.StreamReceiver => ExtensionTagsStreamReceiverTag,
+                ExtensionTags.StreamNew => ExtensionTagsStreamNewTag,
+                ExtensionTags.StreamSender => ExtensionTagsStreamSenderTag,
+                ExtensionTags.StreamService => ExtensionTagsStreamServiceTag,
                 _ => null
                 };
 

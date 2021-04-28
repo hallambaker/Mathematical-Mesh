@@ -114,6 +114,10 @@ File PresentationConstants
 		Code OneTimeStreamId		"OTSID"
 			Description
 				|Declare a set of one-time use stream identifiers of equal length, 
+		Code Roll					"Roll"
+			Description
+				|Roll the stream to the primary exchange key of the specified stream ID.
+
 		
 		// Present challenges
 		Code Challenge				"Challenge"
@@ -139,6 +143,7 @@ File PresentationConstants
 		Code Encrypt				"Encrypt"
 			Description
 				|The stream encryption options
+
 		Code CloseStream			"Close"
 			Description
 				|
@@ -151,14 +156,28 @@ File PresentationConstants
 				|When specified in a datagram, requests that the recipient offer a transactional
 				|service for the specified service and that the payload of the current datagram
 				|be presented to that packet as a request.
+
+		Code StreamReceiver			"Receiver"
+			Description
+				|
+
+
+		Code StreamNew				"New"
+			Description
+				|Close the current stream and create a new one using the same parameters except 
+				|that the datagram index is reset to zero and where overriden by other extensions.
+
+
+		// These might be redundant. Maybe best to require all streams be created from the
+		// control end.
+		Code StreamSender			"Sender"
+			Description
+				|
+
 		Code StreamService			"Service"
 			Description
 				|Announces creation of a client stream to which requests MAY be submitted. All 
 				|Stream ID announcements following the Service announcement are 
-		Code StreamSender			"Sender"
-			Description
-				|
-		Code StreamReceiver			"Receive"
-			Description
-				|
+
+
 

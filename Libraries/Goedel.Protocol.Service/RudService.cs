@@ -14,15 +14,15 @@ namespace Goedel.Protocol.Service {
     /// <summary>
     /// Service provider managing HTTP and UDP listeners.
     /// </summary>
-    public class Service : Disposable {
+    public class RudService : Disposable {
 
-
+        #region // Properties
 
         ///<summary>Maximum number of concurrent worker processes.</summary> 
         public int MaxDispatch { get; }
 
         ///<summary>Timeout for action on a worker thread.</summary> 
-        public int Timeout { get; set; }  = 60 * 1000;
+        public int Timeout { get; set; } = 60 * 1000;
 
         bool active = true;
 
@@ -38,7 +38,7 @@ namespace Goedel.Protocol.Service {
 
         private Task<ServiceRequest>[] serviceTasks;
 
-        private HttpListener httpListener=null;
+        private HttpListener httpListener = null;
 
         private UdpClient[] udpListeners;
 
@@ -48,7 +48,7 @@ namespace Goedel.Protocol.Service {
 
 
         private CancellationTokenSource cancellationTokenSource;
-        private CancellationToken cancellationToken ;
+        private CancellationToken cancellationToken;
         private int udpListenerCount;
         private int httpListenerCount = 1;
         private int ListenerCount => udpListenerCount + httpListenerCount;
@@ -58,8 +58,12 @@ namespace Goedel.Protocol.Service {
         bool[] dispatchTaskActive;
 
         ///<summary>Service instrumentation.</summary> 
-        public Monitor Monitor ;
+        public Monitor Monitor;
 
+        Dictionary<string, RudProvider> providerMap = new();
+
+        #endregion
+        #region // Destructor
         /// <summary>
         /// Disposal routine, perform clean termination of all active threads.
         /// </summary>
@@ -77,40 +81,24 @@ namespace Goedel.Protocol.Service {
 
             }
 
-        Dictionary<string, Provider> providerMap = new();
 
-        /// <summary>
-        /// Return a provider.
-        /// </summary>
-        /// <param name="domain">Domain to which the provider is bound.</param>
-        /// <param name="port">Port to which the provider is bound.</param>
-        /// <param name="resource">Protocol serviced.</param>
-        /// <returns>The provider.</returns>
-        public Provider GetProvider(string domain, int port, string resource) {
+        #endregion
+        #region // Constructors
 
-            var test = $"http://+:{port}{resource}";
-            if (providerMap.TryGetValue(test, out var provider)) {
-                return provider;
-                }
 
-            test = $"http://{domain}:{port}{resource}";
-            if (providerMap.TryGetValue(test, out provider)) {
-                return provider;
-                }
-            return null;
-            }
 
         /// <summary>
         /// Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
         /// </summary>
-        /// <param name="rdpListener">The RDP listener layer.</param>
         /// <param name="providers">The services to be served.</param>
+        /// <param name="rdpListener">Specify the listener layer (default is <see cref="RudListener"/>.</param>
         /// <param name="maxCores">Maximum number of dispatch threads.</param>
+        /// <param name="credential">Credential for the listener to use.</param>
         /// <remarks>Constructor returns after the service has been started and listener threads 
         /// initialized.</remarks>
-        public Service(Listener rdpListener, List<Provider> providers, int maxCores = 0) {
+        public RudService(List<RudProvider> providers, Credential credential = null, Listener rdpListener = null, int maxCores = 0) {
 
-            Listener = rdpListener;
+            Listener = rdpListener?? new RudListener(credential, providers);
 
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
@@ -177,13 +165,34 @@ namespace Goedel.Protocol.Service {
             serviceThread = new Thread (WaitService);
             serviceThread.Start();
             }
-
+        #endregion
+        #region // Methods 
 
 
         // The choreography here is flawed but leave as is for now. Need to have a three stage 
         // scheme in which we first construct the complete request, then dispatch it on
         // a managed queue and finally release it.
 
+        /// <summary>
+        /// Return a provider.
+        /// </summary>
+        /// <param name="domain">Domain to which the provider is bound.</param>
+        /// <param name="port">Port to which the provider is bound.</param>
+        /// <param name="resource">Protocol serviced.</param>
+        /// <returns>The provider.</returns>
+        public RudProvider GetProvider(string domain, int port, string resource) {
+
+            var test = $"http://+:{port}{resource}";
+            if (providerMap.TryGetValue(test, out var provider)) {
+                return provider;
+                }
+
+            test = $"http://{domain}:{port}{resource}";
+            if (providerMap.TryGetValue(test, out provider)) {
+                return provider;
+                }
+            return null;
+            }
 
         void WaitService() {
 
@@ -353,8 +362,6 @@ namespace Goedel.Protocol.Service {
             await connection;
             return new ServiceRequestUdp(connection.Result);
             }
-
+        #endregion
         }
-
-
     }

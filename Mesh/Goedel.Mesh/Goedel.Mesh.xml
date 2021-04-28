@@ -2591,6 +2591,11 @@
             deserialization.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ConnectionAccount">
+            <summary>
+            The account connection assertion.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.GetActivationDevice(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationDevice"/>
             to return the <see cref="T:Goedel.Mesh.ActivationDevice"/> value.</summary>
@@ -3421,6 +3426,11 @@
         </member>
         <member name="P:Goedel.Mesh.ConnectionAccount.EnvelopedConnectionAccount">
             <summary>Typed enveloped data</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ConnectionAccount.Strip">
+            <summary>
+            Minimize the connection data to remove unnecessary data.
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.ConnectionAccount.Account">
              <summary>
@@ -7088,6 +7098,13 @@
             <param name="algorithmSign">The signature algorithm.</param>
             <param name="algorithmEncrypt">The encryption algorithm.</param>
             <returns>The service profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileService.Sign(Goedel.Mesh.Connection,Goedel.Protocol.ObjectEncoding)">
+            <summary>
+            Sign a host connection.
+            </summary>
+            <param name="connection">The connection to sign.</param>
+            <param name="objectEncoding">The encoding for the connection object.</param>
         </member>
         <member name="P:Goedel.Mesh.ProfileService.ServiceAuthentication">
              <summary>

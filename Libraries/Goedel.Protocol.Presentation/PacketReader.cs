@@ -14,7 +14,7 @@ namespace Goedel.Protocol.Presentation {
     /// Presentation packet reader class.
     /// </summary>
     public class PacketReader {
-
+        #region // Properties
         // Performance: Need to revise the interaction between the packet reader and the JsonReader classes.
 
         ///<summary>Reader position.</summary> 
@@ -29,7 +29,8 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>Factory method returning a reader of the default decryption algorithm and mode.</summary> 
         public static PacketReader Factory(byte[] data) => new PacketReaderAesGcm(data);
-
+        #endregion
+        #region // Constructors
         /// <summary>
         /// Constructor, returns a reader instance for the packet <paramref name="packet"/>.
         /// </summary>
@@ -43,7 +44,8 @@ namespace Goedel.Protocol.Presentation {
             Position = position;
             Last = count < 0 ? packet.Length : position + count;
             }
-
+        #endregion
+        #region // Methods 
         /// <summary>
         /// Read the next byte in the packet.
         /// </summary>
@@ -91,11 +93,22 @@ namespace Goedel.Protocol.Presentation {
             return (int) data;
             }
 
-
+        /// <summary>
+        /// Read a <see cref="ResponderMessageType"/> in a connection packet.
+        /// </summary>
+        /// <param name="buffer">Buffer to be read from.</param>
+        /// <param name="position">Position at which to read.</param>
+        /// <returns>The value read.</returns>
         public static ResponderMessageType ReadResponderMessageType(
                     byte[] buffer,
                     ref int position) => (ResponderMessageType) buffer[position++];
 
+        /// <summary>
+        /// Read a <see cref="InitiatorMessageType"/> in a connection packet.
+        /// </summary>
+        /// <param name="buffer">Buffer to be read from.</param>
+        /// <param name="position">Position at which to read.</param>
+        /// <returns>The value read.</returns>
         public static InitiatorMessageType ReadInitiatorMessageType(
             byte[] buffer,
             ref int position) => (InitiatorMessageType)buffer[position++];
@@ -157,16 +170,7 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>A reader for the decrypted data.</returns>
         public virtual PacketReader Decrypt(byte[] ikm, bool pad = true) => throw new NYI();
 
-
-        ///// <summary>
-        ///// Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="ikm"/> and 
-        ///// the nonce at the start of the packet to provide the necessary keying material.
-        ///// </summary>
-        ///// <param name="ikm">The primary key.</param>
-        ///// <param name="packet">The data to decrypt</param>
-        ///// <returns>A reader for the decrypted data.</returns>
-        //public static PacketReader Unwrap(byte[] ikm, byte[] packet) => PacketReaderAesGcm.Unwrap(ikm, packet);
-
+        #endregion
         }
 
     /// <summary>
@@ -174,17 +178,20 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public class PacketReaderAesGcm : PacketReader {
 
+        #region // Properties
         ///<summary>Initialization vector size in bytes. Currently fixed at 12 bytes.</summary> 
         public virtual int SizeIv => 12;
 
         ///<summary>Tag size in bytes. Currently fixed at 16 bytes.</summary> 
         public virtual int SizeTag => 16;
-
+        #endregion
+        #region // Constructors
         ///<inheritdoc/>
         public PacketReaderAesGcm(byte[] packet, 
                 int position=0,
                 int count = -1) : base(packet, position, count) { }
-
+        #endregion
+        #region // Methods 
         ///<inheritdoc/>
         public override PacketReader Decrypt(byte[] key, bool pad = true) {
 
@@ -258,7 +265,7 @@ namespace Goedel.Protocol.Presentation {
             return new PacketReader(result);
             }
 
-
+        #endregion
         }
 
     }

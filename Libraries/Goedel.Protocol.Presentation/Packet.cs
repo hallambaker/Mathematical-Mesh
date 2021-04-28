@@ -38,11 +38,15 @@ namespace Goedel.Protocol.Presentation {
     /// Packet options (to be specified).
     /// </summary>
     public struct PacketExtension {
+        #region // Properties
+
+
         ///<summary>Registered extension tag</summary> 
         public string Tag;
         ///<summary>Extension value</summary> 
         public byte[] Value;
-
+        #endregion
+        #region // Methods 
 
         /// <summary>
         /// Convenience method scans the list <paramref name="packetExtensions"/> and returns the
@@ -71,6 +75,9 @@ namespace Goedel.Protocol.Presentation {
         public void Dump() {
             Screen.WriteLine($"    {Tag} -> {Value.ToStringBase16()}");
             }
+
+        #endregion
+
         }
 
 
@@ -78,6 +85,8 @@ namespace Goedel.Protocol.Presentation {
     /// Base class for packet classes.
     /// </summary>
     public class Packet {
+        #region // Properties
+
         ///<summary>The packet payload.</summary> 
         public byte[] Payload { get; set; }
 
@@ -89,7 +98,8 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Options specified in the packet plaintext.</summary> 
         public List<PacketExtension> PlaintextExtensions { get; set; }
 
-
+        #endregion
+        #region // Methods 
         /// <summary>
         /// Debug output, remove for final release.
         /// </summary>
@@ -102,16 +112,18 @@ namespace Goedel.Protocol.Presentation {
                 }
 
             }
-
+        #endregion
         }
 
     /// <summary>
     /// Packet data exchanged after negotiation has been completed.
     /// </summary>
     public class PacketData : Packet {
-
+        #region // Properties
         ///<summary>Options specified in the packet ciphertext.</summary> 
         public List<PacketExtension> CiphertextExtensions { get; set; }
+
+        #endregion
 
         }
 

@@ -42,6 +42,12 @@
             assertion).
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Credential.MeshCredential.Tag">
+            <summary>Tag to describe the credential in a <see cref="T:Goedel.Protocol.Presentation.PacketExtension"/></summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Credential.MeshCredential.Value">
+            <summary>The binary credential value.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Credential.MeshCredential.Profile">
             <summary>The profile to which this credential is bound</summary> 
         </member>
@@ -69,9 +75,6 @@
             </summary>
             <param name="connection">The user context used to construct this credential</param>
             <param name="authenticationPrivate">The authentication private key.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.GetTemporaryResponder(Goedel.Protocol.Presentation.Listener,Goedel.Protocol.Presentation.Packet)">
-            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Credential.MeshCredential.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
             <inheritdoc/>

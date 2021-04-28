@@ -29,7 +29,7 @@ namespace Goedel.Protocol.Presentation {
     /// Base class for packet writers.
     /// </summary>
     public class PacketWriter : Disposable {
-
+        #region // Properties
         ///<summary>Position of the writer within the packet.</summary> 
         public int Position { get; set; } = 0;
         ///<summary>The Packet data</summary> 
@@ -41,7 +41,8 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>Factory method, returns a packet writer for the default encryption algorithm.</summary> 
         public static PacketWriter Factory(int packetSize = 1200) => new PacketWriterAesGcm(packetSize);
-
+        #endregion
+        #region // Constructors
         /// <summary>
         /// Constructor, create a packet writer with a packet size of 
         /// <paramref name="packetSize"/>.
@@ -53,7 +54,8 @@ namespace Goedel.Protocol.Presentation {
             Packet = buffer ?? new byte[packetSize];
             Position = position;
             }
-
+        #endregion
+        #region // Methods 
         /// <summary>
         /// Return the number of bytes taken to specify tag/length production of length
         /// <paramref name="data"/>.
@@ -257,7 +259,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="streamId">The stream identifier.</param>
         /// <returns>The wrapped data packet.</returns>
         public virtual byte[] Wrap(byte[] streamId, byte[] ikm) => throw new NYI();
-
+        #endregion
 
         }
 
@@ -265,17 +267,19 @@ namespace Goedel.Protocol.Presentation {
     /// Encrypting packet writer.
     /// </summary>
     public class PacketWriterAesGcm : PacketWriter {
-
+        #region // Properties
         ///<inheritdoc/>
         public override int RemainingSpace => Packet.Length - Position 
                     - Constants.SizeIvAesGcm - Constants.SizeTagAesGcm;
-
+        #endregion
+        #region // Constructors
         ///<inheritdoc/>
         public PacketWriterAesGcm(
                     int packetSize = 1200, 
                     byte[] buffer = null, 
                     int position = 0) : base(packetSize, buffer, position) { }
-
+        #endregion
+        #region // Methods 
         ///<inheritdoc/>
         public override void Encrypt(byte[] key, PacketWriter writerIn, bool pad=true) {
             //Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
@@ -349,6 +353,6 @@ namespace Goedel.Protocol.Presentation {
 
             return result;
             }
-
+        #endregion
         }
     }

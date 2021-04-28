@@ -45,6 +45,9 @@ namespace Goedel.Protocol.Presentation {
              string Domain,
              string Protocol,
              string Instance = null) : Endpoint (Protocol, Instance) {
+        #region // Properties
+        #endregion
+        #region // Methods 
 
         public string Account(string username) => $"{username}@{Domain}";
 
@@ -57,9 +60,8 @@ namespace Goedel.Protocol.Presentation {
 
         // used for testing.
         public string GetServiceUri() => WebServiceEndpoint.GetEndpoint(Domain, Protocol, null, Instance);
-            
-            
-            //$"http://voodoo.hallambaker.com:15099/.well-known/{Protocol}{specializer}/";
+
+        #endregion
         }
 
 
@@ -68,7 +70,7 @@ namespace Goedel.Protocol.Presentation {
              string Instance = null,
              int Port = 0,
              AddressFamily AddressFamily= AddressFamily.InterNetwork) : Endpoint (Protocol, Instance) {
-
+        #region // Methods 
 
         public UdpClient GetClient() {
             if (Port > 0) {
@@ -90,7 +92,7 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
-
+        #endregion
         }
 
 

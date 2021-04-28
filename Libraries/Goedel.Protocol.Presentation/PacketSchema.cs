@@ -49,7 +49,7 @@ namespace Goedel.Protocol.Presentation {
 	/// <summary>
     /// Client connection class. Tracks the state of a client connection.
     /// </summary>
-    public partial class  ConnectionInitiator : Connection {
+    public partial class  ConnectionInitiator : RudConnection {
 
 
         // Serialize Client packet InitiatorHello
@@ -183,7 +183,7 @@ namespace Goedel.Protocol.Presentation {
 
 		}
 
-    public partial class ConnectionResponder : Connection {
+    public partial class ConnectionResponder : RudConnection {
 
         // Serialize Host packet ResponderChallenge
 

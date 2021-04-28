@@ -35,17 +35,22 @@ namespace Goedel.Protocol.Presentation {
     /// Port identifier. Specifies an IP address and port number.
     /// </summary>
     public record PortId {
+
+        #region // Properties
         ///<summary>The IP address.</summary> 
         public IPAddress IPAddress;
 
         ///<summary>The port number.</summary> 
         public int Port;
+
+        #endregion
         }
 
     /// <summary>
     /// Port history. Used to track possible abuse.
     /// </summary>
     public record PortHistory {
+        #region // Properties
         ///<summary>Time at which the last challenge was issued.</summary> 
         public DateTime LastChallenge;
 
@@ -54,11 +59,15 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>Number of refusals made.</summary> 
         public int Refusals;
+        #endregion
+        #region // Methods 
 
         /// <summary>
         /// Constructor, initialize the last challenge time to now.
         /// </summary>
         public PortHistory() => LastChallenge = DateTime.Now;
+
+        #endregion
         }
 
 
@@ -68,6 +77,10 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public abstract partial class Listener : Disposable {
         #region // Properties
+
+        ///<summary>The list of RUD providers.</summary> 
+        public List<RudProvider> Providers { get; }
+
         ///<summary>Private credential of self.</summary> 
         public virtual Credential CredentialSelf { get; }
 
@@ -75,18 +88,21 @@ namespace Goedel.Protocol.Presentation {
         #region // Constructors
 
         ///<summary>Dictionary mapping inbound source Ids to sessions.</summary> 
-        public Dictionary<StreamId, ConnectionResponder> DictionarySessionsInbound = new();
+        public Dictionary<StreamId, RudStream> DictionaryStreamsInbound = new();
 
         /// <summary>
         /// Base constructor, populate the common properties.
         /// </summary>
         /// <param name="credentialSelf">The credential used by the listener.</param>
-        public Listener(Credential credentialSelf) => CredentialSelf = credentialSelf;
-        
-        
-        
-        #endregion
+        public Listener(Credential credentialSelf,
+            List<RudProvider> providers) {
+            CredentialSelf = credentialSelf;
+            Providers = providers;
+            }
 
+
+        #endregion
+        #region // Methods 
         /// <summary>
         /// Create a challenge value over the packet <paramref name="packetRequest"/> and
         /// payload <paramref name="payload"/> and return as a list of packet extensions.
@@ -113,16 +129,46 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packetRequest">Parsed inbound request packet.</param>
         /// <returns>The host connection. This may be used to wait for inbound requests from the 
         /// connection.</returns>
-        public abstract ConnectionResponder Accept(
+        public abstract RudStream AcceptConnection(
                     Packet packetRequest);
+
+        /// <summary>
+        /// Create a stream according to the parameters specified in <paramref name="packetExtensions"/>.
+        /// If <paramref name="rudConnection"/> is not null, the new stream is the primary stream of
+        /// the connection. Otherwise, <paramref name="parentStream"/> must be non null and the stream is
+        /// made a child stream.
+        /// </summary>
+        /// <param name="packetExtensions">Extensions describing the stream to create (if found)</param>
+        /// <param name="rudConnection">The RUD connection.</param>
+        /// <param name="parentStream">The parent stream</param>
+        /// <returns>The child stream (if created)</returns>
+        public abstract RudStream AcceptStream(List<PacketExtension> packetExtensions,
+                RudConnection rudConnection = null, RudStream parentStream = null);
 
         /// <summary>
         /// Defer creation of a host connection by sending a challenge to the source.
         /// </summary>
         /// <param name="packetRequest">Parsed inbound request packet.</param>
-        public virtual ConnectionResponder GetTemporaryResponder(
+        public virtual RudStream GetTemporaryResponder(
                     Packet packetRequest) => throw new NYI();
 
+        /// <summary>
+        /// Return a provider for protocol <paramref name="protocol"/>. If multiple
+        /// providers are specified, return the instance <paramref name="instance"/>
+        /// </summary>
+        /// <param name="protocol">The protocol identifier.</param>
+        /// <param name="instance">The service instance.</param>
+        /// <returns>Provider interface for the specified service.</returns>
+        public JpcInterface GetService(string protocol, string instance = null) {
+            foreach (var provider in Providers) {
+                if (provider.JpcInterface.GetWellKnown == protocol) {
+                    return provider.JpcInterface;
+                    }
+                }
+            return null;
+            }
+
+        #endregion
 
 
         }

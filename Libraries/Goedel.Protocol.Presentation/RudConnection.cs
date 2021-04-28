@@ -29,7 +29,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Base class for presentation connections.
     /// </summary>
-    public abstract class Connection : Disposable {
+    public abstract class RudConnection : Disposable {
 
         #region // Properties
 
@@ -88,6 +88,12 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>When not null, contains the return address to be sent as an an extension.</summary> 
         public byte[] ReturnStreamId = null;
 
+
+        ///<summary>The listener this connection services</summary> 
+        public Listener Listener { get; protected init; }
+
+        ///<summary>The object encoding for use in the connection</summary> 
+        public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON;
 
         List<KeyPairAdvanced> ephemeralsOffered;
         #endregion
@@ -161,13 +167,13 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="buffer">Optional buffer passed in for use by the method.</param>
         /// <param name="position">Start point for writing to the buffer.</param>
         public virtual byte[] SerializePacketData(
-                
+                byte[] destinationStream,
+
                 byte[] payload = null,
                 List<PacketExtension> ciphertextExtensions = null,
                 int packetSize = -1,
-                byte[]buffer=null,
-                int position =0,
-                byte[] destinationStream = null) {
+                byte[] buffer = null,
+                int position = 0) {
 
             packetSize = payload == null ? Constants.MinimumPacketSize :
                 QuantizePacketLength(payload.Length);
@@ -203,6 +209,10 @@ namespace Goedel.Protocol.Presentation {
 
             return result;
             }
+        #endregion
+        #region // Methods - Streams
+
+
 
         #endregion
         #region // Methods - Key Agreement

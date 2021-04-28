@@ -36,10 +36,10 @@ namespace Goedel.XUnit {
 
 
             testProvider = new TestServiceStatus();
-            var provider = new Provider(testProvider, TransportType.All, Domain, Instance);
+            var provider = new RudProvider(testProvider, TransportType.All, Domain, Instance);
 
-            var providers = new List<Provider> { provider };
-            using var server = new Goedel.Protocol.Service.RdpService(hostCredential, providers);
+            var providers = new List<RudProvider> { provider };
+            using var server = new Goedel.Protocol.Service.RudService(providers, hostCredential);
 
 
             var meshServiceBinding = new ConnectionInitiator(clientCredential, Domain, Instance,
@@ -76,12 +76,12 @@ namespace Goedel.XUnit {
 
             testProvider = new TestServiceStatus();
 
-            var meshProvider = new Provider(meshService, TransportType.All, Domain, Instance);
-            var provider = new Provider(testProvider, TransportType.All, Domain, Instance);
+            var meshProvider = new RudProvider(meshService, TransportType.All, Domain, Instance);
+            var provider = new RudProvider(testProvider, TransportType.All, Domain, Instance);
 
-            var providers = new List<Provider> { meshProvider, provider };
+            var providers = new List<RudProvider> { meshProvider, provider };
 
-            using var server = new Goedel.Protocol.Service.RdpService(hostCredential, providers);
+            using var server = new Goedel.Protocol.Service.RudService(providers, hostCredential);
 
 
             var Connection = new ConnectionInitiator(clientCredential, Domain, Instance, TransportType.Http);

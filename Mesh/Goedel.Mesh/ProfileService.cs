@@ -143,7 +143,11 @@ namespace Goedel.Mesh {
             return result;
             }
 
-
+        /// <summary>
+        /// Sign a host connection.
+        /// </summary>
+        /// <param name="connection">The connection to sign.</param>
+        /// <param name="objectEncoding">The encoding for the connection object.</param>
         public void Sign(Connection connection, ObjectEncoding objectEncoding) =>
             connection.Envelope(KeySignature, objectEncoding:
                         objectEncoding);
