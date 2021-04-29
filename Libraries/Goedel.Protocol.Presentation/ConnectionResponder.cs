@@ -80,8 +80,8 @@ namespace Goedel.Protocol.Presentation {
             CredentialSelf = Listener?.CredentialSelf;
 
             if (packetIn != null) {
-                LocalStreamId = StreamId.GetStreamId();
-                ReturnStreamId = LocalStreamId.GetValue();
+                //LocalStreamId = StreamId.GetStreamId();
+                //ReturnStreamId = LocalStreamId.GetValue();
 
                 PacketIn = packetIn;
                 }

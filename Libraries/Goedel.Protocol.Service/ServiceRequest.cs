@@ -102,6 +102,7 @@ namespace Goedel.Protocol.Service {
 
             var (sourceId, offset) = StreamId.GetSourceId(Buffer);
 
+            Screen.WriteLine($"Received Request {sourceId.Value}");
 
             RudStream stream = null;
 
@@ -154,6 +155,7 @@ namespace Goedel.Protocol.Service {
                 responseBytes = response.GetBytes(true, ObjectEncoding);
                 }
 
+            // UGH: this should be switched out to use stream.StreamState !!!!
             switch (responsePacket) {
                 case ResponderMessageType.ResponderChallenge: {
 
@@ -172,12 +174,18 @@ namespace Goedel.Protocol.Service {
                     }
                 case ResponderMessageType.Data: {
                     List<PacketExtension> packetExtensions=null;
-                    if (sessionResponder.ReturnStreamId != null) {
+
+                    if (stream.StreamState != StreamState.Data) {
                         var returnExtension = new PacketExtension() {
-                            Tag = Constants.ExtensionTagsStreamIdTag, Value = sessionResponder.ReturnStreamId
+                            Tag = Constants.ExtensionTagsStreamIdTag,
+                            Value = stream.RemoteStreamId
                             };
                         packetExtensions = new List<PacketExtension> { returnExtension };
+
+
+                        stream.StreamState = StreamState.Data;
                         }
+
 
                     var responsePacket = sessionResponder.SerializePacketData(
                         stream.RemoteStreamId, payload: responseBytes, ciphertextExtensions: packetExtensions);
@@ -205,6 +213,8 @@ namespace Goedel.Protocol.Service {
 
         RudStream ProcessClientData(StreamId SourceId, int offset) {
 
+
+            Screen.WriteLine($"Try to match inbound stream {SourceId.Value}");
 
             responsePacket = ResponderMessageType.Data;
 

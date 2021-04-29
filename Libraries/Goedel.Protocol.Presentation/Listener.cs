@@ -84,6 +84,9 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Private credential of self.</summary> 
         public virtual Credential CredentialSelf { get; }
 
+        public static PacketReaderFactoryDelegate PacketReaderFactory { get; set; }
+            = PacketReader.Factory;
+
         #endregion
         #region // Constructors
 

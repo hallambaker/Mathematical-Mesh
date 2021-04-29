@@ -9,6 +9,45 @@ using Goedel.Utilities;
 using Goedel.Cryptography;
 namespace Goedel.Protocol.Presentation {
 
+    /// <summary>
+    /// Factory method delegate, returns a reader instance for the packet 
+    /// <paramref name="packet"/>.
+    /// </summary>
+    /// <param name="packet">The packet data.</param>
+    /// <param name="position">Start position at which reading of the packet should start.</param>
+    /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.</param>
+
+    public delegate PacketReader PacketReaderFactoryDelegate(byte[] packet,
+                int position = 0,
+                int count = -1);
+
+    /// <summary>
+    /// Decrypts the ciphertext into the provided destination buffer if the authentication
+    /// tag can be validated
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="nonce">The nonce associated with this message, which must match the value 
+    /// provided during encryption.</param>
+    /// <param name="ciphertext">The encrypted content to decrypt.</param>
+    /// <param name="tag">The authentication tag produced for this message during encryption.</param>
+    /// <param name="plaintext">The byte span to receive the decrypted contents.</param>
+    /// <param name="associatedData">Extra data associated with this message, which must match the 
+    /// value provided during encryption.</param>
+    /// <exception cref="System.ArgumentException">The plaintext parameter and the ciphertext do 
+    /// not have the same length. -or- The nonce parameter length is not permitted by 
+    /// System.Security.Cryptography.AesGcm.NonceByteSizes.  -or- The tag parameter length is 
+    /// not permitted by System.Security.Cryptography.AesGcm.TagByteSizes.</exception>
+    /// <exception cref="System.Security.Cryptography.CryptographicException">
+    /// The tag value could not be verified, or the decryption operation otherwise failed.</exception>
+    public delegate void DecryptDataDelegate(
+            byte[] key,
+            ReadOnlySpan<byte> nonce,
+            ReadOnlySpan<byte> ciphertext,
+            ReadOnlySpan<byte> tag,
+            Span<byte> plaintext,
+            ReadOnlySpan<byte> associatedData = default);
+
+
 
     /// <summary>
     /// Presentation packet reader class.
@@ -28,7 +67,13 @@ namespace Goedel.Protocol.Presentation {
         public byte[] Packet;
 
         ///<summary>Factory method returning a reader of the default decryption algorithm and mode.</summary> 
-        public static PacketReader Factory(byte[] data) => new PacketReaderAesGcm(data);
+        public static PacketReader Factory(byte[] data,
+                int position = 0,
+                int count = -1) => new PacketReader(data, position, count);
+
+        ///<summary>The delegate to use to decrypt data.</summary> 
+        public DecryptDataDelegate DecryptDataDelegate = DecryptAesGcm;
+
         #endregion
         #region // Constructors
         /// <summary>
@@ -130,6 +175,9 @@ namespace Goedel.Protocol.Presentation {
         public string ReadString() {
             var (packetTag, length) = ReadTag();
             (packetTag == PacketTag.String).AssertTrue(NYI.Throw);
+            if (length == 0) {
+                return null;
+                }
             return ReadSpan((int)length).ToArray().ToUTF8();
             }
 
@@ -145,13 +193,9 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <returns>>The list of extensions read.</returns>
         public List<PacketExtension> ReadExtensions() {
-            var (etag, count) = ReadTag();
-            if (count == 0) {
-                return null;
-                }
-            var result = new List<PacketExtension>();
-            for (var i = 0; i < count; i++) {
-                var tag = ReadString();
+            List<PacketExtension> result = null;
+            for (var tag = ReadString(); tag != null; tag = ReadString()) {
+                result ??= new();
                 var value = ReadBinary();
                 var extension = new PacketExtension() { Tag = tag, Value = value };
                 result.Add(extension);
@@ -162,48 +206,54 @@ namespace Goedel.Protocol.Presentation {
 
 
         /// <summary>
+        /// Decrypts the ciphertext into the provided destination buffer if the authentication
+        /// tag can be validated
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="nonce">The nonce associated with this message, which must match the value 
+        /// provided during encryption.</param>
+        /// <param name="ciphertext">The encrypted content to decrypt.</param>
+        /// <param name="tag">The authentication tag produced for this message during encryption.</param>
+        /// <param name="plaintext">The byte span to receive the decrypted contents.</param>
+        /// <param name="associatedData">Extra data associated with this message, which must match the 
+        /// value provided during encryption.</param>
+        /// <exception cref="System.ArgumentException">The plaintext parameter and the ciphertext do 
+        /// not have the same length. -or- The nonce parameter length is not permitted by 
+        /// System.Security.Cryptography.AesGcm.NonceByteSizes.  -or- The tag parameter length is 
+        /// not permitted by System.Security.Cryptography.AesGcm.TagByteSizes.</exception>
+        /// <exception cref="System.Security.Cryptography.CryptographicException">
+        /// The tag value could not be verified, or the decryption operation otherwise failed.</exception>
+        public static void DecryptAesGcm (
+                byte[] key,
+                ReadOnlySpan<byte> nonce, 
+                ReadOnlySpan<byte> ciphertext, 
+                ReadOnlySpan<byte> tag, 
+                Span<byte> plaintext, 
+                ReadOnlySpan<byte> associatedData = default) {
+            var aes = new AesGcm(key);
+            aes.Decrypt(nonce, ciphertext, tag, plaintext, associatedData);
+
+            }
+
+
+        /// <summary>
         /// Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
         /// nonce at the current position in the packet to provide the necessary keying material.
         /// </summary>
         /// <param name="ikm">The primary key.</param>
         /// <param name="pad">If true the data is padded to consume the remainder of the data.</param>
         /// <returns>A reader for the decrypted data.</returns>
-        public virtual PacketReader Decrypt(byte[] ikm, bool pad = true) => throw new NYI();
+        public virtual PacketReader Decrypt(byte[] key, bool pad = true) {
 
-        #endregion
-        }
+            Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
-    /// <summary>
-    /// Packet reader using AES in GCM mode for decryption.
-    /// </summary>
-    public class PacketReaderAesGcm : PacketReader {
-
-        #region // Properties
-        ///<summary>Initialization vector size in bytes. Currently fixed at 12 bytes.</summary> 
-        public virtual int SizeIv => 12;
-
-        ///<summary>Tag size in bytes. Currently fixed at 16 bytes.</summary> 
-        public virtual int SizeTag => 16;
-        #endregion
-        #region // Constructors
-        ///<inheritdoc/>
-        public PacketReaderAesGcm(byte[] packet, 
-                int position=0,
-                int count = -1) : base(packet, position, count) { }
-        #endregion
-        #region // Methods 
-        ///<inheritdoc/>
-        public override PacketReader Decrypt(byte[] key, bool pad = true) {
-
-            //Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
-
-            var aes = new AesGcm(key);
+            //var aes = new AesGcm(key);
 
             var ivSpan = new ReadOnlySpan<byte>(Packet, Position, Constants.SizeIvAesGcm);
             Position += Constants.SizeIvAesGcm;
 
             var authSpan = new Span<byte>(Packet, 0, Position);
-            //Screen.WriteLine($"AuthSpan {0}  {Position}");
+            Screen.WriteLine($"AuthSpan {0}  {Position}");
 
             var length = (pad ? Last - Position : Position) - Constants.SizeTagAesGcm;
             var dataOut = new byte[length];
@@ -214,13 +264,15 @@ namespace Goedel.Protocol.Presentation {
             Position += length;
 
             var tagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
-            //Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
+            Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
 
 
-            //Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
-            aes.Decrypt(ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
+            Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
+            //aes.Decrypt(ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
 
-            return new PacketReaderAesGcm(dataOut);
+            DecryptDataDelegate (key, ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
+
+            return new PacketReader(dataOut);
             }
 
         /// <summary>
@@ -233,15 +285,16 @@ namespace Goedel.Protocol.Presentation {
         /// of the initialization vector)</param>
         /// <param name="last">The last byte in the buffer to read.</param>
         /// <returns>A reader for the decrypted data.</returns>
-        public static PacketReader Unwrap(byte[] key, byte[] packet, int offset, int last) {
+        public static PacketReader Unwrap(byte[] key, byte[] packet, int offset, int last,
+            DecryptDataDelegate decryptDataDelegate=null) {
 
             // Hack: This needs to be rewritten with the tag at the end!
 
-            Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
+            //Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
-            var aes = new AesGcm(key);
+            //var aes = new AesGcm(key);
             var ivSpan = new ReadOnlySpan<byte>(packet, offset, Constants.SizeIvAesGcm);
-            Screen.WriteLine($"IvSpan {offset}  {ivSpan.Length}");
+            //Screen.WriteLine($"IvSpan {offset}  {ivSpan.Length}");
 
             var position = offset + ivSpan.Length;
 
@@ -249,19 +302,20 @@ namespace Goedel.Protocol.Presentation {
 
             var length = last - position - Constants.SizeTagAesGcm;
             var ciphertextSpan = new ReadOnlySpan<byte>(packet, position, length);
-            Screen.WriteLine($"Ciphertext {position} {ciphertextSpan.Length}");
+            //Screen.WriteLine($"Ciphertext {position} {ciphertextSpan.Length}");
 
             position += length;
 
             var tagSpan = new ReadOnlySpan<byte>(packet, position, Constants.SizeTagAesGcm);
-            Screen.WriteLine($"TagSpan {position} {tagSpan.Length}");
+            //Screen.WriteLine($"TagSpan {position} {tagSpan.Length}");
 
             var result = new byte[length];
 
             var plaintextSpan = new Span<byte>(result, 0, length);
 
-            aes.Decrypt(ivSpan, ciphertextSpan, tagSpan, plaintextSpan);
-
+            //aes.Decrypt(ivSpan, ciphertextSpan, tagSpan, plaintextSpan);
+            decryptDataDelegate ??= DecryptAesGcm;
+            decryptDataDelegate(key, ivSpan, ciphertextSpan, tagSpan, plaintextSpan);
             return new PacketReader(result);
             }
 

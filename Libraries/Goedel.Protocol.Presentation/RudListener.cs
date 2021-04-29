@@ -156,7 +156,7 @@ namespace Goedel.Protocol.Presentation {
 
             child.SetOptions(streamId, encrypt, account);
 
-
+            Screen.WriteLine($"Replace {child.LocalStreamId.Value} ");
             if (DictionaryStreamsInbound.TryGetValue(child.LocalStreamId, out var _)) {
                 DictionaryStreamsInbound.Remove(child.LocalStreamId);
 

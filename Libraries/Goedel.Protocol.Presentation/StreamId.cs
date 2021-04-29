@@ -97,8 +97,13 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="buffer"></param>
         /// <returns>The retrieved sourceId and position in the buffer.</returns>
-        public static (StreamId, int) GetSourceId(byte[] buffer) =>
-            (new StreamId(buffer.BigEndianInt(StreamId.SourceIdSize)), StreamId.SourceIdSize);
+        public static (StreamId, int) GetSourceId(byte[] buffer) {
+            var streamId = new StreamId(buffer.BigEndianInt(StreamId.SourceIdSize));
+            //Screen.WriteLine($"Received Stream ID {streamId.Value}");
+
+            return (streamId, StreamId.SourceIdSize);
+            }
+
 
         /// <summary>
         /// Factory method returing a new unique stream identifier.

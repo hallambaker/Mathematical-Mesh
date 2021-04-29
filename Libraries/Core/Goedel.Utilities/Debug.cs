@@ -36,5 +36,12 @@ namespace Goedel.Utilities {
         /// </summary>
         public static void WriteLine () => Console.WriteLine();
 
+
+        /// <summary>
+        /// Write text to the console;
+        /// </summary>
+        /// <param name="text">The text to write.</param>
+        public static void Write(string text) => Console.Write(text);
+
         }
     }

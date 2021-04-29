@@ -759,6 +759,35 @@
         <member name="P:Goedel.Protocol.Presentation.PacketData.CiphertextExtensions">
             <summary>Options specified in the packet ciphertext.</summary> 
         </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketReaderFactoryDelegate">
+            <summary>
+            Factory method delegate, returns a reader instance for the packet 
+            <paramref name="packet"/>.
+            </summary>
+            <param name="packet">The packet data.</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.DecryptDataDelegate">
+            <summary>
+            Decrypts the ciphertext into the provided destination buffer if the authentication
+            tag can be validated
+            </summary>
+            <param name="key"></param>
+            <param name="nonce">The nonce associated with this message, which must match the value 
+            provided during encryption.</param>
+            <param name="ciphertext">The encrypted content to decrypt.</param>
+            <param name="tag">The authentication tag produced for this message during encryption.</param>
+            <param name="plaintext">The byte span to receive the decrypted contents.</param>
+            <param name="associatedData">Extra data associated with this message, which must match the 
+            value provided during encryption.</param>
+            <exception cref="T:System.ArgumentException">The plaintext parameter and the ciphertext do 
+            not have the same length. -or- The nonce parameter length is not permitted by 
+            System.Security.Cryptography.AesGcm.NonceByteSizes.  -or- The tag parameter length is 
+            not permitted by System.Security.Cryptography.AesGcm.TagByteSizes.</exception>
+            <exception cref="T:System.Security.Cryptography.CryptographicException">
+            The tag value could not be verified, or the decryption operation otherwise failed.</exception>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.PacketReader">
             <summary>
             Presentation packet reader class.
@@ -774,8 +803,11 @@
             <summary>Buffer from which data is read. This MAY be longer than needed, the lenght to be used
             is specified by <see cref="F:Goedel.Protocol.Presentation.PacketReader.Last"/></summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReader.Factory(System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.Factory(System.Byte[],System.Int32,System.Int32)">
             <summary>Factory method returning a reader of the default decryption algorithm and mode.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.PacketReader.DecryptDataDelegate">
+            <summary>The delegate to use to decrypt data.</summary> 
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.#ctor(System.Byte[],System.Int32,System.Int32)">
             <summary>
@@ -850,6 +882,26 @@
             </summary>
             <returns>>The list of extensions read.</returns>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.DecryptAesGcm(System.Byte[],System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte},System.Span{System.Byte},System.ReadOnlySpan{System.Byte})">
+            <summary>
+            Decrypts the ciphertext into the provided destination buffer if the authentication
+            tag can be validated
+            </summary>
+            <param name="key"></param>
+            <param name="nonce">The nonce associated with this message, which must match the value 
+            provided during encryption.</param>
+            <param name="ciphertext">The encrypted content to decrypt.</param>
+            <param name="tag">The authentication tag produced for this message during encryption.</param>
+            <param name="plaintext">The byte span to receive the decrypted contents.</param>
+            <param name="associatedData">Extra data associated with this message, which must match the 
+            value provided during encryption.</param>
+            <exception cref="T:System.ArgumentException">The plaintext parameter and the ciphertext do 
+            not have the same length. -or- The nonce parameter length is not permitted by 
+            System.Security.Cryptography.AesGcm.NonceByteSizes.  -or- The tag parameter length is 
+            not permitted by System.Security.Cryptography.AesGcm.TagByteSizes.</exception>
+            <exception cref="T:System.Security.Cryptography.CryptographicException">
+            The tag value could not be verified, or the decryption operation otherwise failed.</exception>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.Decrypt(System.Byte[],System.Boolean)">
             <summary>
             Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
@@ -859,24 +911,7 @@
             <param name="pad">If true the data is padded to consume the remainder of the data.</param>
             <returns>A reader for the decrypted data.</returns>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketReaderAesGcm">
-            <summary>
-            Packet reader using AES in GCM mode for decryption.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketReaderAesGcm.SizeIv">
-            <summary>Initialization vector size in bytes. Currently fixed at 12 bytes.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketReaderAesGcm.SizeTag">
-            <summary>Tag size in bytes. Currently fixed at 16 bytes.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.#ctor(System.Byte[],System.Int32,System.Int32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Decrypt(System.Byte[],System.Boolean)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketReaderAesGcm.Unwrap(System.Byte[],System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.Unwrap(System.Byte[],System.Byte[],System.Int32,System.Int32,Goedel.Protocol.Presentation.DecryptDataDelegate)">
             <summary>
             Unwrap the packet <paramref name="packet"/> using  the primary key <paramref name="key"/> and 
             the nonce at the start of the packet to provide the necessary keying material.
@@ -938,6 +973,15 @@
         <member name="F:Goedel.Protocol.Presentation.PacketTag.Extensions">
             <summary>List of extensions follow</summary> 
         </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketWriterFactoryDelegate">
+            <summary>
+            Factory method delegate for <see cref="T:Goedel.Protocol.Presentation.PacketWriter"/>
+            </summary>
+            <param name="packetSize">The number of bytes in the packet to be created.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <returns>The created instance.</returns>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.PacketWriter">
             <summary>
             Base class for packet writers.
@@ -953,9 +997,6 @@
             <summary>Size of the largest encrypted block that can be inserted into
             the writer.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Factory(System.Int32)">
-            <summary>Factory method, returns a packet writer for the default encryption algorithm.</summary> 
-        </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.#ctor(System.Int32,System.Byte[],System.Int32)">
             <summary>
             Constructor, create a packet writer with a packet size of 
@@ -964,6 +1005,15 @@
             <param name="packetSize">The number of bytes in the packet to be created.</param>
             <param name="buffer">Buffer provided by caller</param>
             <param name="position">Offset within packet at which first byte is to be written.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Factory(System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Factory method returning instance of <see cref="!:PacketWriterAesGcm"/>
+            </summary>
+            <param name="packetSize">The number of bytes in the packet to be created.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <returns>The created instance.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.LengthLength(System.Int64)">
             <summary>
@@ -1016,21 +1066,6 @@
             </summary>
             <param name="data">The data to write</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.Span{System.Byte})">
-            <summary>
-            Write the binary data contained in <paramref name="span"/> to the packet.
-            </summary>
-            <param name="span">The data to write</param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-             Write the binary data  <paramref name="data"/> to the packet beginning
-             at position <paramref name="offset"/> for <paramref name="count"/> bytes.
-            </summary>
-            <param name="data"></param>
-            <param name="offset"></param>
-            <param name="count"></param>
-        </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Write(System.String)">
              <summary>
             Write the string <paramref name="data"/> to the packet
@@ -1043,45 +1078,61 @@
             </summary>
             <param name="extensions">The extensions to write.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.SkipBinary(System.Int32)">
-            <summary>
-            Skip forward to reserve space for a data item of <paramref name="length"/>
-            bytes.
-            </summary>
-            <param name="length">Length of the data item to reserve space for.</param>
-        </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter,System.Boolean)">
-            <summary>
-            Fill out the remainder of the packet by using the value <paramref name="ikm"/>
-            and a generated nonce to encrypt the data specified in <paramref name="packet"/>
-            </summary>
-            <param name="ikm">The primary key.</param>
-            <param name="packet">The plaintext data</param>
-            <param name="pad">If true, fill the entire remainder of the packet.</param>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Wrap(System.Byte[],System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.#ctor(System.Int32,System.Byte[],System.Int32)">
             <summary>
-            Wrap a data packet payload to create an encrypted data packet.
+            Constructor creating an instance of <see cref="T:Goedel.Protocol.Presentation.PacketWriterDebug"/>
             </summary>
-            <param name="ikm">The primary key.</param>
-            <param name="streamId">The stream identifier.</param>
-            <returns>The wrapped data packet.</returns>
+            <param name="packetSize">The number of bytes in the packet to be created.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.PacketWriterAesGcm">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Factory(System.Int32,System.Byte[],System.Int32)">
             <summary>
-            Encrypting packet writer.
+            Factory method returning instance of <see cref="T:Goedel.Protocol.Presentation.PacketWriterDebug"/>
             </summary>
+            <param name="packetSize">The number of bytes in the packet to be created.</param>
+            <param name="buffer">Buffer provided by caller</param>
+            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <returns>The created instance.</returns>
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketWriterAesGcm.RemainingSpace">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Debug(System.String)">
+            <summary>
+            Stub method to write debug output to the screeen for now, change this to
+            write to the documentation.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.WriteStreamId(System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.#ctor(System.Int32,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Write(Goedel.Protocol.Presentation.InitiatorMessageType)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter,System.Boolean)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Write(Goedel.Protocol.Presentation.ResponderMessageType)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterAesGcm.Wrap(System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Write(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Write(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Write(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.WriteExtensions(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Wrap(System.Byte[],System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter,System.Boolean)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.Presentation.InitiatorMessageType">
@@ -1293,15 +1344,6 @@
         </member>
         <member name="P:Goedel.Protocol.Presentation.RudConnection.PacketIn">
             <summary>The packet that the connection is a response to.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.RudConnection.LocalStreamId">
-            <summary>The local stream Id, this is generated localy and MAY contain hidden structure.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.RudConnection.RemoteStreamId">
-            <summary>Remote stream Id, an opaque blob.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Presentation.RudConnection.ReturnStreamId">
-            <summary>When not null, contains the return address to be sent as an an extension.</summary> 
         </member>
         <member name="P:Goedel.Protocol.Presentation.RudConnection.Listener">
             <summary>The listener this connection services</summary> 

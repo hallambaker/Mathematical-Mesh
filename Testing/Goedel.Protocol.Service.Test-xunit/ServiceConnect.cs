@@ -85,7 +85,7 @@ namespace Goedel.XUnit {
 
 
             var Connection = new ConnectionInitiator(clientCredential, Domain, Instance, TransportType.Http);
-            //Connection.Initialize(null, null);
+
 
 
             var statusClient = Connection.GetClient<ServiceManagementServiceClient>();
@@ -93,19 +93,29 @@ namespace Goedel.XUnit {
 
             // no messages sent out until here where we initialize the stream and the protocol at
             // the same time.
+
+
+            Screen.WriteLine($"Make the first mmm request");
+
             var helloRequest = new HelloRequest() { };
             var response1 = meshClient.Hello(helloRequest);
 
+
+            Screen.WriteLine($"Make the second mmm request");
             // An ordinary request
             var response2 = meshClient.Hello(helloRequest);
 
+
+            Screen.WriteLine($"Make the first status request");
             // Try to start a different service 
             var serviceStatusRequest = new ServiceStatusRequest() { };
             var response3 = statusClient.ServiceStatus(serviceStatusRequest);
 
+            Screen.WriteLine($"Make the third mmm request");
             // Another ordinary request
             var response4 = meshClient.Hello(helloRequest);
 
+            Screen.WriteLine($"Make the second status request");
             // An ordinary request on the new client.
             // failing because we are not fishing out the session id on the stream assignment...
             var response5 = statusClient.ServiceStatus(serviceStatusRequest);

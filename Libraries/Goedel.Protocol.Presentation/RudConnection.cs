@@ -79,14 +79,14 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The packet that the connection is a response to.</summary> 
         public Packet PacketIn { get; set; }
 
-        ///<summary>The local stream Id, this is generated localy and MAY contain hidden structure.</summary> 
-        public StreamId LocalStreamId { get; protected set; }
+        /////<summary>The local stream Id, this is generated localy and MAY contain hidden structure.</summary> 
+        //public StreamId LocalStreamId { get; protected set; }
 
-        ///<summary>Remote stream Id, an opaque blob.</summary> 
-        public byte[] RemoteStreamId { get; set; }
+        /////<summary>Remote stream Id, an opaque blob.</summary> 
+        //public byte[] RemoteStreamId { get; set; }
 
-        ///<summary>When not null, contains the return address to be sent as an an extension.</summary> 
-        public byte[] ReturnStreamId = null;
+        /////<summary>When not null, contains the return address to be sent as an an extension.</summary> 
+        //public byte[] ReturnStreamId = null;
 
 
         ///<summary>The listener this connection services</summary> 
@@ -96,6 +96,16 @@ namespace Goedel.Protocol.Presentation {
         public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON;
 
         List<KeyPairAdvanced> ephemeralsOffered;
+
+
+
+        public PacketWriterFactoryDelegate PacketWriterFactory { get; set; } 
+                    = PacketWriterDebug.Factory;
+
+        public PacketReaderFactoryDelegate PacketReaderFactory { get; set; }
+                    = PacketReader.Factory;
+
+
         #endregion
 
 
@@ -180,13 +190,13 @@ namespace Goedel.Protocol.Presentation {
 
             buffer ??= new byte[packetSize];
 
-            using var writer = new PacketWriterAesGcm(packetSize, buffer, 0);
+            using var writer = PacketWriterFactory(packetSize, buffer, 0);
             writer.WriteExtensions(ciphertextExtensions);
             writer.Write(payload);
 
            
             // encrypt the result and return.
-            return writer.Wrap(destinationStream ?? RemoteStreamId, MutualKeyOut);
+            return writer.Wrap(destinationStream, MutualKeyOut);
             }
 
         /// <summary>
@@ -198,7 +208,7 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>Packet specifying the decrypted payload and extensions (if specified).</returns>
 
         public virtual PacketData ParsePacketData(byte[] packet, int offset, int last) {
-            var innerReader = PacketReaderAesGcm.Unwrap(MutualKeyIn, packet, offset, last);
+            var innerReader = PacketReader.Unwrap(MutualKeyIn, packet, offset, last);
 
             var result = new PacketData() {
                 //SourcePortId = sourceId,
@@ -282,7 +292,7 @@ namespace Goedel.Protocol.Presentation {
         public virtual void ClientKeyExchange(out byte[] ephemeral, out string keyId) {
             var (privateEphemeral, publickey) = HostCredential.SelectKey();
 
-            Screen.WriteLine($"Client key exchange at client Ephemeral={privateEphemeral} Host={publickey}");
+            //Screen.WriteLine($"Client key exchange at client Ephemeral={privateEphemeral} Host={publickey}");
 
             ClientKeyExchange(privateEphemeral, publickey);
 

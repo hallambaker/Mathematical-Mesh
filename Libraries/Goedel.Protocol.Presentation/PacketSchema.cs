@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/23/2021 11:16:47 AM
+//  This file was automatically generated at 4/29/2021 3:20:10 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  yaschema version 3.0.0.711
+//  Generator:  yaschema version 3.0.0.714
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -74,7 +74,7 @@ namespace Goedel.Protocol.Presentation {
                 int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
+            var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
             outerWriter.WriteStreamId(destinationId);
             outerWriter.Write(InitiatorMessageType.InitiatorHello);
             // Plaintext fields..
@@ -120,7 +120,7 @@ namespace Goedel.Protocol.Presentation {
                 int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
+            var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
             outerWriter.WriteStreamId(destinationId);
             outerWriter.Write(InitiatorMessageType.InitiatorComplete);
             // Plaintext fields..
@@ -134,7 +134,7 @@ namespace Goedel.Protocol.Presentation {
 
 
             // Mezzanine
-            var mezanineWriter = new PacketWriterAesGcm(outerWriter.RemainingSpace);
+            var mezanineWriter = PacketWriterFactory(outerWriter.RemainingSpace);
             var mezanineExtensions = new List<PacketExtension>();
             MutualKeyExchange (out var clientKeyId);
             mezanineWriter.Write (clientKeyId);
@@ -171,7 +171,7 @@ namespace Goedel.Protocol.Presentation {
             var result = new PacketResponderChallenge () ;
             PacketIn=result;
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet, position, count);
+            var outerReader = PacketReaderFactory(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
             CredentialOther = CredentialSelf.GetCredentials (result.PlaintextExtensions);
             // Only have plaintext
@@ -207,7 +207,7 @@ namespace Goedel.Protocol.Presentation {
                 int position=0) {
 
             // The plaintext part
-            var outerWriter = new PacketWriterAesGcm(buffer:buffer, position:position);
+            var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
             outerWriter.WriteStreamId(destinationId);
             outerWriter.Write(ResponderMessageType.ResponderChallenge);
             // Plaintext fields..
@@ -269,7 +269,7 @@ namespace Goedel.Protocol.Presentation {
                 int count = -1) {
             var result = new PacketInitiatorHello () ;
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet, position, count);
+            var outerReader = new PacketReader(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
             // Only have plaintext
             result.SourceId = outerReader.ReadBinary();
@@ -293,7 +293,7 @@ namespace Goedel.Protocol.Presentation {
                 int count = -1) {
             var result = new PacketInitiatorComplete () ;
             // The plaintext part
-            var outerReader = new PacketReaderAesGcm(packet, position, count);
+            var outerReader = PacketReaderFactory(packet, position, count);
             result.HostKeyId = outerReader.ReadString ();
             result.ClientEphemeral = outerReader.ReadBinary ();
             result.PlaintextExtensions = outerReader.ReadExtensions();
