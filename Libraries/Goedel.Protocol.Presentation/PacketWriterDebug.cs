@@ -49,14 +49,14 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="buffer">Buffer provided by caller</param>
         /// <param name="position">Offset within packet at which first byte is to be written.</param>
         public PacketWriterDebug(
-                    int packetSize = 1200,
+                    PacketWriter parent = null,
                     byte[] buffer = null,
-                    int position = 0) : base(packetSize, buffer, position) {
+                    int position = 0) : base(parent, buffer, position) {
             Debug("");
             Debug("");
-            Debug("******************");
+            Debug("---Start");
             if (position > 0) {
-                Debug($"Inner buffer start:{position} bytes{packetSize}");
+                Debug($"Inner buffer start:{position} bytes{Packet.Length}");
                 }
             }
 
@@ -68,9 +68,9 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The created instance.</returns>
         public static new PacketWriter Factory(
-            int packetSize = 1200,
+            PacketWriter parent = null,
             byte[] buffer = null,
-            int position = 0) => new PacketWriterDebug(packetSize, buffer, position);
+            int position = 0) => new PacketWriterDebug(parent, buffer, position);
 
 
         #endregion 
@@ -152,13 +152,21 @@ namespace Goedel.Protocol.Presentation {
 
         ///<inheritdoc/>
         public override void Encrypt(byte[] key, PacketWriter writerIn, bool pad = true) {
+            if (writerIn is PacketWriterDebug debug) {
+                debug.Debug($"---- End");
+                }
+
+
             if (pad) {
-                Debug($"Encrypt under {key.ToStringBase16()} with padding");
+                Debug($"Encrypt {writerIn.Position} bytes key: {key.ToStringBase16()} with padding");
                 }
             else {
-                Debug($"Encrypt under {key.ToStringBase16()} without padding");
+                Debug($"Encrypt {writerIn.Position} bytes key: {key.ToStringBase16()} without padding");
                 }
             base.Encrypt(key, writerIn, pad);
+
+
+            DebugBytes();
             }
 
         #endregion 

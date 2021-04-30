@@ -74,7 +74,7 @@
             <typeparam name="T"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorHello(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorHello(System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
             Create a serialised packet of type InitiatorHello packet.
             </summary>
@@ -87,7 +87,7 @@
             <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorComplete(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorComplete(System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
             <summary>
             Create a serialised packet of type InitiatorComplete packet.
             </summary>
@@ -176,6 +176,16 @@
             <param name="buffer">Buffer provided by caller</param>
             <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.ParseInitiatorHello(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Parse the packet <paramref name="packet"/> as a InitiatorHello packet.
+            </summary>
+            <param name="packet">The packet data</param>
+            <param name="position">Start position at which reading of the packet should start.</param>
+            <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+            If less than 0, <paramref name="packet"/> is read to the end.</param>
+            <returns>The parsed packet.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.CompleteInitiatorComplete(Goedel.Protocol.Presentation.PacketInitiatorComplete)">
             <summary>
@@ -997,7 +1007,7 @@
             <summary>Size of the largest encrypted block that can be inserted into
             the writer.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.#ctor(System.Int32,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.#ctor(Goedel.Protocol.Presentation.PacketWriter,System.Byte[],System.Int32)">
             <summary>
             Constructor, create a packet writer with a packet size of 
             <paramref name="packetSize"/>.
@@ -1006,7 +1016,7 @@
             <param name="buffer">Buffer provided by caller</param>
             <param name="position">Offset within packet at which first byte is to be written.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Factory(System.Int32,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Factory(Goedel.Protocol.Presentation.PacketWriter,System.Byte[],System.Int32)">
             <summary>
             Factory method returning instance of <see cref="!:PacketWriterAesGcm"/>
             </summary>
@@ -1084,7 +1094,7 @@
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Wrap(System.Byte[],System.Byte[])">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.#ctor(System.Int32,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.#ctor(Goedel.Protocol.Presentation.PacketWriter,System.Byte[],System.Int32)">
             <summary>
             Constructor creating an instance of <see cref="T:Goedel.Protocol.Presentation.PacketWriterDebug"/>
             </summary>
@@ -1092,7 +1102,7 @@
             <param name="buffer">Buffer provided by caller</param>
             <param name="position">Offset within packet at which first byte is to be written.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Factory(System.Int32,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Factory(Goedel.Protocol.Presentation.PacketWriter,System.Byte[],System.Int32)">
             <summary>
             Factory method returning instance of <see cref="T:Goedel.Protocol.Presentation.PacketWriterDebug"/>
             </summary>

@@ -265,25 +265,31 @@ namespace Goedel.Protocol.Presentation {
             //byte[] encoded = null;
 
 
-            //Screen.WriteLine($"Client {Protocol} - Post data to {RemoteStreamId.ToStringBase16()}");
+            Screen.WriteLine($"Client {Protocol} - State {StreamState} Post data to {RemoteStreamId?.ToStringBase16()}");
 
-            switch (StreamState) {
-                case StreamState.Initial: {
-                    return await PostWebHello(span, extensions);
-                    }
-                case StreamState.Challenged: 
-                case StreamState.Child: {
-                    if (RudConnection.Connected) {
+            if (RudConnection.Connected) {
+                switch (StreamState) {
+                    case StreamState.Initial: {
                         return await PostWebChild(span, extensions);
                         }
-                    else {
+                    case StreamState.Data: {
+                        return await PostWebData(span, extensions);
+                        }
+                    }
+
+                }
+            else {
+                switch (StreamState) {
+                    case StreamState.Initial: {
+                        return await PostWebHello(span, extensions);
+                        }
+                    case StreamState.Challenged: {
                         return await PostWebComplete(span, extensions);
                         }
                     }
-                case StreamState.Data: {
-                    return await PostWebData(span, extensions);
-                    }
                 }
+
+
 
             throw new NYI();
             }
@@ -293,7 +299,7 @@ namespace Goedel.Protocol.Presentation {
             InitializeStream(ref extensions);
 
             var encoded = ConnectionInitiator.SerializeInitiatorHello(
-                LocalStreamId.GetValue(), Constants.StreamIdClientInitial, span,
+                LocalStreamId.GetValue(), span,
                 plaintextExtensionsIn: extensions);
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
@@ -319,7 +325,7 @@ namespace Goedel.Protocol.Presentation {
             StreamState = StreamState.Data;
             InitializeStream(ref extensions);
             var encoded = ConnectionInitiator.SerializeInitiatorComplete(
-                LocalStreamId.GetValue(), Constants.StreamIdClientInitial, span,
+                LocalStreamId.GetValue(), span,
                 ciphertextExtensions: extensions);
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);

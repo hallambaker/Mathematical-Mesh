@@ -190,7 +190,7 @@ namespace Goedel.Protocol.Presentation {
 
             buffer ??= new byte[packetSize];
 
-            using var writer = PacketWriterFactory(packetSize, buffer, 0);
+            using var writer = PacketWriterFactory(buffer:buffer, position:0);
             writer.WriteExtensions(ciphertextExtensions);
             writer.Write(payload);
 

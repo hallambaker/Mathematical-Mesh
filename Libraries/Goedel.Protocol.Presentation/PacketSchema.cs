@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/29/2021 3:20:10 PM
+//  This file was automatically generated at 4/30/2021 6:20:22 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  yaschema version 3.0.0.714
+//  Generator:  yaschema version 3.0.0.724
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -67,7 +67,6 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The serialized data.</returns>
         public byte[] SerializeInitiatorHello (
                 byte[] sourceId,
-                byte[] destinationId,
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 byte[] buffer=null,
@@ -75,7 +74,9 @@ namespace Goedel.Protocol.Presentation {
 
             // The plaintext part
             var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
+            byte[] destinationId = null;
             outerWriter.WriteStreamId(destinationId);
+
             outerWriter.Write(InitiatorMessageType.InitiatorHello);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
@@ -111,7 +112,6 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The serialized data.</returns>
         public byte[] SerializeInitiatorComplete (
                 byte[] sourceId,
-                byte[] destinationId,
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 List<PacketExtension> mezanineExtensionsIn = null,
@@ -121,7 +121,9 @@ namespace Goedel.Protocol.Presentation {
 
             // The plaintext part
             var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
+            byte[] destinationId = null;
             outerWriter.WriteStreamId(destinationId);
+
             outerWriter.Write(InitiatorMessageType.InitiatorComplete);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
@@ -134,7 +136,7 @@ namespace Goedel.Protocol.Presentation {
 
 
             // Mezzanine
-            var mezanineWriter = PacketWriterFactory(outerWriter.RemainingSpace);
+            var mezanineWriter = PacketWriterFactory(outerWriter);
             var mezanineExtensions = new List<PacketExtension>();
             MutualKeyExchange (out var clientKeyId);
             mezanineWriter.Write (clientKeyId);
@@ -142,12 +144,12 @@ namespace Goedel.Protocol.Presentation {
             mezanineExtensions.AddRangeSafe(mezanineExtensionsIn);
             mezanineWriter.WriteExtensions(mezanineExtensions);
             // Encrypted inside Mezzanine
-            var innerWriter = new PacketWriter(mezanineWriter.RemainingSpace);
+            var innerWriter = PacketWriterFactory(mezanineWriter);
             innerWriter.WriteExtensions(ciphertextExtensions);
             innerWriter.Write(sourceId);
             innerWriter.Write(payload);
-            mezanineWriter.Encrypt(MutualKeyOut, innerWriter);
-            outerWriter.Encrypt(ClientKeyOut, mezanineWriter);
+            mezanineWriter.Encrypt(MutualKeyOut, innerWriter, false);
+            outerWriter.Encrypt(ClientKeyOut, mezanineWriter, true);
 
             // Return the outermost packet
             return outerWriter.Packet;
@@ -209,6 +211,7 @@ namespace Goedel.Protocol.Presentation {
             // The plaintext part
             var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
             outerWriter.WriteStreamId(destinationId);
+
             outerWriter.Write(ResponderMessageType.ResponderChallenge);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
@@ -227,8 +230,31 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
-        // Skip Client packet InitiatorHello (initial packets parsed by the listener)
 
+        /// <summary>
+        /// Parse the packet <paramref name="packet"/> as a InitiatorHello packet.
+        /// </summary>
+        /// <param name="packet">The packet data</param>
+        /// <param name="position">Start position at which reading of the packet should start.</param>
+        /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
+        /// If less than 0, <paramref name="packet"/> is read to the end.</param>
+        /// <returns>The parsed packet.</returns>
+
+        public  PacketInitiatorHello ParseInitiatorHello (
+                byte[] packet,
+                int position=0,
+                int count = -1) {
+            var result = new PacketInitiatorHello () ;
+            PacketIn=result;
+            // The plaintext part
+            var outerReader = PacketReaderFactory(packet, position, count);
+            result.PlaintextExtensions = outerReader.ReadExtensions();
+            // Only have plaintext
+            result.SourceId = outerReader.ReadBinary();
+            result.Payload = outerReader.ReadBinary();
+
+            return result;
+            }
         // Perform initial parse as static listener, only complete decrypt in session context
 
         /// <summary>
@@ -244,7 +270,7 @@ namespace Goedel.Protocol.Presentation {
             CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);
             MutualKeyExchange (result.ClientKeyId);
             // Encrypted inside Mezzanine
-            var innerReader = mezanineReader.Decrypt (MutualKeyIn);
+            var innerReader = mezanineReader.Decrypt (MutualKeyIn, false);
             result.CiphertextExtensions = innerReader.ReadExtensions();
             result.SourceId = innerReader.ReadBinary();
             result.Payload = innerReader.ReadBinary();
@@ -269,7 +295,7 @@ namespace Goedel.Protocol.Presentation {
                 int count = -1) {
             var result = new PacketInitiatorHello () ;
             // The plaintext part
-            var outerReader = new PacketReader(packet, position, count);
+            var outerReader = PacketReaderFactory(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
             // Only have plaintext
             result.SourceId = outerReader.ReadBinary();

@@ -33,7 +33,7 @@ namespace Goedel.Protocol.Presentation {
     /// <param name="position">Offset within packet at which first byte is to be written.</param>
     /// <returns>The created instance.</returns>
     public delegate PacketWriter PacketWriterFactoryDelegate(
-                    int packetSize = 1200,
+                    PacketWriter parent=null,
                     byte[] buffer = null,
                     int position = 0);
 
@@ -61,8 +61,10 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packetSize">The number of bytes in the packet to be created.</param>
         /// <param name="buffer">Buffer provided by caller</param>
         /// <param name="position">Offset within packet at which first byte is to be written.</param>
-        public PacketWriter(int packetSize = 1200, byte[] buffer = null, int position = 0) {
-            Packet = buffer ?? new byte[packetSize];
+        public PacketWriter( PacketWriter parent = null, byte[] buffer = null, int position = 0) {
+            
+
+            Packet = buffer ?? new byte[parent?.RemainingSpace ?? 1200];
             Position = position;
             }
 
@@ -76,9 +78,9 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The created instance.</returns>
         public static PacketWriter Factory(
-                    int packetSize = 1200,
+                    PacketWriter parent = null,
                     byte[] buffer = null,
-                    int position = 0) => new PacketWriter(packetSize, buffer, position);
+                    int position = 0) => new PacketWriter(parent, buffer, position);
 
 
         #endregion
@@ -173,7 +175,10 @@ namespace Goedel.Protocol.Presentation {
         /// Write out the destination stream Id.
         /// </summary>
         /// <param name="data"></param>
-        public virtual void WriteStreamId(byte[] data) {                
+        public virtual void WriteStreamId(byte[] data) {
+            data ??= Constants.StreamIdClientInitial; 
+                    // We could just increment Position, but the buffer might not be clean on entry.
+                    // This is the safest approach.
             Buffer.BlockCopy(data, 0, Packet, Position, data.Length);
             Position += data.Length;
             }
@@ -273,12 +278,23 @@ namespace Goedel.Protocol.Presentation {
             Buffer.BlockCopy(iv, 0, Packet, Position, iv.Length);
             Position+= iv.Length;
 
+
+
             // Set up the authentication span so it covers the start of the 
             // packet up to the tag.
             var authSpan = new Span<byte>(Packet, 0, Position);
             Screen.WriteLine($"AuthSpan {0}  {Position}");
+            
+            int length;
+            if (pad) {
+                length = Packet.Length - Position - Constants.SizeTagAesGcm;
+                }
+            else {
+                length = writerIn.Position;
+                Write(length);
+                }
 
-            var length = (pad ? Packet.Length - Position : Position) - Constants.SizeTagAesGcm;
+
             var ciphertextSpan = new Span<byte>(Packet, Position, length);
             var plaintextSpan = new ReadOnlySpan<byte>(writerIn.Packet, 0, length);
             Position += length;
@@ -287,9 +303,10 @@ namespace Goedel.Protocol.Presentation {
 
             var TagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
             Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
+            
+            Position += Constants.SizeTagAesGcm;
 
             aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, TagSpan, authSpan);
-            Position += length;
             }
 
         ///<inheritdoc/>
