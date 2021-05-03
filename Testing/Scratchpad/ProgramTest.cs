@@ -8,6 +8,9 @@ using System;
 
 namespace Scratchpad {
 
+    // Bug: 1) The host credential is not being filled as it should.
+
+
 
     // ToDo: 1) Parse account details from client
     // ToDo: 2) Verify account details.
@@ -32,8 +35,7 @@ namespace Scratchpad {
             Screen.WriteLine($"Start test  {DateTime.Now}");
 
 
-            // Need to build out TestEnvironmentRdp as a listener
-            TestPresentationMesh.Test().TestMeshMultiService();
+            TestPresentationMesh.Test().TestCreateAccount();
 
 
 

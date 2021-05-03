@@ -128,11 +128,6 @@ namespace Goedel.XUnit {
             }
 
 
-        //SpoolEntry CheckEntry(Spool spool, string id) {
-        //    throw new NYI();
-        //    }
-
-
         [Fact]
         public void TestCatalog() {
 
@@ -157,7 +152,7 @@ namespace Goedel.XUnit {
             catalog.New(catalogedBob);
 
 
-            // Now try to read back.
+            // try to read back.
 
 
             }

@@ -3,6 +3,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh;
 using Goedel.Mesh.Server;
+using Goedel.Mesh.Credential;
 using Goedel.Protocol;
 using Goedel.Utilities;
 using Goedel.Test.Core;
@@ -22,7 +23,7 @@ namespace Goedel.Mesh.Test {
         
         public const string Domain = "localhost";
         public string Protocol => MeshService.GetWellKnown;
-        public const string Instance = "69";
+        public string Instance => Test;
 
 
         public override MeshServiceClient GetMeshClient( MeshCredentialTraced meshCredential) {
@@ -46,7 +47,11 @@ namespace Goedel.Mesh.Test {
             using var provider = new RudProvider(endpoints, MeshService);
 
             var providers = new List<RudProvider> { provider };
-            return new RudService(providers, null);
+
+            // create the service and host credentials here.
+            var credential = new MeshCredential(MeshService.ConnectionAccount, MeshService.ActivationDevice.DeviceAuthentication);
+            
+            return new RudService(providers, credential);
 
 
             var service = base.StartService();

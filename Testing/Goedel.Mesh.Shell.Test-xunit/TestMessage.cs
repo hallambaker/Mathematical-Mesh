@@ -296,7 +296,7 @@ namespace Goedel.XUnit {
             var resultRequest = deviceB.Dispatch($"message confirm {AliceAccount} start") as ResultSent;
             var messageId = resultRequest.Message.MessageId;
 
-            var resultHandle = ProcessMessage(deviceA, true, messageId); // Hack - lets start using MessageID eh?
+            var resultHandle = ProcessMessage(deviceA, true, messageId); 
 
             var resultResponse = GetResponse(deviceB, resultRequest.Message) as ResponseConfirmation;
 

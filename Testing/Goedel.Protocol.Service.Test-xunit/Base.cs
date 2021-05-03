@@ -20,50 +20,25 @@ namespace Goedel.XUnit {
 
 
 
-    //public partial class TestPresentationGeneric {
-
-    //    public virtual Credential GetInitiatorCredential() => new TestCredential();
-    //    public virtual Credential GetResponderCredential() => new TestCredential();
-
-    //    public static TestPresentationGeneric Test() => new();
-
-    //    static TestPresentationGeneric() => _ = Goedel.Cryptography.Core.Initialization.Initialized;
-
-
-
-    //    //[Fact]
-    //    //public void TestService() {
-    //    //    var TestEnvironmentCommon = new TestEnvironmentCommon();
-
-
-    //    //    var testService = new TestService(TestEnvironmentCommon);
-
-    //    //    }
-
-
-    //    byte[] MakePayload(int size = 100) => new byte[size];
-
-
-    //    }
     public partial class TestPresentationMesh : TestPresentationGeneric {
 
         public string DeviceAliceAdmin = "Alice Admin";
         static string AccountAlice = "alice@example.com";
         static string AccountMallet = "mallet@example.com";
 
-        public ContextUser ContextInitiator { get; }
+        public ContextUser ContextInitiator { get; set;  }
 
         public Mesh.Connection ConnectionInnitiator => ContextInitiator.Connection;
         public ProfileUser ProfileInitiator => ContextInitiator.ProfileUser;
 
 
 
-        public PublicMeshService MeshService { get; }
+        public PublicMeshService MeshService { get; set; }
 
 
-        public MeshCredential InitiatorCredential { get; }
+        public MeshCredential InitiatorCredential { get; set; }
 
-        public MeshCredential ResponderCredential { get; }
+        public MeshCredential ResponderCredential { get; set; }
         public  Credential GetInitiatorCredential() => InitiatorCredential;
         public  Credential GetResponderCredential() => ResponderCredential;
 
@@ -77,7 +52,14 @@ namespace Goedel.XUnit {
 
 
         public TestPresentationMesh() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+
+
+            }
+
+
+        public TestEnvironmentCommon SetTestEnvironment(TestEnvironmentCommon testEnvironmentCommon=null) {
+            testEnvironmentCommon ??= new TestEnvironmentRdp();
+
             var meshMachine = testEnvironmentCommon.GetMeshMachine("test");
             Console.Write("");
 
@@ -100,7 +82,9 @@ namespace Goedel.XUnit {
                 testEnvironmentCommon.MeshService.ConnectionAccount,
                 testEnvironmentCommon.MeshService.ActivationDevice.DeviceAuthentication);
 
+            return testEnvironmentCommon;
             }
+
 
         public Listener CreateMeshListener() {
 

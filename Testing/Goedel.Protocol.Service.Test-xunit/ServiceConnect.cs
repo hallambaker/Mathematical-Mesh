@@ -30,6 +30,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestMeshService() {
+            var testEnvironmentCommon = SetTestEnvironment(new TestEnvironmentCommon());
 
             var clientCredential = GetInitiatorCredential();
             var hostCredential = GetResponderCredential();
@@ -67,7 +68,7 @@ namespace Goedel.XUnit {
         public void TestMeshMultiService() {
 
 
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var testEnvironmentCommon = SetTestEnvironment(new TestEnvironmentCommon());
 
             var clientCredential = GetInitiatorCredential();
             var hostCredential = GetResponderCredential();
@@ -125,7 +126,7 @@ namespace Goedel.XUnit {
         [Fact]
 
         public void TestCreateAccount() {
-            var testEnvironmentCommon = new TestEnvironmentRdp();
+            var testEnvironmentCommon = SetTestEnvironment();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
@@ -160,7 +161,7 @@ namespace Goedel.XUnit {
         public void TestImpersonation() {
 
 
-            var testEnvironmentCommon = new TestEnvironmentRdp();
+            var testEnvironmentCommon = SetTestEnvironment();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
@@ -178,7 +179,7 @@ namespace Goedel.XUnit {
         [Fact]
 
         public void TestPreconnect() {
-            var testEnvironmentCommon = new TestEnvironmentRdp();
+            var testEnvironmentCommon = SetTestEnvironment();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
@@ -202,61 +203,4 @@ namespace Goedel.XUnit {
 
         }
 
-
-    //public partial class MeshServiceSession : JpcRemoteSession {
-
-    //    public  string Protocol { get; }
-    //    public  string Instance { get; }
-
-    //    Session Session { get; }
-
-
-    //    //public MeshServiceSession(PresentationType presentationTypes,
-    //    //            string domain, string protocol, string instance = null) : base (null) {
-
-    //    //    Domain = domain;
-    //    //    Protocol = protocol;
-    //    //    Instance = instance;
-
-    //    //    Session = new TestConnectionClient(null);
-    //    //    }
-
-
-
-
-    //    //public static JpcSession JpcSession(
-    //    //            string domain, string protocol, string instance=null) =>
-    //    //     new MeshServiceSession(PresentationType.Http, domain, protocol, instance);
-
-    //    //public void BindCredential(Credential credential) {
-    //    //    }
-
-
-    //    ///<inheritdoc/>
-    //    public override JsonObject Post(string tag, JsonObject request) {
-
-    //        // Get the Web service client
-
-
-    //        // serialize the request
-
-
-
-    //        // Make a presentation of the request
-
-
-    //        // send the request and await the response
-
-
-
-    //        // extract the response data
-
-
-    //        // parse the response data.
-
-
-    //        throw new NYI();
-    //        }
-
-        //}
     }

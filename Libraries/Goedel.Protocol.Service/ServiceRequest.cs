@@ -225,7 +225,7 @@ namespace Goedel.Protocol.Service {
 
             var packet = responder.ParsePacketData(Buffer, offset, Count);
             packetClient = packet;
-            // now check to see if there is a sub-stream to be created.
+            // check to see if there is a sub-stream to be created.
 
             if (packet.CiphertextExtensions != null) {
                 var streamChild = Listener.AcceptStream(packet.CiphertextExtensions, parentStream: stream);

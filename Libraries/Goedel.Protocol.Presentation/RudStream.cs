@@ -211,7 +211,13 @@ namespace Goedel.Protocol.Presentation {
 
             Screen.WriteLine($"Client {Protocol} - Posted data to {RemoteStreamId?.ToStringBase16()}");
 
+          
 
+            if (packet is PacketResponderChallenge packetResponderChallenge && 
+                        (packet.Payload == null | packet?.Payload.Length == 0) ) {
+                // if we got a challenge and no payload, represent the request here.
+                packet = await PostWeb(span);
+                }
 
             JsonObject response = null;
             if (packet?.Payload.Length > 0) {

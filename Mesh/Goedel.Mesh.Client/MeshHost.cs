@@ -249,7 +249,7 @@ namespace Goedel.Mesh.Client {
             // create a Cataloged Device entry for the admin device
             var catalogedDevice = activationRoot.MakeCatalogedDevice(profileDevice, profileUser, rights);
 
-            // now create the host catalog entry and apply to the context user.
+            // Create the host catalog entry and apply to the context user.
             var catalogedMachine = new CatalogedStandard() {
                 Id = profileDevice.Udf,
                 Local = localName,

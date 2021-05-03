@@ -22,9 +22,6 @@ namespace Goedel.XUnit {
 
             Dispatch($"password add  {site1} {username1} {password1}");
 
-            // Bug: this password entry is not being added to the catalog at the service when the account is registered
-            // Bug: the credential catalog turns up twice
-
 
             Dispatch($"account hello {AliceService1}");
 
