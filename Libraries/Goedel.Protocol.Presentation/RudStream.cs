@@ -322,6 +322,9 @@ namespace Goedel.Protocol.Presentation {
             }
 
         async Task<Packet> PostWebComplete(byte[] span, List<PacketExtension> extensions = null) {
+
+            ConnectionInitiator.RudStreamInitial = this;
+
             StreamState = StreamState.Data;
             InitializeStream(ref extensions);
             var encoded = ConnectionInitiator.SerializeInitiatorComplete(
@@ -342,7 +345,11 @@ namespace Goedel.Protocol.Presentation {
         async Task<Packet> PostWebChild(byte[] span, List<PacketExtension> extensions = null) {
             StreamState = StreamState.Data;
             InitializeStream(ref extensions);
-            var encoded = RudConnection.SerializePacketData(destinationStream: RemoteStreamId, payload: span,
+
+            var remoteStreamIdInitial = RdpStreamParent?.RemoteStreamId ?? ConnectionInitiator?.RudStreamInitial.RemoteStreamId;
+            remoteStreamIdInitial.AssertNotNull(NYI.Throw);
+
+            var encoded = RudConnection.SerializePacketData(destinationStream: remoteStreamIdInitial, payload: span,
                 ciphertextExtensions: extensions);
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);

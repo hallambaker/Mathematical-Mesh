@@ -8,16 +8,22 @@ using System;
 
 namespace Scratchpad {
 
-    // Some unit tests are passing because the following are not being checked
+    // ToDo: Connect Dispatch to Web Client
+    // ToDo: Parse account details from client
+    // ToDo: Verify account details.
+    // ToDo: Unit tests to attempt use of illegit credential.
+    // ToDo: Audit the profile creation mechanism
+    // ToDo: Clear all unit tests
 
-    // Encryption of catalogs (especially password!)
-    // Presence of signatures
-    // Who signed
-    // Validity of signatures
+    // ToDo: RUD Documentation - Grab examples from connection formation
+    // ToDo: RUD Documentation - Describe stream lifecycle
+    // ToDo: RUD Documentation - Describe account binding
 
-    // Profile path math.
-
-
+    // ToDo: Meshman stand alone app
+    // ToDo: Server stand alone app
+    // ToDo: Server logging
+    // ToDo: Server status info
+    // ToDo: Server admin permissions
 
 
 

@@ -39,13 +39,13 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="parent">The parent stream</param>
         /// <param name="protocol">The stream protocol</param>
         /// <param name="credential">Optional additional credential.</param>
-        /// <param name="rdpConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
+        /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
 
         public RudStreamClient(
                 RudStream parent,
                 string protocol,
                 Credential credential = null,
-                RudConnection rdpConnection = null) : base(parent, protocol, credential, rdpConnection) {
+                RudConnection rudConnection = null) : base(parent, protocol, credential, rudConnection) {
 
 
 

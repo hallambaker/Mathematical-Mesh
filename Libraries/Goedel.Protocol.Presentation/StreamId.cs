@@ -46,7 +46,8 @@ namespace Goedel.Protocol.Presentation {
         public ulong Value { get; }
 
 
-
+        ///<summary>The stream Id value as an unsigned 64 bit integer.</summary> 
+        public byte[] Bytes => Value.BigEndian();
 
         readonly static byte[] ClientCompleteDeferred = 
             ((ulong)InitiatorMessageType.InitiatorExchange).BigEndian();
@@ -57,7 +58,7 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Factory method, creates a packet extension wrapping the stream identifier.</summary> 
         public PacketExtension PacketExtension => new() {
             Tag = Constants.ExtensionTagsStreamIdTag,
-            Value = Value.BigEndian ()
+            Value = Bytes
             };
 
         #endregion

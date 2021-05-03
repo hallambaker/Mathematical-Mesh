@@ -231,12 +231,12 @@ namespace Goedel.Protocol.Service {
             packetClient = packet;
             // now check to see if there is a sub-stream to be created.
 
-
-            var streamChild = Listener.AcceptStream(packet.CiphertextExtensions, parentStream: stream);
-            if (streamChild != null) {
-                return streamChild;
+            if (packet.CiphertextExtensions != null) {
+                var streamChild = Listener.AcceptStream(packet.CiphertextExtensions, parentStream: stream);
+                if (streamChild != null) {
+                    return streamChild;
+                    }
                 }
-
 
             if (packet.CiphertextExtensions != null) {
                 foreach (var extension in packet.CiphertextExtensions) {

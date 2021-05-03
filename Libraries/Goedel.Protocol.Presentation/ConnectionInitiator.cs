@@ -102,11 +102,11 @@ namespace Goedel.Protocol.Presentation {
             WebClient = new WebClient();
 
 
-            // Create the initial stream NB Do NOT re-present the credential used to
-            // initialize the connection.
-            RudStreamInitial = new RudStreamClient(null, protocol, null, this) {
-                StreamState = StreamState.Initial
-                };
+            //// Create the initial stream NB Do NOT re-present the credential used to
+            //// initialize the connection.
+            //RudStreamInitial = new RudStreamClient(null, protocol, null, this) {
+            //    StreamState = StreamState.Initial
+            //    };
             }
 
 
@@ -128,7 +128,11 @@ namespace Goedel.Protocol.Presentation {
         public T GetClient<T>(Credential credential=null) where T : JpcClientInterface, new() {
 
             var client = new T();
-            client.JpcSession = RudStreamInitial.MakeStreamClient(client.GetWellKnown, credential);
+
+            client.JpcSession = new RudStreamClient(null, client.GetWellKnown, credential, rudConnection:this);
+
+
+            //RudStreamInitial.MakeStreamClient(client.GetWellKnown, credential);
 
             return client;
             }
