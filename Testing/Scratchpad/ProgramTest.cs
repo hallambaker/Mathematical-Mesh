@@ -8,7 +8,7 @@ using System;
 
 namespace Scratchpad {
 
-    // Bug: 1) The host credential is not being filled as it should.
+    // Bug: 1) The client credential is blank at the start of the interaction.
 
 
 
