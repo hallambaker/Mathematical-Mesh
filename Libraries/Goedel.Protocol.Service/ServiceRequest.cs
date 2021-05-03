@@ -139,13 +139,9 @@ namespace Goedel.Protocol.Service {
             var reader = new JsonBcdReader(memoryStream);
 
             byte[] responseBytes = null;
-            if (packetClient?.Payload.Length > 0) {
-                var provider = Service.GetProvider(null, 0, null);
-
-                provider.AssertNotNull(NYI.Throw);
-
+            if ((stream is RudStreamService rudStreamService) && (packetClient?.Payload.Length > 0)) {
                 try {
-                    response = provider.JpcInterface.Dispatch(session, reader);
+                    response = rudStreamService.JpcInterface.Dispatch(session, reader);
                     }
                 catch {
                     // here make error response wrapper
@@ -260,14 +256,6 @@ namespace Goedel.Protocol.Service {
             return stream;
             }
 
-        //ConnectionResponder MakeNewStream() {
-        //    throw new NYI();
-        //    }
-
-
-        //ConnectionResponder ProcessClientExchange() {
-        //    throw new NYI();
-        //    }
         RudStream ProcessClientComplete(int offset) {
 
             packetClient = Listener.ParseInitiatorComplete(Buffer, offset, Count-offset);

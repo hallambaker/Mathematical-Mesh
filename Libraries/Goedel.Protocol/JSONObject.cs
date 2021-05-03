@@ -224,11 +224,11 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="objectEncoding">The object encoding to use for serialization.</param>
         /// <returns>The JsonWriter.</returns>
-        public static JsonWriter GetJsonWriter (ObjectEncoding objectEncoding) => objectEncoding switch {
-            ObjectEncoding.JSON_B => new JsonBWriter(),
-            ObjectEncoding.JSON_C => new JsonBWriter(),
-            ObjectEncoding.JSON_D => new JsonBWriter(),
-            _ => new JsonWriter()
+        public static JsonWriter GetJsonWriter (ObjectEncoding objectEncoding, Stream output = null) => objectEncoding switch {
+            ObjectEncoding.JSON_B => new JsonBWriter(output),
+            ObjectEncoding.JSON_C => new JsonBWriter(output),
+            ObjectEncoding.JSON_D => new JsonBWriter(output),
+            _ => new JsonWriter(output)
             };
 
 

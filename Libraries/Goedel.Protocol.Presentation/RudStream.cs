@@ -418,14 +418,17 @@ namespace Goedel.Protocol.Presentation {
 
         private byte[] SerializePayload(string tag, JsonObject request, out MemoryStream stream) {
             stream = new MemoryStream();
-            var writer = JsonObject.GetJsonWriter(RudConnection.ObjectEncoding);
+            var writer = JsonObject.GetJsonWriter(RudConnection.ObjectEncoding, stream);
             writer.WriteObjectStart();
 
             bool first = true;
-            request.Serialize(writer, true, ref first);
             writer.WriteToken(tag, 0);
+            request.Serialize(writer, true, ref first);
+
             writer.WriteObjectEnd();
 
+
+            Screen.WriteLine($"Payload: { stream.ToArray().ToUTF8()}");
             // avoid the copy by using a Span.
             return stream.ToArray();
             }
