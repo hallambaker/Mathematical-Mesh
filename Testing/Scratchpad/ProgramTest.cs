@@ -8,12 +8,12 @@ using System;
 
 namespace Scratchpad {
 
-    // ToDo: Connect Dispatch to Web Client
-    // ToDo: Parse account details from client
-    // ToDo: Verify account details.
-    // ToDo: Unit tests to attempt use of illegit credential.
-    // ToDo: Audit the profile creation mechanism
-    // ToDo: Clear all unit tests
+
+    // ToDo: 1) Parse account details from client
+    // ToDo: 2) Verify account details.
+    // ToDo: 3) Unit tests to attempt use of illegit credential.
+    // ToDo: 4) Audit the profile creation mechanism
+    // ToDo: 5) Clear all unit tests
 
     // ToDo: RUD Documentation - Grab examples from connection formation
     // ToDo: RUD Documentation - Describe stream lifecycle
