@@ -4,7 +4,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh.Client;
 using Goedel.Utilities;
-using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
 
 using System.IO;
 
@@ -156,7 +156,7 @@ namespace Goedel.Mesh {
 
         /// <returns></returns>
         public virtual MeshServiceClient GetMeshClient(
-                string accountAddress) {
+                ICredentialPrivate credential) {
 
 
             throw new NYI();
@@ -164,7 +164,7 @@ namespace Goedel.Mesh {
             //var session = new JpcSessionHTTP(accountAddress);
             //return session.GetWebClient<MeshServiceClient>();
 
-                //JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, null);
+            //JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, null);
 
             }
 

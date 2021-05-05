@@ -97,7 +97,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCore.GetMeshClient(System.String)">
+        <member name="M:Goedel.Mesh.MeshMachineCore.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
             Return a MeshService client for the service ID <paramref name="accountAddress"/>. 
             </summary>

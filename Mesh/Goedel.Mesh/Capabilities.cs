@@ -21,7 +21,7 @@
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-
+using Goedel.Protocol.Presentation;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -34,11 +34,11 @@ namespace Goedel.Mesh {
     public interface IMeshClient {
 
         /// <summary>
-        /// Get a Mesh client for the address <paramref name="accountAddress"/>.
+        /// Get a Mesh client for the credential <paramref name="credentialPrivate"/>.
         /// </summary>
-        /// <param name="accountAddress">The account to obtain a client for.</param>
+        /// <param name="credentialPrivate">The account to obtain a client for.</param>
         /// <returns>The client.</returns>
-        MeshServiceClient GetMeshClient (string accountAddress);
+        MeshServiceClient GetMeshClient (ICredentialPrivate credentialPrivate);
 
         }
 
@@ -232,12 +232,14 @@ namespace Goedel.Mesh {
                     }
                 };
 
-            var client = CryptographicClient.GetMeshClient(ServiceAddress);
-            var response = client.Operate(operateRequest);
+            throw new NYI();
 
-            var result = response.Results[0] as CryptographicResultKeyAgreement;
+            //var client = CryptographicClient.GetMeshClient(ServiceAddress);
+            //var response = client.Operate(operateRequest);
 
-            return result.KeyAgreement.KeyAgreementResult;
+            //var result = response.Results[0] as CryptographicResultKeyAgreement;
+
+            //return result.KeyAgreement.KeyAgreementResult;
             }
 
         }

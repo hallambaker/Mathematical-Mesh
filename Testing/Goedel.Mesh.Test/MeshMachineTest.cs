@@ -11,6 +11,7 @@ using System.IO;
 using System.Collections.Generic;
 using Goedel.Test.Core;
 using Goedel.Test;
+using Goedel.Protocol.Presentation;
 
 namespace Goedel.Mesh.Test {
 
@@ -51,12 +52,11 @@ namespace Goedel.Mesh.Test {
         /// an inbound connection or requesting that a new account be created and optional
         /// otherwise.</param>
         /// <returns></returns>
-        public override MeshServiceClient GetMeshClient(
-                string accountAddress) {
+        public override MeshServiceClient GetMeshClient(ICredentialPrivate credential) {
+            //throw new NYI();
+            //var meshCredential = new MeshCredentialTraced(accountAddress, MeshProtocolMessages);
 
-            var meshCredential = new MeshCredentialTraced(accountAddress, MeshProtocolMessages);
-
-            return testEnvironmentCommon.GetMeshClient(meshCredential);
+            return testEnvironmentCommon.GetMeshClient(credential);
             }
 
 

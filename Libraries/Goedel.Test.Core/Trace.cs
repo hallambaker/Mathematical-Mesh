@@ -2,7 +2,6 @@
 using Goedel.Utilities;
 using Goedel.Mesh.Client;
 using Goedel.Mesh;
-using Goedel.Mesh.Credential;
 using Goedel.Cryptography;
 using System.Collections.Generic;
 using Goedel.Protocol.Presentation;
@@ -141,56 +140,56 @@ namespace Goedel.Test.Core {
 
 
 
-    public class MeshCredentialTraced : MeshCredential {
-        ///<summary>The account address (Account@Domain or @callsign)</summary>
-        public virtual string AccountAddress { get; }
+    //public class MeshCredentialTraced : MeshCredential {
+    //    ///<summary>The account address (Account@Domain or @callsign)</summary>
+    //    public virtual string AccountAddress { get; }
 
-        public List<Trace> MeshProtocolMessages { get; }
-
-
-        ///<inheritdoc/>
-        public override Credential GetCredentials(
-                    List<PacketExtension> extensions) {
-            foreach (var extension in extensions) {
-
-                //if (extension.Tag == TestCredential.CredentialTag) {
-                //    return new TestCredential(extension.Value);
-                //    }
-
-                if (extension.Tag == Constants.ExtensionTagsMeshConnectionTag) {
-
-                    //var valueString = extension.Value.ToUTF8();
+    //    public List<Trace> MeshProtocolMessages { get; }
 
 
-                    return new MeshCredential(extension.Value);
-                    }
+    //    ///<inheritdoc/>
+    //    public override ICredential GetCredentials(
+    //                List<PacketExtension> extensions) {
+    //        foreach (var extension in extensions) {
 
-                }
+    //            //if (extension.Tag == TestCredential.CredentialTag) {
+    //            //    return new TestCredential(extension.Value);
+    //            //    }
 
-            throw new NYI();
-            }
+    //            if (extension.Tag == Constants.ExtensionTagsMeshConnectionTag) {
 
-
-
-        public MeshCredentialTraced(
-                    ContextUser contextUser) : base(
-                            contextUser.ConnectionAccount,
-                            contextUser.DeviceAuthentication as KeyPairAdvanced) {
-
-            }
+    //                //var valueString = extension.Value.ToUTF8();
 
 
-        public MeshCredentialTraced(Mesh.Connection connection,
-                    KeyPair authenticationPrivate) : base(connection, authenticationPrivate) {
-            }
+    //                return new MeshCredential(extension.Value);
+    //                }
 
-        public MeshCredentialTraced(
-            string accountAddress, List<Trace> meshProtocolMessages
-            ) {
-            AccountAddress = accountAddress;
-            MeshProtocolMessages = meshProtocolMessages;
-                }
+    //            }
+
+    //        throw new NYI();
+    //        }
 
 
-        }
+
+    //    public MeshCredentialTraced(
+    //                ContextUser contextUser) : base(
+    //                        contextUser.ConnectionAccount,
+    //                        contextUser.DeviceAuthentication as KeyPairAdvanced) {
+
+    //        }
+
+
+    //    public MeshCredentialTraced(Mesh.Connection connection,
+    //                KeyPair authenticationPrivate) : base(connection, authenticationPrivate) {
+    //        }
+
+    //    public MeshCredentialTraced(
+    //        string accountAddress, List<Trace> meshProtocolMessages
+    //        ) {
+    //        AccountAddress = accountAddress;
+    //        MeshProtocolMessages = meshProtocolMessages;
+    //            }
+
+
+    //    }
     }

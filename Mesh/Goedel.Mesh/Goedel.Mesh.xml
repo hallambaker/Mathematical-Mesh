@@ -383,30 +383,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.ActivationHost">
-            <summary>
-            Activation class binding a host to a service.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationHost.MeshActor">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationHost.#ctor(Goedel.Mesh.ProfileHost,System.Byte[],System.Int32)">
-            <summary>
-            Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
-            <paramref name="profileDevice"/>.
-            If the value <paramref name="masterSecret"/> is
-            specified, it is used as the seed value. Otherwise, a seed value of
-            length <paramref name="bits"/> is generated.
-            The public key value is calculated for the public key pairs and the corresponding
-            <see cref="T:Goedel.Mesh.Connection"/> generated for the public values.
-            </summary>
-            <param name="profileDevice">The base profile that the activation activates.</param>
-            <param name="masterSecret">If not null, specifies the seed value. Otherwise,
-            a seed value of <paramref name="bits"/> length is generated.</param>
-            <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
-            is null.</param>
-        </member>
         <member name="T:Goedel.Mesh.ActivationDevice">
              <summary>
             
@@ -535,11 +511,11 @@
             Interface that returns a Mesh client for an account.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.IMeshClient.GetMeshClient(System.String)">
+        <member name="M:Goedel.Mesh.IMeshClient.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
-            Get a Mesh client for the address <paramref name="accountAddress"/>.
+            Get a Mesh client for the credential <paramref name="credentialPrivate"/>.
             </summary>
-            <param name="accountAddress">The account to obtain a client for.</param>
+            <param name="credentialPrivate">The account to obtain a client for.</param>
             <returns>The client.</returns>
         </member>
         <member name="T:Goedel.Mesh.ICapabilityPartial">
@@ -3498,7 +3474,15 @@
         <member name="P:Goedel.Mesh.ConnectionDevice.EnvelopedConnectionDevice">
             <summary>Typed enveloped data</summary> 
         </member>
+        <member name="P:Goedel.Mesh.ConnectionDevice.AuthenticationPublic">
+            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+        </member>
         <member name="M:Goedel.Mesh.ConnectionDevice.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ConnectionDevice.FromValue(System.Byte[])">
             <summary>
             Constructor for use by deserializers.
             </summary>
@@ -3512,6 +3496,12 @@
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ConnectionDevice.SelectKey">
+            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+        </member>
+        <member name="M:Goedel.Mesh.ConnectionDevice.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
+            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
         </member>
         <member name="P:Goedel.Mesh.ConnectionDevice.Account">
              <summary>
@@ -4988,6 +4978,106 @@
         </member>
         <member name="F:Goedel.Mesh.MeshKeyOperation.Escrow">
             <summary>Escrow Encryption key</summary>
+        </member>
+        <member name="T:Goedel.Mesh.MeshCredential">
+            <summary>
+            JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
+            assertion).
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredential.Account">
+            <summary>The account identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredential.Validated">
+            <summary>If not null, the account identifier has been validated with respect
+            to the specified root of trust.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredential.AuthenticationPublic">
+            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredential.#ctor(Goedel.Mesh.Connection)">
+            <summary>
+            Create a credential wrapper for a device key asserted by means of the connection
+            <paramref name="connectionDevice"/>.
+            </summary>
+            <param name="connectionDevice">The device connection assertion.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredential.#ctor(Goedel.Cryptography.KeyPairAdvanced)">
+            <summary>
+            Create a credential wrapper for a device key asserted by means of the authentication
+            key <paramref name="authenticationPublic"/>.
+            </summary>
+            <param name="authenticationPublic">The authentication key.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredential.SelectKey">
+            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
+            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredential.Verify(Goedel.Mesh.ProfileAccount)">
+            <summary>
+            Claim a binding to the account <paramref name="profileAccount"/>.
+            </summary>
+            <param name="profileAccount"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Mesh.MeshCredentialPrivate">
+            <summary>
+            Wrapper for a private credential.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredentialPrivate.Tag">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredentialPrivate.Value">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredentialPrivate.AuthenticationPrivate">
+            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.#ctor(Goedel.Mesh.ActivationDevice)">
+            <summary>
+            Construct a credential from <paramref name="activationDevice"/> with 
+            private key capabilities.
+            </summary>
+            <param name="activationDevice">An activated device activation.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.#ctor(Goedel.Mesh.ProfileDevice)">
+            <summary>
+            Construct a credential from <paramref name="profileDevice"/> with 
+            private key capabilities.
+            </summary>
+            <param name="profileDevice"></param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.#ctor(Goedel.Cryptography.KeyPairAdvanced)">
+            <summary>
+            Create a credential wrapper for a device key asserted by means of the authentication
+            key <paramref name="authenticationprivate"/>.
+            </summary>
+            <param name="authenticationprivate">The authentication key.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.AddCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.SelectKey(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.SelectKey(System.String,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.Bind(Goedel.Mesh.ProfileAccount)">
+            <summary>
+            Not sure if this is needed, binding of the profile might well be a stream 
+            action rather than a credential action.
+            </summary>
+            <param name="profileAccount"></param>
         </member>
         <member name="T:Goedel.Mesh.GetMachineDelegate">
             <summary>

@@ -9,13 +9,13 @@ using Goedel.IO;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Goedel.Protocol.Presentation;
 
 #pragma warning disable IDE0059
 
 namespace Goedel.Mesh.Test {
 
     public partial class TestShell : Goedel.Mesh.Shell.Shell {
-        static string ServiceName = "example.com";
         public string MachineName = "Test";
 
 
@@ -29,7 +29,7 @@ namespace Goedel.Mesh.Test {
         MeshMachineTest meshMachineTest;
 
         MeshServiceClient MeshClient => meshClient ??
-            GetMeshClient(ServiceName).CacheValue(out meshClient);
+            GetMeshClient(null).CacheValue(out meshClient);
         MeshServiceClient meshClient;
 
 
@@ -47,8 +47,8 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        public MeshServiceClient GetMeshClient(string accountAddress) =>
-            MeshMachine.GetMeshClient(accountAddress);
+        public MeshServiceClient GetMeshClient(ICredentialPrivate credential) =>
+            MeshMachine.GetMeshClient(credential);
             
 
         public override MeshServiceClient GetMeshClient(IAccountOptions Options) => MeshClient;

@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using Goedel.Mesh.Test;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Server;
-using Goedel.Mesh.Credential;
 using Xunit;
 using Goedel.Cryptography.Dare;
 
@@ -36,11 +35,11 @@ namespace Goedel.XUnit {
         public PublicMeshService MeshService { get; set; }
 
 
-        public MeshCredential InitiatorCredential { get; set; }
+        public ICredentialPrivate GetInitiatorCredential() => 
+                    new MeshCredentialPrivate(ProfileDevice.Generate());
 
-        public MeshCredential ResponderCredential { get; set; }
-        public  Credential GetInitiatorCredential() => InitiatorCredential;
-        public  Credential GetResponderCredential() => ResponderCredential;
+        public ICredentialPrivate GetResponderCredential() => 
+            new MeshCredentialPrivate(MeshService.ActivationDevice);
 
 
         public static new TestPresentationMesh Test() => new();
@@ -76,11 +75,11 @@ namespace Goedel.XUnit {
             MeshService = testEnvironmentCommon.MeshService;
 
 
-            // create the client credential
-            InitiatorCredential = new MeshCredentialTraced(ContextInitiator);
-            ResponderCredential = new MeshCredentialTraced(
-                testEnvironmentCommon.MeshService.ConnectionAccount,
-                testEnvironmentCommon.MeshService.ActivationDevice.DeviceAuthentication);
+            //// create the client credential
+            //InitiatorCredential = new MeshCredentialTraced(ContextInitiator);
+            //ResponderCredential = new MeshCredentialTraced(
+            //    testEnvironmentCommon.MeshService.ConnectionAccount,
+            //    testEnvironmentCommon.MeshService.ActivationDevice.DeviceAuthentication);
 
             return testEnvironmentCommon;
             }

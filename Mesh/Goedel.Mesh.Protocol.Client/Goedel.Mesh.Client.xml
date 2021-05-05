@@ -503,7 +503,7 @@
             Delete the associated account from the local machine.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshClient(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
             Returns a Mesh service client for <paramref name="accountAddress"/>.
             </summary>
@@ -1047,6 +1047,9 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.DeviceAuthentication">
             <summary>Device authentication key in account context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.MeshClient">
+            <summary>Returns the MeshClient and caches the result for future use.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
@@ -2388,9 +2391,9 @@
         <member name="P:Goedel.Mesh.Client.IMeshMachineClient.MeshHost">
             <summary>Direct access to the Catalog, should remove this</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.IMeshMachineClient.GetMeshClient(System.String)">
+        <member name="M:Goedel.Mesh.Client.IMeshMachineClient.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
-            Return a MeshService client for the service ID <paramref name="accountAddress"/>.
+            Return a MeshService client for the service ID <paramref name="meshCredential"/>.
             </summary>
             <returns>The client instance.</returns>
         </member>

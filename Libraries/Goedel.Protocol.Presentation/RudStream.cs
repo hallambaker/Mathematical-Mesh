@@ -108,7 +108,7 @@ namespace Goedel.Protocol.Presentation {
         public string Protocol;
 
         ///<summary>The credential to which the stream is bound</summary> 
-        public Credential Credential;
+        public ICredentialPrivate Credential;
 
         ///<summary>The local stream Id, this is generated localy and MAY contain hidden structure.</summary> 
         public StreamId LocalStreamId { get; protected set; }
@@ -139,7 +139,7 @@ namespace Goedel.Protocol.Presentation {
         public RudStream(
                 RudStream parent,
                 string protocol,
-                Credential credential= null,
+                ICredentialPrivate credential = null,
                 RudConnection rdpConnection=null) {
             RdpStreamParent = parent;
             if (parent != null) {
@@ -464,7 +464,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="protocol">The protocol identifier</param>
         /// <param name="credential">Optional additional credential to be presented.</param>
         /// <returns>The created stream.</returns>
-        public RudStreamClient MakeStreamClient(string protocol, Credential credential = null) =>
+        public RudStreamClient MakeStreamClient(string protocol, ICredentialPrivate credential = null) =>
             new RudStreamClient(this, protocol, credential);
 
 
@@ -473,7 +473,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="credential">Optional additional credential to be presented.</param>
         /// <returns>The created stream.</returns>
-        public RudStreamClient MakeStreamSender(Credential credential = null) => throw new NYI();
+        public RudStreamClient MakeStreamSender(ICredentialPrivate credential = null) => throw new NYI();
 
         /// <summary>
         /// Request creation of a transactional stream in the server role

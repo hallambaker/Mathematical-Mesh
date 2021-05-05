@@ -79,7 +79,11 @@ namespace Goedel.Mesh.Client {
         ///<summary>Device authentication key in account context.</summary>
         public KeyPair DeviceAuthentication => ActivationDevice.DeviceAuthentication;
 
-        
+        ///<summary>Returns the MeshClient and caches the result for future use.</summary>
+        public override MeshServiceClient MeshClient => meshClient ??
+                GetMeshClient(new MeshCredentialPrivate(ActivationDevice)).CacheValue(out meshClient);
+        MeshServiceClient meshClient;
+
 
         #endregion
         #region // Constructors

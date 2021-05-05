@@ -36,67 +36,6 @@
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Credential.MeshCredential">
-            <summary>
-            JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
-            assertion).
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Credential.MeshCredential.Tag">
-            <summary>Tag to describe the credential in a <see cref="T:Goedel.Protocol.Presentation.PacketExtension"/></summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Credential.MeshCredential.Value">
-            <summary>The binary credential value.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Credential.MeshCredential.Profile">
-            <summary>The profile to which this credential is bound</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Credential.MeshCredential.Connection">
-            <summary>The connection binding the device presenting the credential to 
-            <see cref="P:Goedel.Mesh.Credential.MeshCredential.Profile"/></summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Credential.MeshCredential.AuthenticationPublic">
-            <summary>The public authentication key.</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.#ctor">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.#ctor(System.Byte[])">
-            <summary>
-            Create a Mesh credential from public key data described in <paramref name="data"/>
-            </summary>
-            <param name="data">JSON-B encoded connection credential.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.#ctor(Goedel.Mesh.Connection,Goedel.Cryptography.KeyPair)">
-            <summary>
-            Create a credential for the connection <paramref name="connection"/>.
-            </summary>
-            <param name="connection">The user context used to construct this credential</param>
-            <param name="authenticationPrivate">The authentication private key.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.AddCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.SelectKey(System.String,System.Byte[])">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.SelectKey">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Credential.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
-            <inheritdoc/>
-        </member>
         <member name="T:Goedel.Mesh.Credential.NamespaceDoc">
             <summary>
             Desctiption of the 

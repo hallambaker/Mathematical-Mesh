@@ -77,7 +77,11 @@ namespace Goedel.XUnit {
 
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
-            var meshClient = machineAdminAlice.GetMeshClient(ServiceName);
+
+            var credentialTemp =
+                    new MeshCredentialPrivate(ProfileDevice.Generate());
+
+            var meshClient = machineAdminAlice.GetMeshClient(credentialTemp);
 
             var request = new HelloRequest();
             var response = meshClient.Hello(request);

@@ -16,7 +16,6 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Session\Goedel.Mesh.Credential.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
   </ItemGroup>

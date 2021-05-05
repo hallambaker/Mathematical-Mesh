@@ -21,8 +21,9 @@
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
-
+using Goedel.Protocol.Presentation;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Goedel.Mesh {
     public partial class ConnectionAccount {
@@ -42,12 +43,24 @@ namespace Goedel.Mesh {
             }
 
         }
-    public partial class ConnectionDevice {
+    public partial class ConnectionDevice : ICredential {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ConnectionDevice> EnvelopedConnectionDevice =>
             envelopedConnectionDevice ?? new Enveloped<ConnectionDevice>(DareEnvelope).
                     CacheValue(out envelopedConnectionDevice);
+
+        /////<inheritdoc cref="ICredential"/>
+        //public string Tag => throw new System.NotImplementedException();
+
+        /////<inheritdoc cref="ICredential"/>
+        //public byte[] Value => throw new System.NotImplementedException();
+
+        ///<inheritdoc cref="ICredential"/>
+        public KeyPairAdvanced AuthenticationPublic => Authentication.GetKeyPairAdvanced();
+
+
+
         Enveloped<ConnectionDevice> envelopedConnectionDevice;
 
 
@@ -56,6 +69,15 @@ namespace Goedel.Mesh {
         /// </summary>
         public ConnectionDevice() {
             }
+
+
+        /// <summary>
+        /// Constructor for use by deserializers.
+        /// </summary>
+        public static ConnectionDevice FromValue (byte[] data) {
+            throw new NYI();
+            }
+
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
@@ -82,6 +104,21 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"KeyAuthentication:   {Authentication.Udf} ");
 
             }
+
+        //public ICredential GetCredentials(List<PacketExtension> extensions) => throw new System.NotImplementedException();
+        //public void AddEphemerals(List<PacketExtension> extensions, ref List<KeyPairAdvanced> ephmeralsOffered) => throw new System.NotImplementedException();
+        //public void AddCredentials(List<PacketExtension> extensions) => throw new System.NotImplementedException();
+        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) => throw new System.NotImplementedException();
+        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) => throw new System.NotImplementedException();
+
+        ///<inheritdoc cref="ICredential"/>
+        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
+            (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
+                        AuthenticationPublic);
+
+        ///<inheritdoc cref="ICredential"/>
+        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<KeyPairAdvanced> ephemerals, string keyId) =>
+            (ephemerals[0], AuthenticationPublic);
         }
 
     }

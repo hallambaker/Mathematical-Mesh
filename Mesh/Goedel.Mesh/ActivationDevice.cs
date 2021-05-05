@@ -23,45 +23,16 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-
+using Goedel.Protocol.Presentation;
 using System.Text;
+using System.Collections.Generic;
+using System;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
-    /// <summary>
-    /// Activation class binding a host to a service.
-    /// </summary>
-    public partial class ActivationHost : ActivationDevice {
-
-        ///<inheritdoc/>
-        public override MeshActor MeshActor => MeshActor.Host;
-
-
-        /// <summary>
-        /// Construct a new <see cref="ActivationDevice"/> instance for the profile
-        /// <paramref name="profileDevice"/>.
-        /// If the value <paramref name="masterSecret"/> is
-        /// specified, it is used as the seed value. Otherwise, a seed value of
-        /// length <paramref name="bits"/> is generated.
-        /// The public key value is calculated for the public key pairs and the corresponding
-        /// <see cref="Connection"/> generated for the public values.
-        /// </summary>
-        /// <param name="profileDevice">The base profile that the activation activates.</param>
-        /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
-        /// a seed value of <paramref name="bits"/> length is generated.</param>
-        /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
-        /// is null.</param>
-        public ActivationHost(
-                    ProfileHost profileDevice,
-                    byte[] masterSecret = null,
-                    int bits = 256) : base(profileDevice, masterSecret, bits) {
-            }
-
-
-        }
-
     public partial class ActivationDevice {
-
+        #region // Properties
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ActivationDevice> EnvelopedActivationDevice =>
             envelopedActivationDevice ?? new Enveloped<ActivationDevice>(DareEnvelope).
@@ -74,6 +45,9 @@ namespace Goedel.Mesh {
         ///<summary>The <see cref="ConnectionUser"/> instance binding the activated device
         ///to a MeshProfile.</summary>
         public ConnectionDevice ConnectionUser { get; set; }
+
+
+
 
 
         // Properties giving access to device specific keys
@@ -89,6 +63,15 @@ namespace Goedel.Mesh {
 
         ///<inheritdoc/>
         public virtual MeshActor MeshActor => MeshActor.Device;
+
+
+        MeshCredentialPrivate MeshCredentialPrivate => meshCredentialPrivate ??
+            new MeshCredentialPrivate(this);
+        MeshCredentialPrivate meshCredentialPrivate;
+
+
+        #endregion
+        #region // Constructors
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -137,7 +120,9 @@ namespace Goedel.Mesh {
                 };
             }
 
+        #endregion
 
+        #region // Methods
         /// <summary>
         /// Activate the keys bound to this activation record using keys derived from 
         /// <paramref name="deviceKeySeed"/>.
@@ -171,6 +156,8 @@ namespace Goedel.Mesh {
             //indent++;
             //builder.AppendIndent(indent, $"KeySignature:     {ProfileSignature} ");
             }
+
+        #endregion
         }
 
     }

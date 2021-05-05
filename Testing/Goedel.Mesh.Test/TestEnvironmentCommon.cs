@@ -3,7 +3,6 @@ using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh;
 using Goedel.Mesh.Server;
-using Goedel.Mesh.Credential;
 using Goedel.Protocol;
 using Goedel.Utilities;
 using Goedel.Test.Core;
@@ -11,7 +10,6 @@ using Goedel.Protocol.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Goedel.Mesh.Session;
 using Goedel.Protocol.Presentation;
 
 namespace Goedel.Mesh.Test {
@@ -26,7 +24,7 @@ namespace Goedel.Mesh.Test {
         public string Instance => Test;
 
 
-        public override MeshServiceClient GetMeshClient( MeshCredentialTraced meshCredential) {
+        public override MeshServiceClient GetMeshClient(ICredentialPrivate meshCredential) {
             StartService();
 
             var meshServiceBinding = new ConnectionInitiator(meshCredential, Domain, Instance, TransportType.Http, Protocol);
@@ -49,8 +47,8 @@ namespace Goedel.Mesh.Test {
             var providers = new List<RudProvider> { provider };
 
             // create the service and host credentials here.
-            var credential = new MeshCredential(MeshService.ConnectionAccount, MeshService.ActivationDevice.DeviceAuthentication);
-            
+            //var credential = new MeshCredential(MeshService.ConnectionAccount, MeshService.ActivationDevice.DeviceAuthentication);
+            var credential = new MeshCredentialPrivate(MeshService.ActivationDevice);
             return new RudService(providers, credential);
 
 
@@ -90,16 +88,16 @@ namespace Goedel.Mesh.Test {
 
         RudService service;
 
-        public virtual MeshServiceClient GetMeshClient(MeshCredentialTraced meshCredential) {
+        public virtual MeshServiceClient GetMeshClient(ICredentialPrivate meshCredential) {
 
             if (!JpcConnection.IsDirect()) {
                 service ??= StartService();
                 }
 
-            JpcSession session = JpcConnection switch  {
-                JpcConnection.Direct => new JpcSessionDirect(MeshService, meshCredential.AccountAddress),
-                JpcConnection.Serialized => new TestSession(MeshService, 
-                        meshCredential.AccountAddress, meshCredential.MeshProtocolMessages),
+            JpcSession session = JpcConnection switch {
+                JpcConnection.Direct => new JpcSessionDirect(MeshService, meshCredential.Account),
+                JpcConnection.Serialized => new TestSession(MeshService,
+                        meshCredential.Account, null),
                 //JpcConnection.Http => new JpcSessionHTTP(meshCredential.AccountAddress, Test),
                 //JpcConnection.Ticketed => new JpcSessionTicketed(null, meshCredential.AccountAddress),
                 _ => throw new NYI()

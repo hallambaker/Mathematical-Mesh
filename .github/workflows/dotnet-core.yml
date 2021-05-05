@@ -8,8 +8,8 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    name: Create GitHub Release
+    runs-on: windows-2019
 
     steps:
     - uses: actions/checkout@v2

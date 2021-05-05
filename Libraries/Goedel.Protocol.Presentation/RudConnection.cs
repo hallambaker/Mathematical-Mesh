@@ -66,15 +66,15 @@ namespace Goedel.Protocol.Presentation {
         public abstract byte[] MutualKeyOut { get; }
 
         ///<summary>Public credential of the counter party.</summary> 
-        public virtual Credential CredentialOther { get; set; }
+        public virtual ICredential CredentialOther { get; set; }
         ///<summary>Private credential of self.</summary> 
-        public virtual Credential CredentialSelf { get; set; }
+        public virtual ICredentialPrivate CredentialSelf { get; set; }
 
         ///<summary>The host credential</summary> 
-        public abstract Credential HostCredential { get; }
+        public abstract ICredential HostCredential { get; }
 
         ///<summary>The client credential</summary> 
-        public abstract Credential ClientCredential { get; }
+        public abstract ICredential ClientCredential { get; }
 
         ///<summary>The packet that the connection is a response to.</summary> 
         public Packet PacketIn { get; set; }
@@ -255,7 +255,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="keyId">Host key identifier</param>
         public void ClientKeyExchange(out string keyId) {
-            var (privateKey, publicEphemeral) = HostCredential.SelectKey(PacketIn.PlaintextExtensions);
+            var (privateKey, publicEphemeral) = CredentialSelf.SelectKey(PacketIn.PlaintextExtensions);
             keyId = privateKey.KeyIdentifier;
             ClientKeyExchange(privateKey, publicEphemeral);
             }
@@ -267,7 +267,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="ephemeral"></param>
         /// <param name="keyId"></param>
         public virtual void ClientKeyExchange(byte[] ephemeral, string keyId) {
-            var (privateKey, publicEphemeral) = HostCredential.SelectKey(keyId, ephemeral);
+            var (privateKey, publicEphemeral) = CredentialSelf.SelectKey(keyId, ephemeral);
             ClientKeyExchange(privateKey, publicEphemeral);
             }
 
@@ -327,7 +327,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="keyId">Client key identifier</param>
         public virtual void MutualKeyExchange(out string keyId) {
-            var (privateKey, publicEphemeral) = ClientCredential.SelectKey(PacketIn.PlaintextExtensions);
+            var (privateKey, publicEphemeral) = CredentialSelf.SelectKey(PacketIn.PlaintextExtensions);
             keyId = privateKey.KeyIdentifier;
             MutualKeyExchange(privateKey, publicEphemeral);
             }
@@ -339,7 +339,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="ephemeral"></param>
         /// <param name="keyId"></param>
         public virtual void MutualKeyExchange(byte[] ephemeral, string keyId) {
-            var (privateKey, publicEphemeral) = ClientCredential.SelectKey(keyId, ephemeral);
+            var (privateKey, publicEphemeral) = CredentialSelf.SelectKey(keyId, ephemeral);
             MutualKeyExchange(privateKey, publicEphemeral);
             }
 

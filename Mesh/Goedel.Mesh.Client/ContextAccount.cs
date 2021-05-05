@@ -2,7 +2,7 @@
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-
+using Goedel.Protocol.Presentation;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,8 +66,7 @@ namespace Goedel.Mesh.Client {
         public abstract Connection Connection { get; }
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
-        public virtual MeshServiceClient MeshClient => meshClient ?? GetMeshClient(AccountAddress).CacheValue(out meshClient);
-        MeshServiceClient meshClient;
+        public virtual MeshServiceClient MeshClient => throw new NYI();
 
         ///<summary>The Account Address</summary>
         public abstract string AccountAddress { get; } 
@@ -241,8 +240,8 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="accountAddress">The account service identifier.</param>
         /// <returns>The Mesh service client</returns>
-        public MeshServiceClient GetMeshClient(string accountAddress) =>
-                    MeshMachine.GetMeshClient(accountAddress);
+        public MeshServiceClient GetMeshClient(ICredentialPrivate credentialPrivate) =>
+                    MeshMachine.GetMeshClient(credentialPrivate);
 
 
         /// <summary>
@@ -698,8 +697,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="exportable">If true, the key is exportable.</param>
         public void Persist(string udf, IJson joseKey, bool exportable) => throw new NotImplementedException();
 
-
         #endregion
+
 
         }
     }

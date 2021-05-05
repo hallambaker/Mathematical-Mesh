@@ -140,6 +140,30 @@
             </summary>
             <returns>The list of container status entries.</returns>
         </member>
+        <member name="T:Goedel.Mesh.Server.ActivationHost">
+            <summary>
+            Activation class binding a host to a service.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.ActivationHost.MeshActor">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Server.ActivationHost.#ctor(Goedel.Mesh.ProfileHost,System.Byte[],System.Int32)">
+            <summary>
+            Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
+            <paramref name="profileDevice"/>.
+            If the value <paramref name="masterSecret"/> is
+            specified, it is used as the seed value. Otherwise, a seed value of
+            length <paramref name="bits"/> is generated.
+            The public key value is calculated for the public key pairs and the corresponding
+            <see cref="T:Goedel.Mesh.Connection"/> generated for the public values.
+            </summary>
+            <param name="profileDevice">The base profile that the activation activates.</param>
+            <param name="masterSecret">If not null, specifies the seed value. Otherwise,
+            a seed value of <paramref name="bits"/> length is generated.</param>
+            <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
+            is null.</param>
+        </member>
         <member name="T:Goedel.Mesh.Server.MeshServerException">
             <summary>
             Generic Mesh Service Error

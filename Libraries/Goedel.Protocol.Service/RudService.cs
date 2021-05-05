@@ -96,7 +96,7 @@ namespace Goedel.Protocol.Service {
         /// <param name="credential">Credential for the listener to use.</param>
         /// <remarks>Constructor returns after the service has been started and listener threads 
         /// initialized.</remarks>
-        public RudService(List<RudProvider> providers, Credential credential = null, Listener rdpListener = null, int maxCores = 0) {
+        public RudService(List<RudProvider> providers, ICredentialPrivate credential = null, Listener rdpListener = null, int maxCores = 0) {
 
             Listener = rdpListener?? new RudListener(credential, providers);
 

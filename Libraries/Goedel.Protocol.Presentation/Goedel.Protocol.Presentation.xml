@@ -52,7 +52,7 @@
         <member name="P:Goedel.Protocol.Presentation.ConnectionInitiator.WebClient">
             <summary>The Web Client</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.#ctor(Goedel.Protocol.Presentation.Credential,System.String,System.String,Goedel.Protocol.Presentation.TransportType,System.String)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.#ctor(Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String,Goedel.Protocol.Presentation.TransportType,System.String)">
             <summary>
             Return an instance of a client connecting to host <paramref name="domain"/> using
             device credential <paramref name="initiatorCredential"/> with client protocol binding
@@ -67,7 +67,7 @@
         <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.GetClient``1(Goedel.Protocol.Presentation.Credential)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.GetClient``1(Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
             Return a client bound to the connection via the relevant protocol
             </summary>
@@ -420,80 +420,6 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.Credential">
-            <summary>
-            Base class for presentation credentials.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.Credential.Tag">
-            <summary><see cref="T:Goedel.Protocol.Presentation.PacketExtension"/> tag for credential type.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.Credential.Value">
-            <summary><see cref="T:Goedel.Protocol.Presentation.PacketExtension"/> binary data.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.Credential.AuthenticationPublic">
-            <summary>The public key to use for authentication.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Credential.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
-            <summary>
-            Generate a set of ephemerals for the supported algorithms to offer for 
-            key agreement and add to <paramref name="extensions"/>.
-            </summary>
-            <param name="extensions">List of extensions to add the ephemerals to.</param>
-            <param name="ephmeralsOffered">List of ephemerals that have been offered, if
-            this is not null, the ephemerals in this list will be returned. Otherwise a list
-            will be created and populated with the ephemerals offered.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Credential.AddCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
-            <summary>
-            Add an extension containing this credential to <paramref name="extensions"/>.
-            </summary>
-            <param name="extensions">List of extensions to add the credential to.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Credential.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
-            <summary>
-            Add an extension containing this credential to <paramref name="extensions"/>.
-            </summary>
-            <param name="extensions">List of extensions to add the credential to.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Credential.SelectKey(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
-            <summary>
-            Select a private key compatible with the ephemeral keys offered in 
-            <paramref name="extensions"/> and return the private key and ephemeral
-            chosen.
-            </summary>
-            <param name="extensions">List of extensions offering ephemeral keys to
-            perform a key agreement against.</param>
-            <returns>The private key and public key.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Credential.SelectKey(System.String,System.Byte[])">
-            <summary>
-            Return a private key and public key compatible with the values specified
-            by <paramref name="keyId"/> and <paramref name="ephemeral"/>.
-            chosen.
-            </summary>
-            <param name="keyId">The key identifier.</param>
-            <param name="ephemeral">Ephemeral data specifying a public key </param>
-            <returns>The ephemeral private key and credential public key.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Credential.SelectKey">
-            <summary>
-            Return a private ephemeral key and compatible public key from the 
-            credential keys
-            </summary>
-            <returns>The ephemeral private key and credential public key.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.Credential.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
-            <summary>
-            Select an ephemeral from <paramref name="ephemerals"/> that is compatible with 
-            the creedential key <paramref name="keyId"/>.
-            </summary>
-            <param name="keyId">If specified, the first ephemeral in the list compatible
-            with the specified key will be used.</param> 
-            <param name="ephemerals">List of ephemerals previously offered to
-            perform a key agreement against.</param>
-            <returns>The ephemeral private key and credential public key.</returns>
-        </member>
         <member name="T:Goedel.Protocol.Presentation.Datagram">
             <summary>
             A RUD datagram.
@@ -589,6 +515,90 @@
             </summary>
             <param name="Protocol">Directory to store persistence data.</param>
         </member>
+        <member name="T:Goedel.Protocol.Presentation.ICredential">
+            <summary>
+            Credential interface
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.ICredential.Account">
+            <summary>The subject name claimed under the credential</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.ICredential.AuthenticationPublic">
+            <summary>The public authentication key.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ICredential.SelectKey">
+            <summary>
+            Return a private ephemeral key and compatible public key from the 
+            credential keys
+            </summary>
+            <returns>The ephemeral private key and credential public key.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ICredential.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
+            <summary>
+            Select an ephemeral from <paramref name="ephemerals"/> that is compatible with 
+            the creedential key <paramref name="keyId"/>.
+            </summary>
+            <param name="keyId">If specified, the first ephemeral in the list compatible
+            with the specified key will be used.</param> 
+            <param name="ephemerals">List of ephemerals previously offered to
+            perform a key agreement against.</param>
+            <returns>The ephemeral private key and credential public key.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.ICredentialPrivate">
+            <summary>
+            Credential with private key affordances.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.ICredentialPrivate.Tag">
+            <summary><see cref="T:Goedel.Protocol.Presentation.PacketExtension"/> tag for credential type.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.ICredentialPrivate.Value">
+            <summary><see cref="T:Goedel.Protocol.Presentation.PacketExtension"/> binary data.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ICredentialPrivate.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Extract the first recognized credential from the exension list 
+            <paramref name="extensions"/>
+            </summary>
+            <param name="extensions">List of extensions to parse.</param>
+            <returns>The credential if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ICredentialPrivate.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
+            <summary>
+            Generate a set of ephemerals for the supported algorithms to offer for 
+            key agreement and add to <paramref name="extensions"/>.
+            </summary>
+            <param name="extensions">List of extensions to add the ephemerals to.</param>
+            <param name="ephmeralsOffered">List of ephemerals that have been offered, if
+            this is not null, the ephemerals in this list will be returned. Otherwise a list
+            will be created and populated with the ephemerals offered.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ICredentialPrivate.AddCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Add an extension containing this credential to <paramref name="extensions"/>.
+            </summary>
+            <param name="extensions">List of extensions to add the credential to.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ICredentialPrivate.SelectKey(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <summary>
+            Select a private key compatible with the ephemeral keys offered in 
+            <paramref name="extensions"/> and return the private key and ephemeral
+            chosen.
+            </summary>
+            <param name="extensions">List of extensions offering ephemeral keys to
+            perform a key agreement against.</param>
+            <returns>The private key and public key.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.ICredentialPrivate.SelectKey(System.String,System.Byte[])">
+            <summary>
+            Return a private key and public key compatible with the values specified
+            by <paramref name="keyId"/> and <paramref name="ephemeral"/>.
+            chosen.
+            </summary>
+            <param name="keyId">The key identifier.</param>
+            <param name="ephemeral">Ephemeral data specifying a public key </param>
+            <returns>The ephemeral private key and credential public key.</returns>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.PortId">
             <summary>
             Port identifier. Specifies an IP address and port number.
@@ -633,7 +643,7 @@
         <member name="F:Goedel.Protocol.Presentation.Listener.DictionaryStreamsInbound">
             <summary>Dictionary mapping inbound source Ids to sessions.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.#ctor(Goedel.Protocol.Presentation.Credential,System.Collections.Generic.List{Goedel.Protocol.Presentation.RudProvider})">
+        <member name="M:Goedel.Protocol.Presentation.Listener.#ctor(Goedel.Protocol.Presentation.ICredentialPrivate,System.Collections.Generic.List{Goedel.Protocol.Presentation.RudProvider})">
             <summary>
             Base constructor, populate the common properties.
             </summary>
@@ -1502,7 +1512,7 @@
             the specified service.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudListener.#ctor(Goedel.Protocol.Presentation.Credential,System.Collections.Generic.List{Goedel.Protocol.Presentation.RudProvider})">
+        <member name="M:Goedel.Protocol.Presentation.RudListener.#ctor(Goedel.Protocol.Presentation.ICredentialPrivate,System.Collections.Generic.List{Goedel.Protocol.Presentation.RudProvider})">
             <summary>
             Base constructor, populate the common properties.
             </summary>
@@ -1642,7 +1652,7 @@
         <member name="F:Goedel.Protocol.Presentation.RudStream.ChallengePoW">
             <summary>The challeng proof of work.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.Credential,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> according to the stream role.
@@ -1689,7 +1699,7 @@
             </summary>
             <param name="recurse"></param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStream.MakeStreamClient(System.String,Goedel.Protocol.Presentation.Credential)">
+        <member name="M:Goedel.Protocol.Presentation.RudStream.MakeStreamClient(System.String,Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
             Request creation of a transactional stream in the client role.
             </summary>
@@ -1697,7 +1707,7 @@
             <param name="credential">Optional additional credential to be presented.</param>
             <returns>The created stream.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStream.MakeStreamSender(Goedel.Protocol.Presentation.Credential)">
+        <member name="M:Goedel.Protocol.Presentation.RudStream.MakeStreamSender(Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
             Request creation of an asynchronous stream in the sender role.
             </summary>
@@ -1728,7 +1738,7 @@
             The client side of an RDP transactional stream.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.Credential,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
@@ -1758,7 +1768,7 @@
             notice of receipt of a datagtram.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamReceiver.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.Credential)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamReceiver.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
@@ -1773,7 +1783,7 @@
             notice of receipt of a control message.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamSender.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.Credential)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamSender.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
@@ -1802,7 +1812,7 @@
         <member name="F:Goedel.Protocol.Presentation.RudStreamService.JpcInterface">
             <summary>The service instance.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamService.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.Credential,System.String,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 

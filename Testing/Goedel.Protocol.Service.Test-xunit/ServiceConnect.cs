@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using Goedel.Mesh.Test;
 using System.Threading;
 using Goedel.Mesh;
-using Goedel.Mesh.Session;
 using Goedel.Mesh.Management;
 using Goedel.Protocol.Service;
 

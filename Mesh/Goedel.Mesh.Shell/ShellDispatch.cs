@@ -195,8 +195,8 @@ namespace Goedel.Mesh.Shell {
         public virtual MeshServiceClient GetMeshClient(IAccountOptions options) {
             var accountAddress = options.AccountAddress .Value;
 
-            return MeshMachine.GetMeshClient(accountAddress);
-
+            //return MeshMachine.GetMeshClient(accountAddress, null);
+            throw new NYI();
             }
 
 

@@ -10,6 +10,9 @@ namespace Scratchpad {
 
     // Bug: 1) The client credential is blank at the start of the interaction.
 
+    // consider reworking Mesh credential...
+    // need to establish the 
+
 
 
     // ToDo: 1) Parse account details from client

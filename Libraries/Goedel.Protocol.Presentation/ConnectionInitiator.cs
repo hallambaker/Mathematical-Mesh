@@ -38,9 +38,9 @@ namespace Goedel.Protocol.Presentation {
         ///<inheritdoc/> 
         public override byte[] MutualKeyOut => MutualKeyClientToHost;
         ///<inheritdoc/>
-        public override Credential HostCredential => CredentialOther;
+        public override ICredential HostCredential => CredentialOther;
         ///<inheritdoc/>
-        public override Credential ClientCredential => CredentialSelf;
+        public override ICredential ClientCredential => CredentialSelf;
 
 
         ///<summary>The verified account.</summary> 
@@ -90,7 +90,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="transportTypes">The transport types.</param>
         /// <param name="protocol">The service protocol to return a client stream for.</param>
         public ConnectionInitiator (
-                    Credential initiatorCredential, 
+                    ICredentialPrivate initiatorCredential, 
                     string domain,
                     string instance = null, 
                     TransportType transportTypes = TransportType.All,
@@ -125,7 +125,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetClient<T>(Credential credential=null) where T : JpcClientInterface, new() {
+        public T GetClient<T>(ICredentialPrivate credential =null) where T : JpcClientInterface, new() {
 
             var client = new T();
 

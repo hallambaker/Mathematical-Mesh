@@ -82,7 +82,7 @@ namespace Goedel.Protocol.Presentation {
         public List<RudProvider> Providers { get; }
 
         ///<summary>Private credential of self.</summary> 
-        public virtual Credential CredentialSelf { get; }
+        public virtual ICredentialPrivate CredentialSelf { get; }
 
         public static PacketReaderFactoryDelegate PacketReaderFactory { get; set; }
             = PacketReader.Factory;
@@ -97,7 +97,7 @@ namespace Goedel.Protocol.Presentation {
         /// Base constructor, populate the common properties.
         /// </summary>
         /// <param name="credentialSelf">The credential used by the listener.</param>
-        public Listener(Credential credentialSelf,
+        public Listener(ICredentialPrivate credentialSelf,
             List<RudProvider> providers) {
             CredentialSelf = credentialSelf;
             Providers = providers;
