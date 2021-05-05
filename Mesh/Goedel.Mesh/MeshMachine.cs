@@ -20,6 +20,7 @@
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Protocol.Presentation;
 
 namespace Goedel.Mesh {
 
@@ -38,8 +39,8 @@ namespace Goedel.Mesh {
         ///<summary>The default number of bits in a master key.</summary>
         public static int DefaultMasterKeyBits = 256;
 
-        ///<summary>Factory returning an IMeshMachine instance</summary>
-        public static GetMachineDelegate IMeshMachineFactory;
+        /////<summary>Factory returning an IMeshMachine instance</summary>
+        //public static GetMachineDelegate IMeshMachineFactory;
 
         ///<summary>Path to directory where the profiles are stored.</summary>
         public static string DirectoryProfiles;
@@ -74,6 +75,12 @@ namespace Goedel.Mesh {
                     int keySize = 0,
                     KeyUses keyUses = KeyUses.Any);
 
+
+        /// <summary>
+        /// Return a MeshService client for the service ID <paramref name="meshCredential"/>.
+        /// </summary>
+        /// <returns>The client instance.</returns>
+        MeshServiceClient GetMeshClient(string accountAddress, ICredentialPrivate meshCredential);
         }
 
 

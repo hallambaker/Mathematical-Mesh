@@ -79,6 +79,36 @@ namespace Goedel.Mesh {
                     int keySize = 0,
                     KeyUses keyUses = KeyUses.Any) => KeyPair.Factory(algorithmID, keySecurity,
                         KeyCollection, keySize, keyUses);
+
+
+        ///// <summary>
+        ///// Factory constructor.
+        ///// </summary>
+        ///// <returns></returns>
+        //public static IMeshMachine GetMachine() => new MeshMachineCore();
+
+
+        /// <summary>
+        /// Return a MeshService client for the service ID <paramref name="accountAddress"/>. 
+        /// </summary>
+        /// <param name="accountAddress">The service identifier to connect to.</param>
+
+        /// <returns></returns>
+        public virtual MeshServiceClient GetMeshClient(
+                            string accountAddress, ICredentialPrivate credential) {
+
+
+            throw new NYI();
+
+            //var session = new JpcSessionHTTP(accountAddress);
+            //return session.GetWebClient<MeshServiceClient>();
+
+            //JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, null);
+
+            }
+
+
+
         #endregion 
         }
 
@@ -91,20 +121,13 @@ namespace Goedel.Mesh {
     public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
 
         #region // Properties
-        ///<summary>The Mesh Host</summary>
+        ///<summary>The Mesh host catalog</summary>
         public MeshHost MeshHost { get; }
 
         ///<summary>The file name of the host catalog.</summary>
-
         public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
 
-
-        //JpcHostBroker JpcHostBroker { get; } = new JpcHostBroker();
-
-
         #endregion
-
-
         #region // Disposing
 
         /// <summary>
@@ -112,12 +135,11 @@ namespace Goedel.Mesh {
         /// </summary>
         protected override void Disposing() => MeshHost.Dispose();
         #endregion
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public MeshMachineCore() : this(MeshMachine.DirectoryProfiles) {
-            }
+        ///// <summary>
+        ///// Default constructor
+        ///// </summary>
+        //public MeshMachineCore() : this(MeshMachine.DirectoryProfiles) {
+        //    }
 
         /// <summary>
         /// Constructor, creating a service instance using <paramref name="directory"/>
@@ -142,31 +164,7 @@ namespace Goedel.Mesh {
 
         #region // Implementation
 
-        /// <summary>
-        /// Factory constructor.
-        /// </summary>
-        /// <returns></returns>
-        public static IMeshMachine GetMachine() => new MeshMachineCore();
 
-
-        /// <summary>
-        /// Return a MeshService client for the service ID <paramref name="accountAddress"/>. 
-        /// </summary>
-        /// <param name="accountAddress">The service identifier to connect to.</param>
-
-        /// <returns></returns>
-        public virtual MeshServiceClient GetMeshClient(
-                ICredentialPrivate credential) {
-
-
-            throw new NYI();
-
-            //var session = new JpcSessionHTTP(accountAddress);
-            //return session.GetWebClient<MeshServiceClient>();
-
-            //JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, null);
-
-            }
 
 
 

@@ -28,9 +28,9 @@ namespace Goedel.Mesh.Test {
                 //new MeshMachineTestWeb(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest));
         MeshMachineTest meshMachineTest;
 
-        MeshServiceClient MeshClient => meshClient ??
-            GetMeshClient(null).CacheValue(out meshClient);
-        MeshServiceClient meshClient;
+        //MeshServiceClient MeshClient => meshClient ??
+        //    GetMeshClient(null).CacheValue(out meshClient);
+        //MeshServiceClient meshClient;
 
 
         bool Direct { get; }
@@ -47,11 +47,12 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        public MeshServiceClient GetMeshClient(ICredentialPrivate credential) =>
-            MeshMachine.GetMeshClient(credential);
-            
+        //public MeshServiceClient GetMeshClient(ICredentialPrivate credential) =>
+        //    MeshMachine.GetMeshClient(credential);
 
-        public override MeshServiceClient GetMeshClient(IAccountOptions Options) => MeshClient;
+
+        public override MeshServiceClient GetMeshClient(IAccountOptions Options) => throw new NYI();
+            //MeshClient;
 
         public ShellResult ShellResult;
 

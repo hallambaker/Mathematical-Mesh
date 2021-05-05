@@ -60,6 +60,13 @@
             <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
             <returns>The created key pair</returns>
         </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetMeshClient(System.String,Goedel.Protocol.Presentation.ICredentialPrivate)">
+            <summary>
+            Return a MeshService client for the service ID <paramref name="accountAddress"/>. 
+            </summary>
+            <param name="accountAddress">The service identifier to connect to.</param>
+            <returns></returns>
+        </member>
         <member name="T:Goedel.Mesh.MeshMachineCore">
             <summary>
             
@@ -69,7 +76,7 @@
             obtained before attempting a write operation and while opening a container.</remarks>
         </member>
         <member name="P:Goedel.Mesh.MeshMachineCore.MeshHost">
-            <summary>The Mesh Host</summary>
+            <summary>The Mesh host catalog</summary>
         </member>
         <member name="P:Goedel.Mesh.MeshMachineCore.FileNameHost">
             <summary>The file name of the host catalog.</summary>
@@ -79,30 +86,12 @@
             Disposing routine. Feee internal resources  and shut down the Mesh Host.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCore.#ctor">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
         <member name="M:Goedel.Mesh.MeshMachineCore.#ctor(System.String)">
             <summary>
             Constructor, creating a service instance using <paramref name="directory"/>
             to store persistent data.
             </summary>
             <param name="directory">Directory to store persistence data.</param>
-        </member>
-        <member name="M:Goedel.Mesh.MeshMachineCore.GetMachine">
-            <summary>
-            Factory constructor.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshMachineCore.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate)">
-            <summary>
-            Return a MeshService client for the service ID <paramref name="accountAddress"/>. 
-            </summary>
-            <param name="accountAddress">The service identifier to connect to.</param>
-            <returns></returns>
         </member>
     </members>
 </doc>

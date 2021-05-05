@@ -2391,12 +2391,6 @@
         <member name="P:Goedel.Mesh.Client.IMeshMachineClient.MeshHost">
             <summary>Direct access to the Catalog, should remove this</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.IMeshMachineClient.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate)">
-            <summary>
-            Return a MeshService client for the service ID <paramref name="meshCredential"/>.
-            </summary>
-            <returns>The client instance.</returns>
-        </member>
         <member name="T:Goedel.Mesh.Client.MeshHost">
             <summary>
             Manages the host catalog, i.e. the catalog of Meshes that the device is 

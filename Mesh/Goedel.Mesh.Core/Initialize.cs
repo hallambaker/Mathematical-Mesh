@@ -22,7 +22,7 @@ namespace Goedel.Mesh {
             Initialized = Goedel.Cryptography.Initialization.Initialized &
                 Goedel.Cryptography.Core.Initialization.Initialized;
 
-            MeshMachine.IMeshMachineFactory = MeshMachineCore.GetMachine;
+            //MeshMachine.IMeshMachineFactory = MeshMachineCore.GetMachine;
             }
 
         }

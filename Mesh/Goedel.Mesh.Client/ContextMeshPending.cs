@@ -142,7 +142,7 @@ namespace Goedel.Mesh.Client {
 
             // Acquire ephemeral client. This will only be used for the Connect and Complete methods.
             var meshClient = meshHost.MeshMachine.GetMeshClient(
-                        new MeshCredentialPrivate(profileDevice));
+                        accountAddress, new MeshCredentialPrivate(profileDevice));
 
             var connectRequest = new ConnectRequest() {
                 EnvelopedRequestConnection = requestConnection.EnvelopedRequestConnection,

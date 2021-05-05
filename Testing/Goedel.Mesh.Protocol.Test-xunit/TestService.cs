@@ -81,7 +81,7 @@ namespace Goedel.XUnit {
             var credentialTemp =
                     new MeshCredentialPrivate(ProfileDevice.Generate());
 
-            var meshClient = machineAdminAlice.GetMeshClient(credentialTemp);
+            var meshClient = machineAdminAlice.GetMeshClient("@anonymous", credentialTemp);
 
             var request = new HelloRequest();
             var response = meshClient.Hello(request);

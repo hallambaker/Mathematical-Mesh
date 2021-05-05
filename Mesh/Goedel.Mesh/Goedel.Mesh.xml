@@ -5093,9 +5093,6 @@
         <member name="F:Goedel.Mesh.MeshMachine.DefaultMasterKeyBits">
             <summary>The default number of bits in a master key.</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshMachine.IMeshMachineFactory">
-            <summary>Factory returning an IMeshMachine instance</summary>
-        </member>
         <member name="F:Goedel.Mesh.MeshMachine.DirectoryProfiles">
             <summary>Path to directory where the profiles are stored.</summary>
         </member>
@@ -5121,6 +5118,12 @@
             <param name="keySecurity">The key security model</param>
             <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
             <returns>The created key pair</returns>
+        </member>
+        <member name="M:Goedel.Mesh.IMeshMachine.GetMeshClient(System.String,Goedel.Protocol.Presentation.ICredentialPrivate)">
+            <summary>
+            Return a MeshService client for the service ID <paramref name="meshCredential"/>.
+            </summary>
+            <returns>The client instance.</returns>
         </member>
         <member name="T:Goedel.Mesh.Reference">
             <summary>

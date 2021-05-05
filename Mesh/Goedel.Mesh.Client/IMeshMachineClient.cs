@@ -20,7 +20,7 @@
 
 using Goedel.Cryptography;
 using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
+
 
 
 namespace Goedel.Mesh.Client {
@@ -31,10 +31,6 @@ namespace Goedel.Mesh.Client {
         ///<summary>Direct access to the Catalog, should remove this</summary>
         MeshHost MeshHost { get; }
 
-        /// <summary>
-        /// Return a MeshService client for the service ID <paramref name="meshCredential"/>.
-        /// </summary>
-        /// <returns>The client instance.</returns>
-        MeshServiceClient GetMeshClient(ICredentialPrivate meshCredential);
+
         }
     }

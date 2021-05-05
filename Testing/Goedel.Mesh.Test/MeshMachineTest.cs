@@ -52,7 +52,9 @@ namespace Goedel.Mesh.Test {
         /// an inbound connection or requesting that a new account be created and optional
         /// otherwise.</param>
         /// <returns></returns>
-        public override MeshServiceClient GetMeshClient(ICredentialPrivate credential) {
+        public override MeshServiceClient GetMeshClient(
+                        string accountAddress, 
+                        ICredentialPrivate credential) {
             //throw new NYI();
             //var meshCredential = new MeshCredentialTraced(accountAddress, MeshProtocolMessages);
 
