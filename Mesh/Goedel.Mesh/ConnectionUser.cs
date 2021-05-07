@@ -21,17 +21,28 @@
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
+using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using System.Text;
 using System.Collections.Generic;
 
 namespace Goedel.Mesh {
-    public partial class ConnectionAccount {
+    public partial class ConnectionAddress {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ConnectionAccount> EnvelopedConnectionAccount =>
-            envelopedConnectionDevice ?? new Enveloped<ConnectionAccount>(DareEnvelope).
+        public Enveloped<ConnectionAddress> EnvelopedConnectionAccount =>
+            envelopedConnectionDevice ?? new Enveloped<ConnectionAddress>(DareEnvelope).
                     CacheValue(out envelopedConnectionDevice);
-        Enveloped<ConnectionAccount> envelopedConnectionDevice;
+        Enveloped<ConnectionAddress> envelopedConnectionDevice;
+
+
+
+        /// <summary>
+        /// Constructor for use by deserializers.
+        /// </summary>
+        public static ConnectionDevice FromValue(byte[] data) {
+            throw new NYI();
+            }
+
 
         /// <summary>
         /// Minimize the connection data to remove unnecessary data.
@@ -71,13 +82,6 @@ namespace Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Constructor for use by deserializers.
-        /// </summary>
-        public static ConnectionDevice FromValue (byte[] data) {
-            throw new NYI();
-            }
-
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
@@ -105,12 +109,6 @@ namespace Goedel.Mesh {
 
             }
 
-        //public ICredential GetCredentials(List<PacketExtension> extensions) => throw new System.NotImplementedException();
-        //public void AddEphemerals(List<PacketExtension> extensions, ref List<KeyPairAdvanced> ephmeralsOffered) => throw new System.NotImplementedException();
-        //public void AddCredentials(List<PacketExtension> extensions) => throw new System.NotImplementedException();
-        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) => throw new System.NotImplementedException();
-        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) => throw new System.NotImplementedException();
-
         ///<inheritdoc cref="ICredential"/>
         public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
             (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
@@ -119,6 +117,18 @@ namespace Goedel.Mesh {
         ///<inheritdoc cref="ICredential"/>
         public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<KeyPairAdvanced> ephemerals, string keyId) =>
             (ephemerals[0], AuthenticationPublic);
+
+
+
+        /// <summary>
+        /// Minimize the connection data to remove unnecessary data.
+        /// </summary>
+        public void Strip() {
+            if (Authentication != null) {
+                Authentication.Udf = null;
+                }
+            }
+
         }
 
     }

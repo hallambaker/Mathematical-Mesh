@@ -60,12 +60,8 @@
             <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
             <returns>The created key pair</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetMeshClient(System.String,Goedel.Protocol.Presentation.ICredentialPrivate)">
-            <summary>
-            Return a MeshService client for the service ID <paramref name="accountAddress"/>. 
-            </summary>
-            <param name="accountAddress">The service identifier to connect to.</param>
-            <returns></returns>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String)">
+            <inheritdoc cref="T:Goedel.Mesh.IMeshMachine"/>
         </member>
         <member name="T:Goedel.Mesh.MeshMachineCore">
             <summary>

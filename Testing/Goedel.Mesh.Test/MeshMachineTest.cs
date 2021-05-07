@@ -37,29 +37,12 @@ namespace Goedel.Mesh.Test {
         public string Path => System.IO.Path.Combine(testEnvironmentCommon.Path, Name);
 
 
-
-        /// <summary>
-        /// Return a MeshService client for the service ID <paramref name="accountAddress"/>
-        /// using the authentication key <paramref name="keyAuthentication"/> and credential
-        /// <paramref name="assertionAccountConnection"/>. 
-        /// </summary>
-        /// <param name="accountAddress">The service identifier to connect to.</param>
-        /// <param name="keyAuthentication">The private key to be used for authentication
-        /// (encryption).</param>
-        /// <param name="assertionAccountConnection">The credential binding the device
-        /// to the account.</param>
-        /// <param name="profileMaster">The master profile. This is required when requesting
-        /// an inbound connection or requesting that a new account be created and optional
-        /// otherwise.</param>
-        /// <returns></returns>
+        ///<inheritdoc/>
         public override MeshServiceClient GetMeshClient(
-                        string accountAddress, 
-                        ICredentialPrivate credential) {
-            //throw new NYI();
-            //var meshCredential = new MeshCredentialTraced(accountAddress, MeshProtocolMessages);
-
-            return testEnvironmentCommon.GetMeshClient(credential);
-            }
+                    ICredentialPrivate credential,
+                    string service,
+                    string accountAddress) => // Pass through to the test environment.
+            testEnvironmentCommon.GetMeshClient(credential, service, accountAddress);
 
 
         public static Contact ContactAlice = new ContactPerson(

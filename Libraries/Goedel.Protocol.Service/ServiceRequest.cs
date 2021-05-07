@@ -141,7 +141,7 @@ namespace Goedel.Protocol.Service {
             byte[] responseBytes = null;
             if ((stream is RudStreamService rudStreamService) && (packetClient?.Payload.Length > 0)) {
                 try {
-                    response = rudStreamService.JpcInterface.Dispatch(session, reader);
+                    response = rudStreamService.JpcInterface.Dispatch(stream, reader);
                     }
                 catch {
                     // here make error response wrapper
@@ -157,11 +157,11 @@ namespace Goedel.Protocol.Service {
 
                     var challenge = Listener.MakeChallenge(packetClient, responseBytes);
 
-                    var buffer = new byte[Constants.MinimumPacketSize];
+                    //var buffer = new byte[Constants.MinimumPacketSize];
 
                     var responsePacket = sessionResponder.SerializeResponderChallenge(
                                 StreamId.GetClientCompleteDeferred(), packetClient.SourceId,
-                                responseBytes, challenge, buffer);
+                                responseBytes, challenge);
 
                     ReturnResponse(responsePacket);
 

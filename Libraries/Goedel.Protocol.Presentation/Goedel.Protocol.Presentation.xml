@@ -67,19 +67,18 @@
         <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.GetClient``1(Goedel.Protocol.Presentation.ICredentialPrivate)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.GetClient``1(Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
             <summary>
             Return a client bound to the connection via the relevant protocol
             </summary>
             <typeparam name="T"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorHello(System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorHello(System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
             Create a serialised packet of type InitiatorHello packet.
             </summary>
             <param name="sourceId">The source identifier.</param>
-            <param name="destinationId">The destination identifier.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
@@ -87,12 +86,11 @@
             <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorComplete(System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorComplete(System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
             Create a serialised packet of type InitiatorComplete packet.
             </summary>
             <param name="sourceId">The source identifier.</param>
-            <param name="destinationId">The destination identifier.</param>
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
@@ -164,7 +162,7 @@
         <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.MutualKeyExchange(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.SerializeResponderChallenge(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.SerializeResponderChallenge(System.Byte[],System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
             Create a serialised packet of type ResponderChallenge packet.
             </summary>
@@ -1010,14 +1008,10 @@
         <member name="P:Goedel.Protocol.Presentation.PacketWriter.Position">
             <summary>Position of the writer within the packet.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.PacketWriter.Packet">
+        <member name="P:Goedel.Protocol.Presentation.PacketWriter.Packet">
             <summary>The Packet data</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.PacketWriter.RemainingSpace">
-            <summary>Size of the largest encrypted block that can be inserted into
-            the writer.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.#ctor(Goedel.Protocol.Presentation.PacketWriter,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.#ctor(Goedel.Protocol.Presentation.PacketWriter)">
             <summary>
             Constructor, create a packet writer with a packet size of 
             <paramref name="packetSize"/>.
@@ -1026,7 +1020,7 @@
             <param name="buffer">Buffer provided by caller</param>
             <param name="position">Offset within packet at which first byte is to be written.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Factory(Goedel.Protocol.Presentation.PacketWriter,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriter.Factory(Goedel.Protocol.Presentation.PacketWriter)">
             <summary>
             Factory method returning instance of <see cref="!:PacketWriterAesGcm"/>
             </summary>
@@ -1112,7 +1106,7 @@
             <param name="buffer">Buffer provided by caller</param>
             <param name="position">Offset within packet at which first byte is to be written.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Factory(Goedel.Protocol.Presentation.PacketWriter,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Factory(Goedel.Protocol.Presentation.PacketWriter)">
             <summary>
             Factory method returning instance of <see cref="T:Goedel.Protocol.Presentation.PacketWriterDebug"/>
             </summary>
@@ -1652,7 +1646,7 @@
         <member name="F:Goedel.Protocol.Presentation.RudStream.ChallengePoW">
             <summary>The challeng proof of work.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> according to the stream role.
@@ -1738,7 +1732,7 @@
             The client side of an RDP transactional stream.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
@@ -1768,7 +1762,7 @@
             notice of receipt of a datagtram.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamReceiver.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamReceiver.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
@@ -1783,7 +1777,7 @@
             notice of receipt of a control message.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamSender.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamSender.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
@@ -1812,7 +1806,7 @@
         <member name="F:Goedel.Protocol.Presentation.RudStreamService.JpcInterface">
             <summary>The service instance.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamService.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 

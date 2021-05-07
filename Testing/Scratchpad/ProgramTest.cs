@@ -8,17 +8,13 @@ using System;
 
 namespace Scratchpad {
 
-    // Bug: 1) The client credential is blank at the start of the interaction.
-
-    // consider reworking Mesh credential...
-    // need to establish the 
-
+    // Bug: 1) On the server side, pull the stream out as a session interface...
 
 
     // ToDo: 1) Parse account details from client
     // ToDo: 2) Verify account details.
     // ToDo: 3) Unit tests to attempt use of illegit credential.
-    // ToDo: 4) Audit the profile creation mechanism
+
     // ToDo: 5) Clear all unit tests
 
     // ToDo: RUD Documentation - Grab examples from connection formation

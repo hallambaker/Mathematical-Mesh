@@ -185,12 +185,10 @@ namespace Goedel.Protocol.Presentation {
                 byte[] buffer = null,
                 int position = 0) {
 
-            packetSize = payload == null ? Constants.MinimumPacketSize :
-                QuantizePacketLength(payload.Length);
+            //packetSize = payload == null ? Constants.MinimumPacketSize :
+            //    QuantizePacketLength(payload.Length);
 
-            buffer ??= new byte[packetSize];
-
-            using var writer = PacketWriterFactory(buffer:buffer, position:0);
+            using var writer = PacketWriterFactory();
             writer.WriteExtensions(ciphertextExtensions);
             writer.Write(payload);
 
@@ -310,6 +308,10 @@ namespace Goedel.Protocol.Presentation {
         public void MutualKeyExchange(
                         KeyPairAdvanced privateKey,
                         KeyPairAdvanced keyPublic) {
+
+            Screen.WriteLine($"Keys {privateKey.KeyIdentifier}.{keyPublic.KeyIdentifier}");
+
+
             mutualKeyAgreementResult = privateKey.Agreement(keyPublic);
 
             var ikm = clientKeyAgreementResult.IKM.Concatenate(mutualKeyAgreementResult.IKM);

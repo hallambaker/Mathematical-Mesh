@@ -1018,7 +1018,7 @@
         <member name="P:Goedel.Mesh.Server.PublicMeshService.ActivationDevice">
             <summary>The host activation record.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Server.PublicMeshService.ConnectionAccount">
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.ConnectionDevice">
             <summary>The host connection record.</summary> 
         </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.Mesh">

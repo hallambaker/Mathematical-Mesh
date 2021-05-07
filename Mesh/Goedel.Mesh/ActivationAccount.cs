@@ -253,7 +253,7 @@ namespace Goedel.Mesh {
                         ObjectEncoding.JSON_B);
             connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
-            var connectionAccount = new ConnectionAccount() {
+            var connectionAccount = new ConnectionAddress() {
                 Account = profileUser?.AccountAddress,
                 Subject = connectionDevice.Subject,
                 Authority = connectionDevice.Authority,
@@ -272,7 +272,7 @@ namespace Goedel.Mesh {
                 EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
                 EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice,
-                EnvelopedConnectionAccount = connectionAccount.EnvelopedConnectionAccount,
+                EnvelopedConnectionAddress = connectionAccount.EnvelopedConnectionAccount,
                 EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
                 EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
                 DeviceUdf = profileDevice.Udf

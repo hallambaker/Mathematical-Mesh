@@ -88,23 +88,16 @@ namespace Goedel.Mesh {
         //public static IMeshMachine GetMachine() => new MeshMachineCore();
 
 
-        /// <summary>
-        /// Return a MeshService client for the service ID <paramref name="accountAddress"/>. 
-        /// </summary>
-        /// <param name="accountAddress">The service identifier to connect to.</param>
-
-        /// <returns></returns>
+        ///<inheritdoc cref="IMeshMachine"/>
         public virtual MeshServiceClient GetMeshClient(
-                            string accountAddress, ICredentialPrivate credential) {
+                ICredentialPrivate credential,
+                string service,
+                string accountAddress) {
 
+            var meshServiceBinding = new ConnectionInitiator(
+            credential, service, null, TransportType.Http, MeshServiceClient.WellKnown);
 
-            throw new NYI();
-
-            //var session = new JpcSessionHTTP(accountAddress);
-            //return session.GetWebClient<MeshServiceClient>();
-
-            //JpcHostBroker.GetClient<MeshServiceClient>(session, MeshService.Discovery, null);
-
+            return meshServiceBinding.GetClient<MeshServiceClient>();
             }
 
 

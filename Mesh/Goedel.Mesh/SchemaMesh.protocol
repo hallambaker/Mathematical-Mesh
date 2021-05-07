@@ -244,19 +244,21 @@
 				|The authentication key for use of the device under the profile
 
 
-	Structure ConnectionAccount
+	Structure ConnectionAddress
+		Description
+			|Asserts that a profile is connected to an account address.
 		Inherits Connection
 		Description
 			|Stripped down connection assertion
 		String Account
 			Description
-				|UDF of the connection target.
+				|The account address
+
 
 	Structure ConnectionDevice
 		Inherits Connection
 		Description
-			|Connection assertion used to authenticate service requests made
-			|by a device.
+			|Asserts that a device is connected to an account profile
 		String Account
 			Description
 				|The account address
@@ -582,7 +584,7 @@
 			Description
 				|The device profile
 		
-		Struct Enveloped<ConnectionAccount> EnvelopedConnectionAccount
+		Struct Enveloped<ConnectionAddress> EnvelopedConnectionAddress
 			Description
 				|Slim version of ConnectionDevice used by the presentation layer
 		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice

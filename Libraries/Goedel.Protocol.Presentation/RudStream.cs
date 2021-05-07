@@ -125,6 +125,10 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The challeng proof of work.</summary> 
         public byte[] ChallengePoW;
 
+
+
+        public string AccountAddress { get; }
+
         #endregion
         #region // Constructors
 
@@ -140,7 +144,8 @@ namespace Goedel.Protocol.Presentation {
                 RudStream parent,
                 string protocol,
                 ICredentialPrivate credential = null,
-                RudConnection rdpConnection=null) {
+                string accountAddress = null,
+                    RudConnection rdpConnection = null) {
             RdpStreamParent = parent;
             if (parent != null) {
                 parent.AddChild(this);
@@ -153,7 +158,7 @@ namespace Goedel.Protocol.Presentation {
             if (RudConnection is ConnectionInitiator initiator) {
                 Uri = HttpEndpoint.GetUri(initiator.Domain, protocol, initiator.Instance);
                 }
-
+            AccountAddress = accountAddress;
             Credential = credential;
             LocalStreamId = RudConnection.GetStreamId();
             }
@@ -384,7 +389,7 @@ namespace Goedel.Protocol.Presentation {
 
 
         void Process(PacketData packetData) {
-            RemoteStreamId = PacketExtension.GetExtensionByTag(packetData?.CiphertextExtensions,
+            RemoteStreamId ??= PacketExtension.GetExtensionByTag(packetData?.CiphertextExtensions,
                     Constants.ExtensionTagsStreamIdTag);
 
 
@@ -402,13 +407,18 @@ namespace Goedel.Protocol.Presentation {
                             ChallengePoW = extension.Value;
                             break;
                             }
+                        //case Constants.ExtensionTagsMeshConnectionTag: {
+
+                        //    break;
+                            //}
                         }
                     }
                 }
-
+            ConnectionInitiator.CredentialOther = ConnectionInitiator.CredentialSelf.GetCredentials(
+                        packetResponderChallenge.PlaintextExtensions);
             // get the challenge out
-            var challenge = PacketExtension.GetExtensionByTag(packetResponderChallenge?.PlaintextExtensions,
-                    Constants.ExtensionTagsChallengeTag);
+            //var challenge = PacketExtension.GetExtensionByTag(packetResponderChallenge?.PlaintextExtensions,
+            //        Constants.ExtensionTagsChallengeTag);
 
             // get the stream id for the response.
             RemoteStreamId = packetResponderChallenge.SourceId;

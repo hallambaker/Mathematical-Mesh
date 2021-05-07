@@ -31,7 +31,7 @@ namespace Goedel.Mesh.Client {
         public override Profile Profile => ProfileUser;
 
         ///<summary>Convenience accessor for the connection.</summary>
-        public override Connection Connection => ConnectionUser;
+        public override Connection Connection => ConnectionDevice;
 
         ///<summary>Convenience accessor to the account address.</summary>
         public override string AccountAddress => ProfileUser.AccountAddress;
@@ -44,11 +44,11 @@ namespace Goedel.Mesh.Client {
         public ProfileUser ProfileUser { get; set; }
 
         ///<summary>The connection device</summary>
-        public ConnectionDevice ConnectionUser => CatalogedDevice?.ConnectionUser;
+        public ConnectionDevice ConnectionDevice => CatalogedDevice?.ConnectionUser;
 
 
         ///<summary>The connection device</summary>
-        public ConnectionAccount ConnectionAccount => CatalogedDevice?.ConnectionAccount;
+        public ConnectionAddress ConnectionAccount => CatalogedDevice?.ConnectionAccount;
 
         ///<summary>The device activation</summary>
         public ActivationDevice ActivationDevice { get; private set; }
@@ -81,7 +81,7 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
         public override MeshServiceClient MeshClient => meshClient ??
-                GetMeshClient(new MeshCredentialPrivate(ActivationDevice)).CacheValue(out meshClient);
+                GetMeshClient(new MeshCredentialPrivate(ConnectionDevice, DeviceAuthentication)).CacheValue(out meshClient);
         MeshServiceClient meshClient;
 
 
@@ -126,11 +126,11 @@ namespace Goedel.Mesh.Client {
 
 
             // Some validation checks
-            (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionUser.Signature.Udf,
+            (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionDevice.Signature.Udf,
                     KeyActivationFailed.Throw);
-            (DeviceEncryption.KeyIdentifier).AssertEqual(ConnectionUser.Encryption.Udf,
+            (DeviceEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.Encryption.Udf,
                     KeyActivationFailed.Throw);
-            (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionUser.Authentication.Udf,
+            (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.Authentication.Udf,
                     KeyActivationFailed.Throw);
             }
 

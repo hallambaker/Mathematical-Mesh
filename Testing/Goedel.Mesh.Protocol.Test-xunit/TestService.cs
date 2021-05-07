@@ -67,11 +67,7 @@ namespace Goedel.XUnit {
             Password = "password",
             Service = "example.net"
             };
-        //CatalogedCredential password3 = new CatalogedCredential() {
-        //    Username = "fred",
-        //    Password = "password",
-        //    Service = "fred.example.com"
-        //    };
+
         [Fact]
         public void ProtocolHello() {
 
@@ -81,7 +77,7 @@ namespace Goedel.XUnit {
             var credentialTemp =
                     new MeshCredentialPrivate(ProfileDevice.Generate());
 
-            var meshClient = machineAdminAlice.GetMeshClient("@anonymous", credentialTemp);
+            var meshClient = machineAdminAlice.GetMeshClient(credentialTemp, ServiceName, null);
 
             var request = new HelloRequest();
             var response = meshClient.Hello(request);

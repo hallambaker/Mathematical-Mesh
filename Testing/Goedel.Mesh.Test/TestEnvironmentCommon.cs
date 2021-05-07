@@ -16,27 +16,31 @@ namespace Goedel.Mesh.Test {
 
 
     public class TestEnvironmentRdp : TestEnvironmentCommon {
-        
+
         // This is a horror show right here....
-        
+
         public const string Domain = "localhost";
         public string Protocol => MeshService.GetWellKnown;
-        public string Instance => Test;
 
 
-        public override MeshServiceClient GetMeshClient(ICredentialPrivate meshCredential) {
-            StartService();
+        RudService RudService { get; set; }
 
-            var meshServiceBinding = new ConnectionInitiator(meshCredential, Domain, Instance, TransportType.Http, Protocol);
-            //meshServiceBinding.Initialize(null, null);
+        ///<inheritdoc/>
+        public override MeshServiceClient GetMeshClient(
+                ICredentialPrivate credential,
+                string service,
+                string accountAddress) {
+            RudService ??= StartService();
 
+            var meshServiceBinding = new ConnectionInitiator(
+                        credential, Domain, Test, TransportType.Http, MeshServiceClient.WellKnown);
             var client = meshServiceBinding.GetClient<MeshServiceClient>();
 
 
             return client;
             }
 
-        public override RudService StartService() {
+        public virtual RudService StartService() {
 
             var httpEndpoint = new HttpEndpoint(ServiceName, MeshService.GetWellKnown, Test);
             var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, Test);
@@ -48,12 +52,9 @@ namespace Goedel.Mesh.Test {
 
             // create the service and host credentials here.
             //var credential = new MeshCredential(MeshService.ConnectionAccount, MeshService.ActivationDevice.DeviceAuthentication);
-            var credential = new MeshCredentialPrivate(MeshService.ActivationDevice);
+            var credential = new MeshCredentialPrivate(MeshService.ConnectionDevice, MeshService.ActivationDevice.DeviceAuthentication);
+
             return new RudService(providers, credential);
-
-
-            var service = base.StartService();
-
 
             }
 
@@ -86,39 +87,19 @@ namespace Goedel.Mesh.Test {
             new PublicMeshService(ServiceName, ServiceDirectory).CacheValue (out meshService);
         PublicMeshService meshService;
 
-        RudService service;
 
-        public virtual MeshServiceClient GetMeshClient(ICredentialPrivate meshCredential) {
-
-            if (!JpcConnection.IsDirect()) {
-                service ??= StartService();
-                }
+        public virtual MeshServiceClient GetMeshClient(
+                ICredentialPrivate credential,
+                string serviceId,
+                string accountAddress) {
 
             JpcSession session = JpcConnection switch {
-                JpcConnection.Direct => new JpcSessionDirect(MeshService, meshCredential.Account),
-                JpcConnection.Serialized => new TestSession(MeshService,
-                        meshCredential.Account, null),
-                //JpcConnection.Http => new JpcSessionHTTP(meshCredential.AccountAddress, Test),
-                //JpcConnection.Ticketed => new JpcSessionTicketed(null, meshCredential.AccountAddress),
+                JpcConnection.Direct => new JpcSessionDirect(MeshService, credential.Account),
+                JpcConnection.Serialized => new TestSession(MeshService, credential.Account, null),
                 _ => throw new NYI()
                 };
 
             return session.GetWebClient<MeshServiceClient>();
-            }
-
-
-        public virtual RudService StartService() {
-
-
-
-            var httpEndpoint = new HttpEndpoint(ServiceName, MeshService.GetWellKnown, Test);
-            var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, Test);
-            var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
-
-            using var provider = new RudProvider(endpoints, MeshService);
-
-            var providers = new List<RudProvider> { provider };
-            return new RudService(providers, null);
             }
 
 

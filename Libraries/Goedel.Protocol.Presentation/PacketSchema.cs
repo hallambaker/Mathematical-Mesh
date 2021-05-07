@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/30/2021 6:20:22 PM
+//  This file was automatically generated at 5/7/2021 1:21:08 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  yaschema version 3.0.0.724
+//  Generator:  yaschema version 3.0.0.728
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -58,7 +58,6 @@ namespace Goedel.Protocol.Presentation {
         /// Create a serialised packet of type InitiatorHello packet.
         /// </summary>
         /// <param name="sourceId">The source identifier.</param>
-        /// <param name="destinationId">The destination identifier.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
@@ -68,12 +67,10 @@ namespace Goedel.Protocol.Presentation {
         public byte[] SerializeInitiatorHello (
                 byte[] sourceId,
                 byte[] payload = null,
-                List<PacketExtension> plaintextExtensionsIn = null,
-                byte[] buffer=null,
-                int position=0) {
+                List<PacketExtension> plaintextExtensionsIn = null) {
 
             // The plaintext part
-            var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
+            var outerWriter = PacketWriterFactory();
             byte[] destinationId = null;
             outerWriter.WriteStreamId(destinationId);
 
@@ -99,7 +96,6 @@ namespace Goedel.Protocol.Presentation {
         /// Create a serialised packet of type InitiatorComplete packet.
         /// </summary>
         /// <param name="sourceId">The source identifier.</param>
-        /// <param name="destinationId">The destination identifier.</param>
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
@@ -115,12 +111,10 @@ namespace Goedel.Protocol.Presentation {
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
                 List<PacketExtension> mezanineExtensionsIn = null,
-                List<PacketExtension> ciphertextExtensions = null,
-                byte[] buffer=null,
-                int position=0) {
+                List<PacketExtension> ciphertextExtensions = null) {
 
             // The plaintext part
-            var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
+            var outerWriter = PacketWriterFactory();
             byte[] destinationId = null;
             outerWriter.WriteStreamId(destinationId);
 
@@ -204,12 +198,10 @@ namespace Goedel.Protocol.Presentation {
                 byte[] sourceId,
                 byte[] destinationId,
                 byte[] payload = null,
-                List<PacketExtension> plaintextExtensionsIn = null,
-                byte[] buffer=null,
-                int position=0) {
+                List<PacketExtension> plaintextExtensionsIn = null) {
 
             // The plaintext part
-            var outerWriter = PacketWriterFactory(buffer:buffer, position:position);
+            var outerWriter = PacketWriterFactory();
             outerWriter.WriteStreamId(destinationId);
 
             outerWriter.Write(ResponderMessageType.ResponderChallenge);

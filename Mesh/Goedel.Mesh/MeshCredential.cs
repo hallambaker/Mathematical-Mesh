@@ -132,12 +132,18 @@ namespace Goedel.Mesh {
         /// private key capabilities.
         /// </summary>
         /// <param name="activationDevice">An activated device activation.</param>
-        public MeshCredentialPrivate(ActivationDevice activationDevice) : base (activationDevice.Connection) {
+        public MeshCredentialPrivate(ConnectionDevice connectionDevice, KeyPair key) : base (connectionDevice) {
+
+            (connectionDevice.AuthenticationPublic.KeyIdentifier).AssertEqual(key.KeyIdentifier, NYI.Throw);
+
 
             Tag = Constants.ExtensionTagsMeshConnectionTag;
-            Value = activationDevice.Connection.DareEnvelope.GetJsonB(false);
+            Value = connectionDevice.DareEnvelope.GetJsonB(false);
 
-            AuthenticationPrivate = activationDevice.DeviceAuthentication as KeyPairAdvanced;
+            Screen.WriteLine(connectionDevice.ToString());
+
+            
+            AuthenticationPrivate = key as KeyPairAdvanced;
 
             }
 
@@ -172,8 +178,12 @@ namespace Goedel.Mesh {
         ///<inheritdoc/>
         public ICredential GetCredentials(List<PacketExtension> extensions) {
             foreach (var extension in extensions) {
-                if (extension.Tag == Tag) {
-                    return ConnectionDevice.FromValue(extension.Value);
+                if (extension.Tag == Constants.ExtensionTagsMeshConnectionTag) {
+                    // convert the enveloped ConnectionDevice
+                    var envelope = DareEnvelope.FromJSON(extension.Value, false);
+                    var result = envelope.DecodeJsonObject();
+
+                    return result as ConnectionDevice;
                     }
                 }
 

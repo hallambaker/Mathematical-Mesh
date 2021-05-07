@@ -236,6 +236,19 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
+        private Span<byte> GetSpan(long start, long length) {
+            Screen.WriteLine($"{start} for {length}");
+
+            return new Span<byte>(Packet, (int)start, (int)length);
+            }
+
+        private ReadOnlySpan<byte> GetReadOnlySpan(int start, long length) {
+            Screen.WriteLine($"{start} for {length}");
+            Position = (int)(start+length);
+            return new ReadOnlySpan<byte>(Packet, start, (int)length);
+            }
+
+
         /// <summary>
         /// Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
         /// nonce at the current position in the packet to provide the necessary keying material.
@@ -247,13 +260,13 @@ namespace Goedel.Protocol.Presentation {
 
             Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
-            //var aes = new AesGcm(key);
+            Screen.Write("D-Auth: ");
+            var authSpan = GetReadOnlySpan(0, Position);
 
-            var ivSpan = new ReadOnlySpan<byte>(Packet, Position, Constants.SizeIvAesGcm);
-            Position += Constants.SizeIvAesGcm;
+            Screen.Write("D-IV: ");
+            var ivSpan = GetReadOnlySpan(Position, Constants.SizeIvAesGcm);
 
-            var authSpan = new Span<byte>(Packet, 0, Position);
-            Screen.WriteLine($"AuthSpan {0}  {Position}");
+
 
             int length;
             if (pad) {
@@ -264,18 +277,13 @@ namespace Goedel.Protocol.Presentation {
                 }
 
             var dataOut = new byte[length];
-
-            var ciphertextSpan = new ReadOnlySpan<byte>(Packet, Position, length);
             var plaintextSpan = new Span<byte>(dataOut, 0, length);
 
-            Position += length;
-
-            var tagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
-            Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
-
-
-            Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
-            //aes.Decrypt(ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
+            Screen.Write("D-Cipher: ");
+            var ciphertextSpan = GetReadOnlySpan(Position, length);
+            
+            Screen.Write("D-Tag: ");
+            var tagSpan = GetReadOnlySpan(Position, Constants.SizeTagAesGcm);
 
             DecryptDataDelegate (key, ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
 

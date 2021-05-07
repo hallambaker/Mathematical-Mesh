@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
@@ -33,9 +33,7 @@ namespace Goedel.Protocol.Presentation {
     /// <param name="position">Offset within packet at which first byte is to be written.</param>
     /// <returns>The created instance.</returns>
     public delegate PacketWriter PacketWriterFactoryDelegate(
-                    PacketWriter parent=null,
-                    byte[] buffer = null,
-                    int position = 0);
+                    PacketWriter parent=null);
 
 
     /// <summary>
@@ -44,13 +42,17 @@ namespace Goedel.Protocol.Presentation {
     public class PacketWriter : Disposable {
         #region // Properties
         ///<summary>Position of the writer within the packet.</summary> 
-        public int Position { get; set; } = 0;
-        ///<summary>The Packet data</summary> 
-        public byte[] Packet;
+        public long Position => MemoryStream.Position;
 
-        ///<summary>Size of the largest encrypted block that can be inserted into
-        ///the writer.</summary> 
-        public virtual int RemainingSpace => Packet.Length - Position;
+        ///<summary>The Packet data</summary> 
+        public byte[] Packet => MemoryStream.ToArray();
+
+
+        public MemoryStream MemoryStream { get; }
+
+        /////<summary>Size of the largest encrypted block that can be inserted into
+        /////the writer.</summary> 
+        //public virtual int RemainingSpace => Packet.Length - Position;
 
         #endregion
         #region // Constructors
@@ -61,11 +63,11 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packetSize">The number of bytes in the packet to be created.</param>
         /// <param name="buffer">Buffer provided by caller</param>
         /// <param name="position">Offset within packet at which first byte is to be written.</param>
-        public PacketWriter( PacketWriter parent = null, byte[] buffer = null, int position = 0) {
-            
+        public PacketWriter( PacketWriter parent = null) {
+            MemoryStream = new MemoryStream(Constants.MinimumPacketSize);
 
-            Packet = buffer ?? new byte[parent?.RemainingSpace ?? 1200];
-            Position = position;
+            //Packet = new byte[parent?.RemainingSpace ?? 1200];
+            //Position = 0;
             }
 
 
@@ -78,9 +80,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The created instance.</returns>
         public static PacketWriter Factory(
-                    PacketWriter parent = null,
-                    byte[] buffer = null,
-                    int position = 0) => new PacketWriter(parent, buffer, position);
+                    PacketWriter parent = null) => new PacketWriter(parent);
 
 
         #endregion
@@ -108,24 +108,28 @@ namespace Goedel.Protocol.Presentation {
 
 
 
+
         /// <summary>
         /// Write InitiatorMessageType as a byte to the packet
         /// </summary>
         /// <param name="b"></param>
-        public virtual void Write(InitiatorMessageType b) => Packet[Position++] = (byte)b;
+        public virtual void Write(InitiatorMessageType b) => MemoryStream.WriteByte((byte)b);
+            //Packet[Position++] = (byte)b;
 
         /// <summary>
         /// Write ResponderMessageType as a byte to the packet
         /// </summary>
         /// <param name="b"></param>
-        public virtual void Write(ResponderMessageType b) => Packet[Position++] = (byte)b;
+        public virtual void Write(ResponderMessageType b) => MemoryStream.WriteByte((byte)b); 
+            //Packet[Position++] = (byte)b;
 
 
         /// <summary>
         /// Write a byte to the packet
         /// </summary>
         /// <param name="b"></param>
-        void Write(byte b) => Packet[Position++] = b;
+        void Write(byte b) => MemoryStream.WriteByte((byte)b);
+            //Packet[Position++] = b;
 
         /// <summary>
         /// Write out a Tag-Length value using the shortest possible production.
@@ -166,8 +170,10 @@ namespace Goedel.Protocol.Presentation {
 
         void Write(PacketTag code, byte[] data, int offset, int count) {
             WriteTag(code, data.Length);
-            Buffer.BlockCopy(data, offset, Packet, Position, count);
-            Position += data.Length;
+            MemoryStream.Write(data, offset, count);
+
+            //Buffer.BlockCopy(data, offset, Packet, Position, count);
+            //Position += data.Length;
             }
 
 
@@ -176,11 +182,14 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="data"></param>
         public virtual void WriteStreamId(byte[] data) {
-            data ??= Constants.StreamIdClientInitial; 
-                    // We could just increment Position, but the buffer might not be clean on entry.
-                    // This is the safest approach.
-            Buffer.BlockCopy(data, 0, Packet, Position, data.Length);
-            Position += data.Length;
+            data ??= Constants.StreamIdClientInitial;
+            // We could just increment Position, but the buffer might not be clean on entry.
+            // This is the safest approach.
+            MemoryStream.Write(data, 0, data.Length);
+
+
+            //Buffer.BlockCopy(data, 0, Packet, Position, data.Length);
+            //Position += data.Length;
             }
 
         //public void Write(byte data) {
@@ -207,33 +216,6 @@ namespace Goedel.Protocol.Presentation {
                 }
             }
 
-
-
-        ///// <summary>
-        ///// Write the binary data contained in <paramref name="span"/> to the packet.
-        ///// </summary>
-        ///// <param name="span">The data to write</param>
-        //public void Write(Span<byte> span) {
-        //    if (span == null) {
-        //        WriteTag(PacketTag.Binary, 0);
-        //        }
-        //    else {
-        //        var data = span.ToArray();
-        //        Write(PacketTag.Binary, data, 0, data.Length);
-        //        }
-        //    }
-
-
-
-        ///// <summary>
-        /////  Write the binary data  <paramref name="data"/> to the packet beginning
-        /////  at position <paramref name="offset"/> for <paramref name="count"/> bytes.
-        ///// </summary>
-        ///// <param name="data"></param>
-        ///// <param name="offset"></param>
-        ///// <param name="count"></param>
-        //public void Write(byte[] data, int offset, int count) =>
-        //        Write(PacketTag.Binary, data, offset, count);
 
         /// <summary>
         ///Write the string <paramref name="data"/> to the packet
@@ -267,46 +249,69 @@ namespace Goedel.Protocol.Presentation {
             Write("");
             }
 
+
+        private Span<byte> GetSpan(long start, long length) {
+            Screen.WriteLine($"{start} for {length}");
+            
+            return new Span<byte>(MemoryStream.GetBuffer(), (int)start, (int)length);
+            }
+
+        private ReadOnlySpan<byte> GetReadOnlySpan(long start, long length) {
+            Screen.WriteLine($"{start} for {length}");
+            return new ReadOnlySpan<byte>(MemoryStream.GetBuffer(), (int)start, (int)length);
+            }
         ///<inheritdoc/>
         public virtual void Encrypt(byte[] key, PacketWriter writerIn, bool pad=true) {
             Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
             var aes = new AesGcm(key);
 
+            Screen.Write("Auth: ");
+            var authSpan = GetSpan(0, MemoryStream.Position);
+
             var iv = Platform.GetRandomBytes(Constants.SizeIvAesGcm);
-            var ivSpan = new ReadOnlySpan<byte>(iv);
+            MemoryStream.Write(iv, 0, iv.Length);
 
-            Buffer.BlockCopy(iv, 0, Packet, Position, iv.Length);
-            Position+= iv.Length;
+            Screen.Write("IV: ");
+            var ivSpan = GetReadOnlySpan(MemoryStream.Position- Constants.SizeIvAesGcm, Constants.SizeIvAesGcm);
 
 
-
-            // Set up the authentication span so it covers the start of the 
-            // packet up to the tag.
-            var authSpan = new Span<byte>(Packet, 0, Position);
-            Screen.WriteLine($"AuthSpan {0}  {Position}");
-            
-            int length;
+            long lengthCiphertext;
             if (pad) {
-                length = Packet.Length - Position - Constants.SizeTagAesGcm;
+                lengthCiphertext = (int)writerIn.MemoryStream.Position;
+                var unpaddedLength = MemoryStream.Position + lengthCiphertext + Constants.SizeTagAesGcm;
+
+
+                var padBytes = unpaddedLength < Constants.MinimumPacketSize ?
+                     Constants.MinimumPacketSize - unpaddedLength : 0;
+
+
+                lengthCiphertext += padBytes;
+
+                writerIn.MemoryStream.SetLength(lengthCiphertext);
+                writerIn.MemoryStream.Position = lengthCiphertext;
+
                 }
             else {
-                length = writerIn.Position;
-                Write(length);
+                lengthCiphertext = (int)writerIn.MemoryStream.Position;
+                Write((int)lengthCiphertext);
                 }
 
+            var totalLength = MemoryStream.Position + lengthCiphertext + Constants.SizeTagAesGcm;
+            MemoryStream.SetLength(totalLength);
 
-            var ciphertextSpan = new Span<byte>(Packet, Position, length);
-            var plaintextSpan = new ReadOnlySpan<byte>(writerIn.Packet, 0, length);
-            Position += length;
 
-            Screen.WriteLine($"Spans plaintext: {0} ciphertext {Position} length {length}");
+            Screen.Write("cipher: ");
+            var ciphertextSpan = GetSpan(MemoryStream.Position, lengthCiphertext);
 
-            var TagSpan = new Span<byte>(Packet, Position, Constants.SizeTagAesGcm);
-            Screen.WriteLine($"TagSpan {Position}  {Constants.SizeTagAesGcm}");
-            
-            Position += Constants.SizeTagAesGcm;
+
+            Screen.Write("Plaintext: ");
+            var plaintextSpan = writerIn.GetReadOnlySpan(0, lengthCiphertext);
+
+            Screen.Write("Tag: ");
+            var TagSpan = GetSpan(MemoryStream.Position + lengthCiphertext, Constants.SizeTagAesGcm);
 
             aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, TagSpan, authSpan);
+            MemoryStream.Position = totalLength;
             }
 
         ///<inheritdoc/>
@@ -315,7 +320,10 @@ namespace Goedel.Protocol.Presentation {
             //Constants.Derive(ikm, out var nonce, out var iv, out var key);
             //Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
 
-            var result = new byte[Packet.Length];
+            var resultLength = streamId.Length + Constants.SizeIvAesGcm + 
+                    MemoryStream.Position + Constants.SizeTagAesGcm;
+
+            var result = new byte[resultLength];
 
             // Copy the nonce.
             // NB, it is the responsibility of the caller to set the top bit to ensure the
@@ -346,7 +354,8 @@ namespace Goedel.Protocol.Presentation {
             var tagSpan = new Span<byte>(result, count, Constants.SizeTagAesGcm);
             //Screen.WriteLine($"TagSpan {count} {tagSpan.Length}");
 
-            var plaintextSpan = new ReadOnlySpan<byte>(Packet, 0, length);
+            var plaintextSpan = GetReadOnlySpan(0, MemoryStream.Position);
+                //new ReadOnlySpan<byte>(Packet, 0, length);
 
             aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, tagSpan);
 

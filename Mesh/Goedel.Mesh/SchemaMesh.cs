@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/5/2021 6:03:46 PM
+//  This file was automatically generated at 5/7/2021 6:13:16 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -89,7 +89,7 @@ namespace Goedel.Mesh {
 			{"ProfileService", ProfileService._Factory},
 			{"ProfileHost", ProfileHost._Factory},
 			{"Connection", Connection._Factory},
-			{"ConnectionAccount", ConnectionAccount._Factory},
+			{"ConnectionAddress", ConnectionAddress._Factory},
 			{"ConnectionDevice", ConnectionDevice._Factory},
 			{"ConnectionApplication", ConnectionApplication._Factory},
 			{"ConnectionGroup", ConnectionGroup._Factory},
@@ -2124,11 +2124,12 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
+	/// Asserts that a profile is connected to an account address.
 	/// Stripped down connection assertion
 	/// </summary>
-	public partial class ConnectionAccount : Connection {
+	public partial class ConnectionAddress : Connection {
         /// <summary>
-        ///UDF of the connection target.
+        ///The account address
         /// </summary>
 
 		public virtual string						Account  {get; set;}
@@ -2141,13 +2142,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ConnectionAccount";
+		public new const string __Tag = "ConnectionAddress";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ConnectionAccount();
+		public static new JsonObject _Factory () => new ConnectionAddress();
 
 
         /// <summary>
@@ -2192,15 +2193,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ConnectionAccount FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new ConnectionAddress FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ConnectionAccount;
+				return Out as ConnectionAddress;
 				}
-		    var Result = new ConnectionAccount ();
+		    var Result = new ConnectionAddress ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -2231,8 +2232,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	///
-	/// Connection assertion used to authenticate service requests made
-	/// by a device.
+	/// Asserts that a device is connected to an account profile
 	/// </summary>
 	public partial class ConnectionDevice : Connection {
         /// <summary>
@@ -5854,7 +5854,7 @@ namespace Goedel.Mesh {
         ///Slim version of ConnectionDevice used by the presentation layer
         /// </summary>
 
-		public virtual Enveloped<ConnectionAccount>						EnvelopedConnectionAccount  {get; set;}
+		public virtual Enveloped<ConnectionAddress>						EnvelopedConnectionAddress  {get; set;}
         /// <summary>
         ///The public assertion demonstrating connection of the Device to the Mesh
         /// </summary>
@@ -5944,10 +5944,10 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("EnvelopedProfileDevice", 1);
 					EnvelopedProfileDevice.Serialize (_writer, false);
 				}
-			if (EnvelopedConnectionAccount != null) {
+			if (EnvelopedConnectionAddress != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedConnectionAccount", 1);
-					EnvelopedConnectionAccount.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedConnectionAddress", 1);
+					EnvelopedConnectionAddress.Serialize (_writer, false);
 				}
 			if (EnvelopedConnectionDevice != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -6040,10 +6040,10 @@ namespace Goedel.Mesh {
  
 					break;
 					}
-				case "EnvelopedConnectionAccount" : {
+				case "EnvelopedConnectionAddress" : {
 					// An untagged structure
-					EnvelopedConnectionAccount = new Enveloped<ConnectionAccount> ();
-					EnvelopedConnectionAccount.Deserialize (jsonReader);
+					EnvelopedConnectionAddress = new Enveloped<ConnectionAddress> ();
+					EnvelopedConnectionAddress.Deserialize (jsonReader);
  
 					break;
 					}

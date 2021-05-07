@@ -77,10 +77,16 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Return a MeshService client for the service ID <paramref name="meshCredential"/>.
+        /// Return a MeshService client for the service ID <paramref name="credential"/>.
         /// </summary>
+        /// <param name="credential">Credential to be used to establish the client.</param>
+        /// <param name="service">Service name</param>
+        /// <param name="accountAddress">Account under which service is requested.</param>
         /// <returns>The client instance.</returns>
-        MeshServiceClient GetMeshClient(string accountAddress, ICredentialPrivate meshCredential);
+        MeshServiceClient GetMeshClient(
+                ICredentialPrivate credential, 
+                string service, 
+                string accountAddress);
         }
 
 

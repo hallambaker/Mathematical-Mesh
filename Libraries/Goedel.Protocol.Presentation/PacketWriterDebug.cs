@@ -51,7 +51,7 @@ namespace Goedel.Protocol.Presentation {
         public PacketWriterDebug(
                     PacketWriter parent = null,
                     byte[] buffer = null,
-                    int position = 0) : base(parent, buffer, position) {
+                    int position = 0) : base(parent) {
             Debug("");
             Debug("");
             Debug("---Start");
@@ -68,16 +68,14 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The created instance.</returns>
         public static new PacketWriter Factory(
-            PacketWriter parent = null,
-            byte[] buffer = null,
-            int position = 0) => new PacketWriterDebug(parent, buffer, position);
+            PacketWriter parent = null) => new PacketWriterDebug(parent);
 
 
         #endregion 
         #region // Methods 
 
 
-        int positionDebug;
+        long positionDebug;
 
         /// <summary>
         /// Stub method to write debug output to the screeen for now, change this to
@@ -86,7 +84,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="text"></param>
 
         void Debug(string text=null) {
-            Screen.WriteLine(text?? "");
+            Screen.WriteLine(text ?? "");
             positionDebug = Position;
             }
 

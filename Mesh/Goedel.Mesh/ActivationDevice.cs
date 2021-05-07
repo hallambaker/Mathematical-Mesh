@@ -65,10 +65,6 @@ namespace Goedel.Mesh {
         public virtual MeshActor MeshActor => MeshActor.Device;
 
 
-        MeshCredentialPrivate MeshCredentialPrivate => meshCredentialPrivate ??
-            new MeshCredentialPrivate(this);
-        MeshCredentialPrivate meshCredentialPrivate;
-
 
         #endregion
         #region // Constructors

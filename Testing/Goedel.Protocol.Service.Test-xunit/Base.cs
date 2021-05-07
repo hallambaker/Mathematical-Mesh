@@ -39,10 +39,11 @@ namespace Goedel.XUnit {
                     new MeshCredentialPrivate(ProfileDevice.Generate());
 
         public ICredentialPrivate GetResponderCredential() => 
-            new MeshCredentialPrivate(MeshService.ActivationDevice);
+            new MeshCredentialPrivate(MeshService.ConnectionDevice, 
+                        MeshService.ActivationDevice.DeviceAuthentication);
 
 
-        public static new TestPresentationMesh Test() => new();
+        public static TestPresentationMesh Test() => new();
 
         //public KeyCollectionTest KeyCollection  = new KeyCollectionTest ()
 

@@ -47,7 +47,7 @@ namespace Goedel.Mesh.Server {
         public ActivationDevice ActivationDevice { get; }
 
         ///<summary>The host connection record.</summary> 
-        public ConnectionAccount ConnectionAccount { get; }
+        public ConnectionDevice ConnectionDevice { get; }
 
         /// <summary>
         /// The mesh persistence provider.
@@ -96,18 +96,18 @@ namespace Goedel.Mesh.Server {
 
             // Sign the connection and connection slim
 
-            ConnectionAccount = new ConnectionAccount() {
+            ConnectionDevice = new ConnectionDevice() {
                 Account = "@example",
                 Subject = connectionDevice.Subject,
                 Authority = connectionDevice.Authority,
                 Authentication = connectionDevice.Authentication
                 };
 
-            ConnectionAccount.Strip();
+            ConnectionDevice.Strip();
 
-            ProfileService.Sign(ConnectionAccount, ObjectEncoding.JSON_B);
+            ProfileService.Sign(ConnectionDevice, ObjectEncoding.JSON_B);
 
-            ConnectionAccount.DareEnvelope.Strip();
+            ConnectionDevice.DareEnvelope.Strip();
             }
 
 

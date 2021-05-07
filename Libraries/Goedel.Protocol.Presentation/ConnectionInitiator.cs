@@ -125,11 +125,12 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetClient<T>(ICredentialPrivate credential =null) where T : JpcClientInterface, new() {
+        public T GetClient<T>(ICredentialPrivate credential =null,
+                    string accountAddress=null) where T : JpcClientInterface, new() {
 
             var client = new T();
 
-            client.JpcSession = new RudStreamClient(null, client.GetWellKnown, credential, rudConnection:this);
+            client.JpcSession = new RudStreamClient(null, client.GetWellKnown, credential, rudConnection: this);
 
 
             //RudStreamInitial.MakeStreamClient(client.GetWellKnown, credential);

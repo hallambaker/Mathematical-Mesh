@@ -1014,7 +1014,7 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.ProfileUser">
             <summary>The profile</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionUser">
+        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionDevice">
             <summary>The connection device</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAccount">

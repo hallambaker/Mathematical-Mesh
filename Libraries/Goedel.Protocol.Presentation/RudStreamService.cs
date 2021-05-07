@@ -49,7 +49,8 @@ namespace Goedel.Protocol.Presentation {
                 string protocol,
                 ICredentialPrivate credential = null, 
                 string instance=null,
-                RudConnection rudConnection = null) : base(parent, protocol, credential, rudConnection) {
+                string accountAddress = null,
+                    RudConnection rudConnection = null) : base(parent, protocol, credential, accountAddress, rudConnection) {
 
             JpcInterface = RudConnection?.Listener.GetService(protocol, instance);
 
