@@ -23,6 +23,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.IO;
 using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 using System.Collections.Generic;
@@ -600,14 +601,15 @@ namespace Goedel.Mesh.Server {
             // Goal: Allow an administrator device to regain control of the account
             // by creating Device entry public for itself.
 
-            if (jpcSession is JpcSessionDirect) {
-                return new AccountHandleVerified(accountEntry);
+            switch (jpcSession) {
+                case JpcSessionDirect:
+                case JpcSessionSerialized:
+                case RudStreamService: {
+                    return new AccountHandleVerified(accountEntry);
+                    }
                 }
-            if (jpcSession is JpcSessionSerialized) {
-                return new AccountHandleVerified(accountEntry);
-                }
-            // At this point we need to examine the actual information presented and the 
-            // AssertionDeviceConnection value from the session.
+
+
 
             throw new NotAuthenticated();
             }

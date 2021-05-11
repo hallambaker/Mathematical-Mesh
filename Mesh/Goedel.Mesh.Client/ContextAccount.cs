@@ -238,7 +238,6 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Returns a Mesh service client for <paramref name="accountAddress"/>.
         /// </summary>
-        /// <param name="accountAddress">The account service identifier.</param>
         /// <returns>The Mesh service client</returns>
         public MeshServiceClient GetMeshClient(ICredentialPrivate credentialPrivate) =>
                     MeshMachine.GetMeshClient(credentialPrivate, null, AccountAddress);

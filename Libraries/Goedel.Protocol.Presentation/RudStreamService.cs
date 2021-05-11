@@ -28,10 +28,13 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// RUD service stream, exposes transaction dispatch methods.
     /// </summary>
-    public class RudStreamService : RudStream {
+    public class RudStreamService : RudStream, IJpcSession {
 
         ///<summary>The service instance.</summary> 
         public JpcInterface JpcInterface;
+
+
+        public override VerifiedAccount VerifiedAccount { get; }
 
         #region // Constructors
 
@@ -54,7 +57,13 @@ namespace Goedel.Protocol.Presentation {
 
             JpcInterface = RudConnection?.Listener.GetService(protocol, instance);
 
+            if (AccountAddress != null) {
+                VerifiedAccount = new VerifiedAccount() {
+                    AccountAddress = AccountAddress
+                    };
+                }
             }
+
         #endregion
 
 
@@ -64,7 +73,7 @@ namespace Goedel.Protocol.Presentation {
         public async Task<DataGram> AsyncRequestDatagram() => throw new NYI();
 
         public async Task<JsonObject> AsyncRequestObject() => throw new NYI();
-
+        public JsonObject Post(string tag, JsonObject request) => throw new System.NotImplementedException();
 
         public void Respond (DataGram dataGram) => throw new NYI();
 

@@ -27,8 +27,6 @@ namespace Goedel.Protocol.Presentation {
     public class RudStreamClient : RudStream, IJpcSession {
         #region // Properties
 
-
-
         #endregion
         #region // Constructors
 
@@ -55,10 +53,7 @@ namespace Goedel.Protocol.Presentation {
         #endregion
         #region // Methods
 
-        /// <summary>
-        /// The verified account address.
-        /// </summary>
-        public VerifiedAccount VerifiedAccount => throw new System.NotImplementedException();
+
 
         /// <summary>
         /// Post the transaction <paramref name="tag"/> with data <paramref name="request"/>

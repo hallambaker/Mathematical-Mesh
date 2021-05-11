@@ -105,15 +105,6 @@ namespace Goedel.Protocol {
         public virtual IJpcSession JpcSession { get; set; }
 
 
-
-        //public JpcClientInterface(IJpcSession jpcSession = null) =>
-        //    JpcSession = jpcSession;
-
-
-
-        ///<summary>The active JpcSession as a remote session.</summary> 
-        public IJpcSession JpcRemoteSession => JpcSession;
-
         }
     }
 

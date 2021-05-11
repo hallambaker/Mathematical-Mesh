@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using Goedel.IO;
@@ -210,6 +211,10 @@ namespace Goedel.Mesh.Client {
             response.AssertSuccess(ServerOperationFailed.Throw);
 
             ActivationAccount.BindService(ProfileService);
+
+            RudStream.Rebind(MeshClient, AccountAddress);
+
+
 
             // Generate a contact and self-sign
             var contact = CreateContact();

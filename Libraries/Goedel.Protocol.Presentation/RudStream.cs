@@ -88,7 +88,7 @@ namespace Goedel.Protocol.Presentation {
         protected ConnectionInitiator ConnectionInitiator => RudConnection as ConnectionInitiator;
 
         ///<summary>Account name claimed during stream initialization (unverified).</summary> 
-        public string Account { get; set; }
+        //public string Account { get; set; }
 
 
         ///<summary>The state of the stream</summary> 
@@ -128,6 +128,9 @@ namespace Goedel.Protocol.Presentation {
 
 
         public string AccountAddress { get; }
+
+
+        public virtual VerifiedAccount VerifiedAccount { get;}
 
         #endregion
         #region // Constructors
@@ -184,13 +187,12 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="encryptionOptions"></param>
         public void SetOptions(
                     byte[] streamId,
-                    byte[] encryptionOptions,
-                    byte[] account) {
+                    byte[] encryptionOptions) {
 
             Screen.WriteLine($"Stream set Stream Id {streamId.ToStringBase16()}");
 
             RemoteStreamId = streamId;
-            Account = account?.ToUTF8();
+            //AccountAddress = account?.ToUTF8();
             }
 
         /// <summary>
@@ -257,10 +259,13 @@ namespace Goedel.Protocol.Presentation {
                     Tag = Credential.Tag,
                     Value = Credential.Value
                     });
+                }
 
-
-
-
+            if (AccountAddress != null) {
+                extensions.Add(new() {
+                    Tag = Constants.ExtensionTagsClaimIdTag,
+                    Value = AccountAddress.ToUTF8()
+                    }) ;
                 }
 
             }
@@ -474,8 +479,9 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="protocol">The protocol identifier</param>
         /// <param name="credential">Optional additional credential to be presented.</param>
         /// <returns>The created stream.</returns>
-        public RudStreamClient MakeStreamClient(string protocol, ICredentialPrivate credential = null) =>
-            new RudStreamClient(this, protocol, credential);
+        public RudStreamClient MakeStreamClient(string protocol, ICredentialPrivate credential = null,
+                string accountAddress = null) =>
+            new RudStreamClient(this, protocol, credential, accountAddress);
 
 
         /// <summary>
@@ -506,6 +512,14 @@ namespace Goedel.Protocol.Presentation {
         public void Flush () => throw new NYI();
 
         //public async Task<RudStream> AsyncReceiveStreamOffer() => throw new NYI();
+
+
+        public static void Rebind(JpcClientInterface jpcClientInterface, string accountAddress) {
+            var original = jpcClientInterface.JpcSession as RudStream;
+            var result = original.MakeStreamClient(original.Protocol, null, accountAddress);
+            jpcClientInterface.JpcSession = result;
+            }
+
 
         #endregion
 

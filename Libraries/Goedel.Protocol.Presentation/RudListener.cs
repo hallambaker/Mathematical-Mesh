@@ -115,46 +115,51 @@ namespace Goedel.Protocol.Presentation {
 
             byte[] streamId=null;
             byte[] encrypt = null;
-            byte[] account = null;
+            string account = null;
+            string protocol = null;
+
+            string streamType = null;
 
             foreach (var extension in packetExtensions) {
 
                 switch (extension.Tag) {
+                    case Constants.ExtensionTagsStreamReceiverTag:
                     case Constants.ExtensionTagsStreamClientTag: {
-
-                        var protocol = extension.Value.ToUTF8();
-                        child = new RudStreamService(stream, protocol, null, rudConnection:rudConnection);
-
+                        streamType = extension.Tag;
+                        protocol = extension.Value.ToUTF8();
                         break;
                         }
-                    case Constants.ExtensionTagsStreamReceiverTag: {
-
-                        var protocol = extension.Value.ToUTF8();
-                        child = new RudStreamReceiver(stream, protocol, null);
-
-                        break;
-                        }
-
                     case Constants.ExtensionTagsStreamIdTag: {
                         streamId = extension.Value;
                         break;
                         }
-
                     case Constants.ExtensionTagsEncryptTag: {
                         streamId = extension.Value;
                         break;
                         }
-
+                    case Constants.ExtensionTagsClaimIdTag: {
+                        account = extension.Value.ToUTF8();
+                        break;
+                        }
                     }
-
-
                 }
 
-            if (child == null) {
-                return null;
+            switch (streamType) {
+                case Constants.ExtensionTagsStreamClientTag: {
+                    child = new RudStreamService(stream, protocol, accountAddress: account, rudConnection: rudConnection);
+                    break;
+                    }
+                case Constants.ExtensionTagsStreamReceiverTag: {
+                    child = new RudStreamReceiver(stream, protocol, accountAddress: account);
+                    break;
+                    }
+                default: {
+                    return null;
+                    }
                 }
 
-            child.SetOptions(child.LocalStreamId.Bytes, encrypt, account);
+
+            child.SetOptions(child.LocalStreamId.Bytes, encrypt);
 
             Screen.WriteLine($"Replace {child.LocalStreamId.Value} ");
             if (DictionaryStreamsInbound.TryGetValue(child.LocalStreamId, out var _)) {

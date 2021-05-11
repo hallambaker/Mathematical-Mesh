@@ -507,7 +507,6 @@
             <summary>
             Returns a Mesh service client for <paramref name="accountAddress"/>.
             </summary>
-            <param name="accountAddress">The account service identifier.</param>
             <returns>The Mesh service client</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Status">
