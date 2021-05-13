@@ -68,6 +68,10 @@ namespace Goedel.Protocol.Presentation {
 
 
         #region // Methods
+        ///<inheritdoc cref="IJpcSession"/>
+        public IJpcSession Rebind(string accountAddress) {
+            return MakeStreamClient(Protocol, null, accountAddress);
+            }
 
 
         public async Task<DataGram> AsyncRequestDatagram() => throw new NYI();

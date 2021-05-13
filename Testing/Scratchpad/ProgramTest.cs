@@ -8,11 +8,10 @@ using System;
 
 namespace Scratchpad {
 
-    // Bug: 1) On the server side, pull the stream out as a session interface...
+    // Bug: 1) Failing because the Complete request is not being authenticated to the device credential as it should
 
 
-    // ToDo: 1) Parse account details from client
-    // ToDo: 2) Verify account details.
+
     // ToDo: 3) Unit tests to attempt use of illegit credential.
 
     // ToDo: 5) Clear all unit tests
@@ -33,8 +32,8 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteLine($"Start test  {DateTime.Now}");
 
-
-            TestPresentationMesh.Test().TestCreateAccount();
+            TestService.Test().MeshCreateAdmin();
+            //TestPresentationMesh.Test().TestCreateAccount();
 
 
 

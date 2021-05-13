@@ -127,37 +127,10 @@ namespace Goedel.Protocol {
         /// <returns>The transaction result.</returns>
         public virtual JsonObject Post(string tag, JsonObject request) => 
                     throw new System.NotImplementedException();
+        public  abstract IJpcSession Rebind(string accountAddress);
         }
 
 
-
-
-    /// <summary>
-    /// Direct connection between client and service host. Useful for debugging
-    /// and for direct access to a service on the same machine.
-    /// </summary>
-    public partial class JpcSessionDirect : JpcSession {
-        JpcInterface jpcInterface;
-
-        /// <summary>
-        /// Create a direct session for the specified account.
-        /// </summary>
-        /// <param name="accountAddress">The account name</param>
-        /// <param name="jpcInterface">The interfact to which the direct session is bound</param>
-        public JpcSessionDirect(JpcInterface jpcInterface, string accountAddress) : base(accountAddress) {
-            Authenticated = true;
-            this.jpcInterface = jpcInterface;
-            }
-
-        /// <summary>
-        /// Return a client bound to the interface using the session.
-        /// </summary>
-        /// <typeparam name="T">The client type</typeparam>
-        /// <returns>The client</returns>
-        public override T GetWebClient<T>() => jpcInterface.GetDirect(this) as T;
-
-
-        }
 
 
     /// <summary>
@@ -174,48 +147,12 @@ namespace Goedel.Protocol {
         public JpcRemoteSession(string accountAddress) : base(accountAddress) {
             }
 
-        ///// <summary>
-        ///// Post the specified data to the remote service.
-        ///// </summary>
-        ///// <param name="data">Input data</param>
-        ///// <param name="request">The request</param>
-        ///// <returns>The response data</returns>
-        //public abstract Stream Post(MemoryStream data, JsonObject request);
 
-        ///// <summary>
-        ///// Construct a Post string.
-        ///// </summary>
-        ///// <param name="tag">Operation to perform.</param>
-        ///// <param name="request">Request data.</param>
-        ///// <returns>string returned in response.</returns>
-        //public virtual string Post(string tag, JsonObject request) {
-
-        //    var buffer = new MemoryStream();
-        //    var JSONWriter = new JsonWriter(buffer);
-
-        //    // Wrap the request object with the transaction name.
-        //    JSONWriter.WriteObjectStart();
-        //    JSONWriter.WriteToken(tag, 0);
-        //    request.Serialize(JSONWriter, false);
-        //    JSONWriter.WriteObjectEnd();
-
-        //    // Send the request
-        //    var responseBuffer = Post(buffer, request);
-
-        //    return responseBuffer.GetUTF8();
-        //    }
-
-        ///// <summary>
-        ///// Post a transaction of type <paramref name="tag"/> with request data 
-        ///// <paramref name="request"/> to the service expecting a response of type
-        ///// <paramref name="tagResponse"/>
-        ///// </summary>
-        ///// <param name="tag">The transaction tag.</param>
-        ///// <param name="tagResponse">The response type tag.</param>
-        ///// <param name="request">The request data.</param>
-        ///// <returns>The response data.</returns>
-        //public abstract JsonObject Post(string tag, JsonObject request);
-
+        ///<inheritdoc/>
+        public override IJpcSession Rebind(string accountAddress) {
+            AccountAddress = accountAddress;
+            return this;
+            }
         }
 
     /// <summary>

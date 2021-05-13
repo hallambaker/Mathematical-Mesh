@@ -212,9 +212,9 @@ namespace Goedel.Mesh.Client {
 
             ActivationAccount.BindService(ProfileService);
 
-            RudStream.Rebind(MeshClient, AccountAddress);
+            //RudStream.Rebind(MeshClient, AccountAddress);
 
-
+            MeshClient.Rebind(AccountAddress);
 
             // Generate a contact and self-sign
             var contact = CreateContact();

@@ -514,12 +514,6 @@ namespace Goedel.Protocol.Presentation {
         //public async Task<RudStream> AsyncReceiveStreamOffer() => throw new NYI();
 
 
-        public static void Rebind(JpcClientInterface jpcClientInterface, string accountAddress) {
-            var original = jpcClientInterface.JpcSession as RudStream;
-            var result = original.MakeStreamClient(original.Protocol, null, accountAddress);
-            jpcClientInterface.JpcSession = result;
-            }
-
 
         #endregion
 

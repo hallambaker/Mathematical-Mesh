@@ -42,7 +42,7 @@ namespace Goedel.Mesh.Test {
                     ICredentialPrivate credential,
                     string service,
                     string accountAddress) => // Pass through to the test environment.
-            testEnvironmentCommon.GetMeshClient(credential, service, accountAddress);
+            testEnvironmentCommon.GetMeshClient(this, credential, service, accountAddress);
 
 
         public static Contact ContactAlice = new ContactPerson(

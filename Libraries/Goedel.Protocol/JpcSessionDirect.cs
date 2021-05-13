@@ -21,29 +21,36 @@
 //  
 
 namespace Goedel.Protocol {
-
-
-
     /// <summary>
-    /// Jpc Session interface.
+    /// Direct connection between client and service host. Useful for debugging
+    /// and for direct access to a service on the same machine.
     /// </summary>
-    public interface IJpcSession {
-
-        ///<summary>The verified account bound to this session (used for inbound sessions
-        ///only.)</summary> 
-        VerifiedAccount VerifiedAccount { get; }
+    public partial class JpcSessionDirect : JpcSession {
+        JpcInterface JpcInterface { get; }
 
         /// <summary>
-        /// Post the request <paramref name="request"/> 
+        /// Create a direct session for the specified account.
         /// </summary>
-        /// <param name="tag">The transaction identifier.</param>
+        /// <param name="accountAddress">The account name</param>
+        /// <param name="jpcInterface">The interfact to which the direct session is bound</param>
+        public JpcSessionDirect(JpcInterface jpcInterface, string accountAddress) : base(accountAddress) {
+            Authenticated = true;
+            JpcInterface = jpcInterface;
+            }
 
-        /// <param name="request">The transaction request.</param>
-        /// <returns>The transaction response</returns>
-        JsonObject Post(string tag, JsonObject request);
+        /// <summary>
+        /// Return a client bound to the interface using the session.
+        /// </summary>
+        /// <typeparam name="T">The client type</typeparam>
+        /// <returns>The client</returns>
+        public override T GetWebClient<T>() => JpcInterface.GetDirect(this) as T;
 
-
-
-        IJpcSession Rebind(string accountAddress);
+        public override IJpcSession Rebind(string accountAddress) {
+            AccountAddress = accountAddress;
+            return this;
+            }
         }
+
+
     }
+

@@ -27,10 +27,13 @@ namespace Goedel.Mesh.Test {
 
         ///<inheritdoc/>
         public override MeshServiceClient GetMeshClient(
+                MeshMachineTest meshMachineTest,
                 ICredentialPrivate credential,
                 string service,
                 string accountAddress) {
             RudService ??= StartService();
+
+            // if we wanted to create traces on the RUD binding, we could put the data here.
 
             var meshServiceBinding = new ConnectionInitiator(
                         credential, Domain, Test, TransportType.Http, MeshServiceClient.WellKnown);
@@ -89,13 +92,15 @@ namespace Goedel.Mesh.Test {
 
 
         public virtual MeshServiceClient GetMeshClient(
+                MeshMachineTest meshMachineTest,
                 ICredentialPrivate credential,
                 string serviceId,
                 string accountAddress) {
 
             JpcSession session = JpcConnection switch {
                 JpcConnection.Direct => new JpcSessionDirect(MeshService, credential.Account),
-                JpcConnection.Serialized => new TestSession(MeshService, credential.Account, null),
+                JpcConnection.Serialized => new TestSession(MeshService, credential.Account, 
+                        meshMachineTest.MeshProtocolMessages),
                 _ => throw new NYI()
                 };
 

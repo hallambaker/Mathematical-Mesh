@@ -1748,6 +1748,9 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.Rebind(System.String)">
+            <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.RudStreamReceiver">
             <summary>
             RUD stream receiver class. Provides methods to send control messages and to receive
@@ -1807,6 +1810,9 @@
             <param name="protocol">The stream protocol</param>
             <param name="credential">Optional additional credential.</param>
             <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.Rebind(System.String)">
+            <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
         </member>
         <member name="T:Goedel.Protocol.Presentation.StreamId">
             <summary>

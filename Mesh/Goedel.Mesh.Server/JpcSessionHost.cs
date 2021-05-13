@@ -17,5 +17,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         public JpcSessionHost() : base("nobody@example.com") {
             }
+
+        public override IJpcSession Rebind(string accountAddress) => throw new NotImplementedException();
         }
     }
