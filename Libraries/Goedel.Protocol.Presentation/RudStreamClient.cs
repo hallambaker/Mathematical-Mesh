@@ -42,10 +42,11 @@ namespace Goedel.Protocol.Presentation {
         public RudStreamClient(
                 RudStream parent,
                 string protocol,
-                ICredentialPrivate credential = null,
+                 ICredentialPrivate credentialSelf = null,
+                ICredential credentialOther = null,
                 string accountAddress = null,
-                    RudConnection rudConnection = null) : base(parent, protocol, credential, accountAddress, rudConnection) {
-            }
+                RudConnection rudConnection = null) : base(
+                    parent, protocol, credentialSelf, credentialOther, accountAddress, rudConnection) { }
 
         #endregion
         #region // Methods

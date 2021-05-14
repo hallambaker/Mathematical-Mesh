@@ -32,6 +32,8 @@ namespace Goedel.Test.Core {
         //public static JpcSession JpcSessionFactory(JpcCredential jpcCredential) =>
         //        new TestSession(jpcCredential as JpcCredentialTest);
 
+        
+
 
         public List<Trace> MeshProtocolMessages;
 
@@ -64,7 +66,7 @@ namespace Goedel.Test.Core {
             var requestBytes = data.ToArray();
 
             var JSONReader = new JsonReader(requestBytes);
-            var result = Host.Dispatch(this, JSONReader);
+             var result = Host.Dispatch(this, JSONReader);
             var responseBytes = result.GetBytes();
 
             var trace = new Trace(requestBytes, responseBytes, Request) ;

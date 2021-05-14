@@ -108,7 +108,11 @@ namespace Goedel.Protocol.Presentation {
         public string Protocol;
 
         ///<summary>The credential to which the stream is bound</summary> 
-        public ICredentialPrivate Credential;
+        public ICredentialPrivate CredentialSelf;
+
+        ///<summary>The credential to which the stream is bound</summary> 
+        public ICredential CredentialOther;
+
 
         ///<summary>The local stream Id, this is generated localy and MAY contain hidden structure.</summary> 
         public StreamId LocalStreamId { get; protected set; }
@@ -130,7 +134,7 @@ namespace Goedel.Protocol.Presentation {
         public string AccountAddress { get; }
 
 
-        public virtual VerifiedAccount VerifiedAccount { get;}
+        public virtual IVerifiedAccount VerifiedAccount { get;}
 
         #endregion
         #region // Constructors
@@ -141,12 +145,13 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="parent">The parent stream</param>
         /// <param name="protocol">The stream protocol</param>
-        /// <param name="credential">Optional additional credential.</param>
+        /// <param name="credentialSelf">Optional additional credential.</param>
         /// <param name="rdpConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
         public RudStream(
                 RudStream parent,
                 string protocol,
-                ICredentialPrivate credential = null,
+                ICredentialPrivate credentialSelf = null,
+                ICredential credentialOther = null,
                 string accountAddress = null,
                     RudConnection rdpConnection = null) {
             RdpStreamParent = parent;
@@ -162,8 +167,11 @@ namespace Goedel.Protocol.Presentation {
                 Uri = HttpEndpoint.GetUri(initiator.Domain, protocol, initiator.Instance);
                 }
             AccountAddress = accountAddress;
-            Credential = credential;
+            CredentialSelf = credentialSelf;
             LocalStreamId = RudConnection.GetStreamId();
+
+            VerifiedAccount = new VerifiedAccount(credentialOther, AccountAddress);
+
             }
 
         #endregion
@@ -254,10 +262,10 @@ namespace Goedel.Protocol.Presentation {
                 }) ;
 
 
-            if (Credential != null) {
+            if (CredentialSelf != null) {
                 extensions.Add(new() {
-                    Tag = Credential.Tag,
-                    Value = Credential.Value
+                    Tag = CredentialSelf.Tag,
+                    Value = CredentialSelf.Value
                     });
                 }
 
@@ -477,11 +485,11 @@ namespace Goedel.Protocol.Presentation {
         /// Request creation of a transactional stream in the client role.
         /// </summary>
         /// <param name="protocol">The protocol identifier</param>
-        /// <param name="credential">Optional additional credential to be presented.</param>
+        /// <param name="credentialSelf">Optional additional credential to be presented.</param>
         /// <returns>The created stream.</returns>
-        public RudStreamClient MakeStreamClient(string protocol, ICredentialPrivate credential = null,
+        public RudStreamClient MakeStreamClient(string protocol, ICredentialPrivate credentialSelf = null,
                 string accountAddress = null) =>
-            new RudStreamClient(this, protocol, credential, accountAddress);
+            new RudStreamClient(this, protocol, credentialSelf, accountAddress: accountAddress);
 
 
         /// <summary>

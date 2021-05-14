@@ -82,8 +82,9 @@ namespace Goedel.Protocol {
         /// <summary>
         /// VerifiedAccount instance describing the verified account details. 
         /// </summary>
-        public virtual VerifiedAccount VerifiedAccount => !Authenticated ? null :
-            new VerifiedAccount() { AccountAddress = AccountAddress };
+        public virtual IVerifiedAccount VerifiedAccount => throw new NYI();
+            //!Authenticated ? null :
+            //new VerifiedAccount() { AccountAddress = AccountAddress };
 
         /// <summary>
         /// Default constructor.

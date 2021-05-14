@@ -85,6 +85,7 @@ namespace Goedel.Mesh.Server {
         /// Add a new account. The account name must be unique.
         /// </summary>
         public void AccountAdd(IJpcSession jpcSession,
+            VerifiedAccount account,
                         AccountEntry accountEntry) {
 
             jpcSession.Future();
@@ -114,6 +115,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="requestConnection">TThe message connection request.</param>
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(IJpcSession jpcSession,
+            VerifiedAccount account,
                         RequestConnection requestConnection) {
             jpcSession.Future();
 
@@ -332,27 +334,6 @@ namespace Goedel.Mesh.Server {
                 }
             }
 
-        ///// <summary>
-        ///// Service a publication request. Note that at present the mechanism does not
-        ///// support handling of external publication data.
-        ///// </summary>
-        ///// <param name="jpcSession">The session connection data.</param>
-        ///// <param name="account">The account to publish to.</param> 
-        ///// <param name="publications">The publications to be published.</param>
-        //public void Publish(
-        //            JpcSession jpcSession,
-        //            VerifiedAccount account,
-        //            List<CatalogedPublication> publications) {
-
-        //    using var accountEntry = GetAccountVerified(account, jpcSession);
-        //    using var store = accountEntry.GetCatalogPublication();
-
-        //    foreach (var publication in publications) {
-        //        store.New(publication);
-
-        //        }
-
-        //    }
 
         /// <summary>
         /// Verify a claim to a publication and return the value if accepted.

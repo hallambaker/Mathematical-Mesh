@@ -170,6 +170,10 @@ namespace Goedel.XUnit {
         public void TestImpersonationDevice() => throw new NYI();
 
         [Fact]
+        public void TestDeviceDeletion() => throw new NYI();
+
+
+        [Fact]
 
         public void TestImpersonation() {
 

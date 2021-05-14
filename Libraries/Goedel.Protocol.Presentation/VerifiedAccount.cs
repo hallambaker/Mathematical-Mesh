@@ -1,5 +1,4 @@
-﻿//  Copyright © 2015 by Comodo Group Inc.
-//  Copyright © 2021 Threshold Secrets Llc
+﻿//  Copyright © 2021 by Threshold Secrets Llc.
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -18,65 +17,40 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-//  
-//  
 
-namespace Goedel.Protocol {
+//using Goedel.Protocol.Service;
 
-    // Transaction Classes
-    /// <summary>
-    /// The base class for transaction requests
-    /// </summary>
-    public abstract partial class Request {
-
-
-        }
-
-    /// <summary>
-    /// Base class for all responses.
-    /// </summary>
-    public abstract partial class Response {
-
-        /// <summary>
-        /// Numeric status return code value
-        /// </summary>
-		public virtual int StatusCode {
-            get => Status;
-            set => Status = value;
-            }
-
-        /// <summary>
-        /// Description of the status code (for debugging).
-        /// </summary>
-        public virtual string StatusDescriptionCode {
-            get => StatusDescription;
-            set => StatusDescription = value;
-            }
-
-        }
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface IVerifiedAccount {
+namespace Goedel.Protocol.Presentation {
+    public class VerifiedAccount: IVerifiedAccount {
         #region // Properties
         /// <summary>
         /// The account identifier.
         /// </summary>
-        string AccountAddress { get; }
+        public string AccountAddress { get; }
+
 
         /// <summary>
-        /// The profile identifer.
+        /// The account identifier.
         /// </summary>
-        string AuthenticatedProfileUDF { get; }
+        public string AuthenticatedProfileUDF { get; }
 
         /// <summary>
-        /// The authentication key identifier.
+        /// The account identifier.
         /// </summary>
-        string AuthenticationKeyIdentifier { get; }
+        public string AuthenticationKeyIdentifier { get; }
+        #endregion
+
+        #region // Constructors
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public VerifiedAccount(ICredential credential, string AccountAddress) {
+            AccountAddress = AccountAddress;
+            
+            }
+
         #endregion
 
         }
-
     }

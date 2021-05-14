@@ -84,17 +84,17 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="text"></param>
 
         void Debug(string text=null) {
-            Screen.WriteLine(text ?? "");
-            positionDebug = Position;
+            //Screen.WriteLine(text ?? "");
+            //positionDebug = Position;
             }
 
         void DebugBytes() {
-            for (; positionDebug < Position; positionDebug++) {
-                Screen.Write($"{Packet[positionDebug]:X2} ");
+            //for (; positionDebug < Position; positionDebug++) {
+            //    Screen.Write($"{Packet[positionDebug]:X2} ");
 
 
-                }
-            Screen.WriteLine();
+            //    }
+            //Screen.WriteLine();
 
             }
 

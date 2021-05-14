@@ -21,6 +21,7 @@
 //  
 
 using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 using System.Collections.Generic;
@@ -115,6 +116,12 @@ namespace Goedel.Mesh.Server {
         public override JpcSession GetSession() => new JpcSessionHost();
 
 
+
+        private VerifiedAccount VerifyDevice(IJpcSession jpcSession) => throw new NYI();
+
+        private VerifiedAccount VerifyAccount(IJpcSession jpcSession) => throw new NYI();
+
+
         /// <summary>
         /// Respond with the 'hello' version and encoding info. This request does not 
         /// require authentication or authorization since it is the method a client
@@ -157,7 +164,7 @@ namespace Goedel.Mesh.Server {
 
             try {
                 var accountEntry = new AccountUser(request);
-                Mesh.AccountAdd(jpcSession, accountEntry);
+                Mesh.AccountAdd(jpcSession, VerifyDevice(jpcSession),accountEntry);
                 return new BindResponse();
                 }
             catch (System.Exception exception) {
@@ -166,6 +173,29 @@ namespace Goedel.Mesh.Server {
             }
 
 
+        /// <summary>
+		/// Server method implementing the transaction  Connect.
+        /// </summary>
+        /// <param name="request">The request object to send to the host.</param>
+        /// <param name="jpcSession">The connection authentication context.</param>
+		/// <returns>The response object from the service</returns>
+        public override ConnectResponse Connect(
+                ConnectRequest request, IJpcSession jpcSession) {
+
+            // decode MessageConnectionRequestClient with verification
+            var requestConnection = request.EnvelopedRequestConnection.Decode();
+
+            try {
+                var connectResponse = Mesh.Connect(jpcSession, VerifyDevice(jpcSession), requestConnection);
+                return connectResponse;
+                }
+            catch (System.Exception exception) {
+                return new ConnectResponse(exception);
+
+                }
+
+            throw new NYI();
+            }
 
         /// <summary>
         /// Server method implementing the transaction Download.
@@ -176,7 +206,7 @@ namespace Goedel.Mesh.Server {
         public override CompleteResponse Complete(
                 CompleteRequest request, IJpcSession jpcSession ) {
             try {
-                return Mesh.AccountComplete(jpcSession, jpcSession.VerifiedAccount, request);
+                return Mesh.AccountComplete(jpcSession, VerifyDevice(jpcSession), request);
                 }
             catch (System.Exception exception) {
                 return new CompleteResponse(exception);
@@ -194,7 +224,10 @@ namespace Goedel.Mesh.Server {
         public override StatusResponse Status(
                 StatusRequest request, IJpcSession jpcSession) {
             try {
-                return Mesh.AccountStatus(jpcSession, jpcSession.VerifiedAccount);
+
+                "Must check that the device making the request is authorized to the account".TaskFunctionality(true);
+
+                return Mesh.AccountStatus(jpcSession, VerifyAccount(jpcSession));
                 }
             catch (System.Exception exception) {
                 return new StatusResponse(exception);
@@ -214,7 +247,7 @@ namespace Goedel.Mesh.Server {
                 UnbindRequest request, IJpcSession jpcSession) {
 
             try {
-                Mesh.AccountDelete(jpcSession, account: jpcSession.VerifiedAccount);
+                Mesh.AccountDelete(jpcSession, VerifyAccount(jpcSession));
                 return new UnbindResponse();
                 }
             catch (System.Exception exception) {
@@ -235,7 +268,7 @@ namespace Goedel.Mesh.Server {
         public override DownloadResponse Download(
                 DownloadRequest request, IJpcSession jpcSession) {
             try {
-                var Updates = Mesh.AccountDownload(jpcSession, jpcSession.VerifiedAccount, request.Select);
+                var Updates = Mesh.AccountDownload(jpcSession, VerifyAccount(jpcSession), request.Select);
                 return new DownloadResponse() { Updates = Updates };
                 }
             catch (System.Exception exception) {
@@ -254,7 +287,7 @@ namespace Goedel.Mesh.Server {
                 TransactRequest request, IJpcSession jpcSession) {
             try {
 
-                Mesh.AccountUpdate(jpcSession, jpcSession.VerifiedAccount, 
+                Mesh.AccountUpdate(jpcSession, VerifyAccount(jpcSession), 
                         request.Updates, request.Inbound, request.Outbound, request.Local, request.Accounts);
                 return new TransactResponse();
                 }
@@ -299,29 +332,6 @@ namespace Goedel.Mesh.Server {
 
             }
 
-        /// <summary>
-		/// Server method implementing the transaction  Connect.
-        /// </summary>
-        /// <param name="request">The request object to send to the host.</param>
-        /// <param name="jpcSession">The connection authentication context.</param>
-		/// <returns>The response object from the service</returns>
-        public override ConnectResponse Connect(
-                ConnectRequest request, IJpcSession jpcSession) {
-
-            // decode MessageConnectionRequestClient with verification
-            var requestConnection = request.EnvelopedRequestConnection.Decode();
-
-            try {
-                var connectResponse = Mesh.Connect(jpcSession, requestConnection);
-                return connectResponse;
-                }
-            catch (System.Exception exception) {
-                return new ConnectResponse(exception);
-
-                }
-
-            throw new NYI();
-            }
 
 
         /// <summary>

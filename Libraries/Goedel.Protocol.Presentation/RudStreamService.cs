@@ -34,7 +34,7 @@ namespace Goedel.Protocol.Presentation {
         public JpcInterface JpcInterface;
 
 
-        public override VerifiedAccount VerifiedAccount { get; }
+        public override IVerifiedAccount VerifiedAccount { get; }
 
         #region // Constructors
 
@@ -50,18 +50,16 @@ namespace Goedel.Protocol.Presentation {
         public RudStreamService(
                 RudStream parent,
                 string protocol,
-                ICredentialPrivate credential = null, 
-                string instance=null,
+                string instance = null,
+                ICredentialPrivate credentialSelf = null,
+                ICredential credentialOther = null,
                 string accountAddress = null,
-                    RudConnection rudConnection = null) : base(parent, protocol, credential, accountAddress, rudConnection) {
+                RudConnection rudConnection = null) : base(
+                    parent, protocol, credentialSelf, credentialOther,accountAddress, rudConnection) {
 
             JpcInterface = RudConnection?.Listener.GetService(protocol, instance);
 
-            if (AccountAddress != null) {
-                VerifiedAccount = new VerifiedAccount() {
-                    AccountAddress = AccountAddress
-                    };
-                }
+
             }
 
         #endregion
@@ -79,12 +77,10 @@ namespace Goedel.Protocol.Presentation {
         public async Task<JsonObject> AsyncRequestObject() => throw new NYI();
         public JsonObject Post(string tag, JsonObject request) => throw new System.NotImplementedException();
 
-        public void Respond (DataGram dataGram) => throw new NYI();
+        public void Respond(DataGram dataGram) => throw new NYI();
 
 
         public void Respond(JsonObject jsonObject) => throw new NYI();
         #endregion
         }
-
-
     }

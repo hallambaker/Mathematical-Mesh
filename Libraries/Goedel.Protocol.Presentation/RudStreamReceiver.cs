@@ -43,9 +43,11 @@ namespace Goedel.Protocol.Presentation {
         public RudStreamReceiver(
                 RudStream parent,
                 string protocol,
-                ICredentialPrivate credential = null,
-                    string accountAddress = null) : base(parent, protocol, credential, accountAddress) {
-
+                ICredentialPrivate credentialSelf = null,
+                ICredential credentialOther = null,
+                string accountAddress = null,
+                RudConnection rudConnection = null) : base(
+                    parent, protocol, credentialSelf, credentialOther, accountAddress, rudConnection) {
 
 
             }
