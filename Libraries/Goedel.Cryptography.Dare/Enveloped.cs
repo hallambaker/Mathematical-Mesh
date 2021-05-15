@@ -115,7 +115,7 @@ namespace Goedel.Cryptography.Dare {
                     ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(
                         new CryptoParameters(signer: signingKey, recipient: encryptionKey), 
                         data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
-            data.EnvelopedData = this;
+            data.Enveloped = this;
             }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Goedel.Cryptography.Dare {
 
         /// <summary>
         /// Decrypt and deserialize the envelope to obtain the typed contents and set the value of 
-        /// <see cref="JsonObject.EnvelopedData"/> to the original envelope data.
+        /// <see cref="JsonObject.Enveloped"/> to the original envelope data.
         /// </summary>
         /// <param name="keyCollection">Key collection to be used to find decryption keys and
         /// roots of trust for verification keys.</param>
@@ -160,7 +160,7 @@ namespace Goedel.Cryptography.Dare {
 
             result.KeyLocate = keyCollection;
 
-            result.EnvelopedData = this;
+            result.Enveloped = this;
 
             return result as T;
             }

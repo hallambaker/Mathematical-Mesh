@@ -87,6 +87,38 @@ namespace Goedel.Mesh {
                 _ => KeyUses.Any
                 };
 
+
+        /// <summary>
+        /// Derive a base private key of type <paramref name="type"/> for the
+        /// actor <paramref name="actor"/> for the key use <paramref name="operation"/> from the 
+        /// secret seed value <paramref name="secretSeed"/> and register the private component
+        /// in <paramref name="keyCollection"/> under the key security model
+        /// <paramref name="keySecurity"/>. 
+        /// </summary>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="actor">The actor that will use the key</param>
+        /// <param name="operation">The operation for which the key will be used.</param>
+        /// <param name="type">The contribuition type</param>
+        /// <param name="keyCollection">The key collection to register the private key to
+        /// (the key is always generated as ephemeral.)</param>
+        /// <param name="keySecurity">The key security model of the derrived key.</param>
+        /// <returns>KeyData for the public parameters of the derrived key.</returns>
+        public static (KeyPair,KeyData) GenerateContributionKey(
+                    this PrivateKeyUDF secretSeed,
+                    MeshKeyType type,
+                    MeshActor actor,
+                    MeshKeyOperation operation,
+                    IKeyCollection keyCollection = null,
+                    KeySecurity keySecurity = KeySecurity.Ephemeral) {
+            var keyPair = GenerateContributionKeyPair(secretSeed, type, actor, operation,
+                keyCollection, keySecurity);
+            var keyData = new KeyData(keyPair, false);
+
+            return (keyPair, keyData);
+            }
+
+
+
         /// <summary>
         /// Derive a base private key of type <paramref name="type"/> for the
         /// actor <paramref name="actor"/> for the key use <paramref name="operation"/> from the 
@@ -109,10 +141,6 @@ namespace Goedel.Mesh {
                     MeshKeyOperation operation,
                     IKeyCollection keyCollection = null,
                     KeySecurity keySecurity = KeySecurity.Ephemeral) {
-
-            //Screen.WriteLine($"{type}={actor}-{operation}::{secretSeed}");
-
-
             return new KeyData(GenerateContributionKeyPair(secretSeed, type, actor, operation,
                 keyCollection, keySecurity));
             }

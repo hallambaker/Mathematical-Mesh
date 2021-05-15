@@ -28,6 +28,13 @@ namespace Goedel.Mesh {
 
 
     public partial class ProfileDevice {
+        #region // Properties
+        ///<summary>The base device encryption key</summary> 
+        public KeyPair KeyEncrypt { get; private set; }
+        ///<summary>The base device signature key</summary> 
+        public KeyPair KeySignature { get; private set; }
+        ///<summary>The base device authentication key</summary> 
+        public KeyPair KeyAuthentication { get; private set; }
 
         ///<summary>The actor type</summary> 
         public override MeshActor MeshActor => MeshActor.Device;
@@ -39,7 +46,8 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedProfileDevice);
         Enveloped<ProfileDevice> envelopedProfileDevice;
 
-
+        #endregion
+        #region // Constructors
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -55,16 +63,21 @@ namespace Goedel.Mesh {
                     PrivateKeyUDF secretSeed) : base(secretSeed) {
             }
 
+        #endregion
+        #region // Methods 
+
+
 
         /// <summary>
         /// Generate profile specific keys.
         /// </summary>
         protected override void Generate() {
-            Encryption = SecretSeed.GenerateContributionKeyData(
+            base.Generate();
+            (KeyEncrypt, Encryption) = SecretSeed.GenerateContributionKey(
                     MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
-            Signature = SecretSeed.GenerateContributionKeyData(
+            (KeySignature, Signature) = SecretSeed.GenerateContributionKey(
                     MeshKeyType, MeshActor, MeshKeyOperation.Sign);
-            Authentication = SecretSeed.GenerateContributionKeyData(
+            (KeyAuthentication, Authentication) = SecretSeed.GenerateContributionKey(
                     MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
             }
 
@@ -148,6 +161,9 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"KeyAuthentication:   {Authentication.Udf} ");
 
             }
+
+
+        #endregion
         }
 
     }

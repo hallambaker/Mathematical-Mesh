@@ -36,14 +36,16 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="parent">The parent stream</param>
         /// <param name="protocol">The stream protocol</param>
-        /// <param name="credential">Optional additional credential.</param>
+        /// <param name="credentialSelf">Optional additional credential for self.</param>
+        /// <param name="credentialOther">Optional additional credential for other.</param>
+        /// <param name="accountAddress">Account address asserted</param>
         /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
 
         public RudStreamClient(
                 RudStream parent,
                 string protocol,
                  ICredentialPrivate credentialSelf = null,
-                ICredential credentialOther = null,
+                ICredentialPublic credentialOther = null,
                 string accountAddress = null,
                 RudConnection rudConnection = null) : base(
                     parent, protocol, credentialSelf, credentialOther, accountAddress, rudConnection) { }
@@ -67,7 +69,7 @@ namespace Goedel.Protocol.Presentation {
             }
 
         ///<inheritdoc cref="IJpcSession"/>
-        public IJpcSession Rebind(string accountAddress) {
+        public IJpcSession Rebind(string accountAddress, ICredential credential) {
             return MakeStreamClient(Protocol, null, accountAddress);
             }
 

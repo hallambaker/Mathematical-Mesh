@@ -66,15 +66,15 @@ namespace Goedel.Protocol.Presentation {
         public abstract byte[] MutualKeyOut { get; }
 
         ///<summary>Public credential of the counter party.</summary> 
-        public virtual ICredential CredentialOther { get; set; }
+        public virtual ICredentialPublic CredentialOther { get; set; }
         ///<summary>Private credential of self.</summary> 
         public virtual ICredentialPrivate CredentialSelf { get; set; }
 
         ///<summary>The host credential</summary> 
-        public abstract ICredential HostCredential { get; }
+        public abstract ICredentialPublic HostCredential { get; }
 
         ///<summary>The client credential</summary> 
-        public abstract ICredential ClientCredential { get; }
+        public abstract ICredentialPublic ClientCredential { get; }
 
         ///<summary>The packet that the connection is a response to.</summary> 
         public Packet PacketIn { get; set; }
@@ -98,10 +98,10 @@ namespace Goedel.Protocol.Presentation {
         List<KeyPairAdvanced> ephemeralsOffered;
 
 
-
+        ///<summary>The packet writer factory</summary> 
         public PacketWriterFactoryDelegate PacketWriterFactory { get; set; } 
                     = PacketWriterDebug.Factory;
-
+        ///<summary>The packet reader factory</summary> 
         public PacketReaderFactoryDelegate PacketReaderFactory { get; set; }
                     = PacketReader.Factory;
 

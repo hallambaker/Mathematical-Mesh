@@ -21,6 +21,9 @@
 //using Goedel.Protocol.Service;
 
 namespace Goedel.Protocol.Presentation {
+    /// <summary>
+    /// Verified account.
+    /// </summary>
     public class VerifiedAccount: IVerifiedAccount {
         #region // Properties
         /// <summary>
@@ -45,8 +48,8 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public VerifiedAccount(ICredential credential, string AccountAddress) {
-            AccountAddress = AccountAddress;
+        public VerifiedAccount(ICredentialPublic credential, string accountAddress) {
+            AccountAddress = accountAddress;
             
             }
 

@@ -28,9 +28,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Factory method delegate for <see cref="PacketWriter"/>
     /// </summary>
-    /// <param name="packetSize">The number of bytes in the packet to be created.</param>
-    /// <param name="buffer">Buffer provided by caller</param>
-    /// <param name="position">Offset within packet at which first byte is to be written.</param>
+    /// <param name="parent">Parent writer </param>
     /// <returns>The created instance.</returns>
     public delegate PacketWriter PacketWriterFactoryDelegate(
                     PacketWriter parent=null);
@@ -47,40 +45,26 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The Packet data</summary> 
         public byte[] Packet => MemoryStream.ToArray();
 
-
+        ///<summary>The memory stream to which data is written.</summary> 
         public MemoryStream MemoryStream { get; }
-
-        /////<summary>Size of the largest encrypted block that can be inserted into
-        /////the writer.</summary> 
-        //public virtual int RemainingSpace => Packet.Length - Position;
 
         #endregion
         #region // Constructors
         /// <summary>
-        /// Constructor, create a packet writer with a packet size of 
-        /// <paramref name="packetSize"/>.
+        /// Constructor, create a packet writer.
         /// </summary>
-        /// <param name="packetSize">The number of bytes in the packet to be created.</param>
-        /// <param name="buffer">Buffer provided by caller</param>
-        /// <param name="position">Offset within packet at which first byte is to be written.</param>
-        public PacketWriter( PacketWriter parent = null) {
+        /// <param name="parent">Parent writer </param>
+        public PacketWriter(PacketWriter parent = null) => 
             MemoryStream = new MemoryStream(Constants.MinimumPacketSize);
-
-            //Packet = new byte[parent?.RemainingSpace ?? 1200];
-            //Position = 0;
-            }
-
 
 
         /// <summary>
-        /// Factory method returning instance of <see cref="PacketWriterAesGcm"/>
+        /// Factory method returning instance of <see cref="PacketWriter"/>
         /// </summary>
-        /// <param name="packetSize">The number of bytes in the packet to be created.</param>
-        /// <param name="buffer">Buffer provided by caller</param>
-        /// <param name="position">Offset within packet at which first byte is to be written.</param>
+        /// <param name="parent">Parent writer </param>
         /// <returns>The created instance.</returns>
         public static PacketWriter Factory(
-                    PacketWriter parent = null) => new PacketWriter(parent);
+                    PacketWriter parent = null) => new(parent);
 
 
         #endregion
@@ -106,23 +90,17 @@ namespace Goedel.Protocol.Presentation {
                 }
             }
 
-
-
-
         /// <summary>
         /// Write InitiatorMessageType as a byte to the packet
         /// </summary>
         /// <param name="b"></param>
         public virtual void Write(InitiatorMessageType b) => MemoryStream.WriteByte((byte)b);
-            //Packet[Position++] = (byte)b;
 
         /// <summary>
         /// Write ResponderMessageType as a byte to the packet
         /// </summary>
         /// <param name="b"></param>
         public virtual void Write(ResponderMessageType b) => MemoryStream.WriteByte((byte)b); 
-            //Packet[Position++] = (byte)b;
-
 
         /// <summary>
         /// Write a byte to the packet
@@ -171,9 +149,6 @@ namespace Goedel.Protocol.Presentation {
         void Write(PacketTag code, byte[] data, int offset, int count) {
             WriteTag(code, data.Length);
             MemoryStream.Write(data, offset, count);
-
-            //Buffer.BlockCopy(data, offset, Packet, Position, count);
-            //Position += data.Length;
             }
 
 
@@ -186,16 +161,9 @@ namespace Goedel.Protocol.Presentation {
             // We could just increment Position, but the buffer might not be clean on entry.
             // This is the safest approach.
             MemoryStream.Write(data, 0, data.Length);
-
-
-            //Buffer.BlockCopy(data, 0, Packet, Position, data.Length);
-            //Position += data.Length;
             }
 
-        //public void Write(byte data) {
-        //    Packet[Position] = data;
-        //    Position++;
-        //    }
+
 
         /// <summary>
         ///Write the positive integer <paramref name="data"/> to the packet

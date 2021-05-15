@@ -84,6 +84,9 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Add a new account. The account name must be unique.
         /// </summary>
+        /// <param name="account">The verified account data.</param>
+        /// <param name="accountEntry">Account data to add.</param>
+        /// <param name="jpcSession">The session connection data.</param>
         public void AccountAdd(IJpcSession jpcSession,
             VerifiedAccount account,
                         AccountEntry accountEntry) {
@@ -113,6 +116,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="requestConnection">TThe message connection request.</param>
+        /// <param name="account">The verified account data.</param>
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(IJpcSession jpcSession,
             VerifiedAccount account,

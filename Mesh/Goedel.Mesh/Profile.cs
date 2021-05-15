@@ -38,6 +38,11 @@ namespace Goedel.Mesh {
 
     public partial class Profile {
 
+        #region // Properties
+
+        ///<summary>Key used to sign the profile.</summary> 
+        public KeyPair KeyProfileSign { get; private set; }
+
 
         ///<summary>The key contribution type</summary> 
         public virtual MeshKeyType MeshKeyType => Goedel.Mesh.MeshKeyType.Base;
@@ -65,13 +70,20 @@ namespace Goedel.Mesh {
         public string Udf => ProfileSignature.Udf;
 
         ///<summary>The secret seed value used to derrive the private keys.</summary>
-        public PrivateKeyUDF SecretSeed { get; }
+        public PrivateKeyUDF SecretSeed { get => secretSeed;
+            set { 
+                secretSeed = value;
+                Generate();
+                } 
+            }
+        PrivateKeyUDF secretSeed;
 
         ///<summary>The signature key of the profile</summary> 
         public KeyPair ProfileSignatureKey => profileSignatureKey ??
             ProfileSignature.GetKeyPair().CacheValue(out profileSignatureKey);
         KeyPair profileSignatureKey;
-
+        #endregion
+        #region // Constructors
         /// <summary>
         /// Base constructor used for deserialization
         /// </summary>
@@ -92,26 +104,29 @@ namespace Goedel.Mesh {
             SecretSeed = secretSeed ?? new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier);
 
             // We always have a profile signature key in a profile.
-            var profileSign = SecretSeed.GenerateContributionKeyPair(
-                MeshKeyType, MeshActor, MeshKeyOperation.Profile);
-            ProfileSignature = new KeyData(profileSign.KeyPairPublic());
+
 
             if (persist) {
                 keyCollection.Persist(ProfileSignature.Udf, secretSeed, false);
                 }
 
             // Generate profile specific keys
-            Generate();
+            //Generate();
 
             // sign the profile.
-            Envelope(profileSign);
+            Envelope(KeyProfileSign);
 
             }
-
+        #endregion
+        #region // Methods 
         /// <summary>
         /// Generate profile specific keys, is overriden in child classes.
         /// </summary>
         protected virtual void Generate() {
+            (KeyProfileSign, ProfileSignature) = SecretSeed.GenerateContributionKey(
+                        MeshKeyType, MeshActor, MeshKeyOperation.Profile);
+
+
             }
 
         /// <summary>
@@ -134,5 +149,7 @@ namespace Goedel.Mesh {
         /// <returns>True if there is a valid signature under this profile, otherwise false.</returns>
         public bool Verify(DareEnvelope envelopedAssertion) => 
                     envelopedAssertion.Verify(ProfileSignatureKey);
+
+        #endregion
         }
     }

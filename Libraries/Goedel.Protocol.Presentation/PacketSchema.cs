@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/7/2021 1:21:08 PM
+//  This file was automatically generated at 5/15/2021 1:18:01 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  yaschema version 3.0.0.728
+//  Generator:  yaschema version 3.0.0.730
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -61,8 +61,6 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
-        /// <param name="buffer">Buffer provided by caller</param>
-        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeInitiatorHello (
                 byte[] sourceId,
@@ -103,8 +101,6 @@ namespace Goedel.Protocol.Presentation {
         /// in the mezzanine segment.</param>
         /// <param name="ciphertextExtensions">Additional extensions to be presented 
         /// in the encrypted segment.</param>
-        /// <param name="buffer">Buffer provided by caller</param>
-        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeInitiatorComplete (
                 byte[] sourceId,
@@ -191,8 +187,6 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="payload">The payload data.</param>
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
-        /// <param name="buffer">Buffer provided by caller</param>
-        /// <param name="position">Offset within packet at which first byte is to be written.</param>
         /// <returns>The serialized data.</returns>
         public byte[] SerializeResponderChallenge (
                 byte[] sourceId,

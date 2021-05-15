@@ -27,6 +27,13 @@ using Goedel.Utilities;
 using Goedel.Discovery;
 namespace Goedel.Protocol {
 
+    /// <summary>
+    /// Credential interface
+    /// </summary>
+    public interface  ICredential {
+        ///<summary>The subject name claimed under the credential</summary> 
+        public string Account { get; }
+        }
 
     /// <summary>
     /// Enumeration describing the different connection modes
@@ -128,7 +135,9 @@ namespace Goedel.Protocol {
         /// <returns>The transaction result.</returns>
         public virtual JsonObject Post(string tag, JsonObject request) => 
                     throw new System.NotImplementedException();
-        public  abstract IJpcSession Rebind(string accountAddress);
+
+        ///<inheritdoc cref="IJpcSession"/>
+        public  abstract IJpcSession Rebind(string accountAddress, ICredential credential);
         }
 
 
@@ -150,7 +159,7 @@ namespace Goedel.Protocol {
 
 
         ///<inheritdoc/>
-        public override IJpcSession Rebind(string accountAddress) {
+        public override IJpcSession Rebind(string accountAddress, ICredential credential) {
             AccountAddress = accountAddress;
             return this;
             }
@@ -223,71 +232,6 @@ namespace Goedel.Protocol {
 
         }
 
-    ///// <summary>
-    ///// Session of type HTTP.
-    ///// </summary>
-    //public partial class JpcSessionHTTP : JpcRemoteSession {
-
-    //    string Instance { get; }
-
-    //    WebClient webClient;
-
-    //    ///<inheritdoc/>
-    //    protected override void Disposing() => webClient?.Dispose();
-
-
-    //    /// <summary>
-    //    /// Return a session  bound to the account <paramref name="account"/>.
-    //    /// </summary>
-    //    /// <param name="account">The account address</param>
-    //    /// <param name="instance">The remote instance identifier.</param>
-    //    public JpcSessionHTTP(string account, string instance = null) :
-    //            base(account) => Instance = instance;
-
-    //    /// <summary>
-    //    /// Post the specified data to the remote service.
-    //    /// </summary>
-    //    /// <param name="data">Input data</param>
-    //    /// <param name="request">The request</param>
-    //    /// <returns>The response data</returns>
-    //    public override Stream Post(MemoryStream data, JsonObject request) {
-    //        // Get the Web client
-    //        var uri = WebServiceEndpoint.GetEndpoint(Domain, JpcClientInterface.GetWellKnown,
-    //                JpcClientInterface.GetDiscovery, Instance);
-
-    //        webClient ??=  new WebClient();
-
-
-    //        // Prepare the request
-    //        var requestData = data.GetBuffer();
-    //        var responseData = webClient.UploadData(uri, requestData);
-    //        return new MemoryStream(responseData);
-    //        }
-    //    }
-
-    ///// <summary>
-    ///// Ticketed session.
-    ///// </summary>
-    //public partial class JpcSessionTicketed : JpcRemoteSession {
-
-    //    /// <summary>
-    //    /// Return a session  bound to the account <paramref name="account"/>.
-    //    /// </summary>
-    //    /// <param name="account">The account address</param>
-    //    /// <param name="ticket">The ticket data</param>
-    //    public JpcSessionTicketed(JpcTicket ticket, string account) :
-    //            base(account) {
-    //        }
-
-    //    /// <summary>
-    //    /// Post the specified data to the remote service.
-    //    /// </summary>
-    //    /// <param name="Data">Input data</param>
-    //    /// <param name="request">The request</param>
-    //    /// <returns>The response data</returns>
-    //    public override Stream Post(MemoryStream Data, JsonObject request) => throw new System.NotImplementedException();
-
-    //    }
 
     }
 

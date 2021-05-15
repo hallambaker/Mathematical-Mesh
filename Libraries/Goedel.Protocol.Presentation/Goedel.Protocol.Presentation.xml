@@ -82,8 +82,6 @@
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
-            <param name="buffer">Buffer provided by caller</param>
-            <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.SerializeInitiatorComplete(System.Byte[],System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
@@ -98,8 +96,6 @@
             in the mezzanine segment.</param>
             <param name="ciphertextExtensions">Additional extensions to be presented 
             in the encrypted segment.</param>
-            <param name="buffer">Buffer provided by caller</param>
-            <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.ParseResponderChallenge(System.Byte[],System.Int32,System.Int32)">
@@ -171,8 +167,6 @@
             <param name="payload">The payload data.</param>
             <param name="plaintextExtensionsIn">Additional extensions to be presented 
             in the plaintext segment.</param>
-            <param name="buffer">Buffer provided by caller</param>
-            <param name="position">Offset within packet at which first byte is to be written.</param>
             <returns>The serialized data.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionResponder.ParseInitiatorHello(System.Byte[],System.Int32,System.Int32)">
@@ -513,25 +507,22 @@
             </summary>
             <param name="Protocol">Directory to store persistence data.</param>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.ICredential">
+        <member name="T:Goedel.Protocol.Presentation.ICredentialPublic">
             <summary>
             Credential interface
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Presentation.ICredential.Account">
-            <summary>The subject name claimed under the credential</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.ICredential.AuthenticationPublic">
+        <member name="P:Goedel.Protocol.Presentation.ICredentialPublic.AuthenticationPublic">
             <summary>The public authentication key.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ICredential.SelectKey">
+        <member name="M:Goedel.Protocol.Presentation.ICredentialPublic.SelectKey">
             <summary>
             Return a private ephemeral key and compatible public key from the 
             credential keys
             </summary>
             <returns>The ephemeral private key and credential public key.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.ICredential.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
+        <member name="M:Goedel.Protocol.Presentation.ICredentialPublic.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
             <summary>
             Select an ephemeral from <paramref name="ephemerals"/> that is compatible with 
             the creedential key <paramref name="keyId"/>.
@@ -638,6 +629,9 @@
         <member name="P:Goedel.Protocol.Presentation.Listener.CredentialSelf">
             <summary>Private credential of self.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Presentation.Listener.PacketReaderFactory">
+            <summary>Packet reader delegate to use.</summary> 
+        </member>
         <member name="F:Goedel.Protocol.Presentation.Listener.DictionaryStreamsInbound">
             <summary>Dictionary mapping inbound source Ids to sessions.</summary> 
         </member>
@@ -646,6 +640,7 @@
             Base constructor, populate the common properties.
             </summary>
             <param name="credentialSelf">The credential used by the listener.</param>
+            <param name="providers">The listener service providers.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Listener.MakeChallenge(Goedel.Protocol.Presentation.Packet,System.Byte[])">
             <summary>
@@ -922,10 +917,10 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.Decrypt(System.Byte[],System.Boolean)">
             <summary>
-            Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
+            Decrypt the remainder of the packet using the primary key <paramref name="key"/> and the 
             nonce at the current position in the packet to provide the necessary keying material.
             </summary>
-            <param name="ikm">The primary key.</param>
+            <param name="key">The primary key.</param>
             <param name="pad">If true the data is padded to consume the remainder of the data.</param>
             <returns>A reader for the decrypted data.</returns>
         </member>
@@ -939,6 +934,7 @@
             <param name="offset">The starting point of the encrypted portion of the buffer (i.e. start
             of the initialization vector)</param>
             <param name="last">The last byte in the buffer to read.</param>
+            <param name="decryptDataDelegate">The decryption delegate.</param>
             <returns>A reader for the decrypted data.</returns>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketInitiatorHello">
@@ -995,9 +991,7 @@
             <summary>
             Factory method delegate for <see cref="T:Goedel.Protocol.Presentation.PacketWriter"/>
             </summary>
-            <param name="packetSize">The number of bytes in the packet to be created.</param>
-            <param name="buffer">Buffer provided by caller</param>
-            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <param name="parent">Parent writer </param>
             <returns>The created instance.</returns>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketWriter">
@@ -1011,22 +1005,20 @@
         <member name="P:Goedel.Protocol.Presentation.PacketWriter.Packet">
             <summary>The Packet data</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Presentation.PacketWriter.MemoryStream">
+            <summary>The memory stream to which data is written.</summary> 
+        </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.#ctor(Goedel.Protocol.Presentation.PacketWriter)">
             <summary>
-            Constructor, create a packet writer with a packet size of 
-            <paramref name="packetSize"/>.
+            Constructor, create a packet writer.
             </summary>
-            <param name="packetSize">The number of bytes in the packet to be created.</param>
-            <param name="buffer">Buffer provided by caller</param>
-            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <param name="parent">Parent writer </param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Factory(Goedel.Protocol.Presentation.PacketWriter)">
             <summary>
-            Factory method returning instance of <see cref="!:PacketWriterAesGcm"/>
+            Factory method returning instance of <see cref="T:Goedel.Protocol.Presentation.PacketWriter"/>
             </summary>
-            <param name="packetSize">The number of bytes in the packet to be created.</param>
-            <param name="buffer">Buffer provided by caller</param>
-            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <param name="parent">Parent writer </param>
             <returns>The created instance.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.LengthLength(System.Int64)">
@@ -1098,11 +1090,16 @@
         <member name="M:Goedel.Protocol.Presentation.PacketWriter.Wrap(System.Byte[],System.Byte[])">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Protocol.Presentation.PacketWriterDebug">
+            <summary>
+            Debug version of PacketWriter (move to doc tools.)
+            </summary>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.#ctor(Goedel.Protocol.Presentation.PacketWriter,System.Byte[],System.Int32)">
             <summary>
             Constructor creating an instance of <see cref="T:Goedel.Protocol.Presentation.PacketWriterDebug"/>
             </summary>
-            <param name="packetSize">The number of bytes in the packet to be created.</param>
+            <param name="parent">Parent writer</param>
             <param name="buffer">Buffer provided by caller</param>
             <param name="position">Offset within packet at which first byte is to be written.</param>
         </member>
@@ -1110,9 +1107,7 @@
             <summary>
             Factory method returning instance of <see cref="T:Goedel.Protocol.Presentation.PacketWriterDebug"/>
             </summary>
-            <param name="packetSize">The number of bytes in the packet to be created.</param>
-            <param name="buffer">Buffer provided by caller</param>
-            <param name="position">Offset within packet at which first byte is to be written.</param>
+            <param name="parent">Parent writer</param>
             <returns>The created instance.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Debug(System.String)">
@@ -1364,6 +1359,12 @@
         </member>
         <member name="P:Goedel.Protocol.Presentation.RudConnection.ObjectEncoding">
             <summary>The object encoding for use in the connection</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.RudConnection.PacketWriterFactory">
+            <summary>The packet writer factory</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.RudConnection.PacketReaderFactory">
+            <summary>The packet reader factory</summary> 
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudConnection.AddEphemerals(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
@@ -1646,15 +1647,23 @@
         <member name="F:Goedel.Protocol.Presentation.RudStream.ChallengePoW">
             <summary>The challeng proof of work.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredential,System.String,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="P:Goedel.Protocol.Presentation.RudStream.AccountAddress">
+            <summary>The account address</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.RudStream.VerifiedAccount">
+            <summary>The verified account</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> according to the stream role.
             </summary>
             <param name="parent">The parent stream</param>
             <param name="protocol">The stream protocol</param>
-            <param name="credentialSelf">Optional additional credential.</param>
-            <param name="rdpConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
+            <param name="credentialSelf">Optional additional credential for self.</param>
+            <param name="credentialOther">Optional additional credential for other.</param>
+            <param name="accountAddress">Account address asserted</param>
+            <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStream.AddOneTime(System.Byte[])">
             <summary>
@@ -1667,6 +1676,7 @@
             Set the encryption options for the stream.
             </summary>
             <param name="encryptionOptions"></param>
+            <param name="streamId">The stream id</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStream.PostAsync(System.String,Goedel.Protocol.JsonObject)">
             <summary>
@@ -1693,12 +1703,19 @@
             </summary>
             <param name="recurse"></param>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStream.RemoveChild(Goedel.Protocol.Presentation.RudStream)">
+            <summary>
+            Remove a child stream.
+            </summary>
+            <param name="child">The child to drop.</param>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.RudStream.MakeStreamClient(System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
             <summary>
             Request creation of a transactional stream in the client role.
             </summary>
             <param name="protocol">The protocol identifier</param>
             <param name="credentialSelf">Optional additional credential to be presented.</param>
+            <param name="accountAddress">The account address.</param>
             <returns>The created stream.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStream.MakeStreamSender(Goedel.Protocol.Presentation.ICredentialPrivate)">
@@ -1732,14 +1749,16 @@
             The client side of an RDP transactional stream.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredential,System.String,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
             </summary>
             <param name="parent">The parent stream</param>
             <param name="protocol">The stream protocol</param>
-            <param name="credential">Optional additional credential.</param>
+            <param name="credentialSelf">Optional additional credential for self.</param>
+            <param name="credentialOther">Optional additional credential for other.</param>
+            <param name="accountAddress">Account address asserted</param>
             <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStreamClient.Post(System.String,Goedel.Protocol.JsonObject)">
@@ -1751,7 +1770,7 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.Rebind(System.String)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.Rebind(System.String,Goedel.Protocol.ICredential)">
             <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
         </member>
         <member name="T:Goedel.Protocol.Presentation.RudStreamReceiver">
@@ -1760,14 +1779,29 @@
             notice of receipt of a datagtram.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamReceiver.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredential,System.String,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamReceiver.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
             </summary>
             <param name="parent">The parent stream</param>
             <param name="protocol">The stream protocol</param>
-            <param name="credential">Optional additional credential.</param>
+            <param name="credentialSelf">Optional additional credential for self.</param>
+            <param name="credentialOther">Optional additional credential for other.</param>
+            <param name="accountAddress">Account address asserted</param>
+            <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamReceiver.AsyncReceive">
+            <summary>
+            Asynchronous task that waits to receive a datagram on the stream.
+            </summary>
+            <returns>The datagram received.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamReceiver.SendControlDatagram(Goedel.Protocol.Presentation.DataGram)">
+            <summary>
+            Asynchronous task that waits to send a control datagram on the stream.
+            </summary>
+            <param name="dataGram">The datagram to send.</param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.RudStreamSender">
             <summary>
@@ -1775,14 +1809,17 @@
             notice of receipt of a control message.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamSender.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredential,System.String,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamSender.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
             </summary>
             <param name="parent">The parent stream</param>
             <param name="protocol">The stream protocol</param>
-            <param name="credential">Optional additional credential.</param>
+            <param name="credentialSelf">Optional additional credential for self.</param>
+            <param name="credentialOther">Optional additional credential for other.</param>
+            <param name="accountAddress">Account address asserted</param>
+            <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStreamSender.AsyncControlDatagram">
             <summary>
@@ -1804,18 +1841,57 @@
         <member name="F:Goedel.Protocol.Presentation.RudStreamService.JpcInterface">
             <summary>The service instance.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamService.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredential,System.String,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="P:Goedel.Protocol.Presentation.RudStreamService.VerifiedAccount">
+            <summary>The verified account.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
             </summary>
             <param name="parent">The parent stream</param>
             <param name="protocol">The stream protocol</param>
-            <param name="credential">Optional additional credential.</param>
+            <param name="instance">The service instance</param>
+            <param name="credentialSelf">Optional additional credential for self.</param>
+            <param name="credentialOther">Optional additional credential for other.</param>
+            <param name="accountAddress">Account address asserted</param>
             <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamService.Rebind(System.String)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.Rebind(System.String,Goedel.Protocol.ICredential)">
             <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.AsyncRequestDatagram">
+            <summary>
+            Wait to receive a request datagram on the stream.
+            </summary>
+            <returns>The task created.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.AsyncRequestObject">
+            <summary>
+            Wait to receive a parsed request object on the stream.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.Post(System.String,Goedel.Protocol.JsonObject)">
+            <summary>
+            Post the request <paramref name="tag"/> with data <paramref name="request"/> to
+            the service bound to the stream.
+            </summary>
+            <param name="tag">Transaction name.</param>
+            <param name="request">Transaction data</param>
+            <returns>Result of posting data to the stream.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.Respond(Goedel.Protocol.Presentation.DataGram)">
+            <summary>
+            Send the response datagram <paramref name="dataGram"/>
+            </summary>
+            <param name="dataGram">The datagram to send.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.Respond(Goedel.Protocol.JsonObject)">
+            <summary>
+            Send the response object <paramref name="jsonObject"/>
+            </summary>
+            <param name="jsonObject">The object to send</param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.StreamId">
             <summary>
@@ -1870,6 +1946,11 @@
             </summary>
             <returns>The stream identifier created.</returns>
         </member>
+        <member name="T:Goedel.Protocol.Presentation.VerifiedAccount">
+            <summary>
+            Verified account.
+            </summary>
+        </member>
         <member name="P:Goedel.Protocol.Presentation.VerifiedAccount.AccountAddress">
             <summary>
             The account identifier.
@@ -1885,7 +1966,7 @@
             The account identifier.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.VerifiedAccount.#ctor(Goedel.Protocol.Presentation.ICredential,System.String)">
+        <member name="M:Goedel.Protocol.Presentation.VerifiedAccount.#ctor(Goedel.Protocol.Presentation.ICredentialPublic,System.String)">
             <summary>
             Default constructor.
             </summary>

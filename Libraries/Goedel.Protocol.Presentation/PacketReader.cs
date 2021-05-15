@@ -250,10 +250,10 @@ namespace Goedel.Protocol.Presentation {
 
 
         /// <summary>
-        /// Decrypt the remainder of the packet using the primary key <paramref name="ikm"/> and the 
+        /// Decrypt the remainder of the packet using the primary key <paramref name="key"/> and the 
         /// nonce at the current position in the packet to provide the necessary keying material.
         /// </summary>
-        /// <param name="ikm">The primary key.</param>
+        /// <param name="key">The primary key.</param>
         /// <param name="pad">If true the data is padded to consume the remainder of the data.</param>
         /// <returns>A reader for the decrypted data.</returns>
         public virtual PacketReader Decrypt(byte[] key, bool pad = true) {
@@ -299,6 +299,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="offset">The starting point of the encrypted portion of the buffer (i.e. start
         /// of the initialization vector)</param>
         /// <param name="last">The last byte in the buffer to read.</param>
+        /// <param name="decryptDataDelegate">The decryption delegate.</param>
         /// <returns>A reader for the decrypted data.</returns>
         public static PacketReader Unwrap(byte[] key, byte[] packet, int offset, int last,
             DecryptDataDelegate decryptDataDelegate=null) {

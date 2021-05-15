@@ -87,9 +87,6 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The connection as an initiator</summary> 
         protected ConnectionInitiator ConnectionInitiator => RudConnection as ConnectionInitiator;
 
-        ///<summary>Account name claimed during stream initialization (unverified).</summary> 
-        //public string Account { get; set; }
-
 
         ///<summary>The state of the stream</summary> 
         public StreamState StreamState { get; set; }
@@ -111,7 +108,7 @@ namespace Goedel.Protocol.Presentation {
         public ICredentialPrivate CredentialSelf;
 
         ///<summary>The credential to which the stream is bound</summary> 
-        public ICredential CredentialOther;
+        public ICredentialPublic CredentialOther;
 
 
         ///<summary>The local stream Id, this is generated localy and MAY contain hidden structure.</summary> 
@@ -130,10 +127,10 @@ namespace Goedel.Protocol.Presentation {
         public byte[] ChallengePoW;
 
 
-
+        ///<summary>The account address</summary> 
         public string AccountAddress { get; }
 
-
+        ///<summary>The verified account</summary> 
         public virtual IVerifiedAccount VerifiedAccount { get;}
 
         #endregion
@@ -145,20 +142,22 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="parent">The parent stream</param>
         /// <param name="protocol">The stream protocol</param>
-        /// <param name="credentialSelf">Optional additional credential.</param>
-        /// <param name="rdpConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
+        /// <param name="credentialSelf">Optional additional credential for self.</param>
+        /// <param name="credentialOther">Optional additional credential for other.</param>
+        /// <param name="accountAddress">Account address asserted</param>
+        /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
         public RudStream(
                 RudStream parent,
                 string protocol,
                 ICredentialPrivate credentialSelf = null,
-                ICredential credentialOther = null,
+                ICredentialPublic credentialOther = null,
                 string accountAddress = null,
-                    RudConnection rdpConnection = null) {
+                    RudConnection rudConnection = null) {
             RdpStreamParent = parent;
             if (parent != null) {
                 parent.AddChild(this);
                 }
-            RudConnection = rdpConnection ?? parent?.RudConnection ;
+            RudConnection = rudConnection ?? parent?.RudConnection ;
 
             Protocol = protocol;
 
@@ -193,6 +192,7 @@ namespace Goedel.Protocol.Presentation {
         /// Set the encryption options for the stream.
         /// </summary>
         /// <param name="encryptionOptions"></param>
+        /// <param name="streamId">The stream id</param>
         public void SetOptions(
                     byte[] streamId,
                     byte[] encryptionOptions) {
@@ -476,6 +476,10 @@ namespace Goedel.Protocol.Presentation {
             ChildStreams.Add(child);
             }
 
+        /// <summary>
+        /// Remove a child stream.
+        /// </summary>
+        /// <param name="child">The child to drop.</param>
         protected void RemoveChild(RudStream child) {
             ChildStreams.Remove(child);
             }
@@ -486,6 +490,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="protocol">The protocol identifier</param>
         /// <param name="credentialSelf">Optional additional credential to be presented.</param>
+        /// <param name="accountAddress">The account address.</param>
         /// <returns>The created stream.</returns>
         public RudStreamClient MakeStreamClient(string protocol, ICredentialPrivate credentialSelf = null,
                 string accountAddress = null) =>

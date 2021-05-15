@@ -35,8 +35,8 @@ namespace Goedel.Mesh {
         /// The DareEnvelope encapsulation of this object instance.
         /// </summary>
         public virtual DareEnvelope DareEnvelope {
-            get => EnvelopedData as DareEnvelope;
-            set => EnvelopedData = value;
+            get => Enveloped as DareEnvelope;
+            set => Enveloped = value;
             }
 
         ///<summary>The key collection that was used to decode this object instance.</summary>
@@ -70,7 +70,7 @@ namespace Goedel.Mesh {
                 MessageType = _Tag
                 };
 
-            EnvelopedData = new Enveloped<MeshItem>(this,
+            Enveloped = new Enveloped<MeshItem>(this,
                         signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
                         objectEncoding: objectEncoding);
             DareEnvelope.Header.EnvelopeId = EnvelopeId;
@@ -127,7 +127,7 @@ namespace Goedel.Mesh {
             var reader = new JsonBcdReader(plaintext);
 
             var result = FromJson(reader, true);
-            result.EnvelopedData = envelope;
+            result.Enveloped = envelope;
             result.KeyCollection = keyCollection;
             return result;
 

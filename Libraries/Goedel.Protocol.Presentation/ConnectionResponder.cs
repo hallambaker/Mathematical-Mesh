@@ -42,9 +42,9 @@ namespace Goedel.Protocol.Presentation {
         ///<inheritdoc/>
         public override byte[] MutualKeyOut => MutualKeyHostToClient;
         ///<inheritdoc/> 
-        public override ICredential HostCredential => CredentialSelf;
+        public override ICredentialPublic HostCredential => CredentialSelf;
         ///<inheritdoc/> 
-        public override ICredential ClientCredential => CredentialOther;
+        public override ICredentialPublic ClientCredential => CredentialOther;
 
 
 

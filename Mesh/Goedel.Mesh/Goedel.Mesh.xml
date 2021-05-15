@@ -3480,7 +3480,7 @@
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ConnectionDevice.AuthenticationPublic">
-            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="M:Goedel.Mesh.ConnectionDevice.#ctor">
             <summary>
@@ -3498,10 +3498,10 @@
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
         <member name="M:Goedel.Mesh.ConnectionDevice.SelectKey">
-            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="M:Goedel.Mesh.ConnectionDevice.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
-            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="M:Goedel.Mesh.ConnectionDevice.Strip">
             <summary>
@@ -4809,6 +4809,23 @@
             </summary>
             <param name="operation">The Mesh Key operation.</param>
         </member>
+        <member name="M:Goedel.Mesh.Extensions.GenerateContributionKey(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.KeySecurity)">
+            <summary>
+            Derive a base private key of type <paramref name="type"/> for the
+            actor <paramref name="actor"/> for the key use <paramref name="operation"/> from the 
+            secret seed value <paramref name="secretSeed"/> and register the private component
+            in <paramref name="keyCollection"/> under the key security model
+            <paramref name="keySecurity"/>. 
+            </summary>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="actor">The actor that will use the key</param>
+            <param name="operation">The operation for which the key will be used.</param>
+            <param name="type">The contribuition type</param>
+            <param name="keyCollection">The key collection to register the private key to
+            (the key is always generated as ephemeral.)</param>
+            <param name="keySecurity">The key security model of the derrived key.</param>
+            <returns>KeyData for the public parameters of the derrived key.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Extensions.GenerateContributionKeyData(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.KeySecurity)">
             <summary>
             Derive a base private key of type <paramref name="type"/> for the
@@ -4998,7 +5015,7 @@
             to the specified root of trust.</summary> 
         </member>
         <member name="P:Goedel.Mesh.MeshCredential.AuthenticationPublic">
-            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="M:Goedel.Mesh.MeshCredential.#ctor(Goedel.Mesh.Connection)">
             <summary>
@@ -5015,10 +5032,10 @@
             <param name="authenticationPublic">The authentication key.</param>
         </member>
         <member name="M:Goedel.Mesh.MeshCredential.SelectKey">
-            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="M:Goedel.Mesh.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
-            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="M:Goedel.Mesh.MeshCredential.Verify(Goedel.Mesh.ProfileAccount)">
             <summary>
@@ -5039,14 +5056,15 @@
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.MeshCredentialPrivate.AuthenticationPrivate">
-            <inheritdoc cref="T:Goedel.Protocol.Presentation.ICredential"/>
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="M:Goedel.Mesh.MeshCredentialPrivate.#ctor(Goedel.Mesh.ConnectionDevice,Goedel.Cryptography.KeyPair)">
             <summary>
-            Construct a credential from <paramref name="activationDevice"/> with 
+            Construct a credential from <paramref name="connectionDevice"/> with 
             private key capabilities.
             </summary>
-            <param name="activationDevice">An activated device activation.</param>
+            <param name="connectionDevice">An activated device activation.</param>
+            <param name="key">The private key</param>
         </member>
         <member name="M:Goedel.Mesh.MeshCredentialPrivate.#ctor(Goedel.Mesh.ProfileDevice)">
             <summary>
@@ -6711,6 +6729,9 @@
              Parent class from which all profile classes are derived
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Profile.KeyProfileSign">
+            <summary>Key used to sign the profile.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Profile.MeshKeyType">
             <summary>The key contribution type</summary> 
         </member>
@@ -6830,6 +6851,15 @@
             
              Describes a mesh device.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileDevice.KeyEncrypt">
+            <summary>The base device encryption key</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ProfileDevice.KeySignature">
+            <summary>The base device signature key</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ProfileDevice.KeyAuthentication">
+            <summary>The base device authentication key</summary> 
         </member>
         <member name="P:Goedel.Mesh.ProfileDevice.MeshActor">
             <summary>The actor type</summary> 
@@ -7150,6 +7180,15 @@
         <member name="P:Goedel.Mesh.ProfileService.EnvelopedProfileService">
             <summary>Typed enveloped data</summary> 
         </member>
+        <member name="P:Goedel.Mesh.ProfileService.KeySignature">
+            <summary>The service signature key</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ProfileService.KeyEncryption">
+            <summary>The service encryption key</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ProfileService.KeyAuthentication">
+            <summary>The service authentication key</summary> 
+        </member>
         <member name="M:Goedel.Mesh.ProfileService.#ctor">
             <summary>
             Blank constructor for use by deserializers.
@@ -7190,15 +7229,6 @@
             </summary>
             <param name="keySign">The offline signature key.</param>
             <param name="keyEncrypt">The service encryption key.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ProfileService.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Generate a new <see cref="T:Goedel.Mesh.ProfileService"/>
-            </summary>
-            <param name="meshMachine">The mesh machine</param>
-            <param name="algorithmSign">The signature algorithm.</param>
-            <param name="algorithmEncrypt">The encryption algorithm.</param>
-            <returns>The service profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.ProfileService.Sign(Goedel.Mesh.Connection,Goedel.Protocol.ObjectEncoding)">
             <summary>

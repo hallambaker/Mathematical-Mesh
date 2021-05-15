@@ -29,12 +29,11 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Credential interface
     /// </summary>
-    public interface ICredential {
+    public interface ICredentialPublic: ICredential {
         #region // Properties
 
 
-        ///<summary>The subject name claimed under the credential</summary> 
-        public string Account { get; }
+
 
         ///<summary>The public authentication key.</summary> 
         public KeyPairAdvanced AuthenticationPublic { get; }
@@ -76,7 +75,7 @@ namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Credential with private key affordances.
     /// </summary>
-    public interface ICredentialPrivate : ICredential {
+    public interface ICredentialPrivate : ICredentialPublic {
         #region // Properties
 
         ///<summary><see cref="PacketExtension"/> tag for credential type.</summary> 
@@ -95,7 +94,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="extensions">List of extensions to parse.</param>
         /// <returns>The credential if found, otherwise null.</returns>
-        ICredential GetCredentials(
+        ICredentialPublic GetCredentials(
                     List<PacketExtension> extensions);
 
 

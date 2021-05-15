@@ -54,17 +54,17 @@ namespace Goedel.Mesh {
             }
 
         }
-    public partial class ConnectionDevice : ICredential {
+    public partial class ConnectionDevice : ICredentialPublic {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ConnectionDevice> EnvelopedConnectionDevice =>
             envelopedConnectionDevice ?? new Enveloped<ConnectionDevice>(DareEnvelope).
                     CacheValue(out envelopedConnectionDevice);
 
-        /////<inheritdoc cref="ICredential"/>
+        /////<inheritdoc cref="ICredentialPublic"/>
         //public string Tag => throw new System.NotImplementedException();
 
-        /////<inheritdoc cref="ICredential"/>
+        /////<inheritdoc cref="ICredentialPublic"/>
         //public byte[] Value => throw new System.NotImplementedException();
 
         ///<inheritdoc cref="ICredential"/>

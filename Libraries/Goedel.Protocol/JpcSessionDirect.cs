@@ -44,8 +44,8 @@ namespace Goedel.Protocol {
         /// <typeparam name="T">The client type</typeparam>
         /// <returns>The client</returns>
         public override T GetWebClient<T>() => JpcInterface.GetDirect(this) as T;
-
-        public override IJpcSession Rebind(string accountAddress) {
+        ///<inheritdoc/>
+        public override IJpcSession Rebind(string accountAddress, ICredential credential) {
             AccountAddress = accountAddress;
             return this;
             }

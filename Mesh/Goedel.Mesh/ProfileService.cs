@@ -28,7 +28,7 @@ using Goedel.Protocol;
 using System.Collections.Generic;
 namespace Goedel.Mesh {
     public partial class ProfileService {
-
+        #region // Properties
         ///<summary>The actor type</summary> 
         public override MeshActor MeshActor => MeshActor.Service;
 
@@ -38,11 +38,16 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedProfileService);
         Enveloped<ProfileService> envelopedProfileService;
 
+        ///<summary>The service signature key</summary> 
+        public KeyPair KeySignature { get; private set; }
 
-        KeyPair KeySignature { get; }
-        KeyPair KeyEncryption { get; }
-        
+        ///<summary>The service encryption key</summary> 
+        public KeyPair KeyEncryption { get; private set; }
 
+        ///<summary>The service authentication key</summary> 
+        public KeyPair KeyAuthentication { get; private set; }
+        #endregion
+        #region // Constructors
         /// <summary>
         /// Blank constructor for use by deserializers.
         /// </summary>
@@ -60,17 +65,19 @@ namespace Goedel.Mesh {
                     PrivateKeyUDF secretSeed,
                     bool persist = false) : base(secretSeed, keyCollection, persist) {
             }
-
+        #endregion
+        #region // Methods 
 
         /// <summary>
         /// Generate profile specific keys.
         /// </summary>
         protected override void Generate() {
-            ServiceSignature = SecretSeed.GenerateContributionKeyData(
+            base.Generate();
+            (KeySignature,ServiceSignature) = SecretSeed.GenerateContributionKey(
                     MeshKeyType, MeshActor, MeshKeyOperation.Sign);
-            ServiceAuthentication = SecretSeed.GenerateContributionKeyData(
+            (KeyAuthentication,ServiceAuthentication) = SecretSeed.GenerateContributionKey(
                     MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
-            ServiceEncryption = SecretSeed.GenerateContributionKeyData(
+            (KeyEncryption,ServiceEncryption) = SecretSeed.GenerateContributionKey(
                     MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
             }
 
@@ -101,8 +108,6 @@ namespace Goedel.Mesh {
             return new ProfileService(keyCollection, secretSeed, persist);
             }
 
-
-
         /// <summary>
         /// Constructor create service with the signature key <paramref name="keySign"/>
         /// </summary>
@@ -117,32 +122,6 @@ namespace Goedel.Mesh {
             }
 
 
-
-        /// <summary>
-        /// Generate a new <see cref="ProfileService"/>
-        /// </summary>
-        /// <param name="meshMachine">The mesh machine</param>
-        /// <param name="algorithmSign">The signature algorithm.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <returns>The service profile.</returns>
-        public static ProfileService Generate(
-            IMeshMachine meshMachine,
-            CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
-
-            algorithmSign = algorithmSign.DefaultAlgorithmSign();
-            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
-
-            var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.ExportableStored, keyUses: KeyUses.Sign);
-            var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.ExportableStored, keyUses: KeyUses.Encrypt);
-            //var keyAuthenticate = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.KeyAgreement);
-
-
-            var result = new ProfileService(keySign, keyEncrypt);
-            result.Envelope(keySign);
-            return result;
-            }
-
         /// <summary>
         /// Sign a host connection.
         /// </summary>
@@ -151,7 +130,7 @@ namespace Goedel.Mesh {
         public void Sign(Connection connection, ObjectEncoding objectEncoding) =>
             connection.Envelope(KeySignature, objectEncoding:
                         objectEncoding);
-
+        #endregion
         }
 
 

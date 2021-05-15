@@ -69,7 +69,11 @@ namespace Goedel.Mesh.Client {
         public RespondConnection RespondConnection;
 
         ///<summary>Device decryption key in account context.</summary> 
-        public KeyPair DeviceDecrypt { get; }
+        public KeyPair BaseDecrypt { get; }
+
+        ///<summary>Device decryption key in account context.</summary> 
+        public KeyPair BaseAuthenticate { get; }
+
 
         ///<summary>Device signature key in account context.</summary>
         public KeyPair DeviceSignature => ActivationDevice.DeviceSignature;
@@ -81,8 +85,11 @@ namespace Goedel.Mesh.Client {
         public KeyPair DeviceAuthentication => ActivationDevice.DeviceAuthentication;
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
-        public override MeshServiceClient MeshClient => meshClient ??
-                GetMeshClient(new MeshCredentialPrivate(ConnectionDevice, DeviceAuthentication)).CacheValue(out meshClient);
+        public override MeshServiceClient MeshClient {
+            get => meshClient ??
+                 GetMeshClient(new MeshCredentialPrivate(ConnectionDevice, DeviceAuthentication)).CacheValue(out meshClient);
+            set => meshClient = value;
+            }
         MeshServiceClient meshClient;
 
 
@@ -107,10 +114,11 @@ namespace Goedel.Mesh.Client {
 
             // Get the device key so that we can decrypt the activation record.
             var deviceKeySeed = KeyCollection.LocatePrivateKey(ProfileDevice.Udf) as PrivateKeyUDF;
-            DeviceDecrypt = deviceKeySeed.GenerateContributionKeyPair(MeshKeyType.Base,
+            BaseDecrypt = deviceKeySeed.GenerateContributionKeyPair(MeshKeyType.Base,
                 MeshActor.Device, MeshKeyOperation.Encrypt);
-            
-            KeyCollection.Add(DeviceDecrypt);
+            BaseAuthenticate = deviceKeySeed.GenerateContributionKeyPair(MeshKeyType.Base,
+                MeshActor.Device, MeshKeyOperation.Authenticate);
+            KeyCollection.Add(BaseDecrypt);
 
             // Activate the device within the account.
             ActivationDevice = CatalogedDevice?.GetActivationDevice(KeyCollection);
@@ -214,7 +222,8 @@ namespace Goedel.Mesh.Client {
 
             //RudStream.Rebind(MeshClient, AccountAddress);
 
-            MeshClient.Rebind(AccountAddress);
+            "Fix this rebind to put the connection in".TaskFunctionality(true);
+            MeshClient.Rebind(AccountAddress, null);
 
             // Generate a contact and self-sign
             var contact = CreateContact();

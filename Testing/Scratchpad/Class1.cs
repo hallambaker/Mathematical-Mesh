@@ -1,5 +1,5 @@
-﻿//  Copyright © 2021 Threshold Secrets Llc
-//
+﻿//  © 2021 by Phill Hallam-Baker
+//  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -18,37 +18,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //  
-//  
 
-namespace Goedel.Protocol {
+using Goedel.Utilities;
 
-
-
-    /// <summary>
-    /// Jpc Session interface.
-    /// </summary>
-    public interface IJpcSession {
-
-        ///<summary>The verified account bound to this session (used for inbound sessions
-        ///only.)</summary> 
-        IVerifiedAccount VerifiedAccount { get; }
-
-        /// <summary>
-        /// Post the request <paramref name="request"/> 
-        /// </summary>
-        /// <param name="tag">The transaction identifier.</param>
-
-        /// <param name="request">The transaction request.</param>
-        /// <returns>The transaction response</returns>
-        JsonObject Post(string tag, JsonObject request);
+using System;
+using System.Collections.Generic;
 
 
-        /// <summary>
-        ///Bind new credential to the session to create a new one.
-        /// </summary>
-        /// <param name="accountAddress">Account address to bind.</param>
-        /// <param name="credential">Credential to bind.</param>
-        /// <returns>The new session.</returns>
-        IJpcSession Rebind(string accountAddress, ICredential credential);
+namespace Scratchpad {
+    public class Class1 {
+
+        #region // Properties
+        #endregion 
+        #region // Destructor
+        #endregion 
+        #region // Constructors
+        #endregion 
+        #region // Implement Interface: Ixxx
+        #endregion 
+        #region // Methods 
+        #endregion 
         }
+
     }

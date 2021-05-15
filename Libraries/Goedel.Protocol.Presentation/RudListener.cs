@@ -62,7 +62,7 @@ namespace Goedel.Protocol.Presentation {
         private RudStream MakeConnectionResponder() {
             var responder = new ConnectionResponder(this);
 
-            return new RudStream(null, null, rdpConnection: responder);
+            return new RudStream(null, null, rudConnection: responder);
             }
 
 

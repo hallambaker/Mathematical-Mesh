@@ -74,7 +74,7 @@ namespace Goedel.Protocol {
         public virtual string _PrimaryKey => null;
 
         ///<summary>The enveloped object data.</summary> 
-        public object EnvelopedData;
+        public object Enveloped;
 
         ///<summary>Key collection to be used to decrypt enveloped data within the object.</summary> 
         public object KeyLocate;
@@ -223,6 +223,7 @@ namespace Goedel.Protocol {
         /// Return a JsonWriter for the encoding <paramref name="objectEncoding"/>.
         /// </summary>
         /// <param name="objectEncoding">The object encoding to use for serialization.</param>
+        /// <param name="output">The output stream.</param>
         /// <returns>The JsonWriter.</returns>
         public static JsonWriter GetJsonWriter (ObjectEncoding objectEncoding, Stream output = null) => objectEncoding switch {
             ObjectEncoding.JSON_B => new JsonBWriter(output),

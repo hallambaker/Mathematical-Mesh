@@ -505,7 +505,7 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
-            Returns a Mesh service client for <paramref name="accountAddress"/>.
+            Returns a Mesh service client for <paramref name="credentialPrivate"/>.
             </summary>
             <returns>The Mesh service client</returns>
         </member>
@@ -1035,7 +1035,10 @@
             This is only populated when the context is returned as the result of completing 
             device connection</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.DeviceDecrypt">
+        <member name="P:Goedel.Mesh.Client.ContextUser.BaseDecrypt">
+            <summary>Device decryption key in account context.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.BaseAuthenticate">
             <summary>Device decryption key in account context.</summary> 
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.DeviceSignature">

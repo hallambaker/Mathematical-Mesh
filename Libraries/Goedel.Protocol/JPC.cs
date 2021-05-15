@@ -105,9 +105,9 @@ namespace Goedel.Protocol {
         public virtual IJpcSession JpcSession { get; set; }
 
 
-
-        public virtual void Rebind(string accountAddress) =>
-            JpcSession = JpcSession.Rebind(accountAddress);
+        ///<inheritdoc cref="IJpcSession"/>
+        public virtual void Rebind(string accountAddress, ICredential credential) =>
+            JpcSession = JpcSession.Rebind(accountAddress, credential);
 
         }
     }

@@ -38,13 +38,16 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="parent">The parent stream</param>
         /// <param name="protocol">The stream protocol</param>
-        /// <param name="credential">Optional additional credential.</param>
+        /// <param name="credentialSelf">Optional additional credential for self.</param>
+        /// <param name="credentialOther">Optional additional credential for other.</param>
+        /// <param name="accountAddress">Account address asserted</param>
+        /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
 
         public RudStreamReceiver(
                 RudStream parent,
                 string protocol,
                 ICredentialPrivate credentialSelf = null,
-                ICredential credentialOther = null,
+                ICredentialPublic credentialOther = null,
                 string accountAddress = null,
                 RudConnection rudConnection = null) : base(
                     parent, protocol, credentialSelf, credentialOther, accountAddress, rudConnection) {
@@ -55,8 +58,17 @@ namespace Goedel.Protocol.Presentation {
 
 
         #region // Methods
+
+        /// <summary>
+        /// Asynchronous task that waits to receive a datagram on the stream.
+        /// </summary>
+        /// <returns>The datagram received.</returns>
         public async Task<DataGram> AsyncReceive() => throw new NYI();
 
+        /// <summary>
+        /// Asynchronous task that waits to send a control datagram on the stream.
+        /// </summary>
+        /// <param name="dataGram">The datagram to send.</param>
         public async void SendControlDatagram(DataGram dataGram) {
 
             }

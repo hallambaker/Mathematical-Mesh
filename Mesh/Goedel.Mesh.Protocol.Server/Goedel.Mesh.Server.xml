@@ -738,6 +738,9 @@
             Default constructor.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Server.JpcSessionHost.Rebind(System.String,Goedel.Protocol.ICredential)">
+            <inheritdoc/> 
+        </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>
             
@@ -1161,6 +1164,9 @@
             <summary>
             Add a new account. The account name must be unique.
             </summary>
+            <param name="account">The verified account data.</param>
+            <param name="accountEntry">Account data to add.</param>
+            <param name="jpcSession">The session connection data.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Connect(Goedel.Protocol.IJpcSession,Goedel.Protocol.Presentation.VerifiedAccount,Goedel.Mesh.RequestConnection)">
             <summary>
@@ -1168,6 +1174,7 @@
             </summary>
             <param name="jpcSession">The session connection data.</param>
             <param name="requestConnection">TThe message connection request.</param>
+            <param name="account">The verified account data.</param>
             <returns>The connection response.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountComplete(Goedel.Protocol.IJpcSession,Goedel.Protocol.Presentation.VerifiedAccount,Goedel.Mesh.CompleteRequest)">

@@ -26,6 +26,9 @@ using System.Collections.Generic;
 
 
 namespace Goedel.Protocol.Presentation {
+    /// <summary>
+    /// Debug version of PacketWriter (move to doc tools.)
+    /// </summary>
     public class PacketWriterDebug : PacketWriter {
 
 
@@ -45,7 +48,7 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Constructor creating an instance of <see cref="PacketWriterDebug"/>
         /// </summary>
-        /// <param name="packetSize">The number of bytes in the packet to be created.</param>
+        /// <param name="parent">Parent writer</param>
         /// <param name="buffer">Buffer provided by caller</param>
         /// <param name="position">Offset within packet at which first byte is to be written.</param>
         public PacketWriterDebug(
@@ -63,9 +66,7 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Factory method returning instance of <see cref="PacketWriterDebug"/>
         /// </summary>
-        /// <param name="packetSize">The number of bytes in the packet to be created.</param>
-        /// <param name="buffer">Buffer provided by caller</param>
-        /// <param name="position">Offset within packet at which first byte is to be written.</param>
+        /// <param name="parent">Parent writer</param>
         /// <returns>The created instance.</returns>
         public static new PacketWriter Factory(
             PacketWriter parent = null) => new PacketWriterDebug(parent);
@@ -82,7 +83,6 @@ namespace Goedel.Protocol.Presentation {
         /// write to the documentation.
         /// </summary>
         /// <param name="text"></param>
-
         void Debug(string text=null) {
             //Screen.WriteLine(text ?? "");
             //positionDebug = Position;

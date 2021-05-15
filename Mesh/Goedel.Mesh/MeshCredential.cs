@@ -36,7 +36,7 @@ namespace Goedel.Mesh {
     /// assertion).
     /// </summary>
 
-    public class MeshCredential : ICredential {
+    public class MeshCredential : ICredentialPublic {
         #region // Properties
         ///<summary>The account identifier.</summary> 
         public string Account { get; private set; }
@@ -128,10 +128,11 @@ namespace Goedel.Mesh {
         #region // Constructors
 
         /// <summary>
-        /// Construct a credential from <paramref name="activationDevice"/> with 
+        /// Construct a credential from <paramref name="connectionDevice"/> with 
         /// private key capabilities.
         /// </summary>
-        /// <param name="activationDevice">An activated device activation.</param>
+        /// <param name="connectionDevice">An activated device activation.</param>
+        /// <param name="key">The private key</param>
         public MeshCredentialPrivate(ConnectionDevice connectionDevice, KeyPair key) : base (connectionDevice) {
 
             (connectionDevice.AuthenticationPublic.KeyIdentifier).AssertEqual(key.KeyIdentifier, NYI.Throw);
@@ -176,7 +177,7 @@ namespace Goedel.Mesh {
         #region Implement ICredential
 
         ///<inheritdoc/>
-        public ICredential GetCredentials(List<PacketExtension> extensions) {
+        public ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
             foreach (var extension in extensions) {
                 if (extension.Tag == Constants.ExtensionTagsMeshConnectionTag) {
                     // convert the enveloped ConnectionDevice

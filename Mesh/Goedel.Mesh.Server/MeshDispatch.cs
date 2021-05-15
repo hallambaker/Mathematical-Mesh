@@ -70,7 +70,7 @@ namespace Goedel.Mesh.Server {
             Mesh = new MeshPersist(serviceDirectory);
 
             // Dummy profiles for the service and host at this point
-            ProfileService = ProfileService.Generate(meshMachine);
+            ProfileService = ProfileService.Generate(meshMachine.KeyCollection);
 
             // here we need to generate the activation record for the host and the connection for that record
 

@@ -148,7 +148,7 @@ namespace Goedel.Test.Core {
 
 
     //    ///<inheritdoc/>
-    //    public override ICredential GetCredentials(
+    //    public override ICredentialPublic GetCredentials(
     //                List<PacketExtension> extensions) {
     //        foreach (var extension in extensions) {
 

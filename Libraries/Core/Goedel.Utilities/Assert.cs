@@ -154,6 +154,12 @@ namespace Goedel.Utilities {
     /// </summary>
     public static class Assert {
 
+
+
+
+
+
+
         /// <summary>
         /// Syntactic sugar to allow compact tests on the return value of a function.
         /// Returns true is <paramref name="test"/> is not null, otherwise false.

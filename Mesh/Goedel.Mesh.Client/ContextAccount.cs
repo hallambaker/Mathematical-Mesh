@@ -66,8 +66,12 @@ namespace Goedel.Mesh.Client {
         public abstract Connection Connection { get; }
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
-        public virtual MeshServiceClient MeshClient => meshClient ??
-                GetMeshClient(new MeshCredentialPrivate(ProfileDevice)).CacheValue(out meshClient);
+        public virtual MeshServiceClient MeshClient {
+            get => meshClient ??
+              GetMeshClient(new MeshCredentialPrivate(ProfileDevice)).CacheValue(out meshClient);
+            set => meshClient = value;
+            }
+
         MeshServiceClient meshClient;
 
 
@@ -240,7 +244,7 @@ namespace Goedel.Mesh.Client {
 
 
         /// <summary>
-        /// Returns a Mesh service client for <paramref name="accountAddress"/>.
+        /// Returns a Mesh service client for <paramref name="credentialPrivate"/>.
         /// </summary>
         /// <returns>The Mesh service client</returns>
         public MeshServiceClient GetMeshClient(ICredentialPrivate credentialPrivate) =>
