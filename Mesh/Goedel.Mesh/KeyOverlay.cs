@@ -160,7 +160,7 @@ namespace Goedel.Mesh {
         /// (the key is always generated as ephemeral.)</param>
         /// <param name="keySecurity">The key security model of the derrived key.</param>
         /// <returns>The derrived key.</returns>
-        public static KeyPair GenerateContributionKeyPair(
+        public static KeyPairAdvanced GenerateContributionKeyPair(
 
                 this PrivateKeyUDF secretSeed,
                 MeshKeyType type,
@@ -176,7 +176,7 @@ namespace Goedel.Mesh {
             var cryptoAlgorithmID = GetCryptoAlgorithmID(operation, secretSeed);
 
             return UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,
-                    keySecurity, keyUses: keyUses, cryptoAlgorithmID, keyName);
+                    keySecurity, keyUses: keyUses, cryptoAlgorithmID, keyName) as KeyPairAdvanced;
             }
 
         /// <summary>

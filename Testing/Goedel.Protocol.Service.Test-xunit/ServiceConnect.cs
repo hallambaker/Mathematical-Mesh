@@ -213,7 +213,7 @@ namespace Goedel.XUnit {
 
 
     public class TestServiceStatus : ServiceManagementService {
-        public override JpcSession GetSession() => throw new NotImplementedException();
+        //public override JpcSession GetSession() => throw new NotImplementedException();
         public override ServiceStatusResponse ServiceStatus(ServiceStatusRequest request, IJpcSession session) => new() {
             Start = DateTime.Now
             };

@@ -28,11 +28,34 @@ using Goedel.Discovery;
 namespace Goedel.Protocol {
 
     /// <summary>
+    /// Describe the validation of the credential
+    /// </summary>
+    public enum CredentialValidation {
+        ///<summary>Validation not attempted.</summary> 
+        None,
+        ///<summary>Validation failed.</summary> 
+        Failed,
+        ///<summary>The authentication key is valid under the device credential pressented.</summary> 
+        Device,
+        ///<summary>The authentication key is valid under the account credential pressented.</summary> 
+        Account
+        }
+
+    /// <summary>
     /// Credential interface
     /// </summary>
     public interface  ICredential {
-        ///<summary>The subject name claimed under the credential</summary> 
+        ///<summary>The account name claimed under the credential</summary> 
         public string Account { get; }
+
+        ///<summary>The provider servicing the account claimed under the credential</summary> 
+        public string Provider { get; }
+
+        ///<summary>The authentication key used to authenticate the device.</summary> 
+        public string AuthenticationKeyId { get; }
+
+        ///<summary>Validation status of <see cref="AuthenticationKeyId"/> with respect to the credential data.</summary> 
+        public CredentialValidation CredentialValidation { get; }
         }
 
     /// <summary>
@@ -59,39 +82,36 @@ namespace Goedel.Protocol {
     /// </summary>
     public abstract class JpcSession : Disposable, IJpcSession {
 
-        ///<summary>The service identifier (Account@Domain)</summary>
-        public string AccountAddress;
+        ///<summary>The credential to which the session is bound.</summary> 
+        protected ICredential Credential { get; set; }
 
 
-        ///<summary>The account portion of <see cref="AccountAddress"/></summary>
-        public string Account;
+        /////<summary>The service identifier (Account@Domain)</summary>
+        //public string AccountAddress;
 
-        ///<summary>The domain portion of <see cref="AccountAddress"/></summary>
-        public string Domain;
+        /////<summary>The account portion of <see cref="AccountAddress"/></summary>
+        //public string Account;
 
-        /// <summary>
-        /// Fingerprint of authentication key
-        /// </summary>
-        public string UDF;
+        /////<summary>The domain portion of <see cref="AccountAddress"/></summary>
+        //public string Domain;
 
-        /// <summary>
-        /// If true we have an authentication structure.
-        /// </summary>
-        public bool Authenticated;
+        ///// <summary>
+        ///// Fingerprint of authentication key
+        ///// </summary>
+        //public string UDF;
+
+        ///// <summary>
+        ///// If true we have an authentication structure.
+        ///// </summary>
+        //public bool Authenticated;
 
         ///<summary>The client interface.</summary> 
         public JpcClientInterface JpcClientInterface;
-
-
-
-
 
         /// <summary>
         /// VerifiedAccount instance describing the verified account details. 
         /// </summary>
         public virtual IVerifiedAccount VerifiedAccount => throw new NYI();
-            //!Authenticated ? null :
-            //new VerifiedAccount() { AccountAddress = AccountAddress };
 
         /// <summary>
         /// Default constructor.
@@ -100,14 +120,10 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>
-        /// Constructor for a session with service <paramref name="accountAddress"/>.
+        /// Constructor for a session with credential <paramref name="credential"/>.
         /// </summary>
-        /// <param name="accountAddress">The name of the service (e.g. example.com) or an account 
-        /// at the service (e.g. alice@example.com).</param>
-        public JpcSession(string accountAddress) {
-            AccountAddress = accountAddress;
-            accountAddress?.SplitAccountIDService(out Domain, out Account);
-            }
+        /// <param name="credential">The credential to be used.</param>
+        public JpcSession(ICredential credential) => Credential = Credential;
 
 
         /// <summary>
@@ -137,7 +153,7 @@ namespace Goedel.Protocol {
                     throw new System.NotImplementedException();
 
         ///<inheritdoc cref="IJpcSession"/>
-        public  abstract IJpcSession Rebind(string accountAddress, ICredential credential);
+        public  abstract IJpcSession Rebind(ICredential credential);
         }
 
 
@@ -151,16 +167,16 @@ namespace Goedel.Protocol {
 
 
         /// <summary>
-        /// Create a direct session for the specified account.
+        /// Create a direct session  with credential <paramref name="credential"/>.
         /// </summary>
-        /// <param name="accountAddress">The account name</param>
-        public JpcRemoteSession(string accountAddress) : base(accountAddress) {
+        /// <param name="credential">The credential to be used.</param>
+        public JpcRemoteSession(ICredential credential) : base(credential) {
             }
 
 
         ///<inheritdoc/>
-        public override IJpcSession Rebind(string accountAddress, ICredential credential) {
-            AccountAddress = accountAddress;
+        public override IJpcSession Rebind(ICredential credential) {
+            Credential = credential;
             return this;
             }
         }
@@ -183,8 +199,8 @@ namespace Goedel.Protocol {
         /// specified credential.
         /// </summary>
         /// <param name="host">The host implementation</param>
-        /// <param name="accountAddress">The service account.</param>
-        public JpcSessionSerialized(JpcInterface host, string accountAddress) : base(accountAddress) {
+        /// <param name="credential">The credential to be used.</param>
+        public JpcSessionSerialized(JpcInterface host, ICredential credential) : base(credential) {
             Host = host;
             Host.AssertNotNull(NYI.Throw);
 

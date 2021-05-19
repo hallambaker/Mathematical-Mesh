@@ -46,9 +46,8 @@ namespace Goedel.Protocol.Presentation {
                 string protocol,
                  ICredentialPrivate credentialSelf = null,
                 ICredentialPublic credentialOther = null,
-                string accountAddress = null,
                 RudConnection rudConnection = null) : base(
-                    parent, protocol, credentialSelf, credentialOther, accountAddress, rudConnection) { }
+                    parent, protocol, credentialSelf, credentialOther, rudConnection) { }
 
         #endregion
         #region // Methods
@@ -69,8 +68,8 @@ namespace Goedel.Protocol.Presentation {
             }
 
         ///<inheritdoc cref="IJpcSession"/>
-        public IJpcSession Rebind(string accountAddress, ICredential credential) {
-            return MakeStreamClient(Protocol, null, accountAddress);
+        public IJpcSession Rebind(ICredential credential) {
+            return MakeStreamClient(Protocol, credential as ICredentialPrivate);
             }
 
 

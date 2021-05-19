@@ -67,11 +67,11 @@ namespace Goedel.Protocol {
         /// <returns>The direct client instance.</returns>
         public abstract Goedel.Protocol.JpcClientInterface GetDirect(IJpcSession jpcSession);
 
-        /// <summary>
-        /// Return a JpcSession for the service.
-        /// </summary>
-        /// <returns></returns>
-        public abstract IJpcSession GetSession();
+        ///// <summary>
+        ///// Return a JpcSession for the service.
+        ///// </summary>
+        ///// <returns></returns>
+        //public abstract IJpcSession GetSession();
 
 
         }
@@ -106,8 +106,8 @@ namespace Goedel.Protocol {
 
 
         ///<inheritdoc cref="IJpcSession"/>
-        public virtual void Rebind(string accountAddress, ICredential credential) =>
-            JpcSession = JpcSession.Rebind(accountAddress, credential);
+        public virtual void Rebind(ICredential credential) =>
+            JpcSession = JpcSession.Rebind(credential);
 
         }
     }

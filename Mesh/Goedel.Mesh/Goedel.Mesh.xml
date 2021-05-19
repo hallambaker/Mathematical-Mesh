@@ -3404,11 +3404,6 @@
         <member name="P:Goedel.Mesh.ConnectionAddress.EnvelopedConnectionAccount">
             <summary>Typed enveloped data</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ConnectionAddress.FromValue(System.Byte[])">
-            <summary>
-            Constructor for use by deserializers.
-            </summary>
-        </member>
         <member name="M:Goedel.Mesh.ConnectionAddress.Strip">
             <summary>
             Minimize the connection data to remove unnecessary data.
@@ -5008,16 +5003,33 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.MeshCredential.Account">
-            <summary>The account identifier.</summary> 
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
-        <member name="P:Goedel.Mesh.MeshCredential.Validated">
-            <summary>If not null, the account identifier has been validated with respect
-            to the specified root of trust.</summary> 
+        <member name="P:Goedel.Mesh.MeshCredential.AuthenticationKeyId">
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredential.Provider">
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredential.CredentialValidation">
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredential.AuthenticationPrivate">
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="P:Goedel.Mesh.MeshCredential.AuthenticationPublic">
             <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
-        <member name="M:Goedel.Mesh.MeshCredential.#ctor(Goedel.Mesh.Connection)">
+        <member name="P:Goedel.Mesh.MeshCredential.ProfileDevice">
+            <summary>The device profile</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredential.ConnectionDevice">
+            <summary>The connection device</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredential.ConnectionAccount">
+            <summary>The address connection.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.MeshCredential.#ctor(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ConnectionDevice,Goedel.Mesh.ConnectionAddress,Goedel.Cryptography.KeyPairAdvanced,Goedel.Mesh.MeshCredentialPrivate)">
             <summary>
             Create a credential wrapper for a device key asserted by means of the connection
             <paramref name="connectionDevice"/>.
@@ -5037,13 +5049,6 @@
         <member name="M:Goedel.Mesh.MeshCredential.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
             <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
-        <member name="M:Goedel.Mesh.MeshCredential.Verify(Goedel.Mesh.ProfileAccount)">
-            <summary>
-            Claim a binding to the account <paramref name="profileAccount"/>.
-            </summary>
-            <param name="profileAccount"></param>
-            <returns></returns>
-        </member>
         <member name="T:Goedel.Mesh.MeshCredentialPrivate">
             <summary>
             Wrapper for a private credential.
@@ -5055,30 +5060,15 @@
         <member name="P:Goedel.Mesh.MeshCredentialPrivate.Value">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.MeshCredentialPrivate.AuthenticationPrivate">
-            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
-        </member>
-        <member name="M:Goedel.Mesh.MeshCredentialPrivate.#ctor(Goedel.Mesh.ConnectionDevice,Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.#ctor(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ConnectionDevice,Goedel.Mesh.ConnectionAddress,Goedel.Cryptography.KeyPairAdvanced,Goedel.Mesh.MeshCredentialPrivate)">
             <summary>
-            Construct a credential from <paramref name="connectionDevice"/> with 
-            private key capabilities.
-            </summary>
-            <param name="connectionDevice">An activated device activation.</param>
-            <param name="key">The private key</param>
-        </member>
-        <member name="M:Goedel.Mesh.MeshCredentialPrivate.#ctor(Goedel.Mesh.ProfileDevice)">
-            <summary>
-            Construct a credential from <paramref name="profileDevice"/> with 
-            private key capabilities.
+            Create private credential
             </summary>
             <param name="profileDevice"></param>
-        </member>
-        <member name="M:Goedel.Mesh.MeshCredentialPrivate.#ctor(Goedel.Cryptography.KeyPairAdvanced)">
-            <summary>
-            Create a credential wrapper for a device key asserted by means of the authentication
-            key <paramref name="authenticationprivate"/>.
-            </summary>
-            <param name="authenticationprivate">The authentication key.</param>
+            <param name="connectionDevice"></param>
+            <param name="connectionAccount"></param>
+            <param name="authenticationKey"></param>
+            <param name="meshCredentialPrivate"></param>
         </member>
         <member name="M:Goedel.Mesh.MeshCredentialPrivate.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <inheritdoc/>

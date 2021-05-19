@@ -728,19 +728,6 @@
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Server.JpcSessionHost">
-            <summary>
-            Host session.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.JpcSessionHost.#ctor">
-            <summary>
-            Default constructor.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.JpcSessionHost.Rebind(System.String,Goedel.Protocol.ICredential)">
-            <inheritdoc/> 
-        </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>
             
@@ -1035,9 +1022,6 @@
             </summary>
             <param name="domain">The domain of the service provider.</param>
             <param name="serviceDirectory">The mesh persistence store filename.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.GetSession">
-            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Hello(Goedel.Protocol.HelloRequest,Goedel.Protocol.IJpcSession)">
             <summary>

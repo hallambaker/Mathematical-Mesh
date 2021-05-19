@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 5/15/2021 1:50:10 AM
+//  This file was automatically generated at 5/19/2021 12:21:38 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -91,9 +91,11 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>PKIXO</summary>
         PkixOcsp,
         ///<summary>MMMP</summary>
-        MeshProfile,
+        MeshProfileDevice,
         ///<summary>MMMC</summary>
-        MeshConnection,
+        MeshConnectionDevice,
+        ///<summary>MMMA</summary>
+        MeshConnectionAddress,
         ///<summary>Claim</summary>
         ClaimId,
         ///<summary>SID</summary>
@@ -265,10 +267,12 @@ namespace Goedel.Protocol.Presentation {
         public const string  ExtensionTagsPkixX509Tag = "PkixX509";
         ///<summary>Jose enumeration tag for ExtensionTags.PkixOcsp</summary>
         public const string  ExtensionTagsPkixOcspTag = "PkixOcsp";
-        ///<summary>Jose enumeration tag for ExtensionTags.MeshProfile</summary>
-        public const string  ExtensionTagsMeshProfileTag = "MeshProfile";
-        ///<summary>Jose enumeration tag for ExtensionTags.MeshConnection</summary>
-        public const string  ExtensionTagsMeshConnectionTag = "MeshConnection";
+        ///<summary>Jose enumeration tag for ExtensionTags.MeshProfileDevice</summary>
+        public const string  ExtensionTagsMeshProfileDeviceTag = "MeshProfileDevice";
+        ///<summary>Jose enumeration tag for ExtensionTags.MeshConnectionDevice</summary>
+        public const string  ExtensionTagsMeshConnectionDeviceTag = "MeshConnectionDevice";
+        ///<summary>Jose enumeration tag for ExtensionTags.MeshConnectionAddress</summary>
+        public const string  ExtensionTagsMeshConnectionAddressTag = "MeshConnectionAddress";
         ///<summary>Jose enumeration tag for ExtensionTags.ClaimId</summary>
         public const string  ExtensionTagsClaimIdTag = "ClaimId";
         ///<summary>Jose enumeration tag for ExtensionTags.StreamId</summary>
@@ -315,8 +319,9 @@ namespace Goedel.Protocol.Presentation {
                 ExtensionTagsX448Tag => ExtensionTags.X448,
                 ExtensionTagsPkixX509Tag => ExtensionTags.PkixX509,
                 ExtensionTagsPkixOcspTag => ExtensionTags.PkixOcsp,
-                ExtensionTagsMeshProfileTag => ExtensionTags.MeshProfile,
-                ExtensionTagsMeshConnectionTag => ExtensionTags.MeshConnection,
+                ExtensionTagsMeshProfileDeviceTag => ExtensionTags.MeshProfileDevice,
+                ExtensionTagsMeshConnectionDeviceTag => ExtensionTags.MeshConnectionDevice,
+                ExtensionTagsMeshConnectionAddressTag => ExtensionTags.MeshConnectionAddress,
                 ExtensionTagsClaimIdTag => ExtensionTags.ClaimId,
                 ExtensionTagsStreamIdTag => ExtensionTags.StreamId,
                 ExtensionTagsOneTimeStreamIdTag => ExtensionTags.OneTimeStreamId,
@@ -348,8 +353,9 @@ namespace Goedel.Protocol.Presentation {
                 ExtensionTags.X448 => ExtensionTagsX448Tag,
                 ExtensionTags.PkixX509 => ExtensionTagsPkixX509Tag,
                 ExtensionTags.PkixOcsp => ExtensionTagsPkixOcspTag,
-                ExtensionTags.MeshProfile => ExtensionTagsMeshProfileTag,
-                ExtensionTags.MeshConnection => ExtensionTagsMeshConnectionTag,
+                ExtensionTags.MeshProfileDevice => ExtensionTagsMeshProfileDeviceTag,
+                ExtensionTags.MeshConnectionDevice => ExtensionTagsMeshConnectionDeviceTag,
+                ExtensionTags.MeshConnectionAddress => ExtensionTagsMeshConnectionAddressTag,
                 ExtensionTags.ClaimId => ExtensionTagsClaimIdTag,
                 ExtensionTags.StreamId => ExtensionTagsStreamIdTag,
                 ExtensionTags.OneTimeStreamId => ExtensionTagsOneTimeStreamIdTag,

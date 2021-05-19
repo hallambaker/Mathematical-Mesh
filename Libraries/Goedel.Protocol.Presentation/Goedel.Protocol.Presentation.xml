@@ -339,11 +339,14 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsPkixOcspTag">
             <summary>Jose enumeration tag for ExtensionTags.PkixOcsp</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsMeshProfileTag">
-            <summary>Jose enumeration tag for ExtensionTags.MeshProfile</summary>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsMeshProfileDeviceTag">
+            <summary>Jose enumeration tag for ExtensionTags.MeshProfileDevice</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsMeshConnectionTag">
-            <summary>Jose enumeration tag for ExtensionTags.MeshConnection</summary>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsMeshConnectionDeviceTag">
+            <summary>Jose enumeration tag for ExtensionTags.MeshConnectionDevice</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsMeshConnectionAddressTag">
+            <summary>Jose enumeration tag for ExtensionTags.MeshConnectionAddress</summary>
         </member>
         <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsClaimIdTag">
             <summary>Jose enumeration tag for ExtensionTags.ClaimId</summary>
@@ -1240,11 +1243,14 @@
         <member name="F:Goedel.Protocol.Presentation.ExtensionTags.PkixOcsp">
             <summary>PKIXO</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.MeshProfile">
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.MeshProfileDevice">
             <summary>MMMP</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.MeshConnection">
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.MeshConnectionDevice">
             <summary>MMMC</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.MeshConnectionAddress">
+            <summary>MMMA</summary>
         </member>
         <member name="F:Goedel.Protocol.Presentation.ExtensionTags.ClaimId">
             <summary>Claim</summary>
@@ -1653,7 +1659,7 @@
         <member name="P:Goedel.Protocol.Presentation.RudStream.VerifiedAccount">
             <summary>The verified account</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,System.String,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> according to the stream role.
@@ -1662,7 +1668,6 @@
             <param name="protocol">The stream protocol</param>
             <param name="credentialSelf">Optional additional credential for self.</param>
             <param name="credentialOther">Optional additional credential for other.</param>
-            <param name="accountAddress">Account address asserted</param>
             <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStream.AddOneTime(System.Byte[])">
@@ -1709,13 +1714,12 @@
             </summary>
             <param name="child">The child to drop.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStream.MakeStreamClient(System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
+        <member name="M:Goedel.Protocol.Presentation.RudStream.MakeStreamClient(System.String,Goedel.Protocol.Presentation.ICredentialPrivate)">
             <summary>
             Request creation of a transactional stream in the client role.
             </summary>
             <param name="protocol">The protocol identifier</param>
             <param name="credentialSelf">Optional additional credential to be presented.</param>
-            <param name="accountAddress">The account address.</param>
             <returns>The created stream.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStream.MakeStreamSender(Goedel.Protocol.Presentation.ICredentialPrivate)">
@@ -1749,7 +1753,7 @@
             The client side of an RDP transactional stream.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,System.String,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,Goedel.Protocol.Presentation.RudConnection)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> 
@@ -1770,7 +1774,7 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.Rebind(System.String,Goedel.Protocol.ICredential)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamClient.Rebind(Goedel.Protocol.ICredential)">
             <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
         </member>
         <member name="T:Goedel.Protocol.Presentation.RudStreamReceiver">
@@ -1857,7 +1861,7 @@
             <param name="accountAddress">Account address asserted</param>
             <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStreamService.Rebind(System.String,Goedel.Protocol.ICredential)">
+        <member name="M:Goedel.Protocol.Presentation.RudStreamService.Rebind(Goedel.Protocol.ICredential)">
             <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStreamService.AsyncRequestDatagram">

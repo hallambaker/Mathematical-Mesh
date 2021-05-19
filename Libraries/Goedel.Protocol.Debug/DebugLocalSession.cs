@@ -15,21 +15,19 @@ namespace Goedel.Protocol.Debug {
     /// </summary>
     public class DebugLocalSession : JpcSessionSerialized {
 
-        /// <summary>
+         /// <summary>
         /// Trace Dictionary for this session
         /// </summary>
         public TraceDictionary Traces { get; set; }
 
 
         /// <summary>
-        /// Create a remote session without authentication. This call
-        /// is typically used when beginning an interaction that will
-        /// lead to the authentication credential being established.
+        /// Create a remote session with debugging hooks.
         /// </summary>
         /// <param name="host">The host implementation</param>
-        /// <param name="accountAddress">User account</param>
-        public DebugLocalSession(JpcInterface host, string accountAddress)
-                : base(host, accountAddress) {
+        /// <param name="credential">The credential to be used.</param>
+        public DebugLocalSession(JpcInterface host, ICredential credential)
+                : base(host, credential) {
             }
 
 

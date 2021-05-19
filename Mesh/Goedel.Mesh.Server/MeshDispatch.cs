@@ -112,8 +112,8 @@ namespace Goedel.Mesh.Server {
             }
 
 
-        ///<inheritdoc/>
-        public override JpcSession GetSession() => new JpcSessionHost();
+        /////<inheritdoc/>
+        //public override JpcSession GetSession() => new JpcSessionHost();
 
 
 

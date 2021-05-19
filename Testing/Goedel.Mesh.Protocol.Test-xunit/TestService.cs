@@ -74,8 +74,12 @@ namespace Goedel.XUnit {
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
 
+
+            var profileDevice = ProfileDevice.Generate();
+
             var credentialTemp =
-                    new MeshCredentialPrivate(ProfileDevice.Generate());
+                    new MeshCredentialPrivate(profileDevice, null, null, 
+                        profileDevice.KeyAuthentication as KeyPairAdvanced);
 
             var meshClient = machineAdminAlice.GetMeshClient(credentialTemp, ServiceName, null);
 

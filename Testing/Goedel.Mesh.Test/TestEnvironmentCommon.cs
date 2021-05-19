@@ -55,7 +55,8 @@ namespace Goedel.Mesh.Test {
 
             // create the service and host credentials here.
             //var credential = new MeshCredential(MeshService.ConnectionAccount, MeshService.ActivationDevice.DeviceAuthentication);
-            var credential = new MeshCredentialPrivate(MeshService.ConnectionDevice, MeshService.ActivationDevice.DeviceAuthentication);
+            var credential = new MeshCredentialPrivate(
+                MeshService.ProfileHost, MeshService.ConnectionDevice, null, MeshService.ActivationDevice.DeviceAuthentication);
 
             return new RudService(providers, credential);
 
@@ -98,8 +99,8 @@ namespace Goedel.Mesh.Test {
                 string accountAddress) {
 
             JpcSession session = JpcConnection switch {
-                JpcConnection.Direct => new JpcSessionDirect(MeshService, credential.Account),
-                JpcConnection.Serialized => new TestSession(MeshService, credential.Account, 
+                JpcConnection.Direct => new JpcSessionDirect(MeshService, credential),
+                JpcConnection.Serialized => new TestSession(MeshService, credential, 
                         meshMachineTest.MeshProtocolMessages),
                 _ => throw new NYI()
                 };

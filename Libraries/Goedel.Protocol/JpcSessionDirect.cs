@@ -31,10 +31,9 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Create a direct session for the specified account.
         /// </summary>
-        /// <param name="accountAddress">The account name</param>
+        /// <param name="credential">The credential to be used.</param>
         /// <param name="jpcInterface">The interfact to which the direct session is bound</param>
-        public JpcSessionDirect(JpcInterface jpcInterface, string accountAddress) : base(accountAddress) {
-            Authenticated = true;
+        public JpcSessionDirect(JpcInterface jpcInterface, ICredential credential) : base(credential) {
             JpcInterface = jpcInterface;
             }
 
@@ -45,8 +44,8 @@ namespace Goedel.Protocol {
         /// <returns>The client</returns>
         public override T GetWebClient<T>() => JpcInterface.GetDirect(this) as T;
         ///<inheritdoc/>
-        public override IJpcSession Rebind(string accountAddress, ICredential credential) {
-            AccountAddress = accountAddress;
+        public override IJpcSession Rebind(ICredential credential) {
+            Credential = credential;
             return this;
             }
         }

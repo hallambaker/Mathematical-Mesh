@@ -45,9 +45,8 @@ namespace Goedel.Test.Core {
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
         /// <param name="UDF">Authentication key identifier.</param>
-        public TestSession(JpcInterface host, string accountAddress, List<Trace> meshProtocolMessages) : base(host, accountAddress) {
+        public TestSession(JpcInterface host, ICredential credential, List<Trace> meshProtocolMessages) : base(host, credential) {
             MeshProtocolMessages = meshProtocolMessages;
-            Authenticated = true;
             }
 
         //public TestSession(JpcCredentialTest jpcCredentialTest) : this(

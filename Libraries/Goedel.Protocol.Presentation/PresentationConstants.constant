@@ -95,12 +95,16 @@ File PresentationConstants
 		Code PkixOcsp				"PKIXO"
 			Description
 				|A PKIX OCSP token validating the credential presented.
-		Code MeshProfile			"MMMP"
+		Code MeshProfileDevice		"MMMP"
 			Description
 				|A Mathematical Mesh Profile Credential.
-		Code MeshConnection			"MMMC"
+		Code MeshConnectionDevice	"MMMC"
 			Description
 				|A Mathematical Mesh Connection Credential.
+		Code MeshConnectionAddress	"MMMA"
+			Description
+				|A Mathematical Mesh Connection Credential.
+
 
 		Code ClaimId				"Claim"
 			Description

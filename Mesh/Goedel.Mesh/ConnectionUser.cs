@@ -34,16 +34,6 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedConnectionDevice);
         Enveloped<ConnectionAddress> envelopedConnectionDevice;
 
-
-
-        /// <summary>
-        /// Constructor for use by deserializers.
-        /// </summary>
-        public static ConnectionDevice FromValue(byte[] data) {
-            throw new NYI();
-            }
-
-
         /// <summary>
         /// Minimize the connection data to remove unnecessary data.
         /// </summary>
@@ -54,25 +44,17 @@ namespace Goedel.Mesh {
             }
 
         }
-    public partial class ConnectionDevice : ICredentialPublic {
+    public partial class ConnectionDevice  {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ConnectionDevice> EnvelopedConnectionDevice =>
             envelopedConnectionDevice ?? new Enveloped<ConnectionDevice>(DareEnvelope).
                     CacheValue(out envelopedConnectionDevice);
+        Enveloped<ConnectionDevice> envelopedConnectionDevice;
 
-        /////<inheritdoc cref="ICredentialPublic"/>
-        //public string Tag => throw new System.NotImplementedException();
-
-        /////<inheritdoc cref="ICredentialPublic"/>
-        //public byte[] Value => throw new System.NotImplementedException();
 
         ///<inheritdoc cref="ICredential"/>
         public KeyPairAdvanced AuthenticationPublic => Authentication.GetKeyPairAdvanced();
-
-
-
-        Enveloped<ConnectionDevice> envelopedConnectionDevice;
 
 
         /// <summary>
@@ -80,7 +62,6 @@ namespace Goedel.Mesh {
         /// </summary>
         public ConnectionDevice() {
             }
-
 
 
         /// <summary>

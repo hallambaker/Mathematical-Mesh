@@ -49,6 +49,6 @@ namespace Goedel.Protocol {
         /// <param name="accountAddress">Account address to bind.</param>
         /// <param name="credential">Credential to bind.</param>
         /// <returns>The new session.</returns>
-        IJpcSession Rebind(string accountAddress, ICredential credential);
+        IJpcSession Rebind(ICredential credential);
         }
     }

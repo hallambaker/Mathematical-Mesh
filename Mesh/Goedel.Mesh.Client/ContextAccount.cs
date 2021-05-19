@@ -65,10 +65,17 @@ namespace Goedel.Mesh.Client {
         ///<summary>The connection binding the calling context to the account.</summary>
         public abstract Connection Connection { get; }
 
+        /// <summary>
+        /// Create a new ICredential.
+        /// </summary>
+        /// <returns>The credential</returns>
+        protected virtual MeshCredentialPrivate GetMeshCredentialPrivate() => new(
+                ProfileDevice, null, null, null );
+
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
         public virtual MeshServiceClient MeshClient {
             get => meshClient ??
-              GetMeshClient(new MeshCredentialPrivate(ProfileDevice)).CacheValue(out meshClient);
+              GetMeshClient(GetMeshCredentialPrivate()).CacheValue(out meshClient);
             set => meshClient = value;
             }
 

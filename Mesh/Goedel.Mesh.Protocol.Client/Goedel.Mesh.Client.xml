@@ -411,6 +411,12 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.Connection">
             <summary>The connection binding the calling context to the account.</summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshCredentialPrivate">
+            <summary>
+            Create a new ICredential.
+            </summary>
+            <returns>The credential</returns>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.MeshClient">
             <summary>Returns the MeshClient and caches the result for future use.</summary>
         </member>
@@ -1050,8 +1056,11 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.DeviceAuthentication">
             <summary>Device authentication key in account context.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.MeshClient">
-            <summary>Returns the MeshClient and caches the result for future use.</summary>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetMeshCredentialPrivate">
+            <summary>
+            Create a new ICredential.
+            </summary>
+            <returns>The credential</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>

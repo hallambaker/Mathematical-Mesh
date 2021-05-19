@@ -53,13 +53,13 @@ namespace Goedel.Mesh {
         // Properties giving access to device specific keys
 
         ///<summary>The device signature key for use under the profile</summary>
-        public KeyPair DeviceSignature { get; private set; }
+        public KeyPairAdvanced DeviceSignature { get; private set; }
 
         ///<summary>The device encryption key for use under the profile</summary>
-        public KeyPair DeviceEncryption { get; private set; }
+        public KeyPairAdvanced DeviceEncryption { get; private set; }
 
         ///<summary>The device authentication key for use under the profile</summary>
-        public KeyPair DeviceAuthentication { get; private set; }
+        public KeyPairAdvanced DeviceAuthentication { get; private set; }
 
         ///<inheritdoc/>
         public virtual MeshActor MeshActor => MeshActor.Device;

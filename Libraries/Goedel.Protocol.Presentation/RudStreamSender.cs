@@ -51,7 +51,7 @@ namespace Goedel.Protocol.Presentation {
                 ICredentialPublic credentialOther = null,
                 string accountAddress = null,
                 RudConnection rudConnection = null) : base(
-                    parent, protocol, credentialSelf, credentialOther, accountAddress, rudConnection) {
+                    parent, protocol, credentialSelf, credentialOther, rudConnection) {
 
             }
         #endregion

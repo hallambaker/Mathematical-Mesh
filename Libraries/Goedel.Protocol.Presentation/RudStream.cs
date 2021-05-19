@@ -144,14 +144,12 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="protocol">The stream protocol</param>
         /// <param name="credentialSelf">Optional additional credential for self.</param>
         /// <param name="credentialOther">Optional additional credential for other.</param>
-        /// <param name="accountAddress">Account address asserted</param>
         /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
         public RudStream(
                 RudStream parent,
                 string protocol,
                 ICredentialPrivate credentialSelf = null,
                 ICredentialPublic credentialOther = null,
-                string accountAddress = null,
                     RudConnection rudConnection = null) {
             RdpStreamParent = parent;
             if (parent != null) {
@@ -165,7 +163,7 @@ namespace Goedel.Protocol.Presentation {
             if (RudConnection is ConnectionInitiator initiator) {
                 Uri = HttpEndpoint.GetUri(initiator.Domain, protocol, initiator.Instance);
                 }
-            AccountAddress = accountAddress;
+            //AccountAddress = throw new NYI();
             CredentialSelf = credentialSelf;
             LocalStreamId = RudConnection.GetStreamId();
 
@@ -490,11 +488,9 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="protocol">The protocol identifier</param>
         /// <param name="credentialSelf">Optional additional credential to be presented.</param>
-        /// <param name="accountAddress">The account address.</param>
         /// <returns>The created stream.</returns>
-        public RudStreamClient MakeStreamClient(string protocol, ICredentialPrivate credentialSelf = null,
-                string accountAddress = null) =>
-            new RudStreamClient(this, protocol, credentialSelf, accountAddress: accountAddress);
+        public RudStreamClient MakeStreamClient(string protocol, ICredentialPrivate credentialSelf = null) =>
+            new RudStreamClient(this, protocol, credentialSelf);
 
 
         /// <summary>

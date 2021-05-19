@@ -69,29 +69,28 @@ namespace Goedel.Mesh.Client {
         public RespondConnection RespondConnection;
 
         ///<summary>Device decryption key in account context.</summary> 
-        public KeyPair BaseDecrypt { get; }
+        public KeyPairAdvanced BaseDecrypt { get; }
 
         ///<summary>Device decryption key in account context.</summary> 
-        public KeyPair BaseAuthenticate { get; }
+        public KeyPairAdvanced BaseAuthenticate { get; }
 
 
         ///<summary>Device signature key in account context.</summary>
-        public KeyPair DeviceSignature => ActivationDevice.DeviceSignature;
+        public KeyPairAdvanced DeviceSignature => ActivationDevice?.DeviceSignature;
 
         ///<summary>Device decryption key in account context.</summary>
-        public KeyPair DeviceEncryption => ActivationDevice.DeviceEncryption;
+        public KeyPairAdvanced DeviceEncryption => ActivationDevice?.DeviceEncryption;
 
         ///<summary>Device authentication key in account context.</summary>
-        public KeyPair DeviceAuthentication => ActivationDevice.DeviceAuthentication;
+        public KeyPairAdvanced DeviceAuthentication => ActivationDevice?.DeviceAuthentication;
 
-        ///<summary>Returns the MeshClient and caches the result for future use.</summary>
-        public override MeshServiceClient MeshClient {
-            get => meshClient ??
-                 GetMeshClient(new MeshCredentialPrivate(ConnectionDevice, DeviceAuthentication)).CacheValue(out meshClient);
-            set => meshClient = value;
-            }
-        MeshServiceClient meshClient;
-
+        /// <summary>
+        /// Create a new ICredential.
+        /// </summary>
+        /// <returns>The credential</returns>
+        protected override MeshCredentialPrivate GetMeshCredentialPrivate() => new(
+                ProfileDevice, ConnectionDevice, ConnectionAccount,
+                DeviceAuthentication ?? BaseAuthenticate);
 
         #endregion
         #region // Constructors
@@ -131,8 +130,6 @@ namespace Goedel.Mesh.Client {
             if (KeyAccountEncryption != null) {
                 KeyCollection.Add(KeyAccountEncryption);
                 }
-
-
 
             // Some validation checks
             (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionDevice.Signature.Udf,
@@ -223,7 +220,7 @@ namespace Goedel.Mesh.Client {
             //RudStream.Rebind(MeshClient, AccountAddress);
 
             "Fix this rebind to put the connection in".TaskFunctionality(true);
-            MeshClient.Rebind(AccountAddress, null);
+            MeshClient.Rebind(GetMeshCredentialPrivate());
 
             // Generate a contact and self-sign
             var contact = CreateContact();
