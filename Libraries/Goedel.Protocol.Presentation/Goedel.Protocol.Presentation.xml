@@ -30,9 +30,6 @@
         <member name="P:Goedel.Protocol.Presentation.ConnectionInitiator.ClientCredential">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Protocol.Presentation.ConnectionInitiator.VerifiedAccount">
-            <summary>The verified account.</summary> 
-        </member>
         <member name="P:Goedel.Protocol.Presentation.ConnectionInitiator.Domain">
             <summary>The connection domain.</summary> 
         </member>
@@ -1949,31 +1946,6 @@
             Factory method returing a new unique stream identifier.
             </summary>
             <returns>The stream identifier created.</returns>
-        </member>
-        <member name="T:Goedel.Protocol.Presentation.VerifiedAccount">
-            <summary>
-            Verified account.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.VerifiedAccount.AccountAddress">
-            <summary>
-            The account identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.VerifiedAccount.AuthenticatedProfileUDF">
-            <summary>
-            The account identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.VerifiedAccount.AuthenticationKeyIdentifier">
-            <summary>
-            The account identifier.
-            </summary>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.VerifiedAccount.#ctor(Goedel.Protocol.Presentation.ICredentialPublic,System.String)">
-            <summary>
-            Default constructor.
-            </summary>
         </member>
         <member name="T:Goedel.Protocol.PacketSizeExceeded">
             <summary>

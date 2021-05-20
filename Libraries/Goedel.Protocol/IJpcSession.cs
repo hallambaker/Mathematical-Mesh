@@ -31,7 +31,7 @@ namespace Goedel.Protocol {
 
         ///<summary>The verified account bound to this session (used for inbound sessions
         ///only.)</summary> 
-        IVerifiedAccount VerifiedAccount { get; }
+        ICredential Credential { get; }
 
         /// <summary>
         /// Post the request <paramref name="request"/> 

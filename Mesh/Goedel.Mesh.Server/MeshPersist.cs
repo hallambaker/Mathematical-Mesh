@@ -88,7 +88,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="accountEntry">Account data to add.</param>
         /// <param name="jpcSession">The session connection data.</param>
         public void AccountAdd(IJpcSession jpcSession,
-            VerifiedAccount account,
+            MeshVerifiedAccount account,
                         AccountEntry accountEntry) {
 
             jpcSession.Future();
@@ -119,7 +119,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The verified account data.</param>
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(IJpcSession jpcSession,
-            VerifiedAccount account,
+            MeshVerifiedAccount account,
                         RequestConnection requestConnection) {
             jpcSession.Future();
 
@@ -167,7 +167,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The account for which the status is requested..</param>
         /// <param name="completeRequest">The completion request.</param>
         public CompleteResponse AccountComplete(IJpcSession jpcSession,
-                    VerifiedAccount account,
+                    MeshVerifiedAccount account,
                     CompleteRequest completeRequest) {
 
             using var accountHandle = GetAccountVerified(account, jpcSession);
@@ -195,7 +195,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account for which the status is requested..</param>
-        public StatusResponse AccountStatus(IJpcSession jpcSession, VerifiedAccount account) {
+        public StatusResponse AccountStatus(IJpcSession jpcSession, MeshVerifiedAccount account) {
 
 
             using var accountHandle = GetAccountVerified(account, jpcSession);
@@ -228,7 +228,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="selections">The selection criteria.</param>
         public List<ContainerUpdate> AccountDownload(
                     IJpcSession jpcSession,
-                    VerifiedAccount account,
+                    MeshVerifiedAccount account,
                     List<ConstraintsSelect> selections) {
 
             using var accountEntry = GetAccountVerified(account, jpcSession);
@@ -265,7 +265,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="accounts">Accounts to which outbound messages are to be sent.</param>
         public void AccountUpdate(
                     IJpcSession jpcSession,
-                    VerifiedAccount account,
+                    MeshVerifiedAccount account,
                     List<ContainerUpdate> updates,
                     List<Enveloped<Message>> inbound,
                     List<Enveloped<Message>> outbound,
@@ -329,12 +329,13 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account to be deleted.</param> 
-        public bool AccountDelete(IJpcSession jpcSession, VerifiedAccount account) {
+        public bool AccountDelete(IJpcSession jpcSession, MeshVerifiedAccount account,
+                string accountAddress) {
             jpcSession.Future();
 
 
             lock (Container) {
-                return Container.Delete(account.AccountAddress);
+                return Container.Delete(accountAddress);
                 }
             }
 
@@ -484,7 +485,7 @@ namespace Goedel.Mesh.Server {
         /// <returns>Identifier of the message posted.</returns>
         public string MessagePost(
                     JpcSession jpcSession,
-                    VerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) =>
+                    MeshVerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) =>
             accounts == null ? MessagePostSelf(jpcSession, account, dareMessage) :
                  MessagePostOther(jpcSession, account, accounts, dareMessage);
 
@@ -495,7 +496,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The verified sending account.</param>
         /// <param name="dareMessage">The message.</param>
         /// <returns>Identifier of the message posted.</returns>
-        public string MessagePostSelf(JpcSession jpcSession, VerifiedAccount account, DareEnvelope dareMessage) {
+        public string MessagePostSelf(JpcSession jpcSession, MeshVerifiedAccount account, DareEnvelope dareMessage) {
 
             var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
 
@@ -519,7 +520,7 @@ namespace Goedel.Mesh.Server {
         /// <returns>Identifier of the message posted.</returns>
         public string MessagePostOther(
                 IJpcSession jpcSession,
-                VerifiedAccount senderAccount,
+                MeshVerifiedAccount senderAccount,
                 List<string> accounts,
                 DareEnvelope dareMessage) {
 
@@ -528,7 +529,7 @@ namespace Goedel.Mesh.Server {
             var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
             identifier.AssertNotNull(InvalidMessageID.Throw);
 
-            var senderService = senderAccount.AccountAddress.GetService();
+            var senderService = senderAccount.MeshCredential.Provider;
 
             foreach (var recipient in accounts) {
                 var recipientService = recipient.GetService();
@@ -568,7 +569,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession">The session connection data.</param>      
         /// <param name="verifiedAccount">The account for which the data is requested.</param>
         /// <returns></returns>
-        AccountHandleVerified GetAccountVerified(VerifiedAccount verifiedAccount, IJpcSession jpcSession) {
+        AccountHandleVerified GetAccountVerified(MeshVerifiedAccount verifiedAccount, IJpcSession jpcSession) {
             var accountEntry = GetAccountLocked(verifiedAccount.AccountAddress);
             
             accountEntry.AssertNotNull(MeshUnknownAccount.Throw);

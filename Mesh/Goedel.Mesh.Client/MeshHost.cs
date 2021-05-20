@@ -234,7 +234,7 @@ namespace Goedel.Mesh.Client {
             var profileUser = new ProfileUser(accountAddress, activationRoot);
 
             // Check that the profile is valid before using it.
-            profileDevice.Validate();
+            profileUser.Validate();
 
             // Create the account directory.
             ContextUser.CreateDirectory(this, profileUser, activationRoot, KeyCollection);

@@ -26,7 +26,22 @@ using Goedel.Utilities;
 
 using System.Collections.Generic;
 namespace Goedel.Mesh.Server {
+    public class  MeshVerifiedAccount {
 
+        public string AccountAddress => MeshCredential.Account;
+
+        public string Provider => MeshCredential.Provider;
+
+
+        public CredentialValidation CredentialValidation => MeshCredential.CredentialValidation;
+
+
+        public MeshCredential MeshCredential { get; }
+
+        public MeshVerifiedAccount(MeshCredential meshCredential) =>
+            MeshCredential = meshCredential;
+
+        }
 
 
 
@@ -117,9 +132,27 @@ namespace Goedel.Mesh.Server {
 
 
 
-        private VerifiedAccount VerifyDevice(IJpcSession jpcSession) => throw new NYI();
+        private MeshVerifiedAccount VerifyDevice(IJpcSession jpcSession) {
+            var meshCredential = jpcSession.Credential as MeshCredential;
+            meshCredential?.AuthenticationPublic?.AssertNotNull(NYI.Throw);
 
-        private VerifiedAccount VerifyAccount(IJpcSession jpcSession) => throw new NYI();
+            if (meshCredential.ConnectionDevice != null) {
+                meshCredential.AuthenticationPublic.MatchKeyIdentifier(
+                    meshCredential.ConnectionDevice.AuthenticationPublic.KeyIdentifier).AssertTrue(NYI.Throw);
+                meshCredential.CredentialValidation = CredentialValidation.Account;
+                }
+            if (meshCredential.ProfileDevice != null) {
+                meshCredential.AuthenticationPublic.MatchKeyIdentifier(
+                        meshCredential.ProfileDevice.Authentication.Udf).AssertTrue(NYI.Throw);
+                return new MeshVerifiedAccount(meshCredential);
+                }
+
+
+            throw new NYI();
+            }
+
+
+        private MeshVerifiedAccount VerifyAccount(IJpcSession jpcSession) => throw new NYI();
 
 
         /// <summary>
@@ -163,8 +196,10 @@ namespace Goedel.Mesh.Server {
 
 
             try {
+                var verifiedDevice = VerifyDevice(jpcSession);
+
                 var accountEntry = new AccountUser(request);
-                Mesh.AccountAdd(jpcSession, VerifyDevice(jpcSession),accountEntry);
+                Mesh.AccountAdd(jpcSession, verifiedDevice, accountEntry);
                 return new BindResponse();
                 }
             catch (System.Exception exception) {
@@ -247,7 +282,7 @@ namespace Goedel.Mesh.Server {
                 UnbindRequest request, IJpcSession jpcSession) {
 
             try {
-                Mesh.AccountDelete(jpcSession, VerifyAccount(jpcSession));
+                Mesh.AccountDelete(jpcSession, VerifyAccount(jpcSession), request.Account);
                 return new UnbindResponse();
                 }
             catch (System.Exception exception) {

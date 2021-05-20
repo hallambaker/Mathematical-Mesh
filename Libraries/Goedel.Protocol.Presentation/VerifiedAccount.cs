@@ -21,39 +21,39 @@
 //using Goedel.Protocol.Service;
 
 namespace Goedel.Protocol.Presentation {
-    /// <summary>
-    /// Verified account.
-    /// </summary>
-    public class VerifiedAccount: IVerifiedAccount {
-        #region // Properties
-        /// <summary>
-        /// The account identifier.
-        /// </summary>
-        public string AccountAddress { get; }
+    ///// <summary>
+    ///// Verified account.
+    ///// </summary>
+    //public class VerifiedAccount: IVerifiedAccount {
+    //    #region // Properties
+    //    /// <summary>
+    //    /// The account identifier.
+    //    /// </summary>
+    //    public string AccountAddress { get; }
 
 
-        /// <summary>
-        /// The account identifier.
-        /// </summary>
-        public string AuthenticatedProfileUDF { get; }
+    //    /// <summary>
+    //    /// The account identifier.
+    //    /// </summary>
+    //    public string AuthenticatedProfileUDF { get; }
 
-        /// <summary>
-        /// The account identifier.
-        /// </summary>
-        public string AuthenticationKeyIdentifier { get; }
-        #endregion
+    //    /// <summary>
+    //    /// The account identifier.
+    //    /// </summary>
+    //    public string AuthenticationKeyIdentifier { get; }
+    //    #endregion
 
-        #region // Constructors
+    //    #region // Constructors
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public VerifiedAccount(ICredentialPublic credential, string accountAddress) {
-            AccountAddress = accountAddress;
-            
-            }
+    //    /// <summary>
+    //    /// Default constructor.
+    //    /// </summary>
+    //    public VerifiedAccount(ICredentialPublic credential, string accountAddress) {
+    //        AccountAddress = accountAddress;
 
-        #endregion
+    //        }MeshVerifiedAccount
 
-        }
+    //#endregion
+
+    //}
     }

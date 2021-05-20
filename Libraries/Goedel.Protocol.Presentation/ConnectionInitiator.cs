@@ -43,8 +43,8 @@ namespace Goedel.Protocol.Presentation {
         public override ICredentialPublic ClientCredential => CredentialSelf;
 
 
-        ///<summary>The verified account.</summary> 
-        public VerifiedAccount VerifiedAccount { get; set; }
+        /////<summary>The verified account.</summary> 
+        //public VerifiedAccount VerifiedAccount { get; set; }
 
         ///<summary>The connection domain.</summary> 
         public string Domain { get; set; }

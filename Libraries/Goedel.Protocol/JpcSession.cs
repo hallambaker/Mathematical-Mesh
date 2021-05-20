@@ -83,27 +83,7 @@ namespace Goedel.Protocol {
     public abstract class JpcSession : Disposable, IJpcSession {
 
         ///<summary>The credential to which the session is bound.</summary> 
-        protected ICredential Credential { get; set; }
-
-
-        /////<summary>The service identifier (Account@Domain)</summary>
-        //public string AccountAddress;
-
-        /////<summary>The account portion of <see cref="AccountAddress"/></summary>
-        //public string Account;
-
-        /////<summary>The domain portion of <see cref="AccountAddress"/></summary>
-        //public string Domain;
-
-        ///// <summary>
-        ///// Fingerprint of authentication key
-        ///// </summary>
-        //public string UDF;
-
-        ///// <summary>
-        ///// If true we have an authentication structure.
-        ///// </summary>
-        //public bool Authenticated;
+        public ICredential Credential { get; set; }
 
         ///<summary>The client interface.</summary> 
         public JpcClientInterface JpcClientInterface;
@@ -123,7 +103,7 @@ namespace Goedel.Protocol {
         /// Constructor for a session with credential <paramref name="credential"/>.
         /// </summary>
         /// <param name="credential">The credential to be used.</param>
-        public JpcSession(ICredential credential) => Credential = Credential;
+        public JpcSession(ICredential credential) => Credential = credential;
 
 
         /// <summary>

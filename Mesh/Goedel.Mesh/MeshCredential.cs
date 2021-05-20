@@ -31,6 +31,40 @@ using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
+    public class MeshVerifiedAccount {
+
+        public string AccountAddress => MeshCredential.Account;
+
+        public string Provider => MeshCredential.Provider;
+
+
+        public CredentialValidation CredentialValidation => MeshCredential.CredentialValidation;
+
+
+        public MeshCredential MeshCredential { get; }
+
+        public MeshVerifiedAccount(MeshCredential meshCredential) =>
+            MeshCredential = meshCredential;
+
+        }
+
+    public class MeshVerifiedDevice {
+
+
+        public string Provider => MeshCredential.Provider;
+
+
+        public CredentialValidation CredentialValidation => MeshCredential.CredentialValidation;
+
+
+        public MeshCredential MeshCredential { get; }
+
+        public MeshVerifiedDevice(MeshCredential meshCredential) =>
+            MeshCredential = meshCredential;
+
+        }
+
+
     /// <summary>
     /// JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
     /// assertion).
@@ -48,7 +82,7 @@ namespace Goedel.Mesh {
         public string Provider { get; }
 
         ///<inheritdoc cref="ICredential"/>
-        public CredentialValidation CredentialValidation { get; }
+        public CredentialValidation CredentialValidation { get; set; }
 
         ///<inheritdoc cref="ICredential"/>
         public KeyPairAdvanced AuthenticationPrivate { get; }
@@ -109,20 +143,12 @@ namespace Goedel.Mesh {
             (ephemerals[0], AuthenticationPublic);
 
 
-        ///// <summary>
-        ///// Claim a binding to the account <paramref name="profileAccount"/>.
-        ///// </summary>
-        ///// <param name="profileAccount"></param>
-        ///// <returns></returns>
-        //public virtual bool Verify(ProfileAccount profileAccount) {
-        //    if (!profileAccount.Verify(ConnectionDevice.DareEnvelope)) {
-        //        return false;
-        //        }
+        public MeshVerifiedDevice VerifyDevice() {
+            }
 
-        //    Validated = profileAccount.Udf;
-        //    Account = profileAccount.AccountAddress;
-        //    return true;
-        //    }
+        public MeshVerifiedAccount VerifyAccount() {
+            }
+
 
         #endregion
 
@@ -183,19 +209,19 @@ namespace Goedel.Mesh {
 
                 }
 
-            if (meshCredentialPrivate.ProfileDevice is null & profileDevice is not null) {
+            if (meshCredentialPrivate?.ProfileDevice is null & profileDevice is not null) {
                 Extensions.Add(new PacketExtension() {
                     Tag = Constants.ExtensionTagsMeshProfileDeviceTag,
                     Value = profileDevice.GetBytes()
                     });
                 }
-            if (meshCredentialPrivate.ConnectionDevice is null & connectionDevice is not null) {
+            if (meshCredentialPrivate?.ConnectionDevice is null & connectionDevice is not null) {
                 Extensions.Add(new PacketExtension() {
                     Tag = Constants.ExtensionTagsMeshProfileDeviceTag,
                     Value = connectionDevice.GetBytes()
                     });
                 }
-            if (meshCredentialPrivate.ConnectionAccount is null & connectionAccount is not null) {
+            if (meshCredentialPrivate?.ConnectionAccount is null & connectionAccount is not null) {
                 Extensions.Add(new PacketExtension() {
                     Tag = Constants.ExtensionTagsMeshProfileDeviceTag,
                     Value = connectionAccount.GetBytes()
