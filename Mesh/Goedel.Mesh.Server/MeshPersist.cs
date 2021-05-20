@@ -88,7 +88,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="accountEntry">Account data to add.</param>
         /// <param name="jpcSession">The session connection data.</param>
         public void AccountAdd(IJpcSession jpcSession,
-            MeshVerifiedAccount account,
+            MeshVerifiedDevice account,
                         AccountEntry accountEntry) {
 
             jpcSession.Future();
@@ -119,7 +119,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The verified account data.</param>
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(IJpcSession jpcSession,
-            MeshVerifiedAccount account,
+            MeshVerifiedDevice account,
                         RequestConnection requestConnection) {
             jpcSession.Future();
 
@@ -167,7 +167,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The account for which the status is requested..</param>
         /// <param name="completeRequest">The completion request.</param>
         public CompleteResponse AccountComplete(IJpcSession jpcSession,
-                    MeshVerifiedAccount account,
+                    MeshVerifiedDevice account,
                     CompleteRequest completeRequest) {
 
             using var accountHandle = GetAccountVerified(account, jpcSession);
