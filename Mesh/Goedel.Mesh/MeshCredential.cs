@@ -31,20 +31,19 @@ using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
-    public class MeshVerifiedAccount {
+    public class MeshVerifiedAccount : MeshVerifiedDevice{
 
         public string AccountAddress => MeshCredential.Account;
 
-        public string Provider => MeshCredential.Provider;
+
+        public MeshVerifiedAccount(MeshCredential meshCredential) : base(meshCredential) {
+            }
 
 
-        public CredentialValidation CredentialValidation => MeshCredential.CredentialValidation;
+        public virtual void Validate(ProfileAccount profile) {
+            MeshCredential.ConnectionDevice.Validate(profile);
+            }
 
-
-        public MeshCredential MeshCredential { get; }
-
-        public MeshVerifiedAccount(MeshCredential meshCredential) =>
-            MeshCredential = meshCredential;
 
         }
 
@@ -112,23 +111,14 @@ namespace Goedel.Mesh {
                 ConnectionDevice connectionDevice,
                 ConnectionAddress connectionAccount,
                 KeyPairAdvanced authenticationKey,
-                MeshCredentialPrivate meshCredentialPrivate = null) :
-                        this(connectionDevice.Authentication.GetKeyPairAdvanced()) {
+                MeshCredentialPrivate meshCredentialPrivate = null)  {
             ProfileDevice = profileDevice ?? meshCredentialPrivate?.ProfileDevice;
             ConnectionDevice = connectionDevice ?? meshCredentialPrivate?.ConnectionDevice;
             ConnectionAccount = connectionAccount ?? meshCredentialPrivate?.ConnectionAccount;
             AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
+            AuthenticationPublic = authenticationKey; ;
             }
 
-
-        /// <summary>
-        /// Create a credential wrapper for a device key asserted by means of the authentication
-        /// key <paramref name="authenticationPublic"/>.
-        /// </summary>
-        /// <param name="authenticationPublic">The authentication key.</param>
-        public MeshCredential(KeyPairAdvanced authenticationPublic) {
-            AuthenticationPublic = authenticationPublic;
-            }
 
         #endregion
         #region // Methods
@@ -144,9 +134,26 @@ namespace Goedel.Mesh {
 
 
         public MeshVerifiedDevice VerifyDevice() {
+            if (ConnectionDevice != null) {
+                return VerifyAccount();
+                }
+            ProfileDevice.AssertNotNull(NotAuthenticated.Throw);
+            ProfileDevice.Validate();
+            AuthenticationPublic.MatchKeyIdentifier(
+                    ProfileDevice.Authentication.Udf).AssertTrue(NotAuthenticated.Throw);
+            CredentialValidation = CredentialValidation.Device;
+            return new MeshVerifiedDevice(this);
             }
 
         public MeshVerifiedAccount VerifyAccount() {
+            ConnectionDevice.AssertNotNull(NotAuthenticated.Throw);
+
+
+            AuthenticationPublic.MatchKeyIdentifier(
+                ConnectionDevice.AuthenticationPublic.KeyIdentifier).AssertTrue(NotAuthenticated.Throw);
+            CredentialValidation = CredentialValidation.Account;
+            return new MeshVerifiedAccount(this);
+
             }
 
 

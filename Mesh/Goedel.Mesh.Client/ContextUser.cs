@@ -88,7 +88,7 @@ namespace Goedel.Mesh.Client {
         /// Create a new ICredential.
         /// </summary>
         /// <returns>The credential</returns>
-        protected override MeshCredentialPrivate GetMeshCredentialPrivate() => new(
+        public override MeshCredentialPrivate GetMeshCredentialPrivate() => new(
                 ProfileDevice, ConnectionDevice, ConnectionAccount,
                 DeviceAuthentication ?? BaseAuthenticate);
 
@@ -217,10 +217,10 @@ namespace Goedel.Mesh.Client {
 
             ActivationAccount.BindService(ProfileService);
 
-            //RudStream.Rebind(MeshClient, AccountAddress);
+            ////RudStream.Rebind(MeshClient, AccountAddress);
 
-            "Fix this rebind to put the connection in".TaskFunctionality(true);
-            MeshClient.Rebind(GetMeshCredentialPrivate());
+            //"Fix this rebind to put the connection in".TaskFunctionality(true);
+            //MeshClient.Rebind(GetMeshCredentialPrivate());
 
             // Generate a contact and self-sign
             var contact = CreateContact();

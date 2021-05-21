@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 5/19/2021 10:46:55 PM
+//  This file was automatically generated at 5/21/2021 12:28:32 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -179,10 +179,62 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// The assertion presented was invalid.
+    /// </summary>
+    [global::System.Serializable]
+	public partial class InvalidAssertion : Internal {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary>Templates for formatting response messages.</summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The assertion is invalid"
+				};
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public InvalidAssertion  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
+			}
+
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+        static System.Exception _Throw(object reasons) => new InvalidAssertion(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+
+        }
+
+
+    /// <summary>
     /// The profile presented was invalid.
     /// </summary>
     [global::System.Serializable]
-	public partial class InvalidProfile : Internal {
+	public partial class InvalidProfile : InvalidAssertion {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>

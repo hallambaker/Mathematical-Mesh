@@ -1,6 +1,7 @@
 ﻿using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
+using Goedel.Cryptography.Jose;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -341,10 +342,24 @@ namespace Goedel.Cryptography.Dare {
             if (signature == null) {
                 return false;
                 }
+            var digest = GetValidatedDigest();
+            return key.VerifyHash(digest, signature.SignatureValue);
+            }
 
-            "Recalculate the payload digest".TaskFunctionality();
 
-            return key.VerifyHash(Trailer.PayloadDigest, signature.SignatureValue);
+        public byte[] GetValidatedDigest() {
+
+            var digestAlg = (Header.DigestAlgorithm ?? "S512").FromJoseIDDigest();
+            var provider = digestAlg.CreateDigest();
+            var result = provider.ComputeHash(Body);
+
+            if (Trailer.PayloadDigest != null) {
+                if (!Trailer.PayloadDigest.IsEqualTo(result)) {
+                    return null;
+                    }
+                }
+
+            return result;
             }
 
         /// <summary>

@@ -2,7 +2,8 @@
 using Goedel.Utilities;
 using Goedel.XUnit;
 using Goedel.Mesh;
-
+using Goedel.Test;
+using Goedel.Test.Core;
 using System;
 
 
@@ -31,8 +32,10 @@ namespace Scratchpad {
     partial class Program {
         static void Main() {
             Screen.WriteLine($"Start test  {DateTime.Now}");
+            //TestService.Test().TestCredentialDevice();
+            TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
 
-            TestService.Test().MeshCreateAdmin();
+            //TestService.Test().MeshCreateAdmin();
             //TestPresentationMesh.Test().TestCreateAccount();
 
 

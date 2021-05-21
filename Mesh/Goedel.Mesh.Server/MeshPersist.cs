@@ -170,7 +170,7 @@ namespace Goedel.Mesh.Server {
                     MeshVerifiedDevice account,
                     CompleteRequest completeRequest) {
 
-            using var accountHandle = GetAccountVerified(account, jpcSession);
+            using var accountHandle = GetAccountUnverified(completeRequest.Account);
 
             // pull the request off SpoolLocal
             var envelope = accountHandle.GetLocal(completeRequest.ResponseID);

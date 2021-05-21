@@ -15,7 +15,7 @@ namespace Goedel.Test.Core {
         Valid = 0b_0000_0000,
 
         ///<summary>The public key is invalid.</summary>
-        CorruptPublicKey = 0b_0000_0001,
+        CorruptSigner = 0b_0000_0001,
 
         ///<summary>The signature data is modified.</summary>
         CorruptSignature = 0b_0000_0010,
@@ -28,18 +28,42 @@ namespace Goedel.Test.Core {
 
         ///<summary>An Attribute is modified.</summary>
         CorruptAttributes = 0b_0001_0000,
+
+        ///<summary>The body is modified.</summary>
+        CorruptMissing = 0b_0010_0000,
+
         }
 
     public static class Extension {
 
+        public static string CorruptedPIN(this string data) =>
+            $"{data[0]}{data[1]}{data[2].Corrupt()}" + data.Substring(3);
+
+        public static char Corrupt(this char data) {
+            var c = ((int)data) ^ 0x01;
+            return (char)c;
+
+            }
+
+        public static string Corrupted(this string data) => data switch {
+            null => "A",
+            "" => "A",
+            _ => data[0].Corrupt() + data.Substring(1)
+            };
+
 
         public static void Corrupt(
                 this DareEnvelope envelope,
-                DataValidity dataValidity = DataValidity.CorruptPayload) {
+                DataValidity dataValidity = DataValidity.CorruptPayload,
+                DareEnvelope alternative=null) {
 
             switch (dataValidity) {
                 case DataValidity.CorruptPayload: {
                     envelope.Body = envelope.Body.Corrupt();
+                    return;
+                    }
+                case DataValidity.CorruptMissing: {
+                    envelope.Trailer.Signatures = null;
                     return;
                     }
                 case DataValidity.CorruptDigest: {
@@ -51,14 +75,15 @@ namespace Goedel.Test.Core {
                     signature.SignatureValue = signature.SignatureValue.Corrupt();
                     return;
                     }
-                case DataValidity.CorruptPublicKey: {
-                    throw new NYI();
+                case DataValidity.CorruptSigner: {
+                    envelope.Trailer.Signatures = alternative.Trailer.Signatures;
+                    return;
                     }
-                case DataValidity.CorruptAttributes: {
-                    throw new NYI();
-                    }
+
                 }
             }
+
+
 
         public static void Corrupt(
                 ref byte[] data) => data = Corrupt(data);

@@ -44,6 +44,7 @@ namespace Goedel.XUnit {
         static string ServiceName = "example.com";
         static string AccountBob = "bob@example.com";
         static string AccountQ = "q@example.com";
+        static string AccountMallet = "mallet@example.com";
 
         public string DeviceAliceAdmin = "Alice Admin";
         public string DeviceAlice2 = "Alice Device 2";

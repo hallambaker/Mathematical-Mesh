@@ -69,7 +69,7 @@ namespace Goedel.Mesh.Client {
         /// Create a new ICredential.
         /// </summary>
         /// <returns>The credential</returns>
-        protected virtual MeshCredentialPrivate GetMeshCredentialPrivate() => new(
+        public virtual MeshCredentialPrivate GetMeshCredentialPrivate() => new(
                 ProfileDevice, null, null, null );
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>

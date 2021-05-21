@@ -25,17 +25,6 @@ using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
 
-
-    public partial class Assertion {
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public Assertion() {
-            }
-
-
-        }
-
     public partial class Profile {
 
         #region // Properties

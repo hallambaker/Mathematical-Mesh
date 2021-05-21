@@ -12,11 +12,15 @@ Namespace Goedel.Mesh
 		Exception NoMeshSecret
 			Console "The Mesh Secret required to perform the operation is not installed on this device"
 
-
-		Exception InvalidProfile
-			Console "The profile is invalid"
+		Exception InvalidAssertion
+			Console "The assertion is invalid"
 			Description
-				|The profile presented was invalid.
+				|The assertion presented was invalid.
+
+			Exception InvalidProfile
+				Console "The profile is invalid"
+				Description
+					|The profile presented was invalid.
 
 
 
@@ -46,7 +50,6 @@ Namespace Goedel.Mesh
 
 		Exception InvalidDate
 			Console "The specified date was invalid."
-
 
 	Exception NotAdministrator
 		Console "This device does not have administration capability"

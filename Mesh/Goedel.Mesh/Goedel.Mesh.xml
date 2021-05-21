@@ -506,6 +506,98 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.Assertion">
+             <summary>
+            
+             Parent class from which all assertion classes are derived
+             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Assertion.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Assertion.Validate(Goedel.Mesh.ProfileAccount)">
+            <summary>
+            Verify the profile to check that it is correctly signed and consistent.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Goedel.Mesh.Assertion.Names">
+             <summary>
+            Fingerprints of index terms for profile retrieval. The use of the fingerprint
+            of the name rather than the name itself is a precaution against enumeration
+            attacks and other forms of abuse.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Assertion.Updated">
+             <summary>
+            The time instant the profile was last modified.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Assertion.NotaryToken">
+             <summary>
+            A Uniform Notary Token providing evidence that a signature
+            was performed after the notary token was created.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Assertion.Conditions">
+             <summary>
+            Conditional clause(s) that MAY be verified to evaluate the validity of the
+            assertion. At present no condition classes are specified.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Assertion._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Assertion.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Assertion._Factory">
+            <summary>
+            Factory method. Throws exception as this is an abstract class.
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Assertion.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Assertion.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Assertion.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Assertion.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Mesh.IMeshClient">
             <summary>
             Interface that returns a Mesh client for an account.
@@ -4227,6 +4319,38 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.InvalidAssertion">
+            <summary>
+            The assertion presented was invalid.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.InvalidAssertion.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidAssertion.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.InvalidAssertion.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.InvalidAssertion._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.InvalidAssertion.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.InvalidProfile">
             <summary>
             The profile presented was invalid.
@@ -5035,13 +5159,6 @@
             <paramref name="connectionDevice"/>.
             </summary>
             <param name="connectionDevice">The device connection assertion.</param>
-        </member>
-        <member name="M:Goedel.Mesh.MeshCredential.#ctor(Goedel.Cryptography.KeyPairAdvanced)">
-            <summary>
-            Create a credential wrapper for a device key asserted by means of the authentication
-            key <paramref name="authenticationPublic"/>.
-            </summary>
-            <param name="authenticationPublic">The authentication key.</param>
         </member>
         <member name="M:Goedel.Mesh.MeshCredential.SelectKey">
             <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
@@ -6626,92 +6743,6 @@
             <param name="request">The request message.</param>
             <param name="replyContact">The message sent in reply.</param>
             <param name="messagePIN">PIN code registration, to be marked as used</param>
-        </member>
-        <member name="T:Goedel.Mesh.Assertion">
-             <summary>
-            
-             Parent class from which all assertion classes are derived
-             </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Assertion.#ctor">
-            <summary>
-            Default Constructor
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Assertion.Names">
-             <summary>
-            Fingerprints of index terms for profile retrieval. The use of the fingerprint
-            of the name rather than the name itself is a precaution against enumeration
-            attacks and other forms of abuse.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Assertion.Updated">
-             <summary>
-            The time instant the profile was last modified.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Assertion.NotaryToken">
-             <summary>
-            A Uniform Notary Token providing evidence that a signature
-            was performed after the notary token was created.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Assertion.Conditions">
-             <summary>
-            Conditional clause(s) that MAY be verified to evaluate the validity of the
-            assertion. At present no condition classes are specified.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Assertion._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Assertion.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Assertion._Factory">
-            <summary>
-            Factory method. Throws exception as this is an abstract class.
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Assertion.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Assertion.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Assertion.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Assertion.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Profile">
              <summary>
