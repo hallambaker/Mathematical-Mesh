@@ -4,6 +4,242 @@
         <name>Goedel.Mesh.Server</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Mesh.Server.AccountEntry">
+             <summary>
+            
+             Represents a Mesh Account.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry._PrimaryKey">
+            <summary>The primary key</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountEntry.#ctor">
+            <summary>
+            Default constructor for serialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountEntry.Verify(Goedel.Mesh.MeshVerifiedAccount)">
+            <summary>
+            Verification function.
+            </summary>
+            <returns>True if the account entry is properly formatted.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry.Directory">
+             <summary>
+            Subdirectory containing the catalogs and spools for the account.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry.AccountAddress">
+             <summary>
+            The service account to bind to.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry.Status">
+             <summary>
+            The profile status. Valid values are "Pending", "Connected", "Blocked"
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountEntry.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountEntry._Factory">
+            <summary>
+            Factory method. Throws exception as this is an abstract class.
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountEntry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Server.AccountUser">
+             <summary>
+            
+             Represents a Mesh Acco
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser.ProfileUser">
+            <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountUser.ProfileUser"/></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountUser.#ctor">
+            <summary>
+            Default constructor for serialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountUser.#ctor(Goedel.Mesh.BindRequest)">
+            <summary>
+            Constructor creating an Account entry from the request <paramref name="request"/>.
+            </summary>
+            <param name="request">The account creation request.</param>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser.EnvelopedProfileUser">
+             <summary>
+            The signed assertion describing the account.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountUser.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountUser._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountUser.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountUser.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountUser.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountUser.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Server.AccountGroup">
+             <summary>
+            
+             Represents a Mesh Acco
+             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountGroup.#ctor">
+            <summary>
+            Default constructor for serialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountGroup.#ctor(Goedel.Mesh.BindRequest)">
+            <summary>
+            Constructor creating an Account entry from the request <paramref name="request"/>.
+            </summary>
+            <param name="request">The account creation request.</param>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountGroup.EnvelopedProfileGroup">
+             <summary>
+            The persistent profile that will be used to validate changes to the
+            account assertion.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountGroup._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountGroup.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountGroup._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountGroup.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountGroup.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountGroup.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Mesh.Server.AccountHandle">
             <summary>
             Provides a means of accessing an account mediated by the permissions specified
@@ -755,242 +991,6 @@
             </summary>
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
-        </member>
-        <member name="T:Goedel.Mesh.Server.AccountEntry">
-             <summary>
-            
-             Represents a Mesh Account.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry.Directory">
-             <summary>
-            Subdirectory containing the catalogs and spools for the account.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry.AccountAddress">
-             <summary>
-            The service account to bind to.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry.Status">
-             <summary>
-            The profile status. Valid values are "Pending", "Connected", "Blocked"
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Server.AccountEntry.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry._Factory">
-            <summary>
-            Factory method. Throws exception as this is an abstract class.
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry._PrimaryKey">
-            <summary>The primary key</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry.#ctor">
-            <summary>
-            Default constructor for serialization.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry.Verify">
-            <summary>
-            Verification function.
-            </summary>
-            <returns>True if the account entry is properly formatted.</returns>
-        </member>
-        <member name="T:Goedel.Mesh.Server.AccountUser">
-             <summary>
-            
-             Represents a Mesh Acco
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser.EnvelopedProfileUser">
-             <summary>
-            The signed assertion describing the account.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Server.AccountUser.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser.ProfileUser">
-            <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountUser.ProfileUser"/></summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.#ctor">
-            <summary>
-            Default constructor for serialization.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.#ctor(Goedel.Mesh.BindRequest)">
-            <summary>
-            Constructor creating an Account entry from the request <paramref name="request"/>.
-            </summary>
-            <param name="request">The account creation request.</param>
-        </member>
-        <member name="T:Goedel.Mesh.Server.AccountGroup">
-             <summary>
-            
-             Represents a Mesh Acco
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountGroup.EnvelopedProfileGroup">
-             <summary>
-            The persistent profile that will be used to validate changes to the
-            account assertion.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountGroup._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Server.AccountGroup.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountGroup._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountGroup.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountGroup.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountGroup.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountGroup.#ctor">
-            <summary>
-            Default constructor for serialization.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountGroup.#ctor(Goedel.Mesh.BindRequest)">
-            <summary>
-            Constructor creating an Account entry from the request <paramref name="request"/>.
-            </summary>
-            <param name="request">The account creation request.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.PublicMeshService">
             <summary>

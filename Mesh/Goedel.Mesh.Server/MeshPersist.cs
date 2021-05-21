@@ -31,15 +31,6 @@ using System.IO;
 using System;
 
 namespace Goedel.Mesh.Server {
-    public partial class CatalogItem {
-
-        /////<summary>Initialization property. Access this property to force initialization 
-        /////of the static method.</summary>
-        //public static object Initialize => null;
-
-        //static CatalogItem() => AddDictionary(ref _TagDictionary);
-        }
-
     /// <summary>
     /// The Mathematical Mesh persistence store.
     /// </summary>
@@ -170,7 +161,7 @@ namespace Goedel.Mesh.Server {
                     MeshVerifiedDevice account,
                     CompleteRequest completeRequest) {
 
-            using var accountHandle = GetAccountUnverified(completeRequest.Account);
+            using var accountHandle = GetAccountUnverified(completeRequest.AccountAddress);
 
             // pull the request off SpoolLocal
             var envelope = accountHandle.GetLocal(completeRequest.ResponseID);
@@ -571,33 +562,10 @@ namespace Goedel.Mesh.Server {
         /// <returns></returns>
         AccountHandleVerified GetAccountVerified(MeshVerifiedAccount verifiedAccount, IJpcSession jpcSession) {
             var accountEntry = GetAccountLocked(verifiedAccount.AccountAddress);
-            
+           
             accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
-
-            //using (var catalogDevice = new CatalogDevice(accountEntry.Directory, create:false)) {
-            //    if (catalogDevice?.ContainerPersistence != null) {
-
-            //        foreach (var entry in catalogDevice.AsCatalogEntryDevice) {
-            //            //if (entry.AuthUDF == jpcSession.UDF) {
-            //            //    return new AccountHandleVerified(accountEntry);
-            //            //    }
-            //            }
-            //        }
-            //    }
-            // Goal: Allow an administrator device to regain control of the account
-            // by creating Device entry public for itself.
-
-            switch (jpcSession) {
-                case JpcSessionDirect:
-                case JpcSessionSerialized:
-                case RudStreamService: {
-                    return new AccountHandleVerified(accountEntry);
-                    }
-                }
-
-
-
-            throw new NotAuthenticated();
+            accountEntry.Verify(verifiedAccount);
+            return new AccountHandleVerified(accountEntry);
             }
 
         /// <summary>
@@ -639,69 +607,4 @@ namespace Goedel.Mesh.Server {
         }
 
 
-
-    public abstract partial class AccountEntry {
-
-        ///<summary>The primary key</summary>
-        public override string _PrimaryKey => AccountAddress;
-
-
-
-        /// <summary>
-        /// Default constructor for serialization.
-        /// </summary>
-        public AccountEntry() {
-            }
-
-        /// <summary>
-        /// Verification function.
-        /// </summary>
-        /// <returns>True if the account entry is properly formatted.</returns>
-        public static bool Verify() => true; // NYI: Verification of signed profile.
-
-        }
-
-    public partial class AccountUser {
-
-
-        ///<summary>Cached convenience accessor for <see cref="ProfileUser"/></summary>
-        public ProfileUser ProfileUser => EnvelopedProfileUser.Decode() as ProfileUser;
-
-
-        /// <summary>
-        /// Default constructor for serialization.
-        /// </summary>
-        public AccountUser() {
-            }
-
-        /// <summary>
-        /// Constructor creating an Account entry from the request <paramref name="request"/>.
-        /// </summary>
-        /// <param name="request">The account creation request.</param>
-        public AccountUser(BindRequest request) {
-            AccountAddress = request.AccountAddress;
-            EnvelopedProfileUser = request.EnvelopedProfileAccount;
-            Verify();
-            Directory = AccountAddress;
-            }
-        }
-
-    public partial class AccountGroup {
-
-        /// <summary>
-        /// Default constructor for serialization.
-        /// </summary>
-        public AccountGroup() {
-            }
-        /// <summary>
-        /// Constructor creating an Account entry from the request <paramref name="request"/>.
-        /// </summary>
-        /// <param name="request">The account creation request.</param>
-        public AccountGroup(BindRequest request) {
-            AccountAddress = request.AccountAddress;
-            EnvelopedProfileGroup = request.EnvelopedProfileAccount;
-            Verify();
-            Directory = AccountAddress;
-            }
-        }
     }

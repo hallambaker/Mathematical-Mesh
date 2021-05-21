@@ -140,7 +140,7 @@ namespace Goedel.Mesh.Client {
 
             requestConnection.Envelope(keyAuthentication);
 
-
+            profileDevice.Activate(meshHost.KeyCollection);
             var meshCredentialPrivate = new MeshCredentialPrivate(profileDevice, null, null,
                 profileDevice.KeyAuthentication as KeyPairAdvanced);
 
@@ -192,7 +192,8 @@ namespace Goedel.Mesh.Client {
                 ResponseID = CatalogedPending.GetResponseID(),
                 AccountAddress = AccountAddress
                 };
-
+            ProfileDevice.Activate(KeyCollection);
+            
             var completeResponse = MeshClient.Complete(completeRequest);
             completeResponse.Success().AssertTrue(ConnectionAccountUnknown.Throw);
 

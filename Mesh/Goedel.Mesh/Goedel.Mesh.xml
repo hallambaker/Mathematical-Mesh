@@ -200,7 +200,7 @@
             to a rights list.</param>
             <returns>The catalog entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount)">
+        <member name="M:Goedel.Mesh.ActivationAccount.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.KeyPair)">
             <summary>
             Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
             and activation <paramref name="activationDevice"/>.
@@ -6787,6 +6787,13 @@
             <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Profile.Activate(Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>
+            Activate the private keys in the device profile using the seed stored in 
+            <paramref name="keyLocate"/>.
+            </summary>
+            <param name="keyLocate">Key collection containing the secret seed.</param>
         </member>
         <member name="M:Goedel.Mesh.Profile.Generate">
             <summary>

@@ -229,9 +229,6 @@ namespace Goedel.Mesh.Server {
         public override StatusResponse Status(
                 StatusRequest request, IJpcSession jpcSession) {
             try {
-
-                "Must check that the device making the request is authorized to the account".TaskFunctionality(true);
-
                 return Mesh.AccountStatus(jpcSession, VerifyAccount(jpcSession));
                 }
             catch (System.Exception exception) {
@@ -291,9 +288,9 @@ namespace Goedel.Mesh.Server {
         public override TransactResponse Transact(
                 TransactRequest request, IJpcSession jpcSession) {
             try {
-
-                Mesh.AccountUpdate(jpcSession, VerifyAccount(jpcSession), 
-                        request.Updates, request.Inbound, request.Outbound, request.Local, request.Accounts);
+                var account = VerifyAccount(jpcSession);
+                Mesh.AccountUpdate(jpcSession, account,
+                        request.Updates, request.Inbound, request.Outbound, request.Local, request.Accounts); ;
                 return new TransactResponse();
                 }
             catch (System.Exception exception) {

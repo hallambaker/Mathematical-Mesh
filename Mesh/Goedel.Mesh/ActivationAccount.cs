@@ -211,7 +211,8 @@ namespace Goedel.Mesh {
             var activationAccount = MakeActivationAccount(profileDevice, roles);
 
             var catalogedDevice = CreateCataloguedDevice(
-                    profileUser, profileDevice, activationUser, activationAccount);
+                    profileUser, profileDevice, activationUser, activationAccount,
+                    AdministratorSignatureKey);
 
             return catalogedDevice;
             }
@@ -229,7 +230,8 @@ namespace Goedel.Mesh {
                     ProfileUser profileUser,
                     ProfileDevice profileDevice,
                     ActivationDevice activationDevice,
-                    ActivationAccount activationAccount) {
+                    ActivationAccount activationAccount,
+                    KeyPair signature) {
 
             //PrivateAccountOnlineSignature.AssertNotNull(NotAdministrator.Throw);
 
@@ -249,7 +251,7 @@ namespace Goedel.Mesh {
 
             var connectionDevice = activationDevice.ConnectionUser;
             connectionDevice.AssertNotNull(Internal.Throw);
-            connectionDevice.Envelope(AdministratorSignatureKey, objectEncoding: 
+            connectionDevice.Envelope(signature, objectEncoding: 
                         ObjectEncoding.JSON_B);
             connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 

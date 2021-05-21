@@ -116,7 +116,10 @@ namespace Goedel.Mesh {
             ConnectionDevice = connectionDevice ?? meshCredentialPrivate?.ConnectionDevice;
             ConnectionAccount = connectionAccount ?? meshCredentialPrivate?.ConnectionAccount;
             AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
-            AuthenticationPublic = authenticationKey; ;
+            AuthenticationPublic = authenticationKey;
+
+
+
             }
 
 
@@ -148,6 +151,7 @@ namespace Goedel.Mesh {
         public MeshVerifiedAccount VerifyAccount() {
             ConnectionDevice.AssertNotNull(NotAuthenticated.Throw);
 
+            Account = ConnectionAccount?.Account;
 
             AuthenticationPublic.MatchKeyIdentifier(
                 ConnectionDevice.AuthenticationPublic.KeyIdentifier).AssertTrue(NotAuthenticated.Throw);

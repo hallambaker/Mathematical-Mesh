@@ -108,6 +108,15 @@ namespace Goedel.Mesh {
             }
         #endregion
         #region // Methods 
+
+        /// <summary>
+        /// Activate the private keys in the device profile using the seed stored in 
+        /// <paramref name="keyLocate"/>.
+        /// </summary>
+        /// <param name="keyLocate">Key collection containing the secret seed.</param>
+        public void Activate(IKeyCollection keyLocate) => 
+                SecretSeed ??= keyLocate.LocatePrivateKey(Udf) as PrivateKeyUDF;
+
         /// <summary>
         /// Generate profile specific keys, is overriden in child classes.
         /// </summary>

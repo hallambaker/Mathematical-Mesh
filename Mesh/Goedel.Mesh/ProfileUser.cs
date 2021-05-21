@@ -48,7 +48,7 @@ namespace Goedel.Mesh {
 
         ///<summary>The account administrator signature key</summary> 
         public KeyPair AdministratorSignatureKey => administratorSignatureKey ??
-            ProfileSignature.GetKeyPair().CacheValue(out administratorSignatureKey);
+            AdministratorSignature.GetKeyPair().CacheValue(out administratorSignatureKey);
         KeyPair administratorSignatureKey;
 
         /// <summary>

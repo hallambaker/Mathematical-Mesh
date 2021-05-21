@@ -235,7 +235,7 @@ namespace Goedel.Mesh.Client {
 
             // Check that the profile is valid before using it.
             profileUser.Validate();
-
+            //profileUser.Activate(KeyCollection);
             // Create the account directory.
             ContextUser.CreateDirectory(this, profileUser, activationRoot, KeyCollection);
 

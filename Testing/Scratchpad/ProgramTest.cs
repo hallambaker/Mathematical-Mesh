@@ -9,7 +9,9 @@ using System;
 
 namespace Scratchpad {
 
-    // Bug: 1) Failing because the Complete request is not being authenticated to the device credential as it should
+
+    // Bug: 1) The admin device is not being provisioned with the Admin signature key
+    // Bug: 2) Failing because the Complete request is not being authenticated to the device credential as it should
 
 
 
@@ -33,9 +35,9 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteLine($"Start test  {DateTime.Now}");
             //TestService.Test().TestCredentialDevice();
-            TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
+            //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
 
-            //TestService.Test().MeshCreateAdmin();
+            TestService.Test().MeshCreateAdmin();
             //TestPresentationMesh.Test().TestCreateAccount();
 
 
