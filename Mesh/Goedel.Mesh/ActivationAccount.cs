@@ -430,10 +430,10 @@ namespace Goedel.Mesh {
         void GrantProfileAdmin(
                             ActivationAccount newActivation,
                             Right right) {
-            right.Future();
-            var keyPairOnlineSignature = DeviceBindSignature(newActivation.ProfileDevice, KeyCollection);
+            (right.Resource == Resource.ProfileAdmin).AssertTrue(Internal.Throw);
+            //var keyPairOnlineSignature = DeviceBindSignature(newActivation.ProfileDevice, KeyCollection);
             newActivation.AdministratorSignature = AddCapability(
-                        keyPairOnlineSignature, newActivation.ProfileDevice);
+                        AdministratorSignatureKey, newActivation.ProfileDevice);
             }
 
 

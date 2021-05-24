@@ -37,7 +37,7 @@ namespace Scratchpad {
             //TestService.Test().TestCredentialDevice();
             //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
 
-            TestService.Test().MeshCreateAdmin();
+            TestService.Test().MeshCatalogGroup();
             //TestPresentationMesh.Test().TestCreateAccount();
 
 
