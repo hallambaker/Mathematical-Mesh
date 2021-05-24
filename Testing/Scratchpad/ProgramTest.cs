@@ -9,13 +9,11 @@ using System;
 
 namespace Scratchpad {
 
-
-    // Bug: 1) The admin device is not being provisioned with the Admin signature key
-    // Bug: 2) Failing because the Complete request is not being authenticated to the device credential as it should
-
+    // ToDo: CreateGroup - Need to establish account administration credential
+    // ToDo: Apply admin credential to management of user and account 
 
 
-    // ToDo: 3) Unit tests to attempt use of illegit credential.
+
 
     // ToDo: 5) Clear all unit tests
 
@@ -37,8 +35,8 @@ namespace Scratchpad {
             //TestService.Test().TestCredentialDevice();
             //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
 
-            TestService.Test().MeshCatalogGroup();
-            //TestPresentationMesh.Test().TestCreateAccount();
+            //TestService.Test().MeshCatalogGroup();
+            TestPresentationMesh.Test().TestCreateAccount();
 
 
 

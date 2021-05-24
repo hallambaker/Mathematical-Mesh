@@ -139,6 +139,12 @@ namespace Goedel.XUnit {
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
             }
 
+        public void TestCreateGroup() {
+            throw new NYI();
+            }
+
+
+
         static ContextUser TestCompletionSuccess(ContextMeshPending contextMeshPending) {
             var contextUser = contextMeshPending.Complete();
             contextUser.Sync(); // Will fail if cannot complete

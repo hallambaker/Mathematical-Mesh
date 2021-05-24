@@ -78,7 +78,7 @@ namespace Goedel.Mesh {
         public string AuthenticationKeyId { get; }
 
         ///<inheritdoc cref="ICredential"/>
-        public string Provider { get; }
+        public string Provider => Account.GetService();
 
         ///<inheritdoc cref="ICredential"/>
         public CredentialValidation CredentialValidation { get; set; }
