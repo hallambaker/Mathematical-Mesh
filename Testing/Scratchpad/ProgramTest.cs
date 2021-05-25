@@ -9,6 +9,10 @@ using System;
 
 namespace Scratchpad {
 
+
+    // Bug: The credentials are not being copied over into the RUD stream at the server end
+
+
     // ToDo: CreateGroup - Need to establish account administration credential
     // ToDo: Apply admin credential to management of user and account 
 

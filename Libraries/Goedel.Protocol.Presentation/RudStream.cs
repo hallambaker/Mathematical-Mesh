@@ -263,12 +263,14 @@ namespace Goedel.Protocol.Presentation {
                 }) ;
 
 
-            if (CredentialSelf != null) {
-                extensions.Add(new() {
-                    Tag = CredentialSelf.Tag,
-                    Value = CredentialSelf.Value
-                    });
-                }
+            CredentialSelf?.AddCredentials(extensions);
+
+            //if (CredentialSelf != null) {
+            //    extensions.Add(new() {
+            //        Tag = CredentialSelf.Tag,
+            //        Value = CredentialSelf.Value
+            //        });
+            //    }
 
             if (AccountAddress != null) {
                 extensions.Add(new() {

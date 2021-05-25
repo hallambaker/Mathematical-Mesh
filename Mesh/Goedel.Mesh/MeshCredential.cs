@@ -208,34 +208,34 @@ namespace Goedel.Mesh {
 
 
             // Add extensions to describe the credential if they have changed.
-            if (authenticationKey?.KeyIdentifier !=
-                    meshCredentialPrivate?.AuthenticationPrivate?.KeyIdentifier) {
-                Extensions.Add(new PacketExtension() {
-                    Tag = authenticationKey.CryptoAlgorithmId.ToJoseID(),
-                    Value = authenticationKey.IKeyAdvancedPublic.Encoding
-                    });
+            //if (authenticationKey?.KeyIdentifier !=
+            //        meshCredentialPrivate?.AuthenticationPrivate?.KeyIdentifier) {
+            //    Extensions.Add(new PacketExtension() {
+            //        Tag = authenticationKey.CryptoAlgorithmId.ToJoseID(),
+            //        Value = authenticationKey.IKeyAdvancedPublic.Encoding
+            //        });
 
-                // here we need to do a key exchange against the new private key.
+            //    // here we need to do a key exchange against the new private key.
 
 
-                }
+            //    }
 
             if (meshCredentialPrivate?.ProfileDevice is null & profileDevice is not null) {
                 Extensions.Add(new PacketExtension() {
                     Tag = Constants.ExtensionTagsMeshProfileDeviceTag,
-                    Value = profileDevice.GetBytes()
+                    Value = profileDevice.DareEnvelope.GetBytes(false)
                     });
                 }
             if (meshCredentialPrivate?.ConnectionDevice is null & connectionDevice is not null) {
                 Extensions.Add(new PacketExtension() {
-                    Tag = Constants.ExtensionTagsMeshProfileDeviceTag,
-                    Value = connectionDevice.GetBytes()
+                    Tag = Constants.ExtensionTagsMeshConnectionDeviceTag,
+                    Value = connectionDevice.DareEnvelope.GetBytes(false)
                     });
                 }
             if (meshCredentialPrivate?.ConnectionAccount is null & connectionAccount is not null) {
                 Extensions.Add(new PacketExtension() {
-                    Tag = Constants.ExtensionTagsMeshProfileDeviceTag,
-                    Value = connectionAccount.GetBytes()
+                    Tag = Constants.ExtensionTagsMeshConnectionAddressTag,
+                    Value = connectionAccount.DareEnvelope.GetBytes(false)
                     });
                 }
 
@@ -355,10 +355,15 @@ namespace Goedel.Mesh {
             }
 
         ///<inheritdoc/>
-        public void AddCredentials(List<PacketExtension> extensions) => extensions.Add(new PacketExtension() {
-            Tag = Tag,
-            Value = Value
-            });
+        public void AddCredentials(List<PacketExtension> extensions) {
+            foreach (var extension in Extensions) {
+                extensions.Add(extension);
+                }
+            }
+        //=> extensions.Add(new PacketExtension() {
+        //    Tag = Tag,
+        //    Value = Value
+        //    });
 
         ///<inheritdoc/>
         public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
