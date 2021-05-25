@@ -1610,6 +1610,9 @@
             An RDP Stream
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.Presentation.RudStream.Credential">
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
+        </member>
         <member name="P:Goedel.Protocol.Presentation.RudStream.RudConnection">
             <summary>The underlying connection</summary> 
         </member>

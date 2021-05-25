@@ -60,11 +60,11 @@ namespace Goedel.XUnit {
         public TestEnvironmentCommon SetTestEnvironment(TestEnvironmentCommon testEnvironmentCommon=null) {
             testEnvironmentCommon ??= new TestEnvironmentRdp();
 
-            var meshMachine = testEnvironmentCommon.GetMeshMachine("test");
-            Console.Write("");
+            //var meshMachine = testEnvironmentCommon.GetMeshMachine("test");
+            //Console.Write("");
 
-            ContextInitiator = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                        DeviceAliceAdmin, AccountAlice, "main");
+            //ContextInitiator = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+            //            DeviceAliceAdmin, AccountAlice, "main");
 
             // fish out the client credentials here
 

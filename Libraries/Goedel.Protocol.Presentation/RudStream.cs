@@ -81,8 +81,8 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public class RudStream {
         #region // Properties
-
-        public ICredential Credential { get; }
+        ///<inheritdoc cref="ICredential"/>
+        public ICredential Credential => CredentialOther;
 
         ///<summary>The underlying connection</summary> 
         public virtual RudConnection RudConnection { get; }
@@ -168,6 +168,7 @@ namespace Goedel.Protocol.Presentation {
                 }
             //AccountAddress = throw new NYI();
             CredentialSelf = credentialSelf;
+            CredentialOther = credentialOther ?? rudConnection?.CredentialOther ?? parent?.CredentialOther;
             LocalStreamId = RudConnection.GetStreamId();
 
             //VerifiedAccount = new VerifiedAccount(credentialOther, AccountAddress);

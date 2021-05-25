@@ -10,7 +10,8 @@ using System;
 namespace Scratchpad {
 
 
-    // Bug: The credentials are not being copied over into the RUD stream at the server end
+    // ToDo: TestHello - need to create dummy profile and use it to create a client.
+    // ToDo: MeshClient - need to bind to established account.
 
 
     // ToDo: CreateGroup - Need to establish account administration credential
@@ -40,10 +41,14 @@ namespace Scratchpad {
             //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
 
             //TestService.Test().MeshCatalogGroup();
-            TestPresentationMesh.Test().TestCreateAccount();
+            //TestPresentationMesh.Test().TestCreateAccount();
+
+            ShellTests.Test().TestHello();
 
 
 
+            //using var t1 = ShellTestsHTTP.Test();
+            //t1.TestAccountDelete();
 
             //TestAsymmetric.Test().EncryptTest(CryptoAlgorithmId.RSAExch);
 

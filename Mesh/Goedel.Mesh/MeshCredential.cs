@@ -308,7 +308,7 @@ namespace Goedel.Mesh {
                         // convert the enveloped ConnectionDevice
                         var envelope = DareEnvelope.FromJSON(extension.Value, false);
                         profileDevice = envelope.DecodeJsonObject() as ProfileDevice;
-                        keyAuthentication ??= profileDevice.KeyAuthentication as KeyPairAdvanced;
+                        keyAuthentication ??= profileDevice.Authentication.GetKeyPairAdvanced();
                         break;
                         }
                     case Constants.ExtensionTagsMeshConnectionDeviceTag: {

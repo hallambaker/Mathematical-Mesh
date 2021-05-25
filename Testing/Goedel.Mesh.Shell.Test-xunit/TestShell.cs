@@ -7,10 +7,23 @@ namespace Goedel.XUnit {
 
 
     public partial class ShellTestsHTTP : ShellTests {
+        TestEnvironmentCommon testEnvironmentCommon;
+
+
+        protected override void Disposing() {
+            testEnvironmentCommon.Dispose();
+            base.Disposing();
+            }
+
+
         // Use the new test environment (when defined.)
-        public override TestEnvironmentCommon GetTestEnvironment() => new() {
-            JpcConnection = Protocol.JpcConnection.Http
-            };
+        public override TestEnvironmentCommon GetTestEnvironment() {
+
+            testEnvironmentCommon = new TestEnvironmentRdp() {
+                JpcConnection = Protocol.JpcConnection.Http
+                };
+            return testEnvironmentCommon;
+            }
 
         public static new ShellTestsHTTP Test() => new();
 
@@ -23,7 +36,7 @@ namespace Goedel.XUnit {
 
         }
 
-    public partial class ShellTests {
+    public partial class ShellTests :Disposable{
         string ServiceName { get; set; } = "example.com";
         TestCLI DefaultDevice => defaultDevice ?? GetTestCLI().CacheValue(out defaultDevice);
         TestCLI defaultDevice;

@@ -580,6 +580,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var result = reader.ReadTaggedObject(TagDictionary);
+            result.Enveloped = this;
             return result;
             }
 

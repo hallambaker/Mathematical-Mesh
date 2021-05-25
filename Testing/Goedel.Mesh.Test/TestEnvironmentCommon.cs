@@ -23,6 +23,11 @@ namespace Goedel.Mesh.Test {
         public string Protocol => MeshService.GetWellKnown;
 
 
+        protected override void Disposing() {
+            RudService.Dispose();
+            base.Disposing();
+            }
+
         RudService RudService { get; set; }
 
         ///<inheritdoc/>
@@ -69,7 +74,7 @@ namespace Goedel.Mesh.Test {
     /// <summary>
     /// Test environment for one test with one service with one or more devices.
     /// </summary>
-    public class TestEnvironmentCommon  {
+    public class TestEnvironmentCommon :Disposable {
 
 
 
