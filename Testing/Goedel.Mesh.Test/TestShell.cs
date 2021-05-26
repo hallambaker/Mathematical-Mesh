@@ -50,8 +50,8 @@ namespace Goedel.Mesh.Test {
         //public MeshServiceClient GetMeshClient(ICredentialPrivate credential) =>
         //    MeshMachine.GetMeshClient(credential);
 
-
-        public override MeshServiceClient GetMeshClient(IAccountOptions Options) => throw new NYI();
+        /////<inheritdoc/>
+        //public override MeshServiceClient GetMeshClient(IAccountOptions Options) => throw new NYI();
             //MeshClient;
 
         public ShellResult ShellResult;

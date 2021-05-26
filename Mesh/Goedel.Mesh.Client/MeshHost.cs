@@ -24,7 +24,7 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>The Mesh machine client.</summary>
         public IMeshMachineClient MeshMachine;
-        PersistHost ContainerHost { get; }
+        public PersistHost ContainerHost { get; }
 
         ///<summary>The Key Collection of the Mesh Machine.</summary>
         public IKeyCollection KeyCollection => MeshMachine.KeyCollection;
@@ -387,25 +387,6 @@ namespace Goedel.Mesh.Client {
 
             }
 
-
-        ///// <summary>
-        ///// Create a new Mesh master profile without account or service
-        ///// </summary>
-        ///// <returns>Context for administering the Mesh</returns>
-        //public ContextAccount RecoverMesh(
-        //        string localName,
-        //        IEnumerable<string> shares = null,
-        //        CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-        //        CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-        //        CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
-        //        ) {
-        //    var secret = new SharedSecret(shares);
-        //    var bytes = UDF.Parse(out var code);
-
-
-        //    return ContextUser.RecoverMesh(
-        //             this, secret.Key, localName, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
-        //    }
 
         /// <summary>
         /// Create a new Mesh master profile and account without binding to a service

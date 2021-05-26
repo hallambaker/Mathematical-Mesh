@@ -187,16 +187,24 @@ namespace Goedel.Mesh.Shell {
                 }
             }
 
+
+
         /// <summary>
         /// Get a Mesh Client for the options <paramref name="options"/>.
         /// </summary>
         /// <param name="options">Options specifying the Mesh account id to bind to.</param>
         /// <returns>The Mesh Client.</returns>
         public virtual MeshServiceClient GetMeshClient(IAccountOptions options) {
-            var accountAddress = options.AccountAddress .Value;
+            var context = MeshHost.GetContextMesh(options.AccountAddress.Value);
+            if (context != null) {
+                return context.MeshClient;
+                }
 
-            //return MeshMachine.GetMeshClient(accountAddress, null);
-            throw new NYI();
+            var profileDevice = ProfileDevice.Generate();
+            var credential = new MeshCredentialPrivate (profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
+            
+            return MeshMachine.GetMeshClient(credential, null, "@anonymous");
+
             }
 
 

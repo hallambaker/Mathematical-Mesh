@@ -24,7 +24,7 @@ namespace Goedel.Mesh.Test {
 
 
         protected override void Disposing() {
-            RudService.Dispose();
+            RudService?.Dispose();
             base.Disposing();
             }
 

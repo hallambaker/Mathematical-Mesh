@@ -10,9 +10,6 @@ using System;
 namespace Scratchpad {
 
 
-    // ToDo: TestHello - need to create dummy profile and use it to create a client.
-    // ToDo: MeshClient - need to bind to established account.
-
 
     // ToDo: CreateGroup - Need to establish account administration credential
     // ToDo: Apply admin credential to management of user and account 
@@ -43,12 +40,12 @@ namespace Scratchpad {
             //TestService.Test().MeshCatalogGroup();
             //TestPresentationMesh.Test().TestCreateAccount();
 
-            ShellTests.Test().TestHello();
+            //ShellTests.Test().TestHello();
 
 
 
-            //using var t1 = ShellTestsHTTP.Test();
-            //t1.TestAccountDelete();
+            using var t1 = ShellTestsHTTP.Test();
+            t1.TestMessageContactRemote();
 
             //TestAsymmetric.Test().EncryptTest(CryptoAlgorithmId.RSAExch);
 
