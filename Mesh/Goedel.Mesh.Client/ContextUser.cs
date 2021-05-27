@@ -49,7 +49,7 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>The connection device</summary>
-        public ConnectionAddress ConnectionAccount => CatalogedDevice?.ConnectionAccount;
+        public ConnectionAddress ConnectionAddress => CatalogedDevice?.ConnectionAccount;
 
         ///<summary>The device activation</summary>
         public ActivationDevice ActivationDevice { get; private set; }
@@ -89,7 +89,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>The credential</returns>
         public override MeshCredentialPrivate GetMeshCredentialPrivate() => new(
-                ProfileDevice, ConnectionDevice, ConnectionAccount,
+                ProfileDevice, ConnectionDevice, ConnectionAddress,
                 DeviceAuthentication ?? BaseAuthenticate);
 
         #endregion
@@ -600,13 +600,23 @@ namespace Goedel.Mesh.Client {
             profileGroup.Validate();
 
 
+            // create an administrative connection for this user
+            var connectionGroup = new ConnectionAddress() {
+                Account = groupName,
+                Subject = ProfileUser.Udf,
+                Authority = profileGroup.Udf
+                };
+            var envelopedConnectionGroup = connectionGroup.Envelope(activationGroup.AdministratorSignatureKey);
+
+
+
             // When we move to using thresholded keys, this needs to be modified
             // so that the activation for the cataloged group is saved under the 
             // account escrow key.
 
             rights.Future();
             var catalogedGroup = activationGroup.MakeCatalogedGroup(profileGroup,
-                activationGroup, KeyAccountEncryption);
+                activationGroup, KeyAccountEncryption, connectionGroup);
 
             // here we request creation of the group at the service.
             var createRequest = new BindRequest() {
@@ -617,6 +627,10 @@ namespace Goedel.Mesh.Client {
             var createResponse = MeshClient.BindAccount(createRequest);
             createResponse.AssertSuccess();
 
+
+
+
+
             // create the group context
             var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
             var contact = contextGroup.CreateContact();
@@ -626,7 +640,7 @@ namespace Goedel.Mesh.Client {
             var capabilityGroupEncrypt = CapabilityKeyGenerate.CreateThreshold(activationGroup.AccountEncryptionKey);
             var capabilityGroupSign = CapabilityKeyGenerate.CreateThreshold(activationGroup.AccountSignatureKey);
 
-            // Commit all changes in a single transaction.
+            // Commit all changes to the administrator context in a single transaction.
             using (var transaction = TransactBegin()) {
                 // Add the group to the application catalog
                 var catalogApplication = transaction.GetCatalogApplication();

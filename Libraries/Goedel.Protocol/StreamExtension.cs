@@ -76,10 +76,10 @@ namespace Goedel.Protocol {
                 return;
                 }
             if ((c > 0xDC00) & (c <= 0xDFFF)) {
-                throw new Exception("Invalid character sequence");
+                throw new InvalidInput("Invalid character sequence");
                 }
             else {
-                throw new Exception("Not Implemented");
+                throw new InvalidInput("Not Implemented");
 
                 //WriteCached = true;
                 //WriteCache = c;

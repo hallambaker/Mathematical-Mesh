@@ -166,6 +166,9 @@ namespace Goedel.Mesh.Server {
 
 
             try {
+
+                Screen.WriteLine($"Bind {request.AccountAddress}");
+
                 var verifiedDevice = VerifyDevice(jpcSession);
 
                 var accountEntry = new AccountUser(request);

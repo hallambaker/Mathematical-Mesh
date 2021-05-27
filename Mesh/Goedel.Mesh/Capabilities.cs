@@ -33,12 +33,8 @@ namespace Goedel.Mesh {
     /// </summary>
     public interface IMeshClient {
 
-        /// <summary>
-        /// Get a Mesh client for the credential <paramref name="credentialPrivate"/>.
-        /// </summary>
-        /// <param name="credentialPrivate">The account to obtain a client for.</param>
-        /// <returns>The client.</returns>
-        MeshServiceClient GetMeshClient (ICredentialPrivate credentialPrivate);
+        ///<summary>Return a Mesh client</summary> 
+        public MeshServiceClient MeshClient{get; }
 
         }
 
@@ -232,14 +228,13 @@ namespace Goedel.Mesh {
                     }
                 };
 
-            throw new NYI();
 
-            //var client = CryptographicClient.GetMeshClient(ServiceAddress);
-            //var response = client.Operate(operateRequest);
+            var client = CryptographicClient.MeshClient;
+            var response = client.Operate(operateRequest);
 
-            //var result = response.Results[0] as CryptographicResultKeyAgreement;
+            var result = response.Results[0] as CryptographicResultKeyAgreement;
 
-            //return result.KeyAgreement.KeyAgreementResult;
+            return result.KeyAgreement.KeyAgreementResult;
             }
 
         }

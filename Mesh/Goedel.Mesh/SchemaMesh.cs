@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2021 4:17:18 PM
+//  This file was automatically generated at 5/27/2021 5:42:30 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -8119,6 +8119,11 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class CatalogedGroup : CatalogedApplication {
         /// <summary>
+        ///The connection allowing control of the group.
+        /// </summary>
+
+		public virtual Enveloped<ConnectionAddress>						EnvelopedConnectionAddress  {get; set;}
+        /// <summary>
         ///The Mesh profile
         /// </summary>
 
@@ -8172,6 +8177,11 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((CatalogedApplication)this).SerializeX(_writer, false, ref _first);
+			if (EnvelopedConnectionAddress != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedConnectionAddress", 1);
+					EnvelopedConnectionAddress.Serialize (_writer, false);
+				}
 			if (EnvelopedProfileGroup != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("EnvelopedProfileGroup", 1);
@@ -8215,6 +8225,13 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "EnvelopedConnectionAddress" : {
+					// An untagged structure
+					EnvelopedConnectionAddress = new Enveloped<ConnectionAddress> ();
+					EnvelopedConnectionAddress.Deserialize (jsonReader);
+ 
+					break;
+					}
 				case "EnvelopedProfileGroup" : {
 					// An untagged structure
 					EnvelopedProfileGroup = new Enveloped<ProfileAccount> ();

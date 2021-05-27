@@ -768,6 +768,11 @@
 
 	Structure CatalogedGroup
 		Inherits CatalogedApplication
+
+		Struct Enveloped<ConnectionAddress> EnvelopedConnectionAddress
+			Description
+				|The connection allowing control of the group.
+
 		Struct Enveloped<ProfileAccount> EnvelopedProfileGroup
 			Description
 				|The Mesh profile

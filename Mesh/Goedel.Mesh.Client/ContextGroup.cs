@@ -32,7 +32,12 @@ namespace Goedel.Mesh.Client {
         ///<summary>The account profile</summary>
         public override Profile Profile => ProfileGroup;
 
-        ///<summary>The account address.</summary>
+
+        ///<summary>The device profile</summary>
+        public override ProfileDevice ProfileDevice => ContextUser?.ProfileDevice;
+
+
+        ///<inheritdoc/>
         public override string AccountAddress => ProfileGroup.AccountAddress;
 
         ///<summary>The group profile.</summary>
@@ -43,6 +48,11 @@ namespace Goedel.Mesh.Client {
         ///<summary>Convenience accessor for the connection.</summary>
         public override Connection Connection => ConnectionGroup;
 
+
+        ///<inheritdoc/>
+        public override MeshCredentialPrivate GetMeshCredentialPrivate() => new(
+                null, ContextUser?.ConnectionDevice, CatalogedGroup?.ConnectionAddress,
+                ContextUser?.DeviceAuthentication);
 
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
@@ -77,7 +87,6 @@ namespace Goedel.Mesh.Client {
             // Activate the device to communicate as the account (via threshold)
             ActivationAccount = CatalogedGroup?.GetActivationAccount(KeyCollection);
             ActivationAccount.Activate(KeyCollection);
-
             }
 
 

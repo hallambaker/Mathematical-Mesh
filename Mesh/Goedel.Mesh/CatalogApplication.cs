@@ -132,6 +132,15 @@ namespace Goedel.Mesh {
                     (EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup).CacheValue(out profileGroup);
         ProfileGroup profileGroup;
 
+
+
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedConnectionAddress"/>
+        ///to return the <see cref="connectionAddress"/> value.</summary>
+        public ConnectionAddress ConnectionAddress => connectionAddress ??
+                    (EnvelopedConnectionAddress.Decode(KeyCollection) as ConnectionAddress).CacheValue(out connectionAddress);
+        ConnectionAddress connectionAddress;
+
+
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationAccount"/>
         ///to return the <see cref="ActivationAccount"/> value.</summary>
         public ActivationAccount GetActivationAccount(IKeyCollection keyCollection) =>

@@ -116,6 +116,7 @@ namespace Goedel.Cryptography.Dare {
                         new CryptoParameters(signer: signingKey, recipient: encryptionKey), 
                         data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
             data.Enveloped = this;
+            //this.JsonObject = data;
             }
 
         /// <summary>

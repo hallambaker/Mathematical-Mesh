@@ -206,20 +206,6 @@ namespace Goedel.Mesh {
                             (profileDevice, connectionDevice, connectionAccount, 
                                     authenticationKey, meshCredentialPrivate) {
 
-
-            // Add extensions to describe the credential if they have changed.
-            //if (authenticationKey?.KeyIdentifier !=
-            //        meshCredentialPrivate?.AuthenticationPrivate?.KeyIdentifier) {
-            //    Extensions.Add(new PacketExtension() {
-            //        Tag = authenticationKey.CryptoAlgorithmId.ToJoseID(),
-            //        Value = authenticationKey.IKeyAdvancedPublic.Encoding
-            //        });
-
-            //    // here we need to do a key exchange against the new private key.
-
-
-            //    }
-
             if (meshCredentialPrivate?.ProfileDevice is null & profileDevice is not null) {
                 Extensions.Add(new PacketExtension() {
                     Tag = Constants.ExtensionTagsMeshProfileDeviceTag,

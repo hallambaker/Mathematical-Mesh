@@ -5,6 +5,7 @@ using Goedel.Utilities;
 using Goedel.Protocol.Presentation;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Dare;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -153,56 +154,122 @@ namespace Goedel.XUnit {
 
             return contextUser;
             }
-        [Fact]
-
-        public void TestMultipleServices() {
-
-            // create a Mesh client
-            // create a status client to same endpoint.
-
-            throw new NYI();
-            }
 
         [Fact]
         public void TestImpersonationConnect() => throw new NYI();
 
-        [Fact]
-        public void TestImpersonationSync() => throw new NYI();
-        [Fact]
-        public void TestImpersonationUpdate() => throw new NYI();
-        [Fact]
-        public void TestImpersonationConfirm() => throw new NYI();
-        [Fact]
-        public void TestImpersonationGroup() => throw new NYI();
-        [Fact]
-        public void TestImpersonationDevice() => throw new NYI();
-
-        [Fact]
-        public void TestDeviceDeletion() => throw new NYI();
-
-
-        [Fact]
-
-        public void TestImpersonation() {
-
-
+        [Theory]
+        [InlineData(DataValidity.CorruptSigner)]
+        [InlineData(DataValidity.CorruptSignature)]
+        [InlineData(DataValidity.CorruptDigest)]
+        [InlineData(DataValidity.CorruptPayload)]
+        [InlineData(DataValidity.CorruptMissing)]
+        public void TestImpersonationSync(DataValidity dataValidity) {
             using var testEnvironmentCommon = SetTestEnvironment();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
-            var contextAccountMallet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                    DeviceAliceAdmin, AccountMallet, "mallet");
-            contextAccountMallet.ProfileUser = contextAccountAlice.ProfileUser;
+            // check, this should succeed.
+            contextAccountAlice.Sync();
+
+            // check, this should also succeed.
+            contextAccountAlice.MeshClient = null;
+            contextAccountAlice.Sync();
+
+            // Corrupt the credential
+            DareEnvelope alternative = null;
+            if (dataValidity == DataValidity.CorruptSigner) {
+                var mallet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                DeviceAliceAdmin, AccountMallet, "main");
+                alternative = mallet.ConnectionDevice.DareEnvelope;
+                }
+            contextAccountAlice.ConnectionDevice.DareEnvelope.Corrupt(dataValidity, alternative);
+
+            // check, this should now fail.
+            contextAccountAlice.MeshClient = null;
+
+            switch (dataValidity) {
+                case DataValidity.CorruptPayload: {
+                    Xunit.Assert.Throws<InvalidInput>(() => contextAccountAlice.Sync());
+                    break;
+                    }
+                default: {
+                    Xunit.Assert.Throws<ServerResponseInvalid>(() => contextAccountAlice.Sync());
+                    break;
+                    }
+
+                }
+            }
+
+        [Fact]
+        public void TestImpersonationConfirm() => throw new NYI();
+        [Fact]
+        public void TestImpersonationGroup() => throw new NYI();
+
+        [Fact]
+        public void TestDeviceDeletion() {
+            using var testEnvironmentCommon = SetTestEnvironment();
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+
+            contextAccountAlice.Sync();
+
+            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, "device3",
+                    AccountAlice, "device2");
 
 
-            Xunit.Assert.Throws<NYI>(() => contextAccountMallet.Sync());
+            contextAccountAlice.Sync();
+            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest);
 
+            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
 
+            // should succeed
+            contextOnboarded.Sync();
+            var contextOnboardedUdf = contextOnboarded.CatalogedDevice.DeviceUdf;
+
+            contextAccountAlice.DeleteDevice(contextOnboardedUdf);
+
+            // should fail. [But doesn't]
+            Xunit.Assert.Throws<ServerResponseInvalid>(() => contextOnboarded.Sync());
             }
 
 
-        [Fact]
 
+        [Fact]
+        public void TestAccountDeletion() {
+            using var testEnvironmentCommon = SetTestEnvironment();
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+
+            contextAccountAlice.Sync();
+
+            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, "device3",
+                    AccountAlice, "device2");
+
+
+            contextAccountAlice.Sync();
+            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest);
+
+            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+
+            // should succeed
+            contextOnboarded.Sync();
+            var contextOnboardedUdf = contextOnboarded.CatalogedDevice.DeviceUdf;
+
+            contextAccountAlice.DeleteAccount();
+
+
+            // We don't have support for account revocation yet.
+            Xunit.Assert.Throws<ServerResponseInvalid>(() => contextAccountAlice.Sync());
+            Xunit.Assert.Throws<ServerResponseInvalid>(() => contextOnboarded.Sync());
+
+            throw new NYI();
+
+            }
+
+        [Fact]
         public void TestPreconnect() {
             using var testEnvironmentCommon = SetTestEnvironment();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
@@ -212,10 +279,7 @@ namespace Goedel.XUnit {
                     AccountAlice, "device2");
 
             Xunit.Assert.Throws<ConnectionStillPending>(() => contextOnboardPending.Sync());
-
             }
-
-
 
         }
 

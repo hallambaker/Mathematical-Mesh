@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Client {
         public abstract Profile Profile { get; }
 
         ///<summary>The device profile</summary>
-        public ProfileDevice ProfileDevice => CatalogedMachine?.ProfileDevice;
+        public virtual ProfileDevice ProfileDevice => CatalogedMachine?.ProfileDevice;
 
         ///<summary>The current service profile</summary> 
         public ProfileService ProfileService;

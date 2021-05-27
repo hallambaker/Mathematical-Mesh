@@ -9,6 +9,15 @@ using System;
 
 namespace Scratchpad {
 
+    // Bug: Group: The group is being bound as a used account rather than group (is this right)
+    // Validation fails as a result.
+
+
+    // Bug: Group: The capabilities catalog is not being updated for the group as it should be.
+    // Bug: Group: The lack of account credentialling is probably the reason why.
+
+    // Alice creates a group, the MeshClient from her account is used for admin.
+    // This should be the group credential.
 
 
     // ToDo: CreateGroup - Need to establish account administration credential
@@ -34,18 +43,26 @@ namespace Scratchpad {
     partial class Program {
         static void Main() {
             Screen.WriteLine($"Start test  {DateTime.Now}");
+
+
+            TestService.Test().MeshCatalogGroup();
+            //using var t1 = ShellTestsHTTP.Test();
+            //t1.TestMessageContactRemote();
+
+
+
+
+
             //TestService.Test().TestCredentialDevice();
             //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
-
-            //TestService.Test().MeshCatalogGroup();
             //TestPresentationMesh.Test().TestCreateAccount();
 
             //ShellTests.Test().TestHello();
 
+            //TestPresentationMesh.Test().TestImpersonationSync(DataValidity.CorruptPayload);
+            //TestPresentationMesh.Test().TestCreateAccount();
+            //TestPresentationMesh.Test().TestDeviceDeletion();
 
-
-            using var t1 = ShellTestsHTTP.Test();
-            t1.TestMessageContactRemote();
 
             //TestAsymmetric.Test().EncryptTest(CryptoAlgorithmId.RSAExch);
 

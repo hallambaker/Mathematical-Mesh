@@ -737,8 +737,11 @@
         <member name="P:Goedel.Mesh.Client.ContextGroup.Profile">
             <summary>The account profile</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextGroup.ProfileDevice">
+            <summary>The device profile</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.AccountAddress">
-            <summary>The account address.</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.ProfileGroup">
             <summary>The group profile.</summary>
@@ -748,6 +751,9 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.Connection">
             <summary>Convenience accessor for the connection.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.GetMeshCredentialPrivate">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
@@ -1022,7 +1028,7 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionDevice">
             <summary>The connection device</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAccount">
+        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAddress">
             <summary>The connection device</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ActivationDevice">

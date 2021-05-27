@@ -507,7 +507,7 @@ namespace Goedel.Protocol {
                 }
 
             if (TokenType != Token.StartObject) {
-                throw new Exception("Expected {");
+                throw new InvalidInput("Expected {");
                 }
 
             PeekToken();
@@ -525,7 +525,7 @@ namespace Goedel.Protocol {
         public override void EndObject() {
             GetToken();
             if (TokenType != Token.EndObject) {
-                throw new Exception("Expected }");
+                throw new InvalidInput("Expected }");
                 }
             }
 
@@ -587,7 +587,7 @@ namespace Goedel.Protocol {
                 default:
                     break;
                 }
-            throw new Exception("Expected , or }");
+            throw new InvalidInput("Expected , or }");
             }
 
         /// <summary>
@@ -605,7 +605,7 @@ namespace Goedel.Protocol {
                     var Result = ResultString;
                     GetToken();
                     if (TokenType != Token.Colon) {
-                        throw new Exception("Expected :");
+                        throw new InvalidInput("Expected :");
                         }
                     return Result;
                     }
@@ -649,7 +649,7 @@ namespace Goedel.Protocol {
                 default:
                     break;
                 }
-            throw new Exception("Expected \"Tag\"");
+            throw new InvalidInput("Expected \"Tag\"");
             }
 
         /// <summary>
@@ -662,7 +662,7 @@ namespace Goedel.Protocol {
                 {
                     Token.Number => Convert.ToInt32(ResultString),
                     Token.Integer => (int)ResultInt64,
-                    _ => throw new Exception("Expected Number"),
+                    _ => throw new InvalidInput("Expected Number"),
                     };
             }
 
@@ -676,7 +676,7 @@ namespace Goedel.Protocol {
                 {
                     Token.Number => Convert.ToInt64(ResultString),
                     Token.Integer => ResultInt64,
-                    _ => throw new Exception("Expected Number"),
+                    _ => throw new InvalidInput("Expected Number"),
                     };
             }
 
@@ -692,7 +692,7 @@ namespace Goedel.Protocol {
             if (TokenType == Token.False) {
                 return false;
                 }
-            throw new Exception("Expected true or false");
+            throw new InvalidInput("Expected true or false");
             }
 
         /// <summary>
@@ -705,7 +705,7 @@ namespace Goedel.Protocol {
                 {
                     Token.String => ResultBinary,
                     Token.Binary => ReadBinaryData(),
-                    _ => throw new Exception("Expected BASE64 encoded binary"),
+                    _ => throw new InvalidInput("Expected BASE64 encoded binary"),
                     };
             }
 
@@ -734,7 +734,7 @@ namespace Goedel.Protocol {
         public override string ReadString() {
             GetToken();
             if (TokenType != Token.String) {
-                throw new Exception("Expected \"String\"");
+                throw new InvalidInput("Expected \"String\"");
                 }
             return ResultString;
             }
@@ -746,7 +746,7 @@ namespace Goedel.Protocol {
         public override DateTime ReadDateTime() {
             GetToken();
             if (TokenType != Token.String) {
-                throw new Exception("Expected \"DateTime\"");
+                throw new InvalidInput("Expected \"DateTime\"");
                 }
             return ResultString.FromRFC3339();
             }
@@ -759,7 +759,7 @@ namespace Goedel.Protocol {
         public override bool StartArray() {
             GetToken();
             if (TokenType != Token.StartArray) {
-                throw new Exception("Expected [");
+                throw new InvalidInput("Expected [");
                 }
             PeekToken();
             if (TokenType == Token.EndArray) {
@@ -783,7 +783,7 @@ namespace Goedel.Protocol {
                 return false; // end of array reached
                 }
             else {
-                throw new Exception("Expected , or ]");
+                throw new InvalidInput("Expected , or ]");
                 }
             }
 
@@ -794,7 +794,7 @@ namespace Goedel.Protocol {
         public override void EndArray() {
             GetToken();
             if (TokenType != Token.EndArray) {
-                throw new Exception("Expected ]");
+                throw new InvalidInput("Expected ]");
                 }
             }
 

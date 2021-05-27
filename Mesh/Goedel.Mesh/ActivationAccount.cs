@@ -274,7 +274,7 @@ namespace Goedel.Mesh {
                 EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
                 EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice,
-                EnvelopedConnectionAddress = connectionAccount.EnvelopedConnectionAccount,
+                EnvelopedConnectionAddress = connectionAccount.EnvelopedConnectionAddress,
                 EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
                 EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
                 DeviceUdf = profileDevice.Udf
@@ -297,7 +297,8 @@ namespace Goedel.Mesh {
         public CatalogedGroup MakeCatalogedGroup(
                         ProfileGroup profileGroup,
                         ActivationAccount activationAccount,
-                        CryptoKey capability
+                        CryptoKey capability,
+                        ConnectionAddress connectionAddress
                         ) {
 
             profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
@@ -311,6 +312,7 @@ namespace Goedel.Mesh {
                 Key = profileGroup.AccountAddress,
                 EnvelopedProfileGroup = profileGroup.EnvelopedProfileAccount,
                 EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
+                EnvelopedConnectionAddress = connectionAddress.EnvelopedConnectionAddress
                 };
 
             return catalogedGroup;

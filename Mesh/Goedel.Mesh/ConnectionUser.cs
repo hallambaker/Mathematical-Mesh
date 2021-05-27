@@ -29,7 +29,7 @@ using System.Collections.Generic;
 namespace Goedel.Mesh {
     public partial class ConnectionAddress {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ConnectionAddress> EnvelopedConnectionAccount =>
+        public Enveloped<ConnectionAddress> EnvelopedConnectionAddress =>
             envelopedConnectionDevice ?? new Enveloped<ConnectionAddress>(DareEnvelope).
                     CacheValue(out envelopedConnectionDevice);
         Enveloped<ConnectionAddress> envelopedConnectionDevice;

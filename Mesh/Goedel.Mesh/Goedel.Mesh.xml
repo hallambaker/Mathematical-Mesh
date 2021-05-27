@@ -211,7 +211,7 @@
             <param name="activationAccount">The account key overlay.</param>
             <returns>The CatalogedDevice entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedGroup(Goedel.Mesh.ProfileGroup,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedGroup(Goedel.Mesh.ProfileGroup,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.CryptoKey,Goedel.Mesh.ConnectionAddress)">
             <summary>
             Create and return a new catalog entry for <paramref name="profileGroup"/> with
             the activation data <paramref name="activationAccount"/>.
@@ -603,12 +603,8 @@
             Interface that returns a Mesh client for an account.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.IMeshClient.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate)">
-            <summary>
-            Get a Mesh client for the credential <paramref name="credentialPrivate"/>.
-            </summary>
-            <param name="credentialPrivate">The account to obtain a client for.</param>
-            <returns>The client.</returns>
+        <member name="P:Goedel.Mesh.IMeshClient.MeshClient">
+            <summary>Return a Mesh client</summary> 
         </member>
         <member name="T:Goedel.Mesh.ICapabilityPartial">
             <summary>
@@ -1618,6 +1614,10 @@
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedGroup.EnvelopedProfileGroup"/>
             to return the <see cref="T:Goedel.Mesh.ProfileUser"/> value.</summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedGroup.ConnectionAddress">
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedGroup.EnvelopedConnectionAddress"/>
+            to return the <see cref="F:Goedel.Mesh.CatalogedGroup.connectionAddress"/> value.</summary>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedGroup.GetActivationAccount(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedGroup.EnvelopedActivationAccount"/>
             to return the <see cref="T:Goedel.Mesh.ActivationAccount"/> value.</summary>
@@ -1626,6 +1626,11 @@
             <summary>
             Default constructor for serialization.
             </summary>     
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedGroup.EnvelopedConnectionAddress">
+             <summary>
+            The connection allowing control of the group.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedGroup.EnvelopedProfileGroup">
              <summary>
@@ -3493,7 +3498,7 @@
              Stripped down connection assertion
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionAddress.EnvelopedConnectionAccount">
+        <member name="P:Goedel.Mesh.ConnectionAddress.EnvelopedConnectionAddress">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="M:Goedel.Mesh.ConnectionAddress.Strip">
