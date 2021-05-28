@@ -1,9 +1,9 @@
 
-//  This file was automatically generated at 5/28/2021 12:24:52 PM
+//  This file was automatically generated at 5/28/2021 3:27:20 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  constant version 3.0.0.698
+//  Generator:  constant version 3.0.0.728
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -97,6 +97,29 @@ namespace Goedel.Mesh {
         AdminSign,
         ///<summary>Escrow Encryption key</summary>
         Escrow        }
+
+    ///<summary>Server status codes</summary>
+    public enum MeshServerStatus {
+        ///<summary>Undefined type</summary>
+        Unknown = -1,
+        ///<summary>Mesh account already registered</summary>
+        AccountRegistered = 1,
+        ///<summary>Operation is not authorized</summary>
+        NotAuthorized = 2,
+        ///<summary>Operation requires administrator privilege</summary>
+        NotAdministrator = 3,
+        ///<summary>Device connection was revoked</summary>
+        DeviceRevoked = 4,
+        ///<summary>Operation is refused</summary>
+        Refused = 5,
+        ///<summary>Specified account was not found</summary>
+        NotFound = 6,
+        ///<summary>Specified account has moved</summary>
+        Moved = 7,
+        ///<summary>Request is too large</summary>
+        TooLarge = 8,
+        ///<summary>Request timed out</summary>
+        Timeout = 9        }
 
 
     ///<summary>
@@ -481,6 +504,66 @@ namespace Goedel.Mesh {
                 MeshKeyOperation.AdminEncrypt => MeshKeyOperationAdminEncryptTag,
                 MeshKeyOperation.AdminSign => MeshKeyOperationAdminSignTag,
                 MeshKeyOperation.Escrow => MeshKeyOperationEscrowTag,
+                _ => null
+                };
+
+
+        ///<summary>Jose enumeration tag for MeshServerStatus.AccountRegistered</summary>
+        public const string  MeshServerStatusAccountRegisteredTag = "AccountRegistered";
+        ///<summary>Description for MeshServerStatus.AccountRegistered</summary>
+        public const string  MeshServerStatusAccountRegisteredTitle = "Mesh account already registered";
+        ///<summary>Jose enumeration tag for MeshServerStatus.NotAuthorized</summary>
+        public const string  MeshServerStatusNotAuthorizedTag = "NotAuthorized";
+        ///<summary>Description for MeshServerStatus.NotAuthorized</summary>
+        public const string  MeshServerStatusNotAuthorizedTitle = "Operation is not authorized";
+        ///<summary>Jose enumeration tag for MeshServerStatus.NotAdministrator</summary>
+        public const string  MeshServerStatusNotAdministratorTag = "NotAdministrator";
+        ///<summary>Description for MeshServerStatus.NotAdministrator</summary>
+        public const string  MeshServerStatusNotAdministratorTitle = "Operation requires administrator privilege";
+        ///<summary>Jose enumeration tag for MeshServerStatus.DeviceRevoked</summary>
+        public const string  MeshServerStatusDeviceRevokedTag = "DeviceRevoked";
+        ///<summary>Description for MeshServerStatus.DeviceRevoked</summary>
+        public const string  MeshServerStatusDeviceRevokedTitle = "Device connection was revoked";
+        ///<summary>Jose enumeration tag for MeshServerStatus.Refused</summary>
+        public const string  MeshServerStatusRefusedTag = "Refused";
+        ///<summary>Description for MeshServerStatus.Refused</summary>
+        public const string  MeshServerStatusRefusedTitle = "Operation is refused";
+        ///<summary>Jose enumeration tag for MeshServerStatus.NotFound</summary>
+        public const string  MeshServerStatusNotFoundTag = "NotFound";
+        ///<summary>Description for MeshServerStatus.NotFound</summary>
+        public const string  MeshServerStatusNotFoundTitle = "Specified account was not found";
+        ///<summary>Jose enumeration tag for MeshServerStatus.Moved</summary>
+        public const string  MeshServerStatusMovedTag = "Moved";
+        ///<summary>Description for MeshServerStatus.Moved</summary>
+        public const string  MeshServerStatusMovedTitle = "Specified account has moved";
+        ///<summary>Jose enumeration tag for MeshServerStatus.TooLarge</summary>
+        public const string  MeshServerStatusTooLargeTag = "TooLarge";
+        ///<summary>Description for MeshServerStatus.TooLarge</summary>
+        public const string  MeshServerStatusTooLargeTitle = "Request is too large";
+        ///<summary>Jose enumeration tag for MeshServerStatus.Timeout</summary>
+        public const string  MeshServerStatusTimeoutTag = "Timeout";
+        ///<summary>Description for MeshServerStatus.Timeout</summary>
+        public const string  MeshServerStatusTimeoutTitle = "Request timed out";
+
+        /// <summary>
+        /// Convert the string <paramref name="text"/> to the corresponding enumeration
+        /// value.
+        /// </summary>
+        /// <param name="text">The string to convert.</param>
+        /// <returns>The enumeration value.</returns>
+        public static MeshServerStatus ToMeshServerStatus (this string text) =>
+            text switch {
+                _ => MeshServerStatus.Unknown
+                };
+
+        /// <summary>
+        /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+        /// value.
+        /// </summary>
+        /// <param name="data">The enumerated value.</param>
+        /// <returns>The text value.</returns>
+        public static string ToLabel (this MeshServerStatus data) =>
+            data switch {
                 _ => null
                 };
 

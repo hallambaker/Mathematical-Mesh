@@ -4056,6 +4056,76 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusAccountRegisteredTag">
+            <summary>Jose enumeration tag for MeshServerStatus.AccountRegistered</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusAccountRegisteredTitle">
+            <summary>Description for MeshServerStatus.AccountRegistered</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusNotAuthorizedTag">
+            <summary>Jose enumeration tag for MeshServerStatus.NotAuthorized</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusNotAuthorizedTitle">
+            <summary>Description for MeshServerStatus.NotAuthorized</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusNotAdministratorTag">
+            <summary>Jose enumeration tag for MeshServerStatus.NotAdministrator</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusNotAdministratorTitle">
+            <summary>Description for MeshServerStatus.NotAdministrator</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusDeviceRevokedTag">
+            <summary>Jose enumeration tag for MeshServerStatus.DeviceRevoked</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusDeviceRevokedTitle">
+            <summary>Description for MeshServerStatus.DeviceRevoked</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusRefusedTag">
+            <summary>Jose enumeration tag for MeshServerStatus.Refused</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusRefusedTitle">
+            <summary>Description for MeshServerStatus.Refused</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusNotFoundTag">
+            <summary>Jose enumeration tag for MeshServerStatus.NotFound</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusNotFoundTitle">
+            <summary>Description for MeshServerStatus.NotFound</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusMovedTag">
+            <summary>Jose enumeration tag for MeshServerStatus.Moved</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusMovedTitle">
+            <summary>Description for MeshServerStatus.Moved</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusTooLargeTag">
+            <summary>Jose enumeration tag for MeshServerStatus.TooLarge</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusTooLargeTitle">
+            <summary>Description for MeshServerStatus.TooLarge</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusTimeoutTag">
+            <summary>Jose enumeration tag for MeshServerStatus.Timeout</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshServerStatusTimeoutTitle">
+            <summary>Description for MeshServerStatus.Timeout</summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshConstants.ToMeshServerStatus(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshConstants.ToLabel(Goedel.Mesh.MeshServerStatus)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
         <member name="F:Goedel.Mesh.MeshConstants.TransactionResultAccept">
             <summary>
             Transaction result tag Accept
@@ -5124,6 +5194,39 @@
         </member>
         <member name="F:Goedel.Mesh.MeshKeyOperation.Escrow">
             <summary>Escrow Encryption key</summary>
+        </member>
+        <member name="T:Goedel.Mesh.MeshServerStatus">
+            <summary>Server status codes</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServerStatus.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServerStatus.AccountRegistered">
+            <summary>Mesh account already registered</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServerStatus.NotAuthorized">
+            <summary>Operation is not authorized</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServerStatus.NotAdministrator">
+            <summary>Operation requires administrator privilege</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServerStatus.DeviceRevoked">
+            <summary>Device connection was revoked</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServerStatus.Refused">
+            <summary>Operation is refused</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServerStatus.NotFound">
+            <summary>Specified account was not found</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServerStatus.Moved">
+            <summary>Specified account has moved</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServerStatus.TooLarge">
+            <summary>Request is too large</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshServerStatus.Timeout">
+            <summary>Request timed out</summary>
         </member>
         <member name="T:Goedel.Mesh.MeshCredential">
             <summary>

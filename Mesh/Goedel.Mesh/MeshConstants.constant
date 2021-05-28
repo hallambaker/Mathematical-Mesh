@@ -162,7 +162,16 @@ File MiscUnsorted
 		Code AdminSign		"Administrator Signature key"
 		Code Escrow			"Escrow Encryption key"
 
-
+	Enum MeshServerStatus "Server status codes"
+		Integer AccountRegistered	1	"Mesh account already registered"
+		Integer NotAuthorized		2	"Operation is not authorized"
+		Integer NotAdministrator	3	"Operation requires administrator privilege"
+		Integer DeviceRevoked		4	"Device connection was revoked"
+		Integer Refused				5	"Operation is refused"
+		Integer NotFound			6	"Specified account was not found"
+		Integer Moved				7	"Specified account has moved"
+		Integer TooLarge			8	"Request is too large"
+		Integer Timeout				9	"Request timed out"
 
 
 	String TransactionResultAccept "Accept"

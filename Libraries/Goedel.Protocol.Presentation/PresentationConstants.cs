@@ -1,9 +1,9 @@
 
-//  This file was automatically generated at 5/28/2021 12:21:50 PM
+//  This file was automatically generated at 5/28/2021 3:27:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  constant version 3.0.0.698
+//  Generator:  constant version 3.0.0.728
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -140,6 +140,26 @@ namespace Goedel.Protocol.Presentation {
         // File: PresentationConstants
 
 
+        ///<summary>Jose enumeration tag for InitiatorMessageType.Error</summary>
+        public const string  InitiatorMessageTypeErrorTag = "Error";
+        ///<summary>Description for InitiatorMessageType.Error</summary>
+        public const string  InitiatorMessageTypeErrorTitle = "Host exchange message";
+        ///<summary>Jose enumeration tag for InitiatorMessageType.Data</summary>
+        public const string  InitiatorMessageTypeDataTag = "Data";
+        ///<summary>Description for InitiatorMessageType.Data</summary>
+        public const string  InitiatorMessageTypeDataTitle = "Data message";
+        ///<summary>Jose enumeration tag for InitiatorMessageType.InitiatorHello</summary>
+        public const string  InitiatorMessageTypeInitiatorHelloTag = "InitiatorHello";
+        ///<summary>Description for InitiatorMessageType.InitiatorHello</summary>
+        public const string  InitiatorMessageTypeInitiatorHelloTitle = "Initial contact message without key exchange";
+        ///<summary>Jose enumeration tag for InitiatorMessageType.InitiatorExchange</summary>
+        public const string  InitiatorMessageTypeInitiatorExchangeTag = "InitiatorExchange";
+        ///<summary>Description for InitiatorMessageType.InitiatorExchange</summary>
+        public const string  InitiatorMessageTypeInitiatorExchangeTitle = "Initial contact message with key exchange";
+        ///<summary>Jose enumeration tag for InitiatorMessageType.InitiatorComplete</summary>
+        public const string  InitiatorMessageTypeInitiatorCompleteTag = "InitiatorComplete";
+        ///<summary>Description for InitiatorMessageType.InitiatorComplete</summary>
+        public const string  InitiatorMessageTypeInitiatorCompleteTitle = "Initial contact message with key exchange";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -164,6 +184,22 @@ namespace Goedel.Protocol.Presentation {
                 };
 
 
+        ///<summary>Jose enumeration tag for ResponderMessageType.Error</summary>
+        public const string  ResponderMessageTypeErrorTag = "Error";
+        ///<summary>Description for ResponderMessageType.Error</summary>
+        public const string  ResponderMessageTypeErrorTitle = "Host exchange message";
+        ///<summary>Jose enumeration tag for ResponderMessageType.Data</summary>
+        public const string  ResponderMessageTypeDataTag = "Data";
+        ///<summary>Description for ResponderMessageType.Data</summary>
+        public const string  ResponderMessageTypeDataTitle = "Host exchange message";
+        ///<summary>Jose enumeration tag for ResponderMessageType.ResponderChallenge</summary>
+        public const string  ResponderMessageTypeResponderChallengeTag = "ResponderChallenge";
+        ///<summary>Description for ResponderMessageType.ResponderChallenge</summary>
+        public const string  ResponderMessageTypeResponderChallengeTitle = "Host exchange message";
+        ///<summary>Jose enumeration tag for ResponderMessageType.ResponderComplete</summary>
+        public const string  ResponderMessageTypeResponderCompleteTag = "ResponderComplete";
+        ///<summary>Description for ResponderMessageType.ResponderComplete</summary>
+        public const string  ResponderMessageTypeResponderCompleteTitle = "Host challenge type 1";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -188,6 +224,30 @@ namespace Goedel.Protocol.Presentation {
                 };
 
 
+        ///<summary>Jose enumeration tag for ErrorCodes.BadRequest</summary>
+        public const string  ErrorCodesBadRequestTag = "BadRequest";
+        ///<summary>Description for ErrorCodes.BadRequest</summary>
+        public const string  ErrorCodesBadRequestTitle = "Bad request";
+        ///<summary>Jose enumeration tag for ErrorCodes.Unauthorized</summary>
+        public const string  ErrorCodesUnauthorizedTag = "Unauthorized";
+        ///<summary>Description for ErrorCodes.Unauthorized</summary>
+        public const string  ErrorCodesUnauthorizedTitle = "Unauthorized";
+        ///<summary>Jose enumeration tag for ErrorCodes.Forbidden</summary>
+        public const string  ErrorCodesForbiddenTag = "Forbidden";
+        ///<summary>Description for ErrorCodes.Forbidden</summary>
+        public const string  ErrorCodesForbiddenTitle = "Forbidden";
+        ///<summary>Jose enumeration tag for ErrorCodes.Timeout</summary>
+        public const string  ErrorCodesTimeoutTag = "Timeout";
+        ///<summary>Description for ErrorCodes.Timeout</summary>
+        public const string  ErrorCodesTimeoutTitle = "Message timeout";
+        ///<summary>Jose enumeration tag for ErrorCodes.TooManyRequests</summary>
+        public const string  ErrorCodesTooManyRequestsTag = "TooManyRequests";
+        ///<summary>Description for ErrorCodes.TooManyRequests</summary>
+        public const string  ErrorCodesTooManyRequestsTitle = "Too many requests";
+        ///<summary>Jose enumeration tag for ErrorCodes.ServiceUnavailable</summary>
+        public const string  ErrorCodesServiceUnavailableTag = "ServiceUnavailable";
+        ///<summary>Description for ErrorCodes.ServiceUnavailable</summary>
+        public const string  ErrorCodesServiceUnavailableTitle = "The service is unavailable";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration

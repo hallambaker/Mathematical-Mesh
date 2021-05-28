@@ -283,7 +283,7 @@ namespace Goedel.Mesh.Client {
                 };
             var status = MeshClient.Status(statusRequest);
 
-            status.ContainerStatus.AssertNotNull(ServerResponseInvalid.Throw);
+            status.ContainerStatus.AssertNotNull(ServerResponseInvalid.Throw, status);
 
 
             var constraintsSelects = new List<ConstraintsSelect>();

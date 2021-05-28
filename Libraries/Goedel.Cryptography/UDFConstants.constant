@@ -65,7 +65,7 @@ File AlgorithmIdentifier
         Integer RSA2048		8	"2048 bit RSA keypair"
         Integer RSA3072		9	"3072 bit RSA keypair"
         Integer RSA4096		10	"4096 bit RSA keypair"
-        Integer Reserved 11  "Reserved for IETF recommended algorithms"
+        Integer ReservedIetf 11  "Reserved for IETF recommended algorithms"
 			Reserve 255
 		Integer MeshProfileDevice		256 "Mesh device profile"
 		Integer MeshActivationDevice	257 "Mesh device activation"
@@ -73,7 +73,7 @@ File AlgorithmIdentifier
 		Integer MeshActivationAccount	259 "Mesh account activation"
 		Integer MeshProfileService		260 "Mesh service profile"
 		Integer MeshActivationService	261 "Mesh host activation"
-		Integer Reserved 262  "Reserved for future Mesh use"
+		Integer ReservedMesh 262  "Reserved for future Mesh use"
 			Reserve 511
         
 File ContentTypeValues

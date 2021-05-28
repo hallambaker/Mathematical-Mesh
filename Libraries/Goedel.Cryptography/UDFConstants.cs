@@ -1,9 +1,9 @@
 
-//  This file was automatically generated at 5/27/2021 5:37:20 PM
+//  This file was automatically generated at 5/28/2021 3:27:08 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  constant version 3.0.0.698
+//  Generator:  constant version 3.0.0.728
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -155,6 +155,82 @@ namespace Goedel.Cryptography {
         // File: AlgorithmIdentifier
 
 
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.Any</summary>
+        public const string  UdfAlgorithmIdentifierAnyTag = "Any";
+        ///<summary>Description for UdfAlgorithmIdentifier.Any</summary>
+        public const string  UdfAlgorithmIdentifierAnyTitle = "Seed MAY be used to generate keypairs for any algorithm";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.X25519</summary>
+        public const string  UdfAlgorithmIdentifierX25519Tag = "X25519";
+        ///<summary>Description for UdfAlgorithmIdentifier.X25519</summary>
+        public const string  UdfAlgorithmIdentifierX25519Title = "X25519 keypair as described in RFC7748";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.X448</summary>
+        public const string  UdfAlgorithmIdentifierX448Tag = "X448";
+        ///<summary>Description for UdfAlgorithmIdentifier.X448</summary>
+        public const string  UdfAlgorithmIdentifierX448Title = "X448 keypair as described in RFC7748";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.Ed25519</summary>
+        public const string  UdfAlgorithmIdentifierEd25519Tag = "Ed25519";
+        ///<summary>Description for UdfAlgorithmIdentifier.Ed25519</summary>
+        public const string  UdfAlgorithmIdentifierEd25519Title = "Ed25519 keypair as described in RFC8032";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.Ed448</summary>
+        public const string  UdfAlgorithmIdentifierEd448Tag = "Ed448";
+        ///<summary>Description for UdfAlgorithmIdentifier.Ed448</summary>
+        public const string  UdfAlgorithmIdentifierEd448Title = "Ed448 keypair as described in RFC8032";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.P256</summary>
+        public const string  UdfAlgorithmIdentifierP256Tag = "P256";
+        ///<summary>Description for UdfAlgorithmIdentifier.P256</summary>
+        public const string  UdfAlgorithmIdentifierP256Title = "NIST curve P-256";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.P384</summary>
+        public const string  UdfAlgorithmIdentifierP384Tag = "P384";
+        ///<summary>Description for UdfAlgorithmIdentifier.P384</summary>
+        public const string  UdfAlgorithmIdentifierP384Title = "NIST curve P-384";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.P521</summary>
+        public const string  UdfAlgorithmIdentifierP521Tag = "P521";
+        ///<summary>Description for UdfAlgorithmIdentifier.P521</summary>
+        public const string  UdfAlgorithmIdentifierP521Title = "NIST curve P-521";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA2048</summary>
+        public const string  UdfAlgorithmIdentifierRSA2048Tag = "RSA2048";
+        ///<summary>Description for UdfAlgorithmIdentifier.RSA2048</summary>
+        public const string  UdfAlgorithmIdentifierRSA2048Title = "2048 bit RSA keypair";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA3072</summary>
+        public const string  UdfAlgorithmIdentifierRSA3072Tag = "RSA3072";
+        ///<summary>Description for UdfAlgorithmIdentifier.RSA3072</summary>
+        public const string  UdfAlgorithmIdentifierRSA3072Title = "3072 bit RSA keypair";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.RSA4096</summary>
+        public const string  UdfAlgorithmIdentifierRSA4096Tag = "RSA4096";
+        ///<summary>Description for UdfAlgorithmIdentifier.RSA4096</summary>
+        public const string  UdfAlgorithmIdentifierRSA4096Title = "4096 bit RSA keypair";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.ReservedIetf</summary>
+        public const string  UdfAlgorithmIdentifierReservedIetfTag = "ReservedIetf";
+        ///<summary>Description for UdfAlgorithmIdentifier.ReservedIetf</summary>
+        public const string  UdfAlgorithmIdentifierReservedIetfTitle = "Reserved for IETF recommended algorithms";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshProfileDevice</summary>
+        public const string  UdfAlgorithmIdentifierMeshProfileDeviceTag = "MeshProfileDevice";
+        ///<summary>Description for UdfAlgorithmIdentifier.MeshProfileDevice</summary>
+        public const string  UdfAlgorithmIdentifierMeshProfileDeviceTitle = "Mesh device profile";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshActivationDevice</summary>
+        public const string  UdfAlgorithmIdentifierMeshActivationDeviceTag = "MeshActivationDevice";
+        ///<summary>Description for UdfAlgorithmIdentifier.MeshActivationDevice</summary>
+        public const string  UdfAlgorithmIdentifierMeshActivationDeviceTitle = "Mesh device activation";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshProfileAccount</summary>
+        public const string  UdfAlgorithmIdentifierMeshProfileAccountTag = "MeshProfileAccount";
+        ///<summary>Description for UdfAlgorithmIdentifier.MeshProfileAccount</summary>
+        public const string  UdfAlgorithmIdentifierMeshProfileAccountTitle = "Mesh account account";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshActivationAccount</summary>
+        public const string  UdfAlgorithmIdentifierMeshActivationAccountTag = "MeshActivationAccount";
+        ///<summary>Description for UdfAlgorithmIdentifier.MeshActivationAccount</summary>
+        public const string  UdfAlgorithmIdentifierMeshActivationAccountTitle = "Mesh account activation";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshProfileService</summary>
+        public const string  UdfAlgorithmIdentifierMeshProfileServiceTag = "MeshProfileService";
+        ///<summary>Description for UdfAlgorithmIdentifier.MeshProfileService</summary>
+        public const string  UdfAlgorithmIdentifierMeshProfileServiceTitle = "Mesh service profile";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.MeshActivationService</summary>
+        public const string  UdfAlgorithmIdentifierMeshActivationServiceTag = "MeshActivationService";
+        ///<summary>Description for UdfAlgorithmIdentifier.MeshActivationService</summary>
+        public const string  UdfAlgorithmIdentifierMeshActivationServiceTitle = "Mesh host activation";
+        ///<summary>Jose enumeration tag for UdfAlgorithmIdentifier.ReservedMesh</summary>
+        public const string  UdfAlgorithmIdentifierReservedMeshTag = "ReservedMesh";
+        ///<summary>Description for UdfAlgorithmIdentifier.ReservedMesh</summary>
+        public const string  UdfAlgorithmIdentifierReservedMeshTitle = "Reserved for future Mesh use";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -204,6 +280,22 @@ namespace Goedel.Cryptography {
         // File: KeyUses
 
 
+        ///<summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Any</summary>
+        public const string  DerivedKeyUdfDerrivedKeyUsesAnyTag = "Any";
+        ///<summary>Description for DerivedKeyUdfDerrivedKeyUses.Any</summary>
+        public const string  DerivedKeyUdfDerrivedKeyUsesAnyTitle = "Any";
+        ///<summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Encryption</summary>
+        public const string  DerivedKeyUdfDerrivedKeyUsesEncryptionTag = "Encryption";
+        ///<summary>Description for DerivedKeyUdfDerrivedKeyUses.Encryption</summary>
+        public const string  DerivedKeyUdfDerrivedKeyUsesEncryptionTitle = "Encryption";
+        ///<summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Signature</summary>
+        public const string  DerivedKeyUdfDerrivedKeyUsesSignatureTag = "Signature";
+        ///<summary>Description for DerivedKeyUdfDerrivedKeyUses.Signature</summary>
+        public const string  DerivedKeyUdfDerrivedKeyUsesSignatureTitle = "Signature";
+        ///<summary>Jose enumeration tag for DerivedKeyUdfDerrivedKeyUses.Authentication</summary>
+        public const string  DerivedKeyUdfDerrivedKeyUsesAuthenticationTag = "Authentication";
+        ///<summary>Description for DerivedKeyUdfDerrivedKeyUses.Authentication</summary>
+        public const string  DerivedKeyUdfDerrivedKeyUsesAuthenticationTitle = "Authentication";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration

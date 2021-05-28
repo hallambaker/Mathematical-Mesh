@@ -242,6 +242,36 @@
             <param name="iv">The generated initialization vector.</param>
             <param name="key">The generated key.</param>
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeErrorTag">
+            <summary>Jose enumeration tag for InitiatorMessageType.Error</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeErrorTitle">
+            <summary>Description for InitiatorMessageType.Error</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeDataTag">
+            <summary>Jose enumeration tag for InitiatorMessageType.Data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeDataTitle">
+            <summary>Description for InitiatorMessageType.Data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorHelloTag">
+            <summary>Jose enumeration tag for InitiatorMessageType.InitiatorHello</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorHelloTitle">
+            <summary>Description for InitiatorMessageType.InitiatorHello</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorExchangeTag">
+            <summary>Jose enumeration tag for InitiatorMessageType.InitiatorExchange</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorExchangeTitle">
+            <summary>Description for InitiatorMessageType.InitiatorExchange</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorCompleteTag">
+            <summary>Jose enumeration tag for InitiatorMessageType.InitiatorComplete</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorCompleteTitle">
+            <summary>Description for InitiatorMessageType.InitiatorComplete</summary>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.Constants.ToInitiatorMessageType(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -258,6 +288,30 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeErrorTag">
+            <summary>Jose enumeration tag for ResponderMessageType.Error</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeErrorTitle">
+            <summary>Description for ResponderMessageType.Error</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeDataTag">
+            <summary>Jose enumeration tag for ResponderMessageType.Data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeDataTitle">
+            <summary>Description for ResponderMessageType.Data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeResponderChallengeTag">
+            <summary>Jose enumeration tag for ResponderMessageType.ResponderChallenge</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeResponderChallengeTitle">
+            <summary>Description for ResponderMessageType.ResponderChallenge</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeResponderCompleteTag">
+            <summary>Jose enumeration tag for ResponderMessageType.ResponderComplete</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeResponderCompleteTitle">
+            <summary>Description for ResponderMessageType.ResponderComplete</summary>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.Constants.ToResponderMessageType(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -273,6 +327,42 @@
             </summary>
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesBadRequestTag">
+            <summary>Jose enumeration tag for ErrorCodes.BadRequest</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesBadRequestTitle">
+            <summary>Description for ErrorCodes.BadRequest</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesUnauthorizedTag">
+            <summary>Jose enumeration tag for ErrorCodes.Unauthorized</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesUnauthorizedTitle">
+            <summary>Description for ErrorCodes.Unauthorized</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesForbiddenTag">
+            <summary>Jose enumeration tag for ErrorCodes.Forbidden</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesForbiddenTitle">
+            <summary>Description for ErrorCodes.Forbidden</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesTimeoutTag">
+            <summary>Jose enumeration tag for ErrorCodes.Timeout</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesTimeoutTitle">
+            <summary>Description for ErrorCodes.Timeout</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesTooManyRequestsTag">
+            <summary>Jose enumeration tag for ErrorCodes.TooManyRequests</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesTooManyRequestsTitle">
+            <summary>Description for ErrorCodes.TooManyRequests</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesServiceUnavailableTag">
+            <summary>Jose enumeration tag for ErrorCodes.ServiceUnavailable</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesServiceUnavailableTitle">
+            <summary>Description for ErrorCodes.ServiceUnavailable</summary>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Constants.ToErrorCodes(System.String)">
             <summary>

@@ -35,9 +35,11 @@ namespace Goedel.XUnit {
         public PublicMeshService MeshService { get; set; }
 
 
-        public ICredentialPrivate GetInitiatorCredential() => 
-                    new MeshCredentialPrivate(ProfileDevice.Generate(), null, null, null);
-
+        public ICredentialPrivate GetInitiatorCredential() {
+            var profileDevice = ProfileDevice.Generate();
+            return new MeshCredentialPrivate(profileDevice, null, null, 
+                    profileDevice.KeyAuthentication as KeyPairAdvanced);
+            }
         public ICredentialPrivate GetResponderCredential() => 
             new MeshCredentialPrivate(null, MeshService.ConnectionDevice, null, 
                 MeshService.ActivationDevice.DeviceAuthentication);

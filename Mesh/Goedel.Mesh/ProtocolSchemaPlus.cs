@@ -74,11 +74,20 @@ namespace Goedel.Mesh {
 
             switch (exception) {
                 case ObjectIdentifierNotUnique e: {
-                    StatusDescriptionCode = "MeshAccountAlreadyRegistered";
-                    StatusExtended = 1;
+                    StatusDescriptionCode = MeshConstants.MeshServerStatusAccountRegisteredTag;
+                    StatusExtended = (int)MeshServerStatus.AccountRegistered;
                     return;
                     }
-
+                case NotAuthenticated e: {
+                    StatusDescriptionCode = MeshConstants.MeshServerStatusNotAuthorizedTag;
+                    StatusExtended = (int)MeshServerStatus.NotAuthorized;
+                    return;
+                    }
+                case NotAdministrator e: {
+                    StatusDescriptionCode = MeshConstants.MeshServerStatusNotAdministratorTag;
+                    StatusExtended = (int)MeshServerStatus.NotAdministrator;
+                    return;
+                    }
                 default:
                     break;
                 }

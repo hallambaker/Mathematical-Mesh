@@ -278,7 +278,7 @@ namespace Goedel.XUnit {
             var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, "device3",
                     AccountAlice, "device2");
 
-            Xunit.Assert.Throws<ConnectionStillPending>(() => contextOnboardPending.Sync());
+            Xunit.Assert.Throws<ServerResponseInvalid>(() => contextOnboardPending.Sync());
             }
 
         }
