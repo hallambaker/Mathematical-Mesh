@@ -96,8 +96,14 @@
              Represents a Mesh Acco
              </summary>
         </member>
+        <member name="M:Goedel.Mesh.Server.AccountUser.GetProfileAccount">
+            <summary>Cached convenience accessor for <see cref="T:Goedel.Mesh.ProfileAccount"/></summary>
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountUser.ProfileUser">
             <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountUser.ProfileUser"/></summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser.ProfileGroup">
+            <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountUser.ProfileGroup"/></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountUser.#ctor">
             <summary>

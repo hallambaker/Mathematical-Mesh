@@ -538,7 +538,7 @@ namespace Goedel.Mesh.Server {
 
         bool MessagePostLocal(string recipient, DareEnvelope dareMessage) {
 
-            var recipientAccount = GetAccountUnverified(recipient);
+            using var recipientAccount = GetAccountUnverified(recipient);
             recipientAccount.PostInbound(dareMessage);
 
             return true;
@@ -593,13 +593,18 @@ namespace Goedel.Mesh.Server {
                     result = containerEntry?.JsonObject as AccountEntry;
                     result.AssertNotNull(MeshUnknownAccount.Throw);
 
+                    Screen.WriteLine($"LOCK {result.AccountAddress}");
+
+
                     System.Threading.Monitor.Enter(result, ref locked);
                     return result;
                     }
                 }
             catch {
                 if (locked) {
+                    Screen.WriteLine($"UNLOCK {result.AccountAddress}");
                     System.Threading.Monitor.Exit(result);
+
                     }
                 return null;
                 }

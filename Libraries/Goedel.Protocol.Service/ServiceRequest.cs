@@ -140,6 +140,9 @@ namespace Goedel.Protocol.Service {
 
             byte[] responseBytes = null;
             if ((stream is RudStreamService rudStreamService) && (packetClient?.Payload.Length > 0)) {
+
+                Screen.WriteLine($"Begin dispatch");
+
                 try {
                     response = rudStreamService.JpcInterface.Dispatch(rudStreamService, reader);
                     }
@@ -147,6 +150,8 @@ namespace Goedel.Protocol.Service {
                     // here make error response wrapper
 
                     }
+                Screen.WriteLine($"End dispatch");
+
 
                 responseBytes = response.GetBytes(true, ObjectEncoding);
                 }

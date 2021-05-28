@@ -44,8 +44,16 @@ namespace Goedel.Mesh.Server {
     public partial class AccountUser {
 
 
+        ///<summary>Cached convenience accessor for <see cref="ProfileAccount"/></summary>
+        public ProfileAccount GetProfileAccount() => EnvelopedProfileUser.Decode();
+
+
         ///<summary>Cached convenience accessor for <see cref="ProfileUser"/></summary>
-        public ProfileUser ProfileUser => EnvelopedProfileUser.Decode() as ProfileUser;
+        public ProfileUser ProfileUser => GetProfileAccount() as ProfileUser;
+
+
+        ///<summary>Cached convenience accessor for <see cref="ProfileGroup"/></summary>
+        public ProfileGroup ProfileGroup => GetProfileAccount() as ProfileGroup;
 
 
         /// <summary>
@@ -66,7 +74,18 @@ namespace Goedel.Mesh.Server {
 
 
         public override void Verify(MeshVerifiedAccount meshVerifiedAccount) {
-            meshVerifiedAccount.Validate(ProfileUser);
+            var profile = GetProfileAccount();
+
+            switch (profile) {
+                case ProfileUser profileUser: {
+                    meshVerifiedAccount.Validate(profileUser);
+                    break;
+                    }
+                case ProfileGroup profileGroup: {
+                    meshVerifiedAccount.Validate(profileGroup);
+                    break;
+                    }
+                }
             }
         }
 

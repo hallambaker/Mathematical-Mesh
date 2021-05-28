@@ -45,7 +45,10 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Free resources associated with the handle. In particular the lock on the account entry.
         /// </summary>
-        protected override void Disposing() => System.Threading.Monitor.Exit(AccountEntry);
+        protected override void Disposing() {
+            Screen.WriteLine($"UnLOCK {AccountEntry.AccountAddress}");
+            System.Threading.Monitor.Exit(AccountEntry);
+            }
 
         /// <summary>
         /// Base constructor.

@@ -40,8 +40,17 @@ namespace Goedel.Mesh {
             }
 
 
-        public virtual void Validate(ProfileAccount profile) {
+        public virtual void Validate(ProfileUser profile) {
             MeshCredential.ConnectionDevice.Validate(profile);
+            }
+
+
+        public virtual void Validate(ProfileGroup profile) {
+            //MeshCredential.ConnectionDevice.Validate(profile);
+
+
+            // stub this out for now.
+
             }
 
 

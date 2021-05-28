@@ -39,15 +39,17 @@ namespace Scratchpad {
     // ToDo: Server admin permissions
 
 
+    // Refactor: Convert all DareEnvelope to Enveloped<type> and use Decode for cached accessor
+
 
     partial class Program {
         static void Main() {
             Screen.WriteLine($"Start test  {DateTime.Now}");
 
 
-            TestService.Test().MeshCatalogGroup();
-            //using var t1 = ShellTestsHTTP.Test();
-            //t1.TestMessageContactRemote();
+            //TestService.Test().MeshCatalogGroup();
+            using var t1 = ShellTestsHTTP.Test();
+            t1.TestMessageContactRemote();
 
 
 
