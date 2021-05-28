@@ -14,4 +14,9 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Host\Goedel.Mesh.Host.csproj" />
+  </ItemGroup>
+
 </Project>

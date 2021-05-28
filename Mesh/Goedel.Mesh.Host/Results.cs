@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2021 6:17:56 PM
+//  This file was automatically generated at 5/28/2021 6:14:25 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -45,16 +45,19 @@ using Goedel.Protocol;
 #pragma warning disable IDE1006
 
 
+using Goedel.Mesh;
+using Goedel.Mesh.Client;
+using Goedel.Cryptography.Dare;
 
 
-namespace Goedel.XUnit {
+namespace Goedel.Mesh.Host {
 
 
 	/// <summary>
 	///
-	/// Classes that represent data written to the portal log.
+	/// Classes to be used to test serialization an deserialization.
 	/// </summary>
-	public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
+	public abstract partial class HostResult : global::Goedel.Protocol.JsonObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -64,7 +67,7 @@ namespace Goedel.XUnit {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "TestSchema";
+		public new const string __Tag = "HostResult";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -73,8 +76,7 @@ namespace Goedel.XUnit {
 		static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 				new Dictionary<string, JsonFactoryDelegate> () {
 
-			{"TestEntry", TestEntry._Factory},
-			{"TestItem", TestItem._Factory}			};
+			{"Result", Result._Factory}			};
 
         [ModuleInitializer]
         internal static void _Initialize() => AddDictionary(ref _tagDictionary);
@@ -98,20 +100,21 @@ namespace Goedel.XUnit {
 
 		// Transaction Classes
 	/// <summary>
-	///
-	/// An entry in the test log
 	/// </summary>
-	abstract public partial class TestEntry : TestSchema {
+	public partial class Result : HostResult {
+		bool								__Success = false;
+		private bool						_Success;
         /// <summary>
-        ///Time the pending item was created.
         /// </summary>
 
-		public virtual DateTime?						Created  {get; set;}
+		public virtual bool						Success {
+			get => _Success;
+			set {_Success = value; __Success = true; }
+			}
         /// <summary>
-        ///Time the pending item was last modified.
         /// </summary>
 
-		public virtual DateTime?						Modified  {get; set;}
+		public virtual string						Reason  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -121,136 +124,13 @@ namespace Goedel.XUnit {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "TestEntry";
-
-		/// <summary>
-        /// Factory method. Throws exception as this is an abstract class.
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => throw new CannotCreateAbstract();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (Created != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Created", 1);
-					_writer.WriteDateTime (Created);
-				}
-			if (Modified != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Modified", 1);
-					_writer.WriteDateTime (Modified);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new TestEntry FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as TestEntry;
-				}
-			throw new CannotCreateAbstract();
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "Created" : {
-					Created = jsonReader.ReadDateTime ();
-					break;
-					}
-				case "Modified" : {
-					Modified = jsonReader.ReadDateTime ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	///
-	/// Test account...
-	/// </summary>
-	public partial class TestItem : TestEntry {
-        /// <summary>
-        ///Assigned account identifier, e.g. 'alice@example.com'. Account names are 
-        ///not case sensitive.
-        /// </summary>
-
-		public virtual string						AccountID  {get; set;}
-        /// <summary>
-        ///Fingerprint of associated user profile
-        /// </summary>
-
-		public virtual string						UserProfileUDF  {get; set;}
-        /// <summary>
-        ///Status of the account, valid values are 'Open', 'Closed',
-        ///'Suspended'
-        /// </summary>
-
-		public virtual string						Status  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "TestItem";
+		public new const string __Tag = "Result";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new TestItem();
+		public static new JsonObject _Factory () => new Result();
 
 
         /// <summary>
@@ -278,21 +158,15 @@ namespace Goedel.XUnit {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((TestEntry)this).SerializeX(_writer, false, ref _first);
-			if (AccountID != null) {
+			if (__Success){
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("AccountID", 1);
-					_writer.WriteString (AccountID);
+				_writer.WriteToken ("Success", 1);
+					_writer.WriteBoolean (Success);
 				}
-			if (UserProfileUDF != null) {
+			if (Reason != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("UserProfileUDF", 1);
-					_writer.WriteString (UserProfileUDF);
-				}
-			if (Status != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Status", 1);
-					_writer.WriteString (Status);
+				_writer.WriteToken ("Reason", 1);
+					_writer.WriteString (Reason);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -305,15 +179,15 @@ namespace Goedel.XUnit {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new TestItem FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new Result FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as TestItem;
+				return Out as Result;
 				}
-		    var Result = new TestItem ();
+		    var Result = new Result ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -327,20 +201,15 @@ namespace Goedel.XUnit {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "AccountID" : {
-					AccountID = jsonReader.ReadString ();
+				case "Success" : {
+					Success = jsonReader.ReadBoolean ();
 					break;
 					}
-				case "UserProfileUDF" : {
-					UserProfileUDF = jsonReader.ReadString ();
-					break;
-					}
-				case "Status" : {
-					Status = jsonReader.ReadString ();
+				case "Reason" : {
+					Reason = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}

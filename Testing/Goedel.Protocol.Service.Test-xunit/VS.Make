@@ -21,13 +21,12 @@ LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Protocol.Debug.dll\
     Goedel.Protocol.Presentation.dll\
-    Goedel.Protocol.Session.dll\
+    Goedel.Protocol.Service.dll\
     Goedel.Protocol.dll\
     Goedel.Test.Core.dll\
     Goedel.Test.dll\
     Goedel.Mesh.Management.dll\
     Goedel.Mesh.Server.dll\
-    Goedel.Mesh.Session.dll\
     Goedel.Mesh.dll\
     Goedel.Mesh.Test.dll
 

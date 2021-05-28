@@ -48,5 +48,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Protocol.Session.dll
+	powershell publishtarget Goedel.Protocol.Service.dll
 

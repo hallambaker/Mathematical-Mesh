@@ -3,6 +3,8 @@ using Goedel.Mesh.Shell;
 using Goedel.Cryptography.Core;
 
 namespace meshman {
+
+    ///<summary>Main calling program.</summary> 
     public class Program {
 
         static Program() => Initialization.Initialized.AssertTrue(Internal.Throw);

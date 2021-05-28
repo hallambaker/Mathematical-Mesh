@@ -14,7 +14,7 @@ using System.Threading;
 using Goedel.Mesh;
 using Goedel.Mesh.Management;
 using Goedel.Protocol.Service;
-
+using Goedel.Test;
 using Xunit;
 using System.IO;
 
@@ -142,12 +142,6 @@ namespace Goedel.XUnit {
 
             }
 
-        public void TestCreateGroup() {
-            throw new NYI();
-            }
-
-
-
         static ContextUser TestCompletionSuccess(ContextMeshPending contextMeshPending) {
             var contextUser = contextMeshPending.Complete();
             contextUser.Sync(); // Will fail if cannot complete
@@ -157,6 +151,101 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestImpersonationConnect() => throw new NYI();
+
+
+        [Fact]
+        public void TestCreateGroup() => GroupTest();
+
+        [Fact]
+        public void TestImpersonationConfirm() => throw new NYI();
+        [Fact]
+        public void TestImpersonationGroup() {
+
+            var (contextAlice, contextBob, contextGroup) = GroupTest();
+
+            // impersonate Alice, can't do admin thing
+
+
+
+            // impersonate Bob, can't get decryption key
+
+
+
+            throw new NYI();
+
+            }
+
+
+        (ContextUser, ContextUser, ContextGroup) GroupTest() {
+            using var testEnvironmentCommon = SetTestEnvironment();
+            var plaintext = Platform.GetRandomBytes(1000);
+
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+            var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                    DeviceBobAdmin, AccountBob, "main");
+
+            Exchange(contextAccountAlice, contextAccountBob);
+
+            // Generate a recryption group
+            var contextGroup = contextAccountAlice.CreateGroup(AccountGroup);
+
+            var groupList = new List<string>() { AccountGroup };
+            // Encrypt to the group
+            var envelope = contextAccountAlice.DareEncode(plaintext, recipients: groupList, sign: true);
+
+            // attempt to decrypt with Alice's key
+            // this should fail as Alice doesn't have the decryption key.
+
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
+                contextAccountAlice.DareDecode(envelope, verify: true));
+
+            // Create a member entry for Alice
+            contextGroup.Add(AccountAlice);
+            contextAccountAlice.Sync();
+            contextAccountAlice.ProcessAutomatics();
+
+            // need to sync messages here to accept the group addition.
+
+            // this should now succeed
+            var decrypt2 = contextAccountAlice.DareDecode(envelope, verify: true);
+            decrypt2.IsEqualTo(plaintext).TestTrue();
+
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
+              contextAccountBob.DareDecode(envelope, verify: true));
+
+            // Create a member entry fo Bob
+            contextGroup.Add(AccountBob);
+
+            var decrypt3 = contextAccountAlice.DareDecode(envelope, verify: true);
+            decrypt3.IsEqualTo(plaintext).TestTrue();
+
+            // Create a member entry fo Bob
+            contextGroup.Delete(AccountBob);
+
+            var decrypt4 = contextAccountAlice.DareDecode(envelope, verify: true);
+            decrypt4.IsEqualTo(plaintext).TestTrue();
+
+
+            return (contextAccountAlice, contextAccountBob, contextGroup);
+            }
+
+
+        public static bool Exchange(ContextUser contextAccountAlice, ContextUser contextAccountBob) {
+            contextAccountBob.ContactRequest(AccountAlice);
+            var sync = contextAccountAlice.Sync();
+
+
+            var fromBob = contextAccountAlice.GetPendingMessageContactRequest();
+            contextAccountAlice.Process(fromBob);
+            var syncBob = contextAccountBob.Sync();
+
+            var fromAlice = contextAccountBob.GetPendingMessageContactRequest();
+            contextAccountBob.Process(fromAlice);
+
+            return true;
+            }
+
 
         [Theory]
         [InlineData(DataValidity.CorruptSigner)]
@@ -201,10 +290,7 @@ namespace Goedel.XUnit {
                 }
             }
 
-        [Fact]
-        public void TestImpersonationConfirm() => throw new NYI();
-        [Fact]
-        public void TestImpersonationGroup() => throw new NYI();
+
 
         [Fact]
         public void TestDeviceDeletion() {

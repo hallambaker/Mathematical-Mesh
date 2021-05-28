@@ -24,7 +24,9 @@ namespace Goedel.XUnit {
         public string DeviceAliceAdmin = "Alice Admin";
         static string AccountAlice = "alice@example.com";
         static string AccountMallet = "mallet@example.com";
-
+        public string DeviceBobAdmin = "Bob Admin";
+        static string AccountBob = "bob@example.com";
+        static string AccountGroup = "groupw@example.com";
         public ContextUser ContextInitiator { get; set;  }
 
         public Mesh.Connection ConnectionInnitiator => ContextInitiator.Connection;

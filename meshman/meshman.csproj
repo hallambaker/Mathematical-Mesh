@@ -14,6 +14,11 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\hallam\Work\mmm\meshman\xml\meshman.xml</DocumentationFile>
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
     <ProjectReference Include="..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />

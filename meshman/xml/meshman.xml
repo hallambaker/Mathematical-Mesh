@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>meshman</name>
+    </assembly>
+    <members>
+        <member name="T:meshman.Program">
+            <summary>Main calling program.</summary> 
+        </member>
+    </members>
+</doc>

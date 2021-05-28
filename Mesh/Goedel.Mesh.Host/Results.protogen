@@ -1,0 +1,17 @@
+﻿Protocol Goedel.Mesh.Host HostResult HostResult
+	Using Goedel.Mesh
+	Using Goedel.Mesh.Client
+	Using Goedel.Cryptography.Dare
+
+	Description
+		|Classes to be used to test serialization an deserialization.
+
+	Structure Result
+		Boolean			Success
+		String			Reason
+
+
+
+
+
+		
