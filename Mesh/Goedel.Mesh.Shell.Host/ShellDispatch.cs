@@ -27,15 +27,17 @@ namespace Goedel.Mesh.Shell.Host {
 
     public partial class CommandLineInterpreter {
 
+        ///<summary>Dictionary of service descriptions.</summary> 
+        public Dictionary<string, ServiceDescription>
+            ServiceDescriptionDictionary { get; } = new();
+
+
         /// <summary>
         /// Add a service provider to the hosting options.
         /// </summary>
         /// <param name="serviceDescription">The service description.</param>
-        public void AddService(ServiceDescription serviceDescription) {
-            this.Future();
-            this.Future();
-
-            }
+        public void AddService(ServiceDescription serviceDescription) => 
+            ServiceDescriptionDictionary.Add(serviceDescription.WellKnown, serviceDescription);
 
         }
     }
