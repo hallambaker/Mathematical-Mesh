@@ -28,13 +28,13 @@ LinkFiles = \
 
 ToolTargets = \
 	Exceptions.cs\
-	meshman.cs\
+	anyhost.cs\
 	Results.cs
 Exceptions.cs : Exceptions.Exceptional 
 	exceptional Exceptions.Exceptional  /cs  Exceptions.cs
 
-meshman.cs : meshman.command 
-	commandparse meshman.command  /cs  meshman.cs
+anyhost.cs : anyhost.command 
+	commandparse anyhost.command  /cs  anyhost.cs
 
 Results.cs : Results.protogen 
 	protogen Results.protogen  /cs  Results.cs

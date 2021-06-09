@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 5/28/2021 6:17:51 PM
+//  This file was automatically generated at 6/9/2021 5:03:28 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -19,7 +19,7 @@
 
 
 #pragma warning disable IDE1006 // Naming Styles
-namespace Goedel.Mesh.Shell {
+namespace Goedel.Mesh.Shell.ServiceAdmin {
 
 
 

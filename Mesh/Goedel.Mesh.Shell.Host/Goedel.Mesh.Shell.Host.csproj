@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj" />
     <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
   </ItemGroup>
 
@@ -39,8 +40,8 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="meshman.cs">
-      <DependentUpon>meshman.command</DependentUpon>
+    <Compile Update="anyhost.cs">
+      <DependentUpon>anyhost.command</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -51,8 +52,8 @@
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>Exceptional</Generator>
     </None>
-    <None Update="meshman.command">
-      <LastGenOutput>meshman.cs</LastGenOutput>
+    <None Update="anyhost.command">
+      <LastGenOutput>anyhost.cs</LastGenOutput>
       <Generator>CommandCS</Generator>
     </None>
     <None Update="Results.protogen">

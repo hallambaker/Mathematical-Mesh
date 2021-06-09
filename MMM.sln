@@ -190,7 +190,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Shell.Host", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Shell.ServiceAdmin", "Mesh\Goedel.Mesh.Shell.ServiceAdmin\Goedel.Mesh.Shell.ServiceAdmin.csproj", "{BAC4BA76-B434-4EB0-90F8-C9727DB2816F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Services", "Mesh\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.Services.csproj", "{91B1D80B-02D2-4168-A8DB-5DE3744D7A0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.ServiceAdmin", "Mesh\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj", "{91B1D80B-02D2-4168-A8DB-5DE3744D7A0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

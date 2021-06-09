@@ -1,8 +1,8 @@
 ﻿using Goedel.Utilities;
-using Goedel.Mesh.Host;
+using Goedel.Mesh.Shell.ServiceAdmin;
 using Goedel.Cryptography.Core;
 
-namespace meshhost {
+namespace serviceadmin {
     ///<summary>Main calling program.</summary> 
     public class Program {
 

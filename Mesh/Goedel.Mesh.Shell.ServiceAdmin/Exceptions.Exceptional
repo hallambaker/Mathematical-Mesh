@@ -1,4 +1,4 @@
-﻿Namespace Goedel.Mesh.Shell
+﻿Namespace Goedel.Mesh.Shell.ServiceAdmin
     
 	Exception MeshShellException
         Console "Unknown error occured."

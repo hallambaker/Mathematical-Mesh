@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+    <ProjectReference Include="..\..\..\Mesh\Goedel.Mesh.Shell.ServiceAdmin\Goedel.Mesh.Shell.ServiceAdmin.csproj" />
   </ItemGroup>
 
 </Project>

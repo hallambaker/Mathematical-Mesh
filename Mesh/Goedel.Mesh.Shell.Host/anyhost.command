@@ -1,4 +1,4 @@
-﻿Class Goedel.Mesh.Shell.ServiceAdmin Shell
+﻿Class Goedel.Mesh.Shell.Host Shell
 	Library
 	Return		ShellResult
 

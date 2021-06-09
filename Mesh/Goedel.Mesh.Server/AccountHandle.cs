@@ -59,17 +59,17 @@ namespace Goedel.Mesh.Server {
         }
 
 
-    /// <summary>
-    /// Unverified account accessor, only has access to spools
-    /// </summary>
-    public class AccountHandleGroup : AccountHandle {
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="accountEntry">The account entry to create a handle for.</param>
-        public AccountHandleGroup(AccountGroup accountEntry) : base(accountEntry) {
-            }
-        }
+    ///// <summary>
+    ///// Unverified account accessor, only has access to spools
+    ///// </summary>
+    //public class AccountHandleGroup : AccountHandle {
+    //    /// <summary>
+    //    /// Constructor.
+    //    /// </summary>
+    //    /// <param name="accountEntry">The account entry to create a handle for.</param>
+    //    public AccountHandleGroup(AccountGroup accountEntry) : base(accountEntry) {
+    //        }
+    //    }
 
     /// <summary>
     /// Unverified account accessor, only has access to spools

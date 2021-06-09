@@ -89,24 +89,24 @@ namespace Goedel.Mesh.Server {
             }
         }
 
-    public partial class AccountGroup {
+    //public partial class AccountGroup {
 
-        /// <summary>
-        /// Default constructor for serialization.
-        /// </summary>
-        public AccountGroup() {
-            }
-        /// <summary>
-        /// Constructor creating an Account entry from the request <paramref name="request"/>.
-        /// </summary>
-        /// <param name="request">The account creation request.</param>
-        public AccountGroup(BindRequest request) {
-            AccountAddress = request.AccountAddress;
-            EnvelopedProfileGroup = request.EnvelopedProfileAccount;
-            Directory = AccountAddress;
-            }
+    //    /// <summary>
+    //    /// Default constructor for serialization.
+    //    /// </summary>
+    //    public AccountGroup() {
+    //        }
+    //    /// <summary>
+    //    /// Constructor creating an Account entry from the request <paramref name="request"/>.
+    //    /// </summary>
+    //    /// <param name="request">The account creation request.</param>
+    //    public AccountGroup(BindRequest request) {
+    //        AccountAddress = request.AccountAddress;
+    //        EnvelopedProfileGroup = request.EnvelopedProfileAccount;
+    //        Directory = AccountAddress;
+    //        }
 
-        public override void Verify(MeshVerifiedAccount meshVerifiedAccount) => throw new NYI();
+    //    public override void Verify(MeshVerifiedAccount meshVerifiedAccount) => throw new NYI();
 
-        }
+    //    }
     }

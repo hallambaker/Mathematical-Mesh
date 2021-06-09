@@ -23,6 +23,7 @@
 using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
+using Goedel.Mesh.ServiceAdmin;
 
 using System.Collections.Generic;
 namespace Goedel.Mesh.Server {
@@ -54,6 +55,21 @@ namespace Goedel.Mesh.Server {
         /// The mesh persistence provider.
         /// </summary>
         public MeshPersist Mesh  { get; set; }
+
+
+        /// <summary>
+        /// Factory method, the signature is pro tem and will be changed later on.
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <param name="serviceDirectory"></param>
+        /// <returns></returns>
+        public static Goedel.Protocol.JpcInterface Factory(ServiceConfiguration serviceConfiguration,
+            HostConfiguration hostConfiguration) => throw new NYI();
+
+
+        public static ServiceDescription ServiceDescription =>
+            new ServiceDescription(WellKnown, Factory);
+
 
         /// <summary>
         /// The mesh service dispatcher.

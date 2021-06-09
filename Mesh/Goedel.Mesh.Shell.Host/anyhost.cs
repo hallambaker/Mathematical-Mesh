@@ -21,7 +21,7 @@ using Goedel.Utilities;
 #pragma warning disable IDE1006
 #pragma warning disable CS1591
 
-namespace Goedel.Mesh.Shell.ServiceAdmin {
+namespace Goedel.Mesh.Shell.Host {
 
 	// Enumeration type
 	public enum EnumReporting {
