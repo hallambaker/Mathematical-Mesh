@@ -15,8 +15,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Host\Goedel.Mesh.Host.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+    <ProjectReference Include="..\..\..\Mesh\Goedel.Mesh.Host\Goedel.Mesh.Host.csproj" />
+    <ProjectReference Include="..\..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
   </ItemGroup>
 
 </Project>

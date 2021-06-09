@@ -1,0 +1,42 @@
+﻿Namespace Goedel.Mesh.Shell
+    
+	Exception MeshShellException
+        Console "Unknown error occured."
+		Description
+			|Generic error in Mesh Shell library
+
+
+		Exception DidNotMatchExpectedValue
+			Console "The calculated fingerprint did not match the expected value."
+			Description
+				|The calculated fingerprint did not match the expected value.
+
+		Exception ProfileFingerprintInvalid
+			Console "The identifier is not a valid profile fingerprint"
+
+		Exception AccountNotFound
+			Console "Profile not found"
+			Description
+				|Account not valid
+
+		Exception ProfileNotFound
+			Console "No profile defined."
+			Description
+				|Account not valid
+
+
+		Exception DirectoryNotFound
+			Console "The directory could not be found"
+			Description
+				|The directory could not be found
+
+		Exception FileNotFound
+			Console "The file could not be found"
+			Description
+				|The directory could not be found
+
+		Exception CommandNotImplemented
+			Console "The command [{0}] is not yet implemented"
+
+		Exception OptionNotImplemented
+			Console "The option [{1}] on command [{0}] is not yet implemented"

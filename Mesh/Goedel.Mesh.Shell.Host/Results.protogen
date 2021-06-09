@@ -1,0 +1,238 @@
+﻿Protocol Goedel.Mesh.Shell ShellResult ShellResult
+	Using Goedel.Mesh
+	Using Goedel.Mesh.Client
+	Using Goedel.Cryptography.Dare
+
+	Description
+		|Classes to be used to test serialization an deserialization.
+
+	Structure Result
+		Boolean			Success
+		String			Reason
+
+
+	Structure ResultKey
+		Inherits		Result
+		String			Key
+		String			Identifier
+		String			Shares
+			Multiple
+
+	Structure ResultDigest
+		Inherits		Result
+		String			Digest
+		String			Key
+		Boolean			Verified		
+
+	Structure ResultFile
+		Inherits		Result
+		String			Filename
+		Integer			TotalBytes
+		Boolean			Verified
+	Structure ResultListLog
+		Inherits		Result
+		String			Filename
+		Integer			Count
+
+	Structure ResultLog
+		Inherits		Result
+		Integer			Count
+
+	Structure ResultArchive
+		Inherits			Result
+		Struct FileEntry	Entries
+			Multiple
+		Integer			Frames
+		Integer			Deleted
+		Integer			IndexFrame	
+
+	Structure ResultFileDare
+		Inherits		ResultFile
+		Struct DareEnvelope Envelope
+
+
+
+	Structure ResultFileEARL
+		Inherits		Result
+		String			Source
+		String			Created
+		String			URI
+
+
+
+	Structure ResultDump
+		Inherits		Result
+		TStruct CatalogedEntry CatalogedEntries
+			Multiple
+
+	Structure ResultList
+		Inherits		Result
+		Struct CatalogedDevice CatalogedDevices
+			Multiple
+		TStruct Assertion Profiles
+			Multiple
+
+	Structure ResultAccountConnect
+		Inherits		Result
+		Struct ProfileDevice				ProfileDevice
+
+	Structure ResultPublish
+		Inherits							ResultCreateDevice
+		String								Uri
+
+
+	Structure ResultPublishDevice
+		Inherits							ResultCreateDevice
+		String								Uri
+		String								FileName
+		Struct ProfileDevice				ProfileDevice
+		Struct DevicePreconfiguration		DevicePreconfiguration
+
+	Structure ResultCreateDevice
+		Inherits							Result
+		Boolean								Default
+		String								DeviceUDF
+		Struct CatalogedDevice				CatalogedDevice
+
+	Structure ResultCreatePersonal
+		Inherits							ResultCreateAccount
+		String								MeshUDF
+
+
+	Structure ResultCreateAccount
+		Inherits							ResultCreateDevice
+		Struct ProfileAccount				ProfileAccount
+		Struct ActivationDevice				ActivationDevice
+	
+
+	Structure ResultDeleteAccount
+		Inherits							ResultCreateDevice
+		String								UDF
+
+
+	Structure ResultRegisterService
+		Inherits							ResultCreateAccount
+		String								AccountAddress
+
+	Structure ResultRecover
+		Inherits		ResultCreatePersonal
+
+	// Mesh
+
+	Structure ResultStatus
+		Inherits					Result
+		Struct 	StatusResponse					StatusResponse
+
+
+	Structure ResultSync
+		Inherits					Result
+		Integer						Fetched
+		Integer						ProcessedResults
+		TStruct ProcessResult		ProcessResults
+			Multiple
+
+	Structure ResultEscrow
+		Inherits		Result
+		String			Service
+		String			Shares
+			Multiple
+
+
+
+	Structure ResultMachine
+		Inherits		Result
+		Struct CatalogedMachine CatalogedMachines
+			Multiple
+
+	// Account
+	Structure ResultPIN
+		Inherits					Result
+		Struct MessagePin			MessagePIN
+		String						Uri
+
+	Structure ResultHello
+		Inherits		Result
+		Struct MeshHelloResponse Response
+
+
+	// Catalog commands
+
+	Structure ResultSequence 
+		Inherits		Result
+		Struct LogEntry Entries
+	
+	Structure LogEntry
+		String			Key
+		Integer			Length
+		Binary			Digest
+		DateTime		Recorded
+		Boolean			Encrypted
+		Boolean			Signed
+		Boolean			KeyExchange
+
+
+	Structure ResultEntry
+		Inherits		Result
+		TStruct CatalogedEntry CatalogEntry
+	Structure ResultEntrySent
+		Inherits		Result
+		TStruct CatalogedEntry CatalogEntry
+		Struct Message Message
+	Structure ResultMail
+		Inherits		ResultEntry
+	Structure ResultSSH
+		Inherits		ResultEntry
+
+	Structure ResultGroupCreate
+		Inherits		ResultEntry
+
+
+	// Message commands
+
+	Structure ResultSent
+		Inherits		Result
+		Struct			Message Message
+		String			Status
+
+	Structure ResultPending
+		Inherits		Result
+		Struct Message Messages
+			Multiple
+
+	Structure ResultAuthorize
+		Inherits		Result
+		TStruct ProcessResult Messages
+			Multiple
+
+	Structure ResultProcess
+		Inherits		Result
+		Struct Message			ProcessResult
+
+	Structure ResultConnect
+		Inherits					Result
+		TStruct Profile			Profile
+		Struct CatalogedMachine		CatalogedMachine
+		Struct ActivationDevice		ActivationDevice
+		Struct ActivationAccount	ActivationAccount
+		Struct RequestConnection	RequestConnection
+        Struct AcknowledgeConnection AcknowledgeConnection
+		Struct RespondConnection	RespondConnection
+
+	Structure ResultTransactionRequest
+		Inherits		Result
+		String			Identifier
+
+
+	Structure ResultReceived
+		Inherits		Result
+		String			Status
+		Struct Message Message
+
+
+
+
+
+
+
+
+		

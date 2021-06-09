@@ -20,7 +20,9 @@
 		String AccountAddress
 			Description
 				|The service account to bind to.
-
+		Integer Quota
+			Description
+				|The quota assigned to this user in KB
 		String Status
 			Description
 				|The profile status. Valid values are "Pending", "Connected", "Blocked"
@@ -34,11 +36,3 @@
 			Description
 				|The signed assertion describing the account.
 
-	Structure AccountGroup
-		Inherits AccountEntry
-		Description
-			|Represents a Mesh Acco
-		Struct Enveloped<ProfileAccount> EnvelopedProfileGroup
-			Description
-				|The persistent profile that will be used to validate changes to the
-				|account assertion.

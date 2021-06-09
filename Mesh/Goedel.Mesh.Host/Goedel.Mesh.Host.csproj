@@ -35,8 +35,8 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Results.cs">
-      <DependentUpon>Results.protogen</DependentUpon>
+    <Compile Update="HostConfig.cs">
+      <DependentUpon>HostConfig.gdl</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -50,9 +50,9 @@
       <LastGenOutput>meshhost.cs</LastGenOutput>
       <Generator>CommandCS</Generator>
     </None>
-    <None Update="Results.protogen">
-      <LastGenOutput>Results.cs</LastGenOutput>
-      <Generator>ProtoGen</Generator>
+    <None Update="HostConfig.gdl">
+      <LastGenOutput>HostConfig.cs</LastGenOutput>
+      <Generator>Goedel3</Generator>
     </None>
   </ItemGroup>
   

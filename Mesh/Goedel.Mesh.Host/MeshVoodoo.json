@@ -1,0 +1,34 @@
+﻿{
+	"Service": {
+		"Id": "MathMesh",
+		"Description": "Example Mesh service config on one host",
+		"Hosts": [ "Voodoo" ],
+		"Protocol": "mmm",
+		"Addresses": [ "mathmesh.com", "@mathmesh" ],
+	}
+}
+{
+	"Host": {
+		"Id": "Voodoo",
+		"Description": "The host to run the service",
+		"Role": [ "Fixed" ],
+		"Directory": "Data/Mesh",
+		"IP": [ "192.168.1.21:9999", "10.1.2.3:9998" ],
+		"Log": [
+			{
+				"File": "errors.log",
+				"Event": [ "Error" ],
+				"Roll": "1d"
+			}
+		],
+		"Remote": [
+			{
+				"Uri": "mlog:offsite.example.com",
+				"Event": [ "Error" ],
+				"Roll": "1d"
+			}
+		],
+		"Storage": 100,
+		"Load": 100
+	}
+}

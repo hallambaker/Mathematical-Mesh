@@ -1,0 +1,21 @@
+﻿MeshExample: Service
+  // Example Mesh service config on one host
+  On Voodoo
+  ProfileUdf ajkh-dkjh
+  Protocol mmm
+
+Voodoo: Host 
+  // The host to run the service
+  ProfileUdf ajkh-dkjh
+  Directory Data/Mesh
+  IP 192.168.1.21:9999
+  IP 10.1.2.3:9998
+  Log 
+    File errors.log
+    Event Error
+    Roll 1d
+  Remote 
+    Uri mlog:offsite.example.com
+    Event Append
+  Capacity 100
+  Load 100

@@ -234,11 +234,6 @@
       <Project>{602358c6-28b7-446d-86d3-02b3fd1b3d6c}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Services\Goedel.Mesh.Services.csproj">
-      <Name>Goedel.Mesh.Services</Name>
-      <Project>{1c4ea25c-e762-4470-8381-fd2537d854d3}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj">
       <Name>Goedel.Mesh.Shell</Name>
       <Project>{0e631986-5213-4fb5-b4ca-09488ea5c4b5}</Project>

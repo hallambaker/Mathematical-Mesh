@@ -235,10 +235,10 @@ namespace Goedel.Mesh.Server {
                 };
 
             switch (AccountEntry) {
-                case AccountGroup _: {
-                    result.Add(GetStatusStore(CatalogMember.Label));
-                    break;
-                    }
+                //case AccountGroup _: {
+                //    result.Add(GetStatusStore(CatalogMember.Label));
+                //    break;
+                //    }
 
                 case Goedel.Mesh.Server.AccountUser _: {
                     result.Add(GetStatusStore(CatalogCredential.Label));

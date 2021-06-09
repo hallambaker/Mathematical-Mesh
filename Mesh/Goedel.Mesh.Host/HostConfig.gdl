@@ -1,0 +1,89 @@
+﻿Copyright "2021" "Threshold Secrets LLC." MITLicense
+
+Class Goedel.Tool.Constant Constant
+
+	Description
+		|Configuration of a RUD service
+
+	Structure Configuration
+		Name			ID  ConfigType
+			Description
+				|Configuration identifier
+		ProfileUdf		String 
+			Description
+				|UDF fingerprint of the profile specifying the entity.
+		Description		Text 
+			Description
+				|Description of the configuration
+		Path			String 
+			Description
+				|Path to the directory where service data is stored.
+		Options			Options
+
+
+	TopType Service
+
+		Options			Options
+			On				Multiple
+			DNS				Multiple
+			Callsign		Multiple
+			Log				Multiple
+			Remote			Multiple
+			Protocol		Multiple
+
+
+	TopType Host
+		Options			Options
+			IpAddress		Multiple
+			Capacity		Single
+			Priority		Single
+			Log				Multiple
+			Remote			Multiple
+			Protocol		Multiple
+	
+	Type On
+		Value			REF   ConfigType 
+	Type DNS
+		Value			String 
+	Type Callsign
+		Value			String  
+	Type IpAddress
+		Value			String  
+
+	Type Capacity
+		Value			Integer
+	Type Priority
+		Value			Integer
+
+	Type Protocol
+		Protocol		String  
+			Description
+				|Protocol supported by the configuration
+
+	Type DataLog
+		Description
+			|Describes data to be logged
+		Label Facet Facets
+			Multiple
+
+	Type Log
+		Inherits DataLog
+		Description
+		Destination		String
+			Description
+				|Path specifying the filename
+		Roll			String
+			Description
+				|For local logs, specifies the interval at which the log file is to be
+				|closed and a new file started.
+		Format			String
+			Description
+				|The log format
+
+	Type Remote
+		Description
+		Inherits DataLog
+		Destination		String
+			Description
+				|URI specifying the protocol and transport.
+

@@ -19,26 +19,25 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Command.dll\
-    Goedel.Protocol.Presentation.dll\
-    Goedel.Protocol.Service.dll\
+    Goedel.Utilities.dll\
+    Goedel.Cryptography.Dare.dll\
+    Goedel.Cryptography.dll\
     Goedel.Protocol.dll\
     Goedel.Mesh.Client.dll\
-    Goedel.Mesh.Management.dll\
-    Goedel.Mesh.Server.dll\
     Goedel.Mesh.dll
 
 ToolTargets = \
 	Exceptions.cs\
-	meshhost.cs\
-	HostConfig.cs
-Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+	meshman.cs\
+	Results.cs
+Exceptions.cs : Exceptions.Exceptional 
+	exceptional Exceptions.Exceptional  /cs  Exceptions.cs
 
-meshhost.cs : meshhost.command 
-	commandparse meshhost.command  /cs  meshhost.cs
+meshman.cs : meshman.command 
+	commandparse meshman.command  /cs  meshman.cs
 
-HostConfig.cs : HostConfig.gdl 
-	goedel3 HostConfig.gdl  /cs  HostConfig.cs
+Results.cs : Results.protogen 
+	protogen Results.protogen  /cs  Results.cs
 
 
 
@@ -56,5 +55,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Mesh.Host.dll
+	powershell publishtarget Goedel.Mesh.Shell.ServiceAdmin.dll
 

@@ -36,101 +36,36 @@
 
 
 
-	Command Start "start"		
-		DefaultCommand
-		Brief "Start the host service"
+	Command Start "start"
 		Include Reporting
+		DefaultCommand
+		Brief "Start the service or specified host"
+		Option Host "host" String
+		Option Config "config" ExistingFile
 
+	Command Stop "stop"
+		Include Reporting
+		Brief "Start the service or specified host"
+		Option Host "host" String
 
 	Command Initialize "init"		
 		Brief "Initialize the service configuration"
-		Parameter ServiceDomain "domain" String
-			Brief "The service DNS domain"	
 		Include Reporting
-
+		Parameter BaseConfig "config" ExistingFile
+		Parameter Config "config" NewFile
+		Option Administrator "admin" String
+			Brief "Create an initial profile and assign administrator privilege"
 
 	Command Verify "verify"		
 		Brief "Verify the service configuration"
+		Parameter Config "config" ExistingFile
 		Include Reporting
 
+	Command Update "update"		
+		Brief "Update the service configuration at every host"
+		Parameter Config "config" ExistingFile
+		Include Reporting
 
-	CommandSet Host "host"
-
-	OptionSet LogData
-		Option File "file" String
-			Brief "Set file log destination"
-		Option Remote "remote" String
-			Brief "Set remote log destination"		
-		Option Error "error" Flag
-			Default "true"
-			Brief "Error reports"	
-		Option Event "event" Flag
-			Default "true"
-			Brief "Transaction events"
-		Option EventData "data" Flag
-			Default "false"
-			Brief "Transaction data"
-		Option Status "status" Flag
-			Default "true"
-			Brief "Status events"
-
-	CommandSet Log "log"
-		Command LogLocal "local"
-			Brief "Set the path on which to store logs and the roll policies none/hour/day/week/month)"
-			Parameter File "path" String
-			Option Operations "ops" String
-				Brief "Operations log roll period"
-			Option Config "config" String
-				Brief "Configuration log roll period"
-			Option Error "error" String
-				Brief "Error log roll period"
-		
-		Command LogAdd "add"
-			Brief "Add log destination"
-			Parameter Id "identifier" String
-			Include LogData
-			Include Reporting
-
-		Command LogSet "set"
-			Brief "Configure log destination"
-			Parameter Id "identifier" String
-			Include LogData
-			Include Reporting
-
-		Command LogDelete "delete"
-			Brief "Delete  remote log destination"
-			Parameter Id "identifier" String
-			Parameter Address "address" String
-			Include Reporting
-
-		Command LogGet "get"
-			Brief "Lookup remote log destination"
-			Parameter Id "identifier" String
-			Include Reporting
-
-		Command LogDump "list"
-			Brief "List  remote log destination"
-			Include Reporting
-
-	CommandSet DNS "dns"
-		Command DnsAdd "add"
-			Brief "Add dns service address"
-			Parameter Domain "domain" String
-			Include Reporting
-
-		Command DnsDelete "delete"
-			Brief "Delete dns service address"
-			Parameter Domain "domain" String
-			Include Reporting
-
-		Command DnsGet "get"
-			Brief "Lookup dns service address"
-			Parameter Domain "domain" String
-			Include Reporting
-
-		Command DnsDump "list"
-			Brief "List dns service addresses"
-			Include Reporting
 
 	CommandSet Account "account"
 		Command AccountPin "Pin"
