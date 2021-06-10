@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 6/9/2021 5:03:32 PM
+//  This file was automatically generated at 6/10/2021 3:16:12 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.651
+//  Generator:  exceptional version 3.0.0.655
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -36,8 +36,8 @@ namespace ExampleGenerator {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 				};
 
 		/// <summary>
@@ -67,7 +67,7 @@ namespace ExampleGenerator {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }

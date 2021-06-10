@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 6/9/2021 5:03:23 PM
+//  This file was automatically generated at 6/10/2021 3:15:58 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.651
+//  Generator:  exceptional version 3.0.0.655
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -37,8 +37,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"An internal error occurred"
 				};
@@ -70,7 +70,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -88,8 +88,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The device Secret required to perform the operation is not installed on this device"
 				};
@@ -121,7 +121,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -139,8 +139,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The Mesh Secret required to perform the operation is not installed on this device"
 				};
@@ -172,7 +172,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -191,8 +191,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The assertion is invalid"
 				};
@@ -224,7 +224,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -243,8 +243,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The profile is invalid"
 				};
@@ -276,7 +276,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -295,8 +295,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The requestor is not authorized for the specified operation"
 				};
@@ -328,7 +328,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -347,8 +347,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The request is not authenticated for the specified operation"
 				};
@@ -380,7 +380,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -399,8 +399,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"Mesh Messages MUST specify a valid message ID"
 				};
@@ -432,7 +432,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -450,8 +450,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The Message was invalid."
 				};
@@ -483,7 +483,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -502,8 +502,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The specified connection URI was invalid"
 				};
@@ -535,7 +535,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -553,8 +553,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The specified date was invalid."
 				};
@@ -586,7 +586,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -604,8 +604,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"This device does not have administration capability"
 				};
@@ -637,7 +637,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -655,8 +655,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"This device does not have administration capability"
 				};
@@ -688,7 +688,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -706,8 +706,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The attempt to perform threshold key recovery failed"
 				};
@@ -739,7 +739,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -757,8 +757,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The attempt to perform threshold key activation failed"
 				};
@@ -790,7 +790,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -808,8 +808,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The right {0} is not known."
 				};
@@ -841,7 +841,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -859,8 +859,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The specified URI method is invalid"
 				};
@@ -892,7 +892,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -910,8 +910,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"Essential server operation failed."
 				};
@@ -943,7 +943,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -961,8 +961,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The server returned an invalid response."
 				};
@@ -994,7 +994,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }
@@ -1012,8 +1012,8 @@ namespace Goedel.Mesh {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"The format {0} is not supported for the specified output."
 				};
@@ -1045,7 +1045,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }

@@ -19,13 +19,12 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Command.dll\
-    Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.dll\
     Goedel.Protocol.dll\
     Goedel.Mesh.Client.dll\
     Goedel.Mesh.ServiceAdmin.dll\
-    Goedel.Mesh.dll
+    Goedel.Utilities.dll
 
 ToolTargets = \
 	Exceptions.cs\

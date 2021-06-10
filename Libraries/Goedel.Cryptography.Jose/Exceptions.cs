@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 6/9/2021 5:03:18 PM
+//  This file was automatically generated at 6/10/2021 3:15:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.651
+//  Generator:  exceptional version 3.0.0.655
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -37,8 +37,8 @@ namespace Goedel.Cryptography.Jose {
 
 
 		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates = 
-				new System.Collections.Generic.List<string> {
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
 
 				"An internal error occurred"
 				};
@@ -70,7 +70,7 @@ namespace Goedel.Cryptography.Jose {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
         }

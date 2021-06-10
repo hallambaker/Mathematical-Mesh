@@ -30,7 +30,7 @@
   </Target>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
     <ProjectReference Include="..\..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\Goedel.Protocol\Goedel.Protocol.csproj" />

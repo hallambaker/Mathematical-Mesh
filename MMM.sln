@@ -24,19 +24,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{E9EA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{0B0479B0-052D-4BCA-8920-7B2BAA788BE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.ASN", "Libraries\Core\Goedel.ASN\Goedel.ASN.csproj", "{8C3FAAAA-4187-4368-8C10-4F3F7C31AB51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.ASN", "Libraries\Goedel.ASN\Goedel.ASN.csproj", "{8C3FAAAA-4187-4368-8C10-4F3F7C31AB51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Command", "Libraries\Core\Goedel.Command\Goedel.Command.csproj", "{92374241-B365-4366-8C08-6DB92B0460B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Command", "Libraries\Goedel.Command\Goedel.Command.csproj", "{92374241-B365-4366-8C08-6DB92B0460B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Discovery", "Libraries\Core\Goedel.Discovery\Goedel.Discovery.csproj", "{C67E9A8E-C56D-43D8-9CBD-4FD3F5E3956A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Discovery", "Libraries\Goedel.Discovery\Goedel.Discovery.csproj", "{C67E9A8E-C56D-43D8-9CBD-4FD3F5E3956A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.FSR", "Libraries\Core\Goedel.FSR\Goedel.FSR.csproj", "{70ABEECF-B15C-4D36-83D3-DF9508BEE1C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.FSR", "Libraries\Goedel.FSR\Goedel.FSR.csproj", "{70ABEECF-B15C-4D36-83D3-DF9508BEE1C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.IO", "Libraries\Core\Goedel.IO\Goedel.IO.csproj", "{E9341173-6212-4A7A-8A59-21FD11C32360}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.IO", "Libraries\Goedel.IO\Goedel.IO.csproj", "{E9341173-6212-4A7A-8A59-21FD11C32360}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Registry", "Libraries\Core\Goedel.Registry\Goedel.Registry.csproj", "{C6AB7FED-46C8-43F1-BA55-790921ADFDD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Registry", "Libraries\Goedel.Registry\Goedel.Registry.csproj", "{C6AB7FED-46C8-43F1-BA55-790921ADFDD5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Utilities", "Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj", "{171F782C-4D04-40BD-8D12-EAD48EEFB79A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Utilities", "Libraries\Goedel.Utilities\Goedel.Utilities.csproj", "{171F782C-4D04-40BD-8D12-EAD48EEFB79A}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Documents", "Documentation\Documents\Documents.shfbproj", "{4CD2C6BE-B222-4337-BCAA-B010FF98E259}"
 EndProject

@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+#pragma warning disable IDE1006 // Naming Styles
+
 namespace Goedel.Mesh.Shell {
 
     /// <summary>

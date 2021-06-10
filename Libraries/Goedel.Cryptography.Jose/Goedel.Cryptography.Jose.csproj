@@ -15,18 +15,19 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Cryptography.Jose.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Cryptography.Jose.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Focus|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Cryptography.Jose.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Cryptography.Jose.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\Goedel.Cryptography.Jose.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Cryptography.Jose.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
   </ItemGroup>

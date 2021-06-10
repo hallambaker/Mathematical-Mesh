@@ -26,10 +26,13 @@ using System.Collections.Generic;
 
 
 namespace Goedel.Mesh.ServiceAdmin {
+
     /// <summary>
-    /// 
+    /// Delegate returning a host <paramref name="hostConfiguration"/> for the
+    /// service  <paramref name="serviceConfiguration"/>
     /// </summary>
-    /// <param name="ServiceDescription"></param>
+    /// <param name="serviceConfiguration">The service configuration.</param>
+    /// <param name="hostConfiguration">The configuration of this specific host.</param>
     /// <returns></returns>
     public delegate Goedel.Protocol.JpcInterface ServiceFactoryDelegate(
         ServiceConfiguration serviceConfiguration,
@@ -42,8 +45,15 @@ namespace Goedel.Mesh.ServiceAdmin {
             string WellKnown, ServiceFactoryDelegate Factory) {
         }
 
+    /// <summary>
+    /// Describes a service configuration.
+    /// </summary>
     public partial class ServiceConfiguration {
         }
+
+    /// <summary>
+    /// Describes a host configuration.
+    /// </summary>
     public partial class HostConfiguration {
         }
     }

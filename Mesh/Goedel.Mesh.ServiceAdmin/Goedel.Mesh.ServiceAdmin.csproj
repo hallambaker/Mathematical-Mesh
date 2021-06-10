@@ -15,15 +15,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\hallam\Work\mmm\Mesh\Goedel.Mesh.Services\Goedel.Mesh.Services.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Mesh.Services\Goedel.Mesh.Services.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
   
   <ItemGroup>
@@ -32,8 +31,8 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="ServiceSchema.cs">
-      <DependentUpon>ServiceSchema.Protocol</DependentUpon>
+    <Compile Update="ServiceProtocol.cs">
+      <DependentUpon>ServiceProtocol.Protocol</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -44,8 +43,8 @@
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
     </None>
-    <None Update="ServiceSchema.Protocol">
-      <LastGenOutput>ServiceSchema.cs</LastGenOutput>
+    <None Update="ServiceProtocol.Protocol">
+      <LastGenOutput>ServiceProtocol.cs</LastGenOutput>
       <Generator>Protogen</Generator>
     </None>
   </ItemGroup>

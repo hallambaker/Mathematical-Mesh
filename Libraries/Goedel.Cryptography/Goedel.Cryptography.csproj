@@ -15,22 +15,22 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Cryptography.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Cryptography.xml</DocumentationFile>
     <NoWarn>1701;1702;CA1707</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Focus|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Cryptography.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Cryptography.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\Goedel.Cryptography.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Cryptography.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Goedel.ASN\Goedel.ASN.csproj" />
-    <ProjectReference Include="..\Core\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\Goedel.ASN\Goedel.ASN.csproj" />
+    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Protocol.Debug</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Protocol.Debug.DebugLocalSession">
+            <summary>
+            Direct connection between client and service host with messages 
+            encoded and decoded from JSON. For use in debugging issues that
+            might be the result of JSON encoding issues and to collect samples
+            for documentation.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.DebugLocalSession.Traces">
+            <summary>
+            Trace Dictionary for this session
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.DebugLocalSession.#ctor(Goedel.Protocol.JpcInterface,Goedel.Protocol.ICredential)">
+            <summary>
+            Create a remote session with debugging hooks.
+            </summary>
+            <param name="host">The host implementation</param>
+            <param name="credential">The credential to be used.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.DebugLocalSession.Post(System.IO.MemoryStream,Goedel.Protocol.JsonObject)">
+            <summary>
+            Post a request and retrieve the response.
+            </summary>
+            <param name="data">StreamBuffer object containing JSON encoded request.</param>
+            <param name="requestObject">The abstract request object (for debugging).</param>
+            <returns>StreamBuffer object containing JSON encoded response.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Debug.NamespaceDoc">
+            <summary>
+            Debugging extensions for PROTOGEN Web Services
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Debug.TraceDictionary">
+            <summary>
+            The trace dictionary class is used for capturing a set of protocol
+            messages for use in documentation. The functions supported include
+            capture of the message objects and presenting them in full or
+            with various levels of redaction.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TraceDictionary.HostName">
+            <summary>
+            The Service Host Name
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TraceDictionary.URI">
+            <summary>
+            The HTTP Web Service URI
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Debug.TraceDictionary.Traces">
+            <summary>
+            The tract dictionary, maps labels to traces.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TraceDictionary.Level">
+            <summary>
+            Set the level of detail for trace messages
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TraceDictionary.Current">
+            <summary>
+            The current trace point.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TraceDictionary.#ctor(System.String,System.String)">
+            <summary>
+            Default constructor.
+            </summary>
+            <param name="HostName">The host name for the example</param>
+            <param name="URI">The web service end point.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TraceDictionary.Label(System.String,System.String)">
+            <summary>
+            Start a new named trace point. This allows an example generator to assign
+            labels to each test 'label1' and retrieve the 2nd message of trace 'label1'
+            when describing that particular function.
+            </summary>
+            <param name="Tag">Label for future retrieval</param>
+            <param name="Command">Console command that caused the trace.</param>
+            <returns>The trace point created.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TraceDictionary.Get(System.String)">
+            <summary>
+            Find the trace point with the specified value
+            </summary>
+            <param name="Tag">The trace label to find</param>
+            <returns>The traces created.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TraceDictionary.Request(Goedel.Protocol.JsonObject)">
+            <summary>
+            Create a trace entry for a request message
+            </summary>
+            <param name="Payload">The message Payload</param>
+            <returns>The trace message entry</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TraceDictionary.Response(System.String,Goedel.Protocol.JsonObject)">
+            <summary>
+            Create a trace entry for a response message
+            </summary>
+            <param name="Status">HTTP Status return line</param>
+            <param name="Payload">The message Payload</param>
+            <returns>The trace message entry</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Debug.TracePoint">
+            <summary>
+            Capture a related set of traces.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Debug.TracePoint.Tag">
+            <summary>Tag to label trace information with.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TracePoint.Command">
+            <summary>
+            The console command issued to cause the result.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TracePoint.Messages">
+            <summary>
+            The text of the message
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TracePoint.Level">
+            <summary>
+            Current level of trace detail
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TracePoint.TraceDictionary">
+            <summary>
+            The current Trace Dictionary
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TracePoint.#ctor(Goedel.Protocol.Debug.TraceDictionary,System.String)">
+            <summary>
+            Constructor for a trace point.
+            </summary>
+            <param name="traceDictionary">The parent dictionary</param>
+            <param name="tag">Locator tag within the trace dictionary</param>
+        </member>
+        <member name="T:Goedel.Protocol.Debug.TraceMessage">
+            <summary>
+            Represents a single trace message
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TraceMessage.Payload">
+            <summary>
+            The text of the message payload
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TraceMessage.Time">
+            <summary>
+            The time the message was sent
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TraceMessage.IsRequest">
+            <summary>
+            If true message was a request, otherwise is a response.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Debug.TraceMessage.Status">
+            <summary>
+            The HTTP result
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TraceMessage.#ctor(Goedel.Protocol.Debug.TracePoint,Goedel.Protocol.JsonObject,System.DateTime,System.Boolean)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="TracePoint">the parent tracepoint</param>
+            <param name="Payload">the payload object</param>
+            <param name="Time">The date and time of the request</param>
+            <param name="IsRequest">If true, this was a request message (sent by the initiator
+            of the conversation. Otherwise it is a response.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TraceMessage.StringHTTP(System.Boolean)">
+            <summary>
+            Wrap minimal HTTP headers round a request
+            </summary>
+            <param name="Redact">If true, redact the payload to omit long
+            sections of base64 encoded text.</param>
+            <returns>the formatted message</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TraceMessage.StringJSON(System.Boolean)">
+            <summary>
+            Serialize an individual payload
+            </summary>
+            <param name="Redact">If true, Base64 blobs are 
+            limited to two start lines and a last line.</param>
+            <returns>the formatted message</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TraceMessage.String(System.Int32)">
+            <summary>
+            Serialize a message at the specified level of detail
+            </summary>
+            <param name="Level">level of detail. 0=full message, 
+            2= HTTP Payload including authentication envelope,
+            4 = Just the JSON payload. Adding 1 causes the JSON 
+            payload to be abbreviated so that Base64 blobs are
+            limited to a start line and a last line.</param>
+            <returns>the formatted message</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Debug.TraceMessage.String">
+            <summary>
+            Serialize a message at the current default level of detail
+            </summary>
+            <returns>the formatted message</returns>
+        </member>
+    </members>
+</doc>

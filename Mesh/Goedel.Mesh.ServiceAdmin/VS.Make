@@ -18,20 +18,19 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.dll\
     Goedel.Protocol.dll\
-    Goedel.Mesh.dll
+    Goedel.Utilities.dll
 
 ToolTargets = \
 	Exceptions.cs\
-	ServiceSchema.cs
+	ServiceProtocol.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
-ServiceSchema.cs : ServiceSchema.Protocol 
-	protogen ServiceSchema.Protocol  /cs  ServiceSchema.cs
+ServiceProtocol.cs : ServiceProtocol.Protocol 
+	protogen ServiceProtocol.Protocol  /cs  ServiceProtocol.cs
 
 
 

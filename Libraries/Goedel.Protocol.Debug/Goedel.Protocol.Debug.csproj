@@ -15,15 +15,15 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Protocol.Debug.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Protocol.Debug.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Focus|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Protocol.Debug.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Protocol.Debug.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\Goedel.Protocol.Debug.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Protocol.Debug.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

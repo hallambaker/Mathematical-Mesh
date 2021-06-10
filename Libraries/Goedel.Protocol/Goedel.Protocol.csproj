@@ -15,22 +15,22 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Protocol.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Protocol.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Focus|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Protocol.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Protocol.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\Goedel.Protocol.xml</DocumentationFile>
+    <DocumentationFile>xml\Goedel.Protocol.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Goedel.Discovery\Goedel.Discovery.csproj" />
-    <ProjectReference Include="..\Core\Goedel.FSR\Goedel.FSR.csproj" />
-    <ProjectReference Include="..\Core\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj" />
+    <ProjectReference Include="..\Goedel.FSR\Goedel.FSR.csproj" />
+    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -346,7 +346,13 @@ namespace Goedel.Cryptography.Dare {
             return key.VerifyHash(digest, signature.SignatureValue);
             }
 
-
+        /// <summary>
+        /// Compute the digest of the payload and if a digest value is specified in the header
+        /// or trailer, verify that it matches.
+        /// </summary>
+        /// <returns>If a payload digest field is specified in the trailer that does not
+        /// match the digest of the payload, returns the payload. Otherwise returns the
+        /// digest of the payload.</returns>
         public byte[] GetValidatedDigest() {
 
             var digestAlg = (Header.DigestAlgorithm ?? "S512").FromJoseIDDigest();

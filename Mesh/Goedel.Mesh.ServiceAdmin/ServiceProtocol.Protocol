@@ -1,0 +1,53 @@
+﻿Protocol Goedel.Mesh.Services ServiceProtocol ServiceProtocol
+	Using Goedel.Mesh
+	Using Goedel.Cryptography.Dare
+
+	Description
+		|The Service Administration Protocol
+
+    Service ServiceAdministrationService "_srvadmin._tcp" "srvadmin" ServiceAdminRequest ServiceAdminResponse
+		Description
+			|
+
+	Section 2 "Registration Transactions"
+		Description
+			|
+
+
+	Transaction Device ThresholdSign ThresholdSignRequest ThresholdSignResponse
+		Description
+			|Request creation of a new service account.
+		Description
+			|Announce the existence of the device. 
+
+	Message ThresholdSignRequest
+		External ServiceAdminRequest
+		Description
+			|Announce the device to the presence service
+
+
+	Message ThresholdSignResponse
+		External ServiceAdminResponse
+		Description
+			|Reports the result of the presence request
+
+
+
+
+	Transaction Device ThresholdAgreement ThresholdAgreementRequest ThresholdAgreementResponse
+		Description
+			|Request creation of a new service account.
+		Description
+			|Announce the existence of the device. 
+
+	Message ThresholdAgreementRequest
+		External ServiceAdminRequest
+		Description
+			|Announce the device to the presence service
+
+
+	Message ThresholdAgreementResponse
+		External ServiceAdminResponse
+		Description
+			|Reports the result of the presence request
+

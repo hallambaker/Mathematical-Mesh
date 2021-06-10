@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Mesh.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Mesh.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Initialization.Initialize">
+            <summary>
+            Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.MeshMachineCoreServer">
+            <summary>
+            The  Mesh server.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryMaster">
+            <summary>The directory used to store the master data.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryMesh">
+            <summary>The directory used to store the account mesh data.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryKeys">
+            <summary>The directory used to store host keys.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.KeyCollection">
+            <summary>The host key collection.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshMachineCoreServer.FileTypeHost">
+            <summary>The IANA media type for the host file data.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.#ctor(System.String)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="directory">Directory to store the server information.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetKeyCollection">
+            <summary>
+            Get the host key collection.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.CreateKeyPair(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.KeyUses)">
+            <summary>
+            Generate a keypair of a type specified by <paramref name="algorithmID"/> and bind to the 
+            KeyCollection of the machine instance.
+            </summary>
+            <param name="algorithmID">The type of keypair to create.</param>
+            <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
+            <param name="keySecurity">The key security model</param>
+            <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+            <returns>The created key pair</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String)">
+            <inheritdoc cref="T:Goedel.Mesh.IMeshMachine"/>
+        </member>
+        <member name="T:Goedel.Mesh.MeshMachineCore">
+            <summary>
+            
+            </summary>
+            <remarks>This implementation does not currently support concurrent access to the Mesh profile files
+            from separate processes. This support should be added my introducing a system wide lock that is
+            obtained before attempting a write operation and while opening a container.</remarks>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCore.MeshHost">
+            <summary>The Mesh host catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCore.FileNameHost">
+            <summary>The file name of the host catalog.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCore.Disposing">
+            <summary>
+            Disposing routine. Feee internal resources  and shut down the Mesh Host.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCore.#ctor(System.String)">
+            <summary>
+            Constructor, creating a service instance using <paramref name="directory"/>
+            to store persistent data.
+            </summary>
+            <param name="directory">Directory to store persistence data.</param>
+        </member>
+    </members>
+</doc>
