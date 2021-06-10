@@ -19,6 +19,7 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Cryptography.Core.dll\
+    Goedel.Mesh.Management.dll\
     Goedel.Mesh.Server.dll\
     Goedel.Mesh.Shell.Host.dll
 

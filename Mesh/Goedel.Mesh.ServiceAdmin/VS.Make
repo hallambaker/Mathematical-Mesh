@@ -26,13 +26,9 @@ LinkFiles = \
 
 ToolTargets = \
 	Exceptions.cs\
-	ServiceSchema - Copy.cs\
 	ServiceSchema.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
-
-ServiceSchema - Copy.cs : ServiceSchema - Copy.Protocol 
-	protogen ServiceSchema - Copy.Protocol  /cs  ServiceSchema - Copy.cs
 
 ServiceSchema.cs : ServiceSchema.Protocol 
 	protogen ServiceSchema.Protocol  /cs  ServiceSchema.cs
