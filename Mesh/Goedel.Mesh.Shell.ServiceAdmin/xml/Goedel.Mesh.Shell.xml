@@ -367,6 +367,13 @@
             </summary>
             <param name="result"></param>
         </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.NamespaceDoc">
+            <summary>
+            Service administration shell. Dispatches over methods defined in 
+            <see cref="N:Goedel.Mesh.ServiceAdmin"/> relating to administration of a service of
+            multiple hosts.
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Shell.ServiceAdmin.ShellResult">
              <summary>
             

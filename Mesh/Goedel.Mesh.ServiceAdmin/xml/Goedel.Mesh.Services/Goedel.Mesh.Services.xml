@@ -36,382 +36,6 @@
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Services.ServiceProtocol">
-             <summary>
-            
-             The Service Administration Protocol
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Services.ServiceProtocol._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Services.ServiceProtocol.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Services.ServiceProtocol._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ServiceProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
-        </member>
-        <member name="T:Goedel.Mesh.Services.ServiceAdministrationService">
-            <summary>
-            The new base class for the client and service side APIs.
-            </summary>		
-        </member>
-        <member name="F:Goedel.Mesh.Services.ServiceAdministrationService.WellKnown">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Services.ServiceAdministrationService.GetWellKnown">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Services.ServiceAdministrationService.Discovery">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Services.ServiceAdministrationService.GetDiscovery">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ServiceAdministrationService.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="session">The client context.</param>
-            <param name="jsonReader">Reader for data object.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ServiceAdministrationService.GetDirect(Goedel.Protocol.IJpcSession)">
-            <summary>
-            Return a client tapping the service API directly without serialization bound to
-            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
-            </summary>
-            <param name="jpcSession">Session to which requests are to be bound.</param>
-            <returns>The direct client instance.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ServiceAdministrationService.ThresholdSign(Goedel.Mesh.Services.ThresholdSignRequest,Goedel.Protocol.IJpcSession)">
-            <summary>
-            Base method for implementing the transaction  ThresholdSign.
-            </summary>
-            <param name="request">The request object to send to the host.</param>
-            <param name="session">The request context.</param>
-            <returns>The response object from the service</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ServiceAdministrationService.ThresholdAgreement(Goedel.Mesh.Services.ThresholdAgreementRequest,Goedel.Protocol.IJpcSession)">
-            <summary>
-            Base method for implementing the transaction  ThresholdAgreement.
-            </summary>
-            <param name="request">The request object to send to the host.</param>
-            <param name="session">The request context.</param>
-            <returns>The response object from the service</returns>
-        </member>
-        <member name="T:Goedel.Mesh.Services.ServiceAdministrationServiceClient">
-            <summary>
-            Client class for ServiceAdministrationService.
-            </summary>		
-        </member>
-        <member name="F:Goedel.Mesh.Services.ServiceAdministrationServiceClient.WellKnown">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Services.ServiceAdministrationServiceClient.GetWellKnown">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Services.ServiceAdministrationServiceClient.Discovery">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Services.ServiceAdministrationServiceClient.GetDiscovery">
-            <summary>
-            Well Known service identifier.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ServiceAdministrationServiceClient.ThresholdSign(Goedel.Mesh.Services.ThresholdSignRequest)">
-            <summary>
-            Implement the transaction
-            </summary>		
-            <param name="request">The request object.</param>
-            <returns>The response object</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ServiceAdministrationServiceClient.ThresholdAgreement(Goedel.Mesh.Services.ThresholdAgreementRequest)">
-            <summary>
-            Implement the transaction
-            </summary>		
-            <param name="request">The request object.</param>
-            <returns>The response object</returns>
-        </member>
-        <member name="T:Goedel.Mesh.Services.ServiceAdministrationServiceDirect">
-            <summary>
-            Direct API class for ServiceAdministrationService.
-            </summary>		
-        </member>
-        <member name="P:Goedel.Mesh.Services.ServiceAdministrationServiceDirect.Service">
-            <summary>
-            Interface object to dispatch requests to.
-            </summary>	
-        </member>
-        <member name="M:Goedel.Mesh.Services.ServiceAdministrationServiceDirect.ThresholdSign(Goedel.Mesh.Services.ThresholdSignRequest)">
-            <summary>
-            Implement the transaction
-            </summary>		
-            <param name="request">The request object.</param>
-            <returns>The response object</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ServiceAdministrationServiceDirect.ThresholdAgreement(Goedel.Mesh.Services.ThresholdAgreementRequest)">
-            <summary>
-            Implement the transaction
-            </summary>		
-            <param name="request">The request object.</param>
-            <returns>The response object</returns>
-        </member>
-        <member name="T:Goedel.Mesh.Services.ThresholdSignRequest">
-             <summary>
-            
-             Announce the device to the presence service
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Services.ThresholdSignRequest._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Services.ThresholdSignRequest.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignRequest._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.Services.ThresholdSignResponse">
-             <summary>
-            
-             Reports the result of the presence request
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Services.ThresholdSignResponse._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Services.ThresholdSignResponse.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignResponse._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.Services.ThresholdAgreementRequest">
-             <summary>
-            
-             Announce the device to the presence service
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Services.ThresholdAgreementRequest._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Services.ThresholdAgreementRequest.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementRequest._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.Services.ThresholdAgreementResponse">
-             <summary>
-            
-             Reports the result of the presence request
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Services.ThresholdAgreementResponse._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Services.ThresholdAgreementResponse.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementResponse._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.Services.ServiceAdminRequest">
             <summary>
             Service administration request
@@ -450,6 +74,502 @@
             <summary>
             Describes a host configuration.
             </summary>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.ServiceConfig">
+             <summary>
+            
+             Host and Service configuration tile.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfig._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.ServiceConfig.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfig._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceConfig.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.Configuration">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.Name">
+             <summary>
+            Configuration identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.Instance">
+             <summary>
+            Used to distinguish between multiple service instances for test purposes.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.Entries">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.Administrator">
+             <summary>
+            Strong name of service identifier.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.Configuration.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.ConfigurationEntry">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.Id">
+             <summary>
+            Configuration identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.ProfileUdf">
+             <summary>
+            UDF fingerprint of the profile specifying the entity.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.Description">
+             <summary>
+            Description of the configuration
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.Path">
+             <summary>
+            Path to the directory where service data is stored.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.Logs">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationEntry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ConfigurationEntry._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.Service">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Service.Addresses">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Service.WellKnown">
+             <summary>
+            The well known service identifier of the service
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Service._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.Service.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Service._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Service.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Service.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Service.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Service.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.Host">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Host.Process">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Host.Storage">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Host._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.Host.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Host._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Host.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Host.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Host.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Host.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.LogEntry">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.LogEntry.Events">
+             <summary>
+            The data facets to be recorded to this log, 'error', 'event', 'append', 'sync'.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.LogEntry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.LogEntry.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.LogEntry._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.LogEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.LogEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.LogEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.LogEntry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.LocalLog">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.LocalLog.Path">
+             <summary>
+            Path specifying the directory to which the log is to be written.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.LocalLog.Roll">
+             <summary>
+            Specifies the interval at which the log file is to be
+            closed and a new file started. This may be in units of 
+            time h(our), d(ay), m(onth), y(ear), or in units of events
+            (e(vent).
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.LocalLog._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.LocalLog.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.LocalLog._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.LocalLog.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.LocalLog.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.LocalLog.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.LocalLog.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.RemoteLog">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.RemoteLog.Uri">
+             <summary>
+            Path specifying the filename
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.RemoteLog._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.RemoteLog.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.RemoteLog._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.RemoteLog.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.RemoteLog.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.RemoteLog.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.RemoteLog.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
         </member>
     </members>
 </doc>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/10/2021 3:15:57 PM
+//  This file was automatically generated at 6/14/2021 6:00:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -45,18 +45,16 @@ using Goedel.Protocol;
 #pragma warning disable IDE1006
 
 
-using Goedel.Mesh;
-using Goedel.Cryptography.Dare;
 
 
-namespace Goedel.Mesh.Services {
+namespace Goedel.Mesh.ServiceAdmin {
 
 
 	/// <summary>
 	///
-	/// The Service Administration Protocol
+	/// Host and Service configuration tile.
 	/// </summary>
-	public abstract partial class ServiceProtocol : global::Goedel.Protocol.JsonObject {
+	public abstract partial class ServiceConfig : global::Goedel.Protocol.JsonObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -66,7 +64,7 @@ namespace Goedel.Mesh.Services {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ServiceProtocol";
+		public new const string __Tag = "ServiceConfig";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -75,10 +73,13 @@ namespace Goedel.Mesh.Services {
 		static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 				new Dictionary<string, JsonFactoryDelegate> () {
 
-			{"ThresholdSignRequest", ThresholdSignRequest._Factory},
-			{"ThresholdSignResponse", ThresholdSignResponse._Factory},
-			{"ThresholdAgreementRequest", ThresholdAgreementRequest._Factory},
-			{"ThresholdAgreementResponse", ThresholdAgreementResponse._Factory}			};
+			{"Configuration", Configuration._Factory},
+			{"ConfigurationEntry", ConfigurationEntry._Factory},
+			{"Service", Service._Factory},
+			{"Host", Host._Factory},
+			{"LogEntry", LogEntry._Factory},
+			{"LocalLog", LocalLog._Factory},
+			{"RemoteLog", RemoteLog._Factory}			};
 
         [ModuleInitializer]
         internal static void _Initialize() => AddDictionary(ref _tagDictionary);
@@ -99,235 +100,30 @@ namespace Goedel.Mesh.Services {
 		// Service Dispatch Classes
 
 
-    /// <summary>
-	/// The new base class for the client and service side APIs.
-    /// </summary>		
-    public abstract partial class ServiceAdministrationService : Goedel.Protocol.JpcInterface {
-		
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
-		public const string WellKnown = "srvadmin";
-
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
-		public override string GetWellKnown => WellKnown;
-
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
-		public const string Discovery = "_srvadmin._tcp";
-
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
-		public override string GetDiscovery => Discovery;
-
-		/// <summary>
-		/// Dispatch object request in specified authentication context.
-		/// </summary>			
-        /// <param name="session">The client context.</param>
-        /// <param name="jsonReader">Reader for data object.</param>
-        /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
-								Goedel.Protocol.JsonReader jsonReader) {
-
-			jsonReader.StartObject ();
-			string token = jsonReader.ReadToken ();
-			JsonObject response = null;
-
-			switch (token) {
-				case "ThresholdSign" : {
-					var request = new ThresholdSignRequest();
-					request.Deserialize (jsonReader);
-					response = ThresholdSign (request, session);
-					break;
-					}
-				case "ThresholdAgreement" : {
-					var request = new ThresholdAgreementRequest();
-					request.Deserialize (jsonReader);
-					response = ThresholdAgreement (request, session);
-					break;
-					}
-				default : {
-					throw new Goedel.Protocol.UnknownOperation ();
-					}
-				}
-			jsonReader.EndObject ();
-			return response;
-			}
-
-        /// <summary>
-        /// Return a client tapping the service API directly without serialization bound to
-        /// the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
-        /// </summary>
-        /// <param name="jpcSession">Session to which requests are to be bound.</param>
-        /// <returns>The direct client instance.</returns>
-		public override Goedel.Protocol.JpcClientInterface GetDirect (IJpcSession jpcSession) =>
-				new ServiceAdministrationServiceDirect () {
-						JpcSession = jpcSession,
-						Service = this
-						};
-
-
-        /// <summary>
-		/// Base method for implementing the transaction  ThresholdSign.
-        /// </summary>
-        /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The request context.</param>
-		/// <returns>The response object from the service</returns>
-        public abstract ThresholdSignResponse ThresholdSign (
-                ThresholdSignRequest request, IJpcSession session);
-
-        /// <summary>
-		/// Base method for implementing the transaction  ThresholdAgreement.
-        /// </summary>
-        /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The request context.</param>
-		/// <returns>The response object from the service</returns>
-        public abstract ThresholdAgreementResponse ThresholdAgreement (
-                ThresholdAgreementRequest request, IJpcSession session);
-
-        }
-
-    /// <summary>
-	/// Client class for ServiceAdministrationService.
-    /// </summary>		
-    public partial class ServiceAdministrationServiceClient :  Goedel.Protocol.JpcClientInterface {
-
-	    /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
-		public const string WellKnown = "srvadmin";
-
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
-		public override string GetWellKnown => WellKnown;
-
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
-		public const string Discovery = "_srvadmin._tcp";
-
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
-		public override string GetDiscovery => Discovery;
-
-
-
-        /// <summary>
-		/// Implement the transaction
-        /// </summary>		
-        /// <param name="request">The request object.</param>
-		/// <returns>The response object</returns>
-        public virtual ThresholdSignResponse ThresholdSign (ThresholdSignRequest request) =>
-				JpcSession.Post("ThresholdSign", request) as ThresholdSignResponse;
-
-
-        /// <summary>
-		/// Implement the transaction
-        /// </summary>		
-        /// <param name="request">The request object.</param>
-		/// <returns>The response object</returns>
-        public virtual ThresholdAgreementResponse ThresholdAgreement (ThresholdAgreementRequest request) =>
-				JpcSession.Post("ThresholdAgreement", request) as ThresholdAgreementResponse;
-
-
-		}
-
-    /// <summary>
-	/// Direct API class for ServiceAdministrationService.
-    /// </summary>		
-    public partial class ServiceAdministrationServiceDirect: ServiceAdministrationServiceClient {
- 		
-		/// <summary>
-		/// Interface object to dispatch requests to.
-		/// </summary>	
-		public ServiceAdministrationService Service {get; set;}
-
-
-        /// <summary>
-		/// Implement the transaction
-        /// </summary>		
-        /// <param name="request">The request object.</param>
-		/// <returns>The response object</returns>
-        public override ThresholdSignResponse ThresholdSign (ThresholdSignRequest request) =>
-				Service.ThresholdSign (request, JpcSession);
-
-
-        /// <summary>
-		/// Implement the transaction
-        /// </summary>		
-        /// <param name="request">The request object.</param>
-		/// <returns>The response object</returns>
-        public override ThresholdAgreementResponse ThresholdAgreement (ThresholdAgreementRequest request) =>
-				Service.ThresholdAgreement (request, JpcSession);
-
-
-		}
-
-
-    /*
-    /// <summary>
-	/// Service class for ServiceAdministrationService.
-    /// </summary>		
-    public partial class ServiceAdministrationServiceDispatch : Goedel.Protocol.JpcDispatch {
-
-		/// <summary>
-		/// Interface object to dispatch requests to.
-		/// </summary>	
-		public ServiceAdministrationService Service;
-
-
-		/// <summary>
-		/// Dispatch object request in specified authentication context.
-		/// </summary>			
-        /// <param name="session">The client context.</param>
-        /// <param name="jsonReader">Reader for data object.</param>
-        /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
-								Goedel.Protocol.JsonReader jsonReader) {
-
-			jsonReader.StartObject ();
-			string token = jsonReader.ReadToken ();
-			JsonObject response = null;
-
-			switch (token) {
-				case "ThresholdSign" : {
-					var request = new ThresholdSignRequest();
-					request.Deserialize (jsonReader);
-					response = Service.ThresholdSign (request, session);
-					break;
-					}
-				case "ThresholdAgreement" : {
-					var request = new ThresholdAgreementRequest();
-					request.Deserialize (jsonReader);
-					response = Service.ThresholdAgreement (request, session);
-					break;
-					}
-				default : {
-					throw new Goedel.Protocol.UnknownOperation ();
-					}
-				}
-			jsonReader.EndObject ();
-			return response;
-			}
-
-		}
-		*/
-
-
-
 
 		// Transaction Classes
 	/// <summary>
-	///
-	/// Announce the device to the presence service
 	/// </summary>
-	public partial class ThresholdSignRequest : ServiceAdminRequest {
+	public partial class Configuration : ServiceConfig {
+        /// <summary>
+        ///Configuration identifier
+        /// </summary>
+
+		public virtual string						Name  {get; set;}
+        /// <summary>
+        ///Used to distinguish between multiple service instances for test purposes.
+        /// </summary>
+
+		public virtual string						Instance  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<ConfigurationEntry>				Entries  {get; set;}
+        /// <summary>
+        ///Strong name of service identifier.
+        /// </summary>
+
+		public virtual List<string>				Administrator  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -337,13 +133,13 @@ namespace Goedel.Mesh.Services {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ThresholdSignRequest";
+		public new const string __Tag = "Configuration";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ThresholdSignRequest();
+		public static new JsonObject _Factory () => new Configuration();
 
 
         /// <summary>
@@ -371,7 +167,44 @@ namespace Goedel.Mesh.Services {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((ServiceAdminRequest)this).SerializeX(_writer, false, ref _first);
+			if (Name != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Name", 1);
+					_writer.WriteString (Name);
+				}
+			if (Instance != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Instance", 1);
+					_writer.WriteString (Instance);
+				}
+			if (Entries != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Entries", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Entries) {
+					_writer.WriteArraySeparator (ref _firstarray);
+                    _writer.WriteObjectStart();
+                    _writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    _writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (Administrator != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Administrator", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Administrator) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -383,15 +216,15 @@ namespace Goedel.Mesh.Services {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ThresholdSignRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new Configuration FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ThresholdSignRequest;
+				return Out as Configuration;
 				}
-		    var Result = new ThresholdSignRequest ();
+		    var Result = new Configuration ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -405,6 +238,347 @@ namespace Goedel.Mesh.Services {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "Name" : {
+					Name = jsonReader.ReadString ();
+					break;
+					}
+				case "Instance" : {
+					Instance = jsonReader.ReadString ();
+					break;
+					}
+				case "Entries" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Entries = new List <ConfigurationEntry> ();
+					while (_Going) {
+						var _Item = ConfigurationEntry.FromJson (jsonReader, true); // a tagged structure
+						Entries.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "Administrator" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Administrator = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Administrator.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ConfigurationEntry : ServiceConfig {
+        /// <summary>
+        ///Configuration identifier
+        /// </summary>
+
+		public virtual string						Id  {get; set;}
+        /// <summary>
+        ///UDF fingerprint of the profile specifying the entity.
+        /// </summary>
+
+		public virtual string						ProfileUdf  {get; set;}
+        /// <summary>
+        ///Description of the configuration
+        /// </summary>
+
+		public virtual string						Description  {get; set;}
+        /// <summary>
+        ///Path to the directory where service data is stored.
+        /// </summary>
+
+		public virtual string						Path  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<LogEntry>				Logs  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ConfigurationEntry";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new ConfigurationEntry();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (Id != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Id", 1);
+					_writer.WriteString (Id);
+				}
+			if (ProfileUdf != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ProfileUdf", 1);
+					_writer.WriteString (ProfileUdf);
+				}
+			if (Description != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Description", 1);
+					_writer.WriteString (Description);
+				}
+			if (Path != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Path", 1);
+					_writer.WriteString (Path);
+				}
+			if (Logs != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Logs", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Logs) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ConfigurationEntry FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as ConfigurationEntry;
+				}
+		    var Result = new ConfigurationEntry ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Id" : {
+					Id = jsonReader.ReadString ();
+					break;
+					}
+				case "ProfileUdf" : {
+					ProfileUdf = jsonReader.ReadString ();
+					break;
+					}
+				case "Description" : {
+					Description = jsonReader.ReadString ();
+					break;
+					}
+				case "Path" : {
+					Path = jsonReader.ReadString ();
+					break;
+					}
+				case "Logs" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Logs = new List <LogEntry> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  LogEntry ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new LogEntry (jsonReader);
+						Logs.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class Service : ConfigurationEntry {
+        /// <summary>
+        /// </summary>
+
+		public virtual List<string>				Addresses  {get; set;}
+        /// <summary>
+        ///The well known service identifier of the service
+        /// </summary>
+
+		public virtual string						WellKnown  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "Service";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new Service();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((ConfigurationEntry)this).SerializeX(_writer, false, ref _first);
+			if (Addresses != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Addresses", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Addresses) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (WellKnown != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("WellKnown", 1);
+					_writer.WriteString (WellKnown);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new Service FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as Service;
+				}
+		    var Result = new Service ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Addresses" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Addresses = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Addresses.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "WellKnown" : {
+					WellKnown = jsonReader.ReadString ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;
@@ -417,10 +591,26 @@ namespace Goedel.Mesh.Services {
 		}
 
 	/// <summary>
-	///
-	/// Reports the result of the presence request
 	/// </summary>
-	public partial class ThresholdSignResponse : ServiceAdminResponse {
+	public partial class Host : ConfigurationEntry {
+		bool								__Process = false;
+		private int						_Process;
+        /// <summary>
+        /// </summary>
+
+		public virtual int						Process {
+			get => _Process;
+			set {_Process = value; __Process = true; }
+			}
+		bool								__Storage = false;
+		private int						_Storage;
+        /// <summary>
+        /// </summary>
+
+		public virtual int						Storage {
+			get => _Storage;
+			set {_Storage = value; __Storage = true; }
+			}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -430,13 +620,13 @@ namespace Goedel.Mesh.Services {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ThresholdSignResponse";
+		public new const string __Tag = "Host";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ThresholdSignResponse();
+		public static new JsonObject _Factory () => new Host();
 
 
         /// <summary>
@@ -464,7 +654,17 @@ namespace Goedel.Mesh.Services {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((ServiceAdminResponse)this).SerializeX(_writer, false, ref _first);
+			((ConfigurationEntry)this).SerializeX(_writer, false, ref _first);
+			if (__Process){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Process", 1);
+					_writer.WriteInteger32 (Process);
+				}
+			if (__Storage){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Storage", 1);
+					_writer.WriteInteger32 (Storage);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -476,15 +676,15 @@ namespace Goedel.Mesh.Services {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ThresholdSignResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new Host FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ThresholdSignResponse;
+				return Out as Host;
 				}
-		    var Result = new ThresholdSignResponse ();
+		    var Result = new Host ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -498,6 +698,14 @@ namespace Goedel.Mesh.Services {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "Process" : {
+					Process = jsonReader.ReadInteger32 ();
+					break;
+					}
+				case "Storage" : {
+					Storage = jsonReader.ReadInteger32 ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;
@@ -510,10 +718,13 @@ namespace Goedel.Mesh.Services {
 		}
 
 	/// <summary>
-	///
-	/// Announce the device to the presence service
 	/// </summary>
-	public partial class ThresholdAgreementRequest : ServiceAdminRequest {
+	public partial class LogEntry : ServiceConfig {
+        /// <summary>
+        ///The data facets to be recorded to this log, 'error', 'event', 'append', 'sync'.
+        /// </summary>
+
+		public virtual List<string>				Events  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -523,13 +734,13 @@ namespace Goedel.Mesh.Services {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ThresholdAgreementRequest";
+		public new const string __Tag = "LogEntry";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ThresholdAgreementRequest();
+		public static new JsonObject _Factory () => new LogEntry();
 
 
         /// <summary>
@@ -557,7 +768,18 @@ namespace Goedel.Mesh.Services {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((ServiceAdminRequest)this).SerializeX(_writer, false, ref _first);
+			if (Events != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Events", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Events) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -569,15 +791,15 @@ namespace Goedel.Mesh.Services {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ThresholdAgreementRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new LogEntry FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ThresholdAgreementRequest;
+				return Out as LogEntry;
 				}
-		    var Result = new ThresholdAgreementRequest ();
+		    var Result = new LogEntry ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -591,6 +813,138 @@ namespace Goedel.Mesh.Services {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "Events" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Events = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Events.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class LocalLog : LogEntry {
+        /// <summary>
+        ///Path specifying the directory to which the log is to be written.
+        /// </summary>
+
+		public virtual string						Path  {get; set;}
+        /// <summary>
+        ///Specifies the interval at which the log file is to be
+        ///closed and a new file started. This may be in units of 
+        ///time h(our), d(ay), m(onth), y(ear), or in units of events
+        ///(e(vent).
+        /// </summary>
+
+		public virtual string						Roll  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "LocalLog";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new LocalLog();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((LogEntry)this).SerializeX(_writer, false, ref _first);
+			if (Path != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Path", 1);
+					_writer.WriteString (Path);
+				}
+			if (Roll != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Roll", 1);
+					_writer.WriteString (Roll);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new LocalLog FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as LocalLog;
+				}
+		    var Result = new LocalLog ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Path" : {
+					Path = jsonReader.ReadString ();
+					break;
+					}
+				case "Roll" : {
+					Roll = jsonReader.ReadString ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;
@@ -603,10 +957,13 @@ namespace Goedel.Mesh.Services {
 		}
 
 	/// <summary>
-	///
-	/// Reports the result of the presence request
 	/// </summary>
-	public partial class ThresholdAgreementResponse : ServiceAdminResponse {
+	public partial class RemoteLog : LogEntry {
+        /// <summary>
+        ///Path specifying the filename
+        /// </summary>
+
+		public virtual string						Uri  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -616,13 +973,13 @@ namespace Goedel.Mesh.Services {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ThresholdAgreementResponse";
+		public new const string __Tag = "RemoteLog";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ThresholdAgreementResponse();
+		public static new JsonObject _Factory () => new RemoteLog();
 
 
         /// <summary>
@@ -650,7 +1007,12 @@ namespace Goedel.Mesh.Services {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((ServiceAdminResponse)this).SerializeX(_writer, false, ref _first);
+			((LogEntry)this).SerializeX(_writer, false, ref _first);
+			if (Uri != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Uri", 1);
+					_writer.WriteString (Uri);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -662,15 +1024,15 @@ namespace Goedel.Mesh.Services {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ThresholdAgreementResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new RemoteLog FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ThresholdAgreementResponse;
+				return Out as RemoteLog;
 				}
-		    var Result = new ThresholdAgreementResponse ();
+		    var Result = new RemoteLog ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -684,6 +1046,10 @@ namespace Goedel.Mesh.Services {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "Uri" : {
+					Uri = jsonReader.ReadString ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;

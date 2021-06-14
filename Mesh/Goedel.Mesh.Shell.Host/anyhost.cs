@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 6/10/2021 3:16:03 PM
+//  This file was automatically generated at 6/14/2021 6:01:05 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -132,8 +132,6 @@ namespace Goedel.Mesh.Shell.Host {
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"start", _HostStart._DescribeCommand },
-				{"pause", _HostPause._DescribeCommand },
-				{"stop", _HostStop._DescribeCommand },
 				{"verify", _HostVerify._DescribeCommand },
 				{"about", DescribeAbout },
 				{"help", DescribeHelp }
@@ -176,26 +174,6 @@ namespace Goedel.Mesh.Shell.Host {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_HostPause (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			Shell Dispatch =	DispatchIn as Shell;
-			HostPause		Options = new HostPause ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
-			var result = Dispatch.HostPause (Options);
-			Dispatch._PostProcess (result);
-			}
-
-		public static void Handle_HostStop (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			Shell Dispatch =	DispatchIn as Shell;
-			HostStop		Options = new HostStop ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
-			var result = Dispatch.HostStop (Options);
-			Dispatch._PostProcess (result);
-			}
-
 		public static void Handle_HostVerify (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
@@ -229,6 +207,8 @@ namespace Goedel.Mesh.Shell.Host {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new ExistingFile (),
+			new Flag (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -247,41 +227,59 @@ namespace Goedel.Mesh.Shell.Host {
 		public virtual string _HostConfig {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [console]</summary>
+		public virtual Flag Console {
+			get => _Data[1] as Flag;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _Console {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for option [host]</summary>
+		public virtual String MachineName {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _MachineName {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _EnumReporting {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -299,32 +297,46 @@ namespace Goedel.Mesh.Shell.Host {
 					Index = 0,
 					Key = ""
 					},
+				new DescribeEntryOption () {
+					Identifier = "Console", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = "console"
+					},
+				new DescribeEntryOption () {
+					Identifier = "MachineName", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 2,
+					Key = "host"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 3,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -335,92 +347,12 @@ namespace Goedel.Mesh.Shell.Host {
     public partial class HostStart : _HostStart {
         } // class HostStart
 
-    public class _HostPause : Goedel.Command.Dispatch  {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new ExistingFile ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile HostConfig {
-			get => _Data[0] as ExistingFile;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _HostConfig {
-			set => _Data[0].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "pause",
-			Brief =  "Start the host service in paused mode or pause the service if already started.",
-			HandleDelegate =  CommandLineInterpreter.Handle_HostPause,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "HostConfig", 
-					Default = null, // null if null
-					Brief = "The host configuration file",
-					Index = 0,
-					Key = ""
-					}
-				}
-			};
-
-		}
-
-    public partial class HostPause : _HostPause {
-        } // class HostPause
-
-    public class _HostStop : Goedel.Command.Dispatch  {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new ExistingFile ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile HostConfig {
-			get => _Data[0] as ExistingFile;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _HostConfig {
-			set => _Data[0].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "stop",
-			Brief =  "Stop the host service.",
-			HandleDelegate =  CommandLineInterpreter.Handle_HostStop,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "HostConfig", 
-					Default = null, // null if null
-					Brief = "The host configuration file",
-					Index = 0,
-					Key = ""
-					}
-				}
-			};
-
-		}
-
-    public partial class HostStop : _HostStop {
-        } // class HostStop
-
     public class _HostVerify : Goedel.Command.Dispatch  {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new ExistingFile ()			} ;
+			new ExistingFile (),
+			new Flag (),
+			new String ()			} ;
 
 
 
@@ -434,6 +366,24 @@ namespace Goedel.Mesh.Shell.Host {
 
 		public virtual string _HostConfig {
 			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [console]</summary>
+		public virtual Flag Console {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Console {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [host]</summary>
+		public virtual String MachineName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _MachineName {
+			set => _Data[2].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -449,6 +399,20 @@ namespace Goedel.Mesh.Shell.Host {
 					Brief = "The host configuration file",
 					Index = 0,
 					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "Console", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = "console"
+					},
+				new DescribeEntryOption () {
+					Identifier = "MachineName", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 2,
+					Key = "host"
 					}
 				}
 			};
@@ -498,16 +462,6 @@ namespace Goedel.Mesh.Shell.Host {
     public class _Shell : global::Goedel.Command.DispatchShell {
 
 		public virtual ShellResult HostStart ( HostStart Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			return null;
-			}
-
-		public virtual ShellResult HostPause ( HostPause Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			return null;
-			}
-
-		public virtual ShellResult HostStop ( HostStop Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

@@ -1,53 +1,76 @@
-﻿Protocol Goedel.Mesh.Services ServiceProtocol ServiceProtocol
-	Using Goedel.Mesh
-	Using Goedel.Cryptography.Dare
+﻿Protocol Goedel.Mesh.ServiceAdmin ServiceConfig ServiceConfig
 
 	Description
-		|The Service Administration Protocol
+		|Host and Service configuration tile.
 
-    Service ServiceAdministrationService "_srvadmin._tcp" "srvadmin" ServiceAdminRequest ServiceAdminResponse
+	Section 2 "Configuration Schema"
 		Description
-			|
+			|The schema configuration
 
-	Section 2 "Registration Transactions"
-		Description
-			|
+	Structure Configuration
+		String Name	
+			Description
+				|Configuration identifier
+		String Instance
+			Description
+				|Used to distinguish between multiple service instances for test purposes.
+		TStruct ConfigurationEntry Entries
+			Multiple
+		String Administrator
+			Multiple
+			Description
+				|Strong name of service identifier.
+
+	Structure ConfigurationEntry
+		String Id	
+			Description
+				|Configuration identifier
+		String ProfileUdf		 
+			Description
+				|UDF fingerprint of the profile specifying the entity.
+		String Description		 
+			Description
+				|Description of the configuration
+		String Path			 
+			Description
+				|Path to the directory where service data is stored.
+		Struct LogEntry Logs
+			Multiple
+
+	Structure Service
+		Inherits ConfigurationEntry
+		String Addresses
+			Multiple
+		String WellKnown
+			Description
+				|The well known service identifier of the service
+
+	Structure Host
+		Inherits ConfigurationEntry
+		Integer Process
+		Integer Storage
+
+	Structure LogEntry
+		String Events
+			Multiple
+			Description
+				|The data facets to be recorded to this log, 'error', 'event', 'append', 'sync'.
+
+	Structure LocalLog
+		Inherits LogEntry
+		String Path
+			Description
+				|Path specifying the directory to which the log is to be written.
+		String Roll	
+			Description
+				|Specifies the interval at which the log file is to be
+				|closed and a new file started. This may be in units of 
+				|time h(our), d(ay), m(onth), y(ear), or in units of events
+				|(e(vent).
 
 
-	Transaction Device ThresholdSign ThresholdSignRequest ThresholdSignResponse
-		Description
-			|Request creation of a new service account.
-		Description
-			|Announce the existence of the device. 
-
-	Message ThresholdSignRequest
-		External ServiceAdminRequest
-		Description
-			|Announce the device to the presence service
-
-
-	Message ThresholdSignResponse
-		External ServiceAdminResponse
-		Description
-			|Reports the result of the presence request
-
-
-
-
-	Transaction Device ThresholdAgreement ThresholdAgreementRequest ThresholdAgreementResponse
-		Description
-			|Request creation of a new service account.
-		Description
-			|Announce the existence of the device. 
-
-	Message ThresholdAgreementRequest
-		External ServiceAdminRequest
-		Description
-			|Announce the device to the presence service
-
-
-	Message ThresholdAgreementResponse
-		External ServiceAdminResponse
-		Description
-			|Reports the result of the presence request
-
+	Structure RemoteLog
+		Inherits LogEntry
+		String Uri
+			Description
+				|Path specifying the filename

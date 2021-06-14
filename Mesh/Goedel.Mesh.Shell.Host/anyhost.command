@@ -34,26 +34,23 @@
 			Default "false"
 			Brief "Report output in JSON format"
 
-
 	Command HostStart "start"
 		DefaultCommand
 		Brief "Start the host service"
 		Parameter HostConfig "hostconfig" ExistingFile
 			Brief "The host configuration file"
+		Option Console "console" Flag
+			Default "false"
+
+		Option MachineName "host" String
 		Include Reporting
-
-	Command HostPause "pause"
-		Brief "Start the host service in paused mode or pause the service if already started."
-		Parameter HostConfig "hostconfig" ExistingFile
-			Brief "The host configuration file"
-
-	Command HostStop "stop"
-		Brief "Stop the host service."
-		Parameter HostConfig "hostconfig" ExistingFile
-			Brief "The host configuration file"
 
 	Command HostVerify "verify"
 		Brief "Verify that the host configuration file is correct."
 		Parameter HostConfig "hostconfig" ExistingFile
 			Brief "The host configuration file"
+		Option Console "console" Flag
+			Default "false"
+
+		Option MachineName "host" String
 

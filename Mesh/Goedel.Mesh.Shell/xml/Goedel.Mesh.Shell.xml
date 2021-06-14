@@ -6495,5 +6495,10 @@
             </summary>
             <returns>The current string.</returns>
         </member>
+        <member name="T:Goedel.Mesh.NamespaceDoc">
+            <summary>
+            Mesh Protocol and Profile Definition.
+            </summary>
+        </member>
     </members>
 </doc>

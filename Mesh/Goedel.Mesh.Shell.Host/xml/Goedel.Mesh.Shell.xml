@@ -53,6 +53,12 @@
         <member name="P:Goedel.Mesh.Shell.Host._HostStart.HostConfig">
             <summary>Field accessor for parameter []</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostStart.Console">
+            <summary>Field accessor for option [console]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostStart.MachineName">
+            <summary>Field accessor for option [host]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.Host._HostStart.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -65,14 +71,14 @@
         <member name="P:Goedel.Mesh.Shell.Host._HostStart.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.Host._HostPause.HostConfig">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host._HostStop.HostConfig">
-            <summary>Field accessor for parameter []</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell.Host._HostVerify.HostConfig">
             <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostVerify.Console">
+            <summary>Field accessor for option [console]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostVerify.MachineName">
+            <summary>Field accessor for option [host]</summary>
         </member>
         <member name="T:Goedel.Mesh.Shell.Host.Shell">
             <summary>
@@ -484,6 +490,11 @@
         <member name="P:Goedel.Mesh.Shell.OptionNotImplemented.Throw">
             <summary>
             The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.NamespaceDoc">
+            <summary>
+            Host shell. Runs an actual host instance with minimal command line options.
             </summary>
         </member>
     </members>
