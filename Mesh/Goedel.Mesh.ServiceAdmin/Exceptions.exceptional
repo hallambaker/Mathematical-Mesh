@@ -1,10 +1,14 @@
 ﻿
 Namespace Goedel.Mesh.Services
 
-	Exception ServicesTBS
-        Console "An internal error occurred"
+	Exception HostNotFound
+        Console "Configuration for the host {0} could not be found"
 		Description
-			|An internal assertion check failed.
+			|The host indicated could not be found in the configuration file.
 
-
+	Exception ConfigurationNotHost
+        Console "The configuration for {0} is not a host configuration"
+		Description
+			|There is a configuration entry for the indicated host but it is not a
+			|host entry.
 

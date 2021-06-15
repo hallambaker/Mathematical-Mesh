@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 //  
 
+using System;
 
 using Goedel.Utilities;
 using Goedel.Mesh.Shell.Host;
@@ -38,7 +39,32 @@ namespace meshhost {
             commandLineInterpreter.AddService(PublicMeshService.ServiceDescription);
             commandLineInterpreter.AddService(ServiceManagementProvider.ServiceDescription);
 
-            commandLineInterpreter.MainMethod(args);
+            //commandLineInterpreter.MainMethod(args);
+
+            Shell Dispatch = new Shell();
+
+            try {
+                commandLineInterpreter.MainMethod(Dispatch, args);
+                }
+            catch (Goedel.Command.ParserException) {
+                CommandLineInterpreter.Brief(
+                    CommandLineInterpreter.Description,
+                    CommandLineInterpreter.DefaultCommand,
+                    CommandLineInterpreter.Entries);
+                }
+            catch (System.Exception Exception) {
+                Console.WriteLine("Application: {0}", Exception.Message);
+                if (Exception.InnerException != null) {
+                    Console.WriteLine(Exception.InnerException.Message);
+                    }
+
+                }
+
+
             }
+
+
+
+
         }
     }

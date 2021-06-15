@@ -22,6 +22,7 @@
 //  
 
 using Goedel.Utilities;
+using Goedel.IO;
 
 using System;
 using System.Collections.Generic;
@@ -256,6 +257,8 @@ namespace Goedel.Protocol {
             Binary,
             /// <summary>JSON-BCD extended tag, for internal use</summary>
             JSONBCD,
+            /// <summary>Byte Order Mark</summary>
+            BOM,
             /// <summary></summary>
             Empty
             }
@@ -293,6 +296,13 @@ namespace Goedel.Protocol {
                                   };
 
         #endregion
+
+
+        ///<summary>The Line Number (used for error reporting)</summary> 
+        public int Line = 1;
+
+        ///<summary>The Colum number (used for error reporting)</summary> 
+        public int Column = 1;
 
         /// <summary>If true there is a token in the lookahead buffer.</summary>
         protected bool Lookahead = false;
@@ -332,7 +342,7 @@ namespace Goedel.Protocol {
         static JsonReader _JSONReaderFactoryByte(byte[] Data) => new(Data);
 
 
-        StringBuilder StringBuilder = new();
+        StringBuilder stringBuilder = new();
 
         /// <summary>
         /// The underlying character stream.
@@ -380,7 +390,7 @@ namespace Goedel.Protocol {
                 Lookahead = true;
                 }
             if (Trace) {
-                //Screen.WriteLine("Peek {0} \"{1}\"", TokenType, ResultString);
+                Screen.WriteLine("Peek {0} \"{1}\"", TokenType, ResultString);
                 }
             }
 
@@ -417,7 +427,7 @@ namespace Goedel.Protocol {
         /// the ASCII oriented parts of the JSON syntax, that is
         /// everything other than strings.</para></summary>
         protected virtual Token Lexer() {
-            StringBuilder.Clear();
+            stringBuilder.Clear();
 
             bool Going = true;
             bool Complete = false;
@@ -427,8 +437,21 @@ namespace Goedel.Protocol {
 
             //string In = "";
             while (Going & !EOF) {
-                char c = (char)CharacterInput.PeekByte();
+                var c = (char)CharacterInput.PeekByte();
                 //In = In + c;
+
+                if (State == 0 & c == 0xEF) {
+                    CharacterInput.ReadByte();
+
+                    if (CharacterInput.ReadByte() != 0xBB) {
+                        return Token.Invalid;
+                        }
+                    if (CharacterInput.ReadByte() != 0xBF) {
+                        return Token.Invalid;
+                        }
+                    return Token.BOM;
+                    }
+
 
                 if (State == 0 & c > 127) {
                     return Token.JSONBCD;
@@ -447,7 +470,7 @@ namespace Goedel.Protocol {
                         return Token.Invalid;
                         }
                     else if (Token == Token.Litteral) {
-                        return (StringBuilder.ToString()) switch
+                        return (stringBuilder.ToString()) switch
                             {
                                 "true" => Token.True,
                                 "false" => Token.False,
@@ -455,7 +478,7 @@ namespace Goedel.Protocol {
                                 _ => Token.Invalid,
                                 };
                         }
-                    ResultString = StringBuilder.ToString();
+                    ResultString = stringBuilder.ToString();
                     return Token;
 
                     }
@@ -465,12 +488,12 @@ namespace Goedel.Protocol {
                 CharacterInput.ReadByte(); // Consume character
                 switch (Actions[State]) {
                     case Action.Add: {
-                        StringBuilder.Append(c);
+                        stringBuilder.Append(c);
                         break;
                         }
                     case Action.AddComplete: {
                         Complete = true;
-                        StringBuilder.Append(c);
+                        stringBuilder.Append(c);
                         break;
                         }
                     case Action.Complete: {
@@ -609,43 +632,6 @@ namespace Goedel.Protocol {
                         }
                     return Result;
                     }
-
-                case Token.Invalid:
-                    break;
-                case Token.StartObject:
-                    break;
-                case Token.StartArray:
-                    break;
-                case Token.EndArray:
-                    break;
-                case Token.Colon:
-                    break;
-                case Token.Comma:
-                    break;
-                case Token.Number:
-                    break;
-                case Token.Integer:
-                    break;
-                case Token.Real32:
-                    break;
-                case Token.Real64:
-                    break;
-                case Token.Litteral:
-                    break;
-                case Token.True:
-                    break;
-                case Token.False:
-                    break;
-                case Token.Null:
-                    break;
-                case Token.EndRecord:
-                    break;
-                case Token.Binary:
-                    break;
-                case Token.JSONBCD:
-                    break;
-                case Token.Empty:
-                    break;
                 default:
                     break;
                 }
@@ -821,6 +807,39 @@ namespace Goedel.Protocol {
             Out.Deserialize(this);
             EndObject();
             return Out;
+            }
+
+
+        /// <summary>
+        /// Convenience method, reads a file in the 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="file"></param>
+        /// <param name="tagged"></param>
+        /// <returns></returns>
+        public static T ReadFile<T>(string file, bool tagged) where T: JsonObject, new() {
+            var result = new T();
+            using var stream = file.OpenFileReadShared();
+            var countedStream = new CountedUtf8StreamReader(stream);
+            using var reader = new JsonReader(countedStream);
+
+            reader.PeekToken();
+            if (reader.TokenType == Token.BOM) {
+                reader.Lookahead = false; // skip BOM at start of file.
+                }
+
+            // Have only implemented untagged files so far.
+                tagged.AssertFalse(NYI.Throw);
+
+            try {
+                result.Deserialize(reader);
+                }
+            catch (Exception e) {
+                throw new ParseError(null, e, file, countedStream.Line, countedStream.Column);
+                }
+
+
+            return result;
             }
 
 

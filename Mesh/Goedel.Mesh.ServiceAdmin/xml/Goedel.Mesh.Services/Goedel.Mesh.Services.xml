@@ -121,7 +121,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.Administrator">
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.Administrators">
              <summary>
             Strong name of service identifier.
              </summary>
@@ -329,6 +329,14 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.Host.Storage">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Host.Role">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Host.IP">
             <summary>
             </summary>
         </member>

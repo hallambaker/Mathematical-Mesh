@@ -16,7 +16,7 @@
 				|Used to distinguish between multiple service instances for test purposes.
 		TStruct ConfigurationEntry Entries
 			Multiple
-		String Administrator
+		String Administrators
 			Multiple
 			Description
 				|Strong name of service identifier.
@@ -34,10 +34,11 @@
 		String Path			 
 			Description
 				|Path to the directory where service data is stored.
-		Struct LogEntry Logs
+		TStruct LogEntry Logs
 			Multiple
 
-	Structure Service
+	Structure ServiceConfiguration
+		//Tag "Service"
 		Inherits ConfigurationEntry
 		String Addresses
 			Multiple
@@ -45,10 +46,14 @@
 			Description
 				|The well known service identifier of the service
 
-	Structure Host
+	Structure HostConfiguration
+		//Tag "Host"
 		Inherits ConfigurationEntry
 		Integer Process
 		Integer Storage
+		String Role
+		String IP
+			Multiple
 
 	Structure LogEntry
 		String Events

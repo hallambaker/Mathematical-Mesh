@@ -1,0 +1,32 @@
+﻿Entries 
+
+    Service
+      Id						cryptomesh
+      Description		"Example Mesh service config on one host"
+      WellKnown			mmm
+      Addresses
+        mathmesh.com
+        @mathmesh
+
+    Host
+      Id						Voodoo
+      Description		"The host to run the service"
+      Role 
+        Fixed
+      Path					Data/Mesh
+      IP 
+        192.168.1.21:9999
+        10.1.2.3:9998
+      Logs 
+          LocalLog 
+            Path		log/errors
+            Events		
+              Error
+            Roll		1d
+          RemoteLog
+            Uri			mlog:offsite.example.com
+            Event		
+              Error
+      Storage				100
+      Process				100
+

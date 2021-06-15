@@ -27,8 +27,9 @@ namespace Goedel.Mesh.Shell.Host {
 
         bool Console;
         string MachineName;
-        ServiceAdmin.ServiceConfig HostConfig;
-
+        Configuration Configuration;
+        ServiceAdmin.HostConfiguration HostConfiguration;
+        ServiceAdmin.ServiceConfiguration ServiceConfiguration;
 
         public override ShellResult HostStart(HostStart Options) {
             var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, Options.HostConfig.Value);
@@ -75,14 +76,24 @@ namespace Goedel.Mesh.Shell.Host {
                 System.Console.WriteLine($"HostName: {MachineName}");
                 }
 
-            using var stream = hostConfig.OpenFileReadShared();
-            using var reader = new JsonBcdReader(stream);
-            var serviceAdmin = ServiceConfig.FromJson(reader, false);
 
-            return true;
+            Configuration = JsonReader.ReadFile<Configuration>(hostConfig, false);
+
+            HostConfiguration = Configuration.GetHostConfiguration(MachineName);
+            HostConfiguration.AssertNotNull(HostNotFound.Throw, MachineName);
+
+
+
+            //using var stream = hostConfig.OpenFileReadShared();
+            //using var reader = new JsonBcdReader(stream);
+            //var serviceAdmin = ServiceConfig.FromJson(reader, false);
+
+                return true;
 
             }
 
+
+        ServiceAdmin.HostConfiguration
 
         }
 

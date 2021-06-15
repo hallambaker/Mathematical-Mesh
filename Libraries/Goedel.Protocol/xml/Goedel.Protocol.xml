@@ -397,6 +397,60 @@
             <param name="Stream">The stream to read from</param>
             <returns>The decoded data</returns>
         </member>
+        <member name="T:Goedel.Protocol.CountedUtf8StreamReader">
+            <summary>
+            Returns stream reader that tracks line and column numbers.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.Line">
+            <summary>The line number.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.Column">
+            <summary>The column number taking into account UTF8 encoding.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.CanRead">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.CanSeek">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.CanWrite">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.Length">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.Position">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.#ctor(System.IO.Stream)">
+            <summary>
+            Return a counter wrapper for <paramref name="stream"/>.
+            </summary>
+            <param name="stream">The stream to wrap.</param>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.Count(System.Byte)">
+            <summary>
+            The counter method, increment the line and colum counters according to the UTF8 status of 
+            <paramref name="b"/>.
+            </summary>
+            <param name="b">The byte read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.Read(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.Flush">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.Seek(System.Int64,System.IO.SeekOrigin)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.SetLength(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.Write(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Protocol.Dechunk">
             <summary>
             Read and buffer data chunks from a stream. This could be made a lot
@@ -793,6 +847,38 @@
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="P:Goedel.Protocol.DictionaryInitialization.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.ParseError">
+            <summary>
+            Attempt to deserialize untagged data to unknown type.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.ParseError.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.ParseError.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.ParseError.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.ParseError._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.ParseError.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2430,11 +2516,20 @@
         <member name="F:Goedel.Protocol.JsonReader.Token.JSONBCD">
             <summary>JSON-BCD extended tag, for internal use</summary>
         </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.BOM">
+            <summary>Byte Order Mark</summary>
+        </member>
         <member name="F:Goedel.Protocol.JsonReader.Token.Empty">
             <summary></summary>
         </member>
         <member name="F:Goedel.Protocol.JsonReader.Tokens">
             <summary>Tokens to be returned if the FSR stops in the specified state.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Line">
+            <summary>The Line Number (used for error reporting)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Column">
+            <summary>The Colum number (used for error reporting)</summary> 
         </member>
         <member name="F:Goedel.Protocol.JsonReader.Lookahead">
             <summary>If true there is a token in the lookahead buffer.</summary>
@@ -2620,6 +2715,15 @@
             </summary>
             <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
             <returns>The deserialized object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadFile``1(System.String,System.Boolean)">
+            <summary>
+            Convenience method, reads a file in the 
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="file"></param>
+            <param name="tagged"></param>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Protocol.JSONWriterFactoryDelegate">
             <summary>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/14/2021 6:00:59 PM
+//  This file was automatically generated at 6/15/2021 4:00:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -75,8 +75,8 @@ namespace Goedel.Mesh.ServiceAdmin {
 
 			{"Configuration", Configuration._Factory},
 			{"ConfigurationEntry", ConfigurationEntry._Factory},
-			{"Service", Service._Factory},
-			{"Host", Host._Factory},
+			{"ServiceConfiguration", ServiceConfiguration._Factory},
+			{"HostConfiguration", HostConfiguration._Factory},
 			{"LogEntry", LogEntry._Factory},
 			{"LocalLog", LocalLog._Factory},
 			{"RemoteLog", RemoteLog._Factory}			};
@@ -123,7 +123,7 @@ namespace Goedel.Mesh.ServiceAdmin {
         ///Strong name of service identifier.
         /// </summary>
 
-		public virtual List<string>				Administrator  {get; set;}
+		public virtual List<string>				Administrators  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -193,12 +193,12 @@ namespace Goedel.Mesh.ServiceAdmin {
 				_writer.WriteArrayEnd ();
 				}
 
-			if (Administrator != null) {
+			if (Administrators != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Administrator", 1);
+				_writer.WriteToken ("Administrators", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Administrator) {
+				foreach (var _index in Administrators) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					_writer.WriteString (_index);
 					}
@@ -257,13 +257,13 @@ namespace Goedel.Mesh.ServiceAdmin {
 						}
 					break;
 					}
-				case "Administrator" : {
+				case "Administrators" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					Administrator = new List <string> ();
+					Administrators = new List <string> ();
 					while (_Going) {
 						string _Item = jsonReader.ReadString ();
-						Administrator.Add (_Item);
+						Administrators.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;
@@ -375,12 +375,11 @@ namespace Goedel.Mesh.ServiceAdmin {
 				bool _firstarray = true;
 				foreach (var _index in Logs) {
 					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
+                    _writer.WriteObjectStart();
+                    _writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
 					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
+                    _writer.WriteObjectEnd();
 					}
 				_writer.WriteArrayEnd ();
 				}
@@ -439,10 +438,7 @@ namespace Goedel.Mesh.ServiceAdmin {
 					bool _Going = jsonReader.StartArray ();
 					Logs = new List <LogEntry> ();
 					while (_Going) {
-						// an untagged structure.
-						var _Item = new  LogEntry ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new LogEntry (jsonReader);
+						var _Item = LogEntry.FromJson (jsonReader, true); // a tagged structure
 						Logs.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
@@ -460,7 +456,7 @@ namespace Goedel.Mesh.ServiceAdmin {
 
 	/// <summary>
 	/// </summary>
-	public partial class Service : ConfigurationEntry {
+	public partial class ServiceConfiguration : ConfigurationEntry {
         /// <summary>
         /// </summary>
 
@@ -479,13 +475,13 @@ namespace Goedel.Mesh.ServiceAdmin {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "Service";
+		public new const string __Tag = "ServiceConfiguration";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new Service();
+		public static new JsonObject _Factory () => new ServiceConfiguration();
 
 
         /// <summary>
@@ -542,15 +538,15 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Service FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new ServiceConfiguration FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as Service;
+				return Out as ServiceConfiguration;
 				}
-		    var Result = new Service ();
+		    var Result = new ServiceConfiguration ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -592,7 +588,7 @@ namespace Goedel.Mesh.ServiceAdmin {
 
 	/// <summary>
 	/// </summary>
-	public partial class Host : ConfigurationEntry {
+	public partial class HostConfiguration : ConfigurationEntry {
 		bool								__Process = false;
 		private int						_Process;
         /// <summary>
@@ -611,6 +607,14 @@ namespace Goedel.Mesh.ServiceAdmin {
 			get => _Storage;
 			set {_Storage = value; __Storage = true; }
 			}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Role  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<string>				IP  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -620,13 +624,13 @@ namespace Goedel.Mesh.ServiceAdmin {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "Host";
+		public new const string __Tag = "HostConfiguration";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new Host();
+		public static new JsonObject _Factory () => new HostConfiguration();
 
 
         /// <summary>
@@ -665,6 +669,23 @@ namespace Goedel.Mesh.ServiceAdmin {
 				_writer.WriteToken ("Storage", 1);
 					_writer.WriteInteger32 (Storage);
 				}
+			if (Role != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Role", 1);
+					_writer.WriteString (Role);
+				}
+			if (IP != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("IP", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in IP) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -676,15 +697,15 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Host FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new HostConfiguration FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as Host;
+				return Out as HostConfiguration;
 				}
-		    var Result = new Host ();
+		    var Result = new HostConfiguration ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -704,6 +725,21 @@ namespace Goedel.Mesh.ServiceAdmin {
 					}
 				case "Storage" : {
 					Storage = jsonReader.ReadInteger32 ();
+					break;
+					}
+				case "Role" : {
+					Role = jsonReader.ReadString ();
+					break;
+					}
+				case "IP" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					IP = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						IP.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
 					break;
 					}
 				default : {

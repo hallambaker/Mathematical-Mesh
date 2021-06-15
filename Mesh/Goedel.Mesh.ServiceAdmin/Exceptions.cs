@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 6/14/2021 6:00:59 PM
+//  This file was automatically generated at 6/15/2021 4:00:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -25,10 +25,10 @@ namespace Goedel.Mesh.Services {
 
 
     /// <summary>
-    /// An internal assertion check failed.
+    /// The host indicated could not be found in the configuration file.
     /// </summary>
     [global::System.Serializable]
-	public partial class ServicesTBS : global::Goedel.Utilities.GoedelException {
+	public partial class HostDescriptionNotFound : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
@@ -40,7 +40,7 @@ namespace Goedel.Mesh.Services {
 		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
 				new () {
 
-				"An internal error occurred"
+				"The host {0} could not be found"
 				};
 
 		/// <summary>
@@ -50,7 +50,7 @@ namespace Goedel.Mesh.Services {
 		/// generated message.</param>	
 		/// <param name="inner">Inner Exception</param>	
 		/// <param name="args">Optional list of parameterized arguments.</param>
-		public ServicesTBS  (string description=null, System.Exception inner=null,
+		public HostDescriptionNotFound  (string description=null, System.Exception inner=null,
 			params object[] args) : 
 				base (ExceptionFormatDelegate(description, Templates,
 					null, args), inner) {
@@ -65,7 +65,7 @@ namespace Goedel.Mesh.Services {
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new ServicesTBS(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new HostDescriptionNotFound(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate

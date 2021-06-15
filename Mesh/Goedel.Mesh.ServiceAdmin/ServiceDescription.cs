@@ -41,7 +41,7 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// <summary>
     /// Service description used to advertise a service provider.
     /// </summary>
-    public record ServiceDescription (
+    public record ServiceDescription(
             string WellKnown, ServiceFactoryDelegate Factory) {
         }
 
@@ -56,4 +56,31 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// </summary>
     public partial class HostConfiguration {
         }
+
+    public partial class Configuration {
+
+        public HostConfiguration GetHostConfiguration(string Id) {
+            bool nonHost = false;
+            
+            if (Entries == null) {
+                return null;
+                }
+            foreach (var entry in Entries) {
+
+                if (entry.Id?.ToLower() == Id) {
+                    if (entry is HostConfiguration) {
+                        return entry as HostConfiguration;
+                        }
+                    nonHost = true;
+                    }
+                }
+            nonHost.AssertFalse(ConfigurationNotHost.Throw, MachineName);
+
+            return null;
+            }
+
+        }
+
+
+
     }

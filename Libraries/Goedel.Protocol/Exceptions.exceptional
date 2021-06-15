@@ -55,3 +55,10 @@ Namespace Goedel.Protocol
 
 	Exception DictionaryInitialization
 		Console "An attempt was made to deserialize an object without initializing the dictionary"
+
+	Exception ParseError
+		Console "The file {0} could not be read at Line {1} Col {2}."
+		Description
+			|Attempt to deserialize untagged data to unknown type.
+	
+	

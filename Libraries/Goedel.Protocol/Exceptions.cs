@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 6/14/2021 6:00:54 PM
+//  This file was automatically generated at 6/15/2021 4:00:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -585,6 +585,58 @@ namespace Goedel.Protocol {
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new DictionaryInitialization(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+        }
+
+
+    /// <summary>
+    /// Attempt to deserialize untagged data to unknown type.
+    /// </summary>
+    [global::System.Serializable]
+	public partial class ParseError : global::Goedel.Utilities.GoedelException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary>Templates for formatting response messages.</summary>
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
+
+				"The file {0} could not be read at Line {1} Col {2}."
+				};
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public ParseError  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
+			}
+
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+        static System.Exception _Throw(object reasons) => new ParseError(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
