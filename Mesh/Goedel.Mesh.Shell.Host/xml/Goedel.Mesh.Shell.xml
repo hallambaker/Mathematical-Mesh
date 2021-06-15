@@ -41,15 +41,6 @@
             <param name="args">The set of arguments.</param>
             <param name="index">The first unparsed argument.</param>
         </member>
-        <member name="P:Goedel.Mesh.Shell.Host.CommandLineInterpreter.ServiceDescriptionDictionary">
-            <summary>Dictionary of service descriptions.</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Host.CommandLineInterpreter.AddService(Goedel.Mesh.ServiceAdmin.ServiceDescription)">
-            <summary>
-            Add a service provider to the hosting options.
-            </summary>
-            <param name="serviceDescription">The service description.</param>
-        </member>
         <member name="P:Goedel.Mesh.Shell.Host._HostStart.HostConfig">
             <summary>Field accessor for parameter []</summary>
         </member>
@@ -84,6 +75,30 @@
             <summary>
             The command shell.
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Shell.ServiceDescriptionDictionary">
+            <summary>Dictionary of service descriptions.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.#ctor(Goedel.Mesh.ServiceAdmin.ServiceDescription[])">
+            <summary>
+            Constructor creating a shell prepopulated with the service descriptions
+            <paramref name="serviceDescriptions"/>.
+            </summary>
+            <param name="serviceDescriptions">Descriptions of services to dispatch on.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.Dispatch(System.String[],System.IO.TextWriter)">
+            <summary>
+            Dispatch command line instruction with arguments <paramref name="args"/> and
+            error output <paramref name="console"/>.
+            </summary>
+            <param name="args">The command line arguments.</param>
+            <param name="console">Error output stream.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.AddService(Goedel.Mesh.ServiceAdmin.ServiceDescription)">
+            <summary>
+            Add a service provider to the hosting options.
+            </summary>
+            <param name="serviceDescription">The service description.</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.Host.Shell._PostProcess(Goedel.Mesh.Shell.Host.ShellResult)">
             <summary>

@@ -59,25 +59,53 @@ namespace Goedel.Mesh.ServiceAdmin {
 
     public partial class Configuration {
 
-        public HostConfiguration GetHostConfiguration(string Id) {
-            bool nonHost = false;
+
+        /// <summary>
+        /// Return the host configuration for the machine <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">Machine to return the configuration for.</param>
+        /// <returns>The host configuration (if found).</returns>
+        public HostConfiguration GetHostConfiguration(string id) {
+
+            Entries.AssertNotNull(HostNotFound.Throw, id);
             
-            if (Entries == null) {
-                return null;
-                }
+            bool nonHost = false;
             foreach (var entry in Entries) {
 
-                if (entry.Id?.ToLower() == Id) {
+                if (entry.Id?.ToLower() == id | (id == "*")) {
                     if (entry is HostConfiguration) {
                         return entry as HostConfiguration;
                         }
                     nonHost = true;
                     }
                 }
-            nonHost.AssertFalse(ConfigurationNotHost.Throw, MachineName);
+            nonHost.AssertFalse(ConfigurationNotHost.Throw, id);
+            throw new HostNotFound(null, null, id);
 
-            return null;
             }
+
+
+
+        /// <summary>
+        /// Return the host configuration for the host <paramref name="hostConfiguration"/>
+        /// </summary>
+        /// <param name="hostConfiguration">Host to return the service configuration for.</param>
+        /// <returns>The host configuration (if found).</returns>
+        public ServiceConfiguration GetServiceConfiguration(HostConfiguration hostConfiguration) {
+    
+
+            Entries.AssertNotNull(ServiceNotFound.Throw);
+            if ((hostConfiguration.Services == null) || (hostConfiguration.Services.Count == 0)) {
+                foreach (var entry in Entries) {
+
+                    if (entry is ServiceConfiguration) {
+                        return entry as ServiceConfiguration;
+                        }
+                    }
+                }
+            throw new ServiceNotFound();
+            }
+
 
         }
 

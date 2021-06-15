@@ -17,6 +17,63 @@ namespace Goedel.Mesh.Shell.Host {
     /// </summary>
     public partial class Shell : _Shell {
 
+        ///<summary>Dictionary of service descriptions.</summary> 
+        public Dictionary<string, ServiceDescription>
+            ServiceDescriptionDictionary { get; } = new();
+
+
+        /// <summary>
+        /// Constructor creating a shell prepopulated with the service descriptions
+        /// <paramref name="serviceDescriptions"/>.
+        /// </summary>
+        /// <param name="serviceDescriptions">Descriptions of services to dispatch on.</param>
+        public Shell(params ServiceDescription[] serviceDescriptions) {
+
+            foreach (var serviceDescription in serviceDescriptions) {
+                AddService(serviceDescription);
+                }
+
+            }
+
+        /// <summary>
+        /// Dispatch command line instruction with arguments <paramref name="args"/> and
+        /// error output <paramref name="console"/>.
+        /// </summary>
+        /// <param name="args">The command line arguments.</param>
+        /// <param name="console">Error output stream.</param>
+        public void Dispatch(string[] args, TextWriter console) {
+            var commandLineInterpreter = new CommandLineInterpreter();
+
+            try {
+                commandLineInterpreter.MainMethod(this, args);
+                }
+            catch (Goedel.Command.ParserException) {
+                CommandLineInterpreter.Brief(
+                    CommandLineInterpreter.Description,
+                    CommandLineInterpreter.DefaultCommand,
+                    CommandLineInterpreter.Entries);
+                }
+            catch (System.Exception Exception) {
+                console.WriteLine("Application: {0}", Exception.Message);
+                if (Exception.InnerException != null) {
+                    console.WriteLine(Exception.InnerException.Message);
+                    }
+
+                }
+
+            }
+
+
+
+
+        /// <summary>
+        /// Add a service provider to the hosting options.
+        /// </summary>
+        /// <param name="serviceDescription">The service description.</param>
+        public void AddService(ServiceDescription serviceDescription) =>
+            ServiceDescriptionDictionary.Add(serviceDescription.WellKnown, serviceDescription);
+
+
         /// <summary>
         /// Post processing action
         /// </summary>
@@ -33,7 +90,7 @@ namespace Goedel.Mesh.Shell.Host {
 
         public override ShellResult HostStart(HostStart Options) {
             var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, Options.HostConfig.Value);
-            
+
             result.AssertTrue(NYI.Throw);
 
             return new Result() {
@@ -80,36 +137,19 @@ namespace Goedel.Mesh.Shell.Host {
             Configuration = JsonReader.ReadFile<Configuration>(hostConfig, false);
 
             HostConfiguration = Configuration.GetHostConfiguration(MachineName);
-            HostConfiguration.AssertNotNull(HostNotFound.Throw, MachineName);
+            ServiceConfiguration = Configuration.GetServiceConfiguration(HostConfiguration);
 
 
-
-            //using var stream = hostConfig.OpenFileReadShared();
-            //using var reader = new JsonBcdReader(stream);
-            //var serviceAdmin = ServiceConfig.FromJson(reader, false);
-
-                return true;
+            return true;
 
             }
 
-
-        ServiceAdmin.HostConfiguration
 
         }
 
     public partial class CommandLineInterpreter {
 
-        ///<summary>Dictionary of service descriptions.</summary> 
-        public Dictionary<string, ServiceDescription>
-            ServiceDescriptionDictionary { get; } = new();
 
-
-        /// <summary>
-        /// Add a service provider to the hosting options.
-        /// </summary>
-        /// <param name="serviceDescription">The service description.</param>
-        public void AddService(ServiceDescription serviceDescription) => 
-            ServiceDescriptionDictionary.Add(serviceDescription.WellKnown, serviceDescription);
 
 
 

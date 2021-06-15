@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/15/2021 4:00:23 PM
+//  This file was automatically generated at 6/15/2021 5:31:31 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -615,6 +615,10 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// </summary>
 
 		public virtual List<string>				IP  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<string>				Services  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -686,6 +690,18 @@ namespace Goedel.Mesh.ServiceAdmin {
 				_writer.WriteArrayEnd ();
 				}
 
+			if (Services != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Services", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Services) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -738,6 +754,17 @@ namespace Goedel.Mesh.ServiceAdmin {
 					while (_Going) {
 						string _Item = jsonReader.ReadString ();
 						IP.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "Services" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Services = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Services.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;

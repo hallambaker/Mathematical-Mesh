@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 6/15/2021 4:00:23 PM
+//  This file was automatically generated at 6/15/2021 5:31:30 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -19,16 +19,16 @@
 
 
 #pragma warning disable IDE1006 // Naming Styles
-namespace Goedel.Mesh.Services {
+namespace Goedel.Mesh.ServiceAdmin {
 
 
 
 
     /// <summary>
-    /// The host indicated could not be found in the configuration file.
+    /// No service configuration could be found.
     /// </summary>
     [global::System.Serializable]
-	public partial class HostDescriptionNotFound : global::Goedel.Utilities.GoedelException {
+	public partial class ServiceNotFound : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
@@ -40,7 +40,7 @@ namespace Goedel.Mesh.Services {
 		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
 				new () {
 
-				"The host {0} could not be found"
+				"No service configuration found"
 				};
 
 		/// <summary>
@@ -50,7 +50,7 @@ namespace Goedel.Mesh.Services {
 		/// generated message.</param>	
 		/// <param name="inner">Inner Exception</param>	
 		/// <param name="args">Optional list of parameterized arguments.</param>
-		public HostDescriptionNotFound  (string description=null, System.Exception inner=null,
+		public ServiceNotFound  (string description=null, System.Exception inner=null,
 			params object[] args) : 
 				base (ExceptionFormatDelegate(description, Templates,
 					null, args), inner) {
@@ -65,7 +65,112 @@ namespace Goedel.Mesh.Services {
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new HostDescriptionNotFound(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ServiceNotFound(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+        }
+
+
+    /// <summary>
+    /// The host indicated could not be found in the configuration file.
+    /// </summary>
+    [global::System.Serializable]
+	public partial class HostNotFound : global::Goedel.Utilities.GoedelException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary>Templates for formatting response messages.</summary>
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
+
+				"Configuration for the host {0} could not be found"
+				};
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public HostNotFound  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
+			}
+
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+        static System.Exception _Throw(object reasons) => new HostNotFound(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+        }
+
+
+    /// <summary>
+    /// There is a configuration entry for the indicated host but it is not a
+    /// host entry.
+    /// </summary>
+    [global::System.Serializable]
+	public partial class ConfigurationNotHost : global::Goedel.Utilities.GoedelException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary>Templates for formatting response messages.</summary>
+		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+				new () {
+
+				"The configuration for {0} is not a host configuration"
+				};
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public ConfigurationNotHost  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
+			}
+
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+        static System.Exception _Throw(object reasons) => new ConfigurationNotHost(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate

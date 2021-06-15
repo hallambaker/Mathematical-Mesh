@@ -34,31 +34,12 @@ namespace meshhost {
         static Program() => Initialization.Initialized.AssertTrue(Internal.Throw);
 
         static void Main(string[] args) {
-            var commandLineInterpreter = new CommandLineInterpreter();
 
-            commandLineInterpreter.AddService(PublicMeshService.ServiceDescription);
-            commandLineInterpreter.AddService(ServiceManagementProvider.ServiceDescription);
 
-            //commandLineInterpreter.MainMethod(args);
-
-            Shell Dispatch = new Shell();
-
-            try {
-                commandLineInterpreter.MainMethod(Dispatch, args);
-                }
-            catch (Goedel.Command.ParserException) {
-                CommandLineInterpreter.Brief(
-                    CommandLineInterpreter.Description,
-                    CommandLineInterpreter.DefaultCommand,
-                    CommandLineInterpreter.Entries);
-                }
-            catch (System.Exception Exception) {
-                Console.WriteLine("Application: {0}", Exception.Message);
-                if (Exception.InnerException != null) {
-                    Console.WriteLine(Exception.InnerException.Message);
-                    }
-
-                }
+            Shell shell = new Shell(
+                        PublicMeshService.ServiceDescription,
+                        ServiceManagementProvider.ServiceDescription);
+            shell.Dispatch(args, Console.Out);
 
 
             }

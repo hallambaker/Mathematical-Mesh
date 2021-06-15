@@ -1,5 +1,10 @@
 ﻿
-Namespace Goedel.Mesh.Services
+Namespace Goedel.Mesh.ServiceAdmin
+
+	Exception ServiceNotFound
+        Console "No service configuration found"
+		Description
+			|No service configuration could be found.
 
 	Exception HostNotFound
         Console "Configuration for the host {0} could not be found"

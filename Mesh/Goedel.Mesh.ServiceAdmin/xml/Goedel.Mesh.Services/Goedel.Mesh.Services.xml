@@ -4,19 +4,19 @@
         <name>Goedel.Mesh.ServiceAdmin</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Mesh.Services.ServicesTBS">
+        <member name="T:Goedel.Mesh.ServiceAdmin.ServiceNotFound">
             <summary>
-            An internal assertion check failed.
+            No service configuration could be found.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Services.ServicesTBS.ExceptionFormatDelegate">
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceNotFound.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Services.ServicesTBS.Templates">
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceNotFound.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Services.ServicesTBS.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -25,25 +25,80 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Services.ServicesTBS._Throw(System.Object)">
+        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceNotFound._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.Mesh.Services.ServicesTBS.Throw">
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceNotFound.Throw">
             <summary>
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Services.ServiceAdminRequest">
+        <member name="T:Goedel.Mesh.ServiceAdmin.HostNotFound">
             <summary>
-            Service administration request
+            The host indicated could not be found in the configuration file.
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Services.ServiceAdminResponse">
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.HostNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Service administration response
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.HostNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.ConfigurationNotHost">
+            <summary>
+            There is a configuration entry for the indicated host but it is not a
+            host entry.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationNotHost.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationNotHost.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ConfigurationNotHost.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ConfigurationNotHost._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationNotHost.Throw">
+            <summary>
+            The public fatory delegate
             </summary>
         </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate">
@@ -69,43 +124,164 @@
             <summary>
             Describes a service configuration.
             </summary>
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.Addresses">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.WellKnown">
+             <summary>
+            The well known service identifier of the service
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfiguration._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceConfiguration._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.HostConfiguration">
             <summary>
             Describes a host configuration.
             </summary>
+            <summary>
+            </summary>
         </member>
-        <member name="T:Goedel.Mesh.ServiceAdmin.ServiceConfig">
-             <summary>
-            
-             Host and Service configuration tile.
-             </summary>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.Process">
+            <summary>
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfig._Tag">
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.Storage">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.Role">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.IP">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.Services">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.ServiceAdmin.ServiceConfig.__Tag">
+        <member name="F:Goedel.Mesh.ServiceAdmin.HostConfiguration.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfig._TagDictionary">
+        <member name="M:Goedel.Mesh.ServiceAdmin.HostConfiguration._Factory">
             <summary>
-            Dictionary mapping tags to factory methods
+            Factory method
             </summary>
+            <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceConfig.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+        <member name="M:Goedel.Mesh.ServiceAdmin.HostConfiguration.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
-            Construct an instance from the specified tagged JsonReader stream.
+            Serialize this object to the specified output stream.
             </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.HostConfiguration.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.HostConfiguration.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.HostConfiguration.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.Configuration">
             <summary>
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.GetHostConfiguration(System.String)">
+            <summary>
+            Return the host configuration for the machine <paramref name="id"/>
+            </summary>
+            <param name="id">Machine to return the configuration for.</param>
+            <returns>The host configuration (if found).</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.GetServiceConfiguration(Goedel.Mesh.ServiceAdmin.HostConfiguration)">
+            <summary>
+            Return the host configuration for the host <paramref name="hostConfiguration"/>
+            </summary>
+            <param name="hostConfiguration">Host to return the service configuration for.</param>
+            <returns>The host configuration (if found).</returns>
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.Name">
              <summary>
@@ -176,6 +352,34 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.ServiceConfig">
+             <summary>
+            
+             Host and Service configuration tile.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfig._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.ServiceConfig.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfig._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceConfig.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
         </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.ConfigurationEntry">
             <summary>
@@ -250,141 +454,6 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.ServiceAdmin.Service">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Service.Addresses">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Service.WellKnown">
-             <summary>
-            The well known service identifier of the service
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Service._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.ServiceAdmin.Service.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Service._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Service.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Service.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Service.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Service.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.ServiceAdmin.Host">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Host.Process">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Host.Storage">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Host.Role">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Host.IP">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Host._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.ServiceAdmin.Host.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Host._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Host.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Host.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Host.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Host.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -578,6 +647,16 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Services.ServiceAdminRequest">
+            <summary>
+            Service administration request
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Services.ServiceAdminResponse">
+            <summary>
+            Service administration response
+            </summary>
         </member>
     </members>
 </doc>

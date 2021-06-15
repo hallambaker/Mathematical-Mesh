@@ -54,6 +54,8 @@
 		String Role
 		String IP
 			Multiple
+		String Services
+			Multiple
 
 	Structure LogEntry
 		String Events
