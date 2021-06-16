@@ -4,6 +4,38 @@
         <name>Goedel.Mesh.ServiceAdmin</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Mesh.ServiceAdmin.InvalidConfiguration">
+            <summary>
+            An invalid configuration was specified.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.InvalidConfiguration.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.InvalidConfiguration.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.InvalidConfiguration.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.InvalidConfiguration._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.InvalidConfiguration.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.ServiceNotFound">
             <summary>
             No service configuration could be found.
@@ -29,7 +61,7 @@
             <summary>
             The public fatory delegate
             </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.ServiceNotFound.Throw">
             <summary>
@@ -61,7 +93,7 @@
             <summary>
             The public fatory delegate
             </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.HostNotFound.Throw">
             <summary>
@@ -94,7 +126,7 @@
             <summary>
             The public fatory delegate
             </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationNotHost.Throw">
             <summary>

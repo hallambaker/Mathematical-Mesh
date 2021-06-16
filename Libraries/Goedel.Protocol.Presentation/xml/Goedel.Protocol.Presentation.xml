@@ -4,6 +4,25 @@
         <name>Goedel.Protocol.Presentation</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Protocol.Presentation.Extensions">
+            <summary>
+            Extensions class.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Extensions.IsDns(System.String)">
+            <summary>
+            Return true if the address is a valid DNS address
+            </summary>
+            <param name="address">The address to parse.</param>
+            <returns>True if the address is a valid DNS address</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.Extensions.IsCallSign(System.String)">
+            <summary>
+            Return true if the address is a valid callsign address
+            </summary>
+            <param name="address">The address to parse.</param>
+            <returns>True if the address is a valid callsign address</returns>
+        </member>
         <member name="T:Goedel.Protocol.Presentation.ConnectionInitiator">
             <summary>
             Presentation client connection. Tracks the state of a client connection.

@@ -2,6 +2,7 @@
 	Using Goedel.Mesh
 	Using Goedel.Cryptography.Dare
 	Using Goedel.Cryptography.Jose 
+	Using Goedel.Mesh.ServiceAdmin
 
 	Description
 		|Web service providing server management interface.
@@ -29,6 +30,16 @@
 			|Base class for all response messages. Contains only the
 			|status code and status description fields.
 
+
+    Transaction Public ServiceStatus ServiceConfigRequest ServiceConfigResponse
+
+	Message ServiceConfigRequest
+		Inherits WsmpRequest
+
+	Message ServiceConfigResponse
+		Inherits WsmpResponse
+		Struct HostConfiguration HostConfiguration
+		Struct ServiceConfiguration ServiceConfiguration
 
     Transaction Public ServiceStatus ServiceStatusRequest ServiceStatusResponse
 

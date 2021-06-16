@@ -20,6 +20,22 @@
             <param name="serviceDirectory"></param>
             <returns></returns>
         </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementProvider.ServiceDescriptionHost">
+            <summary>The service description for a service reporting a single host.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementProvider.ServiceDescriptionMeta">
+            <summary>The service description for a service reporting a set of hosts.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.#ctor(Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
+            <summary>
+            Return a new <see cref="T:Goedel.Mesh.Management.ServiceManagementProvider"/> instance.
+            </summary>
+            <param name="serviceConfiguration"></param>
+            <param name="hostConfiguration"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.ServiceStatus(Goedel.Mesh.Management.ServiceStatusRequest,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Mesh.Management.ServiceManagement">
              <summary>
             

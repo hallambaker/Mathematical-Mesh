@@ -22,8 +22,10 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>

@@ -106,6 +106,22 @@
             </summary>
             <param name="result"></param>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.HostStart(Goedel.Mesh.Shell.Host.HostStart)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.HostVerify(Goedel.Mesh.Shell.Host.HostVerify)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.VerifyConfig(System.Boolean,System.String,System.String)">
+            <summary>
+            Verify the configuration specified in <paramref name="hostConfig"/> and extract the host 
+            description for <paramref name="hostConfig"/>.
+            </summary>
+            <param name="console"></param>
+            <param name="machineName"></param>
+            <param name="hostConfig"></param>
+            <returns></returns>
+        </member>
         <member name="T:Goedel.Mesh.Shell.Host.ShellResult">
              <summary>
             

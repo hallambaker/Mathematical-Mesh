@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>

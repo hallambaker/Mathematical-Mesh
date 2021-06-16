@@ -3,12 +3,16 @@ using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Mesh.Client;
 using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
+using Goedel.Protocol.Service;
 using Goedel.Utilities;
 using Goedel.Mesh.ServiceAdmin;
 using Goedel.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Mesh.Management;
 
 namespace Goedel.Mesh.Shell.Host {
 
@@ -82,30 +86,21 @@ namespace Goedel.Mesh.Shell.Host {
             }
 
 
-        bool Console;
-        string MachineName;
-        Configuration Configuration;
-        ServiceAdmin.HostConfiguration HostConfiguration;
-        ServiceAdmin.ServiceConfiguration ServiceConfiguration;
+        bool Console { get; set; }
+        string MachineName { get; set; }
+        Configuration Configuration { get; set; }
+        HostConfiguration HostConfiguration { get; set; }
+        ServiceConfiguration ServiceConfiguration { get; set; }
+        RudService RudService { get; set; }
 
+        ///<inheritdoc/>
         public override ShellResult HostStart(HostStart Options) {
             var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, Options.HostConfig.Value);
-
-            result.AssertTrue(NYI.Throw);
-
-            return new Result() {
-                Success = true
-                };
-            }
-
-
-        public override ShellResult HostVerify(HostVerify Options) {
-            var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, Options.HostConfig.Value);
-
-            result.AssertTrue(NYI.Throw);
+            result.AssertTrue(InvalidConfiguration.Throw, Options.HostConfig.Value ?? "<none>");
 
             // Start the service.
 
+            RudService = StartService(HostConfiguration, ServiceConfiguration);
 
 
             return new Result() {
@@ -113,7 +108,28 @@ namespace Goedel.Mesh.Shell.Host {
                 };
             }
 
-        bool VerifyConfig(
+        ///<inheritdoc/>
+        public override ShellResult HostVerify(HostVerify Options) {
+            var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, Options.HostConfig.Value);
+
+            result.AssertTrue(InvalidConfiguration.Throw);
+
+
+
+            return new Result() {
+                Success = true
+                };
+            }
+
+        /// <summary>
+        /// Verify the configuration specified in <paramref name="hostConfig"/> and extract the host 
+        /// description for <paramref name="hostConfig"/>.
+        /// </summary>
+        /// <param name="console"></param>
+        /// <param name="machineName"></param>
+        /// <param name="hostConfig"></param>
+        /// <returns></returns>
+        public bool VerifyConfig(
                 bool console,
                 string machineName,
                 string hostConfig) {
@@ -124,7 +140,7 @@ namespace Goedel.Mesh.Shell.Host {
             // to lower case.
             if (machineName == null) {
                 MachineName = System.Environment.MachineName.ToLower();
-                if (console) {
+                if (Console) {
                     System.Console.WriteLine($"HostName: {MachineName} (default)");
                     }
                 }
@@ -141,6 +157,34 @@ namespace Goedel.Mesh.Shell.Host {
 
 
             return true;
+
+            }
+
+
+        public RudService StartService(HostConfiguration hostConfiguration, ServiceConfiguration serviceConfiguration) {
+
+
+
+            var providers = new List<RudProvider>();
+
+            // add in the management service 
+
+            if (ServiceDescriptionDictionary.TryGetValue(
+                ServiceManagementProvider.WellKnown, out var managementProviderDescription)) {
+                }
+            else {
+                managementProviderDescription = ServiceManagementProvider.ServiceDescriptionHost;
+                }
+            providers.Add(managementProviderDescription.Factory(
+                        serviceConfiguration, hostConfiguration));
+
+
+            var credential = HostConfiguration.GetCredential();
+
+            // Need to extract the host credential here...
+
+
+            return new RudService(providers, credential);
 
             }
 

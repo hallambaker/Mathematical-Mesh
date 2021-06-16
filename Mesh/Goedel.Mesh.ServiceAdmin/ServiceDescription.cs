@@ -21,7 +21,7 @@
 
 using Goedel.Utilities;
 
-using System;
+using Goedel.Protocol.Presentation;
 using System.Collections.Generic;
 
 
@@ -34,7 +34,7 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// <param name="serviceConfiguration">The service configuration.</param>
     /// <param name="hostConfiguration">The configuration of this specific host.</param>
     /// <returns></returns>
-    public delegate Goedel.Protocol.JpcInterface ServiceFactoryDelegate(
+    public delegate RudProvider ServiceFactoryDelegate(
         ServiceConfiguration serviceConfiguration,
         HostConfiguration hostConfiguration);
 
@@ -43,18 +43,62 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// </summary>
     public record ServiceDescription(
             string WellKnown, ServiceFactoryDelegate Factory) {
+
+
         }
 
     /// <summary>
     /// Describes a service configuration.
     /// </summary>
     public partial class ServiceConfiguration {
+
+        public string Instance { get; set; }
+
+        public List<Endpoint> GetEndpoints() {
+            var endpoints = new List<Endpoint>();
+
+            foreach (var address in Addresses) {
+                if (address.IsDns()) {
+                    endpoints.Add(new HttpEndpoint(address, WellKnown, Instance));
+                    }
+                else if (address.IsCallSign()) {
+
+
+                    }
+
+                }
+
+
+
+            return endpoints;
+            }
+
+
         }
 
     /// <summary>
     /// Describes a host configuration.
     /// </summary>
     public partial class HostConfiguration {
+
+
+        public List<Endpoint> GetEndpoints() {
+            var endpoints = new List<Endpoint>();
+
+            return endpoints;
+            }
+
+
+        public ICredentialPrivate GetCredential() {
+
+            // to do: read the credential that was written out when the host
+            // was initialized.
+
+
+            throw new NYI();
+            }
+
+
         }
 
     public partial class Configuration {

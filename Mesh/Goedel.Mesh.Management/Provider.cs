@@ -22,12 +22,14 @@
 using Goedel.Protocol;
 using Goedel.Utilities;
 using Goedel.Mesh.ServiceAdmin;
+using Goedel.Protocol.Presentation;
 
 using System;
 using System.Collections.Generic;
 
 
 namespace Goedel.Mesh.Management {
+
 
     public class ServiceManagementProvider : ServiceManagementService {
 
@@ -37,29 +39,66 @@ namespace Goedel.Mesh.Management {
         /// <param name="domain"></param>
         /// <param name="serviceDirectory"></param>
         /// <returns></returns>
-        public static Goedel.Protocol.JpcInterface Factory(ServiceConfiguration serviceConfiguration,
-            HostConfiguration hostConfiguration) => throw new NYI();
-
-        public static ServiceDescription ServiceDescription =>
-            new ServiceDescription(WellKnown, Factory);
+        public static RudProvider Factory(ServiceConfiguration serviceConfiguration,
+            HostConfiguration hostConfiguration) {
 
 
-        public override ServiceStatusResponse ServiceStatus(ServiceStatusRequest request, IJpcSession session) => throw new NotImplementedException();
+            // Since it is the host that responds, the service binds to the host endpoints
+            // in addition to the service.
+            
+            var endpoints = serviceConfiguration.GetEndpoints();
+            endpoints.AddRange(hostConfiguration.GetEndpoints());
+            var provider = new ServiceManagementProvider(serviceConfiguration, hostConfiguration);
+
+            return new RudProvider(endpoints, provider);
+            }
+
+
+        ///<summary>The service description for a service reporting a single host.</summary> 
+        public static ServiceDescription ServiceDescriptionHost => new (WellKnown, Factory);
+
+        ///<summary>The service description for a service reporting a set of hosts.</summary> 
+        public static ServiceDescription ServiceDescriptionMeta => throw new NYI();
 
 
         #region // Properties
+        HostConfiguration HostConfiguration { get; }
+
+        ServiceConfiguration ServiceConfiguration { get; }
         #endregion
 
         #region // Destructor
         #endregion
 
         #region // Constructors
+
+        /// <summary>
+        /// Return a new <see cref="ServiceManagementProvider"/> instance.
+        /// </summary>
+        /// <param name="serviceConfiguration"></param>
+        /// <param name="hostConfiguration"></param>
+        public ServiceManagementProvider(
+                ServiceConfiguration serviceConfiguration,
+                HostConfiguration hostConfiguration) {
+            
+            // Stash these away to report if needed.
+            HostConfiguration = hostConfiguration;
+            ServiceConfiguration = serviceConfiguration;
+            }
+
+
         #endregion
 
         #region // Implement Interface: Ixxx
         #endregion
 
         #region // Methods 
+
+        ///<inheritdoc/>
+        public override ServiceStatusResponse ServiceStatus(ServiceStatusRequest request, IJpcSession session) {
+            throw new System.NotImplementedException();
+            }
+
         #endregion
         }
     }

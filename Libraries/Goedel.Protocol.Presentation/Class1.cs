@@ -19,33 +19,37 @@
 //  THE SOFTWARE.
 //  
 
-using System;
-
 using Goedel.Utilities;
-using Goedel.Mesh.Shell.Host;
-using Goedel.Mesh.Server;
-using Goedel.Cryptography.Core;
-using Goedel.Mesh.Management;
 
-namespace meshhost {
-    ///<summary>Main calling program.</summary> 
-    public class Program {
-
-        static Program() => Initialization.Initialized.AssertTrue(Internal.Throw);
-
-        static void Main(string[] args) {
+using System;
+using System.Collections.Generic;
 
 
-            Shell shell = new Shell(
-                        PublicMeshService.ServiceDescription,
-                        ServiceManagementProvider.ServiceDescriptionHost);
-            shell.Dispatch(args, Console.Out);
+namespace Goedel.Protocol.Presentation {
+    
+    /// <summary>
+    /// Extensions class.
+    /// </summary>
+    public static partial class Extensions {
+        #region // Methods 
 
+        /// <summary>
+        /// Return true if the address is a valid DNS address
+        /// </summary>
+        /// <param name="address">The address to parse.</param>
+        /// <returns>True if the address is a valid DNS address</returns>
+        public static bool IsDns(this string address) => !IsCallSign(address);
 
-            }
+        /// <summary>
+        /// Return true if the address is a valid callsign address
+        /// </summary>
+        /// <param name="address">The address to parse.</param>
+        /// <returns>True if the address is a valid callsign address</returns>
+        public static bool IsCallSign(this string address) => address[0] == '@';
 
+        // Hack: these methods should enforce the correct syntax.
 
-
-
+        #endregion 
         }
+
     }

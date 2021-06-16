@@ -60,15 +60,15 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Factory method, the signature is pro tem and will be changed later on.
         /// </summary>
-        /// <param name="domain"></param>
-        /// <param name="serviceDirectory"></param>
+        ///<param name="hostConfiguration">The host configuration.</param>
+        ///<param name="serviceConfiguration">The service configuration.</param>
         /// <returns></returns>
-        public static Goedel.Protocol.JpcInterface Factory(ServiceConfiguration serviceConfiguration,
-            HostConfiguration hostConfiguration) => throw new NYI();
+        public static RudProvider Factory(
+                ServiceConfiguration serviceConfiguration,
+                HostConfiguration hostConfiguration) => throw new NYI();
 
-
-        public static ServiceDescription ServiceDescription =>
-            new ServiceDescription(WellKnown, Factory);
+        ///<summary>The service description.</summary> 
+        public static ServiceDescription ServiceDescription => new (WellKnown, Factory);
 
 
         /// <summary>

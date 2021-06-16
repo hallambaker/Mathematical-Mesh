@@ -75,6 +75,10 @@ namespace Goedel.Protocol.Presentation {
                 UdpEndpoints.Add(new UdpEndpoint(domain, instance));
                 }
             }
+        #endregion
+        #region // Convenience Methods
+
+
 
         #endregion
 

@@ -943,12 +943,15 @@
             </summary>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Factory(Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
-            <summary>
-            Factory method, the signature is pro tem and will be changed later on.
-            </summary>
-            <param name="domain"></param>
-            <param name="serviceDirectory"></param>
-            <returns></returns>
+             <summary>
+             Factory method, the signature is pro tem and will be changed later on.
+             </summary>
+            <param name="hostConfiguration">The host configuration.</param>
+            <param name="serviceConfiguration">The service configuration.</param>
+             <returns></returns>
+        </member>
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.ServiceDescription">
+            <summary>The service description.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(System.String,System.String)">
             <summary>
