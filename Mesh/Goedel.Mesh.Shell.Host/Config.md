@@ -7,12 +7,101 @@ synchronize it to the callsign registry before the service can interpret
 callsigns correctly, initial configuration of the service requires the use
 of a DNS name for bootstrapping purposes.
 
-## Create initial service description.
+## Service Creation.
 
-The first step is to create the base service configuration file, this 
-MUST contain one service and one host.
+To create a new service and initialize the initial host, the serviceadmin tool
+create command is used.
 
-The active service configuration file ALWAYS has the file name 'serviceconfig.json'.
+Alice creates the Mesh service for example.com with service configuration file
+mesh_example_com.json to be administered by her existing account 
+alice@safe.example.com
+as follows:
+
+~~~~
+serviceadmin create mesh_example_com.json example.com  /admin=alice@safe.example.com
+~~~~
+
+The genesis command causes the following operations to be performed:
+
+* If the configuration file exists, it is validated, if any errors are found, 
+this is reported to the user and the operation aborted. Otherwise a new 
+configuration file is created using the current directory as the base path.
+
+* The directories for storage of the log files and data are created.
+
+* Profile(s) are created for the Mesh Service and the initial host.
+
+* A Mesh Profile is created for alice@example.com which is granted administrator
+privileges for the service.
+
+* The service configuration is updated to include the fingerprints of the service, 
+host and administrator.
+
+* The Mesh service configuration is written out to the service configuration 
+catalog.
+
+Note that creating the service does not cause it to start. 
+
+### Genesis Service Creation.
+
+Since Mesh services make use of the Mesh for user authentication, creation of
+a Mesh service from scratch presents a bootstrap problem. A Mesh profile is 
+required to configure the service, the service is required to create the profile.
+
+To allow for this corner case, the create command automatically detects an
+attempt to create a service with the administration account on the service itself.
+This mode of service installation is called a 'genesis installation'. In
+addition to initializing the Mesh service and host, the serviceadmin tool 
+creates the administration profile and populate the configuration files of 
+each appropriately.
+
+To avoid this problem, Alice first created a separate service safe.example.com
+which has exactly one user, Alice herself:
+
+~~~~
+serviceadmin create safe_example_com.json safe.example.com /admin=alice@safe.example.com
+~~~~
+
+## Starting, Pausing and Stopping the Service
+
+To start the service, it is necessary to start the service host daemon meshhost
+
+~~~~
+meshhost mesh_example_com.json
+~~~~
+
+By default, the meshhost demon uses the host specification whose name is the 
+machine name of the machine the command runs on. This can be overriden with the
+/host option.
+
+Once started, the mesh host demon can only be stopped by killing the process or by
+sending the service an instruction using the serviceadmin tool.
+
+To stop the host daemon on host1, Aliceissues the command:
+
+~~~~
+serviceadmin stop example.com host1 
+~~~~
+
+Once the daemon is stopped, it can only be restarted from the machine on which it
+runs. To avoid this, Alice can pause service instead. The service can then be 
+restarted using the start command:
+
+~~~~
+meshhost mesh_example_com.json
+serviceadmin pause example.com host1 
+serviceadmin start example.com host1 
+~~~~
+
+To start, stop or pause all the services in a multi-hosted service, the 
+/all flag is used:
+
+~~~~
+serviceadmin stop example.com /all 
+~~~~
+
+
+## The service description file
 
 The service descrption specifies the protocols to be serviced, the DNS and
 callsigns by which the service may be discovered and the identifiers of the 
@@ -75,99 +164,45 @@ information including:
 }
 ~~~~
 
-## Initilize the service
 
-The serviceadmin tool is used to initialize the service. Since we do not have a 
-mesh profile ourselves yet, one is created using the /admin option.
+## Configuration Update
 
-~~~~
-serviceadmin init /admin=alice@example.com
-~~~~
-
-The init command causes the following operations to be performed:
-
-* The configuration file is validated, if any errors are found, this is reported to
-the user and the operation aborted.
-
-* The directories for storage of the log files and data directories are created.
-
-* Profile(s) are created for the Mesh Service and the initial host.
-
-* A Mesh Profile is created for alice@example.com which is granted administrator
-privileges for the service.
-
-* The service configuration is updated to include the fingerprints of the service, 
-host and administrator.
-
-* The Mesh service configuration is written out to the service configuration 
-catalog.
-
-Every time the service configuration is updated, the following steps are
-performed:
-
-* The old serviceconfig.json is renamed to serviceconfig-yyyy-mm-dd:HH:MM:SS.json
-
-* A new serviceconfig.json is created and populated with the new data values.
-
-* A host configuration file is created for the current host and written to
-hostconfig.json
-
-* If the DNS parameters have been changed, a new DNS zone file is created with 
-the new service settings.
-
-* The configuration for
-
-Note that the function of the server configuration file is to provide a convenient
-means of reviewing and editing the service configuration. The canonical source
-of the service configuration is the catalog.
-
-## Start the service
-
-The serviceadmin tool is used to configure the service, it is not the service itself. 
-We start the service on the current host using the meshhost command:
+The fetch command is used to fetch a copy of the current service configuration
+for a specified service:
 
 ~~~~
-meshhost hostconfig.json
+serviceadmin fetch mesh_example_com.json example.com
 ~~~~
 
-Hosts are always brought up in the paused state. To start the service the
-serviceadmin tool is used:
+Changes to the service configuration can be pushed out to the service using the
+update command. It is not necessary to specify the service because this is 
+specified in the config file.
 
 ~~~~
-serviceadmin start
+serviceadmin update mesh_example_com.json
 ~~~~
 
-## Stop the service
+[Note, the service configuration is not currently signed. This should be
+required and the update command automatically sign the update. These should
+then be stored in order so that it is possible to track changes. The fetch 
+command should verify the signature and replace it with a comment stating
+when it was fetched and verified.
 
-The service is stopped using the serviceadmin tool. 
-
-~~~~
-serviceadmin stop
-~~~~
-
-## Pause the service
-
-The pausing the service causes it to refuse all commands except for administration 
-commands.
-
-~~~~
-serviceadmin pause
-~~~~
+Note that some configuration changes can take some time to make. Completion of
+the update command only reports that the change has been accepted, not that
+it was completed.
 
 
-
-## Change the server configuration
-
-To change the service configuration, we edit the serviceconfig.json file and 
-tell the service to use the new configuration using the serviceadmin tool
+The verify command MAY be used to verify configuration changes before they are
+committed:
 
 ~~~~
-serviceadmin update
+serviceadmin verify mesh_example_com.json
 ~~~~
 
 Note that in a multi-host service, it is only necessary to issue the serviceadmin 
-command on the host where the serviceconfig.json has been updated. The changes 
-are automatically directed to the other hosts as a multi-stage commit:
+command on one host. The changes are automatically directed to the other 
+hosts as a multi-stage commit:
 
 1. The new configuration is sent to all the hosts providing the service.
 
@@ -185,53 +220,65 @@ configuration.
 
 7. The update is complete and a new change can be initiated.
 
-## Add a Host
+
+### DNS Configuration
+
+The serviceadmin tool can automatically generate a DNS configuration file for the
+service from the service configuration using the dns command:
+
+~~~~
+serviceadmin dns mesh_example_com.json config.bind
+~~~~
+
+## Managing Hosts in a Multi-Host Service.
+
 
 [This is SOOOO not yet implemented.]
 
-To add a new host to the service, an administrator uses their Mesh profile 
-credential to authenticate the request:
+### Add a Host
 
-A hostconfig.json file containing the configuration parameters for the new host
-is created. This must at minimum speficy the identifier for the host:
 
-~~~~
-serviceadmin add mathmesh.com hostconfig.json
-~~~~
+To add a new host to the service, the following commands are issued on the host
+to be added:
 
-By default, new hosts are added with Storage and Load factors of zero so that no
-tasks will be transfered to them until after the correct configuration of the
-new host have been verified.
+1. Fetch the service configuration file.
 
-## Remove a Host
+2. Use the host daemon to configure the local host and add an entry to the service 
+configuration file.
 
-To remove a host, we merely specify the host to be removed
+3. Edit the service configuration to make any additional configuration services
+required.
+
+4. Update the service configuration
 
 ~~~~
-meshman remove voodoo
+serviceadmin fetch mesh_example_com.json example.com
+meshhost init mesh_example_com.json host2
+serviceadmin update mesh_example_com.json
 ~~~~
 
-The time taken to remove a host depends on the role the host is acting in. If the 
-host is merely acting as a cache to take load off another machine, removal can 
-take effect as soon as the discovery tables have been updated to direct traffic back
-to the original. If the host is a primary or secondary repository for active
-accounts, the removal cannot take effect until these responsibilities have been
-transfered to other machines.
+If the service provides multiple protocols, these can be initialized at the same 
+time. 
 
-
-## Change Host Priorities
-
-It is possible to change the role and priority settings for individual hosts remotely
+At this point, the host is ready to run but lacks the credential necessary to act
+on behalf of the service. To do this, we use the serviceadmin tool to approve the
+connection of the host to the service.
 
 ~~~~
-meshman config voodoo /store=100 /load=100 /role=fixed
+serviceadmin fetch mesh_example_com.json example.com
+serviceadmin credential host2
+serviceadmin update mesh_example_com.json
 ~~~~
 
+At this point, we can start the service on the new host:
+
+~~~~
+serviceadmin fetch mesh_example_com.json example.com
+meshhost start mesh_example_com.json 
+~~~
 
 
-## Change Account properties
 
-The serviceadmin tool is also used to modify account settings. Note that this is
-only possible when the service is running. 
+### Remove a Host
 
-
+To remove a host, we simply remove it from the service configuration.
