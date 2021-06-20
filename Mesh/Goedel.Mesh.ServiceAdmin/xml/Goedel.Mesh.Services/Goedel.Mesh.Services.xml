@@ -159,6 +159,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.EnvelopedProfileService">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.Addresses">
             <summary>
             </summary>
@@ -223,6 +227,14 @@
             <summary>
             Describes a host configuration.
             </summary>
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.EnvelopedProfileHost">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.EnvelopedConnectionDevice">
             <summary>
             </summary>
         </member>

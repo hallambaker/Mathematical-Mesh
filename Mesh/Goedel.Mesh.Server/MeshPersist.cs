@@ -25,6 +25,7 @@ using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
+using Goedel.Mesh.ServiceAdmin;
 
 using System.Collections.Generic;
 using System.IO;
@@ -37,7 +38,7 @@ namespace Goedel.Mesh.Server {
     public class MeshPersist {
 
 
-
+        #region // Properties
         ///<summary>The underlying persistence store for the account catalog.</summary>
         public PersistenceStore Container;
 
@@ -50,28 +51,32 @@ namespace Goedel.Mesh.Server {
         ///<summary>The service signature key.</summary> 
         public static CryptoKey ServiceSignatureKey => null;
 
-        //static MeshPersist() {
-        //    _ = MeshItem.Initialize;
-        //    _ = CatalogItem.Initialize;
-        //    _ = MeshProtocol.Initialize;
-        //    }
+        #endregion 
+        #region // Constructors
 
         /// <summary>
         /// Open or create the accounts persistence container.
         /// </summary>
         /// <param name="directory">The directory in which all the service data is stored.</param>
-        public MeshPersist(string directory) {
+        public MeshPersist(string directory, FileStatus fileStatus) {
 
             // Load/create the accounts catalog
             DirectoryRoot = directory;
             Directory.CreateDirectory(directory);
             var fileName = Path.Combine(directory, "Master.cat");
             Container = new PersistenceStore(fileName, "application/mmm-catalog",
-                fileStatus: FileStatus.OpenOrCreate,
+                fileStatus: fileStatus,
                 containerType: SequenceType.Merkle
                 );
             }
+        #endregion
 
+        #region // Service initialization methods 
+
+
+
+
+        #region // Service dispatch methods 
         /// <summary>
         /// Add a new account. The account name must be unique.
         /// </summary>
@@ -79,7 +84,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="accountEntry">Account data to add.</param>
         /// <param name="jpcSession">The session connection data.</param>
         public void AccountAdd(IJpcSession jpcSession,
-            MeshVerifiedDevice account,
+                        MeshVerifiedDevice account,
                         AccountEntry accountEntry) {
 
             jpcSession.Future();
@@ -110,7 +115,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The verified account data.</param>
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(IJpcSession jpcSession,
-            MeshVerifiedDevice account,
+                        MeshVerifiedDevice account,
                         RequestConnection requestConnection) {
             jpcSession.Future();
 
@@ -609,7 +614,11 @@ namespace Goedel.Mesh.Server {
                 return null;
                 }
             }
+
+        #endregion 
+
         }
 
+    #endregion
 
     }

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/17/2021 5:43:26 PM
+//  This file was automatically generated at 6/20/2021 12:08:14 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -45,6 +45,8 @@ using Goedel.Protocol;
 #pragma warning disable IDE1006
 
 
+using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Dare;
 
 
 namespace Goedel.Mesh.ServiceAdmin {
@@ -460,6 +462,10 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// <summary>
         /// </summary>
 
+		public virtual Enveloped<ProfileService>						EnvelopedProfileService  {get; set;}
+        /// <summary>
+        /// </summary>
+
 		public virtual List<string>				Addresses  {get; set;}
         /// <summary>
         ///The well known service identifier of the service
@@ -510,6 +516,11 @@ namespace Goedel.Mesh.ServiceAdmin {
 				_writer.WriteObjectStart ();
 				}
 			((ConfigurationEntry)this).SerializeX(_writer, false, ref _first);
+			if (EnvelopedProfileService != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedProfileService", 1);
+					EnvelopedProfileService.Serialize (_writer, false);
+				}
 			if (Addresses != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Addresses", 1);
@@ -560,6 +571,13 @@ namespace Goedel.Mesh.ServiceAdmin {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "EnvelopedProfileService" : {
+					// An untagged structure
+					EnvelopedProfileService = new Enveloped<ProfileService> ();
+					EnvelopedProfileService.Deserialize (jsonReader);
+ 
+					break;
+					}
 				case "Addresses" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
@@ -589,6 +607,14 @@ namespace Goedel.Mesh.ServiceAdmin {
 	/// <summary>
 	/// </summary>
 	public partial class HostConfiguration : ConfigurationEntry {
+        /// <summary>
+        /// </summary>
+
+		public virtual Enveloped<ProfileHost>						EnvelopedProfileHost  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual Enveloped<ConnectionDevice>						EnvelopedConnectionDevice  {get; set;}
 		bool								__Process = false;
 		private int						_Process;
         /// <summary>
@@ -663,6 +689,16 @@ namespace Goedel.Mesh.ServiceAdmin {
 				_writer.WriteObjectStart ();
 				}
 			((ConfigurationEntry)this).SerializeX(_writer, false, ref _first);
+			if (EnvelopedProfileHost != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedProfileHost", 1);
+					EnvelopedProfileHost.Serialize (_writer, false);
+				}
+			if (EnvelopedConnectionDevice != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedConnectionDevice", 1);
+					EnvelopedConnectionDevice.Serialize (_writer, false);
+				}
 			if (__Process){
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Process", 1);
@@ -735,6 +771,20 @@ namespace Goedel.Mesh.ServiceAdmin {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "EnvelopedProfileHost" : {
+					// An untagged structure
+					EnvelopedProfileHost = new Enveloped<ProfileHost> ();
+					EnvelopedProfileHost.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "EnvelopedConnectionDevice" : {
+					// An untagged structure
+					EnvelopedConnectionDevice = new Enveloped<ConnectionDevice> ();
+					EnvelopedConnectionDevice.Deserialize (jsonReader);
+ 
+					break;
+					}
 				case "Process" : {
 					Process = jsonReader.ReadInteger32 ();
 					break;

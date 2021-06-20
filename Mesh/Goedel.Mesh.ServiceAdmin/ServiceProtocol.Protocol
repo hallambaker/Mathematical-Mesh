@@ -1,4 +1,6 @@
 ﻿Protocol Goedel.Mesh.ServiceAdmin ServiceConfig ServiceConfig
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
 
 	Description
 		|Host and Service configuration tile.
@@ -40,6 +42,7 @@
 	Structure ServiceConfiguration
 		//Tag "Service"
 		Inherits ConfigurationEntry
+		Struct Enveloped<ProfileService> EnvelopedProfileService
 		String Addresses
 			Multiple
 		String WellKnown
@@ -48,6 +51,8 @@
 
 	Structure HostConfiguration
 		//Tag "Host"
+		Struct Enveloped<ProfileHost> EnvelopedProfileHost
+		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 		Inherits ConfigurationEntry
 		Integer Process
 		Integer Storage

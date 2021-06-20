@@ -922,13 +922,16 @@
             <summary>
             The session class implements the Mesh session. The implementations in this class are mostly 
             stubbs that martial and validate the parameters presented in the request and pass the
-            work on to the <see cref="T:Goedel.Mesh.Server.MeshPersist"/> instance <see cref="P:Goedel.Mesh.Server.PublicMeshService.Mesh"/>
+            work on to the <see cref="T:Goedel.Mesh.Server.MeshPersist"/> instance <see cref="P:Goedel.Mesh.Server.PublicMeshService.MeshPersist"/>
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Server.PublicMeshService.ProfileService">
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.MeshMachine">
+            <summary>The Mesh Machine base</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.ProfileService">
             <summary>The profile describing the service</summary>
         </member>
-        <member name="F:Goedel.Mesh.Server.PublicMeshService.ProfileHost">
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.ProfileHost">
             <summary>The profile describing the host</summary>
         </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.ActivationDevice">
@@ -937,10 +940,16 @@
         <member name="P:Goedel.Mesh.Server.PublicMeshService.ConnectionDevice">
             <summary>The host connection record.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Server.PublicMeshService.Mesh">
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.ServiceConfiguration">
+            <summary>The service configuration</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.MeshPersist">
             <summary>
             The mesh persistence provider.
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.ServiceDescription">
+            <summary>The service description.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Factory(Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
              <summary>
@@ -950,15 +959,30 @@
             <param name="serviceConfiguration">The service configuration.</param>
              <returns></returns>
         </member>
-        <member name="P:Goedel.Mesh.Server.PublicMeshService.ServiceDescription">
-            <summary>The service description.</summary> 
-        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(System.String,System.String)">
             <summary>
             The mesh service dispatcher.
             </summary>
             <param name="domain">The domain of the service provider.</param>
             <param name="serviceDirectory">The mesh persistence store filename.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,System.String)">
+            <summary>
+            Create new service and host configurations and attach the service to the host.
+            </summary>
+            <param name="meshMachine">The mesh machine</param>
+            <param name="serviceConfiguration">The service configuration</param>
+            <param name="deviceAddress">The address of the initial host.</param>
+            <returns>The mesh service interface.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Load(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="meshMachine"></param>
+            <param name="serviceConfiguration"></param>
+            <param name="hostConfiguration"></param>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Hello(Goedel.Protocol.HelloRequest,Goedel.Protocol.IJpcSession)">
             <summary>
@@ -1075,7 +1099,7 @@
         <member name="P:Goedel.Mesh.Server.MeshPersist.ServiceSignatureKey">
             <summary>The service signature key.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(System.String,Goedel.IO.FileStatus)">
             <summary>
             Open or create the accounts persistence container.
             </summary>

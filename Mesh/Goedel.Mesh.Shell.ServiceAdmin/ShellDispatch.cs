@@ -12,6 +12,14 @@ using System.IO;
 
 namespace Goedel.Mesh.Shell.ServiceAdmin {
 
+    public partial class CommandLineInterpreter {
+
+
+
+        }
+
+
+
     /// <summary>
     /// The command shell.
     /// </summary>
@@ -23,19 +31,65 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
         /// <param name="result"></param>
         public void _PostProcess(ShellResult result) {
             }
-        }
 
-    public partial class CommandLineInterpreter {
+		///<inheritdoc/>
+		public override ShellResult Create(Create Options) {
 
-        /// <summary>
-        /// Add a service provider to the hosting options.
-        /// </summary>
-        /// <param name="serviceDescription">The service description.</param>
-        public void AddService(ServiceDescription serviceDescription) {
-            this.Future();
-            this.Future();
 
-            }
 
-        }
+			return null;
+			}
+		
+		///<inheritdoc/>
+		public override ShellResult Start(Start Options) {
+			CommandLineInterpreter.DescribeValues(Options);
+			return null;
+			}
+		
+		///<inheritdoc/>
+		public override ShellResult Stop(Stop Options) {
+			CommandLineInterpreter.DescribeValues(Options);
+			return null;
+			}
+		
+		///<inheritdoc/>
+		public override ShellResult Pause(Pause Options) {
+			CommandLineInterpreter.DescribeValues(Options);
+			return null;
+			}
+		
+		///<inheritdoc/>
+		public override ShellResult Fetch(Fetch Options) {
+			CommandLineInterpreter.DescribeValues(Options);
+			return null;
+			}
+		
+		///<inheritdoc/>
+		public override ShellResult Update(Update Options) {
+			CommandLineInterpreter.DescribeValues(Options);
+			return null;
+			}
+		
+		///<inheritdoc/>
+		public override ShellResult Verify(Verify Options) {
+			CommandLineInterpreter.DescribeValues(Options);
+			return null;
+			}
+		
+		///<inheritdoc/>
+		public override ShellResult DNS(DNS Options) {
+			CommandLineInterpreter.DescribeValues(Options);
+			return null;
+			}
+		
+		///<inheritdoc/>
+		public override ShellResult Credential(Credential Options) {
+			CommandLineInterpreter.DescribeValues(Options);
+			return null;
+			}
+
+
+		}
+
+
     }

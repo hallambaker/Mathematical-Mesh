@@ -42,7 +42,7 @@
 	
 		Parameter ServiceConfig "config" ExistingFile
 			Brief "The service configuration file, is created if necessary"
-		Parameter HostDns "dns" String
+		Parameter ServiceDns "dns" String
 			Brief "The DNS address of the service"	
 		Option HostIp "ip" String
 			Brief "The external IP address of the host."
@@ -108,7 +108,7 @@
 		Parameter DNSConfig "dnsconfig" ExistingFile
 			Brief "The DNS configuration file"
 
-	CommandSet Credential "credential"
+	Command Credential "credential"
 		Include Reporting
 		Brief "Issue a credential to the specified host"
 		Parameter HostConfig "hostconfig" ExistingFile

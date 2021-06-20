@@ -326,34 +326,172 @@
             <param name="args">The set of arguments.</param>
             <param name="index">The first unparsed argument.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.AddService(Goedel.Mesh.ServiceAdmin.ServiceDescription)">
-            <summary>
-            Add a service provider to the hosting options.
-            </summary>
-            <param name="serviceDescription">The service description.</param>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._HostStart.HostConfig">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._HostStart.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._HostStart.Verbose">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._HostStart.Report">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._HostStart.Json">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._HostPause.HostConfig">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.ServiceConfig">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._HostStop.HostConfig">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.ServiceDns">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._HostVerify.HostConfig">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.HostIp">
+            <summary>Field accessor for option [ip]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.HostDns">
+            <summary>Field accessor for option [host]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Admin">
+            <summary>Field accessor for option [admin]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.HostDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.All">
+            <summary>Field accessor for option [all]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.HostDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.All">
+            <summary>Field accessor for option [all]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.HostDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.All">
+            <summary>Field accessor for option [all]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.HostDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.HostDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.DNSConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.HostName">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="T:Goedel.Mesh.Shell.ServiceAdmin.Shell">
@@ -366,6 +504,33 @@
             Post processing action
             </summary>
             <param name="result"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Create(Goedel.Mesh.Shell.ServiceAdmin.Create)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Start(Goedel.Mesh.Shell.ServiceAdmin.Start)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Stop(Goedel.Mesh.Shell.ServiceAdmin.Stop)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Pause(Goedel.Mesh.Shell.ServiceAdmin.Pause)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Fetch(Goedel.Mesh.Shell.ServiceAdmin.Fetch)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Update(Goedel.Mesh.Shell.ServiceAdmin.Update)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Verify(Goedel.Mesh.Shell.ServiceAdmin.Verify)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.DNS(Goedel.Mesh.Shell.ServiceAdmin.DNS)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Credential(Goedel.Mesh.Shell.ServiceAdmin.Credential)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ServiceAdmin.NamespaceDoc">
             <summary>

@@ -24,6 +24,7 @@ using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 using Goedel.Mesh.ServiceAdmin;
+using Goedel.IO;
 
 using System.Collections.Generic;
 namespace Goedel.Mesh.Server {
@@ -34,28 +35,42 @@ namespace Goedel.Mesh.Server {
     /// <summary>
     /// The session class implements the Mesh session. The implementations in this class are mostly 
     /// stubbs that martial and validate the parameters presented in the request and pass the
-    /// work on to the <see cref="MeshPersist"/> instance <see cref="Mesh"/>
+    /// work on to the <see cref="Server.MeshPersist"/> instance <see cref="MeshPersist"/>
     /// </summary>
     public class PublicMeshService : MeshService {
-        IMeshMachine meshMachine;
+
+        #region // Properties
+        
+        ///<summary>The Mesh Machine base</summary> 
+        public IMeshMachine MeshMachine { get; init; }
 
         ///<summary>The profile describing the service</summary>
-        public ProfileService ProfileService;
+        public ProfileService ProfileService { get; init; }
 
         ///<summary>The profile describing the host</summary>
-        public ProfileHost ProfileHost;
+        public ProfileHost ProfileHost { get; init; }
 
         ///<summary>The host activation record.</summary> 
-        public ActivationDevice ActivationDevice { get; }
+        public ActivationDevice ActivationDevice { get; init; }
 
         ///<summary>The host connection record.</summary> 
-        public ConnectionDevice ConnectionDevice { get; }
+        public ConnectionDevice ConnectionDevice { get; init; }
 
+        ///<summary>The service configuration</summary> 
+        public ServiceConfiguration ServiceConfiguration { get; init; }
+
+
+        public HostConfiguration HostConfiguration { get; init; }
         /// <summary>
         /// The mesh persistence provider.
         /// </summary>
-        public MeshPersist Mesh  { get; set; }
+        public MeshPersist MeshPersist  { get; init; }
 
+        ///<summary>The service description.</summary> 
+        public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
+
+        #endregion
+        #region // Constructors and factories
 
         /// <summary>
         /// Factory method, the signature is pro tem and will be changed later on.
@@ -67,10 +82,6 @@ namespace Goedel.Mesh.Server {
                 ServiceConfiguration serviceConfiguration,
                 HostConfiguration hostConfiguration) => throw new NYI();
 
-        ///<summary>The service description.</summary> 
-        public static ServiceDescription ServiceDescription => new (WellKnown, Factory);
-
-
         /// <summary>
         /// The mesh service dispatcher.
         /// </summary>
@@ -81,19 +92,16 @@ namespace Goedel.Mesh.Server {
             Domains ??= new List<string>();
             Domains.Add(domain);
 
-            meshMachine = new MeshMachineCoreServer(serviceDirectory);
+            MeshMachine = new MeshMachineCoreServer(serviceDirectory);
 
-            Mesh = new MeshPersist(serviceDirectory);
+            MeshPersist = new MeshPersist(serviceDirectory, FileStatus.OpenOrCreate);
 
             // Dummy profiles for the service and host at this point
-            ProfileService = ProfileService.Generate(meshMachine.KeyCollection);
+            ProfileService = ProfileService.Generate(MeshMachine.KeyCollection);
 
             // here we need to generate the activation record for the host and the connection for that record
 
-
-
-            ProfileHost = ProfileHost.CreateHost(meshMachine);
-
+            ProfileHost = ProfileHost.CreateHost(MeshMachine);
 
             // create an activation record and a connection record.
 
@@ -113,19 +121,113 @@ namespace Goedel.Mesh.Server {
 
             // Sign the connection and connection slim
 
-            ConnectionDevice = new ConnectionDevice() {
+            this.ConnectionDevice = new ConnectionDevice() {
                 Account = "@example",
                 Subject = connectionDevice.Subject,
                 Authority = connectionDevice.Authority,
                 Authentication = connectionDevice.Authentication
                 };
 
-            ConnectionDevice.Strip();
+            this.ConnectionDevice.Strip();
 
-            ProfileService.Sign(ConnectionDevice, ObjectEncoding.JSON_B);
+            ProfileService.Sign(this.ConnectionDevice, ObjectEncoding.JSON_B);
 
-            ConnectionDevice.DareEnvelope.Strip();
+            this.ConnectionDevice.DareEnvelope.Strip();
             }
+
+        private PublicMeshService(
+                    IMeshMachine meshMachine,
+                    ServiceConfiguration serviceConfiguration,
+                    HostConfiguration hostConfiguration) {
+
+            // pull out pieces from serviceConfiguration, hostConfiguration.
+
+
+            // here do something with the domains if desired.
+            // might just kill these in favor of the service description.
+            }
+
+        /// <summary>
+        /// Create new service and host configurations and attach the service to the host.
+        /// </summary>
+        /// <param name="meshMachine">The mesh machine</param>
+        /// <param name="serviceConfiguration">The service configuration</param>
+        /// <param name="deviceAddress">The address of the initial host.</param>
+        /// <returns>The mesh service interface.</returns>
+        public static PublicMeshService Create(
+                IMeshMachine meshMachine,
+                ServiceConfiguration serviceConfiguration,
+                string deviceAddress = "@example"
+                ) {
+
+            // Create the service profile
+            var profileService = ProfileService.Generate(meshMachine.KeyCollection);
+
+            // Create a host profile and add create a connection to the host.
+            var profileHost = ProfileHost.CreateHost(meshMachine);
+            var activationDevice = new ActivationHost(profileHost);
+            activationDevice.Activate(profileHost.SecretSeed);
+            var connectionDevice1 = activationDevice.Connection;
+            var connectionDevice = new ConnectionDevice() {
+                Account = deviceAddress,
+                Subject = connectionDevice1.Subject,
+                Authority = connectionDevice1.Authority,
+                Authentication = connectionDevice1.Authentication
+                };
+
+            // Strip and sign the device connection.
+            connectionDevice.Strip();
+            profileService.Sign(connectionDevice, ObjectEncoding.JSON_B);
+
+
+            // Update the service configuration to add the service profile
+            serviceConfiguration.EnvelopedProfileService = profileService.EnvelopedProfileService;
+
+
+            // Create a device record for the host and persist.
+
+            var hostConfiguration = new HostConfiguration() {
+                EnvelopedProfileHost = profileHost.EnvelopedProfileHost,
+                EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice
+                };
+
+
+            // Initialize the persistence store.
+            var meshPersist = new MeshPersist(serviceConfiguration.Path, FileStatus.OpenOrCreate);
+
+            return new PublicMeshService(
+                        meshMachine, serviceConfiguration, hostConfiguration) {
+                MeshPersist = meshPersist,
+                ProfileService = profileService,
+                ProfileHost = profileHost,
+                ActivationDevice = activationDevice,
+                ConnectionDevice = connectionDevice
+                };
+
+            }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="meshMachine"></param>
+        /// <param name="serviceConfiguration"></param>
+        /// <param name="hostConfiguration"></param>
+        /// <returns></returns>
+        public static PublicMeshService Load(
+                IMeshMachine meshMachine,
+                ServiceConfiguration serviceConfiguration,
+                HostConfiguration hostConfiguration
+                ) {
+
+            // Need to read the host config back from the master catalog here
+            ActivationDevice activationDevice = null;
+
+            return new PublicMeshService(meshMachine, serviceConfiguration, hostConfiguration);
+
+
+            throw new NYI();
+            }
+
 
 
         /////<inheritdoc/>
@@ -188,7 +290,7 @@ namespace Goedel.Mesh.Server {
                 var verifiedDevice = VerifyDevice(jpcSession);
 
                 var accountEntry = new AccountUser(request);
-                Mesh.AccountAdd(jpcSession, verifiedDevice, accountEntry);
+                MeshPersist.AccountAdd(jpcSession, verifiedDevice, accountEntry);
                 return new BindResponse();
                 }
             catch (System.Exception exception) {
@@ -210,7 +312,7 @@ namespace Goedel.Mesh.Server {
             var requestConnection = request.EnvelopedRequestConnection.Decode();
 
             try {
-                var connectResponse = Mesh.Connect(jpcSession, VerifyDevice(jpcSession), requestConnection);
+                var connectResponse = MeshPersist.Connect(jpcSession, VerifyDevice(jpcSession), requestConnection);
                 return connectResponse;
                 }
             catch (System.Exception exception) {
@@ -230,7 +332,7 @@ namespace Goedel.Mesh.Server {
         public override CompleteResponse Complete(
                 CompleteRequest request, IJpcSession jpcSession ) {
             try {
-                return Mesh.AccountComplete(jpcSession, VerifyDevice(jpcSession), request);
+                return MeshPersist.AccountComplete(jpcSession, VerifyDevice(jpcSession), request);
                 }
             catch (System.Exception exception) {
                 return new CompleteResponse(exception);
@@ -248,7 +350,7 @@ namespace Goedel.Mesh.Server {
         public override StatusResponse Status(
                 StatusRequest request, IJpcSession jpcSession) {
             try {
-                return Mesh.AccountStatus(jpcSession, VerifyAccount(jpcSession));
+                return MeshPersist.AccountStatus(jpcSession, VerifyAccount(jpcSession));
                 }
             catch (System.Exception exception) {
                 return new StatusResponse(exception);
@@ -268,7 +370,7 @@ namespace Goedel.Mesh.Server {
                 UnbindRequest request, IJpcSession jpcSession) {
 
             try {
-                Mesh.AccountDelete(jpcSession, VerifyAccount(jpcSession), request.Account);
+                MeshPersist.AccountDelete(jpcSession, VerifyAccount(jpcSession), request.Account);
                 return new UnbindResponse();
                 }
             catch (System.Exception exception) {
@@ -289,7 +391,7 @@ namespace Goedel.Mesh.Server {
         public override DownloadResponse Download(
                 DownloadRequest request, IJpcSession jpcSession) {
             try {
-                var Updates = Mesh.AccountDownload(jpcSession, VerifyAccount(jpcSession), request.Select);
+                var Updates = MeshPersist.AccountDownload(jpcSession, VerifyAccount(jpcSession), request.Select);
                 return new DownloadResponse() { Updates = Updates };
                 }
             catch (System.Exception exception) {
@@ -308,7 +410,7 @@ namespace Goedel.Mesh.Server {
                 TransactRequest request, IJpcSession jpcSession) {
             try {
                 var account = VerifyAccount(jpcSession);
-                Mesh.AccountUpdate(jpcSession, account,
+                MeshPersist.AccountUpdate(jpcSession, account,
                         request.Updates, request.Inbound, request.Outbound, request.Local, request.Accounts); ;
                 return new TransactResponse();
                 }
@@ -364,7 +466,7 @@ namespace Goedel.Mesh.Server {
         public override ClaimResponse Claim(
                     ClaimRequest request,
                     IJpcSession session = null) => 
-            Mesh.Claim(session, request.EnvelopedMessageClaim);
+            MeshPersist.Claim(session, request.EnvelopedMessageClaim);
 
         /// <summary>
         /// Server method implementing the transaction  PollClaim.
@@ -375,7 +477,7 @@ namespace Goedel.Mesh.Server {
         public override PollClaimResponse PollClaim(
                     PollClaimRequest request,
                     IJpcSession session = null) =>
-            Mesh.PollClaim(session, request.TargetAccountAddress, request.PublicationId);
+            MeshPersist.PollClaim(session, request.TargetAccountAddress, request.PublicationId);
 
 
         /// <summary>
@@ -387,7 +489,8 @@ namespace Goedel.Mesh.Server {
         public override OperateResponse Operate(
                     OperateRequest request,
                     IJpcSession session = null) =>
-            Mesh.Operate(session, request.AccountAddress, request.Operations);
+            MeshPersist.Operate(session, request.AccountAddress, request.Operations);
 
+        #endregion
         }
     }

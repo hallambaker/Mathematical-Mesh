@@ -52,6 +52,8 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// </summary>
     public partial class ServiceConfiguration {
 
+        public Goedel.Mesh.ProfileService ProfileService => throw new NYI();
+
         public string Instance { get; set; }
 
         public List<Endpoint> GetEndpoints() {
@@ -81,6 +83,8 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// </summary>
     public partial class HostConfiguration {
 
+        public ProfileHost ProfileHost => throw new NYI();
+        public ConnectionDevice ConnectionDevice => throw new NYI();
 
         public List<Endpoint> GetEndpoints() {
             var endpoints = new List<Endpoint>();
