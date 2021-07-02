@@ -38,6 +38,9 @@
 				|Path to the directory where service data is stored.
 		TStruct LogEntry Logs
 			Multiple
+		String DNS
+			Multiple
+
 
 	Structure ServiceConfiguration
 		//Tag "Service"
@@ -57,6 +60,7 @@
 		Integer Process
 		Integer Storage
 		String Role
+
 		String IP
 			Multiple
 		String Services

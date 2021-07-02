@@ -31,7 +31,7 @@
 			|status code and status description fields.
 
 
-    Transaction Public ServiceStatus ServiceConfigRequest ServiceConfigResponse
+    Transaction Public ServiceConfig ServiceConfigRequest ServiceConfigResponse
 
 	Message ServiceConfigRequest
 		Inherits WsmpRequest

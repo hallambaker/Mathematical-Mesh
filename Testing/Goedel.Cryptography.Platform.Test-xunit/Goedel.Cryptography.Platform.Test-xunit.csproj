@@ -5,6 +5,8 @@
     <RootNamespace>Goedel.Cryptography.Platform.Test_xunit</RootNamespace>
 
     <IsPackable>false</IsPackable>
+
+    <Configurations>Debug;Release;Sandcastle</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

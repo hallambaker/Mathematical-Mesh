@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/16/2021 11:16:25 AM
+//  This file was automatically generated at 7/1/2021 12:13:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.649
+//  Generator:  protogen version 3.0.0.652
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -48,6 +48,7 @@ using Goedel.Protocol;
 using Goedel.Mesh;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Mesh.ServiceAdmin;
 
 
 namespace Goedel.Mesh.Management {
@@ -78,6 +79,8 @@ namespace Goedel.Mesh.Management {
 
 			{"WsmpRequest", WsmpRequest._Factory},
 			{"WsmpResponse", WsmpResponse._Factory},
+			{"ServiceConfigRequest", ServiceConfigRequest._Factory},
+			{"ServiceConfigResponse", ServiceConfigResponse._Factory},
 			{"ServiceStatusRequest", ServiceStatusRequest._Factory},
 			{"ServiceStatusResponse", ServiceStatusResponse._Factory}			};
 
@@ -139,6 +142,12 @@ namespace Goedel.Mesh.Management {
 			JsonObject response = null;
 
 			switch (token) {
+				case "ServiceConfig" : {
+					var request = new ServiceConfigRequest();
+					request.Deserialize (jsonReader);
+					response = ServiceConfig (request, session);
+					break;
+					}
 				case "ServiceStatus" : {
 					var request = new ServiceStatusRequest();
 					request.Deserialize (jsonReader);
@@ -165,6 +174,15 @@ namespace Goedel.Mesh.Management {
 						Service = this
 						};
 
+
+        /// <summary>
+		/// Base method for implementing the transaction  ServiceConfig.
+        /// </summary>
+        /// <param name="request">The request object to send to the host.</param>
+		/// <param name="session">The request context.</param>
+		/// <returns>The response object from the service</returns>
+        public abstract ServiceConfigResponse ServiceConfig (
+                ServiceConfigRequest request, IJpcSession session);
 
         /// <summary>
 		/// Base method for implementing the transaction  ServiceStatus.
@@ -209,6 +227,15 @@ namespace Goedel.Mesh.Management {
         /// </summary>		
         /// <param name="request">The request object.</param>
 		/// <returns>The response object</returns>
+        public virtual ServiceConfigResponse ServiceConfig (ServiceConfigRequest request) =>
+				JpcSession.Post("ServiceConfig", request) as ServiceConfigResponse;
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
         public virtual ServiceStatusResponse ServiceStatus (ServiceStatusRequest request) =>
 				JpcSession.Post("ServiceStatus", request) as ServiceStatusResponse;
 
@@ -224,6 +251,15 @@ namespace Goedel.Mesh.Management {
 		/// Interface object to dispatch requests to.
 		/// </summary>	
 		public ServiceManagementService Service {get; set;}
+
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <returns>The response object</returns>
+        public override ServiceConfigResponse ServiceConfig (ServiceConfigRequest request) =>
+				Service.ServiceConfig (request, JpcSession);
 
 
         /// <summary>
@@ -264,6 +300,12 @@ namespace Goedel.Mesh.Management {
 			JsonObject response = null;
 
 			switch (token) {
+				case "ServiceConfig" : {
+					var request = new ServiceConfigRequest();
+					request.Deserialize (jsonReader);
+					response = Service.ServiceConfig (request, session);
+					break;
+					}
 				case "ServiceStatus" : {
 					var request = new ServiceStatusRequest();
 					request.Deserialize (jsonReader);
@@ -461,6 +503,220 @@ namespace Goedel.Mesh.Management {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ServiceConfigRequest : WsmpRequest {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ServiceConfigRequest";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new ServiceConfigRequest();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((WsmpRequest)this).SerializeX(_writer, false, ref _first);
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ServiceConfigRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as ServiceConfigRequest;
+				}
+		    var Result = new ServiceConfigRequest ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ServiceConfigResponse : WsmpResponse {
+        /// <summary>
+        /// </summary>
+
+		public virtual HostConfiguration						HostConfiguration  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual ServiceConfiguration						ServiceConfiguration  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ServiceConfigResponse";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new ServiceConfigResponse();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((WsmpResponse)this).SerializeX(_writer, false, ref _first);
+			if (HostConfiguration != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("HostConfiguration", 1);
+					HostConfiguration.Serialize (_writer, false);
+				}
+			if (ServiceConfiguration != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ServiceConfiguration", 1);
+					ServiceConfiguration.Serialize (_writer, false);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ServiceConfigResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as ServiceConfigResponse;
+				}
+		    var Result = new ServiceConfigResponse ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "HostConfiguration" : {
+					// An untagged structure
+					HostConfiguration = new HostConfiguration ();
+					HostConfiguration.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "ServiceConfiguration" : {
+					// An untagged structure
+					ServiceConfiguration = new ServiceConfiguration ();
+					ServiceConfiguration.Deserialize (jsonReader);
+ 
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;

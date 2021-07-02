@@ -25,10 +25,10 @@ using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 using Goedel.Mesh.ServiceAdmin;
 using Goedel.IO;
+using System.IO;
 
 using System.Collections.Generic;
 namespace Goedel.Mesh.Server {
-
 
 
 
@@ -147,6 +147,63 @@ namespace Goedel.Mesh.Server {
             // might just kill these in favor of the service description.
             }
 
+
+        public static PublicMeshService Create(
+            IMeshMachine meshMachine,
+            string serviceConfig, string serviceDns, string hostIp, string hostDns,
+            string admin, string newFile) {
+
+            hostDns ??= "example.com";
+            hostIp ??= "127.0.0.1";
+            var hostName = System.Environment.MachineName;
+
+            hostDns ??= serviceDns;
+
+            var pathService = Path.Combine(meshMachine.DirectoryMesh, "service", hostName, "mmm");
+            var pathHost = Path.Combine(meshMachine.DirectoryMesh, "hosts", hostName, "mmm");
+
+            // Create the initial service application
+            var ServiceConfiguration = new ServiceConfiguration() {
+                DNS = new List<string> { serviceDns },
+                Path = pathService
+                };
+
+            // populate with user supplied data
+
+
+
+
+            var hostConfiguration = new HostConfiguration() {
+                IP = new List<string> { hostIp},
+                DNS = new List<string> { hostDns },
+                Services = new List<string> { WellKnown },
+                Path = pathHost
+                };
+
+            // create the service.
+            var service = Create(meshMachine, ServiceConfiguration, hostConfiguration, hostDns);
+
+
+            var configuration = new Configuration() {
+                Entries = new List<ConfigurationEntry> { ServiceConfiguration, hostConfiguration}
+                };
+
+
+            if (admin != null) {
+                // create an administrator profile
+
+                // add to the service as an administrator
+
+                }
+
+
+            // write the configuration out.
+            configuration.ToFile(newFile ?? serviceConfig);
+
+            return service;
+            }
+
+
         /// <summary>
         /// Create new service and host configurations and attach the service to the host.
         /// </summary>
@@ -157,6 +214,7 @@ namespace Goedel.Mesh.Server {
         public static PublicMeshService Create(
                 IMeshMachine meshMachine,
                 ServiceConfiguration serviceConfiguration,
+                HostConfiguration hostConfiguration,
                 string deviceAddress = "@example"
                 ) {
 
@@ -179,21 +237,15 @@ namespace Goedel.Mesh.Server {
             connectionDevice.Strip();
             profileService.Sign(connectionDevice, ObjectEncoding.JSON_B);
 
-
             // Update the service configuration to add the service profile
             serviceConfiguration.EnvelopedProfileService = profileService.EnvelopedProfileService;
 
-
-            // Create a device record for the host and persist.
-
-            var hostConfiguration = new HostConfiguration() {
-                EnvelopedProfileHost = profileHost.EnvelopedProfileHost,
-                EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice
-                };
+            hostConfiguration.EnvelopedProfileHost = profileHost.EnvelopedProfileHost;
+            hostConfiguration.EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice;
 
 
             // Initialize the persistence store.
-            var meshPersist = new MeshPersist(serviceConfiguration.Path, FileStatus.OpenOrCreate);
+            var meshPersist = new MeshPersist(hostConfiguration.Path, FileStatus.OpenOrCreate);
 
             return new PublicMeshService(
                         meshMachine, serviceConfiguration, hostConfiguration) {

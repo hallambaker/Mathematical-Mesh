@@ -4,6 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Company>ThresholdSecrets.Com</Company>
+    <Configurations>Debug;Release;Sandcastle</Configurations>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Protocol</Product>
     <Description>Support library for serializers/deserializers built using PROTOGEN.</Description>
@@ -11,20 +12,9 @@
     <Title>Goedel.Protocol</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <Configurations>Debug;Release</Configurations>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>xml\Goedel.Protocol.xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Focus|AnyCPU'">
-    <DocumentationFile>xml\Goedel.Protocol.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>xml\Goedel.Protocol.xml</DocumentationFile>
-  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj" />

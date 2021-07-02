@@ -37,7 +37,7 @@ namespace Scratchpad {
 
 
             // This is failing as a result of Operate having a lock that is acquired but not released.
-            TestPresentationMesh.Test().TestCreateGroup();
+            ShellTestsAdmin.Test().TestAccount();
 
 
             //TestPresentationMesh.Test().TestAccountDeletion();

@@ -99,6 +99,8 @@ namespace Goedel.Mesh.Management {
             throw new System.NotImplementedException();
             }
 
+        public override ServiceConfigResponse ServiceConfig(ServiceConfigRequest request, IJpcSession session) => throw new NotImplementedException();
+
         #endregion
         }
     }

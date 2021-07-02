@@ -353,6 +353,9 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Admin">
             <summary>Field accessor for option [admin]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.NewFile">
+            <summary>Field accessor for option [out]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>

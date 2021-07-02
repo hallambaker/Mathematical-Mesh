@@ -27,14 +27,7 @@
       <Argument Key="maxVersionParts" Value="" xmlns="" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.ASN\Goedel.ASN.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.Command\Goedel.Command.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.Discovery\Goedel.Discovery.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.FSR\Goedel.FSR.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj" />
-      <DocumentationSource sourceFile="..\..\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj" />
+      <DocumentationSource sourceFile="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
     </DocumentationSources>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
@@ -114,39 +107,22 @@
     <Content Include="icons\Help.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Base\Goedel.Cryptography.Base\Goedel.Cryptography.Base.csproj">
-      <Name>Goedel.Cryptography.Base</Name>
-      <Project>{9617263c-992b-4456-af7f-cf3083dfcbad}</Project>
+    <Reference Include="System.Numerics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <Name>System.Numerics</Name>
+      <AssemblyName>System.Numerics.dll</AssemblyName>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Numerics.dll</HintPath>
       <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Core\Goedel.ASN\Goedel.ASN.csproj">
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.ASN\Goedel.ASN.csproj">
       <Name>Goedel.ASN</Name>
       <Project>{8c3faaaa-4187-4368-8c10-4f3f7c31ab51}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Core\Goedel.Command\Goedel.Command.csproj">
+    <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj">
       <Name>Goedel.Command</Name>
       <Project>{92374241-b365-4366-8c08-6db92b0460b7}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Core\Goedel.FSR\Goedel.FSR.csproj">
-      <Name>Goedel.FSR</Name>
-      <Project>{70abeecf-b15c-4d36-83d3-df9508bee1c5}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Core\Goedel.IO\Goedel.IO.csproj">
-      <Name>Goedel.IO</Name>
-      <Project>{e9341173-6212-4a7a-8a59-21fd11c32360}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Core\Goedel.Registry\Goedel.Registry.csproj">
-      <Name>Goedel.Registry</Name>
-      <Project>{c6ab7fed-46c8-43f1-ba55-790921adfdd5}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Core\Goedel.Utilities\Goedel.Utilities.csproj">
-      <Name>Goedel.Utilities</Name>
-      <Project>{171f782c-4d04-40bd-8d12-ead48eefb79a}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj">
@@ -169,24 +145,34 @@
       <Project>{8340d6c4-d1ba-4369-b9cc-0e0eb36387d7}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Test\Goedel.Cryptography.Test.csproj">
-      <Name>Goedel.Cryptography.Test</Name>
-      <Project>{d2ab97dd-b0e2-4485-9697-7122b2e9c72a}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <Name>Goedel.Cryptography</Name>
       <Project>{b8319c05-ea98-405d-94eb-acb9de6da975}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Debug\Goedel.Debug.csproj">
-      <Name>Goedel.Debug</Name>
-      <Project>{4a8c6fd3-b818-4517-8f2a-5a759315b7aa}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj">
+      <Name>Goedel.Discovery</Name>
+      <Project>{c67e9a8e-c56d-43d8-9cbd-4fd3f5e3956a}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj">
-      <Name>Goedel.Protocol.Debug</Name>
-      <Project>{dfd86335-edec-4503-9a31-247c401d6342}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.FSR\Goedel.FSR.csproj">
+      <Name>Goedel.FSR</Name>
+      <Project>{70abeecf-b15c-4d36-83d3-df9508bee1c5}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj">
+      <Name>Goedel.IO</Name>
+      <Project>{e9341173-6212-4a7a-8a59-21fd11c32360}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj">
+      <Name>Goedel.Protocol.Presentation</Name>
+      <Project>{2f4e3947-e0be-4b27-bfc1-0541c8ca7b23}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj">
+      <Name>Goedel.Protocol.Service</Name>
+      <Project>{ab1a8e04-e59d-4903-ae53-1dfe036ea724}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
@@ -194,9 +180,9 @@
       <Project>{5b919409-8341-4d0a-bcdf-43a6841b6d7b}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj">
-      <Name>Goedel.Test.Core</Name>
-      <Project>{c4b778bf-808c-4681-8e66-906218d86b5a}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj">
+      <Name>Goedel.Registry</Name>
+      <Project>{c6ab7fed-46c8-43f1-ba55-790921adfdd5}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj">
@@ -204,19 +190,9 @@
       <Project>{8a74d219-ed84-4943-bba7-e4b00aacbaf4}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Linux\Goedel.Cryptography.Linux\Goedel.Cryptography.Linux.csproj">
-      <Name>Goedel.Cryptography.Linux</Name>
-      <Project>{82e63726-ab12-4a40-b9e0-184b8e657ef7}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\macos\Goedel.Cryptography.macos\Goedel.Cryptography.macos.csproj">
-      <Name>Goedel.Cryptography.macos</Name>
-      <Project>{d50b8ed2-945d-44e0-8c1d-12191c9409c0}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Windows\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj">
-      <Name>Goedel.Cryptography.Windows</Name>
-      <Project>{79f3c448-a1ef-4bf9-866b-b0a03fb22195}</Project>
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
+      <Name>Goedel.Utilities</Name>
+      <Project>{171f782c-4d04-40bd-8d12-ead48eefb79a}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj">
@@ -224,9 +200,9 @@
       <Project>{1a14c73e-960c-4e21-aeb7-184b6d5a0ab3}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj">
-      <Name>Goedel.Mesh.Core</Name>
-      <Project>{ab63da2b-ec91-4413-820a-3f755f15861d}</Project>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj">
+      <Name>Goedel.Mesh.Management</Name>
+      <Project>{7abdf4e7-8f7e-41af-bdf0-18c88fa054c2}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
@@ -234,9 +210,9 @@
       <Project>{602358c6-28b7-446d-86d3-02b3fd1b3d6c}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj">
-      <Name>Goedel.Mesh.Shell</Name>
-      <Project>{0e631986-5213-4fb5-b4ca-09488ea5c4b5}</Project>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj">
+      <Name>Goedel.Mesh.ServiceAdmin</Name>
+      <Project>{91b1d80b-02d2-4168-a8db-5de3744d7a0d}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
@@ -244,14 +220,6 @@
       <Project>{6b2d9659-e2a6-4e0f-a6e4-2af27bdaea89}</Project>
       <Private>True</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Numerics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-      <Name>System.Numerics</Name>
-      <AssemblyName>System.Numerics.dll</AssemblyName>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Numerics.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
@@ -269,5 +237,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Windows' ">
     <OutputPath>bin\Windows\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Sandcastle' ">
+    <OutputPath>bin\Sandcastle\</OutputPath>
   </PropertyGroup>
 </Project>

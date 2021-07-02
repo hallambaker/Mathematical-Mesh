@@ -966,7 +966,7 @@
             <param name="domain">The domain of the service provider.</param>
             <param name="serviceDirectory">The mesh persistence store filename.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,System.String)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration,System.String)">
             <summary>
             Create new service and host configurations and attach the service to the host.
             </summary>

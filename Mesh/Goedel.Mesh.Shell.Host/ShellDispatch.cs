@@ -62,12 +62,8 @@ namespace Goedel.Mesh.Shell.Host {
                 if (Exception.InnerException != null) {
                     console.WriteLine(Exception.InnerException.Message);
                     }
-
                 }
-
             }
-
-
 
 
         /// <summary>

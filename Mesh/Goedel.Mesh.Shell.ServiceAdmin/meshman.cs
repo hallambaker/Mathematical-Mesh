@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 6/20/2021 12:08:19 AM
+//  This file was automatically generated at 7/1/2021 5:58:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  commandparse version 3.0.0.659
+//  Generator:  commandparse version 3.0.0.662
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -127,7 +127,6 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
                 FlagIndicator = WindowsFlag;
                 }
 
-				DefaultCommand = _Start._DescribeCommand;
 				Description = "Mathematical Mesh command tool";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
@@ -291,7 +290,8 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 			new String (),
 			new String (),
 			new String (),
-			new String ()			} ;
+			new String (),
+			new NewFile ()			} ;
 
 
 
@@ -378,6 +378,15 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 		public virtual string _Admin {
 			set => _Data[8].Parameter (value);
 			}
+		/// <summary>Field accessor for option [out]</summary>
+		public virtual NewFile NewFile {
+			get => _Data[9] as NewFile;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _NewFile {
+			set => _Data[9].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -448,6 +457,13 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 					Brief = "The administrator account address, also default for the host domain.",
 					Index = 8,
 					Key = "admin"
+					},
+				new DescribeEntryOption () {
+					Identifier = "NewFile", 
+					Default = null, // null if null
+					Brief = "File to write the configuration to",
+					Index = 9,
+					Key = "out"
 					}
 				}
 			};
@@ -533,7 +549,6 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 			Brief =  "Start the host service",
 			HandleDelegate =  CommandLineInterpreter.Handle_Start,
 			Lazy =  false,
-            IsDefault = true,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 

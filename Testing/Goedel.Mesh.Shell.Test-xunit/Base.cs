@@ -2,8 +2,48 @@ using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
+//using Goedel.Mesh.Shell.ServiceAdmin;
+
 
 namespace Goedel.XUnit {
+
+
+    public partial class ShellTestsAdmin : ShellTests {
+        TestEnvironmentCommon testEnvironmentCommon;
+
+
+        protected override void Disposing() {
+            testEnvironmentCommon.Dispose();
+            base.Disposing();
+            }
+
+
+        // Use the new test environment (when defined.)
+        public override TestEnvironmentCommon GetTestEnvironment() {
+
+            //var shell = new Goedel.Mesh.Shell.ServiceAdmin.Shell() {
+            //    };
+
+
+
+            //throw new NYI();
+            testEnvironmentCommon = new TestEnvironmentRdpShell() {
+                JpcConnection = Protocol.JpcConnection.Http
+                };
+            return testEnvironmentCommon;
+            }
+
+        public static new ShellTestsAdmin Test() => new();
+
+
+        public override TestCLI GetTestCLI(string MachineName = null) {
+            var testShell = new TestShell(TestEnvironment, MachineName, false);
+            return new TestCLI(testShell);
+            }
+
+
+        }
+
 
 
     public partial class ShellTestsHTTP : ShellTests {

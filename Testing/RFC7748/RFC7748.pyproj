@@ -23,6 +23,9 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Windows' ">
     <OutputPath>bin\Windows\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Sandcastle' ">
+    <OutputPath>bin\Sandcastle\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="RFC7748.py" />
   </ItemGroup>

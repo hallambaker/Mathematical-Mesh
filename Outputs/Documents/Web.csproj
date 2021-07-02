@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Configurations>Debug;Release;Sandcastle</Configurations>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Config\MeshVoodoo.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Config\MeshVoodoo.json" />
+  </ItemGroup>
 
 </Project>

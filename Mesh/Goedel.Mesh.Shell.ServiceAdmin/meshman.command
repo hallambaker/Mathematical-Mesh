@@ -50,11 +50,12 @@
 			Brief "The DNS address of the host for service configuration"
 		Option Admin "admin" String
 			Brief "The administrator account address, also default for the host domain."
+		Option NewFile "out" NewFile
+			Brief "File to write the configuration to"
 
 
 	Command Start "start"
 		Include Reporting
-		DefaultCommand
 		Brief "Start the host service"
 		Parameter HostDns "dns" String
 			Brief "The DNS address of the service"	

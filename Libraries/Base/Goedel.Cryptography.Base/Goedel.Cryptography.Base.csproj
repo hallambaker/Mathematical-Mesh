@@ -3,8 +3,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <RootNamespace>Goedel.Cryptography.Windows</RootNamespace>
-    <Configurations>Debug;Release;Focus;Windows</Configurations>
+    <Configurations>Debug;Release;Sandcastle</Configurations>
     <Company>ThresholdSecrets.Com</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Cryptography.Windows</Product>

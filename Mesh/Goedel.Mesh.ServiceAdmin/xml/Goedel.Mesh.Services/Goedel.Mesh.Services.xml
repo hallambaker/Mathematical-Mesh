@@ -133,6 +133,11 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.NamespaceDoc">
+            <summary>
+            Service administration over multiple hosts.
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate">
             <summary>
             Delegate returning a host <paramref name="hostConfiguration"/> for the
@@ -450,6 +455,10 @@
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.Logs">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.ConfigurationEntry.DNS">
             <summary>
             </summary>
         </member>

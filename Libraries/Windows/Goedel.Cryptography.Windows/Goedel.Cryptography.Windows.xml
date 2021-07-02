@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Goedel.Cryptography.Base</name>
+        <name>Goedel.Cryptography.Linux</name>
     </assembly>
     <members>
         <member name="T:Goedel.Cryptography.Windows.DecryptionFailed">

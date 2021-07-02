@@ -11,13 +11,94 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Goedel.Protocol.Presentation;
+using Goedel.Mesh.Management;
+
 
 namespace Goedel.Mesh.Test {
+    public class TestEnvironmentRdpShell : TestEnvironmentRdp {
+        MeshMachineTest HostMachine;
+        Goedel.Mesh.Shell.ServiceAdmin.Shell ServiceAdminShell { get; set; }
+        Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter ServiceAdminCLI { get; set; }
 
+
+        Goedel.Mesh.Shell.Host.Shell HostShell { get; set; }
+        Goedel.Mesh.Shell.Host.CommandLineInterpreter HostAdminCLI { get; set; }
+        public TestEnvironmentRdpShell() {
+            }
+
+        RudService RudService { get; set; }
+
+
+        protected override void Disposing() {
+            RudService?.Dispose();
+            base.Disposing();
+            }
+
+        public override RudService StartService() {
+            var serviceConfig = "ServiceConfig.json";
+            var dnsConfig = "ServiceDNS.bind";
+
+            HostMachine = new MeshMachineTest(this, "host1");
+            
+            // initialize the service and host configuration
+            ServiceAdminShell = new Shell.ServiceAdmin.Shell() {
+                MeshMachine = HostMachine
+                };
+            ServiceAdminCLI = new();
+            ServiceAdmin($"create {serviceConfig} example.com");
+
+            ServiceAdmin($"dns {serviceConfig} {dnsConfig}");
+
+
+            // now start the host
+            HostShell = new Shell.Host.Shell(
+                PublicMeshService.ServiceDescription,
+                ServiceManagementProvider.ServiceDescriptionHost);
+            HostAdminCLI = new();
+
+            // this is not going to return now is it???
+            // need to save the service and return it.
+            Host($"start {serviceConfig}");
+
+
+            throw new NYI();
+            }
+
+
+        public override MeshServiceClient GetMeshClient(
+                MeshMachineTest meshMachineTest,
+                ICredentialPrivate credential,
+                string service,
+                string accountAddress) {
+
+            RudService ??= StartService();
+
+            var meshServiceBinding = new ConnectionInitiator(
+            credential, Domain, Test, TransportType.Http, MeshServiceClient.WellKnown);
+            var client = meshServiceBinding.GetClient<MeshServiceClient>();
+
+
+            return client;
+            }
+
+        public void ServiceAdmin(string command) {
+
+            var args = command.Split(" ");
+            ServiceAdminCLI.MainMethod(ServiceAdminShell, args);
+            }
+
+        public void Host (string command) {
+
+            var args = command.Split(" ");
+            ServiceAdminCLI.MainMethod(ServiceAdminShell, args);
+            }
+
+
+        }
 
     public class TestEnvironmentRdp : TestEnvironmentCommon {
 
-        // This is a horror show right here....
+
 
         public const string Domain = "localhost";
         public string Protocol => MeshService.GetWellKnown;
@@ -92,7 +173,7 @@ namespace Goedel.Mesh.Test {
 
         public JpcConnection JpcConnection = JpcConnection.Serialized;
 
-        public PublicMeshService MeshService => meshService ??
+        public virtual PublicMeshService MeshService => meshService ??
             new PublicMeshService(ServiceName, ServiceDirectory).CacheValue (out meshService);
         PublicMeshService meshService;
 

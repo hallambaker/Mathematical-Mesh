@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/20/2021 12:08:14 AM
+//  This file was automatically generated at 7/1/2021 12:13:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.649
+//  Generator:  protogen version 3.0.0.652
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -307,6 +307,10 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// </summary>
 
 		public virtual List<LogEntry>				Logs  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<string>				DNS  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -386,6 +390,18 @@ namespace Goedel.Mesh.ServiceAdmin {
 				_writer.WriteArrayEnd ();
 				}
 
+			if (DNS != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("DNS", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in DNS) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -442,6 +458,17 @@ namespace Goedel.Mesh.ServiceAdmin {
 					while (_Going) {
 						var _Item = LogEntry.FromJson (jsonReader, true); // a tagged structure
 						Logs.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "DNS" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					DNS = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						DNS.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;

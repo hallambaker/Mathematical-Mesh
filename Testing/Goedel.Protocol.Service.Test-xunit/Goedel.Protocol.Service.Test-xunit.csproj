@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Goedel.Protocol.Service.Test_xunit</RootNamespace>
-    <Configurations>Debug;Windows</Configurations>
+    <Configurations>Debug;Release;Windows;Sandcastle</Configurations>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
