@@ -476,7 +476,7 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.HostConfig">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.DNSConfig">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.DnsConfig">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.EnumReporting">

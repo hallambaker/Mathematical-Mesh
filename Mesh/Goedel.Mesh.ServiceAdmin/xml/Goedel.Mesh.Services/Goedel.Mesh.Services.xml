@@ -163,6 +163,9 @@
             </summary>
             <summary>
             </summary>
+            <summary>
+            Service administration request
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.EnvelopedProfileService">
             <summary>
@@ -252,6 +255,10 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.Role">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.Port">
             <summary>
             </summary>
         </member>
@@ -350,6 +357,10 @@
              <summary>
             Strong name of service identifier.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.Address">
+            <summary>
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.Configuration._Tag">
             <summary>
@@ -700,16 +711,6 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.Services.ServiceAdminRequest">
-            <summary>
-            Service administration request
-            </summary>
-        </member>
-        <member name="T:Goedel.Mesh.Services.ServiceAdminResponse">
-            <summary>
-            Service administration response
-            </summary>
         </member>
     </members>
 </doc>

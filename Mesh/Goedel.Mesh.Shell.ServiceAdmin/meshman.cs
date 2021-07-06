@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 7/1/2021 5:58:43 PM
+//  This file was automatically generated at 7/6/2021 6:05:22 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1279,12 +1279,12 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 			set => _Data[4].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile DNSConfig {
+		public virtual ExistingFile DnsConfig {
 			get => _Data[5] as ExistingFile;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _DNSConfig {
+		public virtual string _DnsConfig {
 			set => _Data[5].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -1331,7 +1331,7 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 					Key = ""
 					},
 				new DescribeEntryParameter () {
-					Identifier = "DNSConfig", 
+					Identifier = "DnsConfig", 
 					Default = null, // null if null
 					Brief = "The DNS configuration file",
 					Index = 5,

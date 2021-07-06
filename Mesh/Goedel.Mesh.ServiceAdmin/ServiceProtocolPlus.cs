@@ -27,14 +27,60 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Goedel.Mesh.Services {
+namespace Goedel.Mesh.ServiceAdmin {
+    public partial class Configuration {
+        bool processed = false;
+
+        public Dictionary<string, ServiceConfiguration> DictionaryService { get;}  = new();
+
+        public void PostProcess() {
+            if (processed) {
+                return;
+                }
+            processed = true;
+
+            foreach (var entry in Entries) {
+                if (entry is ServiceConfiguration serviceConfiguration) {
+
+                    DictionaryService.Add(serviceConfiguration.Id, serviceConfiguration);
+
+                    }
+
+                }
+
+
+            foreach (var entry in Entries) {
+                if (entry is HostConfiguration hostConfiguration) {
+
+                    hostConfiguration.ServiceConfigs = new();
+
+                    foreach (var service in hostConfiguration.Services) {
+                        if (DictionaryService.TryGetValue(service, out var config)) {
+                            hostConfiguration.ServiceConfigs.Add(config);
+                            config.DefaultIp ??= hostConfiguration.IP[0];
+                            }
+
+                        }
+
+
+                    }
+                }
+            }
+        }
+
 
     /// <summary>
     /// Service administration request
     /// </summary>
-    public partial class ServiceAdminRequest : Request {
+    public partial class ServiceConfiguration  {
 
         #region // Properties
+
+        public string DefaultIp { get; set; }
+
+
+        
+
         #endregion 
 
         #region // Destructor
@@ -50,26 +96,10 @@ namespace Goedel.Mesh.Services {
         #endregion 
         }
 
-    /// <summary>
-    /// Service administration response
-    /// </summary>
-    public partial class ServiceAdminResponse : Response {
+    public partial class HostConfiguration {
+        public List<ServiceConfiguration> ServiceConfigs { get; set; }
 
-        #region // Properties
-        #endregion 
 
-        #region // Destructor
-        #endregion 
-
-        #region // Constructors
-        #endregion 
-
-        #region // Implement Interface: Ixxx
-        #endregion 
-
-        #region // Methods 
-        #endregion 
         }
-
 
     }

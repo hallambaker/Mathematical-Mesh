@@ -91,6 +91,15 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 		///<inheritdoc/>
 		public override ShellResult DNS(DNS Options) {
 			CommandLineInterpreter.DescribeValues(Options);
+
+			var hostConfig = Options.HostConfig.Value;
+			var dnsConfig = Options.DnsConfig.Value;
+
+
+			var configuration = JsonReader.ReadFile<Configuration>(hostConfig, false);
+
+			DnsConfiguration.BindConfig(configuration, dnsConfig);
+
 			return null;
 			}
 		

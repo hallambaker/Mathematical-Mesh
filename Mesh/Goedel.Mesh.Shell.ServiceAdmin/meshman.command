@@ -106,7 +106,7 @@
 		Brief "Compute the DNS configuration from the service config."
 		Parameter HostConfig "hostconfig" ExistingFile
 			Brief "The host configuration file"
-		Parameter DNSConfig "dnsconfig" ExistingFile
+		Parameter DnsConfig "dnsconfig" ExistingFile
 			Brief "The DNS configuration file"
 
 	Command Credential "credential"

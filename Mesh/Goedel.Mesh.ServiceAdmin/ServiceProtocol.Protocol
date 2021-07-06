@@ -22,6 +22,7 @@
 			Multiple
 			Description
 				|Strong name of service identifier.
+		String Address
 
 	Structure ConfigurationEntry
 		String Id	
@@ -60,7 +61,7 @@
 		Integer Process
 		Integer Storage
 		String Role
-
+		String Port
 		String IP
 			Multiple
 		String Services

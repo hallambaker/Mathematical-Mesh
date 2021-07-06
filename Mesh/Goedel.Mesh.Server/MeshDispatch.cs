@@ -153,8 +153,11 @@ namespace Goedel.Mesh.Server {
             string serviceConfig, string serviceDns, string hostIp, string hostDns,
             string admin, string newFile) {
 
+            var serviceName = "Mesh";
+
             hostDns ??= "example.com";
-            hostIp ??= "127.0.0.1";
+            hostIp ??= "127.0.0.1:666";
+            var hostIpv6 = "[::1]:15099";
             var hostName = System.Environment.MachineName;
 
             hostDns ??= serviceDns;
@@ -164,8 +167,11 @@ namespace Goedel.Mesh.Server {
 
             // Create the initial service application
             var ServiceConfiguration = new ServiceConfiguration() {
+                Id = serviceName,
                 DNS = new List<string> { serviceDns },
-                Path = pathService
+                Path = pathService,
+                WellKnown = "mmm",
+
                 };
 
             // populate with user supplied data
@@ -174,9 +180,11 @@ namespace Goedel.Mesh.Server {
 
 
             var hostConfiguration = new HostConfiguration() {
+                Id = System.Environment.MachineName.ToLower(),
                 IP = new List<string> { hostIp},
                 DNS = new List<string> { hostDns },
-                Services = new List<string> { WellKnown },
+                Port = "15099",
+                Services = new List<string> { serviceName },
                 Path = pathHost
                 };
 
@@ -185,6 +193,8 @@ namespace Goedel.Mesh.Server {
 
 
             var configuration = new Configuration() {
+                Name = "Mesh",
+                Address = serviceDns,
                 Entries = new List<ConfigurationEntry> { ServiceConfiguration, hostConfiguration}
                 };
 

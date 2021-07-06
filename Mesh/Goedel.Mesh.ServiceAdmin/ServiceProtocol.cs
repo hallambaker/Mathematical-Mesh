@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/1/2021 12:13:50 PM
+//  This file was automatically generated at 7/6/2021 6:05:16 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -126,6 +126,10 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// </summary>
 
 		public virtual List<string>				Administrators  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Address  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -207,6 +211,11 @@ namespace Goedel.Mesh.ServiceAdmin {
 				_writer.WriteArrayEnd ();
 				}
 
+			if (Address != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Address", 1);
+					_writer.WriteString (Address);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -268,6 +277,10 @@ namespace Goedel.Mesh.ServiceAdmin {
 						Administrators.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
+					break;
+					}
+				case "Address" : {
+					Address = jsonReader.ReadString ();
 					break;
 					}
 				default : {
@@ -667,6 +680,10 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// <summary>
         /// </summary>
 
+		public virtual string						Port  {get; set;}
+        /// <summary>
+        /// </summary>
+
 		public virtual List<string>				IP  {get; set;}
         /// <summary>
         /// </summary>
@@ -740,6 +757,11 @@ namespace Goedel.Mesh.ServiceAdmin {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Role", 1);
 					_writer.WriteString (Role);
+				}
+			if (Port != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Port", 1);
+					_writer.WriteString (Port);
 				}
 			if (IP != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -822,6 +844,10 @@ namespace Goedel.Mesh.ServiceAdmin {
 					}
 				case "Role" : {
 					Role = jsonReader.ReadString ();
+					break;
+					}
+				case "Port" : {
+					Port = jsonReader.ReadString ();
 					break;
 					}
 				case "IP" : {

@@ -23,11 +23,17 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
   </ItemGroup>
   
   <ItemGroup>
+    <Compile Update="DnsConfig.cs">
+      <DependentUpon>DnsConfig.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -41,6 +47,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="DnsConfig.script">
+      <LastGenOutput>DnsConfig.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
     <None Update="Exceptions.exceptional">
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
