@@ -54,7 +54,7 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="VSPreBuildx" />
+    <Exec Command="VSPreBuild" />
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
