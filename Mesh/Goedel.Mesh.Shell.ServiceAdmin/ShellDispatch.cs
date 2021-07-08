@@ -21,10 +21,16 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 
 
 
+
+
     /// <summary>
     /// The command shell.
     /// </summary>
     public partial class Shell : _Shell {
+
+
+		string GetFile(ExistingFile file) => MeshMachine.GetFilePath(file.Value);
+		string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Value);
 
 		public IMeshMachine MeshMachine { get; init; }
 		public PublicMeshService PublicMeshService { get; set; }
@@ -38,12 +44,12 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 
 		///<inheritdoc/>
 		public override ShellResult Create(Create Options) {
-			var serviceConfig = Options.ServiceConfig.Value;
+			var serviceConfig = GetFile(Options.ServiceConfig);
 			var serviceDns = Options.ServiceDns.Value;
 			var hostIp = Options.HostIp.Value;
 			var hostDns = Options.HostDns.Value;
 			var admin = Options.Admin.Value;
-			var newFile = Options.NewFile.Value;
+			var newFile = GetFile(Options.NewFile);
 
 			PublicMeshService = PublicMeshService.Create(MeshMachine, serviceConfig, serviceDns, hostIp, hostDns, admin, newFile);
 
@@ -92,8 +98,8 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 		public override ShellResult DNS(DNS Options) {
 			CommandLineInterpreter.DescribeValues(Options);
 
-			var hostConfig = Options.HostConfig.Value;
-			var dnsConfig = Options.DnsConfig.Value;
+			var hostConfig = GetFile(Options.HostConfig);
+			var dnsConfig = GetFile(Options.DnsConfig);
 
 
 			var configuration = JsonReader.ReadFile<Configuration>(hostConfig, false);

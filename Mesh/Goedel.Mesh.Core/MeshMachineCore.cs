@@ -63,6 +63,9 @@ namespace Goedel.Mesh {
             new KeyCollectionCore();
 
         #region // Implementation
+        ///<inheritdoc/>
+        public virtual string GetFilePath(string filepath) => filepath;
+
 
         /// <summary>
         /// Generate a keypair of a type specified by <paramref name="algorithmID"/> and bind to the 
