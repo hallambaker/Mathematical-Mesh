@@ -15,7 +15,7 @@
     <DocumentationFile>xml\Goedel.Cryptography.Jose.xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Github|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Github'">
     <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
