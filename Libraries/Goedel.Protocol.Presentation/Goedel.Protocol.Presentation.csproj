@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Sandcastle</Configurations>
+    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
     <Company>ThresholdSecrets.Com</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Utilities</Product>

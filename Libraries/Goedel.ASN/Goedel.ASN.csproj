@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Goedel.ASN</RootNamespace>
-    <Configurations>Debug;Release;Sandcastle</Configurations>
+    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
     <Company>ThresholdSecrets.Com</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.ASN</Product>
@@ -25,6 +25,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>xml\Goedel.ASN.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Github|AnyCPU'">
     <DocumentationFile>xml\Goedel.ASN.xml</DocumentationFile>
   </PropertyGroup>
 

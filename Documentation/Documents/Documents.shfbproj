@@ -241,4 +241,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Sandcastle' ">
     <OutputPath>bin\Sandcastle\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Github' ">
+    <OutputPath>bin\Github\</OutputPath>
+  </PropertyGroup>
 </Project>

@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Company>ThresholdSecrets.Com</Company>
-    <Configurations>Debug;Release;Sandcastle</Configurations>
+    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Protocol</Product>
     <Description>Support library for serializers/deserializers built using PROTOGEN.</Description>

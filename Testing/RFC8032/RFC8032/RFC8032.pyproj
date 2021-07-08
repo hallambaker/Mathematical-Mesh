@@ -26,6 +26,11 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Sandcastle' ">
     <OutputPath>bin\Sandcastle\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Github' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <OutputPath>bin\Github\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="class1.py">
       <SubType>Code</SubType>

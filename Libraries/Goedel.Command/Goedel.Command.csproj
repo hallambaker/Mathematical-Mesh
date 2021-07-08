@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Sandcastle</Configurations>
+    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
     <Company>ThresholdMode.Com</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Command</Product>
@@ -26,6 +26,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>xml\Goedel.Command.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Github|AnyCPU'">
     <DocumentationFile>xml\Goedel.Command.xml</DocumentationFile>
   </PropertyGroup>
 

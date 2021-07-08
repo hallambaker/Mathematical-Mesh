@@ -23,6 +23,9 @@ namespace Goedel.Mesh.Test {
 
         Goedel.Mesh.Shell.Host.Shell HostShell { get; set; }
         Goedel.Mesh.Shell.Host.CommandLineInterpreter HostAdminCLI { get; set; }
+
+
+
         public TestEnvironmentRdpShell() {
             }
 
@@ -161,14 +164,15 @@ namespace Goedel.Mesh.Test {
 
         public string ServiceName = "example.com";
         static string TestPath = "TestPath";
-        static string TestRoot;
+        public static string TestRoot;
 
         public static string CommonData => System.IO.Path.Combine(TestRoot, "CommonData");
         public static string WorkingDirectory => System.IO.Path.Combine(TestRoot, "WorkingDirectory");
         public static string Variable => System.IO.Path.Combine(TestRoot, "Variable");
 
         public string Path => System.IO.Path.Combine(Variable, Test);
-        public string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
+        public virtual string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
+
         public string Test;
 
         public JpcConnection JpcConnection = JpcConnection.Serialized;

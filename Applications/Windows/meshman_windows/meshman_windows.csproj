@@ -5,7 +5,7 @@
       <OutputType>Exe</OutputType>
       <TargetFramework>net5.0-windows</TargetFramework>
       <RootNamespace>meshman</RootNamespace>
-      <Configurations>Debug;Release;Focus;Windows;Sandcastle</Configurations>
+      <Configurations>Debug;Release;Focus;Windows;Sandcastle;Github</Configurations>
       <Company>ThresholdSecrets.Com</Company>
       <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
       <Product>meshman (windows)</Product>

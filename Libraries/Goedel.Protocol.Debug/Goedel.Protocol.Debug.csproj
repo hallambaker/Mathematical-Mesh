@@ -11,7 +11,7 @@
     <Title>Goedel.Protocol.Debug</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <Configurations>Debug;Release;Sandcastle</Configurations>
+    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,6 +23,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>xml\Goedel.Protocol.Debug.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Github|AnyCPU'">
     <DocumentationFile>xml\Goedel.Protocol.Debug.xml</DocumentationFile>
   </PropertyGroup>
 

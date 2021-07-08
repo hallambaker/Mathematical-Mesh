@@ -5339,6 +5339,14 @@
             Interface exposed by all Mesh Machine classes.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.IMeshMachine.GetFilePath(System.String)">
+            <summary>
+            Convert the file path <paramref name="filepath"/> to a file path that will be 
+            correctly interpreted relative to the current working directory of the machine.
+            </summary>
+            <param name="filepath">The file path to translate.</param>
+            <returns>The translated file path.</returns>
+        </member>
         <member name="P:Goedel.Mesh.IMeshMachine.DirectoryMesh">
             <summary>The directory the Mesh data is stored in.</summary>
         </member>

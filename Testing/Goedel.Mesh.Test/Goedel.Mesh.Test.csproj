@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Windows;Sandcastle</Configurations>
+    <Configurations>Debug;Release;Windows;Sandcastle;Github</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

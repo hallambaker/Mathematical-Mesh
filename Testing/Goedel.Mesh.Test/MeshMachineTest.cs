@@ -37,6 +37,13 @@ namespace Goedel.Mesh.Test {
         public string Path => System.IO.Path.Combine(testEnvironmentCommon.Path, Name);
 
 
+
+
+        ///<inheritdoc/>
+        public override string GetFilePath(string filepath) => System.IO.Path.IsPathRooted(filepath) ?
+            filepath : System.IO.Path.Combine(Path, filepath);
+
+
         ///<inheritdoc/>
         public override MeshServiceClient GetMeshClient(
                     ICredentialPrivate credential,

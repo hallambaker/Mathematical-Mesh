@@ -12,7 +12,7 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-    <Configurations>Debug;Release;Sandcastle</Configurations>
+    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>    
   </PropertyGroup>
 
@@ -27,6 +27,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>xml\Goedel.Discovery.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Github|AnyCPU'">
     <DocumentationFile>xml\Goedel.Discovery.xml</DocumentationFile>
   </PropertyGroup>
 

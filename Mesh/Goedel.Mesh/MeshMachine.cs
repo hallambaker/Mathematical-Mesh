@@ -53,6 +53,16 @@ namespace Goedel.Mesh {
     /// </summary>
     public interface IMeshMachine {
 
+        /// <summary>
+        /// Convert the file path <paramref name="filepath"/> to a file path that will be 
+        /// correctly interpreted relative to the current working directory of the machine.
+        /// </summary>
+        /// <param name="filepath">The file path to translate.</param>
+        /// <returns>The translated file path.</returns>
+        string GetFilePath(string filepath);
+        
+
+
         ///<summary>The directory the Mesh data is stored in.</summary>
         string DirectoryMesh { get; }
 
