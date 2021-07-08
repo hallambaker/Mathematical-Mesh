@@ -27,6 +27,9 @@ using Goedel.Mesh.Server;
 using Goedel.Cryptography.Core;
 using Goedel.Mesh.Management;
 
+// Should change this so that it makes use of dependency injection...
+
+
 namespace meshhost {
     ///<summary>Main calling program.</summary> 
     public class Program {
