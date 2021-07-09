@@ -29,6 +29,10 @@ using Goedel.Mesh.Management;
 
 // Should change this so that it makes use of dependency injection...
 
+#if !(_Github_)
+[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
+
 
 namespace meshhost {
     ///<summary>Main calling program.</summary> 

@@ -1,4 +1,7 @@
-﻿
+﻿#if !(_Github_)
+[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
+
 namespace MakeSiteDocs {
 
     /// <summary>

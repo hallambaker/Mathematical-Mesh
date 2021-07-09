@@ -13,25 +13,11 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <Configurations>Debug;Release;Sandcastle;Github</Configurations>
-    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>    
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
     <DocumentationFile>xml\Goedel.Discovery.xml</DocumentationFile>
   </PropertyGroup>
-
-
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Focus|AnyCPU'">
-    <DocumentationFile>xml\Goedel.Discovery.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>xml\Goedel.Discovery.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Github|AnyCPU'">
-    <DocumentationFile>xml\Goedel.Discovery.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)'=='Github'">
+    <DefineConstants>TRACE;_Github_</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

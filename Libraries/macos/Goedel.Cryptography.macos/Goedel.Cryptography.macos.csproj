@@ -7,13 +7,17 @@
     <Configurations>Debug;Release;Sandcastle;Github</Configurations>
     <Company>ThresholdSecrets.Com</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>Goedel.Cryptography.Windows</Product>
-    <Description>Platform specific windows libraries.</Description>
+    <Product>Goedel.Cryptography.macos</Product>
+    <Description>Platform specific macos libraries.</Description>
     <Copyright>© 2020</Copyright>
-    <Title>Goedel.Cryptography.Windows</Title>
+    <Title>Goedel.Cryptography.Macos</Title>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <RuntimeIdentifier>osx.10.11-x64</RuntimeIdentifier>
+    <DocumentationFile>xml\Goedel.Cryptography.Macos.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Github'">
+    <DefineConstants>TRACE;_Github_</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
