@@ -21,5 +21,10 @@
     <ProjectReference Include="..\..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
     <ProjectReference Include="..\..\..\Mesh\Goedel.Mesh.Shell.Host\Goedel.Mesh.Shell.Host.csproj" />
   </ItemGroup>
-
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+    <Exec Command="VSPreBuild" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
+    <Exec Command="VSPostBuild" />
+  </Target>
 </Project>

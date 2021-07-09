@@ -26,5 +26,10 @@
     <ProjectReference Include="..\..\Libraries\Windows\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Platform.Test-xunit\Goedel.Cryptography.Platform.Test-xunit.csproj" />
   </ItemGroup>
-
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+    <Exec Command="VSPreBuild" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
+    <Exec Command="VSPostBuild" />
+  </Target>
 </Project>

@@ -36,5 +36,10 @@
     <ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
     <ProjectReference Include="..\Goedel.Utilities.Test-xunit\Goedel.Utilities.Test-xunit.csproj" />
   </ItemGroup>
-
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+    <Exec Command="VSPreBuild" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
+    <Exec Command="VSPostBuild" />
+  </Target>
 </Project>

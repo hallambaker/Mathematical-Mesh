@@ -24,5 +24,10 @@
     <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
     <ProjectReference Include="..\..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
   </ItemGroup>
-
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+    <Exec Command="VSPreBuild" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
+    <Exec Command="VSPostBuild" />
+  </Target>
 </Project>

@@ -20,12 +20,10 @@
     <DocumentationFile>C:\Users\hallam\Work\mmm\Libraries\Windows\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.xml</DocumentationFile>
   </PropertyGroup>
 
-  
-    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
     <Exec Command="VSPreBuild" />
   </Target>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
     <Exec Command="VSPostBuild" />
   </Target>
 
