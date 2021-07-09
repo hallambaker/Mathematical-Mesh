@@ -14,7 +14,9 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)'=='Github'">
+    <DefineConstants>TRACE;_Github_</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
