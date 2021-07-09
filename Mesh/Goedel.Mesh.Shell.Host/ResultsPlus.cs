@@ -2,7 +2,7 @@
 using Goedel.Utilities;
 using Goedel.Cryptography.Dare;
 using System.Text;
-
+using Goedel.Protocol.Service;
 
 namespace Goedel.Mesh.Shell.Host {
     public partial class ShellResult {
@@ -55,6 +55,7 @@ namespace Goedel.Mesh.Shell.Host {
 
 
         }
-
-
+    public partial class ResultStartService {
+        public RudService RudService { get; set; }
+        }
     }

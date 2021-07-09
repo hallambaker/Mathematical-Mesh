@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Configurations>Debug;Release;Sandcastle;Github</Configurations>
-    <Company>ThresholdSecrets.Com</Company>    <Company>ThresholdSecrets.Com</Company>
+    <Company>ThresholdSecrets.Com</Company> 
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Utilities</Product>
     <Description>Coding utilities common to all Goedel libraries.</Description>

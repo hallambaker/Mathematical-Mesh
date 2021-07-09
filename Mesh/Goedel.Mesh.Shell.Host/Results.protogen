@@ -2,6 +2,7 @@
 	Using Goedel.Mesh
 	Using Goedel.Mesh.Client
 	Using Goedel.Cryptography.Dare
+	Using Goedel.Protocol.Service
 
 	Description
 		|Classes to be used to test serialization an deserialization.
@@ -11,6 +12,8 @@
 		String			Reason
 
 
+	Structure ResultStartService
+		Inherits Result
 
 
 

@@ -35,7 +35,6 @@
 			Brief "Report output in JSON format"
 
 	Command HostStart "start"
-		DefaultCommand
 		Brief "Start the host service"
 		Parameter HostConfig "hostconfig" ExistingFile
 			Brief "The host configuration file"

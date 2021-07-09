@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 7/9/2021 1:37:39 AM
+//  This file was automatically generated at 7/9/2021 4:44:16 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -127,7 +127,6 @@ namespace Goedel.Mesh.Shell.Host {
                 FlagIndicator = WindowsFlag;
                 }
 
-				DefaultCommand = _HostStart._DescribeCommand;
 				Description = "Mathematical Mesh command tool";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
@@ -288,7 +287,6 @@ namespace Goedel.Mesh.Shell.Host {
 			Brief =  "Start the host service",
 			HandleDelegate =  CommandLineInterpreter.Handle_HostStart,
 			Lazy =  false,
-            IsDefault = true,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
 					Identifier = "HostConfig", 

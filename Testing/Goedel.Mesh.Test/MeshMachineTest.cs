@@ -40,8 +40,8 @@ namespace Goedel.Mesh.Test {
 
 
         ///<inheritdoc/>
-        public override string GetFilePath(string filepath) => System.IO.Path.IsPathRooted(filepath) ?
-            filepath : System.IO.Path.Combine(Path, filepath);
+        public override string GetFilePath(string filepath) => (filepath == null) ? null: 
+            System.IO.Path.IsPathRooted(filepath) ? filepath : System.IO.Path.Combine(Path, filepath);
 
 
         ///<inheritdoc/>

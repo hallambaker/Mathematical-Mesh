@@ -13,6 +13,9 @@ using System.IO;
 
 namespace Goedel.Mesh.Shell.ServiceAdmin {
 
+	/// <summary>
+	/// Service administration CLI
+	/// </summary>
     public partial class CommandLineInterpreter {
 
 

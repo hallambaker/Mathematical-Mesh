@@ -21,9 +21,18 @@ namespace Goedel.Mesh.Shell.Host {
     /// </summary>
     public partial class Shell : _Shell {
 
+        ///<summary>The Mesh Machine</summary> 
+        public IMeshMachine MeshMachine { get; init; }
+
+
+        public ShellResult ShellResult { get; set; }
+
+
         ///<summary>Dictionary of service descriptions.</summary> 
         public Dictionary<string, ServiceDescription>
             ServiceDescriptionDictionary { get; } = new();
+
+
 
 
         /// <summary>
@@ -79,6 +88,7 @@ namespace Goedel.Mesh.Shell.Host {
         /// </summary>
         /// <param name="result"></param>
         public void _PostProcess(ShellResult result) {
+            ShellResult = result;
             }
 
 
@@ -89,9 +99,17 @@ namespace Goedel.Mesh.Shell.Host {
         ServiceConfiguration ServiceConfiguration { get; set; }
         RudService RudService { get; set; }
 
+        string GetFile(ExistingFile file) => MeshMachine.GetFilePath(file.Value);
+        string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Value);
+
+
         ///<inheritdoc/>
         public override ShellResult HostStart(HostStart Options) {
-            var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, Options.HostConfig.Value);
+
+            var hostConfig = GetFile(Options.HostConfig);
+
+
+            var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, hostConfig);
             result.AssertTrue(InvalidConfiguration.Throw, Options.HostConfig.Value ?? "<none>");
 
             // Start the service.
@@ -99,14 +117,17 @@ namespace Goedel.Mesh.Shell.Host {
             RudService = StartService(HostConfiguration, ServiceConfiguration);
 
 
-            return new Result() {
-                Success = true
+            return new ResultStartService() {
+                Success = true,
+                RudService = RudService
                 };
             }
 
         ///<inheritdoc/>
         public override ShellResult HostVerify(HostVerify Options) {
-            var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, Options.HostConfig.Value);
+            var hostConfig = GetFile(Options.HostConfig);
+
+            var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, hostConfig);
 
             result.AssertTrue(InvalidConfiguration.Throw);
 
@@ -185,8 +206,31 @@ namespace Goedel.Mesh.Shell.Host {
             // Need to extract the host credential here...
 
 
-            return new RudService(providers, credential);
+            var service = new RudService(providers, credential);
 
+            var sigintReceived = false;
+            // Catch SIGINT
+            System.Console.CancelKeyPress += (_, ea) => {
+                // Tell .NET to not terminate the process
+                ea.Cancel = true;
+
+                Screen.WriteLine("Received SIGINT (Ctrl+C)");
+                service.Dispose();
+                sigintReceived = true;
+                };
+
+            // Catch SIGTERM
+            AppDomain.CurrentDomain.ProcessExit += (_, _) => {
+                if (!sigintReceived) {
+                    Screen.WriteLine("Received SIGTERM");
+                    service.Dispose();
+                    }
+                else {
+                    Screen.WriteLine("Received SIGTERM, ignoring it because already processed SIGINT");
+                    }
+                };
+
+            return service;
             }
 
 

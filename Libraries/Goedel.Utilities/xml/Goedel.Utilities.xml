@@ -957,7 +957,7 @@
         </member>
         <member name="T:Goedel.Utilities.Extension">
             <summary>
-            
+            Extensions class
             </summary>
         </member>
         <member name="M:Goedel.Utilities.Extension.ToCommaSeparated(System.Collections.Generic.List{System.String})">

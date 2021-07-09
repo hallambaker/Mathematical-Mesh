@@ -301,6 +301,11 @@
         <member name="F:Goedel.Mesh.Shell.ServiceAdmin.EnumReporting.eSilent">
             <summary>Case "silent": Suppress output</summary>
         </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter">
+            <summary>
+            Service administration CLI
+            </summary>
+        </member>
         <member name="F:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>

@@ -5,7 +5,7 @@
 
 # Mathematical Mesh 
 
-The Mesh is an infrastructure that makes the Internet easier to use by
+The Mesh is a Threshold Key Infrastructure that makes the Internet easier to use by
 making it more secure.
 
 Bad security design doesn't just create insecurity, it causes endless user 
@@ -54,6 +54,9 @@ User Guide and Reference Manual:
 
 
 ## In Progress
+
+These badges would be so much more impressive if I could work out how to make them report my 
+code coverage rather than someone else's.
 
 [![codecov](https://codecov.io/gh/codecov/example-csharp/branch/master/graph/badge.svg)](https://codecov.io/gh/codecov/example-csharp)
 [![AppVeyor](https://img.shields.io/appveyor/ci/stevepeak/example-csharp.svg)](https://ci.appveyor.com/project/stevepeak/example-csharp/branch/master)

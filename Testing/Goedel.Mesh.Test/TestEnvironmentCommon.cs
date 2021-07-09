@@ -56,12 +56,14 @@ namespace Goedel.Mesh.Test {
             // now start the host
             HostShell = new Shell.Host.Shell(
                 PublicMeshService.ServiceDescription,
-                ServiceManagementProvider.ServiceDescriptionHost);
+                ServiceManagementProvider.ServiceDescriptionHost) {
+                    MeshMachine = HostMachine
+                    };
             HostAdminCLI = new();
 
             // this is not going to return now is it???
             // need to save the service and return it.
-            Host($"start {serviceConfig}");
+            var resultService = Host($"start {serviceConfig}");
 
 
             throw new NYI();
@@ -90,10 +92,11 @@ namespace Goedel.Mesh.Test {
             ServiceAdminCLI.MainMethod(ServiceAdminShell, args);
             }
 
-        public void Host (string command) {
+        public Goedel.Mesh.Shell.Host.ShellResult Host (string command) {
 
             var args = command.Split(" ");
-            ServiceAdminCLI.MainMethod(ServiceAdminShell, args);
+            HostAdminCLI.MainMethod(HostShell, args);
+            return HostShell.ShellResult as Goedel.Mesh.Shell.Host.ResultStartService;
             }
 
 
