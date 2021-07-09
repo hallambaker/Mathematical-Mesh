@@ -1,10 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Windows;Sandcastle;Github</Configurations>
-  </PropertyGroup>
+    <Company>ThresholdSecrets.Com</Company>
+    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
 
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Github'">
+    <DefineConstants>TRACE;_Github_</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
