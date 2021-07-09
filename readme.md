@@ -1,5 +1,7 @@
-![example workflow](https://github.com/hallambaker/Mathematical-Mesh/actions/workflows/dotnet-core.yml/badge.svg)
+[![example workflow](https://github.com/hallambaker/Mathematical-Mesh/actions/workflows/dotnet-core.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcodecov%2Fexample-csharp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fcodecov%2Fexample-csharp?ref=badge_shield)
 
 # Mathematical Mesh 
 
@@ -50,3 +52,8 @@ User Guide and Reference Manual:
 ## Libraries
 
 
+
+## In Progress
+
+[![codecov](https://codecov.io/gh/codecov/example-csharp/branch/master/graph/badge.svg)](https://codecov.io/gh/codecov/example-csharp)
+[![AppVeyor](https://img.shields.io/appveyor/ci/stevepeak/example-csharp.svg)](https://ci.appveyor.com/project/stevepeak/example-csharp/branch/master)
