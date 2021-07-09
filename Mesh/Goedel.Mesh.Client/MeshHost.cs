@@ -24,6 +24,8 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>The Mesh machine client.</summary>
         public IMeshMachineClient MeshMachine;
+
+        ///<summary>The host persistence container.</summary> 
         public PersistHost ContainerHost { get; }
 
         ///<summary>The Key Collection of the Mesh Machine.</summary>

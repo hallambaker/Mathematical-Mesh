@@ -31,8 +31,13 @@ namespace Goedel.Mesh.ServiceAdmin {
     public partial class Configuration {
         bool processed = false;
 
+        ///<summary>Dictionary mapping service name to configuiration.</summary> 
         public Dictionary<string, ServiceConfiguration> DictionaryService { get;}  = new();
 
+        /// <summary>
+        /// Perform post processing of a configuration to resolve identifiers to objects
+        /// etc.
+        /// </summary>
         public void PostProcess() {
             if (processed) {
                 return;
@@ -76,6 +81,7 @@ namespace Goedel.Mesh.ServiceAdmin {
 
         #region // Properties
 
+        ///<summary>The default IP address</summary> 
         public string DefaultIp { get; set; }
 
 
@@ -97,6 +103,8 @@ namespace Goedel.Mesh.ServiceAdmin {
         }
 
     public partial class HostConfiguration {
+
+        ///<summary>List of referenced service configurations.</summary> 
         public List<ServiceConfiguration> ServiceConfigs { get; set; }
 
 

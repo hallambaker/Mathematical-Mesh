@@ -31,20 +31,31 @@ using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
+    /// <summary>
+    /// A verified account credential.
+    /// </summary>
     public class MeshVerifiedAccount : MeshVerifiedDevice{
 
+        ///<summary>The account address</summary> 
         public string AccountAddress => MeshCredential.Account;
 
-
+        /// <summary>
+        /// Construct an instance from the credential <paramref name="meshCredential"/>
+        /// </summary>
+        /// <param name="meshCredential">The credential from which the instance is to be created.</param>
         public MeshVerifiedAccount(MeshCredential meshCredential) : base(meshCredential) {
             }
 
+        /// <summary>
+        /// Validate the profile <paramref name="profile"/> under this credential
+        /// </summary>
+        /// <param name="profile">The profile to validate.</param>
+        public virtual void Validate(ProfileUser profile) => MeshCredential.ConnectionDevice.Validate(profile);
 
-        public virtual void Validate(ProfileUser profile) {
-            MeshCredential.ConnectionDevice.Validate(profile);
-            }
-
-
+        /// <summary>
+        /// Validate the profile <paramref name="profile"/> under this credential
+        /// </summary>
+        /// <param name="profile">The profile to validate.</param>
         public virtual void Validate(ProfileGroup profile) {
             //MeshCredential.ConnectionDevice.Validate(profile);
 
@@ -56,17 +67,24 @@ namespace Goedel.Mesh {
 
         }
 
+    /// <summary>
+    /// A verified device credential.
+    /// </summary>
     public class MeshVerifiedDevice {
 
-
+        ///<summary>The credential provider.</summary> 
         public string Provider => MeshCredential.Provider;
 
-
+        ///<summary>The validation data??</summary> 
         public CredentialValidation CredentialValidation => MeshCredential.CredentialValidation;
 
-
+        ///<summary>Return the underlying credential.</summary> 
         public MeshCredential MeshCredential { get; }
 
+        /// <summary>
+        /// Construct an instance from the credential <paramref name="meshCredential"/>
+        /// </summary>
+        /// <param name="meshCredential">The credential from which the instance is to be created.</param>
         public MeshVerifiedDevice(MeshCredential meshCredential) =>
             MeshCredential = meshCredential;
 
@@ -116,6 +134,10 @@ namespace Goedel.Mesh {
         /// <paramref name="connectionDevice"/>.
         /// </summary>
         /// <param name="connectionDevice">The device connection assertion.</param>
+        /// <param name="profileDevice">The device profile</param>
+        /// <param name="connectionAccount">Connection to the account </param>
+        /// <param name="authenticationKey">The authentication key</param>
+        /// <param name="meshCredentialPrivate">The private credential.</param>
         public MeshCredential(ProfileDevice profileDevice,
                 ConnectionDevice connectionDevice,
                 ConnectionAddress connectionAccount,
@@ -144,7 +166,10 @@ namespace Goedel.Mesh {
         public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<KeyPairAdvanced> ephemerals, string keyId) =>
             (ephemerals[0], AuthenticationPublic);
 
-
+        /// <summary>
+        /// Verify the device.
+        /// </summary>
+        /// <returns>The verified device (if successful)</returns>
         public MeshVerifiedDevice VerifyDevice() {
             if (ConnectionDevice != null) {
                 return VerifyAccount();
@@ -157,6 +182,10 @@ namespace Goedel.Mesh {
             return new MeshVerifiedDevice(this);
             }
 
+        /// <summary>
+        /// Verify the account
+        /// </summary>
+        /// <returns>The verified account (if successful)</returns>
         public MeshVerifiedAccount VerifyAccount() {
             ConnectionDevice.AssertNotNull(NotAuthenticated.Throw);
 
@@ -379,14 +408,14 @@ namespace Goedel.Mesh {
         #endregion
         #region Local methods
 
-        /// <summary>
-        /// Not sure if this is needed, binding of the profile might well be a stream 
-        /// action rather than a credential action.
-        /// </summary>
-        /// <param name="profileAccount"></param>
-        public void Bind(ProfileAccount profileAccount) {
+        ///// <summary>
+        ///// Not sure if this is needed, binding of the profile might well be a stream 
+        ///// action rather than a credential action.
+        ///// </summary>
+        ///// <param name="profileAccount"></param>
+        //public void Bind(ProfileAccount profileAccount) {
 
-            }
+        //    }
 
         #endregion
         }

@@ -156,7 +156,12 @@ namespace Goedel.Mesh.Shell.Host {
 
             }
 
-
+        /// <summary>
+        /// Start the service
+        /// </summary>
+        /// <param name="hostConfiguration">The host configuration.</param>
+        /// <param name="serviceConfiguration">The service configuration</param>
+        /// <returns>The RUD service</returns>
         public RudService StartService(HostConfiguration hostConfiguration, ServiceConfiguration serviceConfiguration) {
 
 
@@ -187,6 +192,9 @@ namespace Goedel.Mesh.Shell.Host {
 
         }
 
+    /// <summary>
+    /// Host Shell Command Line Interpreter.
+    /// </summary>
     public partial class CommandLineInterpreter {
 
 

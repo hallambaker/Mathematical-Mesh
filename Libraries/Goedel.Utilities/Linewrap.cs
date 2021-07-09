@@ -79,7 +79,7 @@ namespace Goedel.Utilities {
             line.Append(current);
             buffer.Append(line);
             line.Clear();
-            buffer.Append("\n");
+            buffer.Append('\n');
 
 
 
@@ -122,7 +122,7 @@ namespace Goedel.Utilities {
             void newline() {
                 buffer.Append(line);
                 line.Clear();
-                buffer.Append("\n");
+                buffer.Append('\n');
                 line.Append("".PadRight(indent));
                 }
             }

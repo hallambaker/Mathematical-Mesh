@@ -106,6 +106,7 @@ namespace Goedel.Utilities {
         /// account components.
         /// </summary>
         /// <param name="identifier">The AccountID to split.</param>
+        /// <returns>The service component.</returns>
         public static string GetService(this string identifier) {
 
             int At = identifier.LastIndexOf('@');

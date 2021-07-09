@@ -5,10 +5,10 @@
       <OutputType>Exe</OutputType>
       <TargetFramework>net5.0</TargetFramework>
       <RootNamespace>meshman</RootNamespace>
-      <Configurations>Debug;Release;Focus;Windows;Sandcastle;Github</Configurations>
+      <Configurations>Debug;Release;Focus;Sandcastle;Github</Configurations>
       <Company>ThresholdSecrets.Com</Company>
       <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-      <Product>meshman (windows)</Product>
+      <Product>meshman (macos)</Product>
       <Description>meshman command line tool</Description>
       <Copyright>© 2020</Copyright>
       <Title>meshhost command line daemons</Title>
@@ -16,7 +16,7 @@
       <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
       <StartupObject>meshman_windows.Program</StartupObject>
       <AssemblyName>meshman</AssemblyName>
-
+      <RuntimeIdentifier>osx.10.11-x64</RuntimeIdentifier>
     </PropertyGroup>
 
 

@@ -30,14 +30,16 @@ using System.Collections.Generic;
 
 namespace Goedel.Mesh.Management {
 
-
+    /// <summary>
+    /// The Service Management Provider.
+    /// </summary>
     public class ServiceManagementProvider : ServiceManagementService {
 
         /// <summary>
         /// Factory method, the signature is pro tem and will be changed later on.
         /// </summary>
-        /// <param name="domain"></param>
-        /// <param name="serviceDirectory"></param>
+        /// <param name="serviceConfiguration">The service configuration</param>
+        /// <param name="hostConfiguration">The host configuration</param>
         /// <returns></returns>
         public static RudProvider Factory(ServiceConfiguration serviceConfiguration,
             HostConfiguration hostConfiguration) {
@@ -99,6 +101,7 @@ namespace Goedel.Mesh.Management {
             throw new System.NotImplementedException();
             }
 
+        ///<inheritdoc/>
         public override ServiceConfigResponse ServiceConfig(ServiceConfigRequest request, IJpcSession session) => throw new NotImplementedException();
 
         #endregion

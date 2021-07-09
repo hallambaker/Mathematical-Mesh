@@ -535,9 +535,6 @@
         <member name="P:Goedel.Protocol.Presentation.Datagram.PacketIndexLast">
             <summary>Index of the last packet sent out.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Datagram.payloadLength">
-            <summary>Per packet payload size.</summary> 
-        </member>
         <member name="F:Goedel.Protocol.Presentation.Datagram.Payload">
             <summary>The datagram payload (may be in construction.</summary> 
         </member>
@@ -1871,7 +1868,6 @@
             <param name="protocol">The stream protocol</param>
             <param name="credentialSelf">Optional additional credential for self.</param>
             <param name="credentialOther">Optional additional credential for other.</param>
-            <param name="accountAddress">Account address asserted</param>
             <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStreamClient.Post(System.String,Goedel.Protocol.JsonObject)">

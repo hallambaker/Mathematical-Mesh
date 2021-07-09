@@ -1,10 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Goedel.Cryptography.Platform.Test_xunit</RootNamespace>
 
     <IsPackable>false</IsPackable>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 
     <Configurations>Debug;Release;Sandcastle;Github</Configurations>
   </PropertyGroup>

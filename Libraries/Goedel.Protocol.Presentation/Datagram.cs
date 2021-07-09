@@ -43,8 +43,8 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Index of the last packet sent out.</summary> 
         public int PacketIndexLast => throw new NYI();
 
-        ///<summary>Per packet payload size.</summary> 
-        int payloadLength;
+        /////<summary>Per packet payload size.</summary> 
+        //int payloadLength;
 
         ///<summary>The datagram payload (may be in construction.</summary> 
         public byte[] Payload;

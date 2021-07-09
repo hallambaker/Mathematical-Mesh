@@ -86,7 +86,7 @@ namespace Goedel.Protocol.Service {
         //int offset;
 
         JsonObject response;
-        IJpcSession session;
+        //IJpcSession session;
 
         ResponderMessageType responsePacket;
 

@@ -72,7 +72,7 @@ namespace Goedel.Mesh.Server {
             Directory = AccountAddress;
             }
 
-
+        ///<inheritdoc/>
         public override void Verify(MeshVerifiedAccount meshVerifiedAccount) {
             var profile = GetProfileAccount();
 

@@ -502,6 +502,12 @@
             The command shell.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.MeshMachine">
+            <summary>The Mesh Machine</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.PublicMeshService">
+            <summary>The Mesh Service Provider.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell._PostProcess(Goedel.Mesh.Shell.ServiceAdmin.ShellResult)">
             <summary>
             Post processing action

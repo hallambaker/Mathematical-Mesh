@@ -225,6 +225,7 @@ namespace Goedel.Mesh {
         /// <param name="profileDevice">Profile of the device to be added.</param>
         /// <param name="activationDevice">The device key overlay.</param>
         /// <param name="activationAccount">The account key overlay.</param>
+        /// <param name="signature">The signature key to use to sign the entry.</param>
         /// <returns>The CatalogedDevice entry.</returns>
         CatalogedDevice CreateCataloguedDevice(
                     ProfileUser profileUser,
@@ -293,6 +294,7 @@ namespace Goedel.Mesh {
         /// <param name="profileGroup">The group profile.</param>
         /// <param name="activationAccount">The activation data.</param>
         /// <param name="capability">Optional capabilities to add.</param>
+        /// <param name="connectionAddress">Connection binding profile to an address.</param>
         /// <returns>The created group.</returns>
         public CatalogedGroup MakeCatalogedGroup(
                         ProfileGroup profileGroup,
@@ -345,7 +347,7 @@ namespace Goedel.Mesh {
                 }
             else {
                 foreach (var role in roles) {
-                    var rightsRole = Rights.GetRights(role, out var subresource);
+                    var rightsRole = Rights.GetRights(role, out var _);
                     rights.Concat(rightsRole);
                     }
                 }

@@ -5,7 +5,7 @@ using System;
 namespace Goedel.Utilities {
 
     /// <summary>
-    /// 
+    /// Extensions class
     /// </summary>
     public static partial class Extension {
 
@@ -47,7 +47,7 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="data">The encoded bytes to convert.</param>
         /// <returns>The resulting string.</returns>
-        public static string ToUTF8(this Span<byte>data) => Encoding.UTF8.GetString(data);
+        public static string ToUTF8(this Span<byte> data) => Encoding.UTF8.GetString(data);
 
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Goedel.Utilities {
         public static bool IsWhite(this int c) => (c == ' ' | c == '\t' | c == '\n' | c == '\r');
 
         // Encoder, is just used to call static methods.
-        static UTF8Encoding UTF8Encoding = new UTF8Encoding();
+        static UTF8Encoding UTF8Encoding = new();
 
         /// <summary>
         /// Count the number of bytes that are required to encode
@@ -131,12 +131,12 @@ namespace Goedel.Utilities {
             var Result = new StringBuilder();
             foreach (char c in text) {
                 switch (c) {
-                    case '\n': Result.Append("\n"); break;
-                    case '\r': Result.Append("\r"); break;
-                    case '\t': Result.Append("\t"); break;
-                    case '\\': Result.Append("\\"); break;
-                    case '\'': Result.Append("\'"); break;
-                    case '\"': Result.Append("\""); break;
+                    case '\n': Result.Append('\n'); break;
+                    case '\r': Result.Append('\r'); break;
+                    case '\t': Result.Append('\t'); break;
+                    case '\\': Result.Append('\\'); break;
+                    case '\'': Result.Append('\''); break;
+                    case '\"': Result.Append('"'); break;
                     default: Result.Append(c); break;
                     }
                 }
@@ -153,14 +153,14 @@ namespace Goedel.Utilities {
             foreach (char c in text) {
                 switch (c) {
                     case '…': Result.Append("..."); break;
-                    case '‘': Result.Append("'"); break;
-                    case '’': Result.Append("'"); break;
-                    case '“': Result.Append("\""); break;
-                    case '”': Result.Append("\""); break;
+                    case '‘': Result.Append('\''); break;
+                    case '’': Result.Append('\''); break;
+                    case '“': Result.Append('"'); break;
+                    case '”': Result.Append('"'); break;
                     case '®': Result.Append("(R)"); break;
                     case '©': Result.Append("(C)"); break;
                     case '\u2011':
-                        Result.Append("-"); break;
+                        Result.Append('-'); break;
                     case '<': Result.Append("&lt;"); break;
                     case '>': Result.Append("&gt;"); break;
                     case '&': Result.Append("&amp;"); break;
@@ -183,18 +183,18 @@ namespace Goedel.Utilities {
             foreach (char c in text) {
                 switch (c) {
                     case '…': Result.Append("..."); break;
-                    case '‘': Result.Append("'"); break;
-                    case '’': Result.Append("'"); break;
-                    case '“': Result.Append("\""); break;
-                    case '”': Result.Append("\""); break;
+                    case '‘': Result.Append('\''); break;
+                    case '’': Result.Append('\''); break;
+                    case '“': Result.Append('"'); break;
+                    case '”': Result.Append('"'); break;
                     case '®': Result.Append("(R)"); break;
                     case '©': Result.Append("(C)"); break;
                     case '\u2011':
-                        Result.Append("-"); break;
+                        Result.Append('-'); break;
                     case '<': Result.Append("&lt;"); break;
                     case '>': Result.Append("&gt;"); break;
                     case '&': Result.Append("&amp;"); break;
-                    case (char)160: Result.Append(" "); break;
+                    case (char)160: Result.Append(' '); break;
                     default: Result.Append(c); break;
                     }
                 }
@@ -213,19 +213,19 @@ namespace Goedel.Utilities {
             foreach (char c in text) {
                 switch (c) {
                     case '…': Result.Append("..."); break;
-                    case '‘': Result.Append("'"); break;
-                    case '’': Result.Append("'"); break;
-                    case '“': Result.Append("\""); break;
-                    case '”': Result.Append("\""); break;
+                    case '‘': Result.Append('\''); break;
+                    case '’': Result.Append('\''); break;
+                    case '“': Result.Append('"'); break;
+                    case '”': Result.Append('"'); break;
                     case '®': Result.Append("(R)"); break;
                     case '©': Result.Append("(C)"); break;
                     case '\u2011': 
-                        Result.Append("-"); break;
+                        Result.Append('-'); break;
 
                     //case '<': Result.Append("&lt;"); break;
                     //case '>': Result.Append("&gt;"); break;
                     //case '&': Result.Append("&amp;"); break;
-                    case (char)160: Result.Append(" "); break;
+                    case (char)160: Result.Append(' '); break;
                     default: Result.Append(c); break;
                     }
                 }

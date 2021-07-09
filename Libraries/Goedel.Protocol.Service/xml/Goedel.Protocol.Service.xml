@@ -151,6 +151,11 @@
             </summary>
             <returns>The copy of the values.</returns>
         </member>
+        <member name="T:Goedel.Protocol.Service.NamespaceDoc">
+            <summary>
+            Service monitoring classes.
+            </summary>
+        </member>
         <member name="T:Goedel.Protocol.Service.RudService">
             <summary>
             Service provider managing HTTP and UDP listeners.
@@ -334,9 +339,6 @@
         </member>
         <member name="F:Goedel.Protocol.Service.ConnectionUDP.TaskInbound">
             <summary>This really goes in the stream</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.ConnectionUDP.PacketsOutbound">
-            <summary>These are bound to the specific connection.</summary> 
         </member>
         <member name="M:Goedel.Protocol.Service.ConnectionUDP.#ctor">
             <summary>

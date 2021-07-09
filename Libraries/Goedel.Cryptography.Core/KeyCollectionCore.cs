@@ -15,7 +15,9 @@ namespace Goedel.Cryptography.Core {
 
 
 
-
+    /// <summary>
+    /// KeyCollection implementation using platform agnostic .NET 5.0 
+    /// </summary>
     public class KeyCollectionCore : KeyCollection, IKeyCollection {
         const string WindowsMeshKeys = @"Mesh\Keys";
         const string WindowsMeshProfiles = @"Mesh\Profiles";
@@ -25,7 +27,10 @@ namespace Goedel.Cryptography.Core {
         static string _DirectoryKeys;
         static string _DirectoryMesh;
 
+        ///<summary>Directory in which to store keys</summary> 
         public virtual string DirectoryKeys => _DirectoryKeys;
+
+        ///<summary>Directory in which to store Mesh application data.</summary> 
         public virtual string DirectoryMesh => _DirectoryMesh;
         //</summary>    @"~\.Mesh\Keys\";
 
@@ -75,7 +80,7 @@ namespace Goedel.Cryptography.Core {
             _DirectoryMesh = Path.Combine(userRoot, LinuxMeshProfiles);
             }
 
-
+        ///<inheritdoc/>
         public override void Persist(string udf, IPKIXPrivateKey privateKey, bool exportable) {
             var fileName = Path.Combine(DirectoryKeys, udf);
 
@@ -90,7 +95,7 @@ namespace Goedel.Cryptography.Core {
 
 
             }
-
+        ///<inheritdoc/>
         public override void Persist(string udf, IJson joseKey, bool exportable) {
             var fileName = Path.Combine(DirectoryKeys, udf);
 
@@ -102,7 +107,11 @@ namespace Goedel.Cryptography.Core {
 
 
             }
-
+        
+        /// <summary>
+        /// Erase the private key <paramref name="udf"/> from storage.
+        /// </summary>
+        /// <param name="udf">The key to erase.</param>
         public void ErasePrivateKey(string udf) {
             var fileName = Path.Combine(DirectoryKeys, udf);
 
@@ -114,7 +123,7 @@ namespace Goedel.Cryptography.Core {
                 }
             }
 
-
+        ///<inheritdoc/>
         public override IJson LocatePrivateKey(string udf) {
 
             var fileName = Path.Combine(DirectoryKeys, udf);
@@ -129,6 +138,7 @@ namespace Goedel.Cryptography.Core {
                 }
             }
 
+        ///<inheritdoc/>
         public override bool LocatePrivateKeyPair(string udf, out CryptoKey cryptoKey) {
 
             var fileName = Path.Combine(DirectoryKeys, udf);
@@ -145,6 +155,13 @@ namespace Goedel.Cryptography.Core {
                 }
             }
 
+        /// <summary>
+        /// Validate the trust path specified in <paramref name="dareSignature"/> relative to the
+        /// trust anchor <paramref name="anchor"/> and return the result.
+        /// </summary>
+        /// <param name="dareSignature">The signature to evaluate.</param>
+        /// <param name="anchor">The trust anchor to evaluate relative to.</param>
+        /// <returns>The trust result.</returns>
         public TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null) => throw new NotImplementedException();
         }
 

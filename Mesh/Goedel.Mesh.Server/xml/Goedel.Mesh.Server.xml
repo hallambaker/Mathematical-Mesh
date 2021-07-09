@@ -121,6 +121,9 @@
             </summary>
             <param name="request">The account creation request.</param>
         </member>
+        <member name="M:Goedel.Mesh.Server.AccountUser.Verify(Goedel.Mesh.MeshVerifiedAccount)">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountUser.EnvelopedProfileUser">
              <summary>
             The signed assertion describing the account.
@@ -943,6 +946,9 @@
         <member name="P:Goedel.Mesh.Server.PublicMeshService.ServiceConfiguration">
             <summary>The service configuration</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.HostConfiguration">
+            <summary>The Host Configuration</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.MeshPersist">
             <summary>
             The mesh persistence provider.
@@ -966,12 +972,26 @@
             <param name="domain">The domain of the service provider.</param>
             <param name="serviceDirectory">The mesh persistence store filename.</param>
         </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.IMeshMachine,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Create a new Mesh Service
+            </summary>
+            <param name="meshMachine">The Mesh Machine</param>
+            <param name="serviceConfig">The service configuration file.</param>
+            <param name="serviceDns">The canonical DNS name of the service</param>
+            <param name="hostIp">The host IP address</param>
+            <param name="hostDns">The host DNS name</param>
+            <param name="admin">The administrative account to create.</param>
+            <param name="newFile">The file to write the new service configuration to.</param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration,System.String)">
             <summary>
             Create new service and host configurations and attach the service to the host.
             </summary>
             <param name="meshMachine">The mesh machine</param>
             <param name="serviceConfiguration">The service configuration</param>
+            <param name="hostConfiguration">The host configuration</param>
             <param name="deviceAddress">The address of the initial host.</param>
             <returns>The mesh service interface.</returns>
         </member>
@@ -1104,6 +1124,7 @@
             Open or create the accounts persistence container.
             </summary>
             <param name="directory">The directory in which all the service data is stored.</param>
+            <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountAdd(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedDevice,Goedel.Mesh.Server.AccountEntry)">
             <summary>
@@ -1167,6 +1188,7 @@
             </summary>
             <param name="jpcSession">The session connection data.</param>
             <param name="account">The account to be deleted.</param> 
+            <param name="accountAddress">The account address.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Claim(Goedel.Protocol.IJpcSession,Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>

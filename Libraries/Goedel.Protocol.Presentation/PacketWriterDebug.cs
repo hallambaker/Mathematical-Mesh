@@ -76,7 +76,7 @@ namespace Goedel.Protocol.Presentation {
         #region // Methods 
 
 
-        long positionDebug;
+        //long positionDebug;
 
         /// <summary>
         /// Stub method to write debug output to the screeen for now, change this to

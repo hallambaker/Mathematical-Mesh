@@ -17,12 +17,17 @@
             Service management interface provides host and service telemetry.
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Management.ServiceManagementProvider">
+            <summary>
+            The Service Management Provider.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.Factory(Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
             <summary>
             Factory method, the signature is pro tem and will be changed later on.
             </summary>
-            <param name="domain"></param>
-            <param name="serviceDirectory"></param>
+            <param name="serviceConfiguration">The service configuration</param>
+            <param name="hostConfiguration">The host configuration</param>
             <returns></returns>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceManagementProvider.ServiceDescriptionHost">
@@ -39,6 +44,9 @@
             <param name="hostConfiguration"></param>
         </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.ServiceStatus(Goedel.Mesh.Management.ServiceStatusRequest,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.ServiceConfig(Goedel.Mesh.Management.ServiceConfigRequest,Goedel.Protocol.IJpcSession)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Management.ServiceManagement">

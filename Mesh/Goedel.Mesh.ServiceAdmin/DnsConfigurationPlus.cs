@@ -28,6 +28,10 @@ using System.Collections.Generic;
 using System.Net;
 
 namespace Goedel.Mesh.ServiceAdmin {
+
+    /// <summary>
+    /// DNS configuration generator class
+    /// </summary>
     public partial class DnsConfiguration {
         #region // Properties
         #endregion
@@ -43,7 +47,11 @@ namespace Goedel.Mesh.ServiceAdmin {
 
         #region // Methods 
 
-
+        /// <summary>
+        /// Generate a BIND configuration file for the service config.
+        /// </summary>
+        /// <param name="Configuration"></param>
+        /// <param name="output"></param>
         public static void BindConfig(Configuration Configuration, string output) {
             using var outputWriter = output.OpenTextWriterNew();
             var dnsConfiguration = new DnsConfiguration() {
@@ -52,7 +60,11 @@ namespace Goedel.Mesh.ServiceAdmin {
             dnsConfiguration.BindConfig(Configuration);
             }
 
-
+        /// <summary>
+        /// Returns the port component of the IP address <paramref name="address"/>
+        /// </summary>
+        /// <param name="address">The IP address to return the port component from.</param>
+        /// <returns>The port component</returns>
         public static string GetPort(string address) {
 
             if (IPEndPoint.TryParse(address, out var endpoint)) {
@@ -60,6 +72,12 @@ namespace Goedel.Mesh.ServiceAdmin {
                 }
             return null;
             }
+
+        /// <summary>
+        /// Returns the address component of the IP address <paramref name="address"/>
+        /// </summary>
+        /// <param name="address">The IP address to return the address component from.</param>
+        /// <returns>The address component</returns>
         public static string GetAddress(string address) {
 
             if (IPEndPoint.TryParse(address, out var endpoint)) {
@@ -68,6 +86,12 @@ namespace Goedel.Mesh.ServiceAdmin {
             return null;
             }
 
+        /// <summary>
+        /// Returns the address component of the IP address  <paramref name="address"/> 
+        /// prefixed by A for IPV4 addresses and AAAA for IPv6 addresses
+        /// </summary>
+        /// <param name="address">The IP address to return the port component from.</param>
+        /// <returns>The port component</returns>
         public static string GetAQuadA(string address) {
             if (IPEndPoint.TryParse(address, out var endpoint)) {
                 switch (endpoint.Address.AddressFamily) {

@@ -51,11 +51,16 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// Describes a service configuration.
     /// </summary>
     public partial class ServiceConfiguration {
-
+        /// <summary>The service profile.</summary>
         public Goedel.Mesh.ProfileService ProfileService => throw new NYI();
 
+        ///<summary>The service instance.</summary> 
         public string Instance { get; set; }
 
+        /// <summary>
+        /// Returns the endpoints for the service configuration.
+        /// </summary>
+        /// <returns>The endpoints</returns>
         public List<Endpoint> GetEndpoints() {
             var endpoints = new List<Endpoint>();
 
@@ -86,16 +91,26 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// </summary>
     public partial class HostConfiguration {
 
+        /// <summary>The host profile </summary>
         public ProfileHost ProfileHost => throw new NYI();
+
+        ///<summary>The connection of the host to the service.</summary> 
         public ConnectionDevice ConnectionDevice => throw new NYI();
 
+        /// <summary>
+        /// Returns the endpoints for the host configuration.
+        /// </summary>
+        /// <returns>The endpoints</returns>
         public List<Endpoint> GetEndpoints() {
             var endpoints = new List<Endpoint>();
 
             return endpoints;
             }
 
-
+        /// <summary>
+        /// Get the private credential data.
+        /// </summary>
+        /// <returns>The private credential</returns>
         public ICredentialPrivate GetCredential() {
 
             // to do: read the credential that was written out when the host

@@ -38,7 +38,6 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="protocol">The stream protocol</param>
         /// <param name="credentialSelf">Optional additional credential for self.</param>
         /// <param name="credentialOther">Optional additional credential for other.</param>
-        /// <param name="accountAddress">Account address asserted</param>
         /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
 
         public RudStreamClient(

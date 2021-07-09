@@ -22,7 +22,7 @@ using Goedel.Utilities;
 //using Goedel.Protocol.Service;
 using System.Threading.Tasks;
 
-
+#pragma warning disable CS1998
 
 namespace Goedel.Protocol.Presentation {
     /// <summary>

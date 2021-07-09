@@ -1252,6 +1252,7 @@
             account components.
             </summary>
             <param name="identifier">The AccountID to split.</param>
+            <returns>The service component.</returns>
         </member>
         <member name="M:Goedel.Utilities.Extension.Read(System.IO.Stream,System.Byte[],System.Int64,System.Int64)">
             <summary>

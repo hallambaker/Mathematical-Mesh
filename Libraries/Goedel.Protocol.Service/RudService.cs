@@ -155,7 +155,7 @@ namespace Goedel.Protocol.Service {
             WaitHttpRequest();
             //set up the UDP clients...
             udpListeners = new UdpClient[udpListenerCount];
-            var listener = 1;
+            //var listener = 1;
             //foreach (var provider in providers) {
             //    foreach (var endpoint in provider.UdpEndpoints) {
             //        udpListeners[listener] = endpoint.GetClient();

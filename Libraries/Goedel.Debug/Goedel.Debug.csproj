@@ -1,9 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+
   <PropertyGroup>
+    <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
+    <RootNamespace>Goedel.Debug</RootNamespace>
+    <Configurations>Debug;Release;Focus;Sandcastle;Github</Configurations>
+    <Company>ThresholdSecrets.Com</Company>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Product> Goedel.Debug</Product>
+    <Description>Debug library tools</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Goedel.Debug</Title>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <DocumentationFile>xml\Goedel.Debug.xml</DocumentationFile>
   </PropertyGroup>
+  
+  
+  
+
   <PropertyGroup Condition="'$(Configuration)'=='Github'">
     <DefineConstants>TRACE;_Github_</DefineConstants>
   </PropertyGroup>

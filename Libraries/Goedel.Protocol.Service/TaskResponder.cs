@@ -63,8 +63,8 @@ namespace Goedel.Protocol.Service {
         ///<summary>This really goes in the stream</summary> 
         Task<Packet> TaskInbound;
 
-        ///<summary>These are bound to the specific connection.</summary> 
-        List<Packet> PacketsOutbound;
+        /////<summary>These are bound to the specific connection.</summary> 
+        //List<Packet> PacketsOutbound;
 
 
         #endregion

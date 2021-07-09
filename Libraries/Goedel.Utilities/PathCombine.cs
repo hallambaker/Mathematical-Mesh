@@ -29,7 +29,7 @@ namespace Goedel.Utilities {
             foreach (var Directory in Directories) {
                 if (Directory != null) {
                     Builder.Append(Directory);
-                    Builder.Append("/");
+                    Builder.Append('/');
                     }
                 }
 

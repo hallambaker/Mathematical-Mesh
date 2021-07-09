@@ -59,7 +59,7 @@ namespace Goedel.Mesh.Server {
         ///<summary>The service configuration</summary> 
         public ServiceConfiguration ServiceConfiguration { get; init; }
 
-
+        ///<summary>The Host Configuration</summary> 
         public HostConfiguration HostConfiguration { get; init; }
         /// <summary>
         /// The mesh persistence provider.
@@ -147,7 +147,17 @@ namespace Goedel.Mesh.Server {
             // might just kill these in favor of the service description.
             }
 
-
+        /// <summary>
+        /// Create a new Mesh Service
+        /// </summary>
+        /// <param name="meshMachine">The Mesh Machine</param>
+        /// <param name="serviceConfig">The service configuration file.</param>
+        /// <param name="serviceDns">The canonical DNS name of the service</param>
+        /// <param name="hostIp">The host IP address</param>
+        /// <param name="hostDns">The host DNS name</param>
+        /// <param name="admin">The administrative account to create.</param>
+        /// <param name="newFile">The file to write the new service configuration to.</param>
+        /// <returns></returns>
         public static PublicMeshService Create(
             IMeshMachine meshMachine,
             string serviceConfig, string serviceDns, string hostIp, string hostDns,
@@ -157,7 +167,7 @@ namespace Goedel.Mesh.Server {
 
             hostDns ??= "example.com";
             hostIp ??= "127.0.0.1:666";
-            var hostIpv6 = "[::1]:15099";
+            //var hostIpv6 = "[::1]:15099";
             var hostName = System.Environment.MachineName;
 
             hostDns ??= serviceDns;
@@ -219,6 +229,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="meshMachine">The mesh machine</param>
         /// <param name="serviceConfiguration">The service configuration</param>
+        /// <param name="hostConfiguration">The host configuration</param>
         /// <param name="deviceAddress">The address of the initial host.</param>
         /// <returns>The mesh service interface.</returns>
         public static PublicMeshService Create(
@@ -282,7 +293,7 @@ namespace Goedel.Mesh.Server {
                 ) {
 
             // Need to read the host config back from the master catalog here
-            ActivationDevice activationDevice = null;
+            //ActivationDevice activationDevice = null;
 
             return new PublicMeshService(meshMachine, serviceConfiguration, hostConfiguration);
 

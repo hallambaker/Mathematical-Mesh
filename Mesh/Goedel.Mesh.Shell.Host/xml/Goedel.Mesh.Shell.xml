@@ -16,6 +16,11 @@
         <member name="F:Goedel.Mesh.Shell.Host.EnumReporting.eSilent">
             <summary>Case "silent": Suppress output</summary>
         </member>
+        <member name="T:Goedel.Mesh.Shell.Host.CommandLineInterpreter">
+            <summary>
+            Host Shell Command Line Interpreter.
+            </summary>
+        </member>
         <member name="F:Goedel.Mesh.Shell.Host.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
@@ -121,6 +126,14 @@
             <param name="machineName"></param>
             <param name="hostConfig"></param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.StartService(Goedel.Mesh.ServiceAdmin.HostConfiguration,Goedel.Mesh.ServiceAdmin.ServiceConfiguration)">
+            <summary>
+            Start the service
+            </summary>
+            <param name="hostConfiguration">The host configuration.</param>
+            <param name="serviceConfiguration">The service configuration</param>
+            <returns>The RUD service</returns>
         </member>
         <member name="T:Goedel.Mesh.Shell.Host.ShellResult">
              <summary>

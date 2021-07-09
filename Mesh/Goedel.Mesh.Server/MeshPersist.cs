@@ -58,6 +58,7 @@ namespace Goedel.Mesh.Server {
         /// Open or create the accounts persistence container.
         /// </summary>
         /// <param name="directory">The directory in which all the service data is stored.</param>
+        /// <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
         public MeshPersist(string directory, FileStatus fileStatus) {
 
             // Load/create the accounts catalog
@@ -325,6 +326,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account to be deleted.</param> 
+        /// <param name="accountAddress">The account address.</param>
         public bool AccountDelete(IJpcSession jpcSession, MeshVerifiedAccount account,
                 string accountAddress) {
             jpcSession.Future();

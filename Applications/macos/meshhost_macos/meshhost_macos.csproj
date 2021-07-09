@@ -9,7 +9,7 @@
       <Configurations>Debug;Release;Focus;Sandcastle;Github</Configurations>
       <Company>ThresholdSecrets.Com</Company>
       <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-      <Product>meshhost (windows)</Product>
+      <Product>meshhost (macos)</Product>
       <Description>meshhost command line daemon</Description>
       <Copyright>© 2020</Copyright>
       <Title>meshhost command line daemons</Title>
