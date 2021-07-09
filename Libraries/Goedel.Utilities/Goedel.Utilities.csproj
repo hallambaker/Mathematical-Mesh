@@ -13,25 +13,16 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>xml\Goedel.Utilities.xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Focus|AnyCPU'">
-    <DocumentationFile>xml\Goedel.Utilities.xml</DocumentationFile>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Github'">
+    <DefineConstants>TRACE;_Github_</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>xml\Goedel.Utilities.xml</DocumentationFile>
-  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Github|AnyCPU'">
-    <DocumentationFile>xml\Goedel.Utilities.xml</DocumentationFile>
-  </PropertyGroup>
-  
-  
+
   <ItemGroup>
     <Compile Update="Exceptions.cs">
       <DependentUpon>Exceptions.exceptional</DependentUpon>
