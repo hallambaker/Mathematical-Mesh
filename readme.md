@@ -1,3 +1,6 @@
+![example workflow](https://github.com/hallambaker/Mathematical-Mesh/actions/workflows/dotnet-core.yml/badge.svg)
+
+
 # Mathematical Mesh 
 
 The Mesh is an infrastructure that makes the Internet easier to use by
