@@ -1,6 +1,6 @@
-[![example workflow](https://github.com/hallambaker/Mathematical-Mesh/actions/workflows/dotnet-core.yml/badge.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+![example workflow](https://github.com/hallambaker/Mathematical-Mesh/actions/workflows/dotnet-core.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcodecov%2Fexample-csharp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fcodecov%2Fexample-csharp?ref=badge_shield)
 
 # Mathematical Mesh 
