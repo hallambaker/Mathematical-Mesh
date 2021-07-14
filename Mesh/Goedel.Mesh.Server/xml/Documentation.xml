@@ -305,30 +305,6 @@
             </summary>
             <returns>The list of container status entries.</returns>
         </member>
-        <member name="T:Goedel.Mesh.Server.ActivationHost">
-            <summary>
-            Activation class binding a host to a service.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.ActivationHost.MeshActor">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Server.ActivationHost.#ctor(Goedel.Mesh.ProfileHost,System.Byte[],System.Int32)">
-            <summary>
-            Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
-            <paramref name="profileDevice"/>.
-            If the value <paramref name="masterSecret"/> is
-            specified, it is used as the seed value. Otherwise, a seed value of
-            length <paramref name="bits"/> is generated.
-            The public key value is calculated for the public key pairs and the corresponding
-            <see cref="T:Goedel.Mesh.Connection"/> generated for the public values.
-            </summary>
-            <param name="profileDevice">The base profile that the activation activates.</param>
-            <param name="masterSecret">If not null, specifies the seed value. Otherwise,
-            a seed value of <paramref name="bits"/> length is generated.</param>
-            <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
-            is null.</param>
-        </member>
         <member name="T:Goedel.Mesh.Server.MeshServerException">
             <summary>
             Generic Mesh Service Error
@@ -972,7 +948,7 @@
             <param name="domain">The domain of the service provider.</param>
             <param name="serviceDirectory">The mesh persistence store filename.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.IMeshMachine,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Create a new Mesh Service
             </summary>
@@ -985,7 +961,7 @@
             <param name="newFile">The file to write the new service configuration to.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration,System.String)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration,System.String)">
             <summary>
             Create new service and host configurations and attach the service to the host.
             </summary>

@@ -6961,6 +6961,13 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
+        <member name="M:Goedel.Mesh.Profile.PersistSeed(Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>
+            Persist the secret seed used to generate a profile to the local machine as a non-exportable
+            secret.
+            </summary>
+            <param name="keyCollection"></param>
+        </member>
         <member name="M:Goedel.Mesh.Profile.Activate(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Activate the private keys in the device profile using the seed stored in 
@@ -7095,13 +7102,6 @@
             <param name="algorithmAuthenticate">The signature algorithm</param>
             <param name="bits">The size of key to generate in bits/</param>
             <returns>The created profile.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.PersistSeed(Goedel.Cryptography.Dare.IKeyCollection)">
-            <summary>
-            Persist the secret seed used to generate a profile to the local machine as a non-exportable
-            secret.
-            </summary>
-            <param name="keyCollection"></param>
         </member>
         <member name="M:Goedel.Mesh.ProfileDevice.Validate">
             <summary>

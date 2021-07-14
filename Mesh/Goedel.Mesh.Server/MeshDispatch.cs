@@ -26,7 +26,7 @@ using Goedel.Utilities;
 using Goedel.Mesh.ServiceAdmin;
 using Goedel.IO;
 using System.IO;
-
+using Goedel.Mesh.Client; 
 using System.Collections.Generic;
 namespace Goedel.Mesh.Server {
 
@@ -105,7 +105,7 @@ namespace Goedel.Mesh.Server {
 
             // create an activation record and a connection record.
 
-            ActivationDevice = new ActivationHost(ProfileHost);
+            ActivationDevice = new ActivationDevice(ProfileHost);
 
 
             //Screen.WriteLine($"$$$$ Seed {ActivationDevice.ActivationSeed}");
@@ -159,7 +159,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="newFile">The file to write the new service configuration to.</param>
         /// <returns></returns>
         public static PublicMeshService Create(
-            IMeshMachine meshMachine,
+            IMeshMachineClient meshMachine,
             string serviceConfig, string serviceDns, string hostIp, string hostDns,
             string admin, string newFile) {
 
@@ -233,7 +233,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="deviceAddress">The address of the initial host.</param>
         /// <returns>The mesh service interface.</returns>
         public static PublicMeshService Create(
-                IMeshMachine meshMachine,
+                IMeshMachineClient meshMachine,
                 ServiceConfiguration serviceConfiguration,
                 HostConfiguration hostConfiguration,
                 string deviceAddress = "@example"
@@ -244,7 +244,24 @@ namespace Goedel.Mesh.Server {
 
             // Create a host profile and add create a connection to the host.
             var profileHost = ProfileHost.CreateHost(meshMachine);
-            var activationDevice = new ActivationHost(profileHost);
+            var activationDevice = new ActivationDevice(profileHost);
+
+            // Persist the profile keys
+            profileService.PersistSeed(meshMachine.KeyCollection);
+            profileHost.PersistSeed(meshMachine.KeyCollection);
+
+            // Need to envelope the activation device under device key.
+
+            var catalogedService = new CatalogedService() {
+                EnvelopedProfileService = profileService.EnvelopedProfileService,
+                EnvelopedProfileHost = profileHost.EnvelopedProfileHost,
+                EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice
+                };
+
+
+            meshMachine.MeshHost.Register(null, null);
+
+
             activationDevice.Activate(profileHost.SecretSeed);
             var connectionDevice1 = activationDevice.Connection;
             var connectionDevice = new ConnectionDevice() {

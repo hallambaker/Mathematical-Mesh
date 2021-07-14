@@ -109,6 +109,18 @@ namespace Goedel.Mesh {
         #endregion
         #region // Methods 
 
+
+        /// <summary>
+        /// Persist the secret seed used to generate a profile to the local machine as a non-exportable
+        /// secret.
+        /// </summary>
+        /// <param name="keyCollection"></param>
+        public void PersistSeed(IKeyCollection keyCollection = null) {
+            SecretSeed.AssertNotNull(NoDeviceSecret.Throw);
+            keyCollection.Persist(ProfileSignature.Udf, SecretSeed, false);
+            }
+
+
         /// <summary>
         /// Activate the private keys in the device profile using the seed stored in 
         /// <paramref name="keyLocate"/>.

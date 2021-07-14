@@ -104,15 +104,7 @@ namespace Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Persist the secret seed used to generate a profile to the local machine as a non-exportable
-        /// secret.
-        /// </summary>
-        /// <param name="keyCollection"></param>
-        public void PersistSeed(IKeyCollection keyCollection = null) {
-            SecretSeed.AssertNotNull(NoDeviceSecret.Throw);
-            keyCollection.Persist(ProfileSignature.Udf, SecretSeed, false);
-            }
+
 
         /// <summary>
         /// Verify the profile to check that it is correctly signed and consistent.

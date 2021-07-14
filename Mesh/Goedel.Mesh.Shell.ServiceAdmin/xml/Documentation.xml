@@ -508,7 +508,7 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.MeshMachine">
-            <summary>The Mesh Machine</summary> 
+            <summary>The Mesh Machine (Must support client catalog)</summary> 
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.PublicMeshService">
             <summary>The Mesh Service Provider.</summary> 

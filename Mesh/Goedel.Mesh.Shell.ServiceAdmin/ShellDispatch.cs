@@ -35,8 +35,8 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 		string GetFile(ExistingFile file) => MeshMachine.GetFilePath(file.Value);
 		string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Value);
 
-		///<summary>The Mesh Machine</summary> 
-		public IMeshMachine MeshMachine { get; init; }
+		///<summary>The Mesh Machine (Must support client catalog)</summary> 
+		public IMeshMachineClient MeshMachine { get; init; }
 
 		///<summary>The Mesh Service Provider.</summary> 
 		public PublicMeshService PublicMeshService { get; set; }

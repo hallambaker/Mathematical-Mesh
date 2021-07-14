@@ -28,6 +28,22 @@
 			Description
 				|The cataloged device profile
 
+
+
+	Structure CatalogedService
+		Inherits CatalogedMachine
+		Description
+			|Describes an ordinary device connected to a Mesh
+		Struct Enveloped<ProfileService> EnvelopedProfileService
+			Description
+				|The service profile
+		Struct Enveloped<ProfileHost> EnvelopedProfileHost
+			Description
+				|The host profile
+		Struct Enveloped<ActivationDevice> EnvelopedActivationDevice
+			Description
+				|The activation record for this host
+
 	Structure CatalogedStandard
 		Inherits CatalogedMachine
 		Description
