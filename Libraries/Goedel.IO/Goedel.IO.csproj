@@ -1,33 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(SolutionDir)CommonSettings.xml" />
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
-    <Company>ThresholdMode.Com</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.IO</Product>
     <Description>Input/Output support classes.</Description>
     <Copyright>© 2020</Copyright>
     <Title>Goedel.IO</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-    <DocumentationFile>xml\Goedel.IO.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Github'">
-    <DefineConstants>TRACE;_Github_</DefineConstants>
-  </PropertyGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPreBuild" />
-  </Target>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPostBuild" />
-  </Target>
 
 </Project>

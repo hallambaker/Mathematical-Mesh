@@ -1,13 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(SolutionDir)CommonSettingsTest.xml" />
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-
-    <IsPackable>false</IsPackable>
-
-    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,10 +21,5 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Debug\Goedel.Debug.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPreBuild" />
-  </Target>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPostBuild" />
-  </Target>
+
 </Project>

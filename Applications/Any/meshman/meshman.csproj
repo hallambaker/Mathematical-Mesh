@@ -1,32 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
-    <Company>ThresholdMode.Com</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Meshman</Product>
     <Description>Mesh command line tool.</Description>
     <Copyright>© 2020</Copyright>
     <Title>Meshman</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-    <DocumentationFile>C:\Users\hallam\Work\mmm\meshman\xml\meshman.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Github'">
-    <DefineConstants>TRACE;_Github_</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
     <ProjectReference Include="..\..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPreBuild" />
-  </Target>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPostBuild" />
-  </Target>
+
 </Project>

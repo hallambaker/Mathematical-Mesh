@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MakeSiteDocs</name>
+    </assembly>
+    <members>
+        <member name="M:ExampleGenerator.CreateExamples.PerformAll">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleGenerator.DocumentationException">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:ExampleGenerator.DocumentationException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:ExampleGenerator.DocumentationException.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:ExampleGenerator.DocumentationException.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:ExampleGenerator.DocumentationException._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:ExampleGenerator.DocumentationException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:ExampleGenerator.DerivedKeyNIST.p256">
+            <summary>2 ^ (256) - 2 ^ (224) + 2 ^ (192) + 2 ^ (96) - 1;</summary>
+        </member>
+        <member name="F:ExampleGenerator.DerivedKeyNIST.p384">
+            <summary>2 ^ (384) - 2 ^ (128) - 2 ^ (96) + 2 ^ (32) - 1</summary>    
+        </member>
+        <member name="F:ExampleGenerator.DerivedKeyNIST.p521">
+            <summary>2 ^ (521) - 1</summary>
+        </member>
+        <member name="T:MakeSiteDocs.NamespaceDoc">
+            <summary>
+            Support application that generates documentation for the Web Site. This is 
+            closely related to the application that generates code for the specifications.
+            </summary>
+        </member>
+    </members>
+</doc>

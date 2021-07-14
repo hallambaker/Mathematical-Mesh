@@ -181,7 +181,7 @@ namespace Goedel.Mesh.Server {
                 DNS = new List<string> { serviceDns },
                 Path = pathService,
                 WellKnown = "mmm",
-
+                Addresses = new List<string> { serviceDns }
                 };
 
             // populate with user supplied data

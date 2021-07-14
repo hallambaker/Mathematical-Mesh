@@ -1,20 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(SolutionDir)CommonSettingsNoDocs.xml" />
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Company>ThresholdMode.Com</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Test</Product>
     <Description>Test library.</Description>
     <Copyright>© 2020</Copyright>
     <Title>Goedel.Test</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Github'">
-    <DefineConstants>TRACE;_Github_</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,12 +32,5 @@
       <Generator>exceptional</Generator>
     </None>
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPreBuild" />
-  </Target>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPostBuild" />
-  </Target>
 
 </Project>

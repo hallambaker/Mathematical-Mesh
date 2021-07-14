@@ -283,7 +283,7 @@ namespace Goedel.Mesh.Client {
 
 
         #endregion
-        #region // Operations requiring AdminSignatureKey - AddDevice, GrantPermission, GrantCapability
+        #region // Contact management
 
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Goedel.Mesh.Client {
 
         #endregion
 
-        #region // General Operations 
+        #region // Operations on capabilities 
 
 
         /// <summary>

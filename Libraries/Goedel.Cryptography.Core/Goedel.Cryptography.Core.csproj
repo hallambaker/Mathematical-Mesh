@@ -1,22 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(SolutionDir)CommonSettings.xml" />
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Company>ThresholdMode.Com</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+
     <Product>Goedel.Cryptography.Core</Product>
     <Description>Core crypto routines.</Description>
     <Copyright>© 2020</Copyright>
     <Title>Goedel.Cryptography.Core</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
-    <DocumentationFile>xml\Goedel.Cryptography.Core.xml</DocumentationFile>
+
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Github'">
-    <DefineConstants>TRACE;_Github_</DefineConstants>
-  </PropertyGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
@@ -24,10 +16,5 @@
     <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPreBuild" />
-  </Target>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPostBuild" />
-  </Target>
+
 </Project>

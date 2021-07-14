@@ -7,23 +7,34 @@ using System;
 using System.Collections.Generic;
 using Goedel.Test;
 
-namespace ExampleGenerator {
 
+namespace ExampleGenerator {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class CreateExamples {
+        
+        
+        ///<summary></summary> 
         public string AliceService = "example.com";
+        
+        ///<summary></summary> 
         public string AliceFingerprint;
 
-
-
+        ///<summary></summary> 
         public ProfileAccount AliceProfileAccount;
 
-
+        ///<summary></summary> 
         public string TestFile1Text = "This is a test";
 
-
+        ///<summary></summary> 
         public int CountMissing = 0;
+        
+        ///<summary></summary> 
         public int CountObsolete = 0;
+
         public void ReportMissingExample() {
+
             ReportMissing();
             _Output.Write("\n{0}", _Indent);
             _Output.Write("~~~~\n{0}", _Indent);

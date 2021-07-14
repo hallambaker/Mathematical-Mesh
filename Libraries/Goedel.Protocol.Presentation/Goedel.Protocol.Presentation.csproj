@@ -1,21 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(SolutionDir)CommonSettings.xml" />
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
-    <Company>ThresholdSecrets.Com</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Utilities</Product>
     <Description>Presentation layer for binding Goedel.Protocol messages to HTTP and UDP transport.</Description>
     <Copyright>© 2021</Copyright>
     <Title>Goedel.Utilities</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <DocumentationFile>xml\Goedel.Protocol.Presentation.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Github'">
-    <DefineConstants>TRACE;_Github_</DefineConstants>
+
   </PropertyGroup>
 
 
@@ -59,13 +49,5 @@
       <Generator>yaschema</Generator>
     </None>   
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPreBuild" />
-  </Target>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPostBuild" />
-  </Target>
-  
 
 </Project>

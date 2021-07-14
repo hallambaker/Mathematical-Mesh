@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Test.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Test.Core.NamespaceDoc">
+            <summary>
+            Various functions to support unit testing.
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.Core.TestSession">
+            <summary>
+            Test session, a specialization of the serialized class in which the
+            request and response messages are captured.
+            </summary>
+        </member>
+        <member name="M:Goedel.Test.Core.TestSession.#ctor(Goedel.Protocol.JpcInterface,Goedel.Protocol.ICredential,System.Collections.Generic.List{Goedel.Test.Core.Trace})">
+            <summary>
+            Create a remote session with authentication under the
+            specified credential.
+            </summary>
+            <param name="host">The host implementation</param>
+            <param name="Domain">Portal address</param>
+            <param name="Account">User account</param>
+            <param name="UDF">Authentication key identifier.</param>
+        </member>
+        <member name="M:Goedel.Test.Core.TestSession.Post(System.IO.MemoryStream,Goedel.Protocol.JsonObject)">
+            <summary>
+            Post a request and retrieve the response.
+            </summary>
+            <param name="data">StreamBuffer object containing JSON encoded request.</param>
+            <returns>StreamBuffer object containing JSON encoded response.</returns>
+        </member>
+    </members>
+</doc>

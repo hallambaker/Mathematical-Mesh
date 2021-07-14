@@ -20,7 +20,9 @@
 //  
 
 using Goedel.Utilities;
-
+using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using System.Collections.Generic;
 
@@ -43,19 +45,135 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// </summary>
     public record ServiceDescription(
             string WellKnown, ServiceFactoryDelegate Factory) {
-
-
         }
+
+
+    public partial class Configuration {
+        #region // Properties
+
+        bool processed = false;
+
+        ///<summary>Dictionary mapping service name to configuiration.</summary> 
+        public Dictionary<string, ServiceConfiguration> DictionaryService { get; } = new();
+
+        #endregion
+
+        #region // Methods 
+
+        /// <summary>
+        /// Perform post processing of a configuration to resolve identifiers to objects
+        /// etc.
+        /// </summary>
+        public void PostProcess() {
+            if (processed) {
+                return;
+                }
+            processed = true;
+
+            foreach (var entry in Entries) {
+                if (entry is ServiceConfiguration serviceConfiguration) {
+
+                    DictionaryService.Add(serviceConfiguration.Id, serviceConfiguration);
+
+                    }
+
+                }
+
+
+            foreach (var entry in Entries) {
+                if (entry is HostConfiguration hostConfiguration) {
+
+                    hostConfiguration.ServiceConfigs = new();
+
+                    foreach (var service in hostConfiguration.Services) {
+                        if (DictionaryService.TryGetValue(service, out var config)) {
+                            hostConfiguration.ServiceConfigs.Add(config);
+                            config.DefaultIp ??= hostConfiguration.IP[0];
+                            }
+
+                        }
+
+
+                    }
+                }
+            }
+
+
+        /// <summary>
+        /// Return the host configuration for the machine <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">Machine to return the configuration for.</param>
+        /// <returns>The host configuration (if found).</returns>
+        public HostConfiguration GetHostConfiguration(string id) {
+
+            Entries.AssertNotNull(HostNotFound.Throw, id);
+
+            bool nonHost = false;
+            foreach (var entry in Entries) {
+
+                if (entry.Id?.ToLower() == id | (id == "*")) {
+                    if (entry is HostConfiguration) {
+                        return entry as HostConfiguration;
+                        }
+                    nonHost = true;
+                    }
+                }
+            nonHost.AssertFalse(ConfigurationNotHost.Throw, id);
+            throw new HostNotFound(null, null, id);
+
+            }
+
+
+
+        /// <summary>
+        /// Return the host configuration for the host <paramref name="hostConfiguration"/>
+        /// </summary>
+        /// <param name="hostConfiguration">Host to return the service configuration for.</param>
+        /// <returns>The host configuration (if found).</returns>
+        public ServiceConfiguration GetServiceConfiguration(HostConfiguration hostConfiguration) {
+
+
+            Entries.AssertNotNull(ServiceNotFound.Throw);
+            if ((hostConfiguration.Services == null) || (hostConfiguration.Services.Count == 0)) {
+                foreach (var entry in Entries) {
+
+                    if (entry is ServiceConfiguration) {
+                        return entry as ServiceConfiguration;
+                        }
+                    }
+                }
+            PostProcess();
+
+            return hostConfiguration.ServiceConfigs[0];
+            }
+
+
+        #endregion
+        }
+
+
+
 
     /// <summary>
     /// Describes a service configuration.
     /// </summary>
     public partial class ServiceConfiguration {
+
+        #region // Properties
+
         /// <summary>The service profile.</summary>
         public Goedel.Mesh.ProfileService ProfileService => throw new NYI();
 
         ///<summary>The service instance.</summary> 
         public string Instance { get; set; }
+
+        ///<summary>The default IP address</summary> 
+        public string DefaultIp { get; set; }
+
+
+        #endregion
+
+        #region // Methods 
 
         /// <summary>
         /// Returns the endpoints for the service configuration.
@@ -81,7 +199,7 @@ namespace Goedel.Mesh.ServiceAdmin {
             }
 
 
-
+        #endregion
 
 
         }
@@ -91,11 +209,20 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// </summary>
     public partial class HostConfiguration {
 
+        #region // Properties
+
         /// <summary>The host profile </summary>
-        public ProfileHost ProfileHost => throw new NYI();
+        public ProfileHost ProfileHost => EnvelopedProfileHost.Decode ();
 
         ///<summary>The connection of the host to the service.</summary> 
-        public ConnectionDevice ConnectionDevice => throw new NYI();
+        public ConnectionDevice ConnectionDevice => EnvelopedConnectionDevice.Decode();
+        ///<summary>List of referenced service configurations.</summary> 
+        public List<ServiceConfiguration> ServiceConfigs { get; set; }
+
+
+        #endregion
+
+        #region // Methods 
 
         /// <summary>
         /// Returns the endpoints for the host configuration.
@@ -111,73 +238,36 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// Get the private credential data.
         /// </summary>
         /// <returns>The private credential</returns>
-        public ICredentialPrivate GetCredential() {
+        public ICredentialPrivate GetCredential(IMeshMachine meshMachine) {
 
             // to do: read the credential that was written out when the host
             // was initialized.
 
 
-            throw new NYI();
+            // Activate the host profile
+            var profile = ProfileHost.Udf;
+
+            var deviceKeySeed = meshMachine.KeyCollection.LocatePrivateKey(ProfileHost.Udf) as PrivateKeyUDF;
+
+            var activation = ConnectionDevice.Signature.Udf;
+
+
+
+
+
+
+            // we need the ConnectionDevice.Authentication key
+            //throw new NYI();
+            return new MeshCredentialPrivate(
+                ProfileHost,
+                ConnectionDevice,
+                null,
+                ConnectionDevice.Authentication.GetKeyPairAdvanced());
+
             }
 
-
+        #endregion
         }
-
-    public partial class Configuration {
-
-
-        /// <summary>
-        /// Return the host configuration for the machine <paramref name="id"/>
-        /// </summary>
-        /// <param name="id">Machine to return the configuration for.</param>
-        /// <returns>The host configuration (if found).</returns>
-        public HostConfiguration GetHostConfiguration(string id) {
-
-            Entries.AssertNotNull(HostNotFound.Throw, id);
-            
-            bool nonHost = false;
-            foreach (var entry in Entries) {
-
-                if (entry.Id?.ToLower() == id | (id == "*")) {
-                    if (entry is HostConfiguration) {
-                        return entry as HostConfiguration;
-                        }
-                    nonHost = true;
-                    }
-                }
-            nonHost.AssertFalse(ConfigurationNotHost.Throw, id);
-            throw new HostNotFound(null, null, id);
-
-            }
-
-
-
-        /// <summary>
-        /// Return the host configuration for the host <paramref name="hostConfiguration"/>
-        /// </summary>
-        /// <param name="hostConfiguration">Host to return the service configuration for.</param>
-        /// <returns>The host configuration (if found).</returns>
-        public ServiceConfiguration GetServiceConfiguration(HostConfiguration hostConfiguration) {
-    
-
-            Entries.AssertNotNull(ServiceNotFound.Throw);
-            if ((hostConfiguration.Services == null) || (hostConfiguration.Services.Count == 0)) {
-                foreach (var entry in Entries) {
-
-                    if (entry is ServiceConfiguration) {
-                        return entry as ServiceConfiguration;
-                        }
-                    }
-                }
-            throw new ServiceNotFound();
-            }
-
-
-
-
-
-        }
-
 
 
     }

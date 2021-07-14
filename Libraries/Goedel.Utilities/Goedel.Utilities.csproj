@@ -1,26 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(SolutionDir)CommonSettings.xml" />
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Sandcastle;Github</Configurations>
-    <Company>ThresholdSecrets.Com</Company> 
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Utilities</Product>
     <Description>Coding utilities common to all Goedel libraries.</Description>
     <Copyright>© 2020</Copyright>
     <Title>Goedel.Utilities</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-    <DocumentationFile>xml\Goedel.Utilities.xml</DocumentationFile>
   </PropertyGroup>
-
-
-  <PropertyGroup Condition="'$(Configuration)'=='Github'">
-    <DefineConstants>TRACE;_Github_</DefineConstants>
-  </PropertyGroup>
-
 
 
   <ItemGroup>
@@ -38,12 +23,5 @@
     </None>
     
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPreBuild" />
-  </Target>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
-    <Exec Command="VSPostBuild" />
-  </Target>
 
 </Project>

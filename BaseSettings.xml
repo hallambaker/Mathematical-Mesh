@@ -1,0 +1,26 @@
+<Project DefaultTargets="Build">
+
+	<PropertyGroup>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+		<Company>Threshold Secrets LLC.</Company>
+		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Goedel.XUnit</RootNamespace>
+  </PropertyGroup>
+
+
+
+	<PropertyGroup Condition="'$(Configuration)'=='Github'">
+		<DefineConstants>TRACE;_Github_</DefineConstants>
+	</PropertyGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+    <Exec Command="VSPreBuild" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
+    <Exec Command="VSPostBuild" />
+  </Target>
+
+</Project>

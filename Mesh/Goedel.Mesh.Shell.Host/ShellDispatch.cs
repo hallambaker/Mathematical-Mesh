@@ -24,7 +24,7 @@ namespace Goedel.Mesh.Shell.Host {
         ///<summary>The Mesh Machine</summary> 
         public IMeshMachine MeshMachine { get; init; }
 
-
+        ///<summary>Result returned by last shell command.</summary> 
         public ShellResult ShellResult { get; set; }
 
 
@@ -201,7 +201,7 @@ namespace Goedel.Mesh.Shell.Host {
                         serviceConfiguration, hostConfiguration));
 
 
-            var credential = HostConfiguration.GetCredential();
+            var credential = HostConfiguration.GetCredential(MeshMachine);
 
             // Need to extract the host credential here...
 

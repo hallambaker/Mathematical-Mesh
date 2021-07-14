@@ -1,0 +1,3543 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Protocol</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Protocol.CharacterStreamTextReader">
+            <summary>
+            A character stream reader that takes a TextReader as the input source.
+            The input stream is only read in the forward direction.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.CharacterStreamTextReader.EOF">
+            <summary>If true, end of file has been reached. </summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamTextReader.#ctor(System.IO.TextReader)">
+            <summary>
+            Creatre an instance from the specified TextReader.
+            </summary>
+            <param name="Input">The input stream.</param>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamTextReader.PeekChar">
+            <summary>Return the next character in the stream without advancing the stream</summary>
+            <returns>The next character in the stream</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamTextReader.ReadChar">
+            <summary>Return the next character in the stream and advance the stream.</summary>
+            <returns>The next character in the stream</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamTextReader.PeekByte">
+            <summary>
+            Get the next byte in the stream without advancing the reader position.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamTextReader.ReadByte">
+            <summary>
+            Get the next byte in the stream and advance the reader position.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamTextReader.GetBinaryBase64">
+            <summary>
+            Read the stream from the current position as a JSON string completion containing
+            base64 encoded binary data and return the number of bytes necessary to store the
+            result. The initial open quote is assumed.
+            </summary>
+            <returns>The decoded data</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamTextReader.GetStringJSON">
+            <summary>
+            Read the stream from the current position as a JSON string completion and return the 
+            resulting string. The initial open quote is assumed.
+            </summary>
+            <returns>The decoded string</returns>
+        </member>
+        <member name="T:Goedel.Protocol.CharacterStreamStringReader">
+            <summary>
+            A character stream reader that takes a string as the input source.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.CharacterStreamStringReader.EOF">
+            <summary>If true, end of file has been reached. </summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamStringReader.#ctor(System.String)">
+            <summary>
+            Create a CharacterStreamStringReader from the specified string.
+            </summary>
+            <param name="Input">The string to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamStringReader.PeekChar">
+            <summary>Return the next character in the stream without advancing the stream</summary>
+            <returns>The next character in the stream</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamStringReader.ReadChar">
+            <summary>Return the next character in the stream and advance the stream.</summary>
+            <returns>The next character in the stream</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamStringReader.PeekByte">
+            <summary>
+            Get the next byte in the stream without advancing the reader position.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamStringReader.ReadByte">
+            <summary>
+            Get the next byte in the stream and advance the reader position.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamStringReader.Mark">
+            <summary>Create a restore point in the stream.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamStringReader.Restore">
+            <summary>Return the stream to the position that the reader was at the last time
+            Mark() was called.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamStringReader.GetBinaryBase64">
+            <summary>
+            Read the stream from the current position as a JSON string completion containing
+            base64 encoded binary data and return the number of bytes necessary to store the
+            result. The initial open quote is assumed.
+            </summary>
+            <returns>The decoded data</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamStringReader.GetStringJSON">
+            <summary>
+            Read the stream from the current position as a JSON string completion and return the 
+            resulting string. The initial open quote is assumed.
+            </summary>
+            <returns>The decoded string</returns>
+        </member>
+        <member name="T:Goedel.Protocol.BinaryStreamReader">
+            <summary>
+            A binary and character stream reader that takes a binary stream as the input
+            source. The stream is only read in the forward direction.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.BinaryStreamReader.UTF16Shift">
+            <summary>
+            If positive, contains the second character in a two character UTF16 character 
+            sequence.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.BinaryStreamReader.EOF">
+            <summary>If true, end of file has been reached. </summary>
+        </member>
+        <member name="M:Goedel.Protocol.BinaryStreamReader.ReadBinary(System.Int32)">
+            <summary>
+            Read a complete binary value.
+            </summary>
+            <param name="Length">The number of bytes to read.</param>
+            <returns>The binary data that was read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.BinaryStreamReader.ReadBinary(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read a partial binary value.
+            </summary>
+            <param name="Buffer"></param>
+            <param name="offset"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.BinaryStreamReader.ReadByte">
+            <summary>
+            Get the next byte in the stream and advance the stream.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.BinaryStreamReader.PeekByte">
+            <summary>
+            Get the next byte in the stream without advancing the stream.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.BinaryStreamReader.PeekChar">
+            <summary>Return the next character in the stream without advancing the stream</summary>
+            <returns>The next character in the stream</returns>
+        </member>
+        <member name="M:Goedel.Protocol.BinaryStreamReader.ReadChar">
+            <summary>Return the next character in the stream and advance the stream.</summary>
+            <returns>The next character in the stream</returns>
+        </member>
+        <member name="M:Goedel.Protocol.BinaryStreamReader.ReadStringUTF8(System.Int32)">
+            <summary>
+            Read a complete string value.
+            </summary>
+            <param name="Length">The number of bytes to read.</param>
+            <returns>The string that was read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.BinaryStreamReader.GetStringJSON">
+            <summary>
+            Read the stream from the current position as a JSON string completion and return the 
+            resulting string. The initial open quote is assumed.
+            </summary>
+            <returns>The decoded string</returns>
+        </member>
+        <member name="M:Goedel.Protocol.BinaryStreamReader.GetBinaryBase64">
+            <summary>
+            Read the stream from the current position as a JSON string completion containing
+            base64 encoded binary data and return the resulting string. The initial open quote is assumed.
+            </summary>
+            <returns>The decoded data</returns>
+        </member>
+        <member name="T:Goedel.Protocol.CharacterStreamReader">
+            <summary>
+            A binary and character stream reader that takes a binary stream as the input
+            source. The stream is only read in the forward direction.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.CharacterStreamReader.Input">
+            <summary>
+            The underlying input stream.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamReader.#ctor(System.IO.Stream)">
+            <summary>
+            Return a CharacterStreamReader for the specified input source which may be
+            any stream source that supports read operations.
+            </summary>
+            <param name="Input">The stream to be read</param>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamReader.ReadByte">
+            <summary>
+            Get the next byte in the stream and advance the reader position.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamReader.PeekByte">
+            <summary>
+            Get the next byte in the stream without advancing the reader position.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamReader.ReadBinary(System.Int32)">
+            <summary>
+            Read a complete binary value, buffering partial chunk values if necessary.
+            </summary>
+            <param name="Length">The number of bytes to read.</param>
+            <returns>The binary data that was read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamReader.ReadBinary(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read a partial binary value.
+            </summary>
+            <param name="Buffer">Buffer to write the data read to.</param>
+            <param name="offset">Byte offset from start of <paramref name="Buffer"/></param>
+            <param name="count">Number of bytes to be read.</param>
+            <returns>Number of bytes read or 0 if the end of the stream is reached.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.CharacterStreamSeekReader">
+            <summary>
+            A binary and character stream reader that takes a binary stream as the input
+            source. The stream MUST support the seek operation.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamSeekReader.#ctor(System.IO.Stream)">
+            <summary>
+            Return a CharacterStreamReader for the specified input source which must
+            be a stream source that supports seek operations.
+            </summary>
+            <param name="Input">The stream to be read</param>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamSeekReader.Mark">
+            <summary>Create a restore point in the stream.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamSeekReader.Restore">
+            <summary>Return the stream to the position that the reader was at the last time
+            Mark() was called.</summary>
+        </member>
+        <member name="T:Goedel.Protocol.CharacterStreamDataReader">
+            <summary>
+            An IBinaryStream that reads from a byte array.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamDataReader.#ctor(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Return a CharacterStreamDataReader for the specified byte array.
+            </summary>
+            <param name="Input">The input data to be read.</param>
+            <param name="Start">The first byte to be read.</param>
+            <param name="Length">The maximum number of bytes to read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamDataReader.Mark">
+            <summary>Create a restore point in the stream.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamDataReader.Restore">
+            <summary>Return the stream to the position that the reader was at the last time
+            Mark() was called.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamDataReader.ReadByte">
+            <summary>
+            Get the next byte in the stream and advance the stream.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamDataReader.PeekByte">
+            <summary>
+            Get the next byte in the stream and advance the stream.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamDataReader.ReadBinary(System.Int32)">
+            <summary>
+            Read a complete binary value, buffering partial chunk values if necessary.
+            </summary>
+            <param name="Length">The number of bytes to read.</param>
+            <returns>The binary data that was read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamDataReader.ReadBinary(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read a partial binary value.
+            </summary>
+            <param name="Data">Buffer to write the data read to.</param>
+            <param name="offset">Byte offset from start of <paramref name="Data"/></param>
+            <param name="Length">Number of bytes to be read.</param>
+            <returns>Number of bytes read or 0 if the end of the stream is reached.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.CharacterStreamRead">
+            <summary>
+            Static methods for reading characters and strings from streams.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.Read(Goedel.Protocol.IBinaryStream)">
+            <summary>
+            Read a character from a binary stream. This enables a binary stream to 
+            expose a TextReader interface.
+            </summary>
+            <param name="Stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.HexCharToInt(System.Char)">
+            <summary>Convert hex character to hex value</summary>
+            <param name="c">The hex character</param>
+            <returns>Integer value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.NextHex(Goedel.Protocol.ICharacterStream)">
+            <summary>
+            Read the next 4 characters from the stream and interpret them as hexadecimal
+            characters.
+            </summary>
+            <param name="Stream">The stream to read from</param>
+            <returns>The character corresponding to the hex value</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.ReadJSONEscaped(Goedel.Protocol.ICharacterStream)">
+            <summary>
+            Read characters from the stream as completion of a JSON escaped character sequence 
+            (i.e excluding the initial escape character).
+            </summary>
+            <param name="Stream">The stream to read from</param>
+            <returns>The character specified by the escape sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.GetJSONStringLength(Goedel.Protocol.ICharacterStream)">
+            <summary>
+            Read the stream from the current position as a JSON string completion and return the 
+            number of UTF16 characters. The initial open quote is assumed.
+            </summary>
+            <param name="Stream">The stream to read from</param>
+            <returns>The measured length of the string.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.GetStringJSON(Goedel.Protocol.ICharacterStream,System.Text.StringBuilder)">
+            <summary>
+            Read the stream from the current position as a JSON string completion and return the 
+            resulting string. The initial open quote is assumed.
+            </summary>
+            <param name="Stream">The stream to read from</param>
+            <param name="StringBuilder">Stringbuilder to be used to assemble the string.</param>
+            <returns>The decoded string</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.GetJSONStringBuffered(Goedel.Protocol.ICharacterBufferedStream)">
+            <summary>
+            Read the stream from the current position as a JSON string completion and return the 
+            resulting string. The initial open quote is assumed.
+            <para>This method produces the same output as GetJSONString but does so by first
+            determining the length of the string, allocating a sufficiently large buffer to 
+            hold the result and re-reading. Depending on the circumstances, this may or may
+            not be more efficient.</para>
+            </summary>
+            <param name="Stream">The stream to read from</param>
+            <returns>The decoded string</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.GetBase64StringLength(Goedel.Protocol.ICharacterStream)">
+            <summary>
+            Read the stream from the current position as a JSON string completion containing
+            base64 encoded binary data and return the number of bytes necessary to store the
+            result. The initial open quote is assumed.
+            </summary>
+            <param name="Stream">The stream to read from</param>
+            <returns>The decoded data</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.GetBinaryBase64(Goedel.Protocol.ICharacterStream)">
+            <summary>
+            Read the stream from the current position as a JSON string completion containing
+            base64 encoded binary data and return the resulting string. The initial open quote is assumed.
+            </summary>
+            <param name="Stream">The stream to read from</param>
+            <returns>The decoded data</returns>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.GetBase64String(Goedel.Protocol.ICharacterStream,System.Byte[],System.Int32)">
+            <summary>
+            Read the stream from the current position as a JSON string completion containing
+            base64 encoded binary data and return the resulting string. The initial open quote is assumed.
+            </summary>
+            <param name="Result">The array to write the result to.</param>
+            <param name="Start">The position in the array at which to start writing.</param>
+            <param name="Stream">The stream to read from</param>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamRead.GetBase64StringBuffered(Goedel.Protocol.ICharacterBufferedStream)">
+            <summary>
+            Read the stream from the current position as a JSON string completion containing
+            base64 encoded binary data and return the resulting string. The initial open quote is assumed.
+            <para>This method produces the same output as GetJSONString but does so by first
+            determining the length of the string, allocating a sufficiently large buffer to 
+            hold the result and re-reading. Depending on the circumstances, this may or may
+            not be more efficient.</para>
+            </summary>
+            <param name="Stream">The stream to read from</param>
+            <returns>The decoded data</returns>
+        </member>
+        <member name="T:Goedel.Protocol.CountedUtf8StreamReader">
+            <summary>
+            Returns stream reader that tracks line and column numbers.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.Line">
+            <summary>The line number.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.Column">
+            <summary>The column number taking into account UTF8 encoding.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.CanRead">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.CanSeek">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.CanWrite">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.Length">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.CountedUtf8StreamReader.Position">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.#ctor(System.IO.Stream)">
+            <summary>
+            Return a counter wrapper for <paramref name="stream"/>.
+            </summary>
+            <param name="stream">The stream to wrap.</param>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.Count(System.Byte)">
+            <summary>
+            The counter method, increment the line and colum counters according to the UTF8 status of 
+            <paramref name="b"/>.
+            </summary>
+            <param name="b">The byte read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.Read(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.Flush">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.Seek(System.Int64,System.IO.SeekOrigin)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.SetLength(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.CountedUtf8StreamReader.Write(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.Dechunk">
+            <summary>
+            Read and buffer data chunks from a stream. This could be made a lot
+            more efficient for longer streams but is acceptable for small ones.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Dechunk.ReadString(System.Int64,System.IO.Stream)">
+            <summary>
+            Tead a string from the stream
+            </summary>
+            <param name="Length">Length of stream. If less than zero,
+            HTTP chunked encoding is assumed.</param>
+            <param name="Stream">The stream to be read.</param>
+            <returns>The array data.</returns>
+            <returns>Data read from stream</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Dechunk.ReadBytes(System.Int64,System.IO.Stream)">
+            <summary>
+            Read an array of bytes from a stream. Note that the length
+            of the byte array is limited to 2GB internally. For longer 
+            streams, some form of processing pipeline is advised.
+            </summary>
+            <param name="Length">Length of stream. If less than zero,
+            HTTP chunked encoding is assumed.</param>
+            <param name="Stream">The stream to be read.</param>
+            <returns>The array data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Dechunk.ReadChunked(System.IO.Stream)">
+            <summary>
+            Read an array of bytes from a stream. Note that the length
+            of the byte array is limited to 2GB internally. For longer 
+            streams, some form of processing pipeline is advised.
+            </summary>
+            <param name="Stream">The stream to be read.</param>
+            <returns>The array data.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.DNS">
+            <summary>
+            STUB!!!  DNS interface class. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.DNS.Resolve(System.String,System.String)">
+            <summary>
+            STUB!!! Resolve the specified domain to obtain an IP address.
+            </summary>
+            <param name="Domain">Domain to resolve</param>
+            <param name="Prefix">The service prefix to resolve</param>
+            <returns>Currently the fixed string 192.168.1.39</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Dechunking">
+            <summary>
+            A dechunking exception occurred.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Dechunking.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Dechunking.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Dechunking.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Dechunking._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.Dechunking.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.UnknownOperation">
+            <summary>
+            The requested operation is not known to this server.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.UnknownOperation.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.UnknownOperation.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.UnknownOperation.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.UnknownOperation._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.UnknownOperation.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.MessageTooBig">
+            <summary>
+            Message exceeds permitted size limit
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.MessageTooBig.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MessageTooBig.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.MessageTooBig.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.MessageTooBig._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.MessageTooBig.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.ConnectionFail">
+            <summary>
+            Could not reach the specified host
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.ConnectionFail.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.ConnectionFail.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.ConnectionFail.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.ConnectionFail._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.ConnectionFail.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.CannotCreateAbstract">
+            <summary>
+            A serialized data stream contains a type tag describing an abstract type that cannot be constructed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.CannotCreateAbstract.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.CannotCreateAbstract.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.CannotCreateAbstract.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.CannotCreateAbstract._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.CannotCreateAbstract.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.UnknownTag">
+            <summary>
+            An unknown tag was encountered.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.UnknownTag.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.UnknownTag.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.UnknownTag.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.UnknownTag._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.UnknownTag.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.TagRequired">
+            <summary>
+            Attempt to deserialize untagged data to unknown type.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.TagRequired.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TagRequired.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.TagRequired.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TagRequired._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.TagRequired.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.InvalidInput">
+            <summary>
+            The input is not valid in the specified encoding.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.InvalidInput.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.InvalidInput.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.InvalidInput.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.InvalidInput._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.InvalidInput.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.BadPartLength">
+            <summary>
+            Data length did not match data presented.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.BadPartLength.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.BadPartLength.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.BadPartLength.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.BadPartLength._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.BadPartLength.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.StreamMarkerError">
+            <summary>
+            Stream reader error, position not correctly marked.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.StreamMarkerError.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.StreamMarkerError.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.StreamMarkerError.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.StreamMarkerError._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.StreamMarkerError.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.DictionaryInitialization">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.DictionaryInitialization.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.DictionaryInitialization.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.DictionaryInitialization.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.DictionaryInitialization._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.DictionaryInitialization.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.ParseError">
+            <summary>
+            Attempt to deserialize untagged data to unknown type.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.ParseError.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.ParseError.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.ParseError.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.ParseError._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.ParseError.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.DataEncoding">
+            <summary>Data encoding forms</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.JSON">
+            <summary>JSON encoding in UTF8</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.JSON_A">
+            <summary>JSON easy to edit format in UTF8</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.JSON_B">
+            <summary>JSON-B encoding in UTF8 plus binary extensions</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.JSON_C">
+            <summary>JSON-C encoding in UTF8 plus binary extensions</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.JSON_D">
+            <summary>JSON-D encoding in UTF8 plus binary extensions</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.ASN_1">
+            <summary>ASN-1</summary>
+        </member>
+        <member name="F:Goedel.Protocol.DataEncoding.RFC822">
+            <summary>RFC 822 style message header</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Extensions">
+            <summary>
+            Define extension codes for checking HTTP/SMTP/FTP style status return values
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.IsSuccess(System.Int32)">
+            <summary>
+            Report if a protocol status cude indicates success.
+            </summary>
+            <param name="Code">The code to be reported on.</param>
+            <returns>True if the code is in the range 100-299 inclusive, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.IsError(System.Int32)">
+            <summary>
+            Report if a protocol status cude indicates failure.
+            </summary>
+            <param name="Code">The code to be reported on.</param>
+            <returns>True if the code is in the range 300-499 inclusive, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetBytes(Goedel.Protocol.JsonObject,Goedel.Protocol.DataEncoding,System.Boolean)">
+            <summary>Convert object to bytes in specified encoding.</summary>
+            <param name="jsonObject">The object to convert.</param>
+            <param name="dataEncoding">The encoding to convert to (defaults to JSON).</param>
+            <param name="tagged">It true, tag the output value with the object type.</param>
+            <returns>The encoded data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetWriter(Goedel.Protocol.DataEncoding,System.IO.Stream)">
+            <summary>
+            Return the most capable writer available for the specified encoding.
+            </summary>
+            <param name="dataEncoding">The encoding to use.</param>
+            <param name="stream">The stream to be encoded.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.IsDirect(Goedel.Protocol.JpcConnection)">
+            <summary>
+            Returns true if <paramref name="jpcConnection"/> is a direct (i.e. not networked) connection type.
+            </summary>
+            <param name="jpcConnection">The connection to test.</param>
+            <returns>Returns true if <paramref name="jpcConnection"/> is a direct (i.e. not networked) connection type,
+            otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.JsonReader(System.Byte[])">
+            <summary>
+            Create a JSONReader for the specified data
+            </summary>
+            <param name="Data">The data to be read as a UTF8 data stream.</param>
+            <returns>The JSONReader</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.JsonReader(System.String)">
+            <summary>
+            Create a JSONReader for the specified data
+            </summary>
+            <param name="Data">The data to be read as a UTF8 data stream.</param>
+            <returns>The JSONReader</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetJson(Goedel.Protocol.JsonObject,System.Boolean)">
+            <summary>
+            Convert object to byte sequence in JSON form.
+            </summary>
+            <param name="Object">The object to convert</param>
+            <param name="Tagged">If true, serialization is tagged with the object type.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetJsonA(Goedel.Protocol.JsonObject,System.Boolean)">
+            <summary>
+            Convert object to byte sequence in JSON form.
+            </summary>
+            <param name="Object">The object to convert</param>
+            <param name="Tagged">If true, serialization is tagged with the object type.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetJsonB(Goedel.Protocol.JsonObject,System.Boolean)">
+            <summary>
+            Convert object to byte sequence in JSON form.
+            </summary>
+            <param name="Object">The object to convert</param>
+            <param name="Tagged">If true, serialization is tagged with the object type.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetJsonC(Goedel.Protocol.JsonObject,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Convert object to byte sequence in JSON form.
+            </summary>
+            <param name="Object">The object to convert</param>
+            <param name="Tagged">If true, serialization is tagged with the object type.</param>
+            <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.GetJsonD(Goedel.Protocol.JsonObject,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Convert object to byte sequence in JSON form using JSON-D encoding
+            </summary>
+            <param name="Object">The object to convert</param>
+            <param name="Tagged">If true, serialization is tagged with the object type.</param>
+            <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.StatusInformation(System.Int32)">
+            <summary>
+            Extension method to report the success or failure of transaction.
+            Information return codes are integers in the range 100..199
+            </summary>
+            <param name="Status">Status code returned by transaction.</param>
+            <returns>true if and only iff the transaction succeeded.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.StatusSuccess(System.Int32)">
+            <summary>
+            Extension method to report the success or failure of transaction.
+            Success return codes are integers in the range 200..299
+            </summary>
+            <param name="Status">Status code returned by transaction.</param>
+            <returns>true if and only iff the transaction succeeded.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.StatusIncomplete(System.Int32)">
+            <summary>
+            Extension method to report the success or failure of transaction.
+            Success return codes are integers in the range 300..399
+            </summary>
+            <param name="Status">Status code returned by transaction.</param>
+            <returns>true if and only iff the transaction succeeded.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.StatusClientError(System.Int32)">
+            <summary>
+            Extension method to report the success or failure of transaction.
+            Client Error return codes are integers in the range 400..499
+            </summary>
+            <param name="Status">Status code returned by transaction.</param>
+            <returns>true if and only iff the transaction succeeded.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.StatusServerError(System.Int32)">
+            <summary>
+            Extension method to report the success or failure of transaction.
+            Server Error return codes are integers in the range 500..599
+            </summary>
+            <param name="Status">Status code returned by transaction.</param>
+            <returns>true if and only iff the transaction succeeded.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.ICharacterStream">
+            <summary>
+            Character stream reader with methods to read individual characters, JSON
+            escaped and base64 binary encoded strings.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.ICharacterStream.EOF">
+            <summary>If true, end of file has been reached. </summary>
+        </member>
+        <member name="M:Goedel.Protocol.ICharacterStream.PeekChar">
+            <summary>Return the next character in the stream without advancing the stream</summary>
+            <returns>The next character in the stream</returns>
+        </member>
+        <member name="M:Goedel.Protocol.ICharacterStream.ReadChar">
+            <summary>Return the next character in the stream and advance the stream.</summary>
+            <returns>The next character in the stream</returns>
+        </member>
+        <member name="M:Goedel.Protocol.ICharacterStream.GetStringJSON">
+            <summary>
+            Read a complete JSON escape encoded string value encoded.
+            </summary>
+            <returns>The string value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.ICharacterStream.GetBinaryBase64">
+            <summary>
+            Read a complete base64 enccoded binary value.
+            </summary>
+            <returns>The string value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.ICharacterStream.PeekByte">
+            <summary>
+            Get the next byte in the stream without advancing the reader position.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.ICharacterStream.ReadByte">
+            <summary>
+            Get the next byte in the stream and advance the reader position.
+            </summary>
+            <returns>The next byte.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.IBinaryStream">
+            <summary>
+            An IBinaryStream is a binary stream that exposes the ICharacterStream and
+            provides binary read access;
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.IBinaryStream.UTF16Shift">
+            <summary>
+            If positive, contains the second character in a two character UTF16 character 
+            sequence.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.IBinaryStream.ReadStringUTF8(System.Int32)">
+            <summary>
+            Read a complete UTF8 string value.
+            </summary>
+            <param name="Length">The number of bytes to read.</param>
+            <returns>The string that was read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.IBinaryStream.ReadBinary(System.Int32)">
+            <summary>
+            Read a complete binary value.
+            </summary>
+            <param name="Length">The number of bytes to read.</param>
+            <returns>The binary data that was read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.IBinaryStream.ReadBinary(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read a partial binary value.
+            </summary>
+            <param name="Data">Buffer to write the data read to.</param>
+            <param name="Offset">Byte offset from start of <paramref name="Data"/></param>
+            <param name="Count">Number of bytes to be read.</param>
+            <returns>Number of bytes read or 0 if the end of the stream is reached.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.IBufferedStream">
+            <summary>
+            Interface allowing a character or binary stream reader to checkpoint the
+            current point in the stream and return to it to re-read data.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.IBufferedStream.Mark">
+            <summary>Create a restore point in the stream.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.IBufferedStream.Restore">
+            <summary>Return the stream to the position that the reader was at the last time
+            Mark() was called.</summary>
+        </member>
+        <member name="T:Goedel.Protocol.ICharacterBufferedStream">
+            <summary>
+            An ICharacterBufferedStream is an ICharacterStream that is also an IBufferedStream
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.IJpcSession">
+            <summary>
+            Jpc Session interface.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.IJpcSession.Credential">
+            <summary>The verified account bound to this session (used for inbound sessions
+            only.)</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.IJpcSession.Post(System.String,Goedel.Protocol.JsonObject)">
+            <summary>
+            Post the request <paramref name="request"/> 
+            </summary>
+            <param name="tag">The transaction identifier.</param>
+            <param name="request">The transaction request.</param>
+            <returns>The transaction response</returns>
+        </member>
+        <member name="M:Goedel.Protocol.IJpcSession.Rebind(Goedel.Protocol.ICredential)">
+             <summary>
+            Bind new credential to the session to create a new one.
+             </summary>
+             <param name="credential">Credential to bind.</param>
+             <returns>The new session.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JpcInterface">
+            <summary>
+            Base class for all JPC server classes.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JpcInterface.Domains">
+            <summary>List of DNS domains serviced by this interface.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JpcInterface.GetWellKnown">
+            <summary>
+            The WellKnown service name for HTTP and DNS prefix use.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JpcInterface.GetDiscovery">
+            <summary>
+            The WellKnown service name for HTTP and DNS prefix use.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JpcInterface.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
+            <summary>
+            Dispatch Class. Reads input from the provided reader and attempts to
+            dispatch a method in response. Note that the calling routine may throw 
+            an error. This must be caught and processed by the host dispatch class.
+            </summary>
+            <param name="Session">The service session that is to handle the request.</param>
+            <param name="JSONReader">The input stream to be read</param>
+            <returns>The response to the request.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JpcInterface.GetDirect(Goedel.Protocol.IJpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JpcClientInterface">
+            <summary>
+            Base class for all JPC client classes.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JpcClientInterface.GetWellKnown">
+            <summary>
+            The WellKnown service name for HTTP and DNS prefix use.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JpcClientInterface.GetDiscovery">
+            <summary>
+            The WellKnown service name for HTTP and DNS prefix use.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JpcClientInterface.JpcSession">
+            <summary>
+            The active JpcSession.
+            </summary>		
+        </member>
+        <member name="M:Goedel.Protocol.JpcClientInterface.Rebind(Goedel.Protocol.ICredential)">
+            <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
+        </member>
+        <member name="T:Goedel.Protocol.JpcTicket">
+            <summary>
+            Jpc Ticket record
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JpcTicket.#ctor">
+            <summary>
+            Jpc Ticket record
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JpcTicket.SharedSecret">
+            <summary>Shared secret to which the ticket is bound</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JpcTicket.Ticket">
+            <summary>Ticket data returned by the service</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JpcTicket.UdpAddress">
+            <summary>UDP address to which the ticket is bound</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JpcTicket.TcpAddress">
+            <summary>TCP address to which the ticket is bound</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JpcTicket.WebServiceEndpoint">
+            <summary>Web Service Endpoint to which the ticket is bound</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.CredentialValidation">
+            <summary>
+            Describe the validation of the credential
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.CredentialValidation.None">
+            <summary>Validation not attempted.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.CredentialValidation.Failed">
+            <summary>Validation failed.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.CredentialValidation.Device">
+            <summary>The authentication key is valid under the device credential pressented.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.CredentialValidation.Account">
+            <summary>The authentication key is valid under the account credential pressented.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.ICredential">
+            <summary>
+            Credential interface
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.ICredential.Account">
+            <summary>The account name claimed under the credential</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.ICredential.Provider">
+            <summary>The provider servicing the account claimed under the credential</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.ICredential.AuthenticationKeyId">
+            <summary>The authentication key used to authenticate the device.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.ICredential.CredentialValidation">
+            <summary>Validation status of <see cref="P:Goedel.Protocol.ICredential.AuthenticationKeyId"/> with respect to the credential data.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.JpcConnection">
+            <summary>
+            Enumeration describing the different connection modes
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JpcConnection.Direct">
+            <summary>The client makes a direct call to the service API.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JpcConnection.Serialized">
+            <summary>The client makes a direct call to the service through the JSON
+            serialization/deserialization interfaces.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JpcConnection.Http">
+            <summary>The client makes a remote call to the service by means of a 
+            HTTP POST method containing a JSON serialization.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JpcConnection.Ticketed">
+            <summary>The client makes a remote call to the service using a ticket 
+            previously issued by the service by means of either the HTTP or the UDP 
+            transport.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.JpcSession">
+            <summary>
+            The session class describes the caller of a method.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JpcSession.Credential">
+            <summary>The credential to which the session is bound.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JpcSession.JpcClientInterface">
+            <summary>The client interface.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JpcSession.VerifiedAccount">
+            <summary>
+            VerifiedAccount instance describing the verified account details. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSession.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSession.#ctor(Goedel.Protocol.ICredential)">
+            <summary>
+            Constructor for a session with credential <paramref name="credential"/>.
+            </summary>
+            <param name="credential">The credential to be used.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSession.GetWebClient``1">
+            <summary>
+            Factory method returning a new JPC interface calling a service of
+            type <typeparamref name="T"/> with an initial <see cref="T:Goedel.Protocol.JpcSession"/> binding of
+            the calling instance. This binding MAY be updated through interaction with the 
+            service, e.g. to replace a HTTP/JSON binding authenticated by means of a direct
+            key exchange with a key exchange established in a referenced token.
+            </summary>
+            <typeparam name="T">Type of the instance to return.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSession.Post(System.String,Goedel.Protocol.JsonObject)">
+            <summary>
+            Post a transaction request and return the resulting object.
+            </summary>
+            <param name="tag">The transaction identifier.</param>
+            <param name="request">The request data.</param>
+            <returns>The transaction result.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSession.Rebind(Goedel.Protocol.ICredential)">
+            <inheritdoc cref="T:Goedel.Protocol.IJpcSession"/>
+        </member>
+        <member name="T:Goedel.Protocol.JpcRemoteSession">
+            <summary>
+            Direct connection between client and service host. Useful for debugging
+            and for direct access to a service on the same machine.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JpcRemoteSession.#ctor(Goedel.Protocol.ICredential)">
+            <summary>
+            Create a direct session  with credential <paramref name="credential"/>.
+            </summary>
+            <param name="credential">The credential to be used.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JpcRemoteSession.Rebind(Goedel.Protocol.ICredential)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.JpcSessionSerialized">
+            <summary>
+            Direct connection between client and service host with messages 
+            encoded and decoded from JSON. For use in debugging issues that
+            might be the result of JSON encoding issues and to collect samples
+            for documentation.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JpcSessionSerialized.Host">
+            <summary>
+            The provider.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSessionSerialized.#ctor(Goedel.Protocol.JpcInterface,Goedel.Protocol.ICredential)">
+            <summary>
+            Create a remote session with authentication under the
+            specified credential.
+            </summary>
+            <param name="host">The host implementation</param>
+            <param name="credential">The credential to be used.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSessionSerialized.Post(System.IO.MemoryStream,Goedel.Protocol.JsonObject)">
+            <summary>
+            Post a request and retrieve the response.
+            </summary>
+            <param name="data">StreamBuffer object containing JSON encoded request.</param>
+            <param name="requestObject">The request object.</param>
+            <returns>StreamBuffer object containing JSON encoded response.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSessionSerialized.Post(System.String,Goedel.Protocol.JsonObject)">
+            <summary>
+            Post a transaction of type <paramref name="tag"/> with request data 
+            <paramref name="request"/> to the service expecting a response of type
+            </summary>
+            <param name="tag">The transaction tag.</param>
+            <param name="request">The request data.</param>
+            <returns>The response data.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JpcSessionDirect">
+            <summary>
+            Direct connection between client and service host. Useful for debugging
+            and for direct access to a service on the same machine.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSessionDirect.#ctor(Goedel.Protocol.JpcInterface,Goedel.Protocol.ICredential)">
+            <summary>
+            Create a direct session for the specified account.
+            </summary>
+            <param name="credential">The credential to be used.</param>
+            <param name="jpcInterface">The interfact to which the direct session is bound</param>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSessionDirect.GetWebClient``1">
+            <summary>
+            Return a client bound to the interface using the session.
+            </summary>
+            <typeparam name="T">The client type</typeparam>
+            <returns>The client</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JpcSessionDirect.Rebind(Goedel.Protocol.ICredential)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.JSONAWriter">
+            <summary>
+            JSON Writer for JSON-A, a format designed to improve human readability.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.#ctor">
+            <summary>
+            Create a new JSON Writer.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.#ctor(System.IO.Stream)">
+            <summary>
+            Create a new JSON Writer using the specified output buffer. If the buffer has
+            an output stream defined, text will be written to the stream.
+            </summary>
+            <param name="Output">Output buffer</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteToken(System.String,System.Int32)">
+            <summary>
+            Write Tag to the stream
+            </summary>
+            <param name="Tag">Tag text.</param>
+            <param name="IndentIn">Current indent level.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteInteger32(System.Int32)">
+            <summary>Write 32 bit integer.</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteInteger64(System.Int64)">
+            <summary>Write 64 bit integer</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteFloat32(System.Single)">
+            <summary>Write float32</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteFloat64(System.Double)">
+            <summary>Write float64</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteBoolean(System.Boolean)">
+            <summary>Write boolean.</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteString(System.String)">
+            <summary>Write string.</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteBinary(System.Byte[],System.Int32,System.Int32)">
+            <summary>Write binary data as Base64Url encoded string.</summary>
+            <param name="buffer">Value to write</param>
+            <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+            at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param> 
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteArrayStart">
+            <summary>Mark start of array element</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteArraySeparator(System.Boolean@)">
+            <summary>Mark middle of array element</summary>
+            <param name="first">If true, this is the first element. 
+            The value is set false on each call</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteArrayEnd">
+            <summary>Mark end of array element</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteObjectStart">
+            <summary>Mark start of object element</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteObjectSeparator(System.Boolean@)">
+            <summary>Mark middle of object element</summary>
+            <param name="first">If true, this is the first element. 
+            The value is set false on each call</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteObjectEnd">
+            <summary>Mark end of object element</summary>
+        </member>
+        <member name="T:Goedel.Protocol.JSONBCD">
+            <summary>Constants for tagging of JBCD encoded data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.Length8">
+            <summary>8 bit length modifier</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.Length16">
+            <summary>16 bit length modifier</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.Length32">
+            <summary>32 bit length modifier</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.Length64">
+            <summary>64 bit length modifier</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.Length128">
+            <summary>64 bit length modifier</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.LengthBig">
+            <summary>Bignum length modifier. The following two bytes will give the length of the length,</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.StringTerm">
+            <summary>Terminal UTF8 data string chunk</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.StringChunk">
+            <summary>Non-terminal UTF8 data string chunk</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.DataTerm">
+            <summary>Terminal binary data chunk</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.DataChunk">
+            <summary>Non-terminal UTF8 data chunk</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.UFrame">
+            <summary>Unidirectional frame record</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.BFrame">
+            <summary>Bidirectional frame record</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.PositiveInteger">
+            <summary>Positive integer base</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.NegativeInteger">
+            <summary>Negative integer base</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.PositiveBigInteger">
+            <summary>Positive integer base</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.NegativeBigInteger">
+            <summary>Negative integer base</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.True">
+            <summary>True boolean value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.False">
+            <summary>False boolean value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.Null">
+            <summary>Null object value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.TagString">
+            <summary>Terminal UTF8 data string chunk</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.TagCode">
+            <summary>Insert data from tag with specified code.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.TagDefinition">
+            <summary>Define a tag code</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.TagCodeDefinition">
+            <summary>Define a tag code and insert corresponding data.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.TagDictionaryDefinition">
+            <summary>Define a code dictionary</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.DictionaryHash">
+            <summary>Insert dictionary with specified hash.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.BinaryFloat16">
+            <summary>16 bit binary floating point value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.BinaryFloat32">
+            <summary>32 bit binary floating point value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.BinaryFloat64">
+            <summary>64 bit binary floating point value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.BinaryFloat128">
+            <summary>128 bit binary floating point value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.Intel80">
+            <summary>80 bit binary floating point value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.DecimalFloat32">
+            <summary>32 bit decimal floating point value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.DecimalFloat64">
+            <summary>64 bit decimal floating point value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONBCD.DecimalFloat128">
+            <summary>128 bit decimal floating point value</summary>
+        </member>
+        <member name="T:Goedel.Protocol.JsonBcdReader">
+            <summary>
+            JSON reader supporting JSON-B, JSON-C and JSON-D extended encodings.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonBcdReader.JSONReaderFactory">
+            <summary>
+            Returns a factory delegate that returns a reader of this type.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.#ctor(System.IO.Stream)">
+            <summary>
+            Construct a JSONReader from a byte Stream.
+            </summary>
+            <param name="input">The stream to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.#ctor(System.Byte[])">
+            <summary>
+            Construct a JSONReader from a byte array.
+            </summary>
+            <param name="Input">The data to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.Lexer">
+            <summary>Get the next lexical token.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.ReadBinaryData">
+            <summary>
+            Read binary data in monolithic mode, i.e. return the entire chunk.
+            </summary>
+            <returns>The binary data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.ReadBinaryToken">
+            <summary>
+            Begin reading data chunk in incremental mode.
+            </summary>
+            <returns>If true, this is a terminal chunk and there is no more data to be read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.ReadBinaryData(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read a partial binary value.
+            </summary>
+            <param name="data">Buffer to write the data read to.</param>
+            <param name="offset">Byte offset from start of <paramref name="data"/></param>
+            <param name="count">Number of bytes to be read.</param>
+            <returns>Number of bytes read or 0 if the end of the stream is reached.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.NextObject">
+            <summary>
+            Attempt to read an object from input.
+            </summary>
+            <returns>True if there is a next object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.NextArray">
+            <summary>
+            Return true if there is a following array item.
+            </summary>
+            <returns>True if there is a following array item, otherwise 
+            false</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.ReadBinaryIncremental(System.Byte[]@)">
+            <summary>
+            Attempt to read a binary object in incremental mode.
+            </summary>
+            <param name="chunk">The data read.</param>
+            <returns>True if there is more data to be read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.ReadBinary">
+            <summary>
+            Attempt to read binary data from input.
+            </summary>
+            <returns>The data read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBcdReader.ReadString">
+            <summary>
+            Attempt to read string from input.
+            </summary>
+            <returns>The data read</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JsonBWriter">
+            <summary>
+            JSON Writer for JSON-B, a superset of JSON encoding with codes that permit
+            efficient encoding of binary data and strings and encoding of floating point
+            values without loss of precision.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.#ctor(System.IO.Stream)">
+            <summary>
+            Create a new writer instance with the output <paramref name="Output"/>. 
+            If <paramref name="Output"/> is null, a memory stream is created and
+            used as the output.
+            </summary>
+            <param name="Output">Output buffer</param> 
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteTag(System.Byte,System.Int64)">
+            <summary>
+            Write out a Tag-Length value using the shortest possible production
+            </summary>
+            <param name="Code">Base code.</param>
+            <param name="Length">Length of data to follow.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteTag(System.IO.Stream,System.Byte,System.Int64)">
+            <summary>
+            Write out a Tag-Length value using the shortest possible production
+            to <paramref name="Output"/>.
+            </summary>
+            <param name="Output">The output stream to write to.</param>
+            <param name="Code">Base code.</param>
+            <param name="Length">Length of data to follow.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger(System.Int64)">
+            <summary>Write integer.</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteToken(System.String,System.Int32)">
+            <summary>
+            Write Tag to the stream
+            </summary>
+            <param name="Tag">Tag text.</param>
+            <param name="IndentIn">Current indent level.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger32(System.Int32)">
+            <summary>Write 32 bit integer.</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger64(System.Int64)">
+            <summary>Write 64 bit integer.</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteFloat32(System.Single)">
+            <summary>Write float32</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteFloat64(System.Double)">
+            <summary>Write float64</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteBoolean(System.Boolean)">
+            <summary>Write boolean.</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteString(System.String)">
+            <summary>Write string without escaping.</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteBinary(System.IO.Stream,System.Byte[],System.Int32,System.Int32)">
+            <summary>Write binary data as length-data item.</summary>
+            <param name="buffer">Value to write</param>
+            <param name="Stream">The output stream.</param>
+            <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+            at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param> 
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteBinary(System.Byte[],System.Int32,System.Int32)">
+            <summary>Write binary data as length-data item.</summary>
+            <param name="buffer">Value to write</param>
+            <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+            at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param> 
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteBinaryBegin(System.Int64,System.Boolean)">
+            <summary>Write binary data as length-data item.</summary>
+            <param name="Length">The length of the chunk to be written.</param>
+            <param name="Terminal">If true, this is the last chunk in a sequence.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteBinaryPart(System.Byte[],System.Int64,System.Int64)">
+            <summary>Write binary data as length-data item.</summary>
+            <param name="Data">Value to write</param>
+            <param name="First">The index position of the first byte in the input data to process</param>
+            <param name="Length">The number of bytes to process</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteArrayStart">
+            <summary>Mark start of array element</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteArraySeparator(System.Boolean@)">
+            <summary>Mark middle of array element</summary>
+            <param name="first">If true, this is the first element. 
+            The value is set false on each call</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteArrayEnd">
+            <summary>Mark end of array element</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteObjectStart">
+            <summary>Mark start of object element</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteObjectSeparator(System.Boolean@)">
+            <summary>Mark middle of object element</summary>
+            <param name="first">If true, this is the first element. 
+            The value is set false on each call</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteObjectEnd">
+            <summary>Mark end of object element</summary>
+        </member>
+        <member name="T:Goedel.Protocol.JSONCWriter">
+            <summary>
+            JSON Writer for JSON-C, which extends the JSON-B format to add support 
+            for compression.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JSONCWriter.#ctor(System.IO.Stream,System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Create a new JSON Writer using the specified output buffer. If the buffer has
+            an output stream defined, text will be written to the stream.
+            </summary>
+            <param name="Output">Output buffer</param>
+            <param name="TagDictionary">Tag dictionary to ues for compression</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONCWriter.WriteToken(System.String,System.Int32)">
+            <summary>
+            Write Tag to the stream
+            </summary>
+            <param name="Tag">Tag text.</param>
+            <param name="IndentIn">Current indent level.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONCWriter.WriteString(System.String)">
+            <summary>Write string.</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="T:Goedel.Protocol.JSONDebugWriter">
+            <summary>
+            JSON Writer that presents data in a forat suitable for use in
+            documentation. All data is wrapped to fit a 72 character line.
+            Large data items are replaced with ellipsis, etc.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JSONDebugWriter.Threshold">
+            <summary>Threshold for redacting binary data blocks.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JSONDebugWriter.#ctor">
+            <summary>
+            Create a new JSON Writer.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JSONDebugWriter.#ctor(System.IO.MemoryStream)">
+            <summary>
+            Create a new JSON Writer using the specified output buffer. If the buffer has
+            an output stream defined, text will be written to the stream.
+            </summary>
+            <param name="Output">The output stream.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONDebugWriter.NewLine">
+            <summary>Write newline character</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JSONDebugWriter.WriteToken(System.String,System.Int32)">
+            <summary>
+            Write Tag to the stream
+            </summary>
+            <param name="Tag">Tag text.</param>
+            <param name="IndentIn">Current indent level.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONDebugWriter.WriteString(System.String)">
+            <summary>Write string.</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JSONDebugWriter.WriteBinary(System.Byte[],System.Int32,System.Int32)">
+            <summary>Write binary data as Base64Url encoded string.</summary>
+            <param name="Data">Value to write</param>
+            <param name="offset">The zero-based byte offset in <paramref name="Data"/>
+            at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param> 
+        </member>
+        <member name="M:Goedel.Protocol.JSONDebugWriter.Write(Goedel.Protocol.JsonObject,System.Boolean)">
+            <summary>
+            Convert a JSONObject to redacted form.
+            </summary>
+            <param name="JSONObject">The object to convert</param>
+            <param name="Tagged">If true, the object is wrapped with its type tag.</param>
+            <returns>The input as a redacted JSON encoded string.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JSONDebugWriter.WriteArrayEnd">
+            <summary>Mark end of array element</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Request">
+            <summary>
+            The base class for transaction requests
+            </summary>
+             <summary>
+            
+             Base class for all request messages.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Request.Service">
+             <summary>
+            Name of the Service to which the request is directed.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Request.ID">
+             <summary>
+            Optional unique transaction request used to detect replay attacks and 
+            duplicates.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Request._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Request.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Request._Factory">
+            <summary>
+            Factory method. Throws exception as this is an abstract class.
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Request.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Request.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Request.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Protocol.Request.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Protocol.Response">
+            <summary>
+            Base class for all responses.
+            </summary>
+             <summary>
+            
+             Base class for all response messages. Contains only the
+             status code and status description fields.
+             A service MAY return either the response message specified
+             for that transaction or any parent of that message. 
+             Thus the RecryptResponse message MAY be returned in response 
+             to any request.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Response.StatusCode">
+            <summary>
+            Numeric status return code value
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Response.StatusDescriptionCode">
+            <summary>
+            Description of the status code (for debugging).
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Response.Success">
+            <summary>
+            Returns true if the response indicates the transaction completed successfully
+            </summary>
+            <returns>true if the response indicates the transaction completed successfully</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Response.Error">
+            <summary>
+            Returns true if the response indicates the transaction failed.
+            </summary>
+            <returns>true if the response indicates the transaction failed</returns>
+        </member>
+        <member name="P:Goedel.Protocol.Response.Status">
+             <summary>
+            Major status return code. The SMTP/HTTP scheme of 2xx = Success,
+            3xx = incomplete, 4xx = failure is followed.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Response.StatusExtended">
+             <summary>
+            Application level status report giving additional information.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Response.StatusDescription">
+             <summary>
+            Text description of the status return code for debugging 
+            and log file use.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Response.ID">
+             <summary>
+            The request to which the response corresponds.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Response._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Response.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Response._Factory">
+            <summary>
+            Factory method. Throws exception as this is an abstract class.
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Response.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Response.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Response.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Protocol.Response.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Protocol.IVerifiedAccount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.IVerifiedAccount.AccountAddress">
+            <summary>
+            The account identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.IVerifiedAccount.AuthenticatedProfileUDF">
+            <summary>
+            The profile identifer.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.IVerifiedAccount.AuthenticationKeyIdentifier">
+            <summary>
+            The authentication key identifier.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.ObjectEncoding">
+            <summary>
+            Encoding types for unified encoding
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.ObjectEncoding.JSON">
+            <summary>JSON encoding</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ObjectEncoding.JSON_A">
+            <summary>JSON-A encoding</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ObjectEncoding.JSON_B">
+            <summary>JSON-B encoding</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ObjectEncoding.JSON_C">
+            <summary>JSON-C encoding</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ObjectEncoding.JSON_D">
+            <summary>JSON-D encoding</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ObjectEncoding.XML">
+            <summary>XML encoding</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ObjectEncoding.ASN">
+            <summary>ASN encoding</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ObjectEncoding.RFC822">
+            <summary>RFC822 header style encoding</summary>
+        </member>
+        <member name="T:Goedel.Protocol.JsonFactoryDelegate">
+            <summary>
+            Factory delegate that returns a JSONObject.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.JsonObject">
+            <summary>
+            Base class for JSON Objects.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._PrimaryKey">
+            <summary>
+            Primary key to use for the object.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonObject.Enveloped">
+            <summary>The enveloped object data.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JsonObject.KeyLocate">
+            <summary>Key collection to be used to decrypt enveloped data within the object.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._Keys">
+            <summary>
+            Secondary keys describing the object
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._KeyValues">
+            <summary>
+            Secondary key/values pairs describing the object
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._Metadata">
+            <summary>
+            Metadata header describing use in persistence store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._Tag">
+            <summary>
+            Tag value used as substitute for reflection internally.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonObject.__Tag">
+            <summary>
+            Tag value used as substitute for reflection internally.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject._Factory">
+            <summary>
+            Factory method. Throws exception as this is an abstract class.
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject.JSONWriterFactory">
+            <summary>
+            Factory method used as default for ToString methods.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject.TagDictionary">
+            <summary>The tag dictionary for decoding entries.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.AddDictionary(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
+            <summary>
+            Add a dictionary to the persistence store decoder.
+            </summary>
+            <param name="dictionary">The dictionary to add</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.AddDictionary(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate}@)">
+            <summary>
+            Append the values from the tag dictionary of this type to <paramref name="dictionary"/>.
+            </summary>
+            <param name="dictionary">The dictionary to append the values to.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.#ctor">
+            <summary>
+            Base constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.DeepCopy">
+            <summary>
+            If implemented in the child class, performs a deep copy of the structure.
+            </summary>
+            <returns>Deep copy of the object with all referenced objects
+            copied.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.ToString">
+            <summary>
+            Convert object to string in JSON form
+            </summary>
+            <returns>Data as string.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.ToBuilder(System.Text.StringBuilder,System.Int32)">
+            <summary>
+            Pretty print the object to the string builder <paramref name="builder"/>
+            prefixed by <paramref name="indent"/> indent units.
+            </summary>
+            <param name="builder"></param>
+            <param name="indent">Number of indentation units.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.ToConsole(System.Int32)">
+            <summary>
+            Write the object to the console using the method defined by ToBuilder.
+            </summary>
+            <param name="indent">Number of indentation units.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.GetUTF8">
+            <summary>
+            Convert object to string in JSON form.
+            </summary>
+            <returns>Data as string.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.GetBytes(System.Boolean,Goedel.Protocol.ObjectEncoding)">
+            <summary>
+            Convert object to byte sequence in JSON form.
+            </summary>
+            <param name="tag">If true, serialization is tagged with the object type.</param>
+            <param name="objectEncoding">The object encoding to use for serialization.</param>
+            <returns>Data as byte sequence.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.GetJsonWriter(Goedel.Protocol.ObjectEncoding,System.IO.Stream)">
+            <summary>
+            Return a JsonWriter for the encoding <paramref name="objectEncoding"/>.
+            </summary>
+            <param name="objectEncoding">The object encoding to use for serialization.</param>
+            <param name="output">The output stream.</param>
+            <returns>The JsonWriter.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Serialize(Goedel.Protocol.Writer,System.Boolean)">
+            <summary>
+            Serialize to the specified Writer.
+            </summary>
+            <param name="writer">Writer to serialize the data to</param>
+            <param name="tag">If true, serialization is tagged with the object type.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.PreEncode">
+            <summary>
+            Routine called before serializing the data structure. This may be used to perform
+            tasks such as serializing a sub-field to a byte array and/or signing subfields.
+            </summary>
+            <remarks>There is a potential for conflict between PostDecode and PreEncode, particularly
+            when debugging. </remarks>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.PostDecode">
+            <summary>
+            Routine called afer deserializing the wire form. This may be used to cause deserialization
+            of nested binary fields.
+            </summary>
+            <remarks>There is a potential for conflict between PostDecode and PreEncode, particularly
+            when debugging. </remarks>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize to the specified Writer.
+            </summary>
+            <param name="writer">Writer to serialize the data to</param>
+            <param name="first">This is the first field in the object being serialized. This 
+            value is set to false on exit.</param>
+            <param name="wrap">Wrap the objects for formatting.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize to the specified Writer. This is a dummy routine
+            whose sole purpose is to prevent 'new' causing issues in derived
+            classes.
+            </summary>
+            <param name="writer">Writer to serialize the data to</param>
+            <param name="first">This is the first field in the object being serialized. This 
+            value is set to false on exit.</param>
+            <param name="wrap">Wrap the objects for formatting.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.From(System.Byte[])">
+            <summary>
+            Factory method to construct object from byte data.
+            </summary>
+            <param name="data">Source</param>
+            <returns>Constructed object</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.From(System.String)">
+            <summary>
+            Factory method to construct object from string data.
+            </summary>
+            <param name="input">Source</param>
+            <returns>Constructed object</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream.
+            </summary>
+            <param name="input">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Deserialize(System.String)">
+            <summary>
+            Deserialize the input string to populate this object
+            </summary>
+            <param name="input">Input string</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Deserialize(Goedel.Protocol.JsonReader)">
+            <summary>
+            Deserialize the input string to populate this object
+            </summary>
+            <param name="jsonReader">Input data</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Deserialize the input stream to populate this object having recieved the specified tag.
+            </summary>
+            <param name="jsonReader">Input data</param>
+            <param name="Tag">Input tag</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.ToFile(System.String,Goedel.Protocol.DataEncoding,System.Boolean)">
+            <summary>
+            Write the object out to a file.
+            </summary>
+            <param name="fileName">Name of the file to create.</param>
+            <param name="dataEncoding">The encoding to use</param>
+            <param name="tagged">If true, tag the output with the object type</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Merge(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate},System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate},System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
+            <summary>
+            Merge two or more token dictionaries to produce a combined dictionary.
+            </summary>
+            <param name="Dictionary1">First dictionary to merge</param>
+            <param name="Dictionary2">Second dictionary to merge</param>
+            <param name="Dictionary3">Third dictionary to merge</param>
+            <returns>Merged dictionaries</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Append(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate},System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
+            <summary>
+            Append elements of one dictionary to another.
+            </summary>
+            <param name="Base">Base dictionary to merge into</param>
+            <param name="Dictionary">Second dictionary to merge</param>
+        </member>
+        <member name="T:Goedel.Protocol.JSONReaderFactoryDelegate">
+            <summary>
+            Delegate method for creating structured readers
+            </summary>
+            <param name="Data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.JsonReader">
+            <summary>
+            JSON Reader base class. Note that this implementation uses a hand coded
+            FSR rather than one generated with FSRGen. This should be fixed.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.JsonReader.CharType">
+            <summary>
+            Character type used by the FSM.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Quote">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.LeftBrace">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.RightBrace">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.LeftSquare">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.RightSquare">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Solidus">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Zero">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Digit">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Period">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Colon">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Comma">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Minus">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Plus">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Ee">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.L_u">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Escaped">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Hex">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Lower">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.WS">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.EOR">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharType.Other">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.GetCharType(System.Char)">
+            <summary>
+            Convert character to character type.
+            </summary>
+            <param name="c">Input character</param>
+            <returns>Character class</returns>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.States">
+            <summary>State transition table</summary>
+        </member>
+        <member name="T:Goedel.Protocol.JsonReader.Action">
+            <summary>Actions to perform on transitions</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Action.Ignore">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Action.Add">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Action.Complete">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Action.AddComplete">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Action.Incomplete">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Actions">
+            <summary>Actions to perform on transitions</summary>
+        </member>
+        <member name="T:Goedel.Protocol.JsonReader.Token">
+            <summary>Tokens to return.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Invalid">
+            <summary>The token is invalid</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.StartObject">
+            <summary>Start object token '{' </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.EndObject">
+            <summary>End object token '}' </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.StartArray">
+            <summary>Start array token '{'</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.EndArray">
+            <summary>End array token '}'</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Colon">
+            <summary>Colon</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Comma">
+            <summary>Comma</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.String">
+            <summary>String (UTF8)</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Tag">
+            <summary>String Tag(UTF8)</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Number">
+            <summary>Number</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Integer">
+            <summary>An Integer Number</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Real32">
+            <summary>A Real32 Number</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Real64">
+            <summary>A Real64 Number</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Litteral">
+            <summary>A string litteral, for internal use.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.True">
+            <summary>The string litteral true</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.False">
+            <summary>The string litteral false</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Null">
+            <summary>The string litteral null</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.EndRecord">
+            <summary>End of record</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Binary">
+            <summary>Binary data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.JSONBCD">
+            <summary>JSON-BCD extended tag, for internal use</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.BOM">
+            <summary>Byte Order Mark</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Token.Empty">
+            <summary></summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Tokens">
+            <summary>Tokens to be returned if the FSR stops in the specified state.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Line">
+            <summary>The Line Number (used for error reporting)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Column">
+            <summary>The Colum number (used for error reporting)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Lookahead">
+            <summary>If true there is a token in the lookahead buffer.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonReader.ResultString">
+            <summary>The current token string value</summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonReader.ResultBinary">
+            <summary>The current token binary value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.ResultFloat">
+            <summary>Last Real32/single precision floating point value.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.ResultDouble">
+            <summary>Last Real64/double precision floating point value.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.ResultInt64">
+            <summary>Last integer value.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.ResultBigInteger">
+            <summary>Last big integer value.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.TokenType">
+            <summary>The last token type read</summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonReader.EOF">
+            <summary>If true, have reached the end of the current record.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Trace">
+            <summary>If true, emit trace value for debugging.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonReader.JSONReaderFactory">
+            <summary>
+            Delegate method for creating structured readers
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.CharacterInput">
+            <summary>
+            The underlying character stream.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.#ctor(System.IO.TextReader)">
+            <summary>
+            Construct a JSONReader from a TextReader stream.
+            </summary>
+            <param name="Input">The stream to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.#ctor(System.String)">
+            <summary>
+            Construct a JSONReader from a string.
+            </summary>
+            <param name="Input">The string to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.#ctor(System.IO.Stream)">
+            <summary>
+            Construct a JSONReader from a byte Stream.
+            </summary>
+            <param name="Input">The stream to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.#ctor(System.Byte[])">
+            <summary>
+            Construct a JSONReader from a byte array.
+            </summary>
+            <param name="Input">The data to be read.</param>
+        </member>
+        <member name="P:Goedel.Protocol.JsonReader.Terminal">
+            <summary>
+            If true, the last token returned was a non-terminal, i.e. chunked production.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.PeekToken">
+            <summary>Get the next token.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonReader.Incomplete">
+            <summary>
+            If true, there is additional data to be collected.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.GetToken(System.Boolean)">
+            <summary>Get the next token.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.Lexer">
+            <summary>Get the next lexical token.
+            <para>Note that this reader only performs lexical analysis of
+            the ASCII oriented parts of the JSON syntax, that is
+            everything other than strings.</para></summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.StartObject">
+            <summary>
+            Attempt to read an object start from input.
+            </summary>
+            <returns>True if there is an object start item, otherwise 
+            false</returns> 
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.EndObject">
+            <summary>
+            Attempt to read an object end from input.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.NextObject">
+            <summary>
+            Attempt to read an object from input.
+            </summary>
+            <returns>True if there is a next object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadToken">
+            <summary>
+            Attempt to read a token from input.
+            </summary>
+            <returns>The token read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadInteger32">
+            <summary>
+            Attempt to read Integer 32 from input.
+            </summary>
+            <returns>The data read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadInteger64">
+            <summary>
+            Attempt to read Integer 64 from input.
+            </summary>
+            <returns>The data read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadBoolean">
+            <summary>
+            Attempt to read boolean from input.
+            </summary>
+            <returns>The data read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadBinary">
+            <summary>
+            Attempt to read binary data from input.
+            </summary>
+            <returns>The data read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadBinaryIncremental(System.Byte[]@)">
+            <summary>
+            Attempt to read a binary object in incremental mode.
+            </summary>
+            <param name="Chunk">The data read.</param>
+            <returns>True if there is more data to be read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadBinaryData">
+            <summary>
+            Read binary data. This method is not supported on the base JSON reader.
+            </summary>
+            <returns>The binary data read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadString">
+            <summary>
+            Attempt to read string from input.
+            </summary>
+            <returns>The data read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadDateTime">
+            <summary>
+            Attempt to read date time from input.
+            </summary>
+            <returns>The data read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.StartArray">
+            <summary>
+            Attempt to read start of array from input.
+            </summary>
+            <returns>True if there is an array start token, otherwise 
+            false</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.NextArray">
+            <summary>
+            Return true if there is a following array item.
+            </summary>
+            <returns>True if there is a following array item, otherwise 
+            false</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.EndArray">
+            <summary>
+            Attempt to read an object end from input.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadTaggedObject(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
+            <summary>
+            Read a tagged object from this stream.
+            </summary>
+            <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
+            <returns>The deserialized object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadFile``1(System.String,System.Boolean)">
+            <summary>
+            Convenience method, reads a file in the 
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="file"></param>
+            <param name="tagged"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.JSONWriterFactoryDelegate">
+            <summary>
+            Factory delegate returning a JSONWriter
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.JsonWriter">
+            <summary>
+            Base class for writers that format a JSON data object. This is usually
+            but not necessarily in JSON encoding. In a project that was required to
+            support XML and ASN.1 encodings, these could be implemented as
+            JSONWriter subclasses.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonWriter.ConversionFormat">
+            <summary>The conversion format to be used for Base64 Binary encoding.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonWriter.Indent">
+            <summary>The current indent level</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.NewLine">
+            <summary>Write newline character</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.ToString">
+            <summary>
+            Return the contents of the writer as a string.
+            </summary>
+            <returns>Current buffered contents as string</returns>
+        </member>
+        <member name="P:Goedel.Protocol.JsonWriter.GetUTF8">
+            <summary>
+            Return the contents of the writer as a string.
+            </summary>
+            <returns>Current buffered contents as string</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.#ctor(System.IO.Stream)">
+            <summary>
+            Create a new writer instance with the output <paramref name="output"/>. 
+            If <paramref name="output"/> is null, a memory stream is created and
+            used as the output.
+            </summary>
+            <param name="output">Output buffer</param> 
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.JSONWriterFactory">
+            <summary>
+            Create a new JSON Writer.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteToken(System.String,System.Int32)">
+            <summary>
+            Write Tag to the stream
+            </summary>
+            <param name="tag">Tag text.</param>
+            <param name="indentIn">Current indent level.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteInteger32(System.Int32)">
+            <summary>Write 32 bit integer.</summary>
+            <param name="data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteInteger64(System.Int64)">
+            <summary>Write 64 bit integer</summary>
+            <param name="data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteFloat32(System.Single)">
+            <summary>Write float32</summary>
+            <param name="data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteFloat64(System.Double)">
+            <summary>Write float64</summary>
+            <param name="data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteBoolean(System.Boolean)">
+            <summary>Write boolean.</summary>
+            <param name="data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteString(System.String)">
+            <summary>Write string.</summary>
+            <param name="data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteBinary(System.Byte[],System.Int32,System.Int32)">
+            <summary>Write binary data as Base64Url encoded string.</summary>
+            <param name="buffer">Value to write</param>
+            <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+            at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param> 
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteBinaryBegin(System.Int64,System.Boolean)">
+            <summary>Begin partial write of binary data. 
+            This is not yet implemented for standard streams.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteBinaryPart(System.Byte[],System.Int64,System.Int64)">
+            <summary>Write binary data as length-data item.</summary>
+            <param name="data">Value to write</param>
+            <param name="first">The index position of the first byte in the input data to process</param>
+            <param name="length">The number of bytes to process</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteDateTime(System.Nullable{System.DateTime})">
+            <summary>Write Date-Time value in RFC3339 format.</summary>
+            <param name="data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteArrayStart">
+            <summary>Mark start of array element</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteArraySeparator(System.Boolean@)">
+            <summary>Mark middle of array element</summary>
+            <param name="first">If true, this is the first element. 
+            The value is set false on each call</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteArrayEnd">
+            <summary>Mark end of array element</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteObjectStart">
+            <summary>Mark start of object element</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteObjectSeparator(System.Boolean@)">
+            <summary>Mark middle of object element</summary>
+            <param name="first">If true, this is the first element. 
+            The value is set false on each call</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonWriter.WriteObjectEnd">
+            <summary>Mark end of object element</summary>
+        </member>
+        <member name="T:Goedel.Protocol.MessageType">
+            <summary>
+            Message types
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.MessageType.Request">
+            <summary>Request</summary>
+        </member>
+        <member name="F:Goedel.Protocol.MessageType.Response">
+            <summary>Response</summary>
+        </member>
+        <member name="T:Goedel.Protocol.BoundMessage">
+            <summary>
+            Message bound to transport context
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.BoundMessage.Payload">
+            <summary>The payload data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.BoundMessage.Ticket">
+            <summary>The authentication ticket</summary>
+        </member>
+        <member name="F:Goedel.Protocol.BoundMessage.MAC">
+            <summary>The message authentication code.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.BoundMessage.HTTPBinding">
+            <summary>The message as a HTTP string.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.BoundMessage.HTTP">
+            <summary>Convert message to HTTP</summary>
+            <returns>The HTTP message value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.BoundMessage.#ctor">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.BoundMessage.ByteCount">
+            <summary>The length of the payload data.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.BoundMessage.Base64Ticket">
+            <summary>The ticket in Base64.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.BoundMessage.Base64Mac">
+            <summary>The message authentication code in Base64.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.BoundMessage.#ctor(System.String)">
+            <summary>Construct from a payload string.</summary>
+            <param name="PayloadIn">The payload to construct from</param>
+        </member>
+        <member name="T:Goedel.Protocol.BoundRequest">
+            <summary>The request message</summary>
+        </member>
+        <member name="M:Goedel.Protocol.BoundRequest.#ctor(System.String)">
+            <summary>Construct from string payload.</summary>
+            <param name="PayloadIn">The string payload to wrap.</param>
+        </member>
+        <member name="M:Goedel.Protocol.BoundRequest.HTTP">
+            <summary>Present message as HTTP</summary>
+            <returns>The formatted message.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.BoundResponse">
+            <summary>The response message</summary>
+        </member>
+        <member name="F:Goedel.Protocol.BoundResponse.ErrorBadMac">
+            <summary>Constant for invalid Mac response.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.BoundResponse.ErrorUnknown">
+            <summary>Constant for invalid message error.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.BoundResponse.ErrorSyntax">
+            <summary>Constant for bad request.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.BoundResponse.Status">
+            <summary>The status value (defaults to 200)</summary>
+        </member>
+        <member name="F:Goedel.Protocol.BoundResponse.StatusDescription">
+            <summary>The status description.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.BoundResponse.#ctor(System.String)">
+            <summary>Construct response for the specified payload.</summary>
+            <param name="PayloadIn">The message payload.</param>
+        </member>
+        <member name="M:Goedel.Protocol.BoundResponse.#ctor(System.Int32,System.String)">
+            <summary>Construct response for the specified result code.</summary>
+            <param name="ErrorCode">The error code to return.</param>
+            <param name="Explanation">Description of the error.</param>
+        </member>
+        <member name="M:Goedel.Protocol.BoundResponse.HTTP">
+            <summary>Present message as HTTP</summary>
+            <returns>The message value.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Message">
+             <summary>
+            
+             Base class for all PROTOGEN messages
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Message._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Message.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Message._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Message.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Protocol.Version">
+             <summary>
+            
+             Describes a protocol version.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Version.Major">
+             <summary>
+            Major version number of the service protocol. A higher
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Version.Minor">
+             <summary>
+            Minor version number of the service protocol.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Version.Encodings">
+             <summary>
+            Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B)
+            supported by the service. If no encodings are specified, the
+            JSON encoding is assumed.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Version.URI">
+             <summary>
+            The preferred URI for this service. This MAY be used to effect
+            a redirect in the case that a service moves.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Version._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Version.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Version._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Version.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Version.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Version.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Protocol.Version.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Protocol.Encoding">
+             <summary>
+            
+             Describes a message content encoding.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Encoding.ID">
+             <summary>
+            The IANA encoding name
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Encoding.Dictionary">
+             <summary>
+            For encodings that employ a named dictionary for tag or data
+            compression, the name of the dictionary as defined by that 
+            encoding scheme. 
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Encoding._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Encoding.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Encoding._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Encoding.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Encoding.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Encoding.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Protocol.Encoding.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Protocol.HelloRequest">
+             <summary>
+            
+             Request service description.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.HelloRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.HelloRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.HelloRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Protocol.HelloRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.HelloRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.HelloRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Protocol.HelloRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Protocol.HelloResponse">
+             <summary>
+            
+             Always reports success. Describes the configuration of the service.
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.HelloResponse.Version">
+             <summary>
+            Enumerates the protocol versions supported
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.HelloResponse.Alternates">
+             <summary>
+            Enumerates alternate protocol version(s) supported
+             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.HelloResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.HelloResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.HelloResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Protocol.HelloResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.HelloResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Protocol.HelloResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Protocol.HelloResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Protocol.NamespaceDoc">
+            <summary>
+            Support library for Web Services and Clients generated using the PROTOGEN tool.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Reader">
+            <summary>
+            Abstract JSON object deserializer
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.StartObject">
+            <summary>Get start of object</summary>
+            <returns>True if start of object found</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.EndObject">
+            <summary>Get end of object</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.NextObject">
+            <summary>Get next object</summary>
+            <returns>Value read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.ReadToken">
+            <summary>Read token</summary>
+            <returns>Value read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.ReadInteger32">
+            <summary>Read Integer32</summary>
+            <returns>Value read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.ReadInteger64">
+            <summary>Read Integer64</summary>
+            <returns>Value read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.ReadBoolean">
+            <summary>Read boolen value</summary>
+            <returns>Value read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.ReadBinary">
+            <summary>Read binary date</summary>
+            <returns>Value read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.ReadBinaryIncremental(System.Byte[]@)">
+            <summary>
+            Attempt to read a binary object in incremental mode.
+            </summary>
+            <param name="Chunk">The data read.</param>
+            <returns>True if there is more data to be read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.ReadString">
+            <summary>Read string</summary>
+            <returns>Value read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.ReadDateTime">
+            <summary>Read date time item</summary>
+            <returns>Value read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.StartArray">
+            <summary>Read</summary>
+            <returns>If true, is an item to read, otherwise have reached end.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.NextArray">
+            <summary>Read next item in array</summary>
+            <returns>If true, is an item to read, otherwise have reached end.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.EndArray">
+            <summary>Get end of object</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Writer">
+            <summary>
+            Abstract JSON object serializer
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Writer.Output">
+            <summary>Output stream</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.Flush">
+            <summary>
+            Flush the output stream.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Writer.GetBytes">
+            <summary>Convert output stream to byte array</summary>
+            <returns>Output stream as byte array</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteToken(System.String,System.Int32)">
+            <summary>Write out the start of a token.</summary>
+            <param name="Tag">Tag to write</param>
+            <param name="Indent">Indent level to write at</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteInteger32(System.Int32)">
+            <summary>Write integer value token</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteInteger64(System.Int64)">
+            <summary>Write integer value token</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteFloat32(System.Single)">
+            <summary>Write integer value token</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteFloat64(System.Double)">
+            <summary>Write integer value token</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteBoolean(System.Boolean)">
+            <summary>Write integer value token</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteString(System.String)">
+            <summary>Write integer value token</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteBinary(System.Byte[],System.Int32,System.Int32)">
+            <summary>Write integer value token</summary>
+            <param name="buffer">Value to write</param>
+            <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+            at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param> 
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteBinary">
+            <summary>Write empty binary data sequence</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteDateTime(System.Nullable{System.DateTime})">
+            <summary>Write integer value token</summary>
+            <param name="Data">Value to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteArrayStart">
+            <summary>Write array start</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteArraySeparator">
+            <summary>Write array separator</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteArraySeparator(System.Boolean@)">
+            <summary>Write array separator</summary>
+            <param name="first">If true, is the first item in array, set to false on exit</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteArrayEnd">
+            <summary>Write array end</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteObjectStart">
+            <summary>Write object start</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteObjectSeparator">
+            <summary>Write array separator</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteObjectSeparator(System.Boolean@)">
+            <summary>Write object separator.</summary>
+            <param name="first">If true, is the first item in array, set to false on exit</param>
+        </member>
+        <member name="M:Goedel.Protocol.Writer.WriteObjectEnd">
+            <summary>Write object end.</summary>
+        </member>
+        <member name="T:Goedel.Protocol.StreamExtension">
+            <summary>
+            Extension methods for streams to output common data types.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.StreamExtension.GetUTF8(System.IO.MemoryStream)">
+            <summary>
+            Convert the contents of a memory stream buffer containing UTF8 data to a string.
+            </summary>
+            <param name="Stream">The memory stream object</param>
+            <returns>The output data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.StreamExtension.GetUTF8(System.IO.Stream)">
+            <summary>
+            Convert the contents of a memory stream buffer containing UTF8 data to a string.
+            </summary>
+            <param name="Stream">The memory stream object</param>
+            <returns>The output data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.StreamExtension.Write(System.IO.Stream,System.Byte)">
+            <summary>
+            Write a single byte to the output stream
+            </summary>
+            <param name="Output">The stream to write the output to</param>
+            <param name="b">The data to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.StreamExtension.Write(System.IO.Stream,System.Byte[],System.Int32,System.Int32)">
+            <summary>Write buffer to to the output stream</summary>
+            <param name="Output">The stream to write the output to</param>
+            <param name="buffer">Data to write</param>
+            <param name="Start">Index of first byte to write</param>
+            <param name="Count">Number of bytes to write.</param>
+        </member>
+        <member name="M:Goedel.Protocol.StreamExtension.Write(System.IO.Stream,System.Char)">
+            <summary>
+            Write character
+            </summary>
+            <param name="Output">The stream to write the output to</param>
+            <param name="c">Character to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.StreamExtension.WriteLine(System.IO.Stream)">
+            <summary>Write newline</summary>
+            <param name="Output">The stream to write the output to</param>
+        </member>
+        <member name="M:Goedel.Protocol.StreamExtension.Write(System.IO.Stream,System.String)">
+            <summary>Write string</summary>
+            <param name="Output">The stream to write the output to</param>
+            <param name="s">Data to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.StreamExtension.Write(System.IO.Stream,System.DateTime)">
+            <summary>Write out the Date Time as a string in RFC3339 Format</summary>
+            <param name="Output">The stream to write the output to</param>
+            <param name="Data">Data to write</param>
+        </member>
+        <member name="T:Goedel.Protocol.WrapWriter">
+            <summary>
+            Variant of the textwriter class that performs pretty print formatting on
+            the output.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.WrapWriter.#ctor(System.IO.TextWriter)">
+            <summary>
+            Construct a new WrapWriter.
+            </summary>
+            <param name="output">Base textwriter stream to write output to.</param>
+        </member>
+        <member name="M:Goedel.Protocol.WrapWriter.Wrap(System.String)">
+            <summary>
+            Wrap the input string, inserting linebreaks where necessary.
+            </summary>
+            <param name="input">The input string</param>
+            <returns>The wrapped output string</returns>
+        </member>
+        <member name="F:Goedel.Protocol.WrapWriter.Line">
+            <summary>
+            Line count.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.WrapWriter.Column">
+            <summary>
+            Column count.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.WrapWriter.Width">
+            <summary>
+            Column width.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.WrapWriter.BreakAt">
+            <summary>
+            Set of valid break points in addition to white space.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.WrapWriter.MinLeading">
+            <summary>
+            Leading space to be added to every line.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.WrapWriter.WrappedLeading">
+            <summary>
+            Additional leading space to add on wrapped lines.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.WrapWriter.Encoding">
+            <summary>
+            The output charater encoding.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.WrapWriter.Dispose(System.Boolean)">
+            <summary>
+            Dispose method.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Goedel.Protocol.WrapWriter.Flush">
+            <summary>
+            Force write of all characters to the output.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.WrapWriter.Write(System.Char[])">
+            <summary>
+            Write buffer to the output.
+            </summary>
+            <param name="buffer">data to write.</param>
+        </member>
+        <member name="M:Goedel.Protocol.WrapWriter.Write(System.String)">
+            <summary>
+            Write string to the output.
+            </summary>
+            <param name="value">Data to write.</param>
+        </member>
+        <member name="F:Goedel.Protocol.WrapWriter.TabStop">
+            <summary>
+            Number of spaces per tab stop.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.WrapWriter.Write(System.Char)">
+            <summary>
+            Write character to output stream.
+            </summary>
+            <param name="c">Character to write</param>
+        </member>
+        <member name="M:Goedel.Protocol.WrapWriter.ToString">
+            <summary>
+            Convert pending data to string.
+            </summary>
+            <returns>The string value</returns>
+        </member>
+    </members>
+</doc>

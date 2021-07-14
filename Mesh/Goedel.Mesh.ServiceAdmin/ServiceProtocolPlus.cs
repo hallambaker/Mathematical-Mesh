@@ -29,48 +29,9 @@ using System.Collections.Generic;
 
 namespace Goedel.Mesh.ServiceAdmin {
     public partial class Configuration {
-        bool processed = false;
-
-        ///<summary>Dictionary mapping service name to configuiration.</summary> 
-        public Dictionary<string, ServiceConfiguration> DictionaryService { get;}  = new();
-
-        /// <summary>
-        /// Perform post processing of a configuration to resolve identifiers to objects
-        /// etc.
-        /// </summary>
-        public void PostProcess() {
-            if (processed) {
-                return;
-                }
-            processed = true;
-
-            foreach (var entry in Entries) {
-                if (entry is ServiceConfiguration serviceConfiguration) {
-
-                    DictionaryService.Add(serviceConfiguration.Id, serviceConfiguration);
-
-                    }
-
-                }
 
 
-            foreach (var entry in Entries) {
-                if (entry is HostConfiguration hostConfiguration) {
 
-                    hostConfiguration.ServiceConfigs = new();
-
-                    foreach (var service in hostConfiguration.Services) {
-                        if (DictionaryService.TryGetValue(service, out var config)) {
-                            hostConfiguration.ServiceConfigs.Add(config);
-                            config.DefaultIp ??= hostConfiguration.IP[0];
-                            }
-
-                        }
-
-
-                    }
-                }
-            }
         }
 
 
@@ -81,17 +42,14 @@ namespace Goedel.Mesh.ServiceAdmin {
 
         #region // Properties
 
-        ///<summary>The default IP address</summary> 
-        public string DefaultIp { get; set; }
+
 
 
         
 
         #endregion 
-
         #region // Destructor
         #endregion 
-
         #region // Constructors
         #endregion 
 
@@ -104,8 +62,7 @@ namespace Goedel.Mesh.ServiceAdmin {
 
     public partial class HostConfiguration {
 
-        ///<summary>List of referenced service configurations.</summary> 
-        public List<ServiceConfiguration> ServiceConfigs { get; set; }
+
 
 
         }

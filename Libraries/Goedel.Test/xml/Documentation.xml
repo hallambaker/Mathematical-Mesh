@@ -1,0 +1,449 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Test</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Test.MakeConstant">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.AssertTest">
+            <summary>
+            Convenience routines to test various types of assertion and throw
+            an exception using an exception factory method such as the ones
+            created by Exceptional.
+            </summary>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestNotNull(System.Object,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if the specified object is not null. 
+            </summary>
+            <param name="test">The condition</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="Reason">Reason data for filling throw template</param>
+            <param name="Int">Integer default parameter</param>
+            <param name="String">String default parameter</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestNull(System.Object,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="test"/> is not null. 
+            </summary>
+            <param name="test">The object to test to see if it is null</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestFalse(System.Boolean,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="condition"/> is true. 
+            (test, NYIException.Throw, "test was false").AssertTrue();
+            </summary>
+            <param name="condition">The condition</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestTrue(System.Boolean,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="condition"/> is false. 
+            (test, NYIException.Throw, "test was false").AssertTrue();
+            </summary>
+            <param name="condition">The condition</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestEqual(System.Byte[],System.Byte[],Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Test to see if two arrays are equal.
+            </summary>
+            <param name="test1">First test value</param>
+            <param name="test2">Second test value</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestEqual``1(``0,``0,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Test to see if two values are equal.
+            </summary>
+            <param name="test1">First test value</param>
+            <param name="test2">Second test value</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestEqualKeys``3(System.Collections.Generic.Dictionary{``0,``1},System.Collections.Generic.Dictionary{``0,``2},Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>
+            Test to see if the dictionaries <paramref name="first"/> and <paramref name="second"/>
+            contain exactly the same set of keys.
+            </summary>
+            <typeparam name="T">The key type.</typeparam>
+            <typeparam name="U">The value type of the first dictionary (ignored)</typeparam>
+            <typeparam name="V">The value type of the second dictionary (ignored</typeparam>
+            <param name="first">The first dictionary</param>
+            <param name="second">The second dictionary</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestEqualKeys``3(System.Collections.Generic.Dictionary{``0,``1},System.Collections.Generic.SortedDictionary{``0,``2},Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>
+            Test to see if the dictionaries <paramref name="first"/> and <paramref name="second"/>
+            contain exactly the same set of keys.
+            </summary>
+            <typeparam name="T">The key type.</typeparam>
+            <typeparam name="U">The value type of the first dictionary (ignored)</typeparam>
+            <typeparam name="V">The value type of the second dictionary (ignored</typeparam>
+            <param name="first">The first dictionary</param>
+            <param name="second">The second dictionary</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestEqualKeys``3(System.Collections.Generic.SortedDictionary{``0,``1},System.Collections.Generic.SortedDictionary{``0,``2},Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>
+            Test to see if the dictionaries <paramref name="first"/> and <paramref name="second"/>
+            contain exactly the same set of keys.
+            </summary>
+            <typeparam name="T">The key type.</typeparam>
+            <typeparam name="U">The value type of the first dictionary (ignored)</typeparam>
+            <typeparam name="V">The value type of the second dictionary (ignored</typeparam>
+            <param name="first">The first dictionary</param>
+            <param name="second">The second dictionary</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="F:Goedel.Test.Core.DataValidity.Valid">
+            <summary>The data is valid.</summary>
+        </member>
+        <member name="F:Goedel.Test.Core.DataValidity.CorruptSigner">
+            <summary>The public key is invalid.</summary>
+        </member>
+        <member name="F:Goedel.Test.Core.DataValidity.CorruptSignature">
+            <summary>The signature data is modified.</summary>
+        </member>
+        <member name="F:Goedel.Test.Core.DataValidity.CorruptDigest">
+            <summary>The digest data is modified.</summary>
+        </member>
+        <member name="F:Goedel.Test.Core.DataValidity.CorruptPayload">
+            <summary>The body is modified.</summary>
+        </member>
+        <member name="F:Goedel.Test.Core.DataValidity.CorruptAttributes">
+            <summary>An Attribute is modified.</summary>
+        </member>
+        <member name="F:Goedel.Test.Core.DataValidity.CorruptMissing">
+            <summary>The body is modified.</summary>
+        </member>
+        <member name="M:Goedel.Test.Core.CryptoStackDebug.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.DareHeader)">
+            <summary>
+            Create a CryptoStack instance to encode data with the specified cryptographic
+            parameters.
+            </summary>
+        </member>
+        <member name="M:Goedel.Test.Core.CryptoParametersDebug.KeyExchange">
+            <summary>
+            Perform a new key exchange and 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Test.Core.DareRecipientDebug.#ctor(System.Byte[],Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create a DARERecipient using the specified cryptographic parameters.
+            </summary>
+            <param name="MasterKey">The master key</param>
+            <param name="PublicKey">The recipient public key.</param>
+            <returns>The recipient informatin object.</returns>
+        </member>
+        <member name="T:Goedel.Test.TestNotImplemented">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.TestNotImplemented.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.TestNotImplemented.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.TestNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.TestNotImplemented._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.TestNotImplemented.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.TestFailed">
+            <summary>
+            An test validation check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.TestFailed.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.TestFailed.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.TestFailed.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.TestFailed._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.TestFailed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.TestExpectedNotNull">
+            <summary>
+            An test validation check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedNotNull.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedNotNull.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedNotNull.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedNotNull._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.TestExpectedNotNull.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.TestExpectedNull">
+            <summary>
+            An test validation check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedNull.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedNull.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedNull.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedNull._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.TestExpectedNull.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.TestExpectedTrue">
+            <summary>
+            An test validation check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedTrue.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedTrue.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedTrue.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedTrue._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.TestExpectedTrue.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.TestExpectedFalse">
+            <summary>
+            An test validation check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedFalse.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedFalse.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedFalse.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedFalse._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.TestExpectedFalse.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.TestExpectedEqual">
+            <summary>
+            An test validation check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedEqual.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedEqual.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedEqual.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedEqual._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.TestExpectedEqual.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.TestExpectedArraysEqual">
+            <summary>
+            An test validation check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedArraysEqual.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedArraysEqual.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedArraysEqual.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedArraysEqual._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.TestExpectedArraysEqual.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.Compare">
+            <summary>
+            An comparison check on the produced result failed
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.Compare.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.Compare.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.Compare.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.Compare._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.Compare.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.NamespaceDoc">
+            <summary>
+            Various functions to support unit testing.
+            </summary>
+        </member>
+    </members>
+</doc>

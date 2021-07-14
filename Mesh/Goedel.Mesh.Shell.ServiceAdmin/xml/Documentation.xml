@@ -1,0 +1,673 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Mesh.Shell.ServiceAdmin</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.MeshShellException">
+            <summary>
+            Generic error in Mesh Shell library
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.MeshShellException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.MeshShellException.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.MeshShellException.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.MeshShellException._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.MeshShellException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.DidNotMatchExpectedValue">
+            <summary>
+            The calculated fingerprint did not match the expected value.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.DidNotMatchExpectedValue.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.DidNotMatchExpectedValue.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.DidNotMatchExpectedValue.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.DidNotMatchExpectedValue._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.DidNotMatchExpectedValue.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.ProfileFingerprintInvalid">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ProfileFingerprintInvalid.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ProfileFingerprintInvalid.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ProfileFingerprintInvalid.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ProfileFingerprintInvalid._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ProfileFingerprintInvalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.AccountNotFound">
+            <summary>
+            Account not valid
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.AccountNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.AccountNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.AccountNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.AccountNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.AccountNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.ProfileNotFound">
+            <summary>
+            Account not valid
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ProfileNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ProfileNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ProfileNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ProfileNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ProfileNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.DirectoryNotFound">
+            <summary>
+            The directory could not be found
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.DirectoryNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.DirectoryNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.DirectoryNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.DirectoryNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.DirectoryNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.FileNotFound">
+            <summary>
+            The directory could not be found
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.FileNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.FileNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.FileNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.FileNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.FileNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.CommandNotImplemented">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.CommandNotImplemented.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.CommandNotImplemented.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.CommandNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.CommandNotImplemented._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.CommandNotImplemented.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.OptionNotImplemented">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.OptionNotImplemented.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.OptionNotImplemented.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.OptionNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.OptionNotImplemented._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.OptionNotImplemented.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.EnumReporting.eJson">
+            <summary>Case "json": Report output in JSON format</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.EnumReporting.eVerbose">
+            <summary>Case "verbose": Verbose reports</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.EnumReporting.eReport">
+            <summary>Case "report": Report output (default)</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.EnumReporting.eSilent">
+            <summary>Case "silent": Suppress output</summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter">
+            <summary>
+            Service administration CLI
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Default help dispatch
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Describe the application invoked by the command.
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.ServiceConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.ServiceDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.HostIp">
+            <summary>Field accessor for option [ip]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.HostDns">
+            <summary>Field accessor for option [host]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Admin">
+            <summary>Field accessor for option [admin]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.NewFile">
+            <summary>Field accessor for option [out]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.HostDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.All">
+            <summary>Field accessor for option [all]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.HostDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Stop.All">
+            <summary>Field accessor for option [all]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.HostDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Pause.All">
+            <summary>Field accessor for option [all]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Fetch.HostDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Update.HostDns">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.DnsConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.HostName">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.Shell">
+            <summary>
+            The command shell.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.MeshMachine">
+            <summary>The Mesh Machine</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.PublicMeshService">
+            <summary>The Mesh Service Provider.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell._PostProcess(Goedel.Mesh.Shell.ServiceAdmin.ShellResult)">
+            <summary>
+            Post processing action
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Create(Goedel.Mesh.Shell.ServiceAdmin.Create)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Start(Goedel.Mesh.Shell.ServiceAdmin.Start)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Stop(Goedel.Mesh.Shell.ServiceAdmin.Stop)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Pause(Goedel.Mesh.Shell.ServiceAdmin.Pause)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Fetch(Goedel.Mesh.Shell.ServiceAdmin.Fetch)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Update(Goedel.Mesh.Shell.ServiceAdmin.Update)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Verify(Goedel.Mesh.Shell.ServiceAdmin.Verify)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.DNS(Goedel.Mesh.Shell.ServiceAdmin.DNS)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Credential(Goedel.Mesh.Shell.ServiceAdmin.Credential)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.NamespaceDoc">
+            <summary>
+            Service administration shell. Dispatches over methods defined in 
+            <see cref="N:Goedel.Mesh.ServiceAdmin"/> relating to administration of a service of
+            multiple hosts.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.ShellResult">
+             <summary>
+            
+             Classes to be used to test serialization an deserialization.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ShellResult._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ShellResult.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ShellResult._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ShellResult.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ShellResult.Verbose">
+            <summary>
+            Converts the value of this instance to a <see langword="String"/> with 
+            additional details.
+            </summary>
+            <returns>The string value.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.Result">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result.Success">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result.Reason">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.Result.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.#ctor">
+            <summary>
+            Default constructor, initialize the value <see cref="P:Goedel.Mesh.Shell.ServiceAdmin.Result.Success"/> to <see langword="true"/>.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.StringBuilder">
+            <summary>
+            Returns a <see cref="M:Goedel.Mesh.Shell.ServiceAdmin.Result.StringBuilder"/> instance initialized with the success value and
+            the expanded error message reason (if relevant).
+            </summary>
+            <returns>The <see cref="M:Goedel.Mesh.Shell.ServiceAdmin.Result.StringBuilder"/> instance.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.ToString">
+            <summary>
+            Converts the value of this instance to a <see langword="String"/>.
+            </summary>
+            <returns>The current string.</returns>
+        </member>
+    </members>
+</doc>

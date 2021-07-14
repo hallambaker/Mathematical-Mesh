@@ -1,0 +1,22 @@
+<Project DefaultTargets="Build">
+
+	<PropertyGroup>
+		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+		<TargetFramework>net5.0</TargetFramework>
+		<Company>Threshold Secrets LLC.</Company>
+		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
+	</PropertyGroup>
+	
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+		<Exec Command="VSPreBuild" />
+	</Target>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
+		<Exec Command="VSPostBuild" />
+	</Target>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Github'">
+		<DefineConstants>TRACE;_Github_</DefineConstants>
+	</PropertyGroup>
+</Project>

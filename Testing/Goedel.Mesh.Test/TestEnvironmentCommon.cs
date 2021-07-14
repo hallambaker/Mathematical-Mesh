@@ -48,7 +48,7 @@ namespace Goedel.Mesh.Test {
                 MeshMachine = HostMachine
                 };
             ServiceAdminCLI = new();
-            ServiceAdmin($"create {serviceConfig} example.com");
+            ServiceAdmin($"create {serviceConfig} localhost");
 
             ServiceAdmin($"dns {serviceConfig} {dnsConfig}");
 

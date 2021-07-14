@@ -104,10 +104,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		BaseSettings.xml = BaseSettings.xml
+		CommonSettings.xml = CommonSettings.xml
+		CommonSettingsApplication.xml = CommonSettingsApplication.xml
+		CommonSettingsNoDocs.xml = CommonSettingsNoDocs.xml
+		CommonSettingsTest.xml = CommonSettingsTest.xml
 		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
 		LICENSE.txt = LICENSE.txt
 		readme.md = readme.md
 		TemplateClass.cs = TemplateClass.cs
+		TestSettings.xml = TestSettings.xml
 		ToDo.md = ToDo.md
 	EndProjectSection
 EndProject
@@ -191,6 +197,27 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Shell.ServiceAdmin", "Mesh\Goedel.Mesh.Shell.ServiceAdmin\Goedel.Mesh.Shell.ServiceAdmin.csproj", "{BAC4BA76-B434-4EB0-90F8-C9727DB2816F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.ServiceAdmin", "Mesh\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj", "{91B1D80B-02D2-4168-A8DB-5DE3744D7A0D}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Variable", "..\..\Test\Variable\", "{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_59265"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\Test\Variable\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59265\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_59265"
+		Release.AspNetCompiler.PhysicalPath = "..\..\Test\Variable\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59265\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "59265"
+		SlnRelativePath = "..\..\Test\Variable\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1813,6 +1840,30 @@ Global
 		{91B1D80B-02D2-4168-A8DB-5DE3744D7A0D}.Sandcastle|x64.Build.0 = Sandcastle|Any CPU
 		{91B1D80B-02D2-4168-A8DB-5DE3744D7A0D}.Sandcastle|x86.ActiveCfg = Sandcastle|Any CPU
 		{91B1D80B-02D2-4168-A8DB-5DE3744D7A0D}.Sandcastle|x86.Build.0 = Sandcastle|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Debug|x64.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Debug|x86.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Github|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Github|Any CPU.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Github|x64.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Github|x64.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Github|x86.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Github|x86.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Release|x64.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Release|x64.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Release|x86.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Release|x86.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Sandcastle|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Sandcastle|Any CPU.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Sandcastle|x64.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Sandcastle|x64.Build.0 = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Sandcastle|x86.ActiveCfg = Debug|Any CPU
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2}.Sandcastle|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1899,6 +1950,7 @@ Global
 		{B43B339E-2FF0-417C-887A-4014BC57AD55} = {27BE7355-4837-465B-81DC-EF2579516464}
 		{BAC4BA76-B434-4EB0-90F8-C9727DB2816F} = {27BE7355-4837-465B-81DC-EF2579516464}
 		{91B1D80B-02D2-4168-A8DB-5DE3744D7A0D} = {5EC1032D-6112-4154-B52F-2DA29CD605E3}
+		{8C2CDC63-F3B7-4E6D-9F3A-D0F1D36E08C2} = {479601E3-3DC5-40DA-BA5E-403D5346E50D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {480B9067-AB16-45B8-BFE3-8EF8803D9D07}
