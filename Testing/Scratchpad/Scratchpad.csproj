@@ -2,6 +2,7 @@
   <Import Project="$(SolutionDir)CommonSettingsTest.xml" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <StartupObject>Scratchpad.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
