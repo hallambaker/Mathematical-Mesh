@@ -245,29 +245,20 @@ namespace Goedel.Mesh.Server {
             // Create a host profile and add create a connection to the host.
             var profileHost = ProfileHost.CreateHost(meshMachine);
             var activationDevice = new ActivationDevice(profileHost);
-
+            activationDevice.Envelope(encryptionKey: profileHost.KeyEncrypt);
             // Persist the profile keys
             profileService.PersistSeed(meshMachine.KeyCollection);
             profileHost.PersistSeed(meshMachine.KeyCollection);
 
             // Need to envelope the activation device under device key.
 
-            var catalogedService = new CatalogedService() {
-                EnvelopedProfileService = profileService.EnvelopedProfileService,
-                EnvelopedProfileHost = profileHost.EnvelopedProfileHost,
-                EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice
-                };
-
-
-            meshMachine.MeshHost.Register(null, null);
-
-
             activationDevice.Activate(profileHost.SecretSeed);
             var connectionDevice1 = activationDevice.Connection;
             var connectionDevice = new ConnectionDevice() {
                 Account = deviceAddress,
-                Subject = connectionDevice1.Subject,
-                Authority = connectionDevice1.Authority,
+                Subject = connectionDevice1.Authentication.CryptoKey.KeyIdentifier,
+                Authority = profileService.Udf,
+
                 Authentication = connectionDevice1.Authentication
                 };
 
@@ -275,11 +266,24 @@ namespace Goedel.Mesh.Server {
             connectionDevice.Strip();
             profileService.Sign(connectionDevice, ObjectEncoding.JSON_B);
 
-            // Update the service configuration to add the service profile
-            serviceConfiguration.EnvelopedProfileService = profileService.EnvelopedProfileService;
+            var catalogedService = new CatalogedService() {
+                Id = connectionDevice.Subject,
+                EnvelopedProfileService = profileService.EnvelopedProfileService,
+                EnvelopedProfileHost = profileHost.EnvelopedProfileHost,
+                EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
+                EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice
+                };
+            meshMachine.MeshHost.Register(catalogedService, null);
 
-            hostConfiguration.EnvelopedProfileHost = profileHost.EnvelopedProfileHost;
-            hostConfiguration.EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice;
+            // Update the service configuration to add the service profile
+            //serviceConfiguration.EnvelopedProfileService = profileService.EnvelopedProfileService;
+
+            //hostConfiguration.EnvelopedProfileHost = profileHost.EnvelopedProfileHost;
+            //hostConfiguration.EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice;
+
+            serviceConfiguration.ProfileUdf = profileService.Udf;
+            hostConfiguration.ProfileUdf = connectionDevice.Subject;
+            hostConfiguration.DeviceUdf = profileHost.Udf;
 
 
             // Initialize the persistence store.

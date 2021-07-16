@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using Goedel.Protocol.Presentation;
 using Goedel.Mesh.Management;
-
+using Goedel.Mesh.Shell.Host;
 
 namespace Goedel.Mesh.Test {
     public class TestEnvironmentRdpShell : TestEnvironmentRdp {
@@ -63,10 +63,9 @@ namespace Goedel.Mesh.Test {
 
             // this is not going to return now is it???
             // need to save the service and return it.
-            var resultService = Host($"start {serviceConfig}");
+            var resultService = Host($"start {serviceConfig}") as ResultStartService;
 
-
-            throw new NYI();
+            return resultService.RudService;
             }
 
 

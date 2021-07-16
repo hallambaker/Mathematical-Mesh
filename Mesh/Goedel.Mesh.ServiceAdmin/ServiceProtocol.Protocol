@@ -46,7 +46,9 @@
 	Structure ServiceConfiguration
 		//Tag "Service"
 		Inherits ConfigurationEntry
-		Struct Enveloped<ProfileService> EnvelopedProfileService
+		//Struct Enveloped<ProfileService> EnvelopedProfileService
+		
+		
 		String Addresses
 			Multiple
 		String WellKnown
@@ -55,9 +57,14 @@
 
 	Structure HostConfiguration
 		//Tag "Host"
-		Struct Enveloped<ProfileHost> EnvelopedProfileHost
-		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
+		//Struct Enveloped<ProfileHost> EnvelopedProfileHost
+		//Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 		Inherits ConfigurationEntry
+		
+		
+		String DeviceUdf		 
+			Description
+				|UDF fingerprint of the device profile.
 		Integer Process
 		Integer Storage
 		String Role

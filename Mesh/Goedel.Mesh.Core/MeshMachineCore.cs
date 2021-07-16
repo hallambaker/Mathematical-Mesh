@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Core;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.IO;
 using Goedel.Mesh.Client;
 using Goedel.Utilities;
@@ -103,9 +104,12 @@ namespace Goedel.Mesh {
             return meshServiceBinding.GetClient<MeshServiceClient>();
             }
 
+        ///<inheritdoc cref="IMeshMachine"/>
+        public virtual ICredentialPrivate GetCredential(string deviceUdf, string connectionUdf) => throw new NYI();
 
 
-        #endregion 
+
+        #endregion
         }
 
     /// <summary>
@@ -161,6 +165,37 @@ namespace Goedel.Mesh {
         #region // Implementation
 
 
+        ///<inheritdoc/>
+        public override ICredentialPrivate GetCredential(string deviceUdf, string connectionUdf) {
+
+            if (!MeshHost.ContainerHost.ObjectIndex.TryGetValue(connectionUdf, out var Service)) {
+                return null;
+                }
+            var catalogedMachine = Service.JsonObject as CatalogedService;
+            var deviceKeySeed = KeyCollection.LocatePrivateKey(deviceUdf) as PrivateKeyUDF;
+
+
+            var profileHost = catalogedMachine?.EnvelopedProfileHost?.Decode(KeyCollection);
+            var profileService = catalogedMachine?.EnvelopedProfileService?.Decode(KeyCollection);
+            var baseDecrypt = deviceKeySeed.GenerateContributionKeyPair(MeshKeyType.Base,
+                    MeshActor.Host, MeshKeyOperation.Encrypt);
+            KeyCollection.Add(baseDecrypt);
+
+            // Bug: profileHost has no encryption key specified!!!!
+            var activationDevice = catalogedMachine?.EnvelopedActivationDevice?.Decode(KeyCollection);
+
+            activationDevice.Activate(deviceKeySeed);
+
+            var connectionDevice = catalogedMachine?.EnvelopedConnectionDevice?.Decode();
+
+
+            return new MeshCredentialPrivate(
+                profileHost,
+                connectionDevice,
+                null,
+                activationDevice.DeviceAuthentication);
+
+            }
 
 
 

@@ -317,10 +317,6 @@
             </summary>
             <returns>The endpoints</returns>
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.EnvelopedProfileService">
-            <summary>
-            </summary>
-        </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.Addresses">
             <summary>
             </summary>
@@ -388,12 +384,6 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.ProfileHost">
-            <summary>The host profile </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.ConnectionDevice">
-            <summary>The connection of the host to the service.</summary> 
-        </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.ServiceConfigs">
             <summary>List of referenced service configurations.</summary> 
         </member>
@@ -409,13 +399,10 @@
             </summary>
             <returns>The private credential</returns>
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.EnvelopedProfileHost">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.EnvelopedConnectionDevice">
-            <summary>
-            </summary>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.DeviceUdf">
+             <summary>
+            UDF fingerprint of the device profile.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.Process">
             <summary>

@@ -2421,6 +2421,11 @@
             The activation record for this host
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedConnectionDevice">
+             <summary>
+            The connection of the host to the service
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedService._Tag">
             <summary>
             Tag identifying this class

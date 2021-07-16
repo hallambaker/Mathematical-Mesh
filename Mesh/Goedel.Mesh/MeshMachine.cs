@@ -97,6 +97,18 @@ namespace Goedel.Mesh {
                 ICredentialPrivate credential, 
                 string service, 
                 string accountAddress);
+
+
+        /// <summary>
+        /// Returns the private credential to be presented by the device <paramref name="deviceUdf"/>,
+        /// connected to the account or service as <paramref name="connectionUdf"/>.
+        /// </summary>
+        /// <param name="deviceUdf">The fingerprint of the device profile.</param>
+        /// <param name="connectionUdf">The fingerprint of the connection of the device to the
+        /// service or account.</param>
+        /// <returns>The private credential.</returns>
+        ICredentialPrivate GetCredential(string deviceUdf, string connectionUdf);
+
         }
 
 

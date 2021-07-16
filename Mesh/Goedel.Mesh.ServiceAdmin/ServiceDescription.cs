@@ -211,11 +211,13 @@ namespace Goedel.Mesh.ServiceAdmin {
 
         #region // Properties
 
-        /// <summary>The host profile </summary>
-        public ProfileHost ProfileHost => EnvelopedProfileHost.Decode ();
+        ///// <summary>The host profile </summary>
+        //public ProfileHost ProfileHost => EnvelopedProfileHost.Decode ();
 
-        ///<summary>The connection of the host to the service.</summary> 
-        public ConnectionDevice ConnectionDevice => EnvelopedConnectionDevice.Decode();
+        /////<summary>The connection of the host to the service.</summary> 
+        //public ConnectionDevice ConnectionDevice => EnvelopedConnectionDevice.Decode();
+        
+        
         ///<summary>List of referenced service configurations.</summary> 
         public List<ServiceConfiguration> ServiceConfigs { get; set; }
 
@@ -238,33 +240,10 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// Get the private credential data.
         /// </summary>
         /// <returns>The private credential</returns>
-        public ICredentialPrivate GetCredential(IMeshMachine meshMachine) {
-
-            // to do: read the credential that was written out when the host
-            // was initialized.
+        public ICredentialPrivate GetCredential(IMeshMachine meshMachine) =>
+            meshMachine.GetCredential(DeviceUdf, ProfileUdf);
 
 
-            // Activate the host profile
-            var profile = ProfileHost.Udf;
-
-            var deviceKeySeed = meshMachine.KeyCollection.LocatePrivateKey(ProfileHost.Udf) as PrivateKeyUDF;
-
-            var activation = ConnectionDevice.Signature.Udf;
-
-
-
-
-
-
-            // we need the ConnectionDevice.Authentication key
-            //throw new NYI();
-            return new MeshCredentialPrivate(
-                ProfileHost,
-                ConnectionDevice,
-                null,
-                ConnectionDevice.Authentication.GetKeyPairAdvanced());
-
-            }
 
         #endregion
         }

@@ -66,6 +66,9 @@
         <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String)">
             <inheritdoc cref="T:Goedel.Mesh.IMeshMachine"/>
         </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetCredential(System.String,System.String)">
+            <inheritdoc cref="T:Goedel.Mesh.IMeshMachine"/>
+        </member>
         <member name="T:Goedel.Mesh.MeshMachineCore">
             <summary>
             
@@ -91,6 +94,9 @@
             to store persistent data.
             </summary>
             <param name="directory">Directory to store persistence data.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCore.GetCredential(System.String,System.String)">
+            <inheritdoc/>
         </member>
     </members>
 </doc>

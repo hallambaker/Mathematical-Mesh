@@ -43,6 +43,10 @@
 		Struct Enveloped<ActivationDevice> EnvelopedActivationDevice
 			Description
 				|The activation record for this host
+		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
+			Description
+				|The connection of the host to the service
+
 
 	Structure CatalogedStandard
 		Inherits CatalogedMachine
