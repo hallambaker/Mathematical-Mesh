@@ -26,7 +26,6 @@ namespace Goedel.XUnit {
 
 
 
-
             //throw new NYI();
 
             testEnvironmentCommon = new TestEnvironmentRdpShell() {
