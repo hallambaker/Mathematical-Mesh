@@ -12,17 +12,17 @@ using Xunit;
 
 namespace Goedel.XUnit {
     public partial class ShellTests {
-        static string AliceAccount => "alice@example.com";
+        string AliceAccount => $"alice@{ServiceDns}";
 
-        static string MalletAccount => "mallet@example.com";
+        string MalletAccount => $"mallet@{ServiceDns}";
 
-        static string AccountA2 => "alice@example.net";
 
-        static string AccountB => "bob@example.com";
 
-        static string AccountC => "carol@example.com";
+        string AccountB => $"bob@{ServiceDns}";
 
-        static string AccountQ => "quartermaster@example.com";
+        string AccountC => $"carol@{ServiceDns}";
+
+        string AccountQ => $"quartermaster@{ServiceDns}";
 
         static string DeviceQName => "DeviceQ";
 

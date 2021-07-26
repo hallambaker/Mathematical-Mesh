@@ -10,6 +10,7 @@ using Goedel.Protocol.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using Goedel.Protocol.Presentation;
 using Goedel.Mesh.Management;
 using Goedel.Mesh.Shell.Host;
@@ -24,10 +25,9 @@ namespace Goedel.Mesh.Test {
         Goedel.Mesh.Shell.Host.Shell HostShell { get; set; }
         Goedel.Mesh.Shell.Host.CommandLineInterpreter HostAdminCLI { get; set; }
 
+        public override string ServiceDns { get; }
 
-
-        public TestEnvironmentRdpShell() {
-            }
+        public TestEnvironmentRdpShell() => ServiceDns = Dns.GetHostName();
 
         RudService RudService { get; set; }
 
@@ -48,7 +48,7 @@ namespace Goedel.Mesh.Test {
                 MeshMachine = HostMachine
                 };
             ServiceAdminCLI = new();
-            ServiceAdmin($"create {serviceConfig} localhost");
+            ServiceAdmin($"create {serviceConfig} {ServiceDns}");
 
             ServiceAdmin($"dns {serviceConfig} {dnsConfig}");
 
@@ -78,7 +78,7 @@ namespace Goedel.Mesh.Test {
             RudService ??= StartService();
 
             var meshServiceBinding = new ConnectionInitiator(
-            credential, Domain, Test, TransportType.Http, MeshServiceClient.WellKnown);
+                    credential, ServiceDns, Test, TransportType.Http, MeshServiceClient.WellKnown);
             var client = meshServiceBinding.GetClient<MeshServiceClient>();
 
 
@@ -103,9 +103,6 @@ namespace Goedel.Mesh.Test {
 
     public class TestEnvironmentRdp : TestEnvironmentCommon {
 
-
-
-        public const string Domain = "localhost";
         public string Protocol => MeshService.GetWellKnown;
 
 
@@ -127,7 +124,7 @@ namespace Goedel.Mesh.Test {
             // if we wanted to create traces on the RUD binding, we could put the data here.
 
             var meshServiceBinding = new ConnectionInitiator(
-                        credential, Domain, Test, TransportType.Http, MeshServiceClient.WellKnown);
+                        credential, ServiceDns, Test, TransportType.Http, MeshServiceClient.WellKnown);
             var client = meshServiceBinding.GetClient<MeshServiceClient>();
 
 
@@ -136,7 +133,7 @@ namespace Goedel.Mesh.Test {
 
         public virtual RudService StartService() {
 
-            var httpEndpoint = new HttpEndpoint(ServiceName, MeshService.GetWellKnown, Test);
+            var httpEndpoint = new HttpEndpoint(ServiceDns, MeshService.GetWellKnown, Test);
             var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, Test);
             var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
 
@@ -163,8 +160,8 @@ namespace Goedel.Mesh.Test {
     public class TestEnvironmentCommon :Disposable {
 
 
+        public virtual string ServiceDns => "example.com";
 
-        public string ServiceName = "example.com";
         static string TestPath = "TestPath";
         public static string TestRoot;
 
@@ -180,7 +177,7 @@ namespace Goedel.Mesh.Test {
         public JpcConnection JpcConnection = JpcConnection.Serialized;
 
         public virtual PublicMeshService MeshService => meshService ??
-            new PublicMeshService(ServiceName, ServiceDirectory).CacheValue (out meshService);
+            new PublicMeshService(ServiceDns, ServiceDirectory).CacheValue (out meshService);
         PublicMeshService meshService;
 
 

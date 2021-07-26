@@ -77,7 +77,10 @@ namespace Goedel.XUnit {
         }
 
     public partial class ShellTests :Disposable{
-        string ServiceName { get; set; } = "example.com";
+
+
+        public string ServiceDns => TestEnvironment.ServiceDns;
+
         TestCLI DefaultDevice => defaultDevice ?? GetTestCLI().CacheValue(out defaultDevice);
         TestCLI defaultDevice;
 
@@ -98,8 +101,7 @@ namespace Goedel.XUnit {
             GetTestEnvironment().CacheValue(out testEnvironment);
         TestEnvironmentCommon testEnvironment;
 
-        public ShellTests(string serviceName = null) =>
-                    ServiceName = serviceName ?? ServiceName;
+        public ShellTests() { }
 
 
         public Result Dispatch(string command, bool fail = false) =>

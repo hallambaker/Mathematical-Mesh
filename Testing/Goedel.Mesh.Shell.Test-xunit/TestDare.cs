@@ -24,18 +24,18 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestFileEncrypt() {
-            var account = "alice@example.com";
-            CreateAccount(account);
 
-            TestFile("Hello world", encrypt: account);
+            CreateAccount(AliceAccount);
+
+            TestFile("Hello world", encrypt: AliceAccount);
             }
 
         [Fact]
         public void TestFileSign() {
-            var account = "alice@example.com";
-            CreateAccount(account);
 
-            TestFile("Hello world", sign: account);
+            CreateAccount(AliceAccount);
+
+            TestFile("Hello world", sign: AliceAccount);
 
             "Need to test file gest signed".TaskTest();
             "Need to test signature is actually valid".TaskTest();
@@ -43,10 +43,10 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestFileSignEncrypt() {
-            var account = "alice@example.com";
-            CreateAccount(account);
 
-            TestFile("Hello world", encrypt: account, sign: account);
+            CreateAccount(AliceAccount);
+
+            TestFile("Hello world", encrypt: AliceAccount, sign: AliceAccount);
             }
 
         public bool TestFile(string content, string contentType = null,
