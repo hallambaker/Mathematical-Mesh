@@ -28,6 +28,7 @@ namespace Goedel.XUnit {
 
 
             //throw new NYI();
+
             testEnvironmentCommon = new TestEnvironmentRdpShell() {
                 JpcConnection = Protocol.JpcConnection.Http
                 };
