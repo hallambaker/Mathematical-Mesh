@@ -84,6 +84,9 @@
         <member name="P:Goedel.Mesh.Shell.Host.Shell.MeshMachine">
             <summary>The Mesh Machine</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Shell.Instance">
+            <summary>The service instance</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Shell.Host.Shell.ShellResult">
             <summary>Result returned by last shell command.</summary> 
         </member>

@@ -24,6 +24,13 @@ namespace Goedel.Mesh.Shell.Host {
         ///<summary>The Mesh Machine</summary> 
         public IMeshMachine MeshMachine { get; init; }
 
+
+        ///<summary>The service instance</summary> 
+        public string Instance { get; init; }
+
+
+
+
         ///<summary>Result returned by last shell command.</summary> 
         public ShellResult ShellResult { get; set; }
 
@@ -114,6 +121,7 @@ namespace Goedel.Mesh.Shell.Host {
 
             // Start the service.
 
+            ServiceConfiguration.Instance ??= Instance;
             RudService = StartService(HostConfiguration, ServiceConfiguration);
 
 

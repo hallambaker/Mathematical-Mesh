@@ -54,9 +54,10 @@ namespace Goedel.Mesh.Test {
 
 
             // now start the host
-            HostShell = new Shell.Host.Shell(
+            HostShell = new Shell.Host.Shell(     
                 PublicMeshService.ServiceDescription,
                 ServiceManagementProvider.ServiceDescriptionHost) {
+                    Instance = Test,
                     MeshMachine = HostMachine
                     };
             HostAdminCLI = new();

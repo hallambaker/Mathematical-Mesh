@@ -24,8 +24,6 @@ namespace Goedel.XUnit {
             //var shell = new Goedel.Mesh.Shell.ServiceAdmin.Shell() {
             //    };
 
-
-
             //throw new NYI();
 
             testEnvironmentCommon = new TestEnvironmentRdpShell() {

@@ -44,19 +44,29 @@ namespace Goedel.Protocol.Presentation {
     public record HttpEndpoint(
              string Domain,
              string Protocol,
-             string Instance = null) : Endpoint (Protocol, Instance) {
+             string Instance = null,
+             int Port = 15099) : Endpoint (Protocol, Instance) {
         #region // Properties
         #endregion
         #region // Methods 
 
         public string Account(string username) => $"{username}@{Domain}";
 
-        public static string Specializer(string instance) => instance == null ? "" : $"{instance}/";
+        public static string Specializer(string instance) => ""; //instance == null ? "" : $"{instance}/";
 
-        public string GetUri() => GetUri("+", Protocol, Instance);  
+        //public string GetUri() => GetUri(, Port, Protocol, Instance);
 
-        public static string GetUri(string domain, string protocol, string instance) =>
-            $"http://{domain}:15099/.well-known/{protocol}/{Specializer(instance)}";
+
+        public string GetUriPrefix() => GetUriBase("+", Port, Protocol, Instance);
+
+        public static string GetUri(string domain, int port, string protocol, string instance) =>
+            GetUriBase("127.0.0.1", port, protocol, instance);
+
+        static string GetUriBase(string domain, int port, string protocol, string instance) =>
+            $"http://{domain}:{port}/.well-known/{protocol}/{Specializer(instance)}";
+
+
+
 
         // used for testing.
         public string GetServiceUri() => WebServiceEndpoint.GetEndpoint(Domain, Protocol, null, Instance);

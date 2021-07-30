@@ -164,7 +164,7 @@ namespace Goedel.Protocol.Presentation {
 
             // only set the URI if we are creating an initiator stream.
             if (RudConnection is ConnectionInitiator initiator) {
-                Uri = HttpEndpoint.GetUri(initiator.Domain, protocol, initiator.Instance);
+                Uri = HttpEndpoint.GetUri(initiator.Domain, 10599, protocol, initiator.Instance);
                 }
             //AccountAddress = throw new NYI();
             CredentialSelf = credentialSelf;
@@ -329,6 +329,9 @@ namespace Goedel.Protocol.Presentation {
             var encoded = ConnectionInitiator.SerializeInitiatorHello(
                 LocalStreamId.GetValue(), span,
                 plaintextExtensionsIn: extensions);
+
+            Screen.WriteLine ($"URI: {Uri}");
+
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
             var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
