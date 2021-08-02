@@ -20,6 +20,10 @@
 
 //using Goedel.Protocol.Service;
 
+using System.Net;
+
+using Goedel.Utilities;
+
 namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// The client side of an RDP transactional stream.
@@ -61,6 +65,19 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="request"></param>
         /// <returns></returns>
         public JsonObject Post(string tag, JsonObject request) {
+
+            //var service = "http://voodoo:15099/.well-known/mmm/";
+            //var webClient = new WebClient();
+            //var data = new byte[12000];
+
+
+            //(service == Uri).AssertTrue(NYI.Throw);
+
+            //var post = webClient.UploadData(Uri, data);
+
+
+
+
             var task = PostAsync(tag, request);
             task.Wait();
             return task.Result;

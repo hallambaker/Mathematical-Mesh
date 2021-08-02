@@ -12,14 +12,6 @@
         <member name="P:Goedel.Mesh.Management.ServiceManagementServiceProvider.Monitor">
             <summary>The monitor being reported.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.Factory(Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
-            <summary>
-            Factory method, the signature is pro tem and will be changed later on.
-            </summary>
-            <param name="domain"></param>
-            <param name="serviceDirectory"></param>
-            <returns></returns>
-        </member>
         <member name="T:Goedel.Mesh.Management.ServiceManagement">
              <summary>
             

@@ -1711,7 +1711,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.Internal.Templates">
+        <member name="P:Goedel.Mesh.Client.Internal.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.Internal.#ctor(System.String,System.Exception,System.Object[])">
@@ -1729,7 +1729,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.Internal.Throw">
+        <member name="P:Goedel.Mesh.Client.Internal.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1742,7 +1742,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.DeviceSeedNotFound.Templates">
+        <member name="P:Goedel.Mesh.Client.DeviceSeedNotFound.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.DeviceSeedNotFound.#ctor(System.String,System.Exception,System.Object[])">
@@ -1760,7 +1760,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.DeviceSeedNotFound.Throw">
+        <member name="P:Goedel.Mesh.Client.DeviceSeedNotFound.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1773,7 +1773,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.AddressNotSupported.Templates">
+        <member name="P:Goedel.Mesh.Client.AddressNotSupported.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.AddressNotSupported.#ctor(System.String,System.Exception,System.Object[])">
@@ -1791,7 +1791,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.AddressNotSupported.Throw">
+        <member name="P:Goedel.Mesh.Client.AddressNotSupported.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1804,7 +1804,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.AccountNotBound.Templates">
+        <member name="P:Goedel.Mesh.Client.AccountNotBound.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.AccountNotBound.#ctor(System.String,System.Exception,System.Object[])">
@@ -1822,7 +1822,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.AccountNotBound.Throw">
+        <member name="P:Goedel.Mesh.Client.AccountNotBound.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1835,7 +1835,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.InvalidServiceResponse.Templates">
+        <member name="P:Goedel.Mesh.Client.InvalidServiceResponse.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.InvalidServiceResponse.#ctor(System.String,System.Exception,System.Object[])">
@@ -1853,7 +1853,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.InvalidServiceResponse.Throw">
+        <member name="P:Goedel.Mesh.Client.InvalidServiceResponse.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1867,7 +1867,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.AccountNotFound.Templates">
+        <member name="P:Goedel.Mesh.Client.AccountNotFound.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.AccountNotFound.#ctor(System.String,System.Exception,System.Object[])">
@@ -1885,7 +1885,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.AccountNotFound.Throw">
+        <member name="P:Goedel.Mesh.Client.AccountNotFound.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1899,7 +1899,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.MeshNotFound.Templates">
+        <member name="P:Goedel.Mesh.Client.MeshNotFound.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshNotFound.#ctor(System.String,System.Exception,System.Object[])">
@@ -1917,7 +1917,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.MeshNotFound.Throw">
+        <member name="P:Goedel.Mesh.Client.MeshNotFound.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1931,7 +1931,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionStillPending.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionStillPending.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionStillPending.#ctor(System.String,System.Exception,System.Object[])">
@@ -1949,7 +1949,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionStillPending.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionStillPending.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1963,7 +1963,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.SyncFailed.Templates">
+        <member name="P:Goedel.Mesh.Client.SyncFailed.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.SyncFailed.#ctor(System.String,System.Exception,System.Object[])">
@@ -1981,7 +1981,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.SyncFailed.Throw">
+        <member name="P:Goedel.Mesh.Client.SyncFailed.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1995,7 +1995,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.Gateway.Templates">
+        <member name="P:Goedel.Mesh.Client.Gateway.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.Gateway.#ctor(System.String,System.Exception,System.Object[])">
@@ -2013,7 +2013,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.Gateway.Throw">
+        <member name="P:Goedel.Mesh.Client.Gateway.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2027,7 +2027,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.NoPortalAccount.Templates">
+        <member name="P:Goedel.Mesh.Client.NoPortalAccount.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.NoPortalAccount.#ctor(System.String,System.Exception,System.Object[])">
@@ -2045,7 +2045,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.NoPortalAccount.Throw">
+        <member name="P:Goedel.Mesh.Client.NoPortalAccount.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2059,7 +2059,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.PortalConnectFail.Templates">
+        <member name="P:Goedel.Mesh.Client.PortalConnectFail.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.PortalConnectFail.#ctor(System.String,System.Exception,System.Object[])">
@@ -2077,7 +2077,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.PortalConnectFail.Throw">
+        <member name="P:Goedel.Mesh.Client.PortalConnectFail.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2091,7 +2091,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.PublicationRequestRefused.Templates">
+        <member name="P:Goedel.Mesh.Client.PublicationRequestRefused.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.PublicationRequestRefused.#ctor(System.String,System.Exception,System.Object[])">
@@ -2109,7 +2109,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.PublicationRequestRefused.Throw">
+        <member name="P:Goedel.Mesh.Client.PublicationRequestRefused.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2123,7 +2123,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionException.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionException.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionException.#ctor(System.String,System.Exception,System.Object[])">
@@ -2141,7 +2141,7 @@
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionException.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionException.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2155,7 +2155,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionAccessControlFail.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionAccessControlFail.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionAccessControlFail.#ctor(System.String,System.Exception,System.Object[])">
@@ -2173,7 +2173,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionAccessControlFail.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionAccessControlFail.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2187,7 +2187,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionRefused.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionRefused.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionRefused.#ctor(System.String,System.Exception,System.Object[])">
@@ -2205,7 +2205,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionRefused.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionRefused.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2219,7 +2219,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionPending.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionPending.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionPending.#ctor(System.String,System.Exception,System.Object[])">
@@ -2237,7 +2237,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionPending.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionPending.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2251,7 +2251,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionExpired.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionExpired.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionExpired.#ctor(System.String,System.Exception,System.Object[])">
@@ -2269,7 +2269,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionExpired.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionExpired.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2283,7 +2283,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionAccountUnknown.Templates">
+        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknown.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknown.#ctor(System.String,System.Exception,System.Object[])">
@@ -2301,7 +2301,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionAccountUnknown.Throw">
+        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknown.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2315,7 +2315,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.RefusedPINInvalid.Templates">
+        <member name="P:Goedel.Mesh.Client.RefusedPINInvalid.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor(System.String,System.Exception,System.Object[])">
@@ -2333,7 +2333,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.RefusedPINInvalid.Throw">
+        <member name="P:Goedel.Mesh.Client.RefusedPINInvalid.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2346,7 +2346,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.MessageIdNotFound.Templates">
+        <member name="P:Goedel.Mesh.Client.MessageIdNotFound.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.MessageIdNotFound.#ctor(System.String,System.Exception,System.Object[])">
@@ -2364,7 +2364,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.MessageIdNotFound.Throw">
+        <member name="P:Goedel.Mesh.Client.MessageIdNotFound.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -2377,7 +2377,7 @@
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.InvalidRecoverySecret.Templates">
+        <member name="P:Goedel.Mesh.Client.InvalidRecoverySecret.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.InvalidRecoverySecret.#ctor(System.String,System.Exception,System.Object[])">
@@ -2395,7 +2395,7 @@
             </summary>
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="F:Goedel.Mesh.Client.InvalidRecoverySecret.Throw">
+        <member name="P:Goedel.Mesh.Client.InvalidRecoverySecret.Throw">
             <summary>
             The public fatory delegate
             </summary>

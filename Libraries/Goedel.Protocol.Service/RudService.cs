@@ -127,13 +127,12 @@ namespace Goedel.Protocol.Service {
             // The HTTP listener handles multiplexing internally and so we only require one.
             HttpListener.IsSupported.AssertTrue(ServerNotSupported.Throw);
             httpListener = new HttpListener();
-
-            foreach (var provider in providers) {    
+            foreach (var provider in providers) {
                 foreach (var endpoint in provider.HTTPEndpoints) {
                     var uri = endpoint.GetUriPrefix();
                     //uri = "http://+:15099/.well-known/";
                     Screen.WriteLine($"Connect to URI {uri}");
-                    
+
                     httpListener.Prefixes.Add(uri);
                     providerMap.Add(uri, provider);
                     }
@@ -152,11 +151,12 @@ namespace Goedel.Protocol.Service {
 
             serviceTasks = new Task<ServiceRequest>[ListenerCount];
 
-            httpListener.Start();
 
+            httpListener.Start();
             WaitHttpRequest();
+
             //set up the UDP clients...
-            udpListeners = new UdpClient[udpListenerCount];
+            //udpListeners = new UdpClient[udpListenerCount];
             //var listener = 1;
             //foreach (var provider in providers) {
             //    foreach (var endpoint in provider.UdpEndpoints) {
@@ -166,10 +166,43 @@ namespace Goedel.Protocol.Service {
             //        }
             //    }
 
-            // start the asynchronous services before returning.
-            serviceThread = new Thread (WaitService);
+
+
+            //start the asynchronous services before returning.
+            serviceThread = new Thread(WaitService);
             serviceThread.Start();
+
+
+
+            //var connection = MiniProcess(httpListener);
+
+
+            //var service = "http://voodoo:15099/.well-known/mmm/";
+            //var webClient = new WebClient();
+            //var data = new byte[12000];
+
+            //var post = webClient.UploadData(service, data);
+
+
+
             }
+
+        async Task<ServiceRequest> MiniProcess(HttpListener httpListener) {
+
+            var connection = httpListener.GetContextAsync();
+            await connection;
+
+            var respond = "hello world".ToBytes();
+
+            var context = connection.Result;
+            context.Response.OutputStream.Write(respond, 0, respond.Length);
+            context.Response.OutputStream.Close();
+
+            return null;
+            }
+
+
+
         #endregion
         #region // Methods 
 
@@ -358,6 +391,9 @@ namespace Goedel.Protocol.Service {
                 var request =  new ServiceRequestHttp(this, connection.Result);
                 if (!request.Refused) {
                     return request;
+                    }
+                else {
+
                     }
                 }
             }

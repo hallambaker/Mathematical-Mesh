@@ -60,7 +60,7 @@ namespace Goedel.Protocol.Presentation {
         public string GetUriPrefix() => GetUriBase("+", Port, Protocol, Instance);
 
         public static string GetUri(string domain, int port, string protocol, string instance) =>
-            GetUriBase("127.0.0.1", port, protocol, instance);
+            GetUriBase("voodoo", port, protocol, instance);
 
         static string GetUriBase(string domain, int port, string protocol, string instance) =>
             $"http://{domain}:{port}/.well-known/{protocol}/{Specializer(instance)}";
