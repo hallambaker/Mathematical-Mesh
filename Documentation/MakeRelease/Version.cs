@@ -26,9 +26,10 @@
 //     /dparser=False
 //     /dstack=False
 
+using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Text;
 using Goedel.Registry;
 using Goedel.Utilities;
 
@@ -78,257 +79,257 @@ namespace Goedel.Tool.Version {
 
         _Label,
         _Bottom
-        }
-
+        }    
+    
 
     public abstract partial class _Choice {
-        abstract public ReleaseType _Tag();
+        abstract public ReleaseType _Tag ();
 
         public _Choice _Parent;
         public Release _Base;
 
-        public abstract void Serialize(StructureWriter Output, bool tag);
+		public abstract void Serialize (StructureWriter Output, bool tag);
 
-        public virtual void Init(_Choice parent) {
+    	public virtual void Init (_Choice parent) {
             _Parent = parent;
             _Base ??= parent?._Base;
-            }
+			}
 
+        
 
-
-        bool _Initialized = false;
-        public virtual void _InitChildren(_Choice parent) {
-            Init(parent);
+		bool _Initialized = false;
+		public virtual void _InitChildren (_Choice parent) {
+			Init (parent);
             _Base = parent._Base;
-            if (_Initialized) {
-                return;
-                }
-            _Initialized = true;
-            }
+			if (_Initialized) {
+				return;
+				}
+			_Initialized = true;
+			}
         }
 
 
 
     public partial class Version : _Choice {
-        public string Code;
-        public List<_Choice> Entries = new List<_Choice>();
+		public string					Code;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override ReleaseType _Tag() => ReleaseType.Version;
+        public override ReleaseType _Tag () =>ReleaseType.Version;
 
 
-        public override void _InitChildren(_Choice Parent) {
-            Init(Parent);
-            foreach (var Sub in Entries) {
-                Sub._InitChildren(this);
-                }
-            }
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
-        public override void Serialize(StructureWriter Output, bool tag) {
+		public override void Serialize (StructureWriter Output, bool tag) {
 
-            if (tag) {
-                Output.StartElement("Version");
-                }
+			if (tag) {
+				Output.StartElement ("Version");
+				}
 
-            Output.WriteAttribute("Code", Code);
-            Output.StartList("");
-            foreach (_Choice _e in Entries) {
-                _e.Serialize(Output, true);
-                }
-            Output.EndList("");
-            if (tag) {
-                Output.EndElement("Version");
-                }
-            }
-        }
+			Output.WriteAttribute ("Code", Code);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Version");
+				}			
+			}
+		}
 
     public partial class Platform : _Choice {
-        public string Name;
-        public List<_Choice> Entries = new List<_Choice>();
+		public string					Name;
+        public List <_Choice>           Entries = new List<_Choice> ();
 
-        public override ReleaseType _Tag() => ReleaseType.Platform;
+        public override ReleaseType _Tag () =>ReleaseType.Platform;
 
 
-        public override void _InitChildren(_Choice Parent) {
-            Init(Parent);
-            foreach (var Sub in Entries) {
-                Sub._InitChildren(this);
-                }
-            }
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			foreach (var Sub in Entries) {
+				Sub._InitChildren (this);
+				}
+			}
 
-        public override void Serialize(StructureWriter Output, bool tag) {
+		public override void Serialize (StructureWriter Output, bool tag) {
 
-            if (tag) {
-                Output.StartElement("Platform");
-                }
+			if (tag) {
+				Output.StartElement ("Platform");
+				}
 
-            Output.WriteAttribute("Name", Name);
-            Output.StartList("");
-            foreach (_Choice _e in Entries) {
-                _e.Serialize(Output, true);
-                }
-            Output.EndList("");
-            if (tag) {
-                Output.EndElement("Platform");
-                }
-            }
-        }
+			Output.WriteAttribute ("Name", Name);
+			Output.StartList ("");
+			foreach (_Choice _e in Entries) {
+				_e.Serialize (Output, true);
+				}
+			Output.EndList ("");
+			if (tag) {
+				Output.EndElement ("Platform");
+				}			
+			}
+		}
 
     public partial class File : _Choice {
-        public string Name;
-        public string RID;
-        public string Type;
+		public string					Name;
+		public string					RID;
+		public string					Type;
 
-        public override ReleaseType _Tag() => ReleaseType.File;
+        public override ReleaseType _Tag () =>ReleaseType.File;
 
 
-        public override void _InitChildren(_Choice Parent) {
-            Init(Parent);
-            }
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
-        public override void Serialize(StructureWriter Output, bool tag) {
+		public override void Serialize (StructureWriter Output, bool tag) {
 
-            if (tag) {
-                Output.StartElement("File");
-                }
+			if (tag) {
+				Output.StartElement ("File");
+				}
 
-            Output.WriteAttribute("Name", Name);
-            Output.WriteAttribute("RID", RID);
-            Output.WriteAttribute("Type", Type);
-            if (tag) {
-                Output.EndElement("File");
-                }
-            }
-        }
+			Output.WriteAttribute ("Name", Name);
+			Output.WriteAttribute ("RID", RID);
+			Output.WriteAttribute ("Type", Type);
+			if (tag) {
+				Output.EndElement ("File");
+				}			
+			}
+		}
 
     public partial class Description : _Choice {
-        public List<System.String> Text = new List<System.String>();
+		public List <System.String>			Text = new List <System.String> (); 
 
-        public override ReleaseType _Tag() => ReleaseType.Description;
+        public override ReleaseType _Tag () =>ReleaseType.Description;
 
 
-        public override void _InitChildren(_Choice Parent) {
-            Init(Parent);
-            }
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
-        public override void Serialize(StructureWriter Output, bool tag) {
+		public override void Serialize (StructureWriter Output, bool tag) {
 
-            if (tag) {
-                Output.StartElement("Description");
-                }
+			if (tag) {
+				Output.StartElement ("Description");
+				}
 
-            foreach (string _s in Text) {
-                Output.WriteAttribute("Text", _s);
-                }
-            if (tag) {
-                Output.EndElement("Description");
-                }
-            }
-        }
+			foreach (string _s in Text) {
+				Output.WriteAttribute ("Text",_s);
+				}
+			if (tag) {
+				Output.EndElement ("Description");
+				}			
+			}
+		}
 
     public partial class Stable : _Choice {
 
-        public override ReleaseType _Tag() => ReleaseType.Stable;
+        public override ReleaseType _Tag () =>ReleaseType.Stable;
 
 
-        public override void _InitChildren(_Choice Parent) {
-            Init(Parent);
-            }
+		public override void _InitChildren (_Choice Parent) {
+			Init (Parent);
+			}
 
-        public override void Serialize(StructureWriter Output, bool tag) {
+		public override void Serialize (StructureWriter Output, bool tag) {
 
-            if (tag) {
-                Output.StartElement("Stable");
-                }
+			if (tag) {
+				Output.StartElement ("Stable");
+				}
 
-            if (tag) {
-                Output.EndElement("Stable");
-                }
-            }
-        }
+			if (tag) {
+				Output.EndElement ("Stable");
+				}			
+			}
+		}
 
     class _Label : _Choice {
-        public REF<_Choice> Label;
+        public REF<_Choice>            Label;
 
-        // This method is never called. It exists only to prevent a warning when a
-        // Schema does not contain a ChoiceREF element.
-        public void Reach() => Label = null;
+		// This method is never called. It exists only to prevent a warning when a
+		// Schema does not contain a ChoiceREF element.
+        public void Reach() =>  Label = null;
 
-        public override ReleaseType _Tag() => ReleaseType._Label;
+        public override ReleaseType _Tag () => ReleaseType._Label;
 
-        public override void Serialize(StructureWriter Output, bool tag) => Output.WriteId("ID", Label.ToString());
+		public override void Serialize (StructureWriter Output, bool tag) =>Output.WriteId ("ID", Label.ToString());
         }
 
 
-    public enum StateCode {
+    public enum StateCode {  
         _Start,
         _Choice,
         _End,
 
-        Version_Start,
-        Version__Code,
-        Version__Entries,
-        Platform_Start,
-        Platform__Name,
-        Platform__Entries,
-        File_Start,
-        File__Name,
-        File__RID,
-        File__Type,
-        Description_Start,
-        Description__Text,
-        Stable_Start,
+		Version_Start,
+		Version__Code,				
+		Version__Entries,				
+		Platform_Start,
+		Platform__Name,				
+		Platform__Entries,				
+		File_Start,
+		File__Name,				
+		File__RID,				
+		File__Type,				
+		Description_Start,
+		Description__Text,				
+		Stable_Start,
         }
 
 
     struct _StackItem {
-        public StateCode State;
-        public Goedel.Tool.Version._Choice Token;
+        public StateCode   State;
+        public Goedel.Tool.Version._Choice     Token;
         }
 
-    public partial class Release : Goedel.Registry.Parser {
-        public List<Goedel.Tool.Version._Choice> Top;
-        public Registry<Goedel.Tool.Version._Choice> Registry;
+    public partial class Release : Goedel.Registry.Parser{
+        public List <Goedel.Tool.Version._Choice>        Top;
+        public Registry	<Goedel.Tool.Version._Choice>	Registry;
 
-        public bool StartOfEntry { get; private set; }
+        public bool StartOfEntry {get;  private set;}
 
-        StateCode State;
-        Goedel.Tool.Version._Choice Current;
-        List<_StackItem> Stack;
+        StateCode								State;
+        Goedel.Tool.Version._Choice				Current;
+        List <_StackItem>						Stack;
 
 
         public static Release Parse(string File, Goedel.Registry.Dispatch Options) {
             var Result = new Release() {
-                Options = Options
-                };
+				Options = Options
+				};
 
             using (Stream infile =
                         new FileStream(File, FileMode.Open, FileAccess.Read)) {
                 Lexer Schema = new Lexer(File);
                 Schema.Process(infile, Result);
                 }
-            Result.Init();
-            Result._InitChildren();
+            Result.Init ();
+			Result._InitChildren ();
 
             return Result;
             }
 
-        bool _Initialized = false;
-        public virtual void _InitChildren() {
-            if (_Initialized) {
-                return;
-                }
-            _Initialized = true;
-            foreach (var Entry in Top) {
+		bool _Initialized = false;
+		public virtual void _InitChildren () {
+			if (_Initialized) {
+				return;
+				}
+			_Initialized = true;
+			foreach (var Entry in Top) {
                 Entry._Base = this;
-                Entry._InitChildren(null);
-                }
-            }
+				Entry._InitChildren (null);
+				}
+			}
 
         public Release() {
-            Top = new List<Goedel.Tool.Version._Choice>();
-            Registry = new Registry<Goedel.Tool.Version._Choice>();
+            Top = new List<Goedel.Tool.Version._Choice> () ;
+            Registry = new Registry <Goedel.Tool.Version._Choice> ();
             State = StateCode._Start;
-            Stack = new List<_StackItem>();
+            Stack = new List <_StackItem> ();
             StartOfEntry = true;
 
 
@@ -348,16 +349,16 @@ namespace Goedel.Tool.Version {
                 case "Description": return NewDescription();
                 case "Stable": return NewStable();
 
-                }
+				}
 
-            throw new NotFoundReserved("Reserved word not recognized \"" + Label + "\"");
+            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
             }
 
 
 
         private Goedel.Tool.Version.Version NewVersion() {
             Goedel.Tool.Version.Version result = new Goedel.Tool.Version.Version();
-            Push(result);
+            Push (result);
             State = StateCode.Version_Start;
             return result;
             }
@@ -365,7 +366,7 @@ namespace Goedel.Tool.Version {
 
         private Goedel.Tool.Version.Platform NewPlatform() {
             Goedel.Tool.Version.Platform result = new Goedel.Tool.Version.Platform();
-            Push(result);
+            Push (result);
             State = StateCode.Platform_Start;
             return result;
             }
@@ -373,7 +374,7 @@ namespace Goedel.Tool.Version {
 
         private Goedel.Tool.Version.File NewFile() {
             Goedel.Tool.Version.File result = new Goedel.Tool.Version.File();
-            Push(result);
+            Push (result);
             State = StateCode.File_Start;
             return result;
             }
@@ -381,7 +382,7 @@ namespace Goedel.Tool.Version {
 
         private Goedel.Tool.Version.Description NewDescription() {
             Goedel.Tool.Version.Description result = new Goedel.Tool.Version.Description();
-            Push(result);
+            Push (result);
             State = StateCode.Description_Start;
             return result;
             }
@@ -389,7 +390,7 @@ namespace Goedel.Tool.Version {
 
         private Goedel.Tool.Version.Stable NewStable() {
             Goedel.Tool.Version.Stable result = new Goedel.Tool.Version.Stable();
-            Push(result);
+            Push (result);
             State = StateCode.Stable_Start;
             return result;
             }
@@ -409,40 +410,40 @@ namespace Goedel.Tool.Version {
             }
 
 
-        public void Serialize(TextWriter Output) => Serialize(Output, OutputFormat.Goedel);
+		public void Serialize (TextWriter Output)=> Serialize (Output, OutputFormat.Goedel);
 
-        public void Serialize(TextWriter Output, OutputFormat OutputFormat) {
+		public void Serialize (TextWriter Output, OutputFormat OutputFormat) {
 
-            StructureWriter StructureWriter = StructureWriter.GetStructureWriter(Output, OutputFormat);
-            StructureWriter.StartDocument();
-            foreach (Goedel.Tool.Version._Choice Entry in Top) {
-                Entry.Serialize(StructureWriter, true);
-                }
-            StructureWriter.EndDocument();
-            }
+			StructureWriter StructureWriter = StructureWriter.GetStructureWriter (Output, OutputFormat);
+			StructureWriter.StartDocument ();
+			foreach (Goedel.Tool.Version._Choice Entry in Top) {
+				Entry.Serialize (StructureWriter, true);
+				}
+			StructureWriter.EndDocument ();
+			}
 
 
-        void Push(Goedel.Tool.Version._Choice Token) {
-            _StackItem Item = new _StackItem() {
-                State = State,
-                Token = Current
-                };
+        void Push (Goedel.Tool.Version._Choice Token) {
+            _StackItem Item = new _StackItem () {
+					State = State,
+					Token = Current
+					};
 
-            Stack.Add(Item);
+            Stack.Add (Item);
 
             //Console.WriteLine ("$$$$PUSH {0}", Current);
 
             Current = Token;
             }
 
-        void Pop() {
-            Assert.AssertFalse(Stack.Count == 0, InternalError.Throw);
+        void Pop () {
+			Assert.AssertFalse (Stack.Count == 0, InternalError.Throw);
 
-            _StackItem Item = Stack[Stack.Count - 1];
+            _StackItem Item = Stack[Stack.Count -1];
             State = Item.State;
             Current = Item.Token;
 
-            Stack.RemoveAt(Stack.Count - 1);
+            Stack.RemoveAt (Stack.Count -1 ) ;
 
             //Console.WriteLine ("$$$$POP {0}", Current);
             }
@@ -454,9 +455,9 @@ namespace Goedel.Tool.Version {
             if ((Token == TokenType.SEPARATOR) |
                 (Token == TokenType.NULL) |
                 (Token == TokenType.COMMENT)) {
-                return;
-                }
-            Assert.AssertFalse(Token == TokenType.INVALID, InvalidToken.Throw);
+				return;
+				}
+			Assert.AssertFalse (Token == TokenType.INVALID, InvalidToken.Throw);
 
             bool Represent = true;
 
@@ -467,188 +468,188 @@ namespace Goedel.Tool.Version {
                 Represent = false;
                 switch (State) {
                     case StateCode._Start:                 //      BEGIN
-                    if (Token == TokenType.BEGIN) {
-                        State = StateCode._Choice;
-                        break;
-                        }
-                    else {
-                        throw new ExpectedStart();
-                        }
-
-                    case StateCode._Choice:                //      LABEL Class | END
-                    if (Token == TokenType.LABEL) {
-                        Goedel.Tool.Version.ReleaseType LabelType = _Reserved(Text);
-                        if (false |
-                                (LabelType == Goedel.Tool.Version.ReleaseType.Version)) {
-                            Top.Add(New_Choice(Text));
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode._Choice;
+                            break;
                             }
                         else {
-                            throw new Expected("Parser Error Expected [Class]");
+							throw new ExpectedStart ();
+							}
+
+                    case StateCode._Choice:                //      LABEL Class | END
+                        if (Token == TokenType.LABEL) {
+                            Goedel.Tool.Version.ReleaseType LabelType = _Reserved (Text);
+                            if (false |
+									(LabelType == Goedel.Tool.Version.ReleaseType.Version)) {
+                                Top.Add(New_Choice(Text));
+                                }
+                            else {
+                                throw new Expected("Parser Error Expected [Class]");
+                                }
+                            break;
                             }
-                        break;
-                        }
-                    if (Token == TokenType.END) {
-                        State = StateCode._End;
-                        break;
-                        }
-                    else {
-                        throw new ExpectedClass();
-                        }
+                        if (Token == TokenType.END) { 
+                            State = StateCode._End;
+                            break;
+                            }
+                        else {
+							throw new ExpectedClass();
+							}
 
                     case StateCode._End: {                  //      -
                         throw new TooManyClose();
-                        }
+						}
 
                     case StateCode.Version_Start:
-                    if (Token == TokenType.STRING) {
-                        Goedel.Tool.Version.Version Current_Cast = (Goedel.Tool.Version.Version)Current;
-                        Current_Cast.Code = Text;
-                        State = StateCode.Version__Code;
-                        break;
-                        }
-                    throw new Expected("Expected String");
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Version.Version Current_Cast = (Goedel.Tool.Version.Version)Current;
+                            Current_Cast.Code = Text;
+                            State = StateCode.Version__Code;
+                            break;
+                            }
+                        throw new Expected("Expected String");
 
                     case StateCode.Version__Code:
 
-                    if (Token == TokenType.BEGIN) {
-                        State = StateCode.Version__Entries;
-                        }
-                    else {
-                        Pop();
-                        Represent = true;
-                        }
-                    break;
-                    case StateCode.Version__Entries:
-                    if (Token == TokenType.END) {
-                        Pop();
-                        break;
-                        }
-
-                    // Parser transition for LIST $$$$$
-
-                    else if (Token == TokenType.LABEL) {
-                        Goedel.Tool.Version.Version Current_Cast = (Goedel.Tool.Version.Version)Current;
-                        Goedel.Tool.Version.ReleaseType LabelType = _Reserved(Text);
-                        if (false |
-                                (LabelType == Goedel.Tool.Version.ReleaseType.Platform) |
-                                (LabelType == Goedel.Tool.Version.ReleaseType.Description) |
-                                (LabelType == Goedel.Tool.Version.ReleaseType.Stable)) {
-                            Current_Cast.Entries.Add(New_Choice(Text));
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Version__Entries;
                             }
                         else {
-                            throw new Expected("Parser Error Expected [Platform Description Stable ]");
+							Pop ();
+                            Represent = true;
                             }
-                        }
-                    break;
+                        break;
+                    case StateCode.Version__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Version.Version Current_Cast = (Goedel.Tool.Version.Version)Current;
+                            Goedel.Tool.Version.ReleaseType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Version.ReleaseType.Platform) |
+									(LabelType == Goedel.Tool.Version.ReleaseType.Description) |
+									(LabelType == Goedel.Tool.Version.ReleaseType.Stable) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [Platform Description Stable ]");
+								}
+							}
+                        break;
 
 
                     case StateCode.Platform_Start:
-                    if (Token == TokenType.STRING) {
-                        Goedel.Tool.Version.Platform Current_Cast = (Goedel.Tool.Version.Platform)Current;
-                        Current_Cast.Name = Text;
-                        State = StateCode.Platform__Name;
-                        break;
-                        }
-                    throw new Expected("Expected String");
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Version.Platform Current_Cast = (Goedel.Tool.Version.Platform)Current;
+                            Current_Cast.Name = Text;
+                            State = StateCode.Platform__Name;
+                            break;
+                            }
+                        throw new Expected("Expected String");
 
                     case StateCode.Platform__Name:
 
-                    if (Token == TokenType.BEGIN) {
-                        State = StateCode.Platform__Entries;
-                        }
-                    else {
-                        Pop();
-                        Represent = true;
-                        }
-                    break;
-                    case StateCode.Platform__Entries:
-                    if (Token == TokenType.END) {
-                        Pop();
-                        break;
-                        }
-
-                    // Parser transition for LIST $$$$$
-
-                    else if (Token == TokenType.LABEL) {
-                        Goedel.Tool.Version.Platform Current_Cast = (Goedel.Tool.Version.Platform)Current;
-                        Goedel.Tool.Version.ReleaseType LabelType = _Reserved(Text);
-                        if (false |
-                                (LabelType == Goedel.Tool.Version.ReleaseType.File)) {
-                            Current_Cast.Entries.Add(New_Choice(Text));
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Platform__Entries;
                             }
                         else {
-                            throw new Expected("Parser Error Expected [File ]");
+							Pop ();
+                            Represent = true;
                             }
-                        }
-                    break;
+                        break;
+                    case StateCode.Platform__Entries: 
+                        if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+
+						// Parser transition for LIST $$$$$
+
+                        else if (Token == TokenType.LABEL) {
+							Goedel.Tool.Version.Platform Current_Cast = (Goedel.Tool.Version.Platform)Current;
+                            Goedel.Tool.Version.ReleaseType LabelType = _Reserved (Text);
+                            if ( false |
+									(LabelType == Goedel.Tool.Version.ReleaseType.File) ) {
+                                Current_Cast.Entries.Add (New_Choice(Text));
+                                }
+                            else {
+								throw new Expected ("Parser Error Expected [File ]");
+								}
+							}
+                        break;
 
 
                     case StateCode.File_Start:
-                    if (Token == TokenType.STRING) {
-                        Goedel.Tool.Version.File Current_Cast = (Goedel.Tool.Version.File)Current;
-                        Current_Cast.Name = Text;
-                        State = StateCode.File__Name;
-                        break;
-                        }
-                    throw new Expected("Expected String");
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Version.File Current_Cast = (Goedel.Tool.Version.File)Current;
+                            Current_Cast.Name = Text;
+                            State = StateCode.File__Name;
+                            break;
+                            }
+                        throw new Expected("Expected String");
 
                     case StateCode.File__Name:
-                    if (Token == TokenType.STRING) {
-                        Goedel.Tool.Version.File Current_Cast = (Goedel.Tool.Version.File)Current;
-                        Current_Cast.RID = Text;
-                        State = StateCode.File__RID;
-                        break;
-                        }
-                    throw new Expected("Expected String");
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Version.File Current_Cast = (Goedel.Tool.Version.File)Current;
+                            Current_Cast.RID = Text;
+                            State = StateCode.File__RID;
+                            break;
+                            }
+                        throw new Expected("Expected String");
 
                     case StateCode.File__RID:
-                    if (Token == TokenType.STRING) {
-                        Goedel.Tool.Version.File Current_Cast = (Goedel.Tool.Version.File)Current;
-                        Current_Cast.Type = Text;
-                        State = StateCode.File__Type;
-                        break;
-                        }
-                    throw new Expected("Expected String");
+                        if (Token == TokenType.STRING) {
+                            Goedel.Tool.Version.File Current_Cast = (Goedel.Tool.Version.File)Current;
+                            Current_Cast.Type = Text;
+                            State = StateCode.File__Type;
+                            break;
+                            }
+                        throw new Expected("Expected String");
 
                     case StateCode.File__Type:
-                    Pop();
-                    Represent = true;
-                    break;
+                        Pop ();
+                        Represent = true; 
+                        break;
                     case StateCode.Description_Start:
-                    if (Token == TokenType.BEGIN) {
-                        State = StateCode.Description__Text;
-                        break;
-                        }
-                    else {
-                        Pop();
-                        Represent = true;
-                        break;
-                        }
+                        if (Token == TokenType.BEGIN) {
+                            State = StateCode.Description__Text;
+                            break;
+                            }
+                        else {
+                            Pop();
+                            Represent = true;
+                            break;
+                            }
                     case StateCode.Description__Text:
-                    if (Token == TokenType.END) {
-                        Pop();
-                        break;
-                        }
-                    else if (Token == TokenType.TEXT) {
-                        Goedel.Tool.Version.Description Current_Cast = (Goedel.Tool.Version.Description)Current;
-                        Current_Cast.Text.Add(Text);
-                        break;
-                        }
-                    throw new Expected("Expected Text");
+                       if (Token == TokenType.END) {
+                            Pop();
+                            break;
+                            }
+                       else if (Token == TokenType.TEXT) {
+                            Goedel.Tool.Version.Description Current_Cast = (Goedel.Tool.Version.Description)Current;
+                            Current_Cast.Text.Add (Text);
+                            break;							
+                            }
+                       throw new Expected("Expected Text");
 
 
                     case StateCode.Stable_Start:
-                    Pop();
-                    Represent = true;
-                    break;
+                        Pop ();
+                        Represent = true; 
+                        break;
 
                     default: {
                         throw new UnreachableCode();
-                        }
+						}
                     }
                 }
             }
         }
-    }
+	}
 #pragma warning restore IDE0022	
 
