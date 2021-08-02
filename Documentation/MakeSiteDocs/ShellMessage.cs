@@ -1,7 +1,8 @@
-﻿using Goedel.Mesh.Test;
+﻿using System.Collections.Generic;
+
 using Goedel.Mesh.Shell;
+using Goedel.Mesh.Test;
 using Goedel.Utilities;
-using System.Collections.Generic;
 
 namespace ExampleGenerator {
     public class ShellMessage : ExampleSet {

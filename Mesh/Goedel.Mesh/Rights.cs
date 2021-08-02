@@ -18,19 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
-using Goedel.Mesh;
-using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.IO;
-using Goedel.Protocol;
-using System.Diagnostics;
-using System.Runtime.Serialization;
-using Goedel.IO;
+
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -121,7 +111,7 @@ namespace Goedel.Mesh {
         ///<summary>The outbound spool. Read/write access is restricted
         ///to External devices.</summary> 
         SpoolOutbound,
-        
+
         ///<summary>The local spool. Write access is limited to administration 
         ///devices. Read access is limited to the specific device to which a message
         ///is directed.</summary> 
@@ -202,7 +192,7 @@ namespace Goedel.Mesh {
         /// <param name="access">The access granted.</param>
         /// <param name="degree">The form of access (direct, service mediated, etc.)</param>
         /// <param name="name">The named sub-resource (e.g. account).</param>
-        public Right(Resource resource, Access access=Access.Decrypt, string name = null, Degree degree=Degree.Service) {
+        public Right(Resource resource, Access access = Access.Decrypt, string name = null, Degree degree = Degree.Service) {
             Resource = resource;
             Access = access;
             Name = name;
@@ -231,7 +221,7 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Class containing static identifiers describing rights.
     /// </summary>
-    public  static partial class Rights {
+    public static partial class Rights {
 
 
         static Rights() {
@@ -267,25 +257,25 @@ namespace Goedel.Mesh {
         public static List<Right> RightsGrantUser =
                     new() {
                         // Needed to create and publish device connection
-                        new Right (Resource.Store, Access.GrantReadWrite, CatalogDevice.Label),
-                        new Right (Resource.Store, Access.GrantReadWrite, CatalogContact.Label),
-                        new Right (Resource.Store, Access.GrantReadWrite, CatalogTask.Label),
-                        new Right (Resource.Store, Access.GrantReadWrite, CatalogBookmark.Label),
-                        new Right (Resource.Store, Access.GrantReadWrite, CatalogDevice.Label),
-                        new Right (Resource.Store, Access.GrantReadWrite, CatalogNetwork.Label),
-                        new Right (Resource.Store, Access.GrantReadWrite, CatalogApplication.Label),
-                        new Right (Resource.Store, Access.GrantReadWrite, CatalogPublication.Label),
-                        new Right (Resource.Store, Access.GrantReadWrite, SpoolInbound.Label),
-                        new Right (Resource.Store, Access.GrantReadWrite, SpoolOutbound.Label)
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogContact.Label),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogTask.Label),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogBookmark.Label),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogNetwork.Label),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogApplication.Label),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogPublication.Label),
+                        new Right(Resource.Store, Access.GrantReadWrite, SpoolInbound.Label),
+                        new Right(Resource.Store, Access.GrantReadWrite, SpoolOutbound.Label)
                         };
 
 
         ///<summary>Super administrator rights.</summary> 
         public readonly static List<Right> RightsSuperAdministrator =
                     new() {
-                        new Right (Resource.ProfileRoot, Access.Sign),
-                        new Right (Resource.ProfileAdmin, Access.Sign| Access.GrantSign),
-                        new Right (Resource.Store,Access.ReadWrite, CatalogDevice.Label),
+                        new Right(Resource.ProfileRoot, Access.Sign),
+                        new Right(Resource.ProfileAdmin, Access.Sign | Access.GrantSign),
+                        new Right(Resource.Store, Access.ReadWrite, CatalogDevice.Label),
                         };
 
         ///<summary>Device admninistrator rights</summary> 
@@ -303,8 +293,8 @@ namespace Goedel.Mesh {
         ///which will require additional grants to be of use.</summary> 
         public readonly static List<Right> RightsDevce =
                     new() {
-                        new Right (Resource.Store, Access.ReadWrite, CatalogNetwork.Label),
-                        new Right (Resource.Store, Access.ReadWrite, CatalogApplication.Label)
+                        new Right(Resource.Store, Access.ReadWrite, CatalogNetwork.Label),
+                        new Right(Resource.Store, Access.ReadWrite, CatalogApplication.Label)
                         };
 
 
@@ -344,7 +334,7 @@ namespace Goedel.Mesh {
         ///a credential or the account key.</summary> 
         public readonly static List<Right> RightsSSH =
                     new() {
-                        new Right (Resource.Ssh, Access.Authenticate, "*"),
+                        new Right(Resource.Ssh, Access.Authenticate, "*"),
                         };
 
         ///<summary>Rights granted to a PGP enabled device. This requires external messaging and
@@ -368,7 +358,7 @@ namespace Goedel.Mesh {
                     new() {
                         new Right(Resource.Account, Access.GrantReadWrite),
                         new Right(Resource.Store, Access.GrantReadWrite, CatalogPublication.Label),
-                        new Right (Resource.Store, Access.ReadWrite, CatalogMember.Label),
+                        new Right(Resource.Store, Access.ReadWrite, CatalogMember.Label),
                         };
 
         ///<summary>Rights granted to a group member. A group member can read/update the group
@@ -426,7 +416,7 @@ namespace Goedel.Mesh {
 
             foreach (var entry in append) {
                 if (!Update(dictionary, entry)) {
-                    dictionary.Add (new Right(entry.Resource, entry.Access, entry.Name, entry.Degree));
+                    dictionary.Add(new Right(entry.Resource, entry.Access, entry.Name, entry.Degree));
                     }
                 }
 
@@ -435,7 +425,7 @@ namespace Goedel.Mesh {
 
         static bool Update(List<Right> rights, Right right) {
             // Can't use foreach because Right is a struct and thus passed by value.
-            for(var i=0; i< rights.Count; i++) {
+            for (var i = 0; i < rights.Count; i++) {
                 var entry = rights[i];
                 if ((entry.Resource == right.Resource) & (entry.Name == right.Name)) {
                     entry.Access |= right.Access;

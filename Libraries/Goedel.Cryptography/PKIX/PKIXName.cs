@@ -137,11 +137,11 @@ namespace Goedel.Cryptography.PKIX {
                     }
 
                 case StringType.Teletex:
-                    break;
+                break;
                 case StringType.Universal:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
             }
         }

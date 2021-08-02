@@ -1,12 +1,14 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using System.Collections.Generic;
+
 using Xunit;
 
 #pragma warning disable IDE0060
@@ -129,8 +131,8 @@ namespace Goedel.XUnit {
             //VerifyArchive(filename, entries, sign, encrypt, mallet, initial);
 
             // Update old file.
-            var filepath = getItem(entries,0);
-            var update = Path.Combine (archive2, Path.GetFileName(filepath));
+            var filepath = getItem(entries, 0);
+            var update = Path.Combine(archive2, Path.GetFileName(filepath));
             Dispatch($"dare append {filename} {update} /key={filepath}");
 
             // update the entries directory
@@ -162,7 +164,7 @@ namespace Goedel.XUnit {
 
             (index ? original.IndexFrame > 0 : original.IndexFrame == 0).TestTrue();
 
-            static string getItem (SortedDictionary<string, string> entries, int index) {
+            static string getItem(SortedDictionary<string, string> entries, int index) {
                 var count = 0;
                 foreach (var entry in entries) {
                     if (count++ == index) {
@@ -262,7 +264,7 @@ namespace Goedel.XUnit {
         static void AddEntries(SortedDictionary<string, string> dictionary, DirectoryInfo directoryInfo,
                     string path) {
             foreach (var file in directoryInfo.GetFiles()) {
-                dictionary.Add(Path.Combine(path, file.Name), 
+                dictionary.Add(Path.Combine(path, file.Name),
                             Path.Combine(directoryInfo.Name, file.FullName));
                 }
             foreach (var subDirectory in directoryInfo.GetDirectories()) {
@@ -272,7 +274,7 @@ namespace Goedel.XUnit {
 
 
         bool VerifyArchive(string filename, SortedDictionary<string, string> entries, string sign, string encrypt,
-                TestCLI mallet, string initial, string test=null) {
+                TestCLI mallet, string initial, string test = null) {
 
             test ??= initial;
 
@@ -304,7 +306,7 @@ namespace Goedel.XUnit {
 
                 var recoverFile = Path.GetFileName(entry.Key);
 
-                recoverFile.CheckFilesEqual (initialFile);
+                recoverFile.CheckFilesEqual(initialFile);
                 System.IO.File.Delete(recoverFile);
                 }
 

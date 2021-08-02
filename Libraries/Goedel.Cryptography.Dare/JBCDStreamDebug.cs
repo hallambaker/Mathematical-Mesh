@@ -1,7 +1,7 @@
-﻿using Goedel.IO;
-
-using System;
+﻿using System;
 using System.IO;
+
+using Goedel.IO;
 
 
 namespace Goedel.Cryptography.Dare {

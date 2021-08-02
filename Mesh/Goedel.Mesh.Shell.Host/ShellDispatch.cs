@@ -1,18 +1,13 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh.Client;
-using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
-using Goedel.Protocol.Service;
-using Goedel.Utilities;
-using Goedel.Mesh.ServiceAdmin;
-using Goedel.IO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
 using Goedel.Mesh.Management;
+using Goedel.Mesh.ServiceAdmin;
+using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
+using Goedel.Protocol.Service;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Shell.Host {
 
@@ -225,7 +220,7 @@ namespace Goedel.Mesh.Shell.Host {
                 Screen.WriteLine("Received SIGINT (Ctrl+C)");
                 service.Dispose();
                 sigintReceived = true;
-                };
+            };
 
             // Catch SIGTERM
             AppDomain.CurrentDomain.ProcessExit += (_, _) => {
@@ -236,7 +231,7 @@ namespace Goedel.Mesh.Shell.Host {
                 else {
                     Screen.WriteLine("Received SIGTERM, ignoring it because already processed SIGINT");
                     }
-                };
+            };
 
             return service;
             }

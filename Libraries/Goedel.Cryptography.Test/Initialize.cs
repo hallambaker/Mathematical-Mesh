@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Goedel.Cryptography;
+﻿using System.Runtime.CompilerServices;
 
 namespace Goedel.Cryptography.Test {
     ///<summary>Static class whose only function is to contain the initialization 

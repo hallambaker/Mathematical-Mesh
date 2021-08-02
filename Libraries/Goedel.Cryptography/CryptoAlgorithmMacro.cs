@@ -42,7 +42,7 @@ namespace Goedel.Cryptography {
         public static CryptoAlgorithmId DefaultDigestId = CryptoAlgorithmId.SHA_2_512;
 
         ///<summary>The default digest algorithm</summary>
-        public static CryptoAlgorithmId DefaultMACId= CryptoAlgorithmId.HMAC_SHA_2_512;
+        public static CryptoAlgorithmId DefaultMACId = CryptoAlgorithmId.HMAC_SHA_2_512;
 
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Goedel.Cryptography {
                 _ => algorithmId
                 };
 
-            //algorithmID == CryptoAlgorithmId.Default ? CryptoID.DefaultExchangeId : algorithmID;
+        //algorithmID == CryptoAlgorithmId.Default ? CryptoID.DefaultExchangeId : algorithmID;
 
 
         /// <summary>
@@ -126,24 +126,22 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The digest algorithm</returns>
-        static CryptoAlgorithmId ExtractMAC(this CryptoAlgorithmId id) => (id.Bulk()) switch
-            {
-                CryptoAlgorithmId.AES128HMAC => CryptoAlgorithmId.HMAC_SHA_2_256,
-                CryptoAlgorithmId.AES256HMAC => CryptoAlgorithmId.HMAC_SHA_2_512,
-                _ => id.Bulk(),
-                };
+        static CryptoAlgorithmId ExtractMAC(this CryptoAlgorithmId id) => (id.Bulk()) switch {
+            CryptoAlgorithmId.AES128HMAC => CryptoAlgorithmId.HMAC_SHA_2_256,
+            CryptoAlgorithmId.AES256HMAC => CryptoAlgorithmId.HMAC_SHA_2_512,
+            _ => id.Bulk(),
+            };
 
         /// <summary>
         /// Return the encryption algorithm from a possibly composite ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The encryption algorithm</returns>
-        static CryptoAlgorithmId ExtractEncryption(this CryptoAlgorithmId id) => (id.Bulk()) switch
-            {
-                CryptoAlgorithmId.AES128HMAC => CryptoAlgorithmId.AES128CBC,
-                CryptoAlgorithmId.AES256HMAC => CryptoAlgorithmId.AES256CBC,
-                _ => id.Bulk(),
-                };
+        static CryptoAlgorithmId ExtractEncryption(this CryptoAlgorithmId id) => (id.Bulk()) switch {
+            CryptoAlgorithmId.AES128HMAC => CryptoAlgorithmId.AES128CBC,
+            CryptoAlgorithmId.AES256HMAC => CryptoAlgorithmId.AES256CBC,
+            _ => id.Bulk(),
+            };
 
         internal static object Type(CryptoAlgorithmId bulk, int v) => throw new NotImplementedException();
 
@@ -200,12 +198,11 @@ namespace Goedel.Cryptography {
                 return id;
                 }
 
-            return keyUses switch
-                {
-                    KeyUses.Sign => defaultSign,
-                    KeyUses.Encrypt => defaultEncrypt,
-                    _ => defaultAny,
-                    };
+            return keyUses switch {
+                KeyUses.Sign => defaultSign,
+                KeyUses.Encrypt => defaultEncrypt,
+                _ => defaultAny,
+                };
             }
 
 

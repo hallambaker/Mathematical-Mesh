@@ -1,8 +1,9 @@
-﻿using Goedel.Protocol;
-using Goedel.Utilities;
-using Goedel.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+
+using Goedel.IO;
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -66,13 +67,13 @@ namespace Goedel.Cryptography.Dare {
 
             // failing here because we have encryption but no recipients!!!
 
-            DareHeader exchange=null;
+            DareHeader exchange = null;
             if (Header?.HasExchangePosition == true) {
                 exchange = sequence.GetHeader(Header.SequenceInfo.ExchangePosition);
                 }
 
             using var input = jbcdStream.FramerGetReader(DataPosition, DataLength);
-            Header.GetDecoder(input, 
+            Header.GetDecoder(input,
                 out var Reader, keyCollection: keyCollection, exchange: exchange);
 
 

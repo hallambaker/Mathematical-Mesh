@@ -36,8 +36,8 @@ namespace Goedel.Utilities {
         /// <param name="length">Maximum line length</param>
         /// <param name="indent">Number of spaces to indent wrapped lines.</param>
         /// <returns>The wrapped string.</returns>
-        public static string Wrap(this string input, string input2 =null, 
-                int length = 68, int indent =0) {
+        public static string Wrap(this string input, string input2 = null,
+                int length = 68, int indent = 0) {
             var buffer = new StringBuilder();
             var line = new StringBuilder();
             var space = new StringBuilder();
@@ -90,7 +90,7 @@ namespace Goedel.Utilities {
                 space.Clear();
                 }
 
-            void addCurrent () {
+            void addCurrent() {
                 if (current.Length > max) {
                     var chunk = length - col();
                     var left = current.ToString().Substring(0, chunk);
@@ -107,7 +107,7 @@ namespace Goedel.Utilities {
                     line.Append(right); // the remainder
                     current.Clear();
                     }
-                if (col()+current.Length > length) {
+                if (col() + current.Length > length) {
                     space.Clear();
                     newline();
                     }

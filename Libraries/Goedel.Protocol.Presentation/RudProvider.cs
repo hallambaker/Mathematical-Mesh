@@ -1,10 +1,6 @@
-﻿using System;
-using System.Threading;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-using Goedel.Protocol;
 using Goedel.Utilities;
-using Goedel.Protocol.Presentation;
 
 namespace Goedel.Protocol.Presentation {
 
@@ -63,9 +59,9 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="domain">The DNS domain.</param>
         /// <param name="instance">The instance specifier</param>
         public RudProvider(
-                    JpcInterface jpcProvider, 
+                    JpcInterface jpcProvider,
                     TransportType presentationTypes,
-                    string domain, 
+                    string domain,
                     string instance = null) {
             JpcInterface = jpcProvider;
             if ((presentationTypes & TransportType.Http) > 0) {

@@ -1,18 +1,10 @@
-using Goedel.Protocol;
-using Goedel.Test.Core;
-using Goedel.Test;
-using Goedel.Utilities;
-using Goedel.Protocol.Presentation;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Goedel.Mesh.Test;
+using Goedel.Cryptography;
+using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Server;
-using Xunit;
-using Goedel.Cryptography;
-
-using Goedel.Mesh;
+using Goedel.Mesh.Test;
+using Goedel.Protocol.Presentation;
+using Goedel.Utilities;
 
 namespace Goedel.XUnit {
 
@@ -27,7 +19,7 @@ namespace Goedel.XUnit {
         public string DeviceBobAdmin = "Bob Admin";
         static string AccountBob = "bob@example.com";
         static string AccountGroup = "groupw@example.com";
-        public ContextUser ContextInitiator { get; set;  }
+        public ContextUser ContextInitiator { get; set; }
 
         public Mesh.Connection ConnectionInnitiator => ContextInitiator.Connection;
         public ProfileUser ProfileInitiator => ContextInitiator.ProfileUser;
@@ -39,11 +31,11 @@ namespace Goedel.XUnit {
 
         public ICredentialPrivate GetInitiatorCredential() {
             var profileDevice = ProfileDevice.Generate();
-            return new MeshCredentialPrivate(profileDevice, null, null, 
+            return new MeshCredentialPrivate(profileDevice, null, null,
                     profileDevice.KeyAuthentication as KeyPairAdvanced);
             }
-        public ICredentialPrivate GetResponderCredential() => 
-            new MeshCredentialPrivate(null, MeshService.ConnectionDevice, null, 
+        public ICredentialPrivate GetResponderCredential() =>
+            new MeshCredentialPrivate(null, MeshService.ConnectionDevice, null,
                 MeshService.ActivationDevice.DeviceAuthentication);
 
 
@@ -61,7 +53,7 @@ namespace Goedel.XUnit {
             }
 
 
-        public TestEnvironmentCommon SetTestEnvironment(TestEnvironmentCommon testEnvironmentCommon=null) {
+        public TestEnvironmentCommon SetTestEnvironment(TestEnvironmentCommon testEnvironmentCommon = null) {
             testEnvironmentCommon ??= new TestEnvironmentRdp();
 
             //var meshMachine = testEnvironmentCommon.GetMeshMachine("test");

@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-
 using System;
 using System.Collections.Generic;
+
+using Goedel.Utilities;
 
 
 namespace Goedel.Protocol.Presentation {
@@ -74,7 +74,7 @@ namespace Goedel.Protocol.Presentation {
         /// Perform the next actions in queue.
         /// </summary>
         public void ProcessSend() {
-            
+
             }
 
         /// <summary>

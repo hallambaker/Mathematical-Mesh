@@ -19,22 +19,21 @@
 //  THE SOFTWARE.
 //  
 //  
+using System.Collections.Generic;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Utilities;
-using Goedel.Protocol.Presentation;
-using System.Text;
-using System.Collections.Generic;
-using System;
 using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
     /// <summary>
     /// A verified account credential.
     /// </summary>
-    public class MeshVerifiedAccount : MeshVerifiedDevice{
+    public class MeshVerifiedAccount : MeshVerifiedDevice {
 
         ///<summary>The account address</summary> 
         public string AccountAddress => MeshCredential.Account;
@@ -142,7 +141,7 @@ namespace Goedel.Mesh {
                 ConnectionDevice connectionDevice,
                 ConnectionAddress connectionAccount,
                 KeyPairAdvanced authenticationKey,
-                MeshCredentialPrivate meshCredentialPrivate = null)  {
+                MeshCredentialPrivate meshCredentialPrivate = null) {
             ProfileDevice = profileDevice ?? meshCredentialPrivate?.ProfileDevice;
             ConnectionDevice = connectionDevice ?? meshCredentialPrivate?.ConnectionDevice;
             ConnectionAccount = connectionAccount ?? meshCredentialPrivate?.ConnectionAccount;
@@ -240,8 +239,8 @@ namespace Goedel.Mesh {
                 ConnectionDevice connectionDevice,
                 ConnectionAddress connectionAccount,
                 KeyPairAdvanced authenticationKey,
-                MeshCredentialPrivate meshCredentialPrivate = null) : base 
-                            (profileDevice, connectionDevice, connectionAccount, 
+                MeshCredentialPrivate meshCredentialPrivate = null) : base
+                            (profileDevice, connectionDevice, connectionAccount,
                                     authenticationKey, meshCredentialPrivate) {
 
             if (meshCredentialPrivate?.ProfileDevice is null & profileDevice is not null) {
@@ -267,7 +266,7 @@ namespace Goedel.Mesh {
 
             }
 
-        
+
 
         ///// <summary>
         ///// Construct a credential from <paramref name="connectionDevice"/> with 
@@ -285,7 +284,7 @@ namespace Goedel.Mesh {
 
         //    Screen.WriteLine(connectionDevice.ToString());
 
-            
+
         //    AuthenticationPrivate = key as KeyPairAdvanced;
 
         //    }
@@ -321,7 +320,7 @@ namespace Goedel.Mesh {
         ///<inheritdoc/>
         public ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
 
-            ConnectionDevice connectionDevice= null;
+            ConnectionDevice connectionDevice = null;
             ConnectionAddress connectionAddress = null;
             ProfileDevice profileDevice = null;
             KeyPairAdvanced keyAuthentication = null;

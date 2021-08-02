@@ -1,11 +1,9 @@
-﻿using Goedel.Mesh;
+﻿using System.Collections.Generic;
+
+using Goedel.Cryptography.Dare;
+using Goedel.Mesh;
 using Goedel.Mesh.Test;
 using Goedel.Test.Core;
-using Goedel.Utilities;
-using Goedel.IO;
-using System;
-using System.Collections.Generic;
-using Goedel.Cryptography.Dare;
 
 namespace ExampleGenerator {
 
@@ -96,8 +94,8 @@ namespace ExampleGenerator {
         public MessagePin ConnectPINMessagePin;
         public AcknowledgeConnection ConnectPINAcknowledgeConnection;
         public RespondConnection ConnectPINConnectResponse;
-        
-        
+
+
         public MessageComplete ConnectPINCompleteMessage;
         public RequestConnection ConnectRequestPIN;
 

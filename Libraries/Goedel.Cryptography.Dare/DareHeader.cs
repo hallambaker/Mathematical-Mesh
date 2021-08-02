@@ -1,9 +1,9 @@
-﻿using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using Goedel.Utilities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+
+using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -279,7 +279,7 @@ namespace Goedel.Cryptography.Dare {
                     CryptoAlgorithmId algorithmID) {
             foreach (var recipient in recipients) {
 
-                if ( keyCollection.TryFindKeyDecryption(recipient.KeyIdentifier, out var decryptionKey)) {
+                if (keyCollection.TryFindKeyDecryption(recipient.KeyIdentifier, out var decryptionKey)) {
 
                     // Recipient has the following fields of interest
                     // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key

@@ -52,55 +52,51 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="keyPair">The key pair.</param>
         /// <returns>Public portion.</returns>
-        public static Key GetPublic(CryptoKey keyPair) => keyPair switch
-            {
-                KeyPairBaseRSA keyPairBaseRSA => new PublicKeyRSA(keyPairBaseRSA),
-                KeyPairBaseDH keyPairBaseDH => new PublicKeyDH(keyPairBaseDH),
-                KeyPairECDH keyPairECDH => new PublicKeyECDH(keyPairECDH),
-                _ => throw new NYI(),
-                };
+        public static Key GetPublic(CryptoKey keyPair) => keyPair switch {
+            KeyPairBaseRSA keyPairBaseRSA => new PublicKeyRSA(keyPairBaseRSA),
+            KeyPairBaseDH keyPairBaseDH => new PublicKeyDH(keyPairBaseDH),
+            KeyPairECDH keyPairECDH => new PublicKeyECDH(keyPairECDH),
+            _ => throw new NYI(),
+            };
 
         /// <summary>
         /// Return the private portion of the keypair.
         /// </summary>
         /// <param name="keyPair">The key pair.</param>
         /// <returns>The private data.</returns>
-        public static Key GetPrivate(CryptoKey keyPair) => keyPair switch
-            {
-                KeyPairBaseRSA keyPairBaseRSA => new PrivateKeyRSA(keyPairBaseRSA),
-                KeyPairBaseDH keyPairBaseDH => new PrivateKeyDH(keyPairBaseDH),
-                KeyPairECDH keyPairECDH => new PrivateKeyECDH(keyPairECDH),
-                _ => throw new NYI(),
-                };
+        public static Key GetPrivate(CryptoKey keyPair) => keyPair switch {
+            KeyPairBaseRSA keyPairBaseRSA => new PrivateKeyRSA(keyPairBaseRSA),
+            KeyPairBaseDH keyPairBaseDH => new PrivateKeyDH(keyPairBaseDH),
+            KeyPairECDH keyPairECDH => new PrivateKeyECDH(keyPairECDH),
+            _ => throw new NYI(),
+            };
 
         /// <summary>
         /// Convert PKIX parameters to JSON structure.
         /// </summary>
         /// <param name="pkixKey">The PKIX key parameters</param>
         /// <returns>The JOSE key</returns>
-        public static Key Factory(IPkixPublicKey pkixKey) => pkixKey switch
-            {
-                PkixPrivateKeyRsa PKIXPrivateKeyRSA => new PrivateKeyRSA(PKIXPrivateKeyRSA),
-                PKIXPrivateKeyDH PKIXPrivateKeyDH => new PrivateKeyDH(PKIXPrivateKeyDH),
-                PKIXPrivateKeyECDH PKIXPrivateKeyECDH => new PrivateKeyECDH(PKIXPrivateKeyECDH),
-                PkixPublicKeyRsa PKIXPublicKeyRSA => new PublicKeyRSA(PKIXPublicKeyRSA),
-                PKIXPublicKeyDH PKIXPublicKeyDH => new PublicKeyDH(PKIXPublicKeyDH),
-                PKIXPublicKeyECDH PKIXPublicKeyECDH => new PublicKeyECDH(PKIXPublicKeyECDH),
-                _ => null,
-                };
+        public static Key Factory(IPkixPublicKey pkixKey) => pkixKey switch {
+            PkixPrivateKeyRsa PKIXPrivateKeyRSA => new PrivateKeyRSA(PKIXPrivateKeyRSA),
+            PKIXPrivateKeyDH PKIXPrivateKeyDH => new PrivateKeyDH(PKIXPrivateKeyDH),
+            PKIXPrivateKeyECDH PKIXPrivateKeyECDH => new PrivateKeyECDH(PKIXPrivateKeyECDH),
+            PkixPublicKeyRsa PKIXPublicKeyRSA => new PublicKeyRSA(PKIXPublicKeyRSA),
+            PKIXPublicKeyDH PKIXPublicKeyDH => new PublicKeyDH(PKIXPublicKeyDH),
+            PKIXPublicKeyECDH PKIXPublicKeyECDH => new PublicKeyECDH(PKIXPublicKeyECDH),
+            _ => null,
+            };
 
         /// <summary>
         /// Convert PKIX parameters to JSON structure.
         /// </summary>
         /// <param name="pkixKey">The PKIX key parameters</param>
         /// <returns>The JOSE key</returns>
-        public static Key Factory(IPKIXPrivateKey pkixKey) => pkixKey switch
-            {
-                PkixPrivateKeyRsa privateKey => new PrivateKeyRSA(privateKey),
-                PKIXPrivateKeyDH privateKey => new PrivateKeyDH(privateKey),
-                PKIXPrivateKeyECDH privateKey => new PrivateKeyECDH(privateKey),
-                _ => null,
-                };
+        public static Key Factory(IPKIXPrivateKey pkixKey) => pkixKey switch {
+            PkixPrivateKeyRsa privateKey => new PrivateKeyRSA(privateKey),
+            PKIXPrivateKeyDH privateKey => new PrivateKeyDH(privateKey),
+            PKIXPrivateKeyECDH privateKey => new PrivateKeyECDH(privateKey),
+            _ => null,
+            };
 
         /// <summary>Create private key from Goedel.Cryptography.KeyPair.</summary>
         /// <param name="keyPair">Key pair to convert</param>
@@ -179,7 +175,7 @@ namespace Goedel.Cryptography.Jose {
                     }
 
                 default:
-                    break;
+                break;
                 }
             return null;
             }
@@ -219,21 +215,21 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the Goedel.Cryptography result.
         /// </summary>
-        public override KeyAgreementResult KeyAgreementResult => Curve switch
-            {
-                CurveX448.CurveJose => new CurveX448Result() {
-                    AgreementX448 = new CurveX448 (Result)},
-                CurveX25519.CurveJose => new CurveX25519Result() {
-                    AgreementX25519 = new CurveX25519(Result)
-                    },
-                //CurveEdwards448.CurveJose => new CurveEdwards448Result() {
-                //    AgreementEd448 = new CurveEdwards448(Result)
-                //    },
-                //CurveEdwards25519.CurveJose => new CurveEdwards25519Result() {
-                //    AgreementEd25519 = new CurveEdwards25519(Result)
-                //    },
-                _ => throw new NYI()
-                };
+        public override KeyAgreementResult KeyAgreementResult => Curve switch {
+            CurveX448.CurveJose => new CurveX448Result() {
+                AgreementX448 = new CurveX448(Result)
+                },
+            CurveX25519.CurveJose => new CurveX25519Result() {
+                AgreementX25519 = new CurveX25519(Result)
+                },
+            //CurveEdwards448.CurveJose => new CurveEdwards448Result() {
+            //    AgreementEd448 = new CurveEdwards448(Result)
+            //    },
+            //CurveEdwards25519.CurveJose => new CurveEdwards25519Result() {
+            //    AgreementEd25519 = new CurveEdwards25519(Result)
+            //    },
+            _ => throw new NYI()
+            };
 
 
         /// <summary>

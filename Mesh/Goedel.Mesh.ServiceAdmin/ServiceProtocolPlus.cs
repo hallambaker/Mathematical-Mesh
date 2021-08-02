@@ -19,14 +19,6 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-
-using Goedel.Protocol;
-
-using System;
-using System.Collections.Generic;
-
-
 namespace Goedel.Mesh.ServiceAdmin {
     public partial class Configuration {
 
@@ -38,26 +30,26 @@ namespace Goedel.Mesh.ServiceAdmin {
     /// <summary>
     /// Service administration request
     /// </summary>
-    public partial class ServiceConfiguration  {
+    public partial class ServiceConfiguration {
 
         #region // Properties
 
 
 
 
-        
 
-        #endregion 
+
+        #endregion
         #region // Destructor
-        #endregion 
+        #endregion
         #region // Constructors
-        #endregion 
+        #endregion
 
         #region // Implement Interface: Ixxx
-        #endregion 
+        #endregion
 
         #region // Methods 
-        #endregion 
+        #endregion
         }
 
     public partial class HostConfiguration {

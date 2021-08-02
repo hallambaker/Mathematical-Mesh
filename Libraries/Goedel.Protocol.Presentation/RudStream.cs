@@ -18,12 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
-
 using System.Collections.Generic;
-//using Goedel.Protocol.Service;
 using System.IO;
 using System.Threading.Tasks;
+
+using Goedel.Utilities;
 
 
 
@@ -36,7 +35,7 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>The data.</summary> 
         public byte[] Data;
-        
+
         ///<summary>If true, this is a final datagram.</summary> 
         public bool IsFinal;
         }
@@ -134,7 +133,7 @@ namespace Goedel.Protocol.Presentation {
         public string AccountAddress { get; }
 
         ///<summary>The verified account</summary> 
-        public virtual IVerifiedAccount VerifiedAccount { get;}
+        public virtual IVerifiedAccount VerifiedAccount { get; }
 
         #endregion
         #region // Constructors
@@ -158,7 +157,7 @@ namespace Goedel.Protocol.Presentation {
             if (parent != null) {
                 parent.AddChild(this);
                 }
-            RudConnection = rudConnection ?? parent?.RudConnection ;
+            RudConnection = rudConnection ?? parent?.RudConnection;
 
             Protocol = protocol;
 
@@ -228,10 +227,10 @@ namespace Goedel.Protocol.Presentation {
 
             Screen.WriteLine($"Client {Protocol} - Posted data to {RemoteStreamId?.ToStringBase16()}");
 
-          
 
-            if (packet is PacketResponderChallenge packetResponderChallenge && 
-                        (packet.Payload == null | packet?.Payload.Length == 0) ) {
+
+            if (packet is PacketResponderChallenge packetResponderChallenge &&
+                        (packet.Payload == null | packet?.Payload.Length == 0)) {
                 // if we got a challenge and no payload, represent the request here.
                 packet = await PostWeb(span);
                 }
@@ -261,7 +260,7 @@ namespace Goedel.Protocol.Presentation {
             extensions.Add(new() {
                 Tag = streamType,
                 Value = Protocol.ToUTF8()
-                }) ;
+                });
 
 
             CredentialSelf?.AddCredentials(extensions);
@@ -277,7 +276,7 @@ namespace Goedel.Protocol.Presentation {
                 extensions.Add(new() {
                     Tag = Constants.ExtensionTagsClaimIdTag,
                     Value = AccountAddress.ToUTF8()
-                    }) ;
+                    });
                 }
 
             }
@@ -330,7 +329,7 @@ namespace Goedel.Protocol.Presentation {
                 LocalStreamId.GetValue(), span,
                 plaintextExtensionsIn: extensions);
 
-            Screen.WriteLine ($"URI: {Uri}");
+            Screen.WriteLine($"URI: {Uri}");
 
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
@@ -430,7 +429,7 @@ namespace Goedel.Protocol.Presentation {
                         //case Constants.ExtensionTagsMeshConnectionTag: {
 
                         //    break;
-                            //}
+                        //}
                         }
                     }
                 }
@@ -527,7 +526,7 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Cause queued requests to be flushed.
         /// </summary>
-        public void Flush () => throw new NYI();
+        public void Flush() => throw new NYI();
 
         //public async Task<RudStream> AsyncReceiveStreamOffer() => throw new NYI();
 

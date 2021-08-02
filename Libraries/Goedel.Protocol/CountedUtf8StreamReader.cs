@@ -19,11 +19,8 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-
 using System;
 using System.IO;
-using System.Collections.Generic;
 
 
 namespace Goedel.Protocol {
@@ -73,16 +70,16 @@ namespace Goedel.Protocol {
         /// <param name="stream">The stream to wrap.</param>
         public CountedUtf8StreamReader(Stream stream) => Stream = stream;
 
-            //{
+        //{
 
 
 
-            //var buffer = new byte[Stream.Length];
-            //stream.Read(buffer, 0, stream.Length);
-            //var text = buffer.ToUTF8();
-            //Screen.Write(text);
+        //var buffer = new byte[Stream.Length];
+        //stream.Read(buffer, 0, stream.Length);
+        //var text = buffer.ToUTF8();
+        //Screen.Write(text);
 
-            //}
+        //}
         #endregion
 
         #region // local methods
@@ -106,7 +103,7 @@ namespace Goedel.Protocol {
                     Line++;
                     Column = 1;
                     }
-                else if (b>= 32) {
+                else if (b >= 32) {
                     Column++;
                     }
                 }
@@ -131,13 +128,13 @@ namespace Goedel.Protocol {
 
         ///<inheritdoc/>
         public override void Flush() => Stream.Flush();
-        
+
         ///<inheritdoc/>
         public override long Seek(long offset, SeekOrigin origin) => throw new NotImplementedException();
-        
+
         ///<inheritdoc/>
         public override void SetLength(long value) => throw new NotImplementedException();
-        
+
         ///<inheritdoc/>
         public override void Write(byte[] buffer, int offset, int count) => throw new NotImplementedException();
 

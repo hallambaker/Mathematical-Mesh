@@ -1,19 +1,19 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.IO;
-using Goedel.Mesh;
-using Goedel.Mesh.Server;
-using Goedel.Protocol;
-using Goedel.Utilities;
-using Goedel.Test.Core;
-using Goedel.Protocol.Service;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using Goedel.Protocol.Presentation;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.IO;
 using Goedel.Mesh.Management;
+using Goedel.Mesh.Server;
 using Goedel.Mesh.Shell.Host;
+using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
+using Goedel.Protocol.Service;
+using Goedel.Test.Core;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Test {
     public class TestEnvironmentRdpShell : TestEnvironmentRdp {
@@ -42,7 +42,7 @@ namespace Goedel.Mesh.Test {
             var dnsConfig = "ServiceDNS.bind";
 
             HostMachine = new MeshMachineTest(this, "host1");
-            
+
             // initialize the service and host configuration
             ServiceAdminShell = new Shell.ServiceAdmin.Shell() {
                 MeshMachine = HostMachine
@@ -54,12 +54,12 @@ namespace Goedel.Mesh.Test {
 
 
             // now start the host
-            HostShell = new Shell.Host.Shell(     
+            HostShell = new Shell.Host.Shell(
                 PublicMeshService.ServiceDescription,
                 ServiceManagementProvider.ServiceDescriptionHost) {
-                    Instance = Test,
-                    MeshMachine = HostMachine
-                    };
+                Instance = Test,
+                MeshMachine = HostMachine
+                };
             HostAdminCLI = new();
 
             // this is not going to return now is it???
@@ -92,7 +92,7 @@ namespace Goedel.Mesh.Test {
             ServiceAdminCLI.MainMethod(ServiceAdminShell, args);
             }
 
-        public Goedel.Mesh.Shell.Host.ShellResult Host (string command) {
+        public Goedel.Mesh.Shell.Host.ShellResult Host(string command) {
 
             var args = command.Split(" ");
             HostAdminCLI.MainMethod(HostShell, args);
@@ -158,7 +158,7 @@ namespace Goedel.Mesh.Test {
     /// <summary>
     /// Test environment for one test with one service with one or more devices.
     /// </summary>
-    public class TestEnvironmentCommon :Disposable {
+    public class TestEnvironmentCommon : Disposable {
 
 
         public virtual string ServiceDns => "example.com";
@@ -178,7 +178,7 @@ namespace Goedel.Mesh.Test {
         public JpcConnection JpcConnection = JpcConnection.Serialized;
 
         public virtual PublicMeshService MeshService => meshService ??
-            new PublicMeshService(ServiceDns, ServiceDirectory).CacheValue (out meshService);
+            new PublicMeshService(ServiceDns, ServiceDirectory).CacheValue(out meshService);
         PublicMeshService meshService;
 
 
@@ -190,7 +190,7 @@ namespace Goedel.Mesh.Test {
 
             JpcSession session = JpcConnection switch {
                 JpcConnection.Direct => new JpcSessionDirect(MeshService, credential),
-                JpcConnection.Serialized => new TestSession(MeshService, credential, 
+                JpcConnection.Serialized => new TestSession(MeshService, credential,
                         meshMachineTest.MeshProtocolMessages),
                 _ => throw new NYI()
                 };
@@ -223,7 +223,7 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        public MeshMachineTest GetMeshMachine (string device) => new(this, device);
+        public MeshMachineTest GetMeshMachine(string device) => new(this, device);
 
         public string MachinePath(string machineName) => System.IO.Path.Combine(Path, machineName);
 

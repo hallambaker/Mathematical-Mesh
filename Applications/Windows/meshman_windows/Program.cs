@@ -1,10 +1,8 @@
-﻿using System;
-
+﻿
 
 using Goedel.Cryptography.Windows;
-
-using Goedel.Utilities;
 using Goedel.Mesh.Shell;
+using Goedel.Utilities;
 
 namespace meshman_windows {
     public class Program {

@@ -180,7 +180,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Id">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderDigest GetDigest(CryptoAlgorithmId Id) => 
+        public CryptoProviderDigest GetDigest(CryptoAlgorithmId Id) =>
                         Get(Id.Bulk().DefaultDigest()) as CryptoProviderDigest;
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Id">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderAuthentication GetMAC(CryptoAlgorithmId Id) => 
+        public CryptoProviderAuthentication GetMAC(CryptoAlgorithmId Id) =>
                         Get(Id.Bulk().DefaultMac()) as CryptoProviderAuthentication;
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Id">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderEncryption GetEncryption(CryptoAlgorithmId Id) => 
+        public CryptoProviderEncryption GetEncryption(CryptoAlgorithmId Id) =>
                         Get(Id.Bulk().DefaultEncryption()) as CryptoProviderEncryption;
 
 

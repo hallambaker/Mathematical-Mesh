@@ -19,11 +19,10 @@
 //  THE SOFTWARE.
 
 using Goedel.Cryptography;
-using System;
 
 namespace Goedel.Mesh {
 
-   
+
     /// <summary>
     /// Status values for Mesh Messages
     /// </summary>

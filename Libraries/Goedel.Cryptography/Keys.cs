@@ -19,10 +19,9 @@
 //  THE SOFTWARE.
 //  
 //  
-using Goedel.Cryptography.PKIX;
-using Goedel.Utilities;
-
 using System;
+
+using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography {
 
@@ -79,7 +78,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Base class for all cryptographic keys.
     /// </summary>
-    public abstract class CryptoKey: IKeyLocate, IKeyDecrypt, IKeySign {
+    public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
 
         /// <summary>
         /// Cryptographic Algorithm Identifier
@@ -167,7 +166,7 @@ namespace Goedel.Cryptography {
         /// <returns>The identifier.</returns>
         public bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
             if (keyId == KeyIdentifier) {
-                cryptoKey = this ;
+                cryptoKey = this;
                 return true;
                 }
             cryptoKey = null;

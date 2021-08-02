@@ -1,15 +1,14 @@
+using System.Collections.Generic;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
+using Goedel.Mesh.Test;
 using Goedel.Protocol;
 using Goedel.Test;
-using Goedel.Test.Core;
 using Goedel.Utilities;
-using Goedel.IO;
-using System;
-using System.Collections.Generic;
-using Goedel.Mesh.Test;
+
 using Xunit;
 
 #pragma warning disable IDE0059
@@ -79,7 +78,7 @@ namespace Goedel.XUnit {
             var profileDevice = ProfileDevice.Generate();
 
             var credentialTemp =
-                    new MeshCredentialPrivate(profileDevice, null, null, 
+                    new MeshCredentialPrivate(profileDevice, null, null,
                         profileDevice.KeyAuthentication as KeyPairAdvanced);
 
             var meshClient = machineAdminAlice.GetMeshClient(credentialTemp, ServiceName, null);
@@ -616,7 +615,7 @@ namespace Goedel.XUnit {
 
             var profileuser = contextUser.ProfileUser;
             using (var transaction1 = contextUser.TransactBegin()) {
-                VerifyStoreEncrypted(transaction1.GetCatalogApplication(), 
+                VerifyStoreEncrypted(transaction1.GetCatalogApplication(),
                                 profileuser.AccountEncryptionKey);
                 VerifyStoreEncrypted(transaction1.GetCatalogDevice(),
                                 profileuser.AccountEncryptionKey);
@@ -625,7 +624,7 @@ namespace Goedel.XUnit {
                 VerifyStoreEncrypted(transaction1.GetCatalogCredential(),
                                 profileuser.AccountEncryptionKey);
                 VerifyStoreEncrypted(transaction1.GetCatalogBookmark(),
-                                profileuser.AccountEncryptionKey); 
+                                profileuser.AccountEncryptionKey);
                 VerifyStoreEncrypted(transaction1.GetCatalogCalendar(),
                                 profileuser.AccountEncryptionKey);
                 VerifyStoreEncrypted(transaction1.GetCatalogNetwork(),
@@ -638,11 +637,11 @@ namespace Goedel.XUnit {
 
         static bool VerifyStoreEncrypted(
                     Store container,
-                    KeyPair encryptionKey=null) =>
+                    KeyPair encryptionKey = null) =>
             VerifyContainerEncrypted(container.Container, encryptionKey);
 
         static bool VerifyContainerEncrypted(Goedel.Cryptography.Dare.Sequence container,
-                    KeyPair encryptionKey=null) {
+                    KeyPair encryptionKey = null) {
 
 
             foreach (var envelope in container) {

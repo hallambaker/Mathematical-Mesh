@@ -1,6 +1,7 @@
-﻿using Goedel.Utilities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
+
+using Goedel.Utilities;
 #pragma warning disable IDE0060  // NYI: Pretty much the whole of this scheme
 
 namespace Goedel.Cryptography.Algorithms {
@@ -65,7 +66,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="odd">Specifies if the v coordinate is odd or even</param>
         /// <param name="u">The U coordinate</param>
-        public CurveX25519(BigInteger u, bool? odd=null) {
+        public CurveX25519(BigInteger u, bool? odd = null) {
             U = u.Mod(P);
             Odd = odd;
             }
@@ -74,7 +75,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Construct a point from a U coordinate.
         /// </summary>
         /// <param name="data">The encoded U coordinate</param>
-        public CurveX25519(byte[] data) : this (DecodePoint (data)) { }
+        public CurveX25519(byte[] data) : this(DecodePoint(data)) { }
 
         #endregion
 
@@ -90,7 +91,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="Private">The extended private key</param>
         /// <returns>The public key corresponding to Private (s.B)</returns>
-        public static CurveX25519 GetPublic(BigInteger Private) => 
+        public static CurveX25519 GetPublic(BigInteger Private) =>
             (CurveX25519)Base.Multiply(Private);
 
 
@@ -99,7 +100,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <returns>The encoded format of the point</returns>
         public override byte[] Encode(bool extended = false) =>
-            extended ? EncodePointSigned (U, Odd) : EncodePoint(U);
+            extended ? EncodePointSigned(U, Odd) : EncodePoint(U);
 
         /// <summary>
         /// Encode the code point <paramref name="u"/>.
@@ -111,7 +112,7 @@ namespace Goedel.Cryptography.Algorithms {
             if (odd == null) {
                 return EncodePointUnsigned(u);
                 }
-            return EncodePointSigned (u, odd);
+            return EncodePointSigned(u, odd);
             }
 
 
@@ -120,7 +121,7 @@ namespace Goedel.Cryptography.Algorithms {
             var prefix = u.ByteArrayLittleEndian(32);
             var result = new byte[33];
             prefix.CopyTo(result, 0);
-            result[32] = odd==true ? (byte)0x80 : (byte)00;
+            result[32] = odd == true ? (byte)0x80 : (byte)00;
 
             return result;
             }
@@ -195,7 +196,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="encoding">The encoded public key value.</param>
         public CurveX25519Public(byte[] encoding) {
-            this.Public =  new CurveX25519 (encoding);
+            this.Public = new CurveX25519(encoding);
             this.Encoding = encoding;
             }
         /// <summary>
@@ -222,9 +223,9 @@ namespace Goedel.Cryptography.Algorithms {
         public static CurveX25519 Agreement(CurveX25519[] Carry) {
             Assert.AssertTrue(Carry.Length >= 1, InsufficientResults.Throw);
 
-            var Total = Carry[0].Copy(); 
-            for(var i = 1; i < Carry.Length; i++) {
-                
+            var Total = Carry[0].Copy();
+            for (var i = 1; i < Carry.Length; i++) {
+
                 Total.Accumulate(Carry[i]);
                 }
 
@@ -356,7 +357,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="publicKey">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
         public CurveX25519 Agreement(CurveX25519Public publicKey) =>
-            (CurveX25519) publicKey.Public.Multiply(Private);
+            (CurveX25519)publicKey.Public.Multiply(Private);
 
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to a private key
@@ -366,7 +367,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// result of this key agreement.</param>
         /// <returns>The key agreement value ZZ</returns>
         public CurveX25519 Agreement(CurveX25519Public publicKey, CurveX25519 carry) {
-            var Result = (CurveX25519) publicKey.Public.Multiply(Private);
+            var Result = (CurveX25519)publicKey.Public.Multiply(Private);
             Result.Accumulate(carry);
 
             return Result;

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Net;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Net.Sockets;
 
-using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
@@ -96,12 +95,12 @@ namespace Goedel.Protocol.Service {
         /// <param name="credential">Credential for the listener to use.</param>
         /// <remarks>Constructor returns after the service has been started and listener threads 
         /// initialized.</remarks>
-        public RudService(List<RudProvider> providers, 
-                ICredentialPrivate credential = null, 
-                Listener rdpListener = null, 
+        public RudService(List<RudProvider> providers,
+                ICredentialPrivate credential = null,
+                Listener rdpListener = null,
                 int maxCores = 0) {
 
-            Listener = rdpListener?? new RudListener(credential, providers);
+            Listener = rdpListener ?? new RudListener(credential, providers);
 
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
@@ -115,7 +114,7 @@ namespace Goedel.Protocol.Service {
             dispatchTaskResource = new string[MaxDispatch];
             dispatchTaskActive = new bool[MaxDispatch];
             for (var i = 0; i < MaxDispatch; i++) {
-                dispatchTasks[i] = Task.Run (NullTask) ;
+                dispatchTasks[i] = Task.Run(NullTask);
                 dispatchTaskActive[i] = false;
                 dispatchTaskResource[i] = null;
                 }
@@ -259,7 +258,7 @@ namespace Goedel.Protocol.Service {
                     Reclaim(); // dispose of all resources held by unused tasks
                     }
 
-                catch (OperationCanceledException){
+                catch (OperationCanceledException) {
                     Canceled();
                     }
 
@@ -278,14 +277,14 @@ namespace Goedel.Protocol.Service {
 
             // Wait for the outstanding tasks to be completed
 
-            Task.WaitAll(dispatchTasks); 
+            Task.WaitAll(dispatchTasks);
 
             foreach (var task in dispatchTasks) {
                 task.Dispose(); // force cleanup of the dispatch tasks
                 }
             httpListener.Close(); // Gracefull termination of the HTTP Listener
             httpListener = null;
-            for (var i=0; i< udpListeners.Length; i++) {
+            for (var i = 0; i < udpListeners.Length; i++) {
                 udpListeners[i].Close(); // Gracefull termination of the UDP Listeners
                 udpListeners[i] = null;
                 }
@@ -388,7 +387,7 @@ namespace Goedel.Protocol.Service {
                 await connection;
 
                 // prepare the result for dispatch to a processing queue.
-                var request =  new ServiceRequestHttp(this, connection.Result);
+                var request = new ServiceRequestHttp(this, connection.Result);
                 if (!request.Refused) {
                     return request;
                     }

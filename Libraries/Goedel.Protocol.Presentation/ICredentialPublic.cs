@@ -19,17 +19,16 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-using Goedel.Cryptography;
-using System;
 using System.Collections.Generic;
+
+using Goedel.Cryptography;
 
 
 namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Credential interface
     /// </summary>
-    public interface ICredentialPublic: ICredential {
+    public interface ICredentialPublic : ICredential {
         #region // Properties
 
 

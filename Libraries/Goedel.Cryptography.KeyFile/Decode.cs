@@ -1,8 +1,8 @@
-﻿using Goedel.Cryptography.PKIX;
+﻿using System.Collections.Generic;
+
+using Goedel.Cryptography.PKIX;
 using Goedel.FSR;
 using Goedel.IO;
-
-using System.Collections.Generic;
 
 namespace Goedel.Cryptography.KeyFile {
 

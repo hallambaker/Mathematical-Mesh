@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
@@ -15,7 +13,7 @@ namespace Goedel.Cryptography.Dare {
         public bool Encrypt => EncryptKeys != null;
 
         ///<summary>Key collection to be used to resolve keys.</summary> 
-        public  IKeyLocate KeyLocation { get; set; }
+        public IKeyLocate KeyLocation { get; set; }
 
 
         /////<summary></summary> 
@@ -42,11 +40,11 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="encrypt">The bulk encryption algorithm.</param>
         /// <param name="digest">The bulk digest algorithm.</param>
         public DarePolicy(IKeyLocate keyLocate,
-                List<string> signers=null, 
+                List<string> signers = null,
                 List<string> recipients = null,
-                CryptoAlgorithmId encrypt=CryptoAlgorithmId.NULL,
+                CryptoAlgorithmId encrypt = CryptoAlgorithmId.NULL,
                 CryptoAlgorithmId digest = CryptoAlgorithmId.NULL) {
-            
+
             KeyLocation = keyLocate;
             EncryptionAlgorithm = encrypt.ToJoseID();
             DigestAlgorithm = digest.ToJoseID();
@@ -59,7 +57,7 @@ namespace Goedel.Cryptography.Dare {
                     EncryptKeys.Add(Jose.Key.FactoryPublic(keypair as KeyPair));
                     }
                 }
-            
+
             signers.Future();
 
             Sealed = true;

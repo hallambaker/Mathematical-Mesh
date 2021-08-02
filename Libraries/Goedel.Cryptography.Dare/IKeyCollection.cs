@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Cryptography;
+
 using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography.Dare {
@@ -26,7 +24,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Key collection extending IKeyLocate to add signature key validation capability.
     /// </summary>
-    public interface IKeyCollection : IKeyLocate{
+    public interface IKeyCollection : IKeyLocate {
 
         /// <summary>
         /// Attempt to form a trust path for the key used to sign <paramref name="dareSignature"/>.
@@ -35,7 +33,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="anchor">If present specifies the fingerprint of a key that MUST anchor
         /// the trust path.</param>
         /// <returns>The result of the trust path analysis.</returns>
-        TrustResult ValidateTrustPath (DareSignature dareSignature, string anchor=null);
+        TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null);
 
 
         /// <summary>

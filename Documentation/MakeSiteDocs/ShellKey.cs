@@ -1,7 +1,7 @@
-﻿using Goedel.Mesh.Test;
-using Goedel.Mesh.Shell;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
+using Goedel.Mesh.Shell;
+using Goedel.Mesh.Test;
 
 namespace ExampleGenerator {
     public class ShellKey : ExampleSet {

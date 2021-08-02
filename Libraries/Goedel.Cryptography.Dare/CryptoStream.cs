@@ -1,8 +1,8 @@
-﻿using Goedel.Protocol;
-using Goedel.Utilities;
-using System;
+﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+
+using Goedel.Protocol;
 namespace Goedel.Cryptography.Dare {
 
 
@@ -283,15 +283,15 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-    /// <summary>
-    /// Write data to the output stream.(not supported).
-    /// </summary>
-    /// <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from 
-    /// <paramref name="buffer"/> to the current stream.</param>
-    /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
-    /// at which to begin copying bytes to the current stream.</param>
-    /// <param name="count">The number of bytes to be written to the current stream.</param>
-    public override void Write(byte[] buffer, int offset, int count) => throw new NotImplementedException();
+        /// <summary>
+        /// Write data to the output stream.(not supported).
+        /// </summary>
+        /// <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from 
+        /// <paramref name="buffer"/> to the current stream.</param>
+        /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+        /// at which to begin copying bytes to the current stream.</param>
+        /// <param name="count">The number of bytes to be written to the current stream.</param>
+        public override void Write(byte[] buffer, int offset, int count) => throw new NotImplementedException();
 
 
         /// <summary>
@@ -370,7 +370,7 @@ namespace Goedel.Cryptography.Dare {
         /// has been reached.</returns>
         public override int Read(byte[] buffer, int offset, int count) {
             var length = inputStream.Read(buffer, offset, count);
-            
+
             BytesRead += length;
             streamMac?.Write(buffer, offset, length);
             streamDigest?.Write(buffer, offset, length);
@@ -390,7 +390,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
         /// at which to begin copying bytes to the current stream.</param>
         /// <param name="count">The number of bytes to be written to the current stream.</param>
-        public override void Write(byte[] buffer, int offset, int count) => 
+        public override void Write(byte[] buffer, int offset, int count) =>
             throw new NotImplementedException();
 
         }
@@ -555,7 +555,7 @@ namespace Goedel.Cryptography.Dare {
 
             // flush the final blocks of data and write end of stream.
             if (CryptoStream != null) {
-                CryptoStream.FlushFinalBlock(); 
+                CryptoStream.FlushFinalBlock();
                 }
             else if (!specifiedLength) {
                 Writer.Write(Empty, 0, 0);

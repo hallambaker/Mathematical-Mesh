@@ -1,10 +1,10 @@
-﻿using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Goedel.Utilities;
 
 
 namespace Goedel.Discovery {
@@ -167,7 +167,7 @@ namespace Goedel.Discovery {
         public DNSContext(int timeout = 5000, int retry = 1000) {
             this.timeout = timeout;
             this.retry = retry;
-            iDCounter = (ushort) Goedel.Cryptography.Platform.GetRandomInteger(0x10000);
+            iDCounter = (ushort)Goedel.Cryptography.Platform.GetRandomInteger(0x10000);
 
             taskTimeout = Task.Delay(this.timeout);
             taskRetry = Task.Delay(this.retry);

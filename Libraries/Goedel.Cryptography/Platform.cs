@@ -1,9 +1,9 @@
-﻿using Goedel.Cryptography.PKIX;
-using Goedel.Utilities;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
+
+using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography.Standard;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
     /// <summary>
@@ -157,7 +157,7 @@ namespace Goedel.Cryptography {
         /// <param name="max">Maximum number of bytes to get. Ignored if less than 
         /// <paramref name="min"/>.</param>
         /// <returns>Random data</returns>
-        public static byte[] GetRandomBytes(int min, int max=0) {
+        public static byte[] GetRandomBytes(int min, int max = 0) {
             var length = max <= min ? min :
                 min + (int)GetRandomInteger(max - min);
 
@@ -190,7 +190,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="max">Maximum value to return.</param>
         /// <returns>The random value.</returns>
-        public static int GetRandomInteger(int max)=>((int) GetRandomBigInteger(30)) % max;
+        public static int GetRandomInteger(int max) => ((int)GetRandomBigInteger(30)) % max;
 
 
         /// <summary>

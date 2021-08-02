@@ -31,7 +31,7 @@ namespace Goedel.Mesh {
         /// Verify the profile to check that it is correctly signed and consistent.
         /// </summary>
         /// <returns></returns>
-        public virtual void Validate(ProfileAccount profile) => 
+        public virtual void Validate(ProfileAccount profile) =>
             DareEnvelope.Verify(profile.AdministratorSignatureKey).
                     AssertTrue(InvalidAssertion.Throw);
 

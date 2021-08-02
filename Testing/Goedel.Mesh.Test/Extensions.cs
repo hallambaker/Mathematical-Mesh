@@ -1,10 +1,6 @@
-﻿using Goedel.Mesh;
+﻿using System.Collections.Generic;
+
 using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
-using Goedel.Utilities;
-using Goedel.IO;
-using System;
-using System.Collections.Generic;
 
 namespace Goedel.Mesh.Test {
     public static class Extensions {
@@ -49,7 +45,7 @@ namespace Goedel.Mesh.Test {
         public static ResultDump GetResultDump(
             this List<ExampleResult> Results,
             int index = 0) => GetResult(Results, index) as ResultDump;
-        public static Result GetResult (
+        public static Result GetResult(
             this List<ExampleResult> Results,
             int index = 0) {
 

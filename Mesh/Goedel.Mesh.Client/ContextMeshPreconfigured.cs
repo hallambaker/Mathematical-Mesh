@@ -1,11 +1,7 @@
 ﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-using Goedel.Mesh;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 
 namespace Goedel.Mesh.Client {
@@ -84,7 +80,7 @@ namespace Goedel.Mesh.Client {
                 DeviceUDF = profileDevice.Udf,
                 AccountAddress = messageClaim.Sender,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
-                EnvelopedAcknowledgeConnection = 
+                EnvelopedAcknowledgeConnection =
                         new Enveloped<AcknowledgeConnection>(claimResponse.EnvelopedMessage)
                 };
 
@@ -110,7 +106,7 @@ namespace Goedel.Mesh.Client {
         public ContextUser Complete() {
             var Pending = Poll();
             if (Pending != null) {
-                return Pending.Complete ();
+                return Pending.Complete();
                 }
             return null;
             }
@@ -143,7 +139,7 @@ namespace Goedel.Mesh.Client {
             var profileDeviceRecovered = devicePreconfiguration.EnvelopedProfileDevice.Decode();
             profileDeviceRecovered.Validate();
             (profileDeviceRecovered.Udf == profileDevice.Udf).AssertTrue(InvalidProfile.Throw);
-            (profileDeviceRecovered.Authentication.Udf == 
+            (profileDeviceRecovered.Authentication.Udf ==
                     profileDevice.Authentication.Udf).AssertTrue(InvalidProfile.Throw);
             (profileDeviceRecovered.Encryption.Udf ==
                     profileDevice.Encryption.Udf).AssertTrue(InvalidProfile.Throw);

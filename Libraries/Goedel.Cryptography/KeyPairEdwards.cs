@@ -1,7 +1,7 @@
-﻿using System;
-using Goedel.Utilities;
+﻿using System.Numerics;
+
 using Goedel.Cryptography.Algorithms;
-using System.Numerics;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -54,14 +54,14 @@ namespace Goedel.Cryptography {
 
             var privateKey = (IKeyAdvancedPrivate as CurveEdwardsPrivate);
 
-            var Shared = new Shared(privateKey.Private, 
+            var Shared = new Shared(privateKey.Private,
                     privateKey.PublicPoint.DomainParameters.Q);
 
             var keyshares = new KeyShareEdwards[n];
 
             for (int i = 0; i < n; i++) {
                 keyshares[i] = new KeyShareEdwards() {
-                    Index = i+1
+                    Index = i + 1
                     };
                 }
 
@@ -130,7 +130,7 @@ namespace Goedel.Cryptography {
         /// Add a signature contribution to the accumulator.
         /// </summary>
         /// <param name="s"></param>
-        public void AddShareS(BigInteger s) => S = (S+s).Mod(Prime);
+        public void AddShareS(BigInteger s) => S = (S + s).Mod(Prime);
 
         /// <summary>
         /// Complete the second round of the signature and return the scalar value S
@@ -235,7 +235,7 @@ namespace Goedel.Cryptography {
         /// Base constructor, specifying the prime value <paramref name="prime"/>
         /// </summary>
         /// <param name="prime">The prime value.</param>
-        protected ThresholdSignatureEdwards(BigInteger prime) => 
+        protected ThresholdSignatureEdwards(BigInteger prime) =>
             PrivateR = BigNumber.Random(prime);
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace Goedel.Cryptography {
         /// Constructor for the private key contribution <paramref name="key"/>
         /// </summary>
         /// <param name="key">The private key contribution.</param>
-        public ThresholdSignatureEdwards25519(CurveEdwards25519Private key) : 
-                base (DomainParameters.Curve25519.Q) {
+        public ThresholdSignatureEdwards25519(CurveEdwards25519Private key) :
+                base(DomainParameters.Curve25519.Q) {
             privateKey = key.Private;
             PublicR = CurveEdwards25519.Base.Multiply(PrivateR);
             }
@@ -316,7 +316,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Threshold signature context for Ed448 curve.
     /// </summary>
-    public class ThresholdSignatureEdwards448: ThresholdSignatureEdwards {
+    public class ThresholdSignatureEdwards448 : ThresholdSignatureEdwards {
 
         /// <summary>
         /// Constructor for the private key contribution <paramref name="key"/>

@@ -20,10 +20,10 @@
 //  THE SOFTWARE.
 //  
 //  
-using Goedel.Utilities;
-
 using System;
 using System.Text;
+
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -31,7 +31,7 @@ namespace Goedel.Cryptography {
     /// Class implementing the Uniform Data Fingerprint spec.
     /// </summary>
     public static class UDF {
-        
+
         #region // Constants
 
         // Test: Matching UDF values against strings.
@@ -58,14 +58,13 @@ namespace Goedel.Cryptography {
         /// <param name="typeIdentifier">The UDF type identifier.</param>
         /// <returns>The cryptographic algorithm identifier.</returns>
         public static CryptoAlgorithmId GetCryptoAlgorithmId(UdfTypeIdentifier typeIdentifier) =>
-            typeIdentifier switch
-                {
-                    UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
-                    UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
-                    UdfTypeIdentifier.Digest_SHA_2_512 => CryptoAlgorithmId.SHA_2_512,
-                    UdfTypeIdentifier.Digest_SHA_3_512 => CryptoAlgorithmId.SHA_3_512,
-                    _ => CryptoAlgorithmId.Unknown
-                    };
+            typeIdentifier switch {
+                UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+                UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
+                UdfTypeIdentifier.Digest_SHA_2_512 => CryptoAlgorithmId.SHA_2_512,
+                UdfTypeIdentifier.Digest_SHA_3_512 => CryptoAlgorithmId.SHA_3_512,
+                _ => CryptoAlgorithmId.Unknown
+                };
 
         /// <summary>
         /// Return the <see cref="UdfTypeIdentifier"/> corresponding to <paramref name="typeIdentifier"/>.
@@ -73,14 +72,13 @@ namespace Goedel.Cryptography {
         /// <param name="typeIdentifier">The cryptographic algorithm identifier.</param>
         /// <returns>The UDF type identifier.</returns>
         public static UdfTypeIdentifier GetUDFTypeIdentifier(CryptoAlgorithmId typeIdentifier) =>
-            typeIdentifier switch
-                {
-                    CryptoAlgorithmId.HMAC_SHA_2_512=>UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 ,
-                    CryptoAlgorithmId.HMAC_SHA_3_512=> UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 ,
-                    CryptoAlgorithmId.SHA_2_512=>UdfTypeIdentifier.Digest_SHA_2_512 ,
-                    CryptoAlgorithmId.SHA_3_512=>UdfTypeIdentifier.Digest_SHA_3_512 ,
-                    _ => UdfTypeIdentifier.Unknown
-                    };
+            typeIdentifier switch {
+                CryptoAlgorithmId.HMAC_SHA_2_512 => UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512,
+                CryptoAlgorithmId.HMAC_SHA_3_512 => UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512,
+                CryptoAlgorithmId.SHA_2_512 => UdfTypeIdentifier.Digest_SHA_2_512,
+                CryptoAlgorithmId.SHA_3_512 => UdfTypeIdentifier.Digest_SHA_3_512,
+                _ => UdfTypeIdentifier.Unknown
+                };
 
         #endregion
         #region // Conversions to binary UDF value
@@ -111,7 +109,7 @@ namespace Goedel.Cryptography {
                     }
 
                 default:
-                    break;
+                break;
                 }
             throw new InvalidAlgorithm();
             }
@@ -319,7 +317,7 @@ namespace Goedel.Cryptography {
                     string textKey,
                     int length = 0,
                     CryptoAlgorithmId algorithm = CryptoAlgorithmId.HMAC_SHA_2_512) {
-            var keyDerive = new KeyDeriveHKDF(textKey.ToUTF8(), 
+            var keyDerive = new KeyDeriveHKDF(textKey.ToUTF8(),
                             KeyDerive.KeyedUDFMaster, algorithm);
             return keyDerive.Derive(KeyDerive.KeyedUDFExpand, length);
             }
@@ -343,9 +341,9 @@ namespace Goedel.Cryptography {
         /// pattern <paramref name="test"/> with at least <paramref name="minBits"/>
         /// significant bits. Otherwise false.</returns>
         public static bool Matches(
-                string value, 
-                UdfTypeIdentifier typeIdentifier, 
-                byte[] test, 
+                string value,
+                UdfTypeIdentifier typeIdentifier,
+                byte[] test,
                 int minBits = 100) {
 
 
@@ -505,7 +503,7 @@ namespace Goedel.Cryptography {
                     int bits = 0,
                     CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512,
                     UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_512) =>
-            TypeBDSToString(udfTypeIdentifier, 
+            TypeBDSToString(udfTypeIdentifier,
                 SymetricKeyIdBytes(key, bits, cryptoAlgorithmId));
 
 
@@ -521,7 +519,7 @@ namespace Goedel.Cryptography {
         public static string SymetricKeyId(
                     string udf,
                     int bits = 0,
-                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512) => 
+                    CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.SHA_2_512) =>
                 SymetricKeyId(SymmetricKeyData(udf), bits, cryptoAlgorithmId);
 
 
@@ -603,7 +601,7 @@ namespace Goedel.Cryptography {
 
             //Console.WriteLine($"Generate MAC: {udf} {data.ToStringBase16FormatHex()}");
 
-            var (code,key) = Parse(udf);
+            var (code, key) = Parse(udf);
             var algorithm = code switch {
                 UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
                 UdfTypeIdentifier.Encryption_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
@@ -637,14 +635,13 @@ namespace Goedel.Cryptography {
 
             //Console.WriteLine($"Generate MAC: {udf} {data.ToStringBase16FormatHex()}");
             var (code, key) = Parse(udf);
-            var algorithm = code switch
-                {
-                    UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
-                    UdfTypeIdentifier.Encryption_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
-                    UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
-                    UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
-                    _ => throw new InvalidAlgorithm()
-                    };
+            var algorithm = code switch {
+                UdfTypeIdentifier.Authenticator_HMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+                UdfTypeIdentifier.Encryption_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+                UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+                UdfTypeIdentifier.Authenticator_HMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
+                _ => throw new InvalidAlgorithm()
+                };
 
             var buffer = data.GetMAC(key, algorithm);
             var udfID = GetUDFTypeIdentifier(algorithm);
@@ -1001,9 +998,9 @@ namespace Goedel.Cryptography {
         /// <param name="p3">Third data item</param>
         /// <returns>The corresponding PIN identifier</returns>
         public static byte[] PinWitness(
-                    string pin, 
+                    string pin,
                     byte[] p1,
-                    byte[] p2=null,
+                    byte[] p2 = null,
                     byte[] p3 = null) {
 
             var (code, key) = Parse(pin);
@@ -1076,7 +1073,7 @@ namespace Goedel.Cryptography {
                     byte[] data = null, int length = 0) {
 
             var keySpecifier = KeySpecifier(algorithmIdentifier);
-            data ??= CryptoCatalog.GetBits(length <=128 ? 128 : length);
+            data ??= CryptoCatalog.GetBits(length <= 128 ? 128 : length);
 
             var result = new byte[keySpecifier.Length + data.Length];
 
@@ -1175,7 +1172,7 @@ namespace Goedel.Cryptography {
                 case UdfAlgorithmIdentifier.MeshActivationAccount:
                 case UdfAlgorithmIdentifier.MeshProfileService:
                 case UdfAlgorithmIdentifier.MeshActivationService: {
-                    cryptoAlgorithmId = cryptoAlgorithmIdin.DefaultMeta (keyUses, CryptoAlgorithmId.X448,
+                    cryptoAlgorithmId = cryptoAlgorithmIdin.DefaultMeta(keyUses, CryptoAlgorithmId.X448,
                         CryptoAlgorithmId.Ed448, CryptoAlgorithmId.X448);
                     break;
                     }
@@ -1184,7 +1181,7 @@ namespace Goedel.Cryptography {
                     }
                 }
             var keySpecifier = KeySpecifier(algorithm);
-            return KeyPair.Factory(cryptoAlgorithmId, keySecurity, 
+            return KeyPair.Factory(cryptoAlgorithmId, keySecurity,
                 ikm,
                 keySpecifier, keyName,
                 keyCollection, keySize, keyUses);
@@ -1208,7 +1205,7 @@ namespace Goedel.Cryptography {
         /// <param name="text">The seed text.</param>
         /// <returns>The computed UDF.</returns>
         public static string TestKey(UdfAlgorithmIdentifier algorithmIdentifier, string text) {
-            var head = new byte[] { 
+            var head = new byte[] {
                     (byte)UdfTypeIdentifier.DerivedKey,
                     (byte)((int)algorithmIdentifier >> 8 & 0xff),
                     (byte)((int)algorithmIdentifier & 0xff)};
@@ -1217,11 +1214,11 @@ namespace Goedel.Cryptography {
 
             var builder = new StringBuilder();
             for (var i = 0; i < plain.Length; i++) {
-                if ((i % 4 == 0) & (i>0)) {
+                if ((i % 4 == 0) & (i > 0)) {
                     builder.Append('-');
                     }
                 var c = plain[i];
-                builder.Append(BaseConvert.BASE32Value[(int)c]==255 ? 'X' : c);
+                builder.Append(BaseConvert.BASE32Value[(int)c] == 255 ? 'X' : c);
                 }
             return builder.ToString();
             }
@@ -1262,5 +1259,5 @@ namespace Goedel.Cryptography {
         }
 
     #endregion
-    
+
     }

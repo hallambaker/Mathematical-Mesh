@@ -19,14 +19,10 @@
 //  THE SOFTWARE.
 
 using System;
-using System.IO;
-using System.Net;
 using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
+using System.Net;
+
 using Goedel.Utilities;
-using Goedel.Protocol;
-using System.Threading.Tasks;
 
 
 namespace Goedel.Protocol.Presentation {

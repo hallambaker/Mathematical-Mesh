@@ -19,13 +19,12 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Protocol;
-using Goedel.Utilities;
-using Goedel.Mesh.ServiceAdmin;
-using Goedel.Protocol.Presentation;
-
 using System;
-using System.Collections.Generic;
+
+using Goedel.Mesh.ServiceAdmin;
+using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
+using Goedel.Utilities;
 
 
 namespace Goedel.Mesh.Management {
@@ -47,7 +46,7 @@ namespace Goedel.Mesh.Management {
 
             // Since it is the host that responds, the service binds to the host endpoints
             // in addition to the service.
-            
+
             var endpoints = serviceConfiguration.GetEndpoints();
             endpoints.AddRange(hostConfiguration.GetEndpoints());
             var provider = new ServiceManagementProvider(serviceConfiguration, hostConfiguration);
@@ -57,7 +56,7 @@ namespace Goedel.Mesh.Management {
 
 
         ///<summary>The service description for a service reporting a single host.</summary> 
-        public static ServiceDescription ServiceDescriptionHost => new (WellKnown, Factory);
+        public static ServiceDescription ServiceDescriptionHost => new(WellKnown, Factory);
 
         ///<summary>The service description for a service reporting a set of hosts.</summary> 
         public static ServiceDescription ServiceDescriptionMeta => throw new NYI();
@@ -82,7 +81,7 @@ namespace Goedel.Mesh.Management {
         public ServiceManagementProvider(
                 ServiceConfiguration serviceConfiguration,
                 HostConfiguration hostConfiguration) {
-            
+
             // Stash these away to report if needed.
             HostConfiguration = hostConfiguration;
             ServiceConfiguration = serviceConfiguration;

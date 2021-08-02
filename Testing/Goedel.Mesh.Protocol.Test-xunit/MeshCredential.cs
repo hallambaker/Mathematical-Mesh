@@ -19,18 +19,14 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Mesh.Test;
 using Goedel.Mesh;
-using Goedel.Mesh.Client;
-using Xunit;
+using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Test.Core;
+
+using Xunit;
 
 namespace Goedel.XUnit {
     public partial class TestService {
@@ -89,7 +85,7 @@ namespace Goedel.XUnit {
         [InlineData(DataValidity.CorruptPayload)]
         [InlineData(DataValidity.CorruptMissing)]
         public void TestCredentialDeviceFails(DataValidity dataValidity) {
-            var alternative = dataValidity== DataValidity.CorruptSigner ?
+            var alternative = dataValidity == DataValidity.CorruptSigner ?
                  ProfileDevice.Generate() : null;
             var credentialTemp = MakeCredentialDevice();
             credentialTemp.ProfileDevice.DareEnvelope.Corrupt(dataValidity, alternative?.DareEnvelope);

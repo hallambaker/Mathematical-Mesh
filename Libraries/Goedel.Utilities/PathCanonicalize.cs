@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Goedel.Utilities {
     public static partial class Extension {
@@ -126,7 +124,7 @@ namespace Goedel.Utilities {
         //        }
 
         //    return state != State.dot2;
-            //}
+        //}
 
 
 

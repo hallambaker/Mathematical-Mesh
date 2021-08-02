@@ -35,7 +35,7 @@ namespace Goedel.Registry {
                     }
 
                 default:
-                    break;
+                break;
                 }
             return text.CS();
             }

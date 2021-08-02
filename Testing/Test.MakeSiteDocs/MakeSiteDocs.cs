@@ -1,13 +1,8 @@
 
 using ExampleGenerator;
 
-using Goedel.IO;
-using Goedel.Mesh;
 using Goedel.Mesh.Test;
-using Goedel.Utilities;
-using Goedel.Test.Core;
-using System.Collections.Generic;
-using Goedel.Test;
+
 using Xunit;
 
 
@@ -35,7 +30,7 @@ namespace Goedel.XUnit {
 
         [Fact]
 
-        public void FullTest () {
+        public void FullTest() {
             ServiceConnect();
             CreateAliceAccount();
             EncodeDecodeFile();
@@ -74,7 +69,7 @@ namespace Goedel.XUnit {
             }
 
 
-        
+
         [Fact]
         public void DeleteDevice() {
 
@@ -84,7 +79,7 @@ namespace Goedel.XUnit {
             ConnectDeviceCompare(out var deviceId);
             TestConnectDisconnect(deviceId);
             }
-        
+
         [Fact]
         public void DecodeSecondDevice() {
 

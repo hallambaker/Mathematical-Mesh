@@ -23,7 +23,7 @@
 // Project-level suppressions either have no target or are given
 // a specific target and scoped to a namespace, type, member, etc.
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Design", 
-    "CA1056:Uri properties should not be strings", 
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Design",
+    "CA1056:Uri properties should not be strings",
     Justification = "Property appears in wire protocol.", Scope = "member", Target = "~P:Goedel.Mesh.CatalogedBookmark.Uri")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "Property appears in wire protocol.", Scope = "member", Target = "~P:Goedel.Mesh.BindResponse.URL")]

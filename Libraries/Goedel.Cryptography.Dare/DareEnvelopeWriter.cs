@@ -1,9 +1,8 @@
-﻿using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Dare {
     internal class DareEnvelopeWriter : Stream {

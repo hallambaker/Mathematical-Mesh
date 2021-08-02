@@ -1,12 +1,12 @@
-﻿using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+
+using Goedel.IO;
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -324,7 +324,7 @@ namespace Goedel.Cryptography.Dare {
             var sequenceInfo = sequenceHeaderFirst.SequenceInfo;
             var sequenceType = sequenceInfo.ContainerType.ToSequenceType();
 
-            var cryptoParametersContainer = 
+            var cryptoParametersContainer =
                 new CryptoParametersSequence(sequenceType, sequenceHeaderFirst, true, keyCollection);
 
             var positionFinalFrameStart = jbcdStream.StartLastFrameRead;
@@ -490,7 +490,7 @@ namespace Goedel.Cryptography.Dare {
             sequenceHeaderFirst.Policy = policy;
 
             // The cryptographic parameters that will be kept between calls.
-            sequence.CryptoParametersSequence = 
+            sequence.CryptoParametersSequence =
                 new CryptoParametersSequence(sequenceType, sequenceHeaderFirst);
 
             sequence.DataEncoding = dataEncoding;
@@ -504,7 +504,7 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-            sequence.CryptoStack = sequenceHeaderFirst.BindEncoder (sequence.CryptoParametersSequence,
+            sequence.CryptoStack = sequenceHeaderFirst.BindEncoder(sequence.CryptoParametersSequence,
                     cloaked, dataSequences);
 
             payload = sequenceHeaderFirst.EnhanceBody(payload, out var Trailer);
@@ -698,7 +698,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="sequenceIndex">The SequenceIndex to append.</param>
         /// <param name="contentMeta">The ContentMeta to append.</param>
-        public void Append(SequenceIndex sequenceIndex= null, ContentMeta contentMeta=null) {
+        public void Append(SequenceIndex sequenceIndex = null, ContentMeta contentMeta = null) {
 
             var header = new DareHeader() {
                 SequenceInfo = MakeSequenceInfo(),
@@ -819,7 +819,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cryptoParameters">The cryptographic parameters.</param>
         /// <returns>The number of bytes written.</returns>
         public long Append(
-            
+
                     byte[] data,
                     ContentMeta contentMeta = null,
                     string contentType = null,
@@ -922,7 +922,7 @@ namespace Goedel.Cryptography.Dare {
                         string contentType = null,
                         byte[] cloaked = null,
                         List<byte[]> dataSequences = null,
-                        CryptoParameters cryptoParameters=null) {
+                        CryptoParameters cryptoParameters = null) {
 
             var index = (int)FrameCount++;
 
@@ -942,7 +942,7 @@ namespace Goedel.Cryptography.Dare {
                 };
 
             // These should be paired.
-            CryptoStack = appendContainerHeader.BindEncoder (cryptoParameters ?? CryptoParametersSequence, 
+            CryptoStack = appendContainerHeader.BindEncoder(cryptoParameters ?? CryptoParametersSequence,
                 cloaked, dataSequences);
 
 
@@ -957,7 +957,7 @@ namespace Goedel.Cryptography.Dare {
             var dummyTrailer = FillDummyTrailer(CryptoStack);
             var lengthTrailer = dummyTrailer == null ? -1 : dummyTrailer.GetBytes(false).Length;
             var dataPayload = appendContainerHeader.GetBytes(false);
-            
+
             JbcdStream.WriteWrappedFrameBegin(dataPayload, payloadLength, lengthTrailer);
             bodyWrite = appendContainerHeader.BodyWriter(JbcdStream.StreamWrite);
 

@@ -1,11 +1,10 @@
-﻿using Goedel.Protocol;
-using Goedel.Test.Core;
-using Goedel.Test;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using Goedel.Protocol;
+using Goedel.Test;
+using Goedel.Utilities;
 
 using Xunit;
 

@@ -1,14 +1,10 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Net.Sockets;
 
-using Goedel.Protocol;
-using Goedel.Utilities;
 using Goedel.Protocol.Presentation;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol.Service {
 
@@ -174,7 +170,7 @@ namespace Goedel.Protocol.Service {
                     break;
                     }
                 case ResponderMessageType.Data: {
-                    List<PacketExtension> packetExtensions=null;
+                    List<PacketExtension> packetExtensions = null;
 
                     if (stream.StreamState != StreamState.Data) {
                         var returnExtension = new PacketExtension() {
@@ -207,8 +203,8 @@ namespace Goedel.Protocol.Service {
 
         RudStream ProcessClientInitial(int offset) {
             responsePacket = ResponderMessageType.ResponderChallenge;
-            packetClient = Listener.ParseInitiatorHello(Buffer, offset, 
-                Count- offset);
+            packetClient = Listener.ParseInitiatorHello(Buffer, offset,
+                Count - offset);
             return Listener.GetTemporaryResponder(packetClient); ;
             }
 
@@ -226,7 +222,7 @@ namespace Goedel.Protocol.Service {
                 }
 
 
-            var responder = stream.RudConnection; 
+            var responder = stream.RudConnection;
 
             var packet = responder.ParsePacketData(Buffer, offset, Count);
             packetClient = packet;
@@ -263,13 +259,13 @@ namespace Goedel.Protocol.Service {
 
         RudStream ProcessClientComplete(int offset) {
 
-            packetClient = Listener.ParseInitiatorComplete(Buffer, offset, Count-offset);
+            packetClient = Listener.ParseInitiatorComplete(Buffer, offset, Count - offset);
             // verify the challenge here
 
             if (Listener.VerifyChallenge(packetClient)) {
 
 
-                
+
 
                 responsePacket = ResponderMessageType.Data;
                 return Listener.AcceptConnection(packetClient);

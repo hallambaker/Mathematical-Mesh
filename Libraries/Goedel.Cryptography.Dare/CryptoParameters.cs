@@ -1,6 +1,6 @@
-﻿using Goedel.Utilities;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
+using Goedel.Utilities;
 namespace Goedel.Cryptography.Dare {
 
 
@@ -99,10 +99,10 @@ namespace Goedel.Cryptography.Dare {
 
         ///<summary>Require payload digest.</summary> 
         public void SetDigest() {
-                if (DigestId == CryptoAlgorithmId.NULL) {
-                    DigestId = CryptoAlgorithmId.Default;
-                    }
+            if (DigestId == CryptoAlgorithmId.NULL) {
+                DigestId = CryptoAlgorithmId.Default;
                 }
+            }
 
         /// <summary>
         /// If true, data is to be signed.

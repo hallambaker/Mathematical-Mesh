@@ -1,8 +1,9 @@
-﻿using Goedel.Utilities;
-using Goedel.Cryptography.Dare;
+﻿using System;
 using System.Collections.Generic;
-using System;
+
+using Goedel.Cryptography.Dare;
 using Goedel.IO;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {

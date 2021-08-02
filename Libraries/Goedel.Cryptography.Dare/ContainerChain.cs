@@ -1,6 +1,6 @@
-﻿using Goedel.Utilities;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
+using Goedel.Utilities;
 
 
 namespace Goedel.Cryptography.Dare {
@@ -58,9 +58,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="firstPosition">Position of frame 1</param>
         /// <param name="positionLast">Position of the last frame</param>
         protected override void FillDictionary(
-                        SequenceInfo header, 
-                        long firstPosition, 
-                        long positionLast) => 
+                        SequenceInfo header,
+                        long firstPosition,
+                        long positionLast) =>
             base.FillDictionary(header, firstPosition, positionLast);
 
 

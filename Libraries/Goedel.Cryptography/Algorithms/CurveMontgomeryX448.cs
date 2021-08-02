@@ -1,7 +1,7 @@
-﻿using Goedel.Utilities;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
+
+using Goedel.Utilities;
 
 #pragma warning disable IDE0060  // NYI: Pretty much the whole of this scheme
 
@@ -97,8 +97,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="secretScalar">The extended private key</param>
         /// <returns>The public key corresponding to Private (s.B)</returns>
-        public static CurveX448 GetPublic(BigInteger secretScalar) => 
-            (CurveX448) Base.Multiply(secretScalar);
+        public static CurveX448 GetPublic(BigInteger secretScalar) =>
+            (CurveX448)Base.Multiply(secretScalar);
 
         /// <summary>
         /// Encode the code point.
@@ -170,12 +170,12 @@ namespace Goedel.Cryptography.Algorithms {
             return (u1, true);
             }
 
-            /// <summary>
-            /// Construct a point on the curve from a buffer.
-            /// </summary>
-            /// <param name="data">The encoded data</param>
-            /// <returns>The point created</returns>
-            public static BigInteger DecodeScalar(byte[] data) {
+        /// <summary>
+        /// Construct a point on the curve from a buffer.
+        /// </summary>
+        /// <param name="data">The encoded data</param>
+        /// <returns>The point created</returns>
+        public static BigInteger DecodeScalar(byte[] data) {
             var copy = data.Duplicate();
             copy[0] &= 252;
             copy[55] |= 128;
@@ -389,7 +389,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="publicKey">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
         public CurveX448 Agreement(CurveX448Public publicKey) =>
-            (CurveX448) publicKey.Public.Multiply(Private);
+            (CurveX448)publicKey.Public.Multiply(Private);
 
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to a private key
@@ -399,7 +399,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// result of this key agreement.</param>
         /// <returns>The key agreement value ZZ</returns>
         public CurveX448 Agreement(CurveX448Public publicKey, CurveX448 carry) {
-            var Result = (CurveX448) publicKey.Public.Multiply(Private);
+            var Result = (CurveX448)publicKey.Public.Multiply(Private);
             Result.Accumulate(carry);
 
             return Result;
@@ -436,7 +436,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             for (var i = 1; i < shares; i++) {
                 var NewPrivate = Platform.GetRandomBigInteger(CurveX448.Q);
-                Result[i] = new CurveX448Private(NewPrivate, exportable: true) { IsRecryption = true};
+                Result[i] = new CurveX448Private(NewPrivate, exportable: true) { IsRecryption = true };
                 Accumulator = (Accumulator + NewPrivate).Mod(CurveX448.Q);
                 }
 

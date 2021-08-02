@@ -19,11 +19,9 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-
-using System;
 using System.Threading;
-using System.Collections.Generic;
+
+using Goedel.Utilities;
 
 
 namespace Goedel.Protocol.Presentation {
@@ -49,7 +47,7 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The stream Id value as an unsigned 64 bit integer.</summary> 
         public byte[] Bytes => Value.BigEndian();
 
-        readonly static byte[] ClientCompleteDeferred = 
+        readonly static byte[] ClientCompleteDeferred =
             ((ulong)InitiatorMessageType.InitiatorExchange).BigEndian();
 
         //readonly static byte[] ClientComplete =
@@ -90,7 +88,7 @@ namespace Goedel.Protocol.Presentation {
         /// Return the stream identifier value as a byte sequence.
         /// </summary>
         /// <returns></returns>
-        public byte[]  GetValue () => Value.BigEndian();
+        public byte[] GetValue() => Value.BigEndian();
 
         /// <summary>
         /// Process the initial bytes of the buffer to get the source ID value according to the 

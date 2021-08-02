@@ -15,7 +15,7 @@ namespace Goedel.Protocol.Service {
         public DateTime TimeEnd => new(timeEnd);
 
         ///<summary>The elapsed time.</summary> 
-        public long TimeElapsed => 
+        public long TimeElapsed =>
             (timeEnd == DateTime.MaxValue.Ticks ? DateTime.Now.Ticks : timeEnd) - timeBegin;
 
         long timeBegin;

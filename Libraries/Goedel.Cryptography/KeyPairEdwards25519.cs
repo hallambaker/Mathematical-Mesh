@@ -1,9 +1,8 @@
-﻿using Goedel.Cryptography.Algorithms;
+﻿using System.Security.Cryptography;
+
+using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
-
-using System;
-using System.Security.Cryptography;
 
 namespace Goedel.Cryptography {
 
@@ -283,7 +282,7 @@ namespace Goedel.Cryptography {
                 data = sha512.ComputeHash(data);
                 }
 
-            
+
 
 
             var dom2 = CurveEdwards25519.Dom2(algorithmID, context);

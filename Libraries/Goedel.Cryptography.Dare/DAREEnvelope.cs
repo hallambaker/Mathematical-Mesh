@@ -1,11 +1,12 @@
-﻿using Goedel.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
+
+using Goedel.Cryptography.Jose;
+using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
-using Goedel.Cryptography.Jose;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.IO;
 
 namespace Goedel.Cryptography.Dare {
     /// <summary>
@@ -20,7 +21,7 @@ namespace Goedel.Cryptography.Dare {
         static Dictionary<string, JsonFactoryDelegate> ThisTagDictionary =
             new()
                 {
-                {"DareEnvelope", Factory}
+                    { "DareEnvelope", Factory }
                 };
 
         /// <summary>
@@ -132,10 +133,10 @@ namespace Goedel.Cryptography.Dare {
                 byte[] plaintext,
                 ContentMeta contentMeta = null,
                 byte[] cloaked = null,
-                List<byte[]> dataSequences = null   
+                List<byte[]> dataSequences = null
                 ) {
             Header = new DareHeader() {
-                ContentMeta= contentMeta
+                ContentMeta = contentMeta
                 };
             Header.BindEncoder(cryptoParameters, cloaked, dataSequences);
             //var _ = new CryptoStackEncode(cryptoParameters, Header, cloaked, dataSequences);
@@ -373,7 +374,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="key">The key</param>
         /// <returns>The signature entry.</returns>
-        public DareSignature FindSignature (CryptoKey key) {
+        public DareSignature FindSignature(CryptoKey key) {
 
             if (Trailer.Signatures != null) {
                 foreach (var signature in Trailer.Signatures) {
@@ -670,7 +671,7 @@ namespace Goedel.Cryptography.Dare {
 
             var decoder = message.Header.GetDecoder(
                 jsonBcdReader, out var Reader,
-                keyCollection: keyCollection, decrypt:false);
+                keyCollection: keyCollection, decrypt: false);
 
             Reader.CopyTo(Stream.Null);
             decoder.Close();
@@ -697,7 +698,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             if (Header != null) {
-                Header.ContentMeta= null;
+                Header.ContentMeta = null;
                 Header.ContentMetaData = null;
                 }
             }

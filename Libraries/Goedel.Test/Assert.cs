@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
+﻿using System.Collections.Generic;
 
 using Goedel.Utilities;
 
@@ -104,7 +101,7 @@ namespace Goedel.Test {
                 TestsFailed++;
                 }
             }
-        
+
 
         /// <summary>Test to see if two values are equal.
         /// </summary>
@@ -136,9 +133,9 @@ namespace Goedel.Test {
         /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-        public static void TestEqualKeys<T, U, V> (
+        public static void TestEqualKeys<T, U, V>(
                     this Dictionary<T, U> first,
-                    Dictionary<T, V> second, 
+                    Dictionary<T, V> second,
                     ThrowDelegate throwDelegate = null,
                     params object[] args) {
             first.Count.TestEqual(second.Count, throwDelegate, args);
@@ -192,6 +189,6 @@ namespace Goedel.Test {
                 second.ContainsKey(entry.Key).TestTrue(throwDelegate, args);
                 }
             }
-        }    
+        }
     }
 

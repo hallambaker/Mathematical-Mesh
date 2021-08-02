@@ -1,8 +1,7 @@
-﻿using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -41,7 +40,7 @@ namespace Goedel.Cryptography.Dare {
         public FileEntry(DareHeader dareHeader, long position) {
             var contentMeta = dareHeader.ContentMeta;
             Path = contentMeta?.Filename;
-            CreationTime= contentMeta?.Created;
+            CreationTime = contentMeta?.Created;
             LastWriteTime = contentMeta?.Modified;
             Index = dareHeader.Index;
             Position = position;
@@ -59,7 +58,7 @@ namespace Goedel.Cryptography.Dare {
     public class FileCollection {
 
         ///<summary>Dictionary mapping full names to file entries.</summary> 
-        public SortedDictionary<string, FileEntry> DictionaryByPath = new ();
+        public SortedDictionary<string, FileEntry> DictionaryByPath = new();
 
         ///<summary>Dictionary mapping full names to file entries.</summary> 
         public SortedDictionary<string, long> DictionaryDeleted = new();
@@ -216,7 +215,7 @@ namespace Goedel.Cryptography.Dare {
                 //Screen.WriteLine($"    {entry.Index} {entry.Path}");
 
                 var position = new IndexPosition() {
-                    Index = (int) entry.Index,
+                    Index = (int)entry.Index,
                     Position = (int)entry.Position,
                     UniqueId = entry.Path
                     };

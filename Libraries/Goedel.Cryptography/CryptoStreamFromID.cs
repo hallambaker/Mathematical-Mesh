@@ -1,9 +1,9 @@
-﻿using Goedel.Cryptography.Algorithms;
+﻿using System.IO;
+using System.Security.Cryptography;
+
+using Goedel.Cryptography.Algorithms;
 using Goedel.IO;
 using Goedel.Utilities;
-
-using System.IO;
-using System.Security.Cryptography;
 
 namespace Goedel.Cryptography {
 
@@ -45,7 +45,7 @@ namespace Goedel.Cryptography {
 
                 case CryptoAlgorithmId.HMAC_SHA_2_512:
                 case CryptoAlgorithmId.HMAC_SHA_2_512T128: return (256, 0);
-                
+
                 }
 
 
@@ -118,7 +118,7 @@ namespace Goedel.Cryptography {
                     return Aes.CreateDecryptor(key, iV);
                     }
 
-                
+
                 }
             return null;
             }
@@ -140,7 +140,7 @@ namespace Goedel.Cryptography {
 
                 case CryptoAlgorithmId.AES128HMAC: return new HMACSHA256();
                 case CryptoAlgorithmId.AES256HMAC: return new HMACSHA512();
-                
+
                 }
             return null;
             }
@@ -164,7 +164,7 @@ namespace Goedel.Cryptography {
 
                 case CryptoAlgorithmId.AES128HMAC: return new HMACSHA256(key);
                 case CryptoAlgorithmId.AES256HMAC: return new HMACSHA512(key);
-                
+
                 }
             return null;
             }
@@ -189,7 +189,7 @@ namespace Goedel.Cryptography {
                 case CryptoAlgorithmId.SHA_3_512: return new SHA3Managed(512);
                 case CryptoAlgorithmId.SHAKE_128: return new SHAKE128();
                 case CryptoAlgorithmId.SHAKE_256: return new SHAKE256();
-                
+
                 }
             return null;
             }
@@ -204,12 +204,11 @@ namespace Goedel.Cryptography {
         public static HashAlgorithm CreateShake(
                         CryptoAlgorithmId cryptoAlgorithmID,
                         int hashBitLength
-                        ) => cryptoAlgorithmID switch
-                            {
-                                CryptoAlgorithmId.SHAKE_128 => new SHAKE128(hashBitLength),
-                                CryptoAlgorithmId.SHAKE_256 => new SHAKE256(hashBitLength),
-                                _ => null,
-                                };
+                        ) => cryptoAlgorithmID switch {
+                            CryptoAlgorithmId.SHAKE_128 => new SHAKE128(hashBitLength),
+                            CryptoAlgorithmId.SHAKE_256 => new SHAKE256(hashBitLength),
+                            _ => null,
+                            };
 
         /// <summary>
         /// Calculate the digest value of the contents of <paramref name="fileName"/> using the algorithm

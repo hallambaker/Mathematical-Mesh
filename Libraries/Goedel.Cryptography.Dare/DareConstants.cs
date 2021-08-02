@@ -1,4 +1,3 @@
-
 //  This file was automatically generated at 8/2/2021 12:13:51 PM
 //   
 //  Changes to this file may be overwritten without warning
@@ -12,12 +11,6 @@
 //  Build Platform: Win32NT 10.0.18362.0
 //  
 //  
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-
-using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -35,7 +28,8 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>Tree</summary>
         Tree,
         ///<summary>Merkle</summary>
-        Merkle        }
+        Merkle
+        }
 
     ///<summary>Encryption policies</summary>
     public enum PolicyEncryption {
@@ -48,7 +42,8 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>Isolated</summary>
         Isolated,
         ///<summary>None</summary>
-        None        }
+        None
+        }
 
     ///<summary>Signature policies</summary>
     public enum PolicySignature {
@@ -61,7 +56,8 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>Last</summary>
         Last,
         ///<summary>Any</summary>
-        Any        }
+        Any
+        }
 
     ///<summary>Sequence Events</summary>
     public enum SequenceEvent {
@@ -72,7 +68,8 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>Update</summary>
         Update,
         ///<summary>Delete</summary>
-        Delete        }
+        Delete
+        }
 
 
     ///<summary>
@@ -84,15 +81,15 @@ namespace Goedel.Cryptography.Dare {
 
 
         ///<summary>Jose enumeration tag for SequenceType.List</summary>
-        public const string  SequenceTypeListTag = "List";
+        public const string SequenceTypeListTag = "List";
         ///<summary>Jose enumeration tag for SequenceType.Digest</summary>
-        public const string  SequenceTypeDigestTag = "Digest";
+        public const string SequenceTypeDigestTag = "Digest";
         ///<summary>Jose enumeration tag for SequenceType.Chain</summary>
-        public const string  SequenceTypeChainTag = "Chain";
+        public const string SequenceTypeChainTag = "Chain";
         ///<summary>Jose enumeration tag for SequenceType.Tree</summary>
-        public const string  SequenceTypeTreeTag = "Tree";
+        public const string SequenceTypeTreeTag = "Tree";
         ///<summary>Jose enumeration tag for SequenceType.Merkle</summary>
-        public const string  SequenceTypeMerkleTag = "Merkle";
+        public const string SequenceTypeMerkleTag = "Merkle";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -100,7 +97,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static SequenceType ToSequenceType (this string text) =>
+        public static SequenceType ToSequenceType(this string text) =>
             text switch {
                 SequenceTypeListTag => SequenceType.List,
                 SequenceTypeDigestTag => SequenceType.Digest,
@@ -116,7 +113,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="data">The enumerated value.</param>
         /// <returns>The text value.</returns>
-        public static string ToLabel (this SequenceType data) =>
+        public static string ToLabel(this SequenceType data) =>
             data switch {
                 SequenceType.List => SequenceTypeListTag,
                 SequenceType.Digest => SequenceTypeDigestTag,
@@ -130,13 +127,13 @@ namespace Goedel.Cryptography.Dare {
 
 
         ///<summary>Jose enumeration tag for PolicyEncryption.Once</summary>
-        public const string  PolicyEncryptionOnceTag = "Once";
+        public const string PolicyEncryptionOnceTag = "Once";
         ///<summary>Jose enumeration tag for PolicyEncryption.Session</summary>
-        public const string  PolicyEncryptionSessionTag = "Session";
+        public const string PolicyEncryptionSessionTag = "Session";
         ///<summary>Jose enumeration tag for PolicyEncryption.Isolated</summary>
-        public const string  PolicyEncryptionIsolatedTag = "Isolated";
+        public const string PolicyEncryptionIsolatedTag = "Isolated";
         ///<summary>Jose enumeration tag for PolicyEncryption.None</summary>
-        public const string  PolicyEncryptionNoneTag = "None";
+        public const string PolicyEncryptionNoneTag = "None";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -144,7 +141,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static PolicyEncryption ToPolicyEncryption (this string text) =>
+        public static PolicyEncryption ToPolicyEncryption(this string text) =>
             text switch {
                 PolicyEncryptionOnceTag => PolicyEncryption.Once,
                 PolicyEncryptionSessionTag => PolicyEncryption.Session,
@@ -159,7 +156,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="data">The enumerated value.</param>
         /// <returns>The text value.</returns>
-        public static string ToLabel (this PolicyEncryption data) =>
+        public static string ToLabel(this PolicyEncryption data) =>
             data switch {
                 PolicyEncryption.Once => PolicyEncryptionOnceTag,
                 PolicyEncryption.Session => PolicyEncryptionSessionTag,
@@ -172,13 +169,13 @@ namespace Goedel.Cryptography.Dare {
 
 
         ///<summary>Jose enumeration tag for PolicySignature.None</summary>
-        public const string  PolicySignatureNoneTag = "None";
+        public const string PolicySignatureNoneTag = "None";
         ///<summary>Jose enumeration tag for PolicySignature.Isolated</summary>
-        public const string  PolicySignatureIsolatedTag = "Isolated";
+        public const string PolicySignatureIsolatedTag = "Isolated";
         ///<summary>Jose enumeration tag for PolicySignature.Last</summary>
-        public const string  PolicySignatureLastTag = "Last";
+        public const string PolicySignatureLastTag = "Last";
         ///<summary>Jose enumeration tag for PolicySignature.Any</summary>
-        public const string  PolicySignatureAnyTag = "Any";
+        public const string PolicySignatureAnyTag = "Any";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -186,7 +183,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static PolicySignature ToPolicySignature (this string text) =>
+        public static PolicySignature ToPolicySignature(this string text) =>
             text switch {
                 PolicySignatureNoneTag => PolicySignature.None,
                 PolicySignatureIsolatedTag => PolicySignature.Isolated,
@@ -201,7 +198,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="data">The enumerated value.</param>
         /// <returns>The text value.</returns>
-        public static string ToLabel (this PolicySignature data) =>
+        public static string ToLabel(this PolicySignature data) =>
             data switch {
                 PolicySignature.None => PolicySignatureNoneTag,
                 PolicySignature.Isolated => PolicySignatureIsolatedTag,
@@ -214,11 +211,11 @@ namespace Goedel.Cryptography.Dare {
 
 
         ///<summary>Jose enumeration tag for SequenceEvent.New</summary>
-        public const string  SequenceEventNewTag = "New";
+        public const string SequenceEventNewTag = "New";
         ///<summary>Jose enumeration tag for SequenceEvent.Update</summary>
-        public const string  SequenceEventUpdateTag = "Update";
+        public const string SequenceEventUpdateTag = "Update";
         ///<summary>Jose enumeration tag for SequenceEvent.Delete</summary>
-        public const string  SequenceEventDeleteTag = "Delete";
+        public const string SequenceEventDeleteTag = "Delete";
 
         /// <summary>
         /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -226,7 +223,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The enumeration value.</returns>
-        public static SequenceEvent ToSequenceEvent (this string text) =>
+        public static SequenceEvent ToSequenceEvent(this string text) =>
             text switch {
                 SequenceEventNewTag => SequenceEvent.New,
                 SequenceEventUpdateTag => SequenceEvent.Update,
@@ -240,7 +237,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="data">The enumerated value.</param>
         /// <returns>The text value.</returns>
-        public static string ToLabel (this SequenceEvent data) =>
+        public static string ToLabel(this SequenceEvent data) =>
             data switch {
                 SequenceEvent.New => SequenceEventNewTag,
                 SequenceEvent.Update => SequenceEventUpdateTag,

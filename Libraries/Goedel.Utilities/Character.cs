@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
-using System;
 
 namespace Goedel.Utilities {
 
@@ -160,7 +160,7 @@ namespace Goedel.Utilities {
                     case '®': Result.Append("(R)"); break;
                     case '©': Result.Append("(C)"); break;
                     case '\u2011':
-                        Result.Append('-'); break;
+                    Result.Append('-'); break;
                     case '<': Result.Append("&lt;"); break;
                     case '>': Result.Append("&gt;"); break;
                     case '&': Result.Append("&amp;"); break;
@@ -190,7 +190,7 @@ namespace Goedel.Utilities {
                     case '®': Result.Append("(R)"); break;
                     case '©': Result.Append("(C)"); break;
                     case '\u2011':
-                        Result.Append('-'); break;
+                    Result.Append('-'); break;
                     case '<': Result.Append("&lt;"); break;
                     case '>': Result.Append("&gt;"); break;
                     case '&': Result.Append("&amp;"); break;
@@ -219,8 +219,8 @@ namespace Goedel.Utilities {
                     case '”': Result.Append('"'); break;
                     case '®': Result.Append("(R)"); break;
                     case '©': Result.Append("(C)"); break;
-                    case '\u2011': 
-                        Result.Append('-'); break;
+                    case '\u2011':
+                    Result.Append('-'); break;
 
                     //case '<': Result.Append("&lt;"); break;
                     //case '>': Result.Append("&gt;"); break;

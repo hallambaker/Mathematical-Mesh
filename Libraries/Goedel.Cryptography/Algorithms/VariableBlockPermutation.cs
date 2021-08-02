@@ -57,7 +57,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="key"></param>
         /// <param name="bits"></param>
         /// <param name="rounds"></param>
-        public ShortBlockPermute(byte[] key, int bits, int rounds=0) {
+        public ShortBlockPermute(byte[] key, int bits, int rounds = 0) {
 
             (bits <= 64).AssertTrue(NYI.Throw); ; // Block size is 64 bits or less.
             Bits = bits;
@@ -81,8 +81,8 @@ namespace Goedel.Cryptography.Algorithms {
             for (var i = 0; i < Rounds; i++) {
                 info[0] = (byte)i;
                 var bytes = kdf.Derive(info, 8).BigEndianInt(8);
-                keySchedule[i] = Mask & bytes ;
-                rotateSchedule[i] = (int) bytes % Bits;
+                keySchedule[i] = Mask & bytes;
+                rotateSchedule[i] = (int)bytes % Bits;
                 }
             }
         #endregion

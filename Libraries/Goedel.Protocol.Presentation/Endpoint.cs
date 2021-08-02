@@ -1,10 +1,6 @@
-﻿using System;
-using System.Threading;
-using System.Net.Sockets;
-using Goedel.Protocol;
+﻿using System.Net.Sockets;
+
 using Goedel.Discovery;
-using Goedel.Utilities;
-using Goedel.Cryptography;
 
 namespace Goedel.Protocol.Presentation {
 
@@ -45,7 +41,7 @@ namespace Goedel.Protocol.Presentation {
              string Domain,
              string Protocol,
              string Instance = null,
-             int Port = 15099) : Endpoint (Protocol, Instance) {
+             int Port = 15099) : Endpoint(Protocol, Instance) {
         #region // Properties
         #endregion
         #region // Methods 
@@ -75,11 +71,11 @@ namespace Goedel.Protocol.Presentation {
         }
 
 
-    public record UdpEndpoint (
+    public record UdpEndpoint(
              string Protocol,
              string Instance = null,
              int Port = 0,
-             AddressFamily AddressFamily= AddressFamily.InterNetwork) : Endpoint (Protocol, Instance) {
+             AddressFamily AddressFamily = AddressFamily.InterNetwork) : Endpoint(Protocol, Instance) {
         #region // Methods 
 
         public UdpClient GetClient() {

@@ -18,13 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
+
+using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 

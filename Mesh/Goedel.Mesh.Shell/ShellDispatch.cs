@@ -1,13 +1,13 @@
-﻿using Goedel.Cryptography;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Mesh.Client;
 using Goedel.Protocol;
 using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 #pragma warning disable IDE1006 // Naming Styles
 
@@ -21,7 +21,7 @@ namespace Goedel.Mesh.Shell {
         //CommandLineInterpreter CommandLineInterpreter;
 
         ///<summary>The MeshMachine</summary>
-        public virtual IMeshMachineClient MeshMachine { get; set;  }
+        public virtual IMeshMachineClient MeshMachine { get; set; }
 
         ///<summary>Convenience accessor for the Mesh Host.</summary>
         public MeshHost MeshHost => MeshMachine?.MeshHost;
@@ -96,7 +96,7 @@ namespace Goedel.Mesh.Shell {
                 }
 
             if (options is IAccountOptions AccountOptions) {
-                MeshID = AccountOptions.AccountAddress .Value;
+                MeshID = AccountOptions.AccountAddress.Value;
                 }
 
             if (options is ICryptoOptions CryptoOptions) {
@@ -164,9 +164,9 @@ namespace Goedel.Mesh.Shell {
                     }
 
                 case CryptoAlgorithmClasses.NULL:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
 
             }
@@ -203,8 +203,8 @@ namespace Goedel.Mesh.Shell {
                 }
 
             var profileDevice = ProfileDevice.Generate();
-            var credential = new MeshCredentialPrivate (profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
-            
+            var credential = new MeshCredentialPrivate(profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
+
             return MeshMachine.GetMeshClient(credential, null, "@anonymous");
 
             }
@@ -296,7 +296,7 @@ namespace Goedel.Mesh.Shell {
             //    }
 
             return result.Count > 0 ? result : null;
-            
+
             }
 
 
@@ -337,7 +337,7 @@ namespace Goedel.Mesh.Shell {
                     }
                 }
 
-            var cryptoParameters = new CryptoParameters(keyCollection, recipients, signers) ;
+            var cryptoParameters = new CryptoParameters(keyCollection, recipients, signers);
 
             if (Options.Hash.Value) {
                 cryptoParameters.DigestId = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);

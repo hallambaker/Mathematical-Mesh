@@ -28,49 +28,49 @@ namespace Goedel.Protocol {
     /// A dechunking exception occurred.
     /// </summary>
     [global::System.Serializable]
-	public partial class Dechunking : global::Goedel.Utilities.GoedelException {
+    public partial class Dechunking : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"Key could not be read."
-				};
+                    "Key could not be read."
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public Dechunking  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public Dechunking(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new Dechunking(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new Dechunking(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -80,49 +80,49 @@ namespace Goedel.Protocol {
     /// The requested operation is not known to this server.
     /// </summary>
     [global::System.Serializable]
-	public partial class UnknownOperation : Dechunking {
+    public partial class UnknownOperation : Dechunking {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"The requested operation is not known to this server."
-				};
+                    "The requested operation is not known to this server."
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public UnknownOperation  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public UnknownOperation(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new UnknownOperation(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new UnknownOperation(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -132,49 +132,49 @@ namespace Goedel.Protocol {
     /// Message exceeds permitted size limit
     /// </summary>
     [global::System.Serializable]
-	public partial class MessageTooBig : Dechunking {
+    public partial class MessageTooBig : Dechunking {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"Message is too big"
-				};
+                    "Message is too big"
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public MessageTooBig  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public MessageTooBig(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new MessageTooBig(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new MessageTooBig(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static new global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -184,49 +184,49 @@ namespace Goedel.Protocol {
     /// Could not reach the specified host
     /// </summary>
     [global::System.Serializable]
-	public partial class ConnectionFail : global::Goedel.Utilities.GoedelException {
+    public partial class ConnectionFail : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"Connection to host [{0}] Failed."
-				};
+                    "Connection to host [{0}] Failed."
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public ConnectionFail  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public ConnectionFail(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new ConnectionFail(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new ConnectionFail(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -236,49 +236,49 @@ namespace Goedel.Protocol {
     /// A serialized data stream contains a type tag describing an abstract type that cannot be constructed.
     /// </summary>
     [global::System.Serializable]
-	public partial class CannotCreateAbstract : global::Goedel.Utilities.GoedelException {
+    public partial class CannotCreateAbstract : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"Deserialzer encountered tag describing abstract type"
-				};
+                    "Deserialzer encountered tag describing abstract type"
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public CannotCreateAbstract  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public CannotCreateAbstract(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new CannotCreateAbstract(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new CannotCreateAbstract(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -288,49 +288,49 @@ namespace Goedel.Protocol {
     /// An unknown tag was encountered.
     /// </summary>
     [global::System.Serializable]
-	public partial class UnknownTag : global::Goedel.Utilities.GoedelException {
+    public partial class UnknownTag : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"Deserialzer encountered unknown tag"
-				};
+                    "Deserialzer encountered unknown tag"
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public UnknownTag  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public UnknownTag(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new UnknownTag(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new UnknownTag(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -340,49 +340,49 @@ namespace Goedel.Protocol {
     /// Attempt to deserialize untagged data to unknown type.
     /// </summary>
     [global::System.Serializable]
-	public partial class TagRequired : global::Goedel.Utilities.GoedelException {
+    public partial class TagRequired : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"Cannot deserialize untagged abstract data."
-				};
+                    "Cannot deserialize untagged abstract data."
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public TagRequired  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public TagRequired(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new TagRequired(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new TagRequired(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -392,49 +392,49 @@ namespace Goedel.Protocol {
     /// The input is not valid in the specified encoding.
     /// </summary>
     [global::System.Serializable]
-	public partial class InvalidInput : global::Goedel.Utilities.GoedelException {
+    public partial class InvalidInput : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"Deserialzer encountered invalid input"
-				};
+                    "Deserialzer encountered invalid input"
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public InvalidInput  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public InvalidInput(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new InvalidInput(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new InvalidInput(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -444,49 +444,49 @@ namespace Goedel.Protocol {
     /// Data length did not match data presented.
     /// </summary>
     [global::System.Serializable]
-	public partial class BadPartLength : global::Goedel.Utilities.GoedelException {
+    public partial class BadPartLength : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"Data length did not match data presented."
-				};
+                    "Data length did not match data presented."
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public BadPartLength  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public BadPartLength(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new BadPartLength(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new BadPartLength(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -496,49 +496,49 @@ namespace Goedel.Protocol {
     /// Stream reader error, position not correctly marked.
     /// </summary>
     [global::System.Serializable]
-	public partial class StreamMarkerError : global::Goedel.Utilities.GoedelException {
+    public partial class StreamMarkerError : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"Stream reader error, position not correctly marked."
-				};
+                    "Stream reader error, position not correctly marked."
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public StreamMarkerError  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public StreamMarkerError(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new StreamMarkerError(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new StreamMarkerError(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -547,49 +547,49 @@ namespace Goedel.Protocol {
     /// <summary>
     /// </summary>
     [global::System.Serializable]
-	public partial class DictionaryInitialization : global::Goedel.Utilities.GoedelException {
+    public partial class DictionaryInitialization : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"An attempt was made to deserialize an object without initializing the dictionary"
-				};
+                    "An attempt was made to deserialize an object without initializing the dictionary"
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public DictionaryInitialization  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public DictionaryInitialization(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new DictionaryInitialization(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new DictionaryInitialization(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
@@ -599,52 +599,52 @@ namespace Goedel.Protocol {
     /// Attempt to deserialize untagged data to unknown type.
     /// </summary>
     [global::System.Serializable]
-	public partial class ParseError : global::Goedel.Utilities.GoedelException {
+    public partial class ParseError : global::Goedel.Utilities.GoedelException {
 
         ///<summary>The exception formatting delegate. May be overriden 
 		///locally or globally to implement different exception formatting.</summary>
 		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
-				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+                global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
 
-		///<summary>Templates for formatting response messages.</summary>
-		public static new System.Collections.Generic.List<string> Templates {get; set;} = 
-				new () {
+        ///<summary>Templates for formatting response messages.</summary>
+        public static new System.Collections.Generic.List<string> Templates { get; set; } =
+                new() {
 
-				"The file {0} could not be read at Line {1} Col {2}."
-				};
+                    "The file {0} could not be read at Line {1} Col {2}."
+                    };
 
-		/// <summary>
-		/// Construct instance for exception
-		/// </summary>		
-		/// <param name="description">Description of the error, may be used to override the 
-		/// generated message.</param>	
-		/// <param name="inner">Inner Exception</param>	
-		/// <param name="args">Optional list of parameterized arguments.</param>
-		public ParseError  (string description=null, System.Exception inner=null,
-			params object[] args) : 
-				base (ExceptionFormatDelegate(description, Templates,
-					null, args), inner) {
-			}
-
-
+        /// <summary>
+        /// Construct instance for exception
+        /// </summary>		
+        /// <param name="description">Description of the error, may be used to override the 
+        /// generated message.</param>	
+        /// <param name="inner">Inner Exception</param>	
+        /// <param name="args">Optional list of parameterized arguments.</param>
+        public ParseError(string description = null, System.Exception inner = null,
+            params object[] args) :
+                base(ExceptionFormatDelegate(description, Templates,
+                    null, args), inner) {
+            }
 
 
 
-		/// <summary>
+
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _Throw(object reasons) => new ParseError(args:reasons) ;
-		
-		/// <summary>
+        static System.Exception _Throw(object reasons) => new ParseError(args: reasons);
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+        public static global::Goedel.Utilities.ThrowDelegate Throw { get; } = _Throw;
 
 
         }
 
 
-	}
+    }

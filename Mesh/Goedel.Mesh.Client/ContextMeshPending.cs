@@ -1,10 +1,9 @@
-﻿using Goedel.Cryptography;
+﻿using System.Collections.Generic;
+using System.IO;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-using Goedel.Mesh;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Goedel.Mesh.Client {
 
@@ -35,13 +34,13 @@ namespace Goedel.Mesh.Client {
         ///address MUST be for the same service that the original request was made to.</summary>
         public override string AccountAddress => CatalogedPending.AccountAddress;
 
-        
+
         ///<summary>The account profile. Always null.</summary>
         public override Profile Profile => null;
 
         ///<summary>The connection binding the calling context to the account. This is of course null
         ///since a device in the state Mesh Pending does not have a connection by definition.</summary>
-        public override Connection Connection =>null;
+        public override Connection Connection => null;
 
 
         /////<summary>Convenience accessor for the Account Service ID</summary>
@@ -95,14 +94,14 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
                 int bits = 256,
-                List<string> rights =null) {
+                List<string> rights = null) {
 
             // If accountAddress is a Mesh Connect URI, replace account, pin with the parsed values.
             MeshUri.ParseUri(ref accountAddress, ref pin);
 
             var profileDevice = ProfileDevice.Generate(
                         algorithmEncrypt, algorithmSign, algorithmAuthenticate, bits);
-            
+
             profileDevice.PersistSeed(meshHost.KeyCollection);
 
             return ConnectService(meshHost, profileDevice, accountAddress, localName, pin, rights: rights);
@@ -167,7 +166,7 @@ namespace Goedel.Mesh.Client {
                 Local = localName
                 };
 
-            var acknowledgeConnection = 
+            var acknowledgeConnection =
                     connectResponse.EnvelopedAcknowledgeConnection.Decode(meshHost.KeyCollection);
 
             var context = new ContextMeshPending(meshHost, catalogedPending) {
@@ -193,7 +192,7 @@ namespace Goedel.Mesh.Client {
                 AccountAddress = AccountAddress
                 };
             ProfileDevice.Activate(KeyCollection);
-            
+
             var completeResponse = MeshClient.Complete(completeRequest);
             completeResponse.Success().AssertTrue(ConnectionAccountUnknown.Throw);
 

@@ -1,9 +1,9 @@
-﻿using Goedel.Mesh;
+﻿using System.Threading;
+
+using Goedel.Mesh;
+using Goedel.Mesh.Shell;
 using Goedel.Test;
 using Goedel.Test.Core;
-using Goedel.Mesh.Shell;
-using Goedel.Utilities;
-using System.Threading;
 
 using Xunit;
 
@@ -194,8 +194,8 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestProfileConnectDynamicQR() {
 
-            var deviceAdmin     = GetTestCLI(DeviceAdminName);
-            var deviceConnect1   = GetTestCLI(DeviceConnect1Name);
+            var deviceAdmin = GetTestCLI(DeviceAdminName);
+            var deviceConnect1 = GetTestCLI(DeviceConnect1Name);
 
 
             deviceAdmin.Dispatch($"account create {AliceAccount}");

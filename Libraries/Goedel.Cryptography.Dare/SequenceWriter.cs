@@ -1,7 +1,5 @@
 ﻿using Goedel.Utilities;
 
-using System.Collections.Generic;
-
 namespace Goedel.Cryptography.Dare {
 
     /// <summary>
@@ -14,7 +12,7 @@ namespace Goedel.Cryptography.Dare {
 
         ///<summary>Property allowing access to the crypto parameters and policy governing
         ///the container.</summary> 
-        public CryptoParametersSequence CryptoParametersSequence => 
+        public CryptoParametersSequence CryptoParametersSequence =>
                 Sequence.CryptoParametersSequence;
 
         ///<summary>The last container header written</summary>

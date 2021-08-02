@@ -18,16 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Protocol;
-using Goedel.Utilities;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -44,7 +43,7 @@ namespace Goedel.Mesh {
 
 
         ///<summary>The persistence store.</summary>
-        public PersistenceStore PersistenceStore { get; set;  } = null;
+        public PersistenceStore PersistenceStore { get; set; } = null;
 
 
         ///<summary>Enumerate the catalog as the cataloged type.</summary>
@@ -285,14 +284,14 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Write the 
         /// </summary>
-        public void Dump(TextWriter output=null) {
+        public void Dump(TextWriter output = null) {
 
             output ??= Console.Out;
 
 
             // Dump the title
             output.WriteLine($"Catalog: {ContainerDefault}");
-            
+
             foreach (var envelope in Container) {
                 var header = envelope.Header;
                 var trailer = envelope.Trailer;
@@ -305,7 +304,7 @@ namespace Goedel.Mesh {
                 else {
                     output.WriteLine("    ############ Invalid");
                     }
-                
+
                 if (header?.EncryptionAlgorithm != null) {
                     output.WriteLine($"       Encrypted: {header?.EncryptionAlgorithm}");
 

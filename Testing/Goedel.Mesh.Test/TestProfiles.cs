@@ -1,11 +1,8 @@
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Protocol;
-using Goedel.Test.Core;
-using Goedel.Utilities;
-using Goedel.Test;
-
 using System.Collections.Generic;
+
+using Goedel.Cryptography;
+using Goedel.Test;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0059
 
@@ -202,7 +199,7 @@ namespace Goedel.Mesh.Test {
 
 
         void CheckCatalog<T>(Catalog<T> catalog, List<CatalogedEntry> entries)
-                    where T: CatalogedEntry{
+                    where T : CatalogedEntry {
 
             var sorted = new SortedDictionary<string, CatalogedEntry>();
             foreach (var entry in entries) {

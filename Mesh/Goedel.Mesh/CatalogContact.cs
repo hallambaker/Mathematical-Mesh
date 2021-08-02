@@ -18,15 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.IO;
-using Goedel.Utilities;
-
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -165,7 +163,7 @@ namespace Goedel.Mesh {
             var cataloged = new CatalogedContact(contact, self);
 
             "Need to merge catalog data intelligently".TaskFunctionality();
-            
+
             return cataloged;
             }
 
@@ -201,7 +199,7 @@ namespace Goedel.Mesh {
         /// <param name="key">specifies the identifier to return.</param>
         /// <returns>The contact, if found. Otherwise null.</returns>
         public override CatalogedContact Get(string key) {
-            if (base.Get(key).NotNull (out var result)) {
+            if (base.Get(key).NotNull(out var result)) {
                 return result;
                 }
             if (DictionaryByNetworkAddress.TryGetValue(key, out var networkEntry)) {
@@ -300,7 +298,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="builder">The output stream.</param>
         /// <param name="detail">If true, provide a detailed description.</param>
-        public override void Describe(StringBuilder builder,bool detail = false) {
+        public override void Describe(StringBuilder builder, bool detail = false) {
             builder.AppendLine($"Entry<{_Tag}>: {Key}");
             if (Contact == null) {
                 builder.AppendLine($"  EMPTY!");
@@ -426,7 +424,7 @@ namespace Goedel.Mesh {
 
             EnvelopedProfileAccount = profile.EnvelopedProfileAccount;
 
-            
+
             Address = address;
             Protocols = new List<NetworkProtocol>() {
                     new NetworkProtocol() {
@@ -438,7 +436,7 @@ namespace Goedel.Mesh {
 
         }
 
-    public partial class PersonName{
+    public partial class PersonName {
 
         ///<summary>Set the full name.</summary>
         public void SetFullName() {
@@ -478,7 +476,7 @@ namespace Goedel.Mesh {
             if (value != null) {
                 builder.Append(' ');
                 builder.Append(value);
-                
+
                 }
 
             }

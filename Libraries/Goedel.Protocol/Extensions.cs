@@ -1,7 +1,7 @@
-﻿using Goedel.Utilities;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -70,11 +70,11 @@ namespace Goedel.Protocol {
                     }
 
                 case DataEncoding.ASN_1:
-                    break;
+                break;
                 case DataEncoding.RFC822:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
 
             throw new NYI();
@@ -105,11 +105,11 @@ namespace Goedel.Protocol {
                     }
 
                 case DataEncoding.ASN_1:
-                    break;
+                break;
                 case DataEncoding.RFC822:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
             throw new NYI();
             }

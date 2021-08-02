@@ -1,8 +1,8 @@
-﻿using Goedel.IO;
-using Goedel.Utilities;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+
+using Goedel.IO;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
     /// <summary>
@@ -251,7 +251,7 @@ namespace Goedel.Cryptography.Dare {
 
                 }
             foreach (var directgoryInfo in directoryInfo.EnumerateDirectories()) {
-                
+
                 AddDirectory(Path.Combine(directory, directgoryInfo.Name), directgoryInfo, contentMeta);
 
                 }

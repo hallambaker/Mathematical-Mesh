@@ -1,9 +1,9 @@
-﻿using Goedel.Cryptography.PKIX;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Numerics;
+
 using Goedel.Cryptography.Algorithms;
+using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -17,7 +17,7 @@ namespace Goedel.Cryptography {
         string CurveJose { get; }
 
         /// <summary> ASN.1 member Data </summary>
-        byte[] Data { get; } 
+        byte[] Data { get; }
         }
 
     /// <summary>
@@ -32,7 +32,7 @@ namespace Goedel.Cryptography {
         byte[] Data { get; }
 
         /// <summary>If true, this is a recryption key.</summary>
-        bool IsRecryption { get;}
+        bool IsRecryption { get; }
         }
 
     /// <summary>
@@ -44,7 +44,7 @@ namespace Goedel.Cryptography {
         string CurveJose { get; }
 
         /// <summary> ASN.1 member Data </summary>
-        byte[] Data { get;}
+        byte[] Data { get; }
         }
 
 
@@ -214,11 +214,11 @@ namespace Goedel.Cryptography {
                 keySize = keySize == 0 ? 448 : keySize;
                 switch (keySize) {
                     case 448:
-                        keyPair = KeyPairEd448.Generate(keySecurity, keyUses, cryptoAlgorithmID); break;
+                    keyPair = KeyPairEd448.Generate(keySecurity, keyUses, cryptoAlgorithmID); break;
                     case 25519:
-                        keyPair = KeyPairEd25519.Generate(keySecurity, keyUses, cryptoAlgorithmID); break;
+                    keyPair = KeyPairEd25519.Generate(keySecurity, keyUses, cryptoAlgorithmID); break;
                     default:
-                        break;
+                    break;
                     }
                 }
             Assert.AssertNotNull(keyPair, NoProviderSpecified.Throw);
@@ -239,14 +239,14 @@ namespace Goedel.Cryptography {
             switch (CryptoAlgorithmID) {
                 case CryptoAlgorithmId.Ed448:
                 case CryptoAlgorithmId.Ed448ph:
-                    return new KeyPairEd448(key, keyType);
+                return new KeyPairEd448(key, keyType);
                 case CryptoAlgorithmId.Ed25519:
                 case CryptoAlgorithmId.Ed25519ph:
                 case CryptoAlgorithmId.Ed25519ctx: return new KeyPairEd25519(key, keyType);
                 case CryptoAlgorithmId.X448:
-                    return new KeyPairX448(key, keyType);
+                return new KeyPairX448(key, keyType);
                 case CryptoAlgorithmId.X25519:
-                    return new KeyPairX25519(key, keyType);
+                return new KeyPairX25519(key, keyType);
 
                 }
 

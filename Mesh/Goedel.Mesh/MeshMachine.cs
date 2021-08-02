@@ -60,7 +60,7 @@ namespace Goedel.Mesh {
         /// <param name="filepath">The file path to translate.</param>
         /// <returns>The translated file path.</returns>
         string GetFilePath(string filepath);
-        
+
 
 
         ///<summary>The directory the Mesh data is stored in.</summary>
@@ -94,8 +94,8 @@ namespace Goedel.Mesh {
         /// <param name="accountAddress">Account under which service is requested.</param>
         /// <returns>The client instance.</returns>
         MeshServiceClient GetMeshClient(
-                ICredentialPrivate credential, 
-                string service, 
+                ICredentialPrivate credential,
+                string service,
                 string accountAddress);
 
 

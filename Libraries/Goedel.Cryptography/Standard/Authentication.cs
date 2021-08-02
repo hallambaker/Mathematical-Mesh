@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 //  
 //  
-using Goedel.Utilities;
-
 using System.IO;
 using System.Security.Cryptography;
+
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Standard {
     /// <summary>

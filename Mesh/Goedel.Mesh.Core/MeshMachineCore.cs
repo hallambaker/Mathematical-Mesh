@@ -1,13 +1,13 @@
-﻿using Goedel.Cryptography;
+﻿using System.IO;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Core;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.IO;
 using Goedel.Mesh.Client;
-using Goedel.Utilities;
 using Goedel.Protocol.Presentation;
-
-using System.IO;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 

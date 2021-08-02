@@ -18,15 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
-using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-
-using System.Numerics;
 using System.Collections.Generic;
-using System.IO;
+
+using Goedel.Protocol;
 
 
 namespace Goedel.Cryptography.Dare {
@@ -113,7 +107,7 @@ namespace Goedel.Cryptography.Dare {
                     CryptoKey encryptionKey = null,
                     ContentMeta contentMeta = null,
                     ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(
-                        new CryptoParameters(signer: signingKey, recipient: encryptionKey), 
+                        new CryptoParameters(signer: signingKey, recipient: encryptionKey),
                         data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
             data.Enveloped = this;
             //this.JsonObject = data;
@@ -135,7 +129,7 @@ namespace Goedel.Cryptography.Dare {
                     CryptoKey signingKey = null,
                     CryptoKey encryptionKey = null,
                     ContentMeta contentMeta = null,
-                    ObjectEncoding objectEncoding = ObjectEncoding.JSON) => 
+                    ObjectEncoding objectEncoding = ObjectEncoding.JSON) =>
             new(data, signingKey, encryptionKey, contentMeta, objectEncoding);
 
 
@@ -147,7 +141,7 @@ namespace Goedel.Cryptography.Dare {
         /// roots of trust for verification keys.</param>
         /// <param name="validation">Validation to be performed after decoding.</param>
         /// <returns>The decoded data.</returns>
-        public T Decode(IKeyCollection keyCollection = null, 
+        public T Decode(IKeyCollection keyCollection = null,
                     EnvelopeValidation validation = EnvelopeValidation.None) {
             if (JsonObject != null) {
                 return EnvelopedObject;

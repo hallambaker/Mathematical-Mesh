@@ -1,13 +1,11 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh.Client;
-using Goedel.IO;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.IO;
+using Goedel.Utilities;
 
 
 namespace Goedel.Mesh.Shell {
@@ -77,7 +75,7 @@ namespace Goedel.Mesh.Shell {
             var keyLocate = GetKeyCollection(options);
             var policy = GetPolicy(keyLocate, options);
 
-            DareLogWriter.ArchiveDirectory(outputFile, policy, inputFile, index:index);
+            DareLogWriter.ArchiveDirectory(outputFile, policy, inputFile, index: index);
 
             return new ResultFile() {
                 Filename = outputFile
@@ -134,7 +132,7 @@ namespace Goedel.Mesh.Shell {
                 Created = DateTime.Now
                 };
 
-            Writer.AddData(data, contentMeta );
+            Writer.AddData(data, contentMeta);
 
             return new ResultLog() {
                 Count = (int)Writer.Sequence.FrameCount
@@ -220,7 +218,7 @@ namespace Goedel.Mesh.Shell {
 
             var result = new ResultArchive() {
                 Entries = new List<FileEntry>(),
-                Frames = (int) reader.Sequence.FrameCount,
+                Frames = (int)reader.Sequence.FrameCount,
                 //IndexFrame = reader.Sequence.Index,
                 //Deleted = reader.Sequence.Deleted
                 };
@@ -244,10 +242,10 @@ namespace Goedel.Mesh.Shell {
 
             var contextAccount = GetContextUser(options);
             using var reader = new DareLogReader(inputFile, contextAccount);
-            
+
             if (file != null) {
                 outputFile ??= Path.GetFileName(file);
-                reader.ReadToFile(outputFile, path:file);
+                reader.ReadToFile(outputFile, path: file);
 
                 return new ResultFile() {
                     Filename = file

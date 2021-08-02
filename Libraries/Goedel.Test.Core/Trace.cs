@@ -1,11 +1,5 @@
 ﻿using Goedel.Protocol;
 using Goedel.Utilities;
-using Goedel.Mesh.Client;
-using Goedel.Mesh;
-using Goedel.Cryptography;
-using System.Collections.Generic;
-using Goedel.Protocol.Presentation;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Test.Core {
     public class Trace {

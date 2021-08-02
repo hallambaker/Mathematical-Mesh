@@ -21,14 +21,14 @@
 //  
 //  
 
-using Goedel.Utilities;
-using Goedel.IO;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Text;
+
+using Goedel.IO;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -470,13 +470,12 @@ namespace Goedel.Protocol {
                         return Token.Invalid;
                         }
                     else if (Token == Token.Litteral) {
-                        return (stringBuilder.ToString()) switch
-                            {
-                                "true" => Token.True,
-                                "false" => Token.False,
-                                "null" => Token.Null,
-                                _ => Token.Invalid,
-                                };
+                        return (stringBuilder.ToString()) switch {
+                            "true" => Token.True,
+                            "false" => Token.False,
+                            "null" => Token.Null,
+                            _ => Token.Invalid,
+                            };
                         }
                     ResultString = stringBuilder.ToString();
                     return Token;
@@ -507,9 +506,9 @@ namespace Goedel.Protocol {
                         }
 
                     case Action.Ignore:
-                        break;
+                    break;
                     default:
-                        break;
+                    break;
                     }
                 }
             return Token;
@@ -570,45 +569,45 @@ namespace Goedel.Protocol {
                     }
 
                 case Token.Invalid:
-                    break;
+                break;
                 case Token.StartObject:
-                    break;
+                break;
                 case Token.StartArray:
-                    break;
+                break;
                 case Token.EndArray:
-                    break;
+                break;
                 case Token.Colon:
-                    break;
+                break;
                 case Token.String:
-                    break;
+                break;
                 case Token.Tag:
-                    break;
+                break;
                 case Token.Number:
-                    break;
+                break;
                 case Token.Integer:
-                    break;
+                break;
                 case Token.Real32:
-                    break;
+                break;
                 case Token.Real64:
-                    break;
+                break;
                 case Token.Litteral:
-                    break;
+                break;
                 case Token.True:
-                    break;
+                break;
                 case Token.False:
-                    break;
+                break;
                 case Token.Null:
-                    break;
+                break;
                 case Token.EndRecord:
-                    break;
+                break;
                 case Token.Binary:
-                    break;
+                break;
                 case Token.JSONBCD:
-                    break;
+                break;
                 case Token.Empty:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
             throw new InvalidInput("Expected , or }");
             }
@@ -621,9 +620,9 @@ namespace Goedel.Protocol {
             GetToken();
             switch (TokenType) {
                 case Token.EndObject:
-                    return null;
+                return null;
                 case Token.Tag:
-                    return ResultString;
+                return ResultString;
                 case Token.String: {
                     var Result = ResultString;
                     GetToken();
@@ -633,7 +632,7 @@ namespace Goedel.Protocol {
                     return Result;
                     }
                 default:
-                    break;
+                break;
                 }
             throw new InvalidInput("Expected \"Tag\"");
             }
@@ -644,12 +643,11 @@ namespace Goedel.Protocol {
         /// <returns>The data read</returns>
         public override int ReadInteger32() {
             GetToken();
-            return TokenType switch
-                {
-                    Token.Number => Convert.ToInt32(ResultString),
-                    Token.Integer => (int)ResultInt64,
-                    _ => throw new InvalidInput("Expected Number"),
-                    };
+            return TokenType switch {
+                Token.Number => Convert.ToInt32(ResultString),
+                Token.Integer => (int)ResultInt64,
+                _ => throw new InvalidInput("Expected Number"),
+                };
             }
 
         /// <summary>
@@ -658,12 +656,11 @@ namespace Goedel.Protocol {
         /// <returns>The data read</returns>
         public override long ReadInteger64() {
             GetToken();
-            return TokenType switch
-                {
-                    Token.Number => Convert.ToInt64(ResultString),
-                    Token.Integer => ResultInt64,
-                    _ => throw new InvalidInput("Expected Number"),
-                    };
+            return TokenType switch {
+                Token.Number => Convert.ToInt64(ResultString),
+                Token.Integer => ResultInt64,
+                _ => throw new InvalidInput("Expected Number"),
+                };
             }
 
         /// <summary>
@@ -687,12 +684,11 @@ namespace Goedel.Protocol {
         /// <returns>The data read</returns>
         public override byte[] ReadBinary() {
             GetToken(true);
-            return TokenType switch
-                {
-                    Token.String => ResultBinary,
-                    Token.Binary => ReadBinaryData(),
-                    _ => throw new InvalidInput("Expected BASE64 encoded binary"),
-                    };
+            return TokenType switch {
+                Token.String => ResultBinary,
+                Token.Binary => ReadBinaryData(),
+                _ => throw new InvalidInput("Expected BASE64 encoded binary"),
+                };
             }
 
         /// <summary>
@@ -817,7 +813,7 @@ namespace Goedel.Protocol {
         /// <param name="file"></param>
         /// <param name="tagged"></param>
         /// <returns></returns>
-        public static T ReadFile<T>(string file, bool tagged) where T: JsonObject, new() {
+        public static T ReadFile<T>(string file, bool tagged) where T : JsonObject, new() {
             var result = new T();
             using var stream = file.OpenFileReadShared();
             var countedStream = new CountedUtf8StreamReader(stream);
@@ -829,7 +825,7 @@ namespace Goedel.Protocol {
                 }
 
             // Have only implemented untagged files so far.
-                tagged.AssertFalse(NYI.Throw);
+            tagged.AssertFalse(NYI.Throw);
 
             try {
                 result.Deserialize(reader);

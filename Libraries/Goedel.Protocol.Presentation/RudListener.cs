@@ -18,13 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using System.Collections.Generic;
+
 using Goedel.Cryptography;
 //using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace Goedel.Protocol.Presentation {
 
@@ -45,7 +43,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="credential">The credential used by the listener.</param>
         /// <param name="providers">The service providers to be dispatched to.</param>
-        public RudListener(ICredentialPrivate credential, List<RudProvider> providers) : 
+        public RudListener(ICredentialPrivate credential, List<RudProvider> providers) :
                 base(credential, providers) {
             }
 
@@ -107,13 +105,13 @@ namespace Goedel.Protocol.Presentation {
         ///<inheritdoc/>
         public override RudStream AcceptStream(List<PacketExtension> packetExtensions,
                 RudConnection rudConnection = null,
-                RudStream stream=null) {
+                RudStream stream = null) {
             RudStream child = null;
 
             // NB: Some of this functionality could be expressed in the connection. Hoevever,
             // it is (probably) better to combine this with connection creation.
 
-            byte[] streamId=null;
+            byte[] streamId = null;
             byte[] encrypt = null;
             string account = null;
             string protocol = null;

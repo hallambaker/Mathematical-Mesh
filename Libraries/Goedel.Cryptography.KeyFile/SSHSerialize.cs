@@ -1,8 +1,8 @@
-﻿using Goedel.Cryptography.PKIX;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Text;
+
+using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.KeyFile {
 

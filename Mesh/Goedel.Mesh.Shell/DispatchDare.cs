@@ -1,9 +1,7 @@
-﻿using Goedel.Cryptography.Dare;
-using Goedel.Cryptography;
-using Goedel.Utilities;
+﻿using System.IO;
 
-using System.IO;
-using Goedel.Mesh.Client;
+using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -72,7 +70,7 @@ namespace Goedel.Mesh.Shell {
 
             return new ResultFileDare() {
                 Verified = true, // Hack: Should test here!!!!
-                TotalBytes = (int) result.PayloadLength,
+                TotalBytes = (int)result.PayloadLength,
                 Filename = inputFile,
                 Envelope = result
                 };

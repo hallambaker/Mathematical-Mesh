@@ -1,9 +1,9 @@
-﻿using Goedel.Cryptography;
+﻿using System.Collections.Generic;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
-using System.IO;
-using System.Collections.Generic;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
 
@@ -30,7 +30,7 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>The Key Collection of the Mesh Machine.</summary>
         public IKeyCollection KeyCollection => MeshMachine.KeyCollection;
-        
+
         //keyCollection ??
         //        new KeyCollectionClient(this, MeshMachine.KeyCollection).CacheValue(out keyCollection);
         //KeyCollection keyCollection;
@@ -74,7 +74,7 @@ namespace Goedel.Mesh.Client {
                     return context;
                     }
                 default:
-                    return null;
+                return null;
                 }
             }
 
@@ -145,7 +145,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="useLocal">If true, match against UDF or local name. Otherwise
         /// match on UDF alone.</param>
         /// <returns>The context, if a matching context is found. Otherwise null.</returns>
-        public ContextAccount LocateMesh(string key, bool useLocal=true) {
+        public ContextAccount LocateMesh(string key, bool useLocal = true) {
             key.AssertNotNull(MeshNotFound.Throw);
 
 
@@ -169,10 +169,10 @@ namespace Goedel.Mesh.Client {
         /// already exist.</param>
         /// <param name="context">The dynamic context that interfaces to the catalog item.</param>
         public void Register(HostCatalogItem catalogItem, ContextAccount context, bool create = true) {
-            
+
             // persist the permanent record.
             ContainerHost.Update(catalogItem, create);
-            if (context!=null) {
+            if (context != null) {
                 Register(context);
                 }
             //if (machine.JsonObject is CatalogedMachine catalogedMachine) {
@@ -209,10 +209,10 @@ namespace Goedel.Mesh.Client {
         /// <returns>Context for administering the Mesh</returns>
         public ContextUser CreateMesh(
                 string accountAddress,
-                string localName=null,
+                string localName = null,
                 PrivateKeyUDF accountSeed = null,
                 ProfileDevice profileDevice = null,
-                List<string> rights=null) {
+                List<string> rights = null) {
 
             // Generate the initial seed for the account if not already specified.
             accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
@@ -320,7 +320,7 @@ namespace Goedel.Mesh.Client {
                     return contextPending.Complete();
                     }
                 case CatalogedPreconfigured catalogedPreconfigured: {
-                    var contextPreconfigured = new ContextMeshPreconfigured (this, catalogedPreconfigured);
+                    var contextPreconfigured = new ContextMeshPreconfigured(this, catalogedPreconfigured);
                     return contextPreconfigured.Complete();
                     }
                 }
@@ -338,8 +338,8 @@ namespace Goedel.Mesh.Client {
                 string accountAddress,
                 string localName = null,
                 string pin = null,
-                List<string> rights=null) => ContextMeshPending.ConnectService(this, accountAddress, localName, pin,
-                    rights:rights);
+                List<string> rights = null) => ContextMeshPending.ConnectService(this, accountAddress, localName, pin,
+                    rights: rights);
 
         /// <summary>
         /// Begin connection to a service.

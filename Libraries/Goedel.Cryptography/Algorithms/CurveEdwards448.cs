@@ -1,9 +1,9 @@
-﻿using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Algorithms {
 
@@ -285,7 +285,7 @@ namespace Goedel.Cryptography.Algorithms {
                     }
 
                 default:
-                    break;
+                break;
                 }
 
             var Buffer = new MemoryStream();

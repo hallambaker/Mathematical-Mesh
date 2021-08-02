@@ -49,7 +49,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="secretSeed">The secret seed value.</param>
         public ProfileHost(
-                    PrivateKeyUDF secretSeed): base(secretSeed) {
+                    PrivateKeyUDF secretSeed) : base(secretSeed) {
             }
 
         ///// <summary>

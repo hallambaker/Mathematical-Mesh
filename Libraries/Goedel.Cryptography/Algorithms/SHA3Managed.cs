@@ -35,14 +35,13 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="hashBitLength"></param>
         public SHA3Managed(int hashBitLength = 512)
-            : base(hashBitLength) => KeccakR = hashBitLength switch
-                {
-                    224 => 1152,
-                    256 => 1088,
-                    384 => 832,
-                    512 => 576,
-                    _ => throw new ArgumentException("hashBitLength must be 224, 256, 384, or 512", "hashBitLength"),
-                    };
+            : base(hashBitLength) => KeccakR = hashBitLength switch {
+                224 => 1152,
+                256 => 1088,
+                384 => 832,
+                512 => 576,
+                _ => throw new ArgumentException("hashBitLength must be 224, 256, 384, or 512", "hashBitLength"),
+                };
         }
 
     /// <summary>

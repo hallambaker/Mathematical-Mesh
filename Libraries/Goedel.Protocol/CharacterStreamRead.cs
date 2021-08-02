@@ -1,7 +1,7 @@
-﻿using Goedel.Utilities;
-
-using System.IO;
+﻿using System.IO;
 using System.Text;
+
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -122,18 +122,17 @@ namespace Goedel.Protocol {
                 return NextHex(Stream);
                 }
 
-            return Next switch
-                {
-                    '\"' => '\"',
-                    '\\' => '\\',
-                    '/' => '/',
-                    '\b' => '\b',
-                    '\f' => '\f',
-                    '\n' => '\n',
-                    '\r' => '\r',
-                    '\t' => '\t',
-                    _ => (char)0,
-                    };
+            return Next switch {
+                '\"' => '\"',
+                '\\' => '\\',
+                '/' => '/',
+                '\b' => '\b',
+                '\f' => '\f',
+                '\n' => '\n',
+                '\r' => '\r',
+                '\t' => '\t',
+                _ => (char)0,
+                };
             }
 
 
@@ -152,12 +151,12 @@ namespace Goedel.Protocol {
 
                 switch (Next) {
                     case '\"':
-                        return Length;
+                    return Length;
                     case '\\':
-                        ReadJSONEscaped(Stream);
-                        break;
+                    ReadJSONEscaped(Stream);
+                    break;
                     default:
-                        break;
+                    break;
                     }
                 }
 
@@ -181,13 +180,13 @@ namespace Goedel.Protocol {
 
                 switch (Next) {
                     case '\"':
-                        return StringBuilder.ToString();
+                    return StringBuilder.ToString();
                     case '\\':
-                        StringBuilder.Append(ReadJSONEscaped(Stream));
-                        break;
+                    StringBuilder.Append(ReadJSONEscaped(Stream));
+                    break;
                     default:
-                        StringBuilder.Append(Next);
-                        break;
+                    StringBuilder.Append(Next);
+                    break;
                     }
                 }
 

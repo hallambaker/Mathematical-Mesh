@@ -22,10 +22,6 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 namespace Goedel.Mesh {
 
 
@@ -56,7 +52,7 @@ namespace Goedel.Mesh {
         public CatalogPublication(
                     string directory,
                     string storeName = null,
-                    DarePolicy policy = null, 
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
@@ -81,7 +77,7 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient = null,
-                    DarePolicy policy = null, 
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
@@ -167,7 +163,7 @@ namespace Goedel.Mesh {
         public bool VerifyService(
             string account,
             string value,
-            int length=125) => Verify(account, Authenticator, value, length);
+            int length = 125) => Verify(account, Authenticator, value, length);
 
 
         static string Authenticate(string account, string key) =>

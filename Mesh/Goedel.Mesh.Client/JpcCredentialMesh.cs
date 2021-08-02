@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Goedel.Protocol;
-using Goedel.Utilities;
-using Goedel.Mesh;
-
-namespace Goedel.Mesh.Client {
+﻿namespace Goedel.Mesh.Client {
     //public class JpcCredentialMesh : JpcCredential {
 
 

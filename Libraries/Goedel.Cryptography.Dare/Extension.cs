@@ -14,18 +14,16 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The class of algorithm specified by <paramref name="cryptoAlgorithmID"/></returns>
         public static CryptoAlgorithmClasses Class(
                     this CryptoAlgorithmId cryptoAlgorithmID) =>
-            (cryptoAlgorithmID & CryptoAlgorithmId.BulkTagMask) switch
-                {
-                    CryptoAlgorithmId.Digest => CryptoAlgorithmClasses.Digest,
-                    CryptoAlgorithmId.Encryption => CryptoAlgorithmClasses.Encryption,
-                    CryptoAlgorithmId.MAC => CryptoAlgorithmClasses.MAC,
-                    _ => (cryptoAlgorithmID & CryptoAlgorithmId.MetaTagMask) switch
-                        {
-                            CryptoAlgorithmId.Signature => CryptoAlgorithmClasses.Signature,
-                            CryptoAlgorithmId.Exchange => CryptoAlgorithmClasses.Exchange,
-                            _ => CryptoAlgorithmClasses.NULL,
-                            },
-                    };
+            (cryptoAlgorithmID & CryptoAlgorithmId.BulkTagMask) switch {
+                CryptoAlgorithmId.Digest => CryptoAlgorithmClasses.Digest,
+                CryptoAlgorithmId.Encryption => CryptoAlgorithmClasses.Encryption,
+                CryptoAlgorithmId.MAC => CryptoAlgorithmClasses.MAC,
+                _ => (cryptoAlgorithmID & CryptoAlgorithmId.MetaTagMask) switch {
+                    CryptoAlgorithmId.Signature => CryptoAlgorithmClasses.Signature,
+                    CryptoAlgorithmId.Exchange => CryptoAlgorithmClasses.Exchange,
+                    _ => CryptoAlgorithmClasses.NULL,
+                    },
+                };
 
 
         /// <summary>

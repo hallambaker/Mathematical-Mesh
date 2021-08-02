@@ -18,9 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
 //using Goedel.Protocol.Service;
 using System.Threading.Tasks;
+
+using Goedel.Utilities;
 
 #pragma warning disable CS1998
 
@@ -79,13 +80,13 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <returns>The task created.</returns>
         public async Task<DataGram> AsyncRequestDatagram() => throw new NYI();
-        
+
         /// <summary>
         /// Wait to receive a parsed request object on the stream.
         /// </summary>
         /// <returns></returns>
         public async Task<JsonObject> AsyncRequestObject() => throw new NYI();
-        
+
         /// <summary>
         /// Post the request <paramref name="tag"/> with data <paramref name="request"/> to
         /// the service bound to the stream.
@@ -94,7 +95,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="request">Transaction data</param>
         /// <returns>Result of posting data to the stream.</returns>
         public JsonObject Post(string tag, JsonObject request) => throw new System.NotImplementedException();
-        
+
         /// <summary>
         /// Send the response datagram <paramref name="dataGram"/>
         /// </summary>

@@ -1,8 +1,8 @@
-﻿using Goedel.Utilities;
-
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+
+using Goedel.Utilities;
 
 namespace Goedel.Discovery {
 

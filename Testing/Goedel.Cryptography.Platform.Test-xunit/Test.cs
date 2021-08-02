@@ -1,7 +1,5 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Mesh.Test;
-using Goedel.Test.Core;
-using Xunit;
 
 
 namespace Goedel.XUnit {

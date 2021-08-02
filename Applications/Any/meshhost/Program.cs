@@ -21,11 +21,11 @@
 
 using System;
 
-using Goedel.Utilities;
-using Goedel.Mesh.Shell.Host;
-using Goedel.Mesh.Server;
 using Goedel.Cryptography.Core;
 using Goedel.Mesh.Management;
+using Goedel.Mesh.Server;
+using Goedel.Mesh.Shell.Host;
+using Goedel.Utilities;
 
 // Should change this so that it makes use of dependency injection...
 

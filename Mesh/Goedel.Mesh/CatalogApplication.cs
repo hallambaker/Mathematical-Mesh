@@ -18,13 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
 using Goedel.Cryptography.Dare;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -38,7 +33,7 @@ namespace Goedel.Mesh {
         #region // Properties
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = MeshConstants.MMM_Application;
-        
+
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
 
@@ -82,7 +77,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public CatalogApplication(
-                    string directory, 
+                    string directory,
                     string storeName = null,
                     DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
@@ -101,7 +96,7 @@ namespace Goedel.Mesh {
         /// <param name="groupAddress">The address of the group to locate in account@domain 
         /// format.</param>
         /// <returns>The unique catalog identifier for the group.</returns>
-        public CatalogedGroup LocateGroup(string groupAddress) => 
+        public CatalogedGroup LocateGroup(string groupAddress) =>
                 Locate(CatalogedGroup.GetGroupID(groupAddress)) as CatalogedGroup;
 
         #endregion

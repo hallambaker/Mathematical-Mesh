@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Security.Cryptography;
-using System.Collections;
 using System.Collections.Generic;
-
+using System.Security.Cryptography;
 //using Org.BouncyCastle.Crypto;
 //using Org.BouncyCastle.Crypto.Engines;
 //using Org.BouncyCastle.Crypto.Modes;
@@ -59,7 +57,7 @@ namespace TestConsole {
     //        var testPlaintext = Hex.Decode(testVector[2]);
     //        var testCipherText = Hex.Decode(testVector[3]);
     //        var testKey = Hex.Decode(OcbTest.KEY_128);
-            
+
     //        var macLengthBits = 128;
     //        int macLengthBytes = macLengthBits / 8;
 
@@ -243,7 +241,7 @@ namespace TestConsole {
         /// <param name="input">The input data</param>
         /// <param name="authData">Additional authentication data (ignored if null)</param>
         /// <returns>The processed data.</returns>
-        public byte[] Process(byte[] input, byte[] authData=null) {
+        public byte[] Process(byte[] input, byte[] authData = null) {
             var output = new byte[GetOutputLength(input.Length)];
             Process(input, output, authData);
             return output;
@@ -285,10 +283,10 @@ namespace TestConsole {
             var hashBlock = new byte[16];
 
             int block = 0;
-            for (; IsFullBlock(block, authData.Length); block ++) {
+            for (; IsFullBlock(block, authData.Length); block++) {
 
                 // calculate the offset
-                var trailingZeroes = CountTrailingZeros(block+1);
+                var trailingZeroes = CountTrailingZeros(block + 1);
                 var L = GetLSub(trailingZeroes);
                 Xor(offset, L);
 
@@ -300,7 +298,7 @@ namespace TestConsole {
 
             // process an incomplete block here
             var remainder = authData.Length - block * AesBlock;
-            if (remainder > 0 ) {
+            if (remainder > 0) {
 
                 // calculate the offset, we use the static value LAsterisk for this.
                 // Apply to the block
@@ -403,7 +401,7 @@ namespace TestConsole {
             GetHash(authData);
 
             var remainder = Encrypt ? input.Length - offsetIn : input.Length - offsetIn - TagLengthBytes;
-            if (remainder>0) {
+            if (remainder > 0) {
                 if (Encrypt) {
                     FillFinal(input, offsetIn, checksum, checksum, remainder);
                     }
@@ -412,7 +410,7 @@ namespace TestConsole {
 
                 aesHash.TransformBlock(offset, 0, AesBlock, pad, 0);
                 for (int i = 0; i < remainder; i++) {
-                    output[offsetOut + i] = (byte) (pad[i] ^ input[offsetIn+i]);
+                    output[offsetOut + i] = (byte)(pad[i] ^ input[offsetIn + i]);
                     }
 
                 if (!Encrypt) {
@@ -436,7 +434,7 @@ namespace TestConsole {
                 // Tweak: Could combine with the preceding XOR.
                 var tagStart = input.Length - TagLengthBytes;
                 for (var i = 0; i < TagLengthBytes; i++) {
-                    if (input[tagStart+i] != checksum[i]) {
+                    if (input[tagStart + i] != checksum[i]) {
                         throw new NYI();
                         }
                     }
@@ -509,7 +507,7 @@ namespace TestConsole {
         /// <param name="offsetb2">Offset from the start of b2.</param>
         protected static void Xor(byte[] b1, byte[] b2, int offsetb2 = 0) {
             for (int i = 15; i >= 0; --i) {
-                b1[i] ^= b2[i+ offsetb2];
+                b1[i] ^= b2[i + offsetb2];
                 }
             }
 
@@ -523,9 +521,9 @@ namespace TestConsole {
         /// <param name="b2">Second input block.</param>
         /// <param name="offsetb1">Offset from the start of b1.</param>
         /// <param name="result">The output.</param>
-        protected static void Xor(byte[] b1, int offsetb1 , byte[] b2, byte[] result) {
+        protected static void Xor(byte[] b1, int offsetb1, byte[] b2, byte[] result) {
             for (int i = 15; i >= 0; --i) {
-                result[i] = (byte) ((b1[i + offsetb1]) ^ b2[i]);
+                result[i] = (byte)((b1[i + offsetb1]) ^ b2[i]);
                 }
             }
 

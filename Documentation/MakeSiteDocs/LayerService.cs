@@ -39,7 +39,7 @@ namespace ExampleGenerator {
         public ShellCalendar ShellCalendar;
         public ShellNetwork ShellNetwork;
         public ShellMail ShellMail;
-        public ShellSSH ShellSSH ;
+        public ShellSSH ShellSSH;
         public ShellPassword ShellPassword;
         public ShellBookmark ShellBookmark;
 

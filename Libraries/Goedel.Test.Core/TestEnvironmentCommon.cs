@@ -1,18 +1,4 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.IO;
-using Goedel.Mesh;
-using Goedel.Mesh.Server;
-using Goedel.Protocol;
-using Goedel.Utilities;
-
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-
-
-namespace Goedel.Test.Core {
+﻿namespace Goedel.Test.Core {
 
 
     ///// <summary>

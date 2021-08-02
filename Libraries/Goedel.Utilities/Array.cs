@@ -195,7 +195,7 @@ namespace Goedel.Utilities {
         /// <param name="index">The element to extract (if present).</param>
         /// <returns>The extracted element or null if either <paramref name="list"/> is null
         /// or <paramref name="index"/> is greater than the number of elements.</returns>
-        public static T SafeIndex<T>(this List<T> list, int index=0) =>
+        public static T SafeIndex<T>(this List<T> list, int index = 0) =>
             list == null || list.Count <= index ? default : list[index];
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Goedel.Utilities {
             if (second != null) {
                 first.AddRange(second);
                 }
-            
+
             }
 
 

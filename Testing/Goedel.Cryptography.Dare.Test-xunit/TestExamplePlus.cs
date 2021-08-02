@@ -1,9 +1,9 @@
-﻿using Goedel.Cryptography.Dare;
+﻿using System;
+using System.Collections.Generic;
+
+using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
 
 namespace Goedel.XUnit {
 
@@ -40,7 +40,7 @@ namespace Goedel.XUnit {
         /// </summary>
         public override List<KeyValuePair<string, string>> _KeyValues =>
             new() {
-                new KeyValuePair<string, string> (KeyUserProfileUDF, UserProfileUDF)
+                new KeyValuePair<string, string>(KeyUserProfileUDF, UserProfileUDF)
                 };
 
 

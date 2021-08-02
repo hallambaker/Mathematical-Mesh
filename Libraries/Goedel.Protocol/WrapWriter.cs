@@ -230,43 +230,43 @@ namespace Goedel.Protocol {
             if (c == ' ') {
                 switch (state) {
                     case 0:
-                        leading += c;
-                        break;
+                    leading += c;
+                    break;
                     case 1:
-                        buffer = buffer + spaceBuffer + breakBuffer;
-                        breakBuffer = c.ToString();
-                        spaceBuffer = " ";
-                        state = 2;
-                        break;
+                    buffer = buffer + spaceBuffer + breakBuffer;
+                    breakBuffer = c.ToString();
+                    spaceBuffer = " ";
+                    state = 2;
+                    break;
                     case 2:
-                        spaceBuffer += " ";
-                        break;
+                    spaceBuffer += " ";
+                    break;
                     case 3:
-                        // Ignore surplus spaces afer break
-                        break;
+                    // Ignore surplus spaces afer break
+                    break;
                     default:
-                        break;
+                    break;
                     }
                 }
             else {
                 switch (state) {
                     case 0:
-                        breakBuffer = c.ToString();
-                        state = 1;
-                        break;
+                    breakBuffer = c.ToString();
+                    state = 1;
+                    break;
                     case 1:
-                        breakBuffer += c;
-                        break;
+                    breakBuffer += c;
+                    break;
                     case 2:
-                        breakBuffer = c.ToString();
-                        state = 1;
-                        break;
+                    breakBuffer = c.ToString();
+                    state = 1;
+                    break;
                     case 3:
-                        breakBuffer = c.ToString();
-                        state = 1;
-                        break;
+                    breakBuffer = c.ToString();
+                    state = 1;
+                    break;
                     default:
-                        break;
+                    break;
                     }
                 }
             }

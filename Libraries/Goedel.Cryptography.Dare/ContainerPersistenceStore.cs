@@ -1,10 +1,10 @@
-﻿using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using Goedel.IO;
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -119,7 +119,7 @@ namespace Goedel.Cryptography.Dare {
                     string comment = null,
                     FileStatus fileStatus = FileStatus.OpenOrCreate,
                     SequenceType containerType = SequenceType.Chain,
-                    DarePolicy policy=null,
+                    DarePolicy policy = null,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     IKeyLocate keyCollection = null,
                     bool readContainer = true,
@@ -177,7 +177,7 @@ namespace Goedel.Cryptography.Dare {
                         }
 
                     default:
-                        break;
+                    break;
                     }
 
                 }

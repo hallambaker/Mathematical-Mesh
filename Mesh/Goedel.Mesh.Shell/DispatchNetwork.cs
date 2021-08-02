@@ -42,7 +42,7 @@ namespace Goedel.Mesh.Shell {
             var contextUser = GetContextUser(options);
             var identifier = options.Identifier.Value;
             var key = CatalogedNetwork.PrimaryKey(null, identifier);
-            
+
             var transaction = contextUser.TransactBegin();
             var catalog = transaction.GetCatalogNetwork();
             var result = catalog.Locate(key);

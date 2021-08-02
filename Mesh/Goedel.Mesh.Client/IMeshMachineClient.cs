@@ -18,11 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Protocol;
-
-
-
 namespace Goedel.Mesh.Client {
     /// <summary>
     /// Interface exposing the properties and methods required to obtain a Mesh Client.

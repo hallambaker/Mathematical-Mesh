@@ -33,23 +33,17 @@
 //  Build Platform: Win32NT 10.0.18362.0
 //  
 //  
-using System;
-using System.IO;
-using System.Net;
 using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
+
 using Goedel.Utilities;
-using Goedel.Protocol;
-using System.Threading.Tasks;
 
 
 namespace Goedel.Protocol.Presentation {
 
-	/// <summary>
+    /// <summary>
     /// Client connection class. Tracks the state of a client connection.
     /// </summary>
-    public partial class  ConnectionInitiator : RudConnection {
+    public partial class ConnectionInitiator : RudConnection {
 
 
         // Serialize Client packet InitiatorHello
@@ -62,7 +56,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeInitiatorHello (
+        public byte[] SerializeInitiatorHello(
                 byte[] sourceId,
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null) {
@@ -75,7 +69,7 @@ namespace Goedel.Protocol.Presentation {
             outerWriter.Write(InitiatorMessageType.InitiatorHello);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
-            AddEphemerals (destinationId, plaintextExtensions);
+            AddEphemerals(destinationId, plaintextExtensions);
             plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
             outerWriter.WriteExtensions(plaintextExtensions);
 
@@ -102,7 +96,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="ciphertextExtensions">Additional extensions to be presented 
         /// in the encrypted segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeInitiatorComplete (
+        public byte[] SerializeInitiatorComplete(
                 byte[] sourceId,
                 byte[] payload = null,
                 List<PacketExtension> plaintextExtensionsIn = null,
@@ -117,10 +111,10 @@ namespace Goedel.Protocol.Presentation {
             outerWriter.Write(InitiatorMessageType.InitiatorComplete);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
-            ClientKeyExchange (out var ephemeral, out var hostKeyId);
-            outerWriter.Write (hostKeyId);
-            outerWriter.Write (ephemeral);
-            AddResponse (plaintextExtensions);
+            ClientKeyExchange(out var ephemeral, out var hostKeyId);
+            outerWriter.Write(hostKeyId);
+            outerWriter.Write(ephemeral);
+            AddResponse(plaintextExtensions);
             plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
             outerWriter.WriteExtensions(plaintextExtensions);
 
@@ -128,9 +122,9 @@ namespace Goedel.Protocol.Presentation {
             // Mezzanine
             var mezanineWriter = PacketWriterFactory(outerWriter);
             var mezanineExtensions = new List<PacketExtension>();
-            MutualKeyExchange (out var clientKeyId);
-            mezanineWriter.Write (clientKeyId);
-            AddCredentials (mezanineExtensions);
+            MutualKeyExchange(out var clientKeyId);
+            mezanineWriter.Write(clientKeyId);
+            AddCredentials(mezanineExtensions);
             mezanineExtensions.AddRangeSafe(mezanineExtensionsIn);
             mezanineWriter.WriteExtensions(mezanineExtensions);
             // Encrypted inside Mezzanine
@@ -156,16 +150,16 @@ namespace Goedel.Protocol.Presentation {
         /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public  PacketResponderChallenge ParseResponderChallenge (
+        public PacketResponderChallenge ParseResponderChallenge(
                 byte[] packet,
-                int position=0,
+                int position = 0,
                 int count = -1) {
-            var result = new PacketResponderChallenge () ;
-            PacketIn=result;
+            var result = new PacketResponderChallenge();
+            PacketIn = result;
             // The plaintext part
             var outerReader = PacketReaderFactory(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
-            CredentialOther = CredentialSelf.GetCredentials (result.PlaintextExtensions);
+            CredentialOther = CredentialSelf.GetCredentials(result.PlaintextExtensions);
             // Only have plaintext
             result.Payload = outerReader.ReadBinary();
 
@@ -173,7 +167,7 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
-		}
+        }
 
     public partial class ConnectionResponder : RudConnection {
 
@@ -188,7 +182,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="plaintextExtensionsIn">Additional extensions to be presented 
         /// in the plaintext segment.</param>
         /// <returns>The serialized data.</returns>
-        public byte[] SerializeResponderChallenge (
+        public byte[] SerializeResponderChallenge(
                 byte[] sourceId,
                 byte[] destinationId,
                 byte[] payload = null,
@@ -201,9 +195,9 @@ namespace Goedel.Protocol.Presentation {
             outerWriter.Write(ResponderMessageType.ResponderChallenge);
             // Plaintext fields..
             var plaintextExtensions = new List<PacketExtension>();
-            AddEphemerals (destinationId, plaintextExtensions);
-            AddChallenge (plaintextExtensions);
-            AddCredentials (plaintextExtensions);
+            AddEphemerals(destinationId, plaintextExtensions);
+            AddChallenge(plaintextExtensions);
+            AddCredentials(plaintextExtensions);
             plaintextExtensions.AddRangeSafe(plaintextExtensionsIn);
             outerWriter.WriteExtensions(plaintextExtensions);
 
@@ -226,12 +220,12 @@ namespace Goedel.Protocol.Presentation {
         /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public  PacketInitiatorHello ParseInitiatorHello (
+        public PacketInitiatorHello ParseInitiatorHello(
                 byte[] packet,
-                int position=0,
+                int position = 0,
                 int count = -1) {
-            var result = new PacketInitiatorHello () ;
-            PacketIn=result;
+            var result = new PacketInitiatorHello();
+            PacketIn = result;
             // The plaintext part
             var outerReader = PacketReaderFactory(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
@@ -246,22 +240,22 @@ namespace Goedel.Protocol.Presentation {
         /// <summary>
         /// Perform key exchanges and complete parsing of the packet
         /// </summary>
-        public void CompleteInitiatorComplete (PacketInitiatorComplete result) {
+        public void CompleteInitiatorComplete(PacketInitiatorComplete result) {
             var outerReader = result.Reader;
-            ClientKeyExchange (result.ClientEphemeral, result.HostKeyId);
+            ClientKeyExchange(result.ClientEphemeral, result.HostKeyId);
             // Mezzanine
-            var mezanineReader = outerReader.Decrypt (ClientKeyIn);
-            result.ClientKeyId = mezanineReader.ReadString ();
+            var mezanineReader = outerReader.Decrypt(ClientKeyIn);
+            result.ClientKeyId = mezanineReader.ReadString();
             result.MezzanineExtensions = mezanineReader.ReadExtensions();
-            CredentialOther = CredentialSelf.GetCredentials (result.MezzanineExtensions);
-            MutualKeyExchange (result.ClientKeyId);
+            CredentialOther = CredentialSelf.GetCredentials(result.MezzanineExtensions);
+            MutualKeyExchange(result.ClientKeyId);
             // Encrypted inside Mezzanine
-            var innerReader = mezanineReader.Decrypt (MutualKeyIn, false);
+            var innerReader = mezanineReader.Decrypt(MutualKeyIn, false);
             result.CiphertextExtensions = innerReader.ReadExtensions();
             result.SourceId = innerReader.ReadBinary();
             result.Payload = innerReader.ReadBinary();
             }
-		}
+        }
 
 
     public partial class Listener {
@@ -275,11 +269,11 @@ namespace Goedel.Protocol.Presentation {
         /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public static PacketInitiatorHello ParseInitiatorHello (
+        public static PacketInitiatorHello ParseInitiatorHello(
                 byte[] packet,
-                int position=0,
+                int position = 0,
                 int count = -1) {
-            var result = new PacketInitiatorHello () ;
+            var result = new PacketInitiatorHello();
             // The plaintext part
             var outerReader = PacketReaderFactory(packet, position, count);
             result.PlaintextExtensions = outerReader.ReadExtensions();
@@ -299,22 +293,22 @@ namespace Goedel.Protocol.Presentation {
         /// If less than 0, <paramref name="packet"/> is read to the end.</param>
         /// <returns>The parsed packet.</returns>
 
-        public static PacketInitiatorComplete ParseInitiatorComplete (
+        public static PacketInitiatorComplete ParseInitiatorComplete(
                 byte[] packet,
-                int position=0,
+                int position = 0,
                 int count = -1) {
-            var result = new PacketInitiatorComplete () ;
+            var result = new PacketInitiatorComplete();
             // The plaintext part
             var outerReader = PacketReaderFactory(packet, position, count);
-            result.HostKeyId = outerReader.ReadString ();
-            result.ClientEphemeral = outerReader.ReadBinary ();
+            result.HostKeyId = outerReader.ReadString();
+            result.ClientEphemeral = outerReader.ReadBinary();
             result.PlaintextExtensions = outerReader.ReadExtensions();
             // Parsing the inner packet is deferred until plaintext is parsed.
             result.Reader = outerReader;
 
             return result;
             }
-		}
+        }
 
 
     /// <summary>
@@ -335,14 +329,14 @@ namespace Goedel.Protocol.Presentation {
     public partial class PacketInitiatorComplete : Packet {
 
         ///<summary>Packet reader used to complete reading of the packet.</summary> 
-        public PacketReader Reader{ get; set; }
+        public PacketReader Reader { get; set; }
         ///<summary>Options specified in the packet mezzanine.</summary> 
-        public List<PacketExtension> MezzanineExtensions{ get; set; }
+        public List<PacketExtension> MezzanineExtensions { get; set; }
         ///<summary>Options specified in the packet ciphertext.</summary> 
         public List<PacketExtension> CiphertextExtensions { get; set; }
 
         ///<summary>Host chosen ephemeral key.</summary> 
-        public byte[] ClientEphemeral  { get; set; }
+        public byte[] ClientEphemeral { get; set; }
         ///<summary>Client Key Identifier.</summary> 
         public string HostKeyId { get; set; }
 
@@ -364,6 +358,6 @@ namespace Goedel.Protocol.Presentation {
 
         }
 
-	}
+    }
 
 

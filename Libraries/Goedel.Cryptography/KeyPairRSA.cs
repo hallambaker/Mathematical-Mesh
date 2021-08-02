@@ -20,12 +20,10 @@
 //  THE SOFTWARE.
 //  
 //  
+using System.Security.Cryptography;
+
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
-using Goedel.ASN;
-
-using System;
-using System.Security.Cryptography;
 
 namespace Goedel.Cryptography {
 

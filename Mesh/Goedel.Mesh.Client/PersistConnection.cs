@@ -1,10 +1,10 @@
-﻿using Goedel.Cryptography;
+﻿using System.Collections.Generic;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
-
-using System.Collections.Generic;
 
 namespace Goedel.Mesh.Client {
 
@@ -187,7 +187,7 @@ namespace Goedel.Mesh.Client {
                     }
 
                 default:
-                    break;
+                break;
                 }
 
             base.MemoryCommitUpdate(containerStoreEntry);

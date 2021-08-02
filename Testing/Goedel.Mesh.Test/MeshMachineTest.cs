@@ -1,17 +1,15 @@
-﻿using Goedel.Cryptography;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Core;
 using Goedel.Cryptography.Dare;
-using Goedel.Mesh;
-using Goedel.Mesh.Client;
-using Goedel.Utilities;
 using Goedel.IO;
-using Goedel.Protocol;
-using System;
-using System.IO;
-using System.Collections.Generic;
-using Goedel.Test.Core;
-using Goedel.Test;
+using Goedel.Mesh.Client;
 using Goedel.Protocol.Presentation;
+using Goedel.Test;
+using Goedel.Test.Core;
 
 namespace Goedel.Mesh.Test {
 
@@ -40,7 +38,7 @@ namespace Goedel.Mesh.Test {
 
 
         ///<inheritdoc/>
-        public override string GetFilePath(string filepath) => (filepath == null) ? null: 
+        public override string GetFilePath(string filepath) => (filepath == null) ? null :
             System.IO.Path.IsPathRooted(filepath) ? filepath : System.IO.Path.Combine(Path, filepath);
 
 
@@ -70,7 +68,7 @@ namespace Goedel.Mesh.Test {
 
         public ContextUser GetContextAccount(string localName = null, string accountName = null) {
             var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
-            return  machine.MeshHost.GetContextMesh(localName) as ContextUser;
+            return machine.MeshHost.GetContextMesh(localName) as ContextUser;
             }
 
 
@@ -78,7 +76,7 @@ namespace Goedel.Mesh.Test {
                     TestEnvironmentCommon testEnvironmentCommon,
                     string machineName,
                     string accountAddress,
-                    string localName=null) {
+                    string localName = null) {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
             var contextUser = result.MeshHost.CreateMesh(accountAddress, localName);
@@ -165,7 +163,7 @@ namespace Goedel.Mesh.Test {
     public class KeyCollectionTestEnv : KeyCollectionCore {
         string path;
 
-        public override string DirectoryKeys => Path.Combine (path, "Keys");
+        public override string DirectoryKeys => Path.Combine(path, "Keys");
 
 
         public KeyCollectionTestEnv(string path) => this.path = path;

@@ -129,11 +129,11 @@ namespace Goedel.IO {
                     }
 
                 case FileStatus.Read:
-                    break;
+                break;
                 case FileStatus.Existing:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
             return System.IO.FileMode.Open;
             }
@@ -153,17 +153,17 @@ namespace Goedel.IO {
                     }
 
                 case FileStatus.New:
-                    break;
+                break;
                 case FileStatus.Overwrite:
-                    break;
+                break;
                 case FileStatus.Existing:
-                    break;
+                break;
                 case FileStatus.OpenOrCreate:
-                    break;
+                break;
                 case FileStatus.ConcurrentLocked:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
             return System.IO.FileAccess.ReadWrite;
             }
@@ -182,17 +182,17 @@ namespace Goedel.IO {
                     }
 
                 case FileStatus.Append:
-                    break;
+                break;
                 case FileStatus.New:
-                    break;
+                break;
                 case FileStatus.Overwrite:
-                    break;
+                break;
                 case FileStatus.Existing:
-                    break;
+                break;
                 case FileStatus.OpenOrCreate:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
             return System.IO.FileShare.Read;
             }
@@ -202,7 +202,7 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The file name</param>
         /// <returns>A file stream</returns>
-        public static FileStream OpenFileRead(this string filename) => 
+        public static FileStream OpenFileRead(this string filename) =>
                 new(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
 
         /// <summary>
@@ -211,8 +211,8 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The file name</param>
         /// <returns>A file stream</returns>
-        public static FileStream OpenFileReadShared(this string filename) => 
-            new(filename, System.IO.FileMode.Open, 
+        public static FileStream OpenFileReadShared(this string filename) =>
+            new(filename, System.IO.FileMode.Open,
                 System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite);
 
         /// <summary>

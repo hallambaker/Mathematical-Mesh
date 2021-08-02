@@ -18,12 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using System.Collections.Generic;
+using System.Numerics;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-using Goedel.Protocol.Presentation;
-using System.Collections.Generic;
-using System.Numerics;
 
 
 namespace Goedel.Mesh {
@@ -34,7 +34,7 @@ namespace Goedel.Mesh {
     public interface IMeshClient {
 
         ///<summary>Return a Mesh client</summary> 
-        public MeshServiceClient MeshClient{get; }
+        public MeshServiceClient MeshClient { get; }
 
         }
 
@@ -78,7 +78,7 @@ namespace Goedel.Mesh {
         }
 
 
-    public partial class CryptographicCapability  {
+    public partial class CryptographicCapability {
 
 
         ///<summary>If not null, specifies a key to which key shares MUST be encrypted
@@ -105,7 +105,7 @@ namespace Goedel.Mesh {
 
             var contentType = MeshConstants.IanaTypeMeshCapabilityId + capability;
             Id = UDF.ContentDigestOfDataString(subjectId.ToUTF8(), contentType);
-                
+
 
             }
 
@@ -139,8 +139,8 @@ namespace Goedel.Mesh {
 
         ///<summary>The cached <see cref="KeyPairAdvanced"/> instance corresponding
         ///to <see cref="KeyData"/></summary>
-        protected KeyPairAdvanced KeyPair => keyPair ?? 
-                KeyData.GetKeyPairAdvanced().CacheValue (out keyPair);
+        protected KeyPairAdvanced KeyPair => keyPair ??
+                KeyData.GetKeyPairAdvanced().CacheValue(out keyPair);
 
         KeyPairAdvanced keyPair;
 
@@ -160,7 +160,7 @@ namespace Goedel.Mesh {
                 KeyPair ephemeral = null,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 KeyAgreementResult partial = null,
-                byte[] salt = null) => KeyPair.Decrypt(encryptedKey, 
+                byte[] salt = null) => KeyPair.Decrypt(encryptedKey,
                     ephemeral, algorithmID, partial, salt);
 
 
@@ -173,13 +173,13 @@ namespace Goedel.Mesh {
             KeyPair.Agreement(keyPair);
 
         }
-    public partial class CapabilityDecryptPartial :ICapabilityPartial {
+    public partial class CapabilityDecryptPartial : ICapabilityPartial {
 
 
         ///<summary>Instance exposing the <see cref="IMeshClient"/> interface allowing
         ///a client to be obtained for resolving the service.</summary>
         public IMeshClient CryptographicClient { get; set; }
-        
+
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
@@ -238,7 +238,7 @@ namespace Goedel.Mesh {
             }
 
         }
-    public partial class CapabilityDecryptServiced :ICapabilityServiced {
+    public partial class CapabilityDecryptServiced : ICapabilityServiced {
         }
 
 
@@ -270,8 +270,8 @@ namespace Goedel.Mesh {
         /// <param name="keyPair">The key to split</param>
         /// <param name="encrypt">The key to encrypt the shaed key under.</param>
         /// <returns>The generated capability.</returns>
-        public static CapabilityKeyGenerate CreateThreshold(KeyPair keyPair, 
-                        KeyPair encrypt=null) {
+        public static CapabilityKeyGenerate CreateThreshold(KeyPair keyPair,
+                        KeyPair encrypt = null) {
             if (encrypt == null) {
                 return CreateDirect(keyPair);
                 }

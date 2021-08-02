@@ -18,13 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using System;
+using System.Text;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
-using System.Text;
 namespace Goedel.Mesh {
 
 
@@ -84,7 +83,7 @@ namespace Goedel.Mesh {
         /////Json parser dictionaries.</summary>
         //public static object Initialize => null;
 
-            ///<summary>Reports the status of the item. </summary>
+        ///<summary>Reports the status of the item. </summary>
         public MessageStatus Status = MessageStatus.None;
 
         //static MeshItem() => AddDictionary(ref _TagDictionary);
@@ -114,7 +113,7 @@ namespace Goedel.Mesh {
         /// <param name="envelope">The enveloped data.</param>
         /// <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
         /// <returns>The decoded data item</returns>
-        public static MeshItem Decode(DareEnvelope envelope, IKeyCollection keyCollection =null) {
+        public static MeshItem Decode(DareEnvelope envelope, IKeyCollection keyCollection = null) {
 
             if (envelope == null) {
                 return null;

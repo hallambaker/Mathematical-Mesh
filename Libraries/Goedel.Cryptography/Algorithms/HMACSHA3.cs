@@ -23,48 +23,48 @@
 // Modified 2018, Phillip Hallam-Baker.
 // Imported into Goedel libraries.
 
-using Goedel.Utilities;
-
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
+using Goedel.Utilities;
+
 namespace Goedel.Cryptography.Algorithms {
-	/// <summary>
-	/// 
-	/// </summary>
-	[ComVisible(true)]
-	public class HMACSHA3 : HMAC {
+    /// <summary>
+    /// 
+    /// </summary>
+    [ComVisible(true)]
+    public class HMACSHA3 : HMAC {
 
 
-		/// <summary>
-		/// Constructor for an HMACSHA3 HMAC.
-		/// </summary>
-		/// <param name="hashBitLength">The hash bit length, must be 224, 256, 384 or 512</param>
-		public HMACSHA3(int hashBitLength = 512) : this(Utilities.GenerateRandom(0x80), hashBitLength) { }
+        /// <summary>
+        /// Constructor for an HMACSHA3 HMAC.
+        /// </summary>
+        /// <param name="hashBitLength">The hash bit length, must be 224, 256, 384 or 512</param>
+        public HMACSHA3(int hashBitLength = 512) : this(Utilities.GenerateRandom(0x80), hashBitLength) { }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="hashBitLength"></param>
-		public HMACSHA3(byte[] key, int hashBitLength = 512) {
-			Contract.Requires(key != null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="hashBitLength"></param>
+        public HMACSHA3(byte[] key, int hashBitLength = 512) {
+            Contract.Requires(key != null);
 
-			key.AssertNotNull(NullKeyValue.Throw);
-			base.HashName = "SHA3Managed";
+            key.AssertNotNull(NullKeyValue.Throw);
+            base.HashName = "SHA3Managed";
 
-			base.BlockSizeValue = hashBitLength switch {
-					224 => 144,
-					256 => 136,
-					384 => 104,
-					512 => 72,
-					_ => throw new KeySizeNotSupported(),
-					};
-			base.HashSizeValue = hashBitLength;
-			Initialize();
-			base.Key = (byte[])key.Clone();
-			}
+            base.BlockSizeValue = hashBitLength switch {
+                224 => 144,
+                256 => 136,
+                384 => 104,
+                512 => 72,
+                _ => throw new KeySizeNotSupported(),
+                };
+            base.HashSizeValue = hashBitLength;
+            Initialize();
+            base.Key = (byte[])key.Clone();
+            }
 
-		}
-	}
+        }
+    }

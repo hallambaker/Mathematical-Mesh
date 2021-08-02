@@ -139,12 +139,12 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public void Reset() {
 
-            
+
 
             container.Start();
-            
+
             // Hack - should pull the container frame index from the dictionary.
-            
+
             Current = container.GetSequenceFrameIndex();
             }
         }

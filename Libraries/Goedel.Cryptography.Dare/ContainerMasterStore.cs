@@ -1,10 +1,10 @@
-﻿using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+
+using Goedel.IO;
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 
 namespace Goedel.Cryptography.Dare {

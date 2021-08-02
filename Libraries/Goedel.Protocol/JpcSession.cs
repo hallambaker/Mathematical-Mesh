@@ -20,11 +20,9 @@
 //  
 //  
 
-using System.Collections.Generic;
 using System.IO;
-using System.Net;
+
 using Goedel.Utilities;
-using Goedel.Discovery;
 namespace Goedel.Protocol {
 
     /// <summary>
@@ -44,7 +42,7 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Credential interface
     /// </summary>
-    public interface  ICredential {
+    public interface ICredential {
         ///<summary>The account name claimed under the credential</summary> 
         public string Account { get; }
 
@@ -129,11 +127,11 @@ namespace Goedel.Protocol {
         /// <param name="tag">The transaction identifier.</param>
         /// <param name="request">The request data.</param>
         /// <returns>The transaction result.</returns>
-        public virtual JsonObject Post(string tag, JsonObject request) => 
+        public virtual JsonObject Post(string tag, JsonObject request) =>
                     throw new System.NotImplementedException();
 
         ///<inheritdoc cref="IJpcSession"/>
-        public  abstract IJpcSession Rebind(ICredential credential);
+        public abstract IJpcSession Rebind(ICredential credential);
         }
 
 

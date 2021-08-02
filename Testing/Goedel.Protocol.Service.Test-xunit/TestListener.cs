@@ -167,8 +167,8 @@
 //                }
 //            throw new NYI();
 //            }
-        
-        
+
+
 //        public string MakeChallenge(Packet packetRequest) {
 
 //            ephemeral = packetRequest switch {

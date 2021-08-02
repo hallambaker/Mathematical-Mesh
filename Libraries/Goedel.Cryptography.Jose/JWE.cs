@@ -20,10 +20,10 @@
 //  
 //  
 
+using System.Collections.Generic;
+
 using Goedel.Protocol;
 using Goedel.Utilities;
-
-using System.Collections.Generic;
 
 
 namespace Goedel.Cryptography.Jose {
@@ -414,7 +414,7 @@ namespace Goedel.Cryptography.Jose {
                 KID.SplitAccountIDService(out var Domain, out var Account);
 
                 if (Account == null) {
-                    if(keyCollection.LocatePrivateKeyPair(KID, out var DecryptionKey)) {
+                    if (keyCollection.LocatePrivateKeyPair(KID, out var DecryptionKey)) {
                         RecipientOut = Recipient;
                         return DecryptionKey;
                         }

@@ -38,7 +38,7 @@
 
         }
 
-    public partial class PrivateKeyUDF: IActivate {
+    public partial class PrivateKeyUDF : IActivate {
 
 
         ///<summary>The encryption algorithm identifier</summary>
@@ -89,7 +89,7 @@
                 PrivateValue = udf;
                 (udfAlgorithmIdentifier, _) = UDF.ParseUdfAlgorithmIdentifier(udf);
                 }
-            
+
             KeyType = udfAlgorithmIdentifier.ToString();
             AlgorithmSign = algorithmSign.ToJoseID();
             AlgorithmEncrypt = algorithmEncrypt.ToJoseID();
@@ -128,8 +128,8 @@
         /// <returns>The generated ephemeral key.</returns>
         public KeyPair ActivatePrivate(
                     string activationSeed,
-                    IKeyLocate keyCollection, 
-                    KeyUses keyUses, string saltSuffix, 
+                    IKeyLocate keyCollection,
+                    KeyUses keyUses, string saltSuffix,
                     CryptoAlgorithmId cryptoAlgorithmID) {
             var baseKey = UDF.DeriveKey(PrivateValue, keyCollection,
                     KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;

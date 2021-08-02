@@ -1,8 +1,7 @@
-﻿using Goedel.Mesh.Client;
-using Goedel.Utilities;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
-using System;
+using Goedel.Mesh.Client;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -73,7 +72,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceComplete(DeviceComplete options) {
-            var accountAddress = options.AccountAddress .Value;
+            var accountAddress = options.AccountAddress.Value;
 
             // here need to pull up an account context for the pending connection.
 
@@ -153,7 +152,7 @@ namespace Goedel.Mesh.Shell {
             ProcessRequest(options, options.CompletionCode.Value, false);
 
         ShellResult ProcessRequest(IAccountOptions options, string messageID, bool accept,
-                List<string> rights=null) {
+                List<string> rights = null) {
             var contextAccount = GetContextUser(options);
 
 

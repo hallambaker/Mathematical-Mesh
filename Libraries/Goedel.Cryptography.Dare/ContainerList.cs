@@ -1,6 +1,6 @@
-﻿using Goedel.Utilities;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -17,7 +17,7 @@ namespace Goedel.Cryptography.Dare {
         /// Default constructor
         /// </summary>
 
-        public ContainerList() : base () {
+        public ContainerList() : base() {
             }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Goedel.Cryptography.Dare {
 
                 else {
                     Assert.AssertTrue(
-                        FrameIndexToPositionDictionary.TryGetValue(frameHighUnknown, out position), 
+                        FrameIndexToPositionDictionary.TryGetValue(frameHighUnknown, out position),
                         SequenceDataCorrupt.Throw);
                     PositionRead = position;
 
@@ -281,7 +281,7 @@ namespace Goedel.Cryptography.Dare {
                 Assert.AssertNotNull(Header.SequenceInfo,
                         SequenceDataCorrupt.Throw);
 
-                Assert.AssertTrue(Header.SequenceInfo.Index == Index, 
+                Assert.AssertTrue(Header.SequenceInfo.Index == Index,
                         SequenceDataCorrupt.Throw);
 
                 if (HeaderFirst.SequenceInfo.ContainerType == DareConstants.SequenceTypeListTag) {

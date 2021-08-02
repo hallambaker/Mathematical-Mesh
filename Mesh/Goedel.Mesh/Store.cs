@@ -18,13 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using System.Collections.Generic;
+using System.IO;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Utilities;
-
-using System.Collections.Generic;
-using System.IO;
 
 
 namespace Goedel.Mesh {
@@ -93,7 +93,7 @@ namespace Goedel.Mesh {
         /// <param name="create">If true, create a new file if none exists.</param>
         /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public static Store Factory(
-                    string directory, 
+                    string directory,
                     string storeId,
                     IMeshClient meshClient,
                     DarePolicy policy = null,
@@ -115,7 +115,7 @@ namespace Goedel.Mesh {
         /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
         /// <param name="create">If true, create a new file if none exists.</param>
         /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        public Store(string directory, 
+        public Store(string directory,
                     string storeId = null,
                     DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
@@ -165,7 +165,7 @@ namespace Goedel.Mesh {
         /// <param name="envelopes">The envelopes to add.</param>
         /// <param name="containerName">The name of the container.</param>
         /// <param name="keyLocate">The key location context.</param>
-        public static void Append(string directory, 
+        public static void Append(string directory,
                 IKeyLocate keyLocate, List<DareEnvelope> envelopes, string containerName = null) {
             envelopes.AssertNotNull(Internal.Throw);
             if (envelopes.Count == 0) {

@@ -1,8 +1,4 @@
-﻿using Goedel.Mesh.Test;
-
-using System.Collections.Generic;
-
-namespace ExampleGenerator {
+﻿namespace ExampleGenerator {
     public partial class CreateExamples {
 
         public void LayerAccount() {

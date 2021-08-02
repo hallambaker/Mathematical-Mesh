@@ -1,6 +1,6 @@
-﻿using Goedel.Utilities;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
     /// <summary>

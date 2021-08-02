@@ -1,6 +1,7 @@
-﻿using Goedel.Registry;
-using System;
+﻿using System;
 using System.IO;
+
+using Goedel.Registry;
 
 namespace Goedel.Command {
 

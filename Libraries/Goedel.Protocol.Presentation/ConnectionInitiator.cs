@@ -18,7 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net;
 
@@ -89,12 +88,12 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="instance"></param>
         /// <param name="transportTypes">The transport types.</param>
         /// <param name="protocol">The service protocol to return a client stream for.</param>
-        public ConnectionInitiator (
-                    ICredentialPrivate initiatorCredential, 
+        public ConnectionInitiator(
+                    ICredentialPrivate initiatorCredential,
                     string domain,
-                    string instance = null, 
+                    string instance = null,
                     TransportType transportTypes = TransportType.All,
-                    string protocol=null) {
+                    string protocol = null) {
 
             Domain = domain;
             Instance = instance;
@@ -125,13 +124,13 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetClient<T>(ICredentialPrivate credential =null,
-                    string accountAddress=null) where T : JpcClientInterface, new() {
+        public T GetClient<T>(ICredentialPrivate credential = null,
+                    string accountAddress = null) where T : JpcClientInterface, new() {
 
             var client = new T();
 
-            client.JpcSession = new RudStreamClient(null, client.GetWellKnown, 
-                credential??CredentialSelf, rudConnection: this);
+            client.JpcSession = new RudStreamClient(null, client.GetWellKnown,
+                credential ?? CredentialSelf, rudConnection: this);
 
 
             //RudStreamInitial.MakeStreamClient(client.GetWellKnown, credential);

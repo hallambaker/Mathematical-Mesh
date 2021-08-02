@@ -19,10 +19,9 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-
-using System;
 using System.Collections.Generic;
+
+using Goedel.Utilities;
 
 
 namespace Goedel.Protocol.Presentation {
@@ -83,7 +82,7 @@ namespace Goedel.Protocol.Presentation {
         /// write to the documentation.
         /// </summary>
         /// <param name="text"></param>
-        void Debug(string text=null) {
+        void Debug(string text = null) {
             //Screen.WriteLine(text ?? "");
             //positionDebug = Position;
             }
@@ -105,7 +104,7 @@ namespace Goedel.Protocol.Presentation {
             base.WriteStreamId(data);
             DebugBytes();
             }
-        
+
         ///<inheritdoc/>
         public override void Write(InitiatorMessageType b) {
             Debug($"InitiatorMessageType {b}");

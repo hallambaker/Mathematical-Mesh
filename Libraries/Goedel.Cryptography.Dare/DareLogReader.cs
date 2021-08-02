@@ -1,11 +1,11 @@
-﻿using Goedel.Cryptography.Jose;
-using Goedel.IO;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Cryptography.Jose;
+using Goedel.IO;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -41,7 +41,7 @@ namespace Goedel.Cryptography.Dare {
 
 
         ///<summary>The archive index</summary> 
-        public FileCollection FileCollection = new ();
+        public FileCollection FileCollection = new();
 
         ///<summary>The index position of the first file in the dictionary.</summary> 
         public int DictionaryStart { get; protected set; }
@@ -64,7 +64,7 @@ namespace Goedel.Cryptography.Dare {
         public DareLogReader(
                 string fileName,
                 IKeyLocate keyCollection = null,
-                FileStatus fileStatus = FileStatus.Read, bool decrypt = true)  {
+                FileStatus fileStatus = FileStatus.Read, bool decrypt = true) {
             Sequence = Sequence.OpenExisting(fileName, fileStatus, keyCollection, decrypt);
             DictionaryStart = Sequence.FrameIndexLast;
             }
@@ -82,7 +82,7 @@ namespace Goedel.Cryptography.Dare {
             FileCollection.Add(Sequence.GetHeader(DictionaryStart), Sequence.Position);
             while (Sequence.Previous()) {
                 FileCollection.Add(Sequence.Header, Sequence.Position);
-                } 
+                }
             }
 
 

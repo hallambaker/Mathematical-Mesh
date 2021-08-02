@@ -1,13 +1,8 @@
-﻿using Goedel.Cryptography;
+﻿using System.Collections.Generic;
+using System.IO;
+
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Goedel.Protocol;
 
 namespace Goedel.Mesh.Client {
 
@@ -63,11 +58,11 @@ namespace Goedel.Mesh.Client {
         ///<summary>Dictionarry used to create stores</summary>
         public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => stores;
         Dictionary<string, StoreFactoryDelegate> stores = new() {
-            {CatalogMember.Label, CatalogMember.Factory},
+                { CatalogMember.Label, CatalogMember.Factory },
 
             // All contexts have a capability catalog:
-            {CatalogAccess.Label, CatalogAccess.Factory},
-            {CatalogPublication.Label, CatalogPublication.Factory}
+                { CatalogAccess.Label, CatalogAccess.Factory },
+                { CatalogPublication.Label, CatalogPublication.Factory }
             };
 
         #endregion
@@ -80,7 +75,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogedGroup">Description of the group to return the
         /// context for.</param>
         public ContextGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) :
-                    base(contextAccount.MeshHost, null) { 
+                    base(contextAccount.MeshHost, null) {
             CatalogedGroup = catalogedGroup;
             ContextUser = contextAccount;
 
@@ -126,7 +121,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="memberAddress">The member to add.</param>
         /// <param name="text">Constrained text to be included in the invitation.</param>
         /// <returns>The member catalog entry.</returns>
-        public CatalogedMember Add(string memberAddress, string text=null) {
+        public CatalogedMember Add(string memberAddress, string text = null) {
 
             var transactInvitation = ContextUser.TransactBegin();
             var transactGroup = TransactBegin();
@@ -210,7 +205,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>The default contact.</returns>
         public override Contact CreateContact(
-                    List<CryptographicCapability> capabilities= null) {
+                    List<CryptographicCapability> capabilities = null) {
 
 
             var address = new NetworkAddress(AccountAddress, ProfileGroup) {
@@ -275,7 +270,7 @@ namespace Goedel.Mesh.Client {
             var capability = catalogCapability.Get(member.ServiceCapabilityId);
             // delete the capabilities of the member
 
-            
+
             transactGroup.CatalogDelete(catalogMember, member);
             transactGroup.CatalogDelete(catalogCapability, capability);
 

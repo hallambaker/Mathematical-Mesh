@@ -18,14 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
-using System.Text;
-
 namespace Goedel.Mesh {
 
 
@@ -74,7 +66,7 @@ namespace Goedel.Mesh {
         public virtual MessageStatus InboundMessageStatus { get; set; } = MessageStatus.None;
 
         /// <summary>The message that caused this result</summary>
-        public virtual MessagePin MessagePin { get;}
+        public virtual MessagePin MessagePin { get; }
 
         /// <summary>The message that caused this result</summary>
         public virtual string MessagePinId => MessagePin?.MessageId;
@@ -91,7 +83,7 @@ namespace Goedel.Mesh {
         /// <param name="message">The request message that led to this result.</param>
         /// <param name="messagePIN">The registration of the PIN code that supported this request.</param>
         /// <param name="success">If true, the processing was successful.</param>
-        public ProcessResult(Message message, MessagePin messagePIN, bool success=true) {
+        public ProcessResult(Message message, MessagePin messagePIN, bool success = true) {
             RequestMessage = message;
             MessagePin = messagePIN;
             Success = success;
@@ -107,8 +99,8 @@ namespace Goedel.Mesh {
         /// because it was not sufficientlyh authorized.
         /// </summary>
         /// <param name="request">The request that failed.</param>
-        public InsufficientAuthorization(Message request):
-                    base (request, null, false) {
+        public InsufficientAuthorization(Message request) :
+                    base(request, null, false) {
             }
         }
 
@@ -152,7 +144,7 @@ namespace Goedel.Mesh {
     /// Report refusal of a message. This is a success response because the request is 
     /// successfully dealt with.
     /// </summary>
-    public class ResultRefused: ProcessResult {
+    public class ResultRefused : ProcessResult {
 
         /// <summary>
         /// Constructor, return an instance reporting the successful processing of 
@@ -161,7 +153,7 @@ namespace Goedel.Mesh {
         /// <param name="request">The request that failed.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
         public ResultRefused(Message request, MessagePin messagePIN = null) :
-                    base(request, messagePIN) {  }
+                    base(request, messagePIN) { }
 
         }
 
@@ -172,7 +164,7 @@ namespace Goedel.Mesh {
      * 
      * In particular, when data from the contacts file is used to authenticate requests,
      * need to attach that information as well.
-     */ 
+     */
 
 
     /// <summary>

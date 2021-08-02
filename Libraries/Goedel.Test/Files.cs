@@ -1,9 +1,8 @@
-﻿using Goedel.IO;
-using Goedel.Utilities;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+
+using Goedel.IO;
 namespace Goedel.Test {
     public static class Files {
 

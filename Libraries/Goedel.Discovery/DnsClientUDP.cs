@@ -18,9 +18,6 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-using Goedel.Utilities;
-using Goedel.Cryptography;
-
 namespace Goedel.Discovery {
 
     /// <summary>
@@ -251,12 +248,12 @@ namespace Goedel.Discovery {
                 var port = Goedel.Cryptography.Platform.GetRandomPort();
                 UdpClient = new UdpClient(port);
                 }
-            catch  {
+            catch {
                 // port was already allocated, take a default port off the system.
                 UdpClient = new UdpClient();
                 }
 
-            
+
             UdpClient.Connect(Address, Port);
             return UdpClient;
             }

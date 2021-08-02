@@ -223,7 +223,7 @@ namespace Goedel.Cryptography {
                     break;
                     }
                 case CryptoAlgorithmId.DH: {
-                    var bits = keySize ;
+                    var bits = keySize;
                     var binaryData = KeySeed(bits, ikm, keySpecifier, keyName);
                     "Implement DH generation from seed".TaskFunctionality(true);
 
@@ -269,7 +269,7 @@ namespace Goedel.Cryptography {
             keyName ??= "";
             parameter ??= "";
 
-            var suffix = ( keyName + parameter).ToBytes();
+            var suffix = (keyName + parameter).ToBytes();
             var info = keySpecifier.Concatenate(suffix);
 
             return KeyDeriveHKDF.Derive(ikm, null, info, bits, CryptoAlgorithmId.HMAC_SHA_2_512);
@@ -295,7 +295,7 @@ namespace Goedel.Cryptography {
             keyCollection ??= Cryptography.KeyCollection.Default;
             keyCollection.Add(keyPair);
 
-            if ((keySecurity& KeySecurity.Persistable) != KeySecurity.Persistable) {
+            if ((keySecurity & KeySecurity.Persistable) != KeySecurity.Persistable) {
                 return;
                 }
             keyCollection.Persist(keyPair);
@@ -355,7 +355,7 @@ namespace Goedel.Cryptography {
 
 
         ///<summary>The raw UDF fingerprint.</summary>
-        public override byte[] UDFBytes => udfBytes ?? 
+        public override byte[] UDFBytes => udfBytes ??
                 PkixPublicKey.UDFBytes(512).CacheValue(out udfBytes);
         byte[] udfBytes = null;
 

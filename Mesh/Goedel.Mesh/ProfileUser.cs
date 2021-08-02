@@ -18,15 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using System.Text;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
 using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Goedel.Mesh {
 
@@ -72,7 +69,7 @@ namespace Goedel.Mesh {
         /// <param name="activationAccount">The activation used to create the account data.</param>
         public ProfileAccount(
                     string accountAddress,
-                    ActivationAccount activationAccount)  {
+                    ActivationAccount activationAccount) {
             AccountAddress = accountAddress;
 
             ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);

@@ -33,106 +33,99 @@
 //  Build Platform: Win32NT 10.0.18362.0
 //  
 //  
-using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
+
 using Goedel.Protocol;
 
 
 #pragma warning disable IDE1006
 
 
-using Goedel.Mesh;
-using Goedel.Mesh.Client;
-using Goedel.Cryptography.Dare;
-using Goedel.Protocol.Service;
 
 
 namespace Goedel.Mesh.Shell.Host {
 
 
-	/// <summary>
-	///
-	/// Classes to be used to test serialization an deserialization.
-	/// </summary>
-	public abstract partial class ShellResult : global::Goedel.Protocol.JsonObject {
+    /// <summary>
+    ///
+    /// Classes to be used to test serialization an deserialization.
+    /// </summary>
+    public abstract partial class ShellResult : global::Goedel.Protocol.JsonObject {
 
-		/// <summary>
+        /// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag =>__Tag;
+        public override string _Tag => __Tag;
 
-		/// <summary>
+        /// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ShellResult";
+        public new const string __Tag = "ShellResult";
 
-		/// <summary>
+        /// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-		static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-				new Dictionary<string, JsonFactoryDelegate> () {
+        public static Dictionary<string, JsonFactoryDelegate> _TagDictionary => _tagDictionary;
+        static Dictionary<string, JsonFactoryDelegate> _tagDictionary =
+                new Dictionary<string, JsonFactoryDelegate>() {
 
-			{"Result", Result._Factory},
-			{"ResultStartService", ResultStartService._Factory}			};
+            {"Result", Result._Factory},
+            {"ResultStartService", ResultStartService._Factory}         };
 
         [ModuleInitializer]
         internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 
 
-		/// <summary>
+        /// <summary>
         /// Construct an instance from the specified tagged JsonReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
         /// <param name="result">The created object</param>
-        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-			result = jsonReader.ReadTaggedObject(_TagDictionary);
+        public static void Deserialize(JsonReader jsonReader, out JsonObject result) =>
+            result = jsonReader.ReadTaggedObject(_TagDictionary);
 
-		}
-
-
-
-		// Service Dispatch Classes
+        }
 
 
 
-		// Transaction Classes
-	/// <summary>
-	/// </summary>
-	public partial class Result : ShellResult {
-		bool								__Success = false;
-		private bool						_Success;
+    // Service Dispatch Classes
+
+
+
+    // Transaction Classes
+    /// <summary>
+    /// </summary>
+    public partial class Result : ShellResult {
+        bool __Success = false;
+        private bool _Success;
         /// <summary>
         /// </summary>
 
-		public virtual bool						Success {
-			get => _Success;
-			set {_Success = value; __Success = true; }
-			}
+        public virtual bool Success {
+            get => _Success;
+            set { _Success = value; __Success = true; }
+            }
         /// <summary>
         /// </summary>
 
-		public virtual string						Reason  {get; set;}
-		
-		/// <summary>
+        public virtual string Reason { get; set; }
+
+        /// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag => __Tag;
+        public override string _Tag => __Tag;
 
-		/// <summary>
+        /// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "Result";
+        public new const string __Tag = "Result";
 
-		/// <summary>
+        /// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new Result();
+        public static new JsonObject _Factory() => new Result();
 
 
         /// <summary>
@@ -142,8 +135,8 @@ namespace Goedel.Mesh.Shell.Host {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+		public override void Serialize(Writer writer, bool wrap, ref bool first) =>
+            SerializeX(writer, wrap, ref first);
 
 
         /// <summary>
@@ -155,25 +148,25 @@ namespace Goedel.Mesh.Shell.Host {
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (__Success){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Success", 1);
-					_writer.WriteBoolean (Success);
-				}
-			if (Reason != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Reason", 1);
-					_writer.WriteString (Reason);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
+		public new void SerializeX(Writer _writer, bool _wrap, ref bool _first) {
+            PreEncode();
+            if (_wrap) {
+                _writer.WriteObjectStart();
+                }
+            if (__Success) {
+                _writer.WriteObjectSeparator(ref _first);
+                _writer.WriteToken("Success", 1);
+                _writer.WriteBoolean(Success);
+                }
+            if (Reason != null) {
+                _writer.WriteObjectSeparator(ref _first);
+                _writer.WriteToken("Reason", 1);
+                _writer.WriteString(Reason);
+                }
+            if (_wrap) {
+                _writer.WriteObjectEnd();
+                }
+            }
 
         /// <summary>
         /// Deserialize a tagged stream
@@ -181,65 +174,65 @@ namespace Goedel.Mesh.Shell.Host {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Result FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as Result;
-				}
-		    var Result = new Result ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
+        public static new Result FromJson(JsonReader jsonReader, bool tagged = true) {
+            if (jsonReader == null) {
+                return null;
+                }
+            if (tagged) {
+                var Out = jsonReader.ReadTaggedObject(_TagDictionary);
+                return Out as Result;
+                }
+            var Result = new Result();
+            Result.Deserialize(jsonReader);
+            Result.PostDecode();
+            return Result;
+            }
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "Success" : {
-					Success = jsonReader.ReadBoolean ();
-					break;
-					}
-				case "Reason" : {
-					Reason = jsonReader.ReadString ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
+		public override void DeserializeToken(JsonReader jsonReader, string tag) {
+
+            switch (tag) {
+                case "Success": {
+                    Success = jsonReader.ReadBoolean();
+                    break;
+                    }
+                case "Reason": {
+                    Reason = jsonReader.ReadString();
+                    break;
+                    }
+                default: {
+                    break;
+                    }
+                }
+            // check up that all the required elements are present
+            }
 
 
-		}
+        }
 
-	/// <summary>
-	/// </summary>
-	public partial class ResultStartService : Result {
-		
-		/// <summary>
+    /// <summary>
+    /// </summary>
+    public partial class ResultStartService : Result {
+
+        /// <summary>
         /// Tag identifying this class
         /// </summary>
-		public override string _Tag => __Tag;
+        public override string _Tag => __Tag;
 
-		/// <summary>
+        /// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ResultStartService";
+        public new const string __Tag = "ResultStartService";
 
-		/// <summary>
+        /// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ResultStartService();
+        public static new JsonObject _Factory() => new ResultStartService();
 
 
         /// <summary>
@@ -249,8 +242,8 @@ namespace Goedel.Mesh.Shell.Host {
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+		public override void Serialize(Writer writer, bool wrap, ref bool first) =>
+            SerializeX(writer, wrap, ref first);
 
 
         /// <summary>
@@ -262,16 +255,16 @@ namespace Goedel.Mesh.Shell.Host {
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			((Result)this).SerializeX(_writer, false, ref _first);
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
+		public new void SerializeX(Writer _writer, bool _wrap, ref bool _first) {
+            PreEncode();
+            if (_wrap) {
+                _writer.WriteObjectStart();
+                }
+            ((Result)this).SerializeX(_writer, false, ref _first);
+            if (_wrap) {
+                _writer.WriteObjectEnd();
+                }
+            }
 
         /// <summary>
         /// Deserialize a tagged stream
@@ -279,38 +272,38 @@ namespace Goedel.Mesh.Shell.Host {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultStartService FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ResultStartService;
-				}
-		    var Result = new ResultStartService ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
+        public static new ResultStartService FromJson(JsonReader jsonReader, bool tagged = true) {
+            if (jsonReader == null) {
+                return null;
+                }
+            if (tagged) {
+                var Out = jsonReader.ReadTaggedObject(_TagDictionary);
+                return Out as ResultStartService;
+                }
+            var Result = new ResultStartService();
+            Result.Deserialize(jsonReader);
+            Result.PostDecode();
+            return Result;
+            }
 
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				default : {
-					base.DeserializeToken(jsonReader, tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
+		public override void DeserializeToken(JsonReader jsonReader, string tag) {
+
+            switch (tag) {
+                default: {
+                    base.DeserializeToken(jsonReader, tag);
+                    break;
+                    }
+                }
+            // check up that all the required elements are present
+            }
 
 
-		}
+        }
 
-	}
+    }
 

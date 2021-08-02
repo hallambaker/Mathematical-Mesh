@@ -1,18 +1,13 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Algorithms;
-using Goedel.Cryptography.Core;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
-using Goedel.Protocol.Debug;
-using Goedel.Test;
-using Goedel.Test.Core;
-using Goedel.Utilities;
-
-using System;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
-using System.Collections.Generic;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Algorithms;
+using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using Goedel.Test;
+using Goedel.Utilities;
 
 namespace ExampleGenerator {
 
@@ -30,7 +25,7 @@ namespace ExampleGenerator {
                     }
 
                 default:
-                    break;
+                break;
                 }
 
             throw new NYI();
@@ -137,7 +132,7 @@ namespace ExampleGenerator {
             ThresholdCoordinate.AddShareR(RRa);
             ThresholdCoordinate.AddShareR(RRb);
 
-            R = ThresholdCoordinate.CompleteR (TestDataBytes) ;
+            R = ThresholdCoordinate.CompleteR(TestDataBytes);
             K = ThresholdCoordinate.K;
 
             SSa = Threshold1.GetS(R, PublicSignatureKey, TestDataBytes, La);
@@ -183,7 +178,7 @@ namespace ExampleGenerator {
 
 
             // check the (adjusted) private key shares equal the master key.
-            var privateKey12 = (privateKey1+ privateKey2).Mod(Modulus);
+            var privateKey12 = (privateKey1 + privateKey2).Mod(Modulus);
             (privateKey.Mod(Modulus) == privateKey12).TestTrue();
 
             // Check that public key A + B = Aggregate;
@@ -268,14 +263,14 @@ namespace ExampleGenerator {
 
 
 
-        public Quorate(CryptoAlgorithmId cryptoAlgorithmID): base (cryptoAlgorithmID) {
+        public Quorate(CryptoAlgorithmId cryptoAlgorithmID) : base(cryptoAlgorithmID) {
 
             KeyAggregate = new CurveKey(cryptoAlgorithmID, true, "TSIGQ", "Aggregate Key");
-            
+
             EdwardsAggregate = KeyAggregate.KeyPair as KeyPairEdwards;
-            
+
             PublicSignatureKey = (EdwardsAggregate.IKeyAdvancedPublic as CurveEdwardsPublic).PublicKey;
-            
+
             // extract the private key for later use
             var privateKey = (EdwardsAggregate.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
 
@@ -330,12 +325,12 @@ namespace ExampleGenerator {
             La = recoveryShares[0].Lagrange(recoveryShares, 0);
             Lc = recoveryShares[1].Lagrange(recoveryShares, 1);
 
-            
+
 
 
             // check calculation of the lagrange point La - x = 1
-            var l1num = (-3) %Modulus;
-            var l1den = (1 - 3) %Modulus;
+            var l1num = (-3) % Modulus;
+            var l1den = (1 - 3) % Modulus;
             var l1deninv = ModInverse(l1den, Modulus);
             var l1test = (l1num * l1deninv).Mod(Modulus);
 
@@ -345,8 +340,8 @@ namespace ExampleGenerator {
             (l1test == La).TestTrue();
 
             // check calculation of the lagrange point Lc - x = 3
-            var l2num = (-1)% Modulus;
-            var l2den = (3 - 1)%Modulus;
+            var l2num = (-1) % Modulus;
+            var l2den = (3 - 1) % Modulus;
             var l2deninv = ModInverse(l2den, Modulus);
             var l2test = (l2num * l2deninv).Mod(Modulus);
 
@@ -485,7 +480,7 @@ namespace ExampleGenerator {
 
         public BigInteger X = -1;
         public BigInteger Y = -1;
-        public string XTag => IsCurveX ? "U": "X";
+        public string XTag => IsCurveX ? "U" : "X";
         public string YTag => IsCurveX ? "V" : "Y";
 
         // Intermediate Montgomery Ladder parameters
@@ -498,10 +493,10 @@ namespace ExampleGenerator {
             }
 
         public CurveKey(
-                CryptoAlgorithmId cryptoAlgorithmID, 
-                bool extended, 
-                string prefix = null, 
-                string name=null) {
+                CryptoAlgorithmId cryptoAlgorithmID,
+                bool extended,
+                string prefix = null,
+                string name = null) {
             CryptoAlgorithmID = cryptoAlgorithmID;
 
             if (name != null) {
@@ -538,7 +533,7 @@ namespace ExampleGenerator {
                     }
 
                 default:
-                    break;
+                break;
                 }
             Private ??= Dummy;
             Public ??= Dummy;
@@ -549,8 +544,8 @@ namespace ExampleGenerator {
             var publicKey = privateKey.Public;
 
             Scalar = privateKey.Private;
-            Private = privateKey.Encoding ;
-            Public = publicKey.Public.Encode (extended);
+            Private = privateKey.Encoding;
+            Public = publicKey.Public.Encode(extended);
 
             X = publicKey.Public.U;
             Y = publicKey.Public.V;
@@ -643,7 +638,7 @@ namespace ExampleGenerator {
             KeyE1 = new CurveResult(key1, KeyE.KeyPair);
             KeyE2 = new CurveResult(key2, KeyE.KeyPair);
 
-            var keyE12 = KeyE1.CurvePoint.Add (KeyE2.CurvePoint);
+            var keyE12 = KeyE1.CurvePoint.Add(KeyE2.CurvePoint);
             KeyE12 = new CurveResult(keyE12);
             }
 
@@ -657,14 +652,14 @@ namespace ExampleGenerator {
         public CurveKey KeyA;
 
         public KeyGen(CryptoAlgorithmId cryptoAlgorithmID) {
-            
+
             Key1 = new CurveKey(cryptoAlgorithmID, true, "TKG", "Key1");
             Key2 = new CurveKey(cryptoAlgorithmID, true, "TKG", "Key2");
 
             var keypair = Key1.KeyPair.Combine(Key2.KeyPair, KeySecurity.Exportable);
             KeyA = new CurveKey(keypair, false);
 
-            
+
             }
         }
 

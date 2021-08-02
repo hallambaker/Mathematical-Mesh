@@ -1,9 +1,9 @@
-﻿using Goedel.Cryptography.PKIX;
-using Goedel.Utilities;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+
+using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 
 namespace Goedel.Cryptography {
@@ -145,14 +145,13 @@ namespace Goedel.Cryptography {
         /// <param name="keysize">Key size (if needed)</param>
         /// <returns>The UDF identifier.</returns>
         public static UdfAlgorithmIdentifier ToUDFID(
-                this CryptoAlgorithmId cryptoAlgorithmID, int keysize = 0) => cryptoAlgorithmID switch
-                    {
-                        CryptoAlgorithmId.X25519 => UdfAlgorithmIdentifier.X25519,
-                        CryptoAlgorithmId.X448 => UdfAlgorithmIdentifier.X448,
-                        CryptoAlgorithmId.Ed25519 => UdfAlgorithmIdentifier.Ed25519,
-                        CryptoAlgorithmId.Ed448 => UdfAlgorithmIdentifier.Ed448,
-                        _ => UdfAlgorithmIdentifier.Any,
-                        };
+                this CryptoAlgorithmId cryptoAlgorithmID, int keysize = 0) => cryptoAlgorithmID switch {
+                    CryptoAlgorithmId.X25519 => UdfAlgorithmIdentifier.X25519,
+                    CryptoAlgorithmId.X448 => UdfAlgorithmIdentifier.X448,
+                    CryptoAlgorithmId.Ed25519 => UdfAlgorithmIdentifier.Ed25519,
+                    CryptoAlgorithmId.Ed448 => UdfAlgorithmIdentifier.Ed448,
+                    _ => UdfAlgorithmIdentifier.Any,
+                    };
         }
 
     }

@@ -1,10 +1,11 @@
-﻿using Goedel.Mesh;
+﻿using System.Collections.Generic;
+
+using Goedel.Mesh;
 using Goedel.Mesh.Shell;
-using Goedel.Utilities;
-using System.Collections.Generic;
-using Xunit;
 using Goedel.Mesh.Test;
 using Goedel.Test;
+
+using Xunit;
 
 #pragma warning disable IDE0059
 namespace Goedel.XUnit {
@@ -266,7 +267,7 @@ namespace Goedel.XUnit {
             return null;
             }
 
-        static bool ValidContact(List<CatalogedEntry> catalogedEntries , params string[] accountAddress) {
+        static bool ValidContact(List<CatalogedEntry> catalogedEntries, params string[] accountAddress) {
             var dictionary = new Dictionary<string, NetworkAddress>();
             foreach (var catalogedEntry in catalogedEntries) {
                 var contactEntry = catalogedEntry as CatalogedContact;
@@ -280,7 +281,7 @@ namespace Goedel.XUnit {
 
             (dictionary.Count == accountAddress.Length).TestTrue();
             foreach (var address in accountAddress) {
-                dictionary.ContainsKey (address).TestTrue();
+                dictionary.ContainsKey(address).TestTrue();
                 //Screen.WriteLine($"Found contact: {address}");
                 }
 
@@ -296,7 +297,7 @@ namespace Goedel.XUnit {
             var resultRequest = deviceB.Dispatch($"message confirm {AliceAccount} start") as ResultSent;
             var messageId = resultRequest.Message.MessageId;
 
-            var resultHandle = ProcessMessage(deviceA, true, messageId); 
+            var resultHandle = ProcessMessage(deviceA, true, messageId);
 
             var resultResponse = GetResponse(deviceB, resultRequest.Message) as ResponseConfirmation;
 

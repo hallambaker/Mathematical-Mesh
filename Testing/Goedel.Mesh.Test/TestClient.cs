@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Net;
 using System.Collections.Generic;
-using System.Threading;
+using System.Net;
 
-using Goedel.Protocol;
-using Goedel.Utilities;
-using Goedel.Protocol.Service;
-using Goedel.Mesh.Management;
 using Goedel.Protocol.Presentation;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Test {
     public class TestClient {
@@ -48,7 +44,7 @@ namespace Goedel.Mesh.Test {
             using var client = new WebClient();
             client.Headers.Add(HttpRequestHeader.UserAgent, "MeshTestClient");
             client.Headers.Add(HttpRequestHeader.CacheControl, "no-store,no-transform");
-            
+
             var uri = httpEndpoint.GetServiceUri();
 
 

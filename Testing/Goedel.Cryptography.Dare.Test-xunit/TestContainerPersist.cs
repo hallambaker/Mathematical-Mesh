@@ -1,10 +1,9 @@
-﻿using Goedel.Cryptography;
+﻿using System;
+
+using Goedel.Cryptography;
 using Goedel.IO;
 using Goedel.Test;
-using Goedel.Test.Core;
 using Goedel.Utilities;
-
-using System;
 
 using Xunit;
 

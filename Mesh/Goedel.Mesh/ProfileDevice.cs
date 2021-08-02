@@ -18,12 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using System.Text;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-
-using System.Text;
 namespace Goedel.Mesh {
 
 
@@ -130,7 +130,7 @@ namespace Goedel.Mesh {
         public static new ProfileDevice Decode(DareEnvelope envelope,
                     IKeyCollection keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as ProfileDevice;
-                
+
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with

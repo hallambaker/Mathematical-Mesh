@@ -1,6 +1,6 @@
-﻿using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography;
-using System;
+﻿using System;
+
+using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -33,7 +33,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="udf">The UDF of the key</param>
         /// <param name="privateKey">The private key parameters.</param>
         /// <param name="Exportable">If true, the key is exportable.</param>
-        public override void Persist(string udf, IPKIXPrivateKey privateKey, bool Exportable) => 
+        public override void Persist(string udf, IPKIXPrivateKey privateKey, bool Exportable) =>
                 throw new NotImplementedException();
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="udf">The UDF of the key</param>
         /// <param name="joseKey">The private key parameters.</param>
         /// <param name="exportable">If true, the key is exportable.</param>
-        public override void Persist(string udf, IJson joseKey, bool exportable) => 
+        public override void Persist(string udf, IJson joseKey, bool exportable) =>
             throw new NotImplementedException();
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="anchor">If present specifies the fingerprint of a key that MUST anchor
         /// the trust path.</param>
         /// <returns>The result of the trust path analysis.</returns>
-        public TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null) => 
+        public TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null) =>
                 throw new NotImplementedException();
         }
     }

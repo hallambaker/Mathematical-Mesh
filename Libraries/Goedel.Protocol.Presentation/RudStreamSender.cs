@@ -18,9 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
 //using Goedel.Protocol.Service;
 using System.Threading.Tasks;
+
+using Goedel.Utilities;
 
 #pragma warning disable CS1998
 
@@ -29,7 +30,7 @@ namespace Goedel.Protocol.Presentation {
     /// RUD stream sender class. Provides methods to send datagrams and to receive
     /// notice of receipt of a control message.
     /// </summary>
-    public class RudStreamSender: RudStream {
+    public class RudStreamSender : RudStream {
         #region // Constructors
 
         /// <summary>

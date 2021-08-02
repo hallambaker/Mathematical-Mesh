@@ -1,16 +1,13 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
-using Goedel.Mesh;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
-using System.Diagnostics;
-using System.Runtime.Serialization;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.IO;
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
 
@@ -251,7 +248,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="activationAccount">The account activation</param>
         /// <param name="keyLocate">the key locator.</param>
         public static void CreateDirectory(
-                    MeshHost meshHost, 
+                    MeshHost meshHost,
                     ProfileUser profileUser,
                     ActivationAccount activationAccount,
                     IKeyCollection keyLocate) {
@@ -261,7 +258,7 @@ namespace Goedel.Mesh.Client {
 
             // Create each of the stores and add the activation to the record.
             foreach (var entry in StaticCatalogDelegates) {
-                
+
                 var storeName = entry.Key;
                 if (!ServiceCatalogs.Contains(storeName)) {
 
@@ -389,17 +386,17 @@ namespace Goedel.Mesh.Client {
         ///<summary>Dictionarry used to create stores</summary>
         public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => StaticCatalogDelegates;
         static Dictionary<string, StoreFactoryDelegate> StaticCatalogDelegates = new() {
-            {CatalogCredential.Label, CatalogCredential.Factory},
-            {CatalogContact.Label, CatalogContact.Factory},
-            {CatalogTask.Label, CatalogTask.Factory},
-            {CatalogBookmark.Label, CatalogBookmark.Factory},
-            {CatalogNetwork.Label, CatalogNetwork.Factory},
-            {CatalogApplication.Label, CatalogApplication.Factory},
-            {CatalogDevice.Label, CatalogDevice.Factory},
+                { CatalogCredential.Label, CatalogCredential.Factory },
+                { CatalogContact.Label, CatalogContact.Factory },
+                { CatalogTask.Label, CatalogTask.Factory },
+                { CatalogBookmark.Label, CatalogBookmark.Factory },
+                { CatalogNetwork.Label, CatalogNetwork.Factory },
+                { CatalogApplication.Label, CatalogApplication.Factory },
+                { CatalogDevice.Label, CatalogDevice.Factory },
 
             // All contexts have a capability catalog:
-            {CatalogAccess.Label, CatalogAccess.Factory},
-            {CatalogPublication.Label, CatalogPublication.Factory}
+                { CatalogAccess.Label, CatalogAccess.Factory },
+                { CatalogPublication.Label, CatalogPublication.Factory }
             };
 
         static SortedSet<string> ServiceCatalogs = new() {
@@ -702,7 +699,7 @@ namespace Goedel.Mesh.Client {
         public DevicePreconfiguration Preconfigure(
                     out string filename,
                     out ProfileDevice profileDevice,
-                    out string connectUri, 
+                    out string connectUri,
                     string path = "") {
 
             CreateDeviceEarl(
@@ -809,7 +806,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="uri">The connection URI</param>
         /// <param name="rights">The list of rights being requested by the device.</param>
         /// <returns>The </returns>
-        public CatalogedDevice Connect(string uri, List<string> rights=null) {
+        public CatalogedDevice Connect(string uri, List<string> rights = null) {
 
             var envelopedProfileDevice = ClaimPublication(uri, out var responseId);
 
@@ -955,7 +952,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="authorize">If true, the action is explicitly authorized.</param>
         /// <returns>The result of requesting the connection.</returns>
         public ProcessResult ProcessAutomatic(
-                        GroupInvitation request, 
+                        GroupInvitation request,
                         bool accept = true,
                         bool authorize = false) {
             authorize.Future();
@@ -985,7 +982,7 @@ namespace Goedel.Mesh.Client {
 
             transactRequest.Transact();
 
-            return new ResultGroupInvitation (request);
+            return new ResultGroupInvitation(request);
             }
 
 
@@ -1023,7 +1020,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="messagePin">The PIN value to be used to authenticate the regquest.</param>
         /// <returns>The result of processing.</returns>
         ProcessResult Process(AcknowledgeConnection request, bool accept = true, MessagePin messagePin = null,
-               List<string> rights=null) {
+               List<string> rights = null) {
             var transactRequest = TransactBegin();
 
             var respondConnection = new RespondConnection() {
@@ -1051,7 +1048,7 @@ namespace Goedel.Mesh.Client {
 
             // Mark the pin code as having been used.
             if (messagePin != null) {
-                transactRequest.LocalComplete(MessageStatus.Closed, 
+                transactRequest.LocalComplete(MessageStatus.Closed,
                     messagePin, respondConnection);
                 }
 
@@ -1288,7 +1285,7 @@ namespace Goedel.Mesh.Client {
                 Subject = recipient,
                 AuthenticatedData = contactSelf,
                 Reply = reply
-                
+
                 };
 
             using (var transact = TransactBegin()) {
@@ -1305,7 +1302,7 @@ namespace Goedel.Mesh.Client {
                 message.Authenticate(pin);
 
                 // send it to the service
-                transact.OutboundMessage(recipient, message);                
+                transact.OutboundMessage(recipient, message);
                 Transact(transact);
                 }
 
@@ -1323,9 +1320,9 @@ namespace Goedel.Mesh.Client {
         /// <param name="message">The reciprocation message (if sent), otherwise null.</param>
         /// <returns>The cataloged contact information.</returns>
         public CatalogedContact ContactExchange(
-                    string uri, 
-                    bool reciprocate, 
-                    out Message message, 
+                    string uri,
+                    bool reciprocate,
+                    out Message message,
                     string localname = null) {
             // Fetch, verify and decrypt the corresponding data.
 

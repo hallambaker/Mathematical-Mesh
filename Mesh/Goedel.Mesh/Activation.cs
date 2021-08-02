@@ -18,10 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
 using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
     public partial class Activation {

@@ -1,19 +1,19 @@
-﻿using Goedel.IO;
-using Goedel.Mesh.Test;
-using Goedel.Test.Core;
-using Goedel.Utilities;
-using Goedel.Mesh.Shell;
-using Goedel.Cryptography.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Cryptography.Core;
+using Goedel.IO;
+using Goedel.Mesh.Shell;
+using Goedel.Mesh.Test;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0059
 
 namespace ExampleGenerator {
 
 
-    public partial class CreateExamples  {
+    public partial class CreateExamples {
 
         public bool GitHub = true;
         public string Preformat => GitHub ? "````" : "~~~~";
@@ -65,7 +65,7 @@ namespace ExampleGenerator {
         public const string TestFile3 = "TestFile3.txt";
         public static string TestFile4 => Path.Combine(TestDir1, "TestFile4.txt");
         public static string TestFile5 => Path.Combine(TestDir1, "TestFile5.txt");
-        
+
         public const string TestText1 = "This is a test 1";
         public const string TestText2 = "This is a test 2";
         public const string TestText3 = "This is a test 3";

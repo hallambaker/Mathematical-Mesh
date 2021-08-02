@@ -1,8 +1,9 @@
-﻿using Xunit;
-using Goedel.Mesh.Shell;
-using Goedel.Utilities;
-using Goedel.Test;
+﻿using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
+using Goedel.Test;
+using Goedel.Utilities;
+
+using Xunit;
 
 #pragma warning disable IDE0059
 

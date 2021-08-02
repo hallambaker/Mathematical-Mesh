@@ -19,12 +19,6 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
-
-
 namespace Scratchpad {
     public class Class1 {
 

@@ -19,9 +19,9 @@
 //  THE SOFTWARE.
 //  
 //  
-using Goedel.Cryptography.PKIX;
-
 using System.Security.Cryptography;
+
+using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography.Standard {
 

@@ -154,13 +154,12 @@ namespace Goedel.Discovery {
             if (service == null) {
                 return address;
                 }
-            return fallback switch
-                {
-                    DNSFallback.Address => address,
-                    DNSFallback.Prefix => service + "." + address,
-                    DNSFallback.None => null,
-                    _ => null,
-                    };
+            return fallback switch {
+                DNSFallback.Address => address,
+                DNSFallback.Prefix => service + "." + address,
+                DNSFallback.None => null,
+                _ => null,
+                };
             }
 
 

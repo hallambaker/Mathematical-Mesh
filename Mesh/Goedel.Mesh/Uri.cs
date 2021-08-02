@@ -19,8 +19,7 @@
 //  THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
@@ -55,7 +54,7 @@ namespace Goedel.Mesh {
         /// <param name="account">The account to connect to.</param>
         /// <param name="pin">The secret value.</param>
         /// <returns>The connection URI</returns>
-        public static string ConnectUri (string account, string pin) =>
+        public static string ConnectUri(string account, string pin) =>
              $"{MeshConstants.MeshConnectURI}://{account}/{pin}";
 
 

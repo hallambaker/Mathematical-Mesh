@@ -1,7 +1,4 @@
-﻿using Xunit;
-
-
-namespace Goedel.XUnit {
+﻿namespace Goedel.XUnit {
     public partial class ShellTests {
 
 

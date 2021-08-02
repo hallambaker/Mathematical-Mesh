@@ -1,12 +1,8 @@
-﻿using Goedel.Utilities;
+﻿using System.Collections.Generic;
+
 using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Protocol;
-using System.Transactions;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
 
@@ -202,7 +198,7 @@ namespace Goedel.Mesh.Client {
     /// </summary>
     public partial class TransactAccount : Transaction<ContextAccount> {
         /// <summary>The account context in which this transaction takes place.</summary>
-        public override ContextAccount ContextAccount  { get; }
+        public override ContextAccount ContextAccount { get; }
 
         /// <summary>
         /// Constructor creating transaction instance under the account context
@@ -305,7 +301,7 @@ namespace Goedel.Mesh.Client {
         ///<summary>Inbound message signature key, the device admin signature key</summary> 
         static KeyPair SignLocalMessage => null; // ToDo: set signing key to the device admin key.
 
-        bool TryFindKeyEncryption(string recipient, out CryptoKey cryptoKey) => 
+        bool TryFindKeyEncryption(string recipient, out CryptoKey cryptoKey) =>
                 ContextAccount.TryFindKeyEncryption(recipient, out cryptoKey);
 
         /// <summary>The transaction request message being assembled</summary>
@@ -321,12 +317,12 @@ namespace Goedel.Mesh.Client {
         #endregion
         #region // Operations
         ///<summary>Returns the publication catalog for the account</summary>
-        public CatalogPublication GetCatalogPublication() => 
+        public CatalogPublication GetCatalogPublication() =>
             ContextAccount.GetStore(CatalogPublication.Label) as CatalogPublication;
 
 
         ///<summary>Returns the capability catalog for the account</summary>
-        public CatalogAccess GetCatalogAccess() => 
+        public CatalogAccess GetCatalogAccess() =>
             ContextAccount.GetStore(CatalogAccess.Label) as CatalogAccess;
 
 
@@ -420,7 +416,7 @@ namespace Goedel.Mesh.Client {
 
             //"Fix the encryption of local messages".TaskFunctionality(true);
 
-            var envelope = message.Envelope(SignLocalMessage, keyEncrypt); 
+            var envelope = message.Envelope(SignLocalMessage, keyEncrypt);
             envelope.JsonObject = message;
             TransactRequest.Local.Add(new Enveloped<Message>(envelope));
             }
@@ -436,12 +432,12 @@ namespace Goedel.Mesh.Client {
         public void InboundComplete(
                 MessageStatus messageStatus,
                 Message completed,
-                Message response=null
+                Message response = null
                 ) {
 
             InboundReferences ??= new List<Reference>();
             var reference = new Reference() {
-                MessageStatus =messageStatus,
+                MessageStatus = messageStatus,
                 MessageId = completed.MessageId,
                 ResponseId = response?.MessageId
                 };
@@ -459,7 +455,7 @@ namespace Goedel.Mesh.Client {
         public void LocalComplete(
                 MessageStatus messageStatus,
                 Message completed,
-                Message response= null
+                Message response = null
                 ) {
 
             LocalReferences ??= new List<Reference>();
@@ -483,7 +479,7 @@ namespace Goedel.Mesh.Client {
                     }
                 }
 
-            
+
             var result = new TransactionUpdate<TEntry>(catalog);
 
             return result;

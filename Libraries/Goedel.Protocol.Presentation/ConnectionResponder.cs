@@ -19,8 +19,8 @@
 //  THE SOFTWARE.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 
@@ -75,7 +75,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="listener">The listener this connection is to service.</param>
         /// <param name="packetIn">The packet resulting in creation of the responder.</param>
         public ConnectionResponder(Listener listener,
-                Packet packetIn = null)  {
+                Packet packetIn = null) {
             Listener = listener;
             CredentialSelf = Listener?.CredentialSelf;
 

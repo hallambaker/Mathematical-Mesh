@@ -18,21 +18,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Protocol;
-using Goedel.Utilities;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+
+using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh {
     /// <summary>
     /// Enumerator class for sequences of <see cref="CatalogedDevice"/> over a Catalog
     /// </summary>
-    public class AsCatalogedType<T> : IEnumerable<T> where T : CatalogedEntry  {
+    public class AsCatalogedType<T> : IEnumerable<T> where T : CatalogedEntry {
         PersistenceStore PersistenceStore { get; }
 
         /// <summary>
@@ -88,7 +84,7 @@ namespace Goedel.Mesh {
         /// <paramref name="persistenceStore"/>.
         /// </summary>
         /// <param name="persistenceStore">The persistence store to enumerate.</param>
-        public EnumeratorAsCatalogedType(PersistenceStore persistenceStore) => 
+        public EnumeratorAsCatalogedType(PersistenceStore persistenceStore) =>
                     baseEnumerator = persistenceStore.GetEnumerator();
         }
 

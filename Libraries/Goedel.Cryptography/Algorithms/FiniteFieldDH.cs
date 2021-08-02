@@ -1,10 +1,10 @@
-﻿using Goedel.ASN;
-using Goedel.Cryptography.PKIX;
-using Goedel.Utilities;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Numerics;
+
+using Goedel.ASN;
+using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Algorithms {
 
@@ -190,7 +190,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The composite key</returns>
         public IKeyAdvancedPublic Combine(IKeyAdvancedPublic contribution) =>
             Combine(contribution as DiffeHellmanPublic);
-        
+
         ///<summary>The encoding of the public value.</summary>
         public byte[] Encoding => Public.ToByteArray();
 

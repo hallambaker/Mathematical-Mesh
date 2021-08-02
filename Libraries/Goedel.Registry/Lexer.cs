@@ -383,26 +383,25 @@ namespace Goedel.Registry {
                                             TokenText += c;
                                             }
                                         else if (State == 10) {
-                                            TokenText += c switch
-                                                {
-                                                    'n' => '\n',
-                                                    'r' => '\r',
-                                                    'v' => '\v',
-                                                    't' => '\t',
-                                                    '\"' => '\"',
-                                                    '\'' => '\'',
-                                                    '\\' => '\\',
-                                                    '0' => '\0',
-                                                    _ => throw new Exception("Unknown Character Escape Sequence"),
-                                                    };
+                                            TokenText += c switch {
+                                                'n' => '\n',
+                                                'r' => '\r',
+                                                'v' => '\v',
+                                                't' => '\t',
+                                                '\"' => '\"',
+                                                '\'' => '\'',
+                                                '\\' => '\\',
+                                                '0' => '\0',
+                                                _ => throw new Exception("Unknown Character Escape Sequence"),
+                                                };
                                             }
                                         break;
                                         }
 
                                     case ActionType.Null:
-                                        break;
+                                    break;
                                     default:
-                                        break;
+                                    break;
                                     }
 
                                 State = NextState;

@@ -10,24 +10,24 @@ namespace Goedel.Mesh.Shell {
 
         ///<summary>Dictionary mapping file extension to IANA content type.</summary>
         public static Dictionary<string, string> MimeMap = new() {
-                { ".saml", "application/samlassertion+xml"},
-                { ".dns", "application/dns"},
-                { ".json", "application/json"},
-                { ".pdf", "application/pdf"},
-                { ".pfx", "application/pkcs12"},
-                { ".cer", "application/pkix-cert"},
-                { ".crt", "application/pkix-cert"},
-                { ".nb", "application/mathematica"},
-                { ".ma", "application/mathematica"},
-                { ".mb", "application/mathematica"},
-                { ".doc", "application/msword"},
-                { ".docx", "application/msword"},
-                { ".csv", "	text/csv"},
-                { ".csh", "application/x-csh"},
-                { ".css", "	text/css"},
-                { ".htm", "text/html"},
-                { ".html", "text/html"},
-                { ".txt", "text/plain"}
+                { ".saml", "application/samlassertion+xml" },
+                { ".dns", "application/dns" },
+                { ".json", "application/json" },
+                { ".pdf", "application/pdf" },
+                { ".pfx", "application/pkcs12" },
+                { ".cer", "application/pkix-cert" },
+                { ".crt", "application/pkix-cert" },
+                { ".nb", "application/mathematica" },
+                { ".ma", "application/mathematica" },
+                { ".mb", "application/mathematica" },
+                { ".doc", "application/msword" },
+                { ".docx", "application/msword" },
+                { ".csv", "	text/csv" },
+                { ".csh", "application/x-csh" },
+                { ".css", "	text/css" },
+                { ".htm", "text/html" },
+                { ".html", "text/html" },
+                { ".txt", "text/plain" }
             };
 
         /// <summary>

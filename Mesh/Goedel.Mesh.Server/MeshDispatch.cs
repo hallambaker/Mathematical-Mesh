@@ -20,14 +20,15 @@
 //  
 //  
 
+using System.Collections.Generic;
+using System.IO;
+
+using Goedel.IO;
+using Goedel.Mesh.Client;
+using Goedel.Mesh.ServiceAdmin;
 using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
-using Goedel.Mesh.ServiceAdmin;
-using Goedel.IO;
-using System.IO;
-using Goedel.Mesh.Client; 
-using System.Collections.Generic;
 namespace Goedel.Mesh.Server {
 
 
@@ -40,7 +41,7 @@ namespace Goedel.Mesh.Server {
     public class PublicMeshService : MeshService {
 
         #region // Properties
-        
+
         ///<summary>The Mesh Machine base</summary> 
         public IMeshMachine MeshMachine { get; init; }
 
@@ -64,7 +65,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// The mesh persistence provider.
         /// </summary>
-        public MeshPersist MeshPersist  { get; init; }
+        public MeshPersist MeshPersist { get; init; }
 
         ///<summary>The service description.</summary> 
         public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
@@ -191,7 +192,7 @@ namespace Goedel.Mesh.Server {
 
             var hostConfiguration = new HostConfiguration() {
                 Id = System.Environment.MachineName.ToLower(),
-                IP = new List<string> { hostIp},
+                IP = new List<string> { hostIp },
                 DNS = new List<string> { hostDns },
                 Port = "15099",
                 Services = new List<string> { serviceName },
@@ -205,7 +206,7 @@ namespace Goedel.Mesh.Server {
             var configuration = new Configuration() {
                 Name = "Mesh",
                 Address = serviceDns,
-                Entries = new List<ConfigurationEntry> { ServiceConfiguration, hostConfiguration}
+                Entries = new List<ConfigurationEntry> { ServiceConfiguration, hostConfiguration }
                 };
 
 
@@ -424,7 +425,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession">The connection authentication context.</param>
         /// <returns>The response object from the service</returns>
         public override CompleteResponse Complete(
-                CompleteRequest request, IJpcSession jpcSession ) {
+                CompleteRequest request, IJpcSession jpcSession) {
             try {
                 return MeshPersist.AccountComplete(jpcSession, VerifyDevice(jpcSession), request);
                 }
@@ -521,7 +522,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
 		/// <returns>The response object from the service</returns>
-        public override PostResponse Post(   
+        public override PostResponse Post(
                 PostRequest request, IJpcSession jpcSession) {
 
             try {
@@ -559,7 +560,7 @@ namespace Goedel.Mesh.Server {
 		/// <returns>The response object from the service</returns>
         public override ClaimResponse Claim(
                     ClaimRequest request,
-                    IJpcSession session = null) => 
+                    IJpcSession session = null) =>
             MeshPersist.Claim(session, request.EnvelopedMessageClaim);
 
         /// <summary>

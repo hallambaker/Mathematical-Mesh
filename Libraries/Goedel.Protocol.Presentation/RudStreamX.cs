@@ -36,7 +36,7 @@
 
 //        ///<summary>The data.</summary> 
 //        public byte[] Data;
-        
+
 //        ///<summary>If true, this is a final datagram.</summary> 
 //        public bool IsFinal;
 //        }
@@ -228,7 +228,7 @@
 
 //            Screen.WriteLine($"Client {Protocol} - Posted data to {RemoteStreamId?.ToStringBase16()}");
 
-          
+
 
 //            if (packet is PacketResponderChallenge packetResponderChallenge && 
 //                        (packet.Payload == null | packet?.Payload.Length == 0) ) {

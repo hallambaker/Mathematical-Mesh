@@ -1,7 +1,7 @@
-﻿using Goedel.ASN;
-
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
+
+using Goedel.ASN;
 
 namespace Goedel.Cryptography.PKIX {
 

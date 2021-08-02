@@ -1,9 +1,9 @@
 
-using Goedel.Cryptography;
-using Goedel.Test.Core;
-using Goedel.Utilities;
-using Goedel.Test;
 using System.IO;
+
+using Goedel.Cryptography;
+using Goedel.Test;
+using Goedel.Utilities;
 
 using Xunit;
 
@@ -237,7 +237,7 @@ namespace Goedel.XUnit {
             }
 
         static void CheckTrim(string Value, string Result, string Reason = null) =>
-            Value.AssertEqual(Result.Trim(), Compare.Throw,  Reason);
+            Value.AssertEqual(Result.Trim(), Compare.Throw, Reason);
 
 
 

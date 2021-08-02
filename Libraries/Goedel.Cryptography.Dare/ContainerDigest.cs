@@ -1,6 +1,6 @@
-﻿using Goedel.Utilities;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -21,7 +21,7 @@ namespace Goedel.Cryptography.Dare {
         /// Default constructor
         /// </summary>
 
-        public ContainerDigest()  {
+        public ContainerDigest() {
             }
 
         /// <summary>

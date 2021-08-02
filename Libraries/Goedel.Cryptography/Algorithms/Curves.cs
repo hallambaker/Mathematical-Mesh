@@ -1,9 +1,9 @@
-﻿using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Algorithms {
 
@@ -19,7 +19,7 @@ namespace Goedel.Cryptography.Algorithms {
 
 
         ///<summary>The domain parameters</summary>
-        public abstract DomainParameters DomainParameters { get;  }
+        public abstract DomainParameters DomainParameters { get; }
 
         ///<summary>The modulus</summary>
         public BigInteger Prime => DomainParameters.P;
@@ -54,7 +54,8 @@ namespace Goedel.Cryptography.Algorithms {
         public BigInteger U { get; set; }
 
         /// <summary>The V value, used for Point Addition.</summary>
-        public BigInteger V { get => v;
+        public BigInteger V {
+            get => v;
             set {
                 v = value;
                 odd = !v.IsEven;
@@ -95,7 +96,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// even value is returned. Otherwise, either value may be returned.</param>
         /// <param name="u">The u coordinate value.</param>
         /// <returns>The V corresponding to U.</returns>
-        public BigInteger GetV(BigInteger u , bool? odd = null) {
+        public BigInteger GetV(BigInteger u, bool? odd = null) {
             //v^2 = u^3 + A*u^2 + u
 
             var u2 = (u * u).Mod(Prime);
@@ -371,7 +372,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Encode the code point.
         /// </summary>
         /// <returns>The encoded format of the point</returns>
-        public abstract byte[] Encode(bool extended=false);
+        public abstract byte[] Encode(bool extended = false);
 
         /// <summary>
         /// Add the point <paramref name="point"/> to this point on the curve
@@ -379,7 +380,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="point">The point to add.</param>
         /// <returns>The sum of the two points.</returns>
-        public override Curve Add(Curve point) => Add (point as CurveMontgomery);
+        public override Curve Add(Curve point) => Add(point as CurveMontgomery);
 
         /// <summary>
         /// Add two points
@@ -423,7 +424,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             var u3 = (DD - A - u1 - u2).Mod(Prime);
             var v3 = (((u1 + u1 + u2 + A) * B * CINV) - DDD - v1).Mod(Prime);
-            
+
             CheckCurve(u3, v3).AssertTrue(InternalCryptographicException.Throw);
 
             return (u3, v3);
@@ -434,15 +435,15 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="point">The point to double.</param>
         /// <returns>The (u,v) cooredinates of the result.</returns>
-        public (BigInteger, BigInteger) Double (CurveMontgomery point) {
+        public (BigInteger, BigInteger) Double(CurveMontgomery point) {
             var x = point.U;
             var y = point.V;
 
-            var xx3 = (x * x *3).Mod(Prime);
+            var xx3 = (x * x * 3).Mod(Prime);
             //var x2 = (x + x).Mod(Prime);
             var y2inv = (y + y).ModularInverse(Prime);
 
-            var l = ((xx3 + 2*A* x+ 1) * y2inv).Mod(Prime);
+            var l = ((xx3 + 2 * A * x + 1) * y2inv).Mod(Prime);
             var ll = (l * l).Mod(Prime);
             var lll = (ll * l).Mod(Prime);
 
@@ -475,7 +476,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="point">Second point</param>
         /// <returns>The result of the addition.</returns>
-        public virtual void Accumulate(CurveMontgomery point) => 
+        public virtual void Accumulate(CurveMontgomery point) =>
                     (U, V) = Add(this, point);
 
 
@@ -574,7 +575,7 @@ namespace Goedel.Cryptography.Algorithms {
                 p1.Equal(p2);               // Ignoring above warning causes an infinite loop
                                             // due to the == operator being overloaded.
 
-            
+
 
         /// <summary>Test to see if the domain parameters are not equal.</summary>
         /// <param name="p1">First value to test</param>
@@ -731,7 +732,7 @@ namespace Goedel.Cryptography.Algorithms {
 
 
         /// <summary>The public key, a point on the curve</summary>
-        public abstract CurveEdwards PublicPoint { get;}
+        public abstract CurveEdwards PublicPoint { get; }
 
         /// <summary>The private key, i.e. a scalar</summary>
         public BigInteger Private { get; protected set; }
@@ -779,7 +780,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="keySecurity">The key security model.</param>
         /// <param name="keyUses">The allowed key uses.</param>
         /// <returns>The composite key</returns>
-        public abstract IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution, 
+        public abstract IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution,
             KeySecurity keySecurity = KeySecurity.Admin, KeyUses keyUses = KeyUses.Any);
 
 
@@ -1027,7 +1028,7 @@ namespace Goedel.Cryptography.Algorithms {
                 156326,
                 5,
                 Curve448BaseV,
-                - 39081,
+                -39081,
                 Curve448BaseY,
                 448,
                 Curve448Q);

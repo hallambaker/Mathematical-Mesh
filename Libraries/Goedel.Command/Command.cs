@@ -1,8 +1,8 @@
-﻿using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Utilities;
 
 namespace Goedel.Command {
 
@@ -118,9 +118,9 @@ namespace Goedel.Command {
                         }
 
                     case CommandLex.Token.INVALID:
-                        break;
+                    break;
                     default:
-                        break;
+                    break;
                     }
                 }
             foreach (var Entry in Options._Data) {
@@ -312,7 +312,7 @@ namespace Goedel.Command {
                         }
 
                     default:
-                        break;
+                    break;
                     }
                 }
             foreach (var Entry in Entries) {
@@ -323,7 +323,7 @@ namespace Goedel.Command {
                         }
 
                     default:
-                        break;
+                    break;
                     }
                 }
             foreach (var Entry in Entries) {
@@ -334,7 +334,7 @@ namespace Goedel.Command {
                         }
 
                     default:
-                        break;
+                    break;
                     }
                 }
             }
@@ -372,7 +372,7 @@ namespace Goedel.Command {
                         }
 
                     default:
-                        break;
+                    break;
                     }
 
                 }
@@ -384,7 +384,7 @@ namespace Goedel.Command {
                         }
 
                     default:
-                        break;
+                    break;
                     }
 
                 }

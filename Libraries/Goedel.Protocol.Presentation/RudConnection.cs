@@ -17,13 +17,10 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Net;
 
-using Goedel.Utilities;
 using Goedel.Cryptography;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation {
     /// <summary>
@@ -99,7 +96,7 @@ namespace Goedel.Protocol.Presentation {
 
 
         ///<summary>The packet writer factory</summary> 
-        public PacketWriterFactoryDelegate PacketWriterFactory { get; set; } 
+        public PacketWriterFactoryDelegate PacketWriterFactory { get; set; }
                     = PacketWriterDebug.Factory;
         ///<summary>The packet reader factory</summary> 
         public PacketReaderFactoryDelegate PacketReaderFactory { get; set; }
@@ -192,7 +189,7 @@ namespace Goedel.Protocol.Presentation {
             writer.WriteExtensions(ciphertextExtensions);
             writer.Write(payload);
 
-           
+
             // encrypt the result and return.
             return writer.Wrap(destinationStream, MutualKeyOut);
             }

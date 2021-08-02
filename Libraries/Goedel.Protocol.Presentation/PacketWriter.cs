@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-using Goedel.Protocol;
-using Goedel.Utilities;
 using Goedel.Cryptography;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation {
 
@@ -16,7 +13,7 @@ namespace Goedel.Protocol.Presentation {
     /// </summary>
     public enum PacketTag {
         ///<summary>Integer field</summary> 
-        Integer =0x00,
+        Integer = 0x00,
         ///<summary>String field</summary> 
         String = 0x10,
         ///<summary>Binary field</summary> 
@@ -31,7 +28,7 @@ namespace Goedel.Protocol.Presentation {
     /// <param name="parent">Parent writer </param>
     /// <returns>The created instance.</returns>
     public delegate PacketWriter PacketWriterFactoryDelegate(
-                    PacketWriter parent=null);
+                    PacketWriter parent = null);
 
 
     /// <summary>
@@ -54,7 +51,7 @@ namespace Goedel.Protocol.Presentation {
         /// Constructor, create a packet writer.
         /// </summary>
         /// <param name="parent">Parent writer </param>
-        public PacketWriter(PacketWriter parent = null) => 
+        public PacketWriter(PacketWriter parent = null) =>
             MemoryStream = new MemoryStream(Constants.MinimumPacketSize);
 
 
@@ -100,14 +97,14 @@ namespace Goedel.Protocol.Presentation {
         /// Write ResponderMessageType as a byte to the packet
         /// </summary>
         /// <param name="b"></param>
-        public virtual void Write(ResponderMessageType b) => MemoryStream.WriteByte((byte)b); 
+        public virtual void Write(ResponderMessageType b) => MemoryStream.WriteByte((byte)b);
 
         /// <summary>
         /// Write a byte to the packet
         /// </summary>
         /// <param name="b"></param>
         void Write(byte b) => MemoryStream.WriteByte((byte)b);
-            //Packet[Position++] = b;
+        //Packet[Position++] = b;
 
         /// <summary>
         /// Write out a Tag-Length value using the shortest possible production.
@@ -199,7 +196,7 @@ namespace Goedel.Protocol.Presentation {
         /// Write the list of extensions <paramref name="extensions"/> to the packet.
         /// </summary>
         /// <param name="extensions">The extensions to write.</param>
-        public virtual void WriteExtensions(List<PacketExtension> extensions=null) {
+        public virtual void WriteExtensions(List<PacketExtension> extensions = null) {
 
             if (extensions != null) {
                 //WriteTag(PacketTag.Extensions, 0);
@@ -220,7 +217,7 @@ namespace Goedel.Protocol.Presentation {
 
         private Span<byte> GetSpan(long start, long length) {
             Screen.WriteLine($"{start} for {length}");
-            
+
             return new Span<byte>(MemoryStream.GetBuffer(), (int)start, (int)length);
             }
 
@@ -229,7 +226,7 @@ namespace Goedel.Protocol.Presentation {
             return new ReadOnlySpan<byte>(MemoryStream.GetBuffer(), (int)start, (int)length);
             }
         ///<inheritdoc/>
-        public virtual void Encrypt(byte[] key, PacketWriter writerIn, bool pad=true) {
+        public virtual void Encrypt(byte[] key, PacketWriter writerIn, bool pad = true) {
             Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
             var aes = new AesGcm(key);
 
@@ -240,7 +237,7 @@ namespace Goedel.Protocol.Presentation {
             MemoryStream.Write(iv, 0, iv.Length);
 
             Screen.Write("IV: ");
-            var ivSpan = GetReadOnlySpan(MemoryStream.Position- Constants.SizeIvAesGcm, Constants.SizeIvAesGcm);
+            var ivSpan = GetReadOnlySpan(MemoryStream.Position - Constants.SizeIvAesGcm, Constants.SizeIvAesGcm);
 
 
             long lengthCiphertext;
@@ -288,7 +285,7 @@ namespace Goedel.Protocol.Presentation {
             //Constants.Derive(ikm, out var nonce, out var iv, out var key);
             //Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
 
-            var resultLength = streamId.Length + Constants.SizeIvAesGcm + 
+            var resultLength = streamId.Length + Constants.SizeIvAesGcm +
                     MemoryStream.Position + Constants.SizeTagAesGcm;
 
             var result = new byte[resultLength];
@@ -310,20 +307,20 @@ namespace Goedel.Protocol.Presentation {
             //Screen.WriteLine($"IvSpan {count}  {ivSpan.Length}");
 
             count += iv.Length;
-            
+
 
             var length = result.Length - count - Constants.SizeTagAesGcm;
             var ciphertextSpan = new Span<byte>(result, count, length);
             //Screen.WriteLine($"Ciphertext {count} {length}");
 
             count += length;
-            
+
 
             var tagSpan = new Span<byte>(result, count, Constants.SizeTagAesGcm);
             //Screen.WriteLine($"TagSpan {count} {tagSpan.Length}");
 
             var plaintextSpan = GetReadOnlySpan(0, MemoryStream.Position);
-                //new ReadOnlySpan<byte>(Packet, 0, length);
+            //new ReadOnlySpan<byte>(Packet, 0, length);
 
             aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, tagSpan);
 

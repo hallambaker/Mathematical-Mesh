@@ -18,15 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
+
+using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -63,7 +58,7 @@ namespace Goedel.Mesh {
                 string directory,
                     string storeId,
                     IMeshClient meshClient,
-                    DarePolicy policy = null, 
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
@@ -94,7 +89,7 @@ namespace Goedel.Mesh {
                     string directory,
                     string storeName = null,
                     IMeshClient meshClient = null,
-                    DarePolicy policy = null, 
+                    DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
@@ -142,12 +137,12 @@ namespace Goedel.Mesh {
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
         ///to return the <see cref="ProfileUser"/> value.</summary>
-        public ProfileUser ProfileUser => 
+        public ProfileUser ProfileUser =>
                     EnvelopedProfileUser.Decode(KeyCollection) as ProfileUser;
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileDevice"/>
         ///to return the <see cref="ProfileDevice"/> value.</summary>
-        public ProfileDevice ProfileDevice => 
+        public ProfileDevice ProfileDevice =>
                     EnvelopedProfileDevice.Decode(KeyCollection);
 
         /// <summary>

@@ -1,13 +1,12 @@
-﻿using Goedel.Cryptography;
+﻿using System;
+using System.Collections.Generic;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
-using Goedel.Test;
-using Goedel.Test.Core;
-using Goedel.Utilities;
 using Goedel.Mesh.Test;
-
-using System.Collections.Generic;
-using System;
+using Goedel.Test;
+using Goedel.Utilities;
 
 using Xunit;
 #pragma warning disable IDE0060
@@ -71,7 +70,7 @@ namespace Goedel.XUnit {
 
         static byte[] MakeRecordData(int record, int size) {
             var rand = new Random(record);
-            size = rand.Next(1,size);
+            size = rand.Next(1, size);
             var result = new byte[size];
             rand.NextBytes(result);
 
@@ -83,9 +82,9 @@ namespace Goedel.XUnit {
 
         static bool Verify(
                     Sequence container,
-                    DarePolicy darePolicy, 
-                    SequenceFrameIndex frameIndex, 
-                    int record, 
+                    DarePolicy darePolicy,
+                    SequenceFrameIndex frameIndex,
+                    int record,
                     int size,
                     IKeyLocate keyCollection) {
 
@@ -118,8 +117,8 @@ namespace Goedel.XUnit {
                 }
 
             // Check policy is applied correctly
-            (frameIndex.IsEncrypted==encrypt).TestTrue();
-            (keyExchange== null || keyExchange == frameIndex.KeyExchange).TestTrue();
+            (frameIndex.IsEncrypted == encrypt).TestTrue();
+            (keyExchange == null || keyExchange == frameIndex.KeyExchange).TestTrue();
 
             // check the payload
             frameIndex.HasPayload.TestTrue();

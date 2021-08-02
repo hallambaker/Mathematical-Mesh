@@ -12,7 +12,7 @@ namespace Goedel.XUnit {
     public partial class KeyFileTest {
         public static KeyFileTest Test() => new();
 
-        
+
 
         [Fact]
         public void TestKeyRead() {

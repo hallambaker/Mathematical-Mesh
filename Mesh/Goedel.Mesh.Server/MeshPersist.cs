@@ -18,18 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using System.Collections.Generic;
+using System.IO;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.IO;
 using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
-using Goedel.Mesh.ServiceAdmin;
-
-using System.Collections.Generic;
-using System.IO;
-using System;
 
 namespace Goedel.Mesh.Server {
     /// <summary>
@@ -146,7 +143,7 @@ namespace Goedel.Mesh.Server {
             // Encrypt: We should probably encrypt here to the device key and the account key.
 
             // the key isn't being filled in on the envelope ???
-            acknowledgeConnection.Envelope(ServiceSignatureKey); 
+            acknowledgeConnection.Envelope(ServiceSignatureKey);
             accountHandle.PostInbound(acknowledgeConnection.DareEnvelope);
 
             var connectResponse = new ConnectResponse() {
@@ -569,7 +566,7 @@ namespace Goedel.Mesh.Server {
         /// <returns></returns>
         AccountHandleVerified GetAccountVerified(MeshVerifiedAccount verifiedAccount, IJpcSession jpcSession) {
             var accountEntry = GetAccountLocked(verifiedAccount.AccountAddress);
-           
+
             accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
             accountEntry.Verify(verifiedAccount);
             return new AccountHandleVerified(accountEntry);

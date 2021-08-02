@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -41,15 +41,14 @@ namespace Goedel.Mesh {
 
         ///<summary>The key identifier</summary> 
         public virtual UdfAlgorithmIdentifier UdfAlgorithmIdentifier =>
-            MeshActor switch
-                {
-                    MeshActor.Device => UdfAlgorithmIdentifier.MeshProfileDevice,
-                    MeshActor.Host => UdfAlgorithmIdentifier.MeshProfileDevice,
-                    MeshActor.Account => UdfAlgorithmIdentifier.MeshProfileAccount,
-                    MeshActor.Service => UdfAlgorithmIdentifier.MeshProfileService,
-                    //MeshActor.Host => UdfAlgorithmIdentifier.MeshProfileHost,
-                    _ => throw new NYI()
-                    };
+            MeshActor switch {
+                MeshActor.Device => UdfAlgorithmIdentifier.MeshProfileDevice,
+                MeshActor.Host => UdfAlgorithmIdentifier.MeshProfileDevice,
+                MeshActor.Account => UdfAlgorithmIdentifier.MeshProfileAccount,
+                MeshActor.Service => UdfAlgorithmIdentifier.MeshProfileService,
+                //MeshActor.Host => UdfAlgorithmIdentifier.MeshProfileHost,
+                _ => throw new NYI()
+                };
 
 
         ///<summary>The primary key value.</summary>
@@ -59,11 +58,12 @@ namespace Goedel.Mesh {
         public string Udf => ProfileSignature.Udf;
 
         ///<summary>The secret seed value used to derrive the private keys.</summary>
-        public PrivateKeyUDF SecretSeed { get => secretSeed;
-            set { 
+        public PrivateKeyUDF SecretSeed {
+            get => secretSeed;
+            set {
                 secretSeed = value;
                 Generate();
-                } 
+                }
             }
         PrivateKeyUDF secretSeed;
 
@@ -88,7 +88,7 @@ namespace Goedel.Mesh {
         /// <paramref name="keyCollection"/>.</param>
         public Profile(
                     PrivateKeyUDF secretSeed,
-                    IKeyCollection keyCollection=null,
+                    IKeyCollection keyCollection = null,
                     bool persist = false) {
             SecretSeed = secretSeed ?? new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier);
 
@@ -126,7 +126,7 @@ namespace Goedel.Mesh {
         /// <paramref name="keyLocate"/>.
         /// </summary>
         /// <param name="keyLocate">Key collection containing the secret seed.</param>
-        public void Activate(IKeyCollection keyLocate) => 
+        public void Activate(IKeyCollection keyLocate) =>
                 SecretSeed ??= keyLocate.LocatePrivateKey(Udf) as PrivateKeyUDF;
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns></returns>
         public virtual void Validate() {
-            Verify(DareEnvelope).AssertTrue (InvalidProfile.Throw);
+            Verify(DareEnvelope).AssertTrue(InvalidProfile.Throw);
             ProfileSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
 
 
@@ -157,7 +157,7 @@ namespace Goedel.Mesh {
         /// <param name="envelopedAssertion">Envelope containing the assertion 
         /// to be verified.</param>
         /// <returns>True if there is a valid signature under this profile, otherwise false.</returns>
-        public bool Verify(DareEnvelope envelopedAssertion) => 
+        public bool Verify(DareEnvelope envelopedAssertion) =>
                     envelopedAssertion.Verify(ProfileSignatureKey);
 
         #endregion

@@ -1,10 +1,10 @@
-﻿using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Security.Cryptography;
+
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Algorithms {
 
@@ -287,7 +287,7 @@ namespace Goedel.Cryptography.Algorithms {
                     break;
                     }
                 default:
-                    break;
+                break;
                 }
 
             var Buffer = new MemoryStream();
@@ -322,7 +322,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             using var Sha512 = SHA512.Create();
             if (A0 != null) {
-                
+
                 Sha512.Digest(A0);
                 }
             if (A1 != null) {
@@ -783,7 +783,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="publicKey">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
-        public CurveEdwards25519 Agreement(CurveEdwards25519Public publicKey) => 
+        public CurveEdwards25519 Agreement(CurveEdwards25519Public publicKey) =>
             publicKey.Public.Multiply(Private);
 
 

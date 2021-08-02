@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Goedel.Protocol;
-using Goedel.Utilities;
-using Goedel.Protocol.Service;
-using Goedel.Mesh;
-using Goedel.Mesh.Server;
-using Goedel.Mesh.Management;
-using Goedel.Test.Core;
-
 namespace Goedel.Mesh.Test {
     public class TestService {
         static string Domain => "example.com";
@@ -87,7 +79,7 @@ namespace Goedel.Mesh.Test {
                 };
 
             var loopResult = Parallel.For(0, count, options, (i, loopState) => {
-                
+
                 Interlocked.Increment(ref threadCount);
                 //Screen.WriteLine($"Start thread {i}/{threadCount}");
 
@@ -102,8 +94,8 @@ namespace Goedel.Mesh.Test {
 
         const int MaxRandom = 0x10000;
 
-        static float[] ErrorProbabilities => new float[] { 1, 1, 1, 1};
-        static int[] CumulativeProbabilities { get; }  = MakeCumulative(ErrorProbabilities, MaxRandom);
+        static float[] ErrorProbabilities => new float[] { 1, 1, 1, 1 };
+        static int[] CumulativeProbabilities { get; } = MakeCumulative(ErrorProbabilities, MaxRandom);
 
         static int[] MakeCumulative(float[] probabilities, int max) {
             var result = new int[probabilities.Length];

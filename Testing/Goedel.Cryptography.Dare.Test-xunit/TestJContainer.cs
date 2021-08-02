@@ -1,12 +1,11 @@
-﻿using Goedel.Cryptography;
+﻿using System.Collections.Generic;
+using System.Text;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Test;
-using Goedel.Test.Core;
 using Goedel.Utilities;
-
-using System.Collections.Generic;
-using System.Text;
 
 using Xunit;
 
@@ -217,7 +216,7 @@ namespace Goedel.XUnit {
             // Write additional records
             while (Record < records) {
                 using var XContainer = Sequence.Open(fileName, FileStatus.Append,
-                             policy:policy);
+                             policy: policy);
                 for (var i = 0; (Record < records) & i < reOpen; i++) {
                     var Test = MakeConstant("Test ", ((Record + 1) % maxSize));
                     XContainer.Append(Test);

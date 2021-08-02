@@ -128,7 +128,7 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="Data">Input</param>
         /// <returns>Output array</returns>
-        public static byte[] BigEndian(this int Data) => 
+        public static byte[] BigEndian(this int Data) =>
                     new byte[] { Data.Byte3(), Data.Byte2(), Data.Byte1(), Data.Byte0() };
 
 

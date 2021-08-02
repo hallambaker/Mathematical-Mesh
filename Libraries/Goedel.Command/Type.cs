@@ -105,7 +105,7 @@ namespace Goedel.Command {
                     break;
                     }
                 default:
-                    throw new System.Exception("Flag value not recognized" + Text);
+                throw new System.Exception("Flag value not recognized" + Text);
                 }
             }
 

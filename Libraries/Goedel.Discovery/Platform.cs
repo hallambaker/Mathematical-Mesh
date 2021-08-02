@@ -1,9 +1,4 @@
-﻿using Goedel.Utilities;
-
-using System.Security.Cryptography;
-using Goedel.Cryptography;
-
-namespace Goedel.Discovery {
+﻿namespace Goedel.Discovery {
 
     /// <summary>
     /// Contains static links to delegates to perform platform specific

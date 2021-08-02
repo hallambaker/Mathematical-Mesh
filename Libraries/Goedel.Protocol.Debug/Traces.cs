@@ -277,14 +277,13 @@ namespace Goedel.Protocol.Debug {
                 return "$$$$ Missing $$$$";
                 }
 
-            return Level switch
-                {
-                    0 => StringHTTP(false),
-                    1 => StringHTTP(true),
-                    4 => StringJSON(false),
-                    5 => StringJSON(true),
-                    _ => StringHTTP(true),
-                    };
+            return Level switch {
+                0 => StringHTTP(false),
+                1 => StringHTTP(true),
+                4 => StringJSON(false),
+                5 => StringJSON(true),
+                _ => StringHTTP(true),
+                };
             }
 
 

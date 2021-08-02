@@ -1,12 +1,10 @@
-﻿using Goedel.Cryptography;
+﻿using System.Collections.Generic;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Cryptography.Core;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
-using Goedel.Utilities;
-
-using System.Collections.Generic;
 
 namespace Goedel.Test.Core {
 
@@ -55,7 +53,7 @@ namespace Goedel.Test.Core {
         public static void Corrupt(
                 this DareEnvelope envelope,
                 DataValidity dataValidity = DataValidity.CorruptPayload,
-                DareEnvelope alternative=null) {
+                DareEnvelope alternative = null) {
 
             switch (dataValidity) {
                 case DataValidity.CorruptPayload: {
@@ -117,7 +115,7 @@ namespace Goedel.Test.Core {
         }
 
 
-    public class CryptoParametersDebug : CryptoParameters{
+    public class CryptoParametersDebug : CryptoParameters {
 
         public CryptoParametersDebug(IKeyLocate keyCollection = null,
                         List<string> recipients = null,
@@ -125,8 +123,8 @@ namespace Goedel.Test.Core {
                         CryptoKey recipient = null,
                         CryptoKey signer = null,
                         CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
-                        CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) : 
-                    base (keyCollection, recipients, signers, recipient, signer, encryptID, digestID) {
+                        CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) :
+                    base(keyCollection, recipients, signers, recipient, signer, encryptID, digestID) {
             }
 
         /// <summary>

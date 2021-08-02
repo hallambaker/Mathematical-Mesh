@@ -20,10 +20,10 @@
 //  
 //  
 
-using Goedel.Utilities;
-
 using System;
 using System.IO;
+
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -94,7 +94,7 @@ namespace Goedel.Protocol {
                 else if (c == '\\') {
                     conv = "\\\\";
                     }
-                else if (c >= 32 & c <127) {
+                else if (c >= 32 & c < 127) {
                     conv = c.ToString();
                     }
                 else if (c == '\b') {
@@ -137,7 +137,7 @@ namespace Goedel.Protocol {
             Output.Write("\"");
             Output.Write(BaseConvert.ToStringBase64url(
                     Data, offset, Length, format: ConversionFormat.Draft,
-                    outputCol: OutputCol+2, outputMax: 66));
+                    outputCol: OutputCol + 2, outputMax: 66));
 
             Output.Write("\"");
             }

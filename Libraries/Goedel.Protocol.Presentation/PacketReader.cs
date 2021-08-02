@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
-using Goedel.Protocol;
+
 using Goedel.Utilities;
-using Goedel.Cryptography;
 namespace Goedel.Protocol.Presentation {
 
     /// <summary>
@@ -82,8 +78,8 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="packet">The packet data.</param>
         /// <param name="position">Start position at which reading of the packet should start.</param>
         /// <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.</param>
-        public PacketReader(byte[] packet, 
-                int position=0,
+        public PacketReader(byte[] packet,
+                int position = 0,
                 int count = -1) {
             Packet = packet;
             Position = position;
@@ -135,7 +131,7 @@ namespace Goedel.Protocol.Presentation {
         public int ReadInteger() {
             var (packetTag, data) = ReadTag();
             (packetTag == PacketTag.Integer).AssertTrue(NYI.Throw);
-            return (int) data;
+            return (int)data;
             }
 
         /// <summary>
@@ -146,7 +142,7 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The value read.</returns>
         public static ResponderMessageType ReadResponderMessageType(
                     byte[] buffer,
-                    ref int position) => (ResponderMessageType) buffer[position++];
+                    ref int position) => (ResponderMessageType)buffer[position++];
 
         /// <summary>
         /// Read a <see cref="InitiatorMessageType"/> in a connection packet.
@@ -165,7 +161,7 @@ namespace Goedel.Protocol.Presentation {
         public Span<byte> ReadBinarySpan() {
             var (packetTag, length) = ReadTag();
             (packetTag == PacketTag.Binary).AssertTrue(NYI.Throw);
-            return ReadSpan((int) length);
+            return ReadSpan((int)length);
             }
 
         /// <summary>
@@ -223,12 +219,12 @@ namespace Goedel.Protocol.Presentation {
         /// not permitted by System.Security.Cryptography.AesGcm.TagByteSizes.</exception>
         /// <exception cref="System.Security.Cryptography.CryptographicException">
         /// The tag value could not be verified, or the decryption operation otherwise failed.</exception>
-        public static void DecryptAesGcm (
+        public static void DecryptAesGcm(
                 byte[] key,
-                ReadOnlySpan<byte> nonce, 
-                ReadOnlySpan<byte> ciphertext, 
-                ReadOnlySpan<byte> tag, 
-                Span<byte> plaintext, 
+                ReadOnlySpan<byte> nonce,
+                ReadOnlySpan<byte> ciphertext,
+                ReadOnlySpan<byte> tag,
+                Span<byte> plaintext,
                 ReadOnlySpan<byte> associatedData = default) {
             var aes = new AesGcm(key);
             aes.Decrypt(nonce, ciphertext, tag, plaintext, associatedData);
@@ -244,7 +240,7 @@ namespace Goedel.Protocol.Presentation {
 
         private ReadOnlySpan<byte> GetReadOnlySpan(int start, long length) {
             Screen.WriteLine($"{start} for {length}");
-            Position = (int)(start+length);
+            Position = (int)(start + length);
             return new ReadOnlySpan<byte>(Packet, start, (int)length);
             }
 
@@ -281,11 +277,11 @@ namespace Goedel.Protocol.Presentation {
 
             Screen.Write("D-Cipher: ");
             var ciphertextSpan = GetReadOnlySpan(Position, length);
-            
+
             Screen.Write("D-Tag: ");
             var tagSpan = GetReadOnlySpan(Position, Constants.SizeTagAesGcm);
 
-            DecryptDataDelegate (key, ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
+            DecryptDataDelegate(key, ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
 
             return new PacketReader(dataOut);
             }
@@ -302,7 +298,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="decryptDataDelegate">The decryption delegate.</param>
         /// <returns>A reader for the decrypted data.</returns>
         public static PacketReader Unwrap(byte[] key, byte[] packet, int offset, int last,
-            DecryptDataDelegate decryptDataDelegate=null) {
+            DecryptDataDelegate decryptDataDelegate = null) {
 
             // Hack: This needs to be rewritten with the tag at the end!
 
@@ -314,7 +310,7 @@ namespace Goedel.Protocol.Presentation {
 
             var position = offset + ivSpan.Length;
 
-            
+
 
             var length = last - position - Constants.SizeTagAesGcm;
             var ciphertextSpan = new ReadOnlySpan<byte>(packet, position, length);

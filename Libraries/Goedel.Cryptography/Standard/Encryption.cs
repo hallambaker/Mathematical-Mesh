@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 //  
 //  
-using Goedel.Utilities;
-
 using System.IO;
 using System.Security.Cryptography;
+
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Standard {
     /// <summary>
@@ -384,7 +384,7 @@ namespace Goedel.Cryptography.Standard {
                             CipherMode.ECB, PaddingMode.None);
                     }
 
- 
+
                 default: {
                     throw new CipherModeNotSupported();
                     }

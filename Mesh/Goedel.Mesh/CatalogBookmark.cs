@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Goedel.Mesh {
 
@@ -77,12 +71,12 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public CatalogBookmark(
-                    string directory, 
+                    string directory,
                     string storeName = null,
                     DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
-                    IMeshClient meshClient = null, 
+                    IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
             base(directory, storeName ?? Label,

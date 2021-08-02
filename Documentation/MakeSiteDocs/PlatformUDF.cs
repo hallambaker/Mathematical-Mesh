@@ -1,9 +1,9 @@
-﻿using Goedel.Cryptography;
+﻿using System.Numerics;
+
+using Goedel.Cryptography;
 using Goedel.Mesh.Shell;
 using Goedel.Test;
 using Goedel.Utilities;
-
-using System.Numerics;
 
 using GC = Goedel.Cryptography;
 
@@ -162,7 +162,7 @@ namespace ExampleGenerator {
                     break;
                     }
                 default:
-                    break;
+                break;
                 }
 
             Key = OKM;
@@ -214,7 +214,7 @@ namespace ExampleGenerator {
 
 
                 default:
-                    break;
+                break;
                 }
             Key = ModConvert(OKM, prime);
             }
@@ -260,7 +260,7 @@ namespace ExampleGenerator {
                     }
 
                 default:
-                    break;
+                break;
                 }
 
             OKM_P = HKDF.Derive(Info_P, bits);

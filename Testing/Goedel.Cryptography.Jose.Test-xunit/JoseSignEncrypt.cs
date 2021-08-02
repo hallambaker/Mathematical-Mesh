@@ -4,8 +4,9 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.IO;
 using Goedel.Protocol;
-using Goedel.Utilities;
 using Goedel.Test;
+using Goedel.Utilities;
+
 using Xunit;
 
 #pragma warning disable IDE0059
@@ -51,7 +52,7 @@ namespace Goedel.XUnit {
         [InlineData(CryptoAlgorithmId.RSASign)]
         public void RoundTripKeyExportable(CryptoAlgorithmId cryptoAlgorithmID) {
 
-            
+
 
             var key = KeyPair.Factory(cryptoAlgorithmID, keySecurity: KeySecurity.Exportable);
             var jsonPublic = Key.GetPublic(key);

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Goedel.Utilities {
     /// <summary>
@@ -26,7 +24,7 @@ namespace Goedel.Utilities {
                 Console.WriteLine(format, arg);
                 }
 
-           
+
 
 
             }
@@ -34,7 +32,7 @@ namespace Goedel.Utilities {
         /// <summary>
         /// Write a blank line to the output
         /// </summary>
-        public static void WriteLine () => Console.WriteLine();
+        public static void WriteLine() => Console.WriteLine();
 
 
         /// <summary>

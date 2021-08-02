@@ -19,11 +19,8 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Goedel.Protocol.Presentation;
 
 namespace Goedel.Protocol.Service {

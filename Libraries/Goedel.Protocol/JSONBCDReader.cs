@@ -1,7 +1,7 @@
-﻿using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.IO;
+
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -38,14 +38,13 @@ namespace Goedel.Protocol {
 
         static int ModifierToLength(int c) {
             var code = c & 0x03;
-            return code switch
-                {
-                    0 => 1,
-                    1 => 2,
-                    2 => 4,
-                    3 => 8,
-                    _ => throw new NYI(),
-                    };
+            return code switch {
+                0 => 1,
+                1 => 2,
+                2 => 4,
+                3 => 8,
+                _ => throw new NYI(),
+                };
             }
 
         static bool IsWhitespace(byte c) =>
@@ -96,7 +95,7 @@ namespace Goedel.Protocol {
                         }
 
                     default:
-                        break;
+                    break;
                     }
 
                 switch (b) {
@@ -118,7 +117,7 @@ namespace Goedel.Protocol {
                         }
 
                     default:
-                        break;
+                    break;
                     }
 
 
@@ -146,7 +145,7 @@ namespace Goedel.Protocol {
                         }
 
                     default:
-                        break;
+                    break;
                     }
 
 
@@ -177,7 +176,7 @@ namespace Goedel.Protocol {
                         }
 
                     default:
-                        break;
+                    break;
                     }
                 } while (Dictionary);
             throw new UnknownTag();

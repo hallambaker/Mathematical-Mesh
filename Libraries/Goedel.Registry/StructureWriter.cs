@@ -58,12 +58,11 @@ namespace Goedel.Registry {
         /// <param name="TextWriter">The output</param>
         /// <param name="OutputFormat">Format to write output in.</param>
         /// <returns>The created output writer.</returns>
-        public static StructureWriter GetStructureWriter(TextWriter TextWriter, OutputFormat OutputFormat) => OutputFormat switch
-            {
-                Goedel.Registry.OutputFormat.Goedel => new IndentWriter(TextWriter),
-                Goedel.Registry.OutputFormat.XML => new XMLWriter(TextWriter),
-                _ => null,
-                };
+        public static StructureWriter GetStructureWriter(TextWriter TextWriter, OutputFormat OutputFormat) => OutputFormat switch {
+            Goedel.Registry.OutputFormat.Goedel => new IndentWriter(TextWriter),
+            Goedel.Registry.OutputFormat.XML => new XMLWriter(TextWriter),
+            _ => null,
+            };
 
         /// <summary>
         /// Constructor.

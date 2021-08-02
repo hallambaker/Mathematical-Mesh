@@ -18,14 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using System.Collections.Generic;
+using System.Text;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Utilities;
 using Goedel.Protocol;
-
-using System.Collections.Generic;
-using System.Text;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -119,7 +119,7 @@ namespace Goedel.Mesh {
                     PrivateKeyUDF secretSeed) => ActivateFromSeed(keyCollection, secretSeed);
 
         void ActivateFromSeed(
-                    IKeyCollection keyCollection, 
+                    IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed) {
             this.secretSeed = secretSeed;
             ProfileSignatureKey = secretSeed.GenerateContributionKeyPair(
@@ -252,7 +252,7 @@ namespace Goedel.Mesh {
 
             var connectionDevice = activationDevice.ConnectionUser;
             connectionDevice.AssertNotNull(Internal.Throw);
-            connectionDevice.Envelope(signature, objectEncoding: 
+            connectionDevice.Envelope(signature, objectEncoding:
                         ObjectEncoding.JSON_B);
             connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
@@ -282,7 +282,7 @@ namespace Goedel.Mesh {
                 };
 
             return catalogEntryDevice;
-            
+
             }
 
         #endregion
@@ -304,7 +304,7 @@ namespace Goedel.Mesh {
                         ) {
 
             profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
-            
+
             // encrypt the activationAccount under the device encryption key.
             activationAccount.AssertNotNull(Internal.Throw);
             activationAccount.Envelope(AdministratorSignatureKey, capability);
@@ -334,7 +334,7 @@ namespace Goedel.Mesh {
         public ActivationAccount MakeActivationAccount(
                 ProfileDevice profileDevice,
                 List<string> roles = null,
-                ITransactContextAccount transactContextAccount=null
+                ITransactContextAccount transactContextAccount = null
                 ) {
 
             var newActivation = new ActivationAccount {
@@ -549,7 +549,7 @@ namespace Goedel.Mesh {
 
                 DictionaryStoreEncryptionKey.Add(containerName, encryptionKey);
                 }
-            else if (GetEntry (containerName, out var entry)){
+            else if (GetEntry(containerName, out var entry)) {
                 encryptionKey = entry.Key.GetKeyPair(KeySecurity.Exportable);
 
                 DictionaryStoreEncryptionKey.Add(entry.Resource, encryptionKey);

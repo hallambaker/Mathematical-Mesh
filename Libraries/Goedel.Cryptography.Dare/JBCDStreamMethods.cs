@@ -1,9 +1,9 @@
-﻿using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.IO;
 using System.Threading;
+
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -323,9 +323,9 @@ namespace Goedel.Cryptography.Dare {
 
             check += frameLength;
             Assert.AssertTrue(PositionWrite == check, Internal.Throw);
-                // Note, if this check fails, check to see if the trailer length is being calculated correctly.
-                // Missing or incorrect dummy trailers will cause this check to fail as will incorrect calculation
-                // of the payload length.
+            // Note, if this check fails, check to see if the trailer length is being calculated correctly.
+            // Missing or incorrect dummy trailers will cause this check to fail as will incorrect calculation
+            // of the payload length.
 
             WriteTagReverse(BFrame, frameLength);
             StreamWrite.Flush(); // Force output of data

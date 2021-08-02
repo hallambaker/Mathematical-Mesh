@@ -7,7 +7,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
 	/// PKIXPublicKeyECDH 
     /// </summary>
-	public abstract partial class PKIXPublicKeyECDH : Goedel.ASN.ByteArrayVerbatim, 
+	public abstract partial class PKIXPublicKeyECDH : Goedel.ASN.ByteArrayVerbatim,
                     IPkixPublicKey, IKeyPublicECDH {
 
         /// <summary>The Jose curve identifier.</summary>
@@ -50,7 +50,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
 	/// PKIXPrivateKeyECDH 
     /// </summary>
-	public abstract partial class PKIXPrivateKeyECDH : Goedel.ASN.ByteArrayVerbatim, 
+	public abstract partial class PKIXPrivateKeyECDH : Goedel.ASN.ByteArrayVerbatim,
                         IPKIXPrivateKey, IKeyPrivateECDH {
 
         /// <summary>The Jose curve identifier.</summary>

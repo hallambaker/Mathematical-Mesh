@@ -1,8 +1,8 @@
-﻿using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.KeyFile {
 
@@ -54,15 +54,15 @@ namespace Goedel.Cryptography.KeyFile {
                     }
 
                 case KeyFileFormat.Default:
-                    break;
+                break;
                 case KeyFileFormat.X509DER:
-                    break;
+                break;
                 case KeyFileFormat.PKCS12:
-                    break;
+                break;
                 case KeyFileFormat.PKCS7:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
             return null;
             }

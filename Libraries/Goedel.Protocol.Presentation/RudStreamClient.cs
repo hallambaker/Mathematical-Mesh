@@ -20,10 +20,6 @@
 
 //using Goedel.Protocol.Service;
 
-using System.Net;
-
-using Goedel.Utilities;
-
 namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// The client side of an RDP transactional stream.

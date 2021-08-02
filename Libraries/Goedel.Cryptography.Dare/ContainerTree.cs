@@ -1,7 +1,6 @@
-﻿using Goedel.Utilities;
+﻿using System.Collections.Generic;
 
-using System;
-using System.Collections.Generic;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -15,7 +14,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ContainerTree()  {
+        public ContainerTree() {
             }
 
 
@@ -353,9 +352,9 @@ namespace Goedel.Cryptography.Dare {
                 Assert.AssertTrue(header.SequenceInfo.Index == index, SequenceDataCorrupt.Throw);
                 if (index > 1) {
                     var Previous = PreviousFrame(index);
-                    Assert.AssertTrue(headerDictionary.TryGetValue(header.SequenceInfo.TreePosition, out var PreviousHeader), 
+                    Assert.AssertTrue(headerDictionary.TryGetValue(header.SequenceInfo.TreePosition, out var PreviousHeader),
                         SequenceDataCorrupt.Throw);
-                    Assert.AssertTrue(PreviousHeader.SequenceInfo.Index == Previous, 
+                    Assert.AssertTrue(PreviousHeader.SequenceInfo.Index == Previous,
                         SequenceDataCorrupt.Throw);
                     }
 

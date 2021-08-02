@@ -19,12 +19,12 @@
 //  THE SOFTWARE.
 //  
 //  
-using Goedel.Utilities;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -195,7 +195,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The Key Value as a Base32 encoded string.
         /// </summary>
-        public virtual string UDFKey => UDF.PresentationBase32(Key, Key.Length*8);
+        public virtual string UDFKey => UDF.PresentationBase32(Key, Key.Length * 8);
 
         ///<summary>The UDF identifier of the secret value.</summary>
         public string UDFIdentifier => UDF.ContentDigestOfUDF(UDFKey, bits: KeyBits * 2);
@@ -371,7 +371,7 @@ namespace Goedel.Cryptography {
             var result = exponent + new BigInteger(PrimeOffsetNext[index - 1]);
 
             result.IsProbablePrime().VerifyTrue(Internal.Throw);
-            
+
             return result;
             }
 
@@ -527,7 +527,7 @@ namespace Goedel.Cryptography {
             set {
                 key = value;
                 data = new byte[key.Length - 1];
-                Array.Copy(key, 1, data, 0, key.Length-1);
+                Array.Copy(key, 1, data, 0, key.Length - 1);
                 First = key[0];
                 valueStore = data.BigIntegerBigEndian();
                 }

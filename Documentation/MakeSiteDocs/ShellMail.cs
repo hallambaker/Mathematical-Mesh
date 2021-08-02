@@ -1,6 +1,6 @@
-﻿using Goedel.Mesh.Test;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
+using Goedel.Mesh.Test;
 
 namespace ExampleGenerator {
     public class ShellMail : ExampleSet {

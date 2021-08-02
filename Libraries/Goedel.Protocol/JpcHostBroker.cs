@@ -19,8 +19,6 @@
 //  THE SOFTWARE.
 //  
 //  
-using Goedel.Utilities;
-using System.Collections.Generic;
 
 namespace Goedel.Protocol {
 
@@ -28,7 +26,7 @@ namespace Goedel.Protocol {
     /// Jpc Ticket record
     /// </summary>
 
-    public record JpcTicket (
+    public record JpcTicket(
             ) {
         ///<summary>Shared secret to which the ticket is bound</summary> 
         public byte[] SharedSecret;
@@ -45,8 +43,8 @@ namespace Goedel.Protocol {
         ///<summary>Web Service Endpoint to which the ticket is bound</summary> 
         public string WebServiceEndpoint;
         }
-    
-    
+
+
     //public class JpcHostBroker {
 
     //    protected Dictionary<string, JpcTicket> TicketByDiscoveryDomain { get; } =

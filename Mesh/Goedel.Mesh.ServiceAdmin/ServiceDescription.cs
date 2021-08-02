@@ -19,12 +19,10 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
 using System.Collections.Generic;
+
+using Goedel.Protocol.Presentation;
+using Goedel.Utilities;
 
 
 namespace Goedel.Mesh.ServiceAdmin {
@@ -216,8 +214,8 @@ namespace Goedel.Mesh.ServiceAdmin {
 
         /////<summary>The connection of the host to the service.</summary> 
         //public ConnectionDevice ConnectionDevice => EnvelopedConnectionDevice.Decode();
-        
-        
+
+
         ///<summary>List of referenced service configurations.</summary> 
         public List<ServiceConfiguration> ServiceConfigs { get; set; }
 

@@ -1,12 +1,11 @@
+using System.Collections.Generic;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
-using Goedel.Test;
-using Goedel.Test.Core;
-using Goedel.Utilities;
 using Goedel.Mesh.Test;
-using System;
-using System.Collections.Generic;
+using Goedel.Test;
+using Goedel.Utilities;
 
 using Xunit;
 
@@ -84,7 +83,7 @@ namespace Goedel.XUnit {
         static MessageComplete SetStatus(Spool spool, string id, MessageStatus messageStatus, KeyPair signingKey) {
 
             var message = new MessageComplete() {
-                
+
                 References = new List<Reference> {
                     new Reference () {
                         MessageId = id,

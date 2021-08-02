@@ -223,25 +223,25 @@ namespace Goedel.Discovery {
             string result = Token(out var GotTokenType);
 
 
-/* Unmerged change from project 'Goedel.Discovery'
-Before:
-            if ((GotTokenType & TokenType )== GotTokenType) {
-After:
-            if ((GotTokenType & TokenType) == GotTokenType) {
-*/
+            /* Unmerged change from project 'Goedel.Discovery'
+            Before:
+                        if ((GotTokenType & TokenType )== GotTokenType) {
+            After:
+                        if ((GotTokenType & TokenType) == GotTokenType) {
+            */
             if ((GotTokenType & TokenType) == GotTokenType) {
                 return result;
 
-/* Unmerged change from project 'Goedel.Discovery'
-Before:
-                }
-            
-            return null;
-After:
-                }
+                /* Unmerged change from project 'Goedel.Discovery'
+                Before:
+                                }
 
-            return null;
-*/
+                            return null;
+                After:
+                                }
+
+                            return null;
+                */
                 }
 
             return null;
@@ -259,16 +259,16 @@ After:
         /// <param name="TokenType">The token type</param>
         /// <returns>The token received</returns>
 
-/* Unmerged change from project 'Goedel.Discovery'
-Before:
-        public string Token(out TokenType TokenType) {
-            
-            while (true) {
-After:
-        public string Token(out TokenType TokenType) {
+        /* Unmerged change from project 'Goedel.Discovery'
+        Before:
+                public string Token(out TokenType TokenType) {
 
-            while (true) {
-*/
+                    while (true) {
+        After:
+                public string Token(out TokenType TokenType) {
+
+                    while (true) {
+        */
         public string Token(out TokenType TokenType) {
 
             while (true) {
@@ -333,16 +333,16 @@ After:
                     result += c;
                     }
 
-/* Unmerged change from project 'Goedel.Discovery'
-Before:
-                state = next_state;
-                
-                }
-After:
-                state = next_state;
+                /* Unmerged change from project 'Goedel.Discovery'
+                Before:
+                                state = next_state;
 
-                }
-*/
+                                }
+                After:
+                                state = next_state;
+
+                                }
+                */
                 state = next_state;
 
                 }

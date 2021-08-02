@@ -1,12 +1,11 @@
-﻿using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.PKIX;
+﻿using System;
+using System.IO;
+
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.PKIX;
 using Goedel.IO;
 using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
-using System.IO;
 
 
 
@@ -107,7 +106,7 @@ namespace Goedel.Cryptography.Core {
 
 
             }
-        
+
         /// <summary>
         /// Erase the private key <paramref name="udf"/> from storage.
         /// </summary>

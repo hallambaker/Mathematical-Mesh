@@ -1,11 +1,8 @@
-﻿using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Security.Cryptography;
+
+using Goedel.Cryptography.Jose;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
     /// <summary>
@@ -30,8 +27,8 @@ namespace Goedel.Cryptography.Dare {
         public CryptoParametersSequence(
                 SequenceType containerType,
                 DareHeader header,
-                bool recover=false,
-                IKeyLocate keyLocate=null) {
+                bool recover = false,
+                IKeyLocate keyLocate = null) {
 
             var policy = header.Policy;
 
@@ -81,7 +78,7 @@ namespace Goedel.Cryptography.Dare {
                         BaseSeed = keyLocate.Decrypt(header.Recipients, EncryptId);
                         }
                     else {
-                         SetKeyExchange(header);
+                        SetKeyExchange(header);
                         }
                     }
                 else {
@@ -127,7 +124,7 @@ namespace Goedel.Cryptography.Dare {
                     }
                 case PolicyEncryption.Once:
                 case PolicyEncryption.Session: {
-                    if (keyExchangeFrame==-1) {
+                    if (keyExchangeFrame == -1) {
                         previousFrame = currentFrame;
                         keyExchangeFrame = currentFrame;
                         return false;
@@ -155,7 +152,7 @@ namespace Goedel.Cryptography.Dare {
             PayloadDigest = DigestProvider.NullDigest
             };
 
-        CryptoProviderDigest DigestProvider => digestProvider ??= 
+        CryptoProviderDigest DigestProvider => digestProvider ??=
             CryptoCatalog.Default.GetDigest(DigestId).CacheValue(out digestProvider);
         CryptoProviderDigest digestProvider;
 

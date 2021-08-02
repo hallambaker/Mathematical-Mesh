@@ -19,15 +19,12 @@
 //  THE SOFTWARE.
 
 
+using System.Text;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-using Goedel.Protocol.Presentation;
-using System.Text;
-using System.Collections.Generic;
-using System;
-using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
@@ -99,13 +96,13 @@ namespace Goedel.Mesh {
             AccountUdf = profileDevice.Udf;
 
             var deviceEncryption = ActivationSeed.ActivatePublic(
-                    profileDevice.Encryption.GetKeyPairAdvanced(), 
+                    profileDevice.Encryption.GetKeyPairAdvanced(),
                             MeshActor, MeshKeyOperation.Encrypt);
             var deviceSignature = ActivationSeed.ActivatePublic(
-                    profileDevice.Signature.GetKeyPairAdvanced(), 
+                    profileDevice.Signature.GetKeyPairAdvanced(),
                             MeshActor, MeshKeyOperation.Sign);
             var deviceAuthentication = ActivationSeed.ActivatePublic(
-                    profileDevice.Authentication.GetKeyPairAdvanced(), 
+                    profileDevice.Authentication.GetKeyPairAdvanced(),
                             MeshActor, MeshKeyOperation.Authenticate);
 
             // Create the (unsigned) ConnectionUser

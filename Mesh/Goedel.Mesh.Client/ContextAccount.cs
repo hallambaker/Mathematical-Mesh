@@ -1,11 +1,11 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Utilities;
-using Goedel.Protocol.Presentation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Protocol.Presentation;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
 
@@ -86,7 +86,7 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>The Account Address</summary>
-        public abstract string AccountAddress { get; } 
+        public abstract string AccountAddress { get; }
         #endregion
         #region // Activated account keys
         ///<summary>The account activation</summary>
@@ -119,20 +119,20 @@ namespace Goedel.Mesh.Client {
         ///<summary>List of catalogs</summary>
         public virtual Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;
         Dictionary<string, StoreFactoryDelegate> catalogDelegates = new() {
-             // All contexts have a capability catalog:
-            {CatalogAccess.Label, CatalogAccess.Factory},
-            {CatalogPublication.Label, CatalogPublication.Factory}
+            // All contexts have a capability catalog:
+                { CatalogAccess.Label, CatalogAccess.Factory },
+                { CatalogPublication.Label, CatalogPublication.Factory }
             };
         ///<summary>List of spools, these are the same for each type of account.</summary>
         public virtual Dictionary<string, StoreFactoryDelegate> DictionarySpoolDelegates => StaticSpoolDelegates;
 
         ///<summary>List of spools, these are the same for each type of account.</summary>
         protected static Dictionary<string, StoreFactoryDelegate> StaticSpoolDelegates = new() {
-            {SpoolInbound.Label, SpoolInbound.Factory},
-            {SpoolOutbound.Label, SpoolOutbound.Factory},
-            {SpoolLocal.Label, SpoolLocal.Factory},
-            {SpoolArchive.Label, SpoolArchive.Factory},
-            }; 
+                { SpoolInbound.Label, SpoolInbound.Factory },
+                { SpoolOutbound.Label, SpoolOutbound.Factory },
+                { SpoolLocal.Label, SpoolLocal.Factory },
+                { SpoolArchive.Label, SpoolArchive.Factory },
+            };
         #endregion
         #endregion
 
@@ -155,7 +155,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="catalogedMachine">Description of the device profile.</param>
         /// <param name="meshHost">The Mesh host to add the admin context to.</param>
-        public ContextAccount (
+        public ContextAccount(
                 MeshHost meshHost,
                 CatalogedMachine catalogedMachine) {
 
@@ -169,7 +169,7 @@ namespace Goedel.Mesh.Client {
         /// <paramref name="activationAccount"/>.
         /// </summary>
         /// <param name="activationAccount">The activation record.</param>
-        public ContextAccount(ActivationAccount activationAccount) => 
+        public ContextAccount(ActivationAccount activationAccount) =>
             ActivationAccount = activationAccount;
 
 
@@ -190,7 +190,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="register">If true, register the pin at the service.</param>
         /// <param name="encryptKey">The encryption key to be used to encrypt the PIN registration.</param>
         /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
-        public MessagePin GetPIN(string action, bool automatic = true, 
+        public MessagePin GetPIN(string action, bool automatic = true,
                             int length = 80, long validity = MeshConstants.DayInTicks,
                             bool register = true, CryptoKey encryptKey = null) {
             var pin = UDF.AuthenticationKey(length);
@@ -571,7 +571,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="keyId">The key identifier to match.</param>
         /// <param name="cryptoKey">The found key </param>
         /// <returns>The key pair if found.</returns>
-        public virtual bool LocatePrivateKeyPair(string keyId, out CryptoKey cryptoKey) => 
+        public virtual bool LocatePrivateKeyPair(string keyId, out CryptoKey cryptoKey) =>
                     KeyCollection.LocatePrivateKeyPair(keyId, out cryptoKey);
 
         /// <summary>
@@ -590,7 +590,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="signingKey">The identifier to resolve.</param>
         /// <param name="cryptoKey">The found key </param>
         /// <returns>The identifier.</returns>
-        public virtual bool TryFindKeySignature(string signingKey, out CryptoKey cryptoKey) => 
+        public virtual bool TryFindKeySignature(string signingKey, out CryptoKey cryptoKey) =>
                     KeyCollection.TryFindKeySignature(signingKey, out cryptoKey);
 
         /// <summary>

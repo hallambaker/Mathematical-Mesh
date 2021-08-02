@@ -1,16 +1,11 @@
-﻿using Goedel.Cryptography;
-using Goedel.Mesh;
-using Goedel.Mesh.Client;
-using Goedel.Protocol;
-using Goedel.Test.Core;
-using Goedel.Utilities;
-using Goedel.IO;
-using System;
-using System.Collections.Generic;
+﻿using System.Diagnostics;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
-using System.Reflection;
-using System.Diagnostics;
+using Goedel.Mesh;
 using Goedel.Test;
+using Goedel.Utilities;
+
 using Xunit;
 
 #pragma warning disable IDE0059
@@ -126,7 +121,7 @@ namespace Goedel.XUnit {
         /// </summary>
         /// <param name="cryptoAlgorithmId">Algorithm to test</param>
         [Theory]
-        [InlineData(CryptoAlgorithmId.X448,0)]
+        [InlineData(CryptoAlgorithmId.X448, 0)]
         [InlineData(CryptoAlgorithmId.X25519, 0)]
         [InlineData(CryptoAlgorithmId.Ed25519, 0)]
         [InlineData(CryptoAlgorithmId.Ed448, 0)]
@@ -150,13 +145,13 @@ namespace Goedel.XUnit {
             }
 
         static KeyPairAdvanced GetKeyPairAdvanced(CryptoAlgorithmId cryptoAlgorithmId,
-                        int round=0, int count=0) {
+                        int round = 0, int count = 0) {
             var stack = new StackTrace();
             var frame = stack.GetFrame(1);
             var method = frame.GetMethod();
 
             var seed = method.Name;
-            var testKey = UDF.TestKey (cryptoAlgorithmId, $"{seed}-{round}-{count}");
+            var testKey = UDF.TestKey(cryptoAlgorithmId, $"{seed}-{round}-{count}");
 
 
             return UDF.DeriveKey(testKey, null, KeySecurity.Exportable) as KeyPairAdvanced;
@@ -180,13 +175,13 @@ namespace Goedel.XUnit {
 
 
         static DomainParameters GetDomainParameters(string curve) => curve switch {
-                CurveEdwards25519.CurveJose => DomainParameters.Curve25519,
+            CurveEdwards25519.CurveJose => DomainParameters.Curve25519,
             CurveEdwards448.CurveJose => DomainParameters.Curve448,
             CurveX25519.CurveJose => DomainParameters.Curve25519,
             CurveX448.CurveJose => DomainParameters.Curve448,
 
-                _ => throw new NYI()
-                };
+            _ => throw new NYI()
+            };
 
 
         [Fact]

@@ -1,6 +1,5 @@
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
-using Goedel.Test.Core;
 using Goedel.Utilities;
 //using Goedel.Mesh.Shell.ServiceAdmin;
 
@@ -75,7 +74,7 @@ namespace Goedel.XUnit {
 
         }
 
-    public partial class ShellTests :Disposable{
+    public partial class ShellTests : Disposable {
 
 
         public string ServiceDns => TestEnvironment.ServiceDns;
@@ -90,7 +89,7 @@ namespace Goedel.XUnit {
         public virtual TestCLI GetTestCLI(string MachineName = null) {
             var testShell = new TestShell(TestEnvironment, MachineName);
             return new TestCLI(testShell);
-            } 
+            }
         #endregion
 
 

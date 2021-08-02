@@ -1,9 +1,9 @@
-﻿using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+
+using Goedel.Utilities;
 
 namespace Goedel.Discovery {
 

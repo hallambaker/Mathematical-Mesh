@@ -1,8 +1,8 @@
-﻿using Goedel.IO;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.IO;
+
+using Goedel.IO;
+using Goedel.Utilities;
 
 
 namespace Goedel.Cryptography.Dare {
@@ -137,7 +137,7 @@ namespace Goedel.Cryptography.Dare {
             catch (Exception exception) {
                 LockGlobal.Exit();
                 exception.Future();
-                throw ;
+                throw;
                 }
 
             }

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+
 using Goedel.Utilities;
 
 namespace Goedel.FSR {
@@ -34,8 +35,8 @@ namespace Goedel.FSR {
         /// <summary>
         /// Create new lexical analyzer
         /// </summary>
-        public LexReader(string filename) : 
-            this(new FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, 
+        public LexReader(string filename) :
+            this(new FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read,
                     System.IO.FileShare.Read)) {
             }
 

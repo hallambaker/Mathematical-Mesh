@@ -1,7 +1,7 @@
 ﻿
-using Goedel.Cryptography.Standard;
-
 using System.Runtime.CompilerServices;
+
+using Goedel.Cryptography.Standard;
 
 namespace Goedel.Cryptography {
 

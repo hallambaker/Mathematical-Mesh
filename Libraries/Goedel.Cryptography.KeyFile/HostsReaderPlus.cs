@@ -1,6 +1,6 @@
-﻿using Goedel.Utilities;
+﻿using System.Text;
 
-using System.Text;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.KeyFile {
 

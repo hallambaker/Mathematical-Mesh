@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
-using Goedel.Utilities;
+using System.Text;
 
 namespace Goedel.Cryptography.Windows {
 

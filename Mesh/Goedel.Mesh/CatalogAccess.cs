@@ -18,13 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using System.Collections.Generic;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Goedel.Mesh {
 
@@ -80,7 +77,7 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new CatalogAccess(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt:decrypt, create:create);
+            new CatalogAccess(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt: decrypt, create: create);
 
 
         /// <summary>

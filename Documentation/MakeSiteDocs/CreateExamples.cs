@@ -1,11 +1,11 @@
-﻿using Goedel.Mesh;
+﻿using System.Collections.Generic;
+
+using Goedel.IO;
+using Goedel.Mesh;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
-using Goedel.Utilities;
-using Goedel.IO;
-using System;
-using System.Collections.Generic;
 using Goedel.Test;
+using Goedel.Utilities;
 
 
 namespace ExampleGenerator {
@@ -13,11 +13,11 @@ namespace ExampleGenerator {
     /// 
     /// </summary>
     public partial class CreateExamples {
-        
-        
+
+
         ///<summary></summary> 
         public string AliceService = "example.com";
-        
+
         ///<summary></summary> 
         public string AliceFingerprint;
 
@@ -29,7 +29,7 @@ namespace ExampleGenerator {
 
         ///<summary></summary> 
         public int CountMissing = 0;
-        
+
         ///<summary></summary> 
         public int CountObsolete = 0;
 
@@ -77,7 +77,7 @@ namespace ExampleGenerator {
             TaskCatalog();
 
 
-            ConnectDeviceCompare( out var deviceId);
+            ConnectDeviceCompare(out var deviceId);
             TestConnectDisconnect(deviceId);
             SSHApp();
             MailApp();
@@ -222,13 +222,13 @@ namespace ExampleGenerator {
 
             Connect.ConnectRequest = Alice2.Example(
                 $"device request {AliceAccount}"
-                ) ;
+                );
 
             var connectRequest = Connect.ConnectRequest[0].Result as ResultConnect;
 
             Connect.ResponseIdentifierMessage = connectRequest.RequestConnection;
             Connect.ResponseIdentifierEnvelope = Connect.ResponseIdentifierMessage.DareEnvelope;
-            
+
 
             var x = Connect.ResponseIdentifierEnvelope.EnvelopeId;
 
@@ -278,9 +278,9 @@ namespace ExampleGenerator {
             }
 
         public void TestConnectDisconnect(string deviceId) {
-                Connect.Disconnect = Alice1.Example(
-                $"device delete {deviceId}"
-                );
+            Connect.Disconnect = Alice1.Example(
+            $"device delete {deviceId}"
+            );
             Connect.Disconnect.GetResult().Success.TestTrue();
 
             Connect.PasswordList2Disconnect = Alice2.Example(
@@ -590,7 +590,7 @@ namespace ExampleGenerator {
                 $"account connect {resultPublishDevice.Uri}"
                 );
 
-             
+
             //Connect.RequestClaim = Connect.ConnectStaticClaim[0].Traces[0];
             //Connect.ResponseClaim = Connect.ConnectStaticClaim[0].Traces[0];
 

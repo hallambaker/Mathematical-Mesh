@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol.Service {
 
@@ -28,7 +23,7 @@ namespace Goedel.Protocol.Service {
         #region // Properties
         ///<summary>Total result since the Monitor was last restarted.</summary> 
         public MonitorResult Total { get; private set; }
-        
+
         ///<summary>Total results in the most recent sample interval.</summary> 
         public MonitorResult Recent { get; private set; }
 
@@ -78,7 +73,7 @@ namespace Goedel.Protocol.Service {
         /// <param name="dispatch">Index of the thread that was started.</param>
         public void StartDispatch(int dispatch) {
             dispatcherStart[dispatch] = DateTime.Now;
-            Interlocked.Increment (ref (current.DispatcherRequests[dispatch]));
+            Interlocked.Increment(ref (current.DispatcherRequests[dispatch]));
             }
 
         /// <summary>
@@ -94,7 +89,7 @@ namespace Goedel.Protocol.Service {
         /// <summary>
         /// Mark the end of the 'Recent' period.
         /// </summary>
-        public void MarkRecent () {
+        public void MarkRecent() {
             lock (this) {
                 Recent = current.CopyClear();
                 Total.Add(Recent);
@@ -107,7 +102,7 @@ namespace Goedel.Protocol.Service {
         /// collection period began and for the most recent collection interval.
         /// </summary>
         /// <returns></returns>
-        public (MonitorResult, MonitorResult) GetStats () {
+        public (MonitorResult, MonitorResult) GetStats() {
             lock (this) {
                 var total = Total.Copy();
                 var recent = Recent.Copy();

@@ -1,7 +1,7 @@
-﻿using Goedel.Mesh.Client;
+﻿using System.Text;
+
+using Goedel.Mesh.Client;
 using Goedel.Utilities;
-using Goedel.Cryptography.Dare;
-using System.Text;
 
 namespace Goedel.Mesh.Shell {
 
@@ -97,7 +97,7 @@ namespace Goedel.Mesh.Shell {
                     break;
                     }
                 case ResponseConfirmation responseConfirmation: {
-                    Builder.AppendLine(responseConfirmation.Accept ? "Accept" :  "Reject");
+                    Builder.AppendLine(responseConfirmation.Accept ? "Accept" : "Reject");
                     break;
                     }
 
@@ -183,7 +183,7 @@ namespace Goedel.Mesh.Shell {
             switch (CatalogedMachine) {
 
                 case CatalogedPending catalogedPending: {
-                    var acknowledgeConnection = 
+                    var acknowledgeConnection =
                             catalogedPending.EnvelopedAcknowledgeConnection.Decode();
                     Builder.AppendLine($"   Device UDF = {catalogedPending.DeviceUDF}");
                     Builder.AppendLine($"   Witness value = {acknowledgeConnection.Witness}");
@@ -205,7 +205,7 @@ namespace Goedel.Mesh.Shell {
                 //    }
 
                 default:
-                    break;
+                break;
                 }
             return Builder.ToString();
             }
@@ -231,7 +231,7 @@ namespace Goedel.Mesh.Shell {
                     }
 
                 default:
-                    break;
+                break;
                 }
             return Builder.ToString();
             }
@@ -341,7 +341,7 @@ namespace Goedel.Mesh.Shell {
                         }
 
                     default:
-                        break;
+                    break;
                     }
                 }
 
@@ -461,7 +461,7 @@ namespace Goedel.Mesh.Shell {
         /// Converts the value of this instance to a <see langword="String"/>.
         /// </summary>
         /// <returns>The current string.</returns>
-        public override string ToString() => CatalogEntry?.ToString()+"\n" ?? "Empty\n";
+        public override string ToString() => CatalogEntry?.ToString() + "\n" ?? "Empty\n";
 
 
         }

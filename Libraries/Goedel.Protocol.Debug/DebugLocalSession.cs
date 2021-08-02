@@ -1,6 +1,6 @@
-﻿using Goedel.Utilities;
+﻿using System.IO;
 
-using System.IO;
+using Goedel.Utilities;
 
 
 namespace Goedel.Protocol.Debug {
@@ -15,7 +15,7 @@ namespace Goedel.Protocol.Debug {
     /// </summary>
     public class DebugLocalSession : JpcSessionSerialized {
 
-         /// <summary>
+        /// <summary>
         /// Trace Dictionary for this session
         /// </summary>
         public TraceDictionary Traces { get; set; }

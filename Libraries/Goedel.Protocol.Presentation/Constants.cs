@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using Goedel.Cryptography;
 using Goedel.Utilities;
 
@@ -23,7 +18,7 @@ namespace Goedel.Protocol.Presentation {
         public const int SizeReservedInitialStreamId = 16;
 
         ///<summary>Size of packet nonce to be used in AES-GCM packet.</summary> 
-        public const int SizeNonceAesGcm= 16;
+        public const int SizeNonceAesGcm = 16;
         ///<summary>Size of initialization vector / AES nonce to be used in AES-GCM packet.</summary> 
         public const int SizeIvAesGcm = 12;
         ///<summary>Size of authentication tag to be used in AES-GCM packet.</summary> 

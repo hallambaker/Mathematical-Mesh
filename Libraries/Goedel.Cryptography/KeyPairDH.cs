@@ -1,9 +1,9 @@
-﻿using Goedel.Cryptography.Algorithms;
+﻿using System;
+using System.Numerics;
+
+using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
-
-using System;
-using System.Numerics;
 
 namespace Goedel.Cryptography {
 
@@ -103,7 +103,7 @@ namespace Goedel.Cryptography {
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryDHPublicKeyDelegate KeyPairPublicFactory { get; set; }  = KeyPairDH.KeyPairPublicFactory;
+        public static FactoryDHPublicKeyDelegate KeyPairPublicFactory { get; set; } = KeyPairDH.KeyPairPublicFactory;
 
         /// <summary>
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic

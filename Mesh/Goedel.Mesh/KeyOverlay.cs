@@ -19,12 +19,9 @@
 //  THE SOFTWARE.
 
 using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
-using System;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
 
 namespace Goedel.Mesh {
 
@@ -37,17 +34,16 @@ namespace Goedel.Mesh {
         /// <param name="udfAlgorithmIdentifier">The UDF key type identifier.</param>
         /// <returns>The Mesh key group identifier.</returns>
         public static (MeshActor, MeshKeyType) GetMeshKeyType(this UdfAlgorithmIdentifier udfAlgorithmIdentifier) =>
-            udfAlgorithmIdentifier switch
-                {
-                    UdfAlgorithmIdentifier.MeshProfileDevice => (MeshActor.Device, MeshKeyType.Base),
-                    UdfAlgorithmIdentifier.MeshActivationDevice => (MeshActor.Device, MeshKeyType.Activation),
-                    UdfAlgorithmIdentifier.MeshProfileAccount => (MeshActor.Account, MeshKeyType.Complete),
-                    UdfAlgorithmIdentifier.MeshActivationAccount => (MeshActor.Account, MeshKeyType.Activation),
-                    UdfAlgorithmIdentifier.MeshProfileService => (MeshActor.Service, MeshKeyType.Base),
-                    UdfAlgorithmIdentifier.MeshActivationService => (MeshActor.Service, MeshKeyType.Activation),
+            udfAlgorithmIdentifier switch {
+                UdfAlgorithmIdentifier.MeshProfileDevice => (MeshActor.Device, MeshKeyType.Base),
+                UdfAlgorithmIdentifier.MeshActivationDevice => (MeshActor.Device, MeshKeyType.Activation),
+                UdfAlgorithmIdentifier.MeshProfileAccount => (MeshActor.Account, MeshKeyType.Complete),
+                UdfAlgorithmIdentifier.MeshActivationAccount => (MeshActor.Account, MeshKeyType.Activation),
+                UdfAlgorithmIdentifier.MeshProfileService => (MeshActor.Service, MeshKeyType.Base),
+                UdfAlgorithmIdentifier.MeshActivationService => (MeshActor.Service, MeshKeyType.Activation),
 
-                    _ => throw new NYI()
-                    };
+                _ => throw new NYI()
+                };
 
         /// <summary>
         /// Return the <see cref="CryptoAlgorithmId"/> identifier for the mesh key type
@@ -57,17 +53,16 @@ namespace Goedel.Mesh {
         /// <param name="secretSeed">The secret seed.</param>
         /// <returns>The  <see cref="CryptoAlgorithmId"/> identifier.</returns>
         public static CryptoAlgorithmId GetCryptoAlgorithmID(this MeshKeyOperation operation,
-                            IActivate secretSeed) => operation switch
-                                {
-                                    MeshKeyOperation.Authenticate => secretSeed.AlgorithmAuthenticateID,
-                                    MeshKeyOperation.Encrypt => secretSeed.AlgorithmEncryptID,
-                                    MeshKeyOperation.Escrow => secretSeed.AlgorithmEncryptID,
-                                    MeshKeyOperation.Sign => secretSeed.AlgorithmSignID,
-                                    MeshKeyOperation.Profile => secretSeed.AlgorithmSignID,
-                                    MeshKeyOperation.AdminEncrypt => secretSeed.AlgorithmEncryptID,
-                                    MeshKeyOperation.AdminSign => secretSeed.AlgorithmSignID,
-                                    _ => secretSeed.AlgorithmSignID
-                                    };
+                            IActivate secretSeed) => operation switch {
+                                MeshKeyOperation.Authenticate => secretSeed.AlgorithmAuthenticateID,
+                                MeshKeyOperation.Encrypt => secretSeed.AlgorithmEncryptID,
+                                MeshKeyOperation.Escrow => secretSeed.AlgorithmEncryptID,
+                                MeshKeyOperation.Sign => secretSeed.AlgorithmSignID,
+                                MeshKeyOperation.Profile => secretSeed.AlgorithmSignID,
+                                MeshKeyOperation.AdminEncrypt => secretSeed.AlgorithmEncryptID,
+                                MeshKeyOperation.AdminSign => secretSeed.AlgorithmSignID,
+                                _ => secretSeed.AlgorithmSignID
+                                };
 
 
         /// <summary>
@@ -103,7 +98,7 @@ namespace Goedel.Mesh {
         /// (the key is always generated as ephemeral.)</param>
         /// <param name="keySecurity">The key security model of the derrived key.</param>
         /// <returns>KeyData for the public parameters of the derrived key.</returns>
-        public static (KeyPair,KeyData) GenerateContributionKey(
+        public static (KeyPair, KeyData) GenerateContributionKey(
                     this PrivateKeyUDF secretSeed,
                     MeshKeyType type,
                     MeshActor actor,
@@ -237,7 +232,7 @@ namespace Goedel.Mesh {
         public static KeyPairAdvanced ActivatePrivate(
                 this PrivateKeyUDF activationSeed,
                 KeyPair baseKey,
-                MeshActor actor, 
+                MeshActor actor,
                 MeshKeyOperation operation) {
             var activationKey = activationSeed.GenerateContributionKeyPair(
                         MeshKeyType.Activation, actor, operation) as KeyPairAdvanced;

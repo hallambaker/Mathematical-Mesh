@@ -19,8 +19,8 @@
 //  THE SOFTWARE.
 
 using Goedel.Cryptography;
-using Goedel.Utilities;
 using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
     public partial class MessageClaim {
@@ -50,7 +50,7 @@ namespace Goedel.Mesh {
                 string pin) {
             Recipient = targetAccount;
             Sender = claimaintAccount;
-            PublicationId = UDF.SymetricKeyId (pin);
+            PublicationId = UDF.SymetricKeyId(pin);
 
             ServiceAuthenticate = CatalogedPublication.AuthenticateService(claimaintAccount, pin);
             DeviceAuthenticate = CatalogedPublication.AuthenticateDevice(claimaintAccount, pin);

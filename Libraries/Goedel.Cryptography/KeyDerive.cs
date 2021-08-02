@@ -1,6 +1,6 @@
-﻿using Goedel.Utilities;
+﻿using System;
 
-using System;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 

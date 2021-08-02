@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Globalization;
 using System.Collections.Generic;
+using System.Globalization;
 
 
 
@@ -179,7 +179,7 @@ namespace Goedel.Utilities {
         /// <param name="result">Returns the value <paramref name="test"/>.</param>
         /// <returns>True if the value <paramref name="test"/> is not null,
         /// otherwise false.</returns>
-        public static bool NotNull<T> (this T test, out T result) where T : class  {
+        public static bool NotNull<T>(this T test, out T result) where T : class {
             result = test;
             return test != null;
             }
@@ -198,7 +198,7 @@ namespace Goedel.Utilities {
         /// is not null and is strictly less than the current time in which case the value 
         /// <code>null</code> is returned. 
         ///</returns>
-                public static T Expired<T>(this DateTime? expiry, T value) {
+        public static T Expired<T>(this DateTime? expiry, T value) {
             if (expiry == null) {
                 return value;
                 }

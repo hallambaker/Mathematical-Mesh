@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Goedel.Mesh.Test {
 
-namespace Goedel.Mesh.Test {
 
-    
 
 
     public enum ContentEnhancement {

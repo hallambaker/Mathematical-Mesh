@@ -21,11 +21,8 @@
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Utilities;
 using Goedel.Protocol;
-
-
-using System.Collections.Generic;
+using Goedel.Utilities;
 namespace Goedel.Mesh {
     public partial class ProfileService {
         #region // Properties
@@ -73,11 +70,11 @@ namespace Goedel.Mesh {
         /// </summary>
         protected override void Generate() {
             base.Generate();
-            (KeySignature,ServiceSignature) = SecretSeed.GenerateContributionKey(
+            (KeySignature, ServiceSignature) = SecretSeed.GenerateContributionKey(
                     MeshKeyType, MeshActor, MeshKeyOperation.Sign);
-            (KeyAuthentication,ServiceAuthentication) = SecretSeed.GenerateContributionKey(
+            (KeyAuthentication, ServiceAuthentication) = SecretSeed.GenerateContributionKey(
                     MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
-            (KeyEncryption,ServiceEncryption) = SecretSeed.GenerateContributionKey(
+            (KeyEncryption, ServiceEncryption) = SecretSeed.GenerateContributionKey(
                     MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
             }
 

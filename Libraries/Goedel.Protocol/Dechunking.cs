@@ -20,9 +20,9 @@
 //  
 //  
 
-using Goedel.Utilities;
-
 using System.IO;
+
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 

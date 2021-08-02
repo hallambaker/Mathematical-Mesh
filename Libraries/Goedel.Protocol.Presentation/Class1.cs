@@ -19,14 +19,8 @@
 //  THE SOFTWARE.
 //  
 
-using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
-
-
 namespace Goedel.Protocol.Presentation {
-    
+
     /// <summary>
     /// Extensions class.
     /// </summary>

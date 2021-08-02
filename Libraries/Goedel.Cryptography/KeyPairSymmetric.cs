@@ -1,7 +1,6 @@
-﻿using Goedel.Cryptography.PKIX;
-using Goedel.Utilities;
+﻿using System;
 
-using System;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
     /// <summary>
@@ -30,12 +29,12 @@ namespace Goedel.Cryptography {
         /// <param name="udfTypeIdentifier">The UDF type identifier to create. This
         /// is either <see cref="UdfTypeIdentifier.Encryption_HKDF_AES_512"/> or
         /// <see cref="UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512"/></param>
-        public CryptoKeySymmetric(byte[] secretValue, 
+        public CryptoKeySymmetric(byte[] secretValue,
                     UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_512) {
 
             // Create the presentation of the secret value.
             SecretValue = secretValue;
-            SecretKey = UDF.TypeBDSToString(udfTypeIdentifier, SecretValue, 8*(secretValue.Length+1));
+            SecretKey = UDF.TypeBDSToString(udfTypeIdentifier, SecretValue, 8 * (secretValue.Length + 1));
 
 
             KeyIdentifier = UDF.SymetricKeyId(SecretKey);
@@ -182,7 +181,7 @@ namespace Goedel.Cryptography {
             bits = bits.Minimum(UDF.MinimumBits);
             signingKey = KeyPair.Factory(algorithmSign, keySecurity);
 
-            var secretValue = signingKey.UDFBytes.OrTruncated (bits);
+            var secretValue = signingKey.UDFBytes.OrTruncated(bits);
 
 
             return secretValue;
@@ -193,8 +192,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyIdentifier">The decryption/verification key.</param>
         public CryptoKeySymmetricSigner(
-                string keyIdentifier) : 
-                    base (UDF.SymmetricKeyData(keyIdentifier), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
+                string keyIdentifier) :
+                    base(UDF.SymmetricKeyData(keyIdentifier), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
 
             }
 
@@ -224,9 +223,9 @@ namespace Goedel.Cryptography {
         /// <param name="digest">The digest value to be verified.</param>
         /// <returns>True if the signature is valid, otherwise false.</returns>
         public override bool VerifyHash(
-                byte[] digest, 
-                byte[] signature, 
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
+                byte[] digest,
+                byte[] signature,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null) => SigningKey.VerifyHash(digest, signature, algorithmID, context);
 
 

@@ -1,12 +1,12 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
+﻿using System.Numerics;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Utilities;
+using Goedel.Cryptography.Jose;
 using Goedel.Test;
-using System.Numerics;
+using Goedel.Utilities;
 
 using Xunit;
-using Goedel.Cryptography.Jose;
 
 #pragma warning disable IDE0059
 
@@ -151,7 +151,7 @@ namespace Goedel.XUnit {
             for (var i = 1; i <= 1000; i++) {
                 Test22519(ref k, ref u);
                 if (i == 1) {
-                    k.TestEqual( iter1e0);
+                    k.TestEqual(iter1e0);
                     }
                 if (i == 1000) {
                     k.TestEqual(iter1e3);
@@ -416,16 +416,16 @@ namespace Goedel.XUnit {
 
 
             var q = CurveX448.Base;
-            var q1 = q.Multiply(part+1);
+            var q1 = q.Multiply(part + 1);
 
             var point = CurveX448.Base;
             CheckCurve(point);
 
             point.ScalarAccumulate(point.U, part, out var xq, out var zq, out var xq1, out var zq1);
-            point.ScalarAccumulate(point.U, part+1, out var xq2, out var zq2, out _, out var _);
+            point.ScalarAccumulate(point.U, part + 1, out var xq2, out var zq2, out _, out var _);
 
             var u0 = point.Recover(xq, zq);
-            
+
             var u1 = point.Recover(xq1, zq1);
             var u2 = point.Recover(xq2, zq2);
             (u1 == u2).TestTrue();

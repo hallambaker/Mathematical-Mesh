@@ -18,13 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using System.Collections.Generic;
+using System.Text;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
 using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
-using System.Text;
-using System.Collections.Generic;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
     public partial class ConnectionAddress {
@@ -44,7 +44,7 @@ namespace Goedel.Mesh {
             }
 
         }
-    public partial class ConnectionDevice  {
+    public partial class ConnectionDevice {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ConnectionDevice> EnvelopedConnectionDevice =>

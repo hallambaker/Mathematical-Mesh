@@ -1,15 +1,13 @@
+using System;
+using System.Collections.Generic;
+
+using Goedel.IO;
 using Goedel.Mesh.Client;
-using Goedel.Mesh.Server;
 using Goedel.Mesh.Shell;
 using Goedel.Protocol;
 using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
-using Goedel.IO;
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Protocol.Presentation;
 
 #pragma warning disable IDE0059
 
@@ -25,7 +23,7 @@ namespace Goedel.Mesh.Test {
 
         public MeshMachineTest MeshMachineTest => meshMachineTest ??
            new MeshMachineTest(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest);
-                //new MeshMachineTestWeb(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest));
+        //new MeshMachineTestWeb(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest));
         MeshMachineTest meshMachineTest;
 
         //MeshServiceClient MeshClient => meshClient ??
@@ -39,7 +37,7 @@ namespace Goedel.Mesh.Test {
         /// Create a new test shell
         /// </summary>
         /// <param name="meshPortalDirect"></param>
-        public TestShell(TestEnvironmentCommon testEnvironment, string machineName = null, 
+        public TestShell(TestEnvironmentCommon testEnvironment, string machineName = null,
                     bool direct = true) {
             MachineName = machineName ?? MachineName;
             TestEnvironmentCommon = testEnvironment;
@@ -52,7 +50,7 @@ namespace Goedel.Mesh.Test {
 
         /////<inheritdoc/>
         //public override MeshServiceClient GetMeshClient(IAccountOptions Options) => throw new NYI();
-            //MeshClient;
+        //MeshClient;
 
         public ShellResult ShellResult;
 
@@ -78,10 +76,10 @@ namespace Goedel.Mesh.Test {
 
 
         public string ResultText => Result.ToString();
-            //{ get {
-            //    var result = 
-            //    return result == "" ? "\n" : result;
-            //    } }
+        //{ get {
+        //    var result = 
+        //    return result == "" ? "\n" : result;
+        //    } }
         public string ResultJSON => Result.GetJson(true).ToUTF8();
 
 

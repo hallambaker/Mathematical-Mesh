@@ -1,8 +1,8 @@
-﻿using Goedel.Cryptography.PKIX;
-using Goedel.Utilities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+
+using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -98,10 +98,10 @@ namespace Goedel.Cryptography {
 
         ///<summary>Key pairs by SIN value.</summary>
         protected Dictionary<string, KeyPair> DictionaryKeyPairBySINEncrypt = new();
-        
+
         ///<summary>Encryption keypairs by account identifier.</summary>
         protected Dictionary<string, KeyPair> DictionaryKeyPairByAccountEncrypt = new();
-        
+
         ///<summary>Signature keypairs by SIN</summary>
         protected Dictionary<string, KeyPair> DictionaryKeyPairBySINSign = new();
 
@@ -264,7 +264,7 @@ namespace Goedel.Cryptography {
         ///  <param name="cryptoKey">The key, (if found).</param>
         /// <returns>The identifier.</returns>
         public virtual bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
-            
+
             var result = DictionaryKeyPairByAccountSign.TryGetValue(keyId, out var keyPair);
             cryptoKey = keyPair;
             return result;

@@ -1,7 +1,7 @@
-﻿using Goedel.Protocol;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Protocol;
 
 
 namespace Goedel.Test.Core {
@@ -32,7 +32,7 @@ namespace Goedel.Test.Core {
         //public static JpcSession JpcSessionFactory(JpcCredential jpcCredential) =>
         //        new TestSession(jpcCredential as JpcCredentialTest);
 
-        
+
 
 
         public List<Trace> MeshProtocolMessages;
@@ -65,10 +65,10 @@ namespace Goedel.Test.Core {
             var requestBytes = data.ToArray();
 
             var JSONReader = new JsonReader(requestBytes);
-             var result = Host.Dispatch(this, JSONReader);
+            var result = Host.Dispatch(this, JSONReader);
             var responseBytes = result.GetBytes();
 
-            var trace = new Trace(requestBytes, responseBytes, Request) ;
+            var trace = new Trace(requestBytes, responseBytes, Request);
 
             MeshProtocolMessages.Add(trace);
             return new MemoryStream(responseBytes);

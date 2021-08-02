@@ -25,8 +25,6 @@ using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
 
-using System;
-
 namespace Goedel.Mesh {
 
 
@@ -167,7 +165,7 @@ namespace Goedel.Mesh {
         public void ExportPrivateParameters() =>
             PrivateParameters = CryptoKey switch {
                 KeyPairBaseRSA keyPairBaseRSA => new PrivateKeyRSA(keyPairBaseRSA),
-                KeyPairECDH keyPairECDH => new PrivateKeyECDH (keyPairECDH),
+                KeyPairECDH keyPairECDH => new PrivateKeyECDH(keyPairECDH),
                 KeyPairDH keyPairDH => new PrivateKeyDH(keyPairDH),
                 _ => throw new NYI()
                 };

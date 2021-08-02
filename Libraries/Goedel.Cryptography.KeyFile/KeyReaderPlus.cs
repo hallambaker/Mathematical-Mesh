@@ -1,7 +1,7 @@
-﻿using Goedel.Utilities;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
+
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.KeyFile {
 

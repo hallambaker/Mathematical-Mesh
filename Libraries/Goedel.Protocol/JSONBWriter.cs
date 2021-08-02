@@ -20,9 +20,9 @@
 //  
 //  
 
-using Goedel.Utilities;
-
 using System.IO;
+
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -42,7 +42,7 @@ namespace Goedel.Protocol {
         /// used as the output.
         /// </summary>
         /// <param name="Output">Output buffer</param> 
-        public JsonBWriter(Stream Output =null) => this.Output = Output ?? new MemoryStream();
+        public JsonBWriter(Stream Output = null) => this.Output = Output ?? new MemoryStream();
 
 
         /// <summary>

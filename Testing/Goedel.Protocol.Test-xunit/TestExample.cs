@@ -20,10 +20,10 @@
 //  THE SOFTWARE.
 //  
 //  
-using Goedel.Protocol;
-
 using System;
 using System.Collections.Generic;
+
+using Goedel.Protocol;
 
 
 
@@ -54,9 +54,10 @@ namespace Goedel.XUnit {
         public static Dictionary<string, JsonFactoryDelegate> _TagDictionary =
                 new() {
 
-            {"MultiInstance", MultiInstance._Factory},
-            {"MultiArray", MultiArray._Factory},
-            {"MultiStruct", MultiStruct._Factory}           };
+                        { "MultiInstance", MultiInstance._Factory },
+                        { "MultiArray", MultiArray._Factory },
+                        { "MultiStruct", MultiStruct._Factory }
+                    };
 
         /// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.

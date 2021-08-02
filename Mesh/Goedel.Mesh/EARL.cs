@@ -20,10 +20,6 @@
 
 using Goedel.Utilities;
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Goedel.Mesh {
 
     ///<summary>Encrypted Authenticated Resource Locator support.</summary>

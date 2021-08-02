@@ -1,17 +1,15 @@
-﻿using Goedel.Cryptography;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.IO;
-using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
-
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Goedel.Mesh;
 
 namespace ExampleGenerator {
 
@@ -280,15 +278,15 @@ namespace ExampleGenerator {
             var accounts = new List<string> { AliceAccount };
 
 
-            Dare.DarePolicyPlaintext = new DarePolicy (
+            Dare.DarePolicyPlaintext = new DarePolicy(
                         keyLocate: keyCollection,
-                        signers: null) ;
+                        signers: null);
             Dare.DarePolicyEncrypt = new DarePolicy(
                         keyLocate: keyCollection,
                         recipients: accounts);
             Dare.DarePolicySign = new DarePolicy(
                         keyLocate: keyCollection,
-                        signers: accounts); 
+                        signers: accounts);
             Dare.DarePolicySignEncrypt = new DarePolicy(
                         keyLocate: keyCollection,
                         recipients: accounts,
@@ -296,8 +294,8 @@ namespace ExampleGenerator {
 
 
             Dare.CryptoParametersPlaintext = new CryptoParameters() {
-                        KeyLocate = keyCollection
-                        };
+                KeyLocate = keyCollection
+                };
             Dare.CryptoParametersEncrypt = new CryptoParametersDebug(
                         keyCollection: keyCollection,
                         recipients: accounts);
@@ -353,7 +351,7 @@ namespace ExampleGenerator {
             Dare.CryptoStackEncrypt = new CryptoStackDebug(Dare.CryptoParametersEncrypt, encEnvelope.Header);
             encEnvelope.Body = encEnvelope.Header.EnhanceBody(Dare.DareMessageTest1, out var trailer);
             encEnvelope.Trailer = trailer;
-            
+
             Dare.MessageEnc = encEnvelope;
 
             //CryptoStackEncrypt.Message(DareMessageTest1);

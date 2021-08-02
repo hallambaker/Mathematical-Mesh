@@ -18,12 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -31,7 +31,7 @@ namespace Goedel.Mesh {
     public class SpoolEntry {
 
         ///<summary>The spool the message is enrolled in.</summary>
-        public Spool Spool { get;}
+        public Spool Spool { get; }
 
         ///<summary>The unique envelope identifier.</summary>
         public string EnvelopeID { get; private set; }
@@ -167,7 +167,7 @@ namespace Goedel.Mesh {
         SpoolEntry SpoolEntryLast { get; set; } = null;
 
         ///<summary>Dictionary of entries by identifier.</summary>
-        Dictionary<string, SpoolEntry> SpoolEntryById { get; }  = new Dictionary<string, SpoolEntry>();
+        Dictionary<string, SpoolEntry> SpoolEntryById { get; } = new Dictionary<string, SpoolEntry>();
 
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Goedel.Mesh {
         /// <param name="create">If true, create a new file if none exists.</param>
         /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public Spool(
-                    string directory, 
+                    string directory,
                     string storeId,
                      DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,
@@ -294,7 +294,7 @@ namespace Goedel.Mesh {
                 return spoolEntry;
                 }
 
-            foreach (var spoolEntry2 in GetMessages(select, notBefore, notOnOrAfter, 
+            foreach (var spoolEntry2 in GetMessages(select, notBefore, notOnOrAfter,
                         SpoolEntryLast, maxSearch)) {
                 if (spoolEntry2.EnvelopeID == envelopeId) {
                     return spoolEntry2;
@@ -364,7 +364,7 @@ namespace Goedel.Mesh {
                     // Do we already have an entry?
                     var envelopeID = reference.EnvelopeId;
                     if (SpoolEntryById.TryGetValue(envelopeID, out var referenceEntry)) {
-                        referenceEntry.AddReference(reference, next==null);
+                        referenceEntry.AddReference(reference, next == null);
                         }
                     else {
                         referenceEntry = new SpoolEntry(this, reference);
@@ -613,7 +613,7 @@ namespace Goedel.Mesh {
         /// <param name="maxTicks">Maximum message age in ticks (-1 = check all).</param>
         /// <param name="maxSearch">Maximum number of records to check (-1 = check all).</param>
         /// <returns>The plaintext message.</returns>
-        public SpoolEntry CheckPIN(string pinId, 
+        public SpoolEntry CheckPIN(string pinId,
                     long maxTicks = -1,
                     long maxSearch = -1) {
 
@@ -630,7 +630,7 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Class for the inbound spool
     /// </summary>
-    public class SpoolInbound: Spool {
+    public class SpoolInbound : Spool {
         #region // Properties
         ///<summary>Canonical name for inbound spool</summary>
         public const string Label = MeshConstants.MMM_Inbound;
@@ -671,7 +671,7 @@ namespace Goedel.Mesh {
         /// <param name="create">If true, create a new file if none exists.</param>
         /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public SpoolInbound(
-                    string directory, 
+                    string directory,
                     string storeId,
                     DarePolicy policy = null,
                     CryptoParameters cryptoParameters = null,

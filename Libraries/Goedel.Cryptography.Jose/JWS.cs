@@ -20,10 +20,10 @@
 //  
 //  
 
+using System.Collections.Generic;
+
 using Goedel.Protocol;
 using Goedel.Utilities;
-
-using System.Collections.Generic;
 
 namespace Goedel.Cryptography.Jose {
 

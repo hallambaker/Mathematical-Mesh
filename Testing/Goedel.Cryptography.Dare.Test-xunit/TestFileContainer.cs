@@ -1,12 +1,11 @@
-﻿using Goedel.Cryptography;
+﻿using System;
+
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
-using Goedel.Test;
-using Goedel.Test.Core;
-using Goedel.Utilities;
 using Goedel.Mesh.Test;
-using System;
-using System.Collections.Generic;
+using Goedel.Test;
+using Goedel.Utilities;
 
 using Xunit;
 
@@ -62,7 +61,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestFileContainerEncrypted1() {
 
-            var policy = TestEnvironmentCommon.MakePolicy(encryptId:CryptoAlgorithmId.X448);
+            var policy = TestEnvironmentCommon.MakePolicy(encryptId: CryptoAlgorithmId.X448);
 
             var Bytes = CreateBytes(100);
             ReadWriteContainer("TestFileEncrypted_100", Bytes, policy);

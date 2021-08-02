@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 
 
+using System.Collections.Generic;
+
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
-
-using System.Collections.Generic;
 namespace Goedel.Mesh.Server {
 
     /// <summary>

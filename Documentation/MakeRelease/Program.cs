@@ -1,8 +1,8 @@
-﻿using Goedel.Registry;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+
+using Goedel.Registry;
 
 namespace Goedel.Tool.Version {
     class Program {
@@ -160,12 +160,12 @@ namespace Goedel.Tool.Version {
 
 
         static Dictionary<string, string> MapRID = new() {
-            { "win-x64", "Intel & AMD 64 bit (Windows 7 or later)"},
-            { "win10-arm", "Windows ARM, 64 bit (Windows 10 only)"},
-            { "osx-x64", "macOS (OSX) (Sierra (10.12) or later)"},
-            { "linux-x64", "Any 64 bit Intel"},
-            { "linux-arm", "Any 64 bit ARM"},
-            { "any", "Universal (requires dotnet runtime)"}
+                { "win-x64", "Intel & AMD 64 bit (Windows 7 or later)" },
+                { "win10-arm", "Windows ARM, 64 bit (Windows 10 only)" },
+                { "osx-x64", "macOS (OSX) (Sierra (10.12) or later)" },
+                { "linux-x64", "Any 64 bit Intel" },
+                { "linux-arm", "Any 64 bit ARM" },
+                { "any", "Universal (requires dotnet runtime)" }
             };
 
         public string Icon = "fa-file-archive-o";

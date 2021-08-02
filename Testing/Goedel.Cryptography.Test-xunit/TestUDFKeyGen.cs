@@ -1,14 +1,15 @@
-﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Algorithms;
-using Goedel.Utilities;
-using System;
-using System.Numerics;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Xunit;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 using Goedel.Test;
+using Goedel.Utilities;
+
+using Xunit;
 
 namespace Goedel.XUnit {
     public partial class TestGoedelCryptography {
@@ -51,7 +52,7 @@ namespace Goedel.XUnit {
             var activationSeed = new PrivateKeyUDF(activationUDF);
             var activationKey = activationSeed.GenerateContributionKeyPair(MeshKeyType.Activation, actor, operation);
 
-            switch (keytype)  {
+            switch (keytype) {
                 case MeshKeyType.Complete: {
                     // test splitting the key and recombing it
                     return TestBase(primeKey as KeyPairAdvanced, activationKey as KeyPairAdvanced, activationUDF, actor, operation);
@@ -124,7 +125,7 @@ namespace Goedel.XUnit {
             }
 
         [Theory]
-        [InlineData(10,12)]
+        [InlineData(10, 12)]
         public void CombineCurveX448Inner(int a, int b) {
             //var a = 10;
             //var b = 12;
@@ -132,7 +133,7 @@ namespace Goedel.XUnit {
             var c1 = CurveX448.Base.Multiply(a);
             var c2 = CurveX448.Base.Multiply(b);
 
-            var c12a = CurveX448.Base.Multiply(a+b);
+            var c12a = CurveX448.Base.Multiply(a + b);
             var c12b = c1.Add(c2);
 
             if (c12b.V != c12a.V) {
@@ -232,12 +233,11 @@ namespace Goedel.XUnit {
             (keyUses == publicKey.KeyUses).TestTrue();
             (keyUses == privateKey.KeyUses).TestTrue();
 
-            return keyUses switch
-                {
-                    KeyUses.Sign => TestSign(privateKey, publicKey),
-                    KeyUses.Encrypt => TestEncrypt(privateKey, publicKey),
-                    _ => TestAny(privateKey, publicKey),
-                    };
+            return keyUses switch {
+                KeyUses.Sign => TestSign(privateKey, publicKey),
+                KeyUses.Encrypt => TestEncrypt(privateKey, publicKey),
+                _ => TestAny(privateKey, publicKey),
+                };
             }
 
 
@@ -276,7 +276,7 @@ namespace Goedel.XUnit {
         }
 
 
-    public class TestVectorUDFKeyGenUdfKey: TestVectorUDFKeyGen {
+    public class TestVectorUDFKeyGenUdfKey : TestVectorUDFKeyGen {
 
         public string SeedA;
 
@@ -294,7 +294,7 @@ namespace Goedel.XUnit {
 
             (var actor, var _) = UdfAlgorithmIdentifier.GetMeshKeyType();
 
-            
+
             // The base keys
             var baseSign = privatekeyUDF.GenerateContributionKeyPair(MeshKeyType.Base, actor, MeshKeyOperation.Sign);
             var baseEncrypt = privatekeyUDF.GenerateContributionKeyPair(MeshKeyType.Base, actor, MeshKeyOperation.Encrypt);

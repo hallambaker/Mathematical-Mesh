@@ -1,5 +1,4 @@
-﻿using Goedel.Utilities;
-
+﻿
 using System.Collections.Generic;
 
 namespace Goedel.Mesh.Shell {
@@ -65,7 +64,7 @@ namespace Goedel.Mesh.Shell {
             var completed = new Dictionary<string, Message>();
 
             foreach (var envelope in inbound.Select(1, true)) {
-                var meshMessage = Message.Decode (envelope, contextAccount);
+                var meshMessage = Message.Decode(envelope, contextAccount);
                 if (!completed.ContainsKey(envelope.Header.ContentMeta.UniqueId)) {
                     switch (meshMessage) {
                         case MessageComplete meshMessageComplete: {
@@ -106,7 +105,7 @@ namespace Goedel.Mesh.Shell {
             // return status as Pending / Accepted / Rejected
 
             var result = new ResultReceived() {
-                Message = message 
+                Message = message
                 };
             return result;
             }

@@ -18,13 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-using Goedel.Cryptography;
-using Goedel.Protocol;
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
-
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -38,22 +38,20 @@ namespace Goedel.Mesh {
         ///<summary>Accessor for the <see cref="Relationship"/> property
         ///as a <see cref="MessageStatus"/> property.</summary>
         public MessageStatus MessageStatus {
-            get => Relationship switch
-                {
-                    "Open" => MessageStatus.Open,
-                    "Closed" => MessageStatus.Closed,
-                    "Read" => MessageStatus.Read,
-                    "Unread" => MessageStatus.Unread,
-                    _ => MessageStatus.None
-                    };
-            set => Relationship = value switch
-                {
-                    MessageStatus.Open => "Open",
-                    MessageStatus.Closed => "Closed",
-                    MessageStatus.Read => "Read",
-                    MessageStatus.Unread => "Unread",
-                    _ => "Unknown"
-                    };
+            get => Relationship switch {
+                "Open" => MessageStatus.Open,
+                "Closed" => MessageStatus.Closed,
+                "Read" => MessageStatus.Read,
+                "Unread" => MessageStatus.Unread,
+                _ => MessageStatus.None
+                };
+            set => Relationship = value switch {
+                MessageStatus.Open => "Open",
+                MessageStatus.Closed => "Closed",
+                MessageStatus.Read => "Read",
+                MessageStatus.Unread => "Unread",
+                _ => "Unknown"
+                };
             }
 
         }
@@ -76,7 +74,7 @@ namespace Goedel.Mesh {
 
         ///<inheritdoc/>
         public override DareEnvelope Envelope(
-                    CryptoKey signingKey = null, 
+                    CryptoKey signingKey = null,
                     CryptoKey encryptionKey = null,
                     ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
 
@@ -118,13 +116,12 @@ namespace Goedel.Mesh {
 
         static string MakeID(string udf, string content) {
             var (code, bds) = UDF.Parse(udf);
-            return code switch
-                {
-                    UdfTypeIdentifier.Digest_SHA_3_512 => UDF.ContentDigestOfDataString(
-                        bds, content, cryptoAlgorithmId: CryptoAlgorithmId.SHA_3_512),
-                    _ => UDF.ContentDigestOfDataString(
-                    bds, content, cryptoAlgorithmId: CryptoAlgorithmId.SHA_2_512),
-                    };
+            return code switch {
+                UdfTypeIdentifier.Digest_SHA_3_512 => UDF.ContentDigestOfDataString(
+                    bds, content, cryptoAlgorithmId: CryptoAlgorithmId.SHA_3_512),
+                _ => UDF.ContentDigestOfDataString(
+                bds, content, cryptoAlgorithmId: CryptoAlgorithmId.SHA_2_512),
+                };
             }
 
 
