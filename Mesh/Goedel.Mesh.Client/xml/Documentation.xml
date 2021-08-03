@@ -2416,7 +2416,7 @@
             The host profile
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedActivationDevice">
+        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedActivationHost">
              <summary>
             The activation record for this host
              </summary>

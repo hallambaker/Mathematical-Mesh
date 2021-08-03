@@ -214,13 +214,7 @@ namespace Goedel.Mesh {
         ///<inheritdoc/>
         public byte[] Value { get; }
 
-
-
-
-
-
         List<PacketExtension> Extensions { get; } = new();
-
 
 
         #endregion
@@ -250,6 +244,8 @@ namespace Goedel.Mesh {
                     });
                 }
             if (meshCredentialPrivate?.ConnectionDevice is null & connectionDevice is not null) {
+                authenticationKey.MatchKeyIdentifier(
+                        connectionDevice.Authentication.PublicParameters.KeyPair.KeyIdentifier).AssertTrue (NYI.Throw);
                 Extensions.Add(new PacketExtension() {
                     Tag = Constants.ExtensionTagsMeshConnectionDeviceTag,
                     Value = connectionDevice.DareEnvelope.GetBytes(false)
@@ -266,52 +262,6 @@ namespace Goedel.Mesh {
 
             }
 
-
-
-        ///// <summary>
-        ///// Construct a credential from <paramref name="connectionDevice"/> with 
-        ///// private key capabilities.
-        ///// </summary>
-        ///// <param name="connectionDevice">An activated device activation.</param>
-        ///// <param name="key">The private key</param>
-        //public MeshCredentialPrivate(ConnectionDevice connectionDevice, KeyPair key) : base (connectionDevice) {
-
-        //    (connectionDevice.AuthenticationPublic.KeyIdentifier).AssertEqual(key.KeyIdentifier, NYI.Throw);
-
-
-        //    Tag = Constants.ExtensionTagsMeshConnectionDeviceTag;
-        //    Value = connectionDevice.DareEnvelope.GetJsonB(false);
-
-        //    Screen.WriteLine(connectionDevice.ToString());
-
-
-        //    AuthenticationPrivate = key as KeyPairAdvanced;
-
-        //    }
-
-        ///// <summary>
-        ///// Construct a credential from <paramref name="profileDevice"/> with 
-        ///// private key capabilities.
-        ///// </summary>
-        ///// <param name="profileDevice"></param>
-        //public MeshCredentialPrivate(ProfileDevice profileDevice) : 
-        //            base (profileDevice.Authentication.GetKeyPairAdvanced(KeySecurity.Public)) {
-
-        //    AuthenticationPrivate = profileDevice.Authentication.GetKeyPairAdvanced(KeySecurity.Device);
-
-        //    }
-
-        ///// <summary>
-        ///// Create a credential wrapper for a device key asserted by means of the authentication
-        ///// key <paramref name="authenticationprivate"/>.
-        ///// </summary>
-        ///// <param name="authenticationprivate">The authentication key.</param>
-        //public MeshCredentialPrivate(KeyPairAdvanced authenticationprivate) :
-        //    base(authenticationprivate) {
-
-        //    AuthenticationPrivate = authenticationprivate;
-
-        //    }
 
 
         #endregion

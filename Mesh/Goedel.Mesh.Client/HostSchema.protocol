@@ -40,7 +40,7 @@
 		Struct Enveloped<ProfileHost> EnvelopedProfileHost
 			Description
 				|The host profile
-		Struct Enveloped<ActivationDevice> EnvelopedActivationDevice
+		Struct Enveloped<ActivationHost> EnvelopedActivationHost
 			Description
 				|The activation record for this host
 		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice

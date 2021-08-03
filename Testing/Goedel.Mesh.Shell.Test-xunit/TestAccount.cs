@@ -9,22 +9,27 @@ using Xunit;
 
 namespace Goedel.XUnit {
     public partial class ShellTests {
-        public string AliceAccount1 = "personal";
-        public string AliceAccount2 = "business";
-        public string AliceService1 = "alice@example.com";
-        public string AliceService2 = "alice@example.net";
+
+
+
+
+
+        //public string AliceAccount1 = "personal";
+        //public string AliceAccount2 = "business";
+        //public string AliceService1 = "alice@example.com";
+        //public string AliceService2 = "alice@example.net";
 
         [Fact]
         public void TestAccount() {
             var site1 = "example.com"; var username1 = "alice1"; var password1 = "password1";
             var username3 = "alice3"; var password3 = "password3";
 
-            Dispatch($"account create {AliceAccount1}");
+            Dispatch($"account create {AliceAccount}");
 
             Dispatch($"password add  {site1} {username1} {password1}");
 
+            Dispatch($"account hello {ServiceDns}");
 
-            Dispatch($"account hello {AliceService1}");
 
             var result1 = Dispatch($"account status");
 
@@ -132,16 +137,16 @@ namespace Goedel.XUnit {
             var testCLIAlice2 = GetTestCLI(AliceDevice2);
             var testCLIMallet1 = GetTestCLI(MalletDevice1);
 
-            var ProfileHello = testCLIAlice1.Example($"account hello {AliceService1}");
+            var ProfileHello = testCLIAlice1.Example($"account hello {ServiceDns}");
             var ResultHello = ProfileHello[0].Result as ResultHello;
 
-            var ProfileCreateAliceAccount = testCLIAlice1.ExampleNoCatch($"account create {AliceService1}");
+            var ProfileCreateAliceAccount = testCLIAlice1.ExampleNoCatch($"account create {AliceAccount}");
 
 
             // ToDo: need to add a flow for an administration QR code push and implement the QR code document.
 
-            var ConnectRequest = testCLIAlice2.Example($"device request {AliceService1}");
-            var ConnectRequestMallet = testCLIMallet1.Example($"device request {AliceService1}");
+            var ConnectRequest = testCLIAlice2.Example($"device request {AliceAccount}");
+            var ConnectRequestMallet = testCLIMallet1.Example($"device request {AliceAccount}");
 
             var ConnectPending = testCLIAlice1.ExampleNoCatch($"device pending");
 

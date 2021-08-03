@@ -27,6 +27,56 @@ using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh {
+    public partial class ActivationHost : ActivationDevice {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ActivationHost> EnvelopedActivationHost =>
+            envelopedActivationDevice ?? new Enveloped<ActivationHost>(DareEnvelope).
+                    CacheValue(out envelopedActivationDevice);
+        Enveloped<ActivationHost> envelopedActivationDevice;
+
+
+        ///<inheritdoc/>
+        public override MeshActor MeshActor => MeshActor.Host;
+
+        #region // Constructors
+
+        /// <summary>
+        /// Constructor for use by deserializers.
+        /// </summary>
+        public ActivationHost() {
+            }
+
+        /// <summary>
+        /// Construct a new <see cref="ActivationDevice"/> instance for the profile
+        /// <paramref name="profileDevice"/>.
+        /// If the value <paramref name="masterSecret"/> is
+        /// specified, it is used as the seed value. Otherwise, a seed value of
+        /// length <paramref name="bits"/> is generated.
+        /// The public key value is calculated for the public key pairs and the corresponding
+        /// <see cref="ConnectionUser"/> generated for the public values.
+        /// </summary>
+        /// <param name="profileDevice">The base profile that the activation activates.</param>
+        /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
+        /// a seed value of <paramref name="bits"/> length is generated.</param>
+        /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
+        /// is null.</param>
+        public ActivationHost(
+                    ProfileDevice profileDevice,
+                    byte[] masterSecret = null,
+                    int bits = 256) : base(
+                        profileDevice, masterSecret, bits) {
+            ProfileDevice = profileDevice;
+
+            AccountUdf = profileDevice.Udf;
+
+
+            }
+
+        #endregion
+
+
+
+        }
 
     public partial class ActivationDevice {
         #region // Properties

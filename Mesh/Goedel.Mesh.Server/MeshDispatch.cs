@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 
 using Goedel.IO;
 using Goedel.Mesh.Client;
@@ -164,17 +165,17 @@ namespace Goedel.Mesh.Server {
             string serviceConfig, string serviceDns, string hostIp, string hostDns,
             string admin, string newFile) {
 
-            var serviceName = "Mesh";
+            var serviceName = MeshService.WellKnown;
 
-            hostDns ??= "example.com";
+            hostDns ??= Dns.GetHostName();
             hostIp ??= "127.0.0.1:666";
             //var hostIpv6 = "[::1]:15099";
             var hostName = System.Environment.MachineName;
 
             hostDns ??= serviceDns;
 
-            var pathService = Path.Combine(meshMachine.DirectoryMesh, "service", hostName, "mmm");
-            var pathHost = Path.Combine(meshMachine.DirectoryMesh, "hosts", hostName, "mmm");
+            var pathService = Path.Combine(meshMachine.DirectoryMesh, "service", hostName, MeshService.WellKnown);
+            var pathHost = Path.Combine(meshMachine.DirectoryMesh, "hosts", hostName, MeshService.WellKnown);
 
             // Create the initial service application
             var ServiceConfiguration = new ServiceConfiguration() {
@@ -245,7 +246,7 @@ namespace Goedel.Mesh.Server {
 
             // Create a host profile and add create a connection to the host.
             var profileHost = ProfileHost.CreateHost(meshMachine);
-            var activationDevice = new ActivationDevice(profileHost);
+            var activationDevice = new ActivationHost(profileHost);
             activationDevice.Envelope(encryptionKey: profileHost.KeyEncrypt);
             // Persist the profile keys
             profileService.PersistSeed(meshMachine.KeyCollection);
@@ -271,7 +272,7 @@ namespace Goedel.Mesh.Server {
                 Id = connectionDevice.Subject,
                 EnvelopedProfileService = profileService.EnvelopedProfileService,
                 EnvelopedProfileHost = profileHost.EnvelopedProfileHost,
-                EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
+                EnvelopedActivationHost = activationDevice.EnvelopedActivationHost,
                 EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice
                 };
             meshMachine.MeshHost.Register(catalogedService, null);

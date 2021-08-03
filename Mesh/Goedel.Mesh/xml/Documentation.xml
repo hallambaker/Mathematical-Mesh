@@ -385,6 +385,91 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.ActivationHost">
+             <summary>
+            
+             Contains activation data for device specific keys used in the context of a 
+             Mesh host
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationHost.EnvelopedActivationHost">
+            <summary>Typed enveloped data</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ActivationHost.MeshActor">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationHost.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationHost.#ctor(Goedel.Mesh.ProfileDevice,System.Byte[],System.Int32)">
+            <summary>
+            Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
+            <paramref name="profileDevice"/>.
+            If the value <paramref name="masterSecret"/> is
+            specified, it is used as the seed value. Otherwise, a seed value of
+            length <paramref name="bits"/> is generated.
+            The public key value is calculated for the public key pairs and the corresponding
+            <see cref="!:ConnectionUser"/> generated for the public values.
+            </summary>
+            <param name="profileDevice">The base profile that the activation activates.</param>
+            <param name="masterSecret">If not null, specifies the seed value. Otherwise,
+            a seed value of <paramref name="bits"/> length is generated.</param>
+            <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
+            is null.</param>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationHost._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ActivationHost.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationHost._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationHost.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationHost.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationHost.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ActivationHost.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Mesh.ActivationDevice">
              <summary>
             

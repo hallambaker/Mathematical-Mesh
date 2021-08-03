@@ -79,8 +79,6 @@ namespace Goedel.Protocol.Service {
         /// <param name="requestQuality"></param>
         public abstract void Abort(RequestQuality requestQuality);
 
-        //int offset;
-
         JsonObject response;
         //IJpcSession session;
 

@@ -188,6 +188,8 @@ namespace Goedel.Mesh.Shell.Host {
         /// <returns>The RUD service</returns>
         public RudService StartService(HostConfiguration hostConfiguration, ServiceConfiguration serviceConfiguration) {
 
+            // this is failing because only the provider for the management service is getting set, not the mesh etc.
+
 
 
             var providers = new List<RudProvider>();

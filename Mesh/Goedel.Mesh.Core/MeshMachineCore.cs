@@ -182,7 +182,8 @@ namespace Goedel.Mesh {
             KeyCollection.Add(baseDecrypt);
 
             // Bug: profileHost has no encryption key specified!!!!
-            var activationDevice = catalogedMachine?.EnvelopedActivationDevice?.Decode(KeyCollection);
+            var activationDevice = catalogedMachine?.EnvelopedActivationHost?.Decode(KeyCollection);
+            //activationDevice.MeshActor = MeshActor.Host;
 
             activationDevice.Activate(deviceKeySeed);
 

@@ -299,6 +299,13 @@
 				|The UDF of the account
 
 
+	Structure ActivationHost
+		Description
+			|Contains activation data for device specific keys used in the context of a 
+			|Mesh host
+		Inherits ActivationDevice
+
+
 	Structure ActivationAccount
 		Inherits Activation
 		Struct KeyData ProfileSignature
