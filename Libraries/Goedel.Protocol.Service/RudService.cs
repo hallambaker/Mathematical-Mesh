@@ -1,4 +1,25 @@
-﻿using System;
+﻿#region // Copyright
+//  © 2021 by Phill Hallam-Baker
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+#endregion
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -74,10 +95,13 @@ namespace Goedel.Protocol.Service {
 
             // shut down the HTTP and UDP listeners.
             httpListener?.Close();
-            foreach (var listener in udpListeners) {
-                listener?.Close();
-                }
 
+
+            if (udpListeners != null) {
+                foreach (var listener in udpListeners) {
+                    listener?.Close();
+                    }
+                }
             }
 
 
@@ -284,7 +308,9 @@ namespace Goedel.Protocol.Service {
                 }
             httpListener.Close(); // Gracefull termination of the HTTP Listener
             httpListener = null;
-            for (var i = 0; i < udpListeners.Length; i++) {
+
+            
+            for (var i = 0; udpListeners != null && i < udpListeners.Length; i++) {
                 udpListeners[i].Close(); // Gracefull termination of the UDP Listeners
                 udpListeners[i] = null;
                 }

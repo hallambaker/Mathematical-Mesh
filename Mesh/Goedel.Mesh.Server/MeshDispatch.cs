@@ -1,5 +1,6 @@
-﻿//   Copyright © 2015 by Comodo Group Inc.
-//  
+﻿#region // Copyright
+//  Copyright © 2015 by Comodo Group Inc.
+//  Copyright © 2019-2021 by Phill Hallam-Baker
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -17,8 +18,7 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-//  
-//  
+#endregion
 
 using System.Collections.Generic;
 using System.IO;
@@ -72,36 +72,55 @@ namespace Goedel.Mesh.Server {
         public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
 
         #endregion
+        #region // Disposing
+        ///<inheritdoc/>
+        protected override void Disposing() {
+            MeshPersist.Dispose();
+            base.Disposing();
+            }
+        #endregion
         #region // Constructors and factories
 
-        /// <summary>
-        /// Factory method, the signature is pro tem and will be changed later on.
-        /// </summary>
-        ///<param name="hostConfiguration">The host configuration.</param>
-        ///<param name="serviceConfiguration">The service configuration.</param>
-        /// <returns></returns>
+        ///<inheritdoc cref="ServiceFactoryDelegate"/>
         public static RudProvider Factory(
+                IMeshMachine meshMachine,
                 ServiceConfiguration serviceConfiguration,
-                HostConfiguration hostConfiguration) => throw new NYI();
+                HostConfiguration hostConfiguration) {
+
+            hostConfiguration.AssertNotNull(NYI.Throw); // Force fixin of direct unit tests.
+
+            // Since it is the host that responds, the service binds to the host endpoints
+            // in addition to the service.
+
+            var endpoints = hostConfiguration.GetEndpoints();
+            //endpoints.AddRange(hostConfiguration.GetEndpoints());
+            var provider = new PublicMeshService(meshMachine, serviceConfiguration, hostConfiguration);
+
+            return new RudProvider(endpoints, provider);
+            }
+
+
 
         /// <summary>
-        /// The mesh service dispatcher.
+        /// Create a Mesh Service provider instance on the machine <paramref name="hostConfiguration"/>
+        /// according to the parameters specified in <paramref name="serviceConfiguration"/> and
+        /// <paramref name="hostConfiguration"/>/
         /// </summary>
-        /// <param name="domain">The domain of the service provider.</param>
-        /// <param name="serviceDirectory">The mesh persistence store filename.</param>
-        public PublicMeshService(string domain, string serviceDirectory) {
+        ///<inheritdoc cref="ServiceFactoryDelegate"/>
+        public PublicMeshService(
+                IMeshMachine meshMachine,
+                ServiceConfiguration serviceConfiguration,
+                HostConfiguration hostConfiguration) {
 
-            Domains ??= new List<string>();
-            Domains.Add(domain);
+            MeshMachine = meshMachine;
+            ServiceConfiguration = serviceConfiguration;
+            HostConfiguration = hostConfiguration;
 
-            MeshMachine = new MeshMachineCoreServer(serviceDirectory);
-
-            MeshPersist = new MeshPersist(serviceDirectory, FileStatus.OpenOrCreate);
+            MeshPersist = new MeshPersist(hostConfiguration.Path, FileStatus.OpenOrCreate);
 
             // Dummy profiles for the service and host at this point
             ProfileService = ProfileService.Generate(MeshMachine.KeyCollection);
 
-            // here we need to generate the activation record for the host and the connection for that record
 
             ProfileHost = ProfileHost.CreateHost(MeshMachine);
 
@@ -137,17 +156,6 @@ namespace Goedel.Mesh.Server {
             this.ConnectionDevice.DareEnvelope.Strip();
             }
 
-        private PublicMeshService(
-                    IMeshMachine meshMachine,
-                    ServiceConfiguration serviceConfiguration,
-                    HostConfiguration hostConfiguration) {
-
-            // pull out pieces from serviceConfiguration, hostConfiguration.
-
-
-            // here do something with the domains if desired.
-            // might just kill these in favor of the service description.
-            }
 
         /// <summary>
         /// Create a new Mesh Service
@@ -165,7 +173,7 @@ namespace Goedel.Mesh.Server {
             string serviceConfig, string serviceDns, string hostIp, string hostDns,
             string admin, string newFile) {
 
-            var serviceName = MeshService.WellKnown;
+            var serviceName = "MeshService";
 
             hostDns ??= Dns.GetHostName();
             hostIp ??= "127.0.0.1:666";
@@ -195,7 +203,7 @@ namespace Goedel.Mesh.Server {
                 Id = System.Environment.MachineName.ToLower(),
                 IP = new List<string> { hostIp },
                 DNS = new List<string> { hostDns },
-                Port = "15099",
+                Port = 15099,
                 Services = new List<string> { serviceName },
                 Path = pathHost
                 };
@@ -289,11 +297,11 @@ namespace Goedel.Mesh.Server {
 
 
             // Initialize the persistence store.
-            var meshPersist = new MeshPersist(hostConfiguration.Path, FileStatus.OpenOrCreate);
+            //var meshPersist = new MeshPersist(hostConfiguration.Path, FileStatus.OpenOrCreate);
 
             return new PublicMeshService(
                         meshMachine, serviceConfiguration, hostConfiguration) {
-                MeshPersist = meshPersist,
+                //MeshPersist = meshPersist,
                 ProfileService = profileService,
                 ProfileHost = profileHost,
                 ActivationDevice = activationDevice,

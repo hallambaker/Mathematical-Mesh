@@ -1,4 +1,25 @@
-﻿using System;
+﻿#region // Copyright
+//  © 2021 by Phill Hallam-Baker
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+#endregion
+using System;
 using System.IO;
 
 using Goedel.IO;
@@ -28,6 +49,9 @@ namespace Goedel.Cryptography.Dare {
 
         Stream disposeStreamRead = null;
         Stream disposeStreamWrite = null;
+
+
+        string Filename { get; }
 
         /// <summary>
         /// The current position within the stream.
@@ -65,17 +89,25 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="fileStatus">The file access mode.</param>
         /// <param name="writeOnly">If true, the file is only opened in write mode.</param>
         public JbcdStream(string fileName, FileStatus fileStatus = FileStatus.Read, bool writeOnly = false) {
+            Filename = fileName;
+
 
             if (fileStatus == FileStatus.ConcurrentLocked) {
                 LockGlobal = new LockGlobal(UDF.LockName(fileName));
                 }
 
             if (fileStatus != FileStatus.Read) {
+                Screen.WriteLine($"Open for write {fileName}");
+
+
                 StreamWrite = fileName.FileStream(fileStatus);
                 disposeStreamWrite = StreamWrite;
                 StreamWrite.Seek(0, SeekOrigin.End);
                 }
             if (!writeOnly) {
+                Screen.WriteLine($"Open for read {fileName}");
+
+
                 StreamRead = fileName.FileStream(FileStatus.Read);
                 disposeStreamRead = StreamRead;
                 }
@@ -97,6 +129,10 @@ namespace Goedel.Cryptography.Dare {
         /// Dispose method, frees all resources.
         /// </summary>
         protected override void Disposing() {
+            Screen.WriteLine($"close {Filename} read {disposeStreamRead != null} write {disposeStreamWrite!=null}");
+
+
+
             disposeStreamWrite?.Dispose();
             disposeStreamRead?.Dispose();
             LockGlobal?.Dispose();

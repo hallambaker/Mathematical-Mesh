@@ -174,9 +174,12 @@
         </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate">
             <summary>
-            Delegate returning a host <paramref name="hostConfiguration"/> for the
-            service  <paramref name="serviceConfiguration"/>
+            Delegate returning an instance of a service provider on the machine 
+            <paramref name="hostConfiguration"/>
+            according to the parameters specified in <paramref name="serviceConfiguration"/> and
+            <paramref name="hostConfiguration"/>/
             </summary>
+            <param name="meshMachine">The Mesh machine instance.</param>
             <param name="serviceConfiguration">The service configuration.</param>
             <param name="hostConfiguration">The configuration of this specific host.</param>
             <returns></returns>
@@ -311,12 +314,6 @@
         <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.DefaultIp">
             <summary>The default IP address</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.GetEndpoints">
-            <summary>
-            Returns the endpoints for the service configuration.
-            </summary>
-            <returns>The endpoints</returns>
-        </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.ServiceConfiguration.Addresses">
             <summary>
             </summary>
@@ -387,7 +384,7 @@
         <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.ServiceConfigs">
             <summary>List of referenced service configurations.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.HostConfiguration.GetEndpoints">
+        <member name="M:Goedel.Mesh.ServiceAdmin.HostConfiguration.GetEndpoints(System.String)">
             <summary>
             Returns the endpoints for the host configuration.
             </summary>

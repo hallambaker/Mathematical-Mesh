@@ -1,4 +1,5 @@
-﻿//  © 2021 by Phill Hallam-Baker
+﻿#region // Copyright - MIT License
+//  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -17,7 +18,9 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-//  
+#endregion
+
+
 
 using System;
 
@@ -34,21 +37,21 @@ namespace Goedel.Mesh.Management {
     /// </summary>
     public class ServiceManagementProvider : ServiceManagementService {
 
-        /// <summary>
-        /// Factory method, the signature is pro tem and will be changed later on.
-        /// </summary>
-        /// <param name="serviceConfiguration">The service configuration</param>
-        /// <param name="hostConfiguration">The host configuration</param>
-        /// <returns></returns>
-        public static RudProvider Factory(ServiceConfiguration serviceConfiguration,
+        ///<inheritdoc cref="ServiceFactoryDelegate"/>
+        public static RudProvider Factory(
+            IMeshMachine meshMachine,
+            ServiceConfiguration serviceConfiguration,
             HostConfiguration hostConfiguration) {
 
 
             // Since it is the host that responds, the service binds to the host endpoints
             // in addition to the service.
 
-            var endpoints = serviceConfiguration.GetEndpoints();
-            endpoints.AddRange(hostConfiguration.GetEndpoints());
+
+            var wellKnown = ServiceManagementProvider.WellKnown + "/" + serviceConfiguration.Id;
+
+            var endpoints = hostConfiguration.GetEndpoints(wellKnown);
+            //endpoints.AddRange(hostConfiguration.GetEndpoints());
             var provider = new ServiceManagementProvider(serviceConfiguration, hostConfiguration);
 
             return new RudProvider(endpoints, provider);

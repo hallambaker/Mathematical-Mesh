@@ -933,20 +933,19 @@
         <member name="P:Goedel.Mesh.Server.PublicMeshService.ServiceDescription">
             <summary>The service description.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Factory(Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
-             <summary>
-             Factory method, the signature is pro tem and will be changed later on.
-             </summary>
-            <param name="hostConfiguration">The host configuration.</param>
-            <param name="serviceConfiguration">The service configuration.</param>
-             <returns></returns>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(System.String,System.String)">
-            <summary>
-            The mesh service dispatcher.
-            </summary>
-            <param name="domain">The domain of the service provider.</param>
-            <param name="serviceDirectory">The mesh persistence store filename.</param>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Factory(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
+            <inheritdoc cref="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate"/>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
+             <summary>
+             Create a Mesh Service provider instance on the machine <paramref name="hostConfiguration"/>
+             according to the parameters specified in <paramref name="serviceConfiguration"/> and
+             <paramref name="hostConfiguration"/>/
+             </summary>
+            <inheritdoc cref="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate"/>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
@@ -1094,6 +1093,9 @@
         </member>
         <member name="P:Goedel.Mesh.Server.MeshPersist.ServiceSignatureKey">
             <summary>The service signature key.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.Disposing">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(System.String,Goedel.IO.FileStatus)">
             <summary>

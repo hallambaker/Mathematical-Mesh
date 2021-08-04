@@ -1,4 +1,5 @@
-﻿//  © 2021 by Phill Hallam-Baker
+﻿#region // Copyright
+//  Copyright © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -17,24 +18,28 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-//  
+#endregion
 
 using System.Collections.Generic;
 
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
-
+using Goedel.Mesh;
 
 namespace Goedel.Mesh.ServiceAdmin {
 
     /// <summary>
-    /// Delegate returning a host <paramref name="hostConfiguration"/> for the
-    /// service  <paramref name="serviceConfiguration"/>
+    /// Delegate returning an instance of a service provider on the machine 
+    /// <paramref name="hostConfiguration"/>
+    /// according to the parameters specified in <paramref name="serviceConfiguration"/> and
+    /// <paramref name="hostConfiguration"/>/
     /// </summary>
+    /// <param name="meshMachine">The Mesh machine instance.</param>
     /// <param name="serviceConfiguration">The service configuration.</param>
     /// <param name="hostConfiguration">The configuration of this specific host.</param>
     /// <returns></returns>
     public delegate RudProvider ServiceFactoryDelegate(
+        IMeshMachine meshMachine,
         ServiceConfiguration serviceConfiguration,
         HostConfiguration hostConfiguration);
 
@@ -177,24 +182,27 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// Returns the endpoints for the service configuration.
         /// </summary>
         /// <returns>The endpoints</returns>
-        public List<Endpoint> GetEndpoints() {
-            var endpoints = new List<Endpoint>();
-
-            foreach (var address in Addresses) {
-                if (address.IsDns()) {
-                    endpoints.Add(new HttpEndpoint(address, WellKnown, Instance));
-                    }
-                else if (address.IsCallSign()) {
+        //public List<Endpoint> GetEndpoints(string serviceId=null) {
+        //    var endpoints = new List<Endpoint>();
 
 
-                    }
+        //    var wellknown = serviceId == null ? WellKnown : WellKnown + "/" + serviceId;
 
-                }
+        //    foreach (var address in Addresses) {
+        //        if (address.IsDns()) {
+        //            endpoints.Add(new HttpEndpoint(address, wellknown, Instance));
+        //            }
+        //        else if (address.IsCallSign()) {
+
+
+        //            }
+
+        //        }
 
 
 
-            return endpoints;
-            }
+        //    return endpoints;
+        //    }
 
 
         #endregion
@@ -228,8 +236,28 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// Returns the endpoints for the host configuration.
         /// </summary>
         /// <returns>The endpoints</returns>
-        public List<Endpoint> GetEndpoints() {
+        public List<Endpoint> GetEndpoints(string wellKnown = null) {
+
+
             var endpoints = new List<Endpoint>();
+
+            foreach (var service in ServiceConfigs) {
+
+                foreach (var address in service.Addresses) {
+                    if (address.IsDns()) {
+                        endpoints.Add(new HttpEndpoint(address, wellKnown ?? service.WellKnown, service.Instance, Port:Port));
+                        }
+                    else if (address.IsCallSign()) {
+
+
+                        }
+
+
+                    }
+
+
+                }
+
 
             return endpoints;
             }

@@ -1,4 +1,5 @@
-﻿//   Copyright © 2020 Phillip Hallam-Baker
+﻿#region // Copyright - MIT License
+//  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -17,6 +18,9 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
+#endregion
+
+
 
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +36,7 @@ namespace Goedel.Mesh.Server {
     /// <summary>
     /// The Mathematical Mesh persistence store.
     /// </summary>
-    public class MeshPersist {
+    public class MeshPersist : Disposable {
 
 
         #region // Properties
@@ -48,7 +52,20 @@ namespace Goedel.Mesh.Server {
         ///<summary>The service signature key.</summary> 
         public static CryptoKey ServiceSignatureKey => null;
 
-        #endregion 
+        #endregion
+
+
+        #region // Disposing
+        ///<inheritdoc/>
+        protected override void Disposing() {
+
+            base.Disposing();
+            Container.Dispose();
+
+            }
+
+        #endregion
+
         #region // Constructors
 
         /// <summary>

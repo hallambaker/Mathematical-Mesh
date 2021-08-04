@@ -22,13 +22,8 @@
             The Service Management Provider.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.Factory(Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
-            <summary>
-            Factory method, the signature is pro tem and will be changed later on.
-            </summary>
-            <param name="serviceConfiguration">The service configuration</param>
-            <param name="hostConfiguration">The host configuration</param>
-            <returns></returns>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.Factory(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
+            <inheritdoc cref="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate"/>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceManagementProvider.ServiceDescriptionHost">
             <summary>The service description for a service reporting a single host.</summary> 

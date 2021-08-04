@@ -1,5 +1,5 @@
-﻿#region Copyright
-//  Copyright © 2021 by Threshold Secrets Llc.
+﻿#region // Copyright
+//  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal

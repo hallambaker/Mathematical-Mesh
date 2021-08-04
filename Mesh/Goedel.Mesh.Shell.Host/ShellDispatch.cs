@@ -1,4 +1,26 @@
-﻿using System;
+﻿#region // Copyright
+//  © 2021 by Phill Hallam-Baker
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -188,29 +210,24 @@ namespace Goedel.Mesh.Shell.Host {
         /// <returns>The RUD service</returns>
         public RudService StartService(HostConfiguration hostConfiguration, ServiceConfiguration serviceConfiguration) {
 
-            // this is failing because only the provider for the management service is getting set, not the mesh etc.
-
-
-
             var providers = new List<RudProvider>();
 
-            // add in the management service 
-
-            if (ServiceDescriptionDictionary.TryGetValue(
-                ServiceManagementProvider.WellKnown, out var managementProviderDescription)) {
+            if (ServiceDescriptionDictionary.TryGetValue(serviceConfiguration.WellKnown, out var provider)) {
+                providers.Add(provider.Factory(MeshMachine, serviceConfiguration, hostConfiguration));
                 }
-            else {
+
+            // add in the management service 
+            if (!ServiceDescriptionDictionary.TryGetValue(
+                ServiceManagementProvider.WellKnown, out var managementProviderDescription)) {
                 managementProviderDescription = ServiceManagementProvider.ServiceDescriptionHost;
                 }
             providers.Add(managementProviderDescription.Factory(
-                        serviceConfiguration, hostConfiguration));
+                MeshMachine, serviceConfiguration, hostConfiguration));
 
-
+            // retrieve the credential
             var credential = HostConfiguration.GetCredential(MeshMachine);
 
-            // Need to extract the host credential here...
-
-
+            // start the service
             var service = new RudService(providers, credential);
 
             var sigintReceived = false;

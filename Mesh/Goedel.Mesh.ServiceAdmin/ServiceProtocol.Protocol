@@ -68,7 +68,7 @@
 		Integer Process
 		Integer Storage
 		String Role
-		String Port
+		Integer Port
 		String IP
 			Multiple
 		String Services

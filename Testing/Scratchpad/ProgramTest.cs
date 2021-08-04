@@ -1,5 +1,5 @@
-﻿#region Copyright
-//  Copyright © 2021 by Threshold Secrets Llc.
+﻿#region // Copyright - MIT License
+//  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+
 using System;
 
 using Goedel.Cryptography;
@@ -30,7 +31,7 @@ using Goedel.XUnit;
 namespace Scratchpad {
 
 
-
+    // Current bug: test not terminating as the service is not being KILLED
 
 
 
@@ -40,8 +41,6 @@ namespace Scratchpad {
     // ToDo: RUD Documentation - Describe stream lifecycle
     // ToDo: RUD Documentation - Describe account binding
 
-    // ToDo: Meshman stand alone app
-    // ToDo: Server stand alone app
     // ToDo: Server logging
     // ToDo: Server status info
     // ToDo: Server admin permissions

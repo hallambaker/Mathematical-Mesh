@@ -1168,9 +1168,6 @@
             Base class for all JPC server classes.
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.JpcInterface.Domains">
-            <summary>List of DNS domains serviced by this interface.</summary> 
-        </member>
         <member name="P:Goedel.Protocol.JpcInterface.GetWellKnown">
             <summary>
             The WellKnown service name for HTTP and DNS prefix use.

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/3/2021 3:39:50 PM
+//  This file was automatically generated at 8/4/2021 6:11:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -658,10 +658,15 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// </summary>
 
 		public virtual string						Role  {get; set;}
+		bool								__Port = false;
+		private int						_Port;
         /// <summary>
         /// </summary>
 
-		public virtual string						Port  {get; set;}
+		public virtual int						Port {
+			get => _Port;
+			set {_Port = value; __Port = true; }
+			}
         /// <summary>
         /// </summary>
 
@@ -734,10 +739,10 @@ namespace Goedel.Mesh.ServiceAdmin {
 				_writer.WriteToken ("Role", 1);
 					_writer.WriteString (Role);
 				}
-			if (Port != null) {
+			if (__Port){
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Port", 1);
-					_writer.WriteString (Port);
+					_writer.WriteInteger32 (Port);
 				}
 			if (IP != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -813,7 +818,7 @@ namespace Goedel.Mesh.ServiceAdmin {
 					break;
 					}
 				case "Port" : {
-					Port = jsonReader.ReadString ();
+					Port = jsonReader.ReadInteger32 ();
 					break;
 					}
 				case "IP" : {
