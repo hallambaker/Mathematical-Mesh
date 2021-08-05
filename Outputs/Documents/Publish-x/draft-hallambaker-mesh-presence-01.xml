@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-presence-01" indexInclude="false" ipr="trust200902" prepTime="2021-01-13T16:39:29Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Mesh Presence">Mathematical Mesh 3.0 Part XII: Mesh Presence</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-presence" stream="independent"/>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><organization>Venture Cryptography.</organization>
+<address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="13" month="January" year="2021"/>
+<area/>
+<workgroup/>
+<keyword>Threshold Cryptography</keyword>
+<keyword>Elliptic Curve</keyword>
+<keyword>Threshold Encryption</keyword>
+<keyword>Threshold Key Generation</keyword>
+<keyword>Notary</keyword>
+<abstract>
+<t><eref target="http://whatever">https://mailarchive.ietf.org/arch/browse/mathmesh/</eref>Discussion of this draft should take place on the MathMesh mailing list (mathmesh@ietf.org), which is archived at .</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="n-introduction"></section>
+<section title="Definitions" anchor="n-definitions"><t>This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.</t>
+<section title="Requirements Language" anchor="n-requirements-language"><t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
+</section>
+<section title="Defined Terms" anchor="n-defined-terms"></section>
+<section title="Related Specifications" anchor="n-related-specifications"></section>
+<section title="Implementation Status" anchor="n-implementation-status"><t>The implementation status of the reference code base is described in the companion document <xref target="draft-hallambaker-mesh-developer"></xref>.</t>
+</section>
+</section>
+<section title="Presence Model" anchor="n-presence-model"><section title="Registration Service" anchor="n-registration-service"><section title="Connect" anchor="n-connect"></section>
+<section title="Keep Alive" anchor="n-keep-alive"></section>
+<section title="Disconnect" anchor="n-disconnect"></section>
+<section title="Invite" anchor="n-invite"></section>
+<section title="Accept" anchor="n-accept"></section>
+</section>
+<section title="Forwarding Service" anchor="n-forwarding-service"><section title="Data" anchor="n-data"><section title="Push" anchor="n-push"></section>
+<section title="Pull" anchor="n-pull"></section>
+</section>
+<section title="Administration" anchor="n-administration"><section title="Rekey" anchor="n-rekey"></section>
+<section title="Permission" anchor="n-permission"></section>
+</section>
+<section title="Service" anchor="n-service"><section title="Status" anchor="n-status"><t>Returns the current status of the stream including the current participants and their ephemeral keys (if used).</t>
+</section>
+<section title="Transfer" anchor="n-transfer"><t>Instructs a specific participant to use a different set of service hosts for upload/download.</t>
+</section>
+</section>
+</section>
+<section title="Peer to Peer Service" anchor="n-peer-to-peer-service"></section>
+</section>
+<section title="Security Considerations" anchor="n-security-considerations"></section>
+<section title="IANA Considerations" anchor="n-iana-considerations"><t>This document requires no IANA actions.</t>
+</section>
+<section title="Acknowledgements" anchor="n-acknowledgements"><t></t>
+</section>
+</middle>
+<back>
+<references title="Normative References"><reference anchor="RFC2119"><front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+</references>
+<references title="Informative References"><reference anchor="draft-hallambaker-mesh-developer"><front>
+<title>Mathematical Mesh: Reference Implementation</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-developer-10"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-10.txt"/>
+</reference>
+</references>
+</back>
+</rfc>

@@ -6,7 +6,7 @@ her closest friends:
 <div="terminal">
 <cmd>Alice> group create groupw@example.com
 <rsp>Account=groupw@example.com
-UDF=MARH-IIDG-JIAU-4YFZ-5DNO-NPCZ-YKVC
+UDF=MCTZ-HSH7-NUNV-MQ3Z-XNJ6-XGB3-VBPX
 </div>
 ~~~~
 
@@ -31,8 +31,8 @@ Alice adds herself to the group, now she can decrypt:
 <cmd>Alice> group add groupw@example.com alice@example.com
 <rsp>{
   "ContactAddress": "alice@example.com",
-  "MemberCapabilityId": "MC37-4KGF-WZ2P-ZFBC-WI2R-RLVJ-DXJF",
-  "ServiceCapabilityId": "NDIQ-4NHI-RGTF-3KLF-YH4G-77NB-AKEB"}
+  "MemberCapabilityId": "MCHU-Q4TP-GE2Y-6DNU-UYEF-P3BF-LZTB",
+  "ServiceCapabilityId": "NA3H-TSPB-TVND-S6NK-57T4-6TYM-ZT3Z"}
 <cmd>Alice> account sync /auto
 <cmd>Alice> dare decode groupsecret.dare grouptext_alice.dare
 <cmd>Alice> type grouptext_alice.dare
@@ -51,8 +51,8 @@ the group:
 <cmd>Alice> group add groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MC37-4KGF-WZ2P-ZFBC-WI2R-RLVJ-DXJF",
-  "ServiceCapabilityId": "ND36-BKGE-44KA-MRU3-7BIH-P57L-X5U6"}
+  "MemberCapabilityId": "MCHU-Q4TP-GE2Y-6DNU-UYEF-P3BF-LZTB",
+  "ServiceCapabilityId": "NBDJ-WYQO-UIEH-OVLK-B3UM-J5TN-AQ3P"}
 </div>
 ~~~~
 

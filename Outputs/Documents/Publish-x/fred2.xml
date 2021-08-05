@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-architecture-12" indexInclude="false" ipr="trust200902" prepTime="2020-01-16T16:00:14Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Mesh Architecture 3.0">Mathematical Mesh 3.0 Part I: Architecture Guide</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-architecture" stream="independent"/>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="16" month="January" year="2020"/>
+<area/>
+<workgroup/>
+<abstract>
+  <t>tbs</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="n-introduction"><t>The Mathematical Mesh (Mesh) is a user centered Public Key Infrastructure that uses cryptography to make computers easier to use. The Mesh provides an infrastructure that addresses the three concerns that have proved obstacles to the use of end-to-end security in computer applications:</t>
+
+
+<dl>
+
+  <dt>VII. Security Considerations <xref target="draft-hallambaker-mesh-security"></xref>.</dt>
+<dd>
+<t>Describes the security considerations for the Mesh protocol suite.</t>
+</dd>
+
+ 
+</dl>
+</section>
+
+</middle>
+<back>
+<references title="Normative References">
+  
+
+<reference anchor="draft-hallambaker-mesh-security"><front>
+<title>Mathematical Mesh 3.0 Part VII: Security Considerations</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="23" month="October" year="2019"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-security-02"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-security-02.txt"/>
+</reference>
+
+</references>
+</back>
+</rfc>

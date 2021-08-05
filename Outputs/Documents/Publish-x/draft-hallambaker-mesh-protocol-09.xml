@@ -1,0 +1,2797 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-protocol-09" indexInclude="false" ipr="trust200902" prepTime="2021-08-05T16:57:05Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Mesh Protocol Reference">Mathematical Mesh 3.0 Part V: Protocol Reference</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-protocol" stream="independent"/>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><organization>ThresholdSecrets.com</organization>
+<address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="5" month="August" year="2021"/>
+<area/>
+<workgroup/>
+<abstract>
+<t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices. The core protocols of the Mesh are described with examples of common use cases and reference data.</t>
+<t>[Note to Readers]</t>
+<t>Discussion of this draft takes place on the MATHMESH mailing list (mathmesh@ietf.org), which is archived at https://mailarchive.ietf.org/arch/search/?email_list=mathmesh.</t>
+<t>This document is also available online at <eref target="http://mathmesh.com/Documents/draft-hallambaker-mesh-protocol.html"></eref>.</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="n-introduction"><t>This document describes the Mesh Service protocol supported by Mesh Services, an account-based protocol that facilitates exchange of data between devices connected to a Mesh profile and between Mesh accounts.</t>
+<t>Mesh Service Accounts support the following services:</t>
+<ul>
+<li>Provides the master persistence store for the Catalogs and Spools associated with the account.</li>
+<li>Enables synchronization of Catalogs and Spools with connected devices.</li>
+<li>Enforces access control on inbound Mesh Messages from other users and other Mesh Services.</li>
+<li>Authenticates outbound Mesh Messages, certifying that they comply with abuse mitigation policies.</li>
+</ul>
+<t>A Mesh Profile <bcp14>MAY</bcp14> be bound to multiple Mesh Service Accounts at the same time but only one Mesh Service Account is considered to be authoritative at a time. Users may add or remove Mesh Service Accounts and change the account designated as authoritative at any time.</t>
+<t>The Mesh Services are build from a very small set of primitives which provide a surprisingly extensive set of capabilities. These primitives are:</t>
+<dl>
+<dt><tt>Hello</tt></dt>
+<dd>
+<t>Describes the features and options provided by the service and provides a 'null' transaction which <bcp14>MAY</bcp14> be used to establish an authentication ticket without performing any action,</t>
+</dd>
+<dt>CreateAccount, DeleteAccount</dt>
+<dd>
+<t>Manage the creation and deletion of accounts at the service.</t>
+</dd>
+<dt>Status, Download, <tt>Upload</tt></dt>
+<dd>
+<t>Support synchronization of Mesh containers between the service (Master) and the connected devices (Replicas).</t>
+</dd>
+<dt>Connect</dt>
+<dd>
+<t>Initiate the process of connecting a device to a Mesh profile from the device itself.</t>
+</dd>
+<dt>Post</dt>
+<dd>
+<t> Request that a Mesh Message be transferred to one or more Mesh Accounts.</t>
+</dd>
+</dl>
+<t>Although these functions could in principle be used to replace many if not most existing Internet application protocols, the principal value of any communication protocol lies in the size of the audience it allows them to communicate with. Thus, while the Mesh Messaging service is designed to support efficient and reliable transfer of messages ranging in size from a few bytes to multiple terabytes, the near-term applications of these services will be to applications that are not adequately supported by existing protocols if at all.</t>
+</section>
+<section title="Definitions" anchor="n-definitions"><t>This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.</t>
+<section title="Requirements Language" anchor="n-requirements-language"><t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
+</section>
+<section title="Defined Terms" anchor="n-defined-terms"><t>The terms of art used in this document are described in the <em>Mesh Architecture Guide</em> <xref target="draft-hallambaker-mesh-architecture"></xref>.</t>
+</section>
+<section title="Related Specifications" anchor="n-related-specifications"><t>The architecture of the Mathematical Mesh is described in the <em>Mesh Architecture Guide</em> <xref target="draft-hallambaker-mesh-architecture"></xref>. The Mesh documentation set and related specifications are described in this document.</t>
+</section>
+<section title="Implementation Status" anchor="n-implementation-status"><t>The implementation status of the reference code base is described in the companion document <xref target="draft-hallambaker-mesh-developer"></xref>.</t>
+</section>
+</section>
+<section title="Mesh Protocols" anchor="n-mesh-protocols"><t>The Mesh specifies two separate types of protocol interactions:</t>
+<dl>
+<dt>Mesh Service Protocol</dt>
+<dd>
+<t>A synchronous protocol supporting interactions between devices and a Mesh Service Host and between Mesh Service hosts.</t>
+</dd>
+<dt>Mesh Messaging Protocol</dt>
+<dd>
+<t>An asynchronous protocol that supports interactions between devices connected to the same account and between accounts.</t>
+</dd>
+</dl>
+<t>The Mesh Messaging Protocol uses the Mesh Service Protocol as transport. The Mesh Service Protocol in turn is supported by either the HTTPS binding over TCP or by the Mesh Datagram binding over UDP.</t>
+<figure>
+<name>
+ Protocol Layering</name>
+<!-- Include SVG File ../Images/ProtocolLayering.svg --><artwork type="svg">
+<svg width="384" height="185" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 368,0" fill="none" stroke="black" />
+  <path d="M 0,32 L 368,32" fill="none" stroke="black" />
+  <path d="M 0,64 L 184,64" fill="none" stroke="black" />
+  <path d="M 184,64 L 368,64" fill="none" stroke="black" />
+  <path d="M 0,96 L 184,96" fill="none" stroke="black" />
+  <path d="M 0,128 L 184,128" fill="none" stroke="black" />
+  <path d="M 184,128 L 368,128" fill="none" stroke="black" />
+  <path d="M 0,160 L 184,160" fill="none" stroke="black" />
+  <path d="M 184,160 L 368,160" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,32" fill="none" stroke="black" />
+  <path d="M 0,32 L 0,64" fill="none" stroke="black" />
+  <path d="M 0,64 L 0,96" fill="none" stroke="black" />
+  <path d="M 0,96 L 0,128" fill="none" stroke="black" />
+  <path d="M 0,128 L 0,160" fill="none" stroke="black" />
+  <path d="M 184,64 L 184,96" fill="none" stroke="black" />
+  <path d="M 184,96 L 184,128" fill="none" stroke="black" />
+  <path d="M 184,128 L 184,160" fill="none" stroke="black" />
+  <path d="M 368,0 L 368,32" fill="none" stroke="black" />
+  <path d="M 368,32 L 368,64" fill="none" stroke="black" />
+  <path d="M 368,64 L 368,128" fill="none" stroke="black" />
+  <path d="M 368,128 L 368,160" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="168" y="52">v</text>
+  <text text-anchor="middle" font-family="sans-serif" x="192" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="52">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="20">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="120" y="52">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="84">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="312" y="100">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="168" y="20">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="176" y="20">g</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="20">M</text>
+  <text text-anchor="middle" font-family="sans-serif" x="120" y="20">h</text>
+  <text text-anchor="middle" font-family="sans-serif" x="216" y="52">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="84">H</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="100">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="320" y="100">m</text>
+  <text text-anchor="middle" font-family="sans-serif" x="128" y="52">h</text>
+  <text text-anchor="middle" font-family="sans-serif" x="184" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="100">D</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="116">L</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="20">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="100">M</text>
+  <text text-anchor="middle" font-family="sans-serif" x="136" y="20">M</text>
+  <text text-anchor="middle" font-family="sans-serif" x="200" y="20">g</text>
+  <text text-anchor="middle" font-family="sans-serif" x="144" y="20">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="152" y="20">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="100">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="304" y="100">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="148">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="20">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="20">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">M</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="148">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="100">h</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="148">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="116">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="148">C</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="148">U</text>
+  <text text-anchor="middle" font-family="sans-serif" x="160" y="20">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="176" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="100">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="296" y="100">g</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="152" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="52">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="52">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="84">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="100">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="116">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="20">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="52">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="144" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="52">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="84">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="100">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="184" y="20">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="216" y="20">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="160" y="52">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="52">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="84">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="148">D</text>
+  <text text-anchor="middle" font-family="sans-serif" x="192" y="20">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="20">c</text>
+</g></svg>
+</artwork>
+</figure>
+<t>Mesh Services <bcp14>MUST</bcp14> support the HTTPS binding and <bcp14>MAY</bcp14> support the Mesh Datagram binding.</t>
+</section>
+<section title="Mesh Service" anchor="n-mesh-service"><t>A Mesh Service is a minimally trusted service. In particular a user does not need to trust a Mesh service to protect the confidentiality or integrity of most data stored in the account catalogs and spools.</t>
+<t>Unless the use of the Mesh Service is highly restricted, a user does need to trust the Mesh Service in certain respects:</t>
+<dl>
+<dt>Data Loss</dt>
+<dd>
+<t>A service could refuse to respond to requests to download data.</t>
+</dd>
+<dt>Integrity (Stale Data)</dt>
+<dd>
+<t>The use of Merkle Trees limits but does not eliminate the ability of a Mesh Service to respond to requests with stale data.</t>
+</dd>
+<dt>Messaging</dt>
+<dd>
+<t>A service could reject requests to post messages to or accept messages from other mesh users. </t>
+<t>This risk is a necessary consequence of the fact that the Mesh Service Provider is accountable to other Mesh Service Providers for abuse originating from their service.</t>
+</dd>
+<dt>Traffic analysis</dt>
+<dd>
+<t>A Mesh Service has knowledge of the number of Mesh Messages being sent and received by its users and the addresses to which they are being sent to or received from.</t>
+</dd>
+</dl>
+<t>The need to trust the Mesh Service in these respects is mitigated by accountability and the user's ability to change Mesh Service providers at any time they choose with minimal inconvenience.</t>
+<t>It is possible that some of these risks will be reduced in future versions of the Mesh Service Protocol but it is highly unlikely that these can be eliminated entirely without compromising practicality or efficiency.</t>
+<section title="Data Model" anchor="n-data-model"><t>The design of the Mesh Service model followed a quasi-formal approach in which the system was reduced to schemas which could in principle be rendered in a formal development method but without construction of proofs.</t>
+<t>Like the contents of Mesh Accounts, a Mesh Service may be represented by a collection of catalogs and spools, for example:</t>
+<dl>
+<dt>Account Catalog</dt>
+<dd>
+<t>Contains the account entries.</t>
+</dd>
+<dt>Incident Spool</dt>
+<dd>
+<t>Reports of potential abuse</t>
+</dd>
+</dl>
+<t>Backup of the service <bcp14>MAY</bcp14> be implemented using the same container synchronization mechanism used to synchronize account catalogs and spools.</t>
+</section>
+<section title="Partitioning" anchor="n-partitioning"><t>Mesh Services supporting a large number of accounts or large activity volume <bcp14>MAY</bcp14> partition the account catalog between one or more hosts using the usual tiered service model in which a front-end server receives traffic for any account hosted at the server and routes the request to the back-end service that provides the persistence store for that account.</t>
+<t>In addition, the Mesh Service Protocol supports a 'direct connection' partitioning model in which devices are given a DNS name which <bcp14>MAY</bcp14> allow for direct connection to the persistence host or to a front-end service offering service that is in some way specific to that account.</t>
+</section>
+</section>
+<section title="Protocol Bindings" anchor="n-protocol-bindings"><t>Mesh Service transactions are mapped to an underlying messaging and transport protocol. The following binding</t>
+<t>Mesh Services <bcp14>MUST</bcp14> support the Web Service binding specified in this document and <bcp14>MAY</bcp14> support the UDP binding currently in development.</t>
+<section title="DNS Web Service Discovery" anchor="n-dns-web-service-discovery"><t>The DNS Web Service discovery mechanism is used to discover Mesh Services regardless of the protocol binding .The service name, DNS prefix and and .well-known service suffix are specified as follows:</t>
+<ul>
+<li>Service Name: mmm</li>
+<li>DNS Prefix: _mmm._tcp</li>
+<li>Well Known service suffix: /.well-known/mmm</li>
+</ul>
+</section>
+<section title="Web Service Protocol Binding" anchor="n-web-service-protocol-binding"><t>The Web Service Protocol binding makes use of the most widely deployed and used protocols:</t>
+<ul>
+<li>Discovery: DNS Service discovery</li>
+<li>Transport: TLS</li>
+<li>Application: HTTP</li>
+<li>Presentation: DARE Message</li>
+<li>Encoding: JSON, JSON-B</li>
+</ul>
+<t>The chief limitations of the Web Service Protocol Binding are that the use of TCP based transport results in unsatisfactory latency for some applications and that the HTTP application layer only serves to allow a host to support multiple services on the same TCP/IP port.</t>
+<section title="Transport Security" anchor="n-transport-security"><t>Mesh Services <bcp14>MUST</bcp14> offer TLS transport and <bcp14>MAY</bcp14> offer non TLS transport. MESH clients <bcp14>SHOULD</bcp14> use TLS transport when connecting to a MESH service.</t>
+<t>TLS version 1.3 <xref target="RFC8446"></xref> or higher <bcp14>MUST</bcp14> be supported. Client authentication <bcp14>SHOULD NOT</bcp14> be used.</t>
+</section>
+<section title="HTTP Message Binding" anchor="n-http-message-binding"><t>All messages are exchanged as HTTP POST transactions. Support for and use of HTTP/1.1 <xref target="RFC7230"></xref> is <bcp14>REQUIRED</bcp14>. Services <bcp14>MAY</bcp14> support HTTP/2.</t>
+<t>In contrast to other approaches to the design of Web Services, the only use made of the HTTP transport is to distinguish between different services on the same host using the Host header and .well-known convention and for message framing.  No use is made of the URI request line to identify commands, nor are the caching or proxy capabilities of HTTP made use of.</t>
+</section>
+<section title="Request" anchor="n-request"><t>The HTTP request <bcp14>MAY</bcp14> contain any valid HTTP header specified in <xref target="RFC7230"></xref>. </t>
+<dl>
+<dt>Request Line URI </dt>
+<dd>
+<t><tt>/well-known/</tt>&lt;service&gt; (unless overridden using a TXT path attribute)</t>
+</dd>
+<dt>Request Line Method</dt>
+<dd>
+<t>POST</t>
+</dd>
+<dt>Host: Header</dt>
+<dd>
+<t>&lt;domain&gt;</t>
+</dd>
+<dt>Content-Encoding</dt>
+<dd>
+<t>As specified in section yy below.</t>
+</dd>
+<dt>Content-Type</dt>
+<dd>
+<t>As specified in section zz below.</t>
+</dd>
+<dt>Content-Length or Transfer-Encoding</dt>
+<dd>
+<t>As specified in <xref target="RFC7230"></xref>.</t>
+</dd>
+<dt>Payload</dt>
+<dd>
+<t>The content payload as specified in section XX below.</t>
+</dd>
+</dl>
+<sourcecode>
+[No dump of the binding yet]
+
+~~~~
+
+</sourcecode>
+</section>
+<section title="Response" anchor="n-response"><t>The response <bcp14>MAY</bcp14> contain any HTTP response header but since JWB services do not make use of HTTP caching and messages are not intended to be modified by HTTP intermediaries, only a limited number of headers have significance:</t>
+<dl>
+<dt>Response Code</dt>
+<dd>
+<t>The HTTP response code. This is processed as described in section zz below.</t>
+</dd>
+<dt>Content-Type</dt>
+<dd>
+<t>As specified in section zz below.</t>
+</dd>
+<dt>Content-Length or Transfer-Encoding</dt>
+<dd>
+<t>As specified in <xref target="RFC7230"></xref>.</t>
+</dd>
+<dt>Cache-Control</dt>
+<dd>
+<t>Since the only valid HTTP method for a JWB request is POST, JWB responses are not cacheable. The use of the cache-control header is therefore unnecessary. However, experience suggests that reviewers find it easier to understand protocol specifications if they are reminded of the fact that caching is neither supported nor desired. </t>
+</dd>
+</dl>
+<sourcecode>
+[No dump of the binding yet]
+
+~~~~
+
+</sourcecode>
+</section>
+</section>
+<section title="DARE Message Encapsulation" anchor="n-dare-message-encapsulation"><t>The payload of the HTTP requests and responses is a DARE Message whose payload contains the Mesh Service request or response.</t>
+<t>The DARE Message encapsulation is used to authenticate the request or response data. The form of the authentication depending on the credentials available to the sender at the time the request is made.</t>
+<t>Mesh Service <bcp14>MUST</bcp14> support the use of Mutually Authenticated Key Exchange <xref target="draft-hallambaker-mesh-security"></xref> to establish the Master Key used for authentication of requests and responses.</t>
+<t>Requests and Responses <bcp14>MUST</bcp14> be authenticated. Requests and Responses <bcp14>MUST</bcp14> be encrypted if the transport is not encrypted and <bcp14>MAY</bcp14> be encrypted otherwise.</t>
+<section title="Null Authentication" anchor="n-null-authentication"><t>Null Authentication <bcp14>MAY</bcp14> be used to make a <tt>Hello</tt> Request.</t>
+<t>The Null Authentication mechanism <bcp14>MUST NOT</bcp14> be used for any Mesh Service request or response other than a <tt>Hello</tt> request.</t>
+<t>Since the Mutually Authenticated key exchange requires both parties to know the public key of the other, it is not possible for a client to authenticate itself to the service until it has obtained the service public key. One means by which the client <bcp14>MAY</bcp14> obtain the service public key is by requesting the service return the credential in a <tt>Hello</tt> transaction.</t>
+</section>
+<section title="Device Authentication" anchor="n-device-authentication"><t>Device Authentication is used in two circumstances</t>
+<ul>
+<li>When requesting creation of an account</li>
+<li>When a device is requesting connection to a profile.</li>
+</ul>
+</section>
+<section title="Profile Authentication" anchor="n-profile-authentication"><t>Profile Authentication has the same form as Device Authentication except that the client provides its Device Connection Assertion as part of the request:</t>
+</section>
+<section title="Ticket Authentication" anchor="n-ticket-authentication"><t>Ticket Authentication is used after a device has obtained an authentication ticket from a service. The ticket is returned in the response to a previous Profile Authentication exchange.</t>
+</section>
+</section>
+<section title="Payload Encoding" anchor="n-payload-encoding"><t>The Dare Message payload of a <tt>Hello</tt> request <bcp14>MUST</bcp14> be encoded in JSON encoding. The payload of all other requests <bcp14>MUST</bcp14> be in either JSON encoding or one of the encodings advertised as being accepted in a Hello response from the Service. Services <bcp14>MUST</bcp14> accept JSON encoding and <bcp14>MAY</bcp14> support the JSON-B or JSON-C encodings as specified in this document. Services <bcp14>MUST</bcp14> generate a response that is compatible with the DARE Message Content-Type specified in the request.</t>
+<t>JSON was originally developed to provide a serialization format for the JavaScript programming language <xref target="ECMA-262"></xref>. While this approach is generally applicable to the type systems of scripting programming languages, it is less well matched to the richer type systems of modern object oriented programming languages such as Java and C#.</t>
+<t>Working within a subset of the capabilities of JSON allows a Web Service protocol to be accessed with equal ease from either platform type. The following capabilities of JSON are avoided:</t>
+<t>The ability to use arbitrary strings as field names.</t>
+<t>The use of JSON objects to define maps directly</t>
+<t>The following data field types are used:</t>
+<dl>
+<dt>Integer</dt>
+<dd>
+<t>Integer values are encoded as JSON number values.</t>
+</dd>
+<dt>String</dt>
+<dd>
+<t>Test strings are encoded as JSON text strings.</t>
+</dd>
+<dt>Boolean</dt>
+<dd>
+<t>Boolean values are encoded as JSON 'false', 'true' or 'null' tokens according to value.</t>
+</dd>
+<dt>Sequence</dt>
+<dd>
+<t>Sequences of data items that are encoded as JSON arrays</t>
+</dd>
+<dt>Object of known type</dt>
+<dd>
+<t>Objects whose type is known to the receiver are encoded as JSON objects</t>
+</dd>
+<dt>Object of variable type</dt>
+<dd>
+<t>Objects whose type is not known to the receiver are encoded as JSON objects containing a single field whose name describes the type of the object value and whose value contains the value.</t>
+</dd>
+<dt>Binary Data</dt>
+<dd>
+<t>Byte sequences are converted to BASE64-url encoding <xref target="RFC4648"></xref> and encoded as JSON string values.</t>
+</dd>
+<dt>Date Time</dt>
+<dd>
+<t>Date Time values are converted to Internet time format as described in <xref target="RFC3339"></xref> and encoded as JSON string values.</t>
+</dd>
+</dl>
+</section>
+<section title="Error handling and response codes" anchor="n-error-handling-and-response-codes"><t>It is possible for an error to occur at any of the three layers in the Web Service binding:</t>
+<t>Service Layer</t>
+<t>HTTP Layer</t>
+<t>Transport Layer</t>
+<t>Services <bcp14>SHOULD</bcp14> always attempt to return error codes at the highest level possible. However, it is clearly impossible for a connection that is refused at the Transport layer to return an error code at the HTTP layer. It is however possible for a HTTP layer error response to contain a content body.</t>
+<t>In the case that a response contains both a HTTP response code and a well-formed payload containing a response, the payload response <bcp14>SHALL</bcp14> have precedence.</t>
+</section>
+</section>
+<section title="Key Establishment Protocol" anchor="n-key-establishment-protocol"><t>The key establishment protocol is the mechanism used to establish an authentication context between a Mesh Client and a Mesh Host. </t>
+<t>The key establishment protocol runs in parallel with regular Mesh communications. Each key establishment message consists of three segments:</t>
+<ul>
+<li>Plaintext KEP</li>
+<li>Encrypted KEP</li>
+<li>Payload + Padding</li>
+</ul>
+<t>When using HTTP transport, the ability of the client to respond to a packet sent by the host has already been established. When using UDP transport, amplification and resource denial attacks are possible.</t>
+<section title="Processes" anchor="n-processes"><section title="Start = initial -&gt; Begin | cloaked -&gt; Begin" anchor="n-start--initial--begin--cloaked--begin"><t>Depending on the discovery process, the client begins the connection establishment protocol with either the initial or cloaked message.</t>
+<ul>
+<li>If the client has the Service credential, it <bcp14>MAY</bcp14> use either the initial or cloaked message to initiate the connection.</li>
+<li>Otherwise, the initial message is used.</li>
+</ul>
+<t>When using UDP transport, amplification the client <bcp14>MUST</bcp14> pad the initial and cloaked messages to the MTA and the host <bcp14>MUST</bcp14> reject messages that lack the required padding. </t>
+</section>
+<section title="Begin = challenge -&gt; Present | complete -&gt; WaitClient | refused -&gt; Stop" anchor="n-begin--challenge--present--complete--waitclient--refused--stop"><t>From the Host point of view, the initial and cloaked messages are equivalent.</t>
+<t>The host <bcp14>MAY</bcp14> refuse the connection request by returning the refused event. In this case the key establishment is aborted.</t>
+<t>Otherwise, the host either completes the connection request immediately or presents the client with a challenge to protect against resource exhaustion attacks.</t>
+</section>
+<section title="Present = represent -&gt; Begin" anchor="n-present--represent--begin"><t>If the host presents a challenge, the client responds with the represent event containing the response to the challenge. This <bcp14>MAY</bcp14> involve a proof of work test to demonstrate that the client has performed a certain degree of work before the host commits resources to the public key operations.</t>
+</section>
+<section title="WaitClient = request -&gt; WaitService" anchor="n-waitclient--request--waitservice"><t>A client that has reached the WaitClient state has established a ticket and shared secret. These are then used to enhance all further requests.</t>
+</section>
+<section title="WaitService = response -&gt; WaitClient | refused -&gt; Stop" anchor="n-waitservice--response--waitclient--refused--stop"><t>A host that has reached the WaitClient state has established a ticket and shared secret. These are then used to enhance all further responses.</t>
+</section>
+</section>
+<section title="Client Events" anchor="n-client-events"><section title="Initial" anchor="n-initial"><t>Client knows</t>
+<ul>
+<li>Service DNS (Direct or from callsign)</li>
+</ul>
+<t>Client presents</t>
+<ul>
+<li>Client ephemeral key</li>
+<li>Account Profile</li>
+<li>Device Connection</li>
+<li>Payload is plaintext</li>
+</ul>
+<dl>
+<dt></dt>
+<dd>
+</dd>
+</dl>
+</section>
+<section title="Cloaked" anchor="n-cloaked"><t>Encrypted version of the Initial request.</t>
+<t>Client knows</t>
+<ul>
+<li>Service DNS with Host key  (Direct or from callsign)</li>
+</ul>
+<t>Client presents</t>
+<ul>
+<li>Client ephemeral key</li>
+<li>Account Profile</li>
+<li>Device Connection</li>
+<li>Payload is plaintext</li>
+</ul>
+<t></t>
+</section>
+<section title="Present" anchor="n-present"></section>
+<section title="Request" anchor="n-request-0"></section>
+</section>
+<section title="Server Events" anchor="n-server-events"><section title="Challenge" anchor="n-challenge"></section>
+<section title="Complete" anchor="n-complete"></section>
+<section title="Response" anchor="n-response-0"></section>
+<section title="Refused" anchor="n-refused"></section>
+</section>
+</section>
+<section title="Mesh Service Transactions" anchor="n-mesh-service-transactions"><section title="Service Description" anchor="n-service-description"><t>The Hello transaction is used to determine the features supported by the service and obtain the service credentials</t>
+<t>The request payload: </t>
+<sourcecode>{
+  "HelloRequest":{}}</sourcecode>
+<t>The response payload: </t>
+<sourcecode>{
+  "MeshHelloResponse":{
+    "Status":201,
+    "Version":{
+      "Major":3,
+      "Minor":0,
+      "Encodings":[{
+          "ID":["application/json"
+            ]}
+        ]},
+    "EnvelopedProfileService":[{
+        "EnvelopeId":"MBBY-E4VA-CMWF-52T7-ESLA-PGNT-CNNX",
+        "dig":"S512",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQkJZLUU0VkEtQ0
+  1XRi01MlQ3LUVTTEEtUEdOVC1DTk5YIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+  sZVNlcnZpY2UiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAg
+  IkNyZWF0ZWQiOiAiMjAyMS0wOC0wNVQxNjozNzoyOVoifQ"},
+      "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJQcm9maWxlU2lnbmF0dX
+  JlIjogewogICAgICAiVWRmIjogIk1CQlktRTRWQS1DTVdGLTUyVDctRVNMQS1QR05
+  ULUNOTlgiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVi
+  bGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgI
+  CAgIlB1YmxpYyI6ICJKNDlrcGhHMGJZTFlrSXRDZm5jeURNOWFUcWpBUGd6Ql9Wen
+  pjQU5VYjU5a0hfdUxuM1hBCiAgcFpCWVRmelI4NlFuN1hvMm5xX215NFlBIn19fSw
+  KICAgICJTZXJ2aWNlQXV0aGVudGljYXRpb24iOiB7CiAgICAgICJVZGYiOiAiTUNE
+  Ui1NSEtLLVRVN0otRDZORi1TR000LTZTRlAtWlNYNiIsCiAgICAgICJQdWJsaWNQY
+  XJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgIC
+  AgImNydiI6ICJYNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAicjI3YVNLOWZkUEJ
+  hZ2ExLWJmZE8zX0JVQlp6R1JWSHBwcGVfY05KM2NPRmYxQ3I4dGt2bAogIHZoQjhw
+  eldjZ09mQndlUTJKYWU1bFRLQSJ9fX0sCiAgICAiU2VydmljZUVuY3J5cHRpb24iO
+  iB7CiAgICAgICJVZGYiOiAiTUM3NS03TUtMLVpWQUktWEw2NC01UlpDLUxBWFMtNj
+  NGVyIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWN
+  LZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJYNDQ4IiwKICAgICAgICAgICJQ
+  dWJsaWMiOiAibHlmbXdvY2xwVm5KVTNPbVVwYmlVVm53YWljUXJEalc0OHRVZ1JYW
+  DdFNEZ5am9iZ212bAogIDJvVTlrQ3ZmY1JrNWRzdG1xSDhEUHBhQSJ9fX0sCiAgIC
+  AiU2VydmljZVNpZ25hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNQ080LU1CTkwtWlR
+  MSi1KNURCLUQ3SUYtTk9GUC03QTZWIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMi
+  OiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogI
+  kVkNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAielB1M1pNdTZZYjlvZHlnaExCb3
+  ZwMWE4T0c1eUUzdzQ3ei12ZEFLNUlaVkZHaEpPVEVmRwogIGZxTjFMTEFGU2hQXzl
+  iekxuZG1qTklJQSJ9fX19fQ",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MBBY-E4VA-CMWF-52T7-ESLA-PGNT-CNNX",
+            "signature":"GXYGhu6H4ZOuZiayoRy94x6WnIJiHhYHGvmD1Mzp
+  Td9rqAHYspxMo-l6SyheWNccwzqP3Ps3v-AAg7P3SF-Dt8zyoRYYgS8Mwg3MavHlQ
+  TJbAiyq1fruykJddR1EkB1FAxWayl73usHTWO_ffBauqiMA"}
+          ],
+        "PayloadDigest":"tf1ucBynDXcgOCrUO9HubDJLozl39Imevt14slRR
+  PCRFoQRMOc1vvyMfDrPMcmAUmZN6nv34yLooay3-HMF1jg"}
+      ],
+    "EnvelopedProfileHost":[{
+        "EnvelopeId":"MBFC-J3BC-EQTD-UQPM-URBP-FRCA-VHB3",
+        "dig":"S512",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQkZDLUozQkMtRV
+  FURC1VUVBNLVVSQlAtRlJDQS1WSEIzIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+  sZUhvc3QiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIkNy
+  ZWF0ZWQiOiAiMjAyMS0wOC0wNVQxNjozNzoyOVoifQ"},
+      "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJQcm9maWxlU2lnbmF0dXJlIj
+  ogewogICAgICAiVWRmIjogIk1CRkMtSjNCQy1FUVRELVVRUE0tVVJCUC1GUkNBLVZ
+  IQjMiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+  S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+  lB1YmxpYyI6ICJkMU5BS3FoNTJWUVRnZm9lWlZHbWpoX3VrNk9PWFFZcXJvRFlwMW
+  5fdWIxblBrQk9qbTVyCiAgMkg2VGotdlFTbmtuQ0U5OVJRTDl0cUtBIn19fSwKICA
+  gICJFbmNyeXB0aW9uIjogewogICAgICAiVWRmIjogIk1ENUotQzNRUy1USUpTLTdN
+  SUItVjZZNi1HV0hFLVRLQUkiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKI
+  CAgICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiWDQ0OC
+  IsCiAgICAgICAgICAiUHVibGljIjogIm52REpzV0dXNGtSUWFZeEM4Z3NJQ0E0bnp
+  4Zm0yTnVBeVprU1lwYnhJVHcxMU1ULUtONFYKICBuNmR1QXFheFptbnktNm81clFv
+  TnFKMkEifX19LAogICAgIlNpZ25hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNQ1ZGL
+  TY1R1AtQjVTWC1TRlY2LUVZVFItUlJYUS01Qk0zIiwKICAgICAgIlB1YmxpY1Bhcm
+  FtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICA
+  iY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAic2o0ejN5TTlpZEkw
+  bEZ4d0NhRjZFckFwSHpaQ0ltdGhLVnhuYk5FQWVSRDRUSGZPRmNwTwogIHlQMXkwR
+  DROcEZlaDZlZmdERVBLY2VlQSJ9fX0sCiAgICAiQXV0aGVudGljYXRpb24iOiB7Ci
+  AgICAgICJVZGYiOiAiTUFRWi1OV0lZLUdDN0ktQ1E2SS1HTUEzLU1CNEYtUllBWCI
+  sCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlF
+  Q0RIIjogewogICAgICAgICAgImNydiI6ICJYNDQ4IiwKICAgICAgICAgICJQdWJsa
+  WMiOiAiVTFYNWtKRU55NDYwTzZ5VEdIY3FzMkFBMXphU2Ffbm4yR3FxRHBxcENtRE
+  RZREhHMWVEUwogIDZKSGR1QmNkTVlZeWdteUdRbncyRjRDQSJ9fX19fQ",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MBFC-J3BC-EQTD-UQPM-URBP-FRCA-VHB3",
+            "signature":"zIbCIREQXwu5GBXdPKHZmO5dkJ3h-Jta65FYKLy8
+  lQrNp2yLPN_ox5QHlp-tkw8fnFsIe3IMQIgAOOWqpdJejQGLhiymClaz7BPEQlsEt
+  o0q-pwH2iBiHoPiMv65YOaZPzblW2X4j3BsCt4I2StEciAA"}
+          ],
+        "PayloadDigest":"njYw-Th6easiJpjiAz6pz9rsb8xxhZTO5UaXM8_P
+  P75IfULeBhkki3773VDhqL71EIAwvIfktFRF0G50CxKm3A"}
+      ]}}</sourcecode>
+</section>
+<section title="Account Creation" anchor="n-account-creation"><section title="Bind User Account" anchor="n-bind-user-account"><t>A User Account is bound to a Mesh Service by completing a <tt>BindAccount</tt> transaction with the service.</t>
+<t>The <tt>BindRequest</tt> message specifies the account address and <tt>ProfileUser </tt>of the account to be serviced. </t>
+<t>The <tt>BindAccount</tt> transaction is unique in that it can fail to complete for reasons that are outside the scope of the Mesh specifications. Creation of an account might require payment to be made or authentication of the user's credentials. It is thus quite normal for the result of a CreateRequest to be the account being created in an 'on hold' state which can only be changed out of band.</t>
+<t>If the request is at least partially successful, a BindResponse message is returned. In the case of partial success, a description of the request status and link to a Web page providing further details <bcp14>MAY</bcp14> be returned.</t>
+<t>The request payload: </t>
+<sourcecode>{
+  "HelloRequest":{}}</sourcecode>
+<t>The response payload: </t>
+<sourcecode>{
+  "MeshHelloResponse":{
+    "Status":201,
+    "Version":{
+      "Major":3,
+      "Minor":0,
+      "Encodings":[{
+          "ID":["application/json"
+            ]}
+        ]},
+    "EnvelopedProfileService":[{
+        "EnvelopeId":"MBBY-E4VA-CMWF-52T7-ESLA-PGNT-CNNX",
+        "dig":"S512",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQkJZLUU0VkEtQ0
+  1XRi01MlQ3LUVTTEEtUEdOVC1DTk5YIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+  sZVNlcnZpY2UiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAg
+  IkNyZWF0ZWQiOiAiMjAyMS0wOC0wNVQxNjozNzoyOVoifQ"},
+      "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJQcm9maWxlU2lnbmF0dX
+  JlIjogewogICAgICAiVWRmIjogIk1CQlktRTRWQS1DTVdGLTUyVDctRVNMQS1QR05
+  ULUNOTlgiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVi
+  bGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgI
+  CAgIlB1YmxpYyI6ICJKNDlrcGhHMGJZTFlrSXRDZm5jeURNOWFUcWpBUGd6Ql9Wen
+  pjQU5VYjU5a0hfdUxuM1hBCiAgcFpCWVRmelI4NlFuN1hvMm5xX215NFlBIn19fSw
+  KICAgICJTZXJ2aWNlQXV0aGVudGljYXRpb24iOiB7CiAgICAgICJVZGYiOiAiTUNE
+  Ui1NSEtLLVRVN0otRDZORi1TR000LTZTRlAtWlNYNiIsCiAgICAgICJQdWJsaWNQY
+  XJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgIC
+  AgImNydiI6ICJYNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAicjI3YVNLOWZkUEJ
+  hZ2ExLWJmZE8zX0JVQlp6R1JWSHBwcGVfY05KM2NPRmYxQ3I4dGt2bAogIHZoQjhw
+  eldjZ09mQndlUTJKYWU1bFRLQSJ9fX0sCiAgICAiU2VydmljZUVuY3J5cHRpb24iO
+  iB7CiAgICAgICJVZGYiOiAiTUM3NS03TUtMLVpWQUktWEw2NC01UlpDLUxBWFMtNj
+  NGVyIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWN
+  LZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJYNDQ4IiwKICAgICAgICAgICJQ
+  dWJsaWMiOiAibHlmbXdvY2xwVm5KVTNPbVVwYmlVVm53YWljUXJEalc0OHRVZ1JYW
+  DdFNEZ5am9iZ212bAogIDJvVTlrQ3ZmY1JrNWRzdG1xSDhEUHBhQSJ9fX0sCiAgIC
+  AiU2VydmljZVNpZ25hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNQ080LU1CTkwtWlR
+  MSi1KNURCLUQ3SUYtTk9GUC03QTZWIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMi
+  OiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogI
+  kVkNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAielB1M1pNdTZZYjlvZHlnaExCb3
+  ZwMWE4T0c1eUUzdzQ3ei12ZEFLNUlaVkZHaEpPVEVmRwogIGZxTjFMTEFGU2hQXzl
+  iekxuZG1qTklJQSJ9fX19fQ",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MBBY-E4VA-CMWF-52T7-ESLA-PGNT-CNNX",
+            "signature":"GXYGhu6H4ZOuZiayoRy94x6WnIJiHhYHGvmD1Mzp
+  Td9rqAHYspxMo-l6SyheWNccwzqP3Ps3v-AAg7P3SF-Dt8zyoRYYgS8Mwg3MavHlQ
+  TJbAiyq1fruykJddR1EkB1FAxWayl73usHTWO_ffBauqiMA"}
+          ],
+        "PayloadDigest":"tf1ucBynDXcgOCrUO9HubDJLozl39Imevt14slRR
+  PCRFoQRMOc1vvyMfDrPMcmAUmZN6nv34yLooay3-HMF1jg"}
+      ],
+    "EnvelopedProfileHost":[{
+        "EnvelopeId":"MBFC-J3BC-EQTD-UQPM-URBP-FRCA-VHB3",
+        "dig":"S512",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQkZDLUozQkMtRV
+  FURC1VUVBNLVVSQlAtRlJDQS1WSEIzIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+  sZUhvc3QiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIkNy
+  ZWF0ZWQiOiAiMjAyMS0wOC0wNVQxNjozNzoyOVoifQ"},
+      "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJQcm9maWxlU2lnbmF0dXJlIj
+  ogewogICAgICAiVWRmIjogIk1CRkMtSjNCQy1FUVRELVVRUE0tVVJCUC1GUkNBLVZ
+  IQjMiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+  S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+  lB1YmxpYyI6ICJkMU5BS3FoNTJWUVRnZm9lWlZHbWpoX3VrNk9PWFFZcXJvRFlwMW
+  5fdWIxblBrQk9qbTVyCiAgMkg2VGotdlFTbmtuQ0U5OVJRTDl0cUtBIn19fSwKICA
+  gICJFbmNyeXB0aW9uIjogewogICAgICAiVWRmIjogIk1ENUotQzNRUy1USUpTLTdN
+  SUItVjZZNi1HV0hFLVRLQUkiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKI
+  CAgICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiWDQ0OC
+  IsCiAgICAgICAgICAiUHVibGljIjogIm52REpzV0dXNGtSUWFZeEM4Z3NJQ0E0bnp
+  4Zm0yTnVBeVprU1lwYnhJVHcxMU1ULUtONFYKICBuNmR1QXFheFptbnktNm81clFv
+  TnFKMkEifX19LAogICAgIlNpZ25hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNQ1ZGL
+  TY1R1AtQjVTWC1TRlY2LUVZVFItUlJYUS01Qk0zIiwKICAgICAgIlB1YmxpY1Bhcm
+  FtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICA
+  iY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAic2o0ejN5TTlpZEkw
+  bEZ4d0NhRjZFckFwSHpaQ0ltdGhLVnhuYk5FQWVSRDRUSGZPRmNwTwogIHlQMXkwR
+  DROcEZlaDZlZmdERVBLY2VlQSJ9fX0sCiAgICAiQXV0aGVudGljYXRpb24iOiB7Ci
+  AgICAgICJVZGYiOiAiTUFRWi1OV0lZLUdDN0ktQ1E2SS1HTUEzLU1CNEYtUllBWCI
+  sCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlF
+  Q0RIIjogewogICAgICAgICAgImNydiI6ICJYNDQ4IiwKICAgICAgICAgICJQdWJsa
+  WMiOiAiVTFYNWtKRU55NDYwTzZ5VEdIY3FzMkFBMXphU2Ffbm4yR3FxRHBxcENtRE
+  RZREhHMWVEUwogIDZKSGR1QmNkTVlZeWdteUdRbncyRjRDQSJ9fX19fQ",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MBFC-J3BC-EQTD-UQPM-URBP-FRCA-VHB3",
+            "signature":"zIbCIREQXwu5GBXdPKHZmO5dkJ3h-Jta65FYKLy8
+  lQrNp2yLPN_ox5QHlp-tkw8fnFsIe3IMQIgAOOWqpdJejQGLhiymClaz7BPEQlsEt
+  o0q-pwH2iBiHoPiMv65YOaZPzblW2X4j3BsCt4I2StEciAA"}
+          ],
+        "PayloadDigest":"njYw-Th6easiJpjiAz6pz9rsb8xxhZTO5UaXM8_P
+  P75IfULeBhkki3773VDhqL71EIAwvIfktFRF0G50CxKm3A"}
+      ]}}</sourcecode>
+<t>[Future: Consider converting this to a Messaging flow.]</t>
+</section>
+<section title="Bind Group Account" anchor="n-bind-group-account"><t>Mesh Group Accounts are created in the same manner as user accounts except that a ProfileGroup is specified.</t>
+<t>The request payload: </t>
+<sourcecode>{
+  "TransactRequest":{
+    "Updates":[{
+        "Container":"MMM_Member",
+        "Envelopes":[[{
+              "dig":"S512",
+              "policy":{
+                "enc":"none",
+                "dig":"none",
+                "Sealed":true},
+              "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24v
+  bW1tLWNhdGFsb2cifQ",
+              "SequenceInfo":{
+                "DataEncoding":"JSON",
+                "ContainerType":"Merkle",
+                "Index":0}},
+            "",
+            {
+              "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_
+  SpIdNs6c5H0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
+              "TreeDigest":"FEHy24Y6cLModDXWH31kVc2a3TdhjXPooKHpL
+  Ab2JbsO1YQnJolmowXAYHhkOGY0kg3jrKNTjds0myf4Dw1sdg"}
+            ]
+          ]},
+      {
+        "Container":"MMM_Access",
+        "Envelopes":[[{
+              "dig":"S512",
+              "policy":{
+                "enc":"none",
+                "dig":"none",
+                "Sealed":true},
+              "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24v
+  bW1tLWNhdGFsb2cifQ",
+              "SequenceInfo":{
+                "DataEncoding":"JSON",
+                "ContainerType":"Merkle",
+                "Index":0}},
+            "",
+            {
+              "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_
+  SpIdNs6c5H0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
+              "TreeDigest":"FEHy24Y6cLModDXWH31kVc2a3TdhjXPooKHpL
+  Ab2JbsO1YQnJolmowXAYHhkOGY0kg3jrKNTjds0myf4Dw1sdg"}
+            ]
+          ]},
+      {
+        "Container":"MMM_Publication",
+        "Envelopes":[[{
+              "dig":"S512",
+              "policy":{
+                "enc":"none",
+                "dig":"none",
+                "Sealed":true},
+              "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24v
+  bW1tLWNhdGFsb2cifQ",
+              "SequenceInfo":{
+                "DataEncoding":"JSON",
+                "ContainerType":"Merkle",
+                "Index":0}},
+            "",
+            {
+              "PayloadDigest":"z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_
+  SpIdNs6c5H0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg",
+              "TreeDigest":"FEHy24Y6cLModDXWH31kVc2a3TdhjXPooKHpL
+  Ab2JbsO1YQnJolmowXAYHhkOGY0kg3jrKNTjds0myf4Dw1sdg"}
+            ]
+          ]}
+      ]}}</sourcecode>
+<t>The response payload: </t>
+<sourcecode>{
+  "TransactResponse":{
+    "Status":201,
+    "StatusDescription":"Operation completed successfully"}}</sourcecode>
+</section>
+<section title="Unbind Account" anchor="n-unbind-account"><t>An account registration is deleted using the<tt>UnbindAccount</tt> transaction.</t>
+<t>The request payload: </t>
+<t>The response payload: </t>
+</section>
+</section>
+<section title="Persistence Store Management" anchor="n-persistence-store-management"><t>All the state associated with a Mesh profile is stored as a sequence of DARE Messages in a Dare Container. The Mesh Service holding the master copy of the persistence stores and the devices connected to the profile containing complete copies (replicas) or partial copies (redactions).</t>
+<t>Thus, the only primitive needed to achieve synchronization of the profile state are those required for synchronization of a DARE Container. These steps are:</t>
+<ul>
+<li>Obtain the status of the catalogs and spools associated with the account.</li>
+<li>Download catalog and spool updates</li>
+<li>Upload catalog updates.</li>
+</ul>
+<t>To ensure a satisfactory user experience, Mesh Messages are intentionally limited in size to 64 KB or less, thus ensuring that an application can retrieve the most recent 100 messages almost instantaneously on a high bandwidth connection and without undue delay on a slower one.</t>
+<section title="Status" anchor="n-status"><t>The status transaction returns the status of the containers the device is authorized to access for the specified account together with the updated Device Connection Entry if this has been modified since the entry presented to authenticate the request was issued.</t>
+<t>The request payload: </t>
+<t>The response payload: </t>
+</section>
+<section title="Download" anchor="n-download"><t>The download transaction returns a collection of entries from one or more containers associated with the profile.</t>
+<t>Optional filtering criteria <bcp14>MAY</bcp14> be specified to only return objects matching specific criteria and/or only return certain parts of the selected messages.</t>
+<t>The service <bcp14>MAY</bcp14> limit the number of entries returned in an individual response for performance reasons.</t>
+<sourcecode>Obsolete example 1</sourcecode>
+</section>
+<section title="Conflict Detection" anchor="n-conflict-detection"><t>Clients <bcp14>SHOULD</bcp14> check to determine if updates to a container conflict with pending updates on the device waiting to be uploaded. For example, if a contact that the user modified on the device attempting to synchronize was subsequently deleted.</t>
+<t>The means of resolving such conflicts is not in the scope of this specification.</t>
+</section>
+<section title="Filtering" anchor="n-filtering"><t>Clients may request container updates be filtered to redact catalog entries that have been updated or deleted or spool entries that have been read, deleted or were received before a certain date.</t>
+</section>
+<section title="Transact" anchor="n-transact"><t>The transact transaction appends envelopes to one or more stores. The operation is atomic, that is either all the changes specified will be made to the stores or none will. This ensures that simultaneous attempts to update a store do not result in race conditions. </t>
+<t>Each update to a catalog or container specifies the expected container index and apex digest. This provides a strong guarantee of consistency. The service <bcp14>MUST</bcp14> verify each update to check that the Merkle Tree values specified are consistent with the store entries and that the signature on the apex value (if specified) is valid and correct.</t>
+<t>Services <bcp14>MAY</bcp14> impose limits on the size and number of additions performed in response to a <tt>TransactRequest</tt> message to ensure that processing time does not degrade performance for other users.</t>
+<sourcecode>Obsolete example 2</sourcecode>
+</section>
+</section>
+<section title="Messaging" anchor="n-messaging"><t>Mesh Messaging is an asynchronous messaging service that allows exchange of information between devices connected to a Mesh account and between Mesh users.</t>
+<t>To enable effective abuse mitigation, Mesh Messaging enforces a four corner communication model in which all outbound and inbound messages pass through a Mesh Service which accredits and authorizes the messages on the user's behalf.</t>
+<figure>
+<name>
+</name>
+<!-- Include SVG File ../Images/ArchFourCorner.svg --><artwork type="svg">
+<svg width="448" height="217" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 16,0 L 144,0" fill="none" stroke="black" />
+  <path d="M 288,0 L 416,0" fill="none" stroke="black" />
+  <path d="M 160,32 L 264,32" fill="none" stroke="black" />
+  <path d="M 16,64 L 144,64" fill="none" stroke="black" />
+  <path d="M 288,64 L 352,64" fill="none" stroke="black" />
+  <path d="M 352,64 L 416,64" fill="none" stroke="black" />
+  <path d="M 0,128 L 80,128" fill="none" stroke="black" />
+  <path d="M 80,128 L 160,128" fill="none" stroke="black" />
+  <path d="M 272,128 L 432,128" fill="none" stroke="black" />
+  <path d="M 0,192 L 160,192" fill="none" stroke="black" />
+  <path d="M 272,192 L 432,192" fill="none" stroke="black" />
+  <path d="M 0,16 L 0,48" fill="none" stroke="black" />
+  <path d="M 0,128 L 0,192" fill="none" stroke="black" />
+  <path d="M 80,80 L 80,128" fill="none" stroke="black" />
+  <path d="M 160,16 L 160,32" fill="none" stroke="black" />
+  <path d="M 160,32 L 160,48" fill="none" stroke="black" />
+  <path d="M 160,128 L 160,192" fill="none" stroke="black" />
+  <path d="M 272,16 L 272,48" fill="none" stroke="black" />
+  <path d="M 272,128 L 272,192" fill="none" stroke="black" />
+  <path d="M 352,64 L 352,112" fill="none" stroke="black" />
+  <path d="M 432,16 L 432,48" fill="none" stroke="black" />
+  <path d="M 432,128 L 432,192" fill="none" stroke="black" />
+  <path d="M 80,72 L 80,80" fill="none" stroke="black" />
+  <polygon points="96.000000,80.000000 84.000000,74.400002 84.000000,85.599998" fill="black" transform="rotate(270.000000, 80.000000, 80.000000)" />
+  <polygon points="272.000000,32.000000 260.000000,26.400000 260.000000,37.599998" fill="black" transform="rotate(0.000000, 264.000000, 32.000000)" />
+  <path d="M 352,112 L 352,120" fill="none" stroke="black" />
+  <polygon points="368.000000,112.000000 356.000000,106.400002 356.000000,117.599998" fill="black" transform="rotate(90.000000, 352.000000, 112.000000)" />
+  <path d="M 16,0 A 16,16 0 0,0 0,16" fill="none" stroke="black" />
+  <path d="M 144,0 A 16,16 0 0,1 160,16" fill="none" stroke="black" />
+  <path d="M 288,0 A 16,16 0 0,0 272,16" fill="none" stroke="black" />
+  <path d="M 416,0 A 16,16 0 0,1 432,16" fill="none" stroke="black" />
+  <path d="M 0,48 A 16,16 0 0,0 16,64" fill="none" stroke="black" />
+  <path d="M 160,48 A 16,16 0 0,1 144,64" fill="none" stroke="black" />
+  <path d="M 272,48 A 16,16 0 0,0 288,64" fill="none" stroke="black" />
+  <path d="M 432,48 A 16,16 0 0,1 416,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="164">A</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="164">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="360" y="164">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="344" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="368" y="20">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="352" y="20">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="36">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="344" y="36">M</text>
+  <text text-anchor="middle" font-family="sans-serif" x="360" y="36">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="164">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="20">A</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="336" y="20">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="344" y="164">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="164">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="20">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="20">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="360" y="20">'</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">M</text>
+  <text text-anchor="middle" font-family="sans-serif" x="352" y="36">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="164">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="352" y="164">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="20">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="20">'</text>
+</g></svg>
+</artwork>
+</figure>
+<t>The Post transaction is used for client-service and service-service messaging transactions.</t>
+<t>Client-Service (Post Transaction)</t>
+<t>To send a message, the client creates the Mesh Message structure, encapsulates it in a DARE Message and forwards this to its service using a <tt>Post</tt> transaction.</t>
+<t>The Post transaction is authenticated to the service by device using the usual means of profile or ticket authentication.</t>
+<t>The DARE Message <bcp14>MUST</bcp14> be signed under a device signature key accredited by a Device Connection Assertion provided in the message signature block.</t>
+<t>The request payload: </t>
+<sourcecode>{
+  "ConnectRequest":{
+    "EnvelopedRequestConnection":[{
+        "EnvelopeId":"MCXG-4JUY-HJYA-ZUTD-MOLU-K2V7-6THR",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQjVXLVQzM0EtVF
+  hXTi1TVVhVLVFGSjMtTFJZMy1TTEc0IiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+  zdENvbm5lY3Rpb24iLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIs
+  CiAgIkNyZWF0ZWQiOiAiMjAyMS0wOC0wNVQxNjozNzozMVoifQ"},
+      "ewogICJSZXF1ZXN0Q29ubmVjdGlvbiI6IHsKICAgICJNZXNzYWdlSWQiOi
+  AiTkI1Vy1UMzNBLVRYV04tU1VYVS1RRkozLUxSWTMtU0xHNCIsCiAgICAiQXV0aGV
+  udGljYXRlZERhdGEiOiBbewogICAgICAgICJFbnZlbG9wZUlkIjogIk1DVjQtTEdK
+  QS1KNlRJLVpKNEQtU1hKVy1CT0syLUhDWkwiLAogICAgICAgICJkaWciOiAiUzUxM
+  iIsCiAgICAgICAgIkNvbnRlbnRNZXRhRGF0YSI6ICJld29nSUNKVmJtbHhkV1ZKWk
+  NJNklDSk5RMVkwTFV4SFNrRXRTalpVU1MxCiAgYVNqUkVMVk5ZU2xjdFFrOUxNaTF
+  JUTFwTUlpd0tJQ0FpVFdWemMyRm5aVlI1Y0dVaU9pQWlVSEp2Wm1sc1oKICBVUmxk
+  bWxqWlNJc0NpQWdJbU4wZVNJNklDSmhjSEJzYVdOaGRHbHZiaTl0YlcwdmIySnFaV
+  04wSWl3S0lDQQogIGlRM0psWVhSbFpDSTZJQ0l5TURJeExUQTRMVEExVkRFMk9qTT
+  NPak14V2lKOSJ9LAogICAgICAiZXdvZ0lDSlFjbTltYVd4bFJHVjJhV05sSWpvZ2V
+  3b2dJQ0FnSWxCeWIyWgogIHBiR1ZUYVdkdVlYUjFjbVVpT2lCN0NpQWdJQ0FnSUNK
+  VlpHWWlPaUFpVFVOV05DMU1SMHBCTFVvMlZFa3RXCiAga28wUkMxVFdFcFhMVUpQU
+  3pJdFNFTmFUQ0lzQ2lBZ0lDQWdJQ0pRZFdKc2FXTlFZWEpoYldWMFpYSnpJam8KIC
+  BnZXdvZ0lDQWdJQ0FnSUNKUWRXSnNhV05MWlhsRlEwUklJam9nZXdvZ0lDQWdJQ0F
+  nSUNBZ0ltTnlkaUk2SQogIENKRlpEUTBPQ0lzQ2lBZ0lDQWdJQ0FnSUNBaVVIVmli
+  R2xqSWpvZ0luQXRWVlpYYkRaU2FEUmhSazQwUWtzCiAgeldqRkdjMnhpY0Y5cU9YT
+  kdOa3BvWTJoVVpsTm5jbVp5T0V4R1JWTnFRazlqWlZnS0lDQTFUbDl6WlZGeE0KIC
+  AxQjViWEpJTFhkd2VFMUlTV3RWYzBFaWZYMTlMQW9nSUNBZ0lrVnVZM0o1Y0hScGI
+  yNGlPaUI3Q2lBZ0lDQQogIGdJQ0pWWkdZaU9pQWlUVUZSVWkxSU5FRTBMVFJIUXpZ
+  dFdqUlpXUzB5V1V3MUxWYzNVakl0VVZwTVNTSXNDCiAgaUFnSUNBZ0lDSlFkV0pzY
+  VdOUVlYSmhiV1YwWlhKeklqb2dld29nSUNBZ0lDQWdJQ0pRZFdKc2FXTkxaWGwKIC
+  BGUTBSSUlqb2dld29nSUNBZ0lDQWdJQ0FnSW1OeWRpSTZJQ0pZTkRRNElpd0tJQ0F
+  nSUNBZ0lDQWdJQ0pRZAogIFdKc2FXTWlPaUFpTUZWc2NrVmxMVXd6YVRCeUxYQm9Z
+  VEpyTm1rMVNESlZNMlJSWlZKdmNWOVBaMTlKT0ZwCiAgcFNta3lhbTB6UlRsQ1dsQ
+  Xhkd29nSUZoWlNEQlVaRVp3UkZKV0xVSjJWeTAwUVVObVpUQXRRU0o5Zlgwc0MKIC
+  BpQWdJQ0FpVTJsbmJtRjBkWEpsSWpvZ2V3b2dJQ0FnSUNBaVZXUm1Jam9nSWsxRE4
+  wZ3ROa1ZHV1MwelRGUgogIEJMVWsxUzBNdFF6ZFlXQzFCU0ZwSUxVbEVOVklpTEFv
+  Z0lDQWdJQ0FpVUhWaWJHbGpVR0Z5WVcxbGRHVnljCiAgeUk2SUhzS0lDQWdJQ0FnS
+  UNBaVVIVmliR2xqUzJWNVJVTkVTQ0k2SUhzS0lDQWdJQ0FnSUNBZ0lDSmpjblkKIC
+  BpT2lBaVJXUTBORGdpTEFvZ0lDQWdJQ0FnSUNBZ0lsQjFZbXhwWXlJNklDSnhNVzV
+  vVlRSSlVXZEdOSGMzYQogIFRWRFFXVjZNR2wyT0RaMFdtcFJOVmw0VmpOSmVUSmpW
+  MWQxVjNGdlRuSjFTMFZJTm5ocUNpQWdiRTVPU3pnCiAgMVJIZFZaWFJFZERkR2JHb
+  HZXVEJ6YVRKQkluMTlmU3dLSUNBZ0lDSkJkWFJvWlc1MGFXTmhkR2x2YmlJNkkKIC
+  BIc0tJQ0FnSUNBZ0lsVmtaaUk2SUNKTlJFTklMVVJIV1VndFdFaEZSUzFQTlVGVUx
+  WZE9RVlF0UTFGVFR5MQogIEZURUpMSWl3S0lDQWdJQ0FnSWxCMVlteHBZMUJoY21G
+  dFpYUmxjbk1pT2lCN0NpQWdJQ0FnSUNBZ0lsQjFZCiAgbXhwWTB0bGVVVkRSRWdpT
+  2lCN0NpQWdJQ0FnSUNBZ0lDQWlZM0oySWpvZ0lsZzBORGdpTEFvZ0lDQWdJQ0EKIC
+  BnSUNBZ0lsQjFZbXhwWXlJNklDSnBVMUJxZEdFNFpHTnJRVkpyVEd4UGR6bHlkRFZ
+  UVFZCMVFWaEROVjg1VQogIDJ0dk1FZzBVVVZQYldwWVJtbExUbWR6Wm1wakNpQWdO
+  RmMyWldGRGEwUmpSM0oyVDNOTVpXZDFiVlE0ZDIxCiAgQkluMTlmWDE5IiwKICAgI
+  CAgewogICAgICAgICJzaWduYXR1cmVzIjogW3sKICAgICAgICAgICAgImFsZyI6IC
+  JTNTEyIiwKICAgICAgICAgICAgImtpZCI6ICJNQ1Y0LUxHSkEtSjZUSS1aSjRELVN
+  YSlctQk9LMi1IQ1pMIiwKICAgICAgICAgICAgInNpZ25hdHVyZSI6ICJiYjV6aTVQ
+  ZzVRcjNqSUtYRUI5SnFkQ1VEVWN3RVowSDBrQ1FuQjVMcjZ2djJsZVJYCiAgbmZve
+  mFuZnM2VnhkcFR5MVF2RDB0SmVOLW1BdHBPWHg4bU1mRU50MmZJRjVjbzlCZzYxUk
+  lTSXotODJ3cEkKICB4RUl2OEF5Q3NhWHJRZ09rZzZCQ1BXVTBXNUJRWk9ORmlkSG8
+  wWndVQSJ9XSwKICAgICAgICAiUGF5bG9hZERpZ2VzdCI6ICJQV1dkcjBtNE5Pdjc4
+  ZjIzcEhQaTBrZzNfRTltZU10bVM4V0NhQS1wQ0M4am8KICB0LVZuN3BGeVNtVFlmV
+  XhtbkR1dTAxM0dXVHBtQlk4eWszYkRBY0NtUSJ9XSwKICAgICJDbGllbnROb25jZS
+  I6ICJkNU5WMUVlcVlXa20zTEVCeTBqMVBnIiwKICAgICJBY2NvdW50QWRkcmVzcyI
+  6ICJhbGljZUBleGFtcGxlLmNvbSJ9fQ"
+      ]}}</sourcecode>
+<t>The response payload: </t>
+<sourcecode>{
+  "ConnectResponse":{
+    "Status":201,
+    "StatusDescription":"Operation completed successfully",
+    "EnvelopedAcknowledgeConnection":[{
+        "EnvelopeId":"MBI4-NKXK-OCSH-URV5-VDUT-PH57-WBDY",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJCVlZMLTJBVFYtMl
+  UyUS1WM0FMLUhVNTQtQzU1Si1YWktVIiwKICAiTWVzc2FnZVR5cGUiOiAiQWNrbm9
+  3bGVkZ2VDb25uZWN0aW9uIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmpl
+  Y3QiLAogICJDcmVhdGVkIjogIjIwMjEtMDgtMDVUMTY6Mzc6MzJaIn0",
+        "SequenceInfo":{
+          "Index":1,
+          "TreePosition":0},
+        "Received":"2021-08-05T16:37:32Z"},
+      "ewogICJBY2tub3dsZWRnZUNvbm5lY3Rpb24iOiB7CiAgICAiTWVzc2FnZU
+  lkIjogIkJWVkwtMkFUVi0yVTJRLVYzQUwtSFU1NC1DNTVKLVhaS1UiLAogICAgIkV
+  udmVsb3BlZFJlcXVlc3RDb25uZWN0aW9uIjogW3sKICAgICAgICAiRW52ZWxvcGVJ
+  ZCI6ICJNQ1hHLTRKVVktSEpZQS1aVVRELU1PTFUtSzJWNy02VEhSIiwKICAgICAgI
+  CAiQ29udGVudE1ldGFEYXRhIjogImV3b2dJQ0pWYm1seGRXVkpaQ0k2SUNKT1FqVl
+  hMVlF6TTBFdFZGaFhUaTEKICBUVlZoVkxWRkdTak10VEZKWk15MVRURWMwSWl3S0l
+  DQWlUV1Z6YzJGblpWUjVjR1VpT2lBaVVtVnhkV1Z6ZAogIEVOdmJtNWxZM1JwYjI0
+  aUxBb2dJQ0pqZEhraU9pQWlZWEJ3YkdsallYUnBiMjR2YlcxdEwyOWlhbVZqZENJC
+  iAgc0NpQWdJa055WldGMFpXUWlPaUFpTWpBeU1TMHdPQzB3TlZReE5qb3pOem96TV
+  ZvaWZRIn0sCiAgICAgICJld29nSUNKU1pYRjFaWE4wUTI5dWJtVmpkR2x2YmlJNkl
+  Ic0tJQ0FnSUNKCiAgTlpYTnpZV2RsU1dRaU9pQWlUa0kxVnkxVU16TkJMVlJZVjA0
+  dFUxVllWUzFSUmtvekxVeFNXVE10VTB4SE4KICBDSXNDaUFnSUNBaVFYVjBhR1Z1Z
+  EdsallYUmxaRVJoZEdFaU9pQmJld29nSUNBZ0lDQWdJQ0pGYm5abGJHOQogIHdaVW
+  xrSWpvZ0lrMURWalF0VEVkS1FTMUtObFJKTFZwS05FUXRVMWhLVnkxQ1Qwc3lMVWh
+  EV2t3aUxBb2dJCiAgQ0FnSUNBZ0lDSmthV2NpT2lBaVV6VXhNaUlzQ2lBZ0lDQWdJ
+  Q0FnSWtOdmJuUmxiblJOWlhSaFJHRjBZU0kKICA2SUNKbGQyOW5TVU5LVm1KdGJIa
+  GtWMVpLV2tOSk5rbERTazVSTVZrd1RGVjRTRk5yUlhSVGFscFZVMU14QwogIGlBZ1
+  lWTnFVa1ZNVms1WlUyeGpkRkZyT1V4TmFURkpVVEZ3VFVscGQwdEpRMEZwVkZkV2V
+  tTXlSbTVhVmxJCiAgMVkwZFZhVTlwUVdsVlNFcDJXbTFzYzFvS0lDQlZVbXhrYld4
+  cVdsTkpjME5wUVdkSmJVNHdaVk5KTmtsRFMKICBtaGpTRUp6WVZkT2FHUkhiSFppY
+  VRsMFlsY3dkbUl5U25GYVYwNHdTV2wzUzBsRFFRb2dJR2xSTTBwc1dWaAogIFNiRn
+  BEU1RaSlEwbDVUVVJKZUV4VVFUUk1WRUV4VmtSRk1rOXFUVE5QYWsxNFYybEtPU0o
+  5TEFvZ0lDQWdJCiAgQ0FpWlhkdlowbERTbEZqYlRsdFlWZDRiRkpIVmpKaFYwNXNT
+  V3B2WjJWM2IyZEpRMEZuU1d4Q2VXSXlXZ28KICBnSUhCaVIxWlVZVmRrZFZsWVVqR
+  mpiVlZwVDJsQ04wTnBRV2RKUTBGblNVTktWbHBIV1dsUGFVRnBWRlZPVgogIDA1RE
+  1VMVNNSEJDVEZWdk1sWkZhM1JYQ2lBZ2EyOHdVa014VkZkRmNGaE1WVXBRVTNwSmR
+  GTkZUbUZVUTBsCiAgelEybEJaMGxEUVdkSlEwcFJaRmRLYzJGWFRsRlpXRXBvWWxk
+  V01GcFlTbnBKYW04S0lDQm5aWGR2WjBsRFEKICBXZEpRMEZuU1VOS1VXUlhTbk5oV
+  jA1TVdsaHNSbEV3VWtsSmFtOW5aWGR2WjBsRFFXZEpRMEZuU1VOQlowbAogIHRUbm
+  xrYVVrMlNRb2dJRU5LUmxwRVVUQlBRMGx6UTJsQlowbERRV2RKUTBGblNVTkJhVlZ
+  JVm1saVIyeHFTCiAgV3B2WjBsdVFYUldWbHBZWWtSYVUyRkVVbWhTYXpRd1VXdHpD
+  aUFnZWxkcVJrZGpNbmhwWTBZNWNVOVlUa2QKICBPYTNCdldUSm9WVnBzVG01amJWc
+  DVUMFY0UjFKV1RuRlJhemxxV2xablMwbERRVEZVYkRsNldsWkdlRTBLSQogIENBeF
+  FqVmlXRXBKVEZoa2QyVkZNVWxUVjNSV1l6QkZhV1pZTVRsTVFXOW5TVU5CWjBsclZ
+  uVlpNMG8xWTBoCiAgU2NHSXlOR2xQYVVJM1EybEJaMGxEUVFvZ0lHZEpRMHBXV2tk
+  WmFVOXBRV2xVVlVaU1ZXa3hTVTVGUlRCTVYKICBGSklVWHBaZEZkcVVscFhVekI1V
+  jFWM01VeFdZek5WYWtsMFZWWndUVk5UU1hORENpQWdhVUZuU1VOQlowbAogIERTbE
+  ZrVjBwellWZE9VVmxZU21oaVYxWXdXbGhLZWtscWIyZGxkMjluU1VOQlowbERRV2R
+  KUTBwUlpGZEtjCiAgMkZYVGt4YVdHd0tJQ0JHVVRCU1NVbHFiMmRsZDI5blNVTkJa
+  MGxEUVdkSlEwRm5TVzFPZVdScFNUWkpRMHAKICBaVGtSUk5FbHBkMHRKUTBGblNVT
+  kJaMGxEUVdkSlEwcFJaQW9nSUZkS2MyRlhUV2xQYVVGcFRVWldjMk5yVgogIG14TV
+  ZYZDZZVlJDZVV4WVFtOVpWRXB5VG0xck1WTkVTbFpOTWxKU1dsWktkbU5XT1ZCYU1
+  UbEtUMFp3Q2lBCiAgZ2NGTnRhM2xoYlRCNlVsUnNRMWRzUVhoa2QyOW5TVVpvV2xO
+  RVFsVmFSVnAzVWtaS1YweFZTakpXZVRBd1UKICBWVk9iVnBVUVhSUlUwbzVabGd3Y
+  zBNS0lDQnBRV2RKUTBGcFZUSnNibUp0UmpCa1dFcHNTV3B2WjJWM2IyZAogIEpRME
+  ZuU1VOQmFWWlhVbTFKYW05blNXc3hSRTR3WjNST2ExWkhWMU13ZWxSR1Vnb2dJRUp
+  NVldzeFV6Qk5kCiAgRkY2WkZsWFF6RkNVMFp3U1V4VmJFVk9Wa2xwVEVGdlowbERR
+  V2RKUTBGcFZVaFdhV0pIYkdwVlIwWjVXVmMKICB4YkdSSFZubGpDaUFnZVVrMlNVa
+  HpTMGxEUVdkSlEwRm5TVU5CYVZWSVZtbGlSMnhxVXpKV05WSlZUa1ZUUQogIDBrMl
+  NVaHpTMGxEUVdkSlEwRm5TVU5CWjBsRFNtcGpibGtLSUNCcFQybEJhVkpYVVRCT1J
+  HZHBURUZ2WjBsCiAgRFFXZEpRMEZuU1VOQlowbHNRakZaYlhod1dYbEpOa2xEU25o
+  TlZ6VnZWbFJTU2xWWFpFZE9TR016WVFvZ0kKICBGUldSRkZYVmpaTlIyd3lUMFJhT
+  UZkdGNGSk9WbXcwVm1wT1NtVlVTbXBXTVdReFZqTkdkbFJ1U2pGVE1GWgogIEpUbT
+  VvY1VOcFFXZGlSVFZQVTNwbkNpQWdNVkpJWkZaYVdGSkZaRVJrUjJKSGJIWlhWRUo
+  2WVZSS1FrbHVNCiAgVGxtVTNkTFNVTkJaMGxEU2tKa1dGSnZXbGMxTUdGWFRtaGtS
+  MngyWW1sSk5ra0tJQ0JJYzB0SlEwRm5TVU4KICBCWjBsc1ZtdGFhVWsyU1VOS1RsS
+  kZUa2xNVlZKSVYxVm5kRmRGYUVaU1V6RlFUbFZHVlV4V1pFOVJWbEYwVQogIFRGR1
+  ZGUjVNUW9nSUVaVVJVcE1TV2wzUzBsRFFXZEpRMEZuU1d4Q01WbHRlSEJaTVVKb1k
+  yMUdkRnBZVW14CiAgamJrMXBUMmxDTjBOcFFXZEpRMEZuU1VOQlowbHNRakZaQ2lB
+  Z2JYaHdXVEIwYkdWVlZrUlNSV2RwVDJsQ04KICAwTnBRV2RKUTBGblNVTkJaMGxEU
+  VdsWk0wb3lTV3B2WjBsc1p6Qk9SR2RwVEVGdlowbERRV2RKUTBFS0lDQgogIG5TVU
+  5CWjBsc1FqRlpiWGh3V1hsSk5rbERTbkJWTVVKeFpFZEZORnBIVG5KUlZrcHlWRWQ
+  0VUdSNmJIbGtSCiAgRlpVVkZaQ01WRldhRVJPVmpnMVZRb2dJREowZGsxRlp6QlZW
+  VlpRWWxkd1dWSnRiRXhVYldSNldtMXdha04KICBwUVdkT1JtTXlXbGRHUkdFd1Vtc
+  FNNMG95VkROT1RWcFhaREZpVmxFMFpESXhDaUFnUWtsdU1UbG1XREU1SQogIGl3S0
+  lDQWdJQ0FnZXdvZ0lDQWdJQ0FnSUNKemFXZHVZWFIxY21Weklqb2dXM3NLSUNBZ0l
+  DQWdJQ0FnSUNBCiAgZ0ltRnNaeUk2SUNKVE5URXlJaXdLSUNBZ0lDQWdJQ0FnSUNB
+  Z0ltdHBaQ0k2SUNKTlExWTBMVXhIU2tFdFMKICBqWlVTUzFhU2pSRUxWTllTbGN0U
+  Ws5TE1pMUlRMXBNSWl3S0lDQWdJQ0FnSUNBZ0lDQWdJbk5wWjI1aGRIVgogIHlaU0
+  k2SUNKaVlqVjZhVFZRWnpWUmNqTnFTVXRZUlVJNVNuRmtRMVZFVldOM1JWb3dTREJ
+  yUTFGdVFqVk1jCiAgaloyZGpKc1pWSllDaUFnYm1admVtRnVabk0yVm5oa2NGUjVN
+  VkYyUkRCMFNtVk9MVzFCZEhCUFdIZzRiVTEKICBtUlU1ME1tWkpSalZqYnpsQ1p6W
+  XhVa2xUU1hvdE9ESjNjRWtLSUNCNFJVbDJPRUY1UTNOaFdISlJaMDlyWgogIHpaQ1
+  ExQlhWVEJYTlVKUldrOU9SbWxrU0c4d1duZFZRU0o5WFN3S0lDQWdJQ0FnSUNBaVV
+  HRjViRzloWkVSCiAgcFoyVnpkQ0k2SUNKUVYxZGtjakJ0TkU1UGRqYzRaakl6Y0Vo
+  UWFUQnJaek5mUlRsdFpVMTBiVk00VjBOaFEKICBTMXdRME00YW04S0lDQjBMVlp1T
+  jNCR2VWTnRWRmxtVlhodGJrUjFkVEF4TTBkWFZIQnRRbGs0ZVdzellrUgogIEJZME
+  50VVNKOVhTd0tJQ0FnSUNKRGJHbGxiblJPYjI1alpTSTZJQ0prTlU1V01VVmxjVmx
+  YYTIwelRFVkNlCiAgVEJxTVZCbklpd0tJQ0FnSUNKQlkyTnZkVzUwUVdSa2NtVnpj
+  eUk2SUNKaGJHbGpaVUJsZUdGdGNHeGxMbU4KICB2YlNKOWZRIl0sCiAgICAiU2Vyd
+  mVyTm9uY2UiOiAiVFRPSlJPMFA0LUxBMlRFVU1TWUw5ZyIsCiAgICAiV2l0bmVzcy
+  I6ICJCVlZMLTJBVFYtMlUyUS1WM0FMLUhVNTQtQzU1Si1YWktVIn19",
+      {}
+      ],
+    "EnvelopedProfileAccount":[{
+        "EnvelopeId":"MC44-IZC3-IWZT-VCVZ-L2AG-HI4E-LOV2",
+        "dig":"S512",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQzQ0LUlaQzMtSV
+  daVC1WQ1ZaLUwyQUctSEk0RS1MT1YyIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+  sZVVzZXIiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIkNy
+  ZWF0ZWQiOiAiMjAyMS0wOC0wNVQxNjozNzozMVoifQ"},
+      "ewogICJQcm9maWxlVXNlciI6IHsKICAgICJQcm9maWxlU2lnbmF0dXJlIj
+  ogewogICAgICAiVWRmIjogIk1DNDQtSVpDMy1JV1pULVZDVlotTDJBRy1ISTRFLUx
+  PVjIiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+  S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+  lB1YmxpYyI6ICJXNXVnRVd5Q3o5ODZQdzd4UFA5LWFwMDlQRnBxZmM5eF9NQjBVcT
+  FiclVwRWcxeWxJYWl0CiAgRTVZYUpJQWVUYl9DYzV5NFlyNUQ2a2dBIn19fSwKICA
+  gICJBY2NvdW50QWRkcmVzcyI6ICJhbGljZUBleGFtcGxlLmNvbSIsCiAgICAiU2Vy
+  dmljZVVkZiI6ICJNQkJZLUU0VkEtQ01XRi01MlQ3LUVTTEEtUEdOVC1DTk5YIiwKI
+  CAgICJBY2NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQ1FYLVBGN0
+  EtTFkzRy0zWlBJLUFJWU8tTFI1RC1ZRzZXIiwKICAgICAgIlB1YmxpY1BhcmFtZXR
+  lcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2
+  IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICIwQVJFMFZhcHNNcVlmX1Atd
+  EZuRTBGWjJacTJ3bjRlMjF2aUNINFRyaHlnN1EwTjhGWG1iCiAgcFl2XzcyX0wyVk
+  t1bGlpaU9oZGRUMU9BIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIjo
+  gewogICAgICAiVWRmIjogIk1DTEotTENGWC1FTkUyLTVOVEYtR0JOVi1NVzNQLVZI
+  U1oiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS
+  2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIl
+  B1YmxpYyI6ICJHWG1nOHprMHB2VjliODgxSk52Um02OWRPVHVMN295WU53emlRUWx
+  0V0Y0YVhaTUNUamY4CiAgRU0zZ3RDVTd3SEYwenVGc2QxV2dYOEdBIn19fSwKICAg
+  ICJBY2NvdW50QXV0aGVudGljYXRpb24iOiB7CiAgICAgICJVZGYiOiAiTURBNS1QW
+  TZBLUJHMkwtN1lONi1FQUtQLU8zUUItQ0c1VCIsCiAgICAgICJQdWJsaWNQYXJhbW
+  V0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImN
+  ydiI6ICJYNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAiWGNITjdBYk1UVzFUTVFP
+  ZDBtWHlBSEc2Mk82ajdZSGdJR2hwMU9hajV4VE9LMnVQekd4TQogIGVDZUZPelgwZ
+  i1ZSlhpakw2aGxfYmFXQSJ9fX0sCiAgICAiQWNjb3VudFNpZ25hdHVyZSI6IHsKIC
+  AgICAgIlVkZiI6ICJNQ0dCLTRLQ0ktQ1AzRy1GSlNELVc3VzItVVlLTy1HTkxVIiw
+  KICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVD
+  REgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQdWJsa
+  WMiOiAiY0Exd2NLdG4xZGFqNjA2VUQwUEo4eExxRk4wa09keHlqc0YyUUtyUFp4ZF
+  VZZ1NQUlZSaQogIExzTEpPRWw3Y0lzdHRwYUNGd3VQaURPQSJ9fX19fQ",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MC44-IZC3-IWZT-VCVZ-L2AG-HI4E-LOV2",
+            "signature":"p1UxtlxOGp8wd7oESFQkmqR6uV9s-cW4WtonkwN1
+  BbH9F1KN6lllLPhnNBhlmstQ06cm7BEYtR6AwG2f1yOM1IjdPFzLmm53MBA-g4GLe
+  bflsg87h_kvT9JVSnHq7MDY6ewMo97Boay7r26qf-Ci4xIA"}
+          ],
+        "PayloadDigest":"gNprAKlPBfHdWXEdD7djEQ8IoJzHAJS-zBlZW6Bj
+  8xjHqsbEhqbSO4AkIEizON5HsGbMSu_BQl_NPSrKZWS9pw"}
+      ]}}</sourcecode>
+<t>Service-Service (Post Transaction)</t>
+<t>The Mesh Service receiving the message from the user's device <bcp14>MAY</bcp14> attempt immediate retransmission or queue it to be sent at a future time. Mesh Services <bcp14>SHOULD</bcp14> forward messages without undue delay.</t>
+<t>The Post transaction forwarding the message to the destination service carries the same payload as the original request but is authenticated by the service forwarding it. This authentication <bcp14>MAY</bcp14> be my means of either profile or ticket authentication. </t>
+<sourcecode>Missing example 37</sourcecode>
+<t><em>Denial of Service Mitigation</em></t>
+<t>Services <bcp14>SHOULD</bcp14> implement Denial of Service mitigation strategies including limiting the maximum time taken to complete a transaction and refusing connections from clients that engage in patterns of behavior consistent with abuse.  </t>
+<t>The limitation in message size allows Mesh Services to aggressively time out connections that take too long to complete a transaction. A Mesh Service that hosted on a 10Mb/s link should be able to transfer 20 messages a second. If the service is taking more than 5 seconds to complete a transaction, either the source or the destination service is overloaded or the message itself is an attack.</t>
+<t>Imposing hard constraints on Mesh Service performance requires deployments to scale and apply resources appropriately. If a service is attempting to transfer 100 messages simultaneously and 40% are taking 4 seconds or more, this indicates that the number of simultaneous transfers being attempted should be reduced. Contrawise, if 90% are completinin less than a second, the number of threads allocated to sending outbound messages might be increased.</t>
+<t><em>Access Control</em></t>
+<t>The inbound service <bcp14>MUST</bcp14> subject inbound messages to Access Control according to the credentials presented in the DARE Message payload.</t>
+<t>After verifying the signature and checking that the key is properly accredited in accordance with site policy, the service applies authorization controls taking account of:</t>
+<ul>
+<li>The accreditation of the sender</li>
+<li>The accreditation of the transmitting Service</li>
+<li>The type of Mesh Message being sent</li>
+<li>User policy as specified in their Contact Catalog</li>
+<li>Site policy.</li>
+</ul>
+<t>Service-Client (Synchronization)</t>
+<t>The final recipient receives the message by synchronizing their device. The message received will be appended to the inbound spool.</t>
+</section>
+<section title="Publication" anchor="n-publication"><t>The Publication mechanism allows content to be published through a Mesh Account and retrieved by means of the EARL mechanism described in Uniform Data Fingerprint <xref target="draft-hallambaker-mesh-udf"></xref>. This mechanism is used in certain flows supported by the Mesh Device Connection and Contact Exchange functions.</t>
+<t>Content is published by appending an entry to an account's Publication spool. The content may then be retrieved by issuing a claim to the account specifying the publication identifier that is authenticated under the value specified in the EARL.</t>
+<t>Use of the Publication spool to post content necessarily requires that the content be smaller than the maximum message size imposed by the Mesh Service so that it can be uploaded to the service by means of a Transact transaction.</t>
+<t>Publication of large data items will require modification of the protocol to support use of a detached message body. Transfer of a detached message body is outside the scope of this document.</t>
+<section title="Claim Transaction" anchor="n-claim-transaction"><t>The claim transaction is used to post a claim to a document published by means of an EARL. The claim interaction is used in the Static QR Code connection interaction but <bcp14>MAY</bcp14> be used for other purposes as required by Mesh applications.</t>
+<t>A claim is made by sending a ClaimRequest message to the service to which the publication is posted. The service responds with a ClaimRespose message specifying the success or failure of the claim.</t>
+<t>A device is preconfigured during manufacture and a Device Description published to the EARL: </t>
+<t>The client claiming the publication creates a claim message specifying the  resource being claimed and the address of the Mesh account making the claim. </t>
+<sourcecode>Missing example 25</sourcecode>
+<t>The message is signed by the claimant to make a RequestClaim to the service: </t>
+<t>The publication is found and the claim is accepted, the publication is returned in the response. </t>
+<t>The device waiting to be connected uses the PollClaim transaction to receive notification of a claim having been posted. </t>
+</section>
+<section title="PollClaim Transaction" anchor="n-pollclaim-transaction"><t>The PollClaim transaction is used to discover if a claim has been posted to a published document.</t>
+<t>When an authenticated, authorized request is made, the service responds with the latest claim posted to the publication.</t>
+<t>The device in the example above periodically polls the service to which the device  description is published to find if a claim has been registered. </t>
+<t>The PollClaimRequest contains the account to which the document is published and the publication ID: </t>
+<t>The response returns the latest claim made as signed message: </t>
+</section>
+</section>
+<section title="Cryptographic" anchor="n-cryptographic"><t>The Operate transaction is used to perform one or more cryptographic operations using private key material recorded in the Threshold Catalog. Such operations typically represent one part of a threshold key operation divided between the service and a device connected to an account.</t>
+<t>As with all operations involving the Threshold catalog, the request <bcp14>MUST</bcp14> meet the authentication criteria specified by the catalog entry. These typically include the request being authenticated by a specific key.</t>
+<section title="Generate Key Shares" anchor="n-generate-key-shares"><t><tt>CryptographicOperationShare</tt> is used to request that a private key held by the service to be divided into two or more key shares. One key share is then encrypted under the encryption key of the service and the others are encrypted under public keys specified in the request. These parameters are returned in a <tt>CryptographicResultShare</tt>.</t>
+<t>The request payload: </t>
+<sourcecode>{
+  "TransactRequest":{
+    "Accounts":["bob@example.com"
+      ],
+    "Outbound":[[{
+          "EnvelopeId":"MBVP-H2LE-JMGK-DDAX-2BVN-LJBM-22LP",
+          "enc":"A256CBC",
+          "kid":"EBQK-CZ5R-DWAD-5VAH-SJ7A-7ZAN-2GE5",
+          "Salt":"xfcHvFiUdMEiUarO1C11jg",
+          "recipients":[{
+              "kid":"MBSO-V6BO-2RKR-GDCI-DWY3-SWXX-WBXO",
+              "epk":{
+                "PublicKeyECDH":{
+                  "crv":"X448",
+                  "Public":"dMDBhYLBN17FW33UCIWepwHeMe5nGGcRZBmfn
+  _L933z3AStJPv1k2ryTvzPJtX6Hzk_YJSU-9E6A"}},
+              "wmk":"KtkslCXX8DA3GC4YrOJmQo7yAfy7Eg2g7uTRlbn6GfDf
+  Z5LQmkUETw"}
+            ],
+          "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQUVMLVpEWVgt
+  NFpVUS1LUFJDLVlDNzctVVNBVi1XSEZNIiwKICAiTWVzc2FnZVR5cGUiOiAiR3Jvd
+  XBJbnZpdGF0aW9uIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLA
+  ogICJDcmVhdGVkIjogIjIwMjEtMDgtMDVUMTY6Mzc6NDBaIn0"},
+        "zMT8ZtPMrikjNcspm6EVshYR1R__pG82CoNG6N91reJwVbH65V5i8ewD
+  QwWNeFhnodVD6LjfTA4cNfV5vNl86BMik-TjhkH94iIlCejr5UrxoRQprlOkY_y-T
+  blYkKGpV2jaMz15yd9OA1FjyKTT7GFpfo21y1JCh1VHOxBmSHEhYe3Ydm111E_U8B
+  jAwjddaT96cVwMs_aAstycWMljTIx7MwUms_mFUeQRa-uuvWZAbtnuM37A8l_ah69
+  1b4VdOc5WAhWtYP5Z9R-kD_0gfOwsvxXByFZFzl5ykCWkXHTpoIgBrw8tC9L3GDCS
+  mxS0bUn3Py4_FNXyKvSMuRyCpu9kc8VxsN2msdSecS_E1ofZriPKWIl5vD3SZczbs
+  cxj-RDtbO0fv6e46ZRz2CzxrHDiRcEdYE1LE_IkFCDqYrLCTGcpCx7ZS5ptjcqAb2
+  r67vWay357q8u9RLZUe-fLV-pod_FhGUm8XrmhRZ48c6KFcICinQx9qsXj-Mcr99z
+  yyjrBwTFqHNRQ4m73JcqT4jPtswaA83AD96rLcqawtUZxc2bDRrRP80pdA_vGofWa
+  kqaP-z_mZBoLkdR_E_eB3JdrHDBOKh2Ku8VqBZhoiIxGF6NtRoVJAwHCXBOFSOV0q
+  FUu6X1tVyDXTlmgIgYAvOEpIZzmUtMsAnCYDF4vCxdQVUO3_Mml-owxoiSQcZL3M7
+  Fclh88YKxNwuMH9wp2aBFYiSZtKdpWoM_zjmE6U3BW6tWh4umriBksS1dBDodUBVh
+  FvSdnSHj20Y8wGQPwiHZ9TtLrm35XFOWw2mqmUvuq3RGhOJBUXr4qLfNCDL_Uvv9G
+  ctTPelZ5cOPCclk-893O5sznv7QRoJBmzrffElw2KTJy6uGlsl3iFsZ9JsQTOHjtu
+  njQfSWCEB_zRqrbt5T9WKlWSIgvHp_EJakS28UO7HEiiemgS0E-Cp6NHQ92CGqHMX
+  ztNvKXN3IaCkroOQbOlq_j9ZefIRwmyb92kMKsxH5tGzWRnC7zvMN9mQS4EQAGlLz
+  DOUIUwnNsPyMohwbBML4TY3-TLg4VGpe7T5ikkodYza8VPhykasZrr-kgZ9iptSZR
+  G1kro3DSluVytPkVPFzIKDo9h5bE54FQCZAptEftI2zzHpPtOHwyrzR1lQDDtI_XE
+  TefFDEq6Mlvj1Zu3bciJBGvxLfQl4W-tbxgu3AUuRUviZMXcMq_TUPsDauGDJtN-6
+  h7cRYGw8J4N3JZFSJRDZi4wN8TkKtJLR9u0Mt4LBvoqMTeBf-u-ZT_WGgSsVLIRPW
+  LbUObeUXl-nqdQkAQPQ1Fnarv3hdUDOK-PZORfgr_MgT7-I0ErapcHjAoYIPKNbq5
+  ukw_SJgRXYL9MFyUL5FQO9ee8IS1vPgGCwFrgE7EI7IgeTlhjmBrro9BkQTxfoppz
+  hy4R90HAW0eTzUpCue0X-gNccn0NbI5iqeH1MehfEV1MHSSDV1aOQ1KaE4okZKKUj
+  yddN9iPGL-VRlNjswm2tsq3TDVlfFXodN5IDNh6eK_KXDBv70NDNrM3fu9iH0H5km
+  WAoEEdfzZeGHNcDG8aFE8rlX6_-wJuDDuPUTX1iozNXCMvTs_M46u3DVfEqTlZvRc
+  Ky96QiZHp1lQQsLBnE8UcoQGXwL9FEgWl-R6G7FyVANC0vyWOokNg70tAb40rKzZX
+  7a9pr0PMxQuv4KBBwN-r96hjoK4n2Yu86savenQUocrz931L_M3dmjq3cpnxj2x4r
+  0AgMuxQKZJirEOfLl1fq0xsS1k1FwVN1GxcuFeXZFLeBv685qPF3eV1Ha546pLw-E
+  nnPRzLPRHyHfU5aWCZAeU6ygwpVwNhMPtE_9vQDKLvArBvNW4Jafz-kisYIW7wnVU
+  R33-PsKVf0-PxjvdNLjZ9VrACTqK--6ANUpvKjICv6Vxk_M08htaJqUnsxLPa7L4P
+  5GmN1m4EVRpJByvcJLcqI43RXep2vO8BOxLnD1WuQ21L8uEg4usy1lFVbIIvIlaDJ
+  e_EMtx1n9jN17GORRkOA8tB59TM-XoCSnTmgAwuMByjdZ0J3gj8smooSETJAZHK8u
+  rDYS8fSc-zEWrqfPlg5tLu8r9jXaCHJkT_g1hJMUHTZ5Uj3qTou9W7G3FM8aCxGkF
+  iGC8G9h3PIv4YvWDlB77CEU1dco_oEjMwZZNbF3bAKkhgW5Du0rcx_7MMeDJNV0j1
+  Jfh41_2d5bKi7-2pyLZ6NZI0EK5bUrqHtdnlmW2XIMBactW9-vD-mXOislFWWOluu
+  5czJuLyjnmJRRQeV3jLO6A0FP__HKc9OGwVhqeAN7c-2pylOnWYyObFTvLMxeyVCb
+  kdl6Q2QfpRLXO68mb-xwk4JbYWjY3APKTJp-y2jC8czwo_eW1glt-CVmSpLbBUSSl
+  Y4Gn5HomLTHAnHTWAWBgZ54YQf_gsb9VF4UAVmNNE8D5fXvBXcwz4hBlALI7J4Dgh
+  BcFqO2wvSiobYByolAMjaa9G4bIDgAEqa10F589SRfE1cVe1qbmYT0-c8uX1FUD2R
+  R2sRXy4dvHu_tlaLhfPP-RMMaDi7cW39NKmNtHRNvv2h1RcIOPSBMe77wIMR7cDy5
+  PrtjA0d_NAf5Xrj8YsFbuxx0yItnvge8ZOpM-y8Yq5qr_roNYlJLSLxiF6F7bReiy
+  LNjqC_MmgzWztz96giKQZlZmWgPdOpFj7kDOtk3ruJn6RCF7-fvAx_-pa5Yc99bHW
+  zwfFnLW6Il0bnAgmXibf13klh4iQ1Rid7ZU-TG6c21uQgsdl1bSJBCEdSS7pJSmj6
+  laHTWLAdo-UYcPuiNLbxbnUwqLja0OLNccmvnZ0GRdRSOOuwbrqYKomI_3gVadKN9
+  nUh-24Rtu65PGJEsuTSVj24WH9hMgxV2E_i03CxV6QyhmF-vgejl1gSELrYsXlxBB
+  kXOa2-rMwj89fveTIYScNWj1iuxePvyCHK2QcIMj84DeoIUDVpsrreU7XgVKggCwH
+  pag7jXvLgqYHZcHWkybOKnMLZ5kVy6qGMPTMaPpxdfBwnGglLy7TTmkwqms5BxGBi
+  EiUEm_-fcKg3IZmQv5p91xzK30VaUadjqq7EJ3LcuvSEHKqz7r_5m0UsrNaJOO4WD
+  y5igSBwzfOpmyiYPZzRQ5MAp14KUDfZGOtyY7fKPY3Iq9ajz166fwcIxS3HAhskIW
+  YYK8p-4PRvr0GIue2FLyBhH3-RLuK_EHxEfLsbAw83OSIDo1Ne4SUO99sMRNj7ZNB
+  ovY_e4giibi7cEZbxVP5XKIJi0PilJ1h0V6npB9K7lCw6fybROeTDQfb8MW26G3rJ
+  Gya0yJuVUHqnzLLATYhzMJvwpthFvxzdn3Kuv6_XTUqbyRs7IgPXW7D-HhEbOhU4s
+  uhcX6juMtlwWnzjq65VzgxINzFXYh03CewZ9edz6_LlqRRTfTSRvoDJOf67hrVssc
+  tFXcL3CQWs_Nka66Y3QiJHrTwNZenDR-JG8GL0B40Sy-9tBrhJNyqrb7J5YTs8rfN
+  V_PggOt0EKgDFfXtKETHu1A5CZ2mtB_cRR133XCDNP8ecnJ8yW-b9UN1f4sMi8zMi
+  gmQ1oFDTt_dcCaV6hafw8-n6bZ9k4oW6UmgXw5slQbIBcyXX2wpLMJ3UNJswswMIj
+  xF_Ez-jabaIqSDwIANCuXJ-TteQnu4b_aXfeJdYHv0dbWqA8bgYcYLJ118-uH8QHC
+  CwGyoGg5zIqwCpRV8VVXXN1laxK1eGbnINvLwbZXaJY4M6dZ4k3nGpV7ixDx8hELM
+  9d9EewmHp6ZSQ5IJ6imk6KpfVxdr9pws4FOXqtkrJihUjYOjiVrvZLJK8EbzpXKKS
+  yA7qpoCWDjhLfTRqDutTOVCmqtQkM1v6LSbqfqL_MY6DIlJ93-I9zB7aVH2tvXRiP
+  8PskHGhcRYnKSMgqyKcrIY7mS4DXLtJ0O7yZ5V7cFgxv9KzK11C71jy-eK5lKx11I
+  aAC-bJEzudOysYaXB44JKPNafKohU3CRWnV6C66j4kl1HMT7rxzgF5U7GwcajlzvX
+  hOEg-DJ7PRekhrFQjJ-czoeWD-Jkw1iBgxTTvoDoxT08c9YiFgPEy_0cGshI7woxQ
+  cl6xIw44Akk07nlMNkQffkX2B4kshbDHWzKmxpLAGYwdTPQI98vjsSqzjEvpQ5YgD
+  njuLyCJzaKb3eBVG4K-FIfXFVW5-U_WaU8zAYpm2bHneCLQMI--AE4j0z7YANoBQL
+  YaCNjW8KhBwfjmFjwF3IywHP_-9nQL6BDFhGmYAemTgGbiUQ51fFYNQ0qMbfDjEAC
+  _-j87FWRg2IINsGFdzf80i42KBTbQ"
+        ]
+      ]}}</sourcecode>
+<t>The response payload: </t>
+<sourcecode>{
+  "TransactResponse":{
+    "Status":201,
+    "StatusDescription":"Operation completed successfully"}}</sourcecode>
+</section>
+<section title="Key Agreement" anchor="n-key-agreement"><t>CryptographicOperationKeyAgreement is used to request a threshold key agreement operation on a specified public key.</t>
+<t>The request payload: </t>
+<t>The response payload: </t>
+</section>
+<section title="Sign" anchor="n-sign"><t>Threshold signature is not currently supported.</t>
+</section>
+</section>
+</section>
+<section title="Message Interactions" anchor="n-message-interactions"><t>Message interactions are asynchronous interactions that occur between devices connected to the same account or between accounts. </t>
+<t>All messages are signed by the sender and encrypted under the encryption key of the recipient if this is known to the sender.</t>
+<section title="Message PIN Interaction" anchor="n-message-pin-interaction"><t>The Message PIN Interaction is used to register and validate PIN codes used to authenticate certain transactions. This interaction allows a PIN code issued by one device to be consumed by another allowing for greater convenience in managing devices or contact exchange.</t>
+<t>For example, Alice might delegate the PIN code issue privilege to her mobile device without delegating the administration privilege to that device. This would allow Alice to use her mobile device to initiate the connection of a large number of devices to her Mesh as her house is being built and approve them later using her administrative device.</t>
+<t>Use of the Message PIN interaction is optional. An application that issues a PIN code to authenticate a message <bcp14>MAY</bcp14> store the PIN value within the application without persisting it to external storage.</t>
+<t>Derivation of the SaltedPin, MessageId and Witness values from their respective inputs is described in the Schema Reference <xref target="draft-hallambaker-mesh-schema"></xref>.</t>
+<section title="Registration" anchor="n-registration"><t>To register a PIN code to an <tt>Account</tt>, a device:</t>
+<ul>
+<li>Generates the <tt>PIN</tt> code value</li>
+<li>Calculates the <tt>SaltedPin</tt> value for the specified <tt>Action</tt></li>
+<li>Calculates the <tt>PinId</tt> binding the specified <tt>SaltedPin </tt>to the <tt>Account</tt>.</li>
+<li>Creates and signs <tt>MessagePin</tt> containing the <tt>SaltedPin </tt>, <tt>Action</tt> and <tt>Account</tt> values with the <tt>MessageId</tt> value <tt>PinId</tt>.</li>
+<li>Appends the <tt>MessagePin </tt>value to the <tt>Administration</tt> Spool of the <tt>Account</tt>.</li>
+</ul>
+<t>Note that this construction provides limited protection against forgery attacks by a party with access to the <tt>MessagePin</tt>. A party with such access can use it to construct the witness value required to authenticate a request. </t>
+<t>PIN Code values consist of an opaque sequence of octets represented as a UDF nonce value. Codes are presented in canonical UDF form, i.e. Base32 encoding separated into groups of 4 characters. The PIN value is converted to binary form for calculation of the <tt>SaltedPin</tt>, thus ensuring that the canonical form of the PIN value is used.</t>
+</section>
+<section title="Authentication" anchor="n-authentication"><t>The PIN Code value is passed out of band to a user who will enter it into a device to authenticate a request made to the issuer. </t>
+<t>A request that <bcp14>MAY</bcp14> be validated by means of a PIN is a subclass of MessagePinValidated and contains the following fields:</t>
+<dl>
+<dt>AuthenticatedData</dt>
+<dd>
+<t>A DARE Envelope containing the data that is authenticated.</t>
+</dd>
+<dt>ClientNonce</dt>
+<dd>
+<t>A nonce value used to prevent certain replay attacks.</t>
+</dd>
+<dt>PinId</dt>
+<dd>
+<t>Digest value binding the <tt>SaltedPin </tt>to the <tt>Account</tt>.</t>
+</dd>
+<dt>PinWitness</dt>
+<dd>
+<t>Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)</t>
+</dd>
+</dl>
+<t>The device uses the PIN code and Action identifier corresponding to the desired request to calculate the <tt>SaltedPin</tt> value in the same manner as during registration. This value is then used to calculate the <tt>PinId</tt> and <tt>PinWitness</tt> values.</t>
+</section>
+<section title="Validation" anchor="n-validation"><t>The PIN code is validated by performing the steps of:</t>
+<ul>
+<li>Calculating the <tt>SaltedPin</tt> value from the PIN code and <tt>Action</tt></li>
+<li>Calculating <tt>PinId</tt> from <tt>SaltedPin</tt>  and <tt>Account</tt></li>
+<li>Retrieving a <tt>MessagePin</tt> from the Administration spool with the <tt>MessageId</tt> <tt>PinId</tt>.</li>
+<li>Calculating the <tt>PinWitness</tt> value from <tt>SaltedPin</tt>, <tt>ClientNonce</tt> and <tt>AuthenticatedData</tt> and checking this matches the value specified in the message.</li>
+<li>Performing the requested action.</li>
+<li>Posting a <tt>Complete</tt> message to the <tt>Administration</tt> Spool of the <tt>Account</tt> marking the PIN code as used.</li>
+</ul>
+<t>This process can fail at multiple points resulting in different error results:</t>
+<dl>
+<dt><tt>PinInvalid</tt></dt>
+<dd>
+<t>No PIN code is specified, the Pin code indicates an unsupported algorithm or the calculated <tt>PinWitness</tt> does not match the one specified by the request.</t>
+</dd>
+<dt><tt>PinUsed</tt></dt>
+<dd>
+<t>The PIN code has been used previously.</t>
+</dd>
+<dt><tt>PinExpired</tt></dt>
+<dd>
+<t>The PIN code is no longer valid.</t>
+</dd>
+</dl>
+<t>Note that in the case that an attempt is made to reuse a PIN, it is not automatically the case that the first use of the PIN was the one that was valid and only the second attempt was invalid. Implementations <bcp14>SHOULD</bcp14> alert the user to the attempted re-use so that this possibility can be considered and appropriate action taken.</t>
+</section>
+<section title="Example" anchor="n-example"><t>Alice connects a device using a QR code presented by her administrative device. </t>
+<t>The administration device creates a PIN code and records it to the Local spool: </t>
+<sourcecode>{
+  "MessagePin":{
+    "MessageId":"ACCL-WJJ6-QILY-IDQT-67RT-LHGM-PA2K",
+    "Account":"alice@example.com",
+    "Expires":"2021-08-06T16:37:40Z",
+    "Automatic":true,
+    "SaltedPin":"ADBB-JTKR-RGGL-ACEM-TW6E-ZFY6-NQXF",
+    "Action":"Device"}}</sourcecode>
+<t>This pin value is used to authenticate the connection request from the device: </t>
+<sourcecode>{
+  "RequestConnection":{
+    "MessageId":"NBF4-4PTH-UTSC-RYHZ-EQMK-BVH7-MU3F",
+    "AuthenticatedData":[{
+        "EnvelopeId":"MAOK-I4TT-3EUS-4LMY-Z6JO-VEN7-CX6F",
+        "dig":"S512",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQU9LLUk0VFQtM0
+  VVUy00TE1ZLVo2Sk8tVkVONy1DWDZGIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+  sZURldmljZSIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0IiwKICAi
+  Q3JlYXRlZCI6ICIyMDIxLTA4LTA1VDE2OjM3OjQwWiJ9"},
+      "ewogICJQcm9maWxlRGV2aWNlIjogewogICAgIlByb2ZpbGVTaWduYXR1cm
+  UiOiB7CiAgICAgICJVZGYiOiAiTUFPSy1JNFRULTNFVVMtNExNWS1aNkpPLVZFTjc
+  tQ1g2RiIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJs
+  aWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgI
+  CAiUHVibGljIjogInRERTlnUy02RFk5bVBFWWFScVJmTjh6bW8zOE83N2ZIR2EtaF
+  JYd0Z1NFhnbjVrMkdQcUEKICBqN1ZXRkVmc2FpX2JtMlJNc2w3UE8xU0EifX19LAo
+  gICAgIkVuY3J5cHRpb24iOiB7CiAgICAgICJVZGYiOiAiTUQ2Vi01NEZTLTZRRUYt
+  MkNKRy1FVVhBLU5DVk4tWDVINyIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjoge
+  wogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJYND
+  Q4IiwKICAgICAgICAgICJQdWJsaWMiOiAiMm5Ncl9GUVExYW1VbU13VzFadVQ0Tmp
+  hWXJwRDcyTG5LTUstaXJTc3ZCVldxczVrT3JUSwogIGRQcjh5YkQ3MUoxNmxXNkJk
+  LWJnN3htQSJ9fX0sCiAgICAiU2lnbmF0dXJlIjogewogICAgICAiVWRmIjogIk1BT
+  UktSTdPUy1NQ1VNLVc3SEstNlFTRS1RWE5MLUVKR1MiLAogICAgICAiUHVibGljUG
+  FyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICA
+  gICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJmeTN6bWhJdFFK
+  ZFRaVnJucjVFNlAzT2d6RmVVa2hFYTdOQWNTUHBHUkxvc3U3XzNCUEp6CiAgb1JqO
+  EVDT19kSkpvOUJlMU9jTzdJUW9BIn19fSwKICAgICJBdXRoZW50aWNhdGlvbiI6IH
+  sKICAgICAgIlVkZiI6ICJNQkZOLUIyQ1gtS1JJUS0zTUhMLTdTT1ItWDVXSi1DSFF
+  HIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tl
+  eUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgICAgIlB1Y
+  mxpYyI6ICI2ZmdRRXZEOFNGWjZzb0VzLXJNa1ZXbDFCY202N2s3TVYzcWxlRzQySX
+  ZaN0NOM1FLbDRvCiAgZFhHaVBnOFU0NDZ3bGpQQVJEQnBkNFFBIn19fX19",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MAOK-I4TT-3EUS-4LMY-Z6JO-VEN7-CX6F",
+            "signature":"14AHQuUENwVXXulI7Hxa1cceWaSS_qBhfy-tydNF
+  n7rJksVfHMDiy8vrrvdV00BGuktPqgp86C2AWSac9FnGXwhNZ3PV2edzsCwC_e21d
+  UoGQ7XPPL886uw5wkDjz7Nt8WxL1Dn8uwpAph_xrIMMNSsA"}
+          ],
+        "PayloadDigest":"ZXcdFX7i4PYf4oJ6O7_dLw7TWEkr0vC_r3_RcaDd
+  cy-Wz4DPbqhCk1VGyU0YLsR6C6NEcHa9ExjBa5OIoZakgA"}
+      ],
+    "ClientNonce":"VGxxL-LKUQyqn_Rpdj86Zg",
+    "PinId":"ACCL-WJJ6-QILY-IDQT-67RT-LHGM-PA2K",
+    "PinWitness":"YhwAi-IvYYP2dMjOd-pXioRqgIq0knwLwnUqMHvpvTueLMc
+  7ATSXMdBlxOSZ_u8sztqpwwEZEZ5Rc4WQBKP3cA",
+    "AccountAddress":"alice@example.com"}}</sourcecode>
+<t>The administration device can now use the PIN Identifier to retreive the  MessagePIN from the Local spool and use it to verify the request. </t>
+</section>
+</section>
+<section title="Completion Interaction" anchor="n-completion-interaction"><t>Completion messages are dummy messages that are added to a Mesh Spool to mark a change the status of messages previously posted. Any message that is in the inbound spool and has not been erased or redacted <bcp14>MAY</bcp14> be marked as <tt>read</tt>, <tt>unread</tt> or <tt>deleted</tt>. Any message in the outbound spool <bcp14>MAY</bcp14> be marked as <tt>sent</tt>, <tt>received</tt> or <tt>deleted</tt>.</t>
+<t>Services <bcp14>MAY</bcp14> erase or redact messages in accordance with local site policy. Since messages are not removed from the spool on being marked deleted, they may be undeleted by marking them as read or unread. Marking a message deleted <bcp14>MAY</bcp14> make it more likely that the message will be removed if the sequence is subsequently purged.</t>
+<t>After using the PIN code to authenticate connection of a device in the previous  example, the corresponding MessagePin is marked as having been used by appending  a completion message to the Local spool. </t>
+<sourcecode>Missing example 32</sourcecode>
+<t>The completion message is added to the spool in the same upload transaction that adds the device to the device catalog. This ensures that both operations occur or neither occurs.</t>
+</section>
+<section title="Contact Exchange Interaction" anchor="n-contact-exchange-interaction"><t>The contact exchange interaction is used to support unilateral or mutual exchange of contact information. Contact exchange has three functions in the Mesh:</t>
+<ul>
+<li>To exchange public key information to allow encryption of messages sent to and verification of signatures on messages sent from the contact subject.</li>
+<li>To exchange contact information allowing use of other communication protocols (e.g. telephone, SMS, xmpp, SMTP, OpenPGP, S/MIME, etc).</li>
+<li>To request that the recipient grant privileges to accept certain types of messages from the contact subject.</li>
+</ul>
+<t>Registration of the subject's contact information in a registry service eliminates the need for the first of these functions but not the other two. To prevent abuse, every Mesh Message is subject to access control and a Mesh service will only accept a message from a sender if there is an entry in the Threshold Catalog of the account that expressly permits delivery of messages of the specified type that are authenticated by an authorized signature key.</t>
+<t>The communication of unsolicited information afforded by the contact exchange interaction is deliberately limited so that a majority of users can accept contact exchange requests without prior authorization. It is however likely that some users will receive a considerable volume of requests forcing them to require contact requests be authorized through some form of third party accreditation.</t>
+<section title="Remote" anchor="n-remote"><t>The Remote Contact Exchange transaction consists of a sequence of <tt>MessageContact</tt> messages sent from the initiator to the responder, responder to the initiator, etc. While there is in principle no limit on the number of messages exchanged, most exchanges will be completed in three exchanges or less:</t>
+<dl>
+<dt>Initiator to Responder</dt>
+<dd>
+<t>Contains Initiator contact data without authentication context from the exchange.</t>
+</dd>
+<dt>Responder to Initiator (optional)</dt>
+<dd>
+<t>Contains Responder contact data authenticated under a PIN challenge presented in the previous message.</t>
+</dd>
+<dt>Initiator to Responder (optional) </dt>
+<dd>
+<t>Contains Initiator contact data authenticated under a PIN challenge presented in the previous message.</t>
+</dd>
+</dl>
+<t>Each message provides the recipient with additional information which <bcp14>MAY</bcp14> motivate the recipient to provide additional contact information to the sender.</t>
+<sourcecode>{
+  "MessageContact":{
+    "MessageId":"NDIB-OGS2-XXZG-D2M2-5YJI-QQXN-2IVO",
+    "Sender":"bob@example.com",
+    "Recipient":"alice@example.com",
+    "AuthenticatedData":[{
+        "dig":"S512",
+        "ContentMetaData":"ewogICJNZXNzYWdlVHlwZSI6ICJDb250YWN0UG
+  Vyc29uIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJDcmV
+  hdGVkIjogIjIwMjEtMDgtMDVUMTY6Mzc6MzVaIn0"},
+      "ewogICJDb250YWN0UGVyc29uIjogewogICAgIkFuY2hvcnMiOiBbewogIC
+  AgICAgICJVZGYiOiAiTUE2SS1NSjVaLTdCQk8tVEVCQS1IUUY2LUxOUjYtNzJTRiI
+  sCiAgICAgICAgIlZhbGlkYXRpb24iOiAiU2VsZiJ9XSwKICAgICJOZXR3b3JrQWRk
+  cmVzc2VzIjogW3sKICAgICAgICAiQWRkcmVzcyI6ICJib2JAZXhhbXBsZS5jb20iL
+  AogICAgICAgICJFbnZlbG9wZWRQcm9maWxlQWNjb3VudCI6IFt7CiAgICAgICAgIC
+  AgICJFbnZlbG9wZUlkIjogIk1BNkktTUo1Wi03QkJPLVRFQkEtSFFGNi1MTlI2LTc
+  yU0YiLAogICAgICAgICAgICAiZGlnIjogIlM1MTIiLAogICAgICAgICAgICAiQ29u
+  dGVudE1ldGFEYXRhIjogImV3b2dJQ0pWYm1seGRXVkpaQ0k2SUNKTlFUWkpMVTFLT
+  lZvdE4wSkNUeTEKICBVUlVKQkxVaFJSall0VEU1U05pMDNNbE5HSWl3S0lDQWlUV1
+  Z6YzJGblpWUjVjR1VpT2lBaVVISnZabWxzWgogIFZWelpYSWlMQW9nSUNKamRIa2l
+  PaUFpWVhCd2JHbGpZWFJwYjI0dmJXMXRMMjlpYW1WamRDSXNDaUFnSWtOCiAgeVpX
+  RjBaV1FpT2lBaU1qQXlNUzB3T0Mwd05WUXhOam96Tnpvek5Wb2lmUSJ9LAogICAgI
+  CAgICAgImV3b2dJQ0pRY205bWFXeGxWWE5sY2lJNklIc0tJQ0FnSUNKUWNtOW1hV3
+  gKICBsVTJsbmJtRjBkWEpsSWpvZ2V3b2dJQ0FnSUNBaVZXUm1Jam9nSWsxQk5ra3R
+  UVW8xV2kwM1FrSlBMVlJGUQogIGtFdFNGRkdOaTFNVGxJMkxUY3lVMFlpTEFvZ0lD
+  QWdJQ0FpVUhWaWJHbGpVR0Z5WVcxbGRHVnljeUk2SUhzCiAgS0lDQWdJQ0FnSUNBa
+  VVIVmliR2xqUzJWNVJVTkVTQ0k2SUhzS0lDQWdJQ0FnSUNBZ0lDSmpjbllpT2lBaV
+  IKICBXUTBORGdpTEFvZ0lDQWdJQ0FnSUNBZ0lsQjFZbXhwWXlJNklDSjJhRTU2U2p
+  kUGJFOTFTMmN6WVVReGFVNAogIDVXVEJNVXpWb1EyWTBaMFJDU1RrelVWSnlWa1ZK
+  VERBeFRYRk9ZV2xyY0VkTkNpQWdXbXN5ZG1KU1N6ZENhCiAgbFJ5ZW1oWGJEVlhlV
+  1ZTTFhsQkluMTlmU3dLSUNBZ0lDSkJZMk52ZFc1MFFXUmtjbVZ6Y3lJNklDSmliMk
+  oKICBBWlhoaGJYQnNaUzVqYjIwaUxBb2dJQ0FnSWxObGNuWnBZMlZWWkdZaU9pQWl
+  UVUpDV1MxRk5GWkJMVU5OVgogIDBZdE5USlVOeTFGVTB4QkxWQkhUbFF0UTA1T1dD
+  SXNDaUFnSUNBaVFXTmpiM1Z1ZEVWdVkzSjVjSFJwYjI0CiAgaU9pQjdDaUFnSUNBZ
+  0lDSlZaR1lpT2lBaVRVSlRUeTFXTmtKUExUSlNTMUl0UjBSRFNTMUVWMWt6TFZOWF
+  cKICBGZ3RWMEpZVHlJc0NpQWdJQ0FnSUNKUWRXSnNhV05RWVhKaGJXVjBaWEp6SWp
+  vZ2V3b2dJQ0FnSUNBZ0lDSgogIFFkV0pzYVdOTFpYbEZRMFJJSWpvZ2V3b2dJQ0Fn
+  SUNBZ0lDQWdJbU55ZGlJNklDSllORFE0SWl3S0lDQWdJCiAgQ0FnSUNBZ0lDSlFkV
+  0pzYVdNaU9pQWlabVZFTUVScFpqQm1TVlp0VEZCclRUUjVhakp6WmtveGNFRmhPWE
+  4KICBVVjBGTk5sY3hWa0pGTmxodmVFMUVXRzVET0hoaVZ3b2dJRU5HUmxwaWMyWTJ
+  XVkI0ZEZCTVZVOHhTR2s1VAogIEZkbFFTSjlmWDBzQ2lBZ0lDQWlRV1J0YVc1cGMz
+  UnlZWFJ2Y2xOcFoyNWhkSFZ5WlNJNklIc0tJQ0FnSUNBCiAgZ0lsVmtaaUk2SUNKT
+  lJGcFlMVVJTTmxndFZUTkhRUzFGVWtkQ0xWbzJTMDB0TlZwQlNTMVZURkZVSWl3S0
+  kKICBDQWdJQ0FnSWxCMVlteHBZMUJoY21GdFpYUmxjbk1pT2lCN0NpQWdJQ0FnSUN
+  BZ0lsQjFZbXhwWTB0bGVVVgogIERSRWdpT2lCN0NpQWdJQ0FnSUNBZ0lDQWlZM0oy
+  SWpvZ0lrVmtORFE0SWl3S0lDQWdJQ0FnSUNBZ0lDSlFkCiAgV0pzYVdNaU9pQWllR
+  3M0U0hONVZIcHFUbEpDTmtod00wVnBjbWwzUVRBeUxYUmpTazk1TjNkdVVtRkNaR0
+  oKICBPYm5vdFEyMUxlVGRFVFZOS1ZBb2dJRlJ5TTBaQmR6TmFjR2xWYm1GWFpETm5
+  kbkpTWlc5WlFTSjlmWDBzQwogIGlBZ0lDQWlRV05qYjNWdWRFRjFkR2hsYm5ScFky
+  RjBhVzl1SWpvZ2V3b2dJQ0FnSUNBaVZXUm1Jam9nSWsxCiAgRVUwd3RRa1JUUmkxU
+  1JrUlRMVXBMTkVVdFdFMVRTeTFhV0VKUUxVaEJUa1FpTEFvZ0lDQWdJQ0FpVUhWaW
+  IKICBHbGpVR0Z5WVcxbGRHVnljeUk2SUhzS0lDQWdJQ0FnSUNBaVVIVmliR2xqUzJ
+  WNVJVTkVTQ0k2SUhzS0lDQQogIGdJQ0FnSUNBZ0lDSmpjbllpT2lBaVdEUTBPQ0lz
+  Q2lBZ0lDQWdJQ0FnSUNBaVVIVmliR2xqSWpvZ0lraE9iCiAgVkpPYW5NMVJrbFRPV
+  lJPYUdGVlZqUllUa2RxT0VwdFoyTnFUWE5aT1dkcGJHeE9SRk4yT1RWQ2FXcGZTV3
+  gKICAxVHpjS0lDQnBSSEpoUjJKTGJUWXlSamQ1UXpGblEycHdTMGRHTkVFaWZYMTl
+  MQW9nSUNBZ0lrRmpZMjkxYgogIG5SVGFXZHVZWFIxY21VaU9pQjdDaUFnSUNBZ0lD
+  SlZaR1lpT2lBaVRVUlRReTFWVFVaVExWcFdXVlV0VERRCiAgM1JpMVpSRkZVTFVOR
+  FJETXRVRVpITnlJc0NpQWdJQ0FnSUNKUWRXSnNhV05RWVhKaGJXVjBaWEp6SWpvZ2
+  UKICB3b2dJQ0FnSUNBZ0lDSlFkV0pzYVdOTFpYbEZRMFJJSWpvZ2V3b2dJQ0FnSUN
+  BZ0lDQWdJbU55ZGlJNklDSgogIEZaRFEwT0NJc0NpQWdJQ0FnSUNBZ0lDQWlVSFZp
+  Ykdsaklqb2dJa3R5UW5GR1YxSTRkbmgyY1hBNGNVeFliCiAgMWsyWmpBMlYxWnNNe
+  kZ2VmxKVVYzcGlWVlk1YWxWbFprOTFORTh3Y0RCUWMxOEtJQ0JRVkdacVMxUnFiRF
+  EKICB0YkhGT2VuSmtSWGM0Ylc4NFkwRWlmWDE5ZlgwIiwKICAgICAgICAgIHsKICA
+  gICAgICAgICAgInNpZ25hdHVyZXMiOiBbewogICAgICAgICAgICAgICAgImFsZyI6
+  ICJTNTEyIiwKICAgICAgICAgICAgICAgICJraWQiOiAiTUE2SS1NSjVaLTdCQk8tV
+  EVCQS1IUUY2LUxOUjYtNzJTRiIsCiAgICAgICAgICAgICAgICAic2lnbmF0dXJlIj
+  ogIko1RnhqcmlUWHZ5a2VwNTY5Y0EtTE9rUkc5UkR4RUttMVJIX09tM3F3RnVZS0J
+  PUFAKICBvVVRFQmphR29YdTEtS2NTemVHTm5oakMxSUFiWDVqNE9DYUpmcWJnRTAt
+  b1NZVUlmYnF5YUY1T0c0UTRhVAogIG5PWHVwZlAzaFNxNzZQdWVrT3lfYUttSEZCd
+  zBCMFZVOHZJVzlOVGtBIn1dLAogICAgICAgICAgICAiUGF5bG9hZERpZ2VzdCI6IC
+  JONjdKOFNSbFpVbUgxQzdhQk9iSGxzVHp3SlBkZjlBZEVzY19TLXloSVJ3eFgKICB
+  hS3Q5Q1drSFhicE12ZXRVdXVZMi1jdkJLRmVmLVRhYVo3czZHVXRoQSJ9XSwKICAg
+  ICAgICAiUHJvdG9jb2xzIjogW3sKICAgICAgICAgICAgIlByb3RvY29sIjogIm1tb
+  SJ9XX1dfX0",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MDSC-UMFS-ZVYU-L47F-YDQT-CCD3-PFG7",
+            "signature":"FM74a48A3IDF2nPouls7KkMJhwCqIgmrqInktSf9
+  zfSfWlIG4V4gtWFWo1Ga7FLJiZULqs_fgLeAsP95OCpARbF41EITbm6XMBxUBVhhd
+  LIymr4qDMl6SSJNlTaXtf6YUvtxs31SKD2Rza5F_6wr7A4A"}
+          ],
+        "PayloadDigest":"z05L3W6dkgu8p8U-5g58pWp7jBNRAmbv-7Dt5w98
+  e12lzHM3Uo-EDBtiC7Lq24C-BjeZG_Jx5VIHa9Xf0N5EzA"}
+      ],
+    "Reply":true,
+    "Subject":"alice@example.com",
+    "PIN":"AAKO-AYTU-YH3M-DWOO-SLKU-N7ZD-SKUA"}}</sourcecode>
+<t>The Mesh Contact Exchange transaction does not provide for validation of the contact information beyond the binding to the Mesh Account Address used to perform the exchange.</t>
+</section>
+<section title="PIN" anchor="n-pin"><t>Contact exchange requests <bcp14>MAY</bcp14> be authenticated by a PIN code. Initial contact exchange requests <bcp14>SHOULD</bcp14> include a PIN code value that can be used to authenticate a response (if given). PIN codes <bcp14>MAY</bcp14> also be exchanged out of band.</t>
+<t>A <tt>MessageContact</tt> authenticated by means of a PIN code is authenticated as described in the PIN Interaction section above.</t>
+</section>
+<section title="EARL" anchor="n-earl"><t>A <tt>MessageContact</tt> message <bcp14>MAY</bcp14> be published as an EARL. This allows contact data to be presented to the recipient on a printed document such as a business card in machine readable format such as a QR code.</t>
+</section>
+</section>
+<section title="Group Invitation" anchor="n-group-invitation"><t>The <tt>GroupInvitation</tt> interaction is used to invite a recipient to join a Mesh Group. The interaction is essentially a form of contact exchange except that a sender <bcp14>SHOULD NOT</bcp14> send group invitations unless there is an existing relationship. Thus the 'first trust' issues intrinsic to the contact exchange interaction do not apply.</t>
+<t>The message specifies the group name and the contact entry for the group. The contact entry includes the <tt>CapabilityDecryptServiced</tt> used to decrypt messages sent to the group when combined with information provided by the threshold service for the group.</t>
+<t>Receipt of a <tt>GroupInvitation</tt> message does not require a response.</t>
+<sourcecode>{
+  "GroupInvitation":{
+    "MessageId":"NAEL-ZDYX-4ZUQ-KPRC-YC77-USAV-WHFM",
+    "Sender":"alice@example.com",
+    "Recipient":"bob@example.com",
+    "Contact":{
+      "ContactPerson":{
+        "Anchors":[{
+            "Udf":"MCTZ-HSH7-NUNV-MQ3Z-XNJ6-XGB3-VBPX",
+            "Validation":"Self"}
+          ],
+        "NetworkAddresses":[{
+            "Address":"groupw@example.com",
+            "EnvelopedProfileAccount":[{
+                "EnvelopeId":"MCTZ-HSH7-NUNV-MQ3Z-XNJ6-XGB3-VBPX",
+                "dig":"S512",
+                "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQ1RaLU
+  hTSDctTlVOVi1NUTNaLVhOSjYtWEdCMy1WQlBYIiwKICAiTWVzc2FnZVR5cGUiOiA
+  iUHJvZmlsZUdyb3VwIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3Qi
+  LAogICJDcmVhdGVkIjogIjIwMjEtMDgtMDVUMTY6Mzc6MzlaIn0"},
+              "ewogICJQcm9maWxlR3JvdXAiOiB7CiAgICAiUHJvZmlsZVNpZ2
+  5hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNQ1RaLUhTSDctTlVOVi1NUTNaLVhOSjY
+  tWEdCMy1WQlBYIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAg
+  IlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgI
+  CAgICAgICJQdWJsaWMiOiAiZ0VQZEg3T0duUjJIdUtrUjJMTWY3YmlfcUxibm01a3
+  FaTzFRNEcxS01DQ19VMXh3ZUZyVAogIFd5QmFsc3Vtd20zVjFpQ2c0RFpFalBpQSJ
+  9fX0sCiAgICAiQWNjb3VudEFkZHJlc3MiOiAiZ3JvdXB3QGV4YW1wbGUuY29tIiwK
+  ICAgICJBY2NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQ0hVLVE0V
+  FAtR0UyWS02RE5VLVVZRUYtUDNCRi1MWlRCIiwKICAgICAgIlB1YmxpY1BhcmFtZX
+  RlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J
+  2IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJyczJRbjJfTTY0WVRFaUR6
+  MkxGenUwN1RiZ0t4VUtvTzRWMjR4NEpUY09MQ3JTMGFRSHNZCiAgVUtyRWlqUmNkd
+  nVNYS1oSzhxOEtwVDhBIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIj
+  ogewogICAgICAiVWRmIjogIk1BRFotNzdESC1LV0JNLTVWWUQtSkYyQy1UQ1FWLVF
+  XUjQiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+  S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+  lB1YmxpYyI6ICJLb2p3Zm1MTnhXUHY2aUJWQ20yc0ltZmxmVDF3ZDJBaWFkWU5iRU
+  hFRWlWQkc2dEQ2bzQ5CiAgYTUzNWRxZnBjNTI4OHF1OTh6YktNNVdBIn19fX19",
+              {
+                "signatures":[{
+                    "alg":"S512",
+                    "kid":"MCTZ-HSH7-NUNV-MQ3Z-XNJ6-XGB3-VBPX",
+                    "signature":"aYkUH6X9_o8SlGtHGHlbUF5Eo-9fbtt0
+  EiDHE6UOcSM74-_kaJEsNjBqDoobQFY2wa9_ZKLAxLIAsaboaM4J0eLO2LwY0sLEn
+  56Hqnomtr9RrSdd3T94RsL9d5VbltUmbm9lri6DbEdTcbApWTIiijsA"}
+                  ],
+                "PayloadDigest":"7QnIkdUEegnV-m6hHDZ-uxunsQi6WVv9
+  lSgKiAFBtZe4pW1XSIwjx--hdhszoqjDEV3d8R0cIdfrAIl705eGcw"}
+              ],
+            "Protocols":[{
+                "Protocol":"mmm"}
+              ],
+            "Capabilities":[{
+                "CapabilityDecryptPartial":{
+                  "Id":"MCHU-Q4TP-GE2Y-6DNU-UYEF-P3BF-LZTB",
+                  "KeyData":{
+                    "Udf":"NBDJ-WYQO-UIEH-OVLK-B3UM-J5TN-AQ3P",
+                    "PrivateParameters":{
+                      "PrivateKeyECDH":{
+                        "crv":"X448z",
+                        "Private":"LvKfwJ0uKLkQiW9XdxDmNZOFc-cnAK
+  aKnTDHzDrwa1-mIk3mc0gotskRzBZrfjhgphB9KZhs_Bk"}}},
+                  "SubjectId":"MCHU-Q4TP-GE2Y-6DNU-UYEF-P3BF-LZTB",
+                  "ServiceId":"NBDJ-WYQO-UIEH-OVLK-B3UM-J5TN-AQ3P",
+                  "ServiceAddress":"groupw@example.com"}}
+              ]}
+          ]}}}}</sourcecode>
+</section>
+<section title="Confirmation Interaction" anchor="n-confirmation-interaction"><t>The confirmation interaction consists of a <tt>RequestConfirmation</tt> message from the initiator followed by a <tt>ResponseConfirmation</tt> from the responder.</t>
+<t>The <tt>RequestConfirmation</tt> message specifies the action that is requested.</t>
+<t>The <tt>ResponseConfirmation</tt> message contains the enveloped RequestConfirmation message signed by the initiator and the disposition of the responder, <tt>Accept = true</tt> if the request is accepted and <tt>Accept = false</tt> otherwise.</t>
+<t>The service sends out the following request: </t>
+<sourcecode>{
+  "RequestConfirmation":{
+    "MessageId":"NBLG-QNFG-5NRO-K2PT-JIBB-4AVX-X2L6",
+    "Sender":"console@example.com",
+    "Recipient":"alice@example.com",
+    "Text":"start"}}</sourcecode>
+<t>Alice accepts the request and returns the following response: </t>
+<sourcecode>{
+  "ResponseConfirmation":{
+    "MessageId":"MDKO-2LBI-LVRI-6F7K-FSQC-NYLV-E76L",
+    "Sender":"alice@example.com",
+    "Recipient":"console@example.com",
+    "Request":[{
+        "EnvelopeId":"MAHP-YGCF-WQAV-CSRH-Y6GA-AAP3-VKLY",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQkxHLVFORkctNU
+  5STy1LMlBULUpJQkItNEFWWC1YMkw2IiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+  zdENvbmZpcm1hdGlvbiIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0
+  IiwKICAiQ3JlYXRlZCI6ICIyMDIxLTA4LTA1VDE2OjM3OjM4WiJ9",
+        "SequenceInfo":{
+          "Index":4,
+          "TreePosition":6201},
+        "Received":"2021-08-05T16:37:38Z"},
+      "ewogICJSZXF1ZXN0Q29uZmlybWF0aW9uIjogewogICAgIk1lc3NhZ2VJZC
+  I6ICJOQkxHLVFORkctNU5STy1LMlBULUpJQkItNEFWWC1YMkw2IiwKICAgICJTZW5
+  kZXIiOiAiY29uc29sZUBleGFtcGxlLmNvbSIsCiAgICAiUmVjaXBpZW50IjogImFs
+  aWNlQGV4YW1wbGUuY29tIiwKICAgICJUZXh0IjogInN0YXJ0In19",
+      {}
+      ],
+    "Accept":true}}</sourcecode>
+</section>
+</section>
+<section title="Device Connection Interactions" anchor="n-device-connection-interactions"><t>Connection of a device to a Mesh Account combines synchronous and asynchronous elements and therefore uses a combination of Mesh Service Protocol and Mesh Messaging interactions.</t>
+<t>Three connection interactions are currently defined support connection of devices with difference affordances:</t>
+<dl>
+<dt>Witness Authenticated</dt>
+<dd>
+<t>For connecting devices that provide data entry and display affordances and are connected to a network. The account the device is to be connected to is entered into the device which displays a witness code. This code is then compared with a code displayed on the administration device to authenticate the request, after which both devices can complete the interaction.</t>
+</dd>
+<dt>Dynamic QR Code (PIN) Authenticated</dt>
+<dd>
+<t>For connecting devices that provide a camera affordance. The user sets the administration device into 'add device' mode, causing a QR code to be displayed. The QR code is scanned by the device being connected after which both devices can complete the interaction.</t>
+</dd>
+<dt>Static QR Code Authenticated</dt>
+<dd>
+<t>For connecting devices that have been preconfigured with a device profile identified by means of a QR Code containing an EARL. The QR code is scanned by the administration device after which both devices can complete the interaction.</t>
+</dd>
+</dl>
+<t>Each of these interactions provide strong mutual authentication with minimal user effort.</t>
+<t>The witness authenticated connection interaction is intended for use in cases in which the device is already connected to a network. The QR code interactions are intended to provide support for acquisition of networking capabilities as part of the connection process. These functions are not currently specified. The Static QR Code Authenticated interaction is intended to support Internet of Things (IoT) devices which provide minimal interaction affordances.</t>
+<t>In each case, the objectives of the device connection interaction are the same:</t>
+<ul>
+<li>Mutually authenticate the onboarding device and the Mesh such that the connection interaction only completes if both sides acquire the authentic profile of the other.</li>
+<li>To provision the onboarding device with the Mesh ProfileAccount, and an ActivationDevice and ConnectionDevice record allowing the device to interact as a member of the Mesh with the set of rights specified by the user.</li>
+<li>To create a CataloguedDevice record and append it to the Device catalog of the account to allow the device to be managed within that account.</li>
+<li>(optional) to acquire networking capabilities to allow the above to be completed.</li>
+</ul>
+<t>The connection of the device to the Mesh Account is achieved through the creation of the ActivationDevice, ConnectionDevice and CataloguedDevice records described earlier. These are created by the administration device in the third phase of each of the connection interactions described below and acquired by the onboarding device in the fourth phase.</t>
+<section title="Dynamic QR Code (PIN) Authenticated" anchor="n-dynamic-qr-code-pin-authenticated"><t>The Dynamic QR Code (PIN) Authenticated interaction comprises four phases as follows:</t>
+<dl>
+<dt>Phase 1: Issue of PIN credential</dt>
+<dd>
+<t>A PIN code is created and registered with the PIN Registration interaction described earlier and transmitted to the user by an out of band communication (e.g. a QR code that is scanned by the device).</t>
+</dd>
+<dt>Phase 2: Onboarding Device Request to Service</dt>
+<dd>
+<t>The onboarding device performs a Connect transaction on a host servicing the account. This results in the exchange of the account and device profiles and the computation of a witness value from the two profile fingerprints and two nonce values specified by the onboarding device and the service. </t>
+<t>An AcknowledgeConnection message is posted to the Inbound spool of the account.</t>
+</dd>
+<dt>Phase 3: Administration Device Acceptance</dt>
+<dd>
+<t>The account holder accepts or rejects the connection request from a device that has been granted administration capability.  </t>
+</dd>
+<dt>Phase 4: Onboarding Device Completion</dt>
+<dd>
+<t>The onboarding device periodically polls the service for acceptance of the request by the administration device using the Complete transaction.</t>
+</dd>
+</dl>
+<t>The use of the PIN code to authenticate the request message is shown in $$$$. </t>
+<t>The PIN code <bcp14>MAY</bcp14> be presented to the onboarding device in any format accepted by the device. Administration <bcp14>MAY</bcp14> support presentation of the account address PIN code as a URI code. Administration devices <bcp14>SHOULD</bcp14> support presentation of the account address PIN code as a QR code containing the corresponding URI. </t>
+<section title="Phase 1:" anchor="n--phase-1-"><sourcecode>Alice&gt; account pin
+PIN=AAJP-KPYV-NSB4-GIYL-AM
+ (Expires=2021-08-06T16:37:40Z)
+</sourcecode>
+<t>The registration of this PIN value was shown earlier in section $$$ </t>
+<t>The URI containing the account address and PIN is: </t>
+<sourcecode>mcu://alice@example.com/AAJP-KPYV-NSB4-GIYL-AM</sourcecode>
+</section>
+<section title="Phase 2:" anchor="n--phase-2-"><t>The onboarding device scans the QR code to obtain the account address and PIN code. The PIN code is used to authenticate a connection request: </t>
+<sourcecode>Alice3&gt; device request alice@example.com /pin AAJP-KPYV-NSB4-GIYL-AM
+   Device UDF = MAOK-I4TT-3EUS-4LMY-Z6JO-VEN7-CX6F
+   Witness value = KB3G-NC35-X6IU-BEKJ-YIQR-J4GX-IKKN
+</sourcecode>
+<t>The device issues a connection request to the service corresponding to the account.  This specifies the device profile, the account to which the device is to be  connected and the client nonce value: </t>
+<sourcecode>{
+  "ConnectRequest":{
+    "EnvelopedRequestConnection":[{
+        "EnvelopeId":"MD22-62AQ-PVVT-NPUS-ATUC-MQH4-PWV2",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQkY0LTRQVEgtVV
+  RTQy1SWUhaLUVRTUstQlZINy1NVTNGIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+  zdENvbm5lY3Rpb24iLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIs
+  CiAgIkNyZWF0ZWQiOiAiMjAyMS0wOC0wNVQxNjozNzo0MFoifQ"},
+      "ewogICJSZXF1ZXN0Q29ubmVjdGlvbiI6IHsKICAgICJNZXNzYWdlSWQiOi
+  AiTkJGNC00UFRILVVUU0MtUllIWi1FUU1LLUJWSDctTVUzRiIsCiAgICAiQXV0aGV
+  udGljYXRlZERhdGEiOiBbewogICAgICAgICJFbnZlbG9wZUlkIjogIk1BT0stSTRU
+  VC0zRVVTLTRMTVktWjZKTy1WRU43LUNYNkYiLAogICAgICAgICJkaWciOiAiUzUxM
+  iIsCiAgICAgICAgIkNvbnRlbnRNZXRhRGF0YSI6ICJld29nSUNKVmJtbHhkV1ZKWk
+  NJNklDSk5RVTlMTFVrMFZGUXRNMFZWVXkwCiAgMFRFMVpMVm8yU2s4dFZrVk9OeTF
+  EV0RaR0lpd0tJQ0FpVFdWemMyRm5aVlI1Y0dVaU9pQWlVSEp2Wm1sc1oKICBVUmxk
+  bWxqWlNJc0NpQWdJbU4wZVNJNklDSmhjSEJzYVdOaGRHbHZiaTl0YlcwdmIySnFaV
+  04wSWl3S0lDQQogIGlRM0psWVhSbFpDSTZJQ0l5TURJeExUQTRMVEExVkRFMk9qTT
+  NPalF3V2lKOSJ9LAogICAgICAiZXdvZ0lDSlFjbTltYVd4bFJHVjJhV05sSWpvZ2V
+  3b2dJQ0FnSWxCeWIyWgogIHBiR1ZUYVdkdVlYUjFjbVVpT2lCN0NpQWdJQ0FnSUNK
+  VlpHWWlPaUFpVFVGUFN5MUpORlJVTFRORlZWTXROCiAgRXhOV1MxYU5rcFBMVlpGV
+  GpjdFExZzJSaUlzQ2lBZ0lDQWdJQ0pRZFdKc2FXTlFZWEpoYldWMFpYSnpJam8KIC
+  BnZXdvZ0lDQWdJQ0FnSUNKUWRXSnNhV05MWlhsRlEwUklJam9nZXdvZ0lDQWdJQ0F
+  nSUNBZ0ltTnlkaUk2SQogIENKRlpEUTBPQ0lzQ2lBZ0lDQWdJQ0FnSUNBaVVIVmli
+  R2xqSWpvZ0luUkVSVGxuVXkwMlJGazViVkJGV1dGCiAgU2NWSm1Uamg2Ylc4ek9FO
+  DNOMlpJUjJFdGFGSllkMFoxTkZobmJqVnJNa2RRY1VFS0lDQnFOMVpYUmtWbWMKIC
+  AyRnBYMkp0TWxKTmMydzNVRTh4VTBFaWZYMTlMQW9nSUNBZ0lrVnVZM0o1Y0hScGI
+  yNGlPaUI3Q2lBZ0lDQQogIGdJQ0pWWkdZaU9pQWlUVVEyVmkwMU5FWlRMVFpSUlVZ
+  dE1rTktSeTFGVlZoQkxVNURWazR0V0RWSU55SXNDCiAgaUFnSUNBZ0lDSlFkV0pzY
+  VdOUVlYSmhiV1YwWlhKeklqb2dld29nSUNBZ0lDQWdJQ0pRZFdKc2FXTkxaWGwKIC
+  BGUTBSSUlqb2dld29nSUNBZ0lDQWdJQ0FnSW1OeWRpSTZJQ0pZTkRRNElpd0tJQ0F
+  nSUNBZ0lDQWdJQ0pRZAogIFdKc2FXTWlPaUFpTW01TmNsOUdVVkV4WVcxVmJVMTNW
+  ekZhZFZRMFRtcGhXWEp3UkRjeVRHNUxUVXN0YVhKCiAgVGMzWkNWbGR4Y3pWclQzS
+  lVTd29nSUdSUWNqaDVZa1EzTVVveE5teFhOa0prTFdKbk4zaHRRU0o5Zlgwc0MKIC
+  BpQWdJQ0FpVTJsbmJtRjBkWEpsSWpvZ2V3b2dJQ0FnSUNBaVZXUm1Jam9nSWsxQlR
+  Va3RTVGRQVXkxTlExVgogIE5MVmMzU0VzdE5sRlRSUzFSV0U1TUxVVktSMU1pTEFv
+  Z0lDQWdJQ0FpVUhWaWJHbGpVR0Z5WVcxbGRHVnljCiAgeUk2SUhzS0lDQWdJQ0FnS
+  UNBaVVIVmliR2xqUzJWNVJVTkVTQ0k2SUhzS0lDQWdJQ0FnSUNBZ0lDSmpjblkKIC
+  BpT2lBaVJXUTBORGdpTEFvZ0lDQWdJQ0FnSUNBZ0lsQjFZbXhwWXlJNklDSm1lVE4
+  2YldoSmRGRktaRlJhVgogIG5KdWNqVkZObEF6VDJkNlJtVlZhMmhGWVRkT1FXTlRV
+  SEJIVWt4dmMzVTNYek5DVUVwNkNpQWdiMUpxT0VWCiAgRFQxOWtTa3B2T1VKbE1VO
+  WpUemRKVVc5QkluMTlmU3dLSUNBZ0lDSkJkWFJvWlc1MGFXTmhkR2x2YmlJNkkKIC
+  BIc0tJQ0FnSUNBZ0lsVmtaaUk2SUNKTlFrWk9MVUl5UTFndFMxSkpVUzB6VFVoTUx
+  UZFRUMUl0V0RWWFNpMQogIERTRkZISWl3S0lDQWdJQ0FnSWxCMVlteHBZMUJoY21G
+  dFpYUmxjbk1pT2lCN0NpQWdJQ0FnSUNBZ0lsQjFZCiAgbXhwWTB0bGVVVkRSRWdpT
+  2lCN0NpQWdJQ0FnSUNBZ0lDQWlZM0oySWpvZ0lsZzBORGdpTEFvZ0lDQWdJQ0EKIC
+  BnSUNBZ0lsQjFZbXhwWXlJNklDSTJabWRSUlhaRU9GTkdXalp6YjBWekxYSk5hMVp
+  YYkRGQ1kyMDJOMnMzVAogIFZZemNXeGxSelF5U1haYU4wTk9NMUZMYkRSdkNpQWda
+  RmhIYVZCbk9GVTBORFozYkdwUVFWSkVRbkJrTkZGCiAgQkluMTlmWDE5IiwKICAgI
+  CAgewogICAgICAgICJzaWduYXR1cmVzIjogW3sKICAgICAgICAgICAgImFsZyI6IC
+  JTNTEyIiwKICAgICAgICAgICAgImtpZCI6ICJNQU9LLUk0VFQtM0VVUy00TE1ZLVo
+  2Sk8tVkVONy1DWDZGIiwKICAgICAgICAgICAgInNpZ25hdHVyZSI6ICIxNEFIUXVV
+  RU53VlhYdWxJN0h4YTFjY2VXYVNTX3FCaGZ5LXR5ZE5GbjdySmtzVmZICiAgTURpe
+  Th2cnJ2ZFYwMEJHdWt0UHFncDg2QzJBV1NhYzlGbkdYd2hOWjNQVjJlZHpzQ3dDX2
+  UyMWRVb0dRN1gKICBQUEw4ODZ1dzV3a0RqejdOdDhXeEwxRG44dXdwQXBoX3hySU1
+  NTlNzQSJ9XSwKICAgICAgICAiUGF5bG9hZERpZ2VzdCI6ICJaWGNkRlg3aTRQWWY0
+  b0o2TzdfZEx3N1RXRWtyMHZDX3IzX1JjYURkY3ktV3oKICA0RFBicWhDazFWR3lVM
+  FlMc1I2QzZORWNIYTlFeGpCYTVPSW9aYWtnQSJ9XSwKICAgICJDbGllbnROb25jZS
+  I6ICJWR3h4TC1MS1VReXFuX1JwZGo4NlpnIiwKICAgICJQaW5JZCI6ICJBQ0NMLVd
+  KSjYtUUlMWS1JRFFULTY3UlQtTEhHTS1QQTJLIiwKICAgICJQaW5XaXRuZXNzIjog
+  Illod0FpLUl2WVlQMmRNak9kLXBYaW9ScWdJcTBrbndMd25VcU1IdnB2VHVlTE1jN
+  wogIEFUU1hNZEJseE9TWl91OHN6dHFwd3dFWkVaNVJjNFdRQktQM2NBIiwKICAgIC
+  JBY2NvdW50QWRkcmVzcyI6ICJhbGljZUBleGFtcGxlLmNvbSJ9fQ"
+      ]}}</sourcecode>
+<t>The service generates the service nonce value and uses it to create the  AcknowledgeConnection message. </t>
+<sourcecode>{
+  "AcknowledgeConnection":{
+    "MessageId":"KB3G-NC35-X6IU-BEKJ-YIQR-J4GX-IKKN",
+    "EnvelopedRequestConnection":[{
+        "EnvelopeId":"MD22-62AQ-PVVT-NPUS-ATUC-MQH4-PWV2",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQkY0LTRQVEgtVV
+  RTQy1SWUhaLUVRTUstQlZINy1NVTNGIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+  zdENvbm5lY3Rpb24iLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIs
+  CiAgIkNyZWF0ZWQiOiAiMjAyMS0wOC0wNVQxNjozNzo0MFoifQ"},
+      "ewogICJSZXF1ZXN0Q29ubmVjdGlvbiI6IHsKICAgICJNZXNzYWdlSWQiOi
+  AiTkJGNC00UFRILVVUU0MtUllIWi1FUU1LLUJWSDctTVUzRiIsCiAgICAiQXV0aGV
+  udGljYXRlZERhdGEiOiBbewogICAgICAgICJFbnZlbG9wZUlkIjogIk1BT0stSTRU
+  VC0zRVVTLTRMTVktWjZKTy1WRU43LUNYNkYiLAogICAgICAgICJkaWciOiAiUzUxM
+  iIsCiAgICAgICAgIkNvbnRlbnRNZXRhRGF0YSI6ICJld29nSUNKVmJtbHhkV1ZKWk
+  NJNklDSk5RVTlMTFVrMFZGUXRNMFZWVXkwCiAgMFRFMVpMVm8yU2s4dFZrVk9OeTF
+  EV0RaR0lpd0tJQ0FpVFdWemMyRm5aVlI1Y0dVaU9pQWlVSEp2Wm1sc1oKICBVUmxk
+  bWxqWlNJc0NpQWdJbU4wZVNJNklDSmhjSEJzYVdOaGRHbHZiaTl0YlcwdmIySnFaV
+  04wSWl3S0lDQQogIGlRM0psWVhSbFpDSTZJQ0l5TURJeExUQTRMVEExVkRFMk9qTT
+  NPalF3V2lKOSJ9LAogICAgICAiZXdvZ0lDSlFjbTltYVd4bFJHVjJhV05sSWpvZ2V
+  3b2dJQ0FnSWxCeWIyWgogIHBiR1ZUYVdkdVlYUjFjbVVpT2lCN0NpQWdJQ0FnSUNK
+  VlpHWWlPaUFpVFVGUFN5MUpORlJVTFRORlZWTXROCiAgRXhOV1MxYU5rcFBMVlpGV
+  GpjdFExZzJSaUlzQ2lBZ0lDQWdJQ0pRZFdKc2FXTlFZWEpoYldWMFpYSnpJam8KIC
+  BnZXdvZ0lDQWdJQ0FnSUNKUWRXSnNhV05MWlhsRlEwUklJam9nZXdvZ0lDQWdJQ0F
+  nSUNBZ0ltTnlkaUk2SQogIENKRlpEUTBPQ0lzQ2lBZ0lDQWdJQ0FnSUNBaVVIVmli
+  R2xqSWpvZ0luUkVSVGxuVXkwMlJGazViVkJGV1dGCiAgU2NWSm1Uamg2Ylc4ek9FO
+  DNOMlpJUjJFdGFGSllkMFoxTkZobmJqVnJNa2RRY1VFS0lDQnFOMVpYUmtWbWMKIC
+  AyRnBYMkp0TWxKTmMydzNVRTh4VTBFaWZYMTlMQW9nSUNBZ0lrVnVZM0o1Y0hScGI
+  yNGlPaUI3Q2lBZ0lDQQogIGdJQ0pWWkdZaU9pQWlUVVEyVmkwMU5FWlRMVFpSUlVZ
+  dE1rTktSeTFGVlZoQkxVNURWazR0V0RWSU55SXNDCiAgaUFnSUNBZ0lDSlFkV0pzY
+  VdOUVlYSmhiV1YwWlhKeklqb2dld29nSUNBZ0lDQWdJQ0pRZFdKc2FXTkxaWGwKIC
+  BGUTBSSUlqb2dld29nSUNBZ0lDQWdJQ0FnSW1OeWRpSTZJQ0pZTkRRNElpd0tJQ0F
+  nSUNBZ0lDQWdJQ0pRZAogIFdKc2FXTWlPaUFpTW01TmNsOUdVVkV4WVcxVmJVMTNW
+  ekZhZFZRMFRtcGhXWEp3UkRjeVRHNUxUVXN0YVhKCiAgVGMzWkNWbGR4Y3pWclQzS
+  lVTd29nSUdSUWNqaDVZa1EzTVVveE5teFhOa0prTFdKbk4zaHRRU0o5Zlgwc0MKIC
+  BpQWdJQ0FpVTJsbmJtRjBkWEpsSWpvZ2V3b2dJQ0FnSUNBaVZXUm1Jam9nSWsxQlR
+  Va3RTVGRQVXkxTlExVgogIE5MVmMzU0VzdE5sRlRSUzFSV0U1TUxVVktSMU1pTEFv
+  Z0lDQWdJQ0FpVUhWaWJHbGpVR0Z5WVcxbGRHVnljCiAgeUk2SUhzS0lDQWdJQ0FnS
+  UNBaVVIVmliR2xqUzJWNVJVTkVTQ0k2SUhzS0lDQWdJQ0FnSUNBZ0lDSmpjblkKIC
+  BpT2lBaVJXUTBORGdpTEFvZ0lDQWdJQ0FnSUNBZ0lsQjFZbXhwWXlJNklDSm1lVE4
+  2YldoSmRGRktaRlJhVgogIG5KdWNqVkZObEF6VDJkNlJtVlZhMmhGWVRkT1FXTlRV
+  SEJIVWt4dmMzVTNYek5DVUVwNkNpQWdiMUpxT0VWCiAgRFQxOWtTa3B2T1VKbE1VO
+  WpUemRKVVc5QkluMTlmU3dLSUNBZ0lDSkJkWFJvWlc1MGFXTmhkR2x2YmlJNkkKIC
+  BIc0tJQ0FnSUNBZ0lsVmtaaUk2SUNKTlFrWk9MVUl5UTFndFMxSkpVUzB6VFVoTUx
+  UZFRUMUl0V0RWWFNpMQogIERTRkZISWl3S0lDQWdJQ0FnSWxCMVlteHBZMUJoY21G
+  dFpYUmxjbk1pT2lCN0NpQWdJQ0FnSUNBZ0lsQjFZCiAgbXhwWTB0bGVVVkRSRWdpT
+  2lCN0NpQWdJQ0FnSUNBZ0lDQWlZM0oySWpvZ0lsZzBORGdpTEFvZ0lDQWdJQ0EKIC
+  BnSUNBZ0lsQjFZbXhwWXlJNklDSTJabWRSUlhaRU9GTkdXalp6YjBWekxYSk5hMVp
+  YYkRGQ1kyMDJOMnMzVAogIFZZemNXeGxSelF5U1haYU4wTk9NMUZMYkRSdkNpQWda
+  RmhIYVZCbk9GVTBORFozYkdwUVFWSkVRbkJrTkZGCiAgQkluMTlmWDE5IiwKICAgI
+  CAgewogICAgICAgICJzaWduYXR1cmVzIjogW3sKICAgICAgICAgICAgImFsZyI6IC
+  JTNTEyIiwKICAgICAgICAgICAgImtpZCI6ICJNQU9LLUk0VFQtM0VVUy00TE1ZLVo
+  2Sk8tVkVONy1DWDZGIiwKICAgICAgICAgICAgInNpZ25hdHVyZSI6ICIxNEFIUXVV
+  RU53VlhYdWxJN0h4YTFjY2VXYVNTX3FCaGZ5LXR5ZE5GbjdySmtzVmZICiAgTURpe
+  Th2cnJ2ZFYwMEJHdWt0UHFncDg2QzJBV1NhYzlGbkdYd2hOWjNQVjJlZHpzQ3dDX2
+  UyMWRVb0dRN1gKICBQUEw4ODZ1dzV3a0RqejdOdDhXeEwxRG44dXdwQXBoX3hySU1
+  NTlNzQSJ9XSwKICAgICAgICAiUGF5bG9hZERpZ2VzdCI6ICJaWGNkRlg3aTRQWWY0
+  b0o2TzdfZEx3N1RXRWtyMHZDX3IzX1JjYURkY3ktV3oKICA0RFBicWhDazFWR3lVM
+  FlMc1I2QzZORWNIYTlFeGpCYTVPSW9aYWtnQSJ9XSwKICAgICJDbGllbnROb25jZS
+  I6ICJWR3h4TC1MS1VReXFuX1JwZGo4NlpnIiwKICAgICJQaW5JZCI6ICJBQ0NMLVd
+  KSjYtUUlMWS1JRFFULTY3UlQtTEhHTS1QQTJLIiwKICAgICJQaW5XaXRuZXNzIjog
+  Illod0FpLUl2WVlQMmRNak9kLXBYaW9ScWdJcTBrbndMd25VcU1IdnB2VHVlTE1jN
+  wogIEFUU1hNZEJseE9TWl91OHN6dHFwd3dFWkVaNVJjNFdRQktQM2NBIiwKICAgIC
+  JBY2NvdW50QWRkcmVzcyI6ICJhbGljZUBleGFtcGxlLmNvbSJ9fQ"
+      ],
+    "ServerNonce":"1PwfBA9kRcN6fLra8ATh1Q",
+    "Witness":"KB3G-NC35-X6IU-BEKJ-YIQR-J4GX-IKKN"}}</sourcecode>
+<t>The AcknowledgeConnection message is appended to the Inbound spool of the account to which connection was requested so that the user can approve the request. The ConnectResponse message is returned to the device containing the AcknowledgeConnection  message and the profile of the account. </t>
+<sourcecode>{
+  "ConnectResponse":{
+    "Status":201,
+    "StatusDescription":"Operation completed successfully",
+    "EnvelopedAcknowledgeConnection":[{
+        "EnvelopeId":"KDKD-2X34-SAB7-R7JD-7P3D-44YE-UXHT",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJLQjNHLU5DMzUtWD
+  ZJVS1CRUtKLVlJUVItSjRHWC1JS0tOIiwKICAiTWVzc2FnZVR5cGUiOiAiQWNrbm9
+  3bGVkZ2VDb25uZWN0aW9uIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmpl
+  Y3QiLAogICJDcmVhdGVkIjogIjIwMjEtMDgtMDVUMTY6Mzc6NDBaIn0",
+        "SequenceInfo":{
+          "Index":6,
+          "TreePosition":11822},
+        "Received":"2021-08-05T16:37:40Z"},
+      "ewogICJBY2tub3dsZWRnZUNvbm5lY3Rpb24iOiB7CiAgICAiTWVzc2FnZU
+  lkIjogIktCM0ctTkMzNS1YNklVLUJFS0otWUlRUi1KNEdYLUlLS04iLAogICAgIkV
+  udmVsb3BlZFJlcXVlc3RDb25uZWN0aW9uIjogW3sKICAgICAgICAiRW52ZWxvcGVJ
+  ZCI6ICJNRDIyLTYyQVEtUFZWVC1OUFVTLUFUVUMtTVFINC1QV1YyIiwKICAgICAgI
+  CAiQ29udGVudE1ldGFEYXRhIjogImV3b2dJQ0pWYm1seGRXVkpaQ0k2SUNKT1FrWT
+  BMVFJRVkVndFZWUlRReTEKICBTV1VoYUxVVlJUVXN0UWxaSU55MU5WVE5HSWl3S0l
+  DQWlUV1Z6YzJGblpWUjVjR1VpT2lBaVVtVnhkV1Z6ZAogIEVOdmJtNWxZM1JwYjI0
+  aUxBb2dJQ0pqZEhraU9pQWlZWEJ3YkdsallYUnBiMjR2YlcxdEwyOWlhbVZqZENJC
+  iAgc0NpQWdJa055WldGMFpXUWlPaUFpTWpBeU1TMHdPQzB3TlZReE5qb3pOem8wTU
+  ZvaWZRIn0sCiAgICAgICJld29nSUNKU1pYRjFaWE4wUTI5dWJtVmpkR2x2YmlJNkl
+  Ic0tJQ0FnSUNKCiAgTlpYTnpZV2RsU1dRaU9pQWlUa0pHTkMwMFVGUklMVlZVVTBN
+  dFVsbElXaTFGVVUxTExVSldTRGN0VFZVelIKICBpSXNDaUFnSUNBaVFYVjBhR1Z1Z
+  EdsallYUmxaRVJoZEdFaU9pQmJld29nSUNBZ0lDQWdJQ0pGYm5abGJHOQogIHdaVW
+  xrSWpvZ0lrMUJUMHN0U1RSVVZDMHpSVlZUTFRSTVRWa3RXalpLVHkxV1JVNDNMVU5
+  ZTmtZaUxBb2dJCiAgQ0FnSUNBZ0lDSmthV2NpT2lBaVV6VXhNaUlzQ2lBZ0lDQWdJ
+  Q0FnSWtOdmJuUmxiblJOWlhSaFJHRjBZU0kKICA2SUNKbGQyOW5TVU5LVm1KdGJIa
+  GtWMVpLV2tOSk5rbERTazVSVlRsTVRGVnJNRlpHVVhSTk1GWldWWGt3QwogIGlBZ0
+  1GUkZNVnBNVm04eVUyczRkRlpyVms5T2VURkVWMFJhUjBscGQwdEpRMEZwVkZkV2V
+  tTXlSbTVhVmxJCiAgMVkwZFZhVTlwUVdsVlNFcDJXbTFzYzFvS0lDQlZVbXhrYld4
+  cVdsTkpjME5wUVdkSmJVNHdaVk5KTmtsRFMKICBtaGpTRUp6WVZkT2FHUkhiSFppY
+  VRsMFlsY3dkbUl5U25GYVYwNHdTV2wzUzBsRFFRb2dJR2xSTTBwc1dWaAogIFNiRn
+  BEU1RaSlEwbDVUVVJKZUV4VVFUUk1WRUV4VmtSRk1rOXFUVE5QYWxGM1YybEtPU0o
+  5TEFvZ0lDQWdJCiAgQ0FpWlhkdlowbERTbEZqYlRsdFlWZDRiRkpIVmpKaFYwNXNT
+  V3B2WjJWM2IyZEpRMEZuU1d4Q2VXSXlXZ28KICBnSUhCaVIxWlVZVmRrZFZsWVVqR
+  mpiVlZwVDJsQ04wTnBRV2RKUTBGblNVTktWbHBIV1dsUGFVRnBWRlZHVQogIEZONU
+  1VcE9SbEpWVEZST1JsWldUWFJPQ2lBZ1JYaE9WMU14WVU1cmNGQk1WbHBHVkdwamR
+  GRXhaekpTYVVsCiAgelEybEJaMGxEUVdkSlEwcFJaRmRLYzJGWFRsRlpXRXBvWWxk
+  V01GcFlTbnBKYW04S0lDQm5aWGR2WjBsRFEKICBXZEpRMEZuU1VOS1VXUlhTbk5oV
+  jA1TVdsaHNSbEV3VWtsSmFtOW5aWGR2WjBsRFFXZEpRMEZuU1VOQlowbAogIHRUbm
+  xrYVVrMlNRb2dJRU5LUmxwRVVUQlBRMGx6UTJsQlowbERRV2RKUTBGblNVTkJhVlZ
+  JVm1saVIyeHFTCiAgV3B2WjBsdVVrVlNWR3h1Vlhrd01sSkdhelZpVmtKR1YxZEdD
+  aUFnVTJOV1NtMVVhbWcyWWxjNGVrOUZPRE4KICBPTWxwSlVqSkZkR0ZHU2xsa01Gb
+  3hUa1pvYm1KcVZuSk5hMlJSWTFWRlMwbERRbkZPTVZwWVVtdFdiV01LSQogIENBeV
+  JuQllNa3AwVFd4S1RtTXlkek5WUlRoNFZUQkZhV1pZTVRsTVFXOW5TVU5CWjBsclZ
+  uVlpNMG8xWTBoCiAgU2NHSXlOR2xQYVVJM1EybEJaMGxEUVFvZ0lHZEpRMHBXV2tk
+  WmFVOXBRV2xVVlZFeVZta3dNVTVGV2xSTVYKICBGcFNVbFZaZEUxclRrdFNlVEZHV
+  mxab1FreFZOVVJXYXpSMFYwUldTVTU1U1hORENpQWdhVUZuU1VOQlowbAogIERTbE
+  ZrVjBwellWZE9VVmxZU21oaVYxWXdXbGhLZWtscWIyZGxkMjluU1VOQlowbERRV2R
+  KUTBwUlpGZEtjCiAgMkZYVGt4YVdHd0tJQ0JHVVRCU1NVbHFiMmRsZDI5blNVTkJa
+  MGxEUVdkSlEwRm5TVzFPZVdScFNUWkpRMHAKICBaVGtSUk5FbHBkMHRKUTBGblNVT
+  kJaMGxEUVdkSlEwcFJaQW9nSUZkS2MyRlhUV2xQYVVGcFRXMDFUbU5zTwogIFVkVl
+  ZrVjRXVmN4Vm1KVk1UTldla1poWkZaUk1GUnRjR2hYV0VwM1VrUmplVlJITlV4VVZ
+  YTjBZVmhLQ2lBCiAgZ1ZHTXpXa05XYkdSNFkzcFdjbFF6U2xWVGQyOW5TVWRTVVdO
+  cWFEVlphMUV6VFZWdmVFNXRlRmhPYTBwclQKICBGZEtiazR6YUhSUlUwbzVabGd3Y
+  zBNS0lDQnBRV2RKUTBGcFZUSnNibUp0UmpCa1dFcHNTV3B2WjJWM2IyZAogIEpRME
+  ZuU1VOQmFWWlhVbTFKYW05blNXc3hRbFJWYTNSVFZHUlFWWGt4VGxFeFZnb2dJRTV
+  NVm1NelUwVnpkCiAgRTVzUmxSU1V6RlNWMFUxVFV4VlZrdFNNVTFwVEVGdlowbERR
+  V2RKUTBGcFZVaFdhV0pIYkdwVlIwWjVXVmMKICB4YkdSSFZubGpDaUFnZVVrMlNVa
+  HpTMGxEUVdkSlEwRm5TVU5CYVZWSVZtbGlSMnhxVXpKV05WSlZUa1ZUUQogIDBrMl
+  NVaHpTMGxEUVdkSlEwRm5TVU5CWjBsRFNtcGpibGtLSUNCcFQybEJhVkpYVVRCT1J
+  HZHBURUZ2WjBsCiAgRFFXZEpRMEZuU1VOQlowbHNRakZaYlhod1dYbEpOa2xEU20x
+  bFZFNDJZbGRvU21SR1JrdGFSbEpoVmdvZ0kKICBHNUtkV05xVmtaT2JFRjZWREprT
+  mxKdFZsWmhNbWhHV1ZSa1QxRlhUbFJWU0VKSVZXdDRkbU16VlROWWVrNQogIERWVV
+  Z3TmtOcFFXZGlNVXB4VDBWV0NpQWdSRlF4T1d0VGEzQjJUMVZLYkUxVk9XcFVlbVJ
+  LVlZjNVFrbHVNCiAgVGxtVTNkTFNVTkJaMGxEU2tKa1dGSnZXbGMxTUdGWFRtaGtS
+  MngyWW1sSk5ra0tJQ0JJYzB0SlEwRm5TVU4KICBCWjBsc1ZtdGFhVWsyU1VOS1RsR
+  nJXazlNVlVsNVVURm5kRk14U2twVlV6QjZWRlZvVFV4VVpGUlVNVWwwVgogIDBSV1
+  dGTnBNUW9nSUVSVFJrWklTV2wzUzBsRFFXZEpRMEZuU1d4Q01WbHRlSEJaTVVKb1k
+  yMUdkRnBZVW14CiAgamJrMXBUMmxDTjBOcFFXZEpRMEZuU1VOQlowbHNRakZaQ2lB
+  Z2JYaHdXVEIwYkdWVlZrUlNSV2RwVDJsQ04KICAwTnBRV2RKUTBGblNVTkJaMGxEU
+  VdsWk0wb3lTV3B2WjBsc1p6Qk9SR2RwVEVGdlowbERRV2RKUTBFS0lDQgogIG5TVU
+  5CWjBsc1FqRlpiWGh3V1hsSk5rbERTVEphYldSU1VsaGFSVTlHVGtkWGFscDZZakJ
+  XZWt4WVNrNWhNCiAgVnBZWWtSR1Exa3lNREpPTW5NelZBb2dJRlpaZW1OWGVHeFNl
+  bEY1VTFoYVlVNHdUazlOTVVaTVlrUlNka04KICBwUVdkYVJtaElZVlpDYms5R1ZUQ
+  k9SRm96WWtkd1VWRldTa1ZSYmtKclRrWkdDaUFnUWtsdU1UbG1XREU1SQogIGl3S0
+  lDQWdJQ0FnZXdvZ0lDQWdJQ0FnSUNKemFXZHVZWFIxY21Weklqb2dXM3NLSUNBZ0l
+  DQWdJQ0FnSUNBCiAgZ0ltRnNaeUk2SUNKVE5URXlJaXdLSUNBZ0lDQWdJQ0FnSUNB
+  Z0ltdHBaQ0k2SUNKTlFVOUxMVWswVkZRdE0KICAwVlZVeTAwVEUxWkxWbzJTazh0V
+  mtWT055MURXRFpHSWl3S0lDQWdJQ0FnSUNBZ0lDQWdJbk5wWjI1aGRIVgogIHlaU0
+  k2SUNJeE5FRklVWFZWUlU1M1ZsaFlkV3hKTjBoNFlURmpZMlZYWVZOVFgzRkNhR1o
+  1TFhSNVpFNUdiCiAgamR5U210elZtWklDaUFnVFVScGVUaDJjbkoyWkZZd01FSkhk
+  V3QwVUhGbmNEZzJRekpCVjFOaFl6bEdia2QKICBZZDJoT1dqTlFWakpsWkhwelEzZ
+  ERYMlV5TVdSVmIwZFJOMWdLSUNCUVVFdzRPRFoxZHpWM2EwUnFlamRPZAogIERoWG
+  VFd3hSRzQ0ZFhkd1FYQm9YM2h5U1UxTlRsTnpRU0o5WFN3S0lDQWdJQ0FnSUNBaVV
+  HRjViRzloWkVSCiAgcFoyVnpkQ0k2SUNKYVdHTmtSbGczYVRSUVdXWTBiMG8yVHpk
+  ZlpFeDNOMVJYUld0eU1IWkRYM0l6WDFKalkKICBVUmtZM2t0VjNvS0lDQTBSRkJpY
+  1doRGF6RldSM2xWTUZsTWMxSTJRelpPUldOSVlUbEZlR3BDWVRWUFNXOQogIGFZV3
+  RuUVNKOVhTd0tJQ0FnSUNKRGJHbGxiblJPYjI1alpTSTZJQ0pXUjNoNFRDMU1TMVZ
+  SZVhGdVgxSndaCiAgR280Tmxwbklpd0tJQ0FnSUNKUWFXNUpaQ0k2SUNKQlEwTk1M
+  VmRLU2pZdFVVbE1XUzFKUkZGVUxUWTNVbFEKICB0VEVoSFRTMVFRVEpMSWl3S0lDQ
+  WdJQ0pRYVc1WGFYUnVaWE56SWpvZ0lsbG9kMEZwTFVsMldWbFFNbVJOYQogIGs5a0
+  xYQllhVzlTY1dkSmNUQnJibmRNZDI1VmNVMUlkbkIyVkhWbFRFMWpOd29nSUVGVVU
+  xaE5aRUpzZUU5CiAgVFdsOTFPSE42ZEhGd2QzZEZXa1ZhTlZKak5GZFJRa3RRTTJO
+  Qklpd0tJQ0FnSUNKQlkyTnZkVzUwUVdSa2MKICBtVnpjeUk2SUNKaGJHbGpaVUJsZ
+  UdGdGNHeGxMbU52YlNKOWZRIl0sCiAgICAiU2VydmVyTm9uY2UiOiAiMVB3ZkJBOW
+  tSY042ZkxyYThBVGgxUSIsCiAgICAiV2l0bmVzcyI6ICJLQjNHLU5DMzUtWDZJVS1
+  CRUtKLVlJUVItSjRHWC1JS0tOIn19",
+      {}
+      ],
+    "EnvelopedProfileAccount":[{
+        "EnvelopeId":"MC44-IZC3-IWZT-VCVZ-L2AG-HI4E-LOV2",
+        "dig":"S512",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQzQ0LUlaQzMtSV
+  daVC1WQ1ZaLUwyQUctSEk0RS1MT1YyIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+  sZVVzZXIiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIkNy
+  ZWF0ZWQiOiAiMjAyMS0wOC0wNVQxNjozNzozMVoifQ"},
+      "ewogICJQcm9maWxlVXNlciI6IHsKICAgICJQcm9maWxlU2lnbmF0dXJlIj
+  ogewogICAgICAiVWRmIjogIk1DNDQtSVpDMy1JV1pULVZDVlotTDJBRy1ISTRFLUx
+  PVjIiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+  S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+  lB1YmxpYyI6ICJXNXVnRVd5Q3o5ODZQdzd4UFA5LWFwMDlQRnBxZmM5eF9NQjBVcT
+  FiclVwRWcxeWxJYWl0CiAgRTVZYUpJQWVUYl9DYzV5NFlyNUQ2a2dBIn19fSwKICA
+  gICJBY2NvdW50QWRkcmVzcyI6ICJhbGljZUBleGFtcGxlLmNvbSIsCiAgICAiU2Vy
+  dmljZVVkZiI6ICJNQkJZLUU0VkEtQ01XRi01MlQ3LUVTTEEtUEdOVC1DTk5YIiwKI
+  CAgICJBY2NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQ1FYLVBGN0
+  EtTFkzRy0zWlBJLUFJWU8tTFI1RC1ZRzZXIiwKICAgICAgIlB1YmxpY1BhcmFtZXR
+  lcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2
+  IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICIwQVJFMFZhcHNNcVlmX1Atd
+  EZuRTBGWjJacTJ3bjRlMjF2aUNINFRyaHlnN1EwTjhGWG1iCiAgcFl2XzcyX0wyVk
+  t1bGlpaU9oZGRUMU9BIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIjo
+  gewogICAgICAiVWRmIjogIk1DTEotTENGWC1FTkUyLTVOVEYtR0JOVi1NVzNQLVZI
+  U1oiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS
+  2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIl
+  B1YmxpYyI6ICJHWG1nOHprMHB2VjliODgxSk52Um02OWRPVHVMN295WU53emlRUWx
+  0V0Y0YVhaTUNUamY4CiAgRU0zZ3RDVTd3SEYwenVGc2QxV2dYOEdBIn19fSwKICAg
+  ICJBY2NvdW50QXV0aGVudGljYXRpb24iOiB7CiAgICAgICJVZGYiOiAiTURBNS1QW
+  TZBLUJHMkwtN1lONi1FQUtQLU8zUUItQ0c1VCIsCiAgICAgICJQdWJsaWNQYXJhbW
+  V0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImN
+  ydiI6ICJYNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAiWGNITjdBYk1UVzFUTVFP
+  ZDBtWHlBSEc2Mk82ajdZSGdJR2hwMU9hajV4VE9LMnVQekd4TQogIGVDZUZPelgwZ
+  i1ZSlhpakw2aGxfYmFXQSJ9fX0sCiAgICAiQWNjb3VudFNpZ25hdHVyZSI6IHsKIC
+  AgICAgIlVkZiI6ICJNQ0dCLTRLQ0ktQ1AzRy1GSlNELVc3VzItVVlLTy1HTkxVIiw
+  KICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVD
+  REgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQdWJsa
+  WMiOiAiY0Exd2NLdG4xZGFqNjA2VUQwUEo4eExxRk4wa09keHlqc0YyUUtyUFp4ZF
+  VZZ1NQUlZSaQogIExzTEpPRWw3Y0lzdHRwYUNGd3VQaURPQSJ9fX19fQ",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MC44-IZC3-IWZT-VCVZ-L2AG-HI4E-LOV2",
+            "signature":"p1UxtlxOGp8wd7oESFQkmqR6uV9s-cW4WtonkwN1
+  BbH9F1KN6lllLPhnNBhlmstQ06cm7BEYtR6AwG2f1yOM1IjdPFzLmm53MBA-g4GLe
+  bflsg87h_kvT9JVSnHq7MDY6ewMo97Boay7r26qf-Ci4xIA"}
+          ],
+        "PayloadDigest":"gNprAKlPBfHdWXEdD7djEQ8IoJzHAJS-zBlZW6Bj
+  8xjHqsbEhqbSO4AkIEizON5HsGbMSu_BQl_NPSrKZWS9pw"}
+      ]}}</sourcecode>
+<t>The device generates the witness value and presents it to the user as shown above. </t>
+</section>
+<section title="Phase 3:" anchor="n--phase-3-"><t>The user synchronizes their pending messages: </t>
+<sourcecode>Alice&gt; message pending
+MessageID: KB3G-NC35-X6IU-BEKJ-YIQR-J4GX-IKKN
+        Connection Request::
+        MessageID: KB3G-NC35-X6IU-BEKJ-YIQR-J4GX-IKKN
+        To:  From:
+        Device:  MAOK-I4TT-3EUS-4LMY-Z6JO-VEN7-CX6F
+        Witness: KB3G-NC35-X6IU-BEKJ-YIQR-J4GX-IKKN
+MessageID: NC2L-ZQGP-ER6P-F6GB-LMKJ-DOFI-PO3V
+        Group invitation::
+        MessageID: NC2L-ZQGP-ER6P-F6GB-LMKJ-DOFI-PO3V
+        To: alice@example.com From: alice@example.com
+MessageID: NBLG-QNFG-5NRO-K2PT-JIBB-4AVX-X2L6
+        Confirmation Request::
+        MessageID: NBLG-QNFG-5NRO-K2PT-JIBB-4AVX-X2L6
+        To: alice@example.com From: console@example.com
+        Text: start
+MessageID: NDIB-OGS2-XXZG-D2M2-5YJI-QQXN-2IVO
+        Contact Request::
+        MessageID: NDIB-OGS2-XXZG-D2M2-5YJI-QQXN-2IVO
+        To: alice@example.com From: bob@example.com
+        PIN: AAKO-AYTU-YH3M-DWOO-SLKU-N7ZD-SKUA
+Alice&gt; account sync /auto
+ERROR - An attempt was made to create an object with an existing obje
+ct identifier
+</sourcecode>
+<t>The administration device determines that the device connection request is authenticated by a PIN code. The PIN code is retrieved and the message authenticated. This is shown in the PIN registration interation example in section $$$ above. </t>
+<t>The Cataloged device record is created from the public key values corresponding to the combination of the public keys in the device profile and those defined by the activation: </t>
+<t>The ActivationDevice and CatalogedDevice records are ??? </t>
+</section>
+<section title="Phase 4" anchor="n--phase-4-"><t>The device periodically polls for completion of the connection request using the Complete transaction. </t>
+<t>To provide a final check on the process, the command line tool presents the UDF of  the account profile to which the device has connected if successful: </t>
+<sourcecode>Missing example 40</sourcecode>
+<t>The completion request specified the device requesting completion: </t>
+<t>The response contains the information the device requires to complete the connection to the mesh: </t>
+</section>
+</section>
+<section title="Witness Authenticated" anchor="n-witness-authenticated"><t>The witness authenticated interaction is essentially the same as the Dynamic QR Code (PIN) Authenticated interaction except that mutual authentication is achieved by comparing the witness value computed by the device in the second phase to that computed by the administration device in the third phase.</t>
+<section title="Phase 1:" anchor="n--phase-1--0"><t>There are no first phase actions. </t>
+</section>
+<section title="Phase 2:" anchor="n--phase-2--0"><t>Alice enters the connection request on the device to be connected. This specifies the  address of the account to which she wishes to connect: </t>
+<sourcecode>Alice2&gt; device request alice@example.com
+   Device UDF = MCV4-LGJA-J6TI-ZJ4D-SXJW-BOK2-HCZL
+   Witness value = BVVL-2ATV-2U2Q-V3AL-HU54-C55J-XZKU
+</sourcecode>
+</section>
+<section title="Phase 3:" anchor="n--phase-3--0"><t>The user reviews their pending messages: </t>
+<sourcecode>Alice&gt; device pending
+MessageID: BVVL-2ATV-2U2Q-V3AL-HU54-C55J-XZKU
+        Connection Request::
+        MessageID: BVVL-2ATV-2U2Q-V3AL-HU54-C55J-XZKU
+        To:  From:
+        Device:  MCV4-LGJA-J6TI-ZJ4D-SXJW-BOK2-HCZL
+        Witness: BVVL-2ATV-2U2Q-V3AL-HU54-C55J-XZKU
+</sourcecode>
+<t>The administration device receives the AcknowledgeConnection message from the service  and verifies that the signature is valid and the witness value correctly computed. </t>
+<t>The user verifies that the witness value presented in the AcknowledgeConnection message matches the one presented on the device. Since they match, the request is accepted: </t>
+<sourcecode>Alice&gt; device accept BVVL-2ATV-2U2Q-V3AL-HU54-C55J-XZKU /message /web
+</sourcecode>
+</section>
+<section title="Phase 4" anchor="n--phase-4--0"><t>The device completes the connection as before: </t>
+<sourcecode>Alice2&gt; device complete
+   Device UDF = MCV4-LGJA-J6TI-ZJ4D-SXJW-BOK2-HCZL
+   Account = alice@example.com
+   Account UDF = MC44-IZC3-IWZT-VCVZ-L2AG-HI4E-LOV2
+</sourcecode>
+</section>
+</section>
+<section title="Static QR Code Authenticated" anchor="n-static-qr-code-authenticated"><t>The Static QR Code Authenticated mode is used to connect devices that have been preconfigured for use with the Mesh with a device configuration identified by a URI typically presented as machine readable QR code on the device itself.</t>
+<t>The interaction has four phases:</t>
+<dl>
+<dt>Phase 1: Preconfiguration</dt>
+<dd>
+<t>The device to be onboarded is preconfigured with a ProfileDevice and private key information and a DeviceDescription posted to a publication service. This process is typically performed during manufacture. An EARL providing the ability to locate and decrypt the description is printed on the device itself as a QR code.</t>
+</dd>
+<dt>Phase 2: Device description acquisition</dt>
+<dd>
+<t>The administration device acquiring the onboarding device scans the QR code on the device and uses this information to obtain the device description by means of the PollClaim interaction described above.</t>
+</dd>
+<dt>Phase 3: Administration Device Acceptance</dt>
+<dd>
+<t>This phase is performed in the same manner as the Dynamic QR Code (PIN) Authenticated interaction except that the administration device <bcp14>MAY</bcp14> advise the device that a connection request is being made by additional means described in the device description (e.g. WiFi, Bluetooth).</t>
+</dd>
+<dt>Phase 4: Onboarding Device Completion</dt>
+<dd>
+<t>This phase is performed in the same manner as the Dynamic QR Code (PIN) Authenticated interaction except that the administration device requires notice that of the pending connection request.</t>
+</dd>
+</dl>
+<t>The use of the PollClaim interaction to discover a pending claim for a document was shown in section $$$ above. The claim is authenticated using the key specified in the EARL.</t>
+<section title="Phase 1" anchor="n--phase-1--1"><t>The device is prepopulated with a Device description, this is shown in section $$$ of Schema. </t>
+</section>
+<section title="Phase 2" anchor="n--phase-2--1"><t>The administration device scans the QR code and obtains the Device Description using the Claim transaction as shown in section $$$$. </t>
+</section>
+<section title="Phase 3" anchor="n--phase-3--1"><t>Tha administration device creates the ActivationDevice and CatalogedDevice records and populates the service as before. </t>
+</section>
+<section title="Phase 4" anchor="n--phase-4--1"><t>The device polls the publication service until a claim message is returned. This  interaction is shown in section $$$$ above. </t>
+</section>
+</section>
+</section>
+<section title="Protocol Schema" anchor="n-protocol-schema"><dl>
+<dt>HTTP Well Known Service Prefix: /.well-known/mmm </dt>
+<dd>
+</dd>
+</dl>
+<t>Every Mesh Portal Service transaction consists of exactly one request followed by exactly one response. Mesh Service transactions MAY cause modification of the data stored in the Mesh Service or the Mesh itself but do not cause changes to the connection state. The protocol itself is thus idempotent. There is no set sequence in which operations are required to be performed. It is not necessary to perform a Hello transaction prior to any other transaction. </t>
+<section title="Request Messages" anchor="n-request-messages-"><t>A Mesh Portal Service request consists of a payload object that inherits from the MeshRequest class. When using the  HTTP binding, the request MUST specify the portal DNS address in the HTTP Host field.  </t>
+<section title="Message: MeshRequest" anchor="n-message-meshrequest-"><t>Base class for all request messages. </t>
+<t>[No fields] </t>
+</section>
+<section title="Message: MeshRequestUser" anchor="n-message-meshrequestuser-"><t>Base class for all request messages made by a user. </t>
+<dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>Account: String (Optional) </dt>
+<dd>
+<t>The fully qualified account name (including DNS address) to which the request is directed. </t>
+</dd>
+<dt>EnvelopedProfileDevice: Enveloped (Optional) </dt>
+<dd>
+<t>Device profile of the device making the request.  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Response Messages" anchor="n-response-messages-"><t>A Mesh Portal Service response consists of a payload object that inherits from the MeshResponse class. When using the HTTP binding, the response SHOULD report the Status response code in the HTTP response  message. However the response code returned in the payload object MUST always be considered authoritative. </t>
+<section title="Message: MeshResponse" anchor="n-message-meshresponse-"><t>Base class for all response messages. Contains only the status code and status description fields. </t>
+<t>[No fields] </t>
+</section>
+</section>
+<section title="Imported Objects" anchor="n-imported-objects-"><t>The Mesh Service protocol makes use of JSON objects defined in the JOSE Signatgure and Encryption specifications and in the DARE Data At Rest Encryption extensions to JOSE. </t>
+</section>
+<section title="Common Structures" anchor="n-common-structures-"><t>The following common structures are used in the protocol messages: </t>
+<section title="Structure: KeyValue" anchor="n-structure-keyvalue-"><t>Describes a Key/Value structure used to make queries for records matching one or more selection criteria. </t>
+<dl>
+<dt>Key: String (Optional) </dt>
+<dd>
+<t>The data retrieval key. </t>
+</dd>
+<dt>Value: String (Optional) </dt>
+<dd>
+<t>The data value to match.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: ConstraintsSelect" anchor="n-structure-constraintsselect-"><t>Specifies constraints to be applied to a search result. These  allow a client to limit the number of records returned, the quantity of data returned, the earliest and latest data returned, etc. </t>
+<dl>
+<dt>Container: String (Optional) </dt>
+<dd>
+<t>The container to be searched. </t>
+</dd>
+<dt>IndexMin: Integer (Optional) </dt>
+<dd>
+<t>Only return objects with an index value that is equal to or higher than the value specified. </t>
+</dd>
+<dt>IndexMax: Integer (Optional) </dt>
+<dd>
+<t>Only return objects with an index value that is equal to or lower than the value specified. </t>
+</dd>
+<dt>NotBefore: DateTime (Optional) </dt>
+<dd>
+<t>Only data published on or after the specified time instant  is requested. </t>
+</dd>
+<dt>Before: DateTime (Optional) </dt>
+<dd>
+<t>Only data published before the specified time instant is requested. This excludes data published at the specified time instant. </t>
+</dd>
+<dt>PageKey: String (Optional) </dt>
+<dd>
+<t>Specifies a page key returned in a previous search operation in which the number of responses exceeded the specified bounds. </t>
+<t>When a page key is specified, all the other search parameters except for MaxEntries and MaxBytes are ignored and the service returns the next set of data responding to the earlier query.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: ConstraintsData" anchor="n-structure-constraintsdata-"><t>Specifies constraints on the data to be sent. </t>
+<dl>
+<dt>MaxEntries: Integer (Optional) </dt>
+<dd>
+<t>Maximum number of entries to send. </t>
+</dd>
+<dt>BytesOffset: Integer (Optional) </dt>
+<dd>
+<t>Specifies an offset to be applied to the payload data before it is sent.  This allows large payloads to be transferred incrementally. </t>
+</dd>
+<dt>BytesMax: Integer (Optional) </dt>
+<dd>
+<t>Maximum number of payload bytes to send. </t>
+</dd>
+<dt>Header: Boolean (Optional) </dt>
+<dd>
+<t>Return the entry header </t>
+</dd>
+<dt>Payload: Boolean (Optional) </dt>
+<dd>
+<t>Return the entry payload </t>
+</dd>
+<dt>Trailer: Boolean (Optional) </dt>
+<dd>
+<t>Return the entry trailer  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: PolicyAccount" anchor="n-structure-policyaccount-"><t>Describes the account creation policy including constraints on  account names, whether there is an open account creation policy, etc. </t>
+<dl>
+<dt>Minimum: Integer (Optional) </dt>
+<dd>
+<t>Specifies the minimum length of an account name. </t>
+</dd>
+<dt>Maximum: Integer (Optional) </dt>
+<dd>
+<t>Specifies the maximum length of an account name. </t>
+</dd>
+<dt>InvalidCharacters: String (Optional) </dt>
+<dd>
+<t>A list of characters that the service  does not accept in account names. The list of characters  MAY not be exhaustive but SHOULD include any illegal characters in the proposed account name.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: ContainerStatus" anchor="n-structure-containerstatus-"><dl>
+<dt>Container: String (Optional) </dt>
+<dd>
+</dd>
+<dt>Index: Integer (Optional) </dt>
+<dd>
+</dd>
+<dt>Digest: Binary (Optional)  </dt>
+<dd>
+</dd>
+</dl>
+</section>
+<section title="Structure: ContainerUpdate" anchor="n-structure-containerupdate-"><dl>
+<dt>Inherits: ContainerStatus  </dt>
+<dd>
+</dd>
+<dt>Envelopes: DareEnvelope [0..Many] </dt>
+<dd>
+<t>The entries to be uploaded.   </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Hello" anchor="n-transaction-hello-"><dl>
+<dt>Request: HelloRequest </dt>
+<dd>
+</dd>
+<dt>Response: MeshHelloResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Report service and version information.  </t>
+<t>The Hello transaction provides a means of determining which protocol versions, message encodings and transport protocols are supported by the service. </t>
+<t>The PostConstraints field MAY be used to advise senders of a maximum size of payload that MAY be sent in an initial Post request. </t>
+<section title="Message: MeshHelloResponse" anchor="n-message-meshhelloresponse-"><dl>
+<dt>ConstraintsUpdate: ConstraintsData (Optional) </dt>
+<dd>
+<t>Specifies the default data constraints for updates. </t>
+</dd>
+<dt>ConstraintsPost: ConstraintsData (Optional) </dt>
+<dd>
+<t>Specifies the default data constraints for message senders. </t>
+</dd>
+<dt>PolicyAccount: PolicyAccount (Optional) </dt>
+<dd>
+<t>Specifies the account creation policy </t>
+</dd>
+<dt>EnvelopedProfileService: Enveloped (Optional) </dt>
+<dd>
+<t>The enveloped master profile of the service. </t>
+</dd>
+<dt>EnvelopedProfileHost: Enveloped (Optional) </dt>
+<dd>
+<t>The enveloped profile of the host.  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: BindAccount" anchor="n-transaction-bindaccount-"><dl>
+<dt>Request: BindRequest </dt>
+<dd>
+</dd>
+<dt>Response: BindResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request creation of a new service account or group. </t>
+<t>Attempt  </t>
+<section title="Message: BindRequest" anchor="n-message-bindrequest-"><t>Request binding of an account to a service address. </t>
+<dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>AccountAddress: String (Optional) </dt>
+<dd>
+<t>The service account to bind to. </t>
+</dd>
+<dt>EnvelopedProfileAccount: Enveloped (Optional) </dt>
+<dd>
+<t>The signed assertion describing the account.  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: BindResponse" anchor="n-message-bindresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Reports the success or failure of a Create transaction. </t>
+<dl>
+<dt>Reason: String (Optional) </dt>
+<dd>
+<t>Text explaining the status of the creation request. </t>
+</dd>
+<dt>URL: String (Optional) </dt>
+<dd>
+<t>A URL to which the user is directed to complete the account creation  request.  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: UnbindAccount" anchor="n-transaction-unbindaccount-"><dl>
+<dt>Request: UnbindRequest </dt>
+<dd>
+</dd>
+<dt>Response: UnbindResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request deletion of a service account. </t>
+<section title="Message: UnbindRequest" anchor="n-message-unbindrequest-"><t>Request creation of a new portal account. The request specifies the requested account identifier and the Mesh profile to be associated  with the account. </t>
+<dl>
+<dt>Inherits: MeshRequestUser  </dt>
+<dd>
+</dd>
+</dl>
+<t>[No fields] </t>
+</section>
+<section title="Message: UnbindResponse" anchor="n-message-unbindresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Reports the success or failure of a Delete transaction. </t>
+<t>[No fields] </t>
+</section>
+</section>
+<section title="Transaction: Connect" anchor="n-transaction-connect-"><dl>
+<dt>Request: ConnectRequest </dt>
+<dd>
+</dd>
+<dt>Response: ConnectResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request information necessary to begin making a connection request. </t>
+<section title="Message: ConnectRequest" anchor="n-message-connectrequest-"><dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>EnvelopedRequestConnection: Enveloped (Optional) </dt>
+<dd>
+<t>The connection request generated by the client  </t>
+</dd>
+<dt>Rights: String [0..Many] </dt>
+<dd>
+<t>List of named access rights.  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: ConnectResponse" anchor="n-message-connectresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+<dt>EnvelopedAcknowledgeConnection: Enveloped (Optional) </dt>
+<dd>
+<t>The connection request generated by the client </t>
+</dd>
+<dt>EnvelopedProfileAccount: Enveloped (Optional) </dt>
+<dd>
+<t>The user profile that provides the root of trust for this Mesh  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Complete" anchor="n-transaction-complete-"><dl>
+<dt>Request: CompleteRequest </dt>
+<dd>
+</dd>
+<dt>Response: CompleteResponse  </dt>
+<dd>
+</dd>
+</dl>
+<section title="Message: CompleteRequest" anchor="n-message-completerequest-"><dl>
+<dt>Inherits: StatusRequest  </dt>
+<dd>
+</dd>
+<dt>AccountAddress: String (Optional) </dt>
+<dd>
+</dd>
+<dt>ResponseID: String (Optional)  </dt>
+<dd>
+</dd>
+</dl>
+</section>
+<section title="Message: CompleteResponse" anchor="n-message-completeresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+<dt>EnvelopedRespondConnection: Enveloped (Optional) </dt>
+<dd>
+<t>The signed assertion describing the result of the connect request  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Status" anchor="n-transaction-status-"><dl>
+<dt>Request: StatusRequest </dt>
+<dd>
+</dd>
+<dt>Response: StatusResponse  </dt>
+<dd>
+</dd>
+</dl>
+<section title="Message: StatusRequest" anchor="n-message-statusrequest-"><dl>
+<dt>Inherits: MeshRequestUser  </dt>
+<dd>
+</dd>
+<dt>DeviceUDF: String (Optional) </dt>
+<dd>
+</dd>
+<dt>ProfileMasterDigest: Binary (Optional) </dt>
+<dd>
+</dd>
+<dt>Catalogs: String [0..Many] </dt>
+<dd>
+</dd>
+<dt>Spools: String [0..Many]  </dt>
+<dd>
+</dd>
+</dl>
+</section>
+<section title="Message: StatusResponse" anchor="n-message-statusresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+<dt>EnvelopedProfileAccount: Enveloped (Optional) </dt>
+<dd>
+<t>The account profile providing the root of trust for this account. </t>
+</dd>
+<dt>EnvelopedCatalogedDevice: Enveloped (Optional) </dt>
+<dd>
+<t>The catalog device entry </t>
+</dd>
+<dt>ContainerStatus: ContainerStatus [0..Many]  </dt>
+<dd>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Download" anchor="n-transaction-download-"><dl>
+<dt>Request: DownloadRequest </dt>
+<dd>
+</dd>
+<dt>Response: DownloadResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request objects from the specified container with the specified search criteria. </t>
+<section title="Message: DownloadRequest" anchor="n-message-downloadrequest-"><dl>
+<dt>Inherits: MeshRequestUser  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request objects from the specified container(s). </t>
+<t>A client MAY request only objects matching specified search criteria be returned and MAY request that only specific fields or parts of the  payload be returned. </t>
+<dl>
+<dt>Select: ConstraintsSelect [0..Many] </dt>
+<dd>
+<t>Specifies constraints to be applied to a search result. These  allow a client to limit the number of records returned, the quantity of data returned, the earliest and latest data returned, etc. </t>
+</dd>
+<dt>ConstraintsPost: ConstraintsData (Optional) </dt>
+<dd>
+<t>Specifies the data constraints to be applied to the responses.  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: DownloadResponse" anchor="n-message-downloadresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Return the set of objects requested. </t>
+<t>Services SHOULD NOT return a response that is disproportionately large relative to the speed of the network connection without a clear indication from the client that it is relevant. A service MAY limit the number of  objects returned. A service MAY limit the scope of each response.  </t>
+<dl>
+<dt>Updates: ContainerUpdate [0..Many] </dt>
+<dd>
+<t>The updated data  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Transact" anchor="n-transaction-transact-"><dl>
+<dt>Request: TransactRequest </dt>
+<dd>
+</dd>
+<dt>Response: TransactResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Attempt an atomic transaction on the containers and spools associated with an account. </t>
+<section title="Message: TransactRequest" anchor="n-message-transactrequest-"><dl>
+<dt>Inherits: MeshRequestUser  </dt>
+<dd>
+</dd>
+</dl>
+<t>Upload entries to a container. This request is only valid if it is issued by the owner of the account </t>
+<dl>
+<dt>Updates: ContainerUpdate [0..Many] </dt>
+<dd>
+<t>The data to be updated </t>
+</dd>
+<dt>Accounts: String [0..Many] </dt>
+<dd>
+<t>The account(s) to which the request is directed. </t>
+</dd>
+<dt>Outbound: Enveloped [0..Many] </dt>
+<dd>
+<t>The messages to be sent to other accounts  </t>
+</dd>
+<dt>Inbound: Enveloped [0..Many] </dt>
+<dd>
+<t>Messages to be appended to the user's inbound spool. this is typically used to post notifications to the user to mark messages as having been read or responded to. </t>
+</dd>
+<dt>Local: Enveloped [0..Many] </dt>
+<dd>
+<t>Messages to be appended to the user's local spool. This is used to allow connecting devices to collect activation messages before they have connected to the mesh.  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: TransactResponse" anchor="n-message-transactresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Response to an upload request.  </t>
+<dl>
+<dt>Entries: EntryResponse [0..Many] </dt>
+<dd>
+<t>The responses to the entries. </t>
+</dd>
+<dt>ConstraintsData: ConstraintsData (Optional) </dt>
+<dd>
+<t>If the upload request contains redacted entries, specifies constraints  that apply to the redacted entries as a group. Thus the total payloads of all the messages must not exceed the specified value.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: EntryResponse" anchor="n-structure-entryresponse-"><dl>
+<dt>IndexRequest: Integer (Optional) </dt>
+<dd>
+<t>The index value of the entry in the request. </t>
+</dd>
+<dt>IndexContainer: Integer (Optional) </dt>
+<dd>
+<t>The index value assigned to the entry in the container. </t>
+</dd>
+<dt>Result: String (Optional) </dt>
+<dd>
+<t>Specifies the result of attempting to add the entry to a catalog or spool. Valid values for a message are 'Accept', 'Reject'. Valid  values for an entry are 'Accept', 'Reject' and 'Conflict'. </t>
+</dd>
+<dt>ConstraintsData: ConstraintsData (Optional) </dt>
+<dd>
+<t>If the entry was redacted, specifies constraints  that apply to the redacted entries as a group. Thus the total payloads of all the messages must not exceed the specified value.	  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Post" anchor="n-transaction-post-"><dl>
+<dt>Request: PostRequest </dt>
+<dd>
+</dd>
+<dt>Response: PostResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request to post to a spool from an external party. The request and response messages are extensions of the corresponding messages for the Upload transaction. It is expected that additional fields will be added as the need arises. </t>
+<section title="Message: PostRequest" anchor="n-message-postrequest-"><dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>Accounts: String [0..Many] </dt>
+<dd>
+<t>The account(s) to which the request is directed. </t>
+</dd>
+<dt>Messages: Enveloped [0..Many] </dt>
+<dd>
+<t>The messages to be sent to the addresses specified in Accounts.   </t>
+</dd>
+</dl>
+</section>
+<section title="Message: PostResponse" anchor="n-message-postresponse-"><dl>
+<dt>Inherits: TransactResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>[No fields] </t>
+</section>
+</section>
+<section title="Transaction: Claim" anchor="n-transaction-claim-"><dl>
+<dt>Request: ClaimRequest </dt>
+<dd>
+</dd>
+<dt>Response: ClaimResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Claim a publication </t>
+<section title="Message: ClaimRequest" anchor="n-message-claimrequest-"><dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>EnvelopedMessageClaim: Enveloped (Optional) </dt>
+<dd>
+<t>The claim message  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: ClaimResponse" anchor="n-message-claimresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+<dt>CatalogedPublication: CatalogedPublication (Optional) </dt>
+<dd>
+<t>The encrypted device profile  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: PollClaim" anchor="n-transaction-pollclaim-"><dl>
+<dt>Request: PollClaimRequest </dt>
+<dd>
+</dd>
+<dt>Response: PollClaimResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Check party making claim </t>
+<section title="Message: PollClaimRequest" anchor="n-message-pollclaimrequest-"><dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>PublicationId: String (Optional) </dt>
+<dd>
+<t>The envelope identifier formed from the PublicationId. </t>
+</dd>
+<dt>TargetAccountAddress: String (Optional) </dt>
+<dd>
+<t>Account to which the claim is directed  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: PollClaimResponse" anchor="n-message-pollclaimresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+<dt>EnvelopedMessage: Enveloped (Optional) </dt>
+<dd>
+<t>The claim message  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: CryptographicOperation" anchor="n-structure-cryptographicoperation-"><dl>
+<dt>KeyId: String (Optional) </dt>
+<dd>
+<t>The key identifier	 </t>
+</dd>
+<dt>KeyCoefficient: Binary (Optional) </dt>
+<dd>
+<t>Lagrange coefficient multiplier to be applied to the private key  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: CryptographicOperationSign" anchor="n-structure-cryptographicoperationsign-"><dl>
+<dt>Inherits: CryptographicOperation  </dt>
+<dd>
+</dd>
+<dt>Data: Binary (Optional) </dt>
+<dd>
+<t>The data to sign </t>
+</dd>
+<dt>PartialR: Binary (Optional) </dt>
+<dd>
+<t>Contribution to the R offset.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: CryptographicOperationKeyAgreement" anchor="n-structure-cryptographicoperationkeyagreement-"><dl>
+<dt>Inherits: CryptographicOperation  </dt>
+<dd>
+</dd>
+</dl>
+<t>[No fields] </t>
+</section>
+<section title="Structure: CryptographicOperationGenerate" anchor="n-structure-cryptographicoperationgenerate-"><dl>
+<dt>Inherits: CryptographicOperation  </dt>
+<dd>
+</dd>
+</dl>
+<t>[No fields] </t>
+</section>
+<section title="Structure: CryptographicOperationShare" anchor="n-structure-cryptographicoperationshare-"><dl>
+<dt>Inherits: CryptographicOperation  </dt>
+<dd>
+</dd>
+<dt>Threshold: Integer (Optional) </dt>
+<dd>
+</dd>
+<dt>Shares: Integer (Optional)  </dt>
+<dd>
+</dd>
+</dl>
+</section>
+<section title="Structure: CryptographicResult" anchor="n-structure-cryptographicresult-"><dl>
+<dt>Error: String (Optional)  </dt>
+<dd>
+</dd>
+</dl>
+</section>
+<section title="Structure: CryptographicResultKeyAgreement" anchor="n-structure-cryptographicresultkeyagreement-"><dl>
+<dt>Inherits: CryptographicResult  </dt>
+<dd>
+</dd>
+</dl>
+<t>[No fields] </t>
+</section>
+<section title="Structure: CryptographicResultShare" anchor="n-structure-cryptographicresultshare-"><dl>
+<dt>Inherits: CryptographicResult  </dt>
+<dd>
+</dd>
+</dl>
+<t>[No fields] </t>
+</section>
+</section>
+<section title="Transaction: Operate" anchor="n-transaction-operate-"><dl>
+<dt>Request: OperateRequest </dt>
+<dd>
+</dd>
+<dt>Response: OperateResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Perform a set of cryptographic operations </t>
+<section title="Message: OperateRequest" anchor="n-message-operaterequest-"><dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>AccountAddress: String (Optional) </dt>
+<dd>
+<t>The service account the capability is bound to  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: OperateResponse" anchor="n-message-operateresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>[No fields] </t>
+</section>
+</section>
+</section>
+<section title="Security Considerations" anchor="n-security-considerations"><t>The security considerations for use and implementation of Mesh services and applications are described in the Mesh Security Considerations guide <xref target="draft-hallambaker-mesh-security"></xref>.</t>
+</section>
+<section title="IANA Considerations" anchor="n-iana-considerations"><t>All the IANA considerations for the Mesh documents are specified in this document</t>
+</section>
+<section title="Acknowledgements" anchor="n-acknowledgements"><t>A list of people who have contributed to the design of the Mesh is presented in <xref target="draft-hallambaker-mesh-architecture"></xref>.</t>
+</section>
+</middle>
+<back>
+<references title="Normative References"><reference anchor="RFC2119"><front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+<reference anchor="RFC4648"><front>
+<title>The Base16, Base32, and Base64 Data Encodings</title>
+<author fullname="S. Josefsson" initials="S." surname="Josefsson"><organization/>
+<address>
+</address>
+</author>
+<date month="October" year="2006"/>
+</front>
+<seriesInfo name="RFC" value="4648"/>
+<seriesInfo name="DOI" value="10.17487/RFC4648"/>
+</reference>
+<reference anchor="RFC8446"><front>
+<title>The Transport Layer Security (TLS) Protocol Version 1.3</title>
+<author fullname="E. Rescorla" initials="E." surname="Rescorla"><organization/>
+<address>
+</address>
+</author>
+<date month="August" year="2018"/>
+</front>
+<seriesInfo name="RFC" value="8446"/>
+<seriesInfo name="DOI" value="10.17487/RFC8446"/>
+</reference>
+<reference anchor="RFC7230"><front>
+<title>Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
+<author fullname="R. Fielding" initials="R." surname="Fielding"><organization/>
+<address>
+</address>
+</author>
+<author fullname="J. Reschke" initials="J." surname="Reschke"><organization/>
+<address>
+</address>
+</author>
+<date month="June" year="2014"/>
+</front>
+<seriesInfo name="RFC" value="7230"/>
+<seriesInfo name="DOI" value="10.17487/RFC7230"/>
+</reference>
+<reference anchor="RFC3339"><front>
+<title>Date and Time on the Internet: Timestamps</title>
+<author fullname="G. Klyne" initials="G." surname="Klyne"><organization/>
+<address>
+</address>
+</author>
+<author fullname="C. Newman" initials="C." surname="Newman"><organization/>
+<address>
+</address>
+</author>
+<date month="July" year="2002"/>
+</front>
+<seriesInfo name="RFC" value="3339"/>
+<seriesInfo name="DOI" value="10.17487/RFC3339"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-architecture"><front>
+<title>Mathematical Mesh 3.0 Part I: Architecture Guide</title>
+<author fullname="Phillip Hallam-Baker"><organization>ThresholdSecrets.com</organization>
+<address>
+</address>
+</author>
+<date day="13" month="January" year="2021"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-architecture-16"/>
+<format type="TXT" target="https://www.ietf.org/archive/id/draft-hallambaker-mesh-architecture-16.txt"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-security"><front>
+<title>Mathematical Mesh 3.0 Part VII: Security Considerations</title>
+<author fullname="Phillip Hallam-Baker"><organization>ThresholdSecrets.com</organization>
+<address>
+</address>
+</author>
+<date day="2" month="November" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-security-06"/>
+<format type="TXT" target="https://www.ietf.org/archive/id/draft-hallambaker-mesh-security-06.txt"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-udf"><front>
+<title>Mathematical Mesh 3.0 Part II: Uniform Data Fingerprint.</title>
+<author fullname="Phillip Hallam-Baker"><organization>ThresholdSecrets.com</organization>
+<address>
+</address>
+</author>
+<date day="13" month="January" year="2021"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-udf-12"/>
+<format type="TXT" target="https://www.ietf.org/archive/id/draft-hallambaker-mesh-udf-12.txt"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-schema"><front>
+<title>Mathematical Mesh 3.0 Part IV: Schema Reference</title>
+<author fullname="Phillip Hallam-Baker"><organization>ThresholdSecrets.com</organization>
+<address>
+</address>
+</author>
+<date day="13" month="January" year="2021"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-schema-07"/>
+<format type="TXT" target="https://www.ietf.org/archive/id/draft-hallambaker-mesh-schema-07.txt"/>
+</reference>
+</references>
+<references title="Informative References"><reference anchor="ECMA-262"><front>
+<title>ECMAScript(R) 2017 Language Specification</title>
+<author><organization>Ecma International</organization>
+<address>
+</address>
+</author>
+<date month="June" year="2017"/>
+</front>
+<format type="pdf" target="https://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-developer"><front>
+<title>Mathematical Mesh: Reference Implementation</title>
+<author fullname="Phillip Hallam-Baker"><address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-developer-10"/>
+<format type="TXT" target="https://www.ietf.org/archive/id/draft-hallambaker-mesh-developer-10.txt"/>
+</reference>
+</references>
+</back>
+</rfc>

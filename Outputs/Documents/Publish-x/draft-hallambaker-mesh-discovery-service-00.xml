@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-discovery-service-00" indexInclude="false" ipr="trust200902" prepTime="2020-10-21T14:29:19Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Mesh Discovery Service">Mathematical Mesh 3.0 Part VI: Mesh Discovery Service</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-discovery-service" stream="independent"/>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><organization>ThresholdSecrets.com</organization>
+<address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="21" month="October" year="2020"/>
+<area/>
+<workgroup/>
+<keyword>Threshold Cryptography</keyword>
+<keyword>Elliptic Curve</keyword>
+<keyword>Threshold Encryption</keyword>
+<keyword>Threshold Key Generation</keyword>
+<keyword>Ceremony</keyword>
+<abstract>
+<t>A naming service for the Mathematical Mesh is described.</t>
+<t><eref target="http://whatever">https://mailarchive.ietf.org/arch/browse/mathmesh/</eref>Discussion of this draft should take place on the MathMesh mailing list (mathmesh@ietf.org), which is archived at .</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="n-introduction"><t>The Mesh Discovery Service allows Mesh users to change Mesh Service Providers without the switching costs associated with usual naming schemes.</t>
+<t>The Mesh Discovery System is distinct from the DNS in several important respects:</t>
+<ul>
+<li>Mesh Names are intended to be the personal property of the assignee and use of the name <bcp14>MUST NOT</bcp14> require payment of ongoing rents, fees etc. of any kind.</li>
+<li>The DNS combines the functions of name delegation and discovery of services provided under those names into a single protocol. The MNS only supports name delegation.</li>
+</ul>
+<t>The limitation on scope allows MDS to provide all the functionality of a traditional DNS TLD with almost none of the costs. While the DNS functionality exposed by a DNS TLD is limited to information that changes very rarely (i.e. discovery of the IP addresses of the authoritative DNS servers), the protocol used to deliver that functionality is designed to support real time publication of service configurations.</t>
+<t>Another costly aspect of the DNS design is that there is no mechanism for invalidation of cached data. Instead every record has a predetermined expiry time and TLDs advise relying parties of updates to DNS records by publishing a new record. As a result, the vast bulk of (valid) TLD traffic consists of requests to check if the information has changed since the last time the party making the request checked. This approach makes the DNS infrastructure vulnerable to Denial of Service attack. If the DNS were ever to suffer a prolonged outage, the cached records would expire and the Internet would cease functioning.</t>
+<t>The MNS Name Registry is an append only log containing a complete history of every change made. Every registry update is authenticated by means of a Merkle Tree, the apex of which is signed once a minute. </t>
+<t>The Name Registry does not respond to discovery queries. Instead, every Mesh Service Provider is required to maintain a 'reasonably current' copy of the MNS Name Registry log and use this to respond to queries from the community it serves. This approach eliminates the almost all the costs associated with a DNS TLD registry and provides a 'fail safe' approach to design. Should the Name Service cease functioning for days or even weeks, only the ability to publish updates to existing configurations would be lost.</t>
+<t>Requirements for Mesh Names, should meet the expectations of the user.</t>
+<dl>
+<dt>Unambiguous</dt>
+<dd>
+<t>The signifier should unambiguously identify the referent.</t>
+</dd>
+<dt>Consistent</dt>
+<dd>
+<t>The binding between the signifier and the signified should be consistent with the reasonable expectations of the user.</t>
+</dd>
+<dt>Freehold</dt>
+<dd>
+<t>There <bcp14>MUST</bcp14> be no ongoing costs associated with the continued use of an existing name under an existing configuration. Charges for publishing changes to configurations should be strictly limited to cost recovery.</t>
+</dd>
+</dl>
+</section>
+<section title="Definitions" anchor="n-definitions"><t>This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.</t>
+<section title="Requirements Language" anchor="n-requirements-language"><t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
+</section>
+<section title="Defined Terms" anchor="n-defined-terms"></section>
+<section title="Related Specifications" anchor="n-related-specifications"></section>
+<section title="Implementation Status" anchor="n-implementation-status"><t>The implementation status of the reference code base is described in the companion document <xref target="draft-hallambaker-mesh-developer"></xref>.</t>
+</section>
+</section>
+<section title="Architecture" anchor="n-architecture"><section title="Name Registry" anchor="n-name-registry"><t>The name registry is implemented as a Mesh Catalog.</t>
+<section title="Name Entries" anchor="n-name-entries"><t>A name entry consists of the following information:</t>
+<dl>
+<dt>Name</dt>
+<dd>
+<t>The unique identifier the entry describes.</t>
+</dd>
+<dt>Profile Identifier</dt>
+<dd>
+<t>The UDF fingerprint of the profile to which the name is bound.</t>
+</dd>
+<dt>Assignment Type</dt>
+<dd>
+<t>Describes the means by which the name is assigned.</t>
+</dd>
+<dt>Mesh Service Provider</dt>
+<dd>
+<t>DNS or Mesh name of the Mesh Service Provider servicing the associated account.</t>
+</dd>
+<dt>DNS Resolver Addresses (Optional)</dt>
+<dd>
+<t>IP addresses of the authoritative name servers for a DNS server servicing the Mesh name.</t>
+</dd>
+<dt>Bindings (Optional)</dt>
+<dd>
+<t>A list of signed assertions binding additional names and/or logographical representations to the profile specified by the name.</t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Name syntax" anchor="n-name-syntax"><t>A Mesh name consists of a sequence of Unicode characters.</t>
+<t>To prevent homograph type attacks, only characters from selected Unicode alphabet are permitted and mixing of characters from different alphabet s is prohibited with the exception of special characters that are permitted in any name. </t>
+<t>The only special characters currently permitted are the digits 0-9, underscore (_) and dash(-).</t>
+<t>The only alphabet currently supported is Extended Latin.</t>
+<t>Canonicalization rules are applied within an alphabet to avoid ambiguity. For the Extended Latin alphabet, canonicalization causes case to be ignored, and ligatures to be mapped according to the prevailing rules applied in circumstances where accented characters are unavailable.</t>
+</section>
+<section title="Name Assignment" anchor="n-name-assignment"><t>The first time a name is assigned, the assignment type is 'Initial'. </t>
+</section>
+</section>
+<section title="Business Model" anchor="n-business-model"><section title="Names do not expire" anchor="n-names-do-not-expire"></section>
+</section>
+<section title="Security Considerations" anchor="n-security-considerations"></section>
+<section title="IANA Considerations" anchor="n-iana-considerations"><t>This document requires no IANA actions.</t>
+</section>
+<section title="Acknowledgements" anchor="n-acknowledgements"><t></t>
+</section>
+</middle>
+<back>
+<references title="Normative References"><reference anchor="RFC2119"><front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+</references>
+<references title="Informative References"><reference anchor="draft-hallambaker-mesh-developer"><front>
+<title>Mathematical Mesh: Reference Implementation</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-developer-10"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-10.txt"/>
+</reference>
+</references>
+</back>
+</rfc>

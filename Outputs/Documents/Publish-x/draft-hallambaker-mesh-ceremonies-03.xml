@@ -1,0 +1,1064 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-ceremonies-03" indexInclude="false" ipr="trust200902" prepTime="2021-01-13T16:39:30Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Mesh Ceremonies">Mathematical Mesh 3.0 Part XIII: Mesh Ceremonies</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-ceremonies" stream="independent"/>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><organization>ThresholdSecrets.com</organization>
+<address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="13" month="January" year="2021"/>
+<area/>
+<workgroup/>
+<keyword>Threshold Cryptography</keyword>
+<keyword>Elliptic Curve</keyword>
+<keyword>Threshold Encryption</keyword>
+<keyword>Threshold Key Generation</keyword>
+<keyword>Ceremony</keyword>
+<abstract>
+<t>Ceremonies are security protocols that involve human participants as principal actors. Ceremonies for onboarding devices, establishing trust between parties and obtaining multi-factor authenticated responses from users are presented and analyzed with particular application to the Mathematical Mesh.</t>
+<t><eref target="http://whatever">https://mailarchive.ietf.org/arch/browse/mathmesh/</eref>Discussion of this draft should take place on the MathMesh mailing list (mathmesh@ietf.org), which is archived at .</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="n-introduction"><t>The consideration of ceremonies as an aspect of network protocol design was introduced by Carl Ellison in 2007 <xref target="Ellison"></xref>. Since then, consideration of ceremony design has provided a bridge between security practitioners focused on network protocol and human-computer interaction.</t>
+<t>While the design of ceremonies is naturally connected to the design of the user experience, the former represents an abstraction of the latter. For example, the description ceremony might require that the user be able to distinguish between two states but not how this distinction is represented in the user experience.</t>
+<t>Failure to consider ceremony design in protocol design frequently leads to the user being consider able to avoid security breaches through clairvoyance. Consider the commonly given but unactionable advice that users 'take care' when opening email attachments. On what basis is the user supposed to exercise caution when standard SMTP email provides no means for determining the authenticity of a message?</t>
+<t>Formalizing the interactions of users in a protocol allows the designers to consider if the expectations being put on the users are likely to be met. It is easy for Web site operators to exhort users to use a strong, unique password, to change it frequently and not write it down. But there is not the slightest chance that users will follow this advice except on rare occasions because it is utterly unreasonable to expect them to remember a different password for each of the hundreds of services they use.</t>
+<t>Ceremonies formalize the interactions of humans with machines, but humans are not Turing machines. They do not interact in precise ways; they misunderstand information they are provided with and they fail to follow instructions. It is essential that ceremonies be designed with these constraints in mind.</t>
+<t>This document describes the ceremonies that are used to establish trust in the Mesh:</t>
+<ul>
+<li>Onboarding devices to a Mesh profile</li>
+<li>Contact endorsement and exchange</li>
+<li>Authenticated response interactions</li>
+</ul>
+<t>While these particular ceremonies were designed to meet the design requirements of the Mesh, most are based on pre-existing interaction patterns that are widely used but not necessarily considered as a ceremony.</t>
+</section>
+<section title="Definitions" anchor="n-definitions"><t>This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.</t>
+<section title="Requirements Language" anchor="n-requirements-language"><t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
+</section>
+<section title="Defined Terms" anchor="n-defined-terms"></section>
+<section title="Related Specifications" anchor="n-related-specifications"></section>
+<section title="Implementation Status" anchor="n-implementation-status"><t>The implementation status of the reference code base is described in the companion document <xref target="draft-hallambaker-mesh-developer"></xref>.</t>
+</section>
+</section>
+<section title="Ceremony Contexts" anchor="n-ceremony-contexts"><t>A Mesh ceremony provides an abstract description of the interactions between users and devices. A Ceremony context describes the specific means by which the abstract ceremony is realized.</t>
+<t>The ceremony context may be considered the equivalent of the physical layer. Just as IP packets may be transferred using Ethernet or WiFi, the short codes used in many of the onboarding ceremonies may be exchanged using QR codes, Bluetooth, Near Field Communication or any other infrastructure that provides the necessary affordances.</t>
+<figure>
+<name>
+Layered model of Ceremony Description.</name>
+<!-- Include SVG File ../Images/CeremonyStack.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+</g></svg>
+</artwork>
+</figure>
+<section title="Users" anchor="n-users"><t>It is assumed that users are of average technical skill or less and that they are unwilling to read any instructions or follow any procedure more complex than that required to purchase the target device.</t>
+<t>The fact that a user is acting in an administrative role with respect to onboarding a device does not mean that they should be assumed to have administrative privileges on the machine they are using to perform that function.</t>
+</section>
+<section title="Devices" anchor="n-devices"><t>The term 'device' is used to refer to any machine involved in the ceremony that is capable of communicating. Back at the dawn of the Internet age, every device connected to the Internet was at least the size of a washing machine that one or more users would interact with by means of a terminal device with a keyboard and either a display or a printer.</t>
+<t>The range of affordances provided by modern devices is much broader. Today's desktop workstation provides essentially the same display, input an network affordances as those of a 'Personal Computer' sold in the mid-1990s. At the other end of the device capability spectrum, a 'smart' light bulb may offer only its light as a potential output and no inputs whatsoever.</t>
+<t>Accessibility is an important consideration in contemporary systems design. Many users cannot use a traditional keyboard or display. In the interests of clarity, we refer to user text input devices as 'keyboards' and text output devices as 'displays' while recognizing that these <bcp14>MAY</bcp14> be realized using other technologies. </t>
+<t>We recognize the following categories of device:</t>
+<dl>
+<dt>Static Computer</dt>
+<dd>
+<t>A server or personal computer which is connected to a wired network (e.g. Ethernet). A static computer provides a keyboard and display, but not (necessarily) a camera.</t>
+</dd>
+<dt>Mobile Computer</dt>
+<dd>
+<t>A laptop, tablet or smartphone device which supports use of a wireless network (e.g. WiFi, Cellular). A mobile computer provides a keyboard, display and a camera.</t>
+</dd>
+<dt>Device with Display</dt>
+<dd>
+<t>A device which contains an embedded computer with a display affordance and some form of network communication capability (e.g. WiFi, Thread, Zigbee, Z-Wave, etc.) but not a keyboard or a camera.</t>
+</dd>
+<dt>Black Box Device</dt>
+<dd>
+<t>A device which contains an embedded computer with some form of network communication capability (e.g. WiFi, Thread, Zigbee, Z-Wave, etc.) that does not provide input or output affordances to the user.</t>
+</dd>
+</dl>
+<t>These capabilities are summarized as follows:</t>
+<table><thead>
+<tr>
+<th>
+Class</th>
+<th>
+Keyboard?</th>
+<th>
+Display?</th>
+<th>
+Camera?</th>
+<th>
+Network Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Static Computer</td>
+<td>
+Yes</td>
+<td>
+Yes</td>
+<td>
+No</td>
+<td>
+Automatic</td>
+</tr>
+<tr>
+<td>
+Mobile Computer</td>
+<td>
+Yes</td>
+<td>
+Yes</td>
+<td>
+Yes</td>
+<td>
+Required</td>
+</tr>
+<tr>
+<td>
+Device with Display</td>
+<td>
+No</td>
+<td>
+No</td>
+<td>
+No</td>
+<td>
+Required</td>
+</tr>
+<tr>
+<td>
+Black Box Device</td>
+<td>
+No</td>
+<td>
+No</td>
+<td>
+No</td>
+<td>
+Required</td>
+</tr>
+</tbody>
+</table><t></t>
+<t>While there is a tendency for IoT devices to become more elaborate with succeeding generations, the expansion in the scope of IoT devices more than compensates for this effect. Thus just as there are more 8-bit CPUs manufactured today than at any point in history, the number of devices in the 'black box device' category will almost certainly increase over time rather than vanish.</t>
+</section>
+<section title="Connection Codes" anchor="n-connection-codes"><t>A Connection Code is a compact data object, typically 50 characters or less that is passed from one party to another during a ceremony.</t>
+<t>Connection Codes <bcp14>MAY</bcp14> take many forms according to the capabilities of the devices involved. </t>
+<ul>
+<li>QR Code</li>
+<li>Serial communication using visible or Infra-Red light.</li>
+<li>Near Field Communications</li>
+</ul>
+</section>
+<section title="Networks" anchor="n-networks"><t>IoT devices don't necessarily support IP</t>
+<t>Local network config - sufficient to connect to the Mesh to bootstrap VPN.</t>
+<dl>
+<dt>Wired</dt>
+<dd>
+<t>Supports automatic configuration of the local network context via DHCP</t>
+</dd>
+<dt>WiFi</dt>
+<dd>
+<t>Requires an SSID to be specified and in some cases a password.</t>
+</dd>
+<dt>Non-IP</dt>
+<dd>
+<t>A large range of wired and wireless communication protocols that provide local communication. Includes RS485, CANBUS, Zigbee, etc.</t>
+</dd>
+</dl>
+<section title="Wired Network Configuration" anchor="n-wired-network-configuration"><t>Wired networks such as Ethernet provide automated network configuration via DHCP.</t>
+<t>Can use this network as-is or as a bootstrap to establish a connection through a VPN.</t>
+</section>
+<section title="WiFi Configuration" anchor="n-wifi-configuration"><t>WiFi networks support DHCP but this only acts after a device has connected to the WiFi network by specifying the correct SSID and providing the necessary credentials.</t>
+<t>It is therefore necessary for an onboarding process to initialize the WiFi settings before making use of the Internet.</t>
+<t>A secondary consideration is the need to update the WiFi settings on devices after the WiFi network configuration is changed or if the device is moved from one network operated by the user to another.</t>
+<t>To support these requirements we anticipate the use of at least three separate WiFi SSIDs types:</t>
+<dl>
+<dt>The Public Network SSID</dt>
+<dd>
+<t>The SSID used by the network that connects to the external Internet.</t>
+</dd>
+<dt>The Device Hailing SSID</dt>
+<dd>
+<t>An SSID that is monitored by a target device that is not connected to a Mesh to allow it to receive inbound connection initiation requests.</t>
+</dd>
+<dt>The Mesh Hailing SSID</dt>
+<dd>
+<t>An SSID that is monitored by a WiFi access point to allow devices previously connected to a Mesh to reconnect. </t>
+</dd>
+</dl>
+<t>This approach allows a device that has no preconfigured WiFi network configuration to be onboarded to a user's personal Mesh. Once accepted, the device can then connect to any WiFi network connected to the user's personal Mesh listening on the Mesh hailing SSID.</t>
+<t>Support for this configuration <bcp14>MAY</bcp14> be deployed at the WiFi access point(s) for the network or by deploying a separate parallel WiFi access point dedicated to serving hailing requests. </t>
+<t>[Diagram: WiFi with hailing access point]</t>
+<figure>
+<name>
+WiFi Network with Hailing Access Point.</name>
+<!-- Include SVG File ../Images/WiFiHail.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+</g></svg>
+</artwork>
+</figure>
+</section>
+<section title="Non-IP Configuration" anchor="n-nonip-configuration"><t>Configuration of non-IP networks is similar to that for WiFi with the important exception that some form of network gateway will be required to bridge the networks.</t>
+<figure>
+<name>
+Connection of Non-IP network.</name>
+<!-- Include SVG File ../Images/NonIP.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+</g></svg>
+</artwork>
+</figure>
+</section>
+</section>
+</section>
+<section title="Device Onboarding Ceremonies" anchor="n-device-onboarding-ceremonies"><t>Devices</t>
+<dl>
+<dt>Target device</dt>
+<dd>
+<t>The device being onboarded</t>
+</dd>
+<dt>Administration device</dt>
+<dd>
+<t>A device that has the ability to authorize onboarding of the target device and cause the necessary credentials.</t>
+</dd>
+<dt>Capture device</dt>
+<dd>
+<t>A device that has the ability to capture a connection code from a target device.</t>
+</dd>
+<dt>Combination device</dt>
+<dd>
+<t>A device that combines the administration and capture device roles.</t>
+</dd>
+</dl>
+<t>Objectives</t>
+<ul>
+<li>Provide bootstrap network connectivity to the target device.</li>
+<li>Provision administrative axiom of trust to the target device.</li>
+<li>Establish trustworthy private keys on the target device.</li>
+<li>Provision credentials to the target device.</li>
+<li>The exchange of credentials <bcp14>MUST</bcp14> be mutually authenticated such that credentials are issued to a device if and only if it is the intended target device and it has received the intended administrative axiom of trust.</li>
+</ul>
+<section title="Networked Computing Device" anchor="n-networked-computing-device"><section title="Fingerprint Comparison" anchor="n-fingerprint-comparison"><t>Primary application: Target device is a static computer. Administration and target devices are in close proximity.</t>
+<figure>
+<name>
+Onboarding by means of fingerprint comparison.</name>
+<!-- Include SVG File ../Images/CeremonyContextFingerprint.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+</g></svg>
+</artwork>
+</figure>
+<t></t>
+<dl>
+<dt>Target Device</dt>
+<dd>
+<t>Prompts user to enter account address and optional PIN</t>
+</dd>
+<dt>User on [Target Device]</dt>
+<dd>
+<t>Enters account address into target device</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Requests device connection to indicated Mesh Service account address</t>
+</dd>
+<dt>Mesh Service </dt>
+<dd>
+<t>Returns connection verification code to Target Device</t>
+<t>Posts connection request to indicated account</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Presents connection verification code to user</t>
+</dd>
+<dt>Administration Device</dt>
+<dd>
+<t>Synchronizes account to Mesh Service, receives pending connection request</t>
+<t>[Optional] Prompts user for attention</t>
+</dd>
+<dt>User [Administration Device]</dt>
+<dd>
+<t>Reviews pending connection requests on administration device</t>
+<t>Verifies that connection codes match, rejects request if they do not match</t>
+<t>Accepts request</t>
+</dd>
+<dt>Administration Device</dt>
+<dd>
+<t>Posts result of connection request to Mesh Service</t>
+</dd>
+<dt>Mesh Service</dt>
+<dd>
+<t>Appends results to for collection spool.</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Requests results of connection request</t>
+</dd>
+<dt>Mesh Service</dt>
+<dd>
+<t>Returns results</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Decrypts result and completes configuration.</t>
+</dd>
+</dl>
+</section>
+<section title="Out of band one-time code" anchor="n-out-of-band-onetime-code"><t>Primary application: Target device is a static computer. Administration and target devices are not in close proximity.</t>
+<figure>
+<name>
+Onboarding by means of OTP Code.</name>
+<!-- Include SVG File ../Images/CeremonyContextOTP.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+</g></svg>
+</artwork>
+</figure>
+<t></t>
+<t>Chief difference is that the </t>
+<dl>
+<dt>User on [Administration Device]</dt>
+<dd>
+<t>Requests PIN code</t>
+</dd>
+<dt>Administration Device</dt>
+<dd>
+<t>Generates PIN code</t>
+<t>Reports PIN code to user</t>
+<t>Posts to administration catalog to allow other administration devices to use code for verifying connection request</t>
+</dd>
+<dt>Mesh Service</dt>
+<dd>
+<t>Receives administration catalog entry.</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Prompts user to enter account address and optional PIN</t>
+</dd>
+<dt>User on [Target Device]</dt>
+<dd>
+<t>Enters account address and PIN into target device</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Requests device connection to indicated Mesh Service account address using PIN for authentication.</t>
+</dd>
+<dt>Mesh Service </dt>
+<dd>
+<t>Returns connection verification code to Target Device</t>
+<t>Posts connection request to indicated account</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Presents connection verification code to user</t>
+</dd>
+<dt>Administration Device</dt>
+<dd>
+<t>Synchronizes account to Mesh Service, receives pending connection request</t>
+<t>Verifies one-time code has been correctly specified, has not been expired or previously used. </t>
+<t>If so, accepts connection request as pre-approved</t>
+<t>Posts result of connection request to Mesh Service</t>
+</dd>
+<dt>Mesh Service</dt>
+<dd>
+<t>Appends results to for collection spool.</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Requests results of connection request</t>
+</dd>
+<dt>Mesh Service</dt>
+<dd>
+<t>Returns results</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Decrypts result and completes configuration.</t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Network bootstrap" anchor="n-network-bootstrap"><t>Target device does not initially have network capability.</t>
+<t>Requires code capture mechanism</t>
+<section title="Dynamic Code From Administration Device" anchor="n-dynamic-code-from-administration-device"><t>Requires code capture capability on target device</t>
+<figure>
+<name>
+Onboarding by means of Dynamic Code from Administration Device</name>
+<!-- Include SVG File ../Images/CeremonyContextAdministrationCode.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+</g></svg>
+</artwork>
+</figure>
+<dl>
+<dt>User on Administration Device</dt>
+<dd>
+<t>Requests device connection code display</t>
+</dd>
+<dt>User on Target device</dt>
+<dd>
+<t>Scans code displayed on Administration device</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Acquires connection code</t>
+<t>Decodes local network bootstrap configuration and connection secret from connection code</t>
+<t>Acquires access to bootstrap network</t>
+<t>Posts connection request to service using connection secret for authentication.</t>
+</dd>
+<dt>Mesh Service</dt>
+<dd>
+<t>Returns connection verification code to Target Device</t>
+<t>Posts connection request to indicated account</t>
+</dd>
+<dt>Administration Device</dt>
+<dd>
+<t>Synchronizes account to Mesh Service, receives pending connection request</t>
+<t>Verifies one-time code has been correctly specified, has not been expired or previously used. </t>
+<t>If so, accepts connection request as pre-approved</t>
+<t>Posts result of connection request to Mesh Service</t>
+</dd>
+<dt>Mesh Service</dt>
+<dd>
+<t>Appends results to for collection spool.</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Requests results of connection request</t>
+</dd>
+<dt>Mesh Service</dt>
+<dd>
+<t>Returns results</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Decrypts result and completes configuration.</t>
+</dd>
+</dl>
+</section>
+<section title="Code From Target Device" anchor="n-code-from-target-device"><t>Requires code capture capability on administration device</t>
+<t>Code may be dynamic or static.</t>
+<t>Dynamic provides same security as for the Admnistration device display but requires the target device to have the display affordance.</t>
+<t>Static avoids need for a display, the code is physically printed on the device itself. In this case the code is static meaning that the connection secret allowing anyone who has handled the device to hijack the connection attempt.</t>
+<figure>
+<name>
+Onboarding by means of Code from Target Device.</name>
+<!-- Include SVG File ../Images/CeremonyContextTargetCode.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+</g></svg>
+</artwork>
+</figure>
+<dl>
+<dt>User on Target device</dt>
+<dd>
+<t>Requests device connection code display</t>
+</dd>
+<dt>Target device</dt>
+<dd>
+<t>Presents device connection code</t>
+</dd>
+<dt>User on Administration Device</dt>
+<dd>
+<t>Scans code displayed on Target device</t>
+</dd>
+<dt>Administration Device</dt>
+<dd>
+<t>Acquires connection code</t>
+<t>Decodes connection secret and device bootstrap network configuration</t>
+<t>Obtains device description and presents to user [*]</t>
+</dd>
+<dt>User on Administration Device</dt>
+<dd>
+<t>Accepts connection</t>
+</dd>
+<dt>Administration Device</dt>
+<dd>
+<t>Posts result of connection to device via device bootstrap network</t>
+</dd>
+<dt>Target Device</dt>
+<dd>
+<t>Receives connection result from Administration device</t>
+<t>Verifies that connection result is consistent with connection code posted.</t>
+</dd>
+</dl>
+<t>The device description <bcp14>MAY</bcp14> be acquired from either</t>
+<ul>
+<li>The device itself (via the Device bootstrap network)</li>
+<li>The Internet</li>
+<li>In either case the UDF digest of the connection secret is used to form the locator.</li>
+</ul>
+</section>
+</section>
+<section title="Proxy configuration" anchor="n-proxy-configuration"><t>As before except that the administration functions are divided between the administration device and a separate capture device.</t>
+<t>&lt;figuresvg="../Images/CeremonyContext</MetaChar>Proxy</MetaChar>.svg"&gt;Onboarding </MetaChar>using a proxy capture device</MetaChar>.</t>
+</section>
+</section>
+<section title="Contact Establishment Ceremonies" anchor="n-contact-establishment-ceremonies"><section title="In Person" anchor="n-in-person"><t></t>
+<figure>
+<name>
+In Person Ceremony Context</name>
+<!-- Include SVG File ../Images/CeremonyContactInPerson.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+</g></svg>
+</artwork>
+</figure>
+<t></t>
+<dl>
+<dt>User Alice</dt>
+<dd>
+<t>Opens contacts app, requests contact creation</t>
+</dd>
+<dt>Alice's Device</dt>
+<dd>
+<t>Presents connection code</t>
+</dd>
+<dt>User Bob</dt>
+<dd>
+<t>Scans connection code</t>
+</dd>
+<dt>Bob's Device</dt>
+<dd>
+<t>Opens contacts app, acquires connection code</t>
+<t>Decodes Connection Secret and Alice's account address</t>
+<t>Posts connection request message to Bob's Mesh Service using connection secret as authenticator</t>
+</dd>
+<dt>Bob's Mesh Service</dt>
+<dd>
+<t>Receives connection request from Bob</t>
+<t>Forwards to Alice's account address</t>
+</dd>
+<dt>Alice's Mesh Service</dt>
+<dd>
+<t>Receives connection request from Bob</t>
+<t>Adds to Alice's inbound message spool</t>
+</dd>
+<dt>Alice's Device</dt>
+<dd>
+<t>Synchronizes to Alice's Mesh Service</t>
+<t>Receives message from Bob</t>
+<t>Verifies that message is authenticated by connection secret, if not abort.</t>
+<t>Presents Bob's contact information</t>
+</dd>
+<dt>User Alice</dt>
+<dd>
+<t>Accepts Bob's contact</t>
+</dd>
+<dt>Alice's Device</dt>
+<dd>
+<t>Generates contact response for Bob posts to Alice's Mesh Service using connection secret as authenticator</t>
+</dd>
+<dt>Alice's Mesh Service</dt>
+<dd>
+<t>Forwards connection response to Bob's Mesh service</t>
+</dd>
+<dt>Bob's Mesh Service</dt>
+<dd>
+<t>Receives connection response from Alice</t>
+<t>Adds to Bob's inbound message spool.</t>
+</dd>
+<dt>Bob's device</dt>
+<dd>
+<t>Synchronizes to Bob's Mesh Service</t>
+<t>Receives connection response</t>
+<t>Presents contact information to Bob</t>
+</dd>
+<dt>User Bob</dt>
+<dd>
+<t>Accepts Alice's contact information</t>
+</dd>
+<dt>Bob's device</dt>
+<dd>
+<t>Adds Alice's contact information to Bob's contacts catalog</t>
+</dd>
+</dl>
+<t>Since it is easy to delete a contact entry from the catalog, users may opt to accept contact information without explicit user verification.</t>
+<t>The application <bcp14>SHOULD</bcp14> capture the circumstances in which the contact was acquired including the time and place (if available). For example, if Alice meets Bob at a conference for which there is an entry in their calendar, their contacts app might make use of this information to label the connection.</t>
+<t>As with any other type of connection, an in-person connection <bcp14>MAY</bcp14> be enrolled in a notary log to provide a fixed point in time.</t>
+</section>
+<section title="Registration" anchor="n-registration"><t>Registration is essentially a variant of the In-Person contact exchange ceremony in which Bob establishes evidence of attendance at an event such as a conference by means of his connected mobile device.</t>
+<t>The ceremony is identical to that of the In-Person contact exchange with the Roles 'Alice' and 'Alice's Device' replaced by 'Registrar' and 'Registrar's device' respectively.</t>
+<t>Registration at one or mode physical events <bcp14>MAY</bcp14> be used by trusted third parties as the basis for providing endorsements according to their published Endorsement Policies and Practices Statements.</t>
+</section>
+<section title="Remote" anchor="n-remote"><t>In the remote contact exchange scenario, Alice and Bob are not present in the same physical location and thus the risk of impersonation is inevitably increased. Despite this limitation, remote contact exchange allows participants to determine that they are interacting with the same person as in previous interactions. Which is sufficient for a wide number of purposes.</t>
+<figure>
+<name>
+Remote Contact Establishment</name>
+<!-- Include SVG File ../Images/CeremonyContactRemote.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+</g></svg>
+</artwork>
+</figure>
+<dl>
+<dt>Alice</dt>
+<dd>
+<t>Receives Bob's Account Address out of band</t>
+<t>Opens contact management application</t>
+<t>Requests remote contact establishment with the user at Bob's Account address.</t>
+</dd>
+<dt>Alice's Device</dt>
+<dd>
+<t>Creates and signs the contact establishment request.</t>
+</dd>
+<dt>Alice's Service</dt>
+<dd>
+<t>Receives contact establishment request</t>
+<t>Signs request and forwards to Bob's Service.</t>
+</dd>
+<dt>Bob's Service</dt>
+<dd>
+<t>Receives contact establishment request</t>
+<t>Verifies signature of Alice's Service, rejects if invalid</t>
+<t>Adds request to Bob's inbound spool.</t>
+</dd>
+<dt>Bob's Device</dt>
+<dd>
+<t>Synchronizes to Bob's Service</t>
+<t>Decrypts request</t>
+<t>Verifies signature of Alice's request, rejects if invalid, rejects if insufficiently authorized according to policy (i.e. spam prevention).</t>
+<t>Notifies Bob of pending request according to previously specified policy.</t>
+</dd>
+<dt>Bob</dt>
+<dd>
+<t>Reviews request from Alice</t>
+<t>Accepts or rejects request.</t>
+</dd>
+<dt>Bob's Device</dt>
+<dd>
+<t>If reject, abort.</t>
+<t>Otherwise add contact to Bob's contact catalog.</t>
+<t>Create and sign contact request for Alice including proof of knowledge of request secret.</t>
+</dd>
+<dt>Bob's Service</dt>
+<dd>
+<t>Receives contact establishment request</t>
+<t>Signs request and forwards to Alice's Service.</t>
+</dd>
+<dt>Alice's Service</dt>
+<dd>
+<t>Receives contact establishment request</t>
+<t>Verifies signature of Bob's Service, rejects if invalid</t>
+<t>Adds request to Alice's inbound spool.</t>
+</dd>
+<dt>Alice's Device</dt>
+<dd>
+<t>Synchronizes to Alice's Service</t>
+<t>Decrypts request</t>
+<t>Verifies signature of Bob's request, rejects if invalid, rejects if insufficiently authorized according to policy (i.e. spam prevention).</t>
+<t>Verifies proof of knowledge of request secret. If invalid, ignore.</t>
+<t>Add's contact to Alice's contact catalog.</t>
+</dd>
+</dl>
+</section>
+<section title="Trusted Third Party Endorsement" anchor="n-trusted-third-party-endorsement"><t>Trusted third party endorsement <bcp14>MAY</bcp14> be used to improve the reliability of either the in-person or remote contact establishment ceremonies.</t>
+<figure>
+<name>
+Contact Establishment with Trusted Third Party</name>
+<!-- Include SVG File ../Images/CeremonyContactTTP.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+</g></svg>
+</artwork>
+</figure>
+<t>The ceremony mechanics are unaffected except at the point where the contact information is accepted when the information from one (or more) trusted third parties <bcp14>MAY</bcp14> be presented to the user to assist them in their decision to accept or reject the contact information.</t>
+<t>Trusted Third Parties <bcp14>MAY</bcp14> provide an ongoing service, advising users of a change in the trustworthiness of contact data.</t>
+</section>
+</section>
+<section title="Authentication Ceremonies" anchor="n-authentication-ceremonies"><t>Second factor authentication by means of entering a one time code is widely used despite the obvious limitations of this approach:</t>
+<ul>
+<li>A response code of four, six or even eight digits has a miniscule work factor compared to the industry benchmark of 2<sup>128</sup> or greater.</li>
+<li>The process of presenting a code is vulnerable to Man in the Middle attack.</li>
+<li>Response codes are not bound to the context in which they are used and thus do not provide for non-repudiability.</li>
+</ul>
+<t>Modern mobile devices are both ubiquitous and offer sufficient affordances to provide user experience that is more satisfactory and offers substantially greater security.</t>
+<section title="Confirmation" anchor="n-confirmation"><figure>
+<name>
+Confirmation Ceremony Context</name>
+<!-- Include SVG File ../Images/CeremonyConfirmation.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+</g></svg>
+</artwork>
+</figure>
+<dl>
+<dt>Alice</dt>
+<dd>
+<t>Attempts action requiring confirmation at Carol's Cloud</t>
+</dd>
+<dt>Carol's Cloud</dt>
+<dd>
+<t>Generates and signs confirmation request for Alice's Account Address</t>
+<t>Sends to Carol's Service</t>
+</dd>
+<dt>Carol's Service</dt>
+<dd>
+<t>Countersigns confirmation request and forwards to Alice's Service</t>
+</dd>
+<dt>Alice's Service</dt>
+<dd>
+<t>Verifies countersignature of Carol's service, if invalid, aborts</t>
+<t>Adds confirmation request to Alice's inbound spool.</t>
+</dd>
+<dt>Alice's Device</dt>
+<dd>
+<t>Synchronizes to Alice's Service</t>
+<t>Discards messages that are unauthorized according to entries in contacts catalog</t>
+<t>Decrypts confirmation request</t>
+<t>Notifies Alice according to policy.</t>
+</dd>
+<dt>Alice</dt>
+<dd>
+<t>Reads confirmation request</t>
+<t>Responds with Accept or Reject.</t>
+</dd>
+<dt>Alice's Device</dt>
+<dd>
+<t>Creates and signs/encrypts response including request data</t>
+<t>Appends to confirmation catalog.</t>
+<t>Forwards response to Alice's Service.</t>
+</dd>
+<dt>Alice's Service</dt>
+<dd>
+<t>Countersigns response, forwards to Carol's Service</t>
+</dd>
+<dt>Carol's Service</dt>
+<dd>
+<t>Verifies counter signature, rejects if invalid</t>
+<t>Appends response to Carol's inbound spool.</t>
+</dd>
+<dt>Carol's Device</dt>
+<dd>
+<t>Synchronizes to service.</t>
+<t>Decrypts response, acts accordingly.</t>
+</dd>
+</dl>
+<t>Waiting for the response from Alice is essentially equivalent to waiting for input from Alice</t>
+<t>This description assumes that the devices poll the service to obtain notification of updates. Provision for push notifications will of course improve response.</t>
+</section>
+<section title="Confirmation with Personal Presence" anchor="n-confirmation-with-personal-presence"><t>In certain situations we would like to require that Alice be physically present when responding to a confirmation request. For example, when opening a door or logging in to a workstation at a facility.</t>
+<t>In these circumstances, a confirmation code is used to provide evidence that Alice is in the physical vicinity. Such codes may be presented by means of a QR code, Near Field Communications or any equivalent means. Noting of course that all proximity controls are inherently vulnerable to a relay attack.</t>
+<figure>
+<name>
+Confirmation Ceremony with evidence of Personal Presence</name>
+<!-- Include SVG File ../Images/CeremonyConfirmationInPerson.svg --><artwork type="svg">
+<svg width="176" height="89" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 160,0" fill="none" stroke="black" />
+  <path d="M 0,64 L 160,64" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,64" fill="none" stroke="black" />
+  <path d="M 160,0 L 160,64" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">T</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="52">d</text>
+</g></svg>
+</artwork>
+</figure>
+<dl>
+<dt>Alice</dt>
+<dd>
+<t>Attempts action requiring confirmation with physical presence at Dave's Door</t>
+</dd>
+<dt>Dave's Door</dt>
+<dd>
+<t>Generates unique connection code.</t>
+<t>Generates and signs confirmation request for Alice's Account Address</t>
+<t>Sends to Dave's Service</t>
+<t>Presents connection code to Alice's Device via local channel</t>
+</dd>
+<dt>Alice's Device</dt>
+<dd>
+<t>Reads Connection code</t>
+<t>Synchronizes to Alice's Service, no message pending (yet), waits.</t>
+</dd>
+<dt>Dave's Service</dt>
+<dd>
+<t>Countersigns confirmation request and forwards to Alice's Service</t>
+</dd>
+<dt>Alice's Service</dt>
+<dd>
+<t>Verifies countersignature of Dave's service, if invalid, aborts</t>
+<t>Adds confirmation request to Alice's inbound spool.</t>
+</dd>
+<dt>Alice's Device</dt>
+<dd>
+<t>Synchronizes to Alice's Service</t>
+<t>Discards messages that are unauthorized according to entries in contacts catalog</t>
+<t>Decrypts confirmation request</t>
+<t>Notifies Alice according to policy.</t>
+</dd>
+<dt>Alice</dt>
+<dd>
+<t>Reads confirmation request</t>
+<t>Responds with Accept or Reject.</t>
+</dd>
+<dt>Alice's Device</dt>
+<dd>
+<t>Creates and signs/encrypts response including request data</t>
+<t>Appends to confirmation catalog.</t>
+<t>Forwards response to Alice's Service.</t>
+</dd>
+<dt>Alice's Service</dt>
+<dd>
+<t>Countersigns response, forwards to Dave's Service</t>
+</dd>
+<dt>Dave's Service</dt>
+<dd>
+<t>Verifies counter signature, rejects if invalid</t>
+<t>Appends response to Dave's inbound spool.</t>
+</dd>
+<dt>Dave's Door</dt>
+<dd>
+<t>Synchronizes to service.</t>
+<t>Decrypts response, acts accordingly.</t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Security Considerations" anchor="n-security-considerations"></section>
+<section title="IANA Considerations" anchor="n-iana-considerations"><t>This document requires no IANA actions.</t>
+</section>
+<section title="Acknowledgements" anchor="n-acknowledgements"><t></t>
+</section>
+</middle>
+<back>
+<references title="Normative References"><reference anchor="RFC2119"><front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+</references>
+<references title="Informative References"><reference anchor="Ellison"><front>
+<title>Ceremony Design and Analysis</title>
+<author fullname="Carl Ellison" initials="C." surname="Ellison"><organization>Microsoft Corporation</organization>
+<address>
+</address>
+</author>
+<date year="2007"/>
+</front>
+</reference>
+<reference anchor="draft-hallambaker-mesh-developer"><front>
+<title>Mathematical Mesh: Reference Implementation</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-developer-10"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-10.txt"/>
+</reference>
+</references>
+</back>
+</rfc>

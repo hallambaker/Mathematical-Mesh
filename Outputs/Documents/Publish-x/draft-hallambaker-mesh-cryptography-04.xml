@@ -1,0 +1,905 @@
+<?xml version='1.0'?>
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd'>
+<rfc ipr="trust200902" docName="draft-hallambaker-mesh-cryptography-04" category="info">
+<?rfc toc="yes"?>  
+<?rfc symrefs="yes"?>  
+<?rfc sortrefs="yes"?>  
+<?rfc compact="yes"?>  
+<?rfc subcompact="no"?>  
+<front>
+<title abbrev="Mesh Cryptographic Algorithms">Mathematical Mesh 3.0 Part VIII: Cryptographic Algorithms</title>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker">
+<address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="2" month="November" year="2019"/>
+<area/>
+<workgroup/>
+<abstract>
+<t>
+The Mathematical Mesh 'The Mesh' is an infrastructure that facilitates the exchange of configuration and credential data between multiple user devices and provides end-to-end security. This document describes the cryptographic algorithm suites used in the Mesh and the implementation of Multi-Party Encryption and Multi-Party Key Generation used in the Mesh.</t>
+<t>
+[Note to Readers]</t>
+<t>
+Discussion of this draft takes place on the MATHMESH mailing list (mathmesh@ietf.org), which is archived at https://mailarchive.ietf.org/arch/search/?email_list=mathmesh.</t>
+<t>
+This document is also available online at <eref target="http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html">
+http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html</eref>
+.</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="s-1">
+<t>
+This document describes the cryptographic algorithm suites used in the Mesh and the implementation of Multi-Party Encryption and Multi-Party Key Generation used in the Mesh.</t>
+<t>
+To allow use of Mesh capabilities on the least capable computing devices currently in use, separate schedules of recommended and required algorithms are specified for Standard Devices and Constrained Devices. </t>
+<t>
+The Constrained device class may be considered to include most 8-bit CPUs equipped with sufficient memory to support the necessary operations. For example an Ardunino Mega 2560 which can perform ECDH key agreement and signature operations in times ranging from 3 to 8 seconds. While such a device is clearly not suited to perform such operations routinely, a one-time connection process that takes several minutes to complete need not be of major concern.</t>
+<t>
+The Standard device class may be considered to include the vast majority of general purpose and personal computing devices manufactured since 2010. Even a Raspberry Pi Zero which currently retails at $5 is capable of performing the cryptographic functions required to implement the Mesh with negligible impact on the user.</t>
+</section>
+<section title="Definitions" anchor="s-2">
+<t>
+This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.</t>
+<section title="Requirements Language" anchor="s-2_1">
+<t>
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <xref target="RFC2119">
+</xref>
+.</t>
+</section>
+<section title="Defined Terms" anchor="s-2_2">
+<t>
+The terms of art used in this document are described in the Mesh Architecture Guide <xref target="draft-hallambaker-mesh-architecture">
+</xref>
+.</t>
+</section>
+<section title="Related Specifications" anchor="s-2_3">
+<t>
+The architecture of the Mathematical Mesh is described in the Mesh Architecture Guide <xref target="draft-hallambaker-mesh-architecture">
+</xref>
+. The Mesh documentation set and related specifications are described in this document.</t>
+</section>
+<section title="Implementation Status" anchor="s-2_4">
+<t>
+The implementation status of the reference code base is described in the companion document <xref target="draft-hallambaker-mesh-developer">
+</xref>
+.</t>
+</section>
+</section>
+<section title="Recommended and Required Algorithms" anchor="s-3">
+<t>
+To allow implementation of Mesh capabilities on the widest possible range of devices, separate algorithm requirements and recommendations are specified for four classes of device:</t>
+<t><list style="hanging">
+<t hangText="Administration Device">
+A general-purpose computing device that is used for Mesh administration functions.</t>
+<t hangText="Mesh Device">
+A general-purpose computing device that is not used for Mesh administration functions with sufficient memory and processing power to perform public key cryptography operations without paying particular attention to the impact on performance.</t>
+<t hangText="Constrained Device">
+An embedded computing device with limited memory and computing power that offers sufficient processing capabilities to perform occasional public key operations (e.g. during device initialization) but is not suited to repeated operations.</t>
+<t hangText="Bridge Device">
+A trusted device that enables Mesh Devices to interoperate with Constrained devices. </t>
+</list></t>
+<t>
+Since Administration Devices and Mesh Devices MUST support communication with Mesh Devices and Constrained devices, they MUST meet all the REQUIRED algorithms for both types of device.</t>
+<section title="Mesh Device" anchor="s-3_1">
+<t>
+Support for the following algorithms is REQUIRED:</t>
+<t><list style="symbols">
+<t>
+SHA-2-512 <xref target="SHA-2">
+</xref>
+</t>
+<t>
+HMAC-SHA-2-512 <xref target="RFC2104">
+</xref>
+</t>
+<t>
+HMAC-based Extract-and-Expand Key Derivation Function <xref target="RFC5869">
+</xref>
+</t>
+<t>
+AES-CBC-256 Encryption <xref target="FIPS197">
+</xref>
+</t>
+<t>
+Advanced Encryption Standard (AES) Key Wrap Algorithm <xref target="RFC3394">
+</xref>
+</t>
+<t>
+Montgomery Curve Diffie-Hellman Key Agreement X25519 and X448 <xref target="RFC7748">
+</xref>
+</t>
+<t>
+Edwards-Curve Digital Signature Algorithm Ed25519 and Ed448 <xref target="RFC8032">
+</xref>
+</t>
+</list></t>
+<t>
+Support for the following algorithms is RECOMMENDED:</t>
+<t><list style="symbols">
+<t>
+AES-GCM-256 Encryption <xref target="AES-GCM">
+</xref>
+</t>
+<t>
+SHA-3-512 <xref target="SHA-3">
+</xref>
+  </t>
+<t>
+KMAC SHA-3-512 <xref target="SHA-3-Derived">
+</xref>
+  </t>
+</list></t>
+<t>
+While the use of GCM is generally preferred over CBC mode in IETF security protocols, this mode is not currently supported by the reference implementation platform.</t>
+</section>
+<section title="Constrained Device" anchor="s-3_2">
+<t>
+Support for the following algorithms is REQUIRED:</t>
+<t><list style="symbols">
+<t>
+SHA-2-512 <xref target="SHA-2">
+</xref>
+</t>
+<t>
+HMAC-SHA-2-512 <xref target="RFC2104">
+</xref>
+</t>
+<t>
+HMAC-based Extract-and-Expand Key Derivation Function <xref target="RFC5869">
+</xref>
+</t>
+<t>
+Poly1035 Authenticated Encryption <xref target="RFC8439">
+</xref>
+</t>
+<t>
+ChaCha20 Encryption <xref target="RFC8439">
+</xref>
+</t>
+<t>
+Advanced Encryption Standard (AES) Key Wrap Algorithm <xref target="RFC3394">
+</xref>
+</t>
+<t>
+Edwards-Curve Digital Signature Algorithm Ed25519 <xref target="RFC8032">
+</xref>
+</t>
+<t>
+Edwards-Curve Diffie-Hellman Key Agreement Ed25519 <xref target="RFC8032">
+</xref>
+</t>
+</list></t>
+<t>
+Use of the Edwards Curves for Signature and Key Agreement allows both functions to be supported by a single library with no reduction in security.</t>
+</section>
+</section>
+<section title="Multi-Party Cryptography" anchor="s-4">
+<t>
+The multi-party key generation and multi-party decryption mechanisms used in the Mesh protocols are made possible by the fact that Diffie Hellman key agreement and elliptic curve variants thereof support properties we call the Key Combination Law and the Result Combination Law.</t>
+<t>
+Let {X, x}, {Y, y}, {E, e} be {public, private} key pairs.</t>
+<t>
+The Key Combination law states that we can define an operator ? such that there is a keypair {Z, z} such that:</t>
+<t>
+Z = X ? Y and z = (x + y) mod o (where o is the order of the group)</t>
+<t>
+The Result Combination Law states that we can define an operator ? such that:</t>
+<t>
+(x ? E) ? (y ? E) = (z ? E) = (e ? Z).</t>
+<section title="Application to Diffie Hellman (not normative)" anchor="s-4_1">
+<t>
+For the Diffie Hellman system in a modular field p, o = p-1 and a ? b = a ? b = a.b mod p.</t>
+<t>
+Proof:</t>
+<t>
+By definition, X = e^x mod p, Y = e^y mod p, and Z = e^z mod p.</t>
+<t>
+Therefore, </t>
+<t>
+Z = e^z mod p = e^x+y mod p = (e^xe^y) mod p = e^x mod p.e^y mod p = X.Y</t>
+<t>
+A similar proof may be constructed for the operator ?.</t>
+</section>
+<section title="Multi-Party Key Generation" anchor="s-4_2">
+<t>
+The Key Combination Law provides the basis for the Key Co-Generation technique used to ensure that the cryptographic keys used in devices connected to a Mesh profile are sufficiently random and have not been compromised by malware or other 'backdoor' compromise to the machine during or after manufacture.</t>
+<t>
+For the Diffie Hellman system, the Key Combination law provides all the mechanism needed to implement a Key Co-Generation mechanism. If the Device key is {X, x},  the administration device can generate a Co-Generation Key Pair {Y, y} and generate a Device Connection Assertion for the final public key E calculated from knowledge of X and Y alone. Passing the value y to the device (using a secure channel) allows it to calculate the corresponding private key e required to make use of the Device Connection Assertion.</t>
+<t>
+This approach ensures that a party with knowledge of either x or y but not both obtains no knowledge of e. </t>
+<t>
+Section  REF _Ref5309729 \w \h 5 describes the implementation of these schemes in the Mesh</t>
+</section>
+<section title="Multi-Party Decryption" anchor="s-4_3">
+<t>
+The Key Combination Law and Result Combination Law provide the basis for the Multi-Party Decryption technique used to support Mesh Encryption Groups.</t>
+<t>
+Section  REF _Ref5309538 \w \h 6 describes the application of this technique in the Mesh</t>
+</section>
+<section title="Mutually Authenticated Key Exchange." anchor="s-4_4">
+<t>
+The Result Combination Law is used to provide a Key Exchange mechanism that provides mutual authentication of the parties while preserving forward secrecy.</t>
+</section>
+<section title="Implementation" anchor="s-4_5">
+<t>
+For elliptic curve cryptosystems, the operators ? and ? are point addition.</t>
+<t>
+Implementing a robust Key Co-Generation for the Elliptic Curve Cryptography schemes described in <xref target="RFC7748">
+</xref>
+ and <xref target="RFC8032">
+</xref>
+ requires some additional considerations to be addressed.</t>
+<t><list style="symbols">
+<t>
+The secret scalar used in the EdDSA algorithm is calculated from the private key using a digest function. It is therefore necessary to specify the Key Co-Generation mechanism by reference to operations on the secret scalar values rather than operations on the private keys.</t>
+<t>
+The Montgomery Ladder traditionally used to perform X25519 and X448 point multiplication does not require implementation of a function to add two arbitrary points. While the steps required to create such a function are fully constrained by the specification, the means of satisfying the constraints is not.</t>
+</list></t>
+<section title="Implementation for Ed25519 and Ed448" anchor="s-4_5_1">
+<t>
+The data structures used to implement co-generation of public keys are defined in the main Mesh Reference Guide. This document describes only the additional implementation details.</t>
+<t>
+Note that the 'private key' described in <xref target="RFC8032">
+</xref>
+ is in fact a seed used to generate a 'secret scalar' value that is the value that has the function of being the private key in the ECDH algorithm.</t>
+<t>
+To provision a new public key to a device, the provisioning device:</t>
+<t><list style="numbers">
+<t>
+Obtains the device profile of the device(s) to be provisioned to determine the type of key to perform co-generation for. Let the device {public, private} key be {D, d}.</t>
+<t>
+Generates a private key m with the specified number of bytes (32 or 57].</t>
+<t>
+Calculates the corresponding public key M.</t>
+<t>
+Calculates the Application public key A = D+M where + is point addition.</t>
+<t>
+Constructs the application device entry containing the private key value m and encrypts under the device encryption key d.</t>
+</list></t>
+<t>
+On receipt, the device may at its option use its knowledge of the secret scalar corresponding to d and m to calculate the application secret scalar a or alternatively maintain the two secrets separately and make use of the result combination law to perform private key operations.</t>
+</section>
+<section title="Implementation for X25519 and X448" anchor="s-4_5_2">
+<t>
+While the point addition function can be defined for any elliptic curve system, it is not necessary to implement point addition to support ECDH key agreement. </t>
+<t>
+In particular, point multiplication using the Montgomery ladder technique over Montgomery curves only operate on the x co-ordinate and only require point doubling operations. </t>
+<t>
+For expediency, the current implementation of the Mesh reference code uses the Edwards curves for both signature and encryption pending announcement of platform support for both algorithms.</t>
+</section>
+</section>
+</section>
+<section title="Multi-Party Key Generation" anchor="s-5">
+<t>
+Multi-Party Key Generation is a capability that is used in the Mesh to enable provisioning of application specific private key pairs to connected devices without revealing any information concerning the application private key of the device.</t>
+<t>
+For example, Alice provisions the confirmation service to her watch. The provisioning device could generate a signature key for the device and encrypt it under the encryption key of the device. But this means that we cannot attribute signatures to the watch with absolute certainty as the provisioning device has had knowledge of the watch signature key. Nor do we wish to use the device signature key for the confirmation service.</t>
+<t>
+Multi-Party Key Generation allows an administration device to provision a connected device with an application specific private key that is specific to that application and no other such that the application can determine the public key of the device but has no knowledge of the private key.</t>
+<t>
+Provisioning an application private key to a device requires the administration device to:</t>
+<t><list style="symbols">
+<t>
+Generate a new application public key for the device.</t>
+<t>
+Construct and publish whatever application specific credentials the device requires to use the application.</t>
+<t>
+Providing the information required to make use of the private key to the device.</t>
+</list></t>
+<t>
+Note that while the administration device needs to know the device application public key, it does not require knowledge of the device application private key.</t>
+<figure>
+<preamble>
+[[This figure is not viewable in this format. The figure is available at <eref target="http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html">http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html</eref>.]]</preamble>
+<artwork>
+</artwork>
+<postamble>
+Two party key pair generation.</postamble>
+</figure>
+<section title="Example: Provisioning the Confirmation Service" anchor="s-5_1">
+<t>
+For example, Alice provisions the confirmation service to her watch. The device profile of the watch specifies an Ed25519 signature key. Note that for production use, Ed448 is almost certainly prefered but Ed25519 has the advantage of more compact presentation. </t>
+<figure anchor="s-5_1-2" suppress-title="true">
+<artwork>
+<![CDATA[Device Key
+
+UDF Seed:       ZAAA-G4F5-G34W-HHLC-24AP-SZKI-VGO7-UHI
+Private Key:
+  B7 48 FF 8A  1B D2 04 BC  BA 53 70 80  91 66 08 8E
+  26 15 B5 52  ED C9 C4 CE  80 D7 75 A6  BD A9 4A 1C
+Secret Scalar:
+56125651237600354228798699639619403779855821496596976661382393571903134631504
+Public Key:
+  2B B3 8F D1  93 16 E1 5E  24 44 BA 82  9F 4A D3 7D
+  F6 7F B5 A0  92 65 A1 7B  F4 8C B6 51  6D F3 9F DC
+Fingerprint:    MANZ-N7DM-BYZH-EQIO-E7YL-C6SX-GONP]]></artwork>
+</figure>
+<t>
+The provisioning device could generate a signature key for the device and encrypt it under the encryption key of the device. But this means that we cannot attribute signatures to the watch with absolute certainty as the provisioning device has had knowledge of the  watch signature key. Nor do we wish to use the device signature key for the confirmation service. </t>
+<t>
+Instead, the provisioning device generates an overlay keypair: </t>
+<figure anchor="s-5_1-5" suppress-title="true">
+<artwork>
+<![CDATA[Device Key
+
+UDF Seed:       ZAAA-HIGJ-GGBY-NTBF-YS2T-ABNO-4WT2-SIY
+Private Key:
+  F9 44 69 38  A7 E2 52 A1  F6 1D 9D 9B  29 D1 5D 52
+  77 23 26 0C  AF F3 14 A6  4E 95 CB 76  5B 24 B1 67
+Secret Scalar:
+49437431830830005043554286843388551057265319605872247754572631754571997461496
+Public Key:
+  C7 EF 8B 19  BE D9 E7 F7  45 17 73 8E  B3 92 6E 86
+  C2 0F A4 06  84 58 BF 3B  FE EE 87 A5  B8 EB 62 0A
+Fingerprint:    MBQO-UETO-EL5H-EQBI-PM4Y-QOE7-E6PH]]></artwork>
+</figure>
+<t>
+The provisioning device can calculate the public key of the composite keypair by adding the public keys of the device profile and the companion public key: </t>
+<figure anchor="s-5_1-7" suppress-title="true">
+<artwork>
+<![CDATA[Composite public key = Device + Overlay:
+  0A FD 34 5B  D7 49 47 BF  C3 CC 2E 4B  AB A6 BF FE
+  E1 7A B1 3C  74 C6 49 EE  04 9C FF C0  4B D3 05 F6
+Fingerprint:    MBAK-3KK5-F3AN-E6AJ-EIIT-IIL6-7KTP]]></artwork>
+</figure>
+<t>
+The provisioning device encrypts the private key of the comanion keypair (or the seed from which it was generated) under the encryption key of the device.  </t>
+<t>
+The provisioning device calculates the private key of the composite keypair by  adding the two private key values modulo the order of the group and verifies that scalar  multiplication of the base point returns the composite public key value. </t>
+<figure anchor="s-5_1-10" suppress-title="true">
+<artwork>
+<![CDATA[Composite Secret Scalar = Device + Overlay:
+3696218815216775247999600833593893946854897602495339232735523069524455498173
+Fingerprint:    MBAK-3KK5-F3AN-E6AJ-EIIT-IIL6-7KTP]]></artwork>
+</figure>
+</section>
+</section>
+<section title="Multi-Party Decryption" anchor="s-6">
+<t>
+A key limitation of most deployed messaging systems is that true end-to-end confidentiality is only achieved for a limited set of communication patterns. Specifically, bilateral communications (Alice sends a message to Bob) or broadcast communications to a known set of recipients (Alice sends a message to Bob, Carol and Doug). These capabilities do not support communication patterns where the set of recipients changes over time or is confidential. Yet such requirements commonly occur in situations such as sending a message to a mailing list whose membership isn't known to the sender, or creating a spreadsheet whose readership is to be limited to authorized members of the 'accounting' team.</t>
+<figure>
+<preamble>
+[[This figure is not viewable in this format. The figure is available at <eref target="http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html">http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html</eref>.]]</preamble>
+<artwork>
+</artwork>
+<postamble>
+Traditional End-to-End Encryption is static.</postamble>
+</figure>
+<t>
+The mathematical approach that makes key co-generation possible may be applied to support a public key encryption mode in which encryption is performed as usual but decryption requires the use of multiple keys. This approach is variously described in the literature as distributed key generation and proxy re-encryption&nbsp;<xref target="Blaze98">
+</xref>
+.</t>
+<t>
+The approach specified in this document borrows aspects of both these techniques. This combined approach is called 'recryption'. Using recryption allows a sender to send a message to a group of users whose membership is not known to the sender at the time the message is sent and can change at any time. </t>
+<figure>
+<preamble>
+[[This figure is not viewable in this format. The figure is available at <eref target="http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html">http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html</eref>.]]</preamble>
+<artwork>
+</artwork>
+<postamble>
+Recryption supports End-to-End Encryption in dynamic groups.</postamble>
+</figure>
+<t>
+Proxy re-encryption provides a technical capability that meets the needs of such communication patterns. Conventional symmetric key cryptography uses a single key to encrypt and decrypt data. Public key cryptography uses two keys, the key used to encrypt data is separate from the key used to decrypt. Proxy re-encryption introduces a third key (the recryption key) that allows a party to permit an encrypted data packet to be decrypted using a different key without permitting the data to be decrypted.</t>
+<t>
+The introduction of a recryption key permits end-to-end confidentiality to be preserved when a communication pattern requires that some part of the communication be supported by a service.</t>
+<t>
+The introduction of a third type of key, the recryption key permits two new roles to be established, that of an administrator and recryption service. There are thus four parties:</t>
+<t><list style="hanging">
+<t hangText="Administrator">
+Holder of Decryption Key, Creator of Recryption Keys</t>
+<t hangText="Sender">
+Holder of Encryption Key</t>
+<t hangText="Recryption Service">
+Holder of Recryption keys</t>
+<t hangText="Receiver">
+Holder of personal decryption key</t>
+</list></t>
+<t>
+The communication between these parties is shown in Figure X below:</t>
+<figure>
+<preamble>
+[[This figure is not viewable in this format. The figure is available at <eref target="http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html">http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html</eref>.]]</preamble>
+<artwork>
+</artwork>
+<postamble>
+Mesh/Recrypt Parties</postamble>
+</figure>
+<t>
+The information stored at the recryption service is necessary but not sufficient to decrypt the message. Thus, no disclosure of the message plaintext occurs even in the event that an attacker gains full knowledge of all the information stored by the recryption service.</t>
+<section title="Mechanism" anchor="s-6_1">
+<t>
+The mechanism used to support recryption is the same as the mechanism used to support key co-generation except that this time, instead of combining two keys to create one, the private component of a decryption key (i.e. the private key) is split into two parts, a recryption key and a decryption key.</t>
+<t>
+Recall that the key combination law for Diffie Hellman crypto-systems states that we can add two private keys to get a third. It follows that we can split the private key portion of a keypair {G, g} into two parts by choosing a random number that is less than the order of the Diffie-Hellman group to be our first key x. Our second key is y = g - r mod o, where o is the order of the group. </t>
+<t>
+Having generated x, y, we can use these to perform private key agreement operations on a public key E and then use the result combination law to obtain the same result that we would have obtained using g.</t>
+<t>
+One means of applying this mechanism to recryption would be to generate a different random value x for each member of the group and store it at the recryption service and communicate the value y to the member via a secure channel. Applying this approach, we can clearly see that the recryption service gains no information about the value of the private key since the only information it holds is a random number which could have been generated without any knowledge of the group private key.</t>
+<t>
+<xref target="RFC8032">
+</xref>
+ requires that implementations derive the scalar secret by taking a cryptographic digest of the private key. This means that either the client or the service must use a non-compliant implementation. Given this choice, it is preferable to require that the non-standard implementation be required at the service rather than the client. This limits the scope of the non-conformant key derivation approach to the specialist recryption service and ensures that the client enforce the requirement to generate the private key component by means of a digest.</t>
+</section>
+<section title="Implementation" anchor="s-6_2">
+<t>
+Implementation of recryption in the Mesh has four parts:</t>
+<t><list style="symbols">
+<t>
+Creation and management of the recryption group.</t>
+<t>
+Provisioning of members to a recryption group.</t>
+<t>
+Message encryption.</t>
+<t>
+Message decryption.</t>
+</list></t>
+<t>
+These operations are all performed using the same catalog and messaging infrastructure provided by the Mesh for other purposes. </t>
+<t>
+Each recryption group has its own independent Mesh account. This has many advantages:</t>
+<t><list style="symbols">
+<t>
+Administration of the recryption group may be spread across multiple Mesh users or transferred from one user to another without requiring specification of a separate management protocol to support these operations.</t>
+<t>
+The recryption account address can be used by Mesh applications such as group messaging, conferencing, etc. as a contact address.</t>
+<t>
+The contact request service can be used to notify members that they have been granted membership in the group.</t>
+</list></t>
+<section title="Group Creation" anchor="s-6_2_1">
+<t>
+Creation of a Recryption group requires the steps of:</t>
+<t><list style="symbols">
+<t>
+Generating the recryption group key pair</t>
+<t>
+Creating the recryption group account</t>
+<t>
+Generating administrator record for each administrator.</t>
+<t>
+Publishing the administrator records to the recryption catalog.</t>
+</list></t>
+<t>
+Note that in principle, we could make use of the key combination law to enable separation of duties controls on administrators so that provisioning of members required multiple administrators to participate in the process. This is left to future versions.</t>
+</section>
+<section title="Provisioning a Member" anchor="s-6_2_2">
+<t>
+To provision a user as a member of the recryption group, the administrator requires their current recryption profile. The administrator MAY obtain this by means of a contact service request. As with any contact service request, this request is subject to access control and MAY require authorization by the intended user before the provisioning can proceed.</t>
+<t>
+Having obtained the user's recryption profile, the administration tool generates a decryption private key for the user and encrypts it under the member's key to create the encrypted decryption key entry. </t>
+<t>
+The administration tool then computes the secret scalar from the private key and uses this together with the secret scalar of the recryption group to compute the recryption key for the member. This value and the encrypted decryption key entry are combined to form the recryption group membership record which is published to the catalog.</t>
+</section>
+<section title="Message Encryption and Decryption" anchor="s-6_2_3">
+<t>
+Encryption of a messages makes use of DARE Message in exactly the same manner as any other encryption. The sole difference being that the recipient entry for the recryption operation MUST specify the recryption group address an not just the key fingerprint. This allows the recipient to determine which recryption service to contact to perform the recryption operation.</t>
+<t>
+To decrypt a message, the recipient makes an authenticated recryption request to the specified recryption service specifying:</t>
+<t><list style="symbols">
+<t>
+The recipient entry to be used for decryption</t>
+<t>
+The fingerprint of the decryption key(s) the device would like to make use of.</t>
+<t>
+Whether or not the encrypted decryption key entry should be returned.</t>
+</list></t>
+<figure>
+<preamble>
+[[This figure is not viewable in this format. The figure is available at <eref target="http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html">http://mathmesh.com/Documents/draft-hallambaker-mesh-cryptography.html</eref>.]]</preamble>
+<artwork>
+</artwork>
+<postamble>
+Two key decryption.</postamble>
+</figure>
+<t>
+The recryption service searches the catalog for the corresponding recryption group to find a matching entry. If found and if the recipient and proposed decryption key are dully authorized for the purpose, the service performs the key agreement operation using the recryption key specified in the entry and returns the result to the recipient.</t>
+<t>
+The recipient then decrypts the recryption data entry using its device decryption key and uses the group decryption key to calculate the other half of the result. The two halves of the result are then added to obtain the key agreement value that is then used to decrypt the message.</t>
+</section>
+</section>
+<section title="Example: Messaging group" anchor="s-6_3">
+<t>
+NB: The current code implements encryption in the Elliptic Curve Ed25519, not the Montgomery Curve X.25519 as it should. This will be lifted in the near future. </t>
+<t>
+Alice creates an encryption keypair. </t>
+<figure anchor="s-6_3-3" suppress-title="true">
+<artwork>
+<![CDATA[Group Key:
+  51 C5 D1 84  5F C3 31 97  D3 80 2A 25  CE 7F 82 AF
+  F0 30 5B 7D  52 D0 B6 CE  3C 1C 95 A0  33 CB 89 98
+Value:
+32231959352602868314725639964100760889451477817969178194652896778421852742616]]></artwork>
+</figure>
+<t>
+To verify the proper function of the group, Alice creates a test message and  encrypts it under the group key. </t>
+<figure anchor="s-6_3-5" suppress-title="true">
+<artwork>
+<![CDATA[Message = This is a test as UTF8:
+  54 68 69 73  20 69 73 20  61 20 74 65  73 74
+
+[{
+    "enc": "A256CBC",
+    "Salt": "HmQcfDk3qgOudmzqLZdtEw",
+    "recipients": [{
+        "kid": "MCGR-HO5N-2FPS-VUFQ-DEKF-7TRA-JHM6",
+        "epk": {
+          "PublicKeyECDH": {
+            "crv": "Ed25519",
+            "Public": "T3NLoRxqQEyUPOPQJIp0aVDN4tH2f3BOVXqgCq5SyDs"}},
+        "wmk": "jjSkEuWVIJZx8zLpedPMzJ9HyXzOcIqJh2i8MdRAHRnYa7E1oMKYyQ"}]},
+  "Sjd7SsWo4o3OPfM-xBbnIQ"]]]></artwork>
+</figure>
+<t>
+Alice decides to add Bob to the group. She creates an encryption key for Bob: The decryption key is specified in the same way as any other Ed25519 private key using the hash of a private key seed value: </t>
+<figure anchor="s-6_3-7" suppress-title="true">
+<artwork>
+<![CDATA[Bob's Member Key:
+  C1 3D 09 F2  D0 46 2B ED  34 43 A2 06  EB C9 C5 6D
+  68 92 08 3C  31 FC E7 35  EB 3D 65 82  82 66 92 1C
+Value:
+39765297387767177229798479396757873493329325191929553639423911645504436683984]]></artwork>
+</figure>
+<t>
+The the recryption key is the group secret scalar minus (mod p) the secret scalar of Bob's private key: </t>
+<figure anchor="s-6_3-9" suppress-title="true">
+<artwork>
+<![CDATA[Bob's Service Key:
+   [Not specified as a digest input value]
+Value:
+6940673119500215512873533693428875877836385344799439767232887009488324560610]]></artwork>
+</figure>
+<t>
+To decrypt: </t>
+<figure anchor="s-6_3-11" suppress-title="true">
+<artwork>
+<![CDATA[Member Agreement Value:
+  1D 32 8A 93  79 65 29 58  89 0A D7 A4  2E 57 C6 F6
+  95 B4 78 71  F2 21 EE 63  4F 1D C7 FB  A9 52 28 59
+
+Service Agreement Value:
+  B8 C1 13 4C  1B 22 21 38  BD 2E 7E 96  39 2C 7B 21
+  56 69 3B 58  6C FE 1E E9  5A 09 09 AD  30 39 09 DC
+
+Key Agreement IKM:
+  E7 88 C7 64  12 02 0E E8  66 38 60 F8  C8 A8 DB 36
+  FF DC E5 63  DF 64 61 D7  3E 41 E8 0E  8D FC 65 62]]></artwork>
+</figure>
+<t>
+This value allows the test message to be decrypted. </t>
+</section>
+</section>
+<section title="Mutually Authenticated Key Agreement" anchor="s-7">
+<t>
+Diffie Hellman key agreement using the authenticated public keys of the principals provides mutual authentication of those principals.</t>
+<t>
+For example, if Alice's key pair is {a, A} and Bob's key pair is {b, B}, the Diffie Hellman key agreement value DH (a, B) = DH (b, A) can only be generated from the public information if a or b is known.</t>
+<t>
+The chief disadvantage of this approach is that it only allows Alice and Bob to establish a single shared secret that will never vary and does not provide forward secrecy. To avoid this, cryptographic protocols usually perform the key agreement against an ephemeral key and either accept that the client key is not authenticated or perform multiple key agreements and combine the results.</t>
+<t>
+Using the Result Combination Law allows a key agreement mechanism to combine the benefits of mutual authentication with the use of ephemeral keys without the need for multiple private key operations or additional round trips.</t>
+<t>
+In its simplest form, the key exchange has two parties which we refer to as the client and the server. The client being the party that initiates the protocol exchange and the server being the party that responds. Let the public key pair of the client be {a, A} and that of the server {b, B}.</t>
+<t>
+Two versions of the key agreement mechanism are specified:</t>
+<t><list style="hanging">
+<t hangText="Client ephemeral">
+The client contributes an ephemeral key pair {n_A, N_A}. The effective public key of the client is A ? N_A. </t>
+<t>
+The server uses its public key B.</t>
+<t>
+The key agreement value is DH (a + n_A, B) = DH (b, A ? N_A)</t>
+<t hangText="Dual ephemeral">
+The client contributes an ephemeral key pair {n_A, N_A}. The effective public key of the client is A ? N_A. </t>
+<t>
+The server contributes an ephemeral key pair {n_B, N_B}. The effective public key of the client is B ? N_B. </t>
+<t>
+The key agreement value is DH (a + n_A, B ? N_B) = DH (b + n_B, A ? N_A)</t>
+</list></t>
+<t>
+The function of the ephemeral key is effectively that of a nonce but it is shared with the counter-party as a public key value.</t>
+<t>
+The dual ephemeral approach has the advantage that it limits the scope for side channel attacks as both sides have contributed unknown information to the key agreement value. The disadvantage of this approach is that the key agreement value can only be calculated after the server has provided its ephemeral.</t>
+<t>
+Implementations MAY take advantage of the result combination law to enable private key operations involving the authenticated key (or a contribution to it) to be performed in trustworthy hardware.</t>
+<t>
+An advantage of this key exchange mechanism over the traditional TLS key exchange approach is that no signature operation is involved, thus ensuring that either party can repudiate the exchange and thus the claim that they were in communication.</t>
+<t>
+The master secret is calculated from the key agreement value in the usual fashion. For ECDH algorithms, this comprises the steps of converting the key agreement value to an octet string which forms the input to a Key Derivation Function. </t>
+</section>
+<section title="Security Considerations" anchor="s-8">
+<t>
+The security considerations for use and implementation of Mesh services and applications are described in the Mesh Security Considerations guide <xref target="draft-hallambaker-mesh-security">
+</xref>
+.</t>
+</section>
+<section title="IANA Considerations" anchor="s-9">
+<t>
+This document requires no IANA actions.</t>
+</section>
+<section title="Acknowledgements" anchor="s-10">
+<t>
+A list of people who have contributed to the design of the Mesh is presented in <xref target="draft-hallambaker-mesh-architecture">
+</xref>
+.</t>
+</section>
+<section title="Examples" anchor="s-11">
+<section title="Key Combination" anchor="s-11_1">
+<section title="Ed25519" anchor="s-11_1_1">
+</section>
+<section title="Ed448" anchor="s-11_1_2">
+</section>
+<section title="X25519" anchor="s-11_1_3">
+</section>
+<section title="X448" anchor="s-11_1_4">
+</section>
+</section>
+<section title="Group Encryption" anchor="s-11_2">
+<section title="X25519" anchor="s-11_2_1">
+</section>
+<section title="X448" anchor="s-11_2_2">
+</section>
+</section>
+</section>
+</middle>
+<back>
+<references title="Normative References">
+<reference anchor="SHA-2">
+<front>
+<title>Secure Hash Standard</title>
+<author>
+<organization>NIST</organization>
+<address>
+</address>
+</author>
+<date month="August" year="2015"/>
+</front>
+<format type="pdf" target="https://dx.doi.org/10.6028/NIST.FIPS.180-4"/>
+</reference>
+<reference anchor="FIPS197">
+<front>
+<title>Advanced Encryption Standard (AES)</title>
+<author>
+<organization>NIST</organization>
+<address>
+</address>
+</author>
+<date month="November" year="2001"/>
+</front>
+<format type="pdf" target="https://doi.org/10.6028/NIST.FIPS.197"/>
+</reference>
+<reference anchor="AES-GCM">
+<front>
+<title>Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC</title>
+<author fullname="Morris J. Dworkin" initials="M. J." surname="Dworkin">
+<organization>NIST</organization>
+<address>
+</address>
+</author>
+<date month="November" year="2007"/>
+</front>
+<format type="pdf" target="https://doi.org/10.6028/NIST.SP.800-38D"/>
+</reference>
+<reference anchor="SHA-3">
+<front>
+<title>SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions</title>
+<author fullname="Morris J. Dworkin" initials="M. J." surname="Dworkin">
+<organization>NIST</organization>
+<address>
+</address>
+</author>
+<date month="August" year="2015"/>
+</front>
+<format type="pdf" target="https://dx.doi.org/10.6028/NIST.FIPS.202"/>
+</reference>
+<reference anchor="SHA-3-Derived">
+<front>
+<title>SHA-3 Derived Functions: cSHAKE, KMAC, TupleHash and ParallelHash SHARE</title>
+<author fullname="John M. Kelsey" initials="J. M." surname="Kelsey">
+<organization>NIST</organization>
+<address>
+</address>
+</author>
+<author fullname="Shu-jen H. Chang" initials="S. H." surname="Chang">
+<organization>NIST</organization>
+<address>
+</address>
+</author>
+<author fullname="Ray A. Perlner" initials="R. A." surname="Perlner">
+<organization>NIST</organization>
+<address>
+</address>
+</author>
+<date month="December" year="2016"/>
+</front>
+<format type="pdf" target="https://doi.org/10.6028/NIST.SP.800-185"/>
+</reference>
+<reference anchor="RFC2119">
+<front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner">
+<organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+<reference anchor="RFC2104">
+<front>
+<title>HMAC: Keyed-Hashing for Message Authentication</title>
+<author fullname="H. Krawczyk" initials="H." surname="Krawczyk">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="M. Bellare" initials="M." surname="Bellare">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="R. Canetti" initials="R." surname="Canetti">
+<organization/>
+<address>
+</address>
+</author>
+<date month="February" year="1997"/>
+</front>
+<seriesInfo name="RFC" value="2104"/>
+<seriesInfo name="DOI" value="10.17487/RFC2104"/>
+</reference>
+<reference anchor="RFC5869">
+<front>
+<title>HMAC-based Extract-and-Expand Key Derivation Function (HKDF)</title>
+<author fullname="H. Krawczyk" initials="H." surname="Krawczyk">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="P. Eronen" initials="P." surname="Eronen">
+<organization/>
+<address>
+</address>
+</author>
+<date month="May" year="2010"/>
+</front>
+<seriesInfo name="RFC" value="5869"/>
+<seriesInfo name="DOI" value="10.17487/RFC5869"/>
+</reference>
+<reference anchor="RFC3394">
+<front>
+<title>Advanced Encryption Standard (AES) Key Wrap Algorithm</title>
+<author fullname="J. Schaad" initials="J." surname="Schaad">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="R. Housley" initials="R." surname="Housley">
+<organization/>
+<address>
+</address>
+</author>
+<date month="September" year="2002"/>
+</front>
+<seriesInfo name="RFC" value="3394"/>
+<seriesInfo name="DOI" value="10.17487/RFC3394"/>
+</reference>
+<reference anchor="RFC7748">
+<front>
+<title>Elliptic Curves for Security</title>
+<author fullname="A. Langley" initials="A." surname="Langley">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="M. Hamburg" initials="M." surname="Hamburg">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="S. Turner" initials="S." surname="Turner">
+<organization/>
+<address>
+</address>
+</author>
+<date month="January" year="2016"/>
+</front>
+<seriesInfo name="RFC" value="7748"/>
+<seriesInfo name="DOI" value="10.17487/RFC7748"/>
+</reference>
+<reference anchor="RFC8032">
+<front>
+<title>Edwards-Curve Digital Signature Algorithm (EdDSA)</title>
+<author fullname="S. Josefsson" initials="S." surname="Josefsson">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="I. Liusvaara" initials="I." surname="Liusvaara">
+<organization/>
+<address>
+</address>
+</author>
+<date month="January" year="2017"/>
+</front>
+<seriesInfo name="RFC" value="8032"/>
+<seriesInfo name="DOI" value="10.17487/RFC8032"/>
+</reference>
+<reference anchor="RFC8439">
+<front>
+<title>ChaCha20 and Poly1305 for IETF Protocols</title>
+<author fullname="Y. Nir" initials="Y." surname="Nir">
+<organization/>
+<address>
+</address>
+</author>
+<author fullname="A. Langley" initials="A." surname="Langley">
+<organization/>
+<address>
+</address>
+</author>
+<date month="June" year="2018"/>
+</front>
+<seriesInfo name="RFC" value="8439"/>
+<seriesInfo name="DOI" value="10.17487/RFC8439"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-architecture">
+<front>
+<title>Mathematical Mesh 3.0 Part I: Architecture Guide</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker">
+<organization/>
+<address>
+</address>
+</author>
+<date day="23" month="October" year="2019"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-architecture-11"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-11.txt"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-security">
+<front>
+<title>Mathematical Mesh 3.0 Part VII: Security Considerations</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker">
+<organization/>
+<address>
+</address>
+</author>
+<date day="23" month="October" year="2019"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-security-02"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-security-02.txt"/>
+</reference>
+</references>
+<references title="Informative References">
+<reference anchor="draft-hallambaker-mesh-developer">
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker">
+<organization/>
+<address>
+</address>
+</author>
+<date day="23" month="October" year="2019"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-developer-09"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-09.txt"/>
+</reference>
+<reference anchor="Blaze98">
+<front>
+<title>[Reference Not Found!]</title>
+<author initials="" surname="">
+<organization/>
+<address>
+</address>
+</author>
+<date/>
+</front>
+</reference>
+</references>
+</back>
+</rfc>

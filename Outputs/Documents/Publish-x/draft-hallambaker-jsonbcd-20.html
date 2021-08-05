@@ -1,0 +1,2033 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="Common,Latin" name="scripts">
+    <meta content="initial-scale=1.0" name="viewport">
+    <title>Binary Encodings for JavaScript Object Notation: JSON-B, JSON-C, JSON-D</title>
+    <meta name="author" content="Phillip Hallam-Baker">
+    <meta name="description" content="Three binary encodings for JavaScript Object Notation (JSON) are presented. JSON-B (Binary) is a strict superset of the JSON encoding that permits efficient binary encoding of intrinsic JavaScript data types. JSON-C (Compact) is a strict superset of JSON-B that supports compact representation of repeated data strings with short numeric codes. JSON-D (Data) supports additional binary data types for integer and floating-point representations for use in scientific applications where conversion between binary and decimal representations would cause a loss of precision. This document is also available online at . ">
+    <meta content="rfctool 2.0" name="generator">
+    <link href="#copyright" rel="license">
+    <style type="text/css">
+/* fonts */
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans'); /* Sans-serif */
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif'); /* Serif (print) */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono'); /* Monospace */
+
+@viewport {
+  zoom: 1.0;
+  width: extend-to-zoom;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+/* general and mobile first */
+html {
+}
+body {
+  max-width: 90%;
+  margin: 1.5em auto;
+  color: #222;
+  background-color: #fff;
+  font-size: 14px;
+  font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 0.5em;
+  font-weight: bold;
+  line-height: 1.3;
+}
+#title {
+  clear: both;
+  border-bottom: 1px solid #ddd;
+  margin: 0 0 0.5em 0;
+  padding: 1em 0 0.5em;
+}
+.filename
+{
+    font-size: 20px;
+    color: darkgray;
+}
+.author {
+  padding-bottom: 4px;
+}
+h1 {
+  font-size: 26px;
+  margin: 1em 0;
+  color: blueviolet;
+}
+h2
+{
+    font-size: 22px;
+    margin-top: -20px; /* provide offset for in-page anchors */
+    padding-top: 33px;
+    color: blueviolet;
+}
+h3
+{
+    font-size: 18px;
+    margin-top: -36px; /* provide offset for in-page anchors */
+    padding-top: 42px;
+    color: blueviolet;
+}
+h4
+{
+    font-size: 16px;
+    margin-top: -36px; /* provide offset for in-page anchors */
+    padding-top: 42px;
+    color: blueviolet;
+}
+h5, h6 {
+  font-size: 14px;
+}
+#n-copyright-notice {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+/* general structure */
+p {
+  padding: 0;
+  margin: 0 0 1em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+.alignCenter.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+  font-weight: bold;
+}
+    dl.nohang > dt
+    {
+        float: none;
+        font-weight: bold;
+    }
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #3E8EDE;
+}
+a[href]:hover {
+  background-color: #f2f2f2;
+}
+figcaption a[href],
+a[href].selfRef {
+  color: blueviolet;
+}
+/* XXX probably not this:
+a.selfRef:hover {
+  background-color: transparent;
+  cursor: default;
+} */
+
+/* Figures */
+tt, code, pre, code {
+  background-color: #f9f9f9;
+  font-family: 'Roboto Mono', monospace;
+}
+pre {
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 1em;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption {
+  font-style: italic;
+  margin: 0 0 1em 0;
+}
+@media screen {
+  pre {
+    overflow-x: auto;
+    max-width: 100%;
+    max-width: calc(100% - 22px);
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 1.2em 2em;
+}
+blockquote {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #e9e9e9;
+}
+tr:nth-child(2n+1) > td {
+  background-color: #f5f5f5;
+}
+table caption {
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  color: #777;
+  text-decoration: none;
+  visibility: hidden;
+  user-select: none;
+  -ms-user-select: none;
+  -o-user-select:none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+@media screen {
+  aside:hover > a.pilcrow,
+  p:hover > a.pilcrow,
+  blockquote:hover > a.pilcrow,
+  div:hover > a.pilcrow,
+  li:hover > a.pilcrow,
+  pre:hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: 0.9em;
+}
+#identifiers dt {
+  width: 3em;
+  clear: left;
+}
+#identifiers dd {
+  float: left;
+  margin-bottom: 0;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc  {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+nav.toc ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+nav.toc li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+/* references */
+.reference dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.reference dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.reference .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 600px) {
+  .index ul {
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+  }
+  .index ul ul {
+    -moz-column-count: 1;
+    -moz-column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  font-family: "Noto Sans",Arial,Helvetica,sans-serif;
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #b76427;
+  background-color: rgba(249, 232, 105, 0.3);
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: rgba(249, 232, 105, 0.3);
+  border-radius: 3px;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 1023px) {
+  body {
+    padding-top: 2em;
+  }
+  #title {
+    padding: 1em 0;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-top: -18px;  /* provide offset for in-page anchors */
+    padding-top: 38px;
+  }
+  #identifiers dd {
+    max-width: 60%;
+  }
+  /* Just get rid of the idiot stuff: */
+  /*
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+    border-bottom: 1px solid #ccc;
+  }
+  #toc h2 {
+    margin: -1px 0 0 0;
+    padding: 4px 0 4px 6px;
+    padding-right: 1em;
+    min-width: 190px;
+    font-size: 1.1em;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { 
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 6px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }*/
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 1024px) {
+  body {
+    max-width: 724px;
+    margin: 42px auto;
+    padding-left: 1.5em;
+    padding-right: 29em;
+  }
+  #toc {
+    position: fixed;
+    top: 42px;
+    right: 42px;
+    width: 25%;
+    margin: 0;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  #toc h2 {
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 0;
+    overflow: auto;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+	/*
+  body {
+    font-family: 'Noto Serif', "Times New Roman", Times, serif;
+    width: 100%;
+  }*/
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+	break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+.ears thead .left {
+  string-set: ears-top-left content();
+}
+
+.ears thead .center {
+  string-set: ears-top-center content();
+}
+
+.ears thead .right {
+  string-set: ears-top-right content();
+}
+
+.ears tfoot .left {
+  string-set: ears-bottom-left content();
+}
+
+.ears tfoot .center {
+  string-set: ears-bottom-center content();
+}
+
+.ears tfoot .right {
+  string-set: ears-bottom-right content();
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+  @top-left {
+    content: 'Internet-Draft';
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-left {
+    content: string(ears-top-left);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-center {
+    content: string(ears-top-center);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-right {
+    content: string(ears-top-right);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @bottom-left {
+    content: string(ears-bottom-left);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-center {
+    content: string(ears-bottom-center);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-right {
+      content: '[Page ' counter(page) ']';
+      vertical-align: top;
+      border-top: solid 1px #ccc;
+  }
+}
+    </style>
+    <link href="rfc-local.css" rel="stylesheet" type="text/css">
+    <link href="urn:issn:2070-1721" rel="alternate">
+<link rel="icon" href="data:image/svg+xml;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAJuwAACbsBBxD8PQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA6LSURBVHic7d1rcFTlGQfw/9lLkk0IuUBQNjEQyIUEAkUIkg7UcFMJ4I3BQpR2xo626nSmln5o7XQInY52OtTp1H5wEMapMxVEKGgCKpchCKKIgEruN5bcISG3zW2zl9MPKWjMbrK72XPe97zn+X3MnssD85/d57znnPeV8H+FKHwIwG8BLAcQA0L41wPgcwnS6zux8yQAGAFgF3btBLAPQCqACHb1ERKQCIxk9pk85MklKDkr7cKuDTLkYtaVETJZEqR8gwx5B+tCCAkFGfIOA4Ac1oUQEiLLDACmsK6CkBCJNrCugJBQokAToVCgiVAo0EQoFGgiFAo0EQoFmgiFAk2EQoEmQqFAE6FQoIlQKNBEKBRoIhQKNBEKBZoIhQJNhEKBJkKhQBOhUKCJUCjQRCgUaCIUCjQRCgWaCIUCTYRCgSZCoUAToVCgiVAo0EQoFGgiFBPrAu4wmAyIT4tHREwEwqaEsS5nFOeAE40XGlU9pzHMiFk/maXqOf3h6HXA3mJH/61+uIfdrMsZg3mgY5JjsPovq5G5ORPmSDPrcrzyuDx4Pel19N/sV+2c4THh2H5yu2rnC5TsltH4eSPOvXoOtR/Vsi7nLqYtR9zcODz/1fNYuH0ht2EGRn49FmxdwLoMrkhGCckrklFwrACLfraIdTl3MQ10XmEeIhMiWZbgt4XPLGRdApckScKaV9cAEutKRjAN9H2597E8fUCsS62YnjmddRlcik6MhiXewroMADTKERD6lvbO4/LA0etgXQYAxoFuON/A8vQByy7I5uanlScN5xrgcXpYlwGAcaDP/vksBjsHWZYQkNjZsZi1kr+hNJaGuodw4ncnWJdxF9NAd9V34e2Vb6PlUgvLMgJCbccIj8uD0gOl2Lt8L1qvtLIu5y7m49Dt5e1464G3kLgsEfMen4f0jemYsWAG67J8ytqSheO/Pg63g7+bCkqTZRmNnzWidH8pyt4vw0D7AOuSxmAeaACADDRfbEbzxWac/sNpRCdGI/PJTKx8ZSWm3MvXMooRsRFI35iOisMVrEtRleyWceDxA6gurmZdyri4HOWwN9vx5RtfYs+SPeiq62Jdzhh6bDu+eecb7sMMcBroO+wtdux/dD93P+9p+WncjLuqpez9MtYl+IXrQAMjPfaF3RdYlzGKMcyI+T+dz7oMVfXc6GFdgl+4DzQAXPj7BW4G7u9Y+LS+2g57q511CX7RRKCHuoZwdd9V1mWMkvTjJMTNiWNdhmp4a/t80USgAeDynsuQZZl1GXdJkqTLi0PeaSbQHZUd3N2AoUDzRzOBBoDS/aWsSxglPi0eicsSWZdBvkdbgX6vFLKbn7YDoG9p3mgq0H2tfbjx6Q3WZYyyYOsCGMzB/zcaw4whrIZoKtAAUHqAr7YjMiESqQ+nBrWvyWKCNcca4or0TXOBLnu/jLu3jYNtO1JWpSAsiq833LVOc4Ee6hpC/cl61mWMkvFYBsJjwgPeL21DmgLV6JvmAg0A1/ZfY13CKKYIEzKfzAx4v7R8CnSoaTLQlUcr4ex3si5jlEDbjhnZMxA7O1ahavRLk4F29jtRc7yGdRmjzM6bjan3TfV7+/SN6QpWo1+aDDTAX9shGaSRl2j9lL6BAq0EzQa65ngNhrqHWJcxir8zCFniLUh8gO4wKkGzgXY73Kg8Wsm6jFESshJw74/unXC7tPw0GEya/a/nmqb/V3m7yQIA2U9P3HbQcJ1yNB3o66evqzojqD+yC7IhGX3PRiMZJcxdN1fFivRF04H2uDwoP1zOuoxRoq3RSFmd4vPz5BXJsEzT1/uIatJ0oAH+HikFxh+TptENZWk+0A2fNXD3AmfW5iyfqxBQ/6wszQcaMn+v2JujzMh4NGPM32NTYpGQlcCgIv3QVKB9vZTKZduxfWzbQe2G8jQVaF9DYq1XWtFR0aFyNeObs3bOmGnM6Ha38jQV6PlPzYfJ4n06vrKDfLUdP1yXxRxlxqwHaSpepWkq0OFTw33+bPN4k+X7ox1z182FKYKPuTFFpqlAA76HxDoqO9D2dZvK1Yxv5pKZSJg/chFIoxvq0Fyg0/LTEDnd+8pZPF4c3lnGIm09BVoNmgu0wWxA1pYsr59d23+Nq9mVgJFfFOsSK6ITo1mXoguaCzQALNru/THN3sZeNF1oUrma8cUkx2DNa2tYl6Ebmgx0Um4SpqVP8/oZjxeHc9bOYV2Cbmgy0ACwYJv3pYpL3yuFx8XHEmNEfZoN9MKnF3pdM3CgfQC2MzbV6wlWTwNfz6FonWYDPd5EiTy2Hd501naio5KvO5xap9lAA77HpMsPlcM15FK5msBVHuHrFTIRaDrQ2duyvU526Oh1oO6TOgYVBabqwyrWJQhH04G2TLNg7sPeX2fibZqDHxq8PYjGzxtZlyEcTQca8L14T3VRNYb7hlWuxn9VRVXczXUtAs0HOuOxDETERoz5u3PAieoifheKpHZDGZoP9HgTJfLadrgdbtSf4msGVVFoPtCA79GO2o9rMXh7UOVqJlZ/qh7Ddn7bIS0TItCzHpzldaJEj9ODiiP8LTJP7YZyhAj0eBMl8naTRZZlVB/jt7fXOiECDfieKNF2xgZ7Cz/L+rZ82QJ7Mz/1iEaYQPuaKFH2yCg/xM/sStRuKEuYQAO+l3jgqe2oKqJAK0moQPta86/piyZ0X+9WuZqxuuq7cOvaLdZlCE2oQPskjzwnzVrVB/TtrDR9BBp8vEBL/bPydBPom9/eRHtZO7PzD3YOouF8A7Pz64VuAg2wbTtqjtfQq2Eq0FWgr73LbpoDajfUoatAd9V1ofVyq+rndTvcmnjhQAS6CjTA5uLw+pnrcPQ6VD+vHukv0AdKIXvUbTuo3VCP7gJtb7GrOtogyzLXLxqIRneBBtRtO9qutKG3qVe18+mdLgNdfqgcHqc6Q2jUbqhLl4Ee6BhQ7RWoyg9o7g016TLQgDpP4PU09ODmtzcVPw/5jm4DXXGkAq5BZWdXqvqgCqCZClSl20AP24dRc7xG0XNQ/6w+3QYaULbtcPQ4cOPTG4odn3in60BXF1fD0aPMHbya4zVwD7sVOTbxTdeBdg25FGsLqN1gQ9eBBpSZXcnj9KD249qQH5dMTPeBrj9Zj/5b/SE9pu2sDUPdQyE9JvGP7gPtcXlCPvE4tRvsaCrQksHLoiohEOq2gx5GYkdTgQ6bEjbu5wZTcP+chnMNIXuAqO3rNnTb2E+ZoFdiBdoc3D9H9sgoO1gW1L4/RO0GW5oJtCXeMuE3sCncFPTxQ3WThdoNtjQT6OmZ0yfcxtei9v5oudSCzprOoPcHAHuzHS2XWyZ1DDI5mgl0QmbChNtMdoH4yU5zUFVEDyOxpplAp6xJmXCbpOVJMEeagz7Htf9MbrSj8ig9+8yaJgJtMBmQ+nDqhNuZIkzIeCwj6PN0VHYE/fzysH0YthJb0OcmoaGJQKdvTEdE3NiVrrzJfTl3UucK9uKw9pNauB30MBJrmgh07g7/Q2rNsU7qW7r0QGlQsyuFerjOaPY+NTAzytzTCjnuA526PhXJK5ID2ueh3Q/BHBVcL919vRvNF5sD2sfj8qDmWGhfFrDEW0J6vMmKnBb8CJKauA50WHQYNr65MeD94lPjsWnPpqDPG2jb0fhZIwY7Q7t83IzsGSE93mRNmTmFdQl+4TbQklHCE/9+AjHJMUHtn12Qjfx/5Qf1U1l2sCygZYuVeLN7/lPzQ37MybAutbIuwS98BloC8t/Ix7wn5k3qMDkv5aCguCDgb5e+1j7Yztr83j7U/XPGoxmTug5QQu7LuQiLHv/RAx5wF2hzlBlbDm7B0heWhuR4aflpeLH0RSx+dnFA39b+zq7UXtaOrrquIKv7TtiUMKSuT8Uj/3gEWw5ugSTxdRUWNzcOBcUFsOZYub5AlApRyM29raTlSdi0Z5Ni/aOtxIbiXxbjdvXtCbe1xFuwo3WHz4WI7jj/2nmcfuV0UPXEpsQiuyAb6RvSYc2xBv20oNp6GnpQ8d8KXNl7hemqCN5wEeiI2Ais/eta3P/c/Yo983yHa9CFU78/hYv/vDjhttuKtiF9Y/q42+zL3YemL5oCrmP5b5Zj3d/WBf2EIA9kWcbVvVdx7MVj3KxOYMxDXiHLAhKXJeLZc89idt5sVX5mDWYDUtenwmA0wHbGNu62kiQhc3Omz8/72vpwYseJgJ/fSFmdgs3vboZk5Pi32w+SJGHmkpmADG7ukjL9ejCGGbH16FYmQ0Ir/7gS9yy6Z9xtqj6sgnPA6fPz6qLqoOaaXvyLxQHvw7Ocl3JYl3AX00DHpsQyG9+UDNKEz4cM9w2P+3xzsKMbcSlxQe3Hq8jpkYiI9e/RBKUxDTTriVjczonP7+smi7PfifrTwc1g2nezL6j9eOVxeeAaUnaeQH8xDXT39W5ms3O6h91+vV1S81GN1ykJ6k7WBT3Z41dvfsVsNS4lVH1YRYG+49DWQ34No4XSsH0YR39+FJ21E7+h4na4vU5zMJlljus+qUPRc0VCzN3RcL4Bxb8qZl3GXVwM2xlMIyMPScuTEG2NRtSMqAnHfwMiA/23+tF/qx+3ym6h8khlQM9eJK9IxoM7Hxz1t8MFhzHQPjCpssxRZsxZOwcz75+JqIQoRN0ThfCp4ZM6ptJcQy70tfWht6kXthLbyISUzBP0HS4CTUioMG85CAklCjQRCgWaCIUCTYRCgSZCoUAToVCgiVAo0EQoFGgiFAo0EQoFmgiFAk2EQoEmQqFAE6FQoIlQKNBEKBRoIhQKNBEKBZoIhQJNhEKBJkKhQBOhUKCJUCjQRCgUaCIUCjQRCgWaCIUCTYRCgSZCoUAToVCgiVAo0EQoFGgiFAMAO+siCAmRHgOAS6yrICRELhkkSLtZV0FIKEiQdhtLUFK7Cqs8APIAaHvxaaJXsgTpTzux820jAJSg5NNVWHUeQAKA6QAsTMsjxD9dAM4AeKEQhe8AwP8A7VA52MoWrGIAAAAASUVORK5CYII=">  </head>
+  <body>
+    <table class="ears">
+      <thead>
+        <tr>
+          <td class="left"/>
+          <td class="center">JSON-B, JSON-C, JSON-D</td>
+          <td class="right">January 2021</td>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td class="left">Hallam-Baker</td>
+          <td class="center">Expires July 17, 2021</td>
+          <td class="right">[Page]</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div id="external-metadata" class="document-information">
+    </div>
+    <div id="internal-metadata" class="document-information">
+      <dl id="identifiers">
+        <dt class="label-workgroup">Workgroup:</dt>
+        <dd class="workgroup">Network Working Group</dd>
+        <dt class="label-stream">Stream:</dt>
+        <dd class="stream">Internet-Draft</dd>
+        <dt class="label-category">Intended status:</dt>
+        <dd class="category">Informational</dd>
+        <dt>Published:</dt>
+        <dd>
+          <time class="published" datetime="2021-01-13">13 January 2021</time>
+        </dd>
+        <dt class="label-issn">ISSN:</dt>
+        <dd class="issn">2070-1721</dd>
+        <dt>Expires</dt>
+        <dd>
+          <time class="expires" datetime="2021-07-17">17 July 2021</time>
+        </dd>
+        <dt>Authors:</dt>
+        <dd class="authors">
+          <div class="author">
+<div class="author-name">Phillip Hallam-Baker</div>          </div>
+        </dd>
+      </dl>
+    </div>
+    <h1 id="title">
+      Binary Encodings for JavaScript Object Notation: JSON-B, JSON-C, JSON-D
+      <h1 id="idnum">draft-hallambaker-jsonbcd-20</h1>
+    </h1>
+    <section id="abstract">
+      <h3>
+        <a class="selfRef" href="#abstract">Abstract</a>
+      </h3>
+      <p id="s-abstract-1">Three binary encodings for JavaScript Object Notation (JSON) are presented. JSON-B (Binary) is a strict superset of the JSON encoding that permits efficient binary encoding of intrinsic JavaScript data types. JSON-C (Compact) is a strict superset of JSON-B that supports compact representation of repeated data strings with short numeric codes. JSON-D (Data) supports additional binary data types for integer and floating-point representations for use in scientific applications where conversion between binary and decimal representations would cause a loss of precision.<a class="pilcrow" href="#s-abstract-1">&para;</a></p>
+      <p id="s-abstract-2">This document is also available online at <a class="eref" href="http://mathmesh.com/Documents/draft-hallambaker-jsonbcd.html">http://mathmesh.com/Documents/draft-hallambaker-jsonbcd.html</a>.<a class="pilcrow" href="#s-abstract-2">&para;</a></p>
+    </section>
+    
+    <section id="n-status-of-this-memo">
+      <h3 id="bp-1">
+        <a class="selfRef" href="#bp-1"></a>
+        <a class="selfRef" href="#n-status-of-this-memo">Status of This Memo</a>
+      </h3>
+      <p id="bp-1-1">This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.<a class="pilcrow" href="#bp-1-1">&para;</a></p>
+      <p id="bp-1-2">Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts. The list of current Internet-Drafts is at <a class="eref" href="http://datatracker.ietf.org/drafts/current/">http://datatracker.ietf.org/drafts/current/</a>.<a class="pilcrow" href="#bp-1-2">&para;</a></p>
+      <p id="bp-1-3">Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."<a class="pilcrow" href="#bp-1-3">&para;</a></p>
+      <p id="bp-1-4">This Internet-Draft will expire on July 17, 2021<a class="pilcrow" href="#bp-1-4">&para;</a></p>
+    </section>
+    
+    <section id="n-copyright-notice">
+      <h3 id="bp-2">
+        <a class="selfRef" href="#bp-2"></a>
+        <a class="selfRef" href="#n-copyright-notice">Copyright Notice</a>
+      </h3>
+      <p id="bp-2-1">Copyright (c) IETF Trust and the persons identified as the document authors. All rights reserved.<a class="pilcrow" href="#bp-2-1">&para;</a></p>
+      <p id="bp-2-2">This document is subject to BCP 78 and the IETF Trust’s Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document.<a class="pilcrow" href="#bp-2-2">&para;</a></p>
+    </section>
+    
+    <section id="toc">
+      <h3>
+        <a class="selfRef" href="#toc">Table of Contents</a>
+      </h3>
+      <nav class="toc">
+        <ul class="toc">
+          <li class="toc">
+            <a href="#s-1">1.</a><a href="#n-introduction">Introduction</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-1_1">1.1.</a><a href="#n-objectives">Objectives</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-2">2.</a><a href="#n-definitions">Definitions</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-2_1">2.1.</a><a href="#n-requirements-language">Requirements Language</a>
+              </li>
+              <li class="toc">
+                <a href="#s-2_2">2.2.</a><a href="#n-defined-terms">Defined Terms</a>
+              </li>
+              <li class="toc">
+                <a href="#s-2_3">2.3.</a><a href="#n-related-specifications">Related Specifications</a>
+              </li>
+              <li class="toc">
+                <a href="#s-2_4">2.4.</a><a href="#n-terminology">Terminology</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-3">3.</a><a href="#n-extended-json-grammar">Extended JSON Grammar</a>
+          </li>
+          <li class="toc">
+            <a href="#s-4">4.</a><a href="#n-jsonb">JSON-B</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-4_1">4.1.</a><a href="#n-jsonb-examples">JSON-B Examples</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-5">5.</a><a href="#n-jsonc">JSON-C</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-5_1">5.1.</a><a href="#n-jsonc-examples">JSON-C Examples</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-6">6.</a><a href="#n-jsond-data">JSON-D (Data)</a>
+          </li>
+          <li class="toc">
+            <a href="#s-7">7.</a><a href="#n-jbcd-frames-and-records">JBCD Frames and Records</a>
+          </li>
+          <li class="toc">
+            <a href="#s-8">8.</a><a href="#n-acknowledgements">Acknowledgements</a>
+          </li>
+          <li class="toc">
+            <a href="#s-9">9.</a><a href="#n-security-considerations">Security Considerations</a>
+          </li>
+          <li class="toc">
+            <a href="#s-10">10.</a><a href="#n-iana-considerations">IANA Considerations</a>
+          </li>
+          <li class="toc">
+<a href="#n-references">References</a>
+            <ul class="toc">
+              <li class="toc">
+<a href="#n-normative">Normative References</a>
+              </li>
+              <li class="toc">
+<a href="#n-informative">Informative References</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="toc">
+          <li class="toc">
+            <a href="#"></a><a href="#n-authors">Author's Address</a>
+          </li>
+        </ul>
+        <h3 id="tof">
+          <a class="selfRef" href="#tof">Table of Figures</a>
+        </h3>
+        <ul class="toc">
+          <li class="toc">
+            <a href="#n-encoding-relationships">Figure 1</a>: <a href="#n-encoding-relationships">Encoding Relationships.</a>
+          </li>
+          <li class="toc">
+            <a href="#n-jbcd-records-and-frames">Figure 2</a>: <a href="#n-jbcd-records-and-frames">JBCD Records and Frames</a>
+          </li>
+        </ul>
+      </nav>
+    </section>
+    
+    <section id="n-introduction">
+      <h3 id="s-1">
+        <a class="selfRef" href="#s-1">1.</a>
+        <a class="selfRef" href="#n-introduction">Introduction</a>
+      </h3>
+      <p id="s-1-1">JavaScript Object Notation (JSON) is a simple text encoding for the JavaScript Data model that has found wide application beyond its original field of use. In particular JSON has rapidly become a preferred encoding for Web Services.<a class="pilcrow" href="#s-1-1">&para;</a></p>
+      <p id="s-1-2">JSON encoding supports just four fundamental data types (integer, floating point, string and boolean), arrays and objects which consist of a list of tag-value pairs.<a class="pilcrow" href="#s-1-2">&para;</a></p>
+      <p id="s-1-3">Although the JSON encoding is sufficient for many purposes it is not always efficient. In particular there is no efficient representation for blocks of binary data. Use of base64 encoding increases data volume by 33%. This overhead increases exponentially in applications where nested binary encodings are required making use of JSON encoding unsatisfactory in cryptographic applications where nested binary structures are frequently required.<a class="pilcrow" href="#s-1-3">&para;</a></p>
+      <p id="s-1-4">Another source of inefficiency in JSON encoding is the repeated occurrence of object tags. A JSON encoding containing an array of a hundred objects such as {"first":1,"second":2} will contain a hundred occurrences of the string "first" (seven bytes) and a hundred occurrences of the string "second" (eight bytes). Using two byte code sequences in place of strings allows a saving of 11 bytes per object without loss of information, a saving of 50%.<a class="pilcrow" href="#s-1-4">&para;</a></p>
+      <p id="s-1-5">A third objection to the use of JSON encoding is that floating point numbers can only be represented in decimal form and this necessarily involves a loss of precision when converting between binary and decimal representations. While such issues are rarely important in network applications they can be critical in scientific applications. It is not acceptable for saving and restoring a data set to change the result of a calculation.<a class="pilcrow" href="#s-1-5">&para;</a></p>
+    </section>
+    
+    <section id="n-objectives">
+      <h4 id="s-1_1">
+        <a class="selfRef" href="#s-1_1">1.1.</a>
+        <a class="selfRef" href="#n-objectives">Objectives</a>
+      </h4>
+      <p id="s-1_1-1">The following were identified as core objectives for a binary JSON encoding:<a class="pilcrow" href="#s-1_1-1">&para;</a></p>
+      <ul id="s-1_1-2-">
+        <li id="s-1_1-2">Easy to convert existing encoders and decoders to add binary support<a class="pilcrow" href="#s-1_1-2">&para;</a></li>
+        <li id="s-1_1-3">Efficient encoding of binary data<a class="pilcrow" href="#s-1_1-3">&para;</a></li>
+        <li id="s-1_1-4">Ability to convert from JSON to binary encoding in a streaming mode (i.e. without reading the entire binary data block before beginning encoding.<a class="pilcrow" href="#s-1_1-4">&para;</a></li>
+        <li id="s-1_1-5">Lossless encoding of JavaScript data types<a class="pilcrow" href="#s-1_1-5">&para;</a></li>
+        <li id="s-1_1-6">The ability to support JSON tag compression and extended data types are considered desirable but not essential for typical network applications.<a class="pilcrow" href="#s-1_1-6">&para;</a></li>
+      </ul>
+      <p id="s-1_1-7">Three binary encodings are defined:<a class="pilcrow" href="#s-1_1-7">&para;</a></p>
+      <dl id="s-1_1-8-" class="nohang">
+        <dt id="s-1_1-8">JSON-B (Binary)<a class="pilcrow" href="#s-1_1-8">&para;</a></dt>
+        <dd id="null">Encodes JSON data in binary. Only the JavaScript data model is supported (i.e. atomic types are integers, double or string). Integers may be 8, 16, 32 or 64 bits either signed or unsigned. Floating points are IEEE 754 binary64 format <a class="xref" href="#IEEE754">[IEEE754]</a>. Supports chunked encoding for binary and UTF-8 string types.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1_1-9">JSON-C (Compact)<a class="pilcrow" href="#s-1_1-9">&para;</a></dt>
+        <dd id="null">As JSON-B but with support for representing JSON tags in numeric code form (16 bit code space). This is done for both compact encoding and to allow simplification of encoders/decoders in constrained environments. Codes may be defined inline or by reference to a known dictionary of codes referenced via a digest value.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1_1-10">JSON-D (Data)<a class="pilcrow" href="#s-1_1-10">&para;</a></dt>
+        <dd id="null">As JSON-C but with support for representing additional data types without loss of precision. In particular other IEEE 754 floating point formats, both binary and decimal and Intel's 80 bit floating point, plus 128 bit integers and bignum integers.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-1_1-11">Each encoding is a proper superset of JSON, JSON-C is a proper superset of JSON-B and JSON-D is a proper superset of JSON-C. Thus a single decoder <span class="bcp14">MAY</span> be used for all three new encodings and for JSON. Figure 1 shows these relationships graphically:<a class="pilcrow" href="#s-1_1-11">&para;</a></p>
+      <figure id="f-1">
+        <div class="artwork art-svg" id="n-encoding-relationships">
+          <a class="pilcrow" href="#n-encoding-relationships">&para;</a>
+<svg width="200" height="201" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 184,0" fill="none" stroke="black" />
+  <path d="M 16,16 L 168,16" fill="none" stroke="black" />
+  <path d="M 32,32 L 152,32" fill="none" stroke="black" />
+  <path d="M 48,48 L 136,48" fill="none" stroke="black" />
+  <path d="M 48,80 L 136,80" fill="none" stroke="black" />
+  <path d="M 32,112 L 152,112" fill="none" stroke="black" />
+  <path d="M 16,144 L 168,144" fill="none" stroke="black" />
+  <path d="M 0,176 L 184,176" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,176" fill="none" stroke="black" />
+  <path d="M 16,16 L 16,144" fill="none" stroke="black" />
+  <path d="M 32,32 L 32,112" fill="none" stroke="black" />
+  <path d="M 48,48 L 48,80" fill="none" stroke="black" />
+  <path d="M 136,48 L 136,80" fill="none" stroke="black" />
+  <path d="M 152,32 L 152,112" fill="none" stroke="black" />
+  <path d="M 168,16 L 168,144" fill="none" stroke="black" />
+  <path d="M 184,0 L 184,176" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="164">N</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="68">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="68">N</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="100">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="132">J</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="132">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="132">O</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="164">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="164">D</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="164">-</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="68">J</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="100">J</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="100">-</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="132">-</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="132">C</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="164">J</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="164">C</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="100">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="100">O</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="68">O</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="100">N</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="132">N</text>
+</g></svg>
+          <figcaption>
+            <a href="n-encoding-relationships">Figure 1</a>
+:            <a href="null" id="null" class="selfRef">Encoding Relationships.</a>
+          </figcaption>
+        </div>
+      </figure>
+      
+      <section id="n-definitions">
+        <h3 id="s-2">
+          <a class="selfRef" href="#s-2">2.</a>
+          <a class="selfRef" href="#n-definitions">Definitions</a>
+        </h3>
+        <p id="s-2-1">This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.<a class="pilcrow" href="#s-2-1">&para;</a></p>
+      </section>
+      
+      <section id="n-requirements-language">
+        <h4 id="s-2_1">
+          <a class="selfRef" href="#s-2_1">2.1.</a>
+          <a class="selfRef" href="#n-requirements-language">Requirements Language</a>
+        </h4>
+        <p id="s-2_1-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as described in [RFC2119].<a class="pilcrow" href="#s-2_1-1">&para;</a></p>
+      </section>
+      
+      <section id="n-defined-terms">
+        <h4 id="s-2_2">
+          <a class="selfRef" href="#s-2_2">2.2.</a>
+          <a class="selfRef" href="#n-defined-terms">Defined Terms</a>
+        </h4>
+        <p id="s-2_2-1">The terms of art used in this document are described in the <i>Mesh Architecture Guide</i> <a class="xref" href="#draft-hallambaker-mesh-architecture">[draft-hallambaker-mesh-architecture]</a>.<a class="pilcrow" href="#s-2_2-1">&para;</a></p>
+      </section>
+      
+      <section id="n-related-specifications">
+        <h4 id="s-2_3">
+          <a class="selfRef" href="#s-2_3">2.3.</a>
+          <a class="selfRef" href="#n-related-specifications">Related Specifications</a>
+        </h4>
+        <p id="s-2_3-1">The JSON-B, JSON-C and JSON-D encodings are all based on the JSON grammar <a class="xref" href="#RFC7159">[RFC7159]</a>. IEEE 754 Floating Point Standard is used for encoding floating point numbers <a class="xref" href="#IEEE754">[IEEE754]</a>,<a class="pilcrow" href="#s-2_3-1">&para;</a></p>
+      </section>
+      
+      <section id="n-terminology">
+        <h4 id="s-2_4">
+          <a class="selfRef" href="#s-2_4">2.4.</a>
+          <a class="selfRef" href="#n-terminology">Terminology</a>
+        </h4>
+        <p id="s-2_4-1">No new terms of art are defined<a class="pilcrow" href="#s-2_4-1">&para;</a></p>
+      </section>
+      
+      <section id="n-extended-json-grammar">
+        <h3 id="s-3">
+          <a class="selfRef" href="#s-3">3.</a>
+          <a class="selfRef" href="#n-extended-json-grammar">Extended JSON Grammar</a>
+        </h3>
+        <p id="s-3-1">The JSON-B, JSON-C and JSON-D encodings are all based on the JSON grammar <a class="xref" href="#RFC7159">[RFC7159]</a> using the same syntactic structure but different lexical encodings.<a class="pilcrow" href="#s-3-1">&para;</a></p>
+        <p id="s-3-2">JSON-B0 and JSON-C0 replace the JSON lexical encodings for strings and numbers with binary encodings. JSON-B1 and JSON-C1 allow either lexical encoding to be used. Thus, any valid JSON encoding is a valid JSON-B1 or JSON-C1 encoding.<a class="pilcrow" href="#s-3-2">&para;</a></p>
+        <p id="s-3-3">The grammar of JSON-B, JSON-C and JSON-D is a superset of the JSON grammar. The following productions are added to the grammar:<a class="pilcrow" href="#s-3-3">&para;</a></p>
+        <dl id="s-3-4-" class="nohang">
+          <dt id="s-3-4">x-value<a class="pilcrow" href="#s-3-4">&para;</a></dt>
+          <dd id="null">Binary encodings for data values. As the binary value encodings are all self-delimiting<a class="pilcrow" href="#">&para;</a></dd>
+          <dt id="s-3-5">x-member<a class="pilcrow" href="#s-3-5">&para;</a></dt>
+          <dd id="null">An object member where the value is specified as an X-value and thus does not require a value-separator.<a class="pilcrow" href="#">&para;</a></dd>
+          <dt id="s-3-6">b-value<a class="pilcrow" href="#s-3-6">&para;</a></dt>
+          <dd id="null">Binary data encodings defined in JSON-B.<a class="pilcrow" href="#">&para;</a></dd>
+          <dt id="s-3-7">b-string<a class="pilcrow" href="#s-3-7">&para;</a></dt>
+          <dd id="null">Defined length string encoding defined in JSON-B.<a class="pilcrow" href="#">&para;</a></dd>
+          <dt id="s-3-8">c-def<a class="pilcrow" href="#s-3-8">&para;</a></dt>
+          <dd id="null">Tag code definition defined in JSON-C. These may only appear before the beginning of an Object or Array and before any preceding white space.<a class="pilcrow" href="#">&para;</a></dd>
+          <dt id="s-3-9">c-tag<a class="pilcrow" href="#s-3-9">&para;</a></dt>
+          <dd id="null">Tag code value defined in JSON-C.<a class="pilcrow" href="#">&para;</a></dd>
+          <dt id="s-3-10">d-value<a class="pilcrow" href="#s-3-10">&para;</a></dt>
+          <dd id="null">Additional binary data encodings defined in JSON-D for use in scientific data applications.<a class="pilcrow" href="#">&para;</a></dd>
+        </dl>
+        <p id="s-3-11">The JSON grammar is modified to permit the use of x-value productions in place of ( value value-separator ) :<a class="pilcrow" href="#s-3-11">&para;</a></p>
+        <pre id="s-3-12">JSON-text = (object / array)
+
+object = *cdef begin-object [
+         *( member value-separator | x-member )
+         (member | x-member) ] end-object
+
+member = tag value
+x-member = tag x-value
+
+tag = string name-separator | b-string | c-tag
+
+array = *cdef begin-array [  *( value value-separator | x-value )
+ (value | x-value) ] end-array
+
+x-value = b-value / d-value
+
+value = false / null / true / object / array / number / string
+
+name-separator  = ws %x3A ws  ; : colon
+value-separator = ws %x2C ws  ; , comma</pre>
+<a class="pilcrow" href="#s-3-12">&para;</a>        <p id="s-3-13"><a class="pilcrow" href="#s-3-13">&para;</a></p>
+        <pre id="s-3-14">The following lexical values are unchanged:
+begin-array     = ws %x5B ws  ; [ left square bracket
+begin-object    = ws %x7B ws  ; { left curly bracket
+end-array       = ws %x5D ws  ; ] right square bracket
+end-object      = ws %x7D ws  ; } right curly bracket
+
+ws = *( %x20 %x09 %x0A  %x0D )
+
+false = %x66.61.6c.73.65   ; false
+null  = %x6e.75.6c.6c      ; null
+true  = %x74.72.75.65      ; true</pre>
+<a class="pilcrow" href="#s-3-14">&para;</a>        <p id="s-3-15">The productions number and string are defined as before:<a class="pilcrow" href="#s-3-15">&para;</a></p>
+        <pre id="s-3-16">number = [ minus ] int [ frac ] [ exp ]
+decimal-point = %x2E       ; .
+digit1-9 = %x31-39         ; 1-9
+e = %x65 / %x45            ; e E
+exp = e [ minus / plus ] 1*DIGIT
+frac = decimal-point 1*DIGIT
+int = zero / ( digit1-9 *DIGIT )
+minus = %x2D               ; -
+plus = %x2B                ; +
+zero = %x30                ; 0
+
+string = quotation-mark *char quotation-mark
+char = unescaped /
+escape ( %x22 / %x5C / %x2F / %x62 / %x66 /
+%x6E / %x72 / %x74 /  %x75 4HEXDIG )
+
+escape = %x5C              ; \
+quotation-mark = %x22      ; "
+unescaped = %x20-21 / %x23-5B / %x5D-10FFFF</pre>
+<a class="pilcrow" href="#s-3-16">&para;</a>      </section>
+      
+      <section id="n-jsonb">
+        <h3 id="s-4">
+          <a class="selfRef" href="#s-4">4.</a>
+          <a class="selfRef" href="#n-jsonb">JSON-B</a>
+        </h3>
+        <p id="s-4-1">The JSON-B encoding defines the b-value and b-string productions:<a class="pilcrow" href="#s-4-1">&para;</a></p>
+        <pre id="s-4-2">b-value = b-atom | b-string | b-data | b-integer |
+b-float
+
+b-string = *( string-chunk ) string-term
+b-data = *( data-chunk ) data-last
+
+b-integer = p-int8 | p-int16 | p-int32 | p-int64 | p-bignum16 |
+n-int8 | n-int16 | n-int32 | n-int64 | n-bignum16
+
+b-float = binary64</pre>
+<a class="pilcrow" href="#s-4-2">&para;</a>        <p id="s-4-3">The lexical encodings of the productions are defined in the following tables where the column 'tag' specifies the byte code that begins the production, 'Fixed' specifies the number of data bytes that follow and 'Length' specifies the number of bytes used to define the length of a variable length field following the data bytes:<a class="pilcrow" href="#s-4-3">&para;</a></p>
+        <table id="s-4-4">
+          <thead>
+            <tr>
+              <th>Production   </th>
+              <th>Tag</th>
+              <th>Fixed</th>
+              <th>Length</th>
+              <th>Data Description            </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>string-term  </td>
+              <td>x80</td>
+              <td>-</td>
+              <td>1</td>
+              <td>Terminal String 8 bit length</td>
+            </tr>
+            <tr>
+              <td>string-term  </td>
+              <td>x81</td>
+              <td>-</td>
+              <td>2</td>
+              <td>Terminal String 16 bit length</td>
+            </tr>
+            <tr>
+              <td>string-term  </td>
+              <td>x82</td>
+              <td>-</td>
+              <td>4</td>
+              <td>Terminal String 32 bit length</td>
+            </tr>
+            <tr>
+              <td>string-term  </td>
+              <td>x83</td>
+              <td>-</td>
+              <td>8</td>
+              <td>Terminal String 64 bit length</td>
+            </tr>
+            <tr>
+              <td>string-chunk</td>
+              <td>x84</td>
+              <td>-</td>
+              <td>1</td>
+              <td>Terminal String 8 bit length</td>
+            </tr>
+            <tr>
+              <td>string-chunk</td>
+              <td>x85</td>
+              <td>-</td>
+              <td>2</td>
+              <td>Terminal String 16 bit length</td>
+            </tr>
+            <tr>
+              <td>string-chunk</td>
+              <td>x86</td>
+              <td>-</td>
+              <td>4</td>
+              <td>Terminal String 32 bit length</td>
+            </tr>
+            <tr>
+              <td>string-chunk</td>
+              <td>x87</td>
+              <td>-</td>
+              <td>8</td>
+              <td>Terminal String 64 bit length</td>
+            </tr>
+            <tr>
+              <td>data-term    </td>
+              <td>x88</td>
+              <td>-</td>
+              <td>1</td>
+              <td>Terminal String 8 bit length</td>
+            </tr>
+            <tr>
+              <td>data-term    </td>
+              <td>x89</td>
+              <td>-</td>
+              <td>2</td>
+              <td>Terminal String 16 bit length</td>
+            </tr>
+            <tr>
+              <td>data-term    </td>
+              <td>x8A</td>
+              <td>-</td>
+              <td>4</td>
+              <td>Terminal String 32 bit length</td>
+            </tr>
+            <tr>
+              <td>data-term    </td>
+              <td>x8B</td>
+              <td>-</td>
+              <td>8</td>
+              <td>Terminal String 64 bit length</td>
+            </tr>
+            <tr>
+              <td>data-chunk   </td>
+              <td>X8C</td>
+              <td>-</td>
+              <td>1</td>
+              <td>Terminal String 8 bit length</td>
+            </tr>
+            <tr>
+              <td>data-chunk</td>
+              <td>x8D</td>
+              <td>-</td>
+              <td>2</td>
+              <td>Terminal String 16 bit length</td>
+            </tr>
+            <tr>
+              <td>data-chunk</td>
+              <td>x8E</td>
+              <td>-</td>
+              <td>4</td>
+              <td>Terminal String 32 bit length</td>
+            </tr>
+            <tr>
+              <td>data-chunk</td>
+              <td>x8F</td>
+              <td>-</td>
+              <td>8</td>
+              <td>Terminal String 64 bit length</td>
+            </tr>
+          </tbody>
+        </table>
+        <p id="s-4-5">Table 1: Codes for String and Data items<a class="pilcrow" href="#s-4-5">&para;</a></p>
+        <table id="s-4-6">
+          <thead>
+            <tr>
+              <th>Production   </th>
+              <th>Tag</th>
+              <th>Fixed</th>
+              <th>Length</th>
+              <th>Data Description            </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p-int8       </td>
+              <td>xA0</td>
+              <td>1</td>
+              <td>-</td>
+              <td>Positive 8 bit Integer</td>
+            </tr>
+            <tr>
+              <td>p-int16</td>
+              <td>xa1</td>
+              <td>2</td>
+              <td>-</td>
+              <td>Positive 16 bit Integer</td>
+            </tr>
+            <tr>
+              <td>p-int32</td>
+              <td>xa2</td>
+              <td>4</td>
+              <td>-</td>
+              <td>Positive 32 bit Integer</td>
+            </tr>
+            <tr>
+              <td>p-int64</td>
+              <td>xa3</td>
+              <td>8</td>
+              <td>-</td>
+              <td>Positive 64 bit Integer</td>
+            </tr>
+            <tr>
+              <td>p-bignum16</td>
+              <td>Xa7</td>
+              <td>-</td>
+              <td>2</td>
+              <td>Positive Bignum</td>
+            </tr>
+            <tr>
+              <td>n-int8       </td>
+              <td>xA8</td>
+              <td>1</td>
+              <td>-</td>
+              <td>Negative 8 bit Integer</td>
+            </tr>
+            <tr>
+              <td>n-int16</td>
+              <td>xA9</td>
+              <td>2</td>
+              <td>-</td>
+              <td>Negative 16 bit Integer</td>
+            </tr>
+            <tr>
+              <td>n-int32</td>
+              <td>xAA</td>
+              <td>4</td>
+              <td>-</td>
+              <td>Negative 32 bit Integer</td>
+            </tr>
+            <tr>
+              <td>n-int64</td>
+              <td>xAB</td>
+              <td>8</td>
+              <td>-</td>
+              <td>Negative 64 bit Integer</td>
+            </tr>
+            <tr>
+              <td>n-bignum16</td>
+              <td>xAF</td>
+              <td>-</td>
+              <td>2</td>
+              <td>Negative Bignum</td>
+            </tr>
+            <tr>
+              <td>binary64     </td>
+              <td>x92</td>
+              <td>8</td>
+              <td>-</td>
+              <td>IEEE 754 Floating Point Binary 64 bit</td>
+            </tr>
+            <tr>
+              <td>b-value      </td>
+              <td>xB0</td>
+              <td>-</td>
+              <td>-</td>
+              <td>True</td>
+            </tr>
+            <tr>
+              <td>b-value      </td>
+              <td>xB1</td>
+              <td>-</td>
+              <td>-</td>
+              <td>False</td>
+            </tr>
+            <tr>
+              <td>b-value      </td>
+              <td>xB2</td>
+              <td>-</td>
+              <td>-</td>
+              <td>Null</td>
+            </tr>
+          </tbody>
+        </table>
+        <p id="s-4-7">Table 2: Codes for Integers, 64 Bit Floating Point, Boolean and Null items.<a class="pilcrow" href="#s-4-7">&para;</a></p>
+        <p id="s-4-8">A data type commonly used in networking that is not defined in this scheme is a datetime representation. To define such a data type, a string containing a date-time value in Internet type format is typically used.<a class="pilcrow" href="#s-4-8">&para;</a></p>
+      </section>
+      
+      <section id="n-jsonb-examples">
+        <h4 id="s-4_1">
+          <a class="selfRef" href="#s-4_1">4.1.</a>
+          <a class="selfRef" href="#n-jsonb-examples">JSON-B Examples</a>
+        </h4>
+        <p id="s-4_1-1">The following examples show examples of using JSON-B encoding:<a class="pilcrow" href="#s-4_1-1">&para;</a></p>
+        <pre id="s-4_1-2">A0 2A                            42 (as 8 bit integer)
+A1 00 2A                         42 (as 16 bit integer)
+A2 00 00 00 2A                   42 (as 32 bit integer)
+A3 00 00 00 00 00 00 00 2A       42 (as 64 bit integer)
+A5 00 01 42                      42 (as Bignum)
+
+80 05 48 65 6c 6c 6f             "Hello" (single chunk)
+81 00 05 48 65 6c 6c 6f          "Hello" (single chunk)
+84 05 48 65 6c 6c 6f 80 00       "Hello" (as two chunks)
+
+92 3f f0 00 00 00 00 00 00       1.0
+92 40 24 00 00 00 00 00 00       10.0
+92 40 09 21 fb 54 44 2e ea       3.14159265359
+92 bf f0 00 00 00 00 00 00       -1.0
+
+B0                               true
+B1                               false
+B2                               null</pre>
+<a class="pilcrow" href="#s-4_1-2">&para;</a>      </section>
+      
+      <section id="n-jsonc">
+        <h3 id="s-5">
+          <a class="selfRef" href="#s-5">5.</a>
+          <a class="selfRef" href="#n-jsonc">JSON-C</a>
+        </h3>
+        <p id="s-5-1">JSON-C (Compressed) permits numeric code values to be substituted for strings and binary data. Tag codes <span class="bcp14">MAY</span> be 8, 16 or 32 bits long encoded in network byte order.<a class="pilcrow" href="#s-5-1">&para;</a></p>
+        <p id="s-5-2">Tag codes <span class="bcp14">MUST</span> be defined before they are referenced. A Tag code <span class="bcp14">MAY</span> be defined before the corresponding data or string value is used or at the same time that it is used.<a class="pilcrow" href="#s-5-2">&para;</a></p>
+        <p id="s-5-3">A dictionary is a list of tag code definitions. An encoding <span class="bcp14">MAY</span> incorporate definitions from a dictionary using the dict-hash production. The dict hash production specifies a (positive) offset value to be added to the entries in the dictionary followed by the UDF fingerprint <a class="xref" href="#draft-hallambaker-udf">[draft-hallambaker-udf]</a> of the dictionary to be used.<a class="pilcrow" href="#s-5-3">&para;</a></p>
+        <table id="s-5-4">
+          <thead>
+            <tr>
+              <th>Production   </th>
+              <th>Tag</th>
+              <th>Fixed</th>
+              <th>Length</th>
+              <th>Data Description            </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>c-tag      </td>
+              <td>xC0</td>
+              <td>1</td>
+              <td>-</td>
+              <td>8 bit tag code</td>
+            </tr>
+            <tr>
+              <td>c-tag      </td>
+              <td>xC1</td>
+              <td>2</td>
+              <td>-</td>
+              <td>16 bit tag code</td>
+            </tr>
+            <tr>
+              <td>c-tag      </td>
+              <td>xC2</td>
+              <td>4</td>
+              <td>-</td>
+              <td>32 bit tag code</td>
+            </tr>
+            <tr>
+              <td>c-def      </td>
+              <td>xC4</td>
+              <td>1</td>
+              <td>-</td>
+              <td>8 bit tag definition</td>
+            </tr>
+            <tr>
+              <td>c-def      </td>
+              <td>xC5</td>
+              <td>2</td>
+              <td>-</td>
+              <td>16 bit tag definition</td>
+            </tr>
+            <tr>
+              <td>c-def      </td>
+              <td>xC6</td>
+              <td>4</td>
+              <td>-</td>
+              <td>32 bit tag definition</td>
+            </tr>
+            <tr>
+              <td>c-tag      </td>
+              <td>xC8</td>
+              <td>1</td>
+              <td>-</td>
+              <td>8 bit tag code and definition</td>
+            </tr>
+            <tr>
+              <td>c-tag      </td>
+              <td>xC9</td>
+              <td>2</td>
+              <td>-</td>
+              <td>16 bit tag code and definition</td>
+            </tr>
+            <tr>
+              <td>c-tag      </td>
+              <td>xCA</td>
+              <td>4</td>
+              <td>-</td>
+              <td>32 bit tag code and definition</td>
+            </tr>
+            <tr>
+              <td>c-def      </td>
+              <td>xCC</td>
+              <td>1</td>
+              <td>-</td>
+              <td>8 bit tag dictionary definition</td>
+            </tr>
+            <tr>
+              <td>c-def      </td>
+              <td>xCD</td>
+              <td>2</td>
+              <td>-</td>
+              <td>16 bit tag dictionary definition</td>
+            </tr>
+            <tr>
+              <td>c-def      </td>
+              <td>xCE</td>
+              <td>4</td>
+              <td>-</td>
+              <td>32 bit tag dictionary definition</td>
+            </tr>
+            <tr>
+              <td>dict-hash</td>
+              <td>xD0</td>
+              <td>4</td>
+              <td>1</td>
+              <td>UDF fingerprint of dictionary</td>
+            </tr>
+          </tbody>
+        </table>
+        <p id="s-5-5">Table 3: Codes Used for Compression<a class="pilcrow" href="#s-5-5">&para;</a></p>
+        <p id="s-5-6">All integer values are encoded in Network Byte Order (most significant byte first).<a class="pilcrow" href="#s-5-6">&para;</a></p>
+      </section>
+      
+      <section id="n-jsonc-examples">
+        <h4 id="s-5_1">
+          <a class="selfRef" href="#s-5_1">5.1.</a>
+          <a class="selfRef" href="#n-jsonc-examples">JSON-C Examples</a>
+        </h4>
+        <p id="s-5_1-1">The following examples show examples of using JSON-C encoding:<a class="pilcrow" href="#s-5_1-1">&para;</a></p>
+        <pre id="s-5_1-2">C8 20 80 05 48 65 6c 6c 6f       "Hello"    20 = "Hello"
+C4 21 80 05 48 65 6c 6c 6f                  21 = "Hello"
+C0 20                            "Hello"
+C1 00 20                         "Hello"
+
+D0 00 00 01 00 20             Insert dictionary at code 256
+e3 b0 c4 42 98 fc 1c 14
+9a fb f4 c8 99 6f b9 24
+27 ae 41 e4 64 9b 93 4c
+a4 95 99 1b 78 52 b8 55       UDF (C4 21 80 05 48 65 6c 6c 6f)</pre>
+<a class="pilcrow" href="#s-5_1-2">&para;</a>      </section>
+      
+      <section id="n-jsond-data">
+        <h3 id="s-6">
+          <a class="selfRef" href="#s-6">6.</a>
+          <a class="selfRef" href="#n-jsond-data">JSON-D (Data)</a>
+        </h3>
+        <p id="s-6-1">JSON-B and JSON-C only support the two numeric types defined in the JavaScript data model: Integers and 64 bit floating point values. JSON-D (Data) defines binary encodings for additional data types that are commonly used in scientific applications. These comprise positive and negative 128 bit integers, six additional floating point representations defined by IEEE 754 <a class="xref" href="#IEEE754">[IEEE754]</a> and the Intel extended precision 80 bit floating point representation <a class="xref" href="#INTEL">[INTEL]</a>.<a class="pilcrow" href="#s-6-1">&para;</a></p>
+        <p id="s-6-2">Should the need arise, even bigger bignums could be defined with the length specified as a 32 bit value permitting bignums of up to 2^35 bits to be represented.<a class="pilcrow" href="#s-6-2">&para;</a></p>
+        <pre id="s-6-3">d-value = d-integer | d-float
+
+d-float = binary16 | binary32 | binary128 | binary80 |
+decimal32 | decimal64 | decimal 128</pre>
+<a class="pilcrow" href="#s-6-3">&para;</a>        <p id="s-6-4">The codes for these values are as follows:<a class="pilcrow" href="#s-6-4">&para;</a></p>
+        <table id="s-6-5">
+          <thead>
+            <tr>
+              <th>Production   </th>
+              <th>Tag</th>
+              <th>Fixed</th>
+              <th>Length</th>
+              <th>Data Description            </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>p-int128</td>
+              <td>xA4</td>
+              <td>16</td>
+              <td>-</td>
+              <td>Positive 128 bit Integer</td>
+            </tr>
+            <tr>
+              <td>n-int128</td>
+              <td>xAC</td>
+              <td>16</td>
+              <td>-</td>
+              <td>Negative 128 bit Integer      </td>
+            </tr>
+            <tr>
+              <td>binary16</td>
+              <td>x90</td>
+              <td>2</td>
+              <td>-</td>
+              <td>IEEE 754 Floating Point Binary 16 bit</td>
+            </tr>
+            <tr>
+              <td>binary32</td>
+              <td>x91</td>
+              <td>4</td>
+              <td>-</td>
+              <td>IEEE 754 Floating Point Binary 32 bit</td>
+            </tr>
+            <tr>
+              <td>binary128</td>
+              <td>x94</td>
+              <td>16</td>
+              <td>-</td>
+              <td>IEEE 754 Floating Point Binary 64 bit</td>
+            </tr>
+            <tr>
+              <td>Intel80</td>
+              <td>x95</td>
+              <td>10</td>
+              <td>-</td>
+              <td>Intel extended Floating Point 80 bit</td>
+            </tr>
+            <tr>
+              <td>decimal32</td>
+              <td>x96</td>
+              <td>4</td>
+              <td>-</td>
+              <td>IEEE 754 Floating Point Decimal 32</td>
+            </tr>
+            <tr>
+              <td>Decimal64</td>
+              <td>x97</td>
+              <td>8</td>
+              <td>-</td>
+              <td>IEEE 754 Floating Point Decimal 64</td>
+            </tr>
+            <tr>
+              <td>Decimal128</td>
+              <td>x98</td>
+              <td>16</td>
+              <td>-</td>
+              <td>IEEE 754 Floating Point Decimal 128</td>
+            </tr>
+          </tbody>
+        </table>
+        <p id="s-6-6">Table 4: Additional Codes for Scientific Data <a class="pilcrow" href="#s-6-6">&para;</a></p>
+      </section>
+      
+      <section id="n-jbcd-frames-and-records">
+        <h3 id="s-7">
+          <a class="selfRef" href="#s-7">7.</a>
+          <a class="selfRef" href="#n-jbcd-frames-and-records">JBCD Frames and Records</a>
+        </h3>
+        <p id="s-7-1">Tag codes in the range xF0-XFF are reserved for specifying markers for <i>frames</i> and <i>records</i>. These tags are not used to encode JSON data, they are only used to encapsulate opaque binary data blobs as a unit.<a class="pilcrow" href="#s-7-1">&para;</a></p>
+        <p id="s-7-2">A JBCD record consists of consist of the tag, a length and the data item. The length indication provided by the record format allows efficient traversal of a sequence of records in the forward direction only.<a class="pilcrow" href="#s-7-2">&para;</a></p>
+        <p id="s-7-3">A JBCD Frames consists of consist of the tag, a length and the data item followed by the tag-length sequence repeated with the bytes written in the reverse order. The first length indication allows efficient traversal of a sequence of records in the forward direction and the second allows efficient traversal in the reverse direction.<a class="pilcrow" href="#s-7-3">&para;</a></p>
+        <figure id="f-2">
+          <div class="artwork art-svg" id="n-jbcd-records-and-frames">
+            <a class="pilcrow" href="#n-jbcd-records-and-frames">&para;</a>
+<svg width="400" height="153" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 40,0" fill="none" stroke="black" />
+  <path d="M 40,0 L 80,0" fill="none" stroke="black" />
+  <path d="M 80,0 L 120,0" fill="none" stroke="black" />
+  <path d="M 120,0 L 264,0" fill="none" stroke="black" />
+  <path d="M 0,32 L 40,32" fill="none" stroke="black" />
+  <path d="M 40,32 L 80,32" fill="none" stroke="black" />
+  <path d="M 80,32 L 120,32" fill="none" stroke="black" />
+  <path d="M 120,32 L 264,32" fill="none" stroke="black" />
+  <path d="M 0,80 L 40,80" fill="none" stroke="black" />
+  <path d="M 40,80 L 80,80" fill="none" stroke="black" />
+  <path d="M 80,80 L 120,80" fill="none" stroke="black" />
+  <path d="M 120,80 L 264,80" fill="none" stroke="black" />
+  <path d="M 264,80 L 304,80" fill="none" stroke="black" />
+  <path d="M 304,80 L 344,80" fill="none" stroke="black" />
+  <path d="M 344,80 L 384,80" fill="none" stroke="black" />
+  <path d="M 0,112 L 40,112" fill="none" stroke="black" />
+  <path d="M 40,112 L 80,112" fill="none" stroke="black" />
+  <path d="M 80,112 L 120,112" fill="none" stroke="black" />
+  <path d="M 120,112 L 264,112" fill="none" stroke="black" />
+  <path d="M 264,112 L 304,112" fill="none" stroke="black" />
+  <path d="M 304,112 L 344,112" fill="none" stroke="black" />
+  <path d="M 344,112 L 384,112" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,32" fill="none" stroke="black" />
+  <path d="M 0,80 L 0,112" fill="none" stroke="black" />
+  <path d="M 40,0 L 40,32" fill="none" stroke="black" />
+  <path d="M 40,80 L 40,112" fill="none" stroke="black" />
+  <path d="M 80,0 L 80,32" fill="none" stroke="black" />
+  <path d="M 80,80 L 80,112" fill="none" stroke="black" />
+  <path d="M 120,0 L 120,32" fill="none" stroke="black" />
+  <path d="M 120,80 L 120,112" fill="none" stroke="black" />
+  <path d="M 264,0 L 264,32" fill="none" stroke="black" />
+  <path d="M 264,80 L 264,112" fill="none" stroke="black" />
+  <path d="M 304,80 L 304,112" fill="none" stroke="black" />
+  <path d="M 344,80 L 344,112" fill="none" stroke="black" />
+  <path d="M 384,80 L 384,112" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="132">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="52">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="20">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="176" y="100">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="328" y="100">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="8" y="132">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="132">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="176" y="132">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="132">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="20">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="132">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="52">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="184" y="52">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="52">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="168" y="100">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="320" y="100">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="132">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="132">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="168" y="20">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="192" y="52">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="176" y="20">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="52">3</text>
+  <text text-anchor="middle" font-family="sans-serif" x="312" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="20">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="136" y="52">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="100">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="168" y="132">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="144" y="132">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="160" y="132">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="304" y="132">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="132">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="192" y="20">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="128" y="52">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="52">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="20">F</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="132">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="100">&gt;</text>
+  <text text-anchor="middle" font-family="sans-serif" x="136" y="132">m</text>
+  <text text-anchor="middle" font-family="sans-serif" x="184" y="132">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="216" y="132">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="52">g</text>
+  <text text-anchor="middle" font-family="sans-serif" x="320" y="52">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="100">C</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="132">g</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="100">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="132">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="20">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="100">2</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="132">3</text>
+  <text text-anchor="middle" font-family="sans-serif" x="200" y="52">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="152" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="32" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="132">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="52">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="296" y="52">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="360" y="100">F</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="100">F</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="100">5</text>
+  <text text-anchor="middle" font-family="sans-serif" x="192" y="100">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="216" y="100">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="132">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="132">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="20">2</text>
+  <text text-anchor="middle" font-family="sans-serif" x="200" y="132">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="52">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="200" y="20">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="152" y="100">&lt;</text>
+  <text text-anchor="middle" font-family="sans-serif" x="200" y="100">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="20">C</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="52">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="132">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="52">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="8" y="52">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="52">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="304" y="52">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="100">C</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="132">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="52">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="192" y="132">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="296" y="132">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="0" y="132">B</text>
+  <text text-anchor="middle" font-family="sans-serif" x="144" y="52">m</text>
+  <text text-anchor="middle" font-family="sans-serif" x="176" y="52">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="52">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="52">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="100">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="100">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="132">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="160" y="20">3</text>
+  <text text-anchor="middle" font-family="sans-serif" x="32" y="132">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="152" y="20">&lt;</text>
+  <text text-anchor="middle" font-family="sans-serif" x="120" y="52">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="120" y="132">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="20">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="368" y="100">5</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="132">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="160" y="100">3</text>
+  <text text-anchor="middle" font-family="sans-serif" x="128" y="132">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="20">&gt;</text>
+  <text text-anchor="middle" font-family="sans-serif" x="312" y="132">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="0" y="52">U</text>
+  <text text-anchor="middle" font-family="sans-serif" x="168" y="52">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="52">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="100">2</text>
+  <text text-anchor="middle" font-family="sans-serif" x="216" y="20">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="216" y="52">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="132">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="52">i</text>
+</g></svg>
+            <figcaption>
+              <a href="n-jbcd-records-and-frames">Figure 2</a>
+:              <a href="null" id="null" class="selfRef">JBCD Records and Frames</a>
+            </figcaption>
+          </div>
+          <p id="s-7-5">The JBCD-Frame tags currently defined are:<a class="pilcrow" href="#s-7-5">&para;</a></p>
+          <table id="s-7-6">
+            <thead>
+              <tr>
+                <th>Production   </th>
+                <th>Tag</th>
+                <th>Fixed</th>
+                <th>Length</th>
+                <th>Data Description            </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>uframe  </td>
+                <td>xF0</td>
+                <td>-</td>
+                <td>1</td>
+                <td>Record, 8 bit length</td>
+              </tr>
+              <tr>
+                <td>uframe  </td>
+                <td>xF1</td>
+                <td>-</td>
+                <td>2</td>
+                <td>Record, 16 bit length</td>
+              </tr>
+              <tr>
+                <td>uframe  </td>
+                <td>xF2</td>
+                <td>-</td>
+                <td>4</td>
+                <td>Record, 32 bit length</td>
+              </tr>
+              <tr>
+                <td>uframe  </td>
+                <td>xF3</td>
+                <td>-</td>
+                <td>8</td>
+                <td>Record, 64 bit length</td>
+              </tr>
+              <tr>
+                <td>bframe  </td>
+                <td>xF4</td>
+                <td>-</td>
+                <td>1</td>
+                <td>Frame, 8 bit length</td>
+              </tr>
+              <tr>
+                <td>bframe</td>
+                <td>xF5</td>
+                <td>-</td>
+                <td>2</td>
+                <td>Frame, 16 bit length</td>
+              </tr>
+              <tr>
+                <td>bframe</td>
+                <td>xF6</td>
+                <td>-</td>
+                <td>4</td>
+                <td>Frame, 32 bit length</td>
+              </tr>
+              <tr>
+                <td>bframe</td>
+                <td>xF7</td>
+                <td>-</td>
+                <td>8</td>
+                <td>Frame, 64 bit length</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>xF8-xFF</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Reserved</td>
+              </tr>
+            </tbody>
+          </table>
+          <p id="s-7-7">The author does not expect additional framing tags to be added but codes F8-FF are reserved in case this is desired.<a class="pilcrow" href="#s-7-7">&para;</a></p>
+          <p id="s-7-8">It may prove convenient to represent message digest values as large integers rather than binary strings. While very few platforms or programming languages support mathematical operations on fixed size integers larger than 64, this is not a major concern since message digests are rarely used for any purpose other than comparison for equality.<a class="pilcrow" href="#s-7-8">&para;</a></p>
+          <table id="s-7-9">
+            <thead>
+              <tr>
+                <th>Production   </th>
+                <th>Tag</th>
+                <th>Fixed</th>
+                <th>Length</th>
+                <th>Data Description            </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>p-int128</td>
+                <td>Xa4</td>
+                <td>16</td>
+                <td>-</td>
+                <td>Positive 128 bit Integer</td>
+              </tr>
+              <tr>
+                <td>p-int256</td>
+                <td>Xa5</td>
+                <td>32</td>
+                <td>-</td>
+                <td>Positive 256 bit Integer</td>
+              </tr>
+              <tr>
+                <td>p-int512</td>
+                <td>Xa6</td>
+                <td>64</td>
+                <td>-</td>
+                <td>Positive 512 bit Integer</td>
+              </tr>
+            </tbody>
+          </table>
+          <p id="s-7-10"><a class="pilcrow" href="#s-7-10">&para;</a></p>
+        </figure>
+        
+        <section id="n-acknowledgements">
+          <h3 id="s-8">
+            <a class="selfRef" href="#s-8">8.</a>
+            <a class="selfRef" href="#n-acknowledgements">Acknowledgements</a>
+          </h3>
+          <p id="s-8-1">This work was assisted by conversations with Nico Williams and other participants on the applications area mailing list.<a class="pilcrow" href="#s-8-1">&para;</a></p>
+        </section>
+        
+        <section id="n-security-considerations">
+          <h3 id="s-9">
+            <a class="selfRef" href="#s-9">9.</a>
+            <a class="selfRef" href="#n-security-considerations">Security Considerations</a>
+          </h3>
+          <p id="s-9-1">A correctly implemented data encoding mechanism should not introduce new security vulnerabilities. However, experience demonstrates that some data encoding approaches are more prone to introduce vulnerabilities when incorrectly implemented than others.<a class="pilcrow" href="#s-9-1">&para;</a></p>
+          <p id="s-9-2">In particular, whenever variable length data formats are used, the possibility of a buffer overrun vulnerability is introduced. While best practice suggests that a coding language with native mechanisms for bounds checking is the best protection against such errors, such approaches are not always followed. While such vulnerabilities are most commonly seen in the design of decoders, it is possible for the same vulnerabilities to be exploited in encoders.<a class="pilcrow" href="#s-9-2">&para;</a></p>
+          <p id="s-9-3">A common source of such errors is the case where nested length encodings are used. For example, a decoder relies on an outermost length encoding that specifies a length on 50 bytes to allocate memory for the entire result and then attempts to copy a string with a declared length of 1000 bytes within the sequence.<a class="pilcrow" href="#s-9-3">&para;</a></p>
+          <p id="s-9-4">The extensions to the JSON encoding described in this document are designed to avoid such errors. Length encodings are only used to define the length of x-value constructions which are always terminal and cannot have nested data entries. <a class="pilcrow" href="#s-9-4">&para;</a></p>
+        </section>
+        
+        <section id="n-iana-considerations">
+          <h3 id="s-10">
+            <a class="selfRef" href="#s-10">10.</a>
+            <a class="selfRef" href="#n-iana-considerations">IANA Considerations</a>
+          </h3>
+          <p id="s-10-1">[TBS list out all the code points that require an IANA registration]<a class="pilcrow" href="#s-10-1">&para;</a></p>
+        </section>
+        
+        <section id="n-references">
+          <h2>
+            <a class="selfRef" href="#n-references">References</a>
+          </h2>
+          <section id="n-normative">
+            <h3>
+              <a class="selfRef" href="#n-normative">Normative References</a>
+            </h3>
+            <dl class="reference">
+              <dt id="IEEE754">[IEEE754]</dt>
+              <dd>
+                "<span class="refTitle">IEEE Standard for Floating-Point Arithmetic</span>"
+                <span Class="refSeries">
+                  <span class="refSeriesName">IEEE</span>
+                  <span class="refSeriesValue">754-2008</span>
+                </span>
+                <span Class="refSeries">
+                  <span class="refSeriesName">DOI</span>
+                  <span class="refSeriesValue">10.1109/IEEESTD.2008.4610935</span>
+                </span>
+                <time class="refDate" datetime="2008-08-29">29 August 2008</time>
+              </dd>
+              <dt id="RFC7159">[RFC7159]</dt>
+              <dd>
+                <span class="refAuthor">T. Bray</span>
+                "<span class="refTitle">The JavaScript Object Notation (JSON) Data Interchange Format</span>"
+                <span Class="refSeries">
+                  <span class="refSeriesName">RFC</span>
+                  <span class="refSeriesValue">7159</span>
+                </span>
+                <span Class="refSeries">
+                  <span class="refSeriesName">DOI</span>
+                  <span class="refSeriesValue">10.17487/RFC7159</span>
+                </span>
+                <time class="refDate" datetime="2014-03">March 2014</time>
+              </dd>
+              <dt id="INTEL">[INTEL]</dt>
+              <dd>
+                "<span class="refTitle">Unknown</span>"
+                <time class="refDate" datetime=""></time>
+              </dd>
+              <dt id="draft-hallambaker-udf">[draft-hallambaker-udf]</dt>
+              <dd>
+                <span class="refAuthor">Phillip Hallam-Baker</span>
+                "<span class="refTitle">Uniform Data Fingerprint (UDF)</span>"
+                <span Class="refSeries">
+                  <span class="refSeriesName">Internet-Draft</span>
+                  <span class="refSeriesValue">draft-hallambaker-udf-12</span>
+                </span>
+                &lt;<a class="refTarget">http://www.ietf.org/internet-drafts/draft-hallambaker-udf-12.txt</a>&gt;
+                <time class="refDate" datetime="2019-01-6">6 January 2019</time>
+              </dd>
+            </dl>
+          </section>
+          
+          <section id="n-informative">
+            <h3>
+              <a class="selfRef" href="#n-informative">Informative References</a>
+            </h3>
+            <dl class="reference">
+              <dt id="draft-hallambaker-mesh-architecture">[draft-hallambaker-mesh-architecture]</dt>
+              <dd>
+                <span class="refAuthor">Phillip Hallam-Baker</span>
+                "<span class="refTitle">Mathematical Mesh 3.0 Part I: Architecture Guide</span>"
+                <span Class="refSeries">
+                  <span class="refSeriesName">Internet-Draft</span>
+                  <span class="refSeriesValue">draft-hallambaker-mesh-architecture-15</span>
+                </span>
+                &lt;<a class="refTarget">http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-15.txt</a>&gt;
+                <time class="refDate" datetime="2020-11-2">2 November 2020</time>
+              </dd>
+            </dl>
+          </section>
+          
+        </section>
+        
+        <section id="n-authors">
+          <h2>
+            <a class="selfRef" href="#n-authors">Author's Address</a>
+          </h2>
+          <hr class="addr"/>
+          <address class="vcard">
+            <div class="nameRole">
+              <span class="fn">Phillip Hallam-Baker</span>
+            </div>
+            <div>
+              <span>Email:</span>
+              <a class="email" href="mailto:phill@hallambaker.com ">phill@hallambaker.com </a>
+            </div>
+          </address>
+        </section>
+        
+        <div class="docInfo">
+          <span class="prepared">
+            Prepared: 
+            <time datetime="2021-01-13">2021-01-13</time>
+          </span>
+          <span class="rendered">
+            Rendered: 
+            <time datetime="2021-01-13">2021-01-13</time>
+          </span>
+        </div>
+        
+        <script src="xml2rfc.js" type="text/javascript"></script>
+      </section>
+    </section>

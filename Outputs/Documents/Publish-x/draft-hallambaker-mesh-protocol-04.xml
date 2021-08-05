@@ -1,0 +1,1136 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-protocol-04" indexInclude="false" ipr="trust200902" prepTime="2020-01-06T17:19:58Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Mesh Protocol Reference">Mathematical Mesh 3.0 Part V: Protocol Reference</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-protocol" stream="independent"/>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="6" month="January" year="2020"/>
+<area/>
+<workgroup/>
+<abstract>
+<t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices. The core protocols of the Mesh are described with examples of common use cases and reference data.</t>
+<t>[Note to Readers]</t>
+<t>Discussion of this draft takes place on the MATHMESH mailing list (mathmesh@ietf.org), which is archived at https://mailarchive.ietf.org/arch/search/?email_list=mathmesh.</t>
+<t>This document is also available online at <eref target="http://mathmesh.com/Documents/draft-hallambaker-mesh-protocol.html"></eref>.</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="n-introduction"><t>This document describes the Mesh Service protocol supported by Mesh Services, an account-based protocol that facilitates exchange of data between devices connected to a Mesh profile and between Mesh accounts.</t>
+<t>Mesh Service Accounts support the following services:</t>
+<ul>
+<li>Provides the master persistence store for the Catalogs and Spools associated with the account.</li>
+<li>Enables synchronization of Catalogs and Spools with connected devices.</li>
+<li>Enforces access control on inbound Mesh Messages from other users and other Mesh Services.</li>
+<li>Authenticates outbound Mesh Messages, certifying that they comply with abuse mitigation policies.</li>
+</ul>
+<t>A Mesh Profile <bcp14>MAY</bcp14> be bound to multiple Mesh Service Accounts at the same time but only one Mesh Service Account is considered to be authoritative at a time. Users may add or remove Mesh Service Accounts and change the account designated as authoritative at any time.</t>
+<t>The Mesh Services are build from a very small set of primitives which provide a surprisingly extensive set of capabilities. These primitives are:</t>
+<dl>
+<dt><tt>Hello</tt></dt>
+<dd>
+<t>Describes the features and options provided by the service and provides a 'null' transaction which <bcp14>MAY</bcp14> be used to establish an authentication ticket without performing any action,</t>
+</dd>
+<dt>CreateAccount, DeleteAccount</dt>
+<dd>
+<t>Manage the creation and deletion of accounts at the service.</t>
+</dd>
+<dt>Status, Download, <tt>Upload</tt></dt>
+<dd>
+<t>Support synchronization of Mesh containers between the service (Master) and the connected devices (Replicas).</t>
+</dd>
+<dt>Connect</dt>
+<dd>
+<t>Initiate the process of connecting a device to a Mesh profile from the device itself.</t>
+</dd>
+<dt>Post</dt>
+<dd>
+<t> Request that a Mesh Message be transferred to one or more Mesh Accounts.</t>
+</dd>
+</dl>
+<t>Although these functions could in principle be used to replace many if not most existing Internet application protocols, the principal value of any communication protocol lies in the size of the audience it allows them to communicate with. Thus, while the Mesh Messaging service is designed to support efficient and reliable transfer of messages ranging in size from a few bytes to multiple terabytes, the near-term applications of these services will be to applications that are not adequately supported by existing protocols if at all.</t>
+</section>
+<section title="Definitions" anchor="n-definitions"><t>This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.</t>
+<section title="Requirements Language" anchor="n-requirements-language"><t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
+</section>
+<section title="Defined Terms" anchor="n-defined-terms"><t>The terms of art used in this document are described in the <em>Mesh Architecture Guide</em> <xref target="draft-hallambaker-mesh-architecture"></xref>.</t>
+</section>
+<section title="Related Specifications" anchor="n-related-specifications"><t>The architecture of the Mathematical Mesh is described in the <em>Mesh Architecture Guide</em> <xref target="draft-hallambaker-mesh-architecture"></xref>. The Mesh documentation set and related specifications are described in this document.</t>
+</section>
+<section title="Implementation Status" anchor="n-implementation-status"><t>The implementation status of the reference code base is described in the companion document <xref target="draft-hallambaker-mesh-developer"></xref>.</t>
+</section>
+</section>
+<section title="Mesh Service" anchor="n-mesh-service"><t>A Mesh Service is a minimally trusted service. In particular a user does not need to trust a Mesh service to protect the confidentiality or integrity of most data stored in the account catalogs and spools.</t>
+<t>Unless the use of the Mesh Service is highly restricted, a user does need to trust the Mesh Service in certain respects:</t>
+<dl>
+<dt>Data Loss</dt>
+<dd>
+<t>A service could refuse to respond to requests to download data.</t>
+</dd>
+<dt>Integrity (Stale Data)</dt>
+<dd>
+<t>The use of Merkle Trees limits but does not eliminate the ability of a Mesh Service to respond to requests with stale data.</t>
+</dd>
+<dt>Messaging</dt>
+<dd>
+<t>A service could reject requests to post messages to or accept messages from other mesh users. </t>
+<t>This risk is a necessary consequence of the fact that the Mesh Service Provider is accountable to other Mesh Service Providers for abuse originating from their service.</t>
+</dd>
+<dt>Traffic analysis</dt>
+<dd>
+<t>A Mesh Service has knowledge of the number of Mesh Messages being sent and received by its users and the addresses to which they are being sent to or received from.</t>
+</dd>
+</dl>
+<t>The need to trust the Mesh Service in these respects is mitigated by accountability and the user's ability to change Mesh Service providers at any time they choose with minimal inconvenience.</t>
+<t>It is possible that some of these risks will be reduced in future versions of the Mesh Service Protocol but it is highly unlikely that these can be eliminated entirely without compromising practicality or efficiency.</t>
+<section title="Data Model" anchor="n-data-model"><t>The design of the Mesh Service model followed a quasi-formal approach in which the system was reduced to schemas which could in principle be rendered in a formal development method but without construction of proofs.</t>
+<t>Like the contents of Mesh Accounts, a Mesh Service may be represented by a collection of catalogs and spools, for example:</t>
+<dl>
+<dt>Account Catalog</dt>
+<dd>
+<t>Contains the account entries.</t>
+</dd>
+<dt>Incident Spool</dt>
+<dd>
+<t>Reports of potential abuse</t>
+</dd>
+</dl>
+<t>Backup of the service <bcp14>MAY</bcp14> be implemented using the same container synchronization mechanism used to synchronize account catalogs and spools.</t>
+</section>
+<section title="Partitioning" anchor="n-partitioning"><t>Mesh Services supporting a large number of accounts or large activity volume <bcp14>MAY</bcp14> partition the account catalog between one or more hosts using the usual tiered service model in which a front-end server receives traffic for any account hosted at the server and routes the request to the back-end service that provides the persistence store for that account.</t>
+<t>In addition, the Mesh Service Protocol supports a 'direct connection' partitioning model in which devices are given a DNS name which <bcp14>MAY</bcp14> allow for direct connection to the persistence host or to a front-end service offering service that is in some way specific to that account.</t>
+</section>
+</section>
+<section title="Protocol Bindings" anchor="n-protocol-bindings"><t>Mesh Service transactions are mapped to an underlying messaging and transport protocol. The following binding</t>
+<t>Mesh Services <bcp14>MUST</bcp14> support the Web Service binding specified in this document and <bcp14>MAY</bcp14> support the UDP binding currently in development.</t>
+<section title="DNS Web Service Discovery" anchor="n-dns-web-service-discovery"><t>The DNS Web Service discovery mechanism is used to discover Mesh Services regardless of the protocol binding .The service name, DNS prefix and and .well-known service suffix are specified as follows:</t>
+<ul>
+<li>Service Name: mmm</li>
+<li>DNS Prefix: _mmm._tcp</li>
+<li>Well Known service suffix: /.well-known/mmm</li>
+</ul>
+</section>
+<section title="Web Service Protocol Binding" anchor="n-web-service-protocol-binding"><t>The Web Service Protocol binding makes use of the most widely deployed and used protocols:</t>
+<ul>
+<li>Discovery: DNS Service discovery</li>
+<li>Transport: TLS</li>
+<li>Application: HTTP</li>
+<li>Presentation: DARE Message</li>
+<li>Encoding: JSON, JSON-B</li>
+</ul>
+<t>The chief limitations of the Web Service Protocol Binding are that the use of TCP based transport results in unsatisfactory latency for some applications and that the HTTP application layer only serves to allow a host to support multiple services on the same TCP/IP port.</t>
+<section title="Transport Security" anchor="n-transport-security"><t>Mesh Services <bcp14>MUST</bcp14> offer TLS transport and <bcp14>MAY</bcp14> offer non TLS transport. MESH clients <bcp14>SHOULD</bcp14> use TLS transport when connecting to a MESH service.</t>
+<t>TLS version 1.3 <xref target="RFC8446"></xref> or higher <bcp14>MUST</bcp14> be supported. Client authentication <bcp14>SHOULD NOT</bcp14> be used.</t>
+</section>
+<section title="HTTP Message Binding" anchor="n-http-message-binding"><t>All messages are exchanged as HTTP POST transactions. Support for and use of HTTP/1.1 <xref target="RFC7230"></xref> is <bcp14>REQUIRED</bcp14>. Services <bcp14>MAY</bcp14> support HTTP/2.</t>
+<t>In contrast to other approaches to the design of Web Services, the only use made of the HTTP transport is to distinguish between different services on the same host using the Host header and .well-known convention and for message framing.  No use is made of the URI request line to identify commands, nor are the caching or proxy capabilities of HTTP made use of.</t>
+</section>
+<section title="Request" anchor="n-request"><t>The HTTP request <bcp14>MAY</bcp14> contain any valid HTTP header specified in <xref target="RFC7230"></xref>. </t>
+<dl>
+<dt>Request Line URI </dt>
+<dd>
+<t><tt>/well-known/</tt>&lt;service&gt; (unless overridden using a TXT path attribute)</t>
+</dd>
+<dt>Request Line Method</dt>
+<dd>
+<t>POST</t>
+</dd>
+<dt>Host: Header</dt>
+<dd>
+<t>&lt;domain&gt;</t>
+</dd>
+<dt>Content-Encoding</dt>
+<dd>
+<t>As specified in section yy below.</t>
+</dd>
+<dt>Content-Type</dt>
+<dd>
+<t>As specified in section zz below.</t>
+</dd>
+<dt>Content-Length or Transfer-Encoding</dt>
+<dd>
+<t>As specified in <xref target="RFC7230"></xref>.</t>
+</dd>
+<dt>Payload</dt>
+<dd>
+<t>The content payload as specified in section XX below.</t>
+</dd>
+</dl>
+<t>[Note, this is showing the payload, not the binding as is intended because the current code  doesn't implement it as intended yet] </t>
+<sourcecode>{
+  "Hello": {}}</sourcecode>
+</section>
+<section title="Response" anchor="n-response"><t>The response <bcp14>MAY</bcp14> contain any HTTP response header but since JWB services do not make use of HTTP caching and messages are not intended to be modified by HTTP intermediaries, only a limited number of headers have significance:</t>
+<dl>
+<dt>Response Code</dt>
+<dd>
+<t>The HTTP response code. This is processed as described in section zz below.</t>
+</dd>
+<dt>Content-Type</dt>
+<dd>
+<t>As specified in section zz below.</t>
+</dd>
+<dt>Content-Length or Transfer-Encoding</dt>
+<dd>
+<t>As specified in <xref target="RFC7230"></xref>.</t>
+</dd>
+<dt>Cache-Control</dt>
+<dd>
+<t>Since the only valid HTTP method for a JWB request is POST, JWB responses are not cacheable. The use of the cache-control header is therefore unnecessary. However, experience suggests that reviewers find it easier to understand protocol specifications if they are reminded of the fact that caching is neither supported nor desired. </t>
+</dd>
+</dl>
+<t>[Note, this is showing the payload, not the binding as is intended because the current code  doesn't implement it as intended yet] </t>
+<sourcecode>{
+  "MeshHelloResponse": {
+    "Status": 201,
+    "Version": {
+      "Major": 3,
+      "Minor": 0,
+      "Encodings": [{
+          "ID": ["application/json"]}]},
+    "EnvelopedProfileService": [{
+        "dig": "SHA2"},
+      "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJLZXlPZmZsaW5lU2l
+  nbmF0dXJlIjogewogICAgICAiVURGIjogIk1BWk4tQUJDRy00VUg3LU5OM0gtN
+  Uc3RC1LUDdYLUhSR08iLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICA
+  gICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0N
+  DgiLAogICAgICAgICAgIlB1YmxpYyI6ICI0Xy03bXY5ZEVDU0Y1aWhxUzd3UlA
+  tS1pibzRFeEpjNUpqb0g0aXVkanltUTlRYkhQVVlXCiAgSEQxWVNwVnlwYUhne
+  WctWGtmaGFxa1NBIn19fX19",
+      {
+        "signatures": [{
+            "alg": "SHA2",
+            "kid": "MAZN-ABCG-4UH7-NN3H-5G7D-KP7X-HRGO",
+            "signature": "Apr9_Nn0tfB3qNDQBsyWBW324iy3c9cLDFhRrUDrPCy
+                qPD5jN
+  zH3Rf6N0X6ppWWwSX5q0X6WhToAmrJR1hs5zV0HALInq4KhSPUvzyHi6OmAFVD
+  ttNcfQaisl94VJfbt9FgWXtGHDD2iN6bouZWSTz0A"}],
+        "PayloadDigest": "fFyeahxvdJ9nWgkHOJgitOmZXUIZ4C1ZJTmjy9kP6Xz
+            zt
+  k2kajc7JqSr_2DVvCqs4-EkqVWl7MVa4KXVITnnLA"}],
+    "EnvelopedProfileHost": [{
+        "dig": "SHA2"},
+      "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJLZXlPZmZsaW5lU2lnbmF
+  0dXJlIjogewogICAgICAiVURGIjogIk1ETkctM1JKUy1ONkJKLU1VNjMtVTdUW
+  i1SS1ZCLVNZWlQiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICA
+  gICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiL
+  AogICAgICAgICAgIlB1YmxpYyI6ICJCbjNZby1IaF9kb25zbWsxQVF4U2Qxbnp
+  SLVNFelJjSnVkd29DMTc0REVWLVZtNHQ2U2wyCiAgalZGQXEzR0JHN2xPVUVGN
+  UhmZVZxUWlBIn19fSwKICAgICJLZXlBdXRoZW50aWNhdGlvbiI6IHsKICAgICA
+  gIlVERiI6ICJNRFNPLVdPVkwtUjRZRy03T1VULVBCNk8tMkRCVy1LVU5EIiwKI
+  CAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUV
+  DREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQd
+  WJsaWMiOiAiaEZ0bWgxRXJUOTNJVXktRkpiUEh0N1FGSUFQLW9oUU5MU3pVd3R
+  YYzJFMElIN3JYRTZ1OQogIDJnbkNVUXBKVkVDdVROckh1d0FMSkI0QSJ9fX19f
+  Q",
+      {
+        "signatures": [{
+            "alg": "SHA2",
+            "kid": "MDNG-3RJS-N6BJ-MU63-U7TZ-RKVB-SYZT",
+            "signature": "4XxMRQaW2CXNVSshXDkBGN8ratT-EMiXYROyWCJ-vTF
+                jj90-4
+  ZLoKD9Ufh_cd8LPiZalqcCeV_0AWamPAehwNeOAsir1wrT0EsxvEkbo_7-46Rn
+  zBY1yLc2Cv9qIzdz8GvwexmsM_6irYhdjdeWhsSkA"}],
+        "PayloadDigest": "5srrCp5gfKaZ8VMpelOUe6ypyoZdNG8UJDrO0X2QGGY
+            hx
+  gWG6Ix0ZUpe2ika7Tu82fDW-JFLHT9ad8Tsm2lvxA"}]}}</sourcecode>
+</section>
+</section>
+<section title="DARE Message Encapsulation" anchor="n-dare-message-encapsulation"><t>The payload of the HTTP requests and responses is a DARE Message whose payload contains the Mesh Service request or response.</t>
+<t>The DARE Message encapsulation is used to authenticate the request or response data. The form of the authentication depending on the credentials available to the sender at the time the request is made.</t>
+<t>Mesh Service <bcp14>MUST</bcp14> support the use of Mutually Authenticated Key Exchange <xref target="draft-hallambaker-mesh-security"></xref> to establish the Master Key used for authentication of requests and responses.</t>
+<t>Requests and Responses <bcp14>MUST</bcp14> be authenticated. Requests and Responses <bcp14>MUST</bcp14> be encrypted if the transport is not encrypted and <bcp14>MAY</bcp14> be encrypted otherwise.</t>
+<section title="Null Authentication" anchor="n-null-authentication"><t>Null Authentication <bcp14>MAY</bcp14> be used to make a <tt>Hello</tt> Request.</t>
+<t>The Null Authentication mechanism <bcp14>MUST NOT</bcp14> be used for any Mesh Service request or response other than a <tt>Hello</tt> request.</t>
+<t>Since the Mutually Authenticated key exchange requires both parties to know the public key of the other, it is not possible for a client to authenticate itself to the service until it has obtained the service public key. One means by which the client <bcp14>MAY</bcp14> obtain the service public key is by requesting the service return the credential in a <tt>Hello</tt> transaction.</t>
+</section>
+<section title="Device Authentication" anchor="n-device-authentication"><t>Device Authentication is used in two circumstances</t>
+<ul>
+<li>When requesting creation of an account</li>
+<li>When a device is requesting connection to a profile.</li>
+</ul>
+</section>
+<section title="Profile Authentication" anchor="n-profile-authentication"><t>Profile Authentication has the same form as Device Authentication except that the client provides its Device Connection Assertion as part of the request:</t>
+</section>
+<section title="Ticket Authentication" anchor="n-ticket-authentication"><t>Ticket Authentication is used after a device has obtained an authentication ticket from a service. The ticket is returned in the response to a previous Profile Authentication exchange.</t>
+</section>
+</section>
+<section title="Payload Encoding" anchor="n-payload-encoding"><t>The Dare Message payload of a <tt>Hello</tt> request <bcp14>MUST</bcp14> be encoded in JSON encoding. The payload of all other requests <bcp14>MUST</bcp14> be in either JSON encoding or one of the encodings advertised as being accepted in a Hello response from the Service. Services <bcp14>MUST</bcp14> accept JSON encoding and <bcp14>MAY</bcp14> support the JSON-B or JSON-C encodings as specified in this document. Services <bcp14>MUST</bcp14> generate a response that is compatible with the DARE Message Content-Type specified in the request.</t>
+<t>JSON was originally developed to provide a serialization format for the JavaScript programming language <xref target="ECMA-262"></xref>. While this approach is generally applicable to the type systems of scripting programming languages, it is less well matched to the richer type systems of modern object oriented programming languages such as Java and C#.</t>
+<t>Working within a subset of the capabilities of JSON allows a Web Service protocol to be accessed with equal ease from either platform type. The following capabilities of JSON are avoided:</t>
+<t>The ability to use arbitrary strings as field names.</t>
+<t>The use of JSON objects to define maps directly</t>
+<t>The following data field types are used:</t>
+<dl>
+<dt>Integer</dt>
+<dd>
+<t>Integer values are encoded as JSON number values.</t>
+</dd>
+<dt>String</dt>
+<dd>
+<t>Test strings are encoded as JSON text strings.</t>
+</dd>
+<dt>Boolean</dt>
+<dd>
+<t>Boolean values are encoded as JSON 'false', 'true' or 'null' tokens according to value.</t>
+</dd>
+<dt>Sequence</dt>
+<dd>
+<t>Sequences of data items that are encoded as JSON arrays</t>
+</dd>
+<dt>Object of known type</dt>
+<dd>
+<t>Objects whose type is known to the receiver are encoded as JSON objects</t>
+</dd>
+<dt>Object of variable type</dt>
+<dd>
+<t>Objects whose type is not known to the receiver are encoded as JSON objects containing a single field whose name describes the type of the object value and whose value contains the value.</t>
+</dd>
+<dt>Binary Data</dt>
+<dd>
+<t>Byte sequences are converted to BASE64-url encoding <xref target="RFC4648"></xref> and encoded as JSON string values.</t>
+</dd>
+<dt>Date Time</dt>
+<dd>
+<t>Date Time values are converted to Internet time format as described in <xref target="RFC3339"></xref> and encoded as JSON string values.</t>
+</dd>
+</dl>
+</section>
+<section title="Error handling and response codes" anchor="n-error-handling-and-response-codes"><t>It is possible for an error to occur at any of the three layers in the Web Service binding:</t>
+<t>Service Layer</t>
+<t>HTTP Layer</t>
+<t>Transport Layer</t>
+<t>Services <bcp14>SHOULD</bcp14> always attempt to return error codes at the highest level possible. However, it is clearly impossible for a connection that is refused at the Transport layer to return an error code at the HTTP layer. It is however possible for a HTTP layer error response to contain a content body.</t>
+<t>In the case that a response contains both a HTTP response code and a well-formed payload containing a response, the payload response <bcp14>SHALL</bcp14> have precedence.</t>
+</section>
+</section>
+<section title="Service Description" anchor="n-service-description"><t>The Hello transaction is used to determine the features supported by the service and obtain the service credentials</t>
+<t>The request payload: </t>
+<sourcecode>{
+  "Hello": {}}</sourcecode>
+<t>The response payload: </t>
+<sourcecode>{
+  "MeshHelloResponse": {
+    "Status": 201,
+    "Version": {
+      "Major": 3,
+      "Minor": 0,
+      "Encodings": [{
+          "ID": ["application/json"]}]},
+    "EnvelopedProfileService": [{
+        "dig": "SHA2"},
+      "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJLZXlPZmZsaW5lU2l
+  nbmF0dXJlIjogewogICAgICAiVURGIjogIk1BWk4tQUJDRy00VUg3LU5OM0gtN
+  Uc3RC1LUDdYLUhSR08iLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICA
+  gICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0N
+  DgiLAogICAgICAgICAgIlB1YmxpYyI6ICI0Xy03bXY5ZEVDU0Y1aWhxUzd3UlA
+  tS1pibzRFeEpjNUpqb0g0aXVkanltUTlRYkhQVVlXCiAgSEQxWVNwVnlwYUhne
+  WctWGtmaGFxa1NBIn19fX19",
+      {
+        "signatures": [{
+            "alg": "SHA2",
+            "kid": "MAZN-ABCG-4UH7-NN3H-5G7D-KP7X-HRGO",
+            "signature": "Apr9_Nn0tfB3qNDQBsyWBW324iy3c9cLDFhRrUDrPCy
+                qPD5jN
+  zH3Rf6N0X6ppWWwSX5q0X6WhToAmrJR1hs5zV0HALInq4KhSPUvzyHi6OmAFVD
+  ttNcfQaisl94VJfbt9FgWXtGHDD2iN6bouZWSTz0A"}],
+        "PayloadDigest": "fFyeahxvdJ9nWgkHOJgitOmZXUIZ4C1ZJTmjy9kP6Xz
+            zt
+  k2kajc7JqSr_2DVvCqs4-EkqVWl7MVa4KXVITnnLA"}],
+    "EnvelopedProfileHost": [{
+        "dig": "SHA2"},
+      "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJLZXlPZmZsaW5lU2lnbmF
+  0dXJlIjogewogICAgICAiVURGIjogIk1ETkctM1JKUy1ONkJKLU1VNjMtVTdUW
+  i1SS1ZCLVNZWlQiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICA
+  gICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiL
+  AogICAgICAgICAgIlB1YmxpYyI6ICJCbjNZby1IaF9kb25zbWsxQVF4U2Qxbnp
+  SLVNFelJjSnVkd29DMTc0REVWLVZtNHQ2U2wyCiAgalZGQXEzR0JHN2xPVUVGN
+  UhmZVZxUWlBIn19fSwKICAgICJLZXlBdXRoZW50aWNhdGlvbiI6IHsKICAgICA
+  gIlVERiI6ICJNRFNPLVdPVkwtUjRZRy03T1VULVBCNk8tMkRCVy1LVU5EIiwKI
+  CAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUV
+  DREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQd
+  WJsaWMiOiAiaEZ0bWgxRXJUOTNJVXktRkpiUEh0N1FGSUFQLW9oUU5MU3pVd3R
+  YYzJFMElIN3JYRTZ1OQogIDJnbkNVUXBKVkVDdVROckh1d0FMSkI0QSJ9fX19f
+  Q",
+      {
+        "signatures": [{
+            "alg": "SHA2",
+            "kid": "MDNG-3RJS-N6BJ-MU63-U7TZ-RKVB-SYZT",
+            "signature": "4XxMRQaW2CXNVSshXDkBGN8ratT-EMiXYROyWCJ-vTF
+                jj90-4
+  ZLoKD9Ufh_cd8LPiZalqcCeV_0AWamPAehwNeOAsir1wrT0EsxvEkbo_7-46Rn
+  zBY1yLc2Cv9qIzdz8GvwexmsM_6irYhdjdeWhsSkA"}],
+        "PayloadDigest": "5srrCp5gfKaZ8VMpelOUe6ypyoZdNG8UJDrO0X2QGGY
+            hx
+  gWG6Ix0ZUpe2ika7Tu82fDW-JFLHT9ad8Tsm2lvxA"}]}}</sourcecode>
+</section>
+<section title="Account Management" anchor="n-account-management"><t>A Mesh Account is bound to a Mesh Service by completing a <tt>CreateAccount</tt> transaction with the service.</t>
+<t>The client requesting the account creation specifies the <tt>ProfileMesh</tt> profile describing the requested account and lists of initial entries to populate the devices and contacts catalogs. Additional catalogs <bcp14>MAY</bcp14> be synchronized if the account creation request is accepted.</t>
+<t>The request payload: </t>
+<sourcecode>{
+  "CreateAccount": {
+    "ServiceID": "alice@example.com",
+    "SignedProfileMesh": [{
+        "dig": "SHA2"},
+      "ewogICJQcm9maWxlTWVzaCI6IHsKICAgICJLZXlPZmZsaW5lU2lnbmF
+  0dXJlIjogewogICAgICAiVURGIjogIk1DU0MtMlBPRy1QSDdULU9ESlgtSE9DQ
+  S1CNFhZLUFGU0siLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICA
+  gICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiL
+  AogICAgICAgICAgIlB1YmxpYyI6ICJBcU9tLWVMc1VQeVNQa2VtTXZWSUpjdFh
+  VU1RhNkVDNWNfdzBrTEhaQ2g0eExsRm93NFNKCiAgenNEajJ4U1g1b2ZVbDFYY
+  3VDQmo5cWFBIn19fSwKICAgICJLZXlzT25saW5lU2lnbmF0dXJlIjogW3sKICA
+  gICAgICAiVURGIjogIk1ESTctTE1NVC1MVEpFLTZDNVotQUZaTi02T1hXLVlMV
+  zMiLAogICAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICAgIlB
+  1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogI
+  CAgICAgICAgICAiUHVibGljIjogInRRaE0ybFVpQm5LZ2s5UEFTaWdlYmRaSDE
+  4bkRDNHFGU1pJSmdtd1RQWXJwZEFLc1NudVoKICBQSDdVUHUzQXRZakZGOGFHT
+  Xl5RjhVdUEifX19XSwKICAgICJLZXlFbmNyeXB0aW9uIjogewogICAgICAiVUR
+  GIjogIk1BVFMtMzdKNS0yNkRHLU1ZVVItN0JNVS1QUEpKLVVVTzQiLAogICAgI
+  CAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUNESCI
+  6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpY
+  yI6ICJTVUpOenBETEhUOWR4T3lZZHpmdWhQTDBta1IxdHctSlRqdUlWZ1U3WC1
+  iRnFpMno2NmVmCiAgUXYxY3dTZVZMLW9abjJDT3BJSE4tbEtBIn19fX19",
+      {
+        "signatures": [{
+            "alg": "SHA2",
+            "kid": "MCSC-2POG-PH7T-ODJX-HOCA-B4XY-AFSK",
+            "signature": "riRoZjc1gdnCuBooN1Nf3b-U1BxNNMNdyGoepizbYZB
+                kie_TZ
+  g26c-wb-Nabj1QoxckrARTeyrSA9LyI-pw2CfVYJIxxqoYjN2tzhQ_yixJ7nFk
+  ieasbfVD_IKR6xU1j8agpeiU572xz42NlF5jufgkA"}],
+        "PayloadDigest": "kzRXdgdpelIk0nCoPlfMJ8SN3j211cOF6ygBIQuirxT
+            S8
+  Q6aBJyUbbhFBRVWtyyVSQo_CA_5a5we_9dsLrkPpQ"}],
+    "SignedAssertionAccount": [{
+        "dig": "SHA2"},
+      "ewogICJQcm9maWxlQWNjb3VudCI6IHsKICAgICJLZXlPZmZsaW5lU2l
+  nbmF0dXJlIjogewogICAgICAiVURGIjogIk1DMjMtWDNDVC1FVU5CLURSM00tU
+  UlCSS1XMklKLUFURVAiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICA
+  gICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0N
+  DgiLAogICAgICAgICAgIlB1YmxpYyI6ICI5dXBQMWlhazMwX0pyRzFwZVl3aGt
+  UMDBEcHc4SjBqd0dRQTBuZWhuQlZQdU9hRzloNlNzCiAgRmUwRGV6MmIzYVFwb
+  GRBR1VLb1VCZENBIn19fSwKICAgICJLZXlzT25saW5lU2lnbmF0dXJlIjogW3s
+  KICAgICAgICAiVURGIjogIk1DUlItSkZMWi1UMkpILUlOR0QtU0JZRi1OTzZYL
+  TU1Uk4iLAogICAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICA
+  gIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAgICJjcnYiOiAiRWQ0NDgiL
+  AogICAgICAgICAgICAiUHVibGljIjogIkZfTUpmMHc4ZFVIaVBZeTk3WEtRbXB
+  mRlZMbk5uZHNqUUg1cDFjM3ozSGxucVRhMmE3YkUKICBVQ09veGE0SEFpc2Y5Q
+  nFueEpFZE9tZ0EifX19XSwKICAgICJTZXJ2aWNlSURzIjogWyJhbGljZUBleGF
+  tcGxlLmNvbSJdLAogICAgIk1lc2hQcm9maWxlVURGIjogIk1DU0MtMlBPRy1QS
+  DdULU9ESlgtSE9DQS1CNFhZLUFGU0siLAogICAgIktleUVuY3J5cHRpb24iOiB
+  7CiAgICAgICJVREYiOiAiTUJXWS1JSUtZLVZPQjUtQlhJUC1ESVhYLVI0VEgtW
+  klGMiIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJ
+  saWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgI
+  CAgICAiUHVibGljIjogInN3cGU2SDV5aVU0dkpvdGJvWGJGd3dJRXBfbFhPLWt
+  ibTl6ajlQT0ZMTHdmcWU2QlVNc3UKICA5RkJDTDZHSHA5M3djbUxNMjd0R1JuN
+  EEifX19fX0",
+      {
+        "signatures": [{
+            "alg": "SHA2",
+            "kid": "MDI7-LMMT-LTJE-6C5Z-AFZN-6OXW-YLW3",
+            "signature": "BKyn2yRykmhAchtt7nfrEFbtAjq597QoPxRTb8hphW0
+                1701Oh
+  gTWMBilRSDRQaz-MdtVqePyDYCA7Voe6MO31wEh3xKUcD50zZeD01bKnIpbylb
+  l13WNGw25loyC6ns_Xj2fbsP6bq-j98gEm4uYAwEA"}],
+        "PayloadDigest": "h-nEPwrNmuSb9Eed4NgVBHIbfthIoyoHXvmyrCJ61Nm
+            qc
+  1GVow8VgMV-tywKMfH7rhra3iRwx4Z_ikDtgKdbOQ"}]}}</sourcecode>
+<t>The response payload: </t>
+<sourcecode>{
+  "CreateResponse": {
+    "Status": 201,
+    "StatusDescription": "Operation completed successfully"}}</sourcecode>
+<t>An account registration is deleted using the <tt>DeleteAccount</tt> transaction.</t>
+</section>
+<section title="Container Synchronization" anchor="n-container-synchronization"><t>All the state associated with a Mesh profile is stored as a sequence of DARE Messages in a Dare Container. The Mesh Service holding the master copy of the persistence stores and the devices connected to the profile containing complete copies (replicas) or partial copies (redactions).</t>
+<t>Thus, the only primitive needed to achieve synchronization of the profile state are those required for synchronization of a DARE Container. These steps are:</t>
+<ul>
+<li>Obtain the status of the catalogs and spools associated with the account.</li>
+<li>Download catalog and spool updates</li>
+<li>Upload catalog updates.</li>
+</ul>
+<t>To ensure a satisfactory user experience, Mesh Messages are intentionally limited in size to 64 KB or less, thus ensuring that an application can retrieve the most recent 100 messages almost instantaneously on a high bandwidth connection and without undue delay on a slower one.</t>
+<section title="Status Transaction" anchor="n-status-transaction"><t>The status transaction returns the status of the containers the device is authorized to access for the specified account together with the updated Device Connection Entry if this has been modified since the entry presented to authenticate the request was issued.</t>
+</section>
+<section title="Download Transaction" anchor="n-download-transaction"><t>The download transaction returns a collection of entries from one or more containers associated with the profile.</t>
+<t>Optional filtering criteria <bcp14>MAY</bcp14> be specified to only return objects matching specific criteria and/or only return certain parts of the selected messages.</t>
+<t>The service <bcp14>MAY</bcp14> limit the number of entries returned in an individual response for performance reasons.</t>
+<section title="Conflict Detection" anchor="n-conflict-detection"><t>Clients <bcp14>SHOULD</bcp14> check to determine if updates to a container conflict with pending updates on the device waiting to be uploaded. For example, if a contact that the user modified on the device attempting to synchronize was subsequently deleted.</t>
+<t>The means of resolving such conflicts is not in the scope of this specification.</t>
+</section>
+<section title="Filtering" anchor="n-filtering"><t>Clients may request container updates be filtered to redact catalog entries that have been updated or deleted or spool entries that have been read, deleted or were received before a certain date.</t>
+</section>
+</section>
+<section title="Upload Transaction" anchor="n-upload-transaction"><t>The upload transaction upload objects to a catalog or spool.</t>
+<t>Multiple objects <bcp14>MAY</bcp14> be uploaded at once. Object updates <bcp14>MAY</bcp14> be conditional on the successful completion of other upload requests.</t>
+<t>The transaction <bcp14>MAY</bcp14> be performed in one request/response round trip or with separate round trips to confirm that the transaction is accepted by the service before sending large number of updates.</t>
+</section>
+</section>
+<section title="Device Connection" anchor="n-device-connection"><t>Devices request connection to a Mesh profile using the <tt>Connect</tt> transaction. Three connection mechanisms are currently defined. All three of which offer strong mutual authentication.</t>
+<t>Device Authenticated</t>
+<t>Pin Authenticated</t>
+<t>EARL Connection Mode</t>
+<t>The first two of these mechanisms are initiated from the device being connected which requires that the Mesh Service Account it is being connected to be entered into it. Use of these mechanisms thus requires keyboard and display affordances or accessibility equivalents.</t>
+<t>The last mechanism is initiated from an administration device that is already connected to the account. It is intended for use in circumstances where the device being connected does not have the necessary affordances to allow the Device or PIN authenticated modes.</t>
+<t>In either case, the connection request is completed by the device requesting synchronization with the Mesh Account using its device credential for authentication. If the connection request was accepted, the device will be provisioned with the Device Connection Assertion allowing it to complete the process.</t>
+<t>The Device Connection Assertion includes an overlay device profile containing a set of private key contributions to be used to perform key cogeneration on the original set of device keys to create a new device profile to be used for all purposes associated with the Mesh Profile to which it has just been connected. This assures the user that the keys the device uses for performing operation in the context of their profile are not affected by any compromise that might have occurred during manufacture or at any point after up to the time it was connected to their profile.</t>
+<section title="Device Authenticated" anchor="n-device-authenticated"><t>The direct connection mechanism requires that both the administration device and the device originating the connection request have data entry and output affordances and that it is possible for the user to compare the authentication codes presented by the two devices to check that they are identical. </t>
+</section>
+<section title="PIN Authenticated" anchor="n-pin-authenticated"><t>The PIN Connection mechanism is similar to the Direct connection mechanism except that the process is initiated on an administration device by requesting assignment of a new authentication PIN. The PIN is then input to the connecting device to authenticate the request.</t>
+</section>
+<section title="EARL connection mode" anchor="n-earl-connection-mode"><t>The EARL/QR code connection mechanisms are used to connect a constrained device to a Mesh profile by means of an Encrypted Authenticated Resource Locator, typically presented as a QR code on the device itself or its packaging.</t>
+</section>
+</section>
+<section title="Mesh Messaging" anchor="n-mesh-messaging"><t>Mesh Messages provide a means of communication between Mesh Service Accounts with capabilities that are not possible or poorly supported in traditional SMTP mail messaging:</t>
+<ul>
+<li>End-to-end confidentiality and authentication by default.</li>
+<li>Abuse mitigation by applying access control to every inbound and outbound message.</li>
+<li>End-to-end secure group messaging.</li>
+<li>Transfer of very large data sets (Terabytes).</li>
+</ul>
+<t>Note that although Mesh Messaging is designed to facilitate the transfer of very large data sets, the size of Mesh Messages themselves is severely restricted. The current default maximum size being 64 KB. This approach allows Mesh </t>
+<t>In addition, the platform anticipates but does not currently support additional cryptographic security capabilities:</t>
+<ul>
+<li>Traffic analysis resistance using mix networks (Chaum).</li>
+<li>Simultaneous contract binding using fair contract signing (Micali).</li>
+</ul>
+<t>While these capabilities might in time cause Mesh Messaging to replace SMTP, this is not a near term goal. The short-term goal of Mesh Messaging is to support the Contact Exchange and Confirmation applications.</t>
+<t>Two important classes of application that are not currently supported directly are payments and presence. While prototypes of these applications have been considered, it is not clear if these are best implemented as special cases of the Confirmation and Contact Exchange applications or as separate applications in their own right.</t>
+<section title="Message Exchange" anchor="n-message-exchange"><t>To enable effective abuse mitigation, Mesh Messaging enforces a four corner communication model in which all outbound and inbound messages pass through a Mesh Service which accredits and authorizes the messages on the user's behalf.</t>
+<t>The Post transaction is used for client-service and service-service messaging transactions.</t>
+<section title="Client-Service (Post Transaction)" anchor="n-clientservice-post-transaction"><t>To send a message, the client creates the Mesh Message structure, encapsulates it in a DARE Message and forwards this to its service using a <tt>Post</tt> transaction.</t>
+<t>The Post transaction is authenticated to the service by device using the usual means of profile or ticket authentication.</t>
+<t>The DARE Message <bcp14>MUST</bcp14> be signed under a device signature key accredited by a Device Connection Assertion provided in the message signature block.</t>
+</section>
+<section title="Service-Service (Post Transaction)" anchor="n-serviceservice-post-transaction"><t>The Mesh Service receiving the message from the user's device <bcp14>MAY</bcp14> attempt immediate retransmission or queue it to be sent at a future time. Mesh Services <bcp14>SHOULD</bcp14> forward messages without undue delay.</t>
+<t>The Post transaction forwarding the message to the destination service carries the same payload as the original request but is authenticated by the service forwarding it. This authentication <bcp14>MAY</bcp14> be my means of either profile or ticket authentication. </t>
+<section title="Denial of Service Mitigation" anchor="n-denial-of-service-mitigation"><t>Services <bcp14>SHOULD</bcp14> implement Denial of Service mitigation strategies including limiting the maximum time taken to complete a transaction and refusing connections from clients that engage in patterns of behavior consistent with abuse.  </t>
+<t>The limitation in message size allows Mesh Services to aggressively time out connections that take too long to complete a transaction. A Mesh Service that hosted on a 10Mb/s link should be able to transfer 20 messages a second. If the service is taking more than 5 seconds to complete a transaction, either the source or the destination service is overloaded or the message itself is an attack.</t>
+<t>Imposing hard constraints on Mesh Service performance requires deployments to scale and apply resources appropriately. If a service is attempting to transfer 100 messages simultaneously and 40% are taking 4 seconds or more, this indicates that the number of simultaneous transfers being attempted should be reduced. Contrawise, if 90% are completinin less than a second, the number of threads allocated to sending outbound messages might be increased.</t>
+</section>
+<section title="Access Control" anchor="n-access-control"><t>The inbound service <bcp14>MUST</bcp14> subject inbound messages to Access Control according to the credentials presented in the DARE Message payload.</t>
+<t>After verifying the signature and checking that the key is properly accredited in accordance with site policy, the service applies authorization controls taking account of:</t>
+<ul>
+<li>The accreditation of the sender</li>
+<li>The accreditation of the transmitting Service</li>
+<li>The type of Mesh Message being sent</li>
+<li>User policy as specified in their Contact Catalog</li>
+<li>Site policy.</li>
+</ul>
+</section>
+</section>
+<section title="Service-Client (Synchronization)" anchor="n-serviceclient-synchronization"><t>The final recipient receives the message by synchronizing their inbound spool.</t>
+</section>
+</section>
+</section>
+<section title="Protocol Schema" anchor="n-protocol-schema"><dl>
+<dt>HTTP Well Known Service Prefix: /.well-known/mmm </dt>
+<dd>
+</dd>
+</dl>
+<t>Every Mesh Portal Service transaction consists of exactly one request followed by exactly one response. Mesh Service transactions MAY cause modification of the data stored in the Mesh Service or the Mesh itself but do not cause changes to the connection state. The protocol itself is thus idempotent. There is no set sequence in which operations are required to be performed. It is not necessary to perform a Hello transaction prior to any other transaction. </t>
+<section title="Request Messages" anchor="n-request-messages-"><t>A Mesh Portal Service request consists of a payload object that inherits from the MeshRequest class. When using the  HTTP binding, the request MUST specify the portal DNS address in the HTTP Host field.  </t>
+<section title="Message: MeshRequest" anchor="n-message-meshrequest-"><t>Base class for all request messages. </t>
+<t>[No fields] </t>
+</section>
+<section title="Message: MeshRequestUser" anchor="n-message-meshrequestuser-"><t>Base class for all request messages made by a user. </t>
+<dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>Account: String (Optional) </dt>
+<dd>
+<t>The fully qualified account name (including DNS address) to which the request is directed. </t>
+</dd>
+<dt>DeviceProfile: DareEnvelope (Optional) </dt>
+<dd>
+<t>Device profile of the device making the request.  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Response Messages" anchor="n-response-messages-"><t>A Mesh Portal Service response consists of a payload object that inherits from the MeshResponse class. When using the HTTP binding, the response SHOULD report the Status response code in the HTTP response  message. However the response code returned in the payload object MUST always be considered authoritative. </t>
+<section title="Message: MeshResponse" anchor="n-message-meshresponse-"><t>Base class for all response messages. Contains only the status code and status description fields. </t>
+<t>[No fields] </t>
+</section>
+</section>
+<section title="Imported Objects" anchor="n-imported-objects-"><t>The Mesh Service protocol makes use of JSON objects defined in the JOSE Signatgure and Encryption specifications and in the DARE Data At Rest Encryption extensions to JOSE. </t>
+</section>
+<section title="Common Structures" anchor="n-common-structures-"><t>The following common structures are used in the protocol messages: </t>
+<section title="Structure: KeyValue" anchor="n-structure-keyvalue-"><t>Describes a Key/Value structure used to make queries for records matching one or more selection criteria. </t>
+<dl>
+<dt>Key: String (Optional) </dt>
+<dd>
+<t>The data retrieval key. </t>
+</dd>
+<dt>Value: String (Optional) </dt>
+<dd>
+<t>The data value to match.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: ConstraintsSelect" anchor="n-structure-constraintsselect-"><t>Specifies constraints to be applied to a search result. These  allow a client to limit the number of records returned, the quantity of data returned, the earliest and latest data returned, etc. </t>
+<dl>
+<dt>Container: String (Optional) </dt>
+<dd>
+<t>The container to be searched. </t>
+</dd>
+<dt>IndexMin: Integer (Optional) </dt>
+<dd>
+<t>Only return objects with an index value that is equal to or higher than the value specified. </t>
+</dd>
+<dt>IndexMax: Integer (Optional) </dt>
+<dd>
+<t>Only return objects with an index value that is equal to or lower than the value specified. </t>
+</dd>
+<dt>NotBefore: DateTime (Optional) </dt>
+<dd>
+<t>Only data published on or after the specified time instant  is requested. </t>
+</dd>
+<dt>Before: DateTime (Optional) </dt>
+<dd>
+<t>Only data published before the specified time instant is requested. This excludes data published at the specified time instant. </t>
+</dd>
+<dt>PageKey: String (Optional) </dt>
+<dd>
+<t>Specifies a page key returned in a previous search operation in which the number of responses exceeded the specified bounds. </t>
+<t>When a page key is specified, all the other search parameters except for MaxEntries and MaxBytes are ignored and the service returns the next set of data responding to the earlier query.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: ConstraintsData" anchor="n-structure-constraintsdata-"><t>Specifies constraints on the data to be sent. </t>
+<dl>
+<dt>MaxEntries: Integer (Optional) </dt>
+<dd>
+<t>Maximum number of entries to send. </t>
+</dd>
+<dt>BytesOffset: Integer (Optional) </dt>
+<dd>
+<t>Specifies an offset to be applied to the payload data before it is sent.  This allows large payloads to be transferred incrementally. </t>
+</dd>
+<dt>BytesMax: Integer (Optional) </dt>
+<dd>
+<t>Maximum number of payload bytes to send. </t>
+</dd>
+<dt>Header: Boolean (Optional) </dt>
+<dd>
+<t>Return the entry header </t>
+</dd>
+<dt>Payload: Boolean (Optional) </dt>
+<dd>
+<t>Return the entry payload </t>
+</dd>
+<dt>Trailer: Boolean (Optional) </dt>
+<dd>
+<t>Return the entry trailer  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: PolicyAccount" anchor="n-structure-policyaccount-"><t>Describes the account creation policy including constraints on  account names, whether there is an open account creation policy, etc. </t>
+<dl>
+<dt>Minimum: Integer (Optional) </dt>
+<dd>
+<t>Specifies the minimum length of an account name. </t>
+</dd>
+<dt>Maximum: Integer (Optional) </dt>
+<dd>
+<t>Specifies the maximum length of an account name. </t>
+</dd>
+<dt>InvalidCharacters: String (Optional) </dt>
+<dd>
+<t>A list of characters that the service  does not accept in account names. The list of characters  MAY not be exhaustive but SHOULD include any illegal characters in the proposed account name.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: ContainerStatus" anchor="n-structure-containerstatus-"><dl>
+<dt>Container: String (Optional) </dt>
+<dd>
+</dd>
+<dt>Index: Integer (Optional) </dt>
+<dd>
+</dd>
+<dt>Digest: Binary (Optional)  </dt>
+<dd>
+</dd>
+</dl>
+</section>
+<section title="Structure: ContainerUpdate" anchor="n-structure-containerupdate-"><dl>
+<dt>Inherits: ContainerStatus  </dt>
+<dd>
+</dd>
+<dt>Envelopes: DareEnvelope [0..Many] </dt>
+<dd>
+<t>The entries to be uploaded.   </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Hello" anchor="n-transaction-hello-"><dl>
+<dt>Request: HelloRequest </dt>
+<dd>
+</dd>
+<dt>Response: MeshHelloResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Report service and version information.  </t>
+<t>The Hello transaction provides a means of determining which protocol versions, message encodings and transport protocols are supported by the service. </t>
+<t>The PostConstraints field MAY be used to advise senders of a maximum size of payload that MAY be sent in an initial Post request. </t>
+<section title="Message: MeshHelloResponse" anchor="n-message-meshhelloresponse-"><dl>
+<dt>ConstraintsUpdate: ConstraintsData (Optional) </dt>
+<dd>
+<t>Specifies the default data constraints for updates. </t>
+</dd>
+<dt>ConstraintsPost: ConstraintsData (Optional) </dt>
+<dd>
+<t>Specifies the default data constraints for message senders. </t>
+</dd>
+<dt>PolicyAccount: PolicyAccount (Optional) </dt>
+<dd>
+<t>Specifies the account creation policy </t>
+</dd>
+<dt>EnvelopedProfileService: DareEnvelope (Optional) </dt>
+<dd>
+<t>The enveloped master profile of the service. </t>
+</dd>
+<dt>EnvelopedProfileHost: DareEnvelope (Optional) </dt>
+<dd>
+<t>The enveloped profile of the host.  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: CreateAccount" anchor="n-transaction-createaccount-"><dl>
+<dt>Request: CreateRequest </dt>
+<dd>
+</dd>
+<dt>Response: CreateResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request creation of a new service account. </t>
+<t>Attempt  </t>
+<section title="Message: CreateRequest" anchor="n-message-createrequest-"><t>Request binding of an account to a service address. </t>
+<dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>ServiceID: String (Optional) </dt>
+<dd>
+<t>The service account to bind to. </t>
+</dd>
+<dt>SignedProfileMesh: DareEnvelope (Optional) </dt>
+<dd>
+<t>The persistent profile that will be used to validate changes to the account assertion. </t>
+</dd>
+<dt>SignedAssertionAccount: DareEnvelope (Optional) </dt>
+<dd>
+<t>The signed assertion describing the account.  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: CreateResponse" anchor="n-message-createresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Reports the success or failure of a Create transaction. </t>
+<dl>
+<dt>Reason: String (Optional) </dt>
+<dd>
+<t>Text explaining the status of the creation request. </t>
+</dd>
+<dt>URL: String (Optional) </dt>
+<dd>
+<t>A URL to which the user is directed to complete the account creation  request.  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: DeleteAccount" anchor="n-transaction-deleteaccount-"><dl>
+<dt>Request: DeleteRequest </dt>
+<dd>
+</dd>
+<dt>Response: DeleteResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request deletion of a service account. </t>
+<section title="Message: DeleteRequest" anchor="n-message-deleterequest-"><t>Request creation of a new portal account. The request specifies the requested account identifier and the Mesh profile to be associated  with the account. </t>
+<dl>
+<dt>Inherits: MeshRequestUser  </dt>
+<dd>
+</dd>
+</dl>
+<t>[No fields] </t>
+</section>
+<section title="Message: DeleteResponse" anchor="n-message-deleteresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Reports the success or failure of a Delete transaction. </t>
+<t>[No fields] </t>
+</section>
+</section>
+<section title="Transaction: Complete" anchor="n-transaction-complete-"><dl>
+<dt>Request: CompleteRequest </dt>
+<dd>
+</dd>
+<dt>Response: StatusResponse  </dt>
+<dd>
+</dd>
+</dl>
+<section title="Message: CompleteRequest" anchor="n-message-completerequest-"><dl>
+<dt>Inherits: StatusRequest  </dt>
+<dd>
+</dd>
+<dt>ServiceID: String (Optional)  </dt>
+<dd>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Status" anchor="n-transaction-status-"><dl>
+<dt>Request: StatusRequest </dt>
+<dd>
+</dd>
+<dt>Response: StatusResponse  </dt>
+<dd>
+</dd>
+</dl>
+<section title="Message: StatusRequest" anchor="n-message-statusrequest-"><dl>
+<dt>Inherits: MeshRequestUser  </dt>
+<dd>
+</dd>
+<dt>DeviceUDF: String (Optional) </dt>
+<dd>
+</dd>
+<dt>ProfileMasterDigest: Binary (Optional) </dt>
+<dd>
+</dd>
+<dt>Catalogs: String [0..Many] </dt>
+<dd>
+</dd>
+<dt>Spools: String [0..Many]  </dt>
+<dd>
+</dd>
+</dl>
+</section>
+<section title="Message: StatusResponse" anchor="n-message-statusresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+<dt>EnvelopedProfileMaster: DareEnvelope (Optional) </dt>
+<dd>
+<t>The master profile that provides the root of trust for this Mesh </t>
+</dd>
+<dt>EnvelopedCatalogEntryDevice: DareEnvelope (Optional) </dt>
+<dd>
+<t>The catalog device entry </t>
+</dd>
+<dt>ContainerStatus: ContainerStatus [0..Many]  </dt>
+<dd>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Download" anchor="n-transaction-download-"><dl>
+<dt>Request: DownloadRequest </dt>
+<dd>
+</dd>
+<dt>Response: DownloadResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request objects from the specified container with the specified search criteria. </t>
+<section title="Message: DownloadRequest" anchor="n-message-downloadrequest-"><dl>
+<dt>Inherits: MeshRequestUser  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request objects from the specified container(s). </t>
+<t>A client MAY request only objects matching specified search criteria be returned and MAY request that only specific fields or parts of the  payload be returned. </t>
+<dl>
+<dt>Select: ConstraintsSelect [0..Many] </dt>
+<dd>
+<t>Specifies constraints to be applied to a search result. These  allow a client to limit the number of records returned, the quantity of data returned, the earliest and latest data returned, etc. </t>
+</dd>
+<dt>ConstraintsPost: ConstraintsData (Optional) </dt>
+<dd>
+<t>Specifies the data constraints to be applied to the responses.  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: DownloadResponse" anchor="n-message-downloadresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Return the set of objects requested. </t>
+<t>Services SHOULD NOT return a response that is disproportionately large relative to the speed of the network connection without a clear indication from the client that it is relevant. A service MAY limit the number of  objects returned. A service MAY limit the scope of each response.  </t>
+<dl>
+<dt>Updates: ContainerUpdate [0..Many] </dt>
+<dd>
+<t>The updated data  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Upload" anchor="n-transaction-upload-"><dl>
+<dt>Request: UploadRequest </dt>
+<dd>
+</dd>
+<dt>Response: UploadResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request objects from the specified container with the specified search criteria. </t>
+<section title="Message: UploadRequest" anchor="n-message-uploadrequest-"><dl>
+<dt>Inherits: MeshRequestUser  </dt>
+<dd>
+</dd>
+</dl>
+<t>Upload entries to a container. This request is only valid if it is issued by the owner of the account </t>
+<dl>
+<dt>Updates: ContainerUpdate [0..Many] </dt>
+<dd>
+<t>The data to be updated </t>
+</dd>
+<dt>Self: DareEnvelope [0..Many] </dt>
+<dd>
+<t>Entries to be added to the inbound spool on the account, e.g. completion messages.  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: UploadResponse" anchor="n-message-uploadresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Response to an upload request.  </t>
+<dl>
+<dt>Entries: EntryResponse [0..Many] </dt>
+<dd>
+<t>The responses to the entries. </t>
+</dd>
+<dt>ConstraintsData: ConstraintsData (Optional) </dt>
+<dd>
+<t>If the upload request contains redacted entries, specifies constraints  that apply to the redacted entries as a group. Thus the total payloads of all the messages must not exceed the specified value.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: EntryResponse" anchor="n-structure-entryresponse-"><dl>
+<dt>IndexRequest: Integer (Optional) </dt>
+<dd>
+<t>The index value of the entry in the request. </t>
+</dd>
+<dt>IndexContainer: Integer (Optional) </dt>
+<dd>
+<t>The index value assigned to the entry in the container. </t>
+</dd>
+<dt>Result: String (Optional) </dt>
+<dd>
+<t>Specifies the result of attempting to add the entry to a catalog or spool. Valid values for a message are 'Accept', 'Reject'. Valid  values for an entry are 'Accept', 'Reject' and 'Conflict'. </t>
+</dd>
+<dt>ConstraintsData: ConstraintsData (Optional) </dt>
+<dd>
+<t>If the entry was redacted, specifies constraints  that apply to the redacted entries as a group. Thus the total payloads of all the messages must not exceed the specified value.	  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Transaction: Post" anchor="n-transaction-post-"><dl>
+<dt>Request: PostRequest </dt>
+<dd>
+</dd>
+<dt>Response: PostResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request to post to a spool from an external party. The request and response messages are extensions of the corresponding messages for the Upload transaction. It is expected that additional fields will be added as the need arises. </t>
+<section title="Message: PostRequest" anchor="n-message-postrequest-"><dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>Accounts: String [0..Many] </dt>
+<dd>
+<t>The account(s) to which the request is directed. </t>
+</dd>
+<dt>Message: DareEnvelope [0..Many] </dt>
+<dd>
+<t>The entries to be uploaded. These MAY be either complete messages or redacted messages. In either case, the messages MUST conform to the ConstraintsUpdate specified by the  service  </t>
+</dd>
+<dt>Self: DareEnvelope [0..Many] </dt>
+<dd>
+<t>Messages to be appended to the user's self spool. this is typically used to post notifications to the user to mark messages as having been read or responded to.  </t>
+</dd>
+</dl>
+</section>
+<section title="Message: PostResponse" anchor="n-message-postresponse-"><dl>
+<dt>Inherits: UploadResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>[No fields] </t>
+</section>
+</section>
+<section title="Transaction: Connect" anchor="n-transaction-connect-"><dl>
+<dt>Request: ConnectRequest </dt>
+<dd>
+</dd>
+<dt>Response: ConnectResponse  </dt>
+<dd>
+</dd>
+</dl>
+<t>Request information necessary to begin making a connection request. </t>
+<section title="Message: ConnectRequest" anchor="n-message-connectrequest-"><dl>
+<dt>Inherits: MeshRequest  </dt>
+<dd>
+</dd>
+<dt>MessageConnectionRequestClient: DareEnvelope (Optional) </dt>
+<dd>
+<t>The connection request generated by the client   </t>
+</dd>
+</dl>
+</section>
+<section title="Message: ConnectResponse" anchor="n-message-connectresponse-"><dl>
+<dt>Inherits: MeshResponse  </dt>
+<dd>
+</dd>
+<dt>EnvelopedConnectionResponse: DareEnvelope (Optional) </dt>
+<dd>
+<t>The connection request generated by the client </t>
+</dd>
+<dt>EnvelopedProfileMaster: DareEnvelope (Optional) </dt>
+<dd>
+<t>The master profile that provides the root of trust for this Mesh </t>
+</dd>
+<dt>EnvelopedAccountAssertion: DareEnvelope (Optional) </dt>
+<dd>
+<t>The current account assertion  </t>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+<section title="Security Considerations" anchor="n-security-considerations"><t>The security considerations for use and implementation of Mesh services and applications are described in the Mesh Security Considerations guide <xref target="draft-hallambaker-mesh-security"></xref>.</t>
+</section>
+<section title="IANA Considerations" anchor="n-iana-considerations"><t>All the IANA considerations for the Mesh documents are specified in this document</t>
+</section>
+<section title="Acknowledgements" anchor="n-acknowledgements"><t>A list of people who have contributed to the design of the Mesh is presented in <xref target="draft-hallambaker-mesh-architecture"></xref>.</t>
+</section>
+</middle>
+<back>
+<references title="Normative References"><reference anchor="RFC2119"><front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+<reference anchor="RFC8446"><front>
+<title>The Transport Layer Security (TLS) Protocol Version 1.3</title>
+<author fullname="E. Rescorla" initials="E." surname="Rescorla"><organization/>
+<address>
+</address>
+</author>
+<date month="August" year="2018"/>
+</front>
+<seriesInfo name="RFC" value="8446"/>
+<seriesInfo name="DOI" value="10.17487/RFC8446"/>
+</reference>
+<reference anchor="RFC7230"><front>
+<title>Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
+<author fullname="R. Fielding" initials="R." surname="Fielding"><organization/>
+<address>
+</address>
+</author>
+<author fullname="J. Reschke" initials="J." surname="Reschke"><organization/>
+<address>
+</address>
+</author>
+<date month="June" year="2014"/>
+</front>
+<seriesInfo name="RFC" value="7230"/>
+<seriesInfo name="DOI" value="10.17487/RFC7230"/>
+</reference>
+<reference anchor="RFC4648"><front>
+<title>The Base16, Base32, and Base64 Data Encodings</title>
+<author fullname="S. Josefsson" initials="S." surname="Josefsson"><organization/>
+<address>
+</address>
+</author>
+<date month="October" year="2006"/>
+</front>
+<seriesInfo name="RFC" value="4648"/>
+<seriesInfo name="DOI" value="10.17487/RFC4648"/>
+</reference>
+<reference anchor="RFC3339"><front>
+<title>Date and Time on the Internet: Timestamps</title>
+<author fullname="G. Klyne" initials="G." surname="Klyne"><organization/>
+<address>
+</address>
+</author>
+<author fullname="C. Newman" initials="C." surname="Newman"><organization/>
+<address>
+</address>
+</author>
+<date month="July" year="2002"/>
+</front>
+<seriesInfo name="RFC" value="3339"/>
+<seriesInfo name="DOI" value="10.17487/RFC3339"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-architecture"><front>
+<title>Mathematical Mesh 3.0 Part I: Architecture Guide</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="23" month="October" year="2019"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-architecture-11"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-11.txt"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-security"><front>
+<title>Mathematical Mesh 3.0 Part VII: Security Considerations</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="23" month="October" year="2019"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-security-02"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-security-02.txt"/>
+</reference>
+</references>
+<references title="Informative References"><reference anchor="ECMA-262"><front>
+<title>ECMAScript(R) 2017 Language Specification</title>
+<author><organization>Ecma International</organization>
+<address>
+</address>
+</author>
+<date month="June" year="2017"/>
+</front>
+<format type="pdf" target="https://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-developer"><front>
+<title>Mathematical Mesh: Reference Implementation</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="23" month="October" year="2019"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-developer-09"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-09.txt"/>
+</reference>
+</references>
+</back>
+</rfc>

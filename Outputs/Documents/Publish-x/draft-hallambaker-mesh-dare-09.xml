@@ -1,0 +1,2553 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-dare-09" indexInclude="false" ipr="trust200902" prepTime="2020-11-03T01:51:14Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Mesh: Data At Rest Encryption">Mathematical Mesh 3.0 Part III : Data At Rest Encryption (DARE)</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-dare" stream="independent"/>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><organization>ThresholdSecrets.com</organization>
+<address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="3" month="November" year="2020"/>
+<area/>
+<workgroup/>
+<abstract>
+<t>This document describes the Data At Rest Encryption (DARE) Envelope and Container syntax. </t>
+<t>The DARE Envelope syntax is used to digitally sign, digest, authenticate, or encrypt arbitrary content data.</t>
+<t>The DARE Container syntax describes an append-only sequence of entries, each containing a DARE Envelope. DARE Containers may support cryptographic integrity verification of the entire data container content by means of a Merkle tree. </t>
+<t>[Note to Readers]</t>
+<t>Discussion of this draft takes place on the MATHMESH mailing list (mathmesh@ietf.org), which is archived at https://mailarchive.ietf.org/arch/search/?email_list=mathmesh.</t>
+<t>This document is also available online at <eref target="http://mathmesh.com/Documents/draft-hallambaker-mesh-dare.html"></eref>.</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="n-introduction"><t>This document describes the Data At Rest Encryption (DARE) Envelope and Container Syntax. The DARE Envelope syntax is used to digitally sign, digest, authenticate, or encrypt arbitrary message content. The DARE Container syntax describes an append-only sequence of data frames, each containing a DARE Envelope that supports efficient incremental signature and encryption.</t>
+<t>The DARE Envelope Syntax is based on a subset of the JSON Web Signature <xref target="RFC7515"></xref> and JSON Web Encryption <xref target="RFC7516"></xref> standards and shares many fields and semantics. The processing model and data structures have been streamlined to remove alternative means of specifying the same content and to enable multiple data sequences to be signed and encrypted under a single master encryption key without compromise to security.</t>
+<t>A DARE Envelope consists of a <em>Header</em>, <em>Payload</em> and an optional <em>Trailer</em>. To enable single pass encoding and decoding, the Header contains all the information required to perform cryptographic processing of the Payload and authentication data (digest, MAC, signature values) <bcp14>MAY</bcp14> be deferred to the Trailer section.</t>
+<t>A DARE Container is an append-only log format consisting of a sequence of frames. Cryptographic enhancements (signature, encryption) may be applied to individual frames or to sets of frames. Thus, a single key exchange may be used to provide a master key to encrypt multiple frames and a single signature may be used to authenticate all the frames in the container up to and including the frame in which the signature is presented.</t>
+<t>The DARE Envelope syntax may be used either as a standalone cryptographic message syntax or as a means of presenting a single DARE Container frame together with the complete cryptographic context required to verify the contents and decrypt them.</t>
+<section title="Encryption and Integrity" anchor="n-encryption-and-integrity"><t>A key innovation in the DARE Envelope Syntax is the separation of key exchange and data encryption operations so that a Master Key (MK) established in a single exchange to be applied to multiple data sequences. This means that a single public key operation <bcp14>MAY</bcp14> be used to encrypt and/or authenticate multiple parts of the same DARE Envelope or multiple frames in a DARE Container.</t>
+<t>To avoid reuse of the key and to avoid the need to communicate separate IVs, each octet sequence is encrypted under a different encryption key (and IV if required) derived from the Master Key by means of a salt that is unique for each octet sequence that is encrypted. The same approach is used to generate keys for calculating a MAC over the octet sequence if required. This approach allows encryption and integrity protections to be applied to the envelope payload, to header or trailer fields or to application defined Enhanced Data Sequences in the header or trailer. </t>
+<section title="Key Exchange" anchor="n-key-exchange"><t>Traditional cryptographic containers describe the application of a single key exchange to encryption of a single octet sequence. Examples include PCKS#7/CMS <xref target="RFC2315"></xref>, OpenPGP <xref target="RFC4880"></xref> and JSON Web Encryption <xref target="RFC7516"></xref>.</t>
+<t>To encrypt data using RSA, the encoder first generates a random encryption key and initialization vector (IV). The encryption key is encrypted under the public key of each recipient to create a per-recipient decryption entry. The encryption key, plaintext and IV are used to generate the ciphertext (figure 1).</t>
+<figure>
+<!-- Include SVG File ../Images/DAREEncrypt1.svg --><artwork type="svg">
+<svg height="345" width="552" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 120,0" fill="none" stroke="black" />
+  <path d="M 416,0 L 536,0" fill="none" stroke="black" />
+  <path d="M 120,16 L 264,16" fill="none" stroke="black" />
+  <path d="M 264,16 L 408,16" fill="none" stroke="black" />
+  <path d="M 0,48 L 120,48" fill="none" stroke="black" />
+  <path d="M 416,48 L 536,48" fill="none" stroke="black" />
+  <path d="M 0,96 L 120,96" fill="none" stroke="black" />
+  <path d="M 208,96 L 328,96" fill="none" stroke="black" />
+  <path d="M 416,96 L 536,96" fill="none" stroke="black" />
+  <path d="M 120,112 L 160,112" fill="none" stroke="black" />
+  <path d="M 160,112 L 200,112" fill="none" stroke="black" />
+  <path d="M 328,112 L 408,112" fill="none" stroke="black" />
+  <path d="M 0,144 L 120,144" fill="none" stroke="black" />
+  <path d="M 208,144 L 328,144" fill="none" stroke="black" />
+  <path d="M 416,144 L 536,144" fill="none" stroke="black" />
+  <path d="M 0,176 L 120,176" fill="none" stroke="black" />
+  <path d="M 208,176 L 328,176" fill="none" stroke="black" />
+  <path d="M 416,176 L 536,176" fill="none" stroke="black" />
+  <path d="M 160,192 L 200,192" fill="none" stroke="black" />
+  <path d="M 120,208 L 200,208" fill="none" stroke="black" />
+  <path d="M 328,208 L 408,208" fill="none" stroke="black" />
+  <path d="M 160,224 L 200,224" fill="none" stroke="black" />
+  <path d="M 0,240 L 120,240" fill="none" stroke="black" />
+  <path d="M 208,240 L 328,240" fill="none" stroke="black" />
+  <path d="M 416,240 L 536,240" fill="none" stroke="black" />
+  <path d="M 0,272 L 120,272" fill="none" stroke="black" />
+  <path d="M 416,272 L 536,272" fill="none" stroke="black" />
+  <path d="M 120,288 L 160,288" fill="none" stroke="black" />
+  <path d="M 160,288 L 408,288" fill="none" stroke="black" />
+  <path d="M 0,320 L 120,320" fill="none" stroke="black" />
+  <path d="M 416,320 L 536,320" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,48" fill="none" stroke="black" />
+  <path d="M 0,96 L 0,144" fill="none" stroke="black" />
+  <path d="M 0,176 L 0,240" fill="none" stroke="black" />
+  <path d="M 0,272 L 0,320" fill="none" stroke="black" />
+  <path d="M 120,0 L 120,16" fill="none" stroke="black" />
+  <path d="M 120,16 L 120,48" fill="none" stroke="black" />
+  <path d="M 120,96 L 120,112" fill="none" stroke="black" />
+  <path d="M 120,112 L 120,144" fill="none" stroke="black" />
+  <path d="M 120,176 L 120,208" fill="none" stroke="black" />
+  <path d="M 120,208 L 120,240" fill="none" stroke="black" />
+  <path d="M 120,272 L 120,288" fill="none" stroke="black" />
+  <path d="M 120,288 L 120,320" fill="none" stroke="black" />
+  <path d="M 160,112 L 160,192" fill="none" stroke="black" />
+  <path d="M 160,224 L 160,288" fill="none" stroke="black" />
+  <path d="M 208,96 L 208,144" fill="none" stroke="black" />
+  <path d="M 208,176 L 208,240" fill="none" stroke="black" />
+  <path d="M 264,16 L 264,80" fill="none" stroke="black" />
+  <path d="M 328,96 L 328,112" fill="none" stroke="black" />
+  <path d="M 328,112 L 328,144" fill="none" stroke="black" />
+  <path d="M 328,176 L 328,208" fill="none" stroke="black" />
+  <path d="M 328,208 L 328,240" fill="none" stroke="black" />
+  <path d="M 416,0 L 416,48" fill="none" stroke="black" />
+  <path d="M 416,96 L 416,144" fill="none" stroke="black" />
+  <path d="M 416,176 L 416,240" fill="none" stroke="black" />
+  <path d="M 416,272 L 416,320" fill="none" stroke="black" />
+  <path d="M 536,0 L 536,48" fill="none" stroke="black" />
+  <path d="M 536,96 L 536,144" fill="none" stroke="black" />
+  <path d="M 536,176 L 536,240" fill="none" stroke="black" />
+  <path d="M 536,272 L 536,320" fill="none" stroke="black" />
+  <polygon points="208.000000,112.000000 196.000000,106.400002 196.000000,117.599998" fill="black" transform="rotate(0.000000, 200.000000, 112.000000)" />
+  <polygon points="208.000000,192.000000 196.000000,186.399994 196.000000,197.600006" fill="black" transform="rotate(0.000000, 200.000000, 192.000000)" />
+  <polygon points="208.000000,208.000000 196.000000,202.399994 196.000000,213.600006" fill="black" transform="rotate(0.000000, 200.000000, 208.000000)" />
+  <polygon points="208.000000,224.000000 196.000000,218.399994 196.000000,229.600006" fill="black" transform="rotate(0.000000, 200.000000, 224.000000)" />
+  <path d="M 264,80 L 264,88" fill="none" stroke="black" />
+  <polygon points="280.000000,80.000000 268.000000,74.400002 268.000000,85.599998" fill="black" transform="rotate(90.000000, 264.000000, 80.000000)" />
+  <polygon points="416.000000,16.000000 404.000000,10.400000 404.000000,21.600000" fill="black" transform="rotate(0.000000, 408.000000, 16.000000)" />
+  <polygon points="416.000000,112.000000 404.000000,106.400002 404.000000,117.599998" fill="black" transform="rotate(0.000000, 408.000000, 112.000000)" />
+  <polygon points="416.000000,208.000000 404.000000,202.399994 404.000000,213.600006" fill="black" transform="rotate(0.000000, 408.000000, 208.000000)" />
+  <polygon points="416.000000,288.000000 404.000000,282.399994 404.000000,293.600006" fill="black" transform="rotate(0.000000, 408.000000, 288.000000)" />
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="292">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="292">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="20">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="32" y="36">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="36">m</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="116">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="196">E</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="228">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="296" y="132">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="292">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="292">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="488" y="36">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="116">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="132">h</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="132">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="212">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="228">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="308">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="432" y="20">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="440" y="36">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="488" y="116">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="496" y="132">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="212">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="440" y="292">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="132">g</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="212">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="196">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="292">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="496" y="20">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="116">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="132">E</text>
+  <text text-anchor="middle" font-family="sans-serif" x="480" y="132">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="196">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="196">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="480" y="308">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="32" y="292">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="520" y="292">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="36">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="116">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="116">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="132">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="304" y="228">)</text>
+  <text text-anchor="middle" font-family="sans-serif" x="8" y="292">I</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="20">u</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="36">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="132">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="212">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="292">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="116">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="212">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="228">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="196">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="212">x</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="292">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="116">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="228">m</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="228">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="480" y="292">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="488" y="292">z</text>
+  <text text-anchor="middle" font-family="sans-serif" x="440" y="20">u</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="36">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="36">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="480" y="36">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="32" y="116">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="196">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="504" y="20">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="212">h</text>
+  <text text-anchor="middle" font-family="sans-serif" x="296" y="228">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="432" y="292">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="308">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="20">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="116">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="512" y="132">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="440" y="212">C</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="308">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="480" y="116">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="132">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="488" y="212">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="308">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="20">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="432" y="36">I</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="132">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="132">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="212">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="292">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="488" y="20">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="116">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="212">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="212">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="496" y="212">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="36">I</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="116">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="212">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="20">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="36">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="132">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="228">(</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="20">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="20">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="504" y="36">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="504" y="116">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="432" y="132">I</text>
+  <text text-anchor="middle" font-family="sans-serif" x="440" y="132">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="504" y="212">x</text>
+  <text text-anchor="middle" font-family="sans-serif" x="112" y="292">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="424" y="292">I</text>
+  <text text-anchor="middle" font-family="sans-serif" x="32" y="20">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="36">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="36">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="32" y="212">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="212">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="228">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="496" y="292">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="504" y="292">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="292">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="528" y="292">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="20">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="20">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="132">x</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="228">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="292">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="292">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="116">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="440" y="116">R</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="132">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="488" y="132">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="480" y="212">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="292">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="116">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="196">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="228">m</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="36">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="116">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="292">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="308">V</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="116">E</text>
+  <text text-anchor="middle" font-family="sans-serif" x="504" y="132">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="512" y="212">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="512" y="292">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="308">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="488" y="308">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="20">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="496" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="116">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="292">z</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="308">V</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="308">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="496" y="308">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="292">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="36">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="116">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="496" y="116">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="132">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="132">m</text>
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="308">e</text>
+</g></svg>
+</artwork>
+</figure>
+<t>This approach is adequate for the task of encrypting a single octet stream. It is less than satisfactory when encrypting multiple octet streams or very long streams for which a rekeying operation is desirable. </t>
+<t>In the DARE approach, key exchange and key derivation are separate operations and keys <bcp14>MAY</bcp14> be derived for encryption or integrity purposes or both. A single key exchange <bcp14>MAY</bcp14> be used to derive keys to apply encryption and integrity enhancements to multiple data sequences.</t>
+<t>The DARE key exchange begins with the same key exchange used to produce the CEK in JWE but instead of using the CEK to encipher data directly, it is used as one of the inputs to a Key Derivation Function (KDF) that is used to derive parameters for each block of data to be encrypted. To avoid the need to introduce additional terminology, the term 'CEK' is still used to describe the output of the key agreement algorithm (including key unwrapping if required) but it is more appropriately described as a Master Key (figure 2).</t>
+<figure>
+<!-- Include SVG File ../Images/DAREEncrypt2.svg --><artwork type="svg">
+<svg height="281" width="552" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 120,0" fill="none" stroke="black" />
+  <path d="M 416,0 L 536,0" fill="none" stroke="black" />
+  <path d="M 120,16 L 264,16" fill="none" stroke="black" />
+  <path d="M 264,16 L 408,16" fill="none" stroke="black" />
+  <path d="M 0,48 L 120,48" fill="none" stroke="black" />
+  <path d="M 416,48 L 536,48" fill="none" stroke="black" />
+  <path d="M 208,96 L 328,96" fill="none" stroke="black" />
+  <path d="M 208,144 L 264,144" fill="none" stroke="black" />
+  <path d="M 264,144 L 328,144" fill="none" stroke="black" />
+  <path d="M 208,208 L 328,208" fill="none" stroke="black" />
+  <path d="M 208,256 L 328,256" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,48" fill="none" stroke="black" />
+  <path d="M 120,0 L 120,16" fill="none" stroke="black" />
+  <path d="M 120,16 L 120,48" fill="none" stroke="black" />
+  <path d="M 208,96 L 208,144" fill="none" stroke="black" />
+  <path d="M 208,208 L 208,256" fill="none" stroke="black" />
+  <path d="M 264,16 L 264,80" fill="none" stroke="black" />
+  <path d="M 264,144 L 264,192" fill="none" stroke="black" />
+  <path d="M 328,96 L 328,112" fill="none" stroke="black" />
+  <path d="M 328,112 L 328,144" fill="none" stroke="black" />
+  <path d="M 328,208 L 328,256" fill="none" stroke="black" />
+  <path d="M 416,0 L 416,48" fill="none" stroke="black" />
+  <path d="M 536,0 L 536,48" fill="none" stroke="black" />
+  <path d="M 264,80 L 264,88" fill="none" stroke="black" />
+  <polygon points="280.000000,80.000000 268.000000,74.400002 268.000000,85.599998" fill="black" transform="rotate(90.000000, 264.000000, 80.000000)" />
+  <path d="M 264,192 L 264,200" fill="none" stroke="black" />
+  <polygon points="280.000000,192.000000 268.000000,186.399994 268.000000,197.600006" fill="black" transform="rotate(90.000000, 264.000000, 192.000000)" />
+  <polygon points="416.000000,16.000000 404.000000,10.400000 404.000000,21.600000" fill="black" transform="rotate(0.000000, 408.000000, 16.000000)" />
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="36">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="36">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="132">g</text>
+  <text text-anchor="middle" font-family="sans-serif" x="504" y="20">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="36">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="20">u</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="20">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="20">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="36">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="228">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="36">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="36">m</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="36">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="36">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="496" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="132">h</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="20">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="36">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="504" y="36">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="132">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="20">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="36">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="244">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="244">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="20">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="32" y="36">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="480" y="36">f</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="116">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="296" y="132">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="228">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="20">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="432" y="20">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="20">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="228">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="228">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="20">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="432" y="36">I</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="36">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="488" y="36">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="116">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="32" y="20">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="244">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="496" y="20">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="440" y="36">d</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="228">M</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="20">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="36">I</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="132">E</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="20">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="228">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="440" y="20">u</text>
+  <text text-anchor="middle" font-family="sans-serif" x="488" y="20">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="36">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="132">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="20">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="116">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="132">x</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="132">a</text>
+</g></svg>
+</artwork>
+</figure>
+<t>A Master Key may be used to encrypt any number of data items. Each data item is encrypted under a different encryption key and IV (if required). This data is derived from the Master Key using the HKDF function <xref target="RFC5869"></xref> using a different salt for each data item and separate info tags for each cryptographic function (figure 3).</t>
+<figure>
+<!-- Include SVG File ../Images/DAREEncrypt3.svg --><artwork type="svg">
+<svg height="457" width="552" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 208,0 L 328,0" fill="none" stroke="black" />
+  <path d="M 208,48 L 264,48" fill="none" stroke="black" />
+  <path d="M 264,48 L 328,48" fill="none" stroke="black" />
+  <path d="M 208,96 L 328,96" fill="none" stroke="black" />
+  <path d="M 0,112 L 120,112" fill="none" stroke="black" />
+  <path d="M 120,128 L 160,128" fill="none" stroke="black" />
+  <path d="M 160,128 L 200,128" fill="none" stroke="black" />
+  <path d="M 0,144 L 120,144" fill="none" stroke="black" />
+  <path d="M 208,160 L 256,160" fill="none" stroke="black" />
+  <path d="M 256,160 L 280,160" fill="none" stroke="black" />
+  <path d="M 280,160 L 328,160" fill="none" stroke="black" />
+  <path d="M 192,192 L 256,192" fill="none" stroke="black" />
+  <path d="M 280,192 L 336,192" fill="none" stroke="black" />
+  <path d="M 136,240 L 256,240" fill="none" stroke="black" />
+  <path d="M 280,240 L 400,240" fill="none" stroke="black" />
+  <path d="M 136,288 L 192,288" fill="none" stroke="black" />
+  <path d="M 192,288 L 256,288" fill="none" stroke="black" />
+  <path d="M 280,288 L 336,288" fill="none" stroke="black" />
+  <path d="M 336,288 L 400,288" fill="none" stroke="black" />
+  <path d="M 192,320 L 256,320" fill="none" stroke="black" />
+  <path d="M 280,320 L 336,320" fill="none" stroke="black" />
+  <path d="M 0,368 L 120,368" fill="none" stroke="black" />
+  <path d="M 208,368 L 328,368" fill="none" stroke="black" />
+  <path d="M 416,368 L 536,368" fill="none" stroke="black" />
+  <path d="M 120,400 L 200,400" fill="none" stroke="black" />
+  <path d="M 328,400 L 408,400" fill="none" stroke="black" />
+  <path d="M 0,432 L 120,432" fill="none" stroke="black" />
+  <path d="M 208,432 L 328,432" fill="none" stroke="black" />
+  <path d="M 416,432 L 536,432" fill="none" stroke="black" />
+  <path d="M 0,112 L 0,144" fill="none" stroke="black" />
+  <path d="M 0,368 L 0,432" fill="none" stroke="black" />
+  <path d="M 120,112 L 120,128" fill="none" stroke="black" />
+  <path d="M 120,128 L 120,144" fill="none" stroke="black" />
+  <path d="M 120,368 L 120,400" fill="none" stroke="black" />
+  <path d="M 120,400 L 120,432" fill="none" stroke="black" />
+  <path d="M 136,240 L 136,288" fill="none" stroke="black" />
+  <path d="M 192,192 L 192,224" fill="none" stroke="black" />
+  <path d="M 192,288 L 192,320" fill="none" stroke="black" />
+  <path d="M 208,0 L 208,48" fill="none" stroke="black" />
+  <path d="M 208,96 L 208,160" fill="none" stroke="black" />
+  <path d="M 208,368 L 208,432" fill="none" stroke="black" />
+  <path d="M 256,160 L 256,192" fill="none" stroke="black" />
+  <path d="M 256,240 L 256,288" fill="none" stroke="black" />
+  <path d="M 256,320 L 256,352" fill="none" stroke="black" />
+  <path d="M 264,48 L 264,80" fill="none" stroke="black" />
+  <path d="M 280,160 L 280,192" fill="none" stroke="black" />
+  <path d="M 280,240 L 280,288" fill="none" stroke="black" />
+  <path d="M 280,320 L 280,352" fill="none" stroke="black" />
+  <path d="M 328,0 L 328,48" fill="none" stroke="black" />
+  <path d="M 328,96 L 328,160" fill="none" stroke="black" />
+  <path d="M 328,368 L 328,400" fill="none" stroke="black" />
+  <path d="M 328,400 L 328,432" fill="none" stroke="black" />
+  <path d="M 336,192 L 336,224" fill="none" stroke="black" />
+  <path d="M 336,288 L 336,320" fill="none" stroke="black" />
+  <path d="M 400,240 L 400,288" fill="none" stroke="black" />
+  <path d="M 416,368 L 416,432" fill="none" stroke="black" />
+  <path d="M 536,368 L 536,432" fill="none" stroke="black" />
+  <path d="M 192,224 L 192,232" fill="none" stroke="black" />
+  <polygon points="208.000000,224.000000 196.000000,218.399994 196.000000,229.600006" fill="black" transform="rotate(90.000000, 192.000000, 224.000000)" />
+  <polygon points="208.000000,128.000000 196.000000,122.400002 196.000000,133.600006" fill="black" transform="rotate(0.000000, 200.000000, 128.000000)" />
+  <polygon points="208.000000,400.000000 196.000000,394.399994 196.000000,405.600006" fill="black" transform="rotate(0.000000, 200.000000, 400.000000)" />
+  <path d="M 256,352 L 256,360" fill="none" stroke="black" />
+  <polygon points="272.000000,352.000000 260.000000,346.399994 260.000000,357.600006" fill="black" transform="rotate(90.000000, 256.000000, 352.000000)" />
+  <path d="M 264,80 L 264,88" fill="none" stroke="black" />
+  <polygon points="280.000000,80.000000 268.000000,74.400002 268.000000,85.599998" fill="black" transform="rotate(90.000000, 264.000000, 80.000000)" />
+  <path d="M 280,352 L 280,360" fill="none" stroke="black" />
+  <polygon points="296.000000,352.000000 284.000000,346.399994 284.000000,357.600006" fill="black" transform="rotate(90.000000, 280.000000, 352.000000)" />
+  <path d="M 336,224 L 336,232" fill="none" stroke="black" />
+  <polygon points="352.000000,224.000000 340.000000,218.399994 340.000000,229.600006" fill="black" transform="rotate(90.000000, 336.000000, 224.000000)" />
+  <polygon points="416.000000,400.000000 404.000000,394.399994 404.000000,405.600006" fill="black" transform="rotate(0.000000, 408.000000, 400.000000)" />
+  <text text-anchor="middle" font-family="sans-serif" x="304" y="132">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="368" y="260">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="20">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="36">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="312" y="260">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="404">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="404">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="404">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="260">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="376" y="260">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="192" y="276">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="404">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="420">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="304" y="420">)</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="132">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="148">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="152" y="260">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="168" y="260">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="200" y="260">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="304" y="260">E</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="148">F</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="260">z</text>
+  <text text-anchor="middle" font-family="sans-serif" x="320" y="260">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="132">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="344" y="260">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="440" y="404">C</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="420">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="148">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="420">m</text>
+  <text text-anchor="middle" font-family="sans-serif" x="200" y="276">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="336" y="276">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="144" y="260">I</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="148">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="352" y="260">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="276">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="388">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="388">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="20">M</text>
+  <text text-anchor="middle" font-family="sans-serif" x="488" y="404">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="420">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="132">v</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="148">u</text>
+  <text text-anchor="middle" font-family="sans-serif" x="296" y="148">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="160" y="260">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="336" y="260">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="20">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="48" y="132">S</text>
+  <text text-anchor="middle" font-family="sans-serif" x="496" y="404">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="328" y="260">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="184" y="276">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="216" y="276">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="296" y="420">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="132">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="404">P</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="20">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="132">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="216" y="260">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="480" y="404">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="388">E</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="388">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="116">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="148">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="404">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="404">p</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="420">r</text>
+  <text text-anchor="middle" font-family="sans-serif" x="360" y="260">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="32" y="404">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="132">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="132">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="176" y="260">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="404">h</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="36">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="192" y="260">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="260">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="388">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="36">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="504" y="404">x</text>
+  <text text-anchor="middle" font-family="sans-serif" x="40" y="404">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="116">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="132">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="296" y="132">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="132">l</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="420">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="512" y="404">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="388">c</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="404">x</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="404">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="240" y="260">o</text>
+  <text text-anchor="middle" font-family="sans-serif" x="248" y="260">n</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="132">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="148">i</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="388">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="404">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="420">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="20">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="20">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="420">m</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="132">D</text>
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="420">(</text>
+  <text text-anchor="middle" font-family="sans-serif" x="176" y="276">V</text>
+  <text text-anchor="middle" font-family="sans-serif" x="344" y="276">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="132">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="184" y="260">a</text>
+  <text text-anchor="middle" font-family="sans-serif" x="328" y="276">K</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="116">y</text>
+</g></svg>
+</artwork>
+</figure>
+<t>This approach to encryption offers considerably greater flexibility allowing the same format for data item encryption to be applied at the transport, message or field level.</t>
+</section>
+<section title="Data Erasure" anchor="n-data-erasure"><t>Each encrypted DARE Envelope specifies a unique Master Salt value of at least 128 bits which is used to derive the salt values used to derive cryptographic keys for the envelope payload and annotations.</t>
+<t>Erasure of the Master Salt value <bcp14>MAY</bcp14> be used to effectively render the envelope payload and annotations undecipherable without altering the envelope payload data. The work factor for decryption will be O(2^128) even if the decryption key is compromised.</t>
+</section>
+</section>
+<section title="Signature" anchor="n-signature"><t>As with encryption, DARE Envelope signatures <bcp14>MAY</bcp14> be applied to an individual envelope or a sequence of envelope. </t>
+<section title="Signing Individual Plaintext Envelopes" anchor="n-signing-individual-plaintext-envelopes"><t>When an individual plaintext envelope is signed, the digest value used to create the signature is calculated over the binary value of the payload data. That is, the value of the payload before the encoding (Base-64, JSON-B) is applied. </t>
+</section>
+<section title="Signing Individual Encrypted Envelopes" anchor="n-signing-individual-encrypted-envelopes"><t>When an individual plaintext envelope is signed, the digest value used to create the signature is calculated over the binary value of the payload data. That is, the value of the payload after encryption but before the encoding (Base-64, JSON-B) is applied. </t>
+<t>Use of signing and encryption in combination presents the risk of subtle attacks depending on the order in which signing and encryption take place <xref target="Davis2001"></xref>.</t>
+<t>Na?ve approaches in which an envelope is encrypted and then signed present the possibility of a surreptitious forwarding attack. For example, Alice signs an envelope and sends it to Mallet who then strips off Alice's signature and sends the envelope to Bob.  </t>
+<t>Na?ve approaches in which an envelope is signed and then encrypted present the possibility of an attacker claiming authorship of a ciphertext. For example, Alice encrypts a ciphertext for Bob and then signs it. Mallet then intercepts the envelope and sends it to Bob.</t>
+<t>While neither attack is a concern in all applications, both attacks pose potential hazards for the unwary and require close inspection of application protocol design to avoid exploitation.</t>
+<t>To prevent these attacks, each signature on an envelope that is signed and encrypted <bcp14>MUST</bcp14> include a witness value that is calculated by applying a MAC function to the signature value as described in section XXX.</t>
+</section>
+<section title="Signing sequences of envelopes" anchor="n-signing-sequences-of-envelopes"><t>To sign multiple envelopes with a single signature, we first construct a Merkle tree of the envelope payload digest values and then sign the root of the Merkle tree.</t>
+<t>[This is not yet implemented but will be soon.]</t>
+</section>
+</section>
+<section title="Container" anchor="n-container"><t>DARE Container is a message and file syntax that allows a sequence of data frames to be represented with cryptographic integrity, signature, and encryption enhancements to be constructed in an append only format.</t>
+<t>The format is designed to meet the requirements of a wide range of use cases including:</t>
+<ul>
+<li>Recording transactions in persistent storage.</li>
+<li>Synchronizing transaction logs between hosts.</li>
+<li>File archive.</li>
+<li>Message spool.</li>
+<li>Signing and encrypting single data items.</li>
+<li>Incremental encryption and authentication of server logs.</li>
+</ul>
+<section title="Container Format" anchor="n-container-format"><t>A Container consists of a sequence of variable length Frames. Each frame consists of a forward length indicator, the framed data and a reverse length indicator. The reverse length indicator is written out backwards allowing the length and thus the frame to be read in the reverse direction: </t>
+<figure>
+<!-- Include SVG File ../Images/DAREjbcdContainer.svg --><artwork type="svg">
+<svg height="57" width="400" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 0,0 L 40,0" fill="none" stroke="black" />
+  <path d="M 40,0 L 80,0" fill="none" stroke="black" />
+  <path d="M 80,0 L 120,0" fill="none" stroke="black" />
+  <path d="M 120,0 L 264,0" fill="none" stroke="black" />
+  <path d="M 264,0 L 304,0" fill="none" stroke="black" />
+  <path d="M 304,0 L 344,0" fill="none" stroke="black" />
+  <path d="M 344,0 L 384,0" fill="none" stroke="black" />
+  <path d="M 0,32 L 40,32" fill="none" stroke="black" />
+  <path d="M 40,32 L 80,32" fill="none" stroke="black" />
+  <path d="M 80,32 L 120,32" fill="none" stroke="black" />
+  <path d="M 120,32 L 264,32" fill="none" stroke="black" />
+  <path d="M 264,32 L 304,32" fill="none" stroke="black" />
+  <path d="M 304,32 L 344,32" fill="none" stroke="black" />
+  <path d="M 344,32 L 384,32" fill="none" stroke="black" />
+  <path d="M 0,0 L 0,32" fill="none" stroke="black" />
+  <path d="M 40,0 L 40,32" fill="none" stroke="black" />
+  <path d="M 80,0 L 80,32" fill="none" stroke="black" />
+  <path d="M 120,0 L 120,32" fill="none" stroke="black" />
+  <path d="M 264,0 L 264,32" fill="none" stroke="black" />
+  <path d="M 304,0 L 304,32" fill="none" stroke="black" />
+  <path d="M 344,0 L 344,32" fill="none" stroke="black" />
+  <path d="M 384,0 L 384,32" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="224" y="20">s</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="20">&gt;</text>
+  <text text-anchor="middle" font-family="sans-serif" x="288" y="20">C</text>
+  <text text-anchor="middle" font-family="sans-serif" x="328" y="20">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="168" y="20">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="192" y="20">b</text>
+  <text text-anchor="middle" font-family="sans-serif" x="320" y="20">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="360" y="20">F</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="20">F</text>
+  <text text-anchor="middle" font-family="sans-serif" x="96" y="20">2</text>
+  <text text-anchor="middle" font-family="sans-serif" x="176" y="20">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="20">2</text>
+  <text text-anchor="middle" font-family="sans-serif" x="160" y="20">3</text>
+  <text text-anchor="middle" font-family="sans-serif" x="200" y="20">y</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="20">t</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="20">5</text>
+  <text text-anchor="middle" font-family="sans-serif" x="56" y="20">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="20">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="104" y="20">C</text>
+  <text text-anchor="middle" font-family="sans-serif" x="152" y="20">&lt;</text>
+  <text text-anchor="middle" font-family="sans-serif" x="216" y="20">e</text>
+  <text text-anchor="middle" font-family="sans-serif" x="368" y="20">5</text>
+</g></svg>
+</artwork>
+</figure>
+<t>Each frame contains a single DARE Envelope consisting of a Header, Payload and Trailer (if required). The first frame in a container describes the container format options and defaults. These include the range of encoding options for frame metadata supported and the container profiles to which the container conforms. </t>
+<t>All internal data formats support use of pointers of up to 64 bits allowing containers of up to 18 exabytes to be written. </t>
+<t>Five container types are currently specified:</t>
+<dl>
+<dt>Simple</dt>
+<dd>
+<t>The container does not provide any index or content integrity checks.</t>
+</dd>
+<dt>Tree</dt>
+<dd>
+<t>Frame headers contain entries that specify the start position of previous frames at the apex of the immediately enclosing binary tree. This enables efficient random access to any frame in the file.</t>
+</dd>
+<dt>Digest</dt>
+<dd>
+<t>Each frame trailer contains a <tt>PayloadDigest</tt> field. Modification of the payload will cause verification of the <tt>PayloadDigest</tt> value to fail on that frame.</t>
+</dd>
+<dt>Chain</dt>
+<dd>
+<t>Each frame trailer contains <tt>PayloadDigest</tt> and <tt>ChainDigest</tt> fields allowing modifications to the payload data to be detected. Modification of the payload will cause verification of the <tt>PayloadDigest</tt> value to fail on that frame and verification of the <tt>ChainDigest</tt> value to fail on all subsequent frames.</t>
+</dd>
+<dt>Merkle Tree</dt>
+<dd>
+<t>Frame headers contain entries that specify the start position of previous frames at the apex of the immediately enclosing binary tree. Frame Trailers contain TreeDigestPartial and TreeDigestFinal entries forming a Merkle digest tree.</t>
+</dd>
+</dl>
+</section>
+<section title="Write" anchor="n-write"><t>In normal circumstances, Containers are written as an append only log. As with Envelopes, integrity information (payload digest, signatures) is written to the entry trailer. Thus, large payloads may be written without the need to buffer the payload data <em>provided that</em> the content length is known in advance.</t>
+<t>Should exceptional circumstances require, Container entries <bcp14>MAY</bcp14> be erased by overwriting the Payload and/or parts of the Header content without compromising the ability to verify other entries in the container. If the entry Payload is encrypted, it is sufficient to erase the container salt value to render the container entry effectively inaccessible (though recovery might still be possible if the original salt value can be recovered from the storage media.</t>
+</section>
+<section title="Encryption and Authentication" anchor="n-encryption-and-authentication"><t>Frame payloads and associated attributes <bcp14>MAY</bcp14> be encrypted and/or authenticated in the same manner as Envelopes. </t>
+<t><em>Incremental encryption</em> is supported allowing encryption parameters from a single public key exchange operation to be applied to encrypt multiple frames. The public key exchange information is specified in the first encrypted frame and subsequent frames encrypted under those parameters specify the location at which the key exchange information is to be found by means of the ExchangePosition field which <bcp14>MUST</bcp14> specify a location that is earlier in the file.</t>
+<t>To avoid cryptographic vulnerabilities resulting from key re-use, the DARE key exchange requires that each encrypted sequence use an encryption key and initialization vector derived from the master key established in the public key exchange by means of a unique salt.</t>
+<t>Each Envelope and by extension, each Container frame <bcp14>MUST</bcp14> specify a unique salt value of at least 128 bits. Since the encryption key is derived from the salt value by means of a Key Derivation Function, erasure of the salt <bcp14>MAY</bcp14> be used as a means of rendering the payload plaintext value inaccessible without changing the payload value. </t>
+</section>
+<section title="Integrity and Signature" anchor="n-integrity-and-signature"><t>Signatures <bcp14>MAY</bcp14> be applied to a payload digest, the final digest in a chain or tree. The chain and tree digest modes allow a single signature to be used to authenticate all frame payloads in a container.</t>
+<t>The tree signature mode is particularly suited to applications such as file archives as it allows files to be verified individually without requiring the signer to sign each individually. Furthermore, in applications such as code signing, it allows a single signature to be used to verify both the integrity of the code and its membership of the distribution.</t>
+<t>As with DARE Envelope, the signature mechanism does not specify the interpretation of the signature semantics. The presence of a signature demonstrates that the holder of the private key applied it to the specified digest value but not their motive for doing so. Describing such semantics is beyond the scope of this document and is deferred to future work.</t>
+</section>
+<section title="Redaction" anchor="n-redaction"><t>The chief disadvantage of using an append-only format is that containers only increase in size. In many applications, much of the data in the container becomes redundant or obsolete and a process analogous to garbage collection is required. This process is called <em>redaction</em>.</t>
+<t>The simplest method of redaction is to create a new container and sequentially copy each entry from the old container to the new, discarding redundant frames and obsolete header information. </t>
+<t>For example, partial index records may be consolidated into a single index record placed in the last frame of the container. Unnecessary signature and integrity data may be discarded and so on.</t>
+<t>While redaction could in principle be effected by moving data in-place in the existing container, supporting this approach in a robust fashion is considerably more complex as it requires backward references in subsequent frames to be overridden as each frame is moved. </t>
+</section>
+<section title="Alternative approaches" anchor="n-alternative-approaches"><t>Many file proprietary formats are in use that support some or all of these capabilities but only a handful have public, let alone open, standards. DARE Container is designed to provide a superset of the capabilities of existing message and file syntaxes, including:</t>
+<ul>
+<li>Cryptographic Message Syntax <xref target="RFC5652"></xref> defines a syntax used to digitally sign, digest, authenticate, or encrypt arbitrary message content.</li>
+<li>The.ZIP File Format specification <xref target="ZIPFILE"></xref> developed by Phil Katz. </li>
+<li>The BitCoin Block chain <xref target="BLOCKCHAIN"></xref>.</li>
+<li>JSON Web Encryption and JSON Web Signature</li>
+</ul>
+<t>Attempting to make use of these specifications in a layered fashion would require at least three separate encoders and introduce unnecessary complexity. Furthermore, there is considerable overlap between the specifications providing multiple means of achieving the same ends, all of which must be supported if decoders are to work reliably.</t>
+</section>
+<section title="Efficiency" anchor="n-efficiency"><t>Every data format represents a compromise between different concerns, in particular:</t>
+<dl>
+<dt>Compactness</dt>
+<dd>
+<t>The space required to record data in the encoding.</t>
+</dd>
+<dt>Memory Overhead</dt>
+<dd>
+<t>The additional volatile storage (RAM) required to maintain indexes etc. to support efficient retrieval operations.</t>
+</dd>
+<dt>Number of Operations</dt>
+<dd>
+<t>The number of operations required to retrieve data from or append data to an existing encoded sequence.</t>
+</dd>
+<dt>Number of Disk Seek Operations</dt>
+<dd>
+<t>Optimizing the response time of magnetic storage media to random access read requests has traditionally been one of the central concerns of database design. The DARE Container format is designed to the assumption that this will cease to be a concern as solid state media replaces magnetic.</t>
+</dd>
+</dl>
+<t>While the cost of storage of all types has declined rapidly over the past decades, so has the amount of data to be stored. DARE Container represents a pragmatic balance of these considerations for current technology. In particular, since payload volumes are likely to be very large, memory and operational efficiency are considered higher priorities than compactness.</t>
+</section>
+</section>
+</section>
+<section title="Definitions" anchor="n-definitions"><section title="Related Specifications" anchor="n-related-specifications"><t>The DARE Envelope and Container formats are based on the following existing standards and specifications.</t>
+<dl>
+<dt>Object serialization</dt>
+<dd>
+<t>The JSON-B <xref target="draft-hallambaker-jsonbcd"></xref> encoding is used for object serialization. This encoding is an extension of the JavaScript Object Notation (JSON) <xref target="RFC7159"></xref>.</t>
+</dd>
+<dt>Message syntax</dt>
+<dd>
+<t>The cryptographic processing model is based on JSON Web Signature (JWS) <xref target="RFC7515"></xref>, JSON Web Encryption (JWE) <xref target="RFC7516"></xref> and JSON Web Key (JWK) <xref target="RFC7517"></xref>.</t>
+</dd>
+<dt>Cryptographic primitives.</dt>
+<dd>
+<t>The HMAC-based Extract-and-Expand Key Derivation Function <xref target="RFC5869"></xref> and Advanced Encryption Standard (AES) Key Wrap with Padding Algorithm <xref target="RFC3394"></xref> are used.</t>
+<t>The Uniform Data Fingerprint method of presenting data digests is used for key identifiers and other purposes <xref target="draft-hallambaker-mesh-udf"></xref>.</t>
+</dd>
+<dt>Cryptographic algorithms</dt>
+<dd>
+<t>The cryptographic algorithms and identifiers described in JSON Web Algorithms (JWA) <xref target="RFC7518"></xref> are used together with additional algorithms as defined in the JSON Object Signing and Encryption IANA registry <xref target="IANAJOSE"></xref>.</t>
+</dd>
+</dl>
+</section>
+<section title="Requirements Language" anchor="n-requirements-language"><t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
+</section>
+<section title="Defined terms" anchor="n-defined-terms"><t>The terms "Authentication Tag", "Content Encryption Key", "Key Management Mode", "Key Encryption", "Direct Key Agreement", "Key Agreement with Key Wrapping" and "Direct Encryption" are defined in the JWE specification <xref target="RFC7516"></xref>.</t>
+<t>The terms "Authentication", "Ciphertext", "Digital Signature", "Encryption", "Initialization Vector (IV)", "Message Authentication Code (MAC)", "Plaintext" and "Salt" are defined by the Internet Security Glossary, Version 2 <xref target="RFC4949"></xref>. </t>
+<dl>
+<dt>Annotated Envelope</dt>
+<dd>
+<t>A DARE Envelope that contains an <tt>Annotations</tt> field with at least one entry.</t>
+</dd>
+<dt>Authentication Data</dt>
+<dd>
+<t>A Message Authentication Code or authentication tag.</t>
+</dd>
+<dt>Complete Envelope</dt>
+<dd>
+<t>A DARE envelope that contains the key exchange information necessary for the intended recipient(s) to decrypt it.</t>
+</dd>
+<dt>Detached Envelope</dt>
+<dd>
+<t>A DARE envelope that does not contain the key exchange information necessary for the intended recipient(s) to decrypt it.</t>
+</dd>
+<dt>Encryption Context</dt>
+<dd>
+<t>The master key, encryption algorithms and associated parameters used to generate a set of one or more enhanced data sequences.</t>
+</dd>
+<dt>Encoded data sequence (EDS)</dt>
+<dd>
+<t>A sequence consisting of a salt, content data and authentication data (if required by the encryption context).</t>
+</dd>
+<dt>Enhancement</dt>
+<dd>
+<t>Applying a cryptographic operation to a data sequence. This includes encryption, authentication and both at the same time.</t>
+</dd>
+<dt>Generator</dt>
+<dd>
+<t>The party that generates a DARE envelope.</t>
+</dd>
+<dt>Group Encryption Key</dt>
+<dd>
+<t>A key used to encrypt data to be read by a group of users. This is typically achieved by means of some form of proxy re-encryption or distributed key generation.</t>
+</dd>
+<dt>Group Encryption Key Identifier</dt>
+<dd>
+<t>A key identifier for a group encryption key.</t>
+</dd>
+<dt>Master Key (MK)</dt>
+<dd>
+<t>The master secret from which keys are derived for authenticating enhanced data sequences.</t>
+</dd>
+<dt>Recipient</dt>
+<dd>
+<t>Any party that receives and processes at least some part of a DARE envelope.</t>
+</dd>
+<dt>Related Envelope</dt>
+<dd>
+<t>A set of DARE envelopes that share the same key exchange information and hence the same Master Key.</t>
+</dd>
+<dt>Uniform Data Fingerprint (UDF)</dt>
+<dd>
+<t>The means of presenting the result of a cryptographic digest function over a data sequence and content type identifier specified in the Uniform Data Fingerprint specification <xref target="draft-hallambaker-mesh-udf"></xref></t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="DARE Envelope Architecture" anchor="n-dare-envelope-architecture"><t>A DARE Envelope is a sequence of three parts:</t>
+<dl>
+<dt>Header</dt>
+<dd>
+<t>A JSON object containing information a reader requires to begin processing the envelope.</t>
+</dd>
+<dt>Payload</dt>
+<dd>
+<t>An array of octets.</t>
+</dd>
+<dt>Trailer</dt>
+<dd>
+<t>A JSON object containing information calculated from the envelope payload.</t>
+</dd>
+</dl>
+<t>For example, the following sequence is a JSON encoded Envelope with an empty header, a payload of zero length and an empty trailer:</t>
+<sourcecode>[ {}, "", {} ]</sourcecode>
+<t>DARE Envelopes <bcp14>MAY</bcp14> be encoded using JSON serialization or a binary serialization for greater efficiency.</t>
+<dl>
+<dt>JSON <xref target="RFC7159"></xref></dt>
+<dd>
+<t>Offers compatibility with applications and libraries that support JSON. Payload data is encoded using Base64 incurring a 33% overhead.</t>
+</dd>
+<dt>JSON-B <xref target="draft-hallambaker-jsonbcd"></xref></dt>
+<dd>
+<t>A superset of JSON encoding that permits binary data to be encoded as a sequence of length-data segments. This avoids the Base64 overhead incurred by JSON encoding. Since JSON-B is a superset of JSON encoding, an application can use a single decoder for either format.</t>
+</dd>
+<dt>JSON-C <xref target="draft-hallambaker-jsonbcd"></xref></dt>
+<dd>
+<t>A superset of JSON-C which provides additional efficiency by allowing field tags and other repeated string data to be encoded by reference to a dictionary. Since JSON-C is a superset of JSON and JSON-B encodings, an application can use a single decoder for all three formats.</t>
+</dd>
+</dl>
+<t>DARE Envelope processors <bcp14>MUST</bcp14> support JSON serialization and <bcp14>SHOULD</bcp14> support JSON-B serialization. </t>
+<section title="Processing Considerations" anchor="n-processing-considerations"><t>The DARE Envelope Syntax supports single pass encoding and decoding without buffering of data. All the information required to begin processing a DARE envelope (key agreement information, digest algorithms), is provided in the envelope header. All the information that is derived from envelope processing (authentication codes, digest values, signatures) is presented in the envelope trailer.</t>
+<t>The choice of envelope encoding does not affect the semantics of envelope processing. A DARE Envelope <bcp14>MAY</bcp14> be reserialized under the same serialization or converted from any of the specified serialization to any other serialization without changing the semantics or integrity properties of the envelope.</t>
+</section>
+<section title="Content Metadata and Annotations" anchor="n-content-metadata-and-annotations"><t>A header <bcp14>MAY</bcp14> contain header fields describing the payload content. These include:</t>
+<dl>
+<dt>ContentType</dt>
+<dd>
+<t>Specifies the IANA Media Type <xref target="RFC6838"></xref>.</t>
+</dd>
+<dt>Annotations</dt>
+<dd>
+<t>A list of Encoded Data Sequences that provide application specific annotations to the envelope.</t>
+</dd>
+</dl>
+<t>For example, consider the following mail message: </t>
+<sourcecode>From: Alice@example.com
+To: bob@example.com
+Subject: TOP-SECRET Product Launch Today!
+
+The CEO told me the product launch is today. Tell no-one!</sourcecode>
+<t>Existing encryption approaches require that header fields such as the subject line be encrypted  with the body of the message or not encrypted at all. Neither approach is satisfactory. In this example, the subject line gives away important information that the sender probably assumed would be encrypted. But if the subject line is encrypted together with the message body, a mail client must retrieve at least part of the message body to provide a  'folder' view. </t>
+<t>The plaintext form of the equivalent DARE Message encoding is: </t>
+<sourcecode>[{
+    "Annotations":["iAEBiBdGcm9tOiBBbGljZUBleGFtcGxlLmNvbQ",
+      "iAECiBNUbzogYm9iQGV4YW1wbGUuY29t",
+      "iAEDiClTdWJqZWN0OiBUT1AtU0VDUkVUIFByb2R1Y3QgTGF1bmNoIFRvZG
+  F5IQ"
+      ],
+    "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24vZXhhbXBsZS
+  1tYWlsIn0"},
+  "VGhlIENFTyB0b2xkIG1lIHRoZSBwcm9kdWN0IGxhdW5jaCBpcyB0b2RheS4gVG
+  VsbCBuby1vbmUh"
+  ]</sourcecode>
+<t>This contains the same information as before but the mail message headers are  now presented as a list of Encoded Data Sequences. </t>
+</section>
+<section title="Encoded Data Sequence" anchor="n-encoded-data-sequence"><t>An encoded data sequence (EDS) is a sequence of octets that encodes a data sequence according to cryptographic enhancements specified in the context in which it is presented. An EDS <bcp14>MAY</bcp14> be encrypted and <bcp14>MAY</bcp14> be authenticated by means of a MAC. The keys and other cryptographic parameters used to apply these enhancements are derived from the cryptographic context and a Salt prefix specified in the EDS itself.</t>
+<t>An EDS sequence contains exactly three binary fields encoded in JSON-B serialization as follows:</t>
+<dl>
+<dt>Salt Prefix</dt>
+<dd>
+<t>A sequence of octets used to derive the encryption key, Initialization Vector and MAC key as required.</t>
+</dd>
+<dt>Body</dt>
+<dd>
+<t>The plaintext or encrypted content.</t>
+</dd>
+<dt>Authentication Tag</dt>
+<dd>
+<t>The authentication code value in the case that the cryptographic context specifies use of authenticated encryption or a MAC, otherwise is a zero-length field.</t>
+</dd>
+</dl>
+<t>Requiring all three fields to be present, even in cases where they are unnecessary simplifies processing at the cost of up to six additional data bytes.</t>
+<t>The encoding of the 'From' header of the previous example as a plaintext EDS is as follows: </t>
+<sourcecode>88 01
+  01
+88 17
+  46 72 6f 6d 3a 20 41 6c   69 63 65 40 65 78 61 6d
+  70 6c 65 2e 63 6f 6d
+[EOF]
+
+</sourcecode>
+</section>
+<section title="Encryption and Integrity" anchor="n-encryption-and-integrity-0"><t>Encryption and integrity protections <bcp14>MAY</bcp14> be applied to any DARE Envelope Payload and Annotations.</t>
+<t>The following is an encrypted version of the message shown earlier.  The payload and annotations have both increased in size as a result of the block cipher padding. The header now includes Recipients and Salt fields to enable the content to be decoded. </t>
+<sourcecode>[{
+    "enc":"A256CBC",
+    "kid":"EBQC-JL2F-WWAH-TB5I-JHQV-33K4-UXTC",
+    "Salt":"GdANLjz0STqBV_VrLXSt4w",
+    "Annotations":["iAEBiCCMPw-7wD7zbiJ7ibyFTzOCC31vMiLs3IwdZqlBqT
+  E6YQ",
+      "iAECiCBX9ZNBei3mlep4NLm8BOqKMUCmOHgQWucOHuR_Q_ELIA",
+      "iAEDiDC_ltEcAMJS_HV76Acq7PpNY9BSxt-Our-8THB_LlwT9LDuLiaTEv
+  zpMIdG-XPxpqY"
+      ],
+    "recipients":[{
+        "kid":"MCUG-LA4F-7LOS-Z2JR-MNMJ-BEL5-654X",
+        "epk":{
+          "PublicKeyECDH":{
+            "crv":"Ed25519",
+            "Public":"wmbGWU9mVQtV7tiJQx795KsW0nxkBCphux1HMepjOG4"}},
+        "wmk":"qOytoINlqv0ceaDUNShRUqjPE4AFvTaK2sithsrU1tVUpFoKal
+  2Tiw"}
+      ],
+    "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24vZXhhbXBsZS
+  1tYWlsIn0"},
+  "rj2yWkGTe8l6p4AiDPEKSas8IzvLltbQIrWbqykbdHvTtpQKz0QTbDEOLVvnVS
+  ScQnYIsT_W55pcJORZzOQC4Q"
+  ]</sourcecode>
+<section title="Key Exchange" anchor="n-key-exchange-0"><t>The DARE key exchange is based on the JWE key exchange except that encryption modes are intentionally limited and the output of the key exchange is the DARE Master Key rather than the Content Encryption Key.</t>
+<t>A DARE Key Exchange <bcp14>MAY</bcp14> contain any number of Recipient entries, each providing a means of decrypting the Master Key using a different private key.</t>
+<t>If the Key Exchange mechanism supports message recovery, Direct Key Agreement is used, in all other cases, Key Wrapping is used.</t>
+<t>This approach allows envelopes with one intended recipient to be handled in the exact same fashion as envelopes with multiple recipients. While this does require an additional key wrapping operation, that could be avoided if an envelope has exactly one intended recipient, this is offset by the reduction in code complexity.</t>
+<t>If the key exchange algorithm does not support message recovery (e.g. Diffie Hellman and Elliptic Curve Diffie-Hellman), the HKDF Extract-and-Expand Key Derivation Function is used to derive a master key using the following info tag:</t>
+<dl>
+<dt>"dare-master" [64 61 72 65 2d 6d 61 73 74 65 72]</dt>
+<dd>
+<t>Key derivation info field used when deriving a master key from the output of a key exchange.</t>
+</dd>
+</dl>
+<t>The master key length is the maximum of the key size of the encryption algorithm specified by the key exchange header, the key size of the MAC algorithm specified by the key exchange header (if used) and 256.</t>
+</section>
+<section title="Key Identifiers" anchor="n-key-identifiers"><t>The JWE/JWS specifications define a kid field for use as a key identifier but not how the identifier itself is constructed. All DARE key identifiers are either UDF key fingerprints <xref target="draft-hallambaker-mesh-udf"></xref> or Mesh/Recrypt Group Key Identifiers.</t>
+<t>A UDF fingerprint is formed as the digest of an IANA content type and the digested data. A UDF key fingerprint is formed with the content type <tt>application/pkix-keyinfo</tt> and the digested data is the ASN.1 DER encoded PKIX certificate <tt>keyInfo</tt> sequence for the corresponding public key.</t>
+<t>A Group Key Identifier has the form &lt;fingerprint&gt;@&lt;domain&gt;. Where &lt;fingerprint&gt; is a UDF key fingerprint and &lt;domain&gt; is the DNS address of a service that provides the encryption service to support decryption by group members.</t>
+</section>
+<section title="Salt Derivation" anchor="n-salt-derivation"><t>A Master Salt is a sequence of 16 or more octets that is specified in the Salt field of the header.</t>
+<t>The Master Salt is used to derive salt values for the envelope payload and associated encoded data sequences as follows.</t>
+<dl>
+<dt>Payload</dt>
+<dd>
+<t>Salt = Master Salt</t>
+</dd>
+<dt>EDS</dt>
+<dd>
+<t>Salt = Concatenate (Payload Salt Prefix,  Master Salt)</t>
+</dd>
+</dl>
+<t>Encoders <bcp14>SHOULD NOT</bcp14> generate salt values that exceed 1024 octets.</t>
+<t>The salt value is opaque to the DARE encoding but <bcp14>MAY</bcp14> be used to encode application specific semantics including:</t>
+<ul>
+<li>Frame number to allow reassembly of a data sequence split over a sequence of envelopes which may be delivered out of order.</li>
+<li>Transmit the Master Key in the manner of a Kerberos ticket.</li>
+<li>Identify the Master Key under which the Enhanced Data Sequence was generated.</li>
+<li>Enable access to the plaintext to be eliminated by erasure of the encryption key.</li>
+</ul>
+<t>For data erasure to be effective, the salt <bcp14>MUST</bcp14> be constructed so that the difficulty of recovering the key is sufficiently high that it is infeasible. For most purposes, a salt with 128 bits of appropriately random data is sufficient.</t>
+</section>
+<section title="Key Derivation" anchor="n-key-derivation"><t>Encryption and/or authentication keys are derived from the Master Key using a Extract-and-Expand Key Derivation Function as follows:</t>
+<ol start="0">
+<li>The Master Key and salt value are used to extract the PRK (pseudorandom key)</li>
+<li>The PRK is used to derive the algorithm keys using the application specific information input for that key type.</li>
+</ol>
+<t>The application specific information inputs are:</t>
+<dl>
+<dt>"dare-encrypt" [64 61 72 65 2d 65 6e 63 72 79 70 74]</dt>
+<dd>
+<t>To generate an encryption or encryption with authentication key.</t>
+</dd>
+<dt>"dare-iv" [64 61 72 65 2d 65 6e 63 72 79 70 74]</dt>
+<dd>
+<t>To generate an initialization vector.</t>
+</dd>
+<dt>"dare-mac" [dare-mac]</dt>
+<dd>
+<t>To generate a Message Authentication Code key.</t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Signature" anchor="n-signature-0"><t>While encryption and integrity enhancements can be applied to any part of a DARE Envelope, signatures are only applied to payload digest values calculated over one or more envelope payloads. </t>
+<t>The payload digest value for an envelope is calculated over the binary payload data. That is, after any encryption enhancement has been applied but before the envelope encoding is applied. This allows envelopes to be converted from one encoding to another without affecting signature verification. </t>
+<dl>
+<dt>Single Payload</dt>
+<dd>
+<t>The signed value is the payload digest of the envelope payload.</t>
+</dd>
+<dt>Multiple Payload.</dt>
+<dd>
+<t>The signed value is the root of a Merkle Tree in which the payload digest of the envelope is one of the leaves.</t>
+</dd>
+</dl>
+<t>Verification of a multiple payload signature naturally requires the additional digest values required to construct the Merkle Tree. These are provided in the Trailer in a format that permits multiple signers to reference the same tree data.</t>
+</section>
+<section title="Algorithms" anchor="n-algorithms"><section title="Field: kwd" anchor="n-field-kwd"><t>The key wrapping and derivation algorithms.</t>
+<t>Since the means of public key exchange is determined by the key identifier of the recipient key, it is only necessary to specify the algorithms used for key wrapping and derivation.</t>
+<t>The default (and so far only) algorithm is kwd-aes-sha2-256-256.</t>
+<t>Advanced Encryption Standard (AES) Key Wrap with Padding Algorithm <xref target="RFC3394"></xref> is used to wrap the Master Exchange Key. AES 256 is used.</t>
+<t>HMAC-based Extract-and-Expand Key Derivation Function <xref target="RFC5869"></xref> is used for key derivation. SHA-2-256 is used for the hash function.</t>
+</section>
+</section>
+</section>
+<section title="DARE Container Architecture" anchor="n-dare-container-architecture"><section title="Container Navigation" anchor="n-container-navigation"><t>Three means of locating frames in a container are supported:</t>
+<dl>
+<dt>Sequential</dt>
+<dd>
+<t>Access frames sequentially starting from the start or the end of the container.</t>
+</dd>
+<dt>Binary search</dt>
+<dd>
+<t>Access any container frame by frame number in O(log<sub>2</sub>(n)) time by means of a binary tree constructed while the container is written.</t>
+</dd>
+<dt>Index</dt>
+<dd>
+<t>Access and container frame by frame number or by key by means of an index record.</t>
+</dd>
+</dl>
+<t>All DARE Containers support sequential access. Only tree and Merkle tree containers support binary search access. An index frame <bcp14>MAY</bcp14> be written appended to any container and provides O(1) access to any frame listed in the index.</t>
+<t>Two modes of compilation are considered:</t>
+<dl>
+<dt>Monolithic</dt>
+<dd>
+<t>Frames are added to the container in a single operation, e.g. file archives, </t>
+</dd>
+<dt>Incremental</dt>
+<dd>
+<t>Additional frames are written to the container at various intervals after it was originally created, e.g. server logs, message spools.</t>
+</dd>
+</dl>
+<t>In the monolithic mode, navigation requirements are best met by writing an index frame to the end of the container when it is complete. It is not necessary to construct a binary search tree unless a Merkle tree integrity check is required.</t>
+<t>In the incremental mode, Binary search provides an efficient means of locating frames by frame number but not by key. Writing a complete index to the container every <em>m</em> write operations provides <em>O(m)</em> search access but requires O(n<sup>2</sup>) storage.</t>
+<t>Use of partial indexes provides a better compromise between speed and efficiency. A partial index is written out every <em>m</em> frames where <em>m</em> is a power of two. A complete index is written every time a binary tree apex record is written. This approach provides for O(log<sub>2</sub>(n)) search with incremental compilation with approximately double the overhead of the monolithic case.</t>
+<section title="Tree" anchor="n-tree"><t>As previously described, the JBCD frame structure allows incremental navigation to the immediately preceding frame. The <tt>TreePosition</tt> parameter specifies the start position of <em>any</em> previous frame in the container, thus allowing rapid navigation to that point.</t>
+<t>The TreePosition parameter <bcp14>MAY</bcp14> be used to enable any frame in the container to be retrieved in log<sub>2</sub>(n) time by means of a binary search. The TreePosition parameter specifies the immediately preceding apex of a binary tree formed from the container entries.</t>
+<t>For example, the TreePosition of frame 6 in a container gives the location of frame 5, the TreePosition of frame 5 gives the location of frame 3, the TreePosition of frame 3 gives the location of frame 1, and the TreePosition of frame 1 gives the location of frame 0:</t>
+<figure>
+<!-- Include SVG File ../Images/DAREMerkleTree1.svg --><artwork type="svg">
+<svg height="281" width="512" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 224,16 L 448,16" fill="none" stroke="black" />
+  <path d="M 96,80 L 192,80" fill="none" stroke="black" />
+  <path d="M 232,80 L 320,80" fill="none" stroke="black" />
+  <path d="M 32,144 L 64,144" fill="none" stroke="black" />
+  <path d="M 104,144 L 128,144" fill="none" stroke="black" />
+  <path d="M 232,144 L 256,144" fill="none" stroke="black" />
+  <path d="M 360,144 L 384,144" fill="none" stroke="black" />
+  <path d="M 40,224 L 64,224" fill="none" stroke="black" />
+  <path d="M 104,224 L 128,224" fill="none" stroke="black" />
+  <path d="M 168,224 L 192,224" fill="none" stroke="black" />
+  <path d="M 232,224 L 256,224" fill="none" stroke="black" />
+  <path d="M 296,224 L 320,224" fill="none" stroke="black" />
+  <path d="M 360,224 L 384,224" fill="none" stroke="black" />
+  <path d="M 424,224 L 448,224" fill="none" stroke="black" />
+  <path d="M 16,160 L 16,192" fill="none" stroke="black" />
+  <path d="M 16,192 L 16,208" fill="none" stroke="black" />
+  <path d="M 80,96 L 80,112" fill="none" stroke="black" />
+  <path d="M 80,112 L 80,128" fill="none" stroke="black" />
+  <path d="M 80,160 L 80,208" fill="none" stroke="black" />
+  <path d="M 144,160 L 144,208" fill="none" stroke="black" />
+  <path d="M 208,32 L 208,48" fill="none" stroke="black" />
+  <path d="M 208,48 L 208,64" fill="none" stroke="black" />
+  <path d="M 208,96 L 208,128" fill="none" stroke="black" />
+  <path d="M 208,160 L 208,208" fill="none" stroke="black" />
+  <path d="M 272,160 L 272,208" fill="none" stroke="black" />
+  <path d="M 336,96 L 336,128" fill="none" stroke="black" />
+  <path d="M 336,160 L 336,208" fill="none" stroke="black" />
+  <path d="M 400,160 L 400,208" fill="none" stroke="black" />
+  <path d="M 464,32 L 464,64" fill="none" stroke="black" />
+  <path d="M 464,96 L 464,128" fill="none" stroke="black" />
+  <path d="M 464,160 L 464,208" fill="none" stroke="black" />
+  <path d="M 16,192 L 16,200" fill="none" stroke="black" />
+  <polygon points="32.000000,192.000000 20.000000,186.399994 20.000000,197.600006" fill="black" transform="rotate(90.000000, 16.000000, 192.000000)" />
+  <polygon points="48.000000,224.000000 36.000000,218.399994 36.000000,229.600006" fill="black" transform="rotate(180.000000, 40.000000, 224.000000)" />
+  <path d="M 80,112 L 80,120" fill="none" stroke="black" />
+  <polygon points="96.000000,112.000000 84.000000,106.400002 84.000000,117.599998" fill="black" transform="rotate(90.000000, 80.000000, 112.000000)" />
+  <polygon points="112.000000,144.000000 100.000000,138.399994 100.000000,149.600006" fill="black" transform="rotate(180.000000, 104.000000, 144.000000)" />
+  <polygon points="112.000000,224.000000 100.000000,218.399994 100.000000,229.600006" fill="black" transform="rotate(180.000000, 104.000000, 224.000000)" />
+  <polygon points="176.000000,224.000000 164.000000,218.399994 164.000000,229.600006" fill="black" transform="rotate(180.000000, 168.000000, 224.000000)" />
+  <path d="M 208,48 L 208,56" fill="none" stroke="black" />
+  <polygon points="224.000000,48.000000 212.000000,42.400002 212.000000,53.599998" fill="black" transform="rotate(90.000000, 208.000000, 48.000000)" />
+  <polygon points="240.000000,80.000000 228.000000,74.400002 228.000000,85.599998" fill="black" transform="rotate(180.000000, 232.000000, 80.000000)" />
+  <polygon points="240.000000,144.000000 228.000000,138.399994 228.000000,149.600006" fill="black" transform="rotate(180.000000, 232.000000, 144.000000)" />
+  <polygon points="240.000000,224.000000 228.000000,218.399994 228.000000,229.600006" fill="black" transform="rotate(180.000000, 232.000000, 224.000000)" />
+  <polygon points="304.000000,224.000000 292.000000,218.399994 292.000000,229.600006" fill="black" transform="rotate(180.000000, 296.000000, 224.000000)" />
+  <polygon points="368.000000,144.000000 356.000000,138.399994 356.000000,149.600006" fill="black" transform="rotate(180.000000, 360.000000, 144.000000)" />
+  <polygon points="368.000000,224.000000 356.000000,218.399994 356.000000,229.600006" fill="black" transform="rotate(180.000000, 360.000000, 224.000000)" />
+  <polygon points="432.000000,224.000000 420.000000,218.399994 420.000000,229.600006" fill="black" transform="rotate(180.000000, 424.000000, 224.000000)" />
+  <path d="M 464,0 A 16,16 0 0,0 448,16" fill="none" stroke="black" />
+  <path d="M 464,0 A 16,16 0 0,1 480,16" fill="none" stroke="black" />
+  <path d="M 224,16 A 16,16 0 0,0 208,32" fill="none" stroke="black" />
+  <path d="M 448,16 A 16,16 0 0,0 464,32" fill="none" stroke="black" />
+  <path d="M 480,16 A 16,16 0 0,1 464,32" fill="none" stroke="black" />
+  <path d="M 208,64 A 16,16 0 0,0 192,80" fill="none" stroke="black" />
+  <path d="M 208,64 A 16,16 0 0,1 224,80" fill="none" stroke="black" />
+  <path d="M 464,64 A 16,16 0 0,0 448,80" fill="none" stroke="black" />
+  <path d="M 464,64 A 16,16 0 0,1 480,80" fill="none" stroke="black" />
+  <path d="M 96,80 A 16,16 0 0,0 80,96" fill="none" stroke="black" />
+  <path d="M 320,80 A 16,16 0 0,1 336,96" fill="none" stroke="black" />
+  <path d="M 192,80 A 16,16 0 0,0 208,96" fill="none" stroke="black" />
+  <path d="M 224,80 A 16,16 0 0,1 208,96" fill="none" stroke="black" />
+  <path d="M 448,80 A 16,16 0 0,0 464,96" fill="none" stroke="black" />
+  <path d="M 480,80 A 16,16 0 0,1 464,96" fill="none" stroke="black" />
+  <path d="M 80,128 A 16,16 0 0,0 64,144" fill="none" stroke="black" />
+  <path d="M 80,128 A 16,16 0 0,1 96,144" fill="none" stroke="black" />
+  <path d="M 208,128 A 16,16 0 0,0 192,144" fill="none" stroke="black" />
+  <path d="M 208,128 A 16,16 0 0,1 224,144" fill="none" stroke="black" />
+  <path d="M 336,128 A 16,16 0 0,0 320,144" fill="none" stroke="black" />
+  <path d="M 336,128 A 16,16 0 0,1 352,144" fill="none" stroke="black" />
+  <path d="M 464,128 A 16,16 0 0,0 448,144" fill="none" stroke="black" />
+  <path d="M 464,128 A 16,16 0 0,1 480,144" fill="none" stroke="black" />
+  <path d="M 32,144 A 16,16 0 0,0 16,160" fill="none" stroke="black" />
+  <path d="M 128,144 A 16,16 0 0,1 144,160" fill="none" stroke="black" />
+  <path d="M 256,144 A 16,16 0 0,1 272,160" fill="none" stroke="black" />
+  <path d="M 384,144 A 16,16 0 0,1 400,160" fill="none" stroke="black" />
+  <path d="M 64,144 A 16,16 0 0,0 80,160" fill="none" stroke="black" />
+  <path d="M 96,144 A 16,16 0 0,1 80,160" fill="none" stroke="black" />
+  <path d="M 192,144 A 16,16 0 0,0 208,160" fill="none" stroke="black" />
+  <path d="M 224,144 A 16,16 0 0,1 208,160" fill="none" stroke="black" />
+  <path d="M 320,144 A 16,16 0 0,0 336,160" fill="none" stroke="black" />
+  <path d="M 352,144 A 16,16 0 0,1 336,160" fill="none" stroke="black" />
+  <path d="M 448,144 A 16,16 0 0,0 464,160" fill="none" stroke="black" />
+  <path d="M 480,144 A 16,16 0 0,1 464,160" fill="none" stroke="black" />
+  <path d="M 16,208 A 16,16 0 0,0 0,224" fill="none" stroke="black" />
+  <path d="M 16,208 A 16,16 0 0,1 32,224" fill="none" stroke="black" />
+  <path d="M 80,208 A 16,16 0 0,0 64,224" fill="none" stroke="black" />
+  <path d="M 80,208 A 16,16 0 0,1 96,224" fill="none" stroke="black" />
+  <path d="M 144,208 A 16,16 0 0,0 128,224" fill="none" stroke="black" />
+  <path d="M 144,208 A 16,16 0 0,1 160,224" fill="none" stroke="black" />
+  <path d="M 208,208 A 16,16 0 0,0 192,224" fill="none" stroke="black" />
+  <path d="M 208,208 A 16,16 0 0,1 224,224" fill="none" stroke="black" />
+  <path d="M 272,208 A 16,16 0 0,0 256,224" fill="none" stroke="black" />
+  <path d="M 272,208 A 16,16 0 0,1 288,224" fill="none" stroke="black" />
+  <path d="M 336,208 A 16,16 0 0,0 320,224" fill="none" stroke="black" />
+  <path d="M 336,208 A 16,16 0 0,1 352,224" fill="none" stroke="black" />
+  <path d="M 400,208 A 16,16 0 0,0 384,224" fill="none" stroke="black" />
+  <path d="M 400,208 A 16,16 0 0,1 416,224" fill="none" stroke="black" />
+  <path d="M 464,208 A 16,16 0 0,0 448,224" fill="none" stroke="black" />
+  <path d="M 464,208 A 16,16 0 0,1 480,224" fill="none" stroke="black" />
+  <path d="M 0,224 A 16,16 0 0,0 16,240" fill="none" stroke="black" />
+  <path d="M 32,224 A 16,16 0 0,1 16,240" fill="none" stroke="black" />
+  <path d="M 64,224 A 16,16 0 0,0 80,240" fill="none" stroke="black" />
+  <path d="M 96,224 A 16,16 0 0,1 80,240" fill="none" stroke="black" />
+  <path d="M 128,224 A 16,16 0 0,0 144,240" fill="none" stroke="black" />
+  <path d="M 160,224 A 16,16 0 0,1 144,240" fill="none" stroke="black" />
+  <path d="M 192,224 A 16,16 0 0,0 208,240" fill="none" stroke="black" />
+  <path d="M 224,224 A 16,16 0 0,1 208,240" fill="none" stroke="black" />
+  <path d="M 256,224 A 16,16 0 0,0 272,240" fill="none" stroke="black" />
+  <path d="M 288,224 A 16,16 0 0,1 272,240" fill="none" stroke="black" />
+  <path d="M 320,224 A 16,16 0 0,0 336,240" fill="none" stroke="black" />
+  <path d="M 352,224 A 16,16 0 0,1 336,240" fill="none" stroke="black" />
+  <path d="M 384,224 A 16,16 0 0,0 400,240" fill="none" stroke="black" />
+  <path d="M 416,224 A 16,16 0 0,1 400,240" fill="none" stroke="black" />
+  <path d="M 448,224 A 16,16 0 0,0 464,240" fill="none" stroke="black" />
+  <path d="M 480,224 A 16,16 0 0,1 464,240" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="336" y="228">5</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="144" y="228">2</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="228">4</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="72" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="128" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="384" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="84">3</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="148">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="400" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="228">7</text>
+  <text text-anchor="middle" font-family="sans-serif" x="8" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="216" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="336" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="228">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="400" y="228">6</text>
+  <text text-anchor="middle" font-family="sans-serif" x="408" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="456" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="320" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="228">3</text>
+  <text text-anchor="middle" font-family="sans-serif" x="272" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="24" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="64" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="152" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="200" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="264" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="336" y="148">5</text>
+  <text text-anchor="middle" font-family="sans-serif" x="0" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="192" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="280" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="148">7</text>
+  <text text-anchor="middle" font-family="sans-serif" x="144" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="256" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="344" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="392" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="84">7</text>
+  <text text-anchor="middle" font-family="sans-serif" x="208" y="148">3</text>
+  <text text-anchor="middle" font-family="sans-serif" x="136" y="260">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="328" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="472" y="260">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="464" y="20">7</text>
+  <text text-anchor="middle" font-family="sans-serif" x="80" y="228">1</text>
+</g></svg>
+</artwork>
+</figure>
+<t>An algorithm for efficiently calculating the immediately preceding apex is provided in Appendix C.</t>
+</section>
+<section title="Position Index" anchor="n-position-index"><t>Contains a table of frame number, position pairs pointing to prior locations in the file.</t>
+</section>
+<section title="Metadata Index" anchor="n-metadata-index"><t>Contains a list of IndexMeta entries. Each entry contains a metadata description and a list of frame indexes (not positions) of frames that match the description.</t>
+</section>
+</section>
+<section title="Integrity Mechanisms" anchor="n-integrity-mechanisms"><t>Frame sequences in a DARE container <bcp14>MAY</bcp14> be protected against a frame insertion attack by means of a digest chain, a binary Merkle tree or both.</t>
+<section title="Digest Chain calculation" anchor="n-digest-chain-calculation"><t>A digest chain is simple to implement but can only be verified if the full chain of values is known. Appending a frame to the chain has <em>O(1)</em> complexity but verification has <em>O(n)</em> complexity:</t>
+<figure>
+<!-- Include SVG File ../Images/DAREhashchain.svg --><artwork type="svg">
+<svg height="57" width="568" xmlns="http://www.w3.org/2000/svg" >
+<g transform="translate(8,16)">
+  <path d="M 32,16 L 64,16" fill="none" stroke="black" />
+  <path d="M 104,16 L 136,16" fill="none" stroke="black" />
+  <path d="M 176,16 L 208,16" fill="none" stroke="black" />
+  <path d="M 248,16 L 280,16" fill="none" stroke="black" />
+  <path d="M 320,16 L 352,16" fill="none" stroke="black" />
+  <path d="M 392,16 L 424,16" fill="none" stroke="black" />
+  <path d="M 464,16 L 496,16" fill="none" stroke="black" />
+  <path d="M 536,16 L 552,16" fill="none" stroke="black" />
+  <polygon points="72.000000,16.000000 60.000000,10.400000 60.000000,21.600000" fill="black" transform="rotate(0.000000, 64.000000, 16.000000)" />
+  <polygon points="144.000000,16.000000 132.000000,10.400000 132.000000,21.600000" fill="black" transform="rotate(0.000000, 136.000000, 16.000000)" />
+  <polygon points="216.000000,16.000000 204.000000,10.400000 204.000000,21.600000" fill="black" transform="rotate(0.000000, 208.000000, 16.000000)" />
+  <polygon points="288.000000,16.000000 276.000000,10.400000 276.000000,21.600000" fill="black" transform="rotate(0.000000, 280.000000, 16.000000)" />
+  <polygon points="360.000000,16.000000 348.000000,10.400000 348.000000,21.600000" fill="black" transform="rotate(0.000000, 352.000000, 16.000000)" />
+  <polygon points="432.000000,16.000000 420.000000,10.400000 420.000000,21.600000" fill="black" transform="rotate(0.000000, 424.000000, 16.000000)" />
+  <polygon points="504.000000,16.000000 492.000000,10.400000 492.000000,21.600000" fill="black" transform="rotate(0.000000, 496.000000, 16.000000)" />
+  <path d="M 16,0 A 16,16 0 0,0 0,16" fill="none" stroke="black" />
+  <path d="M 16,0 A 16,16 0 0,1 32,16" fill="none" stroke="black" />
+  <path d="M 88,0 A 16,16 0 0,0 72,16" fill="none" stroke="black" />
+  <path d="M 88,0 A 16,16 0 0,1 104,16" fill="none" stroke="black" />
+  <path d="M 160,0 A 16,16 0 0,0 144,16" fill="none" stroke="black" />
+  <path d="M 160,0 A 16,16 0 0,1 176,16" fill="none" stroke="black" />
+  <path d="M 232,0 A 16,16 0 0,0 216,16" fill="none" stroke="black" />
+  <path d="M 232,0 A 16,16 0 0,1 248,16" fill="none" stroke="black" />
+  <path d="M 304,0 A 16,16 0 0,0 288,16" fill="none" stroke="black" />
+  <path d="M 304,0 A 16,16 0 0,1 320,16" fill="none" stroke="black" />
+  <path d="M 376,0 A 16,16 0 0,0 360,16" fill="none" stroke="black" />
+  <path d="M 376,0 A 16,16 0 0,1 392,16" fill="none" stroke="black" />
+  <path d="M 448,0 A 16,16 0 0,0 432,16" fill="none" stroke="black" />
+  <path d="M 448,0 A 16,16 0 0,1 464,16" fill="none" stroke="black" />
+  <path d="M 520,0 A 16,16 0 0,0 504,16" fill="none" stroke="black" />
+  <path d="M 520,0 A 16,16 0 0,1 536,16" fill="none" stroke="black" />
+  <path d="M 0,16 A 16,16 0 0,0 16,32" fill="none" stroke="black" />
+  <path d="M 32,16 A 16,16 0 0,1 16,32" fill="none" stroke="black" />
+  <path d="M 72,16 A 16,16 0 0,0 88,32" fill="none" stroke="black" />
+  <path d="M 104,16 A 16,16 0 0,1 88,32" fill="none" stroke="black" />
+  <path d="M 144,16 A 16,16 0 0,0 160,32" fill="none" stroke="black" />
+  <path d="M 176,16 A 16,16 0 0,1 160,32" fill="none" stroke="black" />
+  <path d="M 216,16 A 16,16 0 0,0 232,32" fill="none" stroke="black" />
+  <path d="M 248,16 A 16,16 0 0,1 232,32" fill="none" stroke="black" />
+  <path d="M 288,16 A 16,16 0 0,0 304,32" fill="none" stroke="black" />
+  <path d="M 320,16 A 16,16 0 0,1 304,32" fill="none" stroke="black" />
+  <path d="M 360,16 A 16,16 0 0,0 376,32" fill="none" stroke="black" />
+  <path d="M 392,16 A 16,16 0 0,1 376,32" fill="none" stroke="black" />
+  <path d="M 432,16 A 16,16 0 0,0 448,32" fill="none" stroke="black" />
+  <path d="M 464,16 A 16,16 0 0,1 448,32" fill="none" stroke="black" />
+  <path d="M 504,16 A 16,16 0 0,0 520,32" fill="none" stroke="black" />
+  <path d="M 536,16 A 16,16 0 0,1 520,32" fill="none" stroke="black" />
+  <text text-anchor="middle" font-family="sans-serif" x="448" y="20">6</text>
+  <text text-anchor="middle" font-family="sans-serif" x="520" y="20">7</text>
+  <text text-anchor="middle" font-family="sans-serif" x="16" y="20">0</text>
+  <text text-anchor="middle" font-family="sans-serif" x="88" y="20">1</text>
+  <text text-anchor="middle" font-family="sans-serif" x="160" y="20">2</text>
+  <text text-anchor="middle" font-family="sans-serif" x="232" y="20">3</text>
+  <text text-anchor="middle" font-family="sans-serif" x="304" y="20">4</text>
+  <text text-anchor="middle" font-family="sans-serif" x="376" y="20">5</text>
+</g></svg>
+</artwork>
+</figure>
+<t>The value of the chain digest for the first frame (frame 0) is <em>H(H(null)+H(Payload<sub>0</sub>)), where null is a zero length octet sequence and payloadn is the sequence of payload data bytes for frame n</em></t>
+<t>The value of the chain digest for frame <em>n is H(H(Payload<sub>n-1</sub> +H(Payloadn)), where A+B stands for concatenation of the byte sequences A and B.</em></t>
+</section>
+<section title="Binary Merkle tree calculation" anchor="n-binary-merkle-tree-calculation"><t>The tree index mechanism describe earlier may be used to implement a binary Merkle tree. The value TreeDigest specifies the apex value of the tree for that node.</t>
+<t>Appending a frame to the chain has O(log<sub>2</sub> (n)) complexity provided that the container format supports at least the binary tree index. Verifying a chain has O(log<sub>2</sub> (n)) complexity, provided that the set of necessary digest inputs is known.</t>
+<t>To calculate the value of the tree digest for a node, we first calculate the values of all the sub trees that have their apex at that node and then calculate the digest of that value and the immediately preceding local apex.</t>
+</section>
+<section title="Signature" anchor="n-signature-1"><t>Payload data <bcp14>MAY</bcp14> be signed using a JWS <xref target="RFC7515"></xref> as applied in the Envelope.</t>
+<t>Signatures are specified by the <tt>Signatures</tt> parameter in the content header. The data that the signature is calculated over is defined by the typ parameter of the Signature as follows.</t>
+<dl>
+<dt><tt>Payload</tt></dt>
+<dd>
+<t>The value of the <tt>PayloadDigest</tt> parameter</t>
+</dd>
+<dt><tt>Chain</tt></dt>
+<dd>
+<t>The value of the <tt>ChainDigest</tt> parameter</t>
+</dd>
+<dt><tt>Tree</tt></dt>
+<dd>
+<t>The value of the <tt>TreeDigestFinal</tt> parameter</t>
+</dd>
+</dl>
+<t>If the <tt>typ</tt> parameter is absent, the value Payload is implied.</t>
+<t>A frame <bcp14>MAY</bcp14> contain multiple signatures created with the same signing key and different typ values.</t>
+<t>The use of signatures over chain and tree digest values permit multiple frames to be validated using a single signature verification operation.</t>
+</section>
+</section>
+</section>
+<section title="DARE Schema" anchor="n-dare-schema-"><t>A DARE Envelope consists of a Header, an Enhanced Data Sequence (EDS) and  an optional trailer. This section describes the JSON data fields used to  construct headers, trailers and complete messages. </t>
+<t>Wherever possible, fields from JWE, JWS and JWK have been used. In these cases, the fields have the exact same semantics. Note however that the classes in  which these fields are presented have different structure and nesting. </t>
+<section title="Message Classes" anchor="n-message-classes-"><t>A DARE Message contains a single DAREMessageSequence in either the JSON or  Compact serialization as directed by the protocol in which it is applied. </t>
+<section title="Structure: DareEnvelopeSequence" anchor="n-structure-dareenvelopesequence-"><t>A DARE Message containing Header, EDS and Trailer in JSON object encoding. Since a DAREMessage is almost invariably presented in JSON sequence or compact encoding, use of the DAREMessage subclass is preferred. </t>
+<t>Although a DARE Message is functionally an object, it is serialized as  an ordered sequence. This ensures that the message header field will always precede the body in a serialization, this allowing processing of the header information to be performed before the entire body has been received. </t>
+<dl>
+<dt>Header: DareHeader (Optional) </dt>
+<dd>
+<t>The message header. May specify the key exchange data, pre-signature  or signature data, cloaked headers and/or encrypted data sequences. </t>
+</dd>
+<dt>Body: Binary (Optional) </dt>
+<dd>
+<t>The message body </t>
+</dd>
+<dt>Trailer: DareTrailer (Optional) </dt>
+<dd>
+<t>The message trailer. If present, this contains the signature.  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Header and Trailer Classes" anchor="n-header-and-trailer-classes-"><t>A DARE Message sequence MUST contain a (possibly empty) DAREHeader and MAY contain a DARETrailer.  </t>
+<section title="Structure: DareTrailer" anchor="n-structure-daretrailer-"><t>A DARE Message Trailer </t>
+<dl>
+<dt>Signatures: DareSignature [0..Many] </dt>
+<dd>
+<t>A list of signatures. A message trailer MUST NOT contain a signatures field if the header contains  a signatures field. </t>
+</dd>
+<dt>SignedData: Binary (Optional) </dt>
+<dd>
+<t>Contains a DAREHeader object  </t>
+</dd>
+<dt>PayloadDigest: Binary (Optional) </dt>
+<dd>
+<t>If present, contains the digest of the Payload. </t>
+</dd>
+<dt>ChainDigest: Binary (Optional) </dt>
+<dd>
+<t>If present, contains the digest of the PayloadDigest values of this frame and the frame immediately preceding. </t>
+</dd>
+<dt>TreeDigest: Binary (Optional) </dt>
+<dd>
+<t>If present, contains the Binary Merkle Tree digest value.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: DareHeader" anchor="n-structure-dareheader-"><dl>
+<dt>Inherits: DareTrailer  </dt>
+<dd>
+</dd>
+</dl>
+<t>A DARE Message Header. Since any field that is present in a trailer MAY be  placed in a header instead, the message header inherits from the trailer. </t>
+<dl>
+<dt>EnvelopeID: String (Optional) </dt>
+<dd>
+<t>Unique identifier </t>
+</dd>
+<dt>EncryptionAlgorithm: String (Optional) </dt>
+<dd>
+<t>The encryption algorithm as specified in JWE </t>
+</dd>
+<dt>DigestAlgorithm: String (Optional) </dt>
+<dd>
+<t>Digest Algorithm. If specified, tells decoder that the digest algorithm is used to construct a signature over the message payload. </t>
+</dd>
+<dt>KeyIdentifier: String (Optional) </dt>
+<dd>
+<t>Master key identifier. </t>
+</dd>
+<dt>Salt: Binary (Optional) </dt>
+<dd>
+<t>Salt value used to derrive cryptographic parameters for the content data. </t>
+</dd>
+<dt>Malt: Binary (Optional) </dt>
+<dd>
+<t>Hash of the Salt value used to derrive cryptographic parameters for the content data. This field SHOULD NOT be present if the Salt field is present. It is used to allow the salt value to be erased (thus rendering the payload content irrecoverable) without affecting the ability to calculate the payload digest value. </t>
+</dd>
+<dt>Cloaked: Binary (Optional) </dt>
+<dd>
+<t>If present in a header or trailer, specifies an encrypted data block  containing additional header fields whose values override those specified  in the message and context headers. </t>
+<t>When specified in a header, a cloaked field MAY be used to conceal metadata  (content type, compression) and/or to specify an additional layer of key exchange.  That applies to both the Message body and to headers specified within the cloaked  header. </t>
+<t>Processing of cloaked data is described in... </t>
+</dd>
+<dt>EDSS: Binary [0..Many] </dt>
+<dd>
+<t>If present, the Annotations field contains a sequence of Encrypted Data  Segments encrypted under the message Master Key. The interpretation of these fields  is application specific. </t>
+</dd>
+<dt>Signers: DareSignature [0..Many] </dt>
+<dd>
+<t>A list of 'presignature' </t>
+</dd>
+<dt>Recipients: DareRecipient [0..Many] </dt>
+<dd>
+<t>A list of recipient key exchange information blocks. </t>
+</dd>
+<dt>ContentMetaData: Binary (Optional) </dt>
+<dd>
+<t>If present contains a JSON encoded ContentInfo structure which specifies plaintext content metadata and forms one of the inputs to the envelope digest value. </t>
+</dd>
+<dt>ContainerInfo: ContainerInfo (Optional) </dt>
+<dd>
+<t>Information that describes container information </t>
+</dd>
+<dt>ContainerIndex: ContainerIndex (Optional) </dt>
+<dd>
+<t>An index of records in the current container up to but not including this one. </t>
+</dd>
+<dt>Received: DateTime (Optional) </dt>
+<dd>
+<t>Date on which the envelope was received.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: ContentMeta" anchor="n-structure-contentmeta-"><dl>
+<dt>UniqueID: String (Optional) </dt>
+<dd>
+<t>Unique object identifier </t>
+</dd>
+<dt>Labels: String [0..Many] </dt>
+<dd>
+<t>List of labels that are applied to the payload of the frame. </t>
+</dd>
+<dt>KeyValues: KeyValue [0..Many] </dt>
+<dd>
+<t>List of key/value pairs describing the payload of the frame. </t>
+</dd>
+<dt>MessageType: String (Optional) </dt>
+<dd>
+<t>The mesh message type </t>
+</dd>
+<dt>ContentType: String (Optional) </dt>
+<dd>
+<t>The content type field as specified in JWE </t>
+</dd>
+<dt>Paths: String [0..Many] </dt>
+<dd>
+<t>List of filename paths for the payload of the frame. </t>
+</dd>
+<dt>Filename: String (Optional) </dt>
+<dd>
+<t>The original filename under which the data was stored. </t>
+</dd>
+<dt>Event: String (Optional) </dt>
+<dd>
+<t>Operation on the header </t>
+</dd>
+<dt>Created: DateTime (Optional) </dt>
+<dd>
+<t>Initial creation date. </t>
+</dd>
+<dt>Modified: DateTime (Optional) </dt>
+<dd>
+<t>Date of last modification. </t>
+</dd>
+<dt>Expire: DateTime (Optional) </dt>
+<dd>
+<t>Date at which the associated transaction will expire </t>
+</dd>
+<dt>First: Integer (Optional) </dt>
+<dd>
+<t>Frame number of the first object instance value. </t>
+</dd>
+<dt>Previous: Integer (Optional) </dt>
+<dd>
+<t>Frame number of the immediately prior object instance value	  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Cryptographic Data" anchor="n-cryptographic-data-"><t>DARE Message uses the same fields as JWE and JWS but with different structure. In particular, DARE messages MAY have multiple recipients and multiple signers. </t>
+<section title="Structure: DareSignature" anchor="n-structure-daresignature-"><t>The signature value </t>
+<dl>
+<dt>Dig: String (Optional) </dt>
+<dd>
+<t>Digest algorithm hint. Specifying the digest algorithm to be applied to the message body allows the body to be processed in streaming mode. </t>
+</dd>
+<dt>Alg: String (Optional) </dt>
+<dd>
+<t>Key exchange algorithm </t>
+</dd>
+<dt>KeyIdentifier: String (Optional) </dt>
+<dd>
+<t>Key identifier of the signature key. </t>
+</dd>
+<dt>Certificate: X509Certificate (Optional) </dt>
+<dd>
+<t>PKIX certificate of signer. </t>
+</dd>
+<dt>Path: X509Certificate (Optional) </dt>
+<dd>
+<t>PKIX certificates that establish a trust path for the signer. </t>
+</dd>
+<dt>Manifest: Binary (Optional) </dt>
+<dd>
+<t>The data description that was signed. </t>
+</dd>
+<dt>SignatureValue: Binary (Optional) </dt>
+<dd>
+<t>The signature value as an Enhanced Data Sequence under the message Master Key. </t>
+</dd>
+<dt>WitnessValue: Binary (Optional) </dt>
+<dd>
+<t>The signature witness value used on an encrypted message to demonstrate that  the signature was authorized by a party with actual knowledge of the encryption  key used to encrypt the message.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: X509Certificate" anchor="n-structure-x509certificate-"><dl>
+<dt>X5u: String (Optional) </dt>
+<dd>
+<t>URL identifying an X.509 public key certificate </t>
+</dd>
+<dt>X5: Binary (Optional) </dt>
+<dd>
+<t>An X.509 public key certificate  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: DareRecipient" anchor="n-structure-darerecipient-"><t>Recipient information </t>
+<dl>
+<dt>KeyIdentifier: String (Optional) </dt>
+<dd>
+<t>Key identifier for the encryption key. </t>
+<t>The Key identifier MUST be either a UDF fingerprint of a key or a Group Key Identifier </t>
+</dd>
+<dt>KeyWrapDerivation: String (Optional) </dt>
+<dd>
+<t>The key wrapping and derivation algorithms. </t>
+</dd>
+<dt>WrappedMasterKey: Binary (Optional) </dt>
+<dd>
+<t>The wrapped master key. The master key is encrypted under the result of the key exchange. </t>
+</dd>
+<dt>RecipientKeyData: String (Optional) </dt>
+<dd>
+<t>The per-recipient key exchange data.  </t>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+<section title="DARE Container Schema" anchor="n-dare-container-schema-"><t>TBS stuff </t>
+<section title="Container Headers" anchor="n-container-headers-"><t>TBS stuff </t>
+<section title="Structure: ContainerInfo" anchor="n-structure-containerinfo-"><t>Information that describes container information </t>
+<dl>
+<dt>DataEncoding: String (Optional) </dt>
+<dd>
+<t>Specifies the data encoding for the header section of for the following frames. This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON. </t>
+</dd>
+<dt>ContainerType: String (Optional) </dt>
+<dd>
+<t>Specifies the container type for the following records. This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON. </t>
+</dd>
+<dt>Index: Integer (Optional) </dt>
+<dd>
+<t>The record index within the file. This MUST be unique and  satisfy any additional requirements determined by the ContainerType. </t>
+</dd>
+<dt>IsMeta: Boolean (Optional) </dt>
+<dd>
+<t>If true, the current frame is a meta frame and does not contain a payload. </t>
+<t>Note: Meta frames MAY be present in any container. Applications MUST accept containers that contain meta frames at any position in the file. Applications MUST NOT interpret a meta frame as a data frame with an enpty payload. </t>
+</dd>
+<dt>Default: Boolean (Optional) </dt>
+<dd>
+<t>If set true in a persistent container, specifies that this record contains the default object for the container. </t>
+</dd>
+<dt>TreePosition: Integer (Optional) </dt>
+<dd>
+<t>Position of the frame containing the apex of the preceding sub-tree. </t>
+</dd>
+<dt>IndexPosition: Integer (Optional) </dt>
+<dd>
+<t>Specifies the position in the file at which the last index entry is to be found </t>
+</dd>
+<dt>ExchangePosition: Integer (Optional) </dt>
+<dd>
+<t>Specifies the position in the file at which the key exchange data is to be found  </t>
+</dd>
+</dl>
+</section>
+</section>
+<section title="Index Structures" anchor="n-index-structures-"><t>TBS stuff </t>
+<section title="Structure: ContainerIndex" anchor="n-structure-containerindex-"><t>A container index </t>
+<dl>
+<dt>Full: Boolean (Optional) </dt>
+<dd>
+<t>If true, the index is complete and contains position entries for all the  frames in the file. If absent or false, the index is incremental and only contains position entries for records added since the last  frame containing a ContainerIndex. </t>
+</dd>
+<dt>Positions: IndexPosition [0..Many] </dt>
+<dd>
+<t>List of container position entries </t>
+</dd>
+<dt>Metas: IndexMeta [0..Many] </dt>
+<dd>
+<t>List of container position entries  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: IndexPosition" anchor="n-structure-indexposition-"><t>Specifies the position in a file at which a specified record index is found </t>
+<dl>
+<dt>Index: Integer (Optional) </dt>
+<dd>
+<t>The record index within the file. </t>
+</dd>
+<dt>Position: Integer (Optional) </dt>
+<dd>
+<t>The record position within the file relative to the index base.  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: KeyValue" anchor="n-structure-keyvalue-"><t>Specifies a key/value entry </t>
+<dl>
+<dt>Key: String (Optional) </dt>
+<dd>
+<t>The key </t>
+</dd>
+<dt>Value: String (Optional) </dt>
+<dd>
+<t>The value corresponding to the key  </t>
+</dd>
+</dl>
+</section>
+<section title="Structure: IndexMeta" anchor="n-structure-indexmeta-"><t>Specifies the list of index entries at which a record with the specified metadata occurrs. </t>
+<dl>
+<dt>Index: Integer [0..Many] </dt>
+<dd>
+<t>List of record indicies within the file where frames matching the specified  criteria are found. </t>
+</dd>
+<dt>ContentType: String (Optional) </dt>
+<dd>
+<t>Content type parameter </t>
+</dd>
+<dt>Paths: String [0..Many] </dt>
+<dd>
+<t>List of filename paths for the current frame. </t>
+</dd>
+<dt>Labels: String [0..Many] </dt>
+<dd>
+<t>List of labels that are applied to the current frame.  </t>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+<section title="Dare Container Applications" anchor="n-dare-container-applications"><t>DARE Containers are used to implement two forms of persistence store to support Mesh operations:</t>
+<dl>
+<dt>Catalogs</dt>
+<dd>
+<t>A set of related items which <bcp14>MAY</bcp14> be added, modified or deleted at any time.</t>
+</dd>
+<dt>Spools</dt>
+<dd>
+<t>A list of related items whose status <bcp14>MAY</bcp14> be changed at any time but which are immutable once added.</t>
+</dd>
+</dl>
+<t>Since DARE Containers are an append only log format, entries can only be modified or deleted by adding items to the log to change the status of previous entries. It is always possible to undo any operation on a catalog or spool unless the underlying container is purged or the individual entries modified.</t>
+<section title="Catalog" anchor="n-catalog"><t>Catalogs contain a set of entries, each of which is distinguished by a unique identifier.</t>
+<t>Three operations are supported:</t>
+<dl>
+<dt>Add</dt>
+<dd>
+<t>Addition of the entry to the catalog</t>
+</dd>
+<dt>Update</dt>
+<dd>
+<t>Modification of the data associated with the entry excluding the identifier</t>
+</dd>
+<dt>Delete</dt>
+<dd>
+<t>Removal of the entry from the catalog</t>
+</dd>
+</dl>
+<t>The set of valid state transitions is defined by the Finite State machine:</t>
+<t>(Add-Update*-Delete)*</t>
+<t>Catalogs are used to represent sets of persistent objects associated with a Mesh Service Account. The user's set of contacts for example. Each contact entry may be modified many times over time but refers to the same subject for its entire lifetime.</t>
+</section>
+<section title="Spool" anchor="n-spool"><t>Spools contain lists of entries, each of which is distinguished by a unique identifier.</t>
+<t>Four operations are supported:</t>
+<dl>
+<dt>Post</dt>
+<dd>
+<t>Addition of the entry to the spool</t>
+</dd>
+<dt>Processed</dt>
+<dd>
+<t>Marks the entry as having been processed.</t>
+</dd>
+<dt>Unprocessed</dt>
+<dd>
+<t>Returns the entry to the unread state.</t>
+</dd>
+<dt>Delete</dt>
+<dd>
+<t>Mark the entry as deleted allowing recovery of associated storage in a subsequent purge operation.</t>
+</dd>
+</dl>
+<t>The set of valid state transitions is defined by the Finite State machine:</t>
+<t>Post-(Processed| Unprocessed| Delete *)</t>
+<t>Spools are used to represent time sequence ordered entries such as lists of messages being sent or received, task queues and transaction logs.</t>
+</section>
+<section title="Archive" anchor="n-archive"><t>A DARE Archive is a DARE Container whose entries contain files. This affords the same functionality as a traditional ZIP or tar archive but with the added cryptographic capabilities provided by the DARE format.</t>
+</section>
+</section>
+<section title="Future Work" anchor="n-future-work"><t>The current specification describes an approach in which containers are written according to a strict append-only policy. Greater flexibility may be achieved by loosening this requirement allowing record(s) at the end of the container to be overwritten.</t>
+<section title="Terminal integrity check" anchor="n-terminal-integrity-check"><t>A major concern when operating a critical service is the possibility of a hardware or power failure occurring during a write operation causing the file update to be incomplete. While most modern operating systems have effective mechanisms in place to prevent corruption of the file system itself in such circumstances, this does not provide sufficient protection at the application level.</t>
+<t>Appending a null record containing a container-specific magic number provides an effective means of detecting this circumstance that can be quickly verified.</t>
+<t>If a container specifies a terminal integrity check value in the header of frame zero, the container is considered to be in an incomplete write state if the final frame is not a null record specifying the magic number.</t>
+<t>When appending new records to such containers, the old terminal integrity check record is overwritten by the data being added and a new integrity check record appended to the end.</t>
+</section>
+<section title="Terminal index record" anchor="n-terminal-index-record"><t>A writer can maintain a complete (or partial) index of the container in its final record without additional space overhead by overwriting the prior index on each update.</t>
+</section>
+<section title="Deferred indexing" anchor="n-deferred-indexing"><t>The task of updating terminal indexes may be deferred to a time when the machine is not busy. This improves responsiveness and may avoid the need to re-index containers receiving a sequence of updates.</t>
+<t>This approach may be supported by appending new entries to the end of the container in the usual fashion and maintaining a record of containers to be updated as a separate task.</t>
+<t>When updating the index on a container that has been updated in this fashion, the writer must ensure that no data is lost even if the process is interrupted. The use of guard records and other precautions against loss of state is advised. </t>
+</section>
+</section>
+<section title="Security Considerations" anchor="n-security-considerations"><t>This section describes security considerations arising from the use of DARE in general applications.</t>
+<t>Additional security considerations for use of DARE in Mesh services and applications are described in the Mesh Security Considerations guide <xref target="draft-hallambaker-mesh-security"></xref>.</t>
+<section title="Encryption/Signature nesting" anchor="n-encryptionsignature-nesting"></section>
+<section title="Side channel" anchor="n-side-channel"></section>
+<section title="Salt reuse" anchor="n-salt-reuse"></section>
+</section>
+<section title="IANA Considerations" anchor="n-iana-considerations"></section>
+<section title="Acknowledgements" anchor="n-acknowledgements"><t>A list of people who have contributed to the design of the Mesh is presented in <xref target="draft-hallambaker-mesh-architecture"></xref>.</t>
+<t>The name Data At Rest Encryption was proposed by Melhi Abdulhayo?lu.</t>
+</section>
+<section title="Appendix A: DARE Envelope Examples and Test Vectors" anchor="n-appendix-a-dare-envelope-examples-and-test-vectors"></section>
+<section title="Test Examples" anchor="n-test-examples-"><t>In the following examples, Alice's encryption private key parameters are: </t>
+<sourcecode>{
+  "PrivateKeyECDH":{
+    "crv":"Ed25519",
+    "Private":"-Uye7_hgOBKAkc3z1bVe-kQPZ8gLMCsds5I1B1kdyfg"}}</sourcecode>
+<t>Alice's signature private key parameters are: </t>
+<sourcecode>{
+  "PrivateKeyECDH":{
+    "crv":"Ed25519",
+    "Private":"3sqB9SW-AeblQgp1LpQAaeyNwTe9zIL8kCHREN0Z5aI"}}</sourcecode>
+<t>The body of the test message is the UTF8 representation of the following string: </t>
+<sourcecode>"This is a test long enough to require multiple blocks"</sourcecode>
+<t>The EDS sequences, are the UTF8 representation of the following strings: </t>
+<sourcecode>"Subject: Message metadata should be encrypted"
+"2018-02-01"</sourcecode>
+<section title="Plaintext Message" anchor="n--plaintext-message-"><t>A plaintext message without associated EDS sequences is an empty header followed by the message body: </t>
+<sourcecode>{
+  "DareEnvelope":[{},
+    "VGhpcyBpcyBhIHRlc3QgbG9uZyBlbm91Z2ggdG8gcmVxdWlyZSBtdWx0aXBs
+  ZSBibG9ja3M"
+    ]}</sourcecode>
+</section>
+<section title="Plaintext Message with EDS" anchor="n--plaintext-message-with-eds-"><t>If a plaintext message contains EDS sequences, these are also in plaintext: </t>
+<sourcecode>{
+  "DareEnvelope":[{
+      "Annotations":["iAEBiC1TdWJqZWN0OiBNZXNzYWdlIG1ldGFkYXRhIHNo
+  b3VsZCBiZSBlbmNyeXB0ZWQ",
+        "iAECiAoyMDE4LTAyLTAx"
+        ]},
+    "VGhpcyBpcyBhIHRlc3QgbG9uZyBlbm91Z2ggdG8gcmVxdWlyZSBtdWx0aXBs
+  ZSBibG9ja3M"
+    ]}</sourcecode>
+</section>
+<section title="Encrypted Message" anchor="n--encrypted-message-"><t>The creator generates a master session key: </t>
+<sourcecode>
+  65 01 C1 19  7F C7 54 2A  EA 1B D1 03  67 D9 B8 BA
+  88 C2 D7 E1  7D 68 CA EA  61 D5 52 88  74 11 BB AE</sourcecode>
+<t>For each recipient of the message: </t>
+<t>The creator generates an ephemeral key: </t>
+<sourcecode>{
+  "PrivateKeyECDH":{
+    "crv":"Ed25519",
+    "Private":"LHFGKaKzQQaJjXOOteGaT0HHM8nnVh7XKQYzgXJEyQ8"}}</sourcecode>
+<t>The key agreement value is calculated: </t>
+<sourcecode>
+  2A 96 D2 30  2F 76 BC 25  E2 79 BD 6F  02 FB E3 6C
+  3A 9B F1 78  66 30 8A 7B  8A 0E BC DC  AA A9 06 D9</sourcecode>
+<t>The key agreement value is used as the input to a HKDF key derivation function with the info parameter  master to create the key used to wrap the master key: </t>
+<sourcecode>
+  D4 EC FA 89  F8 44 43 11  63 08 3F 9F  30 06 82 04
+  D7 0B B4 99  18 62 3C 2F  E0 A4 4A C1  3A 8E 5B 9F</sourcecode>
+<t>The wrapped master key is: </t>
+<sourcecode>
+  EB 17 34 1B  15 83 71 E3  F2 34 BC 8F  28 22 4E F2
+  21 CE F9 EE  46 DE 85 56  3B FD 6B 70  6A C0 F3 AF
+  C5 B3 D4 37  02 DF 95 0A</sourcecode>
+<t>This information is used to calculate the Recipient information shown in the example below. </t>
+<t>To encrypt a message, we first generate a unique salt value: </t>
+<sourcecode>
+  14 66 1C D3  61 43 AB 33  80 5B B3 AC  12 C2 BF 73</sourcecode>
+<t>The salt value and master key are used to generate the payload encryption key: </t>
+<sourcecode>
+  C9 6C C5 4D  E6 08 1B D7  11 18 33 6B  7E DC CC 5E
+  0C 31 28 00  2E 61 1A 85  B7 00 EC 99  22 94 B2 5B</sourcecode>
+<t>Since AES is a block cipher, we also require an initializarion vector: </t>
+<sourcecode>
+  D2 D4 EE 1E  DB 2E 84 1A  B7 44 2A 76  50 16 AF 49</sourcecode>
+<t>The output sequence is the encrypted bytes: </t>
+<sourcecode>
+  C1 84 BD EF  6E E7 C9 04  CD AB 88 03  D2 78 E2 14
+  B5 5A 4E D2  79 4D F5 62  6E 27 1F 6B  56 2F 7C CC
+  C7 51 3E 77  85 97 7A E1  DA FA F6 69  6D 73 26 26
+  96 F0 FA CA  F1 E5 37 B9  57 03 64 FA  F3 A0 1E 72</sourcecode>
+<t>Since the message is not signed, there is no need for a trailer. The completed message is: </t>
+<sourcecode>{
+  "DareEnvelope":[{
+      "enc":"A256CBC",
+      "kid":"EBQL-3XPM-4TXF-HEMW-IETV-OE7R-T6RL",
+      "Salt":"FGYc02FDqzOAW7OsEsK_cw",
+      "recipients":[{
+          "kid":"MCUG-LA4F-7LOS-Z2JR-MNMJ-BEL5-654X",
+          "epk":{
+            "PublicKeyECDH":{
+              "crv":"Ed25519",
+              "Public":"L8Ao9kViM5R5VXejYBi7q5W14Kag3SrlI-Rfrh6-t
+  X4"}},
+          "wmk":"6xc0GxWDcePyNLyPKCJO8iHO-e5G3oVWO_1rcGrA86_Fs9Q3
+  At-VCg"}
+        ]},
+    "wYS9727nyQTNq4gD0njiFLVaTtJ5TfVibicfa1YvfMzHUT53hZd64dr69mlt
+  cyYmlvD6yvHlN7lXA2T686Aecg"
+    ]}</sourcecode>
+</section>
+<section title="Signed Message" anchor="n--signed-message-"><t>Signed messages specify the digest algorithm to be used in the header and the signature value in the trailer. Note that the digest algorithm is not optional since it serves as notice that a decoder should digest the payload value  to enable signature verification. </t>
+<sourcecode>{
+  "DareEnvelope":[{
+      "dig":"S512"},
+    "VGhpcyBpcyBhIHRlc3QgbG9uZyBlbm91Z2ggdG8gcmVxdWlyZSBtdWx0aXBs
+  ZSBibG9ja3M",
+    {
+      "signatures":[{
+          "alg":"S512",
+          "kid":"MC27-POUO-6LAV-IQMY-EMXG-ZAI4-27P5",
+          "signature":"WZfzGwAoVYItkIzACC8PI376fuFVxOaFKlzLuqqoCv
+  2Ig9eRX1idcB1B4ijK0yTUvFBtB4y5eeNR-lp_8KpYBA"}
+        ],
+      "PayloadDigest":"raim8SV5adPbWWn8FMM4mrRAQCO9A2jZ0NZAnFXWlG
+  0xF6sWGJbnKSdtIJMmMU_hjarlIPEoY3vy9UdVlH5KAg"}
+    ]}</sourcecode>
+</section>
+<section title="Signed and Encrypted Message" anchor="n--signed-and-encrypted-message-"><t>A signed and encrypted message is encrypted and then signed. The signer proves knowledge of the payload plaintext by providing the plaintext witness value. </t>
+<sourcecode>{
+  "DareEnvelope":[{
+      "enc":"A256CBC",
+      "dig":"S512",
+      "kid":"EBQF-GAG6-RXVB-E6FN-Q22L-DB5M-VP3I",
+      "Salt":"ZgKze8-JB-2DT5MziGwbUA",
+      "recipients":[{
+          "kid":"MCUG-LA4F-7LOS-Z2JR-MNMJ-BEL5-654X",
+          "epk":{
+            "PublicKeyECDH":{
+              "crv":"Ed25519",
+              "Public":"7EIpiRO3znZLzB4RcpJIFMUfU_cH1GQqm_dEArqgd
+  Fs"}},
+          "wmk":"CvI2fpurkp-8hcXmX1jAHFoNczYKKTw9LIJtenGcFanmyZKF
+  fGZeZg"}
+        ]},
+    "BCGSlTBDwcmh_fOs1Sc95FiAuzJYu_wGU54kHOCdZt0VDxxqqGVy6EZ0oheX
+  opmlOaYNZluArErSiDsuqvjeZA",
+    {
+      "signatures":[{
+          "alg":"S512",
+          "kid":"MC27-POUO-6LAV-IQMY-EMXG-ZAI4-27P5",
+          "signature":"zm_BKVAs7AmOAl3q9Di-mEAvx3xglbgaNTgXenmIbq
+  hUgXFI5qH-mVxd0rUYWnSBeCgx-8MWjeEQSCxwefWzDg",
+          "witness":"11qUMvtqF2Kv5CJzisi1M65MwEFuRQicYsiyNSk_PNk"}
+        ],
+      "PayloadDigest":"VjLfgk-YvUCIn_DRJ2HuHGD-5Y9AM7VtejkaoGFgs_
+  7AodH6pZQy9kRcoXLGMCzQhgsqZi9hvCRmMX6awrAx2w"}
+    ]}</sourcecode>
+</section>
+</section>
+<section title="Appendix B: DARE Container Examples and Test Vectors" anchor="n-appendix-b-dare-container-examples-and-test-vectors"><t>The data payloads in all the following examples are identical, only the authentication and/or encryption is different.  </t>
+<ul>
+<li> Frame 1..n consists of 300 bytes being the byte sequence 00, 01, 02, etc.  repeating after 256 bytes. </li>
+</ul>
+<t>For conciseness, the raw data format is omitted for examples after the first, except where the data payload has been transformed, (i.e. encrypted). </t>
+<section title="Simple container" anchor="n-simple-container-"><t>The following example shows a simple container with first frame and a single data frame: </t>
+<sourcecode>f4 82
+f0 7c
+f0 00
+f0 00
+82 f4
+f5 01 74
+f0 43
+f1 01 2c
+74 01 f5</sourcecode>
+<t>Since there is no integrity check, there is no need for trailer entries. The header values are: </t>
+<t>Frame 0 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"List",
+      "Index":0}}}
+
+[Empty trailer]</sourcecode>
+<t>Frame 1 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":1}}}
+
+[Empty trailer]</sourcecode>
+</section>
+<section title="Payload and chain digests" anchor="n-payload-and-chain-digests-"><t>The following example shows a chain container with a first frame and three  data frames. The headers of these frames is the same as before but the frames now have trailers specifying the PayloadDigest and ChainDigest values: </t>
+<t>Frame 0 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"Chain",
+      "Index":0}}}
+
+[Empty trailer]</sourcecode>
+<t>Frame 1 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":1}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "ChainDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYV
+  RVz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}</sourcecode>
+<t>Frame 2 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":2}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "ChainDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYV
+  RVz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}</sourcecode>
+<t>Frame 3 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":3}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "ChainDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYV
+  RVz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}</sourcecode>
+</section>
+<section title="Merkle Tree" anchor="n-merkle-tree-"><t>The following example shows a chain container with a first frame and six  data frames. The trailers now contain the TreePosition and TreeDigest values: </t>
+<t>Frame 0 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"Merkle",
+      "Index":0}}}
+
+[Empty trailer]</sourcecode>
+<t>Frame 1 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":1,
+      "TreePosition":0}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}</sourcecode>
+<t>Frame 2 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":2,
+      "TreePosition":360}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "TreeDigest":"7fHmkEIsPkN6sDYAOLvpIJn5Dg3PxDDAaq-ll2kh8722kok
+  kFnZQcYtjuVC71aHNXI18q-lPnfRkmwryG-bhqQ"}}</sourcecode>
+<t>Frame 3 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":3,
+      "TreePosition":360}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}</sourcecode>
+<t>Frame 4 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":4,
+      "TreePosition":1612}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "TreeDigest":"vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAv
+  KSj8gs0VFgxxLkZ2myrtaDIwhHoswiTiBMLNWug"}}</sourcecode>
+<t>Frame 5 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":5,
+      "TreePosition":1612}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}</sourcecode>
+<t>Frame 6 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":6,
+      "TreePosition":2867}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "TreeDigest":"WgHlz3EHczVPqgtpc39Arv7CFIsCbFVsk8wg0j2qLlEfur9
+  SZ0mdr65Ka-HF0Qx8gg_DAoiJwUrwADDXyxVJOg"}}</sourcecode>
+</section>
+<section title="Signed container" anchor="n-signed-container-"><t>The following example shows a tree container with a signature in the final record. The signing key parameters are: </t>
+<sourcecode>{
+  "PrivateKeyECDH":{
+    "crv":"Ed25519",
+    "Private":"3sqB9SW-AeblQgp1LpQAaeyNwTe9zIL8kCHREN0Z5aI"}}</sourcecode>
+<t>The container headers and trailers are: </t>
+<t>Frame 0 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"Merkle",
+      "Index":0}}}
+
+[Empty trailer]</sourcecode>
+<t>Frame 1 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":1,
+      "TreePosition":0}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "TreeDigest":"T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}}</sourcecode>
+<t>Frame 2 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":2,
+      "TreePosition":360}}}
+
+{
+  "DareTrailer":{
+    "PayloadDigest":"8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZ
+  DlZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+    "TreeDigest":"7fHmkEIsPkN6sDYAOLvpIJn5Dg3PxDDAaq-ll2kh8722kok
+  kFnZQcYtjuVC71aHNXI18q-lPnfRkmwryG-bhqQ"}}</sourcecode>
+</section>
+<section title="Encrypted container" anchor="n-encrypted-container-"><t>The following example shows a container in which all the frame payloads are encrypted  under the same master secret established in a key agreement specified in the first frame. </t>
+<t>Frame 0 </t>
+<sourcecode>{
+  "DareHeader":{
+    "enc":"A256CBC",
+    "kid":"EBQF-WURD-YFJV-I56E-4CL7-SU5P-M25U",
+    "Salt":"6LmtY-Qkh0rzgvcXaSLDAw",
+    "recipients":[{
+        "kid":"MCUG-LA4F-7LOS-Z2JR-MNMJ-BEL5-654X",
+        "epk":{
+          "PublicKeyECDH":{
+            "crv":"Ed25519",
+            "Public":"bj4nRCizT1FQneUswgpUkBHhJ9vPni9v6t5MHaRP-CM"}},
+        "wmk":"UjepdeWKolqOD43GECKK0D7XLZ3SIS7GjM7T6I5uZfmf9WZRJf
+  VPcg"}
+      ],
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"List",
+      "Index":0}}}
+
+[Empty trailer]</sourcecode>
+<t>Frame 1 </t>
+<sourcecode>{
+  "DareHeader":{
+    "enc":"A256CBC",
+    "kid":"EBQF-WURD-YFJV-I56E-4CL7-SU5P-M25U",
+    "Salt":"oAcK0CCllQoQsD8mSPj0lA",
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":1}}}
+
+[Empty trailer]</sourcecode>
+<t>Frame 2 </t>
+<sourcecode>{
+  "DareHeader":{
+    "enc":"A256CBC",
+    "kid":"EBQF-WURD-YFJV-I56E-4CL7-SU5P-M25U",
+    "Salt":"ZaLu3ETpHZ4YLIiSVy5jtw",
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":2}}}
+
+[Empty trailer]</sourcecode>
+<t>Here are the container bytes. Note that the content is now encrypted and has expanded by 25 bytes. These are the salt (16 bytes), the AES padding (4 bytes) and the  JSON-B framing (5 bytes). </t>
+<sourcecode>f5 02 14
+f1 01 fd
+f0 10
+f0 00
+14 02 f5
+f5 01 df
+f0 aa
+f1 01 30
+df 01 f5
+f5 01 df
+f0 aa
+f1 01 30
+df 01 f5
+
+</sourcecode>
+<t>The following example shows a container in which all the frame payloads are encrypted  under separate key agreements specified in the payload frames. </t>
+<t>Frame 0 </t>
+<sourcecode>{
+  "DareHeader":{
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "DataEncoding":"JSON",
+      "ContainerType":"List",
+      "Index":0}}}
+
+[Empty trailer]</sourcecode>
+<t>Frame 1 </t>
+<sourcecode>{
+  "DareHeader":{
+    "enc":"A256CBC",
+    "kid":"EBQN-QBRR-KGRA-XW7H-VGFS-2WQZ-Q5VY",
+    "Salt":"t8uSpe09LvQAeeWhiWszRQ",
+    "recipients":[{
+        "kid":"MCUG-LA4F-7LOS-Z2JR-MNMJ-BEL5-654X",
+        "epk":{
+          "PublicKeyECDH":{
+            "crv":"Ed25519",
+            "Public":"XeZWS1mJpVcRn3fDZje6E7iX-Vuo6rQ9K4mRqtyHwF8"}},
+        "wmk":"3qGEgztXpxs0eK4dIZ0leHDRegiVnAOvUFFJr6UDFqNtIliErI
+  p45g"}
+      ],
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":1}}}
+
+[Empty trailer]</sourcecode>
+<t>Frame 2 </t>
+<sourcecode>{
+  "DareHeader":{
+    "enc":"A256CBC",
+    "kid":"EBQA-4T6G-4Y4W-LLPW-HDP5-GBQ5-KCME",
+    "Salt":"L7P1gbXeByt_NTwNVsbbGg",
+    "recipients":[{
+        "kid":"MCUG-LA4F-7LOS-Z2JR-MNMJ-BEL5-654X",
+        "epk":{
+          "PublicKeyECDH":{
+            "crv":"Ed25519",
+            "Public":"NZUmu6aY-h_SeODovvWgsAYKfH1CMbTEYI2zo6Sl_4A"}},
+        "wmk":"UR72ci9oeCHY1sZsLNI__8fMHkvVl8yXNks9vHMMAitiI7VgH3
+  Hvng"}
+      ],
+    "ContentMetaData":"e30",
+    "ContainerInfo":{
+      "Index":2}}}
+
+[Empty trailer]</sourcecode>
+</section>
+</section>
+<section title="Appendix C: Previous Frame Function" anchor="n-appendix-c-previous-frame-function-"><sourcecode>public long PreviousFrame (long Frame) {
+    long x2 = Frame + 1;
+    long d = 1;
+
+    while (x2 &gt; 0) {
+        if ((x2 &amp; 1) == 1) {
+            return x2 == 1 ? (d / 2) - 1 : Frame - d;
+            }
+        d = d * 2;
+        x2 = x2 / 2;
+        }
+    return 0;
+    }</sourcecode>
+</section>
+<section title="Appendix D: Outstanding Issues" anchor="n-appendix-d-outstanding-issues"><t>The following issues need to be addressed.</t>
+<table><thead>
+<tr>
+<th>
+Issue</th>
+<th>
+Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Indexing</td>
+<td>
+No examples are given of indexing a container</td>
+</tr>
+<tr>
+<td>
+Archive</td>
+<td>
+Should include a file archive example</td>
+</tr>
+<tr>
+<td>
+File Path</td>
+<td>
+Mention the file path security issue in the security considerations</td>
+</tr>
+<tr>
+<td>
+Security Considerations</td>
+<td>
+Write Security considerations</td>
+</tr>
+<tr>
+<td>
+AES-GCM</td>
+<td>
+Switch to using AES GCM in the examples </td>
+</tr>
+<tr>
+<td>
+Witness</td>
+<td>
+Complete handling of witness values.</td>
+</tr>
+<tr>
+<td>
+Schema</td>
+<td>
+Complete the schema documentation</td>
+</tr>
+</tbody>
+</table><t></t>
+</section>
+</middle>
+<back>
+<references title="Normative References"><reference anchor="RFC7515"><front>
+<title>JSON Web Signature (JWS)</title>
+<author fullname="M. Jones" initials="M." surname="Jones"><organization/>
+<address>
+</address>
+</author>
+<author fullname="J. Bradley" initials="J." surname="Bradley"><organization/>
+<address>
+</address>
+</author>
+<author fullname="N. Sakimura" initials="N." surname="Sakimura"><organization/>
+<address>
+</address>
+</author>
+<date month="May" year="2015"/>
+</front>
+<seriesInfo name="RFC" value="7515"/>
+<seriesInfo name="DOI" value="10.17487/RFC7515"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-security"><front>
+<title>Mathematical Mesh 3.0 Part VII: Security Considerations</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-security-05"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-security-05.txt"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-udf"><front>
+<title>Mathematical Mesh 3.0 Part II: Uniform Data Fingerprint.</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-udf-10"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-udf-10.txt"/>
+</reference>
+<reference anchor="draft-hallambaker-jsonbcd"><front>
+<title>Binary Encodings for JavaScript Object Notation: JSON-B, JSON-C, JSON-D</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="23" month="October" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-jsonbcd-18"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-jsonbcd-18.txt"/>
+</reference>
+<reference anchor="RFC6838"><front>
+<title>Media Type Specifications and Registration Procedures</title>
+<author fullname="N. Freed" initials="N." surname="Freed"><organization/>
+<address>
+</address>
+</author>
+<author fullname="J. Klensin" initials="J." surname="Klensin"><organization/>
+<address>
+</address>
+</author>
+<author fullname="T. Hansen" initials="T." surname="Hansen"><organization/>
+<address>
+</address>
+</author>
+<date month="January" year="2013"/>
+</front>
+<seriesInfo name="BCP" value="13"/>
+<seriesInfo name="RFC" value="6838"/>
+<seriesInfo name="DOI" value="10.17487/RFC6838"/>
+</reference>
+<reference anchor="RFC4949"><front>
+<title>Internet Security Glossary, Version 2</title>
+<author fullname="R. Shirey" initials="R." surname="Shirey"><organization/>
+<address>
+</address>
+</author>
+<date month="August" year="2007"/>
+</front>
+<seriesInfo name="FYI" value="36"/>
+<seriesInfo name="RFC" value="4949"/>
+<seriesInfo name="DOI" value="10.17487/RFC4949"/>
+</reference>
+<reference anchor="RFC7518"><front>
+<title>JSON Web Algorithms (JWA)</title>
+<author fullname="M. Jones" initials="M." surname="Jones"><organization/>
+<address>
+</address>
+</author>
+<date month="May" year="2015"/>
+</front>
+<seriesInfo name="RFC" value="7518"/>
+<seriesInfo name="DOI" value="10.17487/RFC7518"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-architecture"><front>
+<title>Mathematical Mesh 3.0 Part I: Architecture Guide</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-architecture-14"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-14.txt"/>
+</reference>
+<reference anchor="RFC3394"><front>
+<title>Advanced Encryption Standard (AES) Key Wrap Algorithm</title>
+<author fullname="J. Schaad" initials="J." surname="Schaad"><organization/>
+<address>
+</address>
+</author>
+<author fullname="R. Housley" initials="R." surname="Housley"><organization/>
+<address>
+</address>
+</author>
+<date month="September" year="2002"/>
+</front>
+<seriesInfo name="RFC" value="3394"/>
+<seriesInfo name="DOI" value="10.17487/RFC3394"/>
+</reference>
+<reference anchor="RFC2315"><front>
+<title>PKCS #7: Cryptographic Message Syntax Version 1.5</title>
+<author fullname="B. Kaliski" initials="B." surname="Kaliski"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1998"/>
+</front>
+<seriesInfo name="RFC" value="2315"/>
+<seriesInfo name="DOI" value="10.17487/RFC2315"/>
+</reference>
+<reference anchor="RFC2119"><front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+<reference anchor="RFC7159"><front>
+<title>The JavaScript Object Notation (JSON) Data Interchange Format</title>
+<author fullname="T. Bray" initials="T." surname="Bray"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="2014"/>
+</front>
+<seriesInfo name="RFC" value="7159"/>
+<seriesInfo name="DOI" value="10.17487/RFC7159"/>
+</reference>
+<reference anchor="RFC5869"><front>
+<title>HMAC-based Extract-and-Expand Key Derivation Function (HKDF)</title>
+<author fullname="H. Krawczyk" initials="H." surname="Krawczyk"><organization/>
+<address>
+</address>
+</author>
+<author fullname="P. Eronen" initials="P." surname="Eronen"><organization/>
+<address>
+</address>
+</author>
+<date month="May" year="2010"/>
+</front>
+<seriesInfo name="RFC" value="5869"/>
+<seriesInfo name="DOI" value="10.17487/RFC5869"/>
+</reference>
+<reference anchor="RFC4880"><front>
+<title>OpenPGP Message Format</title>
+<author fullname="J. Callas" initials="J." surname="Callas"><organization/>
+<address>
+</address>
+</author>
+<author fullname="L. Donnerhacke" initials="L." surname="Donnerhacke"><organization/>
+<address>
+</address>
+</author>
+<author fullname="H. Finney" initials="H." surname="Finney"><organization/>
+<address>
+</address>
+</author>
+<author fullname="D. Shaw" initials="D." surname="Shaw"><organization/>
+<address>
+</address>
+</author>
+<author fullname="R. Thayer" initials="R." surname="Thayer"><organization/>
+<address>
+</address>
+</author>
+<date month="November" year="2007"/>
+</front>
+<seriesInfo name="RFC" value="4880"/>
+<seriesInfo name="DOI" value="10.17487/RFC4880"/>
+</reference>
+<reference anchor="RFC7516"><front>
+<title>JSON Web Encryption (JWE)</title>
+<author fullname="M. Jones" initials="M." surname="Jones"><organization/>
+<address>
+</address>
+</author>
+<author fullname="J. Hildebrand" initials="J." surname="Hildebrand"><organization/>
+<address>
+</address>
+</author>
+<date month="May" year="2015"/>
+</front>
+<seriesInfo name="RFC" value="7516"/>
+<seriesInfo name="DOI" value="10.17487/RFC7516"/>
+</reference>
+<reference anchor="RFC7517"><front>
+<title>JSON Web Key (JWK)</title>
+<author fullname="M. Jones" initials="M." surname="Jones"><organization/>
+<address>
+</address>
+</author>
+<date month="May" year="2015"/>
+</front>
+<seriesInfo name="RFC" value="7517"/>
+<seriesInfo name="DOI" value="10.17487/RFC7517"/>
+</reference>
+<reference anchor="IANAJOSE"><front>
+<title>[Reference Not Found!]</title>
+<author initials="" surname=""><organization/>
+<address>
+</address>
+</author>
+<date/>
+</front>
+</reference>
+</references>
+<references title="Informative References"><reference anchor="Davis2001"><front>
+<title>Defective Sign &amp; Encrypt in S/MIME, PKCS#7, MOSS, PEM, PGP, and XML</title>
+<author fullname="Don Davis" initials="D." surname="Davis"><organization/>
+<address>
+</address>
+</author>
+<date month="May" year="2001"/>
+</front>
+</reference>
+<reference anchor="ZIPFILE"><front>
+<title>APPNOTE.TXT - .ZIP File Format Specification</title>
+<author><organization>PKWARE Inc</organization>
+<address>
+</address>
+</author>
+<date month="October" year="2014"/>
+</front>
+<format type="txt" target="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT"/>
+</reference>
+<reference anchor="BLOCKCHAIN"><front>
+<title>Blockchain Specification</title>
+<author><organization>Chain.com</organization>
+<address>
+</address>
+</author>
+<date/>
+</front>
+<format type="html" target="https://chain.com/docs/1.2/protocol/specifications/blockchain"/>
+</reference>
+<reference anchor="RFC5652"><front>
+<title>Cryptographic Message Syntax (CMS)</title>
+<author fullname="R. Housley" initials="R." surname="Housley"><organization/>
+<address>
+</address>
+</author>
+<date month="September" year="2009"/>
+</front>
+<seriesInfo name="STD" value="70"/>
+<seriesInfo name="RFC" value="5652"/>
+<seriesInfo name="DOI" value="10.17487/RFC5652"/>
+</reference>
+</references>
+</back>
+</rfc>

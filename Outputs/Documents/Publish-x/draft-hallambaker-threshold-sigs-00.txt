@@ -1,0 +1,1333 @@
+Independent Submission                             Phillip Hallam-Baker
+INTERNET-DRAFT                                     Venture Cryptography.
+Intended Status:                                         January 6, 2020
+Expires: July 9, 2020
+
+
+              Threshold Signatures Using Ed25519 and Ed448
+                  draft-hallambaker-threshold-sigs-00
+
+Abstract
+
+   A Threshold signature scheme is described. The signatures created are
+   computationally indistinguishable from those produced using the
+   Ed25519 and Ed448 curves as specified in RFC8032 except in that they
+   are non-deterministic. Threshold signatures are a form of digital
+   signature whose creation requires two or more parties to interact but
+   does not disclose the number or identities of the parties involved.
+
+   https://mailarchive.ietf.org/arch/browse/cfrg/Discussion of this
+   draft should take place on the CFRG mailing list (cfrg@irtf.org),
+   which is archived at .
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts. The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.It is inappropriate to use Internet-Drafts as reference material
+   or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on July 9, 2020
+
+Copyright Notice
+
+   Copyright (c) IETF Trust and the persons identified as the document
+   authors. All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document. Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.
+
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                  [Page 1]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+Table of Contents
+
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  3
+   2.  Definitions  . . . . . . . . . . . . . . . . . . . . . . . . .  4
+      2.1.  Requirements Language . . . . . . . . . . . . . . . . . .  4
+      2.2.  Defined Terms . . . . . . . . . . . . . . . . . . . . . .  4
+      2.3.  Related Specifications  . . . . . . . . . . . . . . . . .  4
+      2.4.  Implementation Status . . . . . . . . . . . . . . . . . .  4
+   3.  Threshold Signature Construction . . . . . . . . . . . . . . .  4
+      3.1.  Threshold signature . . . . . . . . . . . . . . . . . . .  6
+      3.2.  Ed2519 Signature  . . . . . . . . . . . . . . . . . . . .  8
+      3.3.  Ed448 Signature . . . . . . . . . . . . . . . . . . . . .  9
+      3.4.  Security Analysis . . . . . . . . . . . . . . . . . . . . 10
+         3.4.1.  Replay Attack  . . . . . . . . . . . . . . . . . . . 10
+         3.4.2.  Malicious Contribution Attack  . . . . . . . . . . . 11
+         3.4.3.  Rogue Key Attack . . . . . . . . . . . . . . . . . . 11
+   4.  Unanimous Signature  . . . . . . . . . . . . . . . . . . . . . 12
+      4.1.  Using threshold key generation  . . . . . . . . . . . . . 12
+      4.2.  Using key splitting . . . . . . . . . . . . . . . . . . . 13
+   5.  Quorate Signature  . . . . . . . . . . . . . . . . . . . . . . 13
+      5.1.  Key Generation  . . . . . . . . . . . . . . . . . . . . . 13
+      5.2.  Calculating the secret scalar value . . . . . . . . . . . 14
+   6.  Test Vectors . . . . . . . . . . . . . . . . . . . . . . . . . 14
+      6.1.   Unanimous Threshold Signature Ed25519  . . . . . . . . . 14
+      6.2.   Unanimous Threshold Signature Ed448  . . . . . . . . . . 16
+      6.3.   Quorate Threshold Signature Ed25519  . . . . . . . . . . 18
+      6.4.   Quorate Threshold Signature Ed448  . . . . . . . . . . . 20
+   7.  Security Considerations  . . . . . . . . . . . . . . . . . . . 22
+   8.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 22
+   9.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 22
+   References . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+      Normative References  . . . . . . . . . . . . . . . . . . . . . 22
+      Informative References  . . . . . . . . . . . . . . . . . . . . 22
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                  [Page 2]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+1. Introduction
+
+   Threshold encryption and key generation provide compelling advantages
+   over single private key approaches because splitting the private key
+   permits the use of that key to be divided between two or more roles.
+
+   All existing digital signatures allow the signer role to be divided
+   between multiple parties by attaching multiple signatures to the
+   signed document. This approach, known as multi-signatures is
+   distinguished from a threshold signature scheme in that the identity
+   and roles of the individual signers is exposed. In a threshold
+   signature scheme, the creation of a single signature requires the
+   participation of multiple signers and the signature itself does not
+   reveal the means by which it was constructed.
+
+   Rather than considering multi-signatures or threshold signatures to
+   be inherently superior, it is more useful to regard both as two
+   points on a continuum of choices:
+
+         Multi-signatures
+
+         Multi-party key release
+
+         Threshold signatures
+
+         Aggregate Signatures
+
+   This document describes a scheme that creates threshold signatures
+   that are computationally indistinguishable from those produced
+   according to the algorithm specified in . The scheme does not support
+   the creation of aggregate signatures.
+
+   Two versions of the algorithm are presented. Both versions allow a
+   creation of a signature to be divided between a set of n signers such
+   that a minimum of t signers are required to create a signature. The
+   first version of the algorithm (unanimous signature) requires that
+   every member of the set of signers participate in the signing process
+   (i.e. n=t). The second version (quorate signature) allows a signature
+   to be created by a subset of the authorized signers.
+
+   The unanimous signature scheme allows key shares to be generated by
+   either dividing a master key or using threshold key generation to
+   construct the master key from two or more key contributions as
+   described in .
+
+   The quorate signature scheme requires that the signature key shares
+   be derived from a master signature key using Shamir secret sharing.
+   The process of key share generation is thus fundamentally one of
+   dividing a master key.
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                  [Page 3]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+   If required, division of the signing key administration roles may be
+   achieved by using threshold key generation to construct the master
+   key and performing the key splitting process separately for each
+   contribution.
+
+2. Definitions
+
+   This section presents the related specifications and standard, the
+   terms that are used as terms of art within the documents and the
+   terms used as requirements language.
+
+2.1. Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in .
+
+2.2. Defined Terms
+
+   See  .
+
+2.3. Related Specifications
+
+   This document extends the approach described in   to support
+   threshold signatures. The use of Lagrange polynomials to resolve
+   Shamir Secret Shares is currently described in the Uniform Data
+   Fingerprint specification . It is expected that these three documents
+   will eventually form the basis for two CFRG proposals.
+
+2.4. Implementation Status
+
+   The implementation status of the reference code base is described in
+   the companion document .
+
+3. Threshold Signature Construction
+
+   The threshold signatures created according to the algorithms
+   described in this document are compatible with but not identical to
+   the signatures created according to the scheme described in . In
+   particular:
+
+         *  The signature verification algorithm is unchanged.
+
+         *  The unanimous threshold scheme produces values of R and S
+            that are deterministic but different from the values that
+            would be obtained by using the aggregate private key to sign
+            the same document.
+
+         *  The deterministic quorate threshold scheme produces values
+            of R and S that are deterministic for a given set of signers
+            but will change for a different set of signers or if the
+
+
+
+Hallam-Baker              Expires July 9, 2020                  [Page 4]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+            aggregate private key was used to sign the same document.
+
+         *  ?The non-deterministic quorate threshold scheme produces
+            values of R and S that will be different each time the
+            document is signed.
+
+   Recall that a digital signature as specified by  consists of a pair
+   of values S, R calculated as follows:
+
+   R = r.B
+
+   S = r + k.s mod L
+
+         Where
+
+   To verify the signature, the verifier calculates:
+
+   S.B = R + k.A
+
+   Therefore:
+
+   S.B = (r + k.s).B = r.B +k.(s.B) = R + k.A
+
+   The value r plays a critical role in the signature scheme as it
+   serves to prevent disclosure of the secret scalar. If the value r is
+   known, s can be calculated as s = (S-r).k^-1 mod L. It is therefore
+   essential that the value r be unguessable.
+
+   Furthermore, if the same value of r is used to sign two different
+   documents, this results two signatures with the same value R and
+   different values of k and S. Thus
+
+   S_1 = r + k_1.s mod L
+
+   S_2 = r + k2.s mod L
+
+   s = (S_1 - S_2)(k_1 - k_2)^-1 mod L
+
+   The method of constructing r specified in  ensures that the value r
+   is unique and unguessable provided that the private key from which
+   the secret scalar value is derived is kept secret.
+
+   The use of a deterministic means of generating the value r permits
+   auditing of hardware and software implementations to determine if the
+   correct means of constructing r is used by importing a known private
+   key and verifying that the expected values of R are produced when a
+   set of documents is signed.
+
+   The threshold schemes described in this document have been designed
+   to preserve the ability to audit the means of constructing the values
+   of r for each individual key share even though the sum of these
+
+
+
+Hallam-Baker              Expires July 9, 2020                  [Page 5]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+   values and hence the value R will vary according to the number of
+   signature shares used.
+
+3.1. Threshold signature
+
+   A threshold signature R, S is constructed by summing a set of
+   signature contributions from two or more signers. Each signer i
+   provides a contribution as follows:
+
+   A_i = s_i.B
+
+   R_i = r_i.B
+
+   S_i = r_i + k.s_i mod L
+
+   Where s_i and r_i are the secret scalar and unguessable value for the
+   individual signer.
+
+   The contributions of signers {1, 2, ... n} are then combined as
+   follows:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                  [Page 6]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+   R = R_1 + R_2 + ... + R_n
+
+   S = S_1 + S_2 + ... + S_n
+
+   A = s.B
+
+   Where s =  (s_1 + s_2 + ... + s_n) mod L
+
+   The threshold signature is verified in the same manner as before:
+
+   S.B = R + k.A
+
+   Substituting for S.B we get:
+
+   = (S_1 + S_2 + ... + S_n).B
+
+   = S_1.B + S_2.B + ... + S_n.B
+
+   = (r_1 + k.s_1).B + (r_2 + k.s_2).B + ... + (r_n + k.s_n).B
+
+   = (r_1.B + k.s_1.B) + (r_2.B + k.s_2.B) + ... + (r_n.B + k.s_n.B)
+
+   = (R1 + k.A1) + (R1 + k.A1) + ... + (Rn + k.An)
+
+   Substituting for R + k.A we get:
+
+   = R_1 + R_2 + ... + R_n + k.(A_1 + A_2 + ... + A_n)
+
+   = R_1 + R_2 + ... + R_n + k.A_1 + k.A_2 + ... + k.A_n
+
+   = (R_1 + k.A_1) + (R_1 + k.A_1) + ... + (R_n + k.A_n)
+
+   As expected, the operation of threshold signature makes use of the
+   same approach as threshold key generation and threshold decryption as
+   described in . As with threshold decryption it is not necessary for
+   each key share holder to have a public key corresponding to their key
+   share. All that is required is that the sum of the secret scalar
+   values used in calculation of the signature modulo the group order be
+   the value of the aggregate secret scalar corresponding to the
+   aggregate secret key.
+
+   While verification of  signatures is unchanged, the use of threshold
+   signatures requires a different approach to signing. In particular,
+   the fact that the value k is bound to the value R means that the
+   participants in the threshold signature scheme must agree on the
+   value R before the value k can be calculated. Since k is required to
+   calculate the signature contributions S_i can be calculated, it is
+   thus necessary to calculate the values R_i and S_i in separate
+   phases. The process of using a threshold signature to sign a document
+   thus has the following stages orchestrated by a coordinator as
+   follows:
+
+
+
+Hallam-Baker              Expires July 9, 2020                  [Page 7]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+
+         0) The coordinator determines the values F, C and PH(M) as
+            specified in  and transmits them to the signers {1, 2, ...
+            n}.
+
+         0) Each signer generates a random value r_i such that 1  r_i
+            L, calculates the value R_i = r_i.B and returns R to the
+            coordinator.
+
+         0) The coordinator calculates the value R = R_1 + R_2 + ... +
+            R_n and transmits R and A to the signers {1, 2, ... n}.
+
+         0) Each signer uses the suppled data to determine the value k
+            and hence S_i = r_i + k.s_i mod L and transmits it to the
+            coordinator.
+
+         0) The coordinator calculates the value S = S_1 + S_2 + ... +
+            S_n and verifies that the resulting signature R, S verifies
+            according to the mechanism specified in . If the signature
+            is correct, the coordinator publishes it. Otherwise, the
+            coordinator MAY identify the signer(s) that provided
+            incorrect contributions by verifying the values R_i and S_i
+            for each.
+
+   For clarity, the coordinator role is presented here as being
+   implemented by a single party.
+
+3.2. Ed2519 Signature
+
+   The process for creating an Ed25519 signature contribution is as
+   follows
+
+         0) Determine the value of the secret scalar value s_i according
+            to the means used to construct the secret shares.
+
+         0) Generate a random integer r_i such that 1  r_i  L
+
+         0) Compute the point R_i = r_iB.  For efficiency, do this by
+            first reducing r_i modulo L, the group order of B.  Let the
+            string R_i be the encoding of this point.
+
+         0) Transmit the value R_i to the coordinator
+
+         0) Note that the construction of prefix is chosen so as to
+            guarantee that the use of a different message value M or
+            secret scalar value s_i will result in a different value of
+            prefix and thus ensure a different choice of the value r_i.
+
+         0) At some later point, the coordinator MAY complete the
+            signature by returning the values F, C, A and R as specified
+            in . The signer MAY then complete the signature contribution
+
+
+
+Hallam-Baker              Expires July 9, 2020                  [Page 8]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+            as follows:
+
+         0) Compute SHA512(dom2(F, C) || R || A || PH(M)), and interpret
+            the 64-octet digest as a little-endian integer k.
+
+         0) Compute S_i = (r_i + k * s_i) mod L.  For efficiency, again
+            reduce k modulo L first.
+
+         0) Return the values R_i, S_i to the coordinator.
+
+         0) The coordinator assembles the signature values R = S = S_1 +
+            S_2 + ... + S_n
+
+         0) The coordinator verifies that the signature R, S is valid.
+
+3.3. Ed448 Signature
+
+   The process for creating an Ed448 signature contribution is as
+   follows
+
+         0) Determine the value of the secret scalar value s_i according
+            to the means used to construct the secret shares.
+
+         0) Generate a random integer r_i such that 1  r_i  L
+
+         0) Compute the point R_i = r_iB.  For efficiency, do this by
+            first reducing r_i modulo L, the group order of B.  Let the
+            string R_i be the encoding of this point.
+
+   Transmit the value R_i to the coordinator
+
+   At some later point, the coordinator MAY complete the signature by
+   returning the values F, C, A and R as specified in . The signer MAY
+   then complete the signature contribution as follows:
+
+         0) Compute SHAKE256(dom4(F, C) || R || A || PH(M), 114), and
+            interpret the 114-octet digest as a little-endian integer k.
+
+         0) Compute S_i = (r_i + k * s_i) mod L.  For efficiency, again
+            reduce k modulo L first.
+
+         0) Return the values R_i, S_i to the coordinator.
+
+         0) The coordinator assembles the signature values R = S = S_1 +
+            S_2 + ... + S_n
+
+         0) The coordinator verifies that the signature R, S is valid.
+
+   Note that the process of generating the signature contribution is
+   deterministic for a given secret scalar value but the signature
+   computed MAY be deterministic or non-deterministic according to the
+
+
+
+Hallam-Baker              Expires July 9, 2020                  [Page 9]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+   desired signature properties.
+
+3.4. Security Analysis
+
+   We consider a successful breach of the threshold signature scheme to
+   be any attack that allows the attacker to create a valid signature
+   for any message without the participation of the required threshold
+   of signers.
+
+   Potential breaches include:
+
+         *  Disclosure of the signature key or signature key share.
+
+         *  Modification of signature data relating to message M to
+            allow creation of a signature for message M'.
+
+         *  Ability of one of the signers to choose the value of the
+            aggregate public key.
+
+         *  Access control attacks inducing a signer to create a
+            signature contribution that was not properly authenticated
+            or authorized.
+
+   We regard attacks on the access control channel to be out of scope
+   for the threshold signature algorithm, though they are certainly a
+   concern for any system in which a threshold signature algorithm is
+   employed.
+
+   We do not consider the ability of a signer to cause creation of an
+   invalid signature to represent a breach.
+
+3.4.1. Replay Attack
+
+   The most serious concern in the implementation of any Schnorr type
+   signature scheme is the need to ensure that the value r_i is never
+   revealed to any other party and is never used to create signatures
+   for two different values of k.s_i.
+
+   Ensuring this does not occur imposes significant design constraints
+   as creating a correct signature contribution requires that the signer
+   use the same value of r_i to construct its value or R_i and S_i.
+
+   For example, a HSM device may be required to perform multiple
+   signature operations simultaneously. Since the storage capabilities
+   of an HSM device are typically constrained, it is tempting to attempt
+   to avoid the need to track the value of r_i within the device itself
+   using an appropriately authenticated and encrypted opaque state
+   token. Such mechanisms provide the HSM with the value of r_i but do
+   not and cannot provide protection against a replay attack in which
+   the same state token is presented with a request to sign different
+   values of k.
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 10]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+
+3.4.2. Malicious Contribution Attack
+
+   In a malicious contribution attack, one or more parties present a
+   signature contribution that does not meet the criteria R_i = r_i.B
+   and S_i = r_i + ks_i.
+
+   Such an attack is not considered to be a breach as it merely causes
+   the signature process to fail.
+
+3.4.3. Rogue Key Attack
+
+   A threshold signature scheme that allows the participants to 'bring
+   their own key' may be vulnerable to a rogue key attack in which a
+   signer is able to select the value of the aggregate public signature
+   key by selecting a malicious public signature key value.
+
+   The scheme described in this document is a threshold signature scheme
+   and does not support this feature. Consequently, this attack is not
+   relevant. It is described here for illustrative purposes only.
+
+   This particular attack only applies when the individual signers
+   create their own signature shares. It is not a concern when the
+   signature shares are created by splitting a master signature private
+   key.
+
+   Consider the case where the aggregate public key signature is
+   calculated from the sum of public signature key share values
+   presented by the signers:
+
+   A = A_1 + A_2 + ... + A_n
+
+   If the public key values are presented in turn, the last signer
+   presenting their key share can force the selection of any value of A
+   that they choose by selecting A_n = A_m -  (A_1 + A_2 + ... + A_n-1)
+
+   The attacker can thus gain control of the aggregate signature key by
+   choosing A_m = s_m.B where s_m is a secret scalar known only to the
+   attacker. But does so at the cost of not knowing the value s_n and so
+   the signer cannot participate in the signature protocol.
+
+   This attack allows the attacker and the attacker alone to create
+   signatures which are validated under the aggregate signature key.
+
+   The attack is a consequence of the mistaken assumption that a
+   signature created under the signature key A_1 + A_2 + ... + A_n
+   provides evidence of the individual participation of the
+   corresponding key holders without separate validation of the
+   aggregate key.
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 11]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+   Enabling the use of threshold signature techniques by ad-hoc groups
+   of signers using their existing signature keys as signature key
+   shares presents serious technical challenges that are outside the
+   scope of this specification.
+
+4. Unanimous Signature
+
+   A unanimous threshold signature is a signature created by a set of
+   two or more signers that requires the participation of every member
+   of the set. The key shares used by the signers MAY be generated by
+   either:
+
+         *  Each key share holder generating their own unique key share
+            and combining them.
+
+         *  Generating a master signature key and dividing it.
+
+   Both approaches are described in .
+
+4.1. Using threshold key generation
+
+   To create a threshold signature key share using threshold key
+   generation, each signer generates a pair {A_i, s_i} and transmits the
+   public component to the coordinator.
+
+   The coordinator calculates the aggregate public key A = A_1 + A_2 +
+   ... + A_n
+
+   = s_1.B + s_2.B + ... + s_n.B
+
+   = ((s_1 + s_2 + ... + s_n) mod L).B
+
+   = s.B
+
+   Where s =  s_1 + s_2 + ... + s_n) mod L
+
+   The coordinator MUST require and verify proof of possession of the
+   private key component s_i to defeat rogue key attacks of the type
+   described in .
+
+   For example, the coordinator MAY require each signer to create a test
+   signature for their individual signature key share or to participate
+   in creating a test signature under the aggregate signature key. Such
+   a test signature MAY be a Certificate Signing Request as specified in
+   .
+
+   Relying parties MUST NOT accept signatures purporting to be aggregate
+   signatures under ad-hoc collections of public keys as proof of the
+   involvement of the signers.
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 12]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+4.2. Using key splitting
+
+   To divide a keypair {A, p} into n parts, we begin by generating n-1
+   key pairs according to the method described in .
+
+   To calculate the final secret scalar share s_n we begin by
+   calculating the secret scalar value s corresponding to the master
+   private key p and the key shares s_1, s_2, ..., s_n-1. The final
+   secret scalar is given by:
+
+   s_n = s - s_1, s_2, ..., s_n-1
+
+   Since the final secret scalar is not derived from a private key by
+   means of a digest, it is not possible to use  format to store keys.
+   The format described in  is used instead.
+
+5. Quorate Signature
+
+   Constructing the set of secret scalar key shares using the Shamir
+   secret sharing scheme allows a signature scheme in which the
+   threshold of signers t required to create a signature is smaller than
+   the number of key shares n.
+
+5.1. Key Generation
+
+   The key generation process begins with the generation of a master
+   signature key {A, p}. The private key p is used to calculate the
+   secret scalar value s according to the procedure specified in  above.
+
+   The secret scalar is then divided as follows.
+
+   First, we construct a polynomial of degree t in the modular field L,
+   where L is the order of the curve sub-group:
+
+   f(x) = a_0?+ a_1.x + a_2.x^2?+ ... a_t.x^t mod L
+
+         where
+
+   The values of the key shares are the values?f(x_1),?f(x_2), ...
+   ,?f(x_n). That is
+
+   p_i = f(x_i)
+
+         where
+
+   The means of constructing distinct values x_1?... x_n is left to the
+   implementation. It is not necessary for these values to be secret.
+
+   As with the final secret scalar value above, it is not possible to
+   use  format to store keys. The format described in  is used instead.
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 13]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+5.2. Calculating the secret scalar value
+
+   The value of the secret scalar value used to create a signature
+   depends on the specific choice of signature shares used to construct
+   it. Since the numbering of the key shares is arbitrary, we choose the
+   set of signers {1, 2, ... , t}.
+
+   Lagrange polynomials are used to compute a set of coeficients l_1,
+   l_2, ... l_t such that
+
+   s = a_0 = l_1p_1 + l_2p_2 + ... + l_tp_t
+
+   The value of the secret scalars s_1 + s_2 + ... + s_n are thus given
+   by
+
+   s_i = l_ip_i
+
+   The coordinator identifies the signers to participate in the
+   signature event and uses the set of x coordinates corresponding to
+   their key shares to calculate the corresponding Lagrange coefficient
+   li for each as described in .
+
+   [Note: The discussion of Shamir Secret Sharing should probably be
+   moved from its current location in  to either this document or the
+   base document . Which document is better suited will depend on
+   whether it is decided to implement (n,k) threshold signatures and/or
+   key escrow of elliptic curve scalar secrets.]
+
+6. Test Vectors
+
+6.1.  Unanimous Threshold Signature Ed25519
+
+   The signers are Alice and Bob. Each creates a key pair:
+
+   ED25519Alice's Key (ED25519)
+       UDF:        ZAAA-GTSI-GXED-255X-XALI-CEXS-XKEY
+       Scalar:     56271244081186130980636545017945156580516101894352492459594967614223399428880
+       Encoded Private
+     33 40 0E 22  D8 67 17 F4  8A 9F 6A 46  61 B4 0E AD
+     8C D0 DD C3  79 CD 85 BD  95 5C 90 B9  6C CB 8C 23
+       X: 111167936729704271617902644692802945071890447281405479540710227976454124042406369344932655633664630560242213431409139866940284702002648469365756492647970
+       Y: 6165540417161139657302180811910866474957423512534368020645428562991413866150465483230874093885486502722244870898950799705260143544115364878870129761259200
+       Encoded Public
+     E2 AB 8F 37  62 C8 7B F9  E9 BC 59 0C  2E 99 A5 58
+     0C C3 19 D5  CD DA 53 DF  3E C1 F0 C0  FE D3 55 5E
+   ED25519Bob's Key (ED25519)
+       UDF:        ZAAA-GTSI-G2ED-255X-XBOB-XSXK-EY
+       Scalar:     54940772670153459146152925564198105262971485730889818986727608573229799020168
+       Encoded Private
+     68 9A 68 92  8A 06 17 84  35 3C B7 08  F8 56 00 3F
+     BA 31 8C 42  B0 42 FE 2D  18 F2 7F AB  CD 10 49 F1
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 14]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+       X: 1427149506934983821637954019626314096403239351290384220616818255188508270988762898008687355222329085197942511309071258786756343411484065706313568410880015
+       Y: 2809432894800411242818946622375744088638868429125460535585992362409682297067958252824195942194420746470938513025474524704359438513477629978601366725015573
+       Encoded Public
+     32 E5 8D 5E  66 B2 F9 E9  14 79 08 71  96 3B 9A 75
+     A2 31 59 4B  8E ED 18 EF  BD FF 11 D4  47 2A 8C F4
+
+   The Aggregate Signature Key A = A_a + A_b
+
+   Aggregate Key = Alice + Bob ()
+       UDF:        TBS
+       Scalar:     2656933091355656917191672136498348230630842234543697356293312113171384684213
+       Encoded Private
+     B5 CE 0E B3  9C CF 18 99  CF 8D 4C BB  AE 81 79 1F
+     CE 13 AA 3E  63 59 5B AC  8D 2C EB A4  55 C5 DF 05
+       X: 678726850438984690124569497732408141216459047361148134558203398688906486811443744733724675994181258029547346985079901494367752381127781166234556148580090
+       Y: 3648174005836964548442018097600493206208537594152234405290759401185527921585511971074848922045622908028106552535103024484554128548992118101415797909250954
+       Encoded Public
+     29 65 63 86  4F FB 10 8D  BA 7A 0A 68  04 6D 00 DA
+     9B 1D C3 A4  AF BA 95 B4  5D 27 B4 35  00 2F DF 32
+
+   To sign the text "This is a test", Alice and Bob first generate their
+   values r which they multiply by the base point to obtain the value
+   R_i:
+
+   Alice:
+   r_a =  3070215864527239067113232325834204467002396843727643810954266852885966283443
+   R_a =  System.Byte[]
+   
+   Bob:
+   r_a =  7213201239784472347195371192159340042837621666406564568915370621493515329996
+   R_a =  System.Byte[]
+
+   The aggregate value R = R_a + R_b
+
+   R =  
+     F5 FF E6 E9  AC 4D 50 37  EB E4 6F FD  7B 81 B5 5F
+     1C 17 DE 9C  67 8E DA BD  1C B4 99 55  36 CC DD C5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 15]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+
+   The value k is calculated
+
+   k =  4804043495271111518684286091578752373566981758333004193233756899627371301570
+
+   Alice and Bob both calculate their signature scalar contribution:
+
+   Alice:
+   S_a =  3652489436847958991054909907327724538388705205585064176867087952835669210732
+   
+   Bob:
+   S_b =  1732489143975690882475399516666881375759709193605437967827337608949529995680
+
+   The coordinator calculates the aggregate value S = S_a + S_b
+
+   S =  5384978580823649873530309423994605914148414399190502144694425561785199206412
+
+   The coordinator checks to see that the signature verifies:
+
+   S.B = R + kA = 
+       X: 13199863459340539112064207114890931017550026828392834866407922750620625777765
+       Y: 6523885889795733507774976783928926452767091861040656415437509109293309659559
+
+6.2.  Unanimous Threshold Signature Ed448
+
+   The signers are Alice and Bob. Each creates a key pair:
+
+   ED448Alice's Key (ED448)
+       UDF:        ZAAA-ITSI-GXED-44XA-LICE-XSXK-EY
+       Scalar:     634958035836588176881104463147860769763472363613540355597788771064742993095132758589292255654895141583596922516472738879360490167934280
+       Encoded Private
+     A0 53 4C 93  3C 34 00 76  AE 5D B5 4A  C2 71 5F 43
+     E1 D6 63 2C  5C 56 53 C8  98 A0 8F 03  FF F5 22 96
+     91 45 8C 2B  CF E3 FD 7E  2A 9E 0B D6  F4 CC 66 61
+     43 62 72 7B  34 B4 79 92
+       X: 247431975092678332621114495565272851208681677122099195708384263466168536901525943558973091346360088759980994772668117646359614426660579
+       Y: 213428991205767705376644620496852583908537297883034283490511308752175233505795318243164692156369495328007220135137156078814081547431302
+       Encoded Public
+     0A 3B F3 27  E7 E1 67 63  2C 59 E2 1C  D1 84 C7 83
+     E8 1E D1 68  9F 32 A1 16  99 00 5C DA  29 B9 6C 08
+     E4 15 57 7E  E5 63 C2 32  08 23 41 68  5F 49 1F FF
+     BC 4D CD 3A  4E A6 85 49  00
+   ED448Bob's Key (ED448)
+       UDF:        ZAAA-ITSI-G2ED-44XB-OBXS-XKEY
+       Scalar:     726498037731997515649985438918989048397184093129107800262041941160989643727331987658132182181970054245587322070535846720571414845714224
+       Encoded Private
+     BC 53 B4 74  3E A7 A7 FA  9F 05 9A BC  8C 22 26 15
+     A1 4E BB 10  0E B5 59 6B  DE 9C 1B E9  F2 3C 65 42
+     E7 B4 47 18  60 AC 18 A6  D2 78 B8 BC  CE F5 F4 28
+     B2 3A FF 08  61 EF 6B 7C
+       X: 582358519348086406219208168729590591726924111876409504322030398116748997750134460231406698091317008063030408798536634284207667468558264
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 16]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+       Y: 343907676979092838924957612591865386321204224583921312013722826056455656591826216381185634080685718154852726725624178995827091591132128
+       Encoded Public
+     93 63 5A 45  2D 4C 94 32  45 23 CD E2  A8 46 E4 78
+     A0 80 59 DA  36 CB 6B 0C  06 64 6F BE  51 AB C0 BF
+     1E DB A8 3F  2B 3B 80 0F  BF 00 E6 78  DD E0 83 E9
+     AC 20 02 55  87 07 39 38  00
+
+   The Aggregate Signature Key A = A_a + A_b
+
+   Aggregate Key = Alice + Bob ()
+       UDF:        TBS
+       Scalar:     89488306051273634069773238262841883041784075539841550367222863659710609091687646234054150795018564086012188623366949466515613996100051
+       Encoded Private
+     D3 29 DD AB  F6 0D 99 8B  75 65 B8 06  36 C9 3A 2C
+     D4 08 C3 9B  7C F9 77 8C  68 29 0E 3D  5D C7 3E 00
+     92 8B DC AE  26 FB 16 39  CD 25 1B 23  4A 5A 05 61
+     1D 5C C4 70  0A C9 84 1F
+       X: 179856590986701176171733157630822386857356476268712514680009842080317111091696183607307614171726960576308774975742249260532199160570999
+       Y: 315063232248591595943861819956394051706236572739457272887600631624406694682617334725040181287905351066763414658543828623841509161975864
+       Encoded Public
+     9B 3E DF 49  55 40 9F 7B  EA 0B AA 40  B7 3D 15 82
+     60 9F 7C 40  CF 67 DE 56  56 0D 03 87  63 3B 15 F2
+     45 33 FE 48  BD 2D A0 A2  8B CC 74 DA  94 0F 39 00
+     AC 39 CB 0A  9F A4 EB B0  00
+
+   To sign the text "This is a test", Alice and Bob first generate their
+   values r which they multiply by the base point to obtain the value
+   R_i:
+
+   Alice:
+   r_a =  126964556177876397031298049320616500514909182194056696014688034261340163588158683220911488262745052842114213104974704829503378693802101
+   R_a =  System.Byte[]
+   
+   Bob:
+   r_a =  137444969916979793655852731621683381894520400588634369721554924178540816140571297347685364463198663709425773569760570865631283322487522
+   R_a =  System.Byte[]
+
+   The aggregate value R = R_a + R_b
+
+   R =  
+     CA 7E 01 03  B5 5A 4A 7C  FE 70 7F 51  AC ED 2F A5
+     08 40 9E 8A  E3 6C 1A C6  5C BB 71 7C  12 E5 DD F3
+     FD F5 81 70  A7 8F 32 2B  5A 24 FD 9F  CB 24 0B 84
+     A9 71 16 8E  B6 1E 90 D2  00
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 17]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+
+   The value k is calculated
+
+   k =  162496172840583845328408838722846644164091964845001806955481442140639802870937955863986687246008339735442886960714092040034519830459887
+
+   Alice and Bob both calculate their signature scalar contribution:
+
+   Alice:
+   S_a =  43017000798229337689782446854402821103753258398854551854050074968266861765952054113160646609478288471019300470055989747539771156346074
+   
+   Bob:
+   S_b =  80419885958165650323119179819187118725342755795110121934849372338622300063560602232600256886619632231298342368112840744732955220578261
+
+   The coordinator calculates the aggregate value S = S_a + S_b
+
+   S =  123436886756394988012901626673589939829096014193964673788899447306889161829512656345760903496097920702317642838168830492272726376924335
+
+   The coordinator checks to see that the signature verifies:
+
+   S.B = R + kA = 
+       X: 20836559894560525702939970240599645576888052650860803420290899930801983828425
+       Y: 141688092831054051545627888221718884348181790833957945726358076364884046967
+
+6.3.  Quorate Threshold Signature Ed25519
+
+   The administrator creates the aggregate key pair
+
+   ED25519Aggregate Key (ED25519)
+       UDF:        ZAAA-GTSI-GQED-255X-XAGG-REGA-TEXK-EY
+       Scalar:     39348647608109113656999806950437958090469802387424444589375066079861075223816
+       Encoded Private
+     37 39 5E 7A  8B A5 A0 19  46 4B 58 22  EA 24 A5 71
+     45 2C 2A AC  7A 3E FB CA  CE 3F D4 12  9A BA EB 70
+       X: 1419883775837786745571650427751872907091518324989046123079211599049697167784279959512347660021645117385875752575303887583747824906047250057721855068523970
+       Y: 2021102564980207199881041394826674856597514052094792772451795620676255050777515980186295517468245337267098109901934556623856152736116303441031851305458040
+       Encoded Public
+     6E 13 79 B4  39 DA 97 9C  5A 34 CE 79  CD 1B 50 DF
+     A0 76 AD 49  81 6D 52 59  A4 2C DB CE  44 FF 3E F5
+
+   Three key shares are required for Alice, Bob and Carol with a
+   threshold of two.  The parameters of the Shamir Secret Sharing
+   polynomial are:
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 18]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+   a0 = 39348647608109113656999806950437958090469802387424444589375066079861075223816
+   a1 = 1841497275244401057710161978545767748144734303596939386964484061224219557570
+
+   The key share values for the participants are
+
+   xa = 1
+   ya = 5005116996692203644844036113768754634328954894121845946329795449658023526441
+   
+   xb = 2
+   yb = 6846614271936604702554198092314522382473689197718785333294279510882243084011
+   
+   xc = 3
+   yc = 1451105969848743546291173507817295889761307141935817114256812633821008390592
+
+   Alice and Carol are selected to sign the message "This is another
+   test"
+
+   The Lagrange coefficients are:
+
+   la = 3618502788666131106986593281521497120428558179689953803000975469142727125496
+   lc = 3618502788666131106986593281521497120428558179689953803000975469142727125494
+
+   Alice and Carol select their values ra, rc
+
+   ra = 6435174248472204975650832377221795732184920641226841822902391322653997016897
+   Ra = System.Byte[]
+   
+   rc = 6715508119077485782803329046402662876541416793518271394573667286919582376674
+   Rc = System.Byte[]
+
+   The aggregate value R = R_a + R_c
+
+   R =  
+     77 5A CA 2D  4A 1E 31 48  C0 CE 59 80  81 1E 6F B9
+     28 CE 73 D3  02 FC 7B 71  F4 38 FA A5  D3 0F 5C 4B
+
+   The value k is
+
+   k = 4288372694630483969334901519466156969418545100989437682473926356344273641110
+
+   The values R and k (or the document to be signed) and the  Lagrange
+   coefficients are passed to Alice and Carol who use them to  calculate
+   their secret scalar values:
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 19]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+   sa = 3889172706372174360279460889131634831064874161492815116493717705344308164167;
+   sc = 6511452592407890440827599809134346295976462788411999048873544621374950055693
+
+   The signature contributions can now be calulated:
+
+   Sa = 1550755239954671165791281047974291710329017146332546347562566119482384295773
+   Sc = 515186558550432612318110898953954806945982000292153509921914265928407946501
+
+   The coordinator calculates the aggregate value S = S_a + S_b
+
+   S =  2065941798505103778109391946928246517274999146624699857484480385410792242274
+
+   The coordinator checks to see that the signature verifies:
+
+   S.B = R + kA = 
+       X: 48104552531125466552681080866111542639288652609596606936308703894874452401910
+       Y: 10894437170680348378484869539892170761910515061418427253279491810124055287910
+
+6.4.  Quorate Threshold Signature Ed448
+
+   The administrator creates the aggregate key pair
+
+   ED448Aggregate Key (ED448)
+       UDF:        ZAAA-ITSI-GQED-44XA-GGRE-GATE-XKEY
+       Scalar:     508904606564197215312735879582840960158109827605415754207268050539683337837216003977228732536078674802149039736292653681850024283019712
+       Encoded Private
+     78 22 7E 3B  89 95 80 5D  04 19 DC 27  F1 7F 9B E4
+     86 2B 0B DD  55 64 EE 04  19 49 4D DE  B9 04 3B 9E
+     8B 7D DC EC  EC 8F DD 1D  E7 88 86 FD  11 FD 78 EF
+     1A 8B 84 8F  77 00 73 65
+       X: 441091733552781426694844383707249146851763689335471762398096297503768465595321590690311221269514682222687386378631457535068446135118173
+       Y: 532194027185357212124609812001044341800778251886758682940700795084662920552823356888138706016038637934794839496624474125511419755284720
+       Encoded Public
+     43 61 20 A0  B1 DF AA BD  6B 55 00 97  A3 BE CB B8
+     09 57 20 88  16 69 E4 B9  E1 7E 9C 13  C0 41 5B CB
+     4D 3E E4 99  2E 2D 48 89  1C C0 FB 26  58 C2 DD 5C
+     C1 DC 17 82  D7 A0 43 EE  80
+
+   Three key shares are required for Alice, Bob and Carol with a
+   threshold of two.  The parameters of the Shamir Secret Sharing
+   polynomial are:
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 20]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+   a0 = 0
+   a1 = 28264104486187066335436515000267010771422642336821007642316804889617000460885985122651585481864421053273456017871665058372462285692576
+
+   The key share values for the participants are
+
+   xa = 1
+   ya = 28264104486187066335436515000267010771422642336821007642316804889617000460885985122651585481864421053273456017871665058372462285692576
+   
+   xb = 2
+   yb = 56528208972374132670873030000534021542845284673642015284633609779234000921771970245303170963728842106546912035743330116744924571385152
+   
+   xc = 3
+   yc = 84792313458561199006309545000801032314267927010463022926950414668851001382657955367954756445593263159820368053614995175117386857077728
+
+   Alice and Carol are selected to sign the message "This is another
+   test"
+
+   The Lagrange coefficients are:
+
+   la = 90854840536950861318665475986000566794205170085914757535186274897573001980769792858097877645846187981655146854545831152386877929824891
+   lc = 90854840536950861318665475986000566794205170085914757535186274897573001980769792858097877645846187981655146854545831152386877929824889
+
+   Alice and Carol select their values ra, rc
+
+   ra = 37832958193762461333428421266396706318184445553151176522779074402416470180302584219033810894247332581300170854055182595990443396865234
+   Ra = System.Byte[]
+   
+   rc = 162621986135674148161202689445704963023119089797977498508904342320595097494733566067986857462688724021491086706044058384116236943954343
+   Rc = System.Byte[]
+
+   The aggregate value R = R_a + R_c
+
+   R =  
+     63 64 CD 54  70 1D 1B C2  F0 AC 59 7D  A2 D7 76 27
+     25 03 36 17  E7 72 85 8F  44 BA 91 34  EE BE 31 AB
+     FC A8 EE 25  68 29 1C 0F  9E 5D E0 32  AB 0B E5 A9
+     28 49 7D 31  40 AF 12 37  00
+
+   The value k is
+
+   k = 14671730615187035275486677833118615974623188640898811454206651876508642873989388291492858433598927452076310552980999967767700766321775
+
+   The values R and k (or the document to be signed) and the  Lagrange
+   coefficients are passed to Alice and Carol who use them to  calculate
+   their secret scalar values:
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 21]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+   sa = 42396156729280599503154772500400516157133963505231511463475207334425500691328977683977378222796631579910184026807497587558693428538864;
+   sc = 139313524344621123134176179471600617431276376666598003606897342460720503270210608032218377068895744383400109682284164717215062431110915
+
+   The signature contributions can now be calulated:
+
+   Sa = 79210619919272161635856443062274840482013264511643802904586172241391595156670916676327168190922405373672730192811281392913250833422830
+   Sc = 28945584815552162037572296661295401489453732322158801998471368446465649006186884364360078499466603474192233806684957955217470616561624
+
+   The coordinator calculates the aggregate value S = S_a + S_b
+
+   S =  108156204734824323673428739723570241971466996833802604903057540687857244162857801040687246690389008847864963999496239348130721449984454
+
+   The coordinator checks to see that the signature verifies:
+
+   S.B = R + kA = 
+       X: 16455024461817452711875148976644383207339869993409516231163364237342258464519
+       Y: 11610976445441575498897898468177349637885711731338533620006430283986655559368
+
+7. Security Considerations
+
+   TBS.
+
+8. IANA Considerations
+
+   This document requires no IANA actions.
+
+9. Acknowledgements
+
+References
+
+Normative References
+
+   [RFC8032]  Josefsson, S.,Liusvaara, I., "Edwards-Curve Digital
+              Signature Algorithm (EdDSA)", RFC 8032, DOI
+              10.17487/RFC8032, January 2017.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, DOI
+              10.17487/RFC2119, March 1997.
+
+   [draft-hallambaker-mesh-udf]  Hallam-Baker, P, "Mathematical Mesh 3.0
+              Part II: Uniform Data Fingerprint.", Internet-Draft draft-
+              hallambaker-mesh-udf-07, 18 October 2019.
+
+   [draft-hallambaker-threshold]  , "[Reference Not Found!]".
+
+Informative References
+
+   [RFC2314]  ,Kaliski, B., "PKCS #10: Certification Request Syntax
+              Version 1.5", RFC 2314, DOI 10.17487/RFC2314, March 1998.
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 22]
+
+                  Threshold Signatures Ed25519 & Ed448      January 2020
+
+   [draft-hallambaker-mesh-developer]  Hallam-Baker, P, "Mathematical
+              Mesh: Reference Implementation", Internet-Draft draft-
+              hallambaker-mesh-developer-09, 23 October 2019.
+
+Author's Address
+
+   Phillip Hallam-Baker
+   Venture Cryptography.
+
+   phill@hallambaker.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires July 9, 2020                 [Page 23]

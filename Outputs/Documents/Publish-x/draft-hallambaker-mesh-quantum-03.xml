@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-quantum-03" indexInclude="false" ipr="trust200902" prepTime="2020-11-03T01:51:38Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Mathematical Mesh Reference">Mathematical Mesh 3.0 Part X: Considerations for Quantum Cryptanalysis Resistance</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-quantum" stream="independent"/>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="3" month="November" year="2020"/>
+<area/>
+<workgroup/>
+<abstract>
+<t>The Mathematical Mesh 'The Mesh' is an infrastructure that facilitates the exchange of configuration and credential data between multiple user devices and provides end-to-end security. This document describes.</t>
+<t>[Note to Readers]</t>
+<t>Discussion of this draft takes place on the MATHMESH mailing list (mathmesh@ietf.org), which is archived at https://mailarchive.ietf.org/arch/search/?email_list=mathmesh.</t>
+<t>This document is also available online at <eref target="http://mathmesh.com/Documents/draft-hallambaker-mesh-quantum.html"></eref>.</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="n-introduction"><t>One of the core goals of the Mesh is to move the state of the art in commercial cryptography beyond that achieved in the 1990s when PKIX, S/MIME and OpenPGP were first developed. While each of these infrastructures and protocols has been subject to incremental improvement, none has seen widespread adoption of new cryptographic approaches.</t>
+<ul>
+<li>Quantum Resistant Signatures.</li>
+</ul>
+</section>
+<section title="Definitions" anchor="n-definitions"><t>This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.</t>
+<section title="Requirements Language" anchor="n-requirements-language"><t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
+</section>
+<section title="Defined Terms" anchor="n-defined-terms"><t>The terms of art used in this document are described in the <em>Mesh Architecture Guide</em> <xref target="draft-hallambaker-mesh-architecture"></xref>.</t>
+</section>
+<section title="Related Specifications" anchor="n-related-specifications"><t>The architecture of the Mathematical Mesh is described in the <em>Mesh Architecture Guide</em> <xref target="draft-hallambaker-mesh-architecture"></xref>. The Mesh documentation set and related specifications are described in this document.</t>
+</section>
+<section title="Implementation Status" anchor="n-implementation-status"><t>The implementation status of the reference code base is described in the companion document <xref target="draft-hallambaker-mesh-developer"></xref>.</t>
+</section>
+</section>
+<section title="Recommended and Required Algorithms" anchor="n-recommended-and-required-algorithms"></section>
+<section title="Quantum Resistant Signatures." anchor="n-quantum-resistant-signatures"><t>Quantum computing has made considerable advances over the past decade and the field has now reached the point where a machine weighing many tons can apply Shor's algorithm to factor numbers as large as 35 before decoherence occurs.</t>
+<t>Should construction of a large-scale device prove practical, it will in principle be possible to break all of the public key cryptosystems currently in use. While public key cryptosystems that resist quantum cryptanalysis are currently in development, none has yet reached a sufficient state of maturity for the field to reach consensus that they are resistant to ordinary cryptanalysis, let alone offer a replacement.</t>
+<t>The consequence of successful quantum cryptanalysis for encryption systems is that all material encrypted under existing public key systems could be decrypted by a quantum capable attacker. Nor is mitigation of this consequence practical since it is not the adoption of new cryptographic algorithms that make a system more secure, it is the elimination of weak options that provides improvement.</t>
+<t>The Mesh does not currently provide an infrastructure that is Quantum Resistant but could in principle be used as the basis for deploying a Needham-Schroeder style symmetric key infrastructure or a future PKI based on an as yet undecided quantum cryptanalysis resistant public key algorithm. </t>
+<t>Mesh profiles <bcp14>MAY</bcp14> include a Quantum Resistant Signature Fingerprint (QRSF). This contains the UDF fingerprint of an XMSS signature public key <xref target="RFC8391"></xref> together with the parameters used to derive the private key set for the public key from a 256 bit master secret.</t>
+<t>Should it ever become necessary to make use of the QRSF, the user first recovers the master secret from whatever archival mechanism was used to protect it. The use of secret sharing to protect the secret is <bcp14>RECOMMENDED</bcp14>. The master secret is then used to reconstruct the set of private keys from which the public key set is reconstructed. The profile owner can now authenticate themselves by means of their XMSS public key.</t>
+<section title="Example: Creating a Quantum Resistant Signature Fingerprint" anchor="n-example-creating-a-quantum-resistant-signature-fingerprint-"><t>Alice decides to add a QRSF to her Mesh Profile. She creates a 256 bit master secret. </t>
+<sourcecode>TBS:</sourcecode>
+<t>To enable recovery of the master key, Alice creates five keyshares with a quorum of three: </t>
+<sourcecode>TBS:</sourcecode>
+<t>Alice uses the master secret to derrive her private key values: </t>
+<sourcecode>TBS:</sourcecode>
+<t>These values are used to generate the public key value: </t>
+<sourcecode>TBS:</sourcecode>
+<t>The QRSF contains the UDF fingerprint of the public key value plus the XMSS parameters: </t>
+<sourcecode>TBS:</sourcecode>
+<t>Alice adds the QRSF to her profile and publishes it to a Mesh Service that is enrolled in at least one multi-party notary scheme. </t>
+</section>
+</section>
+<section title="Security Considerations" anchor="n-security-considerations"><t>The security considerations for use and implementation of Mesh services and applications are described in the Mesh Security Considerations guide <xref target="draft-hallambaker-mesh-security"></xref>.</t>
+</section>
+<section title="IANA Considerations" anchor="n-iana-considerations"><t>All the IANA considerations for the Mesh documents are specified in this document</t>
+</section>
+<section title="Acknowledgements" anchor="n-acknowledgements"><t>A list of people who have contributed to the design of the Mesh is presented in <xref target="draft-hallambaker-mesh-architecture"></xref>.</t>
+<t></t>
+<t></t>
+</section>
+</middle>
+<back>
+<references title="Normative References"><reference anchor="RFC2119"><front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-architecture"><front>
+<title>Mathematical Mesh 3.0 Part I: Architecture Guide</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-architecture-14"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-14.txt"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-security"><front>
+<title>Mathematical Mesh 3.0 Part VII: Security Considerations</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-security-05"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-security-05.txt"/>
+</reference>
+</references>
+<references title="Informative References"><reference anchor="RFC8391"><front>
+<title>XMSS: eXtended Merkle Signature Scheme</title>
+<author fullname="A. Huelsing" initials="A." surname="Huelsing"><organization/>
+<address>
+</address>
+</author>
+<author fullname="D. Butin" initials="D." surname="Butin"><organization/>
+<address>
+</address>
+</author>
+<author fullname="S. Gazdag" initials="S." surname="Gazdag"><organization/>
+<address>
+</address>
+</author>
+<author fullname="J. Rijneveld" initials="J." surname="Rijneveld"><organization/>
+<address>
+</address>
+</author>
+<author fullname="A. Mohaisen" initials="A." surname="Mohaisen"><organization/>
+<address>
+</address>
+</author>
+<date month="May" year="2018"/>
+</front>
+<seriesInfo name="RFC" value="8391"/>
+<seriesInfo name="DOI" value="10.17487/RFC8391"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-developer"><front>
+<title>Mathematical Mesh: Reference Implementation</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-developer-10"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-10.txt"/>
+</reference>
+</references>
+</back>
+</rfc>

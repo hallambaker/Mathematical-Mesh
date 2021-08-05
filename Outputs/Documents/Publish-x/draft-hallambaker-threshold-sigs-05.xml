@@ -1,0 +1,806 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-threshold-sigs-05" indexInclude="false" ipr="trust200902" prepTime="2020-11-03T01:50:57Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Threshold Signatures in Elliptic Curves">Threshold Signatures in Elliptic Curves</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-threshold-sigs" stream="independent"/>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><organization>ThresholdSecrets.com</organization>
+<address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="3" month="November" year="2020"/>
+<area/>
+<workgroup/>
+<keyword>Threshold Cryptography</keyword>
+<keyword>Elliptic Curve</keyword>
+<keyword>Threshold Signature</keyword>
+<keyword>Digital Signature</keyword>
+<abstract>
+<t>A Threshold signature scheme is described. The signatures created are computationally indistinguishable from those produced using the Ed25519 and Ed448 curves as specified in RFC8032 except in that they are non-deterministic. Threshold signatures are a form of digital signature whose creation requires two or more parties to interact but does not disclose the number or identities of the parties involved.</t>
+<t><eref target="http://whatever">https://mailarchive.ietf.org/arch/browse/cfrg/</eref>Discussion of this draft should take place on the CFRG mailing list (cfrg@irtf.org), which is archived at .</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="n-introduction"><t>Threshold encryption and key generation provide compelling advantages over single private key approaches because splitting the private key permits the use of that key to be divided between two or more roles.</t>
+<t>All existing digital signatures allow the signer role to be divided between multiple parties by attaching multiple signatures to the signed document. This approach, known as multi-signatures, is distinguished from a threshold signature scheme in that the identity and roles of the individual signers is exposed. In a threshold signature scheme, the creation of a single signature requires the participation of multiple signers and the signature itself does not reveal the means by which it was constructed.</t>
+<t>Rather than considering multi-signatures or threshold signatures to be inherently superior, it is more useful to regard both as two points on a continuum of choices:</t>
+<dl>
+<dt>Multi-signatures </dt>
+<dd>
+<t>Multiple digital signatures on the same document. Multi-signatures are simple to create and provide the verifier with more information but require the acceptance criteria to be specified independently of the signature itself. This requires that the application logic or PKI provide some means of describing the criteria to be applied. </t>
+</dd>
+<dt>Multi-party key release</dt>
+<dd>
+<t>A single signature created using a single private key stored in an encrypted form whose use requires participation of multiple key decryption shares.</t>
+</dd>
+<dt>Threshold signatures </dt>
+<dd>
+<t>A single signature created using multiple signature key shares. Signature creation may be subject to complex criteria such as requiring an (n,t) quorum of signers but these criteria are fixed at the time the signature is created</t>
+</dd>
+<dt>Aggregate Signatures </dt>
+<dd>
+<t>A single signature created using multiple signature key shares such that validation of the aggregate signature serves to validate the participation of each of the individual signers. </t>
+</dd>
+</dl>
+<t>This document builds on the approach described in <xref target="draft-hallambaker-threshold"></xref> to define a scheme that creates threshold signatures that are computationally indistinguishable from those produced according to the algorithm specified in <xref target="RFC8032"></xref>. The scheme does not support the creation of aggregate signatures.</t>
+<t>The approach used is based on that developed in FROST <xref target="Komlo"></xref>. This document describes the signature scheme itself. The techniques used to generate keys are described separately in <xref target="draft-hallambaker-threshold"></xref>.</t>
+<t>As in the base document, we first describe signature generation for the case that <em>n</em> = <em>t</em> using 'direct' coefficients, that is the secret scalar is the sum of the secret shares. We then show how the scheme is modified using Shamir secret sharing <xref target="Shamir79"></xref> and Lagrange coefficients for the case that <em>n</em> &gt; <em>t</em>.</t>
+<section title="Applications" anchor="n-applications"><t>Threshold signatures have application in any situation where it is desired to have finer grain control of signing operations without this control structure being visible to external applications. It is of particular interest in situations where legacy applications do not support multi-signatures.</t>
+<section title="HSM Binding" anchor="n-hsm-binding"><t>Hardware Security Modules (HSMs) prevent accidental disclosures of signature keys by binding private keys to a hardware device from which it cannot be extracted without substantial effort. This provides effective mitigation of the chief causes of key disclosure but requires the signer to rely on the trustworthiness of a device that represents a black box they have no means of auditing.</t>
+<t>Threshold signatures allow the signer to take advantage of the key binding control provided by an HSM without trusting it. The HSM only contributes one of the key shares used to create the signature. The other is provided by the application code (or possibly an additional HSM).  </t>
+</section>
+<section title="Code Signing" anchor="n-code-signing"><t>Code signing is an important security control used to enable rapid detection of malware by demonstrating the source of authorized code distributions but places a critical reliance on the security of the signer's private key. Inadvertent disclosure of code signing keys is commonplace as they are typically stored in a form that allows them to be used in automatic build processes. Popular source code repositories are regularly scanned by attackers seeking to discover private signature keys and passwords embedded in scripts.</t>
+<t>Threshold signatures allow the code signing operation to be divided between a developer key and an HSM held locally or by a signature service. The threshold shares required to create the signature can be mapped onto the process roles and personnel responsible for authorizing code release. This last concern might be of particular advantage in open source projects where the concentration of control embodied in a single code signing key has proved to be difficult to reconcile with community principles.</t>
+</section>
+<section title="Signing by Redundant Services" anchor="n-signing-by-redundant-services"><t>Redundancy is as desirable for trusted services as for any other service. But in the case that multiple hosts are tasked with compiling a data set and signing the result, there is a risk of different hosts obtaining a different view of the data set due to timing or other concerns. This presents the risk of the hosts signing inconsistent views of the data set.</t>
+<t>Use of threshold signatures allows the criteria for agreeing on the data set to be signed to be mapped directly onto the requirement for creating a signature. So if there are three hosts and two must agree to create a signature, three signature shares are created and with a threshold of two. </t>
+</section>
+</section>
+</section>
+<section title="Definitions" anchor="n-definitions"><t>This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.</t>
+<section title="Requirements Language" anchor="n-requirements-language"><t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
+</section>
+<section title="Defined Terms" anchor="n-defined-terms"><t>See  <xref target="draft-hallambaker-threshold"></xref>.</t>
+</section>
+<section title="Related Specifications" anchor="n-related-specifications"><t>This document extends the approach described in  <xref target="draft-hallambaker-threshold"></xref> to support threshold signatures. The deterministic mechanism described in specification <xref target="draft-hallambaker-mesh-udf"></xref> is used to generate the private keys used in the test vectors.</t>
+</section>
+<section title="Implementation Status" anchor="n-implementation-status"><t>The implementation status of the reference code base is described in the companion document <xref target="draft-hallambaker-mesh-developer"></xref>.</t>
+</section>
+</section>
+<section title="Principles" anchor="n-principles"><t>The threshold signatures created according to the algorithms described in this document are compatible with but not identical to the signatures created according to the scheme described in <xref target="RFC8032"></xref>. In particular:</t>
+<ul>
+<li>The signature verification algorithm is unchanged.</li>
+<li>The unanimous threshold scheme produces values of <em>R</em> and <em>S</em> that are deterministic but different from the values that would be obtained by using the aggregate private key to sign the same document.</li>
+<li>The deterministic quorate threshold scheme produces values of <em>R</em> and <em>S</em> that are deterministic for a given set of signers but will change for a different set of signers or if the aggregate private key was used to sign the same document.</li>
+<li>?The non-deterministic quorate threshold scheme produces values of <em>R</em> and <em>S</em> that will be different each time the document is signed.</li>
+</ul>
+<t>Recall that a digital signature as specified by <xref target="RFC8032"></xref> consists of a pair of values <em>S</em>, <em>R</em> calculated as follows:</t>
+<t><em>R</em> = <em>r.B</em></t>
+<t>S = <em>r</em> + <em>k.s</em> mod <em>L</em></t>
+<dl>
+<dt>Where </dt>
+<dd>
+<t><em>B</em> is the base point of the elliptic curve.</t>
+<t><em>r</em> is an unique, unpredictable integer value such that 0  r  L</t>
+<t><em>k</em> is the result of applying a message digest function determined by the curve (Ed25519, Ed448) to a set of parameters known to the verifier which include the values <em>R</em>, <em>A</em> and PH(<em>M</em>).</t>
+<t><em>A</em> is the public key of the signer, <em>A</em> = <em>s.B</em></t>
+<t>PH(<em>M</em>) is the prehash function of the message value.</t>
+<t><em>s</em> is the secret scalar value</t>
+<t><em>L</em> is the order of the elliptic curve group.</t>
+</dd>
+</dl>
+<t>To verify the signature, the verifier checks that:</t>
+<t><em>S.B</em> = <em>R</em> + <em>k.A</em> </t>
+<t>This equality must hold for a valid signature since:</t>
+<dl>
+<dt><em>S.B </em></dt>
+<dd>
+<t>= (<em>r</em> + <em>k.s</em>).<em>B</em> </t>
+<t>= <em>r.B</em> +<em>k</em>.(<em>s.B</em>) </t>
+<t>= <em>R</em> + <em>k.A</em></t>
+</dd>
+</dl>
+<t>The value <em>r</em> plays a critical role in the signature scheme as it serves to prevent disclosure of the secret scalar. If the value <em>r</em> is known, <em>s</em> can be calculated as <em>s</em> = (<em>S-r</em>).<em>k</em><sup>-1</sup> mod <em>L</em>. It is therefore essential that the value <em>r</em> be unguessable.</t>
+<t>Furthermore, if the same value of <em>r</em> is used to sign two different documents, this results two signatures with the same value <em>R</em> and different values of <em>k</em> and <em>S</em>. Thus</t>
+<t><em>S<sub>1</sub></em> = <em>r</em> + <em>k<sub>1</sub></em>.<em>s</em> mod <em>L</em></t>
+<t>S<sub>2</sub> = <em>r</em> + <em>k<sub>2</sub>.s mod L</em></t>
+<t>s = (<em>S<sub>1</sub></em> - <em>S<sub>2</sub></em>)(<em>k<sub>1</sub></em> - <em>k<sub>2</sub></em>)<sup>-1</sup> mod <em>L</em></t>
+<t>The method of constructing <em>r</em> <bcp14>MUST</bcp14> ensure that it is unique and unguessable.</t>
+<section title="Direct shared threshold signature" anchor="n-direct-shared-threshold-signature"><t>A threshold signature R, S is constructed by summing a set of signature contributions from two or more signers. For the case that the composite private key is the sum of the key shares (<em>n</em> = <em>t</em>), each signer <em>i</em> provides a contribution as follows:</t>
+<t>A<sub>i</sub> = s<sub>i</sub>.B</t>
+<t>R<sub>i</sub> = r<sub>i</sub>.B</t>
+<t>S<sub>i</sub> = r<sub>i</sub> + k.s<sub>i</sub> mod L</t>
+<t>Where s<sub>i</sub> and r<sub>i</sub> are the secret scalar and unguessable value for the individual signer.</t>
+<t>The contributions of signers {1, 2, ... n} are then combined as follows:</t>
+<t>R = R<sub>1</sub> + R<sub>2</sub> + ... + R<sub>n</sub></t>
+<t>S = S<sub>1</sub> + S<sub>2</sub> + ... + S<sub>n</sub></t>
+<t>A = s.B </t>
+<t>Where s =  (s<sub>1</sub> + s<sub>2</sub> + ... + s<sub>n</sub>) mod L</t>
+<t>The threshold signature is verified in the same manner as before:</t>
+<t>S.B = R + k.A</t>
+<t>Substituting for S.B we get:</t>
+<t>= (S<sub>1</sub> + S<sub>2</sub> + ... + S<sub>n</sub>).B</t>
+<t>= S<sub>1</sub>.B + S<sub>2</sub>.B + ... + S<sub>n</sub>.B</t>
+<t>= (r<sub>1</sub> + k.s<sub>1</sub>).B + (r<sub>2</sub> + k.s<sub>2</sub>).B + ... + (r<sub>n</sub> + k.s<sub>n</sub>).B</t>
+<t>= (r<sub>1</sub>.B + k.s<sub>1</sub>.B) + (r<sub>2</sub>.B + k.s<sub>2</sub>.B) + ... + (r<sub>n</sub>.B + k.s<sub>n</sub>.B)</t>
+<t>= (R1 + k.A1) + (R1 + k.A1) + ... + (Rn + k.An)</t>
+<t>Substituting for R + k.A we get:</t>
+<t>= R<sub>1</sub> + R<sub>2</sub> + ... + R<sub>n</sub> + k.(A<sub>1</sub> + A<sub>2</sub> + ... + A<sub>n</sub>)</t>
+<t>= R<sub>1</sub> + R<sub>2</sub> + ... + R<sub>n</sub> + k.A<sub>1</sub> + k.A<sub>2</sub> + ... + k.A<sub>n</sub></t>
+<t>= (R<sub>1</sub> + k.A<sub>1</sub>) + (R<sub>1</sub> + k.A<sub>1</sub>) + ... + (R<sub>n</sub> + k.A<sub>n</sub>)</t>
+<t>As expected, the operation of threshold signature makes use of the same approach as threshold key generation and threshold decryption as described in <xref target="draft-hallambaker-threshold"></xref>. As with threshold decryption it is not necessary for each key share holder to have a public key corresponding to their key share. All that is required is that the sum of the secret scalar values used in calculation of the signature modulo the group order be the value of the aggregate secret scalar corresponding to the aggregate secret key.</t>
+<t>While verification of <xref target="RFC8032"></xref> signatures is unchanged, the use of threshold signatures requires a different approach to signing. In particular, the fact that the value k is bound to the value R means that the participants in the threshold signature scheme must agree on the value R before the value k can be calculated. Since k is required to calculate the signature contributions S<sub>i</sub> can be calculated, it is thus necessary to calculate the values R<sub>i</sub> and S<sub>i</sub> in separate phases. The process of using a threshold signature to sign a document thus has the following stages orchestrated by a dealer  as follows:</t>
+<ol start="0">
+<li>The dealer determines the values F, C and PH(M) as specified in <xref target="RFC8032"></xref> and transmits them to the signers {1, 2, ... n}.</li>
+<li>Each signer generates a random value r<sub>i</sub> such that 1  r<sub>i</sub>  L, calculates the value R<sub>i</sub> = r<sub>i</sub>.B and returns R to the dealer .</li>
+<li>The dealer calculates the value R = R<sub>1</sub> + R<sub>2</sub> + ... + R<sub>n</sub> and transmits R and A to the signers {1, 2, ... n}.</li>
+<li>Each signer uses the suppled data to determine the value k and hence S<sub>i</sub> = r<sub>i</sub> + k.s<sub>i</sub> mod L and transmits it to the dealer .</li>
+<li>The dealer calculates the value S = S<sub>1</sub> + S<sub>2</sub> + ... + S<sub>n</sub> and verifies that the resulting signature R, S verifies according to the mechanism specified in <xref target="RFC8032"></xref>. If the signature is correct, the dealer  publishes it. Otherwise, the dealer  <bcp14>MAY</bcp14> identify the signer(s) that provided incorrect contributions by verifying the values R<sub>i</sub> and S<sub>i</sub> for each.</li>
+</ol>
+<t>For clarity, the dealer role is presented here as being implemented by a single party. </t>
+</section>
+<section title="Shamir shared threshold signature" anchor="n-shamir-shared-threshold-signature"><t>To construct a threshold signature using shares created using Shamir Secret Sharing, each private key value <em>s<sub>i</sub></em> is multiplied by the Lagrange coefficient <em>l<sub>i</sub></em> corresponding to the set of shares used to construct the signature:</t>
+<t>A<sub>i</sub> = s<sub>i</sub>l<sub>i</sub>.B</t>
+<t>R<sub>i</sub> = r<sub>i</sub>.B</t>
+<t><em>S<sub>i</sub> = ri + klisi mod L</em></t>
+<t>It is convenient to combine the derivation of <em>S<sub>i</sub></em> for the additive and Shamir shared threshold signatures by introducing a key multiplier coefficient <em>c<sub>i</sub></em>:</t>
+<t><em>S<sub>i</sub> = ri + kcisi mod L</em></t>
+<dl>
+<dt>Where</dt>
+<dd>
+<t><em>c<sub>i</sub></em> = 1 for the additive shared threshold signature</t>
+<t><em>c<sub>i</sub></em> = <em>l<sub>i</sub></em> for the Shamir shared threshold signature</t>
+</dd>
+</dl>
+</section>
+<section title="Stateless computation of final share" anchor="n-stateless-computation-of-final-share"><t>One of the chief drawbacks to the algorithm described above is that it requires signers to perform two steps with state carried over from the first to the second to avoid reuse of the value <em>r<sub>i</sub></em>. This raises particular concern for implementations such as signature services or HSMs where maintaining state imposes a significant cost.</t>
+<t>Fortunately, it is possible to modify the algorithm so that the final signer does not need to maintain state between steps:</t>
+<ol start="0">
+<li>All the signers except the final signer <em>F</em> generate their value <em>r<sub>i</sub></em> and submit the corresponding value <em>R<sub>i</sub></em> to the dealer</li>
+<li>Dealer calculates the value <em>R</em> - <em>R<sub>F</sub></em> and sends it to the final signer together with the all the other parameters required to calculate <em>k</em> and the  final signer's key multiplier coefficient <em>c<sub>F</sub></em>.</li>
+<li>The final signer generates its value <em>r<sub>F</sub></em></li>
+<li>The final signer calculates the value <em>R<sub>F</sub></em> from which the values <em>R</em> and <em>k</em> can now be determined.</li>
+<li>The final signer calculates its key share contribution <em>S<sub>F</sub> = rF + kcFsF mod L.</em></li>
+<li>The final signer returns the values <em>S<sub>F</sub></em> and <em>R</em> to the dealer.</li>
+<li>The dealer reports the value R to the other signers and continues the signature process as before.</li>
+</ol>
+<t>While this approach to stateless computation of the signature contributions is limited to the final share, this is sufficient to cover the overwhelming majority of real-world applications where <em>n</em> = <em>t</em> = 2.</t>
+<t>Note that the final signer <bcp14>MAY</bcp14> calculate its value <em>r<sub>F</sub></em> deterministically provided that the parameters <em>R</em> - <em>R<sub>F</sub></em> and <em>c<sub>F</sub></em> are used in its determination. Other signers <bcp14>MUST NOT</bcp14> use a deterministic means of generating their value <em>r<sub>i</sub></em> since the information known to them at the time this parameter is generated is not sufficient to fix the value of <em>R</em>.</t>
+<section title="Side channel resistance" anchor="n-side-channel-resistance"><t>The use of Kocher side channel resistance as described in <xref target="draft-hallambaker-threshold"></xref> entails randomly splitting the private key into two shares and performing the private key operation separately on each share to avoid repeated operations using the same private key value at the cost of performing each operation twice.</t>
+<t>This additional overhead <bcp14>MAY</bcp14> be eliminated when threshold approaches are used by applying blinding factors whose sum is zero to each of the threshold shares.</t>
+<t>For example, if generation of the threshold signature is divided between an application program A and an HSM B using the final share approach to avoid maintaining state in the HSM, we might generate a blinding factor thus:</t>
+<ol start="0">
+<li>A generates a random nonce <em>n<sub>A</sub></em> and sends it to B with the other parameters required to generate the signature.</li>
+<li>B generates a random nonce <em>n<sub>B</sub></em></li>
+<li>B calculates the blinding factor <em>x</em> by calculating <em>H</em>(<em>n<sub>A, </sub>nB) where H is a strong cryptographic digest function and converting the result to an integer in the range 1  x  L.</em></li>
+<li>B calculates the signature parameters as before except that the threshold signature contribution is now <em>S<sub>B</sub> = rB + k(cBsB + x) mod L.</em></li>
+<li>B returns the nonce <em>n<sub>B</sub></em> to A with the other parameters.</li>
+<li>A calculates the blinding factor <em>x</em> using the same approach as B</li>
+<li>A calculates the signature parameters as before except that the threshold signature contribution is now <em>S<sub>A</sub> = rA + k(cAsA - x) mod L.</em></li>
+</ol>
+<t>This approach <bcp14>MAY</bcp14> be extended to the case that <em>t</em> &gt; 2 by substituting a Key Derivation Function (e.g. <xref target="RFC5860"></xref>) for the digest function.</t>
+</section>
+</section>
+<section title="Security Analysis" anchor="n-security-analysis"><t>We consider a successful breach of the threshold signature scheme to be any attack that allows the attacker to create a valid signature for any message without the participation of the required threshold of signers.</t>
+<t>Potential breaches include:</t>
+<ul>
+<li>Disclosure of the signature key or signature key share.</li>
+<li>Modification of signature data relating to message M to allow creation of a signature for message M'.</li>
+<li>Ability of one of the signers to choose the value of the aggregate public key. </li>
+<li>Access control attacks inducing a signer to create a signature contribution that was not properly authenticated or authorized.</li>
+</ul>
+<t>We regard attacks on the access control channel to be out of scope for the threshold signature algorithm, though they are certainly a concern for any system in which a threshold signature algorithm is employed.</t>
+<t>We do not consider the ability of a signer to cause creation of an invalid signature to represent a breach.</t>
+<section title="Calculation of r values" anchor="rvalue"><t>The method of constructing the values <em>r<sub>i</sub></em> <bcp14>MUST</bcp14> ensure that each is unique and unguessable both to external parties, the signers and the dealer. The deterministic method specified in <xref target="RFC8032"></xref> cannot be applied to generation of the values r<sub>i</sub> as it allows the dealer to cause signers to reveal their key shares by requesting multiple signature contributions for the same message but with different values of <em>k</em>. In particular, requesting signature contributions for the same message:</t>
+<t>With different Lagrange coefficients.</t>
+<t>With a false value of <em>R</em></t>
+<t>To avoid these attacks, the value r<sub>i</sub> is generated using a secure random number generator. This approach requires the signer to ensure that values are never reused requiring that the signing API maintain state between the first and second rounds of the algorithm.</t>
+<t>While there are many approaches to deterministic generation of r<sub>i</sub> that appear to be sound, closer inspection has demonstrated these to be vulnerable to rogue key and rogue contribution attacks. </t>
+</section>
+<section title="Replay Attack" anchor="n-replay-attack"><t>The most serious concern in the implementation of any Schnorr type signature scheme is the need to ensure that the value r<sub>i</sub> is never revealed to any other party and is never used to create signatures for two different values of k.s<sub>i</sub>.</t>
+<t>Ensuring this does not occur imposes significant design constraints as creating a correct signature contribution requires that the signer use the same value of r<sub>i</sub> to construct its value or R<sub>i</sub> and S<sub>i</sub>.</t>
+<t>For example, a HSM device may be required to perform multiple signature operations simultaneously. Since the storage capabilities of an HSM device are typically constrained, it is tempting to attempt to avoid the need to track the value of r<sub>i</sub> within the device itself using an appropriately authenticated and encrypted opaque state token. Such mechanisms provide the HSM with the value of r<sub>i</sub> but do not and cannot provide protection against a replay attack in which the same state token is presented with a request to sign different values of k.</t>
+</section>
+<section title="Malicious Contribution Attack" anchor="n-malicious-contribution-attack"><t>In a malicious contribution attack, one or more parties present a signature contribution that does not meet the criteria R<sub>i</sub> = r<sub>i</sub>.B and S<sub>i</sub> = r<sub>i</sub> + ks<sub>i</sub>.</t>
+<t>Such an attack is not considered to be a breach as it merely causes the signature process to fail. </t>
+</section>
+<section title="Rogue Key Attack" anchor="roguekey"><t>A threshold signature scheme that allows the participants to 'bring their own key' may be vulnerable to a rogue key attack in which a signer is able to select the value of the aggregate public signature key by selecting a malicious public signature key value.</t>
+<t>The scheme described in this document is a threshold signature scheme and does not support this feature. Consequently, this attack is not relevant. It is described here for illustrative purposes only.</t>
+<t>This particular attack only applies when the individual signers create their own signature shares. It is not a concern when the signature shares are created by splitting a master signature private key.</t>
+<t>Consider the case where the aggregate public key signature is calculated from the sum of public signature key share values presented by the signers:</t>
+<t>A = A<sub>1</sub> + A<sub>2</sub> + ... + A<sub>n</sub></t>
+<t>If the public key values are presented in turn, the last signer presenting their key share can force the selection of any value of A that they choose by selecting A<sub>n</sub> = A<sub>m</sub> -  (A<sub>1</sub> + A<sub>2</sub> + ... + A<sub>n-1</sub>)</t>
+<t>The attacker can thus gain control of the aggregate signature key by choosing A<sub>m</sub> = s<sub>m</sub>.B where s<sub>m</sub> is a secret scalar known only to the attacker. But does so at the cost of not knowing the value s<sub>n</sub> and so the signer cannot participate in the signature protocol. </t>
+<t>This attack allows the attacker and the attacker alone to create signatures which are validated under the aggregate signature key.</t>
+<t>The attack is a consequence of the mistaken assumption that a signature created under the signature key A<sub>1</sub> + A<sub>2</sub> + ... + A<sub>n</sub> provides evidence of the individual participation of the corresponding key holders without separate validation of the aggregate key.</t>
+<t>Enabling the use of threshold signature techniques by ad-hoc groups of signers using their existing signature keys as signature key shares presents serious technical challenges that are outside the scope of this specification.</t>
+</section>
+</section>
+</section>
+<section title="Ed2519 Signature" anchor="n-ed2519-signature"><t>The means by which threshold shares are created is described in <xref target="draft-hallambaker-threshold"></xref>.</t>
+<t>The dealer selects the signers who are to construct the signature. Each signer then computes the value R<sub>i</sub>:</t>
+<ol start="0">
+<li>Randomly generate an integer r<sub>i</sub> such that 1  r<sub>i</sub>  L.</li>
+<li>Compute the point R<sub>i</sub> = r<sub>i</sub>B.  For efficiency, do this by first reducing r<sub>i</sub> modulo L, the group order of B.  Let the string R<sub>i</sub> be the encoding of this point.</li>
+<li>Transmit the value R<sub>i</sub> to the dealer </li>
+<li>At some later point, the dealer <bcp14>MAY</bcp14> complete the signature by returning the values F, C, A and R as specified in <xref target="RFC8032"></xref> together with the key multiplier coefficient c<sub>i</sub>. The signers <bcp14>MAY</bcp14> then complete their signature contributions:</li>
+<li>Compute SHA512(dom2(F, C) || R || A || PH(M)), and interpret the 64-octet digest as a little-endian integer k.</li>
+<li>Compute S<sub>i</sub> = (r<sub>i</sub> + kc<sub>i</sub>s<sub>i</sub>) mod L.  For efficiency, again reduce k modulo L first.</li>
+<li>Return the values R<sub>i</sub>, S<sub>i</sub> to the dealer .</li>
+</ol>
+<t>The dealer then completes the signature by:</t>
+<ol start="0">
+<li>Computing the composite value S = S<sub>1</sub> + S<sub>2</sub> + ... + S<sub>n</sub></li>
+<li>Verifying that the signature R, S is valid.</li>
+<li>Publishing the signature.</li>
+</ol>
+</section>
+<section title="Ed448 Signature" anchor="n-ed448-signature"><t>The means by which threshold shares are created is described in <xref target="draft-hallambaker-threshold"></xref>.</t>
+<t>The dealer selects the signers who are to construct the signature. Each signer then computes the value R<sub>i</sub>:</t>
+<ol start="0">
+<li>Randomly generate an integer r<sub>i</sub> such that 1  r<sub>i</sub>  L.</li>
+<li>Compute the point R<sub>i</sub> = r<sub>i</sub>B.  For efficiency, do this by first reducing r<sub>i</sub> modulo L, the group order of B.  Let the string R<sub>i</sub> be the encoding of this point.</li>
+</ol>
+<t>Transmit the value R<sub>i</sub> to the dealer </t>
+<ol start="0">
+<li>At some later point, the dealer <bcp14>MAY</bcp14> complete the signature by returning the values F, C, A and R as specified in <xref target="RFC8032"></xref> together with the key multiplier coefficient c<sub>i</sub>. The signers <bcp14>MAY</bcp14> then complete the signature contributions:</li>
+<li>Compute SHAKE256(dom4(F, C) || R || A || PH(M), 114), and interpret the 114-octet digest as a little-endian integer k.</li>
+<li>Compute S<sub>i</sub> = (r<sub>i</sub> + kc<sub>i</sub>s<sub>i</sub>) mod L.  For efficiency, again reduce k modulo L first.</li>
+<li>Return the values R<sub>i</sub>, S<sub>i</sub> to the dealer.</li>
+</ol>
+<t>The dealer then completes the signature by:</t>
+<ol start="0">
+<li>Computing the composite value S = S<sub>1</sub> + S<sub>2</sub> + ... + S<sub>n</sub></li>
+<li>Verifying that the signature R, S is valid.</li>
+<li>Publishing the signature.</li>
+</ol>
+</section>
+<section title="Test Vectors" anchor="n-test-vectors"><section title="Direct Threshold Signature Ed25519" anchor="n--direct-threshold-signature-ed25519-"><t>The signers are Alice and Bob's Threshold Signature Service 'Bob'. Each creates a key pair: </t>
+<sourcecode>ED25519Alice's Key (ED25519)
+    UDF:            ZAAA-GTSI-GXED-255X-XALI-CEXS-XKEY
+    Scalar:         312191303806394376947696888962276115420485359001
+        34467943432016761653342335248
+    Encoded Private
+  10 AE C0 C2  16 65 9B 4F  7C 9D DE 82  3E 49 7F D4
+  9B 14 BB F8  2D 9F 0C 11  24 D7 15 E3  43 79 57 20
+    X:              -13697699435406080999251131063344049965140553452
+        752305353714819106646919347160064793506327635954342719144289
+        2305566686088586980395284289746495530409889930
+    Y:              278793875610616080844162800185864399625503938157
+        569374174700414845758479331294424147393776831767266487579098
+        7675375777043504113387553916769515911310193558
+    Encoded Public
+  45 16 53 7C  26 50 CF DA  F1 A4 DF 4C  45 DC 3D 95
+  4E B6 8E EB  A6 5A 27 D6  CD 5B 43 C5  F4 06 53 ED
+ED25519Bob's Key (ED25519)
+    UDF:            ZAAA-GTSI-G2ED-255X-XBOB-XSXK-EY
+    Scalar:         567212843891509414800308620158891720685508995620
+        72140666211075925337851277632
+    Encoded Private
+  E5 CD 34 01  FD 8C 0E 27  81 4B 11 DD  12 68 50 A1
+  4B 5A D5 E1  E1 41 D7 68  5F 51 ED B4  3A 84 58 5C
+    X:              -13809282472298084436735987888897423507149580966
+        952791761446670884044433963975178482398144657564565223270588
+        5322459642470946347570575475534141406285323257
+    Y:              263684226342871984706317411760423095947068088366
+        393546798602378437432707482089806653755881399592963068751759
+        9645362525866308283171284327931970404321458677
+    Encoded Public
+  F1 5F C0 78  F8 32 49 2C  D9 64 CC 2B  CF 90 5C 4F
+  23 EA BB F8  38 99 C5 FE  F3 AA 67 BE  AB EC D2 5E</sourcecode>
+<t>The composite Signature Key A = A<sub>a</sub> + A<sub>b</sub> </t>
+<sourcecode>Aggregate Key = Alice + Bob ()
+    UDF:            TBS
+    Scalar:         109634784180323260712231215560085272031403914964
+        7717337619681427565742601012
+    Encoded Private
+  34 33 AB 10  9A 09 A9 61  65 8B 3A EC  58 21 FB 2D
+  0D 45 74 49  45 BA E2 CF  A8 98 C2 94  C9 82 6C 02
+    X:              -83837675294300852842901121613445594296352372347
+        711317409367737761568353629718805151940195325485285476438422
+        923698718220652243749390297055882388709313280
+    Y:              160553422944358144751060009820735322036903773802
+        361117046457476895165059738086663330972263850675453249990301
+        0398473811263196653225446124160025082144761534
+    Encoded Public
+  48 1A 27 66  06 AF 4E 3C  20 A4 02 CD  8A 13 46 99
+  02 B7 75 F8  AC D4 7E 89  68 FB 68 EB  D8 EF 4A C7</sourcecode>
+<t>To sign the text "This is a test", Alice first generates her value r and multiplies it by the base point to obtain the value R<sub>a</sub>: </t>
+<sourcecode>Alice:
+    r_a:            994865324101590620374953812868830991180893921026
+        119827618739945834070479673
+R_a =
+  98 73 86 50  FD ED BD 52  92 1D 7D 3D  41 57 35 E1
+  C2 1E 5C 5B  B2 C1 9B CC  05 72 96 0E  6B 53 A5 CA</sourcecode>
+<t>Alice passes her value R<sub>A</sub> to Bob along with the other  parameters required to calculate i. Bob then calculates his value R<sub>A</sub> and multiplies it by the base point to obtain  the value R<sub>b</sub>: </t>
+<sourcecode>Bob:
+    r_b:            296695469005335010495289095424683389859223306121
+        4391500648079331290849384676
+R_b =
+  D8 3E BB 04  BF AF B3 6D  6C 7D 99 C0  85 5C A0 E1
+  45 4A C5 65  A0 A2 2F 82  D4 7F F0 C1  68 09 B8 29</sourcecode>
+<t>Bob can now calculate the composite value R = R<sub>a</sub> + R<sub>b</sub> and thus the value k. </t>
+<sourcecode>R =
+  D5 B4 77 82  2C 9E 2C 6A  DD AB 5B BB  D6 8D A9 E3
+  B7 D5 F9 67  DB C4 60 08  05 45 D7 0E  55 85 6A 04
+    k:              654209576967152871602387531363639338324391056481
+        8567641366938805089498211623</sourcecode>
+<t>Bob calculates his signature scalar contribution and returns the value to Alice: </t>
+<sourcecode>Bob:
+    S_b:            661135848810262069521220984640425893103097691574
+        7633113842250562855472056034</sourcecode>
+<t>Alice can now calculate her signature scalar contribution and thus the signature  scalar S. </t>
+<sourcecode>Alice:
+    S_a:            483524974285470522640298775174276162286291785097
+        534697965396836403223867646
+    S:              709488346238809121785250862157853509331726870084
+        5167811807647399258695923680</sourcecode>
+<t>Alice checks to see that the signature verifies: </t>
+<sourcecode>S.B = R + kA =
+    X:              266431354192689749699572150177656917160373646097
+        98758588109708747726861544375
+    Y:              378335437398861519318990707386305166084655001424
+        63633775565176311917962194767</sourcecode>
+</section>
+<section title="Direct Threshold Signature Ed448" anchor="n--direct-threshold-signature-ed448-"><t>The signers are Alice and Bob's Threshold Signature Service 'Bob'. Each creates a key pair: </t>
+<sourcecode>ED448Alice's Key (ED448)
+    UDF:            ZAAA-ITSI-GXED-44XA-LICE-XSXK-EY
+    Scalar:         672286477331130983513039743350616227864346753924
+        962787860729757222511999618443513569403793186398096717924945
+        854846544396984088344823264
+    Encoded Private
+  6F 85 B1 91  9A 37 06 A6  B2 15 79 AD  5B 69 16 6A
+  5A CD C8 17  D4 14 1F 68  DA 97 C5 B4  44 79 CE EA
+  3C 17 7B E1  29 44 70 DF  41 C8 98 38  1E 7C 9B 3B
+  03 63 6F 85  E8 39 31 91
+    X:              526046019655043632868470952286947529492283092344
+        122476077151423645243648974512182548405702873560533846673262
+        767064019365470830861106049
+    Y:              145374550785380850812934424757986866673485237047
+        938554544492694946608060986459495807055455048208713991919477
+        720250115717234689256856152
+    Encoded Public
+  59 55 F4 7A  66 08 91 35  F8 15 63 F4  90 91 7F 38
+  12 E3 49 22  51 F8 BC 4A  41 C9 44 59  5A 64 9B 40
+  0B C5 7E 53  48 0F 32 12  90 32 69 38  47 28 94 BB
+  99 D1 16 6F  2D D5 3D 4F  80
+ED448Bob's Key (ED448)
+    UDF:            ZAAA-ITSI-G2ED-44XB-OBXS-XKEY
+    Scalar:         455052626698262385397736547727159423941520792904
+        908612603542850909167215987713902322619933929404455741806848
+        064294945283113799683261212
+    Encoded Private
+  CA 15 22 BD  F4 0F 9E 0A  EC A7 61 79  BE 9E E3 38
+  BF 93 D3 5B  B3 E6 FC F0  A7 5B 7C F0  E7 B5 89 F6
+  2E F6 D1 0E  72 49 4D DF  34 5E 2F 7C  9E 42 1D 85
+  AB AB 30 BD  68 C6 3E 35
+    X:              752024108200272710832187535557164455078689734595
+        171189993383259892607253027500878543439908750525763880661232
+        171322059854852522782265
+    Y:              619329873102159676791326142073166790594683111409
+        729383584199833441028484525583699421181422168190856074786324
+        020492214873796495570056511
+    Encoded Public
+  76 2B FC F8  AC 96 79 DE  1C 72 07 65  DD 49 5B 28
+  C7 04 CB A8  A5 96 3D D9  9E 23 FA 05  83 15 33 95
+  85 82 F8 CF  A3 7A 2F 24  F8 EB D6 AE  20 0A 25 D0
+  44 1A F9 C0  86 D7 87 B7  00</sourcecode>
+<t>The composite Signature Key A = A<sub>a</sub> + A<sub>b</sub> </t>
+<sourcecode>Aggregate Key = Alice + Bob ()
+    UDF:            TBS
+    Scalar:         370810175859830330867905792457688502754055057988
+        943100420373093608031918369199015948491953656482966798700316
+        64591515851455352870185802
+    Encoded Private
+  4A AB 7A BB  2D 95 72 75  B1 3A 1D 22  24 17 76 2D
+  A1 D5 55 94  67 35 8C E7  A1 A0 ED 0C  E7 88 FF 9F
+  6E 2F 70 80  89 F5 01 2A  C0 AD 4C 4E  7B 90 68 6C
+  F4 53 BA 32  9B 70 0F 0D
+    X:              583249553407699999284154112964835446252412293188
+        857058051552519639906663406776316984154017062023869075790536
+        30514579317017660114474427
+    Y:              518040437562811181169413740718290938351269168888
+        257124107164689245721852001077758864406412789756149699111633
+        051823234569886260996269341
+    Encoded Public
+  34 70 8D 08  DE 63 0B A6  49 2A 33 D8  B7 15 A9 84
+  A4 87 F6 B6  C7 4B 1C AE  5A 1F 7C 4B  12 70 FB CF
+  5A A9 3C 20  31 BA 9A 53  A0 FE 2A 43  24 97 06 F8
+  DA 40 0D 88  E3 D9 DE 2E  00</sourcecode>
+<t>To sign the text "This is a test", Alice first generates her value r and multiplies it by the base point to obtain the value R<sub>a</sub>: </t>
+<sourcecode>Alice:
+    r_a:            146846010376312817728518082401934884745636355975
+        757165511936235671030570867705574545084958075617453171590377
+        145104287542193476709354490
+R_a =
+  A2 7F 0E 2D  58 E3 B2 B4  97 9B 39 52  4C 57 06 15
+  FF 4B 10 85  F9 21 8A 79  F7 B0 6E F3  CE AB D1 B3
+  60 03 C0 5A  21 CC 6B 30  32 9E BF 00  AA D0 D2 12
+  C6 3E 49 D3  36 33 2C 70  00</sourcecode>
+<t>Alice passes her value R<sub>A</sub> to Bob along with the other  parameters required to calculate i. Bob then calculates his value R<sub>A</sub> and multiplies it by the base point to obtain  the value R<sub>b</sub>: </t>
+<sourcecode>Bob:
+    r_b:            441415237215314442813744278415332291326643069416
+        542281227097179346038283120915698627476677422966544984147203
+        93013715316236406919739976
+R_b =
+  B8 0D 10 54  69 CD 5D 6F  FC 72 BB 6A  A6 74 14 B7
+  C2 71 D9 64  57 CA 61 3F  33 7C DC B7  64 E7 89 DF
+  06 7A 30 5A  32 19 89 E5  DF 64 6E CA  F2 92 18 52
+  F0 38 18 CF  BB 4B AD B4  80</sourcecode>
+<t>Bob can now calculate the composite value R = R<sub>a</sub> + R<sub>b</sub> and thus the value k. </t>
+<sourcecode>R =
+  0D D0 F9 13  A9 13 04 05  D4 8C 95 B8  11 BF 51 96
+  50 71 0C AF  A6 E0 6A 38  24 0C 23 51  7F 12 43 72
+  CF E3 E2 85  AE 5B B4 74  6E FB D2 2D  24 9C 8C EF
+  44 F1 71 0D  99 E9 80 4B  00
+    k:              172685864107018881519636392561021171742328790843
+        868358394721646034497201468075740306745708175425588575422912
+        908338943346049321529728653</sourcecode>
+<t>Bob calculates his signature scalar contribution and returns the value to Alice: </t>
+<sourcecode>Bob:
+    S_b:            147822236553128522835119784582723855675663268268
+        783509350448800185708261316492609517659497181809243908980303
+        435183812238891974622036441</sourcecode>
+<t>Alice can now calculate her signature scalar contribution and thus the signature  scalar S. </t>
+<sourcecode>Alice:
+    S_a:            775018631138975434021938513251677973678353312107
+        009455093556892318883662650191082043855460341656523914409250
+        64494403632835900367214212
+    S:              436144185931243435999826839358905194550882593076
+        549397894319396224506236199721320058492879242825203371109347
+        90586553566954119129600874</sourcecode>
+<t>Alice checks to see that the signature verifies: </t>
+<sourcecode>S.B = R + kA =
+    X:              381725069147841098542944450544219286996775038141
+        64177784308000277737543169610
+    Y:              169297907492541974071353383324007483012643284758
+        54751126110565040021049663201</sourcecode>
+</section>
+<section title="Shamir Threshold Signature Ed25519" anchor="n--shamir-threshold-signature-ed25519-"><t>The administrator creates the composite key pair </t>
+<sourcecode>ED25519Aggregate Key (ED25519)
+    UDF:            ZAAA-GTSI-GQED-255X-XAGG-REGA-TEXK-EY
+    Scalar:         367238470592488326468789252109412889361910680229
+        03089760692844779165588879504
+    Encoded Private
+  FE 48 94 1F  EB 3D 28 E1  61 81 E2 1E  E1 CF F2 1E
+  1E 70 91 30  DF 98 9F 1C  34 EB BB 74  C5 C8 07 EB
+    X:              143576564277195758046684172284175869008525477709
+        640743490221115123376609940386394888392330104965579307772627
+        313244177612005636942740116142030215202393600
+    Y:              844838272625277895849027219595751726665225134917
+        547580682441821283235675507225396641352769322822815561632929
+        543097074319051436285787045255908364074589900
+    Encoded Public
+  DF E8 0A 2B  E9 6C 53 C0  AB 9B BC BC  39 95 9A 61
+  9C 33 2E 22  24 A7 F7 F2  21 06 AC 6D  01 5D 0B E2</sourcecode>
+<t>Three key shares are required for Alice, Bob and Carol with a threshold of two.  The parameters of the Shamir Secret Sharing polynomial are: </t>
+<sourcecode>a0 =    367238470592488326468789252109412889361910680229030897606928
+            44779165588879504
+a1 =    300818222080898117062074906765985223768123140221128913697047
+            9299607269873264</sourcecode>
+<t>The key share values for the participants are </t>
+<sourcecode>xa =    1
+ya =    354700139339650274763374146338616996958671762821484086765356
+            9387345587497823
+
+xb =    2
+yb =    655518361420548391825449053104602220726794903042613000462404
+            8686952857371087
+
+xc =    3
+yc =    232636025768220287490205303566288020409206407325751153559257
+            7048274672993362</sourcecode>
+<t>Alice and Carol are selected to sign the message "This is another test" </t>
+<t>The Lagrange coefficients are: </t>
+<sourcecode>la =    361850278866613110698659328152149712042855817968995380300097
+            5469142727125496
+lc =    361850278866613110698659328152149712042855817968995380300097
+            5469142727125494</sourcecode>
+<t>Alice and Carol select their values ra, rc </t>
+<sourcecode>ra =    924116774562099226813582901653273644725878704438046662429694
+            008360855923557
+Ra =
+  7A FB D6 8D  73 7E 77 55  AD AD AC 90  1B 25 F1 06
+  E9 95 8B A3  B0 EA 5D C7  2E 8A 27 7C  51 7F D3 88
+
+rc =    588388028227239746991198581938638479231747984085073329605533
+            9190739989489774
+Rc =
+  54 A7 03 70  EC 79 A6 8F  94 0A D4 AF  FB 19 4E 4B
+  B7 1B C3 AB  E0 35 CF C7  36 8A 0D A3  73 7F 76 45</sourcecode>
+<t>The composite value R = R<sub>a</sub> + R<sub>c</sub> </t>
+<sourcecode>R =
+  16 B4 4C EF  33 96 A1 9B  F0 B8 9A 31  C9 4A 6C EC
+  7D 4C 9E A9  27 2F 4B 73  92 CB C7 FB  BE 81 A8 9C</sourcecode>
+<t>The value k is  </t>
+<sourcecode>k =     385527803984509368063811550663791169829714063352459728031395
+            0227543268018859</sourcecode>
+<t>The values R and k (or the document to be signed) and the  Lagrange coefficients are passed to Alice and Carol who use them to  calculate their secret scalar values: </t>
+<sourcecode>sa =    170199930142862301446401891355775783395151826263230749847937
+            8611875654121240
+sc =    607382544849116077652216004521155413881108432275115183820566
+            2414148117754308</sourcecode>
+<t>The signature contributions can now be calulated: </t>
+<sourcecode>Sa =    331871833852677303236535311571124917043611873695587436309474
+            6747705281834183
+Sc =    377531132853573535102137555010538269096952878425692227526294
+            6965846183250952</sourcecode>
+<t>The dealer calculates the composite value S = S<sub>a</sub> + S<sub>b</sub> </t>
+<sourcecode>S =     709402966706250838338672866581663186140564752121279663835769
+            3713551465085135</sourcecode>
+<t>The dealer checks to see that the signature verifies: </t>
+<sourcecode>S.B = R + kA =
+    X:              300707114468042274831521920951164646805554784917
+        32651072740727841285196821932
+    X:              416147647870628811329286453121498267508892463013
+        00415051082589629886510462882</sourcecode>
+</section>
+<section title="Shamir Threshold Signature Ed448" anchor="n--shamir-threshold-signature-ed448-"><t>The administrator creates the composite key pair </t>
+<sourcecode>ED448Aggregate Key (ED448)
+    UDF:            ZAAA-ITSI-GQED-44XA-GGRE-GATE-XKEY
+    Scalar:         723088510822916843359337925516642493307623385482
+        113107480846498794254549074097051759295396782499503452909258
+        978468506553055366989547456
+    Encoded Private
+  59 DC 8A 5F  5E AF 8C FA  96 19 F8 EE  78 13 00 12
+  33 0E 12 80  2D 25 E6 EF  E8 E2 56 B5  83 6A 0C CF
+  DC 11 96 A5  A5 D1 39 AA  34 25 0B 52  ED 9F 38 92
+  5D 9F 7B BC  B9 BC 86 45
+    X:              600163199260212879671026282440221570752543874569
+        276531213297382365938924845597497264583528185273760383031589
+        25167107013312482098672476
+    Y:              568007995844826855892481230051783440873263817862
+        016100095069663100696528804467952219402043387612562057320585
+        561865068046226655443122582
+    Encoded Public
+  ED C3 90 99  38 0B 8F CD  60 29 24 04  6C DE 52 33
+  A2 07 3E 56  8D 27 B5 B9  21 60 CF E9  E7 9D D6 4A
+  11 47 20 E6  9D FE 75 C7  04 14 70 18  B4 52 10 83
+  D0 EC 98 BD  F5 E6 E3 D5  80</sourcecode>
+<t>Three key shares are required for Alice, Bob and Carol with a threshold of two.  The parameters of the Shamir Secret Sharing polynomial are: </t>
+<sourcecode>a0 =    723088510822916843359337925516642493307623385482113107480846
+            49879425454907409705175929539678249950345290925897846850
+            6553055366989547456
+a1 =    124546903715248336382344459264576159565355124528114391873389
+            19451094511213020194796920303798079400383923871243896318
+            6659080934201094004</sourcecode>
+<t>The key share values for the participants are </t>
+<sourcecode>xa =    1
+ya =    120796690242558289192358576893214118519337149322909439072745
+            49412461564535814065686371541359652400343890679658106504
+            3993041277752042344
+
+xb =    2
+yb =    636339128839049029373720841857891444962819336791943158757621
+            38840414753526803019116722696285625631314835215310936568
+            347348456093486569
+
+xc =    3
+yc =    647113552525151668238559147836417047322671803547919267877878
+            35562138616954653813697299789747272591907636340408080927
+            01655634434930794</sourcecode>
+<t>Alice and Carol are selected to sign the message "This is another test" </t>
+<t>The Lagrange coefficients are: </t>
+<sourcecode>la =    908548405369508613186654759860005667942051700859147575351862
+            74897573001980769792858097877645846187981655146854545831
+            152386877929824891
+lc =    908548405369508613186654759860005667942051700859147575351862
+            74897573001980769792858097877645846187981655146854545831
+            152386877929824889</sourcecode>
+<t>Alice and Carol select their values ra, rc </t>
+<sourcecode>ra =    323156078283884679379758712191392249006140665729803045675919
+            14376580121834441426575847726858229018090127521398441370
+            865064813639685231
+Ra =
+  40 76 1E CD  A1 7F D2 36  75 18 E8 EF  93 8D D0 E4
+  B2 BB 93 4B  22 0F B0 72  8F A6 D4 E3  1C 90 FB 26
+  33 11 29 32  4E 40 74 E8  4F 93 E9 25  67 17 A5 0A
+  2D 14 68 6B  BD 3A 3A 6A  80
+
+rc =    164211353394251839990927936554298744514341095792524829219742
+            90225063139706778444099543889978599285192706153570810297
+            6961499829543648061
+Rc =
+  E8 4D 85 E5  6E C0 CC 1E  E4 52 5A C6  87 05 FE 42
+  2B F5 C2 69  F4 C6 B5 42  04 3C E1 EF  0A 55 CE 27
+  3A 20 C7 A5  90 1E 4A 70  6C FA 7E DB  08 D6 4D D5
+  1A 4B 11 CA  05 BD 01 83  80</sourcecode>
+<t>The composite value R = R<sub>a</sub> + R<sub>c</sub> </t>
+<sourcecode>R =
+  F5 3B 05 4F  29 C3 20 93  54 6F 20 7C  27 AC 82 50
+  9B 7A 01 CC  CF 04 33 65  BC 69 36 A4  E9 DB EA B5
+  FC 04 3B 6F  3B 84 52 BD  1F 3B 3E BE  28 68 C8 DA
+  55 41 07 B3  69 0A D4 1D  80</sourcecode>
+<t>The value k is  </t>
+<sourcecode>k =     554561129496372976375803872283732809992279799623407386193856
+            51210490548814806292645780126252701556951350519506850800
+            835623063439873033</sourcecode>
+<t>The values R and k (or the document to be signed) and the  Lagrange coefficients are passed to Alice and Carol who use them to  calculate their secret scalar values: </t>
+<sourcecode>sa =    181195035363837433788537865339821177779005723984364158609118
+            24118692346803721098529557312039478600515836019487159756
+            5989561916628063516
+sc =    178474113311275964296138156232819048351796981154089918730983
+            15801703907311380689503133076580432874636792847668868761
+            5953945938642184382</sourcecode>
+<t>The signature contributions can now be calulated: </t>
+<sourcecode>Sa =    446363631005826811322134454837889205549517466650848720366677
+            76543451474805061561816304432955265555080002248647565843
+            543903708616451595
+Sc =    762061351712675406367207076788921252089923623533667663099153
+            59753981374912819089250199581662471555034538471281846454
+            181463066258932119</sourcecode>
+<t>The dealer calculates the composite value S = S<sub>a</sub> + S<sub>b</sub> </t>
+<sourcecode>S =     120842498271850221768934153162681045763944109018451638346583
+            13629743284971788065106650401461773711011454071992941229
+            7725366774875383714</sourcecode>
+<t>The dealer checks to see that the signature verifies: </t>
+<sourcecode>S.B = R + kA =
+    X:              399203064853108721276355685657212014330788081264
+        76046846913419523014341563663
+    X:              547637073857949439568813016131176290222688237991
+        51578124102822725095518868248</sourcecode>
+</section>
+</section>
+<section title="Security Considerations" anchor="n-security-considerations"><t>All the security considerations of <xref target="RFC7748"></xref>, <xref target="RFC8032"></xref> and <xref target="draft-hallambaker-threshold"></xref> apply and are hereby incorporated by reference.</t>
+<section title="Rogue Key attack" anchor="n-rogue-key-attack"><t>The rogue key attack described in  <xref target="draft-hallambaker-threshold"></xref> is of particular concern to generation of threshold signatures.</t>
+<t>If <em>A</em> and <em>B</em> are public keys, the intrinsic degree of trust in the composite keypair <em>A</em> + <em>B</em> is that of the lesser of <em>A</em> and <em>B</em>.</t>
+</section>
+<section title="Disclosure or reuse of the value r" anchor="n-disclosure-or-reuse-of-the-value-r"><t>As in any Schnorr signature scheme, compromise of the value <em>r</em> results in compromise of the private key. The base signature specification <xref target="RFC8032"></xref> describes a deterministic construction of <em>r</em> that ensures confidentiality and uniqueness for a given value of <em>k</em>.</t>
+<t>As described above, this approach is not applicable to the generation of values of <em>r<sub>i</sub></em> to compute threshold signature contributions. Accordingly the requirements of <xref target="RFC4086"></xref> regarding requirements for randomness <bcp14>MUST</bcp14> be observed.</t>
+<t>Implementations <bcp14>MUST NOT</bcp14> use a deterministic generation of the value <em>r<sub>i</sub></em> for any threshold contribution except for calculating the final contribution when all the other parameters required to calculate <em>k</em> are known.</t>
+</section>
+<section title="Resource exhaustion attack" anchor="n-resource-exhaustion-attack"><t>Implementation of the general two stage signing algorithm requires that signers track generation and use of the values <em>r<sub>i</sub></em> to avoid reuse for different values of <em>R<sub>i</sub></em>. Implementations <bcp14>MUST</bcp14> ensure that exhaustion of this resource by one party does not cause other parties to be denied service.</t>
+</section>
+<section title="Signature Uniqueness" anchor="n-signature-uniqueness"><t>Signatures generated in strict conformance with <xref target="RFC8032"></xref> are guaranteed to be unique such that signing the same document with the same key will always result in the same signature value.</t>
+<t>The signature modes described in this document are computationally indistinguishable from those created in accordance with <xref target="RFC8032"></xref> but are not unique.</t>
+<t>Implementations <bcp14>MUST</bcp14> not use threshold signatures in applications where signature values are used in place of cryptographic digests as unique content identifiers.</t>
+</section>
+</section>
+<section title="IANA Considerations" anchor="n-iana-considerations"><t>This document requires no IANA actions.</t>
+</section>
+<section title="Acknowledgements" anchor="n-acknowledgements"><t>[TBS]</t>
+</section>
+</middle>
+<back>
+<references title="Normative References"><reference anchor="RFC8032"><front>
+<title>Edwards-Curve Digital Signature Algorithm (EdDSA)</title>
+<author fullname="S. Josefsson" initials="S." surname="Josefsson"><organization/>
+<address>
+</address>
+</author>
+<author fullname="I. Liusvaara" initials="I." surname="Liusvaara"><organization/>
+<address>
+</address>
+</author>
+<date month="January" year="2017"/>
+</front>
+<seriesInfo name="RFC" value="8032"/>
+<seriesInfo name="DOI" value="10.17487/RFC8032"/>
+</reference>
+<reference anchor="RFC2119"><front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+<reference anchor="RFC7748"><front>
+<title>Elliptic Curves for Security</title>
+<author fullname="A. Langley" initials="A." surname="Langley"><organization/>
+<address>
+</address>
+</author>
+<author fullname="M. Hamburg" initials="M." surname="Hamburg"><organization/>
+<address>
+</address>
+</author>
+<author fullname="S. Turner" initials="S." surname="Turner"><organization/>
+<address>
+</address>
+</author>
+<date month="January" year="2016"/>
+</front>
+<seriesInfo name="RFC" value="7748"/>
+<seriesInfo name="DOI" value="10.17487/RFC7748"/>
+</reference>
+<reference anchor="RFC4086"><front>
+<title>Randomness Requirements for Security</title>
+<author fullname="D. Eastlake 3rd" initials="D." surname="Eastlake 3rd"><organization/>
+<address>
+</address>
+</author>
+<author fullname="J. Schiller" initials="J." surname="Schiller"><organization/>
+<address>
+</address>
+</author>
+<author fullname="S. Crocker" initials="S." surname="Crocker"><organization/>
+<address>
+</address>
+</author>
+<date month="June" year="2005"/>
+</front>
+<seriesInfo name="BCP" value="106"/>
+<seriesInfo name="RFC" value="4086"/>
+<seriesInfo name="DOI" value="10.17487/RFC4086"/>
+</reference>
+<reference anchor="draft-hallambaker-threshold"><front>
+<title>Threshold Modes in Elliptic Curves</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="3" month="September" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-threshold-03"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-threshold-03.txt"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-udf"><front>
+<title>Mathematical Mesh 3.0 Part II: Uniform Data Fingerprint.</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-udf-10"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-udf-10.txt"/>
+</reference>
+</references>
+<references title="Informative References"><reference anchor="Komlo"><front>
+<title>FROST: Flexible Round-Optimized Schnorr Threshold Signatures</title>
+<author fullname="Chelsea Komlo" initials="C." surname="Komlo"><organization>University of Waterloo, Zcash Foundation</organization>
+<address>
+</address>
+</author>
+<author fullname="Ian Goldberg" initials="I." surname="Goldberg"><organization>University of Waterloo</organization>
+<address>
+</address>
+</author>
+<date year="2020"/>
+</front>
+</reference>
+<reference anchor="Shamir79"><front>
+<title>How to share a secret.</title>
+<author fullname="Adi Shamirt" initials="A." surname="Shamir"><address>
+</address>
+</author>
+<date year="1979"/>
+</front>
+</reference>
+<reference anchor="RFC5860"><front>
+<title>Requirements for Operations, Administration, and Maintenance (OAM) in MPLS Transport Networks</title>
+<author fullname="M. Vigoureux" initials="M." surname="Vigoureux"><organization/>
+<address>
+</address>
+</author>
+<author fullname="D. Ward" initials="D." surname="Ward"><organization/>
+<address>
+</address>
+</author>
+<author fullname="M. Betts" initials="M." surname="Betts"><organization/>
+<address>
+</address>
+</author>
+<date month="May" year="2010"/>
+</front>
+<seriesInfo name="RFC" value="5860"/>
+<seriesInfo name="DOI" value="10.17487/RFC5860"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-developer"><front>
+<title>Mathematical Mesh: Reference Implementation</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-developer-10"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-10.txt"/>
+</reference>
+</references>
+</back>
+</rfc>

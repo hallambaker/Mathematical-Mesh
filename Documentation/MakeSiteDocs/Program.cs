@@ -225,7 +225,7 @@ namespace ExampleGenerator {
             MakeDocs();
             }
 
-        public bool All = false;
+        public bool All = true;
 
 
 

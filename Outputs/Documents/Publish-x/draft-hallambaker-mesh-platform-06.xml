@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="info" docName="draft-hallambaker-mesh-platform-06" indexInclude="false" ipr="trust200902" prepTime="2020-07-27T10:03:17Z" scripts="Common,Latin" sortRefs="true" submissionType="independent" symRefs="true" tocDepth="3" tocInclude="true" version="3" xml:lang="en"><front>
+<title abbrev="Mathematical Mesh Platform Configuration">Mathematical Mesh: Platform Configuration</title>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-platform" stream="independent"/>
+<author fullname="Phillip Hallam-Baker" initials="P. M." surname="Hallam-Baker"><address>
+<email>phill@hallambaker.com</email>
+</address>
+</author>
+<date day="27" month="July" year="2020"/>
+<area/>
+<workgroup/>
+<abstract>
+<t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices. This document describes how Mesh profiles are stored for application access on Windows, Linux and OSX platforms.</t>
+<t>This document is also available online at <eref target="http://prismproof.org/Documents/draft-hallambaker-mesh-platform.html"></eref>.</t>
+</abstract>
+</front>
+<middle>
+<section title="Introduction" anchor="n-introduction"><t>This document describes recommended platform specific configuration for Mathematical Mesh applications. The use of common conventions for storage of profiles and private keys allows mesh enabled applications to interoperate on the same machine.</t>
+<t>Protecting private key material from disclosure to other processes presents complex and difficult technical challenges. Ensuring that a key is properly erased from storage before memory is released relies on a complex series of assumptions about memory management at the compiler, operating system and the platform level. </t>
+<t>For maximum security, the use of private key storage facilities provided by the platform is preferred.</t>
+</section>
+<section title="Definitions" anchor="n-definitions"><t>This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.</t>
+<section title="Requirements Language" anchor="n-requirements-language"><t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in RFC 2119 <xref target="RFC2119"></xref>.</t>
+</section>
+<section title="Defined Terms" anchor="n-defined-terms"><t>The terms of art used in this document are described in the <em>Mesh Architecture Guide</em> <xref target="draft-hallambaker-mesh-architecture"></xref>.</t>
+</section>
+<section title="Related Specifications" anchor="n-related-specifications"><t>The architecture of the Mathematical Mesh is described in the <em>Mesh Architecture Guide</em> <xref target="draft-hallambaker-mesh-architecture"></xref>. The Mesh documentation set and related specifications are described in this document.</t>
+</section>
+<section title="Implementation Status" anchor="n-implementation-status"><t>The implementation status of the reference code base is described in the companion document <xref target="draft-hallambaker-mesh-developer"></xref>.</t>
+</section>
+</section>
+<section title="Mesh Content" anchor="n-mesh-content"><t>The catalogs and spools associated with a user's Mesh profiles and accounts are stored in Dare Containers.</t>
+<t>This section describes the conventions used to describe </t>
+<section title="Directory Layout" anchor="n-directory-layout"><dl>
+<dt>host.dare</dt>
+<dd>
+<t>The CatalogHost container with entries for each Mesh</t>
+</dd>
+<dt>-udf&gt;.dcat`</dt>
+<dd>
+<t>The CatalogDevice container for the Mesh with -udf&gt;</t>
+</dd>
+<dt>-udf&gt;/</dt>
+<dd>
+<t>Directory containing catalogs for the account -udf&gt;</t>
+</dd>
+<dt>-udf&gt;/CatalogApplication.dcat</dt>
+<dd>
+<t>The applications catalog for the account -udf&gt;</t>
+</dd>
+<dt>-udf&gt;/CatalogContact.dcat</dt>
+<dd>
+<t>The contacts catalog for the account -udf&gt;</t>
+</dd>
+</dl>
+<section title="CatalogHost" anchor="n-cataloghost"><t>A catalog of <tt>DeviceConnection</tt>, <tt>AdminConnection</tt> and <tt>PendingConnection</tt> entries describing Mesh connections for the device on which the container is hosted.</t>
+<dl>
+<dt>PendingConnection </dt>
+<dd>
+<t>Describes a pending request to join a Mesh. This entry <bcp14>SHOULD</bcp14> be deleted once the request is either completed, refused or has expired.</t>
+</dd>
+<dt>DeviceConnection</dt>
+<dd>
+<t>Describes a non-administrative connection to a Mesh</t>
+</dd>
+<dt>AdminConnection</dt>
+<dd>
+<t>Describes a connection with full administration privileges to a Mesh</t>
+</dd>
+</dl>
+</section>
+<section title="CatalogDevice" anchor="n-catalogdevice"><t>Holds the <tt>CatalogEntryDevice</tt> entries that describe all the devices connected to the Mesh whose UDF fingerprint matches the filename.</t>
+</section>
+<section title="CatalogApplication" anchor="n-catalogapplication"><t>Holds application information that is shared across all the administration devices connected to an account.</t>
+</section>
+<section title="CatalogContact" anchor="n-catalogcontact"><t>Holds the contact information corresponding to the account.</t>
+</section>
+<section title="CatalogRecrypt" anchor="n-catalogrecrypt"><t>Holds recryption entries to be provisioned to a recryption service associated with the account. The entries are encrypted under the public encryption key of the service and indexed under the UDF of the corresponding decryption key.</t>
+</section>
+</section>
+<section title="Container Locking" anchor="n-container-locking"><t>A combination of file access protections and system locks are used to prevent container data being corrupted through conflicting concurrent access.</t>
+<ul>
+<li>Since Dare Containers are append only, the scope for read/write conflict is limited to actions that cause the end of file marker to change. It is thus only necessary for processes to acquire a lock on the file when: </li>
+<li>Reading the file to update the last position in the file.</li>
+<li>Writing to the file to append an object.</li>
+</ul>
+<t>A single system-wide names MUTEX is used.</t>
+<t>To write to the container, a process <bcp14>MUST</bcp14> acquire the named read MUTEX, performs the write operation and releases it. </t>
+<t>A process reading the container <bcp14>SHOULD NOT</bcp14> acquire the container MUTEX to determine that the end of file marker is greater than zero or that the end of file marker has moved. A process <bcp14>MUST</bcp14> acquire the container MUTEX to update the value of the end of file marker so as to ensure that any pending write operation has completed.</t>
+<t>The single lock approach was chosen in preference to more sophisticated approaches involving multiple concurrent read locks because the time to acquire the lock is typically greater than the time required to update the end of file position.</t>
+</section>
+</section>
+<section title="Platform Specific Bindings" anchor="n-platform-specific-bindings"><section title="Windows" anchor="n-windows"></section>
+<section title="OSX" anchor="n-osx"></section>
+<section title="Linux" anchor="n-linux"></section>
+</section>
+<section title="IANA Considerations" anchor="n-iana-considerations"><t>None</t>
+</section>
+<section title="Acknowledgements" anchor="n-acknowledgements"><t>TBS</t>
+<t></t>
+</section>
+</middle>
+<back>
+<references title="Normative References"><reference anchor="RFC2119"><front>
+<title>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author fullname="S. Bradner" initials="S." surname="Bradner"><organization/>
+<address>
+</address>
+</author>
+<date month="March" year="1997"/>
+</front>
+<seriesInfo name="BCP" value="14"/>
+<seriesInfo name="RFC" value="2119"/>
+<seriesInfo name="DOI" value="10.17487/RFC2119"/>
+</reference>
+</references>
+<references title="Informative References"><reference anchor="draft-hallambaker-mesh-architecture"><front>
+<title>Mathematical Mesh 3.0 Part I: Architecture Guide</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="9" month="March" year="2020"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-architecture-13"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-13.txt"/>
+</reference>
+<reference anchor="draft-hallambaker-mesh-developer"><front>
+<title>Mathematical Mesh: Reference Implementation</title>
+<author fullname="Phillip Hallam-Baker" initials="P" surname="Hallam-Baker"><organization/>
+<address>
+</address>
+</author>
+<date day="23" month="October" year="2019"/>
+</front>
+<seriesInfo name="Internet-Draft" value="draft-hallambaker-mesh-developer-09"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-09.txt"/>
+</reference>
+</references>
+</back>
+</rfc>

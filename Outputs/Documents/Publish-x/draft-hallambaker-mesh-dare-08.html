@@ -1,0 +1,3251 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="Common,Latin" name="scripts">
+    <meta content="initial-scale=1.0" name="viewport">
+    <title>Mathematical Mesh 3.0 Part III : Data At Rest Encryption (DARE)</title>
+    <meta name="author" content="Phillip Hallam-Baker">
+    <meta name="description" content="This document describes the Data At Rest Encryption (DARE) Envelope and Container syntax.  The DARE Envelope syntax is used to digitally sign, digest, authenticate, or encrypt arbitrary content data. The DARE Container syntax describes an append-only sequence of entries, each containing a DARE Envelope. DARE Containers may support cryptographic integrity verification of the entire data container content by means of a Merkle tree.  [Note to Readers] Discussion of this draft takes place on the MATHMESH mailing list (mathmesh@ietf.org), which is archived at https://mailarchive.ietf.org/arch/search/?email_list=mathmesh. This document is also available online at . ">
+    <meta content="rfctool 2.0" name="generator">
+    <link href="#copyright" rel="license">
+    <style type="text/css">
+/* fonts */
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans'); /* Sans-serif */
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif'); /* Serif (print) */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono'); /* Monospace */
+
+@viewport {
+  zoom: 1.0;
+  width: extend-to-zoom;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+/* general and mobile first */
+html {
+}
+body {
+  max-width: 90%;
+  margin: 1.5em auto;
+  color: #222;
+  background-color: #fff;
+  font-size: 14px;
+  font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 0.5em;
+  font-weight: bold;
+  line-height: 1.3;
+}
+#title {
+  clear: both;
+  border-bottom: 1px solid #ddd;
+  margin: 0 0 0.5em 0;
+  padding: 1em 0 0.5em;
+}
+.filename
+{
+    font-size: 20px;
+    color: darkgray;
+}
+.author {
+  padding-bottom: 4px;
+}
+h1 {
+  font-size: 26px;
+  margin: 1em 0;
+  color: blueviolet;
+}
+h2
+{
+    font-size: 22px;
+    margin-top: -20px; /* provide offset for in-page anchors */
+    padding-top: 33px;
+    color: blueviolet;
+}
+h3
+{
+    font-size: 18px;
+    margin-top: -36px; /* provide offset for in-page anchors */
+    padding-top: 42px;
+    color: blueviolet;
+}
+h4
+{
+    font-size: 16px;
+    margin-top: -36px; /* provide offset for in-page anchors */
+    padding-top: 42px;
+    color: blueviolet;
+}
+h5, h6 {
+  font-size: 14px;
+}
+#n-copyright-notice {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+/* general structure */
+p {
+  padding: 0;
+  margin: 0 0 1em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+.alignCenter.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+  font-weight: bold;
+}
+    dl.nohang > dt
+    {
+        float: none;
+        font-weight: bold;
+    }
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #3E8EDE;
+}
+a[href]:hover {
+  background-color: #f2f2f2;
+}
+figcaption a[href],
+a[href].selfRef {
+  color: blueviolet;
+}
+/* XXX probably not this:
+a.selfRef:hover {
+  background-color: transparent;
+  cursor: default;
+} */
+
+/* Figures */
+tt, code, pre, code {
+  background-color: #f9f9f9;
+  font-family: 'Roboto Mono', monospace;
+}
+pre {
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 1em;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption {
+  font-style: italic;
+  margin: 0 0 1em 0;
+}
+@media screen {
+  pre {
+    overflow-x: auto;
+    max-width: 100%;
+    max-width: calc(100% - 22px);
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 1.2em 2em;
+}
+blockquote {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #e9e9e9;
+}
+tr:nth-child(2n+1) > td {
+  background-color: #f5f5f5;
+}
+table caption {
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  color: #777;
+  text-decoration: none;
+  visibility: hidden;
+  user-select: none;
+  -ms-user-select: none;
+  -o-user-select:none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+@media screen {
+  aside:hover > a.pilcrow,
+  p:hover > a.pilcrow,
+  blockquote:hover > a.pilcrow,
+  div:hover > a.pilcrow,
+  li:hover > a.pilcrow,
+  pre:hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: 0.9em;
+}
+#identifiers dt {
+  width: 3em;
+  clear: left;
+}
+#identifiers dd {
+  float: left;
+  margin-bottom: 0;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc  {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+nav.toc ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+nav.toc li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+/* references */
+.reference dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.reference dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.reference .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 600px) {
+  .index ul {
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+  }
+  .index ul ul {
+    -moz-column-count: 1;
+    -moz-column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  font-family: "Noto Sans",Arial,Helvetica,sans-serif;
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #b76427;
+  background-color: rgba(249, 232, 105, 0.3);
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: rgba(249, 232, 105, 0.3);
+  border-radius: 3px;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 1023px) {
+  body {
+    padding-top: 2em;
+  }
+  #title {
+    padding: 1em 0;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-top: -18px;  /* provide offset for in-page anchors */
+    padding-top: 38px;
+  }
+  #identifiers dd {
+    max-width: 60%;
+  }
+  /* Just get rid of the idiot stuff: */
+  /*
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+    border-bottom: 1px solid #ccc;
+  }
+  #toc h2 {
+    margin: -1px 0 0 0;
+    padding: 4px 0 4px 6px;
+    padding-right: 1em;
+    min-width: 190px;
+    font-size: 1.1em;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { 
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 6px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }*/
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 1024px) {
+  body {
+    max-width: 724px;
+    margin: 42px auto;
+    padding-left: 1.5em;
+    padding-right: 29em;
+  }
+  #toc {
+    position: fixed;
+    top: 42px;
+    right: 42px;
+    width: 25%;
+    margin: 0;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  #toc h2 {
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 0;
+    overflow: auto;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+	/*
+  body {
+    font-family: 'Noto Serif', "Times New Roman", Times, serif;
+    width: 100%;
+  }*/
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+	break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+.ears thead .left {
+  string-set: ears-top-left content();
+}
+
+.ears thead .center {
+  string-set: ears-top-center content();
+}
+
+.ears thead .right {
+  string-set: ears-top-right content();
+}
+
+.ears tfoot .left {
+  string-set: ears-bottom-left content();
+}
+
+.ears tfoot .center {
+  string-set: ears-bottom-center content();
+}
+
+.ears tfoot .right {
+  string-set: ears-bottom-right content();
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+  @top-left {
+    content: 'Internet-Draft';
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-left {
+    content: string(ears-top-left);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-center {
+    content: string(ears-top-center);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-right {
+    content: string(ears-top-right);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @bottom-left {
+    content: string(ears-bottom-left);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-center {
+    content: string(ears-bottom-center);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-right {
+      content: '[Page ' counter(page) ']';
+      vertical-align: top;
+      border-top: solid 1px #ccc;
+  }
+}
+    </style>
+    <link href="rfc-local.css" rel="stylesheet" type="text/css">
+    <link href="urn:issn:2070-1721" rel="alternate">
+<link rel="icon" href="data:image/svg+xml;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAJuwAACbsBBxD8PQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA6LSURBVHic7d1rcFTlGQfw/9lLkk0IuUBQNjEQyIUEAkUIkg7UcFMJ4I3BQpR2xo626nSmln5o7XQInY52OtTp1H5wEMapMxVEKGgCKpchCKKIgEruN5bcISG3zW2zl9MPKWjMbrK72XPe97zn+X3MnssD85/d57znnPeV8H+FKHwIwG8BLAcQA0L41wPgcwnS6zux8yQAGAFgF3btBLAPQCqACHb1ERKQCIxk9pk85MklKDkr7cKuDTLkYtaVETJZEqR8gwx5B+tCCAkFGfIOA4Ac1oUQEiLLDACmsK6CkBCJNrCugJBQokAToVCgiVAo0EQoFGgiFAo0EQoFmgiFAk2EQoEmQqFAE6FQoIlQKNBEKBRoIhQKNBEKBZoIhQJNhEKBJkKhQBOhUKCJUCjQRCgUaCIUCjQRCgWaCIUCTYRCgSZCoUAToVCgiVAo0EQoFGgiFBPrAu4wmAyIT4tHREwEwqaEsS5nFOeAE40XGlU9pzHMiFk/maXqOf3h6HXA3mJH/61+uIfdrMsZg3mgY5JjsPovq5G5ORPmSDPrcrzyuDx4Pel19N/sV+2c4THh2H5yu2rnC5TsltH4eSPOvXoOtR/Vsi7nLqYtR9zcODz/1fNYuH0ht2EGRn49FmxdwLoMrkhGCckrklFwrACLfraIdTl3MQ10XmEeIhMiWZbgt4XPLGRdApckScKaV9cAEutKRjAN9H2597E8fUCsS62YnjmddRlcik6MhiXewroMADTKERD6lvbO4/LA0etgXQYAxoFuON/A8vQByy7I5uanlScN5xrgcXpYlwGAcaDP/vksBjsHWZYQkNjZsZi1kr+hNJaGuodw4ncnWJdxF9NAd9V34e2Vb6PlUgvLMgJCbccIj8uD0gOl2Lt8L1qvtLIu5y7m49Dt5e1464G3kLgsEfMen4f0jemYsWAG67J8ytqSheO/Pg63g7+bCkqTZRmNnzWidH8pyt4vw0D7AOuSxmAeaACADDRfbEbzxWac/sNpRCdGI/PJTKx8ZSWm3MvXMooRsRFI35iOisMVrEtRleyWceDxA6gurmZdyri4HOWwN9vx5RtfYs+SPeiq62Jdzhh6bDu+eecb7sMMcBroO+wtdux/dD93P+9p+WncjLuqpez9MtYl+IXrQAMjPfaF3RdYlzGKMcyI+T+dz7oMVfXc6GFdgl+4DzQAXPj7BW4G7u9Y+LS+2g57q511CX7RRKCHuoZwdd9V1mWMkvTjJMTNiWNdhmp4a/t80USgAeDynsuQZZl1GXdJkqTLi0PeaSbQHZUd3N2AoUDzRzOBBoDS/aWsSxglPi0eicsSWZdBvkdbgX6vFLKbn7YDoG9p3mgq0H2tfbjx6Q3WZYyyYOsCGMzB/zcaw4whrIZoKtAAUHqAr7YjMiESqQ+nBrWvyWKCNcca4or0TXOBLnu/jLu3jYNtO1JWpSAsiq833LVOc4Ee6hpC/cl61mWMkvFYBsJjwgPeL21DmgLV6JvmAg0A1/ZfY13CKKYIEzKfzAx4v7R8CnSoaTLQlUcr4ex3si5jlEDbjhnZMxA7O1ahavRLk4F29jtRc7yGdRmjzM6bjan3TfV7+/SN6QpWo1+aDDTAX9shGaSRl2j9lL6BAq0EzQa65ngNhrqHWJcxir8zCFniLUh8gO4wKkGzgXY73Kg8Wsm6jFESshJw74/unXC7tPw0GEya/a/nmqb/V3m7yQIA2U9P3HbQcJ1yNB3o66evqzojqD+yC7IhGX3PRiMZJcxdN1fFivRF04H2uDwoP1zOuoxRoq3RSFmd4vPz5BXJsEzT1/uIatJ0oAH+HikFxh+TptENZWk+0A2fNXD3AmfW5iyfqxBQ/6wszQcaMn+v2JujzMh4NGPM32NTYpGQlcCgIv3QVKB9vZTKZduxfWzbQe2G8jQVaF9DYq1XWtFR0aFyNeObs3bOmGnM6Ha38jQV6PlPzYfJ4n06vrKDfLUdP1yXxRxlxqwHaSpepWkq0OFTw33+bPN4k+X7ox1z182FKYKPuTFFpqlAA76HxDoqO9D2dZvK1Yxv5pKZSJg/chFIoxvq0Fyg0/LTEDnd+8pZPF4c3lnGIm09BVoNmgu0wWxA1pYsr59d23+Nq9mVgJFfFOsSK6ITo1mXoguaCzQALNru/THN3sZeNF1oUrma8cUkx2DNa2tYl6Ebmgx0Um4SpqVP8/oZjxeHc9bOYV2Cbmgy0ACwYJv3pYpL3yuFx8XHEmNEfZoN9MKnF3pdM3CgfQC2MzbV6wlWTwNfz6FonWYDPd5EiTy2Hd501naio5KvO5xap9lAA77HpMsPlcM15FK5msBVHuHrFTIRaDrQ2duyvU526Oh1oO6TOgYVBabqwyrWJQhH04G2TLNg7sPeX2fibZqDHxq8PYjGzxtZlyEcTQca8L14T3VRNYb7hlWuxn9VRVXczXUtAs0HOuOxDETERoz5u3PAieoifheKpHZDGZoP9HgTJfLadrgdbtSf4msGVVFoPtCA79GO2o9rMXh7UOVqJlZ/qh7Ddn7bIS0TItCzHpzldaJEj9ODiiP8LTJP7YZyhAj0eBMl8naTRZZlVB/jt7fXOiECDfieKNF2xgZ7Cz/L+rZ82QJ7Mz/1iEaYQPuaKFH2yCg/xM/sStRuKEuYQAO+l3jgqe2oKqJAK0moQPta86/piyZ0X+9WuZqxuuq7cOvaLdZlCE2oQPskjzwnzVrVB/TtrDR9BBp8vEBL/bPydBPom9/eRHtZO7PzD3YOouF8A7Pz64VuAg2wbTtqjtfQq2Eq0FWgr73LbpoDajfUoatAd9V1ofVyq+rndTvcmnjhQAS6CjTA5uLw+pnrcPQ6VD+vHukv0AdKIXvUbTuo3VCP7gJtb7GrOtogyzLXLxqIRneBBtRtO9qutKG3qVe18+mdLgNdfqgcHqc6Q2jUbqhLl4Ee6BhQ7RWoyg9o7g016TLQgDpP4PU09ODmtzcVPw/5jm4DXXGkAq5BZWdXqvqgCqCZClSl20AP24dRc7xG0XNQ/6w+3QYaULbtcPQ4cOPTG4odn3in60BXF1fD0aPMHbya4zVwD7sVOTbxTdeBdg25FGsLqN1gQ9eBBpSZXcnj9KD249qQH5dMTPeBrj9Zj/5b/SE9pu2sDUPdQyE9JvGP7gPtcXlCPvE4tRvsaCrQksHLoiohEOq2gx5GYkdTgQ6bEjbu5wZTcP+chnMNIXuAqO3rNnTb2E+ZoFdiBdoc3D9H9sgoO1gW1L4/RO0GW5oJtCXeMuE3sCncFPTxQ3WThdoNtjQT6OmZ0yfcxtei9v5oudSCzprOoPcHAHuzHS2XWyZ1DDI5mgl0QmbChNtMdoH4yU5zUFVEDyOxpplAp6xJmXCbpOVJMEeagz7Htf9MbrSj8ig9+8yaJgJtMBmQ+nDqhNuZIkzIeCwj6PN0VHYE/fzysH0YthJb0OcmoaGJQKdvTEdE3NiVrrzJfTl3UucK9uKw9pNauB30MBJrmgh07g7/Q2rNsU7qW7r0QGlQsyuFerjOaPY+NTAzytzTCjnuA526PhXJK5ID2ueh3Q/BHBVcL919vRvNF5sD2sfj8qDmWGhfFrDEW0J6vMmKnBb8CJKauA50WHQYNr65MeD94lPjsWnPpqDPG2jb0fhZIwY7Q7t83IzsGSE93mRNmTmFdQl+4TbQklHCE/9+AjHJMUHtn12Qjfx/5Qf1U1l2sCygZYuVeLN7/lPzQ37MybAutbIuwS98BloC8t/Ix7wn5k3qMDkv5aCguCDgb5e+1j7Yztr83j7U/XPGoxmTug5QQu7LuQiLHv/RAx5wF2hzlBlbDm7B0heWhuR4aflpeLH0RSx+dnFA39b+zq7UXtaOrrquIKv7TtiUMKSuT8Uj/3gEWw5ugSTxdRUWNzcOBcUFsOZYub5AlApRyM29raTlSdi0Z5Ni/aOtxIbiXxbjdvXtCbe1xFuwo3WHz4WI7jj/2nmcfuV0UPXEpsQiuyAb6RvSYc2xBv20oNp6GnpQ8d8KXNl7hemqCN5wEeiI2Ais/eta3P/c/Yo983yHa9CFU78/hYv/vDjhttuKtiF9Y/q42+zL3YemL5oCrmP5b5Zj3d/WBf2EIA9kWcbVvVdx7MVj3KxOYMxDXiHLAhKXJeLZc89idt5sVX5mDWYDUtenwmA0wHbGNu62kiQhc3Omz8/72vpwYseJgJ/fSFmdgs3vboZk5Pi32w+SJGHmkpmADG7ukjL9ejCGGbH16FYmQ0Ir/7gS9yy6Z9xtqj6sgnPA6fPz6qLqoOaaXvyLxQHvw7Ocl3JYl3AX00DHpsQyG9+UDNKEz4cM9w2P+3xzsKMbcSlxQe3Hq8jpkYiI9e/RBKUxDTTriVjczonP7+smi7PfifrTwc1g2nezL6j9eOVxeeAaUnaeQH8xDXT39W5ms3O6h91+vV1S81GN1ykJ6k7WBT3Z41dvfsVsNS4lVH1YRYG+49DWQ34No4XSsH0YR39+FJ21E7+h4na4vU5zMJlljus+qUPRc0VCzN3RcL4Bxb8qZl3GXVwM2xlMIyMPScuTEG2NRtSMqAnHfwMiA/23+tF/qx+3ym6h8khlQM9eJK9IxoM7Hxz1t8MFhzHQPjCpssxRZsxZOwcz75+JqIQoRN0ThfCp4ZM6ptJcQy70tfWht6kXthLbyISUzBP0HS4CTUioMG85CAklCjQRCgWaCIUCTYRCgSZCoUAToVCgiVAo0EQoFGgiFAo0EQoFmgiFAk2EQoEmQqFAE6FQoIlQKNBEKBRoIhQKNBEKBZoIhQJNhEKBJkKhQBOhUKCJUCjQRCgUaCIUCjQRCgWaCIUCTYRCgSZCoUAToVCgiVAo0EQoFGgiFAMAO+siCAmRHgOAS6yrICRELhkkSLtZV0FIKEiQdhtLUFK7Cqs8APIAaHvxaaJXsgTpTzux820jAJSg5NNVWHUeQAKA6QAsTMsjxD9dAM4AeKEQhe8AwP8A7VA52MoWrGIAAAAASUVORK5CYII=">  </head>
+  <body>
+    <table class="ears">
+      <thead>
+        <tr>
+          <td class="left"/>
+          <td class="center">Mesh: Data At Rest Encryption</td>
+          <td class="right">July 2020</td>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td class="left">Hallam-Baker</td>
+          <td class="center">Expires January 28, 2021</td>
+          <td class="right">[Page]</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div id="external-metadata" class="document-information">
+    </div>
+    <div id="internal-metadata" class="document-information">
+      <dl id="identifiers">
+        <dt class="label-workgroup">Workgroup:</dt>
+        <dd class="workgroup">Network Working Group</dd>
+        <dt class="label-stream">Stream:</dt>
+        <dd class="stream">Internet-Draft</dd>
+        <dt class="label-category">Intended status:</dt>
+        <dd class="category">Informational</dd>
+        <dt>Published:</dt>
+        <dd>
+          <time class="published" datetime="2020-07-27">27 July 2020</time>
+        </dd>
+        <dt class="label-issn">ISSN:</dt>
+        <dd class="issn">2070-1721</dd>
+        <dt>Expires</dt>
+        <dd>
+          <time class="expires" datetime="2021-01-28">28 January 2021</time>
+        </dd>
+        <dt>Authors:</dt>
+        <dd class="authors">
+          <div class="author">
+<div class="author-name">Phillip Hallam-Baker</div><div class="org">ThresholdSecrets.com</div>          </div>
+        </dd>
+      </dl>
+    </div>
+    <h1 id="title">
+      Mathematical Mesh 3.0 Part III : Data At Rest Encryption (DARE)
+      <h1 id="idnum">draft-hallambaker-mesh-dare-08</h1>
+    </h1>
+    <section id="abstract">
+      <h3>
+        <a class="selfRef" href="#abstract">Abstract</a>
+      </h3>
+      <p id="s-abstract-1">This document describes the Data At Rest Encryption (DARE) Envelope and Container syntax. <a class="pilcrow" href="#s-abstract-1">&para;</a></p>
+      <p id="s-abstract-2">The DARE Envelope syntax is used to digitally sign, digest, authenticate, or encrypt arbitrary content data.<a class="pilcrow" href="#s-abstract-2">&para;</a></p>
+      <p id="s-abstract-3">The DARE Container syntax describes an append-only sequence of entries, each containing a DARE Envelope. DARE Containers may support cryptographic integrity verification of the entire data container content by means of a Merkle tree. <a class="pilcrow" href="#s-abstract-3">&para;</a></p>
+      <p id="s-abstract-4">[Note to Readers]<a class="pilcrow" href="#s-abstract-4">&para;</a></p>
+      <p id="s-abstract-5">Discussion of this draft takes place on the MATHMESH mailing list (mathmesh@ietf.org), which is archived at https://mailarchive.ietf.org/arch/search/?email_list=mathmesh.<a class="pilcrow" href="#s-abstract-5">&para;</a></p>
+      <p id="s-abstract-6">This document is also available online at <a class="eref" href="http://mathmesh.com/Documents/draft-hallambaker-mesh-dare.html">http://mathmesh.com/Documents/draft-hallambaker-mesh-dare.html</a>.<a class="pilcrow" href="#s-abstract-6">&para;</a></p>
+    </section>
+    
+    <section id="n-status-of-this-memo">
+      <h3 id="bp-1">
+        <a class="selfRef" href="#bp-1"></a>
+        <a class="selfRef" href="#n-status-of-this-memo">Status of This Memo</a>
+      </h3>
+      <p id="bp-1-1">This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.<a class="pilcrow" href="#bp-1-1">&para;</a></p>
+      <p id="bp-1-2">Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts. The list of current Internet-Drafts is at <a class="eref" href="http://datatracker.ietf.org/drafts/current/">http://datatracker.ietf.org/drafts/current/</a>.<a class="pilcrow" href="#bp-1-2">&para;</a></p>
+      <p id="bp-1-3">Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."<a class="pilcrow" href="#bp-1-3">&para;</a></p>
+      <p id="bp-1-4">This Internet-Draft will expire on January 28, 2021<a class="pilcrow" href="#bp-1-4">&para;</a></p>
+    </section>
+    
+    <section id="n-copyright-notice">
+      <h3 id="bp-2">
+        <a class="selfRef" href="#bp-2"></a>
+        <a class="selfRef" href="#n-copyright-notice">Copyright Notice</a>
+      </h3>
+      <p id="bp-2-1">Copyright (c) IETF Trust and the persons identified as the document authors. All rights reserved.<a class="pilcrow" href="#bp-2-1">&para;</a></p>
+      <p id="bp-2-2">This document is subject to BCP 78 and the IETF Trust’s Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document.<a class="pilcrow" href="#bp-2-2">&para;</a></p>
+    </section>
+    
+    <section id="toc">
+      <h3>
+        <a class="selfRef" href="#toc">Table of Contents</a>
+      </h3>
+      <nav class="toc">
+        <ul class="toc">
+          <li class="toc">
+            <a href="#s-1">1.</a><a href="#n-introduction">Introduction</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-1_1">1.1.</a><a href="#n-encryption-and-integrity">Encryption and Integrity</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-1_1_1">1.1.1.</a><a href="#n-key-exchange">Key Exchange</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_1_2">1.1.2.</a><a href="#n-data-erasure">Data Erasure</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-1_2">1.2.</a><a href="#n-signature">Signature</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-1_2_1">1.2.1.</a><a href="#n-signing-individual-plaintext-envelopes">Signing Individual Plaintext Envelopes</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_2_2">1.2.2.</a><a href="#n-signing-individual-encrypted-envelopes">Signing Individual Encrypted Envelopes</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_2_3">1.2.3.</a><a href="#n-signing-sequences-of-envelopes">Signing sequences of envelopes</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-1_3">1.3.</a><a href="#n-container">Container</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-1_3_1">1.3.1.</a><a href="#n-container-format">Container Format</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_3_2">1.3.2.</a><a href="#n-write">Write</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_3_3">1.3.3.</a><a href="#n-encryption-and-authentication">Encryption and Authentication</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_3_4">1.3.4.</a><a href="#n-integrity-and-signature">Integrity and Signature</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_3_5">1.3.5.</a><a href="#n-redaction">Redaction</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_3_6">1.3.6.</a><a href="#n-alternative-approaches">Alternative approaches</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_3_7">1.3.7.</a><a href="#n-efficiency">Efficiency</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-2">2.</a><a href="#n-definitions">Definitions</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-2_1">2.1.</a><a href="#n-related-specifications">Related Specifications</a>
+              </li>
+              <li class="toc">
+                <a href="#s-2_2">2.2.</a><a href="#n-requirements-language">Requirements Language</a>
+              </li>
+              <li class="toc">
+                <a href="#s-2_3">2.3.</a><a href="#n-defined-terms">Defined terms</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-3">3.</a><a href="#n-dare-envelope-architecture">DARE Envelope Architecture</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-3_1">3.1.</a><a href="#n-processing-considerations">Processing Considerations</a>
+              </li>
+              <li class="toc">
+                <a href="#s-3_2">3.2.</a><a href="#n-content-metadata-and-annotations">Content Metadata and Annotations</a>
+              </li>
+              <li class="toc">
+                <a href="#s-3_3">3.3.</a><a href="#n-encoded-data-sequence">Encoded Data Sequence</a>
+              </li>
+              <li class="toc">
+                <a href="#s-3_4">3.4.</a><a href="#n-encryption-and-integrity-0">Encryption and Integrity</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-3_4_1">3.4.1.</a><a href="#n-key-exchange-0">Key Exchange</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-3_4_2">3.4.2.</a><a href="#n-key-identifiers">Key Identifiers</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-3_4_3">3.4.3.</a><a href="#n-salt-derivation">Salt Derivation</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-3_4_4">3.4.4.</a><a href="#n-key-derivation">Key Derivation</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-3_5">3.5.</a><a href="#n-signature-0">Signature</a>
+              </li>
+              <li class="toc">
+                <a href="#s-3_6">3.6.</a><a href="#n-algorithms">Algorithms</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-3_6_1">3.6.1.</a><a href="#n-field-kwd">Field: kwd</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-4">4.</a><a href="#n-dare-container-architecture">DARE Container Architecture</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-4_1">4.1.</a><a href="#n-container-navigation">Container Navigation</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-4_1_1">4.1.1.</a><a href="#n-tree">Tree</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-4_1_2">4.1.2.</a><a href="#n-position-index">Position Index</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-4_1_3">4.1.3.</a><a href="#n-metadata-index">Metadata Index</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-4_2">4.2.</a><a href="#n-integrity-mechanisms">Integrity Mechanisms</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-4_2_1">4.2.1.</a><a href="#n-digest-chain-calculation">Digest Chain calculation</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-4_2_2">4.2.2.</a><a href="#n-binary-merkle-tree-calculation">Binary Merkle tree calculation</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-4_2_3">4.2.3.</a><a href="#n-signature-1">Signature</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-5">5.</a><a href="#n-dare-schema-">DARE Schema </a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-5_1">5.1.</a><a href="#n-message-classes-">Message Classes </a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-5_1_1">5.1.1.</a><a href="#n-structure-dareenvelopesequence-">Structure: DareEnvelopeSequence </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-5_2">5.2.</a><a href="#n-header-and-trailer-classes-">Header and Trailer Classes </a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-5_2_1">5.2.1.</a><a href="#n-structure-daretrailer-">Structure: DareTrailer </a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-5_2_2">5.2.2.</a><a href="#n-structure-dareheader-">Structure: DareHeader </a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-5_2_3">5.2.3.</a><a href="#n-structure-contentmeta-">Structure: ContentMeta </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-5_3">5.3.</a><a href="#n-cryptographic-data-">Cryptographic Data </a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-5_3_1">5.3.1.</a><a href="#n-structure-daresignature-">Structure: DareSignature </a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-5_3_2">5.3.2.</a><a href="#n-structure-x509certificate-">Structure: X509Certificate </a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-5_3_3">5.3.3.</a><a href="#n-structure-darerecipient-">Structure: DareRecipient </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-6">6.</a><a href="#n-dare-container-schema-">DARE Container Schema </a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-6_1">6.1.</a><a href="#n-container-headers-">Container Headers </a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-6_1_1">6.1.1.</a><a href="#n-structure-containerinfo-">Structure: ContainerInfo </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-6_2">6.2.</a><a href="#n-index-structures-">Index Structures </a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-6_2_1">6.2.1.</a><a href="#n-structure-containerindex-">Structure: ContainerIndex </a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-6_2_2">6.2.2.</a><a href="#n-structure-indexposition-">Structure: IndexPosition </a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-6_2_3">6.2.3.</a><a href="#n-structure-keyvalue-">Structure: KeyValue </a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-6_2_4">6.2.4.</a><a href="#n-structure-indexmeta-">Structure: IndexMeta </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-7">7.</a><a href="#n-dare-container-applications">Dare Container Applications</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-7_1">7.1.</a><a href="#n-catalog">Catalog</a>
+              </li>
+              <li class="toc">
+                <a href="#s-7_2">7.2.</a><a href="#n-spool">Spool</a>
+              </li>
+              <li class="toc">
+                <a href="#s-7_3">7.3.</a><a href="#n-archive">Archive</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-8">8.</a><a href="#n-future-work">Future Work</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-8_1">8.1.</a><a href="#n-terminal-integrity-check">Terminal integrity check</a>
+              </li>
+              <li class="toc">
+                <a href="#s-8_2">8.2.</a><a href="#n-terminal-index-record">Terminal index record</a>
+              </li>
+              <li class="toc">
+                <a href="#s-8_3">8.3.</a><a href="#n-deferred-indexing">Deferred indexing</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-9">9.</a><a href="#n-security-considerations">Security Considerations</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-9_1">9.1.</a><a href="#n-encryptionsignature-nesting">Encryption/Signature nesting</a>
+              </li>
+              <li class="toc">
+                <a href="#s-9_2">9.2.</a><a href="#n-side-channel">Side channel</a>
+              </li>
+              <li class="toc">
+                <a href="#s-9_3">9.3.</a><a href="#n-salt-reuse">Salt reuse</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-10">10.</a><a href="#n-iana-considerations">IANA Considerations</a>
+          </li>
+          <li class="toc">
+            <a href="#s-11">11.</a><a href="#n-acknowledgements">Acknowledgements</a>
+          </li>
+          <li class="toc">
+            <a href="#s-12">12.</a><a href="#n-appendix-a-dare-envelope-examples-and-test-vectors">Appendix A: DARE Envelope Examples and Test Vectors</a>
+          </li>
+          <li class="toc">
+            <a href="#s-13">13.</a><a href="#n-test-examples-">Test Examples </a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-13_1">13.1.</a><a href="#n--plaintext-message-"> Plaintext Message </a>
+              </li>
+              <li class="toc">
+                <a href="#s-13_2">13.2.</a><a href="#n--plaintext-message-with-eds-"> Plaintext Message with EDS </a>
+              </li>
+              <li class="toc">
+                <a href="#s-13_3">13.3.</a><a href="#n--encrypted-message-"> Encrypted Message </a>
+              </li>
+              <li class="toc">
+                <a href="#s-13_4">13.4.</a><a href="#n--signed-message-"> Signed Message </a>
+              </li>
+              <li class="toc">
+                <a href="#s-13_5">13.5.</a><a href="#n--signed-and-encrypted-message-"> Signed and Encrypted Message </a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-14">14.</a><a href="#n-appendix-b-dare-container-examples-and-test-vectors">Appendix B: DARE Container Examples and Test Vectors</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-14_1">14.1.</a><a href="#n-simple-container-">Simple container </a>
+              </li>
+              <li class="toc">
+                <a href="#s-14_2">14.2.</a><a href="#n-payload-and-chain-digests-">Payload and chain digests </a>
+              </li>
+              <li class="toc">
+                <a href="#s-14_3">14.3.</a><a href="#n-merkle-tree-">Merkle Tree </a>
+              </li>
+              <li class="toc">
+                <a href="#s-14_4">14.4.</a><a href="#n-signed-container-">Signed container </a>
+              </li>
+              <li class="toc">
+                <a href="#s-14_5">14.5.</a><a href="#n-encrypted-container-">Encrypted container </a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-15">15.</a><a href="#n-appendix-c-previous-frame-function-">Appendix C: Previous Frame Function </a>
+          </li>
+          <li class="toc">
+            <a href="#s-16">16.</a><a href="#n-appendix-d-outstanding-issues">Appendix D: Outstanding Issues</a>
+          </li>
+          <li class="toc">
+<a href="#n-references">References</a>
+            <ul class="toc">
+              <li class="toc">
+<a href="#n-normative">Normative References</a>
+              </li>
+              <li class="toc">
+<a href="#n-informative">Informative References</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="toc">
+          <li class="toc">
+            <a href="#"></a><a href="#n-authors">Author's Address</a>
+          </li>
+        </ul>
+        <h3 id="tof">
+          <a class="selfRef" href="#tof">Table of Figures</a>
+        </h3>
+        <ul class="toc">
+          <li class="toc">
+            <a href="#n-monolithic-key-exchange-and-encrypt">Figure 1</a>: <a href="#n-monolithic-key-exchange-and-encrypt">Monolithic Key Exchange and Encrypt</a>
+          </li>
+          <li class="toc">
+            <a href="#n-exchange-of-master-key">Figure 2</a>: <a href="#n-exchange-of-master-key">Exchange of Master Key</a>
+          </li>
+          <li class="toc">
+            <a href="#n-data-item-encryption-under-master-key-and-peritem-salt">Figure 3</a>: <a href="#n-data-item-encryption-under-master-key-and-peritem-salt">Data item encryption under Master Key and per-item salt.</a>
+          </li>
+          <li class="toc">
+            <a href="#n-jbcd-bidirectional-frame">Figure 4</a>: <a href="#n-jbcd-bidirectional-frame">JBCD Bidirectional Frame</a>
+          </li>
+          <li class="toc">
+            <a href="#n-merkle-tree-integrity-check">Figure 5</a>: <a href="#n-merkle-tree-integrity-check">Merkle Tree Integrity check</a>
+          </li>
+          <li class="toc">
+            <a href="#n-hash-chain-integrity-check">Figure 6</a>: <a href="#n-hash-chain-integrity-check">Hash chain integrity check</a>
+          </li>
+        </ul>
+      </nav>
+    </section>
+    
+    <section id="n-introduction">
+      <h3 id="s-1">
+        <a class="selfRef" href="#s-1">1.</a>
+        <a class="selfRef" href="#n-introduction">Introduction</a>
+      </h3>
+      <p id="s-1-1">This document describes the Data At Rest Encryption (DARE) Envelope and Container Syntax. The DARE Envelope syntax is used to digitally sign, digest, authenticate, or encrypt arbitrary message content. The DARE Container syntax describes an append-only sequence of data frames, each containing a DARE Envelope that supports efficient incremental signature and encryption.<a class="pilcrow" href="#s-1-1">&para;</a></p>
+      <p id="s-1-2">The DARE Envelope Syntax is based on a subset of the JSON Web Signature <a class="xref" href="#RFC7515">[RFC7515]</a> and JSON Web Encryption <a class="xref" href="#RFC7516">[RFC7516]</a> standards and shares many fields and semantics. The processing model and data structures have been streamlined to remove alternative means of specifying the same content and to enable multiple data sequences to be signed and encrypted under a single master encryption key without compromise to security.<a class="pilcrow" href="#s-1-2">&para;</a></p>
+      <p id="s-1-3">A DARE Envelope consists of a <i>Header</i>, <i>Payload</i> and an optional <i>Trailer</i>. To enable single pass encoding and decoding, the Header contains all the information required to perform cryptographic processing of the Payload and authentication data (digest, MAC, signature values) <span class="bcp14">MAY</span> be deferred to the Trailer section.<a class="pilcrow" href="#s-1-3">&para;</a></p>
+      <p id="s-1-4">A DARE Container is an append-only log format consisting of a sequence of frames. Cryptographic enhancements (signature, encryption) may be applied to individual frames or to sets of frames. Thus, a single key exchange may be used to provide a master key to encrypt multiple frames and a single signature may be used to authenticate all the frames in the container up to and including the frame in which the signature is presented.<a class="pilcrow" href="#s-1-4">&para;</a></p>
+      <p id="s-1-5">The DARE Envelope syntax may be used either as a standalone cryptographic message syntax or as a means of presenting a single DARE Container frame together with the complete cryptographic context required to verify the contents and decrypt them.<a class="pilcrow" href="#s-1-5">&para;</a></p>
+    </section>
+    
+    <section id="n-encryption-and-integrity">
+      <h4 id="s-1_1">
+        <a class="selfRef" href="#s-1_1">1.1.</a>
+        <a class="selfRef" href="#n-encryption-and-integrity">Encryption and Integrity</a>
+      </h4>
+      <p id="s-1_1-1">A key innovation in the DARE Envelope Syntax is the separation of key exchange and data encryption operations so that a Master Key (MK) established in a single exchange to be applied to multiple data sequences. This means that a single public key operation <span class="bcp14">MAY</span> be used to encrypt and/or authenticate multiple parts of the same DARE Envelope or multiple frames in a DARE Container.<a class="pilcrow" href="#s-1_1-1">&para;</a></p>
+      <p id="s-1_1-2">To avoid reuse of the key and to avoid the need to communicate separate IVs, each octet sequence is encrypted under a different encryption key (and IV if required) derived from the Master Key by means of a salt that is unique for each octet sequence that is encrypted. The same approach is used to generate keys for calculating a MAC over the octet sequence if required. This approach allows encryption and integrity protections to be applied to the envelope payload, to header or trailer fields or to application defined Enhanced Data Sequences in the header or trailer. <a class="pilcrow" href="#s-1_1-2">&para;</a></p>
+    </section>
+    
+    <section id="n-key-exchange">
+      <h5 id="s-1_1_1">
+        <a class="selfRef" href="#s-1_1_1">1.1.1.</a>
+        <a class="selfRef" href="#n-key-exchange">Key Exchange</a>
+      </h5>
+      <p id="s-1_1_1-1">Traditional cryptographic containers describe the application of a single key exchange to encryption of a single octet sequence. Examples include PCKS#7/CMS <a class="xref" href="#RFC2315">[RFC2315]</a>, OpenPGP <a class="xref" href="#RFC4880">[RFC4880]</a> and JSON Web Encryption <a class="xref" href="#RFC7516">[RFC7516]</a>.<a class="pilcrow" href="#s-1_1_1-1">&para;</a></p>
+      <p id="s-1_1_1-2">To encrypt data using RSA, the encoder first generates a random encryption key and initialization vector (IV). The encryption key is encrypted under the public key of each recipient to create a per-recipient decryption entry. The encryption key, plaintext and IV are used to generate the ciphertext (figure 1).<a class="pilcrow" href="#s-1_1_1-2">&para;</a></p>
+      <figure id="f-1">
+        <div class="artwork art-svg" id="n-monolithic-key-exchange-and-encrypt">
+          <a class="pilcrow" href="#n-monolithic-key-exchange-and-encrypt">&para;</a>
+        </div>
+        <figcaption>
+          <a href="n-monolithic-key-exchange-and-encrypt">Figure 1</a>
+:          <a href="null" id="null" class="selfRef">Monolithic Key Exchange and Encrypt</a>
+        </figcaption>
+      </figure>
+      <p id="s-1_1_1-4">This approach is adequate for the task of encrypting a single octet stream. It is less than satisfactory when encrypting multiple octet streams or very long streams for which a rekeying operation is desirable. <a class="pilcrow" href="#s-1_1_1-4">&para;</a></p>
+      <p id="s-1_1_1-5">In the DARE approach, key exchange and key derivation are separate operations and keys <span class="bcp14">MAY</span> be derived for encryption or integrity purposes or both. A single key exchange <span class="bcp14">MAY</span> be used to derive keys to apply encryption and integrity enhancements to multiple data sequences.<a class="pilcrow" href="#s-1_1_1-5">&para;</a></p>
+      <p id="s-1_1_1-6">The DARE key exchange begins with the same key exchange used to produce the CEK in JWE but instead of using the CEK to encipher data directly, it is used as one of the inputs to a Key Derivation Function (KDF) that is used to derive parameters for each block of data to be encrypted. To avoid the need to introduce additional terminology, the term 'CEK' is still used to describe the output of the key agreement algorithm (including key unwrapping if required) but it is more appropriately described as a Master Key (figure 2).<a class="pilcrow" href="#s-1_1_1-6">&para;</a></p>
+      <figure id="f-2">
+        <div class="artwork art-svg" id="n-exchange-of-master-key">
+          <a class="pilcrow" href="#n-exchange-of-master-key">&para;</a>
+        </div>
+        <figcaption>
+          <a href="n-exchange-of-master-key">Figure 2</a>
+:          <a href="null" id="null" class="selfRef">Exchange of Master Key</a>
+        </figcaption>
+      </figure>
+      <p id="s-1_1_1-8">A Master Key may be used to encrypt any number of data items. Each data item is encrypted under a different encryption key and IV (if required). This data is derived from the Master Key using the HKDF function <a class="xref" href="#RFC5869">[RFC5869]</a> using a different salt for each data item and separate info tags for each cryptographic function (figure 3).<a class="pilcrow" href="#s-1_1_1-8">&para;</a></p>
+      <figure id="f-3">
+        <div class="artwork art-svg" id="n-data-item-encryption-under-master-key-and-peritem-salt">
+          <a class="pilcrow" href="#n-data-item-encryption-under-master-key-and-peritem-salt">&para;</a>
+        </div>
+        <figcaption>
+          <a href="n-data-item-encryption-under-master-key-and-peritem-salt">Figure 3</a>
+:          <a href="null" id="null" class="selfRef">Data item encryption under Master Key and per-item salt.</a>
+        </figcaption>
+      </figure>
+      <p id="s-1_1_1-10">This approach to encryption offers considerably greater flexibility allowing the same format for data item encryption to be applied at the transport, message or field level.<a class="pilcrow" href="#s-1_1_1-10">&para;</a></p>
+    </section>
+    
+    <section id="n-data-erasure">
+      <h5 id="s-1_1_2">
+        <a class="selfRef" href="#s-1_1_2">1.1.2.</a>
+        <a class="selfRef" href="#n-data-erasure">Data Erasure</a>
+      </h5>
+      <p id="s-1_1_2-1">Each encrypted DARE Envelope specifies a unique Master Salt value of at least 128 bits which is used to derive the salt values used to derive cryptographic keys for the envelope payload and annotations.<a class="pilcrow" href="#s-1_1_2-1">&para;</a></p>
+      <p id="s-1_1_2-2">Erasure of the Master Salt value <span class="bcp14">MAY</span> be used to effectively render the envelope payload and annotations undecipherable without altering the envelope payload data. The work factor for decryption will be O(2^128) even if the decryption key is compromised.<a class="pilcrow" href="#s-1_1_2-2">&para;</a></p>
+    </section>
+    
+    <section id="n-signature">
+      <h4 id="s-1_2">
+        <a class="selfRef" href="#s-1_2">1.2.</a>
+        <a class="selfRef" href="#n-signature">Signature</a>
+      </h4>
+      <p id="s-1_2-1">As with encryption, DARE Envelope signatures <span class="bcp14">MAY</span> be applied to an individual envelope or a sequence of envelope. <a class="pilcrow" href="#s-1_2-1">&para;</a></p>
+    </section>
+    
+    <section id="n-signing-individual-plaintext-envelopes">
+      <h5 id="s-1_2_1">
+        <a class="selfRef" href="#s-1_2_1">1.2.1.</a>
+        <a class="selfRef" href="#n-signing-individual-plaintext-envelopes">Signing Individual Plaintext Envelopes</a>
+      </h5>
+      <p id="s-1_2_1-1">When an individual plaintext envelope is signed, the digest value used to create the signature is calculated over the binary value of the payload data. That is, the value of the payload before the encoding (Base-64, JSON-B) is applied. <a class="pilcrow" href="#s-1_2_1-1">&para;</a></p>
+    </section>
+    
+    <section id="n-signing-individual-encrypted-envelopes">
+      <h5 id="s-1_2_2">
+        <a class="selfRef" href="#s-1_2_2">1.2.2.</a>
+        <a class="selfRef" href="#n-signing-individual-encrypted-envelopes">Signing Individual Encrypted Envelopes</a>
+      </h5>
+      <p id="s-1_2_2-1">When an individual plaintext envelope is signed, the digest value used to create the signature is calculated over the binary value of the payload data. That is, the value of the payload after encryption but before the encoding (Base-64, JSON-B) is applied. <a class="pilcrow" href="#s-1_2_2-1">&para;</a></p>
+      <p id="s-1_2_2-2">Use of signing and encryption in combination presents the risk of subtle attacks depending on the order in which signing and encryption take place <a class="xref" href="#Davis2001">[Davis2001]</a>.<a class="pilcrow" href="#s-1_2_2-2">&para;</a></p>
+      <p id="s-1_2_2-3">Naïve approaches in which an envelope is encrypted and then signed present the possibility of a surreptitious forwarding attack. For example, Alice signs an envelope and sends it to Mallet who then strips off Alice's signature and sends the envelope to Bob.  <a class="pilcrow" href="#s-1_2_2-3">&para;</a></p>
+      <p id="s-1_2_2-4">Naïve approaches in which an envelope is signed and then encrypted present the possibility of an attacker claiming authorship of a ciphertext. For example, Alice encrypts a ciphertext for Bob and then signs it. Mallet then intercepts the envelope and sends it to Bob.<a class="pilcrow" href="#s-1_2_2-4">&para;</a></p>
+      <p id="s-1_2_2-5">While neither attack is a concern in all applications, both attacks pose potential hazards for the unwary and require close inspection of application protocol design to avoid exploitation.<a class="pilcrow" href="#s-1_2_2-5">&para;</a></p>
+      <p id="s-1_2_2-6">To prevent these attacks, each signature on an envelope that is signed and encrypted <span class="bcp14">MUST</span> include a witness value that is calculated by applying a MAC function to the signature value as described in section XXX.<a class="pilcrow" href="#s-1_2_2-6">&para;</a></p>
+    </section>
+    
+    <section id="n-signing-sequences-of-envelopes">
+      <h5 id="s-1_2_3">
+        <a class="selfRef" href="#s-1_2_3">1.2.3.</a>
+        <a class="selfRef" href="#n-signing-sequences-of-envelopes">Signing sequences of envelopes</a>
+      </h5>
+      <p id="s-1_2_3-1">To sign multiple envelopes with a single signature, we first construct a Merkle tree of the envelope payload digest values and then sign the root of the Merkle tree.<a class="pilcrow" href="#s-1_2_3-1">&para;</a></p>
+      <p id="s-1_2_3-2">[This is not yet implemented but will be soon.]<a class="pilcrow" href="#s-1_2_3-2">&para;</a></p>
+    </section>
+    
+    <section id="n-container">
+      <h4 id="s-1_3">
+        <a class="selfRef" href="#s-1_3">1.3.</a>
+        <a class="selfRef" href="#n-container">Container</a>
+      </h4>
+      <p id="s-1_3-1">DARE Container is a message and file syntax that allows a sequence of data frames to be represented with cryptographic integrity, signature, and encryption enhancements to be constructed in an append only format.<a class="pilcrow" href="#s-1_3-1">&para;</a></p>
+      <p id="s-1_3-2">The format is designed to meet the requirements of a wide range of use cases including:<a class="pilcrow" href="#s-1_3-2">&para;</a></p>
+      <ul id="s-1_3-3-">
+        <li id="s-1_3-3">Recording transactions in persistent storage.<a class="pilcrow" href="#s-1_3-3">&para;</a></li>
+        <li id="s-1_3-4">Synchronizing transaction logs between hosts.<a class="pilcrow" href="#s-1_3-4">&para;</a></li>
+        <li id="s-1_3-5">File archive.<a class="pilcrow" href="#s-1_3-5">&para;</a></li>
+        <li id="s-1_3-6">Message spool.<a class="pilcrow" href="#s-1_3-6">&para;</a></li>
+        <li id="s-1_3-7">Signing and encrypting single data items.<a class="pilcrow" href="#s-1_3-7">&para;</a></li>
+        <li id="s-1_3-8">Incremental encryption and authentication of server logs.<a class="pilcrow" href="#s-1_3-8">&para;</a></li>
+      </ul>
+      
+      <section id="n-container-format">
+        <h5 id="s-1_3_1">
+          <a class="selfRef" href="#s-1_3_1">1.3.1.</a>
+          <a class="selfRef" href="#n-container-format">Container Format</a>
+        </h5>
+      </section>
+      <p id="s-1_3_1-1">A Container consists of a sequence of variable length Frames. Each frame consists of a forward length indicator, the framed data and a reverse length indicator. The reverse length indicator is written out backwards allowing the length and thus the frame to be read in the reverse direction: <a class="pilcrow" href="#s-1_3_1-1">&para;</a></p>
+      <figure id="f-4">
+        <div class="artwork art-svg" id="n-jbcd-bidirectional-frame">
+          <a class="pilcrow" href="#n-jbcd-bidirectional-frame">&para;</a>
+        </div>
+        <figcaption>
+          <a href="n-jbcd-bidirectional-frame">Figure 4</a>
+:          <a href="null" id="null" class="selfRef">JBCD Bidirectional Frame</a>
+        </figcaption>
+      </figure>
+      <p id="s-1_3_1-3">Each frame contains a single DARE Envelope consisting of a Header, Payload and Trailer (if required). The first frame in a container describes the container format options and defaults. These include the range of encoding options for frame metadata supported and the container profiles to which the container conforms. <a class="pilcrow" href="#s-1_3_1-3">&para;</a></p>
+      <p id="s-1_3_1-4">All internal data formats support use of pointers of up to 64 bits allowing containers of up to 18 exabytes to be written. <a class="pilcrow" href="#s-1_3_1-4">&para;</a></p>
+      <p id="s-1_3_1-5">Five container types are currently specified:<a class="pilcrow" href="#s-1_3_1-5">&para;</a></p>
+      <dl id="s-1_3_1-6-" class="nohang">
+        <dt id="s-1_3_1-6">Simple<a class="pilcrow" href="#s-1_3_1-6">&para;</a></dt>
+        <dd id="null">The container does not provide any index or content integrity checks.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1_3_1-7">Tree<a class="pilcrow" href="#s-1_3_1-7">&para;</a></dt>
+        <dd id="null">Frame headers contain entries that specify the start position of previous frames at the apex of the immediately enclosing binary tree. This enables efficient random access to any frame in the file.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1_3_1-8">Digest<a class="pilcrow" href="#s-1_3_1-8">&para;</a></dt>
+        <dd id="null">Each frame trailer contains a <code>PayloadDigest</code> field. Modification of the payload will cause verification of the <code>PayloadDigest</code> value to fail on that frame.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1_3_1-9">Chain<a class="pilcrow" href="#s-1_3_1-9">&para;</a></dt>
+        <dd id="null">Each frame trailer contains <code>PayloadDigest</code> and <code>ChainDigest</code> fields allowing modifications to the payload data to be detected. Modification of the payload will cause verification of the <code>PayloadDigest</code> value to fail on that frame and verification of the <code>ChainDigest</code> value to fail on all subsequent frames.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1_3_1-10">Merkle Tree<a class="pilcrow" href="#s-1_3_1-10">&para;</a></dt>
+        <dd id="null">Frame headers contain entries that specify the start position of previous frames at the apex of the immediately enclosing binary tree. Frame Trailers contain TreeDigestPartial&nbsp;and TreeDigestFinal&nbsp;entries forming a Merkle digest tree.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-write">
+        <h5 id="s-1_3_2">
+          <a class="selfRef" href="#s-1_3_2">1.3.2.</a>
+          <a class="selfRef" href="#n-write">Write</a>
+        </h5>
+      </section>
+      <p id="s-1_3_2-1">In normal circumstances, Containers are written as an append only log. As with Envelopes, integrity information (payload digest, signatures) is written to the entry trailer. Thus, large payloads may be written without the need to buffer the payload data <i>provided that</i> the content length is known in advance.<a class="pilcrow" href="#s-1_3_2-1">&para;</a></p>
+      <p id="s-1_3_2-2">Should exceptional circumstances require, Container entries <span class="bcp14">MAY</span> be erased by overwriting the Payload and/or parts of the Header content without compromising the ability to verify other entries in the container. If the entry Payload is encrypted, it is sufficient to erase the container salt value to render the container entry effectively inaccessible (though recovery might still be possible if the original salt value can be recovered from the storage media.<a class="pilcrow" href="#s-1_3_2-2">&para;</a></p>
+    </section>
+    
+    <section id="n-encryption-and-authentication">
+      <h5 id="s-1_3_3">
+        <a class="selfRef" href="#s-1_3_3">1.3.3.</a>
+        <a class="selfRef" href="#n-encryption-and-authentication">Encryption and Authentication</a>
+      </h5>
+      <p id="s-1_3_3-1">Frame payloads and associated attributes <span class="bcp14">MAY</span> be encrypted and/or authenticated in the same manner as Envelopes. <a class="pilcrow" href="#s-1_3_3-1">&para;</a></p>
+      <p id="s-1_3_3-2"><i>Incremental encryption</i> is supported allowing encryption parameters from a single public key exchange operation to be applied to encrypt multiple frames. The public key exchange information is specified in the first encrypted frame and subsequent frames encrypted under those parameters specify the location at which the key exchange information is to be found by means of the ExchangePosition field which <span class="bcp14">MUST</span> specify a location that is earlier in the file.<a class="pilcrow" href="#s-1_3_3-2">&para;</a></p>
+      <p id="s-1_3_3-3">To avoid cryptographic vulnerabilities resulting from key re-use, the DARE key exchange requires that each encrypted sequence use an encryption key and initialization vector derived from the master key established in the public key exchange by means of a unique salt.<a class="pilcrow" href="#s-1_3_3-3">&para;</a></p>
+      <p id="s-1_3_3-4">Each Envelope and by extension, each Container frame <span class="bcp14">MUST</span> specify a unique salt value of at least 128 bits. Since the encryption key is derived from the salt value by means of a Key Derivation Function, erasure of the salt <span class="bcp14">MAY</span> be used as a means of rendering the payload plaintext value inaccessible without changing the payload value. <a class="pilcrow" href="#s-1_3_3-4">&para;</a></p>
+    </section>
+    
+    <section id="n-integrity-and-signature">
+      <h5 id="s-1_3_4">
+        <a class="selfRef" href="#s-1_3_4">1.3.4.</a>
+        <a class="selfRef" href="#n-integrity-and-signature">Integrity and Signature</a>
+      </h5>
+      <p id="s-1_3_4-1">Signatures <span class="bcp14">MAY</span> be applied to a payload digest, the final digest in a chain or tree. The chain and tree digest modes allow a single signature to be used to authenticate all frame payloads in a container.<a class="pilcrow" href="#s-1_3_4-1">&para;</a></p>
+      <p id="s-1_3_4-2">The tree signature mode is particularly suited to applications such as file archives as it allows files to be verified individually without requiring the signer to sign each individually. Furthermore, in applications such as code signing, it allows a single signature to be used to verify both the integrity of the code and its membership of the distribution.<a class="pilcrow" href="#s-1_3_4-2">&para;</a></p>
+      <p id="s-1_3_4-3">As with DARE Envelope, the signature mechanism does not specify the interpretation of the signature semantics. The presence of a signature demonstrates that the holder of the private key applied it to the specified digest value but not their motive for doing so. Describing such semantics is beyond the scope of this document and is deferred to future work.<a class="pilcrow" href="#s-1_3_4-3">&para;</a></p>
+    </section>
+    
+    <section id="n-redaction">
+      <h5 id="s-1_3_5">
+        <a class="selfRef" href="#s-1_3_5">1.3.5.</a>
+        <a class="selfRef" href="#n-redaction">Redaction</a>
+      </h5>
+      <p id="s-1_3_5-1">The chief disadvantage of using an append-only format is that containers only increase in size. In many applications, much of the data in the container becomes redundant or obsolete and a process analogous to garbage collection is required. This process is called <i>redaction</i>.<a class="pilcrow" href="#s-1_3_5-1">&para;</a></p>
+      <p id="s-1_3_5-2">The simplest method of redaction is to create a new container and sequentially copy each entry from the old container to the new, discarding redundant frames and obsolete header information. <a class="pilcrow" href="#s-1_3_5-2">&para;</a></p>
+      <p id="s-1_3_5-3">For example, partial index records may be consolidated into a single index record placed in the last frame of the container. Unnecessary signature and integrity data may be discarded and so on.<a class="pilcrow" href="#s-1_3_5-3">&para;</a></p>
+      <p id="s-1_3_5-4">While redaction could in principle be effected by moving data in-place in the existing container, supporting this approach in a robust fashion is considerably more complex as it requires backward references in subsequent frames to be overridden as each frame is moved. <a class="pilcrow" href="#s-1_3_5-4">&para;</a></p>
+    </section>
+    
+    <section id="n-alternative-approaches">
+      <h5 id="s-1_3_6">
+        <a class="selfRef" href="#s-1_3_6">1.3.6.</a>
+        <a class="selfRef" href="#n-alternative-approaches">Alternative approaches</a>
+      </h5>
+      <p id="s-1_3_6-1">Many file proprietary formats are in use that support some or all of these capabilities but only a handful have public, let alone open, standards. DARE Container is designed to provide a superset of the capabilities of existing message and file syntaxes, including:<a class="pilcrow" href="#s-1_3_6-1">&para;</a></p>
+      <ul id="s-1_3_6-2-">
+        <li id="s-1_3_6-2">Cryptographic Message Syntax <a class="xref" href="#RFC5652">[RFC5652]</a> defines a syntax used to digitally sign, digest, authenticate, or encrypt arbitrary message content.<a class="pilcrow" href="#s-1_3_6-2">&para;</a></li>
+        <li id="s-1_3_6-3">The.ZIP File Format specification <a class="xref" href="#ZIPFILE">[ZIPFILE]</a> developed by Phil Katz. <a class="pilcrow" href="#s-1_3_6-3">&para;</a></li>
+        <li id="s-1_3_6-4">The BitCoin Block chain <a class="xref" href="#BLOCKCHAIN">[BLOCKCHAIN]</a>.<a class="pilcrow" href="#s-1_3_6-4">&para;</a></li>
+        <li id="s-1_3_6-5">JSON Web Encryption and JSON Web Signature<a class="pilcrow" href="#s-1_3_6-5">&para;</a></li>
+      </ul>
+      <p id="s-1_3_6-6">Attempting to make use of these specifications in a layered fashion would require at least three separate encoders and introduce unnecessary complexity. Furthermore, there is considerable overlap between the specifications providing multiple means of achieving the same ends, all of which must be supported if decoders are to work reliably.<a class="pilcrow" href="#s-1_3_6-6">&para;</a></p>
+    </section>
+    
+    <section id="n-efficiency">
+      <h5 id="s-1_3_7">
+        <a class="selfRef" href="#s-1_3_7">1.3.7.</a>
+        <a class="selfRef" href="#n-efficiency">Efficiency</a>
+      </h5>
+      <p id="s-1_3_7-1">Every data format represents a compromise between different concerns, in particular:<a class="pilcrow" href="#s-1_3_7-1">&para;</a></p>
+      <dl id="s-1_3_7-2-" class="nohang">
+        <dt id="s-1_3_7-2">Compactness<a class="pilcrow" href="#s-1_3_7-2">&para;</a></dt>
+        <dd id="null">The space required to record data in the encoding.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1_3_7-3">Memory Overhead<a class="pilcrow" href="#s-1_3_7-3">&para;</a></dt>
+        <dd id="null">The additional volatile storage (RAM) required to maintain indexes etc. to support efficient retrieval operations.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1_3_7-4">Number of Operations<a class="pilcrow" href="#s-1_3_7-4">&para;</a></dt>
+        <dd id="null">The number of operations required to retrieve data from or append data to an existing encoded sequence.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1_3_7-5">Number of Disk Seek Operations<a class="pilcrow" href="#s-1_3_7-5">&para;</a></dt>
+        <dd id="null">Optimizing the response time of magnetic storage media to random access read requests has traditionally been one of the central concerns of database design. The DARE Container format is designed to the assumption that this will cease to be a concern as solid state media replaces magnetic.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-1_3_7-6">While the cost of storage of all types has declined rapidly over the past decades, so has the amount of data to be stored. DARE Container represents a pragmatic balance of these considerations for current technology. In particular, since payload volumes are likely to be very large, memory and operational efficiency are considered higher priorities than compactness.<a class="pilcrow" href="#s-1_3_7-6">&para;</a></p>
+    </section>
+    
+    <section id="n-definitions">
+      <h3 id="s-2">
+        <a class="selfRef" href="#s-2">2.</a>
+        <a class="selfRef" href="#n-definitions">Definitions</a>
+      </h3>
+    </section>
+    
+    <section id="n-related-specifications">
+      <h4 id="s-2_1">
+        <a class="selfRef" href="#s-2_1">2.1.</a>
+        <a class="selfRef" href="#n-related-specifications">Related Specifications</a>
+      </h4>
+      <p id="s-2_1-1">The DARE Envelope and Container formats are based on the following existing standards and specifications.<a class="pilcrow" href="#s-2_1-1">&para;</a></p>
+      <dl id="s-2_1-2-" class="nohang">
+        <dt id="s-2_1-2">Object serialization<a class="pilcrow" href="#s-2_1-2">&para;</a></dt>
+        <dd id="null">The JSON-B <a class="xref" href="#draft-hallambaker-jsonbcd">[draft-hallambaker-jsonbcd]</a> encoding is used for object serialization. This encoding is an extension of the JavaScript Object Notation (JSON) <a class="xref" href="#RFC7159">[RFC7159]</a>.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_1-3">Message syntax<a class="pilcrow" href="#s-2_1-3">&para;</a></dt>
+        <dd id="null">The cryptographic processing model is based on JSON Web Signature (JWS) <a class="xref" href="#RFC7515">[RFC7515]</a>, JSON Web Encryption (JWE) <a class="xref" href="#RFC7516">[RFC7516]</a> and JSON Web Key (JWK) <a class="xref" href="#RFC7517">[RFC7517]</a>.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_1-4">Cryptographic primitives.<a class="pilcrow" href="#s-2_1-4">&para;</a></dt>
+        <dd id="null">The HMAC-based Extract-and-Expand Key Derivation Function <a class="xref" href="#RFC5869">[RFC5869]</a> and Advanced Encryption Standard (AES) Key Wrap with Padding Algorithm <a class="xref" href="#RFC3394">[RFC3394]</a> are used.<a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">The Uniform Data Fingerprint method of presenting data digests is used for key identifiers and other purposes <a class="xref" href="#draft-hallambaker-mesh-udf">[draft-hallambaker-mesh-udf]</a>.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_1-5">Cryptographic algorithms<a class="pilcrow" href="#s-2_1-5">&para;</a></dt>
+        <dd id="null">The cryptographic algorithms and identifiers described in JSON Web Algorithms (JWA) <a class="xref" href="#RFC7518">[RFC7518]</a> are used together with additional algorithms as defined in the JSON Object Signing and Encryption IANA registry <a class="xref" href="#IANAJOSE">[IANAJOSE]</a>.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-requirements-language">
+        <h4 id="s-2_2">
+          <a class="selfRef" href="#s-2_2">2.2.</a>
+          <a class="selfRef" href="#n-requirements-language">Requirements Language</a>
+        </h4>
+      </section>
+      <p id="s-2_2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as described in <a class="xref" href="#RFC2119">[RFC2119]</a>.<a class="pilcrow" href="#s-2_2-1">&para;</a></p>
+    </section>
+    
+    <section id="n-defined-terms">
+      <h4 id="s-2_3">
+        <a class="selfRef" href="#s-2_3">2.3.</a>
+        <a class="selfRef" href="#n-defined-terms">Defined terms</a>
+      </h4>
+      <p id="s-2_3-1">The terms "Authentication Tag", "Content Encryption Key", "Key Management Mode", "Key Encryption", "Direct Key Agreement", "Key Agreement with Key Wrapping" and "Direct Encryption" are defined in the JWE specification <a class="xref" href="#RFC7516">[RFC7516]</a>.<a class="pilcrow" href="#s-2_3-1">&para;</a></p>
+      <p id="s-2_3-2">The terms "Authentication", "Ciphertext", "Digital Signature", "Encryption", "Initialization Vector (IV)", "Message Authentication Code (MAC)", "Plaintext" and "Salt" are defined by the Internet Security Glossary, Version 2 <a class="xref" href="#RFC4949">[RFC4949]</a>. <a class="pilcrow" href="#s-2_3-2">&para;</a></p>
+      <dl id="s-2_3-3-" class="nohang">
+        <dt id="s-2_3-3">Annotated Envelope<a class="pilcrow" href="#s-2_3-3">&para;</a></dt>
+        <dd id="null">A DARE Envelope that contains an <code>Annotations</code> field with at least one entry.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-4">Authentication Data<a class="pilcrow" href="#s-2_3-4">&para;</a></dt>
+        <dd id="null">A Message Authentication Code or authentication tag.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-5">Complete Envelope<a class="pilcrow" href="#s-2_3-5">&para;</a></dt>
+        <dd id="null">A DARE envelope that contains the key exchange information necessary for the intended recipient(s) to decrypt it.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-6">Detached Envelope<a class="pilcrow" href="#s-2_3-6">&para;</a></dt>
+        <dd id="null">A DARE envelope that does not contain the key exchange information necessary for the intended recipient(s) to decrypt it.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-7">Encryption Context<a class="pilcrow" href="#s-2_3-7">&para;</a></dt>
+        <dd id="null">The master key, encryption algorithms and associated parameters used to generate a set of one or more enhanced data sequences.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-8">Encoded data sequence (EDS)<a class="pilcrow" href="#s-2_3-8">&para;</a></dt>
+        <dd id="null">A sequence consisting of a salt, content data and authentication data (if required by the encryption context).<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-9">Enhancement<a class="pilcrow" href="#s-2_3-9">&para;</a></dt>
+        <dd id="null">Applying a cryptographic operation to a data sequence. This includes encryption, authentication and both at the same time.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-10">Generator<a class="pilcrow" href="#s-2_3-10">&para;</a></dt>
+        <dd id="null">The party that generates a DARE envelope.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-11">Group Encryption Key<a class="pilcrow" href="#s-2_3-11">&para;</a></dt>
+        <dd id="null">A key used to encrypt data to be read by a group of users. This is typically achieved by means of some form of proxy re-encryption or distributed key generation.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-12">Group Encryption Key Identifier<a class="pilcrow" href="#s-2_3-12">&para;</a></dt>
+        <dd id="null">A key identifier for a group encryption key.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-13">Master Key (MK)<a class="pilcrow" href="#s-2_3-13">&para;</a></dt>
+        <dd id="null">The master secret from which keys are derived for authenticating enhanced data sequences.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-14">Recipient<a class="pilcrow" href="#s-2_3-14">&para;</a></dt>
+        <dd id="null">Any party that receives and processes at least some part of a DARE envelope.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-15">Related Envelope<a class="pilcrow" href="#s-2_3-15">&para;</a></dt>
+        <dd id="null">A set of DARE envelopes that share the same key exchange information and hence the same Master Key.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-2_3-16">Uniform Data Fingerprint (UDF)<a class="pilcrow" href="#s-2_3-16">&para;</a></dt>
+        <dd id="null">The means of presenting the result of a cryptographic digest function over a data sequence and content type identifier specified in the Uniform Data Fingerprint specification <a class="xref" href="#draft-hallambaker-mesh-udf">[draft-hallambaker-mesh-udf]</a><a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-dare-envelope-architecture">
+        <h3 id="s-3">
+          <a class="selfRef" href="#s-3">3.</a>
+          <a class="selfRef" href="#n-dare-envelope-architecture">DARE Envelope Architecture</a>
+        </h3>
+      </section>
+      <p id="s-3-1">A DARE Envelope is a sequence of three parts:<a class="pilcrow" href="#s-3-1">&para;</a></p>
+      <dl id="s-3-2-" class="nohang">
+        <dt id="s-3-2">Header<a class="pilcrow" href="#s-3-2">&para;</a></dt>
+        <dd id="null">A JSON object containing information a reader requires to begin processing the envelope.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3-3">Payload<a class="pilcrow" href="#s-3-3">&para;</a></dt>
+        <dd id="null">An array of octets.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3-4">Trailer<a class="pilcrow" href="#s-3-4">&para;</a></dt>
+        <dd id="null">A JSON object containing information calculated from the envelope payload.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-3-5">For example, the following sequence is a JSON encoded Envelope with an empty header, a payload of zero length and an empty trailer:<a class="pilcrow" href="#s-3-5">&para;</a></p>
+      <pre id="s-3-6">[ {}, "", {} ]<a class="pilcrow" href="#s-3-6">&para;</a></pre>
+      <p id="s-3-7">DARE Envelopes <span class="bcp14">MAY</span> be encoded using JSON serialization or a binary serialization for greater efficiency.<a class="pilcrow" href="#s-3-7">&para;</a></p>
+      <dl id="s-3-8-" class="nohang">
+        <dt id="s-3-8">JSON <a class="xref" href="#RFC7159">[RFC7159]</a><a class="pilcrow" href="#s-3-8">&para;</a></dt>
+        <dd id="null">Offers compatibility with applications and libraries that support JSON. Payload data is encoded using Base64 incurring a 33% overhead.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3-9">JSON-B <a class="xref" href="#draft-hallambaker-jsonbcd">[draft-hallambaker-jsonbcd]</a><a class="pilcrow" href="#s-3-9">&para;</a></dt>
+        <dd id="null">A superset of JSON encoding that permits binary data to be encoded as a sequence of length-data segments. This avoids the Base64 overhead incurred by JSON encoding. Since JSON-B is a superset of JSON encoding, an application can use a single decoder for either format.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3-10">JSON-C <a class="xref" href="#draft-hallambaker-jsonbcd">[draft-hallambaker-jsonbcd]</a><a class="pilcrow" href="#s-3-10">&para;</a></dt>
+        <dd id="null">A superset of JSON-C which provides additional efficiency by allowing field tags and other repeated string data to be encoded by reference to a dictionary. Since JSON-C is a superset of JSON and JSON-B encodings, an application can use a single decoder for all three formats.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-3-11">DARE Envelope processors <span class="bcp14">MUST</span> support JSON serialization and <span class="bcp14">SHOULD</span> support JSON-B serialization. <a class="pilcrow" href="#s-3-11">&para;</a></p>
+    </section>
+    
+    <section id="n-processing-considerations">
+      <h4 id="s-3_1">
+        <a class="selfRef" href="#s-3_1">3.1.</a>
+        <a class="selfRef" href="#n-processing-considerations">Processing Considerations</a>
+      </h4>
+      <p id="s-3_1-1">The DARE Envelope Syntax supports single pass encoding and decoding without buffering of data. All the information required to begin processing a DARE envelope (key agreement information, digest algorithms), is provided in the envelope header. All the information that is derived from envelope processing (authentication codes, digest values, signatures) is presented in the envelope trailer.<a class="pilcrow" href="#s-3_1-1">&para;</a></p>
+      <p id="s-3_1-2">The choice of envelope encoding does not affect the semantics of envelope processing. A DARE Envelope <span class="bcp14">MAY</span> be reserialized under the same serialization or converted from any of the specified serialization to any other serialization without changing the semantics or integrity properties of the envelope.<a class="pilcrow" href="#s-3_1-2">&para;</a></p>
+    </section>
+    
+    <section id="n-content-metadata-and-annotations">
+      <h4 id="s-3_2">
+        <a class="selfRef" href="#s-3_2">3.2.</a>
+        <a class="selfRef" href="#n-content-metadata-and-annotations">Content Metadata and Annotations</a>
+      </h4>
+      <p id="s-3_2-1">A header <span class="bcp14">MAY</span> contain header fields describing the payload content. These include:<a class="pilcrow" href="#s-3_2-1">&para;</a></p>
+      <dl id="s-3_2-2-" class="nohang">
+        <dt id="s-3_2-2">ContentType<a class="pilcrow" href="#s-3_2-2">&para;</a></dt>
+        <dd id="null">Specifies the IANA Media Type <a class="xref" href="#RFC6838">[RFC6838]</a>.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3_2-3">Annotations<a class="pilcrow" href="#s-3_2-3">&para;</a></dt>
+        <dd id="null">A list of Encoded Data Sequences that provide application specific annotations to the envelope.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-3_2-4">For example, consider the following mail message: <a class="pilcrow" href="#s-3_2-4">&para;</a></p>
+      <pre id="s-3_2-5">From: Alice@example.com
+To: bob@example.com
+Subject: TOP-SECRET Product Launch Today!
+
+The CEO told me the product launch is today. Tell no-one!<a class="pilcrow" href="#s-3_2-5">&para;</a></pre>
+      <p id="s-3_2-6">Existing encryption approaches require that header fields such as the subject line be encrypted  with the body of the message or not encrypted at all. Neither approach is satisfactory. In this example, the subject line gives away important information that the sender probably assumed would be encrypted. But if the subject line is encrypted together with the message body, a mail client must retrieve at least part of the message body to provide a  'folder' view. <a class="pilcrow" href="#s-3_2-6">&para;</a></p>
+      <p id="s-3_2-7">The plaintext form of the equivalent DARE Message encoding is: <a class="pilcrow" href="#s-3_2-7">&para;</a></p>
+      <pre id="s-3_2-8">[{
+    "Annotations":["iAEBiBdGcm9tOiBBbGljZUBleGFtcGxlLmNvbYgA",
+      "iAECiBNUbzogYm9iQGV4YW1wbGUuY29tiAA",
+      "iAEDiClTdWJqZWN0OiBUT1AtU0VDUkVUIFByb2R1Y3QgTGF1bmNoIFRvZGF5
+  IYgA"
+      ],
+    "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24vZXhhbXBsZS1t
+  YWlsIn0"},
+  "VGhlIENFTyB0b2xkIG1lIHRoZSBwcm9kdWN0IGxhdW5jaCBpcyB0b2RheS4gVGVs
+  bCBuby1vbmUh"
+  ]<a class="pilcrow" href="#s-3_2-8">&para;</a></pre>
+      <p id="s-3_2-9">This contains the same information as before but the mail message headers are  now presented as a list of Encoded Data Sequences. <a class="pilcrow" href="#s-3_2-9">&para;</a></p>
+    </section>
+    
+    <section id="n-encoded-data-sequence">
+      <h4 id="s-3_3">
+        <a class="selfRef" href="#s-3_3">3.3.</a>
+        <a class="selfRef" href="#n-encoded-data-sequence">Encoded Data Sequence</a>
+      </h4>
+      <p id="s-3_3-1">An encoded data sequence (EDS) is a sequence of octets that encodes a data sequence according to cryptographic enhancements specified in the context in which it is presented. An EDS <span class="bcp14">MAY</span> be encrypted and <span class="bcp14">MAY</span> be authenticated by means of a MAC. The keys and other cryptographic parameters used to apply these enhancements are derived from the cryptographic context and a Salt prefix specified in the EDS itself.<a class="pilcrow" href="#s-3_3-1">&para;</a></p>
+      <p id="s-3_3-2">An EDS sequence contains exactly three binary fields encoded in JSON-B serialization as follows:<a class="pilcrow" href="#s-3_3-2">&para;</a></p>
+      <dl id="s-3_3-3-" class="nohang">
+        <dt id="s-3_3-3">Salt Prefix<a class="pilcrow" href="#s-3_3-3">&para;</a></dt>
+        <dd id="null">A sequence of octets used to derive the encryption key, Initialization Vector and MAC key as required.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3_3-4">Body<a class="pilcrow" href="#s-3_3-4">&para;</a></dt>
+        <dd id="null">The plaintext or encrypted content.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3_3-5">Authentication Tag<a class="pilcrow" href="#s-3_3-5">&para;</a></dt>
+        <dd id="null">The authentication code value in the case that the cryptographic context specifies use of authenticated encryption or a MAC, otherwise is a zero-length field.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-3_3-6">Requiring all three fields to be present, even in cases where they are unnecessary simplifies processing at the cost of up to six additional data bytes.<a class="pilcrow" href="#s-3_3-6">&para;</a></p>
+      <p id="s-3_3-7">The encoding of the 'From' header of the previous example as a plaintext EDS is as follows: <a class="pilcrow" href="#s-3_3-7">&para;</a></p>
+      <pre id="s-3_3-8">88 01
+  01
+88 17
+  46 72 6f 6d 3a 20 41 6c   69 63 65 40 65 78 61 6d
+  70 6c 65 2e 63 6f 6d
+88 00
+
+<a class="pilcrow" href="#s-3_3-8">&para;</a></pre>
+    </section>
+    
+    <section id="n-encryption-and-integrity-0">
+      <h4 id="s-3_4">
+        <a class="selfRef" href="#s-3_4">3.4.</a>
+        <a class="selfRef" href="#n-encryption-and-integrity-0">Encryption and Integrity</a>
+      </h4>
+      <p id="s-3_4-1">Encryption and integrity protections <span class="bcp14">MAY</span> be applied to any DARE Envelope Payload and Annotations.<a class="pilcrow" href="#s-3_4-1">&para;</a></p>
+      <p id="s-3_4-2">The following is an encrypted version of the message shown earlier.  The payload and annotations have both increased in size as a result of the block cipher padding. The header now includes Recipients and Salt fields to enable the content to be decoded. <a class="pilcrow" href="#s-3_4-2">&para;</a></p>
+      <pre id="s-3_4-3">[{
+    "enc":"A256CBC",
+    "kid":"EBQP-KM4Q-N32E-JM5V-DF4Y-EPZ3-PPDA",
+    "Salt":"1D0GBsw_YuKSA8t7ScnsLw",
+    "Annotations":["iAEBiCBMuc8j9gaxmEgKqHwmxOLwRXtvc_NIl9TnCl1THa1y
+  dA",
+      "iAECiCCmaGajbkqu-MnAxtca7ktmFcDgWSF64ezieKCc8P947g",
+      "iAEDiDBOZKsqsyk-KYrcT3ll-Odxcj6kbtVSnx3sLC2EEnPFdjZNv6Pf1-eQ
+  S1ST1W4mcDk"
+      ],
+    "recipients":[{
+        "kid":"MAZQ-4ASQ-M4GB-2AH6-JYBJ-G7ME-3GP3",
+        "epk":{
+          "PublicKeyECDH":{
+            "crv":"Ed25519",
+            "Public":"m-3HyC2NCd5ik788zg8YxHHPQvtKM0kx3R-bOEJHInw"}},
+        "wmk":"7r4CXNsg8hgwU9vNv3XmbIn9dzgdDsMN83WPuwv7xqVygBKyvZrX
+  Xg"}
+      ],
+    "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24vZXhhbXBsZS1t
+  YWlsIn0"},
+  "TRmSam6XnPWRgos9zu3Gs_PPn40zwqVAUx4JcXIEMeSopahOxCRPsAw4YFDNJtNs
+  iPOmY81DRW9rgRV-uSRSFg"
+  ]<a class="pilcrow" href="#s-3_4-3">&para;</a></pre>
+    </section>
+    
+    <section id="n-key-exchange-0">
+      <h5 id="s-3_4_1">
+        <a class="selfRef" href="#s-3_4_1">3.4.1.</a>
+        <a class="selfRef" href="#n-key-exchange-0">Key Exchange</a>
+      </h5>
+      <p id="s-3_4_1-1">The DARE key exchange is based on the JWE key exchange except that encryption modes are intentionally limited and the output of the key exchange is the DARE Master Key rather than the Content Encryption Key.<a class="pilcrow" href="#s-3_4_1-1">&para;</a></p>
+      <p id="s-3_4_1-2">A DARE Key Exchange <span class="bcp14">MAY</span> contain any number of Recipient entries, each providing a means of decrypting the Master Key using a different private key.<a class="pilcrow" href="#s-3_4_1-2">&para;</a></p>
+      <p id="s-3_4_1-3">If the Key Exchange mechanism supports message recovery, Direct Key Agreement is used, in all other cases, Key Wrapping is used.<a class="pilcrow" href="#s-3_4_1-3">&para;</a></p>
+      <p id="s-3_4_1-4">This approach allows envelopes with one intended recipient to be handled in the exact same fashion as envelopes with multiple recipients. While this does require an additional key wrapping operation, that could be avoided if an envelope has exactly one intended recipient, this is offset by the reduction in code complexity.<a class="pilcrow" href="#s-3_4_1-4">&para;</a></p>
+      <p id="s-3_4_1-5">If the key exchange algorithm does not support message recovery (e.g. Diffie Hellman and Elliptic Curve Diffie-Hellman), the HKDF Extract-and-Expand Key Derivation Function is used to derive a master key using the following info tag:<a class="pilcrow" href="#s-3_4_1-5">&para;</a></p>
+      <dl id="s-3_4_1-6-" class="nohang">
+        <dt id="s-3_4_1-6">"dare-master" [64 61 72 65 2d 6d 61 73 74 65 72]<a class="pilcrow" href="#s-3_4_1-6">&para;</a></dt>
+        <dd id="null">Key derivation info field used when deriving a master key from the output of a key exchange.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-3_4_1-7">The master key length is the maximum of the key size of the encryption algorithm specified by the key exchange header, the key size of the MAC algorithm specified by the key exchange header (if used) and 256.<a class="pilcrow" href="#s-3_4_1-7">&para;</a></p>
+    </section>
+    
+    <section id="n-key-identifiers">
+      <h5 id="s-3_4_2">
+        <a class="selfRef" href="#s-3_4_2">3.4.2.</a>
+        <a class="selfRef" href="#n-key-identifiers">Key Identifiers</a>
+      </h5>
+      <p id="s-3_4_2-1">The JWE/JWS specifications define a kid field for use as a key identifier but not how the identifier itself is constructed. All DARE key identifiers are either UDF key fingerprints <a class="xref" href="#draft-hallambaker-mesh-udf">[draft-hallambaker-mesh-udf]</a> or Mesh/Recrypt Group Key Identifiers.<a class="pilcrow" href="#s-3_4_2-1">&para;</a></p>
+      <p id="s-3_4_2-2">A UDF fingerprint is formed as the digest of an IANA content type and the digested data. A UDF key fingerprint is formed with the content type <code>application/pkix-keyinfo</code> and the digested data is the ASN.1 DER encoded PKIX certificate <code>keyInfo</code> sequence for the corresponding public key.<a class="pilcrow" href="#s-3_4_2-2">&para;</a></p>
+      <p id="s-3_4_2-3">A Group Key Identifier has the form &lt;fingerprint&gt;@&lt;domain&gt;. Where &lt;fingerprint&gt; is a UDF key fingerprint and &lt;domain&gt; is the DNS address of a service that provides the encryption service to support decryption by group members.<a class="pilcrow" href="#s-3_4_2-3">&para;</a></p>
+    </section>
+    
+    <section id="n-salt-derivation">
+      <h5 id="s-3_4_3">
+        <a class="selfRef" href="#s-3_4_3">3.4.3.</a>
+        <a class="selfRef" href="#n-salt-derivation">Salt Derivation</a>
+      </h5>
+      <p id="s-3_4_3-1">A Master Salt is a sequence of 16 or more octets that is specified in the Salt field of the header.<a class="pilcrow" href="#s-3_4_3-1">&para;</a></p>
+      <p id="s-3_4_3-2">The Master Salt is used to derive salt values for the envelope payload and associated encoded data sequences as follows.<a class="pilcrow" href="#s-3_4_3-2">&para;</a></p>
+      <dl id="s-3_4_3-3-" class="nohang">
+        <dt id="s-3_4_3-3">Payload<a class="pilcrow" href="#s-3_4_3-3">&para;</a></dt>
+        <dd id="null">Salt = Master Salt<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3_4_3-4">EDS<a class="pilcrow" href="#s-3_4_3-4">&para;</a></dt>
+        <dd id="null">Salt = Concatenate (Payload Salt Prefix,  Master Salt)<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-3_4_3-5">Encoders <span class="bcp14">SHOULD NOT</span> generate salt values that exceed 1024 octets.<a class="pilcrow" href="#s-3_4_3-5">&para;</a></p>
+      <p id="s-3_4_3-6">The salt value is opaque to the DARE encoding but <span class="bcp14">MAY</span> be used to encode application specific semantics including:<a class="pilcrow" href="#s-3_4_3-6">&para;</a></p>
+      <ul id="s-3_4_3-7-">
+        <li id="s-3_4_3-7">Frame number to allow reassembly of a data sequence split over a sequence of envelopes which may be delivered out of order.<a class="pilcrow" href="#s-3_4_3-7">&para;</a></li>
+        <li id="s-3_4_3-8">Transmit the Master Key in the manner of a Kerberos ticket.<a class="pilcrow" href="#s-3_4_3-8">&para;</a></li>
+        <li id="s-3_4_3-9">Identify the Master Key under which the Enhanced Data Sequence was generated.<a class="pilcrow" href="#s-3_4_3-9">&para;</a></li>
+        <li id="s-3_4_3-10">Enable access to the plaintext to be eliminated by erasure of the encryption key.<a class="pilcrow" href="#s-3_4_3-10">&para;</a></li>
+      </ul>
+      <p id="s-3_4_3-11">For data erasure to be effective, the salt <span class="bcp14">MUST</span> be constructed so that the difficulty of recovering the key is sufficiently high that it is infeasible. For most purposes, a salt with 128 bits of appropriately random data is sufficient.<a class="pilcrow" href="#s-3_4_3-11">&para;</a></p>
+    </section>
+    
+    <section id="n-key-derivation">
+      <h5 id="s-3_4_4">
+        <a class="selfRef" href="#s-3_4_4">3.4.4.</a>
+        <a class="selfRef" href="#n-key-derivation">Key Derivation</a>
+      </h5>
+      <p id="s-3_4_4-1">Encryption and/or authentication keys are derived from the Master Key using a Extract-and-Expand Key Derivation Function as follows:<a class="pilcrow" href="#s-3_4_4-1">&para;</a></p>
+      <ol id="s-3_4_4-2-">
+        <li id="s-3_4_4-2">The Master Key and salt value are used to extract the PRK (pseudorandom key)<a class="pilcrow" href="#s-3_4_4-2">&para;</a></li>
+        <li id="s-3_4_4-3">The PRK is used to derive the algorithm keys using the application specific information input for that key type.<a class="pilcrow" href="#s-3_4_4-3">&para;</a></li>
+      </ol>
+      <p id="s-3_4_4-4">The application specific information inputs are:<a class="pilcrow" href="#s-3_4_4-4">&para;</a></p>
+      <dl id="s-3_4_4-5-" class="nohang">
+        <dt id="s-3_4_4-5">"dare-encrypt" [64 61 72 65 2d 65 6e 63 72 79 70 74]<a class="pilcrow" href="#s-3_4_4-5">&para;</a></dt>
+        <dd id="null">To generate an encryption or encryption with authentication key.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3_4_4-6">"dare-iv" [64 61 72 65 2d 65 6e 63 72 79 70 74]<a class="pilcrow" href="#s-3_4_4-6">&para;</a></dt>
+        <dd id="null">To generate an initialization vector.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3_4_4-7">"dare-mac" [dare-mac]<a class="pilcrow" href="#s-3_4_4-7">&para;</a></dt>
+        <dd id="null">To generate a Message Authentication Code key.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-signature-0">
+        <h4 id="s-3_5">
+          <a class="selfRef" href="#s-3_5">3.5.</a>
+          <a class="selfRef" href="#n-signature-0">Signature</a>
+        </h4>
+      </section>
+      <p id="s-3_5-1">While encryption and integrity enhancements can be applied to any part of a DARE Envelope, signatures are only applied to payload digest values calculated over one or more envelope payloads. <a class="pilcrow" href="#s-3_5-1">&para;</a></p>
+      <p id="s-3_5-2">The payload digest value for an envelope is calculated over the binary payload data. That is, after any encryption enhancement has been applied but before the envelope encoding is applied. This allows envelopes to be converted from one encoding to another without affecting signature verification. <a class="pilcrow" href="#s-3_5-2">&para;</a></p>
+      <dl id="s-3_5-3-" class="nohang">
+        <dt id="s-3_5-3">Single Payload<a class="pilcrow" href="#s-3_5-3">&para;</a></dt>
+        <dd id="null">The signed value is the payload digest of the envelope payload.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-3_5-4">Multiple Payload.<a class="pilcrow" href="#s-3_5-4">&para;</a></dt>
+        <dd id="null">The signed value is the root of a Merkle Tree in which the payload digest of the envelope is one of the leaves.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-3_5-5">Verification of a multiple payload signature naturally requires the additional digest values required to construct the Merkle Tree. These are provided in the Trailer in a format that permits multiple signers to reference the same tree data.<a class="pilcrow" href="#s-3_5-5">&para;</a></p>
+    </section>
+    
+    <section id="n-algorithms">
+      <h4 id="s-3_6">
+        <a class="selfRef" href="#s-3_6">3.6.</a>
+        <a class="selfRef" href="#n-algorithms">Algorithms</a>
+      </h4>
+    </section>
+    
+    <section id="n-field-kwd">
+      <h5 id="s-3_6_1">
+        <a class="selfRef" href="#s-3_6_1">3.6.1.</a>
+        <a class="selfRef" href="#n-field-kwd">Field: kwd</a>
+      </h5>
+      <p id="s-3_6_1-1">The key wrapping and derivation algorithms.<a class="pilcrow" href="#s-3_6_1-1">&para;</a></p>
+      <p id="s-3_6_1-2">Since the means of public key exchange is determined by the key identifier of the recipient key, it is only necessary to specify the algorithms used for key wrapping and derivation.<a class="pilcrow" href="#s-3_6_1-2">&para;</a></p>
+      <p id="s-3_6_1-3">The default (and so far only) algorithm is kwd-aes-sha2-256-256.<a class="pilcrow" href="#s-3_6_1-3">&para;</a></p>
+      <p id="s-3_6_1-4">Advanced Encryption Standard (AES) Key Wrap with Padding Algorithm <a class="xref" href="#RFC3394">[RFC3394]</a> is used to wrap the Master Exchange Key. AES 256 is used.<a class="pilcrow" href="#s-3_6_1-4">&para;</a></p>
+      <p id="s-3_6_1-5">HMAC-based Extract-and-Expand Key Derivation Function <a class="xref" href="#RFC5869">[RFC5869]</a> is used for key derivation. SHA-2-256 is used for the hash function.<a class="pilcrow" href="#s-3_6_1-5">&para;</a></p>
+    </section>
+    
+    <section id="n-dare-container-architecture">
+      <h3 id="s-4">
+        <a class="selfRef" href="#s-4">4.</a>
+        <a class="selfRef" href="#n-dare-container-architecture">DARE Container Architecture</a>
+      </h3>
+    </section>
+    
+    <section id="n-container-navigation">
+      <h4 id="s-4_1">
+        <a class="selfRef" href="#s-4_1">4.1.</a>
+        <a class="selfRef" href="#n-container-navigation">Container Navigation</a>
+      </h4>
+      <p id="s-4_1-1">Three means of locating frames in a container are supported:<a class="pilcrow" href="#s-4_1-1">&para;</a></p>
+      <dl id="s-4_1-2-" class="nohang">
+        <dt id="s-4_1-2">Sequential<a class="pilcrow" href="#s-4_1-2">&para;</a></dt>
+        <dd id="null">Access frames sequentially starting from the start or the end of the container.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-4_1-3">Binary search<a class="pilcrow" href="#s-4_1-3">&para;</a></dt>
+        <dd id="null">Access any container frame by frame number in O(log<sub>2</sub>(n)) time by means of a binary tree constructed while the container is written.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-4_1-4">Index<a class="pilcrow" href="#s-4_1-4">&para;</a></dt>
+        <dd id="null">Access and container frame by frame number or by key by means of an index record.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-4_1-5">All DARE Containers support sequential access. Only tree and Merkle tree containers support binary search access. An index frame <span class="bcp14">MAY</span> be written appended to any container and provides O(1) access to any frame listed in the index.<a class="pilcrow" href="#s-4_1-5">&para;</a></p>
+      <p id="s-4_1-6">Two modes of compilation are considered:<a class="pilcrow" href="#s-4_1-6">&para;</a></p>
+      <dl id="s-4_1-7-" class="nohang">
+        <dt id="s-4_1-7">Monolithic<a class="pilcrow" href="#s-4_1-7">&para;</a></dt>
+        <dd id="null">Frames are added to the container in a single operation, e.g. file archives, <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-4_1-8">Incremental<a class="pilcrow" href="#s-4_1-8">&para;</a></dt>
+        <dd id="null">Additional frames are written to the container at various intervals after it was originally created, e.g. server logs, message spools.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-4_1-9">In the monolithic mode, navigation requirements are best met by writing an index frame to the end of the container when it is complete. It is not necessary to construct a binary search tree unless a Merkle tree integrity check is required.<a class="pilcrow" href="#s-4_1-9">&para;</a></p>
+      <p id="s-4_1-10">In the incremental mode, Binary search provides an efficient means of locating frames by frame number but not by key. Writing a complete index to the container every <i>m</i> write operations provides <i>O(m)</i> search access but requires O(n<sup>2</sup>) storage.<a class="pilcrow" href="#s-4_1-10">&para;</a></p>
+      <p id="s-4_1-11">Use of partial indexes provides a better compromise between speed and efficiency. A partial index is written out every <i>m</i> frames where <i>m</i> is a power of two. A complete index is written every time a binary tree apex record is written. This approach provides for O(log<sub>2</sub>(n)) search with incremental compilation with approximately double the overhead of the monolithic case.<a class="pilcrow" href="#s-4_1-11">&para;</a></p>
+    </section>
+    
+    <section id="n-tree">
+      <h5 id="s-4_1_1">
+        <a class="selfRef" href="#s-4_1_1">4.1.1.</a>
+        <a class="selfRef" href="#n-tree">Tree</a>
+      </h5>
+      <p id="s-4_1_1-1">Binary search is supported by means of the <code>TreePosition</code> parameter specified in the FrameHeader. This parameter specifies the value of the immediately preceding apex.<a class="pilcrow" href="#s-4_1_1-1">&para;</a></p>
+      <p id="s-4_1_1-2">Calculation of the immediately preceding apex is most easily described by representing the array index in binary with base of 1 (rather than 0). An array index that is a power of 2 (2, 4, 8, 16, etc.) will be the apex of a complete tree. Every other array index has the value of the sum of a set of powers of 2 and the immediately preceding apex will be the value of the next smallest power of 2 in the sum.<a class="pilcrow" href="#s-4_1_1-2">&para;</a></p>
+      <p id="s-4_1_1-3">For example, to find the immediately preceding apex for frame 5, we add 1 to get 6. 6 = 4 + 2, so we ignore the 2 and the preceding frame is 4.<a class="pilcrow" href="#s-4_1_1-3">&para;</a></p>
+      <p id="s-4_1_1-4">The values of Tree Position are shown for the first 8 frames in figure xx below:<a class="pilcrow" href="#s-4_1_1-4">&para;</a></p>
+      <figure id="f-5">
+        <div class="artwork art-svg" id="n-merkle-tree-integrity-check">
+          <a class="pilcrow" href="#n-merkle-tree-integrity-check">&para;</a>
+        </div>
+        <figcaption>
+          <a href="n-merkle-tree-integrity-check">Figure 5</a>
+:          <a href="null" id="null" class="selfRef">Merkle Tree Integrity check</a>
+        </figcaption>
+      </figure>
+      <p id="s-4_1_1-6">An algorithm for efficiently calculating the immediately preceding apex is provided in Appendix C.<a class="pilcrow" href="#s-4_1_1-6">&para;</a></p>
+    </section>
+    
+    <section id="n-position-index">
+      <h5 id="s-4_1_2">
+        <a class="selfRef" href="#s-4_1_2">4.1.2.</a>
+        <a class="selfRef" href="#n-position-index">Position Index</a>
+      </h5>
+      <p id="s-4_1_2-1">Contains a table of frame number, position pairs pointing to prior locations in the file.<a class="pilcrow" href="#s-4_1_2-1">&para;</a></p>
+    </section>
+    
+    <section id="n-metadata-index">
+      <h5 id="s-4_1_3">
+        <a class="selfRef" href="#s-4_1_3">4.1.3.</a>
+        <a class="selfRef" href="#n-metadata-index">Metadata Index</a>
+      </h5>
+      <p id="s-4_1_3-1">Contains a list of IndexMeta entries. Each entry contains a metadata description and a list of frame indexes (not positions) of frames that match the description.<a class="pilcrow" href="#s-4_1_3-1">&para;</a></p>
+    </section>
+    
+    <section id="n-integrity-mechanisms">
+      <h4 id="s-4_2">
+        <a class="selfRef" href="#s-4_2">4.2.</a>
+        <a class="selfRef" href="#n-integrity-mechanisms">Integrity Mechanisms</a>
+      </h4>
+      <p id="s-4_2-1">Frame sequences in a DARE container <span class="bcp14">MAY</span> be protected against a frame insertion attack by means of a digest chain, a binary Merkle tree or both.<a class="pilcrow" href="#s-4_2-1">&para;</a></p>
+    </section>
+    
+    <section id="n-digest-chain-calculation">
+      <h5 id="s-4_2_1">
+        <a class="selfRef" href="#s-4_2_1">4.2.1.</a>
+        <a class="selfRef" href="#n-digest-chain-calculation">Digest Chain calculation</a>
+      </h5>
+      <p id="s-4_2_1-1">A digest chain is simple to implement but can only be verified if the full chain of values is known. Appending a frame to the chain has <i>O(1)</i> complexity but verification has <i>O(n)</i> complexity:<a class="pilcrow" href="#s-4_2_1-1">&para;</a></p>
+      <figure id="f-6">
+        <div class="artwork art-svg" id="n-hash-chain-integrity-check">
+          <a class="pilcrow" href="#n-hash-chain-integrity-check">&para;</a>
+        </div>
+        <figcaption>
+          <a href="n-hash-chain-integrity-check">Figure 6</a>
+:          <a href="null" id="null" class="selfRef">Hash chain integrity check</a>
+        </figcaption>
+      </figure>
+      <p id="s-4_2_1-3">The value of the chain digest for the first frame (frame 0) is <i>H(H(null)+H(Payload<sub>0</sub>)), where null is a zero length octet sequence and payloadn is the sequence of payload data bytes for frame n</i><a class="pilcrow" href="#s-4_2_1-3">&para;</a></p>
+      <p id="s-4_2_1-4">The value of the chain digest for frame <i>n is H(H(Payload<sub>n-1</sub> +H(Payloadn)), where A+B stands for concatenation of the byte sequences A and B.</i><a class="pilcrow" href="#s-4_2_1-4">&para;</a></p>
+    </section>
+    
+    <section id="n-binary-merkle-tree-calculation">
+      <h5 id="s-4_2_2">
+        <a class="selfRef" href="#s-4_2_2">4.2.2.</a>
+        <a class="selfRef" href="#n-binary-merkle-tree-calculation">Binary Merkle tree calculation</a>
+      </h5>
+      <p id="s-4_2_2-1">The tree index mechanism describe earlier may be used to implement a binary Merkle tree. The value TreeDigest specifies the apex value of the tree for that node.<a class="pilcrow" href="#s-4_2_2-1">&para;</a></p>
+      <p id="s-4_2_2-2">Appending a frame to the chain has O(log<sub>2</sub> (n)) complexity provided that the container format supports at least the binary tree index. Verifying a chain has O(log<sub>2</sub> (n)) complexity, provided that the set of necessary digest inputs is known.<a class="pilcrow" href="#s-4_2_2-2">&para;</a></p>
+      <p id="s-4_2_2-3">To calculate the value of the tree digest for a node, we first calculate the values of all the sub trees that have their apex at that node and then calculate the digest of that value and the immediately preceding local apex.<a class="pilcrow" href="#s-4_2_2-3">&para;</a></p>
+    </section>
+    
+    <section id="n-signature-1">
+      <h5 id="s-4_2_3">
+        <a class="selfRef" href="#s-4_2_3">4.2.3.</a>
+        <a class="selfRef" href="#n-signature-1">Signature</a>
+      </h5>
+      <p id="s-4_2_3-1">Payload data <span class="bcp14">MAY</span> be signed using a JWS <a class="xref" href="#RFC7515">[RFC7515]</a> as applied in the Envelope.<a class="pilcrow" href="#s-4_2_3-1">&para;</a></p>
+      <p id="s-4_2_3-2">Signatures are specified by the <code>Signatures</code> parameter in the content header. The data that the signature is calculated over is defined by the typ parameter of the Signature as follows.<a class="pilcrow" href="#s-4_2_3-2">&para;</a></p>
+      <dl id="s-4_2_3-3-" class="nohang">
+        <dt id="s-4_2_3-3"><code>Payload</code><a class="pilcrow" href="#s-4_2_3-3">&para;</a></dt>
+        <dd id="null">The value of the <code>PayloadDigest</code> parameter<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-4_2_3-4"><code>Chain</code><a class="pilcrow" href="#s-4_2_3-4">&para;</a></dt>
+        <dd id="null">The value of the <code>ChainDigest</code> parameter<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-4_2_3-5"><code>Tree</code><a class="pilcrow" href="#s-4_2_3-5">&para;</a></dt>
+        <dd id="null">The value of the <code>TreeDigestFinal</code> parameter<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-4_2_3-6">If the <code>typ</code> parameter is absent, the value Payload is implied.<a class="pilcrow" href="#s-4_2_3-6">&para;</a></p>
+      <p id="s-4_2_3-7">A frame <span class="bcp14">MAY</span> contain multiple signatures created with the same signing key and different typ values.<a class="pilcrow" href="#s-4_2_3-7">&para;</a></p>
+      <p id="s-4_2_3-8">The use of signatures over chain and tree digest values permit multiple frames to be validated using a single signature verification operation.<a class="pilcrow" href="#s-4_2_3-8">&para;</a></p>
+    </section>
+    
+    <section id="n-dare-schema-">
+      <h3 id="s-5">
+        <a class="selfRef" href="#s-5">5.</a>
+        <a class="selfRef" href="#n-dare-schema-">DARE Schema </a>
+      </h3>
+      <p id="s-5-1">A DARE Envelope consists of a Header, an Enhanced Data Sequence (EDS) and  an optional trailer. This section describes the JSON data fields used to  construct headers, trailers and complete messages. <a class="pilcrow" href="#s-5-1">&para;</a></p>
+      <p id="s-5-2">Wherever possible, fields from JWE, JWS and JWK have been used. In these cases, the fields have the exact same semantics. Note however that the classes in  which these fields are presented have different structure and nesting. <a class="pilcrow" href="#s-5-2">&para;</a></p>
+    </section>
+    
+    <section id="n-message-classes-">
+      <h4 id="s-5_1">
+        <a class="selfRef" href="#s-5_1">5.1.</a>
+        <a class="selfRef" href="#n-message-classes-">Message Classes </a>
+      </h4>
+      <p id="s-5_1-1">A DARE Message contains a single DAREMessageSequence in either the JSON or  Compact serialization as directed by the protocol in which it is applied. <a class="pilcrow" href="#s-5_1-1">&para;</a></p>
+    </section>
+    
+    <section id="n-structure-dareenvelopesequence-">
+      <h5 id="s-5_1_1">
+        <a class="selfRef" href="#s-5_1_1">5.1.1.</a>
+        <a class="selfRef" href="#n-structure-dareenvelopesequence-">Structure: DareEnvelopeSequence </a>
+      </h5>
+      <p id="s-5_1_1-1">A DARE Message containing Header, EDS and Trailer in JSON object encoding. Since a DAREMessage is almost invariably presented in JSON sequence or compact encoding, use of the DAREMessage subclass is preferred. <a class="pilcrow" href="#s-5_1_1-1">&para;</a></p>
+      <p id="s-5_1_1-2">Although a DARE Message is functionally an object, it is serialized as  an ordered sequence. This ensures that the message header field will always precede the body in a serialization, this allowing processing of the header information to be performed before the entire body has been received. <a class="pilcrow" href="#s-5_1_1-2">&para;</a></p>
+      <dl id="s-5_1_1-3-" class="nohang">
+        <dt id="s-5_1_1-3">Header: DareHeader (Optional) <a class="pilcrow" href="#s-5_1_1-3">&para;</a></dt>
+        <dd id="null">The message header. May specify the key exchange data, pre-signature  or signature data, cloaked headers and/or encrypted data sequences. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_1_1-4">Body: Binary (Optional) <a class="pilcrow" href="#s-5_1_1-4">&para;</a></dt>
+        <dd id="null">The message body <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_1_1-5">Trailer: DareTrailer (Optional) <a class="pilcrow" href="#s-5_1_1-5">&para;</a></dt>
+        <dd id="null">The message trailer. If present, this contains the signature.  <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-header-and-trailer-classes-">
+        <h4 id="s-5_2">
+          <a class="selfRef" href="#s-5_2">5.2.</a>
+          <a class="selfRef" href="#n-header-and-trailer-classes-">Header and Trailer Classes </a>
+        </h4>
+      </section>
+      <p id="s-5_2-1">A DARE Message sequence MUST contain a (possibly empty) DAREHeader and MAY contain a DARETrailer.  <a class="pilcrow" href="#s-5_2-1">&para;</a></p>
+    </section>
+    
+    <section id="n-structure-daretrailer-">
+      <h5 id="s-5_2_1">
+        <a class="selfRef" href="#s-5_2_1">5.2.1.</a>
+        <a class="selfRef" href="#n-structure-daretrailer-">Structure: DareTrailer </a>
+      </h5>
+      <p id="s-5_2_1-1">A DARE Message Trailer <a class="pilcrow" href="#s-5_2_1-1">&para;</a></p>
+      <dl id="s-5_2_1-2-" class="nohang">
+        <dt id="s-5_2_1-2">Signatures: DareSignature [0..Many] <a class="pilcrow" href="#s-5_2_1-2">&para;</a></dt>
+        <dd id="null">A list of signatures. A message trailer MUST NOT contain a signatures field if the header contains  a signatures field. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_1-3">SignedData: Binary (Optional) <a class="pilcrow" href="#s-5_2_1-3">&para;</a></dt>
+        <dd id="null">Contains a DAREHeader object  <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_1-4">PayloadDigest: Binary (Optional) <a class="pilcrow" href="#s-5_2_1-4">&para;</a></dt>
+        <dd id="null">If present, contains the digest of the Payload. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_1-5">ChainDigest: Binary (Optional) <a class="pilcrow" href="#s-5_2_1-5">&para;</a></dt>
+        <dd id="null">If present, contains the digest of the PayloadDigest values of this frame and the frame immediately preceding. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_1-6">TreeDigest: Binary (Optional) <a class="pilcrow" href="#s-5_2_1-6">&para;</a></dt>
+        <dd id="null">If present, contains the Binary Merkle Tree digest value.  <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-structure-dareheader-">
+        <h5 id="s-5_2_2">
+          <a class="selfRef" href="#s-5_2_2">5.2.2.</a>
+          <a class="selfRef" href="#n-structure-dareheader-">Structure: DareHeader </a>
+        </h5>
+        <dt id="s-5_2_2-1">Inherits: DareTrailer  <a class="pilcrow" href="#s-5_2_2-1">&para;</a></dt>
+      </section>
+      <p id="s-5_2_2-2">A DARE Message Header. Since any field that is present in a trailer MAY be  placed in a header instead, the message header inherits from the trailer. <a class="pilcrow" href="#s-5_2_2-2">&para;</a></p>
+      <dl id="s-5_2_2-3-" class="nohang">
+        <dt id="s-5_2_2-3">EnvelopeID: String (Optional) <a class="pilcrow" href="#s-5_2_2-3">&para;</a></dt>
+        <dd id="null">Unique identifier <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-4">EncryptionAlgorithm: String (Optional) <a class="pilcrow" href="#s-5_2_2-4">&para;</a></dt>
+        <dd id="null">The encryption algorithm as specified in JWE <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-5">DigestAlgorithm: String (Optional) <a class="pilcrow" href="#s-5_2_2-5">&para;</a></dt>
+        <dd id="null">Digest Algorithm. If specified, tells decoder that the digest algorithm is used to construct a signature over the message payload. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-6">KeyIdentifier: String (Optional) <a class="pilcrow" href="#s-5_2_2-6">&para;</a></dt>
+        <dd id="null">Master key identifier. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-7">Salt: Binary (Optional) <a class="pilcrow" href="#s-5_2_2-7">&para;</a></dt>
+        <dd id="null">Salt value used to derrive cryptographic parameters for the content data. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-8">Malt: Binary (Optional) <a class="pilcrow" href="#s-5_2_2-8">&para;</a></dt>
+        <dd id="null">Hash of the Salt value used to derrive cryptographic parameters for the content data. This field SHOULD NOT be present if the Salt field is present. It is used to allow the salt value to be erased (thus rendering the payload content irrecoverable) without affecting the ability to calculate the payload digest value. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-9">Cloaked: Binary (Optional) <a class="pilcrow" href="#s-5_2_2-9">&para;</a></dt>
+        <dd id="null">If present in a header or trailer, specifies an encrypted data block  containing additional header fields whose values override those specified  in the message and context headers. <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">When specified in a header, a cloaked field MAY be used to conceal metadata  (content type, compression) and/or to specify an additional layer of key exchange.  That applies to both the Message body and to headers specified within the cloaked  header. <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">Processing of cloaked data is described in… <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-10">EDSS: Binary [0..Many] <a class="pilcrow" href="#s-5_2_2-10">&para;</a></dt>
+        <dd id="null">If present, the Annotations field contains a sequence of Encrypted Data  Segments encrypted under the message Master Key. The interpretation of these fields  is application specific. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-11">Signers: DareSignature [0..Many] <a class="pilcrow" href="#s-5_2_2-11">&para;</a></dt>
+        <dd id="null">A list of 'presignature' <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-12">Recipients: DareRecipient [0..Many] <a class="pilcrow" href="#s-5_2_2-12">&para;</a></dt>
+        <dd id="null">A list of recipient key exchange information blocks. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-13">ContentMetaData: Binary (Optional) <a class="pilcrow" href="#s-5_2_2-13">&para;</a></dt>
+        <dd id="null">If present contains a JSON encoded ContentInfo structure which specifies plaintext content metadata and forms one of the inputs to the envelope digest value. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-14">ContainerInfo: ContainerInfo (Optional) <a class="pilcrow" href="#s-5_2_2-14">&para;</a></dt>
+        <dd id="null">Information that describes container information <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-15">ContainerIndex: ContainerIndex (Optional) <a class="pilcrow" href="#s-5_2_2-15">&para;</a></dt>
+        <dd id="null">An index of records in the current container up to but not including this one. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_2-16">Received: DateTime (Optional) <a class="pilcrow" href="#s-5_2_2-16">&para;</a></dt>
+        <dd id="null">Date on which the envelope was received.  <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-structure-contentmeta-">
+        <h5 id="s-5_2_3">
+          <a class="selfRef" href="#s-5_2_3">5.2.3.</a>
+          <a class="selfRef" href="#n-structure-contentmeta-">Structure: ContentMeta </a>
+        </h5>
+        <dt id="s-5_2_3-1">UniqueID: String (Optional) <a class="pilcrow" href="#s-5_2_3-1">&para;</a></dt>
+        <dd id="null">Unique object identifier <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-2">Labels: String [0..Many] <a class="pilcrow" href="#s-5_2_3-2">&para;</a></dt>
+        <dd id="null">List of labels that are applied to the payload of the frame. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-3">KeyValues: KeyValue [0..Many] <a class="pilcrow" href="#s-5_2_3-3">&para;</a></dt>
+        <dd id="null">List of key/value pairs describing the payload of the frame. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-4">MessageType: String (Optional) <a class="pilcrow" href="#s-5_2_3-4">&para;</a></dt>
+        <dd id="null">The mesh message type <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-5">ContentType: String (Optional) <a class="pilcrow" href="#s-5_2_3-5">&para;</a></dt>
+        <dd id="null">The content type field as specified in JWE <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-6">Paths: String [0..Many] <a class="pilcrow" href="#s-5_2_3-6">&para;</a></dt>
+        <dd id="null">List of filename paths for the payload of the frame. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-7">Filename: String (Optional) <a class="pilcrow" href="#s-5_2_3-7">&para;</a></dt>
+        <dd id="null">The original filename under which the data was stored. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-8">Event: String (Optional) <a class="pilcrow" href="#s-5_2_3-8">&para;</a></dt>
+        <dd id="null">Operation on the header <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-9">Created: DateTime (Optional) <a class="pilcrow" href="#s-5_2_3-9">&para;</a></dt>
+        <dd id="null">Initial creation date. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-10">Modified: DateTime (Optional) <a class="pilcrow" href="#s-5_2_3-10">&para;</a></dt>
+        <dd id="null">Date of last modification. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-11">Expire: DateTime (Optional) <a class="pilcrow" href="#s-5_2_3-11">&para;</a></dt>
+        <dd id="null">Date at which the associated transaction will expire <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-12">First: Integer (Optional) <a class="pilcrow" href="#s-5_2_3-12">&para;</a></dt>
+        <dd id="null">Frame number of the first object instance value. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_2_3-13">Previous: Integer (Optional) <a class="pilcrow" href="#s-5_2_3-13">&para;</a></dt>
+        <dd id="null">Frame number of the immediately prior object instance value	  <a class="pilcrow" href="#">&para;</a></dd>
+      </section>
+      
+      <section id="n-cryptographic-data-">
+        <h4 id="s-5_3">
+          <a class="selfRef" href="#s-5_3">5.3.</a>
+          <a class="selfRef" href="#n-cryptographic-data-">Cryptographic Data </a>
+        </h4>
+      </section>
+      <p id="s-5_3-1">DARE Message uses the same fields as JWE and JWS but with different structure. In particular, DARE messages MAY have multiple recipients and multiple signers. <a class="pilcrow" href="#s-5_3-1">&para;</a></p>
+    </section>
+    
+    <section id="n-structure-daresignature-">
+      <h5 id="s-5_3_1">
+        <a class="selfRef" href="#s-5_3_1">5.3.1.</a>
+        <a class="selfRef" href="#n-structure-daresignature-">Structure: DareSignature </a>
+      </h5>
+      <p id="s-5_3_1-1">The signature value <a class="pilcrow" href="#s-5_3_1-1">&para;</a></p>
+      <dl id="s-5_3_1-2-" class="nohang">
+        <dt id="s-5_3_1-2">Dig: String (Optional) <a class="pilcrow" href="#s-5_3_1-2">&para;</a></dt>
+        <dd id="null">Digest algorithm hint. Specifying the digest algorithm to be applied to the message body allows the body to be processed in streaming mode. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_1-3">Alg: String (Optional) <a class="pilcrow" href="#s-5_3_1-3">&para;</a></dt>
+        <dd id="null">Key exchange algorithm <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_1-4">KeyIdentifier: String (Optional) <a class="pilcrow" href="#s-5_3_1-4">&para;</a></dt>
+        <dd id="null">Key identifier of the signature key. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_1-5">Certificate: X509Certificate (Optional) <a class="pilcrow" href="#s-5_3_1-5">&para;</a></dt>
+        <dd id="null">PKIX certificate of signer. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_1-6">Path: X509Certificate (Optional) <a class="pilcrow" href="#s-5_3_1-6">&para;</a></dt>
+        <dd id="null">PKIX certificates that establish a trust path for the signer. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_1-7">Manifest: Binary (Optional) <a class="pilcrow" href="#s-5_3_1-7">&para;</a></dt>
+        <dd id="null">The data description that was signed. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_1-8">SignatureValue: Binary (Optional) <a class="pilcrow" href="#s-5_3_1-8">&para;</a></dt>
+        <dd id="null">The signature value as an Enhanced Data Sequence under the message Master Key. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_1-9">WitnessValue: Binary (Optional) <a class="pilcrow" href="#s-5_3_1-9">&para;</a></dt>
+        <dd id="null">The signature witness value used on an encrypted message to demonstrate that  the signature was authorized by a party with actual knowledge of the encryption  key used to encrypt the message.  <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-structure-x509certificate-">
+        <h5 id="s-5_3_2">
+          <a class="selfRef" href="#s-5_3_2">5.3.2.</a>
+          <a class="selfRef" href="#n-structure-x509certificate-">Structure: X509Certificate </a>
+        </h5>
+        <dt id="s-5_3_2-1">X5u: String (Optional) <a class="pilcrow" href="#s-5_3_2-1">&para;</a></dt>
+        <dd id="null">URL identifying an X.509 public key certificate <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_2-2">X5: Binary (Optional) <a class="pilcrow" href="#s-5_3_2-2">&para;</a></dt>
+        <dd id="null">An X.509 public key certificate  <a class="pilcrow" href="#">&para;</a></dd>
+      </section>
+      
+      <section id="n-structure-darerecipient-">
+        <h5 id="s-5_3_3">
+          <a class="selfRef" href="#s-5_3_3">5.3.3.</a>
+          <a class="selfRef" href="#n-structure-darerecipient-">Structure: DareRecipient </a>
+        </h5>
+      </section>
+      <p id="s-5_3_3-1">Recipient information <a class="pilcrow" href="#s-5_3_3-1">&para;</a></p>
+      <dl id="s-5_3_3-2-" class="nohang">
+        <dt id="s-5_3_3-2">KeyIdentifier: String (Optional) <a class="pilcrow" href="#s-5_3_3-2">&para;</a></dt>
+        <dd id="null">Key identifier for the encryption key. <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">The Key identifier MUST be either a UDF fingerprint of a key or a Group Key Identifier <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_3-3">KeyWrapDerivation: String (Optional) <a class="pilcrow" href="#s-5_3_3-3">&para;</a></dt>
+        <dd id="null">The key wrapping and derivation algorithms. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_3-4">WrappedMasterKey: Binary (Optional) <a class="pilcrow" href="#s-5_3_3-4">&para;</a></dt>
+        <dd id="null">The wrapped master key. The master key is encrypted under the result of the key exchange. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-5_3_3-5">RecipientKeyData: String (Optional) <a class="pilcrow" href="#s-5_3_3-5">&para;</a></dt>
+        <dd id="null">The per-recipient key exchange data.  <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-dare-container-schema-">
+        <h3 id="s-6">
+          <a class="selfRef" href="#s-6">6.</a>
+          <a class="selfRef" href="#n-dare-container-schema-">DARE Container Schema </a>
+        </h3>
+      </section>
+      <p id="s-6-1">TBS stuff <a class="pilcrow" href="#s-6-1">&para;</a></p>
+    </section>
+    
+    <section id="n-container-headers-">
+      <h4 id="s-6_1">
+        <a class="selfRef" href="#s-6_1">6.1.</a>
+        <a class="selfRef" href="#n-container-headers-">Container Headers </a>
+      </h4>
+      <p id="s-6_1-1">TBS stuff <a class="pilcrow" href="#s-6_1-1">&para;</a></p>
+    </section>
+    
+    <section id="n-structure-containerinfo-">
+      <h5 id="s-6_1_1">
+        <a class="selfRef" href="#s-6_1_1">6.1.1.</a>
+        <a class="selfRef" href="#n-structure-containerinfo-">Structure: ContainerInfo </a>
+      </h5>
+      <p id="s-6_1_1-1">Information that describes container information <a class="pilcrow" href="#s-6_1_1-1">&para;</a></p>
+      <dl id="s-6_1_1-2-" class="nohang">
+        <dt id="s-6_1_1-2">DataEncoding: String (Optional) <a class="pilcrow" href="#s-6_1_1-2">&para;</a></dt>
+        <dd id="null">Specifies the data encoding for the header section of for the following frames. This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_1_1-3">ContainerType: String (Optional) <a class="pilcrow" href="#s-6_1_1-3">&para;</a></dt>
+        <dd id="null">Specifies the container type for the following records. This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_1_1-4">Index: Integer (Optional) <a class="pilcrow" href="#s-6_1_1-4">&para;</a></dt>
+        <dd id="null">The record index within the file. This MUST be unique and  satisfy any additional requirements determined by the ContainerType. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_1_1-5">IsMeta: Boolean (Optional) <a class="pilcrow" href="#s-6_1_1-5">&para;</a></dt>
+        <dd id="null">If true, the current frame is a meta frame and does not contain a payload. <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">Note: Meta frames MAY be present in any container. Applications MUST accept containers that contain meta frames at any position in the file. Applications MUST NOT interpret a meta frame as a data frame with an enpty payload. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_1_1-6">Default: Boolean (Optional) <a class="pilcrow" href="#s-6_1_1-6">&para;</a></dt>
+        <dd id="null">If set true in a persistent container, specifies that this record contains the default object for the container. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_1_1-7">TreePosition: Integer (Optional) <a class="pilcrow" href="#s-6_1_1-7">&para;</a></dt>
+        <dd id="null">Position of the frame containing the apex of the preceding sub-tree. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_1_1-8">IndexPosition: Integer (Optional) <a class="pilcrow" href="#s-6_1_1-8">&para;</a></dt>
+        <dd id="null">Specifies the position in the file at which the last index entry is to be found <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_1_1-9">ExchangePosition: Integer (Optional) <a class="pilcrow" href="#s-6_1_1-9">&para;</a></dt>
+        <dd id="null">Specifies the position in the file at which the key exchange data is to be found  <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-index-structures-">
+        <h4 id="s-6_2">
+          <a class="selfRef" href="#s-6_2">6.2.</a>
+          <a class="selfRef" href="#n-index-structures-">Index Structures </a>
+        </h4>
+      </section>
+      <p id="s-6_2-1">TBS stuff <a class="pilcrow" href="#s-6_2-1">&para;</a></p>
+    </section>
+    
+    <section id="n-structure-containerindex-">
+      <h5 id="s-6_2_1">
+        <a class="selfRef" href="#s-6_2_1">6.2.1.</a>
+        <a class="selfRef" href="#n-structure-containerindex-">Structure: ContainerIndex </a>
+      </h5>
+      <p id="s-6_2_1-1">A container index <a class="pilcrow" href="#s-6_2_1-1">&para;</a></p>
+      <dl id="s-6_2_1-2-" class="nohang">
+        <dt id="s-6_2_1-2">Full: Boolean (Optional) <a class="pilcrow" href="#s-6_2_1-2">&para;</a></dt>
+        <dd id="null">If true, the index is complete and contains position entries for all the  frames in the file. If absent or false, the index is incremental and only contains position entries for records added since the last  frame containing a ContainerIndex. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_2_1-3">Positions: IndexPosition [0..Many] <a class="pilcrow" href="#s-6_2_1-3">&para;</a></dt>
+        <dd id="null">List of container position entries <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_2_1-4">Metas: IndexMeta [0..Many] <a class="pilcrow" href="#s-6_2_1-4">&para;</a></dt>
+        <dd id="null">List of container position entries  <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-structure-indexposition-">
+        <h5 id="s-6_2_2">
+          <a class="selfRef" href="#s-6_2_2">6.2.2.</a>
+          <a class="selfRef" href="#n-structure-indexposition-">Structure: IndexPosition </a>
+        </h5>
+      </section>
+      <p id="s-6_2_2-1">Specifies the position in a file at which a specified record index is found <a class="pilcrow" href="#s-6_2_2-1">&para;</a></p>
+      <dl id="s-6_2_2-2-" class="nohang">
+        <dt id="s-6_2_2-2">Index: Integer (Optional) <a class="pilcrow" href="#s-6_2_2-2">&para;</a></dt>
+        <dd id="null">The record index within the file. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_2_2-3">Position: Integer (Optional) <a class="pilcrow" href="#s-6_2_2-3">&para;</a></dt>
+        <dd id="null">The record position within the file relative to the index base.  <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-structure-keyvalue-">
+        <h5 id="s-6_2_3">
+          <a class="selfRef" href="#s-6_2_3">6.2.3.</a>
+          <a class="selfRef" href="#n-structure-keyvalue-">Structure: KeyValue </a>
+        </h5>
+      </section>
+      <p id="s-6_2_3-1">Specifies a key/value entry <a class="pilcrow" href="#s-6_2_3-1">&para;</a></p>
+      <dl id="s-6_2_3-2-" class="nohang">
+        <dt id="s-6_2_3-2">Key: String (Optional) <a class="pilcrow" href="#s-6_2_3-2">&para;</a></dt>
+        <dd id="null">The key <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_2_3-3">Value: String (Optional) <a class="pilcrow" href="#s-6_2_3-3">&para;</a></dt>
+        <dd id="null">The value corresponding to the key  <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-structure-indexmeta-">
+        <h5 id="s-6_2_4">
+          <a class="selfRef" href="#s-6_2_4">6.2.4.</a>
+          <a class="selfRef" href="#n-structure-indexmeta-">Structure: IndexMeta </a>
+        </h5>
+      </section>
+      <p id="s-6_2_4-1">Specifies the list of index entries at which a record with the specified metadata occurrs. <a class="pilcrow" href="#s-6_2_4-1">&para;</a></p>
+      <dl id="s-6_2_4-2-" class="nohang">
+        <dt id="s-6_2_4-2">Index: Integer [0..Many] <a class="pilcrow" href="#s-6_2_4-2">&para;</a></dt>
+        <dd id="null">List of record indicies within the file where frames matching the specified  criteria are found. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_2_4-3">ContentType: String (Optional) <a class="pilcrow" href="#s-6_2_4-3">&para;</a></dt>
+        <dd id="null">Content type parameter <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_2_4-4">Paths: String [0..Many] <a class="pilcrow" href="#s-6_2_4-4">&para;</a></dt>
+        <dd id="null">List of filename paths for the current frame. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-6_2_4-5">Labels: String [0..Many] <a class="pilcrow" href="#s-6_2_4-5">&para;</a></dt>
+        <dd id="null">List of labels that are applied to the current frame.  <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-dare-container-applications">
+        <h3 id="s-7">
+          <a class="selfRef" href="#s-7">7.</a>
+          <a class="selfRef" href="#n-dare-container-applications">Dare Container Applications</a>
+        </h3>
+      </section>
+      <p id="s-7-1">DARE Containers are used to implement two forms of persistence store to support Mesh operations:<a class="pilcrow" href="#s-7-1">&para;</a></p>
+      <dl id="s-7-2-" class="nohang">
+        <dt id="s-7-2">Catalogs<a class="pilcrow" href="#s-7-2">&para;</a></dt>
+        <dd id="null">A set of related items which <span class="bcp14">MAY</span> be added, modified or deleted at any time.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-7-3">Spools<a class="pilcrow" href="#s-7-3">&para;</a></dt>
+        <dd id="null">A list of related items whose status <span class="bcp14">MAY</span> be changed at any time but which are immutable once added.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-7-4">Since DARE Containers are an append only log format, entries can only be modified or deleted by adding items to the log to change the status of previous entries. It is always possible to undo any operation on a catalog or spool unless the underlying container is purged or the individual entries modified.<a class="pilcrow" href="#s-7-4">&para;</a></p>
+    </section>
+    
+    <section id="n-catalog">
+      <h4 id="s-7_1">
+        <a class="selfRef" href="#s-7_1">7.1.</a>
+        <a class="selfRef" href="#n-catalog">Catalog</a>
+      </h4>
+      <p id="s-7_1-1">Catalogs contain a set of entries, each of which is distinguished by a unique identifier.<a class="pilcrow" href="#s-7_1-1">&para;</a></p>
+      <p id="s-7_1-2">Three operations are supported:<a class="pilcrow" href="#s-7_1-2">&para;</a></p>
+      <dl id="s-7_1-3-" class="nohang">
+        <dt id="s-7_1-3">Add<a class="pilcrow" href="#s-7_1-3">&para;</a></dt>
+        <dd id="null">Addition of the entry to the catalog<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-7_1-4">Update<a class="pilcrow" href="#s-7_1-4">&para;</a></dt>
+        <dd id="null">Modification of the data associated with the entry excluding the identifier<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-7_1-5">Delete<a class="pilcrow" href="#s-7_1-5">&para;</a></dt>
+        <dd id="null">Removal of the entry from the catalog<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-7_1-6">The set of valid state transitions is defined by the Finite State machine:<a class="pilcrow" href="#s-7_1-6">&para;</a></p>
+      <p id="s-7_1-7">(Add-Update*-Delete)*<a class="pilcrow" href="#s-7_1-7">&para;</a></p>
+      <p id="s-7_1-8">Catalogs are used to represent sets of persistent objects associated with a Mesh Service Account. The user's set of contacts for example. Each contact entry may be modified many times over time but refers to the same subject for its entire lifetime.<a class="pilcrow" href="#s-7_1-8">&para;</a></p>
+      <p id="s-7_1-9">SchemaCatalog <a class="pilcrow" href="#s-7_1-9">&para;</a></p>
+    </section>
+    
+    <section id="n-spool">
+      <h4 id="s-7_2">
+        <a class="selfRef" href="#s-7_2">7.2.</a>
+        <a class="selfRef" href="#n-spool">Spool</a>
+      </h4>
+      <p id="s-7_2-1">Spools contain lists of entries, each of which is distinguished by a unique identifier.<a class="pilcrow" href="#s-7_2-1">&para;</a></p>
+      <p id="s-7_2-2">Four operations are supported:<a class="pilcrow" href="#s-7_2-2">&para;</a></p>
+      <dl id="s-7_2-3-" class="nohang">
+        <dt id="s-7_2-3">Post<a class="pilcrow" href="#s-7_2-3">&para;</a></dt>
+        <dd id="null">Addition of the entry to the spool<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-7_2-4">Processed<a class="pilcrow" href="#s-7_2-4">&para;</a></dt>
+        <dd id="null">Marks the entry as having been processed.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-7_2-5">Unprocessed<a class="pilcrow" href="#s-7_2-5">&para;</a></dt>
+        <dd id="null">Returns the entry to the unread state.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-7_2-6">Delete<a class="pilcrow" href="#s-7_2-6">&para;</a></dt>
+        <dd id="null">Mark the entry as deleted allowing recovery of associated storage in a subsequent purge operation.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-7_2-7">The set of valid state transitions is defined by the Finite State machine:<a class="pilcrow" href="#s-7_2-7">&para;</a></p>
+      <p id="s-7_2-8">Post-(Processed| Unprocessed| Delete *)<a class="pilcrow" href="#s-7_2-8">&para;</a></p>
+      <p id="s-7_2-9">Spools are used to represent time sequence ordered entries such as lists of messages being sent or received, task queues and transaction logs.<a class="pilcrow" href="#s-7_2-9">&para;</a></p>
+      <p id="s-7_2-10">SchemaCatalog <a class="pilcrow" href="#s-7_2-10">&para;</a></p>
+    </section>
+    
+    <section id="n-archive">
+      <h4 id="s-7_3">
+        <a class="selfRef" href="#s-7_3">7.3.</a>
+        <a class="selfRef" href="#n-archive">Archive</a>
+      </h4>
+      <p id="s-7_3-1">A DARE Archive is a DARE Container whose entries contain files. This affords the same functionality as a traditional ZIP or tar archive but with the added cryptographic capabilities provided by the DARE format.<a class="pilcrow" href="#s-7_3-1">&para;</a></p>
+    </section>
+    
+    <section id="n-future-work">
+      <h3 id="s-8">
+        <a class="selfRef" href="#s-8">8.</a>
+        <a class="selfRef" href="#n-future-work">Future Work</a>
+      </h3>
+      <p id="s-8-1">The current specification describes an approach in which containers are written according to a strict append-only policy. Greater flexibility may be achieved by loosening this requirement allowing record(s) at the end of the container to be overwritten.<a class="pilcrow" href="#s-8-1">&para;</a></p>
+    </section>
+    
+    <section id="n-terminal-integrity-check">
+      <h4 id="s-8_1">
+        <a class="selfRef" href="#s-8_1">8.1.</a>
+        <a class="selfRef" href="#n-terminal-integrity-check">Terminal integrity check</a>
+      </h4>
+      <p id="s-8_1-1">A major concern when operating a critical service is the possibility of a hardware or power failure occurring during a write operation causing the file update to be incomplete. While most modern operating systems have effective mechanisms in place to prevent corruption of the file system itself in such circumstances, this does not provide sufficient protection at the application level.<a class="pilcrow" href="#s-8_1-1">&para;</a></p>
+      <p id="s-8_1-2">Appending a null record containing a container-specific magic number provides an effective means of detecting this circumstance that can be quickly verified.<a class="pilcrow" href="#s-8_1-2">&para;</a></p>
+      <p id="s-8_1-3">If a container specifies a terminal integrity check value in the header of frame zero, the container is considered to be in an incomplete write state if the final frame is not a null record specifying the magic number.<a class="pilcrow" href="#s-8_1-3">&para;</a></p>
+      <p id="s-8_1-4">When appending new records to such containers, the old terminal integrity check record is overwritten by the data being added and a new integrity check record appended to the end.<a class="pilcrow" href="#s-8_1-4">&para;</a></p>
+    </section>
+    
+    <section id="n-terminal-index-record">
+      <h4 id="s-8_2">
+        <a class="selfRef" href="#s-8_2">8.2.</a>
+        <a class="selfRef" href="#n-terminal-index-record">Terminal index record</a>
+      </h4>
+      <p id="s-8_2-1">A writer can maintain a complete (or partial) index of the container in its final record without additional space overhead by overwriting the prior index on each update.<a class="pilcrow" href="#s-8_2-1">&para;</a></p>
+    </section>
+    
+    <section id="n-deferred-indexing">
+      <h4 id="s-8_3">
+        <a class="selfRef" href="#s-8_3">8.3.</a>
+        <a class="selfRef" href="#n-deferred-indexing">Deferred indexing</a>
+      </h4>
+      <p id="s-8_3-1">The task of updating terminal indexes may be deferred to a time when the machine is not busy. This improves responsiveness and may avoid the need to re-index containers receiving a sequence of updates.<a class="pilcrow" href="#s-8_3-1">&para;</a></p>
+      <p id="s-8_3-2">This approach may be supported by appending new entries to the end of the container in the usual fashion and maintaining a record of containers to be updated as a separate task.<a class="pilcrow" href="#s-8_3-2">&para;</a></p>
+      <p id="s-8_3-3">When updating the index on a container that has been updated in this fashion, the writer must ensure that no data is lost even if the process is interrupted. The use of guard records and other precautions against loss of state is advised. <a class="pilcrow" href="#s-8_3-3">&para;</a></p>
+    </section>
+    
+    <section id="n-security-considerations">
+      <h3 id="s-9">
+        <a class="selfRef" href="#s-9">9.</a>
+        <a class="selfRef" href="#n-security-considerations">Security Considerations</a>
+      </h3>
+      <p id="s-9-1">This section describes security considerations arising from the use of DARE in general applications.<a class="pilcrow" href="#s-9-1">&para;</a></p>
+      <p id="s-9-2">Additional security considerations for use of DARE in Mesh services and applications are described in the Mesh Security Considerations guide <a class="xref" href="#draft-hallambaker-mesh-security">[draft-hallambaker-mesh-security]</a>.<a class="pilcrow" href="#s-9-2">&para;</a></p>
+    </section>
+    
+    <section id="n-encryptionsignature-nesting">
+      <h4 id="s-9_1">
+        <a class="selfRef" href="#s-9_1">9.1.</a>
+        <a class="selfRef" href="#n-encryptionsignature-nesting">Encryption/Signature nesting</a>
+      </h4>
+    </section>
+    
+    <section id="n-side-channel">
+      <h4 id="s-9_2">
+        <a class="selfRef" href="#s-9_2">9.2.</a>
+        <a class="selfRef" href="#n-side-channel">Side channel</a>
+      </h4>
+    </section>
+    
+    <section id="n-salt-reuse">
+      <h4 id="s-9_3">
+        <a class="selfRef" href="#s-9_3">9.3.</a>
+        <a class="selfRef" href="#n-salt-reuse">Salt reuse</a>
+      </h4>
+    </section>
+    
+    <section id="n-iana-considerations">
+      <h3 id="s-10">
+        <a class="selfRef" href="#s-10">10.</a>
+        <a class="selfRef" href="#n-iana-considerations">IANA Considerations</a>
+      </h3>
+    </section>
+    
+    <section id="n-acknowledgements">
+      <h3 id="s-11">
+        <a class="selfRef" href="#s-11">11.</a>
+        <a class="selfRef" href="#n-acknowledgements">Acknowledgements</a>
+      </h3>
+      <p id="s-11-1">A list of people who have contributed to the design of the Mesh is presented in <a class="xref" href="#draft-hallambaker-mesh-architecture">[draft-hallambaker-mesh-architecture]</a>.<a class="pilcrow" href="#s-11-1">&para;</a></p>
+      <p id="s-11-2">The name Data At Rest Encryption was proposed by Melhi Abdulhayoğlu.<a class="pilcrow" href="#s-11-2">&para;</a></p>
+    </section>
+    
+    <section id="n-appendix-a-dare-envelope-examples-and-test-vectors">
+      <h3 id="s-12">
+        <a class="selfRef" href="#s-12">12.</a>
+        <a class="selfRef" href="#n-appendix-a-dare-envelope-examples-and-test-vectors">Appendix A: DARE Envelope Examples and Test Vectors</a>
+      </h3>
+    </section>
+    
+    <section id="n-test-examples-">
+      <h3 id="s-13">
+        <a class="selfRef" href="#s-13">13.</a>
+        <a class="selfRef" href="#n-test-examples-">Test Examples </a>
+      </h3>
+      <p id="s-13-1">In the following examples, Alice's encryption private key parameters are: <a class="pilcrow" href="#s-13-1">&para;</a></p>
+      <pre id="s-13-2">{
+  "PrivateKeyECDH":{
+    "crv":"Ed25519",
+    "Private":"_DLeB9Phh637q9vDPRast9JaKmIg9eF-lTg1UV9-sB4"}}<a class="pilcrow" href="#s-13-2">&para;</a></pre>
+      <p id="s-13-3">Alice's signature private key parameters are: <a class="pilcrow" href="#s-13-3">&para;</a></p>
+      <pre id="s-13-4">{
+  "PrivateKeyECDH":{
+    "crv":"Ed25519",
+    "Private":"tWS6EyvT3r1xTk3zzv-6Ek4v5FntEq_uB4cC9gn4_MY"}}<a class="pilcrow" href="#s-13-4">&para;</a></pre>
+      <p id="s-13-5">The body of the test message is the UTF8 representation of the following string: <a class="pilcrow" href="#s-13-5">&para;</a></p>
+      <pre id="s-13-6">"This is a test long enough to require multiple blocks"<a class="pilcrow" href="#s-13-6">&para;</a></pre>
+      <p id="s-13-7">The EDS sequences, are the UTF8 representation of the following strings: <a class="pilcrow" href="#s-13-7">&para;</a></p>
+      <pre id="s-13-8">"Subject: Message metadata should be encrypted"
+"2018-02-01"<a class="pilcrow" href="#s-13-8">&para;</a></pre>
+    </section>
+    
+    <section id="n--plaintext-message-">
+      <h4 id="s-13_1">
+        <a class="selfRef" href="#s-13_1">13.1.</a>
+        <a class="selfRef" href="#n--plaintext-message-"> Plaintext Message </a>
+      </h4>
+      <p id="s-13_1-1">A plaintext message without associated EDS sequences is an empty header followed by the message body: <a class="pilcrow" href="#s-13_1-1">&para;</a></p>
+      <pre id="s-13_1-2">{
+  "DareEnvelope":[{},
+    "VGhpcyBpcyBhIHRlc3QgbG9uZyBlbm91Z2ggdG8gcmVxdWlyZSBtdWx0aXBsZS
+  BibG9ja3M"
+    ]}<a class="pilcrow" href="#s-13_1-2">&para;</a></pre>
+    </section>
+    
+    <section id="n--plaintext-message-with-eds-">
+      <h4 id="s-13_2">
+        <a class="selfRef" href="#s-13_2">13.2.</a>
+        <a class="selfRef" href="#n--plaintext-message-with-eds-"> Plaintext Message with EDS </a>
+      </h4>
+      <p id="s-13_2-1">If a plaintext message contains EDS sequences, these are also in plaintext: <a class="pilcrow" href="#s-13_2-1">&para;</a></p>
+      <pre id="s-13_2-2">{
+  "DareEnvelope":[{
+      "Annotations":["iAEBiC1TdWJqZWN0OiBNZXNzYWdlIG1ldGFkYXRhIHNob3
+  VsZCBiZSBlbmNyeXB0ZWSIAA",
+        "iAECiAoyMDE4LTAyLTAxiAA"
+        ]},
+    "VGhpcyBpcyBhIHRlc3QgbG9uZyBlbm91Z2ggdG8gcmVxdWlyZSBtdWx0aXBsZS
+  BibG9ja3M"
+    ]}<a class="pilcrow" href="#s-13_2-2">&para;</a></pre>
+    </section>
+    
+    <section id="n--encrypted-message-">
+      <h4 id="s-13_3">
+        <a class="selfRef" href="#s-13_3">13.3.</a>
+        <a class="selfRef" href="#n--encrypted-message-"> Encrypted Message </a>
+      </h4>
+      <p id="s-13_3-1">The creator generates a master session key: <a class="pilcrow" href="#s-13_3-1">&para;</a></p>
+      <pre id="s-13_3-2">
+  3C 29 54 5F  9C 24 17 3A  2C F0 BC F7  22 F2 35 9A
+  2A 50 50 B3  4C 31 B1 44  5B BD D6 75  54 1D 90 45<a class="pilcrow" href="#s-13_3-2">&para;</a></pre>
+      <p id="s-13_3-3">For each recipient of the message: <a class="pilcrow" href="#s-13_3-3">&para;</a></p>
+      <p id="s-13_3-4">The creator generates an ephemeral key: <a class="pilcrow" href="#s-13_3-4">&para;</a></p>
+      <pre id="s-13_3-5">{
+  "PrivateKeyECDH":{
+    "crv":"Ed25519",
+    "Private":"6QxTJ30xfSKkR7s2cJwlz0lk6rE0wsapdEmk6uVxhnM"}}<a class="pilcrow" href="#s-13_3-5">&para;</a></pre>
+      <p id="s-13_3-6">The key agreement value is calculated: <a class="pilcrow" href="#s-13_3-6">&para;</a></p>
+      <pre id="s-13_3-7">
+  FA 99 C3 96  91 FF 86 46  CC EB CF BD  25 B8 35 6F
+  B5 DE FC 02  47 2E D0 BD  CF 44 C0 1C  93 C3 E4 6B<a class="pilcrow" href="#s-13_3-7">&para;</a></pre>
+      <p id="s-13_3-8">The key agreement value is used as the input to a HKDF key derivation function with the info parameter  master to create the key used to wrap the master key: <a class="pilcrow" href="#s-13_3-8">&para;</a></p>
+      <pre id="s-13_3-9">
+  5D 5D F6 85  FF FB 2C 5D  CD 79 F8 CD  A1 9B 80 57
+  CA 27 65 04  9F 33 AB D5  92 AB 77 31  6D E7 A0 16<a class="pilcrow" href="#s-13_3-9">&para;</a></pre>
+      <p id="s-13_3-10">The wrapped master key is: <a class="pilcrow" href="#s-13_3-10">&para;</a></p>
+      <pre id="s-13_3-11">
+  CF 0E A3 92  4C 02 4C 41  EE A8 4F 9E  F5 84 BC 11
+  5B 53 5E 98  14 BC D0 44  18 41 58 B0  14 3B D8 CF
+  5E 4B 6D AB  89 1F 06 86<a class="pilcrow" href="#s-13_3-11">&para;</a></pre>
+      <p id="s-13_3-12">This information is used to calculate the Recipient information shown in the example below. <a class="pilcrow" href="#s-13_3-12">&para;</a></p>
+      <p id="s-13_3-13">To encrypt a message, we first generate a unique salt value: <a class="pilcrow" href="#s-13_3-13">&para;</a></p>
+      <pre id="s-13_3-14">
+  58 23 17 AB  4A 4E 6C CC  8A 32 8D 62  C6 D9 52 7C<a class="pilcrow" href="#s-13_3-14">&para;</a></pre>
+      <p id="s-13_3-15">The salt value and master key are used to generate the payload encryption key: <a class="pilcrow" href="#s-13_3-15">&para;</a></p>
+      <pre id="s-13_3-16">
+  A3 57 FF DC  00 A9 2E 1A  80 8E 15 58  05 5E 40 1C
+  CF B8 1A 0C  A8 90 45 9E  97 4E 94 27  7F A0 34 64<a class="pilcrow" href="#s-13_3-16">&para;</a></pre>
+      <p id="s-13_3-17">Since AES is a block cipher, we also require an initializarion vector: <a class="pilcrow" href="#s-13_3-17">&para;</a></p>
+      <pre id="s-13_3-18">
+  6B 70 DC 64  5F 41 51 C7  89 67 70 BF  E3 03 A2 DA<a class="pilcrow" href="#s-13_3-18">&para;</a></pre>
+      <p id="s-13_3-19">The output sequence is the encrypted bytes: <a class="pilcrow" href="#s-13_3-19">&para;</a></p>
+      <pre id="s-13_3-20">
+  57 CB 1F 8B  E9 0F 00 7F  E2 26 35 6B  B6 06 59 A3
+  2E 2D F3 DB  76 91 1B 20  D3 CD 02 66  65 80 0A D2
+  21 7A 9F 7C  D3 D8 20 22  FA D4 11 86  23 B6 81 0D
+  FE 21 9F A7  1B 82 B8 3C  AB 58 6C F7  AC E2 02 A0<a class="pilcrow" href="#s-13_3-20">&para;</a></pre>
+      <p id="s-13_3-21">Since the message is not signed, there is no need for a trailer. The completed message is: <a class="pilcrow" href="#s-13_3-21">&para;</a></p>
+      <pre id="s-13_3-22">{
+  "DareEnvelope":[{
+      "enc":"A256CBC",
+      "kid":"EBQO-WNI4-BRD4-TY3E-UDGO-5X75-6675",
+      "Salt":"WCMXq0pObMyKMo1ixtlSfA",
+      "recipients":[{
+          "kid":"MAZQ-4ASQ-M4GB-2AH6-JYBJ-G7ME-3GP3",
+          "epk":{
+            "PublicKeyECDH":{
+              "crv":"Ed25519",
+              "Public":"BsEDw9N8SWsy8RnTUobi9LxdoF5ctlv2pmRF6QQ2ijA"}
+                  },
+          "wmk":"zw6jkkwCTEHuqE-e9YS8EVtTXpgUvNBEGEFYsBQ72M9eS22riR
+  8Ghg"}
+        ]},
+    "V8sfi-kPAH_iJjVrtgZZoy4t89t2kRsg080CZmWACtIhep9809ggIvrUEYYjto
+  EN_iGfpxuCuDyrWGz3rOICoA"
+    ]}<a class="pilcrow" href="#s-13_3-22">&para;</a></pre>
+    </section>
+    
+    <section id="n--signed-message-">
+      <h4 id="s-13_4">
+        <a class="selfRef" href="#s-13_4">13.4.</a>
+        <a class="selfRef" href="#n--signed-message-"> Signed Message </a>
+      </h4>
+      <p id="s-13_4-1">Signed messages specify the digest algorithm to be used in the header and the signature value in the trailer. Note that the digest algorithm is not optional since it serves as notice that a decoder should digest the payload value  to enable signature verification. <a class="pilcrow" href="#s-13_4-1">&para;</a></p>
+      <pre id="s-13_4-2">{
+  "DareEnvelope":[{
+      "dig":"SHA2"},
+    "VGhpcyBpcyBhIHRlc3QgbG9uZyBlbm91Z2ggdG8gcmVxdWlyZSBtdWx0aXBsZS
+  BibG9ja3M",
+    {
+      "signatures":[{
+          "alg":"SHA2",
+          "kid":"MCZH-3KUN-DZH5-GSPY-6KV5-A43N-DFF3",
+          "signature":"_hLBDZT8oZozrwweypbtmSl_rtqmuZNjnF4343VZxEqz
+  94A72B-_qluqYqXzNO0PyoO6xUyrHZ3QjhzBa4TjAg"}
+        ],
+      "PayloadDigest":"raim8SV5adPbWWn8FMM4mrRAQCO9A2jZ0NZAnFXWlG0x
+  F6sWGJbnKSdtIJMmMU_hjarlIPEoY3vy9UdVlH5KAg"}
+    ]}<a class="pilcrow" href="#s-13_4-2">&para;</a></pre>
+    </section>
+    
+    <section id="n--signed-and-encrypted-message-">
+      <h4 id="s-13_5">
+        <a class="selfRef" href="#s-13_5">13.5.</a>
+        <a class="selfRef" href="#n--signed-and-encrypted-message-"> Signed and Encrypted Message </a>
+      </h4>
+      <p id="s-13_5-1">A signed and encrypted message is encrypted and then signed. The signer proves knowledge of the payload plaintext by providing the plaintext witness value. <a class="pilcrow" href="#s-13_5-1">&para;</a></p>
+      <pre id="s-13_5-2">{
+  "DareEnvelope":[{
+      "enc":"A256CBC",
+      "dig":"SHA2",
+      "kid":"EBQJ-ABSI-QR3P-XSEY-RJQT-45MV-FDN2",
+      "Salt":"cfY_McNrYQDbxeIG3bS2TA",
+      "recipients":[{
+          "kid":"MAZQ-4ASQ-M4GB-2AH6-JYBJ-G7ME-3GP3",
+          "epk":{
+            "PublicKeyECDH":{
+              "crv":"Ed25519",
+              "Public":"7uJciy6zYF43EXDcqPz6btXMdpopnPeE1gZYzZINKS0"}
+                  },
+          "wmk":"wkgWkMQ9EllWy-ji8erztJCgUuKGm2vDueSdM_cR6IGndwvHod
+  Y6JQ"}
+        ]},
+    "iE2cIZWiR8U1mH7j8cyK-PcdSyZM0LdkE_nbMXm9cOJqQwSI78gNs1qzZd0L1T
+  Aah3XG5uDTDjw-e2XbVGOy2Q",
+    {
+      "signatures":[{
+          "alg":"SHA2",
+          "kid":"MCZH-3KUN-DZH5-GSPY-6KV5-A43N-DFF3",
+          "signature":"iUjTTlN5ofNjyoMfmeXY4L6y8QCvyE8y1zHoJRuVD3po
+  -dP2BL_VOfc-qDLg6PM8O4b8NKMHfCmRba1WfnWkCw",
+          "witness":"kl3qVDZaaDWYnOjhDwvE7JHs-Q_tG1xJrYfq0vc4Ag8"}
+        ],
+      "PayloadDigest":"ohlZ-KKC10cqZ7rQwmEhANTDRDV2vsPQu2DKnfXFChgN
+  f5jLfiNdIwi4IkBLcllGGANITDKyyg6fmPSMCnTrqw"}
+    ]}<a class="pilcrow" href="#s-13_5-2">&para;</a></pre>
+    </section>
+    
+    <section id="n-appendix-b-dare-container-examples-and-test-vectors">
+      <h3 id="s-14">
+        <a class="selfRef" href="#s-14">14.</a>
+        <a class="selfRef" href="#n-appendix-b-dare-container-examples-and-test-vectors">Appendix B: DARE Container Examples and Test Vectors</a>
+      </h3>
+      <p id="s-14-1">The data payloads in all the following examples are identical, only the authentication and/or encryption is different.  <a class="pilcrow" href="#s-14-1">&para;</a></p>
+      <ul id="s-14-2-">
+        <li id="s-14-2"> Frame 1..n consists of 300 bytes being the byte sequence 00, 01, 02, etc.  repeating after 256 bytes. <a class="pilcrow" href="#s-14-2">&para;</a></li>
+      </ul>
+      <p id="s-14-3">For conciseness, the raw data format is omitted for examples after the first, except where the data payload has been transformed, (i.e. encrypted). <a class="pilcrow" href="#s-14-3">&para;</a></p>
+    </section>
+    
+    <section id="n-simple-container-">
+      <h4 id="s-14_1">
+        <a class="selfRef" href="#s-14_1">14.1.</a>
+        <a class="selfRef" href="#n-simple-container-">Simple container </a>
+      </h4>
+      <p id="s-14_1-1">the following example shows a simple container with first frame and a single data frame: <a class="pilcrow" href="#s-14_1-1">&para;</a></p>
+      <pre id="s-14_1-2">f4 82
+f0 7c
+f0 00
+f0 00
+82 f4
+f5 01 74
+f0 43
+f1 01 2c
+74 01 f5<a class="pilcrow" href="#s-14_1-2">&para;</a></pre>
+      <p id="s-14_1-3">Since there is no integrity check, there is no need for trailer entries. The header values are: <a class="pilcrow" href="#s-14_1-3">&para;</a></p>
+      <p id="s-14_1-4">Frame 0 <a class="pilcrow" href="#s-14_1-4">&para;</a></p>
+      <pre id="s-14_1-5">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "DataEncoding": "JSON",
+    "ContainerType": "List",
+    "Index": 0}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_1-5">&para;</a></pre>
+      <p id="s-14_1-6">Frame 1 <a class="pilcrow" href="#s-14_1-6">&para;</a></p>
+      <pre id="s-14_1-7">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 1}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_1-7">&para;</a></pre>
+    </section>
+    
+    <section id="n-payload-and-chain-digests-">
+      <h4 id="s-14_2">
+        <a class="selfRef" href="#s-14_2">14.2.</a>
+        <a class="selfRef" href="#n-payload-and-chain-digests-">Payload and chain digests </a>
+      </h4>
+      <p id="s-14_2-1">The following example shows a chain container with a first frame and three  data frames. The headers of these frames is the same as before but the frames now have trailers specifying the PayloadDigest and ChainDigest values: <a class="pilcrow" href="#s-14_2-1">&para;</a></p>
+      <p id="s-14_2-2">Frame 0 <a class="pilcrow" href="#s-14_2-2">&para;</a></p>
+      <pre id="s-14_2-3">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "DataEncoding": "JSON",
+    "ContainerType": "Chain",
+    "Index": 0}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_2-3">&para;</a></pre>
+      <p id="s-14_2-4">Frame 1 <a class="pilcrow" href="#s-14_2-4">&para;</a></p>
+      <pre id="s-14_2-5">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 1}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "ChainDigest": "T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}<a class="pilcrow" href="#s-14_2-5">&para;</a></pre>
+      <p id="s-14_2-6">Frame 2 <a class="pilcrow" href="#s-14_2-6">&para;</a></p>
+      <pre id="s-14_2-7">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 2}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "ChainDigest": "T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}<a class="pilcrow" href="#s-14_2-7">&para;</a></pre>
+      <p id="s-14_2-8">Frame 3 <a class="pilcrow" href="#s-14_2-8">&para;</a></p>
+      <pre id="s-14_2-9">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 3}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "ChainDigest": "T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVR
+  Vz9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}<a class="pilcrow" href="#s-14_2-9">&para;</a></pre>
+    </section>
+    
+    <section id="n-merkle-tree-">
+      <h4 id="s-14_3">
+        <a class="selfRef" href="#s-14_3">14.3.</a>
+        <a class="selfRef" href="#n-merkle-tree-">Merkle Tree </a>
+      </h4>
+      <p id="s-14_3-1">The following example shows a chain container with a first frame and six  data frames. The trailers now contain the TreePosition and TreeDigest values: <a class="pilcrow" href="#s-14_3-1">&para;</a></p>
+      <p id="s-14_3-2">Frame 0 <a class="pilcrow" href="#s-14_3-2">&para;</a></p>
+      <pre id="s-14_3-3">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "DataEncoding": "JSON",
+    "ContainerType": "Merkle",
+    "Index": 0}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_3-3">&para;</a></pre>
+      <p id="s-14_3-4">Frame 1 <a class="pilcrow" href="#s-14_3-4">&para;</a></p>
+      <pre id="s-14_3-5">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 1,
+    "TreePosition": 0}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "TreeDigest": "T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVRV
+  z9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}<a class="pilcrow" href="#s-14_3-5">&para;</a></pre>
+      <p id="s-14_3-6">Frame 2 <a class="pilcrow" href="#s-14_3-6">&para;</a></p>
+      <pre id="s-14_3-7">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 2,
+    "TreePosition": 360}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "TreeDigest": "7fHmkEIsPkN6sDYAOLvpIJn5Dg3PxDDAaq-ll2kh8722kokk
+  FnZQcYtjuVC71aHNXI18q-lPnfRkmwryG-bhqQ"}<a class="pilcrow" href="#s-14_3-7">&para;</a></pre>
+      <p id="s-14_3-8">Frame 3 <a class="pilcrow" href="#s-14_3-8">&para;</a></p>
+      <pre id="s-14_3-9">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 3,
+    "TreePosition": 360}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "TreeDigest": "T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVRV
+  z9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}<a class="pilcrow" href="#s-14_3-9">&para;</a></pre>
+      <p id="s-14_3-10">Frame 4 <a class="pilcrow" href="#s-14_3-10">&para;</a></p>
+      <pre id="s-14_3-11">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 4,
+    "TreePosition": 1612}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "TreeDigest": "vJ6ngNATvZcXSMALi5IUqzl1GBxBnTNVcC87VL_BhMRCbAvK
+  Sj8gs0VFgxxLkZ2myrtaDIwhHoswiTiBMLNWug"}<a class="pilcrow" href="#s-14_3-11">&para;</a></pre>
+      <p id="s-14_3-12">Frame 5 <a class="pilcrow" href="#s-14_3-12">&para;</a></p>
+      <pre id="s-14_3-13">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 5,
+    "TreePosition": 1612}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "TreeDigest": "T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVRV
+  z9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}<a class="pilcrow" href="#s-14_3-13">&para;</a></pre>
+      <p id="s-14_3-14">Frame 6 <a class="pilcrow" href="#s-14_3-14">&para;</a></p>
+      <pre id="s-14_3-15">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 6,
+    "TreePosition": 2867}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "TreeDigest": "WgHlz3EHczVPqgtpc39Arv7CFIsCbFVsk8wg0j2qLlEfur9S
+  Z0mdr65Ka-HF0Qx8gg_DAoiJwUrwADDXyxVJOg"}<a class="pilcrow" href="#s-14_3-15">&para;</a></pre>
+    </section>
+    
+    <section id="n-signed-container-">
+      <h4 id="s-14_4">
+        <a class="selfRef" href="#s-14_4">14.4.</a>
+        <a class="selfRef" href="#n-signed-container-">Signed container </a>
+      </h4>
+      <p id="s-14_4-1">The following example shows a tree container with a signature in the final record. The signing key parameters are: <a class="pilcrow" href="#s-14_4-1">&para;</a></p>
+      <pre id="s-14_4-2">{
+  "PrivateKeyECDH":{
+    "crv":"Ed25519",
+    "Private":"tWS6EyvT3r1xTk3zzv-6Ek4v5FntEq_uB4cC9gn4_MY"}}<a class="pilcrow" href="#s-14_4-2">&para;</a></pre>
+      <p id="s-14_4-3">The container headers and trailers are: <a class="pilcrow" href="#s-14_4-3">&para;</a></p>
+      <p id="s-14_4-4">Frame 0 <a class="pilcrow" href="#s-14_4-4">&para;</a></p>
+      <pre id="s-14_4-5">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "DataEncoding": "JSON",
+    "ContainerType": "Merkle",
+    "Index": 0}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_4-5">&para;</a></pre>
+      <p id="s-14_4-6">Frame 1 <a class="pilcrow" href="#s-14_4-6">&para;</a></p>
+      <pre id="s-14_4-7">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 1,
+    "TreePosition": 0}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "TreeDigest": "T7S1FcrgY3AaWD4L-t5W1K-3XYkPTcOdGEGyjglTD6yMYVRV
+  z9tn_KQc6GdA-P4VSRigBygV65OEd2Vv3YDhww"}<a class="pilcrow" href="#s-14_4-7">&para;</a></pre>
+      <p id="s-14_4-8">Frame 2 <a class="pilcrow" href="#s-14_4-8">&para;</a></p>
+      <pre id="s-14_4-9">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 2,
+    "TreePosition": 360}}
+
+{
+  "PayloadDigest": "8dyi62d7MDJlsLm6_w4GEgKBjzXBRwppu6qbtmAl6UjZD
+  lZeaWQlBsYhOu88-ekpNXpZ2iY96zTRI229zaJ5sw",
+  "TreeDigest": "7fHmkEIsPkN6sDYAOLvpIJn5Dg3PxDDAaq-ll2kh8722kokk
+  FnZQcYtjuVC71aHNXI18q-lPnfRkmwryG-bhqQ"}<a class="pilcrow" href="#s-14_4-9">&para;</a></pre>
+    </section>
+    
+    <section id="n-encrypted-container-">
+      <h4 id="s-14_5">
+        <a class="selfRef" href="#s-14_5">14.5.</a>
+        <a class="selfRef" href="#n-encrypted-container-">Encrypted container </a>
+      </h4>
+      <p id="s-14_5-1">The following example shows a container in which all the frame payloads are encrypted  under the same master secret established in a key agreement specified in the first frame. <a class="pilcrow" href="#s-14_5-1">&para;</a></p>
+      <p id="s-14_5-2">Frame 0 <a class="pilcrow" href="#s-14_5-2">&para;</a></p>
+      <pre id="s-14_5-3">{
+  "enc": "A256CBC",
+  "kid": "EBQL-FP4Q-VW6U-OIXJ-T2XF-KVR2-IBEY",
+  "Salt": "mZK5G7GpPyUduKKAz4FcbA",
+  "recipients": [{
+      "kid": "MAZQ-4ASQ-M4GB-2AH6-JYBJ-G7ME-3GP3",
+      "epk": {
+        "PublicKeyECDH": {
+          "crv": "Ed25519",
+          "Public": "uxpnx3YY5dSJ4_OnEQbyuTDqvXGctJIVCIaNr4drKUk"}},
+      "wmk": "Dywrqtijd4UBfMoUb3ispnnE0jOKc-R2wpj2oVRCYq8kJl2awrKQGw"
+          }],
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "DataEncoding": "JSON",
+    "ContainerType": "List",
+    "Index": 0}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_5-3">&para;</a></pre>
+      <p id="s-14_5-4">Frame 1 <a class="pilcrow" href="#s-14_5-4">&para;</a></p>
+      <pre id="s-14_5-5">{
+  "enc": "A256CBC",
+  "kid": "EBQL-FP4Q-VW6U-OIXJ-T2XF-KVR2-IBEY",
+  "Salt": "pfVBV9TTZNwDdLX_xrElXw",
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 1}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_5-5">&para;</a></pre>
+      <p id="s-14_5-6">Frame 2 <a class="pilcrow" href="#s-14_5-6">&para;</a></p>
+      <pre id="s-14_5-7">{
+  "enc": "A256CBC",
+  "kid": "EBQL-FP4Q-VW6U-OIXJ-T2XF-KVR2-IBEY",
+  "Salt": "GCBNz5X8M8QFKDANMYz77g",
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 2}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_5-7">&para;</a></pre>
+      <p id="s-14_5-8">Here are the container bytes. Note that the content is now encrypted and has expanded by 25 bytes. These are the salt (16 bytes), the AES padding (4 bytes) and the  JSON-B framing (5 bytes). <a class="pilcrow" href="#s-14_5-8">&para;</a></p>
+      <pre id="s-14_5-9">f5 02 14
+f1 01 fd
+f0 10
+f0 00
+14 02 f5
+f5 01 df
+f0 aa
+f1 01 30
+df 01 f5
+f5 01 df
+f0 aa
+f1 01 30
+df 01 f5
+
+<a class="pilcrow" href="#s-14_5-9">&para;</a></pre>
+      <p id="s-14_5-10">The following example shows a container in which all the frame payloads are encrypted  under separate key agreements specified in the payload frames. <a class="pilcrow" href="#s-14_5-10">&para;</a></p>
+      <p id="s-14_5-11">Frame 0 <a class="pilcrow" href="#s-14_5-11">&para;</a></p>
+      <pre id="s-14_5-12">{
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "DataEncoding": "JSON",
+    "ContainerType": "List",
+    "Index": 0}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_5-12">&para;</a></pre>
+      <p id="s-14_5-13">Frame 1 <a class="pilcrow" href="#s-14_5-13">&para;</a></p>
+      <pre id="s-14_5-14">{
+  "enc": "A256CBC",
+  "kid": "EBQM-SELQ-Y22B-CDPW-FNCJ-FLB6-SGGH",
+  "Salt": "j14twaGXh43vUKNLMJVxgQ",
+  "recipients": [{
+      "kid": "MAZQ-4ASQ-M4GB-2AH6-JYBJ-G7ME-3GP3",
+      "epk": {
+        "PublicKeyECDH": {
+          "crv": "Ed25519",
+          "Public": "eHz0G-dzVzdP1HPxdOgthCWVlJOJBmpMloaPZ6aq4BI"}},
+      "wmk": "2_WjXkSyyLNV0Y8vjE_Im32avwKoa4AT8qHGYsgYhMEY6nxTyz5kmQ"
+          }],
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 1}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_5-14">&para;</a></pre>
+      <p id="s-14_5-15">Frame 2 <a class="pilcrow" href="#s-14_5-15">&para;</a></p>
+      <pre id="s-14_5-16">{
+  "enc": "A256CBC",
+  "kid": "EBQM-HQ6B-RN74-WCLJ-ZZRC-TKTJ-6D7H",
+  "Salt": "0syPXTpbZ9VICdazMCwyJg",
+  "recipients": [{
+      "kid": "MAZQ-4ASQ-M4GB-2AH6-JYBJ-G7ME-3GP3",
+      "epk": {
+        "PublicKeyECDH": {
+          "crv": "Ed25519",
+          "Public": "OFPZyvMl2_uUJRjsYUmflnhReptUo3N0NnYviBAlZsg"}},
+      "wmk": "0zm3VI4ReK6uRaAnQlxxHRb2O16J_A2paV9SNwHEhq2ZNUQiLq8z9Q"
+          }],
+  "ContentMetaData": "e30",
+  "ContainerInfo": {
+    "Index": 2}}
+
+[Empty trailer]<a class="pilcrow" href="#s-14_5-16">&para;</a></pre>
+    </section>
+    
+    <section id="n-appendix-c-previous-frame-function-">
+      <h3 id="s-15">
+        <a class="selfRef" href="#s-15">15.</a>
+        <a class="selfRef" href="#n-appendix-c-previous-frame-function-">Appendix C: Previous Frame Function </a>
+      </h3>
+      <pre id="s-15-1">public long PreviousFrame (long Frame) {
+    long x2 = Frame + 1;
+    long d = 1;
+
+    while (x2 &gt; 0) {
+        if ((x2 &amp; 1) == 1) {
+            return x2 == 1 ? (d / 2) - 1 : Frame - d;
+            }
+        d = d * 2;
+        x2 = x2 / 2;
+        }
+    return 0;
+    }<a class="pilcrow" href="#s-15-1">&para;</a></pre>
+    </section>
+    
+    <section id="n-appendix-d-outstanding-issues">
+      <h3 id="s-16">
+        <a class="selfRef" href="#s-16">16.</a>
+        <a class="selfRef" href="#n-appendix-d-outstanding-issues">Appendix D: Outstanding Issues</a>
+      </h3>
+      <p id="s-16-1">The following issues need to be addressed.<a class="pilcrow" href="#s-16-1">&para;</a></p>
+      <table id="s-16-2">
+        <thead>
+          <tr>
+            <th>Issue</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>X25519</td>
+            <td>The examples currently use Edwards Curve25519 for encryption. This should be Curve X25519</td>
+          </tr>
+          <tr>
+            <td>Indexing</td>
+            <td>No examples are given of indexing a container</td>
+          </tr>
+          <tr>
+            <td>Archive</td>
+            <td>Should include a file archive example</td>
+          </tr>
+          <tr>
+            <td>File Path</td>
+            <td>Mention the file path security issue in the security considerations</td>
+          </tr>
+          <tr>
+            <td>Security Considerations</td>
+            <td>Write Security considerations</td>
+          </tr>
+          <tr>
+            <td>AES-GCM</td>
+            <td>Switch to using AES GCM in the examples </td>
+          </tr>
+          <tr>
+            <td>Witness</td>
+            <td>Complete handling of witness values.</td>
+          </tr>
+          <tr>
+            <td>Schema</td>
+            <td>Complete the schema documentation</td>
+          </tr>
+          <tr>
+            <td>Container Redo</td>
+            <td>Rework the container/header objects so that these are separate classes and Header is an entry in the Container header.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p id="s-16-3"><a class="pilcrow" href="#s-16-3">&para;</a></p>
+    </section>
+    
+    <section id="n-references">
+      <h2>
+        <a class="selfRef" href="#n-references">References</a>
+      </h2>
+      <section id="n-normative">
+        <h3>
+          <a class="selfRef" href="#n-normative">Normative References</a>
+        </h3>
+        <dl class="reference">
+          <dt id="RFC7515">[RFC7515]</dt>
+          <dd>
+            <span class="refAuthor">M. Jones</span>
+            <span>and</span>
+            <span class="refAuthor">J. Bradley</span>
+            <span>and</span>
+            <span class="refAuthor">N. Sakimura</span>
+            "<span class="refTitle">JSON Web Signature (JWS)</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">7515</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC7515</span>
+            </span>
+            <time class="refDate" datetime="2015-05">May 2015</time>
+          </dd>
+          <dt id="draft-hallambaker-mesh-security">[draft-hallambaker-mesh-security]</dt>
+          <dd>
+            <span class="refAuthor">Phillip Hallam-Baker</span>
+            "<span class="refTitle">Mathematical Mesh 3.0 Part VII: Security Considerations</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">Internet-Draft</span>
+              <span class="refSeriesValue">draft-hallambaker-mesh-security-04</span>
+            </span>
+            &lt;<a class="refTarget">http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-security-04.txt</a>&gt;
+            <time class="refDate" datetime="2020-03-9">9 March 2020</time>
+          </dd>
+          <dt id="draft-hallambaker-mesh-udf">[draft-hallambaker-mesh-udf]</dt>
+          <dd>
+            <span class="refAuthor">Phillip Hallam-Baker</span>
+            "<span class="refTitle">Mathematical Mesh 3.0 Part II: Uniform Data Fingerprint.</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">Internet-Draft</span>
+              <span class="refSeriesValue">draft-hallambaker-mesh-udf-09</span>
+            </span>
+            &lt;<a class="refTarget">http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-udf-09.txt</a>&gt;
+            <time class="refDate" datetime="2020-03-9">9 March 2020</time>
+          </dd>
+          <dt id="draft-hallambaker-jsonbcd">[draft-hallambaker-jsonbcd]</dt>
+          <dd>
+            <span class="refAuthor">Phillip Hallam-Baker</span>
+            "<span class="refTitle">Binary Encodings for JavaScript Object Notation: JSON-B, JSON-C, JSON-D</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">Internet-Draft</span>
+              <span class="refSeriesValue">draft-hallambaker-jsonbcd-15</span>
+            </span>
+            &lt;<a class="refTarget">http://www.ietf.org/internet-drafts/draft-hallambaker-jsonbcd-15.txt</a>&gt;
+            <time class="refDate" datetime="2019-10-23">23 October 2019</time>
+          </dd>
+          <dt id="RFC6838">[RFC6838]</dt>
+          <dd>
+            <span class="refAuthor">N. Freed</span>
+            <span>and</span>
+            <span class="refAuthor">J. Klensin</span>
+            <span>and</span>
+            <span class="refAuthor">T. Hansen</span>
+            "<span class="refTitle">Media Type Specifications and Registration Procedures</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">BCP</span>
+              <span class="refSeriesValue">13</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">6838</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC6838</span>
+            </span>
+            <time class="refDate" datetime="2013-01">January 2013</time>
+          </dd>
+          <dt id="RFC4949">[RFC4949]</dt>
+          <dd>
+            <span class="refAuthor">R. Shirey</span>
+            "<span class="refTitle">Internet Security Glossary, Version 2</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">FYI</span>
+              <span class="refSeriesValue">36</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">4949</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC4949</span>
+            </span>
+            <time class="refDate" datetime="2007-08">August 2007</time>
+          </dd>
+          <dt id="RFC7518">[RFC7518]</dt>
+          <dd>
+            <span class="refAuthor">M. Jones</span>
+            "<span class="refTitle">JSON Web Algorithms (JWA)</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">7518</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC7518</span>
+            </span>
+            <time class="refDate" datetime="2015-05">May 2015</time>
+          </dd>
+          <dt id="draft-hallambaker-mesh-architecture">[draft-hallambaker-mesh-architecture]</dt>
+          <dd>
+            <span class="refAuthor">Phillip Hallam-Baker</span>
+            "<span class="refTitle">Mathematical Mesh 3.0 Part I: Architecture Guide</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">Internet-Draft</span>
+              <span class="refSeriesValue">draft-hallambaker-mesh-architecture-13</span>
+            </span>
+            &lt;<a class="refTarget">http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-13.txt</a>&gt;
+            <time class="refDate" datetime="2020-03-9">9 March 2020</time>
+          </dd>
+          <dt id="RFC3394">[RFC3394]</dt>
+          <dd>
+            <span class="refAuthor">J. Schaad</span>
+            <span>and</span>
+            <span class="refAuthor">R. Housley</span>
+            "<span class="refTitle">Advanced Encryption Standard (AES) Key Wrap Algorithm</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">3394</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC3394</span>
+            </span>
+            <time class="refDate" datetime="2002-09">September 2002</time>
+          </dd>
+          <dt id="RFC2315">[RFC2315]</dt>
+          <dd>
+            <span class="refAuthor">B. Kaliski</span>
+            "<span class="refTitle">PKCS #7: Cryptographic Message Syntax Version 1.5</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">2315</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC2315</span>
+            </span>
+            <time class="refDate" datetime="1998-03">March 1998</time>
+          </dd>
+          <dt id="RFC2119">[RFC2119]</dt>
+          <dd>
+            <span class="refAuthor">S. Bradner</span>
+            "<span class="refTitle">Key words for use in RFCs to Indicate Requirement Levels</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">BCP</span>
+              <span class="refSeriesValue">14</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">2119</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC2119</span>
+            </span>
+            <time class="refDate" datetime="1997-03">March 1997</time>
+          </dd>
+          <dt id="RFC7159">[RFC7159]</dt>
+          <dd>
+            <span class="refAuthor">T. Bray</span>
+            "<span class="refTitle">The JavaScript Object Notation (JSON) Data Interchange Format</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">7159</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC7159</span>
+            </span>
+            <time class="refDate" datetime="2014-03">March 2014</time>
+          </dd>
+          <dt id="RFC5869">[RFC5869]</dt>
+          <dd>
+            <span class="refAuthor">H. Krawczyk</span>
+            <span>and</span>
+            <span class="refAuthor">P. Eronen</span>
+            "<span class="refTitle">HMAC-based Extract-and-Expand Key Derivation Function (HKDF)</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">5869</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC5869</span>
+            </span>
+            <time class="refDate" datetime="2010-05">May 2010</time>
+          </dd>
+          <dt id="RFC4880">[RFC4880]</dt>
+          <dd>
+            <span class="refAuthor">J. Callas</span>
+            <span>and</span>
+            <span class="refAuthor">L. Donnerhacke</span>
+            <span>and</span>
+            <span class="refAuthor">H. Finney</span>
+            <span>and</span>
+            <span class="refAuthor">D. Shaw</span>
+            <span>and</span>
+            <span class="refAuthor">R. Thayer</span>
+            "<span class="refTitle">OpenPGP Message Format</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">4880</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC4880</span>
+            </span>
+            <time class="refDate" datetime="2007-11">November 2007</time>
+          </dd>
+          <dt id="RFC7516">[RFC7516]</dt>
+          <dd>
+            <span class="refAuthor">M. Jones</span>
+            <span>and</span>
+            <span class="refAuthor">J. Hildebrand</span>
+            "<span class="refTitle">JSON Web Encryption (JWE)</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">7516</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC7516</span>
+            </span>
+            <time class="refDate" datetime="2015-05">May 2015</time>
+          </dd>
+          <dt id="RFC7517">[RFC7517]</dt>
+          <dd>
+            <span class="refAuthor">M. Jones</span>
+            "<span class="refTitle">JSON Web Key (JWK)</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">7517</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC7517</span>
+            </span>
+            <time class="refDate" datetime="2015-05">May 2015</time>
+          </dd>
+          <dt id="IANAJOSE">[IANAJOSE]</dt>
+          <dd>
+            "<span class="refTitle">[Reference Not Found!]</span>"
+            <time class="refDate" datetime=""></time>
+          </dd>
+        </dl>
+      </section>
+      
+      <section id="n-informative">
+        <h3>
+          <a class="selfRef" href="#n-informative">Informative References</a>
+        </h3>
+        <dl class="reference">
+          <dt id="Davis2001">[Davis2001]</dt>
+          <dd>
+            <span class="refAuthor">Don Davis</span>
+            "<span class="refTitle">Defective Sign & Encrypt in S/MIME, PKCS#7, MOSS, PEM, PGP, and XML</span>"
+            <time class="refDate" datetime="2001-05">May 2001</time>
+          </dd>
+          <dt id="ZIPFILE">[ZIPFILE]</dt>
+          <dd>
+            "<span class="refTitle">APPNOTE.TXT - .ZIP File Format Specification </span>"
+            &lt;<a class="refTarget">https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT</a>&gt;
+            <time class="refDate" datetime="2014-10">October 2014</time>
+          </dd>
+          <dt id="BLOCKCHAIN">[BLOCKCHAIN]</dt>
+          <dd>
+            "<span class="refTitle">Blockchain Specification </span>"
+            &lt;<a class="refTarget">https://chain.com/docs/1.2/protocol/specifications/blockchain</a>&gt;
+            <time class="refDate" datetime=""></time>
+          </dd>
+          <dt id="RFC5652">[RFC5652]</dt>
+          <dd>
+            <span class="refAuthor">R. Housley</span>
+            "<span class="refTitle">Cryptographic Message Syntax (CMS)</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">STD</span>
+              <span class="refSeriesValue">70</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">5652</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC5652</span>
+            </span>
+            <time class="refDate" datetime="2009-09">September 2009</time>
+          </dd>
+        </dl>
+      </section>
+      
+    </section>
+    
+    <section id="n-authors">
+      <h2>
+        <a class="selfRef" href="#n-authors">Author's Address</a>
+      </h2>
+      <hr class="addr"/>
+      <address class="vcard">
+        <div class="nameRole">
+          <span class="fn">Phillip Hallam-Baker</span>
+        </div>
+        <div class="org">ThresholdSecrets.com</div>
+        <div>
+          <span>Email:</span>
+          <a class="email" href="mailto:phill@hallambaker.com        ">phill@hallambaker.com        </a>
+        </div>
+      </address>
+    </section>
+    
+    <div class="docInfo">
+      <span class="prepared">
+        Prepared: 
+        <time datetime="2020-07-27">2020-07-27</time>
+      </span>
+      <span class="rendered">
+        Rendered: 
+        <time datetime="2020-07-27">2020-07-27</time>
+      </span>
+    </div>
+    
+    <script src="xml2rfc.js" type="text/javascript"></script>
+  </body>
+</html>

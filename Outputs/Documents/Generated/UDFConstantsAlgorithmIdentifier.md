@@ -11,12 +11,12 @@
 <tr><td>8</td><td>RSA2048</td><td>2048 bit RSA keypair</td></tr>
 <tr><td>9</td><td>RSA3072</td><td>3072 bit RSA keypair</td></tr>
 <tr><td>10</td><td>RSA4096</td><td>4096 bit RSA keypair</td></tr>
-<tr><td>11-255</td><td>Reserved</td><td>Reserved for IETF recommended algorithms</td></tr>
+<tr><td>11-255</td><td>ReservedIetf</td><td>Reserved for IETF recommended algorithms</td></tr>
 <tr><td>256</td><td>MeshProfileDevice</td><td>Mesh device profile</td></tr>
 <tr><td>257</td><td>MeshActivationDevice</td><td>Mesh device activation</td></tr>
 <tr><td>258</td><td>MeshProfileAccount</td><td>Mesh account account</td></tr>
 <tr><td>259</td><td>MeshActivationAccount</td><td>Mesh account activation</td></tr>
 <tr><td>260</td><td>MeshProfileService</td><td>Mesh service profile</td></tr>
 <tr><td>261</td><td>MeshActivationService</td><td>Mesh host activation</td></tr>
-<tr><td>262-511</td><td>Reserved</td><td>Reserved for future Mesh use</td></tr>
+<tr><td>262-511</td><td>ReservedMesh</td><td>Reserved for future Mesh use</td></tr>
 </table>

@@ -1,0 +1,4117 @@
+Independent Submission                             Phillip Hallam-Baker
+INTERNET-DRAFT                                      ThresholdSecrets.com
+Intended Status:                                        January 13, 2021
+Expires: July 17, 2021
+
+
+            Mathematical Mesh 3.0 Part V: Protocol Reference
+                   draft-hallambaker-mesh-protocol-08
+
+Abstract
+
+   The Mathematical Mesh 'The Mesh' is an end-to-end secure
+   infrastructure that facilitates the exchange of configuration and
+   credential data between multiple user devices. The core protocols of
+   the Mesh are described with examples of common use cases and
+   reference data.
+
+   [Note to Readers]
+
+   Discussion of this draft takes place on the MATHMESH mailing list
+   (mathmesh@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/search/?email_list=mathmesh.
+
+   This document is also available online at .
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts. The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.It is inappropriate to use Internet-Drafts as reference material
+   or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on July 17, 2021
+
+Copyright Notice
+
+   Copyright (c) IETF Trust and the persons identified as the document
+   authors. All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document. Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.
+
+
+
+Hallam-Baker             Expires July 17, 2021                  [Page 1]
+
+                        Mesh Protocol Reference             January 2021
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                  [Page 2]
+
+                        Mesh Protocol Reference             January 2021
+
+Table of Contents
+
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  6
+   2.  Definitions  . . . . . . . . . . . . . . . . . . . . . . . . .  7
+      2.1.  Requirements Language . . . . . . . . . . . . . . . . . .  7
+      2.2.  Defined Terms . . . . . . . . . . . . . . . . . . . . . .  7
+      2.3.  Related Specifications  . . . . . . . . . . . . . . . . .  7
+      2.4.  Implementation Status . . . . . . . . . . . . . . . . . .  7
+   3.  Mesh Protocols . . . . . . . . . . . . . . . . . . . . . . . .  7
+   4.  Mesh Service . . . . . . . . . . . . . . . . . . . . . . . . .  7
+      4.1.  Data Model  . . . . . . . . . . . . . . . . . . . . . . .  8
+      4.2.  Partitioning  . . . . . . . . . . . . . . . . . . . . . .  8
+   5.  Protocol Bindings  . . . . . . . . . . . . . . . . . . . . . .  9
+      5.1.  DNS Web Service Discovery . . . . . . . . . . . . . . . .  9
+      5.2.  Web Service Protocol Binding  . . . . . . . . . . . . . .  9
+         5.2.1.  Transport Security . . . . . . . . . . . . . . . . .  9
+         5.2.2.  HTTP Message Binding . . . . . . . . . . . . . . . . 10
+         5.2.3.  Request  . . . . . . . . . . . . . . . . . . . . . . 10
+         5.2.4.  Response . . . . . . . . . . . . . . . . . . . . . . 10
+      5.3.  DARE Message Encapsulation  . . . . . . . . . . . . . . . 11
+         5.3.1.  Null Authentication  . . . . . . . . . . . . . . . . 11
+         5.3.2.  Device Authentication  . . . . . . . . . . . . . . . 11
+         5.3.3.  Profile Authentication . . . . . . . . . . . . . . . 12
+         5.3.4.  Ticket Authentication  . . . . . . . . . . . . . . . 12
+      5.4.  Payload Encoding  . . . . . . . . . . . . . . . . . . . . 12
+      5.5.  Error handling and response codes . . . . . . . . . . . . 13
+   6.  Mesh Service Transactions  . . . . . . . . . . . . . . . . . . 13
+      6.1.  Service Description . . . . . . . . . . . . . . . . . . . 13
+      6.2.  Account Creation  . . . . . . . . . . . . . . . . . . . . 15
+         6.2.1.  Bind User Account  . . . . . . . . . . . . . . . . . 15
+         6.2.2.  Bind Group Account . . . . . . . . . . . . . . . . . 17
+         6.2.3.  Unbind Account . . . . . . . . . . . . . . . . . . . 18
+      6.3.  Persistence Store Management  . . . . . . . . . . . . . . 18
+         6.3.1.  Status . . . . . . . . . . . . . . . . . . . . . . . 19
+         6.3.2.  Download . . . . . . . . . . . . . . . . . . . . . . 21
+         6.3.3.  Conflict Detection . . . . . . . . . . . . . . . . . 21
+         6.3.4.  Filtering  . . . . . . . . . . . . . . . . . . . . . 21
+         6.3.5.  Transact . . . . . . . . . . . . . . . . . . . . . . 21
+      6.4.  Messaging . . . . . . . . . . . . . . . . . . . . . . . . 22
+      6.5.  Publication . . . . . . . . . . . . . . . . . . . . . . . 28
+         6.5.1.  Claim Transaction  . . . . . . . . . . . . . . . . . 28
+         6.5.2.  PollClaim Transaction  . . . . . . . . . . . . . . . 31
+      6.6.  Cryptographic . . . . . . . . . . . . . . . . . . . . . . 32
+         6.6.1.  Generate Key Shares  . . . . . . . . . . . . . . . . 33
+         6.6.2.  Key Agreement  . . . . . . . . . . . . . . . . . . . 35
+         6.6.3.  Sign . . . . . . . . . . . . . . . . . . . . . . . . 37
+   7.  Message Interactions . . . . . . . . . . . . . . . . . . . . . 37
+      7.1.  Message PIN Interaction . . . . . . . . . . . . . . . . . 37
+         7.1.1.  Registration . . . . . . . . . . . . . . . . . . . . 38
+         7.1.2.  Authentication . . . . . . . . . . . . . . . . . . . 38
+         7.1.3.  Validation . . . . . . . . . . . . . . . . . . . . . 39
+
+
+
+Hallam-Baker             Expires July 17, 2021                  [Page 3]
+
+                        Mesh Protocol Reference             January 2021
+
+         7.1.4.  Example  . . . . . . . . . . . . . . . . . . . . . . 39
+      7.2.  Completion Interaction  . . . . . . . . . . . . . . . . . 41
+      7.3.  Contact Exchange Interaction  . . . . . . . . . . . . . . 42
+         7.3.1.  Remote . . . . . . . . . . . . . . . . . . . . . . . 42
+         7.3.2.  PIN  . . . . . . . . . . . . . . . . . . . . . . . . 45
+         7.3.3.  EARL . . . . . . . . . . . . . . . . . . . . . . . . 45
+      7.4.  Group Invitation  . . . . . . . . . . . . . . . . . . . . 45
+      7.5.  Confirmation Interaction  . . . . . . . . . . . . . . . . 47
+   8.  Device Connection Interactions . . . . . . . . . . . . . . . . 48
+      8.1.  Dynamic QR Code (PIN) Authenticated . . . . . . . . . . . 49
+         8.1.1.   Phase 1:  . . . . . . . . . . . . . . . . . . . . . 49
+         8.1.2.   Phase 2:  . . . . . . . . . . . . . . . . . . . . . 49
+         8.1.3.   Phase 3:  . . . . . . . . . . . . . . . . . . . . . 55
+         8.1.4.   Phase 4   . . . . . . . . . . . . . . . . . . . . . 56
+      8.2.  Witness Authenticated . . . . . . . . . . . . . . . . . . 57
+         8.2.1.   Phase 1:  . . . . . . . . . . . . . . . . . . . . . 57
+         8.2.2.   Phase 2:  . . . . . . . . . . . . . . . . . . . . . 57
+         8.2.3.   Phase 3:  . . . . . . . . . . . . . . . . . . . . . 57
+         8.2.4.   Phase 4   . . . . . . . . . . . . . . . . . . . . . 58
+      8.3.  Static QR Code Authenticated  . . . . . . . . . . . . . . 58
+         8.3.1.   Phase 1   . . . . . . . . . . . . . . . . . . . . . 59
+         8.3.2.   Phase 2   . . . . . . . . . . . . . . . . . . . . . 59
+         8.3.3.   Phase 3   . . . . . . . . . . . . . . . . . . . . . 59
+         8.3.4.   Phase 4   . . . . . . . . . . . . . . . . . . . . . 59
+   9.  Protocol Schema  . . . . . . . . . . . . . . . . . . . . . . . 59
+      9.1.  Request Messages  . . . . . . . . . . . . . . . . . . . . 59
+         9.1.1.  Message: MeshRequest   . . . . . . . . . . . . . . . 59
+         9.1.2.  Message: MeshRequestUser   . . . . . . . . . . . . . 59
+      9.2.  Response Messages   . . . . . . . . . . . . . . . . . . . 60
+         9.2.1.  Message: MeshResponse  . . . . . . . . . . . . . . . 60
+      9.3.  Imported Objects  . . . . . . . . . . . . . . . . . . . . 60
+      9.4.  Common Structures   . . . . . . . . . . . . . . . . . . . 60
+         9.4.1.  Structure: KeyValue  . . . . . . . . . . . . . . . . 60
+         9.4.2.  Structure: ConstraintsSelect   . . . . . . . . . . . 60
+         9.4.3.  Structure: ConstraintsData   . . . . . . . . . . . . 61
+         9.4.4.  Structure: PolicyAccount   . . . . . . . . . . . . . 61
+         9.4.5.  Structure: ContainerStatus   . . . . . . . . . . . . 61
+         9.4.6.  Structure: ContainerUpdate   . . . . . . . . . . . . 61
+      9.5.  Transaction: Hello  . . . . . . . . . . . . . . . . . . . 62
+         9.5.1.  Message: MeshHelloResponse   . . . . . . . . . . . . 62
+      9.6.  Transaction: BindAccount  . . . . . . . . . . . . . . . . 62
+         9.6.1.  Message: BindRequest   . . . . . . . . . . . . . . . 62
+         9.6.2.  Message: BindResponse  . . . . . . . . . . . . . . . 63
+      9.7.  Transaction: UnbindAccount  . . . . . . . . . . . . . . . 63
+         9.7.1.  Message: UnbindRequest   . . . . . . . . . . . . . . 63
+         9.7.2.  Message: UnbindResponse  . . . . . . . . . . . . . . 63
+      9.8.  Transaction: Connect  . . . . . . . . . . . . . . . . . . 64
+         9.8.1.  Message: ConnectRequest  . . . . . . . . . . . . . . 64
+         9.8.2.  Message: ConnectResponse   . . . . . . . . . . . . . 64
+      9.9.  Transaction: Complete   . . . . . . . . . . . . . . . . . 64
+         9.9.1.  Message: CompleteRequest   . . . . . . . . . . . . . 64
+
+
+
+Hallam-Baker             Expires July 17, 2021                  [Page 4]
+
+                        Mesh Protocol Reference             January 2021
+
+         9.9.2.  Message: CompleteResponse  . . . . . . . . . . . . . 64
+      9.10.  Transaction: Status  . . . . . . . . . . . . . . . . . . 65
+         9.10.1.  Message: StatusRequest  . . . . . . . . . . . . . . 65
+         9.10.2.  Message: StatusResponse   . . . . . . . . . . . . . 65
+      9.11.  Transaction: Download  . . . . . . . . . . . . . . . . . 65
+         9.11.1.  Message: DownloadRequest  . . . . . . . . . . . . . 65
+         9.11.2.  Message: DownloadResponse   . . . . . . . . . . . . 66
+      9.12.  Transaction: Transact  . . . . . . . . . . . . . . . . . 66
+         9.12.1.  Message: TransactRequest  . . . . . . . . . . . . . 66
+         9.12.2.  Message: TransactResponse   . . . . . . . . . . . . 67
+         9.12.3.  Structure: EntryResponse  . . . . . . . . . . . . . 67
+      9.13.  Transaction: Post  . . . . . . . . . . . . . . . . . . . 67
+         9.13.1.  Message: PostRequest  . . . . . . . . . . . . . . . 67
+         9.13.2.  Message: PostResponse   . . . . . . . . . . . . . . 67
+      9.14.  Transaction: Claim   . . . . . . . . . . . . . . . . . . 68
+         9.14.1.  Message: ClaimRequest   . . . . . . . . . . . . . . 68
+         9.14.2.  Message: ClaimResponse  . . . . . . . . . . . . . . 68
+      9.15.  Transaction: PollClaim   . . . . . . . . . . . . . . . . 68
+         9.15.1.  Message: PollClaimRequest   . . . . . . . . . . . . 68
+         9.15.2.  Message: PollClaimResponse  . . . . . . . . . . . . 68
+         9.15.3.  Structure: CryptographicOperation   . . . . . . . . 68
+         9.15.4.  Structure: CryptographicOperationSign   . . . . . . 69
+         9.15.5.  Structure: CryptographicOperationKeyAgreement   . . 69
+         9.15.6.  Structure: CryptographicOperationGenerate   . . . . 69
+         9.15.7.  Structure: CryptographicOperationShare  . . . . . . 69
+         9.15.8.  Structure: CryptographicResult  . . . . . . . . . . 69
+         9.15.9.  Structure: CryptographicResultKeyAgreement  . . . . 69
+         9.15.10.  Structure: CryptographicResultShare  . . . . . . . 69
+      9.16.  Transaction: Operate   . . . . . . . . . . . . . . . . . 70
+         9.16.1.  Message: OperateRequest   . . . . . . . . . . . . . 70
+         9.16.2.  Message: OperateResponse  . . . . . . . . . . . . . 70
+   10.  Security Considerations . . . . . . . . . . . . . . . . . . . 70
+   11.  IANA Considerations . . . . . . . . . . . . . . . . . . . . . 70
+   12.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 70
+   References . . . . . . . . . . . . . . . . . . . . . . . . . . . . 70
+      Normative References  . . . . . . . . . . . . . . . . . . . . . 70
+      Informative References  . . . . . . . . . . . . . . . . . . . . 71
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 71
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                  [Page 5]
+
+                        Mesh Protocol Reference             January 2021
+
+1. Introduction
+
+   This document describes the Mesh Service protocol supported by Mesh
+   Services, an account-based protocol that facilitates exchange of data
+   between devices connected to a Mesh profile and between Mesh
+   accounts.
+
+   Mesh Service Accounts support the following services:
+
+         *  Provides the master persistence store for the Catalogs and
+            Spools associated with the account.
+
+         *  Enables synchronization of Catalogs and Spools with
+            connected devices.
+
+         *  Enforces access control on inbound Mesh Messages from other
+            users and other Mesh Services.
+
+         *  Authenticates outbound Mesh Messages, certifying that they
+            comply with abuse mitigation policies.
+
+   A Mesh Profile MAY be bound to multiple Mesh Service Accounts at the
+   same time but only one Mesh Service Account is considered to be
+   authoritative at a time. Users may add or remove Mesh Service
+   Accounts and change the account designated as authoritative at any
+   time.
+
+   The Mesh Services are build from a very small set of primitives which
+   provide a surprisingly extensive set of capabilities. These
+   primitives are:
+
+         Hello
+
+         CreateAccount, DeleteAccount
+
+         Status, Download, Upload
+
+         Connect
+
+         Post
+
+   Although these functions could in principle be used to replace many
+   if not most existing Internet application protocols, the principal
+   value of any communication protocol lies in the size of the audience
+   it allows them to communicate with. Thus, while the Mesh Messaging
+   service is designed to support efficient and reliable transfer of
+   messages ranging in size from a few bytes to multiple terabytes, the
+   near-term applications of these services will be to applications that
+   are not adequately supported by existing protocols if at all.
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                  [Page 6]
+
+                        Mesh Protocol Reference             January 2021
+
+2. Definitions
+
+   This section presents the related specifications and standard, the
+   terms that are used as terms of art within the documents and the
+   terms used as requirements language.
+
+2.1. Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in .
+
+2.2. Defined Terms
+
+   The terms of art used in this document are described in the Mesh
+   Architecture Guide .
+
+2.3. Related Specifications
+
+   The architecture of the Mathematical Mesh is described in the Mesh
+   Architecture Guide . The Mesh documentation set and related
+   specifications are described in this document.
+
+2.4. Implementation Status
+
+   The implementation status of the reference code base is described in
+   the companion document .
+
+3. Mesh Protocols
+
+   The Mesh specifies two separate types of protocol interactions:
+
+         Mesh Service Protocol
+
+         Mesh Messaging Protocol
+
+   The Mesh Messaging Protocol uses the Mesh Service Protocol as
+   transport. The Mesh Service Protocol in turn is supported by either
+   the HTTPS binding over TCP or by the Mesh Datagram binding over UDP.
+
+   Mesh Services MUST support the HTTPS binding and MAY support the Mesh
+   Datagram binding.
+
+4. Mesh Service
+
+   A Mesh Service is a minimally trusted service. In particular a user
+   does not need to trust a Mesh service to protect the confidentiality
+   or integrity of most data stored in the account catalogs and spools.
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                  [Page 7]
+
+                        Mesh Protocol Reference             January 2021
+
+   Unless the use of the Mesh Service is highly restricted, a user does
+   need to trust the Mesh Service in certain respects:
+
+         Data Loss
+
+         Integrity (Stale Data)
+
+         Messaging
+
+         Traffic analysis
+
+   The need to trust the Mesh Service in these respects is mitigated by
+   accountability and the user's ability to change Mesh Service
+   providers at any time they choose with minimal inconvenience.
+
+   It is possible that some of these risks will be reduced in future
+   versions of the Mesh Service Protocol but it is highly unlikely that
+   these can be eliminated entirely without compromising practicality or
+   efficiency.
+
+4.1. Data Model
+
+   The design of the Mesh Service model followed a quasi-formal approach
+   in which the system was reduced to schemas which could in principle
+   be rendered in a formal development method but without construction
+   of proofs.
+
+   Like the contents of Mesh Accounts, a Mesh Service may be represented
+   by a collection of catalogs and spools, for example:
+
+         Account Catalog
+
+         Incident Spool
+
+   Backup of the service MAY be implemented using the same container
+   synchronization mechanism used to synchronize account catalogs and
+   spools.
+
+4.2. Partitioning
+
+   Mesh Services supporting a large number of accounts or large activity
+   volume MAY partition the account catalog between one or more hosts
+   using the usual tiered service model in which a front-end server
+   receives traffic for any account hosted at the server and routes the
+   request to the back-end service that provides the persistence store
+   for that account.
+
+   In addition, the Mesh Service Protocol supports a 'direct connection'
+   partitioning model in which devices are given a DNS name which MAY
+   allow for direct connection to the persistence host or to a front-end
+   service offering service that is in some way specific to that
+
+
+
+Hallam-Baker             Expires July 17, 2021                  [Page 8]
+
+                        Mesh Protocol Reference             January 2021
+
+   account.
+
+5. Protocol Bindings
+
+   Mesh Service transactions are mapped to an underlying messaging and
+   transport protocol. The following binding
+
+   Mesh Services MUST support the Web Service binding specified in this
+   document and MAY support the UDP binding currently in development.
+
+5.1. DNS Web Service Discovery
+
+   The DNS Web Service discovery mechanism is used to discover Mesh
+   Services regardless of the protocol binding .The service name, DNS
+   prefix and and .well-known service suffix are specified as follows:
+
+         *  Service Name: mmm
+
+         *  DNS Prefix: _mmm._tcp
+
+         *  Well Known service suffix: /.well-known/mmm
+
+5.2. Web Service Protocol Binding
+
+   The Web Service Protocol binding makes use of the most widely
+   deployed and used protocols:
+
+         *  Discovery: DNS Service discovery
+
+         *  Transport: TLS
+
+         *  Application: HTTP
+
+         *  Presentation: DARE Message
+
+         *  Encoding: JSON, JSON-B
+
+   The chief limitations of the Web Service Protocol Binding are that
+   the use of TCP based transport results in unsatisfactory latency for
+   some applications and that the HTTP application layer only serves to
+   allow a host to support multiple services on the same TCP/IP port.
+
+5.2.1. Transport Security
+
+   Mesh Services MUST offer TLS transport and MAY offer non TLS
+   transport. MESH clients SHOULD use TLS transport when connecting to a
+   MESH service.
+
+   TLS version 1.3  or higher MUST be supported. Client authentication
+   SHOULD NOT be used.
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                  [Page 9]
+
+                        Mesh Protocol Reference             January 2021
+
+5.2.2. HTTP Message Binding
+
+   All messages are exchanged as HTTP POST transactions. Support for and
+   use of HTTP/1.1  is REQUIRED. Services MAY support HTTP/2.
+
+   In contrast to other approaches to the design of Web Services, the
+   only use made of the HTTP transport is to distinguish between
+   different services on the same host using the Host header and .well-
+   known convention and for message framing.  No use is made of the URI
+   request line to identify commands, nor are the caching or proxy
+   capabilities of HTTP made use of.
+
+5.2.3. Request
+
+   The HTTP request MAY contain any valid HTTP header specified in .
+
+         Request Line URI
+
+         Request Line Method
+
+         Host: Header
+
+         Content-Encoding
+
+         Content-Type
+
+         Content-Length or Transfer-Encoding
+
+         Payload
+
+   
+   [No dump of the binding yet]
+   
+   ~~~~
+   
+
+5.2.4. Response
+
+   The response MAY contain any HTTP response header but since JWB
+   services do not make use of HTTP caching and messages are not
+   intended to be modified by HTTP intermediaries, only a limited number
+   of headers have significance:
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 10]
+
+                        Mesh Protocol Reference             January 2021
+
+         Response Code
+
+         Content-Type
+
+         Content-Length or Transfer-Encoding
+
+         Cache-Control
+
+   
+   [No dump of the binding yet]
+   
+   ~~~~
+   
+
+5.3. DARE Message Encapsulation
+
+   The payload of the HTTP requests and responses is a DARE Message
+   whose payload contains the Mesh Service request or response.
+
+   The DARE Message encapsulation is used to authenticate the request or
+   response data. The form of the authentication depending on the
+   credentials available to the sender at the time the request is made.
+
+   Mesh Service MUST support the use of Mutually Authenticated Key
+   Exchange  to establish the Master Key used for authentication of
+   requests and responses.
+
+   Requests and Responses MUST be authenticated. Requests and Responses
+   MUST be encrypted if the transport is not encrypted and MAY be
+   encrypted otherwise.
+
+5.3.1. Null Authentication
+
+   Null Authentication MAY be used to make a Hello Request.
+
+   The Null Authentication mechanism MUST NOT be used for any Mesh
+   Service request or response other than a Hello request.
+
+   Since the Mutually Authenticated key exchange requires both parties
+   to know the public key of the other, it is not possible for a client
+   to authenticate itself to the service until it has obtained the
+   service public key. One means by which the client MAY obtain the
+   service public key is by requesting the service return the credential
+   in a Hello transaction.
+
+5.3.2. Device Authentication
+
+   Device Authentication is used in two circumstances
+
+         *  When requesting creation of an account
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 11]
+
+                        Mesh Protocol Reference             January 2021
+
+         *  When a device is requesting connection to a profile.
+
+5.3.3. Profile Authentication
+
+   Profile Authentication has the same form as Device Authentication
+   except that the client provides its Device Connection Assertion as
+   part of the request:
+
+5.3.4. Ticket Authentication
+
+   Ticket Authentication is used after a device has obtained an
+   authentication ticket from a service. The ticket is returned in the
+   response to a previous Profile Authentication exchange.
+
+5.4. Payload Encoding
+
+   The Dare Message payload of a Hello request MUST be encoded in JSON
+   encoding. The payload of all other requests MUST be in either JSON
+   encoding or one of the encodings advertised as being accepted in a
+   Hello response from the Service. Services MUST accept JSON encoding
+   and MAY support the JSON-B or JSON-C encodings as specified in this
+   document. Services MUST generate a response that is compatible with
+   the DARE Message Content-Type specified in the request.
+
+   JSON was originally developed to provide a serialization format for
+   the JavaScript programming language . While this approach is
+   generally applicable to the type systems of scripting programming
+   languages, it is less well matched to the richer type systems of
+   modern object oriented programming languages such as Java and C#.
+
+   Working within a subset of the capabilities of JSON allows a Web
+   Service protocol to be accessed with equal ease from either platform
+   type. The following capabilities of JSON are avoided:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 12]
+
+                        Mesh Protocol Reference             January 2021
+
+   The ability to use arbitrary strings as field names.
+
+   The use of JSON objects to define maps directly
+
+   The following data field types are used:
+
+         Integer
+
+         String
+
+         Boolean
+
+         Sequence
+
+         Object of known type
+
+         Object of variable type
+
+         Binary Data
+
+         Date Time
+
+5.5. Error handling and response codes
+
+   It is possible for an error to occur at any of the three layers in
+   the Web Service binding:
+
+   Service Layer
+
+   HTTP Layer
+
+   Transport Layer
+
+   Services SHOULD always attempt to return error codes at the highest
+   level possible. However, it is clearly impossible for a connection
+   that is refused at the Transport layer to return an error code at the
+   HTTP layer. It is however possible for a HTTP layer error response to
+   contain a content body.
+
+   In the case that a response contains both a HTTP response code and a
+   well-formed payload containing a response, the payload response SHALL
+   have precedence.
+
+6. Mesh Service Transactions
+
+6.1. Service Description
+
+   The Hello transaction is used to determine the features supported by
+   the service and obtain the service credentials
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 13]
+
+                        Mesh Protocol Reference             January 2021
+
+   The request payload:
+
+   {
+     "HelloRequest":{}}
+
+   The response payload:
+
+   {
+     "MeshHelloResponse":{
+       "Status":201,
+       "Version":{
+         "Major":3,
+         "Minor":0,
+         "Encodings":[{
+             "ID":["application/json"
+               ]}
+           ]},
+       "EnvelopedProfileService":[{
+           "EnvelopeId":"MA36-TUJL-QRZJ-3M3L-SRBQ-BRYQ-W2YM",
+           "dig":"S512",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQTM2LVRVSkwtUV
+     JaSi0zTTNMLVNSQlEtQlJZUS1XMllNIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+     sZVNlcnZpY2UiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAg
+     IkNyZWF0ZWQiOiAiMjAyMS0wMS0xM1QxNjozODoxN1oifQ"},
+         "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJQcm9maWxlU2lnbmF0dX
+     JlIjogewogICAgICAiVWRmIjogIk1BMzYtVFVKTC1RUlpKLTNNM0wtU1JCUS1CUll
+     RLVcyWU0iLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVi
+     bGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgI
+     CAgIlB1YmxpYyI6ICJHWnNNaWlOclNMc3ZpbjU5SUZvTWhqcHJYYTRxNUFTTVZZUk
+     FNVGdlUUZTM05lUWxDU1hkCiAgZmZzbzJNaHM5RDc2ZDJFX1lSWWFtZllBIn19fSw
+     KICAgICJTZXJ2aWNlRW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNRE5PLVFF
+     VzMtTzVHTy1JNUlaLVNXTEstUENaMy1WQ1QzIiwKICAgICAgIlB1YmxpY1BhcmFtZ
+     XRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3
+     J2IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICIwY2szb0lGWjZ0eEUzajJ
+     HRUxXZzhaQ1BxaFRHaWtRUWZqeFUxUHhGbVZBczRmLVd6MW05CiAgMkg2alFxWmJq
+     ZmVKLUVickpETzJOTVFBIn19fX19",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MA36-TUJL-QRZJ-3M3L-SRBQ-BRYQ-W2YM",
+               "signature":"MeeZPEkxMpnwnFIcqeau_cw3m82x8n-fT5Gbp0ka
+     U53PTSHIlXrnbJozvpM9kIFK5dr_xFvAcQsAoH0KS9NciI2CHvMYuZgmOX7Yj8GRu
+     bBFpWQABlssgVp5WDTJBBKNHny9ahysun5far-CSdh6MBEA"}
+             ],
+           "PayloadDigest":"7rouYSGk4aJyF1lFml3TtsjIe_4VLmbAzgm1STiM
+     5-8z0gBV-R1n8-qXNUolXqQWo05cc8hBXuZdfz6KfZdmwA"}
+         ],
+       "EnvelopedProfileHost":[{
+           "EnvelopeId":"MAFN-RXIO-YV7S-ZIU2-WXLO-S3ZO-DUU6",
+           "dig":"S512",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQUZOLVJYSU8tWV
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 14]
+
+                        Mesh Protocol Reference             January 2021
+
+     Y3Uy1aSVUyLVdYTE8tUzNaTy1EVVU2IiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+     sZUhvc3QiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIkNy
+     ZWF0ZWQiOiAiMjAyMS0wMS0xM1QxNjozODoxN1oifQ"},
+         "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJQcm9maWxlU2lnbmF0dXJlIj
+     ogewogICAgICAiVWRmIjogIk1BRk4tUlhJTy1ZVjdTLVpJVTItV1hMTy1TM1pPLUR
+     VVTYiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+     S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+     lB1YmxpYyI6ICJjRWhGR2FLd3BlY1FIN0lGemhlWE1TOUVrT3p2dTY5SWNxeWNjcm
+     Q3RkRMdG9tdkU2S044CiAgVXJhUDczblJ4TDhMOGEwdjdFOFlBQTRBIn19fSwKICA
+     gICJLZXlBdXRoZW50aWNhdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQ0ROLVMzVU8t
+     NjVYNy1MN1k3LVMzREUtN09MNy1PRk5JIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlc
+     nMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2Ij
+     ogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJEY2FVNlNPbVFfR21IQ2hldjZ
+     JNnNxOFQyOVRuTWctcV84a0NibGFMeVc3bGNFdEJ6NWFTCiAgZ2p2RDFNVm04MElz
+     V0JmRk5MTER2NFFBIn19fX19",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MAFN-RXIO-YV7S-ZIU2-WXLO-S3ZO-DUU6",
+               "signature":"BuUFO7hpykuHiwuM0i1P4aCMIHBHmubtKdskHfbR
+     NrHGV0Va3Lcljyp5XaXp1KDhrygv8l9XcJiAL2Vy2xTHghzfu29XLc4p59RxhlxP6
+     nlWP0Lw0pUER9v9v9BEss1ULDJYw7yc-mEf0h5sygAnTx8A"}
+             ],
+           "PayloadDigest":"bOkDrRdW4SGwdJ0_YaJoeS1JhczC7o-ftjVWr3sC
+     yLo7-dHhyB-cKe3Fksrg31v_p2R4q6IhUwYOwFrgFEF1nA"}
+         ]}}
+
+6.2. Account Creation
+
+6.2.1. Bind User Account
+
+   A User Account is bound to a Mesh Service by completing a BindAccount
+   transaction with the service.
+
+   The BindRequest message specifies the account address and ProfileUser
+   of the account to be serviced.
+
+   The BindAccount transaction is unique in that it can fail to complete
+   for reasons that are outside the scope of the Mesh specifications.
+   Creation of an account might require payment to be made or
+   authentication of the user's credentials. It is thus quite normal for
+   the result of a CreateRequest to be the account being created in an
+   'on hold' state which can only be changed out of band.
+
+   If the request is at least partially successful, a BindResponse
+   message is returned. In the case of partial success, a description of
+   the request status and link to a Web page providing further details
+   MAY be returned.
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 15]
+
+                        Mesh Protocol Reference             January 2021
+
+   The request payload:
+
+   {
+     "HelloRequest":{}}
+
+   The response payload:
+
+   {
+     "MeshHelloResponse":{
+       "Status":201,
+       "Version":{
+         "Major":3,
+         "Minor":0,
+         "Encodings":[{
+             "ID":["application/json"
+               ]}
+           ]},
+       "EnvelopedProfileService":[{
+           "EnvelopeId":"MA36-TUJL-QRZJ-3M3L-SRBQ-BRYQ-W2YM",
+           "dig":"S512",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQTM2LVRVSkwtUV
+     JaSi0zTTNMLVNSQlEtQlJZUS1XMllNIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+     sZVNlcnZpY2UiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAg
+     IkNyZWF0ZWQiOiAiMjAyMS0wMS0xM1QxNjozODoxN1oifQ"},
+         "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJQcm9maWxlU2lnbmF0dX
+     JlIjogewogICAgICAiVWRmIjogIk1BMzYtVFVKTC1RUlpKLTNNM0wtU1JCUS1CUll
+     RLVcyWU0iLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVi
+     bGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgI
+     CAgIlB1YmxpYyI6ICJHWnNNaWlOclNMc3ZpbjU5SUZvTWhqcHJYYTRxNUFTTVZZUk
+     FNVGdlUUZTM05lUWxDU1hkCiAgZmZzbzJNaHM5RDc2ZDJFX1lSWWFtZllBIn19fSw
+     KICAgICJTZXJ2aWNlRW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNRE5PLVFF
+     VzMtTzVHTy1JNUlaLVNXTEstUENaMy1WQ1QzIiwKICAgICAgIlB1YmxpY1BhcmFtZ
+     XRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3
+     J2IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICIwY2szb0lGWjZ0eEUzajJ
+     HRUxXZzhaQ1BxaFRHaWtRUWZqeFUxUHhGbVZBczRmLVd6MW05CiAgMkg2alFxWmJq
+     ZmVKLUVickpETzJOTVFBIn19fX19",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MA36-TUJL-QRZJ-3M3L-SRBQ-BRYQ-W2YM",
+               "signature":"MeeZPEkxMpnwnFIcqeau_cw3m82x8n-fT5Gbp0ka
+     U53PTSHIlXrnbJozvpM9kIFK5dr_xFvAcQsAoH0KS9NciI2CHvMYuZgmOX7Yj8GRu
+     bBFpWQABlssgVp5WDTJBBKNHny9ahysun5far-CSdh6MBEA"}
+             ],
+           "PayloadDigest":"7rouYSGk4aJyF1lFml3TtsjIe_4VLmbAzgm1STiM
+     5-8z0gBV-R1n8-qXNUolXqQWo05cc8hBXuZdfz6KfZdmwA"}
+         ],
+       "EnvelopedProfileHost":[{
+           "EnvelopeId":"MAFN-RXIO-YV7S-ZIU2-WXLO-S3ZO-DUU6",
+           "dig":"S512",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQUZOLVJYSU8tWV
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 16]
+
+                        Mesh Protocol Reference             January 2021
+
+     Y3Uy1aSVUyLVdYTE8tUzNaTy1EVVU2IiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+     sZUhvc3QiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIkNy
+     ZWF0ZWQiOiAiMjAyMS0wMS0xM1QxNjozODoxN1oifQ"},
+         "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJQcm9maWxlU2lnbmF0dXJlIj
+     ogewogICAgICAiVWRmIjogIk1BRk4tUlhJTy1ZVjdTLVpJVTItV1hMTy1TM1pPLUR
+     VVTYiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+     S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+     lB1YmxpYyI6ICJjRWhGR2FLd3BlY1FIN0lGemhlWE1TOUVrT3p2dTY5SWNxeWNjcm
+     Q3RkRMdG9tdkU2S044CiAgVXJhUDczblJ4TDhMOGEwdjdFOFlBQTRBIn19fSwKICA
+     gICJLZXlBdXRoZW50aWNhdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQ0ROLVMzVU8t
+     NjVYNy1MN1k3LVMzREUtN09MNy1PRk5JIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlc
+     nMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2Ij
+     ogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJEY2FVNlNPbVFfR21IQ2hldjZ
+     JNnNxOFQyOVRuTWctcV84a0NibGFMeVc3bGNFdEJ6NWFTCiAgZ2p2RDFNVm04MElz
+     V0JmRk5MTER2NFFBIn19fX19",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MAFN-RXIO-YV7S-ZIU2-WXLO-S3ZO-DUU6",
+               "signature":"BuUFO7hpykuHiwuM0i1P4aCMIHBHmubtKdskHfbR
+     NrHGV0Va3Lcljyp5XaXp1KDhrygv8l9XcJiAL2Vy2xTHghzfu29XLc4p59RxhlxP6
+     nlWP0Lw0pUER9v9v9BEss1ULDJYw7yc-mEf0h5sygAnTx8A"}
+             ],
+           "PayloadDigest":"bOkDrRdW4SGwdJ0_YaJoeS1JhczC7o-ftjVWr3sC
+     yLo7-dHhyB-cKe3Fksrg31v_p2R4q6IhUwYOwFrgFEF1nA"}
+         ]}}
+
+   [Future: Consider converting this to a Messaging flow.]
+
+6.2.2. Bind Group Account
+
+   Mesh Group Accounts are created in the same manner as user accounts
+   except that a ProfileGroup is specified.
+
+   The request payload:
+
+   {
+     "BindRequest":{
+       "AccountAddress":"groupw@example.com",
+       "EnvelopedProfileAccount":[{
+           "EnvelopeId":"MBND-NF5R-BEOZ-EHDY-PXM3-XTDU-HK5T",
+           "dig":"S512",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQk5ELU5GNVItQk
+     VPWi1FSERZLVBYTTMtWFREVS1ISzVUIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+     sZUdyb3VwIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJD
+     cmVhdGVkIjogIjIwMjEtMDEtMTNUMTY6Mzg6MjhaIn0"},
+         "ewogICJQcm9maWxlR3JvdXAiOiB7CiAgICAiUHJvZmlsZVNpZ25hdHVyZS
+     I6IHsKICAgICAgIlVkZiI6ICJNQk5ELU5GNVItQkVPWi1FSERZLVBYTTMtWFREVS1
+     ISzVUIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1Ymxp
+     Y0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgI
+     CJQdWJsaWMiOiAiTkdXV01jYUI4alY5WjJQOFVyd2lpYUFEdVhDUmhhbGVSX0NDZF
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 17]
+
+                        Mesh Protocol Reference             January 2021
+
+     B1eURXZnBTTVBGM0IxZgogIG1faVd1NTdFbDR0RGR0Uk8wR3ZISjFPQSJ9fX0sCiA
+     gICAiQWNjb3VudEFkZHJlc3MiOiAiZ3JvdXB3QGV4YW1wbGUuY29tIiwKICAgICJB
+     Y2NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQjQ0LUk3VFQtQTNKR
+     S1ONUxLLVNLVFktV0pENi1VUkdaIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOi
+     B7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg
+     0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJKSEkwU0l4SDJObWVJYzFkbGdra2dm
+     VVhCeXpibW5rWkw1cFNoNkFGd2t1UkNOTThMUVVnCiAgbEgwOEYtRi14UWNDS3M1T
+     ndDZ0x6ejBBIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIjogewogIC
+     AgICAiVWRmIjogIk1DSzMtWk1QWS1DUUxHLUQyWUMtTlJJNS1OTzRBLUdKTVgiLAo
+     gICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUNE
+     SCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpY
+     yI6ICJfNnJodzBlQUstUE1kTm5zQWJMM3NtX3FVNVZBQVJIcG5JQ2hfZy1ueDFOaG
+     psNHU5R29rCiAgLWRPUHdmeXpOUTEtVnJSdUU2RG8wR01BIn19fX19",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MBND-NF5R-BEOZ-EHDY-PXM3-XTDU-HK5T",
+               "signature":"pXHiPRR5N9QZieJEiaoxW8J6bn0p8arf1LtY4U6L
+     ROXZpW9ru2eb-7vA4-qDm6d11gUEDOKyhp-AP-zPo1BeiRo7kFuUU6xczM5zCIjnD
+     EQXJuXiLF1FMUfcL9V9l9bAeaPiy7VEtgdEtzobLAaFQxIA"}
+             ],
+           "PayloadDigest":"SFNO6ZCeXo0y3hSACwFeQmGB6ahSrVMDsRDwERcy
+     6lPnAtyPjtP6ht2dVv89ZxFOVBON1q-UKkhjZxTtrnsirg"}
+         ]}}
+
+   The response payload:
+
+   {
+     "BindResponse":{
+       "Status":201,
+       "StatusDescription":"Operation completed successfully"}}
+
+6.2.3. Unbind Account
+
+   An account registration is deleted using theUnbindAccount
+   transaction.
+
+   The request payload:
+
+   The response payload:
+
+6.3. Persistence Store Management
+
+   All the state associated with a Mesh profile is stored as a sequence
+   of DARE Messages in a Dare Container. The Mesh Service holding the
+   master copy of the persistence stores and the devices connected to
+   the profile containing complete copies (replicas) or partial copies
+   (redactions).
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 18]
+
+                        Mesh Protocol Reference             January 2021
+
+   Thus, the only primitive needed to achieve synchronization of the
+   profile state are those required for synchronization of a DARE
+   Container. These steps are:
+
+         *  Obtain the status of the catalogs and spools associated with
+            the account.
+
+         *  Download catalog and spool updates
+
+         *  Upload catalog updates.
+
+   To ensure a satisfactory user experience, Mesh Messages are
+   intentionally limited in size to 64 KB or less, thus ensuring that an
+   application can retrieve the most recent 100 messages almost
+   instantaneously on a high bandwidth connection and without undue
+   delay on a slower one.
+
+6.3.1. Status
+
+   The status transaction returns the status of the containers the
+   device is authorized to access for the specified account together
+   with the updated Device Connection Entry if this has been modified
+   since the entry presented to authenticate the request was issued.
+
+   The request payload:
+
+   {
+     "StatusRequest":{}}
+
+   The response payload:
+
+   {
+     "StatusResponse":{
+       "Status":201,
+       "StatusDescription":"Operation completed successfully",
+       "EnvelopedProfileAccount":[{
+           "EnvelopeId":"MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH",
+           "dig":"S512",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQU1VLTVRWFAtVF
+     dDRC03UEtJLVM0RkMtSUI3Ni1YQVNIIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+     sZVVzZXIiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIkNy
+     ZWF0ZWQiOiAiMjAyMS0wMS0xM1QxNjozODoxOVoifQ"},
+         "ewogICJQcm9maWxlVXNlciI6IHsKICAgICJQcm9maWxlU2lnbmF0dXJlIj
+     ogewogICAgICAiVWRmIjogIk1BTVUtNVFYUC1UV0NELTdQS0ktUzRGQy1JQjc2LVh
+     BU0giLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+     S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+     lB1YmxpYyI6ICJjM2w5NmhGTlZiWHpRYTdkb2hncF9YOVlJSXphUjRVMGRQQ2Z5b2
+     NxdUZXblp1aUZkdTl2CiAgbDlVSWd0WXYtdGpGVnBtazZxUkRqN21BIn19fSwKICA
+     gICJBY2NvdW50QWRkcmVzcyI6ICJhbGljZUBleGFtcGxlLmNvbSIsCiAgICAiU2Vy
+     dmljZVVkZiI6ICJNQTM2LVRVSkwtUVJaSi0zTTNMLVNSQlEtQlJZUS1XMllNIiwKI
+     CAgICJBY2NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNRExPLUpKNE
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 19]
+
+                        Mesh Protocol Reference             January 2021
+
+     ItUkJZNS1WWUQ3LUxKWlktUzNSSy1EQk0yIiwKICAgICAgIlB1YmxpY1BhcmFtZXR
+     lcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2
+     IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICI0TWk5WDhtWEk5bUdoXzdza
+     kdaUDBhRlBSWEpOU0ZleFBCbklBSzFCTl9fU1hSeHRXUVRzCiAgWHNnejFmbDVKYz
+     M4Wll4N01WZTJYOXdBIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIjo
+     gewogICAgICAiVWRmIjogIk1DQ0stRjJXWi1RQUFDLUMzTkEtRVZBVy1TQkw3LUlI
+     RVEiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS
+     2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIl
+     B1YmxpYyI6ICI4VFNaN0ROVE03RnVnSnFBRmZ0NEZKRDRXZGpBOW9tSFVEYTd0bnR
+     uSkJrUTRrTldfdHlTCiAgNlFNR01ZbHk0d0hSMVdGblVadkk1UW1BIn19fSwKICAg
+     ICJBY2NvdW50QXV0aGVudGljYXRpb24iOiB7CiAgICAgICJVZGYiOiAiTUJCMy03M
+     jNLLURKS1EtRzRISC03UFROLTVKWEstWlY2QSIsCiAgICAgICJQdWJsaWNQYXJhbW
+     V0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImN
+     ydiI6ICJYNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAibDY3NF9uOWloZzkxcmpn
+     UGlzYjNYdUE3OEVfOGhXenNIdFlmb0ZRdkdCMmtaM08xeFNCRgogIEUycHBGamhTN
+     GhzbEE0NXl6N1dwQnpnQSJ9fX0sCiAgICAiQWNjb3VudFNpZ25hdHVyZSI6IHsKIC
+     AgICAgIlVkZiI6ICJNREE2LUVMRTItVDJBTS01MlJULUFOM1ItTFVEUy1HSkdYIiw
+     KICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVD
+     REgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQdWJsa
+     WMiOiAiQUhTdFc4S0dwYnJvWnQ1ZXotd3ZiQ19GTXI5QWpxSThnTGlnQzVwM3doSG
+     NFUTRqUDlkVwogIDF4RHdaMzRqNzdxWE5JZkZFdk9FV0pNQSJ9fX19fQ",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH",
+               "signature":"_9tIDk5KvjeIuasHaXDawBB1VTw2YIzxBUxpLn78
+     a0qfO9CjuWh7auyUMHrCGvpuQRjjQrDR_OeATnhDzrIG5xcQbFwvfge_rfqvUjqQc
+     -CZqvT8lLDQ2clW6THP1Z0GcIZmxNEpYVkyyR-9AACDQAcA"}
+             ],
+           "PayloadDigest":"fb_iksIe0dM4IWIWZjmKlYQSF-XttjIAg8Bww4tJ
+     jpOE0P9bxX42pkNorLfHQ8XyD8x9IHT-FKh-_lhLJNAUzA"}
+         ],
+       "ContainerStatus":[{
+           "Container":"MMM_Inbound",
+           "Index":3},
+         {
+           "Container":"MMM_Outbound",
+           "Index":1},
+         {
+           "Container":"MMM_Local",
+           "Index":2},
+         {
+           "Container":"MMM_Access",
+           "Index":1},
+         {
+           "Container":"MMM_Credential",
+           "Index":3},
+         {
+           "Container":"MMM_Device",
+           "Index":3},
+         {
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 20]
+
+                        Mesh Protocol Reference             January 2021
+
+           "Container":"MMM_Contact",
+           "Index":2},
+         {
+           "Container":"MMM_Application",
+           "Index":1},
+         {
+           "Container":"MMM_Bookmark",
+           "Index":2},
+         {
+           "Container":"MMM_Task",
+           "Index":2}
+         ]}}
+
+6.3.2. Download
+
+   The download transaction returns a collection of entries from one or
+   more containers associated with the profile.
+
+   Optional filtering criteria MAY be specified to only return objects
+   matching specific criteria and/or only return certain parts of the
+   selected messages.
+
+   The service MAY limit the number of entries returned in an individual
+   response for performance reasons.
+
+   Obsolete example 1
+
+6.3.3. Conflict Detection
+
+   Clients SHOULD check to determine if updates to a container conflict
+   with pending updates on the device waiting to be uploaded. For
+   example, if a contact that the user modified on the device attempting
+   to synchronize was subsequently deleted.
+
+   The means of resolving such conflicts is not in the scope of this
+   specification.
+
+6.3.4. Filtering
+
+   Clients may request container updates be filtered to redact catalog
+   entries that have been updated or deleted or spool entries that have
+   been read, deleted or were received before a certain date.
+
+6.3.5. Transact
+
+   The transact transaction appends envelopes to one or more stores. The
+   operation is atomic, that is either all the changes specified will be
+   made to the stores or none will. This ensures that simultaneous
+   attempts to update a store do not result in race conditions.
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 21]
+
+                        Mesh Protocol Reference             January 2021
+
+   Each update to a catalog or container specifies the expected
+   container index and apex digest. This provides a strong guarantee of
+   consistency. The service MUST verify each update to check that the
+   Merkle Tree values specified are consistent with the store entries
+   and that the signature on the apex value (if specified) is valid and
+   correct.
+
+   Services MAY impose limits on the size and number of additions
+   performed in response to a TransactRequest message to ensure that
+   processing time does not degrade performance for other users.
+
+   Obsolete example 2
+
+6.4. Messaging
+
+   Mesh Messaging is an asynchronous messaging service that allows
+   exchange of information between devices connected to a Mesh account
+   and between Mesh users.
+
+   To enable effective abuse mitigation, Mesh Messaging enforces a four
+   corner communication model in which all outbound and inbound messages
+   pass through a Mesh Service which accredits and authorizes the
+   messages on the user's behalf.
+
+   The Post transaction is used for client-service and service-service
+   messaging transactions.
+
+   Client-Service (Post Transaction)
+
+   To send a message, the client creates the Mesh Message structure,
+   encapsulates it in a DARE Message and forwards this to its service
+   using a Post transaction.
+
+   The Post transaction is authenticated to the service by device using
+   the usual means of profile or ticket authentication.
+
+   The DARE Message MUST be signed under a device signature key
+   accredited by a Device Connection Assertion provided in the message
+   signature block.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 22]
+
+                        Mesh Protocol Reference             January 2021
+
+   The request payload:
+
+   {
+     "ConnectRequest":{
+       "EnvelopedRequestConnection":[{
+           "EnvelopeId":"MD3N-INKQ-MLJM-WYE2-642P-2VM4-V4TL",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJORDJELTJCMkYtMk
+     VDUy1NWDRKLUJMNkstWURWUy03T0JBIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+     zdENvbm5lY3Rpb24iLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIs
+     CiAgIkNyZWF0ZWQiOiAiMjAyMS0wMS0xM1QxNjozODoyMFoifQ"},
+         "ewogICJSZXF1ZXN0Q29ubmVjdGlvbiI6IHsKICAgICJNZXNzYWdlSWQiOi
+     AiTkQyRC0yQjJGLTJFQ1MtTVg0Si1CTDZLLVlEVlMtN09CQSIsCiAgICAiQXV0aGV
+     udGljYXRlZERhdGEiOiBbewogICAgICAgICJFbnZlbG9wZUlkIjogIk1DRFotSVpG
+     WS1QV1QzLTM2VVAtNEw2US01UU1KLVlXV1kiLAogICAgICAgICJkaWciOiAiUzUxM
+     iIsCiAgICAgICAgIkNvbnRlbnRNZXRhRGF0YSI6ICJld29nSUNKVmJtbHhkV1ZKWk
+     NJNklDSk5RMFJhTFVsYVJsa3RVRmRVTXkwCiAgek5sVlFMVFJNTmxFdE5WRk5TaTF
+     aVjFkWklpd0tJQ0FpVFdWemMyRm5aVlI1Y0dVaU9pQWlVSEp2Wm1sc1oKICBVUmxk
+     bWxqWlNJc0NpQWdJbU4wZVNJNklDSmhjSEJzYVdOaGRHbHZiaTl0YlcwdmIySnFaV
+     04wSWl3S0lDQQogIGlRM0psWVhSbFpDSTZJQ0l5TURJeExUQXhMVEV6VkRFMk9qTT
+     RPakl3V2lKOSJ9LAogICAgICAiZXdvZ0lDSlFjbTltYVd4bFJHVjJhV05sSWpvZ2V
+     3b2dJQ0FnSWxCeWIyWgogIHBiR1ZUYVdkdVlYUjFjbVVpT2lCN0NpQWdJQ0FnSUNK
+     VlpHWWlPaUFpVFVORVdpMUpXa1paTFZCWFZETXRNCiAgelpWVUMwMFREWlJMVFZSV
+     FVvdFdWZFhXU0lzQ2lBZ0lDQWdJQ0pRZFdKc2FXTlFZWEpoYldWMFpYSnpJam8KIC
+     BnZXdvZ0lDQWdJQ0FnSUNKUWRXSnNhV05MWlhsRlEwUklJam9nZXdvZ0lDQWdJQ0F
+     nSUNBZ0ltTnlkaUk2SQogIENKRlpEUTBPQ0lzQ2lBZ0lDQWdJQ0FnSUNBaVVIVmli
+     R2xqSWpvZ0lqZFBZMnRyUWtSMVVYWXRZVUkzVkVrCiAgMWRXVXRWM0YwUmxSMFJTM
+     HRhR3h6VkdoWmRrZDJMVmxvT1MxNU1WWlBVbDl4VVdZS0lDQnlSa3A1TVhwdlEKIC
+     AyUktUVkpVV1hsTlQwdExUVGxPVlVFaWZYMTlMQW9nSUNBZ0lrSmhjMlZGYm1OeWV
+     YQjBhVzl1SWpvZ2V3bwogIGdJQ0FnSUNBaVZXUm1Jam9nSWsxRVQxTXRXVU5IVHkx
+     SVRqVlpMVXRZVEZvdE5rWldUUzFKU1RKRExVazBSCiAga1lpTEFvZ0lDQWdJQ0FpV
+     UhWaWJHbGpVR0Z5WVcxbGRHVnljeUk2SUhzS0lDQWdJQ0FnSUNBaVVIVmliR2wKIC
+     BqUzJWNVJVTkVTQ0k2SUhzS0lDQWdJQ0FnSUNBZ0lDSmpjbllpT2lBaVdEUTBPQ0l
+     zQ2lBZ0lDQWdJQ0FnSQogIENBaVVIVmliR2xqSWpvZ0lscFZVM3BmTlc5c2FuWnJj
+     amhzVlZsd2FWUnNkbkpGUnpJNFFuQm9TRVU1Y0U5CiAgT2FqSXdPWG96U0hoRWRVN
+     XBUamswU25nS0lDQjJMVWhTVGt3MFFXbDFWRXRVWW1abFJ6TkZTWE0wVFVFaWYKIC
+     BYMTlMQW9nSUNBZ0lrSmhjMlZCZFhSb1pXNTBhV05oZEdsdmJpSTZJSHNLSUNBZ0l
+     DQWdJbFZrWmlJNklDSgogIE5RMDVSTFRkRk1rOHRWVWhWUkMxS1JWRTNMVE5VUTBz
+     dFIwRlZSeTAyVEZkS0lpd0tJQ0FnSUNBZ0lsQjFZCiAgbXhwWTFCaGNtRnRaWFJsY
+     25NaU9pQjdDaUFnSUNBZ0lDQWdJbEIxWW14cFkwdGxlVVZEUkVnaU9pQjdDaUEKIC
+     BnSUNBZ0lDQWdJQ0FpWTNKMklqb2dJbGcwTkRnaUxBb2dJQ0FnSUNBZ0lDQWdJbEI
+     xWW14cFl5STZJQ0puUwogIDBOQlJtOW1OMkp5TnpSbWFHTnRiWGRmZUVZeGVVZEZW
+     V3B0UkVKTVJXdHBkWFJGWjI5WGNrcENjamRmZWt4CiAgQ1MyMDJDaUFnUlZKWVJtW
+     mliR1JHU1RWUllqRmhSMVZUVGxWd2NIRkJJbjE5ZlN3S0lDQWdJQ0pDWVhObFUKIC
+     AybG5ibUYwZFhKbElqb2dld29nSUNBZ0lDQWlWV1JtSWpvZ0lrMUVRMDh0VGtzMFV
+     pMU1Va3BhTFVKQldVdwogIHRSa1pDU2kxSFZFMVpMVE5TVERRaUxBb2dJQ0FnSUNB
+     aVVIVmliR2xqVUdGeVlXMWxkR1Z5Y3lJNklIc0tJCiAgQ0FnSUNBZ0lDQWlVSFZpY
+     kdsalMyVjVSVU5FU0NJNklIc0tJQ0FnSUNBZ0lDQWdJQ0pqY25ZaU9pQWlSV1EKIC
+     AwTkRnaUxBb2dJQ0FnSUNBZ0lDQWdJbEIxWW14cFl5STZJQ0p4T0dkWmJFUTFibmM
+     0UTFoMmFsaGtNR2gxWQogIDFWMlNsRTBWbEZWT0MxNlIwZE9iRTVSVEVkQlYyMUNW
+     MVpFZFRoa1MxbDBDaUFnYjBwTlRYZEhTMnh5YVdVCiAgNE1YaFdZakY0U1VadFowZ
+     EJJbjE5ZlgxOSIsCiAgICAgIHsKICAgICAgICAic2lnbmF0dXJlcyI6IFt7CiAgIC
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 23]
+
+                        Mesh Protocol Reference             January 2021
+     AgICAgICAgICJhbGciOiAiUzUxMiIsCiAgICAgICAgICAgICJraWQiOiAiTUNEWi1
+     JWkZZLVBXVDMtMzZVUC00TDZRLTVRTUotWVdXWSIsCiAgICAgICAgICAgICJzaWdu
+     YXR1cmUiOiAiWVJoWGtMYnV0RVFKZjFRVElsNV9hQ21mV0hCTDdHQmZWTGRuM2ZSZ
+     244WnY4VHBWbQogIGFucWtGUmJhSXZmSXdDNzZjeHp4V2EzakFzQVptRmpiSGRzYl
+     JwZzFZSlY4aGFkVTFWOEdKLXp0UGhLdmN0CiAgSlNmU3pHRUhySWtjSEtiNnpub25
+     Lb3RfRXBpRDdhTmd0eVh2RVN3TUEifV0sCiAgICAgICAgIlBheWxvYWREaWdlc3Qi
+     OiAiVUEwenhaMDZ5WTBXS1c4cFhmYllRd0oyRjd6OHY3OVNlb0FHRUJqNE42dURBC
+     iAgUkExblBGM1Z4RXdSM2dLVWc5U0U5NmVyeHQ1a25pYk9mZGFjYTduVlEifV0sCi
+     AgICAiQ2xpZW50Tm9uY2UiOiAiOUVFeFZRNmtlMXFHUUZxZnI3QzcxQSIsCiAgICA
+     iQWNjb3VudEFkZHJlc3MiOiAiYWxpY2VAZXhhbXBsZS5jb20ifX0"
+         ]}}
+
+   The response payload:
+
+   {
+     "ConnectResponse":{
+       "Status":201,
+       "StatusDescription":"Operation completed successfully",
+       "EnvelopedAcknowledgeConnection":[{
+           "EnvelopeId":"MATU-PAPK-JHQ5-BBES-PFX7-UCRN-OLWQ",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJXR0FaLUJYMkEtN0
+     c3Mi1KNVUzLVNHR1QtVUIzVy1UVjRMIiwKICAiTWVzc2FnZVR5cGUiOiAiQWNrbm9
+     3bGVkZ2VDb25uZWN0aW9uIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmpl
+     Y3QiLAogICJDcmVhdGVkIjogIjIwMjEtMDEtMTNUMTY6Mzg6MjBaIn0",
+           "SequenceInfo":{
+             "Index":1,
+             "TreePosition":0},
+           "Received":"2021-01-13T16:38:20Z"},
+         "ewogICJBY2tub3dsZWRnZUNvbm5lY3Rpb24iOiB7CiAgICAiTWVzc2FnZU
+     lkIjogIldHQVotQlgyQS03RzcyLUo1VTMtU0dHVC1VQjNXLVRWNEwiLAogICAgIkV
+     udmVsb3BlZFJlcXVlc3RDb25uZWN0aW9uIjogW3sKICAgICAgICAiRW52ZWxvcGVJ
+     ZCI6ICJNRDNOLUlOS1EtTUxKTS1XWUUyLTY0MlAtMlZNNC1WNFRMIiwKICAgICAgI
+     CAiQ29udGVudE1ldGFEYXRhIjogImV3b2dJQ0pWYm1seGRXVkpaQ0k2SUNKT1JESk
+     VMVEpDTWtZdE1rVkRVeTEKICBOV0RSS0xVSk1Oa3N0V1VSV1V5MDNUMEpCSWl3S0l
+     DQWlUV1Z6YzJGblpWUjVjR1VpT2lBaVVtVnhkV1Z6ZAogIEVOdmJtNWxZM1JwYjI0
+     aUxBb2dJQ0pqZEhraU9pQWlZWEJ3YkdsallYUnBiMjR2YlcxdEwyOWlhbVZqZENJC
+     iAgc0NpQWdJa055WldGMFpXUWlPaUFpTWpBeU1TMHdNUzB4TTFReE5qb3pPRG95TU
+     ZvaWZRIn0sCiAgICAgICJld29nSUNKU1pYRjFaWE4wUTI5dWJtVmpkR2x2YmlJNkl
+     Ic0tJQ0FnSUNKCiAgTlpYTnpZV2RsU1dRaU9pQWlUa1F5UkMweVFqSkdMVEpGUTFN
+     dFRWZzBTaTFDVERaTExWbEVWbE10TjA5Q1EKICBTSXNDaUFnSUNBaVFYVjBhR1Z1Z
+     EdsallYUmxaRVJoZEdFaU9pQmJld29nSUNBZ0lDQWdJQ0pGYm5abGJHOQogIHdaVW
+     xrSWpvZ0lrMURSRm90U1ZwR1dTMVFWMVF6TFRNMlZWQXRORXcyVVMwMVVVMUtMVmx
+     YVjFraUxBb2dJCiAgQ0FnSUNBZ0lDSmthV2NpT2lBaVV6VXhNaUlzQ2lBZ0lDQWdJ
+     Q0FnSWtOdmJuUmxiblJOWlhSaFJHRjBZU0kKICA2SUNKbGQyOW5TVU5LVm1KdGJIa
+     GtWMVpLV2tOSk5rbERTazVSTUZKaFRGVnNZVkpzYTNSVlJtUlZUWGt3QwogIGlBZ2
+     VrNXNWbEZNVkZKTlRteEZkRTVXUms1VGFURmFWakZrV2tscGQwdEpRMEZwVkZkV2V
+     tTXlSbTVhVmxJCiAgMVkwZFZhVTlwUVdsVlNFcDJXbTFzYzFvS0lDQlZVbXhrYld4
+     cVdsTkpjME5wUVdkSmJVNHdaVk5KTmtsRFMKICBtaGpTRUp6WVZkT2FHUkhiSFppY
+     VRsMFlsY3dkbUl5U25GYVYwNHdTV2wzUzBsRFFRb2dJR2xSTTBwc1dWaAogIFNiRn
+     BEU1RaSlEwbDVUVVJKZUV4VVFYaE1WRVY2VmtSRk1rOXFUVFJQYWtsM1YybEtPU0o
+     5TEFvZ0lDQWdJCiAgQ0FpWlhkdlowbERTbEZqYlRsdFlWZDRiRkpIVmpKaFYwNXNT
+     V3B2WjJWM2IyZEpRMEZuU1d4Q2VXSXlXZ28KICBnSUhCaVIxWlVZVmRrZFZsWVVqR
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 24]
+
+                        Mesh Protocol Reference             January 2021
+
+     mpiVlZwVDJsQ04wTnBRV2RKUTBGblNVTktWbHBIV1dsUGFVRnBWRlZPUgogIFZkcE
+     1VcFhhMXBhVEZaQ1dGWkVUWFJOQ2lBZ2VscFdWVU13TUZSRVdsSk1WRlpTVkZWdmR
+     GZFdaRmhYVTBsCiAgelEybEJaMGxEUVdkSlEwcFJaRmRLYzJGWFRsRlpXRXBvWWxk
+     V01GcFlTbnBKYW04S0lDQm5aWGR2WjBsRFEKICBXZEpRMEZuU1VOS1VXUlhTbk5oV
+     jA1TVdsaHNSbEV3VWtsSmFtOW5aWGR2WjBsRFFXZEpRMEZuU1VOQlowbAogIHRUbm
+     xrYVVrMlNRb2dJRU5LUmxwRVVUQlBRMGx6UTJsQlowbERRV2RKUTBGblNVTkJhVlZ
+     JVm1saVIyeHFTCiAgV3B2WjBscVpGQlpNblJ5VVd0U01WVllXWFJaVlVrelZrVnJD
+     aUFnTVdSWFZYUldNMFl3VW14U01GSlRNSFIKICBoUjNoNlZrZG9XbVJyWkRKTVZte
+     HZUMU14TlUxV1dsQlZiRGw0VlZkWlMwbERRbmxTYTNBMVRWaHdkbEVLSQogIENBeV
+     VrdFVWa3BWVjFoc1RsUXdkRXhVVkd4UFZsVkZhV1pZTVRsTVFXOW5TVU5CWjBsclN
+     taGpNbFpHWW0xCiAgT2VXVllRakJoVnpsMVNXcHZaMlYzYndvZ0lHZEpRMEZuU1VO
+     QmFWWlhVbTFKYW05blNXc3hSVlF4VFhSWFYKICBVNUlWSGt4U1ZScVZscE1WWFJaV
+     kVadmRFNXJXbGRVVXpGS1UxUktSRXhWYXpCU0NpQWdhMWxwVEVGdlowbAogIERRV2
+     RKUTBGcFZVaFdhV0pIYkdwVlIwWjVXVmN4YkdSSFZubGplVWsyU1VoelMwbERRV2R
+     KUTBGblNVTkJhCiAgVlZJVm1saVIyd0tJQ0JxVXpKV05WSlZUa1ZUUTBrMlNVaHpT
+     MGxEUVdkSlEwRm5TVU5CWjBsRFNtcGpibGwKICBwVDJsQmFWZEVVVEJQUTBselEyb
+     EJaMGxEUVdkSlEwRm5TUW9nSUVOQmFWVklWbWxpUjJ4cVNXcHZaMGxzYwogIEZaVk
+     0zQm1UbGM1YzJGdVduSmphbWh6Vmxac2QyRldVbk5rYmtwR1VucEpORkZ1UW05VFJ
+     WVTFZMFU1Q2lBCiAgZ1QyRnFTWGRQV0c5NlUwaG9SV1JWTlhCVWFtc3dVMjVuUzBs
+     RFFqSk1WV2hUVkd0M01GRlhiREZXUlhSVlcKICBXMWFiRko2VGtaVFdFMHdWRlZGY
+     VdZS0lDQllNVGxNUVc5blNVTkJaMGxyU21oak1sWkNaRmhTYjFwWE5UQgogIGhWMD
+     VvWkVkc2RtSnBTVFpKU0hOTFNVTkJaMGxEUVdkSmJGWnJXbWxKTmtsRFNnb2dJRTV
+     STURWU1RGUmtSCiAgazFyT0hSV1ZXaFdVa014UzFKV1JUTk1WRTVWVVRCemRGSXdS
+     bFpTZVRBeVZFWmtTMGxwZDB0SlEwRm5TVU4KICBCWjBsc1FqRlpDaUFnYlhod1dUR
+     kNhR050Um5SYVdGSnNZMjVOYVU5cFFqZERhVUZuU1VOQlowbERRV2RKYgogIEVJeF
+     dXMTRjRmt3ZEd4bFZWWkVVa1ZuYVU5cFFqZERhVUVLSUNCblNVTkJaMGxEUVdkSlE
+     wRnBXVE5LTWtsCiAgcWIyZEpiR2N3VGtSbmFVeEJiMmRKUTBGblNVTkJaMGxEUVdk
+     SmJFSXhXVzE0Y0ZsNVNUWkpRMHB1VXdvZ0kKICBEQk9RbEp0T1cxT01rcDVUbnBTY
+     ldGSFRuUmlXR1JtWlVWWmVHVlZaRVpXVjNCMFVrVktUVkpYZEhCa1dGSgogIEdXak
+     k1V0dOcmNFTmphbVJtWld0NENpQWdRMU15TURKRGFVRm5VbFpLV1ZKdFdtbGlSMUp
+     IVTFSV1VsbHFSCiAgbWhTTVZaVVZHeFdkMk5JUmtKSmJqRTVabE4zUzBsRFFXZEpR
+     MHBEV1ZoT2JGVUtJQ0F5Ykc1aWJVWXdaRmgKICBLYkVscWIyZGxkMjluU1VOQlowb
+     ERRV2xXVjFKdFNXcHZaMGxyTVVWUk1EaDBWR3R6TUZWcE1VMVZhM0JoVAogIEZWS1
+     FsZFZkd29nSUhSU2ExcERVMmt4U0ZaRk1WcE1WRTVUVkVSUmFVeEJiMmRKUTBGblN
+     VTkJhVlZJVm1sCiAgaVIyeHFWVWRHZVZsWE1XeGtSMVo1WTNsSk5rbEljMHRKQ2lB
+     Z1EwRm5TVU5CWjBsRFFXbFZTRlpwWWtkc2EKICBsTXlWalZTVlU1RlUwTkpOa2xJY
+     zB0SlEwRm5TVU5CWjBsRFFXZEpRMHBxWTI1WmFVOXBRV2xTVjFFS0lDQQogIHdUa1
+     JuYVV4QmIyZEpRMEZuU1VOQlowbERRV2RKYkVJeFdXMTRjRmw1U1RaSlEwcDRUMGR
+     rV21KRlVURmliCiAgbU0wVVRGb01tRnNhR3ROUjJneFdRb2dJREZXTWxOc1JUQldi
+     RVpXVDBNeE5sSXdaRTlpUlRWU1ZFVmtRbFkKICB5TVVOV01WcEZaRlJvYTFNeGJEQ
+     kRhVUZuWWpCd1RsUllaRWhUTW5oNVlWZFZDaUFnTkUxWWFGZFpha1kwVQogIDFWYW
+     RGb3daRUpKYmpFNVpsZ3hPU0lzQ2lBZ0lDQWdJSHNLSUNBZ0lDQWdJQ0FpYzJsbmJ
+     tRjBkWEpsY3lJCiAgNklGdDdDaUFnSUNBZ0lDQWdJQ0FnSUNKaGJHY2lPaUFpVXpV
+     eE1pSXNDaUFnSUNBZ0lDQWdJQ0FnSUNKcmEKICBXUWlPaUFpVFVORVdpMUpXa1paT
+     FZCWFZETXRNelpWVUMwMFREWlJMVFZSVFVvdFdWZFhXU0lzQ2lBZ0lDQQogIGdJQ0
+     FnSUNBZ0lDSnphV2R1WVhSMWNtVWlPaUFpV1ZKb1dHdE1ZblYwUlZGS1pqRlJWRWx
+     zTlY5aFEyMW1WCiAgMGhDVERkSFFtWldUR1J1TTJaU1oyNDRXblk0VkhCV2JRb2dJ
+     R0Z1Y1d0R1VtSmhTWFptU1hkRE56WmplSHAKICA0VjJFemFrRnpRVnB0Um1waVNHU
+     npZbEp3WnpGWlNsWTRhR0ZrVlRGV09FZEtMWHAwVUdoTGRtTjBDaUFnUwogIGxObV
+     UzcEhSVWh5U1d0alNFdGlObnB1YjI1TGIzUmZSWEJwUkRkaFRtZDBlVmgyUlZOM1R
+     VRWlmVjBzQ2lBCiAgZ0lDQWdJQ0FnSWxCaGVXeHZZV1JFYVdkbGMzUWlPaUFpVlVF
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 25]
+
+                        Mesh Protocol Reference             January 2021
+
+     d2VuaGFNRFo1V1RCWFMxYzRjRmhtWWxsUmQKICAwb3lSamQ2T0hZM09WTmxiMEZIU
+     lVKcU5FNDJkVVJCQ2lBZ1VrRXhibEJHTTFaNFJYZFNNMmRMVldjNVUwVQogIDVObV
+     Z5ZUhRMWEyNXBZazltWkdGallUZHVWbEVpZlYwc0NpQWdJQ0FpUTJ4cFpXNTBUbTl
+     1WTJVaU9pQWlPCiAgVVZGZUZaUk5tdGxNWEZIVVVaeFpuSTNRemN4UVNJc0NpQWdJ
+     Q0FpUVdOamIzVnVkRUZrWkhKbGMzTWlPaUEKICBpWVd4cFkyVkFaWGhoYlhCc1pTN
+     WpiMjBpZlgwIl0sCiAgICAiU2VydmVyTm9uY2UiOiAiYXRMTFRfWFRDYlVQdm5iR2
+     lGTkI1USIsCiAgICAiV2l0bmVzcyI6ICJXR0FaLUJYMkEtN0c3Mi1KNVUzLVNHR1Q
+     tVUIzVy1UVjRMIn19",
+         {}
+         ],
+       "EnvelopedProfileAccount":[{
+           "EnvelopeId":"MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH",
+           "dig":"S512",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQU1VLTVRWFAtVF
+     dDRC03UEtJLVM0RkMtSUI3Ni1YQVNIIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+     sZVVzZXIiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIkNy
+     ZWF0ZWQiOiAiMjAyMS0wMS0xM1QxNjozODoxOVoifQ"},
+         "ewogICJQcm9maWxlVXNlciI6IHsKICAgICJQcm9maWxlU2lnbmF0dXJlIj
+     ogewogICAgICAiVWRmIjogIk1BTVUtNVFYUC1UV0NELTdQS0ktUzRGQy1JQjc2LVh
+     BU0giLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+     S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+     lB1YmxpYyI6ICJjM2w5NmhGTlZiWHpRYTdkb2hncF9YOVlJSXphUjRVMGRQQ2Z5b2
+     NxdUZXblp1aUZkdTl2CiAgbDlVSWd0WXYtdGpGVnBtazZxUkRqN21BIn19fSwKICA
+     gICJBY2NvdW50QWRkcmVzcyI6ICJhbGljZUBleGFtcGxlLmNvbSIsCiAgICAiU2Vy
+     dmljZVVkZiI6ICJNQTM2LVRVSkwtUVJaSi0zTTNMLVNSQlEtQlJZUS1XMllNIiwKI
+     CAgICJBY2NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNRExPLUpKNE
+     ItUkJZNS1WWUQ3LUxKWlktUzNSSy1EQk0yIiwKICAgICAgIlB1YmxpY1BhcmFtZXR
+     lcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2
+     IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICI0TWk5WDhtWEk5bUdoXzdza
+     kdaUDBhRlBSWEpOU0ZleFBCbklBSzFCTl9fU1hSeHRXUVRzCiAgWHNnejFmbDVKYz
+     M4Wll4N01WZTJYOXdBIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIjo
+     gewogICAgICAiVWRmIjogIk1DQ0stRjJXWi1RQUFDLUMzTkEtRVZBVy1TQkw3LUlI
+     RVEiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS
+     2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIl
+     B1YmxpYyI6ICI4VFNaN0ROVE03RnVnSnFBRmZ0NEZKRDRXZGpBOW9tSFVEYTd0bnR
+     uSkJrUTRrTldfdHlTCiAgNlFNR01ZbHk0d0hSMVdGblVadkk1UW1BIn19fSwKICAg
+     ICJBY2NvdW50QXV0aGVudGljYXRpb24iOiB7CiAgICAgICJVZGYiOiAiTUJCMy03M
+     jNLLURKS1EtRzRISC03UFROLTVKWEstWlY2QSIsCiAgICAgICJQdWJsaWNQYXJhbW
+     V0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImN
+     ydiI6ICJYNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAibDY3NF9uOWloZzkxcmpn
+     UGlzYjNYdUE3OEVfOGhXenNIdFlmb0ZRdkdCMmtaM08xeFNCRgogIEUycHBGamhTN
+     GhzbEE0NXl6N1dwQnpnQSJ9fX0sCiAgICAiQWNjb3VudFNpZ25hdHVyZSI6IHsKIC
+     AgICAgIlVkZiI6ICJNREE2LUVMRTItVDJBTS01MlJULUFOM1ItTFVEUy1HSkdYIiw
+     KICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVD
+     REgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQdWJsa
+     WMiOiAiQUhTdFc4S0dwYnJvWnQ1ZXotd3ZiQ19GTXI5QWpxSThnTGlnQzVwM3doSG
+     NFUTRqUDlkVwogIDF4RHdaMzRqNzdxWE5JZkZFdk9FV0pNQSJ9fX19fQ",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH",
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 26]
+
+                        Mesh Protocol Reference             January 2021
+
+               "signature":"_9tIDk5KvjeIuasHaXDawBB1VTw2YIzxBUxpLn78
+     a0qfO9CjuWh7auyUMHrCGvpuQRjjQrDR_OeATnhDzrIG5xcQbFwvfge_rfqvUjqQc
+     -CZqvT8lLDQ2clW6THP1Z0GcIZmxNEpYVkyyR-9AACDQAcA"}
+             ],
+           "PayloadDigest":"fb_iksIe0dM4IWIWZjmKlYQSF-XttjIAg8Bww4tJ
+     jpOE0P9bxX42pkNorLfHQ8XyD8x9IHT-FKh-_lhLJNAUzA"}
+         ]}}
+
+   Service-Service (Post Transaction)
+
+   The Mesh Service receiving the message from the user's device MAY
+   attempt immediate retransmission or queue it to be sent at a future
+   time. Mesh Services SHOULD forward messages without undue delay.
+
+   The Post transaction forwarding the message to the destination
+   service carries the same payload as the original request but is
+   authenticated by the service forwarding it. This authentication MAY
+   be my means of either profile or ticket authentication.
+
+   Missing example 18
+
+   Denial of Service Mitigation
+
+   Services SHOULD implement Denial of Service mitigation strategies
+   including limiting the maximum time taken to complete a transaction
+   and refusing connections from clients that engage in patterns of
+   behavior consistent with abuse.
+
+   The limitation in message size allows Mesh Services to aggressively
+   time out connections that take too long to complete a transaction. A
+   Mesh Service that hosted on a 10Mb/s link should be able to transfer
+   20 messages a second. If the service is taking more than 5 seconds to
+   complete a transaction, either the source or the destination service
+   is overloaded or the message itself is an attack.
+
+   Imposing hard constraints on Mesh Service performance requires
+   deployments to scale and apply resources appropriately. If a service
+   is attempting to transfer 100 messages simultaneously and 40% are
+   taking 4 seconds or more, this indicates that the number of
+   simultaneous transfers being attempted should be reduced. Contrawise,
+   if 90% are completinin less than a second, the number of threads
+   allocated to sending outbound messages might be increased.
+
+   Access Control
+
+   The inbound service MUST subject inbound messages to Access Control
+   according to the credentials presented in the DARE Message payload.
+
+   After verifying the signature and checking that the key is properly
+   accredited in accordance with site policy, the service applies
+   authorization controls taking account of:
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 27]
+
+                        Mesh Protocol Reference             January 2021
+
+
+         *  The accreditation of the sender
+
+         *  The accreditation of the transmitting Service
+
+         *  The type of Mesh Message being sent
+
+         *  User policy as specified in their Contact Catalog
+
+         *  Site policy.
+
+   Service-Client (Synchronization)
+
+   The final recipient receives the message by synchronizing their
+   device. The message received will be appended to the inbound spool.
+
+6.5. Publication
+
+   The Publication mechanism allows content to be published through a
+   Mesh Account and retrieved by means of the EARL mechanism described
+   in Uniform Data Fingerprint . This mechanism is used in certain flows
+   supported by the Mesh Device Connection and Contact Exchange
+   functions.
+
+   Content is published by appending an entry to an account's
+   Publication spool. The content may then be retrieved by issuing a
+   claim to the account specifying the publication identifier that is
+   authenticated under the value specified in the EARL.
+
+   Use of the Publication spool to post content necessarily requires
+   that the content be smaller than the maximum message size imposed by
+   the Mesh Service so that it can be uploaded to the service by means
+   of a Transact transaction.
+
+   Publication of large data items will require modification of the
+   protocol to support use of a detached message body. Transfer of a
+   detached message body is outside the scope of this document.
+
+6.5.1. Claim Transaction
+
+   The claim transaction is used to post a claim to a document published
+   by means of an EARL. The claim interaction is used in the Static QR
+   Code connection interaction but MAY be used for other purposes as
+   required by Mesh applications.
+
+   A claim is made by sending a ClaimRequest message to the service to
+   which the publication is posted. The service responds with a
+   ClaimRespose message specifying the success or failure of the claim.
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 28]
+
+                        Mesh Protocol Reference             January 2021
+
+   A device is preconfigured during manufacture and a Device Description
+   published to the EARL:
+
+   The client claiming the publication creates a claim message
+   specifying the  resource being claimed and the address of the Mesh
+   account making the claim.
+
+   {
+     "MessageClaim":{
+       "MessageId":"NAB5-YJPI-PTQM-LDCJ-73YB-YRMJ-EJTZ",
+       "Sender":"maker@example.com",
+       "Recipient":"maker@example.com",
+       "PublicationId":"EBQA-UU6A-52ZG-L2KJ-2NZY-GZOP-KQ6B",
+       "ServiceAuthenticate":"ABDM-BH6K-2J3F-S5PU-G3OA-6UDM-S5CW",
+       "DeviceAuthenticate":"ABOA-4PKL-7A5C-EW3R-7NNS-EOS4-XX5C"}}
+
+   The message is signed by the claimant to make a RequestClaim to the
+   service:
+
+   {
+     "ClaimRequest":{
+       "EnvelopedMessageClaim":[{
+           "EnvelopeId":"MAT7-SJFB-SVYG-7UK6-ZAEP-PS27-E7LE",
+           "dig":"S512",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQUI1LVlKUEktUF
+     RRTS1MRENKLTczWUItWVJNSi1FSlRaIiwKICAiTWVzc2FnZVR5cGUiOiAiTWVzc2F
+     nZUNsYWltIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJD
+     cmVhdGVkIjogIjIwMjEtMDEtMTNUMTY6Mzg6NDVaIn0"},
+         "ewogICJNZXNzYWdlQ2xhaW0iOiB7CiAgICAiTWVzc2FnZUlkIjogIk5BQj
+     UtWUpQSS1QVFFNLUxEQ0otNzNZQi1ZUk1KLUVKVFoiLAogICAgIlNlbmRlciI6ICJ
+     tYWtlckBleGFtcGxlLmNvbSIsCiAgICAiUmVjaXBpZW50IjogIm1ha2VyQGV4YW1w
+     bGUuY29tIiwKICAgICJQdWJsaWNhdGlvbklkIjogIkVCUUEtVVU2QS01MlpHLUwyS
+     0otMk5aWS1HWk9QLUtRNkIiLAogICAgIlNlcnZpY2VBdXRoZW50aWNhdGUiOiAiQU
+     JETS1CSDZLLTJKM0YtUzVQVS1HM09BLTZVRE0tUzVDVyIsCiAgICAiRGV2aWNlQXV
+     0aGVudGljYXRlIjogIkFCT0EtNFBLTC03QTVDLUVXM1ItN05OUy1FT1M0LVhYNUMi
+     fX0",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MCVM-VUHL-UTSB-SV5M-VRD5-P5XF-QAEV",
+               "signature":"kN-cd4dUkTGT6gjm3MVnuRPCHWYtGmqi2IbhaBmb
+     agc3D6hmJgNTbGApAuVofNkPqc_jBhSpU-WA5NoDvH-e8dn0lUsMLxLUyFvs8VSns
+     PwFvdpMzymp4woMdNQV-7QofoqU7DBAMljBJrLSiG8mdR4A"}
+             ],
+           "PayloadDigest":"pmdjNV2iacjFv2I_5rPfwbCHRV2G2xAaVvW1hb84
+     J1-oN4WiTf8GkSuEwM0hk__qH7qk19nroBGJYEszOe-CsQ"}
+         ]}}
+
+   The publication is found and the claim is accepted, the publication
+   is returned in the response.
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 29]
+
+                        Mesh Protocol Reference             January 2021
+
+   {
+     "ClaimResponse":{
+       "Status":201,
+       "StatusDescription":"Operation completed successfully",
+       "CatalogedPublication":{
+         "Id":"EBQA-UU6A-52ZG-L2KJ-2NZY-GZOP-KQ6B",
+         "Authenticator":"EBGU-ETMA-3DE7-CAHG-BVVE-QARV-4LVT-LKKT-IXR4
+   -FTJQ-JLWD-4RWV-TFFH-E",
+         "EnvelopedData":[{
+             "enc":"A256CBC",
+             "kid":"EBQL-HMNU-PPID-5DNC-OA36-4Q4R-O5RJ",
+             "Salt":"YsZp_N4nuWOAv_NwsHZqqQ",
+             "recipients":[{
+                 "kid":"EBQA-UU6A-52ZG-L2KJ-2NZY-GZOP-KQ6B",
+                 "wmk":"IZxxQwSP394qBo43PA2UuajT-fsFs-FDes1A9A0xxUw9
+     q_o44vw9Ig"}
+               ]},
+           "c-BCcKJKlzHeVj23CuFDw7XNNl28Vp6G8u0nU7786yumJMW9qNddCtT1
+     l2Ui6YxFqrczuEl56Mfr9dsRj66uOR4rznOhsa9YOCj_9qkQmFQaVqbEqDLAGIc5y
+     WBD-VhUpPu1m0t4fpqIdB5eZOd8jnuvjAFIaGqgtH5C8Dh55fCuKbwS3t3F0G6UgE
+     H8IDqg4Qh4jFA5UhmP7HfsQGHld0TroLmL_5raTmsLfLZ1ziULc-7Y7TLOMRL42a7
+     xvzlSmDGV0QQyvnHCOe_gH6hOXjezuOeaI79FerzeZgeKHv3O9IO8D4apW4eg-65B
+     zn0-enj5XKjXmbtQ4jMlAD_iauowS6dwARK2ULV3YsXUGTSn_fWZFj8jMWXeMC0P8
+     5mZWzdBKHcY9V0cJvG-hqdsHt2yOeqUOeHlNZtKX1rjc5a1d_CopL9yi5JgZ-YJbK
+     XjahTUEWb88YGLkKvdk1j-SoM8DIxJ1Q6w3FfrPZdi8FqSkGWfunIktPIr7i_yXsb
+     syzXFe0ONHLdoSxV18-UMbMsUMphajm91MRFYK_JQK37My6RaOVQkh8TA1CeYmLM6
+     Ur_i0eH2Q8-DEpvUhyr3Sv7OPZdB3LbrKCfqNS0m_kquJtC0BXcP5ye62vFf9iJGh
+     icC04xRJngfg_0eWMK96wWFelUjMF_C238rs3TuL3dtK2m76rLfLtK76wrN8CwegJ
+     OSfOkUVwzTwzjsJR77OPbeHJrCsAO0XCKN_uZE81cJC1ivagAvyiuUpx6jBW-agwL
+     xGKGdsmYKA6kbpZLzAHIKD4x4fEI_EDF-bM-_0JNkTsiZ9XSkdOh8Vrid8_hU6BkP
+     meeHWWdpTpH7kv-FUFrAle9MiXyR6ebqhtQWhnV9VXsV4EmC625owxyvt9nt5eRQa
+     9rpc_wb5HkqGrhXxHCns61aWBZA5JmtHW3VsyEXOUAYFJjha_PKuitqzRIG2-yzxQ
+     1NBmFlxK8Q57tLaJGQYbEPO5CgbutTZMmN8oJtm_82TZJJAsECX7gGVq-cUjeNkyO
+     Zx3RF4PQwC76YJQF4TUdVTw5VoGE7YU61ZY7Kj-cpWoxnny3-U-NTti4jMOgYU8XD
+     jk95bQhXelttxSqAt43NFs1zsQKJ348offS-5g52wPqs0wSroqruP77MyqyFx0Flq
+     hPHdNKQmTujiKfDisqwym3QRDwJYctcSM4ifHzVIGkXICkj-DeST9c-f5wDKWrb2m
+     sSJElw8xDJctv_0tSfKgPb7nwhxzy7Ettjg0601CETKLpyrBQg3uH62sfDPleA5Uw
+     lpD2PF-GN3B10vJgM34tazM4U9CyNGhkoSxt_BxofedfgzLJTbWOzXGZPJLp6NRim
+     hAr4_pjmaeqTwJQjVY-2q2jsz2aY_5X65r4XS-A0I-paUhebXrj3sEiVaSa67KGNJ
+     rLoLLwr3EqfY90Pyus1ylh3kd13nEMeRMlPsxqwrjyuHiVKzVwfAEq-0eOHaT9VlV
+     XyfnLoCj60L0tNhYng154gq4Bj-8nuR2SZVPoRxVxOnM3yEgMlgNe6HLsUVAwen1S
+     NLh0EK8axBv9NfTEALVRxWAklOoDFz64SWgimIzgJJP4O2iFt6Or_7ksZ1li7AjhC
+     t-GmjVYELwNP0UVEErHXAIZCt88TwV1OSSFVhsV0rfA1eqbjNFqz1sLJjrF-osUKI
+     xGicbebO-yhj5TCXtzWKbbp4Fmfwrg0cdRS7m3qQlJB5_m2bR6P6qEYekuNxSxcCO
+     DWEn-9WfL0-hNnI03m0FvEYFSMN6MpBWyiTPsnDepbbZfD3yJMUUzs3IIIaQwI3Wf
+     OUEicFB_Mc16KRE1IndUSoQjtDUGNJ37UhBvEfzYmUzWHFKHnUVvvMFjVtD1kh_F8
+     psgrYwg6pu1KS6cXttLzYNpu1i3_4uzsbksZLF-S5M-wx4xy9858YazjJ-bRUDg4a
+     TQ_CHKtYV3m4trO6lgCAa4aVt32kzPBve9pt-YxxMT7gsGEszmRphZ1kq4miaMnr-
+     8zjQn7CKq853v6K1HzCsJA8avjUDWb5mfqvI1u9hxrdZ866guMAtMgqnI_jU78VqE
+     _a3r17C8KfH8mH8fylW5VMKqCslCRJOzCLgv8_5YdcUDcn1I7ytMdagFXN-gc5a0E
+     RBSpr9sxcwdGX5p9b40COCi1oEza0sfUoNHYPM8WHyQHJFPjcLsOH60S1ydjtZKta
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 30]
+
+                        Mesh Protocol Reference             January 2021
+
+     nAFtBPs_PLnmOaPylqAGMn-rTV14yy68A9tdBgKqZMCZzDaHHYzYdNS25EaYFT-G7
+     5KiiF0ARAGMIwAVM5WcEfMbFq-SZXsxKDxMxfXJO0mPiO9xBx2BXwRdAN5Qr1BZHi
+     kIRvs5FT-PFPuE3MyYpWAbhlc6PPBmam0ma-LO4S8jkFPMjpFQ33JT0OIyttrz2I_
+     qhQq27wAGy0ZeILdXbJCMFzr0Ms_kB6ZVYGnteSsrkO4Qu9rQsb3JnV0uKnqwHhOE
+     pTx2Usu6__JdWv8JUizt5tPo13u8ynIOkCxnAPRXDhBHbHD8nTtNYkNB3cpczToQh
+     NmLe8-BN7tqZ3anErBOMR6N39B0sANJyWrom_pWEt52ZYsaqEz75I-GFZFxfsT-M6
+     NDywxXRrcJDXVmpSnGCxAb9IrFR07aQqn5fhOATok3onsTyz2ArsHzHsDFxLi2sNR
+     fRCt1ZUpgE_ryyQu0ex4ItwnAtsJIw8pTnTBkzoDUAmA43VVeAC_pr9QPAy_4BOc8
+     gvdL87fuYbyr_L_VRhTzp3XMMjfAbKjPXdIkNiRKvkbGr9PyOb1riUwd8uLffzvds
+     w9QQiV7GuP3_AwwIOuOijk0ig62EWb7bGA1K-_Zyka5PCDjAMEwkVSbI-Av7-dSu-
+     bu28TgGk8T0f3RNdQR7drp-zCCT7Kbz5CtAUR8SkB7USqUOVng7Ygo5d61Fufx-jz
+     dvZhaTgcbcd69qtxKqXDb9uhGCyKBLP5sDjx-aHX-q7WzFs8UptsD9JWsUM1HJHB3
+     klH8xloE9zNtmTpq9j7GCj4RvmWfsWHkEfDDGxqipiXFixpYoWMp2tu2WxGt1d8OA
+     xUMkY"
+           ]}}}
+
+   The device waiting to be connected uses the PollClaim transaction to
+   receive notification of a claim having been posted.
+
+6.5.2. PollClaim Transaction
+
+   The PollClaim transaction is used to discover if a claim has been
+   posted to a published document.
+
+   When an authenticated, authorized request is made, the service
+   responds with the latest claim posted to the publication.
+
+   The device in the example above periodically polls the service to
+   which the device  description is published to find if a claim has
+   been registered.
+
+   The PollClaimRequest contains the account to which the document is
+   published and the publication ID:
+
+   {
+     "PollClaimRequest":{
+       "PublicationId":"EBQA-UU6A-52ZG-L2KJ-2NZY-GZOP-KQ6B",
+       "TargetAccountAddress":"maker@example.com"}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 31]
+
+                        Mesh Protocol Reference             January 2021
+
+
+   The response returns the latest claim made as signed message:
+
+   {
+     "PollClaimResponse":{
+       "Status":201,
+       "StatusDescription":"Operation completed successfully",
+       "EnvelopedMessage":[{
+           "PayloadDigest":"pmdjNV2iacjFv2I_5rPfwbCHRV2G2xAaVvW1hb84
+     J1-oN4WiTf8GkSuEwM0hk__qH7qk19nroBGJYEszOe-CsQ",
+           "EnvelopeId":"MDRR-M6ZK-YCM4-CIZB-PT7L-K5NX-2MOS",
+           "dig":"S512",
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MCVM-VUHL-UTSB-SV5M-VRD5-P5XF-QAEV",
+               "signature":"kN-cd4dUkTGT6gjm3MVnuRPCHWYtGmqi2IbhaBmb
+     agc3D6hmJgNTbGApAuVofNkPqc_jBhSpU-WA5NoDvH-e8dn0lUsMLxLUyFvs8VSns
+     PwFvdpMzymp4woMdNQV-7QofoqU7DBAMljBJrLSiG8mdR4A"}
+             ],
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQUI1LVlKUEktUF
+     RRTS1MRENKLTczWUItWVJNSi1FSlRaIiwKICAiTWVzc2FnZVR5cGUiOiAiTWVzc2F
+     nZUNsYWltIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJD
+     cmVhdGVkIjogIjIwMjEtMDEtMTNUMTY6Mzg6NDVaIn0",
+           "SequenceInfo":{
+             "Index":1,
+             "TreePosition":0},
+           "Received":"2021-01-13T16:38:45Z"},
+         "ewogICJNZXNzYWdlQ2xhaW0iOiB7CiAgICAiTWVzc2FnZUlkIjogIk5BQj
+     UtWUpQSS1QVFFNLUxEQ0otNzNZQi1ZUk1KLUVKVFoiLAogICAgIlNlbmRlciI6ICJ
+     tYWtlckBleGFtcGxlLmNvbSIsCiAgICAiUmVjaXBpZW50IjogIm1ha2VyQGV4YW1w
+     bGUuY29tIiwKICAgICJQdWJsaWNhdGlvbklkIjogIkVCUUEtVVU2QS01MlpHLUwyS
+     0otMk5aWS1HWk9QLUtRNkIiLAogICAgIlNlcnZpY2VBdXRoZW50aWNhdGUiOiAiQU
+     JETS1CSDZLLTJKM0YtUzVQVS1HM09BLTZVRE0tUzVDVyIsCiAgICAiRGV2aWNlQXV
+     0aGVudGljYXRlIjogIkFCT0EtNFBLTC03QTVDLUVXM1ItN05OUy1FT1M0LVhYNUMi
+     fX0",
+         {}
+         ]}}
+
+6.6. Cryptographic
+
+   The Operate transaction is used to perform one or more cryptographic
+   operations using private key material recorded in the Threshold
+   Catalog. Such operations typically represent one part of a threshold
+   key operation divided between the service and a device connected to
+   an account.
+
+   As with all operations involving the Threshold catalog, the request
+   MUST meet the authentication criteria specified by the catalog entry.
+   These typically include the request being authenticated by a specific
+   key.
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 32]
+
+                        Mesh Protocol Reference             January 2021
+
+6.6.1. Generate Key Shares
+
+   CryptographicOperationShare is used to request that a private key
+   held by the service to be divided into two or more key shares. One
+   key share is then encrypted under the encryption key of the service
+   and the others are encrypted under public keys specified in the
+   request. These parameters are returned in a CryptographicResultShare.
+
+   The request payload:
+
+   {
+     "TransactRequest":{
+       "Accounts":["bob@example.com"
+         ],
+       "Outbound":[[{
+             "EnvelopeId":"MAJX-UL35-3S2N-HIT4-3LND-YNI2-QWFP",
+             "enc":"A256CBC",
+             "kid":"EBQI-LVNF-YZQ5-YNGA-CB36-SPXN-BHSX",
+             "Salt":"mSGcWKixJS60ikGrl1Z8Wg",
+             "recipients":[{
+                 "kid":"MBLV-2ICB-OATF-HHQH-OTA7-E6GC-TH76",
+                 "epk":{
+                   "PublicKeyECDH":{
+                     "crv":"X448",
+                     "Public":"4Jrht04zIboZtGL0oWQiBh6AUyVQiR1PZJZA_
+     yOPOqow6feU73nsjZETIcBkcVLjtMVdlTm7LzmA"}},
+                 "wmk":"rIgRDmiPg73rzanZcO49MbBs2GgS-Ab9gHkkkt-bzoZa
+     a7MFtU347Q"}
+               ],
+             "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQktFLVZSVDct
+     TUVaVC00SU9WLTZLT1ItVDNGTy1aUk1FIiwKICAiTWVzc2FnZVR5cGUiOiAiR3Jvd
+     XBJbnZpdGF0aW9uIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLA
+     ogICJDcmVhdGVkIjogIjIwMjEtMDEtMTNUMTY6Mzg6MjlaIn0"},
+           "NZ7vOnWpbnesaFKr4PNOCacqFqemmIPbZhehX6tlGkP3CpUnMws_LWZZ
+     -2T_tL14_IoTW57466pSHCePABy1unesf0xtFXcw6kXD9Cfj-JxkrsjmrWRAp7LC-
+     CQcPnuhtNmUJ0ygUJSH1gTnr5p7amQSdtT2LHsIZ6pMpgPsm3swc0iTB1wMpYVeue
+     IUChyNfGk_y3BNBo4I4B3nLMLNHIMvrdgFS-dGSfbq1RKRaZLVPxXCOn7ioqigBM8
+     pwP7yzeU9z_NpEqhxlgSmEKK3OC9PAHQDdLMO5xIaEw6dz6WET_pRPzU8IhYEPsN1
+     Un6i4Z9sp1cIto18wyKvrZWojBtE2JKdXgdKuBVW83ppIUV-pOGhYa_6GR6rS4eQ-
+     SEXyX3GaFktVoDTK6rNtljOa8_Q9-3AO3nb1yzbyPtgi0pQOUhk-7lJHKhcN_jY-4
+     ACHVbfUwn5GNseMc-79QvgL8FORkdLdDlTTsijixm2oattZukSAiyLTSwQ1HIMB1g
+     lHXj-Bga_4oQDuoEUoqzXKwUbXIsH9pdvqGK3Pd8X_2j2BLfmlefGZILwigzCzXaN
+     KZmR4Jt2H4mwWtk2t1-2k7Rmh8p26cMe4aBQGqQmWIpDoERcmuI22Sn3tfSJXBQkV
+     s8wnp8Riztj5zPMCGfWxHAI3nUPGVrwJgmyTWaHPlEwUSqHzbie5uM-qytqbR6JZw
+     _FVkIg8RbCfggxoaJ98q7LXDQ63xUYbhLSeM8CrGcCcUPHEanfkxsDwBFX0GHNqre
+     T8fGjV3P_6w0OWTe8fYD3_dazywf4ZV_8kOg0dm6Fdnq--mb2SeYLikT45fFOosxr
+     P6cFGakXMazrWDaEW031qUEczzip_APgxgZ-2M0V53eE2rjigDejIwpDVDHZZL7Rc
+     C4OJ-wS7sstLOGithbWLnaJOB5SP-Q5-psoq8a2-R-PO5BHojZ1K_CXDmM4lVhmsF
+     E4bw3NAqVOCDUbZRg8HiqY9I3w-iuQsAXjUft55ndhamknVPPZYl20-QOej6CIMl9
+     OigomwWx-Fs5vrxM2R_9vMs4uhREfcQcH3Vybn0S6hUctod7v-1iwHgOLG3uiI4Vp
+     XmG3P1fcgUzIhPfbUDs4kFHktc4IQysTjDgO-c3iYugDRvYWpoyEmjgZlLT353_2U
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 33]
+
+                        Mesh Protocol Reference             January 2021
+
+     QJNB3B0r4wKDPjuW85wyRQPkHRr8QVit5Tc6RGw6e2EV7N4pJKaje-BE2vo1jE_zz
+     _rQohgjPsgrV7kOw9FLwxcfAkXhCq1gJdHlRmonixkjkHZtfMnNFkztOY2LCG3cHy
+     bDLn5KAI1jAhiCeMe36haFNWUy3ROb7TXviGLSg6-0AQr2p965-kvMuRXh2cfbJwL
+     fT6QUTQKp8QjOoDsHKWAFJbcIYW72PiQ4yVYNQiEzGEsckMs31AmdEtaikW7__tGa
+     sZeM4irzzUZb_UAuiLTI3lnUrbLwNt2G1nu9-WP1_T3PEPHTWy2cW6Byi9wmtVFMA
+     rrsZXMM6CWfoyFAhw1BeuL-Em-FtRTsqaWVbNaRrlAkB70cum8m8hrrepBVneNSxQ
+     U6SVJKCEI3QNrTcmj0BT6PkM6z51ahu8LBFg0lYwhLM6qqYoosP3VN-UDftcL23ia
+     Ln2MWUMf1GkH1myLDyOAbWYcqPSa8pkHnllv_tpENmB0tj8lkPunSjLbdiSI7P4ph
+     2Z0oG7lQEw1l1K5NG2mZzzY4d90QivirxBaHL-ucID0jCvjNj7XeU1qsqg61IXScd
+     STIFIrKu7DWceJ-t3OFBEhxQ9Niov9LmuPEDkfKsnJg3Jqhj6TK7-v7FibtmEA16W
+     uK-duapE2QWDLXed_J-91MLrYIlWc02EjHnp5l3BZ61WBxqmrG4HfeUu7hGRhCBxF
+     o7pMQwclb4s3XdxcZpkHm4-ZsorxPWkzwPKzSw3BpagOISmqyORPBUIDodiGDZtDM
+     GDUMeENvlSPTp2kVhJYuBkaWng0t59qriLaZefH4J1SAts3yJkqWzyVqaEFmN0u6K
+     HQdJPGdu9ZZc8g6rzSUPzKgbp1IXuKcHbWyg98nl-ofqZuBc8ELzeuxO0s9Vja7wc
+     nA2Q-PK56G5LrMKIQAZTqavwz8ggsEeAzkvgPUIIDNhE9zKTZYR4FNOpC0Fh-OTbu
+     6E5CfADPrLTT9GJrPOJKKbq9siXtnOxoJnvcT1OZp7GDHi9HN7esi0mOOLoRHELvY
+     COYQGVzey6puHu2TZdwiLS70MhFn2EBVPHLS5iQn2O8_Rm7Mg5KhBwjkGV8MWI_Cn
+     L965GATILbXZHiNhIajTND-D9aJ2BonA-0ljeUeAdFzuAfb9RPgu5yXO3oX7Zqdxt
+     GzlHuQErNPv1d5XU-2_xKnEK8djQB4fNV4VOUpaFrURTFcd4xX4MKSaJkPuU3s22v
+     zoxfl6iWhf3NlnWp0_xVPrDYQfUs9Zez3FADjMXj4ZY-Xh7nnqDU_TUhGJsOOGBVM
+     77LuG-7WIOul0exjPV96we82YVMh8N1GYdr0W78nRwRYsLQI-ryB_1JplpDIFUIhO
+     UsWOIFqCDuF79hjz18820ApTd3tFI-E2GAHyc3HTAVCpzNGBAj5EjIXWxlkxgfq8o
+     NjmrDCR1JjuuFILCtQwTb9dHty0ZiDZxdU8-5aTybcBvGgNw03fQp4ywF1XEH9w1s
+     Sv8U-31ms0ZKTyb6kGP3-VUD2EcMq0MlkvReFA6ayaw9j1snnyzqG0w29LGJEdhPo
+     h-tiO-tDf3_DNWmNORx8pK0C_xHWTQpSqmnasIFQVgcqNbMbtcwGGtNJZ1ZhEtVFj
+     An-tDKmbxlXt7zUpCfBZgOC2n8O4TzvpRI9OmMwkKC3x8JfEdmktOxn2dUbIOS8pH
+     LttErF01NVXox_0O6nW_SgjOjdmbRv0fYdR_uqbxZM5dAmfRzvE7Xc6ZoecydxaFJ
+     RH3fbMF3109KmAOyWExInjM4rQ1dLkfbcD01l-VGt235BdGkZEGkAbMEl5j12Mv3b
+     2NYmWu4AU0j16VQufBfV-GICHMgdsX23N0LEvHvQZbFr9E10MJ_zjW5lNElCdjlHL
+     dvv8tPbhi9ehBxxa8Tuq7e4ivgM7OBFeYjcPnUcHz0_9Lp2wyuGXMiAaUAdldsgaj
+     r8iygilwK74CLEsAm0WUzP5PrIDIBeLHEVh8sGEeLCRFMvS_2uW46x1j4wCO0-x3z
+     AHe1txYYv3rsUwBawPDVMW-gd33npWbaVjGcY1WF70a0jX9_2GtJNFbXYF2WTNbzb
+     gc-2R6fRfa1jgIT6YVS-t47c4b_oHpRxM9nQwG7xLcFqQxq1WkMLe6MEWzywn8gTc
+     IATvbQOvB1ETcrmZXVLkCGny7PwvVVQUqxo7egotMB92MtL0kd9XADzGCTwLByFv3
+     olFb4Q7xu2Zxxpg0dwlHq52_H3SsHhDeanbuJ2mG69_CfbzTClpiZrQlWx7LJuRTV
+     K83Ag-ooBb-659GJGhYAo_oNponYHFG4c7W9DgoUk2HE-t7whxl9Wy1AWrCG1ldu2
+     KVz6wF9J7hi_0t4jsLNBxdGtrNs-W6DvP3uw0Cwph4kloLVX4kCj3hVqa8bHT5lQz
+     pT_e5let_kRXjzaZE1uBkSlGdDckqJ5-_riWTbzAGXR2tAhBlTOFzvJ1dYcM0xPdA
+     hNLiaALHNcTDrOcEW-4kisCOtaDwDBNPH_IfudImYHG4D6JC3HCpsLMLbXwY7tUj8
+     VT8F2499UAuB-rK6W6eeH1wTpXjogOCxc3znrypyHDepUBZj8GxfmWqMJtPRXQWtp
+     fKCVHQOaKPph88-VfhgB2LI0EKtRUHdPasR3deK9AR5wZM8amgOOA7WB2nJ9pNe5V
+     JFWAlRpUYc9Bb6LRdIz8lz3M8SUyD4jA0pItw770muTv-vgIvlYzoL5nYWy4N1RJy
+     2eITl-UYjv_9cFYJJUS8K6ghYiV2vvzu-WkbJjLSRzgvSehFe8em7vqKLEE6TTRb2
+     rLgXOmMdwvLm26wRxXoAfMfWr7MYeznIPooCLEOOSusX4te1JIId1tMqg7xPqHmT8
+     dVjRBk9J8iOOC6wgugGq0TPU3xUU5E5TK7rkYZRbuoSB9d6jyke7qgr1t2oqoAI0F
+     I4HZir1d6AZ6MQXlW-4llcqBOivfSqiGxDPviq6whzuMgwdejpj8pHFpM_4krTR7k
+     G57mrSDkit2eTmVFvSmQnYxfpdUC1DFEKTPGF92dkSLD-ooPw-eBFwokmHgrP6MjX
+     JQ_-limOw_qh1ku8tpAO2r6j6NMAdXvGFajIR9g-ADRkiHwURcSxCFNlHfrIAi9BF
+     wv7F0sq_Cun22JqVfVnWVS9STu9ow"
+           ]
+         ]}}
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 34]
+
+                        Mesh Protocol Reference             January 2021
+
+
+   The response payload:
+
+   {
+     "TransactResponse":{
+       "Status":201,
+       "StatusDescription":"Operation completed successfully"}}
+
+6.6.2. Key Agreement
+
+   CryptographicOperationKeyAgreement is used to request a threshold key
+   agreement operation on a specified public key.
+
+   The request payload:
+
+   {
+     "DownloadRequest":{
+       "Select":[{
+           "Container":"MMM_Inbound",
+           "IndexMin":2,
+           "IndexMax":3}
+         ]}}
+
+   The response payload:
+
+   {
+     "DownloadResponse":{
+       "Status":201,
+       "StatusDescription":"Operation completed successfully",
+       "Updates":[{
+           "Container":"MMM_Inbound",
+           "Envelopes":[[{
+                 "EnvelopeId":"MAJX-UL35-3S2N-HIT4-3LND-YNI2-QWFP",
+                 "enc":"A256CBC",
+                 "Salt":"mSGcWKixJS60ikGrl1Z8Wg",
+                 "recipients":[{
+                     "kid":"MBLV-2ICB-OATF-HHQH-OTA7-E6GC-TH76",
+                     "epk":{
+                       "PublicKeyECDH":{
+                         "crv":"X448",
+                         "Public":"4Jrht04zIboZtGL0oWQiBh6AUyVQiR1PZ
+     JZA_yOPOqow6feU73nsjZETIcBkcVLjtMVdlTm7LzmA"}},
+                     "wmk":"rIgRDmiPg73rzanZcO49MbBs2GgS-Ab9gHkkkt-b
+     zoZaa7MFtU347Q"}
+                   ],
+                 "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQktFLVZS
+     VDctTUVaVC00SU9WLTZLT1ItVDNGTy1aUk1FIiwKICAiTWVzc2FnZVR5cGUiOiAiR
+     3JvdXBJbnZpdGF0aW9uIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3
+     QiLAogICJDcmVhdGVkIjogIjIwMjEtMDEtMTNUMTY6Mzg6MjlaIn0",
+                 "SequenceInfo":{
+                   "Index":2,
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 35]
+
+                        Mesh Protocol Reference             January 2021
+
+                   "TreePosition":426},
+                 "Received":"2021-01-13T16:38:29Z"},
+               "NZ7vOnWpbnesaFKr4PNOCacqFqemmIPbZhehX6tlGkP3CpUnMws_
+     LWZZ-2T_tL14_IoTW57466pSHCePABy1unesf0xtFXcw6kXD9Cfj-JxkrsjmrWRAp
+     7LC-CQcPnuhtNmUJ0ygUJSH1gTnr5p7amQSdtT2LHsIZ6pMpgPsm3swc0iTB1wMpY
+     VeueIUChyNfGk_y3BNBo4I4B3nLMLNHIMvrdgFS-dGSfbq1RKRaZLVPxXCOn7ioqi
+     gBM8pwP7yzeU9z_NpEqhxlgSmEKK3OC9PAHQDdLMO5xIaEw6dz6WET_pRPzU8IhYE
+     PsN1Un6i4Z9sp1cIto18wyKvrZWojBtE2JKdXgdKuBVW83ppIUV-pOGhYa_6GR6rS
+     4eQ-SEXyX3GaFktVoDTK6rNtljOa8_Q9-3AO3nb1yzbyPtgi0pQOUhk-7lJHKhcN_
+     jY-4ACHVbfUwn5GNseMc-79QvgL8FORkdLdDlTTsijixm2oattZukSAiyLTSwQ1HI
+     MB1glHXj-Bga_4oQDuoEUoqzXKwUbXIsH9pdvqGK3Pd8X_2j2BLfmlefGZILwigzC
+     zXaNKZmR4Jt2H4mwWtk2t1-2k7Rmh8p26cMe4aBQGqQmWIpDoERcmuI22Sn3tfSJX
+     BQkVs8wnp8Riztj5zPMCGfWxHAI3nUPGVrwJgmyTWaHPlEwUSqHzbie5uM-qytqbR
+     6JZw_FVkIg8RbCfggxoaJ98q7LXDQ63xUYbhLSeM8CrGcCcUPHEanfkxsDwBFX0GH
+     NqreT8fGjV3P_6w0OWTe8fYD3_dazywf4ZV_8kOg0dm6Fdnq--mb2SeYLikT45fFO
+     osxrP6cFGakXMazrWDaEW031qUEczzip_APgxgZ-2M0V53eE2rjigDejIwpDVDHZZ
+     L7RcC4OJ-wS7sstLOGithbWLnaJOB5SP-Q5-psoq8a2-R-PO5BHojZ1K_CXDmM4lV
+     hmsFE4bw3NAqVOCDUbZRg8HiqY9I3w-iuQsAXjUft55ndhamknVPPZYl20-QOej6C
+     IMl9OigomwWx-Fs5vrxM2R_9vMs4uhREfcQcH3Vybn0S6hUctod7v-1iwHgOLG3ui
+     I4VpXmG3P1fcgUzIhPfbUDs4kFHktc4IQysTjDgO-c3iYugDRvYWpoyEmjgZlLT35
+     3_2UQJNB3B0r4wKDPjuW85wyRQPkHRr8QVit5Tc6RGw6e2EV7N4pJKaje-BE2vo1j
+     E_zz_rQohgjPsgrV7kOw9FLwxcfAkXhCq1gJdHlRmonixkjkHZtfMnNFkztOY2LCG
+     3cHybDLn5KAI1jAhiCeMe36haFNWUy3ROb7TXviGLSg6-0AQr2p965-kvMuRXh2cf
+     bJwLfT6QUTQKp8QjOoDsHKWAFJbcIYW72PiQ4yVYNQiEzGEsckMs31AmdEtaikW7_
+     _tGasZeM4irzzUZb_UAuiLTI3lnUrbLwNt2G1nu9-WP1_T3PEPHTWy2cW6Byi9wmt
+     VFMArrsZXMM6CWfoyFAhw1BeuL-Em-FtRTsqaWVbNaRrlAkB70cum8m8hrrepBVne
+     NSxQU6SVJKCEI3QNrTcmj0BT6PkM6z51ahu8LBFg0lYwhLM6qqYoosP3VN-UDftcL
+     23iaLn2MWUMf1GkH1myLDyOAbWYcqPSa8pkHnllv_tpENmB0tj8lkPunSjLbdiSI7
+     P4ph2Z0oG7lQEw1l1K5NG2mZzzY4d90QivirxBaHL-ucID0jCvjNj7XeU1qsqg61I
+     XScdSTIFIrKu7DWceJ-t3OFBEhxQ9Niov9LmuPEDkfKsnJg3Jqhj6TK7-v7FibtmE
+     A16WuK-duapE2QWDLXed_J-91MLrYIlWc02EjHnp5l3BZ61WBxqmrG4HfeUu7hGRh
+     CBxFo7pMQwclb4s3XdxcZpkHm4-ZsorxPWkzwPKzSw3BpagOISmqyORPBUIDodiGD
+     ZtDMGDUMeENvlSPTp2kVhJYuBkaWng0t59qriLaZefH4J1SAts3yJkqWzyVqaEFmN
+     0u6KHQdJPGdu9ZZc8g6rzSUPzKgbp1IXuKcHbWyg98nl-ofqZuBc8ELzeuxO0s9Vj
+     a7wcnA2Q-PK56G5LrMKIQAZTqavwz8ggsEeAzkvgPUIIDNhE9zKTZYR4FNOpC0Fh-
+     OTbu6E5CfADPrLTT9GJrPOJKKbq9siXtnOxoJnvcT1OZp7GDHi9HN7esi0mOOLoRH
+     ELvYCOYQGVzey6puHu2TZdwiLS70MhFn2EBVPHLS5iQn2O8_Rm7Mg5KhBwjkGV8MW
+     I_CnL965GATILbXZHiNhIajTND-D9aJ2BonA-0ljeUeAdFzuAfb9RPgu5yXO3oX7Z
+     qdxtGzlHuQErNPv1d5XU-2_xKnEK8djQB4fNV4VOUpaFrURTFcd4xX4MKSaJkPuU3
+     s22vzoxfl6iWhf3NlnWp0_xVPrDYQfUs9Zez3FADjMXj4ZY-Xh7nnqDU_TUhGJsOO
+     GBVM77LuG-7WIOul0exjPV96we82YVMh8N1GYdr0W78nRwRYsLQI-ryB_1JplpDIF
+     UIhOUsWOIFqCDuF79hjz18820ApTd3tFI-E2GAHyc3HTAVCpzNGBAj5EjIXWxlkxg
+     fq8oNjmrDCR1JjuuFILCtQwTb9dHty0ZiDZxdU8-5aTybcBvGgNw03fQp4ywF1XEH
+     9w1sSv8U-31ms0ZKTyb6kGP3-VUD2EcMq0MlkvReFA6ayaw9j1snnyzqG0w29LGJE
+     dhPoh-tiO-tDf3_DNWmNORx8pK0C_xHWTQpSqmnasIFQVgcqNbMbtcwGGtNJZ1ZhE
+     tVFjAn-tDKmbxlXt7zUpCfBZgOC2n8O4TzvpRI9OmMwkKC3x8JfEdmktOxn2dUbIO
+     S8pHLttErF01NVXox_0O6nW_SgjOjdmbRv0fYdR_uqbxZM5dAmfRzvE7Xc6Zoecyd
+     xaFJRH3fbMF3109KmAOyWExInjM4rQ1dLkfbcD01l-VGt235BdGkZEGkAbMEl5j12
+     Mv3b2NYmWu4AU0j16VQufBfV-GICHMgdsX23N0LEvHvQZbFr9E10MJ_zjW5lNElCd
+     jlHLdvv8tPbhi9ehBxxa8Tuq7e4ivgM7OBFeYjcPnUcHz0_9Lp2wyuGXMiAaUAdld
+     sgajr8iygilwK74CLEsAm0WUzP5PrIDIBeLHEVh8sGEeLCRFMvS_2uW46x1j4wCO0
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 36]
+
+                        Mesh Protocol Reference             January 2021
+
+     -x3zAHe1txYYv3rsUwBawPDVMW-gd33npWbaVjGcY1WF70a0jX9_2GtJNFbXYF2WT
+     Nbzbgc-2R6fRfa1jgIT6YVS-t47c4b_oHpRxM9nQwG7xLcFqQxq1WkMLe6MEWzywn
+     8gTcIATvbQOvB1ETcrmZXVLkCGny7PwvVVQUqxo7egotMB92MtL0kd9XADzGCTwLB
+     yFv3olFb4Q7xu2Zxxpg0dwlHq52_H3SsHhDeanbuJ2mG69_CfbzTClpiZrQlWx7LJ
+     uRTVK83Ag-ooBb-659GJGhYAo_oNponYHFG4c7W9DgoUk2HE-t7whxl9Wy1AWrCG1
+     ldu2KVz6wF9J7hi_0t4jsLNBxdGtrNs-W6DvP3uw0Cwph4kloLVX4kCj3hVqa8bHT
+     5lQzpT_e5let_kRXjzaZE1uBkSlGdDckqJ5-_riWTbzAGXR2tAhBlTOFzvJ1dYcM0
+     xPdAhNLiaALHNcTDrOcEW-4kisCOtaDwDBNPH_IfudImYHG4D6JC3HCpsLMLbXwY7
+     tUj8VT8F2499UAuB-rK6W6eeH1wTpXjogOCxc3znrypyHDepUBZj8GxfmWqMJtPRX
+     QWtpfKCVHQOaKPph88-VfhgB2LI0EKtRUHdPasR3deK9AR5wZM8amgOOA7WB2nJ9p
+     Ne5VJFWAlRpUYc9Bb6LRdIz8lz3M8SUyD4jA0pItw770muTv-vgIvlYzoL5nYWy4N
+     1RJy2eITl-UYjv_9cFYJJUS8K6ghYiV2vvzu-WkbJjLSRzgvSehFe8em7vqKLEE6T
+     TRb2rLgXOmMdwvLm26wRxXoAfMfWr7MYeznIPooCLEOOSusX4te1JIId1tMqg7xPq
+     HmT8dVjRBk9J8iOOC6wgugGq0TPU3xUU5E5TK7rkYZRbuoSB9d6jyke7qgr1t2oqo
+     AI0FI4HZir1d6AZ6MQXlW-4llcqBOivfSqiGxDPviq6whzuMgwdejpj8pHFpM_4kr
+     TR7kG57mrSDkit2eTmVFvSmQnYxfpdUC1DFEKTPGF92dkSLD-ooPw-eBFwokmHgrP
+     6MjXJQ_-limOw_qh1ku8tpAO2r6j6NMAdXvGFajIR9g-ADRkiHwURcSxCFNlHfrIA
+     i9BFwv7F0sq_Cun22JqVfVnWVS9STu9ow",
+               {}
+               ]
+             ]}
+         ]}}
+
+6.6.3. Sign
+
+   Threshold signature is not currently supported.
+
+7. Message Interactions
+
+   Message interactions are asynchronous interactions that occur between
+   devices connected to the same account or between accounts.
+
+   All messages are signed by the sender and encrypted under the
+   encryption key of the recipient if this is known to the sender.
+
+7.1. Message PIN Interaction
+
+   The Message PIN Interaction is used to register and validate PIN
+   codes used to authenticate certain transactions. This interaction
+   allows a PIN code issued by one device to be consumed by another
+   allowing for greater convenience in managing devices or contact
+   exchange.
+
+   For example, Alice might delegate the PIN code issue privilege to her
+   mobile device without delegating the administration privilege to that
+   device. This would allow Alice to use her mobile device to initiate
+   the connection of a large number of devices to her Mesh as her house
+   is being built and approve them later using her administrative
+   device.
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 37]
+
+                        Mesh Protocol Reference             January 2021
+
+   Use of the Message PIN interaction is optional. An application that
+   issues a PIN code to authenticate a message MAY store the PIN value
+   within the application without persisting it to external storage.
+
+   Derivation of the SaltedPin, MessageId and Witness values from their
+   respective inputs is described in the Schema Reference .
+
+7.1.1. Registration
+
+   To register a PIN code to an Account, a device:
+
+         *  Generates the PIN code value
+
+         *  Calculates the SaltedPin value for the specified Action
+
+         *  Calculates the PinId binding the specified SaltedPin to the
+            Account.
+
+         *  Creates and signs MessagePin containing the SaltedPin ,
+            Action and Account values with the MessageId value PinId.
+
+         *  Appends the MessagePin value to the Administration Spool of
+            the Account.
+
+   Note that this construction provides limited protection against
+   forgery attacks by a party with access to the MessagePin. A party
+   with such access can use it to construct the witness value required
+   to authenticate a request.
+
+   PIN Code values consist of an opaque sequence of octets represented
+   as a UDF nonce value. Codes are presented in canonical UDF form, i.e.
+   Base32 encoding separated into groups of 4 characters. The PIN value
+   is converted to binary form for calculation of the SaltedPin, thus
+   ensuring that the canonical form of the PIN value is used.
+
+7.1.2. Authentication
+
+   The PIN Code value is passed out of band to a user who will enter it
+   into a device to authenticate a request made to the issuer.
+
+   A request that MAY be validated by means of a PIN is a subclass of
+   MessagePinValidated and contains the following fields:
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 38]
+
+                        Mesh Protocol Reference             January 2021
+
+         AuthenticatedData
+
+         ClientNonce
+
+         PinId
+
+         PinWitness
+
+   The device uses the PIN code and Action identifier corresponding to
+   the desired request to calculate the SaltedPin value in the same
+   manner as during registration. This value is then used to calculate
+   the PinId and PinWitness values.
+
+7.1.3. Validation
+
+   The PIN code is validated by performing the steps of:
+
+         *  Calculating the SaltedPin value from the PIN code and Action
+
+         *  Calculating PinId from SaltedPin  and Account
+
+         *  Retrieving a MessagePin from the Administration spool with
+            the MessageId PinId.
+
+         *  Calculating the PinWitness value from SaltedPin, ClientNonce
+            and AuthenticatedData and checking this matches the value
+            specified in the message.
+
+         *  Performing the requested action.
+
+         *  Posting a Complete message to the Administration Spool of
+            the Account marking the PIN code as used.
+
+   This process can fail at multiple points resulting in different error
+   results:
+
+         PinInvalid
+
+         PinUsed
+
+         PinExpired
+
+   Note that in the case that an attempt is made to reuse a PIN, it is
+   not automatically the case that the first use of the PIN was the one
+   that was valid and only the second attempt was invalid.
+   Implementations SHOULD alert the user to the attempted re-use so that
+   this possibility can be considered and appropriate action taken.
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 39]
+
+                        Mesh Protocol Reference             January 2021
+
+7.1.4. Example
+
+   Alice connects a device using a QR code presented by her
+   administrative device.
+
+   The administration device creates a PIN code and records it to the
+   Local spool:
+
+   {
+     "MessagePin":{
+       "MessageId":"AAAU-6HVM-7AA6-TNEG-PFUS-IXZ3-BMYL",
+       "Account":"alice@example.com",
+       "Expires":"2021-01-14T16:38:30Z",
+       "Automatic":true,
+       "SaltedPin":"AANT-HAQW-KDUY-GUMW-YFY2-YWB5-23YC",
+       "Action":"Device"}}
+
+   This pin value is used to authenticate the connection request from
+   the device:
+
+   {
+     "RequestConnection":{
+       "MessageId":"NBPS-TE2K-5BQZ-3HWA-PJNU-WYOX-DAMW",
+       "AuthenticatedData":[{
+           "EnvelopeId":"MCNR-5XZX-CCZC-XTMJ-RYP2-PACV-HCBM",
+           "dig":"S512",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQ05SLTVYWlgtQ0
+     NaQy1YVE1KLVJZUDItUEFDVi1IQ0JNIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+     sZURldmljZSIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0IiwKICAi
+     Q3JlYXRlZCI6ICIyMDIxLTAxLTEzVDE2OjM4OjMwWiJ9"},
+         "ewogICJQcm9maWxlRGV2aWNlIjogewogICAgIlByb2ZpbGVTaWduYXR1cm
+     UiOiB7CiAgICAgICJVZGYiOiAiTUNOUi01WFpYLUNDWkMtWFRNSi1SWVAyLVBBQ1Y
+     tSENCTSIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJs
+     aWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgI
+     CAiUHVibGljIjogInRpdWhzU3Y3dnRaaGZBSGRNUjlUNncyMzg3bG9CZF9lMFhpel
+     9xaDNNQUlwZ2QyVW9FdzQKICBqYzFuaXJhY3NERUJjS0xYRGJpOXVxeUEifX19LAo
+     gICAgIkJhc2VFbmNyeXB0aW9uIjogewogICAgICAiVWRmIjogIk1EWUUtQ09CUy1K
+     UDVDLTI3UEYtSkEzVS1DNk5WLUdKSEMiLAogICAgICAiUHVibGljUGFyYW1ldGVyc
+     yI6IHsKICAgICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOi
+     AiWDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogIm1DQy00eHVLVHFBSGhudF9pZ2p
+     ERjBPemg3RFo1dUNVcjE4Z0NtZ0hCS0dqNDVaTEhod0kKICBKaEJCVG1LQmt6b3dr
+     NV93dEo3MU4wcUEifX19LAogICAgIkJhc2VBdXRoZW50aWNhdGlvbiI6IHsKICAgI
+     CAgIlVkZiI6ICJNQ05LLTMzSE4tREVJUC1aTVQ0LTJBWDctQ1dUUi01TVk0IiwKIC
+     AgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREg
+     iOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6
+     ICJBUHVuM01nN0xoMEpia3hkNC1teWNKY3NfZWpMQ2F0YXkyR3NpSFJGS09uRnMxd
+     1dXNmZzCiAgUm9Ib3ctcks4SjVkdmlDZjFnYlFUQUlBIn19fSwKICAgICJCYXNlU2
+     lnbmF0dXJlIjogewogICAgICAiVWRmIjogIk1ENkQtMlJRUi1SSU1WLUw3RzMtNDZ
+     QSy03Q1o0LTdCVE0iLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAg
+     ICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogI
+     CAgICAgICAgIlB1YmxpYyI6ICJCSHRuN3d3Wk1xZGFlVFc2M0M0blJWdDhKSHV5d2
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 40]
+
+                        Mesh Protocol Reference             January 2021
+
+     Z5aFdzd0sxYUp1WTJMWEEzbnpxdFBYCiAgMFkwWEpzbzNhTXFqajVJRHdQVG1CZzJ
+     BIn19fX19",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MCNR-5XZX-CCZC-XTMJ-RYP2-PACV-HCBM",
+               "signature":"NznNSRNVFWr5gUmYxqWMmRBZFBGM-AhdfrXgtEoP
+     NoPNm8-5-rSl3b1RzCSycA6iXIoeOFkXibCAKGo3O1nVzV1Wy5qFu34pVXUH4oxuH
+     3ac957_UgTtGjypbRa10xqPEnlFWbfrMVCiluHa4Jyd1REA"}
+             ],
+           "PayloadDigest":"jUV5RGz2PDyvbgrOndJlcBEpR1YV53I5bpEJKKny
+     z-xC1BImrlcI3x7m0UCEFx_anC-tjsrl3CqbxKjCN8gPcQ"}
+         ],
+       "ClientNonce":"quIpPcxl_KgkWw-XMAQeAQ",
+       "PinId":"AAAU-6HVM-7AA6-TNEG-PFUS-IXZ3-BMYL",
+       "PinWitness":"5zFBoTGleXwSgJc68gRNB5zKuoJtWrlaP9fZYTYUpm26AGQ
+     DYgLAScoVVq6OoNs-9YNQlCUduoa9yDtbVj-dKg",
+       "AccountAddress":"alice@example.com"}}
+
+   The administration device can now use the PIN Identifier to retreive
+   the  MessagePIN from the Local spool and use it to verify the
+   request.
+
+7.2. Completion Interaction
+
+   Completion messages are dummy messages that are added to a Mesh Spool
+   to mark a change the status of messages previously posted. Any
+   message that is in the inbound spool and has not been erased or
+   redacted MAY be marked as read, unread or deleted. Any message in the
+   outbound spool MAY be marked as sent, received or deleted.
+
+   Services MAY erase or redact messages in accordance with local site
+   policy. Since messages are not removed from the spool on being marked
+   deleted, they may be undeleted by marking them as read or unread.
+   Marking a message deleted MAY make it more likely that the message
+   will be removed if the sequence is subsequently purged.
+
+   After using the PIN code to authenticate connection of a device in
+   the previous  example, the corresponding MessagePin is marked as
+   having been used by appending  a completion message to the Local
+   spool.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 41]
+
+                        Mesh Protocol Reference             January 2021
+
+   {
+     "MessageComplete":{
+       "MessageId":"NCAI-WEPR-GYOU-BSFM-5U3V-ASJN-RHPC",
+       "References":[{
+           "MessageId":"AAAU-6HVM-7AA6-TNEG-PFUS-IXZ3-BMYL",
+           "ResponseId":"MADI-J7SC-HSPL-UREO-Z5NC-CWK6-KZIB",
+           "Relationship":"Closed"}
+         ]}}
+
+   The completion message is added to the spool in the same upload
+   transaction that adds the device to the device catalog. This ensures
+   that both operations occur or neither occurs.
+
+7.3. Contact Exchange Interaction
+
+   The contact exchange interaction is used to support unilateral or
+   mutual exchange of contact information. Contact exchange has three
+   functions in the Mesh:
+
+         *  To exchange public key information to allow encryption of
+            messages sent to and verification of signatures on messages
+            sent from the contact subject.
+
+         *  To exchange contact information allowing use of other
+            communication protocols (e.g. telephone, SMS, xmpp, SMTP,
+            OpenPGP, S/MIME, etc).
+
+         *  To request that the recipient grant privileges to accept
+            certain types of messages from the contact subject.
+
+   Registration of the subject's contact information in a registry
+   service eliminates the need for the first of these functions but not
+   the other two. To prevent abuse, every Mesh Message is subject to
+   access control and a Mesh service will only accept a message from a
+   sender if there is an entry in the Threshold Catalog of the account
+   that expressly permits delivery of messages of the specified type
+   that are authenticated by an authorized signature key.
+
+   The communication of unsolicited information afforded by the contact
+   exchange interaction is deliberately limited so that a majority of
+   users can accept contact exchange requests without prior
+   authorization. It is however likely that some users will receive a
+   considerable volume of requests forcing them to require contact
+   requests be authorized through some form of third party
+   accreditation.
+
+7.3.1. Remote
+
+   The Remote Contact Exchange transaction consists of a sequence of
+   MessageContact messages sent from the initiator to the responder,
+   responder to the initiator, etc. While there is in principle no limit
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 42]
+
+                        Mesh Protocol Reference             January 2021
+
+   on the number of messages exchanged, most exchanges will be completed
+   in three exchanges or less:
+
+         Initiator to Responder
+
+         Responder to Initiator (optional)
+
+         Initiator to Responder (optional)
+
+   Each message provides the recipient with additional information which
+   MAY motivate the recipient to provide additional contact information
+   to the sender.
+
+   {
+     "MessageContact":{
+       "MessageId":"NBPI-ULGE-MSPK-FUE2-CBDB-WTNY-NJDZ",
+       "Sender":"bob@example.com",
+       "Recipient":"alice@example.com",
+       "AuthenticatedData":[{
+           "dig":"S512",
+           "ContentMetaData":"ewogICJNZXNzYWdlVHlwZSI6ICJDb250YWN0UG
+     Vyc29uIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJDcmV
+     hdGVkIjogIjIwMjEtMDEtMTNUMTY6Mzg6MjRaIn0"},
+         "ewogICJDb250YWN0UGVyc29uIjogewogICAgIkFuY2hvcnMiOiBbewogIC
+     AgICAgICJVZGYiOiAiTUJRVC1JTDMyLVNFN0gtVDdSWi1FNTJCLVRRMkYtWFZMRSI
+     sCiAgICAgICAgIlZhbGlkYXRpb24iOiAiU2VsZiJ9XSwKICAgICJOZXR3b3JrQWRk
+     cmVzc2VzIjogW3sKICAgICAgICAiQWRkcmVzcyI6ICJib2JAZXhhbXBsZS5jb20iL
+     AogICAgICAgICJFbnZlbG9wZWRQcm9maWxlQWNjb3VudCI6IFt7CiAgICAgICAgIC
+     AgICJFbnZlbG9wZUlkIjogIk1CUVQtSUwzMi1TRTdILVQ3UlotRTUyQi1UUTJGLVh
+     WTEUiLAogICAgICAgICAgICAiZGlnIjogIlM1MTIiLAogICAgICAgICAgICAiQ29u
+     dGVudE1ldGFEYXRhIjogImV3b2dJQ0pWYm1seGRXVkpaQ0k2SUNKTlFsRlVMVWxNT
+     XpJdFUwVTNTQzEKICBVTjFKYUxVVTFNa0l0VkZFeVJpMVlWa3hGSWl3S0lDQWlUV1
+     Z6YzJGblpWUjVjR1VpT2lBaVVISnZabWxzWgogIFZWelpYSWlMQW9nSUNKamRIa2l
+     PaUFpWVhCd2JHbGpZWFJwYjI0dmJXMXRMMjlpYW1WamRDSXNDaUFnSWtOCiAgeVpX
+     RjBaV1FpT2lBaU1qQXlNUzB3TVMweE0xUXhOam96T0RveU5Gb2lmUSJ9LAogICAgI
+     CAgICAgImV3b2dJQ0pRY205bWFXeGxWWE5sY2lJNklIc0tJQ0FnSUNKUWNtOW1hV3
+     gKICBsVTJsbmJtRjBkWEpsSWpvZ2V3b2dJQ0FnSUNBaVZXUm1Jam9nSWsxQ1VWUXR
+     TVXd6TWkxVFJUZElMVlEzVQogIGxvdFJUVXlRaTFVVVRKR0xWaFdURVVpTEFvZ0lD
+     QWdJQ0FpVUhWaWJHbGpVR0Z5WVcxbGRHVnljeUk2SUhzCiAgS0lDQWdJQ0FnSUNBa
+     VVIVmliR2xqUzJWNVJVTkVTQ0k2SUhzS0lDQWdJQ0FnSUNBZ0lDSmpjbllpT2lBaV
+     IKICBXUTBORGdpTEFvZ0lDQWdJQ0FnSUNBZ0lsQjFZbXhwWXlJNklDSm9kRXBxT1h
+     WblZFNUtla2RxUVdKRVZYaAogIHdRbWMzVHpoc1dHWnJWSEo0ZDI5MlIyRjRMVzAz
+     VEV4R2VuVnNUbEpKVm5oNENpQWdTUzE1Vm5kUVNWRlVTCiAgVmh5VkZwZmIxbHRXa
+     3hOWW1GQkluMTlmU3dLSUNBZ0lDSkJZMk52ZFc1MFFXUmtjbVZ6Y3lJNklDSmliMk
+     oKICBBWlhoaGJYQnNaUzVqYjIwaUxBb2dJQ0FnSWxObGNuWnBZMlZWWkdZaU9pQWl
+     UVUV6TmkxVVZVcE1MVkZTVwogIGtvdE0wMHpUQzFUVWtKUkxVSlNXVkV0VnpKWlRT
+     SXNDaUFnSUNBaVFXTmpiM1Z1ZEVWdVkzSjVjSFJwYjI0CiAgaU9pQjdDaUFnSUNBZ
+     0lDSlZaR1lpT2lBaVRVSk1WaTB5U1VOQ0xVOUJWRVl0U0VoUlNDMVBWRUUzTFVVMl
+     IKICAwTXRWRWczTmlJc0NpQWdJQ0FnSUNKUWRXSnNhV05RWVhKaGJXVjBaWEp6SWp
+     vZ2V3b2dJQ0FnSUNBZ0lDSgogIFFkV0pzYVdOTFpYbEZRMFJJSWpvZ2V3b2dJQ0Fn
+     SUNBZ0lDQWdJbU55ZGlJNklDSllORFE0SWl3S0lDQWdJCiAgQ0FnSUNBZ0lDSlFkV
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 43]
+
+                        Mesh Protocol Reference             January 2021
+
+     0pzYVdNaU9pQWlObmcwTTFGU2FreGtXVzlQYlU5SVVtdFJTVGxUVkV4dFQyMTJRbU
+     oKICB1WDJSWlgxbHFiVU0xWWxSdFIxTmFkRVpOVGxGTVZ3b2dJR3Q0TTNFelYycEx
+     kbXhtVlhOTU9ESmFUbU52YQogIFRkbFFTSjlmWDBzQ2lBZ0lDQWlRV1J0YVc1cGMz
+     UnlZWFJ2Y2xOcFoyNWhkSFZ5WlNJNklIc0tJQ0FnSUNBCiAgZ0lsVmtaaUk2SUNKT
+     lFVNUpMVFV6U2xvdE5sazFOQzFSVUZaR0xWRlZOall0Ums1RE5DMVVWalEzSWl3S0
+     kKICBDQWdJQ0FnSWxCMVlteHBZMUJoY21GdFpYUmxjbk1pT2lCN0NpQWdJQ0FnSUN
+     BZ0lsQjFZbXhwWTB0bGVVVgogIERSRWdpT2lCN0NpQWdJQ0FnSUNBZ0lDQWlZM0oy
+     SWpvZ0lrVmtORFE0SWl3S0lDQWdJQ0FnSUNBZ0lDSlFkCiAgV0pzYVdNaU9pQWlWb
+     Ww2YmxFd2VXMVVUV1ZSVEZCdGFYb3RWUzF5U2tSMFZtRTNkM2h4VVhwQ2IxRmFhRn
+     AKICBXWXpCVGJrNXZURWxFVmtSVk5Rb2dJRGREVUZNMk4wYzFTREZ4VUMxTGRtVm5
+     OMk5CTXkxVlFTSjlmWDBzQwogIGlBZ0lDQWlRV05qYjNWdWRFRjFkR2hsYm5ScFky
+     RjBhVzl1SWpvZ2V3b2dJQ0FnSUNBaVZXUm1Jam9nSWsxCiAgRVJrSXRUa3RIVmkxS
+     VFrWk9MVEkzUVVzdFQxTlNTaTB6TlZOSUxVNUVWMVlpTEFvZ0lDQWdJQ0FpVUhWaW
+     IKICBHbGpVR0Z5WVcxbGRHVnljeUk2SUhzS0lDQWdJQ0FnSUNBaVVIVmliR2xqUzJ
+     WNVJVTkVTQ0k2SUhzS0lDQQogIGdJQ0FnSUNBZ0lDSmpjbllpT2lBaVdEUTBPQ0lz
+     Q2lBZ0lDQWdJQ0FnSUNBaVVIVmliR2xqSWpvZ0lsWlRiCiAgMFZJTkdvNFJGSXdRM
+     WhCWTBaWU9WcFNSek10ZG5wRU5FNXJNRU53Ym5nNFFWWlVkMHh4WTFoQlpVWkpVMW
+     sKICAwTkdFS0lDQnZjMloyVkU5Rk9GaFpPRVJQT1dsTU0xOWZlSGMyUTBFaWZYMTl
+     MQW9nSUNBZ0lrRmpZMjkxYgogIG5SVGFXZHVZWFIxY21VaU9pQjdDaUFnSUNBZ0lD
+     SlZaR1lpT2lBaVRVUllWQzAxVFU1RUxWcEtUVWN0VGxGCiAgVFVpMVJXVlZMTFU1V
+     1NFRXRTVTVCVlNJc0NpQWdJQ0FnSUNKUWRXSnNhV05RWVhKaGJXVjBaWEp6SWpvZ2
+     UKICB3b2dJQ0FnSUNBZ0lDSlFkV0pzYVdOTFpYbEZRMFJJSWpvZ2V3b2dJQ0FnSUN
+     BZ0lDQWdJbU55ZGlJNklDSgogIEZaRFEwT0NJc0NpQWdJQ0FnSUNBZ0lDQWlVSFZp
+     Ykdsaklqb2dJbEkwWVVOaFpHd3lMVVo0VFhWSWVGVk1lCiAgRzVvVm10NU5GVjJMV
+     EZCUkhjMVNEUTJialV5TFY5c1owSjRSazFuT0hsTFN6Z0tJQ0E0VTNoWVpWVlNabk
+     YKICBMTFhab1VHdG5OV1ZxYTI5WWVVRWlmWDE5ZlgwIiwKICAgICAgICAgIHsKICA
+     gICAgICAgICAgInNpZ25hdHVyZXMiOiBbewogICAgICAgICAgICAgICAgImFsZyI6
+     ICJTNTEyIiwKICAgICAgICAgICAgICAgICJraWQiOiAiTUJRVC1JTDMyLVNFN0gtV
+     DdSWi1FNTJCLVRRMkYtWFZMRSIsCiAgICAgICAgICAgICAgICAic2lnbmF0dXJlIj
+     ogImFIRERfQWFEdlNLN1dGQTZpaTR0YUFveEt3YV9NY1lLNFMzNXk5ZmhacV9hZVZ
+     iX1EKICBWS0hRdXA0WEdYUFdKSEtNV2psSTF4Q0o2eUFySmR1bmZEaU54ZFNNNlpZ
+     OFdnRmtBQVpiZGZ3S1JmZkNWSwogIGZjVUJwdzBrMVZnVDR5ZFE3N1l6ejc5RWJfW
+     kJNc0NXVEVWQzdnUXNBIn1dLAogICAgICAgICAgICAiUGF5bG9hZERpZ2VzdCI6IC
+     JQNUlwNWhlSW1PaUh3NlJtR3BXcEs5dExScnRzMVR0Vnc0Z2Rqc0xCdDE1QWoKICB
+     GYUdEVkRYS2o5VVZNd212ckxIUUNCcFpDYlU4RVhiT21fNjdIdUtLZyJ9XSwKICAg
+     ICAgICAiUHJvdG9jb2xzIjogW3sKICAgICAgICAgICAgIlByb3RvY29sIjogIm1tb
+     SJ9XX1dfX0",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MDXT-5MND-ZJMG-NQSR-QYUK-NVHA-INAU",
+               "signature":"hqs91kZaFLMQ9eEa5VeXc2AjlwN5z3B9hklwcgH_
+     xBeBccw2r12m1NaoNFmh_5uKFCXxc8zd65KAu87UwIjagWF3G8aevnu_-ku28-90G
+     A8IwD9_MuuMZcgEsFz5F_YdwfXCH5L0SfaZEMdsLAkxUTwA"}
+             ],
+           "PayloadDigest":"Z4CKnUtWFCRlouUzqjT-IwCR6BBT98AhMuyoh1B3
+     _M7VKTU2jPaCskGsNwFv3rpY96G9U0306FtX5W0A6mguJA"}
+         ],
+       "Reply":true,
+       "Subject":"alice@example.com",
+       "PIN":"ADHF-R2A7-SV2S-XUBQ-C7CU-HA6Y-JBVA"}}
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 44]
+
+                        Mesh Protocol Reference             January 2021
+
+
+   The Mesh Contact Exchange transaction does not provide for validation
+   of the contact information beyond the binding to the Mesh Account
+   Address used to perform the exchange.
+
+7.3.2. PIN
+
+   Contact exchange requests MAY be authenticated by a PIN code. Initial
+   contact exchange requests SHOULD include a PIN code value that can be
+   used to authenticate a response (if given). PIN codes MAY also be
+   exchanged out of band.
+
+   A MessageContact authenticated by means of a PIN code is
+   authenticated as described in the PIN Interaction section above.
+
+7.3.3. EARL
+
+   A MessageContact message MAY be published as an EARL. This allows
+   contact data to be presented to the recipient on a printed document
+   such as a business card in machine readable format such as a QR code.
+
+7.4. Group Invitation
+
+   The GroupInvitation interaction is used to invite a recipient to join
+   a Mesh Group. The interaction is essentially a form of contact
+   exchange except that a sender SHOULD NOT send group invitations
+   unless there is an existing relationship. Thus the 'first trust'
+   issues intrinsic to the contact exchange interaction do not apply.
+
+   The message specifies the group name and the contact entry for the
+   group. The contact entry includes the CapabilityDecryptServiced used
+   to decrypt messages sent to the group when combined with information
+   provided by the threshold service for the group.
+
+   Receipt of a GroupInvitation message does not require a response.
+
+   {
+     "GroupInvitation":{
+       "MessageId":"NBKE-VRT7-MEZT-4IOV-6KOR-T3FO-ZRME",
+       "Sender":"alice@example.com",
+       "Recipient":"bob@example.com",
+       "Contact":{
+         "ContactPerson":{
+           "Anchors":[{
+               "Udf":"MBND-NF5R-BEOZ-EHDY-PXM3-XTDU-HK5T",
+               "Validation":"Self"}
+             ],
+           "NetworkAddresses":[{
+               "Address":"groupw@example.com",
+               "EnvelopedProfileAccount":[{
+                   "EnvelopeId":"MBND-NF5R-BEOZ-EHDY-PXM3-XTDU-HK5T",
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 45]
+
+                        Mesh Protocol Reference             January 2021
+
+                   "dig":"S512",
+                   "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQk5ELU
+     5GNVItQkVPWi1FSERZLVBYTTMtWFREVS1ISzVUIiwKICAiTWVzc2FnZVR5cGUiOiA
+     iUHJvZmlsZUdyb3VwIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3Qi
+     LAogICJDcmVhdGVkIjogIjIwMjEtMDEtMTNUMTY6Mzg6MjhaIn0"},
+                 "ewogICJQcm9maWxlR3JvdXAiOiB7CiAgICAiUHJvZmlsZVNpZ2
+     5hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNQk5ELU5GNVItQkVPWi1FSERZLVBYTTM
+     tWFREVS1ISzVUIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAg
+     IlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgI
+     CAgICAgICJQdWJsaWMiOiAiTkdXV01jYUI4alY5WjJQOFVyd2lpYUFEdVhDUmhhbG
+     VSX0NDZFB1eURXZnBTTVBGM0IxZgogIG1faVd1NTdFbDR0RGR0Uk8wR3ZISjFPQSJ
+     9fX0sCiAgICAiQWNjb3VudEFkZHJlc3MiOiAiZ3JvdXB3QGV4YW1wbGUuY29tIiwK
+     ICAgICJBY2NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQjQ0LUk3V
+     FQtQTNKRS1ONUxLLVNLVFktV0pENi1VUkdaIiwKICAgICAgIlB1YmxpY1BhcmFtZX
+     RlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J
+     2IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJKSEkwU0l4SDJObWVJYzFk
+     bGdra2dmVVhCeXpibW5rWkw1cFNoNkFGd2t1UkNOTThMUVVnCiAgbEgwOEYtRi14U
+     WNDS3M1TndDZ0x6ejBBIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIj
+     ogewogICAgICAiVWRmIjogIk1DSzMtWk1QWS1DUUxHLUQyWUMtTlJJNS1OTzRBLUd
+     KTVgiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+     S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+     lB1YmxpYyI6ICJfNnJodzBlQUstUE1kTm5zQWJMM3NtX3FVNVZBQVJIcG5JQ2hfZy
+     1ueDFOaGpsNHU5R29rCiAgLWRPUHdmeXpOUTEtVnJSdUU2RG8wR01BIn19fX19",
+                 {
+                   "signatures":[{
+                       "alg":"S512",
+                       "kid":"MBND-NF5R-BEOZ-EHDY-PXM3-XTDU-HK5T",
+                       "signature":"pXHiPRR5N9QZieJEiaoxW8J6bn0p8arf
+     1LtY4U6LROXZpW9ru2eb-7vA4-qDm6d11gUEDOKyhp-AP-zPo1BeiRo7kFuUU6xcz
+     M5zCIjnDEQXJuXiLF1FMUfcL9V9l9bAeaPiy7VEtgdEtzobLAaFQxIA"}
+                     ],
+                   "PayloadDigest":"SFNO6ZCeXo0y3hSACwFeQmGB6ahSrVMD
+     sRDwERcy6lPnAtyPjtP6ht2dVv89ZxFOVBON1q-UKkhjZxTtrnsirg"}
+                 ],
+               "Protocols":[{
+                   "Protocol":"mmm"}
+                 ],
+               "Capabilities":[{
+                   "CapabilityDecryptPartial":{
+                     "Id":"MB44-I7TT-A3JE-N5LK-SKTY-WJD6-URGZ",
+                     "KeyData":{
+                       "Udf":"NC6A-BU3A-VQE7-KXXQ-F352-E5AG-KZW4",
+                       "PrivateParameters":{
+                         "PrivateKeyECDH":{
+                           "crv":"X448z",
+                           "Private":"_dcWVDGmDmeEIMuBSyGM_a-BbQZiWi
+     QrmvcktCKDn6lXkkat6XV37x59EeEqTaBnqj2zmLWb7ws"}}},
+                     "SubjectId":"MB44-I7TT-A3JE-N5LK-SKTY-WJD6-URGZ",
+                     "ServiceId":"NC6A-BU3A-VQE7-KXXQ-F352-E5AG-KZW4",
+                     "ServiceAddress":"groupw@example.com"}}
+                 ]}
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 46]
+
+                        Mesh Protocol Reference             January 2021
+
+             ]}}}}
+
+7.5. Confirmation Interaction
+
+   The confirmation interaction consists of a RequestConfirmation
+   message from the initiator followed by a ResponseConfirmation from
+   the responder.
+
+   The RequestConfirmation message specifies the action that is
+   requested.
+
+   The ResponseConfirmation message contains the enveloped
+   RequestConfirmation message signed by the initiator and the
+   disposition of the responder, Accept = true if the request is
+   accepted and Accept = false otherwise.
+
+   The service sends out the following request:
+
+   {
+     "RequestConfirmation":{
+       "MessageId":"NCHB-PAFY-23JU-UWSK-Q4NK-LEKY-MFZX",
+       "Sender":"console@example.com",
+       "Recipient":"alice@example.com",
+       "Text":"start"}}
+
+   Alice accepts the request and returns the following response:
+
+   {
+     "ResponseConfirmation":{
+       "MessageId":"MBX5-PSU2-MPUA-IRVR-WIJL-CS4Q-5YUS",
+       "Sender":"alice@example.com",
+       "Recipient":"console@example.com",
+       "Request":[{
+           "EnvelopeId":"MCDL-YDFD-GEC4-MJZO-FONM-AC2D-HNM7",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQ0hCLVBBRlktMj
+     NKVS1VV1NLLVE0TkstTEVLWS1NRlpYIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+     zdENvbmZpcm1hdGlvbiIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0
+     IiwKICAiQ3JlYXRlZCI6ICIyMDIxLTAxLTEzVDE2OjM4OjI3WiJ9",
+           "SequenceInfo":{
+             "Index":4,
+             "TreePosition":6222},
+           "Received":"2021-01-13T16:38:27Z"},
+         "ewogICJSZXF1ZXN0Q29uZmlybWF0aW9uIjogewogICAgIk1lc3NhZ2VJZC
+     I6ICJOQ0hCLVBBRlktMjNKVS1VV1NLLVE0TkstTEVLWS1NRlpYIiwKICAgICJTZW5
+     kZXIiOiAiY29uc29sZUBleGFtcGxlLmNvbSIsCiAgICAiUmVjaXBpZW50IjogImFs
+     aWNlQGV4YW1wbGUuY29tIiwKICAgICJUZXh0IjogInN0YXJ0In19",
+         {}
+         ],
+       "Accept":true}}
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 47]
+
+                        Mesh Protocol Reference             January 2021
+
+8. Device Connection Interactions
+
+   Connection of a device to a Mesh Account combines synchronous and
+   asynchronous elements and therefore uses a combination of Mesh
+   Service Protocol and Mesh Messaging interactions.
+
+   Three connection interactions are currently defined support
+   connection of devices with difference affordances:
+
+         Witness Authenticated
+
+         Dynamic QR Code (PIN) Authenticated
+
+         Static QR Code Authenticated
+
+   Each of these interactions provide strong mutual authentication with
+   minimal user effort.
+
+   The witness authenticated connection interaction is intended for use
+   in cases in which the device is already connected to a network. The
+   QR code interactions are intended to provide support for acquisition
+   of networking capabilities as part of the connection process. These
+   functions are not currently specified. The Static QR Code
+   Authenticated interaction is intended to support Internet of Things
+   (IoT) devices which provide minimal interaction affordances.
+
+   In each case, the objectives of the device connection interaction are
+   the same:
+
+         *  Mutually authenticate the onboarding device and the Mesh
+            such that the connection interaction only completes if both
+            sides acquire the authentic profile of the other.
+
+         *  To provision the onboarding device with the Mesh
+            ProfileAccount, and an ActivationDevice and ConnectionDevice
+            record allowing the device to interact as a member of the
+            Mesh with the set of rights specified by the user.
+
+         *  To create a CataloguedDevice record and append it to the
+            Device catalog of the account to allow the device to be
+            managed within that account.
+
+         *  (optional) to acquire networking capabilities to allow the
+            above to be completed.
+
+   The connection of the device to the Mesh Account is achieved through
+   the creation of the ActivationDevice, ConnectionDevice and
+   CataloguedDevice records described earlier. These are created by the
+   administration device in the third phase of each of the connection
+   interactions described below and acquired by the onboarding device in
+   the fourth phase.
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 48]
+
+                        Mesh Protocol Reference             January 2021
+
+
+8.1. Dynamic QR Code (PIN) Authenticated
+
+   The Dynamic QR Code (PIN) Authenticated interaction comprises four
+   phases as follows:
+
+         Phase 1: Issue of PIN credential
+
+         Phase 2: Onboarding Device Request to Service
+
+         Phase 3: Administration Device Acceptance
+
+         Phase 4: Onboarding Device Completion
+
+   The use of the PIN code to authenticate the request message is shown
+   in $$$$.
+
+   The PIN code MAY be presented to the onboarding device in any format
+   accepted by the device. Administration MAY support presentation of
+   the account address PIN code as a URI code. Administration devices
+   SHOULD support presentation of the account address PIN code as a QR
+   code containing the corresponding URI.
+
+8.1.1.  Phase 1:
+
+   Alice> account pin
+   PIN=AB23-ZBOI-CEIZ-MTD4-VQ
+    (Expires=2021-01-14T16:38:30Z)
+
+   The registration of this PIN value was shown earlier in section $$$
+
+   The URI containing the account address and PIN is:
+
+   mcu://alice@example.com/AB23-ZBOI-CEIZ-MTD4-VQ
+
+8.1.2.  Phase 2:
+
+   The onboarding device scans the QR code to obtain the account address
+   and PIN code. The PIN code is used to authenticate a connection
+   request:
+
+   Alice3> device request alice@example.com /pin AB23-ZBOI-CEIZ-MTD4-VQ
+      Device UDF = MCNR-5XZX-CCZC-XTMJ-RYP2-PACV-HCBM
+      Witness value = B4AE-RNXK-Y2OC-ZS7R-ZQZK-VUBI-ZFPF
+
+   The device issues a connection request to the service corresponding
+   to the account.  This specifies the device profile, the account to
+   which the device is to be  connected and the client nonce value:
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 49]
+
+                        Mesh Protocol Reference             January 2021
+
+   {
+     "ConnectRequest":{
+       "EnvelopedRequestConnection":[{
+           "EnvelopeId":"MAD4-DQE5-PU4Y-QCTJ-D5U2-ZZVS-WBYC",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQlBTLVRFMkstNU
+     JRWi0zSFdBLVBKTlUtV1lPWC1EQU1XIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+     zdENvbm5lY3Rpb24iLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIs
+     CiAgIkNyZWF0ZWQiOiAiMjAyMS0wMS0xM1QxNjozODozMFoifQ"},
+         "ewogICJSZXF1ZXN0Q29ubmVjdGlvbiI6IHsKICAgICJNZXNzYWdlSWQiOi
+     AiTkJQUy1URTJLLTVCUVotM0hXQS1QSk5VLVdZT1gtREFNVyIsCiAgICAiQXV0aGV
+     udGljYXRlZERhdGEiOiBbewogICAgICAgICJFbnZlbG9wZUlkIjogIk1DTlItNVha
+     WC1DQ1pDLVhUTUotUllQMi1QQUNWLUhDQk0iLAogICAgICAgICJkaWciOiAiUzUxM
+     iIsCiAgICAgICAgIkNvbnRlbnRNZXRhRGF0YSI6ICJld29nSUNKVmJtbHhkV1ZKWk
+     NJNklDSk5RMDVTTFRWWVdsZ3RRME5hUXkxCiAgWVZFMUtMVkpaVURJdFVFRkRWaTF
+     JUTBKTklpd0tJQ0FpVFdWemMyRm5aVlI1Y0dVaU9pQWlVSEp2Wm1sc1oKICBVUmxk
+     bWxqWlNJc0NpQWdJbU4wZVNJNklDSmhjSEJzYVdOaGRHbHZiaTl0YlcwdmIySnFaV
+     04wSWl3S0lDQQogIGlRM0psWVhSbFpDSTZJQ0l5TURJeExUQXhMVEV6VkRFMk9qTT
+     RPak13V2lKOSJ9LAogICAgICAiZXdvZ0lDSlFjbTltYVd4bFJHVjJhV05sSWpvZ2V
+     3b2dJQ0FnSWxCeWIyWgogIHBiR1ZUYVdkdVlYUjFjbVVpT2lCN0NpQWdJQ0FnSUNK
+     VlpHWWlPaUFpVFVOT1VpMDFXRnBZTFVORFdrTXRXCiAgRlJOU2kxU1dWQXlMVkJCU
+     TFZdFNFTkNUU0lzQ2lBZ0lDQWdJQ0pRZFdKc2FXTlFZWEpoYldWMFpYSnpJam8KIC
+     BnZXdvZ0lDQWdJQ0FnSUNKUWRXSnNhV05MWlhsRlEwUklJam9nZXdvZ0lDQWdJQ0F
+     nSUNBZ0ltTnlkaUk2SQogIENKRlpEUTBPQ0lzQ2lBZ0lDQWdJQ0FnSUNBaVVIVmli
+     R2xqSWpvZ0luUnBkV2h6VTNZM2RuUmFhR1pCU0dSCiAgTlVqbFVObmN5TXpnM2JHO
+     UNaRjlsTUZocGVsOXhhRE5OUVVsd1oyUXlWVzlGZHpRS0lDQnFZekZ1YVhKaFkKIC
+     AzTkVSVUpqUzB4WVJHSnBPWFZ4ZVVFaWZYMTlMQW9nSUNBZ0lrSmhjMlZGYm1OeWV
+     YQjBhVzl1SWpvZ2V3bwogIGdJQ0FnSUNBaVZXUm1Jam9nSWsxRVdVVXRRMDlDVXkx
+     S1VEVkRMVEkzVUVZdFNrRXpWUzFETms1V0xVZEtTCiAgRU1pTEFvZ0lDQWdJQ0FpV
+     UhWaWJHbGpVR0Z5WVcxbGRHVnljeUk2SUhzS0lDQWdJQ0FnSUNBaVVIVmliR2wKIC
+     BqUzJWNVJVTkVTQ0k2SUhzS0lDQWdJQ0FnSUNBZ0lDSmpjbllpT2lBaVdEUTBPQ0l
+     zQ2lBZ0lDQWdJQ0FnSQogIENBaVVIVmliR2xqSWpvZ0ltMURReTAwZUhWTFZIRkJT
+     R2h1ZEY5cFoycEVSakJQZW1nM1JGbzFkVU5WY2pFCiAgNFowTnRaMGhDUzBkcU5EV
+     mFURWhvZDBrS0lDQkthRUpDVkcxTFFtdDZiM2RyTlY5M2RFbzNNVTR3Y1VFaWYKIC
+     BYMTlMQW9nSUNBZ0lrSmhjMlZCZFhSb1pXNTBhV05oZEdsdmJpSTZJSHNLSUNBZ0l
+     DQWdJbFZrWmlJNklDSgogIE5RMDVMTFRNelNFNHRSRVZKVUMxYVRWUTBMVEpCV0Rj
+     dFExZFVVaTAxVFZrMElpd0tJQ0FnSUNBZ0lsQjFZCiAgbXhwWTFCaGNtRnRaWFJsY
+     25NaU9pQjdDaUFnSUNBZ0lDQWdJbEIxWW14cFkwdGxlVVZEUkVnaU9pQjdDaUEKIC
+     BnSUNBZ0lDQWdJQ0FpWTNKMklqb2dJbGcwTkRnaUxBb2dJQ0FnSUNBZ0lDQWdJbEI
+     xWW14cFl5STZJQ0pCVQogIEhWdU0wMW5OMHhvTUVwaWEzaGtOQzF0ZVdOS1kzTmZa
+     V3BNUTJGMFlYa3lSM05wU0ZKR1MwOXVSbk14ZDFkCiAgWE5tWnpDaUFnVW05SWIzY
+     3Rja3M0U2pWa2RtbERaakZuWWxGVVFVbEJJbjE5ZlN3S0lDQWdJQ0pDWVhObFUKIC
+     AybG5ibUYwZFhKbElqb2dld29nSUNBZ0lDQWlWV1JtSWpvZ0lrMUVOa1F0TWxKUlV
+     pMVNTVTFXTFV3M1J6TQogIHRORFpRU3kwM1ExbzBMVGRDVkUwaUxBb2dJQ0FnSUNB
+     aVVIVmliR2xqVUdGeVlXMWxkR1Z5Y3lJNklIc0tJCiAgQ0FnSUNBZ0lDQWlVSFZpY
+     kdsalMyVjVSVU5FU0NJNklIc0tJQ0FnSUNBZ0lDQWdJQ0pqY25ZaU9pQWlSV1EKIC
+     AwTkRnaUxBb2dJQ0FnSUNBZ0lDQWdJbEIxWW14cFl5STZJQ0pDU0hSdU4zZDNXazF
+     4WkdGbFZGYzJNME0wYgogIGxKV2REaEtTSFY1ZDJaNWFGZHpkMHN4WVVwMVdUSk1X
+     RUV6Ym5weGRGQllDaUFnTUZrd1dFcHpiek5oVFhGCiAgcWFqVkpSSGRRVkcxQ1p6S
+     kJJbjE5ZlgxOSIsCiAgICAgIHsKICAgICAgICAic2lnbmF0dXJlcyI6IFt7CiAgIC
+     AgICAgICAgICJhbGciOiAiUzUxMiIsCiAgICAgICAgICAgICJraWQiOiAiTUNOUi0
+     1WFpYLUNDWkMtWFRNSi1SWVAyLVBBQ1YtSENCTSIsCiAgICAgICAgICAgICJzaWdu
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 50]
+
+                        Mesh Protocol Reference             January 2021
+     YXR1cmUiOiAiTnpuTlNSTlZGV3I1Z1VtWXhxV01tUkJaRkJHTS1BaGRmclhndEVvU
+     E5vUE5tOC01LQogIHJTbDNiMVJ6Q1N5Y0E2aVhJb2VPRmtYaWJDQUtHbzNPMW5Wel
+     YxV3k1cUZ1MzRwVlhVSDRveHVIM2FjOTU3CiAgX1VnVHRHanlwYlJhMTB4cVBFbmx
+     GV2Jmck1WQ2lsdUhhNEp5ZDFSRUEifV0sCiAgICAgICAgIlBheWxvYWREaWdlc3Qi
+     OiAialVWNVJHejJQRHl2YmdyT25kSmxjQkVwUjFZVjUzSTVicEVKS0tueXoteEMxC
+     iAgQkltcmxjSTN4N20wVUNFRnhfYW5DLXRqc3JsM0NxYnhLakNOOGdQY1EifV0sCi
+     AgICAiQ2xpZW50Tm9uY2UiOiAicXVJcFBjeGxfS2drV3ctWE1BUWVBUSIsCiAgICA
+     iUGluSWQiOiAiQUFBVS02SFZNLTdBQTYtVE5FRy1QRlVTLUlYWjMtQk1ZTCIsCiAg
+     ICAiUGluV2l0bmVzcyI6ICI1ekZCb1RHbGVYd1NnSmM2OGdSTkI1ekt1b0p0V3JsY
+     VA5ZlpZVFlVcG0yNkFHUUQKICBZZ0xBU2NvVlZxNk9vTnMtOVlOUWxDVWR1b2E5eU
+     R0YlZqLWRLZyIsCiAgICAiQWNjb3VudEFkZHJlc3MiOiAiYWxpY2VAZXhhbXBsZS5
+     jb20ifX0"
+         ]}}
+
+   The service generates the service nonce value and uses it to create
+   the  AcknowledgeConnection message.
+
+   {
+     "AcknowledgeConnection":{
+       "MessageId":"B4AE-RNXK-Y2OC-ZS7R-ZQZK-VUBI-ZFPF",
+       "EnvelopedRequestConnection":[{
+           "EnvelopeId":"MAD4-DQE5-PU4Y-QCTJ-D5U2-ZZVS-WBYC",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQlBTLVRFMkstNU
+     JRWi0zSFdBLVBKTlUtV1lPWC1EQU1XIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+     zdENvbm5lY3Rpb24iLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIs
+     CiAgIkNyZWF0ZWQiOiAiMjAyMS0wMS0xM1QxNjozODozMFoifQ"},
+         "ewogICJSZXF1ZXN0Q29ubmVjdGlvbiI6IHsKICAgICJNZXNzYWdlSWQiOi
+     AiTkJQUy1URTJLLTVCUVotM0hXQS1QSk5VLVdZT1gtREFNVyIsCiAgICAiQXV0aGV
+     udGljYXRlZERhdGEiOiBbewogICAgICAgICJFbnZlbG9wZUlkIjogIk1DTlItNVha
+     WC1DQ1pDLVhUTUotUllQMi1QQUNWLUhDQk0iLAogICAgICAgICJkaWciOiAiUzUxM
+     iIsCiAgICAgICAgIkNvbnRlbnRNZXRhRGF0YSI6ICJld29nSUNKVmJtbHhkV1ZKWk
+     NJNklDSk5RMDVTTFRWWVdsZ3RRME5hUXkxCiAgWVZFMUtMVkpaVURJdFVFRkRWaTF
+     JUTBKTklpd0tJQ0FpVFdWemMyRm5aVlI1Y0dVaU9pQWlVSEp2Wm1sc1oKICBVUmxk
+     bWxqWlNJc0NpQWdJbU4wZVNJNklDSmhjSEJzYVdOaGRHbHZiaTl0YlcwdmIySnFaV
+     04wSWl3S0lDQQogIGlRM0psWVhSbFpDSTZJQ0l5TURJeExUQXhMVEV6VkRFMk9qTT
+     RPak13V2lKOSJ9LAogICAgICAiZXdvZ0lDSlFjbTltYVd4bFJHVjJhV05sSWpvZ2V
+     3b2dJQ0FnSWxCeWIyWgogIHBiR1ZUYVdkdVlYUjFjbVVpT2lCN0NpQWdJQ0FnSUNK
+     VlpHWWlPaUFpVFVOT1VpMDFXRnBZTFVORFdrTXRXCiAgRlJOU2kxU1dWQXlMVkJCU
+     TFZdFNFTkNUU0lzQ2lBZ0lDQWdJQ0pRZFdKc2FXTlFZWEpoYldWMFpYSnpJam8KIC
+     BnZXdvZ0lDQWdJQ0FnSUNKUWRXSnNhV05MWlhsRlEwUklJam9nZXdvZ0lDQWdJQ0F
+     nSUNBZ0ltTnlkaUk2SQogIENKRlpEUTBPQ0lzQ2lBZ0lDQWdJQ0FnSUNBaVVIVmli
+     R2xqSWpvZ0luUnBkV2h6VTNZM2RuUmFhR1pCU0dSCiAgTlVqbFVObmN5TXpnM2JHO
+     UNaRjlsTUZocGVsOXhhRE5OUVVsd1oyUXlWVzlGZHpRS0lDQnFZekZ1YVhKaFkKIC
+     AzTkVSVUpqUzB4WVJHSnBPWFZ4ZVVFaWZYMTlMQW9nSUNBZ0lrSmhjMlZGYm1OeWV
+     YQjBhVzl1SWpvZ2V3bwogIGdJQ0FnSUNBaVZXUm1Jam9nSWsxRVdVVXRRMDlDVXkx
+     S1VEVkRMVEkzVUVZdFNrRXpWUzFETms1V0xVZEtTCiAgRU1pTEFvZ0lDQWdJQ0FpV
+     UhWaWJHbGpVR0Z5WVcxbGRHVnljeUk2SUhzS0lDQWdJQ0FnSUNBaVVIVmliR2wKIC
+     BqUzJWNVJVTkVTQ0k2SUhzS0lDQWdJQ0FnSUNBZ0lDSmpjbllpT2lBaVdEUTBPQ0l
+     zQ2lBZ0lDQWdJQ0FnSQogIENBaVVIVmliR2xqSWpvZ0ltMURReTAwZUhWTFZIRkJT
+     R2h1ZEY5cFoycEVSakJQZW1nM1JGbzFkVU5WY2pFCiAgNFowTnRaMGhDUzBkcU5EV
+     mFURWhvZDBrS0lDQkthRUpDVkcxTFFtdDZiM2RyTlY5M2RFbzNNVTR3Y1VFaWYKIC
+     BYMTlMQW9nSUNBZ0lrSmhjMlZCZFhSb1pXNTBhV05oZEdsdmJpSTZJSHNLSUNBZ0l
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 51]
+
+                        Mesh Protocol Reference             January 2021
+
+     DQWdJbFZrWmlJNklDSgogIE5RMDVMTFRNelNFNHRSRVZKVUMxYVRWUTBMVEpCV0Rj
+     dFExZFVVaTAxVFZrMElpd0tJQ0FnSUNBZ0lsQjFZCiAgbXhwWTFCaGNtRnRaWFJsY
+     25NaU9pQjdDaUFnSUNBZ0lDQWdJbEIxWW14cFkwdGxlVVZEUkVnaU9pQjdDaUEKIC
+     BnSUNBZ0lDQWdJQ0FpWTNKMklqb2dJbGcwTkRnaUxBb2dJQ0FnSUNBZ0lDQWdJbEI
+     xWW14cFl5STZJQ0pCVQogIEhWdU0wMW5OMHhvTUVwaWEzaGtOQzF0ZVdOS1kzTmZa
+     V3BNUTJGMFlYa3lSM05wU0ZKR1MwOXVSbk14ZDFkCiAgWE5tWnpDaUFnVW05SWIzY
+     3Rja3M0U2pWa2RtbERaakZuWWxGVVFVbEJJbjE5ZlN3S0lDQWdJQ0pDWVhObFUKIC
+     AybG5ibUYwZFhKbElqb2dld29nSUNBZ0lDQWlWV1JtSWpvZ0lrMUVOa1F0TWxKUlV
+     pMVNTVTFXTFV3M1J6TQogIHRORFpRU3kwM1ExbzBMVGRDVkUwaUxBb2dJQ0FnSUNB
+     aVVIVmliR2xqVUdGeVlXMWxkR1Z5Y3lJNklIc0tJCiAgQ0FnSUNBZ0lDQWlVSFZpY
+     kdsalMyVjVSVU5FU0NJNklIc0tJQ0FnSUNBZ0lDQWdJQ0pqY25ZaU9pQWlSV1EKIC
+     AwTkRnaUxBb2dJQ0FnSUNBZ0lDQWdJbEIxWW14cFl5STZJQ0pDU0hSdU4zZDNXazF
+     4WkdGbFZGYzJNME0wYgogIGxKV2REaEtTSFY1ZDJaNWFGZHpkMHN4WVVwMVdUSk1X
+     RUV6Ym5weGRGQllDaUFnTUZrd1dFcHpiek5oVFhGCiAgcWFqVkpSSGRRVkcxQ1p6S
+     kJJbjE5ZlgxOSIsCiAgICAgIHsKICAgICAgICAic2lnbmF0dXJlcyI6IFt7CiAgIC
+     AgICAgICAgICJhbGciOiAiUzUxMiIsCiAgICAgICAgICAgICJraWQiOiAiTUNOUi0
+     1WFpYLUNDWkMtWFRNSi1SWVAyLVBBQ1YtSENCTSIsCiAgICAgICAgICAgICJzaWdu
+     YXR1cmUiOiAiTnpuTlNSTlZGV3I1Z1VtWXhxV01tUkJaRkJHTS1BaGRmclhndEVvU
+     E5vUE5tOC01LQogIHJTbDNiMVJ6Q1N5Y0E2aVhJb2VPRmtYaWJDQUtHbzNPMW5Wel
+     YxV3k1cUZ1MzRwVlhVSDRveHVIM2FjOTU3CiAgX1VnVHRHanlwYlJhMTB4cVBFbmx
+     GV2Jmck1WQ2lsdUhhNEp5ZDFSRUEifV0sCiAgICAgICAgIlBheWxvYWREaWdlc3Qi
+     OiAialVWNVJHejJQRHl2YmdyT25kSmxjQkVwUjFZVjUzSTVicEVKS0tueXoteEMxC
+     iAgQkltcmxjSTN4N20wVUNFRnhfYW5DLXRqc3JsM0NxYnhLakNOOGdQY1EifV0sCi
+     AgICAiQ2xpZW50Tm9uY2UiOiAicXVJcFBjeGxfS2drV3ctWE1BUWVBUSIsCiAgICA
+     iUGluSWQiOiAiQUFBVS02SFZNLTdBQTYtVE5FRy1QRlVTLUlYWjMtQk1ZTCIsCiAg
+     ICAiUGluV2l0bmVzcyI6ICI1ekZCb1RHbGVYd1NnSmM2OGdSTkI1ekt1b0p0V3JsY
+     VA5ZlpZVFlVcG0yNkFHUUQKICBZZ0xBU2NvVlZxNk9vTnMtOVlOUWxDVWR1b2E5eU
+     R0YlZqLWRLZyIsCiAgICAiQWNjb3VudEFkZHJlc3MiOiAiYWxpY2VAZXhhbXBsZS5
+     jb20ifX0"
+         ],
+       "ServerNonce":"LP3WDlQdCtBrNUFaTaUvXA",
+       "Witness":"B4AE-RNXK-Y2OC-ZS7R-ZQZK-VUBI-ZFPF"}}
+
+   The AcknowledgeConnection message is appended to the Inbound spool of
+   the account to which connection was requested so that the user can
+   approve the request. The ConnectResponse message is returned to the
+   device containing the AcknowledgeConnection  message and the profile
+   of the account.
+
+   {
+     "ConnectResponse":{
+       "Status":201,
+       "StatusDescription":"Operation completed successfully",
+       "EnvelopedAcknowledgeConnection":[{
+           "EnvelopeId":"MC3V-VXL7-NE6V-7YMB-FEOM-SJWU-SFQO",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJCNEFFLVJOWEstWT
+     JPQy1aUzdSLVpRWkstVlVCSS1aRlBGIiwKICAiTWVzc2FnZVR5cGUiOiAiQWNrbm9
+     3bGVkZ2VDb25uZWN0aW9uIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmpl
+     Y3QiLAogICJDcmVhdGVkIjogIjIwMjEtMDEtMTNUMTY6Mzg6MzBaIn0",
+           "SequenceInfo":{
+             "Index":6,
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 52]
+
+                        Mesh Protocol Reference             January 2021
+
+             "TreePosition":11843},
+           "Received":"2021-01-13T16:38:30Z"},
+         "ewogICJBY2tub3dsZWRnZUNvbm5lY3Rpb24iOiB7CiAgICAiTWVzc2FnZU
+     lkIjogIkI0QUUtUk5YSy1ZMk9DLVpTN1ItWlFaSy1WVUJJLVpGUEYiLAogICAgIkV
+     udmVsb3BlZFJlcXVlc3RDb25uZWN0aW9uIjogW3sKICAgICAgICAiRW52ZWxvcGVJ
+     ZCI6ICJNQUQ0LURRRTUtUFU0WS1RQ1RKLUQ1VTItWlpWUy1XQllDIiwKICAgICAgI
+     CAiQ29udGVudE1ldGFEYXRhIjogImV3b2dJQ0pWYm1seGRXVkpaQ0k2SUNKT1FsQl
+     RMVlJGTWtzdE5VSlJXaTAKICB6U0ZkQkxWQktUbFV0VjFsUFdDMUVRVTFYSWl3S0l
+     DQWlUV1Z6YzJGblpWUjVjR1VpT2lBaVVtVnhkV1Z6ZAogIEVOdmJtNWxZM1JwYjI0
+     aUxBb2dJQ0pqZEhraU9pQWlZWEJ3YkdsallYUnBiMjR2YlcxdEwyOWlhbVZqZENJC
+     iAgc0NpQWdJa055WldGMFpXUWlPaUFpTWpBeU1TMHdNUzB4TTFReE5qb3pPRG96TU
+     ZvaWZRIn0sCiAgICAgICJld29nSUNKU1pYRjFaWE4wUTI5dWJtVmpkR2x2YmlJNkl
+     Ic0tJQ0FnSUNKCiAgTlpYTnpZV2RsU1dRaU9pQWlUa0pRVXkxVVJUSkxMVFZDVVZv
+     dE0waFhRUzFRU2s1VkxWZFpUMWd0UkVGTlYKICB5SXNDaUFnSUNBaVFYVjBhR1Z1Z
+     EdsallYUmxaRVJoZEdFaU9pQmJld29nSUNBZ0lDQWdJQ0pGYm5abGJHOQogIHdaVW
+     xrSWpvZ0lrMURUbEl0TlZoYVdDMURRMXBETFZoVVRVb3RVbGxRTWkxUVFVTldMVWh
+     EUWswaUxBb2dJCiAgQ0FnSUNBZ0lDSmthV2NpT2lBaVV6VXhNaUlzQ2lBZ0lDQWdJ
+     Q0FnSWtOdmJuUmxiblJOWlhSaFJHRjBZU0kKICA2SUNKbGQyOW5TVU5LVm1KdGJIa
+     GtWMVpLV2tOSk5rbERTazVSTURWVFRGUldXVmRzWjNSUk1FNWhVWGt4QwogIGlBZ1
+     dWWkZNVXRNVmtwYVZVUkpkRlZGUmtSV2FURkpVVEJLVGtscGQwdEpRMEZwVkZkV2V
+     tTXlSbTVhVmxJCiAgMVkwZFZhVTlwUVdsVlNFcDJXbTFzYzFvS0lDQlZVbXhrYld4
+     cVdsTkpjME5wUVdkSmJVNHdaVk5KTmtsRFMKICBtaGpTRUp6WVZkT2FHUkhiSFppY
+     VRsMFlsY3dkbUl5U25GYVYwNHdTV2wzUzBsRFFRb2dJR2xSTTBwc1dWaAogIFNiRn
+     BEU1RaSlEwbDVUVVJKZUV4VVFYaE1WRVY2VmtSRk1rOXFUVFJQYWsxM1YybEtPU0o
+     5TEFvZ0lDQWdJCiAgQ0FpWlhkdlowbERTbEZqYlRsdFlWZDRiRkpIVmpKaFYwNXNT
+     V3B2WjJWM2IyZEpRMEZuU1d4Q2VXSXlXZ28KICBnSUhCaVIxWlVZVmRrZFZsWVVqR
+     mpiVlZwVDJsQ04wTnBRV2RKUTBGblNVTktWbHBIV1dsUGFVRnBWRlZPVAogIDFWcE
+     1ERlhSbkJaVEZWT1JGZHJUWFJYQ2lBZ1JsSk9VMmt4VTFkV1FYbE1Wa0pDVVRGWmR
+     GTkZUa05VVTBsCiAgelEybEJaMGxEUVdkSlEwcFJaRmRLYzJGWFRsRlpXRXBvWWxk
+     V01GcFlTbnBKYW04S0lDQm5aWGR2WjBsRFEKICBXZEpRMEZuU1VOS1VXUlhTbk5oV
+     jA1TVdsaHNSbEV3VWtsSmFtOW5aWGR2WjBsRFFXZEpRMEZuU1VOQlowbAogIHRUbm
+     xrYVVrMlNRb2dJRU5LUmxwRVVUQlBRMGx6UTJsQlowbERRV2RKUTBGblNVTkJhVlZ
+     JVm1saVIyeHFTCiAgV3B2WjBsdVVuQmtWMmg2VlROWk0yUnVVbUZoUjFwQ1UwZFND
+     aUFnVGxWcWJGVk9ibU41VFhwbk0ySkhPVU4KICBhUmpsc1RVWm9jR1ZzT1hoaFJFN
+     U9VVlZzZDFveVVYbFdWemxHWkhwUlMwbERRbkZaZWtaMVlWaEthRmtLSQogIENBel
+     RrVlNWVXBxVXpCNFdWSkhTbkJQV0ZaNFpWVkZhV1pZTVRsTVFXOW5TVU5CWjBsclN
+     taGpNbFpHWW0xCiAgT2VXVllRakJoVnpsMVNXcHZaMlYzYndvZ0lHZEpRMEZuU1VO
+     QmFWWlhVbTFKYW05blNXc3hSVmRWVlhSUk0KICBEbERWWGt4UzFWRVZrUk1WRWt6V
+     lVWWmRGTnJSWHBXVXpGRVRtczFWMHhWWkV0VENpQWdSVTFwVEVGdlowbAogIERRV2
+     RKUTBGcFZVaFdhV0pIYkdwVlIwWjVXVmN4YkdSSFZubGplVWsyU1VoelMwbERRV2R
+     KUTBGblNVTkJhCiAgVlZJVm1saVIyd0tJQ0JxVXpKV05WSlZUa1ZUUTBrMlNVaHpT
+     MGxEUVdkSlEwRm5TVU5CWjBsRFNtcGpibGwKICBwVDJsQmFWZEVVVEJQUTBselEyb
+     EJaMGxEUVdkSlEwRm5TUW9nSUVOQmFWVklWbWxpUjJ4cVNXcHZaMGx0TQogIFVSUm
+     VUQXdaVWhXVEZaSVJrSlRSMmgxWkVZNWNGb3ljRVZTYWtKUVpXMW5NMUpHYnpGa1Z
+     VNVdZMnBGQ2lBCiAgZ05Gb3dUblJhTUdoRFV6QmtjVTVFVm1GVVJXaHZaREJyUzBs
+     RFFrdGhSVXBEVmtjeFRGRnRkRFppTTJSeVQKICBsWTVNMlJGYnpOTlZUUjNZMVZGY
+     VdZS0lDQllNVGxNUVc5blNVTkJaMGxyU21oak1sWkNaRmhTYjFwWE5UQgogIGhWMD
+     VvWkVkc2RtSnBTVFpKU0hOTFNVTkJaMGxEUVdkSmJGWnJXbWxKTmtsRFNnb2dJRTV
+     STURWTVRGUk5lCiAgbE5GTkhSU1JWWktWVU14WVZSV1VUQk1WRXBDVjBSamRGRXha
+     RlZWYVRBeFZGWnJNRWxwZDB0SlEwRm5TVU4KICBCWjBsc1FqRlpDaUFnYlhod1dUR
+     kNhR050Um5SYVdGSnNZMjVOYVU5cFFqZERhVUZuU1VOQlowbERRV2RKYgogIEVJeF
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 53]
+
+                        Mesh Protocol Reference             January 2021
+
+     dXMTRjRmt3ZEd4bFZWWkVVa1ZuYVU5cFFqZERhVUVLSUNCblNVTkJaMGxEUVdkSlE
+     wRnBXVE5LTWtsCiAgcWIyZEpiR2N3VGtSbmFVeEJiMmRKUTBGblNVTkJaMGxEUVdk
+     SmJFSXhXVzE0Y0ZsNVNUWkpRMHBDVlFvZ0kKICBFaFdkVTB3TVc1T01IaHZUVVZ3Y
+     VdFemFHdE9RekYwWlZkT1Mxa3pUbVphVjNCTlVUSkdNRmxZYTNsU00wNQogIHdVMF
+     pLUjFNd09YVlNiazE0WkRGa0NpQWdXRTV0V25wRGFVRm5WVzA1U1dJelkzUmphM00
+     wVTJwV2EyUnRiCiAgRVJhYWtadVdXeEdWVkZWYkVKSmJqRTVabE4zUzBsRFFXZEpR
+     MHBEV1ZoT2JGVUtJQ0F5Ykc1aWJVWXdaRmgKICBLYkVscWIyZGxkMjluU1VOQlowb
+     ERRV2xXVjFKdFNXcHZaMGxyTVVWT2ExRjBUV3hLVWxWcE1WTlRWVEZYVAogIEZWM0
+     0xSjZUUW9nSUhST1JGcFJVM2t3TTFFeGJ6Qk1WR1JEVmtVd2FVeEJiMmRKUTBGblN
+     VTkJhVlZJVm1sCiAgaVIyeHFWVWRHZVZsWE1XeGtSMVo1WTNsSk5rbEljMHRKQ2lB
+     Z1EwRm5TVU5CWjBsRFFXbFZTRlpwWWtkc2EKICBsTXlWalZTVlU1RlUwTkpOa2xJY
+     zB0SlEwRm5TVU5CWjBsRFFXZEpRMHBxWTI1WmFVOXBRV2xTVjFFS0lDQQogIHdUa1
+     JuYVV4QmIyZEpRMEZuU1VOQlowbERRV2RKYkVJeFdXMTRjRmw1U1RaSlEwcERVMGh
+     TZFU0elpETlhhCiAgekY0V2tkR2JGWkdZekpOTUUwd1lnb2dJR3hLVjJSRWFFdFRT
+     RlkxWkRKYU5XRkdaSHBrTUhONFdWVndNVmQKICBVU2sxWFJVVjZZbTV3ZUdSR1Fsb
+     ERhVUZuVFVacmQxZEZjSHBpZWs1b1ZGaEdDaUFnY1dGcVZrcFNTR1JSVgogIGtjeF
+     ExcDZTa0pKYmpFNVpsZ3hPU0lzQ2lBZ0lDQWdJSHNLSUNBZ0lDQWdJQ0FpYzJsbmJ
+     tRjBkWEpsY3lJCiAgNklGdDdDaUFnSUNBZ0lDQWdJQ0FnSUNKaGJHY2lPaUFpVXpV
+     eE1pSXNDaUFnSUNBZ0lDQWdJQ0FnSUNKcmEKICBXUWlPaUFpVFVOT1VpMDFXRnBZT
+     FVORFdrTXRXRlJOU2kxU1dWQXlMVkJCUTFZdFNFTkNUU0lzQ2lBZ0lDQQogIGdJQ0
+     FnSUNBZ0lDSnphV2R1WVhSMWNtVWlPaUFpVG5wdVRsTlNUbFpHVjNJMVoxVnRXWGh
+     4VjAxdFVrSmFSCiAga0pIVFMxQmFHUm1jbGhuZEVWdlVFNXZVRTV0T0MwMUxRb2dJ
+     SEpUYkROaU1WSjZRMU41WTBFMmFWaEpiMlYKICBQUm10WWFXSkRRVXRIYnpOUE1XN
+     VdlbFl4VjNrMWNVWjFNelJ3VmxoVlNEUnZlSFZJTTJGak9UVTNDaUFnWAogIDFWbl
+     ZIUkhhbmx3WWxKaE1UQjRjVkJGYm14R1YySm1jazFXUTJsc2RVaGhORXA1WkRGU1J
+     VRWlmVjBzQ2lBCiAgZ0lDQWdJQ0FnSWxCaGVXeHZZV1JFYVdkbGMzUWlPaUFpYWxW
+     V05WSkhlakpRUkhsMlltZHlUMjVrU214alEKICBrVndVakZaVmpVelNUVmljRVZLU
+     zB0dWVYb3RlRU14Q2lBZ1FrbHRjbXhqU1RONE4yMHdWVU5GUm5oZllXNQogIERMWF
+     JxYzNKc00wTnhZbmhMYWtOT09HZFFZMUVpZlYwc0NpQWdJQ0FpUTJ4cFpXNTBUbTl
+     1WTJVaU9pQWljCiAgWFZKY0ZCamVHeGZTMmRyVjNjdFdFMUJVV1ZCVVNJc0NpQWdJ
+     Q0FpVUdsdVNXUWlPaUFpUVVGQlZTMDJTRloKICBOTFRkQlFUWXRWRTVGUnkxUVJsV
+     lRMVWxZV2pNdFFrMVpUQ0lzQ2lBZ0lDQWlVR2x1VjJsMGJtVnpjeUk2SQogIENJMW
+     VrWkNiMVJIYkdWWWQxTm5TbU0yT0dkU1RrSTFla3QxYjBwMFYzSnNZVkE1WmxwWlZ
+     GbFZjRzB5TmtGCiAgSFVVUUtJQ0JaWjB4QlUyTnZWbFp4Tms5dlRuTXRPVmxPVVd4
+     RFZXUjFiMkU1ZVVSMFlsWnFMV1JMWnlJc0MKICBpQWdJQ0FpUVdOamIzVnVkRUZrW
+     khKbGMzTWlPaUFpWVd4cFkyVkFaWGhoYlhCc1pTNWpiMjBpZlgwIl0sCiAgICAiU2
+     VydmVyTm9uY2UiOiAiTFAzV0RsUWRDdEJyTlVGYVRhVXZYQSIsCiAgICAiV2l0bmV
+     zcyI6ICJCNEFFLVJOWEstWTJPQy1aUzdSLVpRWkstVlVCSS1aRlBGIn19",
+         {}
+         ],
+       "EnvelopedProfileAccount":[{
+           "EnvelopeId":"MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH",
+           "dig":"S512",
+           "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQU1VLTVRWFAtVF
+     dDRC03UEtJLVM0RkMtSUI3Ni1YQVNIIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+     sZVVzZXIiLAogICJjdHkiOiAiYXBwbGljYXRpb24vbW1tL29iamVjdCIsCiAgIkNy
+     ZWF0ZWQiOiAiMjAyMS0wMS0xM1QxNjozODoxOVoifQ"},
+         "ewogICJQcm9maWxlVXNlciI6IHsKICAgICJQcm9maWxlU2lnbmF0dXJlIj
+     ogewogICAgICAiVWRmIjogIk1BTVUtNVFYUC1UV0NELTdQS0ktUzRGQy1JQjc2LVh
+     BU0giLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
+     S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 54]
+
+                        Mesh Protocol Reference             January 2021
+
+     lB1YmxpYyI6ICJjM2w5NmhGTlZiWHpRYTdkb2hncF9YOVlJSXphUjRVMGRQQ2Z5b2
+     NxdUZXblp1aUZkdTl2CiAgbDlVSWd0WXYtdGpGVnBtazZxUkRqN21BIn19fSwKICA
+     gICJBY2NvdW50QWRkcmVzcyI6ICJhbGljZUBleGFtcGxlLmNvbSIsCiAgICAiU2Vy
+     dmljZVVkZiI6ICJNQTM2LVRVSkwtUVJaSi0zTTNMLVNSQlEtQlJZUS1XMllNIiwKI
+     CAgICJBY2NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNRExPLUpKNE
+     ItUkJZNS1WWUQ3LUxKWlktUzNSSy1EQk0yIiwKICAgICAgIlB1YmxpY1BhcmFtZXR
+     lcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2
+     IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICI0TWk5WDhtWEk5bUdoXzdza
+     kdaUDBhRlBSWEpOU0ZleFBCbklBSzFCTl9fU1hSeHRXUVRzCiAgWHNnejFmbDVKYz
+     M4Wll4N01WZTJYOXdBIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIjo
+     gewogICAgICAiVWRmIjogIk1DQ0stRjJXWi1RQUFDLUMzTkEtRVZBVy1TQkw3LUlI
+     RVEiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS
+     2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIl
+     B1YmxpYyI6ICI4VFNaN0ROVE03RnVnSnFBRmZ0NEZKRDRXZGpBOW9tSFVEYTd0bnR
+     uSkJrUTRrTldfdHlTCiAgNlFNR01ZbHk0d0hSMVdGblVadkk1UW1BIn19fSwKICAg
+     ICJBY2NvdW50QXV0aGVudGljYXRpb24iOiB7CiAgICAgICJVZGYiOiAiTUJCMy03M
+     jNLLURKS1EtRzRISC03UFROLTVKWEstWlY2QSIsCiAgICAgICJQdWJsaWNQYXJhbW
+     V0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImN
+     ydiI6ICJYNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAibDY3NF9uOWloZzkxcmpn
+     UGlzYjNYdUE3OEVfOGhXenNIdFlmb0ZRdkdCMmtaM08xeFNCRgogIEUycHBGamhTN
+     GhzbEE0NXl6N1dwQnpnQSJ9fX0sCiAgICAiQWNjb3VudFNpZ25hdHVyZSI6IHsKIC
+     AgICAgIlVkZiI6ICJNREE2LUVMRTItVDJBTS01MlJULUFOM1ItTFVEUy1HSkdYIiw
+     KICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVD
+     REgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQdWJsa
+     WMiOiAiQUhTdFc4S0dwYnJvWnQ1ZXotd3ZiQ19GTXI5QWpxSThnTGlnQzVwM3doSG
+     NFUTRqUDlkVwogIDF4RHdaMzRqNzdxWE5JZkZFdk9FV0pNQSJ9fX19fQ",
+         {
+           "signatures":[{
+               "alg":"S512",
+               "kid":"MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH",
+               "signature":"_9tIDk5KvjeIuasHaXDawBB1VTw2YIzxBUxpLn78
+     a0qfO9CjuWh7auyUMHrCGvpuQRjjQrDR_OeATnhDzrIG5xcQbFwvfge_rfqvUjqQc
+     -CZqvT8lLDQ2clW6THP1Z0GcIZmxNEpYVkyyR-9AACDQAcA"}
+             ],
+           "PayloadDigest":"fb_iksIe0dM4IWIWZjmKlYQSF-XttjIAg8Bww4tJ
+     jpOE0P9bxX42pkNorLfHQ8XyD8x9IHT-FKh-_lhLJNAUzA"}
+         ]}}
+
+   The device generates the witness value and presents it to the user as
+   shown above.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 55]
+
+                        Mesh Protocol Reference             January 2021
+
+8.1.3.  Phase 3:
+
+   The user synchronizes their pending messages:
+
+   Alice> message pending
+   MessageID: B4AE-RNXK-Y2OC-ZS7R-ZQZK-VUBI-ZFPF
+           Connection Request::
+           MessageID: B4AE-RNXK-Y2OC-ZS7R-ZQZK-VUBI-ZFPF
+           To:  From: 
+           Device:  MCNR-5XZX-CCZC-XTMJ-RYP2-PACV-HCBM
+           Witness: B4AE-RNXK-Y2OC-ZS7R-ZQZK-VUBI-ZFPF
+   MessageID: NAL6-QEBL-5JF7-TEX3-AIM7-HV74-MPYQ
+           Group invitation::
+           MessageID: NAL6-QEBL-5JF7-TEX3-AIM7-HV74-MPYQ
+           To: alice@example.com From: alice@example.com
+   MessageID: NCHB-PAFY-23JU-UWSK-Q4NK-LEKY-MFZX
+           Confirmation Request::
+           MessageID: NCHB-PAFY-23JU-UWSK-Q4NK-LEKY-MFZX
+           To: alice@example.com From: console@example.com
+           Text: start
+   MessageID: NBPI-ULGE-MSPK-FUE2-CBDB-WTNY-NJDZ
+           Contact Request::
+           MessageID: NBPI-ULGE-MSPK-FUE2-CBDB-WTNY-NJDZ
+           To: alice@example.com From: bob@example.com
+           PIN: ADHF-R2A7-SV2S-XUBQ-C7CU-HA6Y-JBVA
+   Alice> account sync /auto
+   ERROR - An attempt was made to create an object with an existing obje
+   ct identifier
+
+   The administration device determines that the device connection
+   request is authenticated by a PIN code. The PIN code is retrieved and
+   the message authenticated. This is shown in the PIN registration
+   interation example in section $$$ above.
+
+   The Cataloged device record is created from the public key values
+   corresponding to the combination of the public keys in the device
+   profile and those defined by the activation:
+
+   The ActivationDevice and CatalogedDevice records are ???
+
+8.1.4.  Phase 4
+
+   The device periodically polls for completion of the connection
+   request using the Complete transaction.
+
+   To provide a final check on the process, the command line tool
+   presents the UDF of  the account profile to which the device has
+   connected if successful:
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 56]
+
+                        Mesh Protocol Reference             January 2021
+
+   Alice3> device complete
+      Device UDF = MCNR-5XZX-CCZC-XTMJ-RYP2-PACV-HCBM
+      Account = alice@example.com
+      Account UDF = MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH
+   Alice3> account sync
+
+   The completion request specified the device requesting completion:
+
+   {
+     "CompleteRequest":{
+       "AccountAddress":"alice@example.com",
+       "ResponseID":"MADI-J7SC-HSPL-UREO-Z5NC-CWK6-KZIB"}}
+
+   The response contains the information the device requires to complete
+   the connection to the mesh:
+
+   {
+     "CompleteRequest":{
+       "AccountAddress":"alice@example.com",
+       "ResponseID":"MADI-J7SC-HSPL-UREO-Z5NC-CWK6-KZIB"}}
+
+8.2. Witness Authenticated
+
+   The witness authenticated interaction is essentially the same as the
+   Dynamic QR Code (PIN) Authenticated interaction except that mutual
+   authentication is achieved by comparing the witness value computed by
+   the device in the second phase to that computed by the administration
+   device in the third phase.
+
+8.2.1.  Phase 1:
+
+   There are no first phase actions.
+
+8.2.2.  Phase 2:
+
+   Alice enters the connection request on the device to be connected.
+   This specifies the  address of the account to which she wishes to
+   connect:
+
+   Alice2> device request alice@example.com
+      Device UDF = MCDZ-IZFY-PWT3-36UP-4L6Q-5QMJ-YWWY
+      Witness value = WGAZ-BX2A-7G72-J5U3-SGGT-UB3W-TV4L
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 57]
+
+                        Mesh Protocol Reference             January 2021
+
+8.2.3.  Phase 3:
+
+   The user reviews their pending messages:
+
+   Alice> device pending
+   MessageID: WGAZ-BX2A-7G72-J5U3-SGGT-UB3W-TV4L
+           Connection Request::
+           MessageID: WGAZ-BX2A-7G72-J5U3-SGGT-UB3W-TV4L
+           To:  From: 
+           Device:  MCDZ-IZFY-PWT3-36UP-4L6Q-5QMJ-YWWY
+           Witness: WGAZ-BX2A-7G72-J5U3-SGGT-UB3W-TV4L
+
+   The administration device receives the AcknowledgeConnection message
+   from the service  and verifies that the signature is valid and the
+   witness value correctly computed.
+
+   The user verifies that the witness value presented in the
+   AcknowledgeConnection message matches the one presented on the
+   device. Since they match, the request is accepted:
+
+   Alice> device accept WGAZ-BX2A-7G72-J5U3-SGGT-UB3W-TV4L /message /web
+
+8.2.4.  Phase 4
+
+   The device completes the connection as before:
+
+   Alice2> device complete
+      Device UDF = MCDZ-IZFY-PWT3-36UP-4L6Q-5QMJ-YWWY
+      Account = alice@example.com
+      Account UDF = MAMU-5QXP-TWCD-7PKI-S4FC-IB76-XASH
+
+8.3. Static QR Code Authenticated
+
+   The Static QR Code Authenticated mode is used to connect devices that
+   have been preconfigured for use with the Mesh with a device
+   configuration identified by a URI typically presented as machine
+   readable QR code on the device itself.
+
+   The interaction has four phases:
+
+         Phase 1: Preconfiguration
+
+         Phase 2: Device description acquisition
+
+         Phase 3: Administration Device Acceptance
+
+         Phase 4: Onboarding Device Completion
+
+   The use of the PollClaim interaction to discover a pending claim for
+   a document was shown in section $$$ above. The claim is authenticated
+   using the key specified in the EARL.
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 58]
+
+                        Mesh Protocol Reference             January 2021
+
+
+8.3.1.  Phase 1
+
+   The device is prepopulated with a Device description, this is shown
+   in section $$$ of Schema.
+
+8.3.2.  Phase 2
+
+   The administration device scans the QR code and obtains the Device
+   Description using the Claim transaction as shown in section $$$$.
+
+8.3.3.  Phase 3
+
+   Tha administration device creates the ActivationDevice and
+   CatalogedDevice records and populates the service as before.
+
+8.3.4.  Phase 4
+
+   The device polls the publication service until a claim message is
+   returned. This  interaction is shown in section $$$$ above.
+
+9. Protocol Schema
+
+         HTTP Well Known Service Prefix: /.well-known/mmm
+
+   Every Mesh Portal Service transaction consists of exactly one request
+   followed by exactly one response. Mesh Service transactions MAY cause
+   modification of the data stored in the Mesh Service or the Mesh
+   itself but do not cause changes to the connection state. The protocol
+   itself is thus idempotent. There is no set sequence in which
+   operations are required to be performed. It is not necessary to
+   perform a Hello transaction prior to any other transaction.
+
+9.1. Request Messages
+
+   A Mesh Portal Service request consists of a payload object that
+   inherits from the MeshRequest class. When using the  HTTP binding,
+   the request MUST specify the portal DNS address in the HTTP Host
+   field.
+
+9.1.1. Message: MeshRequest
+
+   Base class for all request messages.
+
+   [No fields]
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 59]
+
+                        Mesh Protocol Reference             January 2021
+
+9.1.2. Message: MeshRequestUser
+
+   Base class for all request messages made by a user.
+
+         Inherits: MeshRequest
+
+         Account: String (Optional)
+
+         EnvelopedProfileDevice: Enveloped (Optional)
+
+9.2. Response Messages
+
+   A Mesh Portal Service response consists of a payload object that
+   inherits from the MeshResponse class. When using the HTTP binding,
+   the response SHOULD report the Status response code in the HTTP
+   response  message. However the response code returned in the payload
+   object MUST always be considered authoritative.
+
+9.2.1. Message: MeshResponse
+
+   Base class for all response messages. Contains only the status code
+   and status description fields.
+
+   [No fields]
+
+9.3. Imported Objects
+
+   The Mesh Service protocol makes use of JSON objects defined in the
+   JOSE Signatgure and Encryption specifications and in the DARE Data At
+   Rest Encryption extensions to JOSE.
+
+9.4. Common Structures
+
+   The following common structures are used in the protocol messages:
+
+9.4.1. Structure: KeyValue
+
+   Describes a Key/Value structure used to make queries for records
+   matching one or more selection criteria.
+
+         Key: String (Optional)
+
+         Value: String (Optional)
+
+9.4.2. Structure: ConstraintsSelect
+
+   Specifies constraints to be applied to a search result. These  allow
+   a client to limit the number of records returned, the quantity of
+   data returned, the earliest and latest data returned, etc.
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 60]
+
+                        Mesh Protocol Reference             January 2021
+
+         Container: String (Optional)
+
+         IndexMin: Integer (Optional)
+
+         IndexMax: Integer (Optional)
+
+         NotBefore: DateTime (Optional)
+
+         Before: DateTime (Optional)
+
+         PageKey: String (Optional)
+
+9.4.3. Structure: ConstraintsData
+
+   Specifies constraints on the data to be sent.
+
+         MaxEntries: Integer (Optional)
+
+         BytesOffset: Integer (Optional)
+
+         BytesMax: Integer (Optional)
+
+         Header: Boolean (Optional)
+
+         Payload: Boolean (Optional)
+
+         Trailer: Boolean (Optional)
+
+9.4.4. Structure: PolicyAccount
+
+   Describes the account creation policy including constraints on
+   account names, whether there is an open account creation policy, etc.
+
+         Minimum: Integer (Optional)
+
+         Maximum: Integer (Optional)
+
+         InvalidCharacters: String (Optional)
+
+9.4.5. Structure: ContainerStatus
+
+         Container: String (Optional)
+
+         Index: Integer (Optional)
+
+         Digest: Binary (Optional)
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 61]
+
+                        Mesh Protocol Reference             January 2021
+
+9.4.6. Structure: ContainerUpdate
+
+         Inherits: ContainerStatus
+
+         Envelopes: DareEnvelope [0..Many]
+
+9.5. Transaction: Hello
+
+         Request: HelloRequest
+
+         Response: MeshHelloResponse
+
+   Report service and version information.
+
+   The Hello transaction provides a means of determining which protocol
+   versions, message encodings and transport protocols are supported by
+   the service.
+
+   The PostConstraints field MAY be used to advise senders of a maximum
+   size of payload that MAY be sent in an initial Post request.
+
+9.5.1. Message: MeshHelloResponse
+
+         ConstraintsUpdate: ConstraintsData (Optional)
+
+         ConstraintsPost: ConstraintsData (Optional)
+
+         PolicyAccount: PolicyAccount (Optional)
+
+         EnvelopedProfileService: Enveloped (Optional)
+
+         EnvelopedProfileHost: Enveloped (Optional)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 62]
+
+                        Mesh Protocol Reference             January 2021
+
+9.6. Transaction: BindAccount
+
+         Request: BindRequest
+
+         Response: BindResponse
+
+   Request creation of a new service account or group.
+
+   Attempt
+
+9.6.1. Message: BindRequest
+
+   Request binding of an account to a service address.
+
+         Inherits: MeshRequest
+
+         AccountAddress: String (Optional)
+
+         EnvelopedProfileAccount: Enveloped (Optional)
+
+9.6.2. Message: BindResponse
+
+         Inherits: MeshResponse
+
+   Reports the success or failure of a Create transaction.
+
+         Reason: String (Optional)
+
+         URL: String (Optional)
+
+9.7. Transaction: UnbindAccount
+
+         Request: UnbindRequest
+
+         Response: UnbindResponse
+
+   Request deletion of a service account.
+
+9.7.1. Message: UnbindRequest
+
+   Request creation of a new portal account. The request specifies the
+   requested account identifier and the Mesh profile to be associated
+   with the account.
+
+         Inherits: MeshRequestUser
+
+   [No fields]
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 63]
+
+                        Mesh Protocol Reference             January 2021
+
+9.7.2. Message: UnbindResponse
+
+         Inherits: MeshResponse
+
+   Reports the success or failure of a Delete transaction.
+
+   [No fields]
+
+9.8. Transaction: Connect
+
+         Request: ConnectRequest
+
+         Response: ConnectResponse
+
+   Request information necessary to begin making a connection request.
+
+9.8.1. Message: ConnectRequest
+
+         Inherits: MeshRequest
+
+         EnvelopedRequestConnection: Enveloped (Optional)
+
+         Rights: String [0..Many]
+
+9.8.2. Message: ConnectResponse
+
+         Inherits: MeshResponse
+
+         EnvelopedAcknowledgeConnection: Enveloped (Optional)
+
+         EnvelopedProfileAccount: Enveloped (Optional)
+
+9.9. Transaction: Complete
+
+         Request: CompleteRequest
+
+         Response: CompleteResponse
+
+9.9.1. Message: CompleteRequest
+
+         Inherits: StatusRequest
+
+         AccountAddress: String (Optional)
+
+         ResponseID: String (Optional)
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 64]
+
+                        Mesh Protocol Reference             January 2021
+
+9.9.2. Message: CompleteResponse
+
+         Inherits: MeshResponse
+
+         EnvelopedRespondConnection: Enveloped (Optional)
+
+9.10. Transaction: Status
+
+         Request: StatusRequest
+
+         Response: StatusResponse
+
+9.10.1. Message: StatusRequest
+
+         Inherits: MeshRequestUser
+
+         DeviceUDF: String (Optional)
+
+         ProfileMasterDigest: Binary (Optional)
+
+         Catalogs: String [0..Many]
+
+         Spools: String [0..Many]
+
+9.10.2. Message: StatusResponse
+
+         Inherits: MeshResponse
+
+         EnvelopedProfileAccount: Enveloped (Optional)
+
+         EnvelopedCatalogedDevice: Enveloped (Optional)
+
+         ContainerStatus: ContainerStatus [0..Many]
+
+9.11. Transaction: Download
+
+         Request: DownloadRequest
+
+         Response: DownloadResponse
+
+   Request objects from the specified container with the specified
+   search criteria.
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 65]
+
+                        Mesh Protocol Reference             January 2021
+
+9.11.1. Message: DownloadRequest
+
+         Inherits: MeshRequestUser
+
+   Request objects from the specified container(s).
+
+   A client MAY request only objects matching specified search criteria
+   be returned and MAY request that only specific fields or parts of the
+   payload be returned.
+
+         Select: ConstraintsSelect [0..Many]
+
+         ConstraintsPost: ConstraintsData (Optional)
+
+9.11.2. Message: DownloadResponse
+
+         Inherits: MeshResponse
+
+   Return the set of objects requested.
+
+   Services SHOULD NOT return a response that is disproportionately
+   large relative to the speed of the network connection without a clear
+   indication from the client that it is relevant. A service MAY limit
+   the number of  objects returned. A service MAY limit the scope of
+   each response.
+
+         Updates: ContainerUpdate [0..Many]
+
+9.12. Transaction: Transact
+
+         Request: TransactRequest
+
+         Response: TransactResponse
+
+   Attempt an atomic transaction on the containers and spools associated
+   with an account.
+
+9.12.1. Message: TransactRequest
+
+         Inherits: MeshRequestUser
+
+   Upload entries to a container. This request is only valid if it is
+   issued by the owner of the account
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 66]
+
+                        Mesh Protocol Reference             January 2021
+
+         Updates: ContainerUpdate [0..Many]
+
+         Accounts: String [0..Many]
+
+         Outbound: Enveloped [0..Many]
+
+         Inbound: Enveloped [0..Many]
+
+         Local: Enveloped [0..Many]
+
+9.12.2. Message: TransactResponse
+
+         Inherits: MeshResponse
+
+   Response to an upload request.
+
+         Entries: EntryResponse [0..Many]
+
+         ConstraintsData: ConstraintsData (Optional)
+
+9.12.3. Structure: EntryResponse
+
+         IndexRequest: Integer (Optional)
+
+         IndexContainer: Integer (Optional)
+
+         Result: String (Optional)
+
+         ConstraintsData: ConstraintsData (Optional)
+
+9.13. Transaction: Post
+
+         Request: PostRequest
+
+         Response: PostResponse
+
+   Request to post to a spool from an external party. The request and
+   response messages are extensions of the corresponding messages for
+   the Upload transaction. It is expected that additional fields will be
+   added as the need arises.
+
+9.13.1. Message: PostRequest
+
+         Inherits: MeshRequest
+
+         Accounts: String [0..Many]
+
+         Messages: Enveloped [0..Many]
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 67]
+
+                        Mesh Protocol Reference             January 2021
+
+9.13.2. Message: PostResponse
+
+         Inherits: TransactResponse
+
+   [No fields]
+
+9.14. Transaction: Claim
+
+         Request: ClaimRequest
+
+         Response: ClaimResponse
+
+   Claim a publication
+
+9.14.1. Message: ClaimRequest
+
+         Inherits: MeshRequest
+
+         EnvelopedMessageClaim: Enveloped (Optional)
+
+9.14.2. Message: ClaimResponse
+
+         Inherits: MeshResponse
+
+         CatalogedPublication: CatalogedPublication (Optional)
+
+9.15. Transaction: PollClaim
+
+         Request: PollClaimRequest
+
+         Response: PollClaimResponse
+
+   Check party making claim
+
+9.15.1. Message: PollClaimRequest
+
+         Inherits: MeshRequest
+
+         PublicationId: String (Optional)
+
+         TargetAccountAddress: String (Optional)
+
+9.15.2. Message: PollClaimResponse
+
+         Inherits: MeshResponse
+
+         EnvelopedMessage: Enveloped (Optional)
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 68]
+
+                        Mesh Protocol Reference             January 2021
+
+9.15.3. Structure: CryptographicOperation
+
+         KeyId: String (Optional)
+
+         KeyCoefficient: Binary (Optional)
+
+9.15.4. Structure: CryptographicOperationSign
+
+         Inherits: CryptographicOperation
+
+         Data: Binary (Optional)
+
+         PartialR: Binary (Optional)
+
+9.15.5. Structure: CryptographicOperationKeyAgreement
+
+         Inherits: CryptographicOperation
+
+   [No fields]
+
+9.15.6. Structure: CryptographicOperationGenerate
+
+         Inherits: CryptographicOperation
+
+   [No fields]
+
+9.15.7. Structure: CryptographicOperationShare
+
+         Inherits: CryptographicOperation
+
+         Threshold: Integer (Optional)
+
+         Shares: Integer (Optional)
+
+9.15.8. Structure: CryptographicResult
+
+         Error: String (Optional)
+
+9.15.9. Structure: CryptographicResultKeyAgreement
+
+         Inherits: CryptographicResult
+
+   [No fields]
+
+9.15.10. Structure: CryptographicResultShare
+
+         Inherits: CryptographicResult
+
+   [No fields]
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 69]
+
+                        Mesh Protocol Reference             January 2021
+
+9.16. Transaction: Operate
+
+         Request: OperateRequest
+
+         Response: OperateResponse
+
+   Perform a set of cryptographic operations
+
+9.16.1. Message: OperateRequest
+
+         Inherits: MeshRequest
+
+         AccountAddress: String (Optional)
+
+9.16.2. Message: OperateResponse
+
+         Inherits: MeshResponse
+
+   [No fields]
+
+10. Security Considerations
+
+   The security considerations for use and implementation of Mesh
+   services and applications are described in the Mesh Security
+   Considerations guide .
+
+11. IANA Considerations
+
+   All the IANA considerations for the Mesh documents are specified in
+   this document
+
+12. Acknowledgements
+
+   A list of people who have contributed to the design of the Mesh is
+   presented in .
+
+References
+
+Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, DOI
+              10.17487/RFC2119, March 1997.
+
+   [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
+              Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006.
+
+   [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
+              Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018.
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 70]
+
+                        Mesh Protocol Reference             January 2021
+
+   [RFC7230]  Fielding, R.,Reschke, J., "Hypertext Transfer Protocol
+              (HTTP/1.1): Message Syntax and Routing", RFC 7230, DOI
+              10.17487/RFC7230, June 2014.
+
+   [RFC3339]  Klyne, G.,Newman, C., "Date and Time on the Internet:
+              Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002.
+
+   [draft-hallambaker-mesh-architecture]  Hallam-Baker, P, "Mathematical
+              Mesh 3.0 Part I: Architecture Guide", Internet-Draft
+              draft-hallambaker-mesh-architecture-15, 2 November 2020.
+
+   [draft-hallambaker-mesh-security]  Hallam-Baker, P, "Mathematical
+              Mesh 3.0 Part VII: Security Considerations", Internet-
+              Draft draft-hallambaker-mesh-security-06, 2 November 2020.
+
+   [draft-hallambaker-mesh-udf]  Hallam-Baker, P, "Mathematical Mesh 3.0
+              Part II: Uniform Data Fingerprint.", Internet-Draft draft-
+              hallambaker-mesh-udf-11, 2 November 2020.
+
+   [draft-hallambaker-mesh-schema]  Hallam-Baker, P, "Mathematical Mesh
+              3.0 Part IV: Schema Reference", Internet-Draft draft-
+              hallambaker-mesh-schema-06, 2 November 2020.
+
+Informative References
+
+   [ECMA-262]  , "ECMAScript? 2017 Language Specification ", June 2017.
+
+   [draft-hallambaker-mesh-developer]  Hallam-Baker, P, "Mathematical
+              Mesh: Reference Implementation", Internet-Draft draft-
+              hallambaker-mesh-developer-10, 27 July 2020.
+
+Author's Address
+
+   Phillip Hallam-Baker
+   ThresholdSecrets.com
+
+   phill@hallambaker.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker             Expires July 17, 2021                 [Page 71]

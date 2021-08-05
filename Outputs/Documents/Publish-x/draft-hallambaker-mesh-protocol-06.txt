@@ -1,0 +1,2029 @@
+Independent Submission                             Phillip Hallam-Baker
+INTERNET-DRAFT                                      ThresholdSecrets.com
+Intended Status:                                           July 27, 2020
+Expires: January 28, 2021
+
+
+            Mathematical Mesh 3.0 Part V: Protocol Reference
+                   draft-hallambaker-mesh-protocol-06
+
+Abstract
+
+   The Mathematical Mesh 'The Mesh' is an end-to-end secure
+   infrastructure that facilitates the exchange of configuration and
+   credential data between multiple user devices. The core protocols of
+   the Mesh are described with examples of common use cases and
+   reference data.
+
+   [Note to Readers]
+
+   Discussion of this draft takes place on the MATHMESH mailing list
+   (mathmesh@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/search/?email_list=mathmesh.
+
+   This document is also available online at .
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts. The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.It is inappropriate to use Internet-Drafts as reference material
+   or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on January 28, 2021
+
+Copyright Notice
+
+   Copyright (c) IETF Trust and the persons identified as the document
+   authors. All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document. Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 1]
+
+                        Mesh Protocol Reference                July 2020
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 2]
+
+                        Mesh Protocol Reference                July 2020
+
+Table of Contents
+
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  6
+   2.  Definitions  . . . . . . . . . . . . . . . . . . . . . . . . .  7
+      2.1.  Requirements Language . . . . . . . . . . . . . . . . . .  7
+      2.2.  Defined Terms . . . . . . . . . . . . . . . . . . . . . .  7
+      2.3.  Related Specifications  . . . . . . . . . . . . . . . . .  7
+      2.4.  Implementation Status . . . . . . . . . . . . . . . . . .  7
+   3.  Mesh Service . . . . . . . . . . . . . . . . . . . . . . . . .  7
+      3.1.  Data Model  . . . . . . . . . . . . . . . . . . . . . . .  8
+      3.2.  Partitioning  . . . . . . . . . . . . . . . . . . . . . .  8
+   4.  Protocol Bindings  . . . . . . . . . . . . . . . . . . . . . .  8
+      4.1.  DNS Web Service Discovery . . . . . . . . . . . . . . . .  8
+      4.2.  Web Service Protocol Binding  . . . . . . . . . . . . . .  9
+         4.2.1.  Transport Security . . . . . . . . . . . . . . . . .  9
+         4.2.2.  HTTP Message Binding . . . . . . . . . . . . . . . .  9
+         4.2.3.  Request  . . . . . . . . . . . . . . . . . . . . . .  9
+         4.2.4.  Response . . . . . . . . . . . . . . . . . . . . . . 10
+      4.3.  DARE Message Encapsulation  . . . . . . . . . . . . . . . 12
+         4.3.1.  Null Authentication  . . . . . . . . . . . . . . . . 12
+         4.3.2.  Device Authentication  . . . . . . . . . . . . . . . 12
+         4.3.3.  Profile Authentication . . . . . . . . . . . . . . . 12
+         4.3.4.  Ticket Authentication  . . . . . . . . . . . . . . . 12
+      4.4.  Payload Encoding  . . . . . . . . . . . . . . . . . . . . 13
+      4.5.  Error handling and response codes . . . . . . . . . . . . 13
+   5.  Service Description  . . . . . . . . . . . . . . . . . . . . . 14
+   6.  Account Management . . . . . . . . . . . . . . . . . . . . . . 15
+   7.  Container Synchronization  . . . . . . . . . . . . . . . . . . 17
+      7.1.  Status Transaction  . . . . . . . . . . . . . . . . . . . 17
+      7.2.  Download Transaction  . . . . . . . . . . . . . . . . . . 17
+         7.2.1.  Conflict Detection . . . . . . . . . . . . . . . . . 18
+         7.2.2.  Filtering  . . . . . . . . . . . . . . . . . . . . . 18
+      7.3.  Upload Transaction  . . . . . . . . . . . . . . . . . . . 18
+   8.  Device Connection  . . . . . . . . . . . . . . . . . . . . . . 18
+      8.1.  Device Authenticated  . . . . . . . . . . . . . . . . . . 19
+      8.2.  PIN Authenticated . . . . . . . . . . . . . . . . . . . . 19
+      8.3.  EARL connection mode  . . . . . . . . . . . . . . . . . . 19
+   9.  Mesh Messaging . . . . . . . . . . . . . . . . . . . . . . . . 19
+      9.1.  Message Exchange  . . . . . . . . . . . . . . . . . . . . 20
+         9.1.1.  Client-Service (Post Transaction)  . . . . . . . . . 20
+         9.1.2.  Service-Service (Post Transaction) . . . . . . . . . 21
+         9.1.3.  Service-Client (Synchronization) . . . . . . . . . . 22
+   10.  Protocol Schema . . . . . . . . . . . . . . . . . . . . . . . 22
+      10.1.  Request Messages   . . . . . . . . . . . . . . . . . . . 22
+         10.1.1.  Message: MeshRequest  . . . . . . . . . . . . . . . 22
+         10.1.2.  Message: MeshRequestUser  . . . . . . . . . . . . . 22
+      10.2.  Response Messages  . . . . . . . . . . . . . . . . . . . 22
+         10.2.1.  Message: MeshResponse   . . . . . . . . . . . . . . 23
+      10.3.  Imported Objects   . . . . . . . . . . . . . . . . . . . 23
+      10.4.  Common Structures  . . . . . . . . . . . . . . . . . . . 23
+         10.4.1.  Structure: KeyValue   . . . . . . . . . . . . . . . 23
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 3]
+
+                        Mesh Protocol Reference                July 2020
+
+         10.4.2.  Structure: ConstraintsSelect  . . . . . . . . . . . 23
+         10.4.3.  Structure: ConstraintsData  . . . . . . . . . . . . 24
+         10.4.4.  Structure: PolicyAccount  . . . . . . . . . . . . . 24
+         10.4.5.  Structure: ContainerStatus  . . . . . . . . . . . . 24
+         10.4.6.  Structure: ContainerUpdate  . . . . . . . . . . . . 24
+      10.5.  Transaction: Hello   . . . . . . . . . . . . . . . . . . 25
+         10.5.1.  Message: MeshHelloResponse  . . . . . . . . . . . . 25
+      10.6.  Transaction: CreateAccount   . . . . . . . . . . . . . . 25
+         10.6.1.  Message: CreateRequest  . . . . . . . . . . . . . . 25
+         10.6.2.  Message: CreateResponse   . . . . . . . . . . . . . 26
+      10.7.  Transaction: DeleteAccount   . . . . . . . . . . . . . . 26
+         10.7.1.  Message: DeleteRequest  . . . . . . . . . . . . . . 26
+         10.7.2.  Message: DeleteResponse   . . . . . . . . . . . . . 27
+      10.8.  Transaction: Complete  . . . . . . . . . . . . . . . . . 27
+         10.8.1.  Message: CompleteRequest  . . . . . . . . . . . . . 27
+         10.8.2.  Message: CompleteResponse   . . . . . . . . . . . . 27
+      10.9.  Transaction: Status  . . . . . . . . . . . . . . . . . . 27
+         10.9.1.  Message: StatusRequest  . . . . . . . . . . . . . . 27
+         10.9.2.  Message: StatusResponse   . . . . . . . . . . . . . 27
+      10.10.  Transaction: Download   . . . . . . . . . . . . . . . . 28
+         10.10.1.  Message: DownloadRequest   . . . . . . . . . . . . 28
+         10.10.2.  Message: DownloadResponse  . . . . . . . . . . . . 28
+      10.11.  Transaction: Upload   . . . . . . . . . . . . . . . . . 28
+         10.11.1.  Message: UploadRequest   . . . . . . . . . . . . . 29
+         10.11.2.  Message: UploadResponse  . . . . . . . . . . . . . 29
+         10.11.3.  Structure: EntryResponse   . . . . . . . . . . . . 29
+      10.12.  Transaction: Publish  . . . . . . . . . . . . . . . . . 29
+         10.12.1.  Message: PublishRequest  . . . . . . . . . . . . . 30
+         10.12.2.  Message: PublishResponse   . . . . . . . . . . . . 30
+      10.13.  Transaction: Post   . . . . . . . . . . . . . . . . . . 30
+         10.13.1.  Message: PostRequest   . . . . . . . . . . . . . . 30
+         10.13.2.  Message: PostResponse  . . . . . . . . . . . . . . 30
+      10.14.  Transaction: Connect  . . . . . . . . . . . . . . . . . 30
+         10.14.1.  Message: ConnectRequest  . . . . . . . . . . . . . 30
+         10.14.2.  Message: ConnectResponse   . . . . . . . . . . . . 31
+      10.15.  Transaction: Claim  . . . . . . . . . . . . . . . . . . 31
+         10.15.1.  Message: ClaimRequest  . . . . . . . . . . . . . . 31
+         10.15.2.  Message: ClaimResponse   . . . . . . . . . . . . . 31
+      10.16.  Transaction: PollClaim  . . . . . . . . . . . . . . . . 31
+         10.16.1.  Message: PollClaimRequest  . . . . . . . . . . . . 32
+         10.16.2.  Message: PollClaimResponse   . . . . . . . . . . . 32
+      10.17.  Transaction: CreateGroup  . . . . . . . . . . . . . . . 32
+         10.17.1.  Message: CreateGroupRequest  . . . . . . . . . . . 32
+         10.17.2.  Message: CreateGroupResponse   . . . . . . . . . . 32
+         10.17.3.  Structure: CryptographicOperation  . . . . . . . . 32
+         10.17.4.  Structure: CryptographicOperationSign  . . . . . . 33
+         10.17.5.  Structure: CryptographicOperationKeyAgreement  . . 33
+         10.17.6.  Structure: CryptographicOperationGenerate  . . . . 33
+         10.17.7.  Structure: CryptographicOperationShare   . . . . . 33
+         10.17.8.  Structure: CryptographicResult   . . . . . . . . . 33
+         10.17.9.  Structure: CryptographicResultKeyAgreement   . . . 33
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 4]
+
+                        Mesh Protocol Reference                July 2020
+
+      10.18.  Transaction: Operate  . . . . . . . . . . . . . . . . . 33
+         10.18.1.  Message: OperateRequest  . . . . . . . . . . . . . 33
+         10.18.2.  Message: OperateResponse   . . . . . . . . . . . . 34
+   11.  Security Considerations . . . . . . . . . . . . . . . . . . . 34
+   12.  IANA Considerations . . . . . . . . . . . . . . . . . . . . . 34
+   13.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 34
+   References . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+      Normative References  . . . . . . . . . . . . . . . . . . . . . 34
+      Informative References  . . . . . . . . . . . . . . . . . . . . 35
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 35
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 5]
+
+                        Mesh Protocol Reference                July 2020
+
+1. Introduction
+
+   This document describes the Mesh Service protocol supported by Mesh
+   Services, an account-based protocol that facilitates exchange of data
+   between devices connected to a Mesh profile and between Mesh
+   accounts.
+
+   Mesh Service Accounts support the following services:
+
+         *  Provides the master persistence store for the Catalogs and
+            Spools associated with the account.
+
+         *  Enables synchronization of Catalogs and Spools with
+            connected devices.
+
+         *  Enforces access control on inbound Mesh Messages from other
+            users and other Mesh Services.
+
+         *  Authenticates outbound Mesh Messages, certifying that they
+            comply with abuse mitigation policies.
+
+   A Mesh Profile MAY be bound to multiple Mesh Service Accounts at the
+   same time but only one Mesh Service Account is considered to be
+   authoritative at a time. Users may add or remove Mesh Service
+   Accounts and change the account designated as authoritative at any
+   time.
+
+   The Mesh Services are build from a very small set of primitives which
+   provide a surprisingly extensive set of capabilities. These
+   primitives are:
+
+         Hello
+
+         CreateAccount, DeleteAccount
+
+         Status, Download, Upload
+
+         Connect
+
+         Post
+
+   Although these functions could in principle be used to replace many
+   if not most existing Internet application protocols, the principal
+   value of any communication protocol lies in the size of the audience
+   it allows them to communicate with. Thus, while the Mesh Messaging
+   service is designed to support efficient and reliable transfer of
+   messages ranging in size from a few bytes to multiple terabytes, the
+   near-term applications of these services will be to applications that
+   are not adequately supported by existing protocols if at all.
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 6]
+
+                        Mesh Protocol Reference                July 2020
+
+2. Definitions
+
+   This section presents the related specifications and standard, the
+   terms that are used as terms of art within the documents and the
+   terms used as requirements language.
+
+2.1. Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in .
+
+2.2. Defined Terms
+
+   The terms of art used in this document are described in the Mesh
+   Architecture Guide .
+
+2.3. Related Specifications
+
+   The architecture of the Mathematical Mesh is described in the Mesh
+   Architecture Guide . The Mesh documentation set and related
+   specifications are described in this document.
+
+2.4. Implementation Status
+
+   The implementation status of the reference code base is described in
+   the companion document .
+
+3. Mesh Service
+
+   A Mesh Service is a minimally trusted service. In particular a user
+   does not need to trust a Mesh service to protect the confidentiality
+   or integrity of most data stored in the account catalogs and spools.
+
+   Unless the use of the Mesh Service is highly restricted, a user does
+   need to trust the Mesh Service in certain respects:
+
+         Data Loss
+
+         Integrity (Stale Data)
+
+         Messaging
+
+         Traffic analysis
+
+   The need to trust the Mesh Service in these respects is mitigated by
+   accountability and the user's ability to change Mesh Service
+   providers at any time they choose with minimal inconvenience.
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 7]
+
+                        Mesh Protocol Reference                July 2020
+
+   It is possible that some of these risks will be reduced in future
+   versions of the Mesh Service Protocol but it is highly unlikely that
+   these can be eliminated entirely without compromising practicality or
+   efficiency.
+
+3.1. Data Model
+
+   The design of the Mesh Service model followed a quasi-formal approach
+   in which the system was reduced to schemas which could in principle
+   be rendered in a formal development method but without construction
+   of proofs.
+
+   Like the contents of Mesh Accounts, a Mesh Service may be represented
+   by a collection of catalogs and spools, for example:
+
+         Account Catalog
+
+         Incident Spool
+
+   Backup of the service MAY be implemented using the same container
+   synchronization mechanism used to synchronize account catalogs and
+   spools.
+
+3.2. Partitioning
+
+   Mesh Services supporting a large number of accounts or large activity
+   volume MAY partition the account catalog between one or more hosts
+   using the usual tiered service model in which a front-end server
+   receives traffic for any account hosted at the server and routes the
+   request to the back-end service that provides the persistence store
+   for that account.
+
+   In addition, the Mesh Service Protocol supports a 'direct connection'
+   partitioning model in which devices are given a DNS name which MAY
+   allow for direct connection to the persistence host or to a front-end
+   service offering service that is in some way specific to that
+   account.
+
+4. Protocol Bindings
+
+   Mesh Service transactions are mapped to an underlying messaging and
+   transport protocol. The following binding
+
+   Mesh Services MUST support the Web Service binding specified in this
+   document and MAY support the UDP binding currently in development.
+
+4.1. DNS Web Service Discovery
+
+   The DNS Web Service discovery mechanism is used to discover Mesh
+   Services regardless of the protocol binding .The service name, DNS
+   prefix and and .well-known service suffix are specified as follows:
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 8]
+
+                        Mesh Protocol Reference                July 2020
+
+
+         *  Service Name: mmm
+
+         *  DNS Prefix: _mmm._tcp
+
+         *  Well Known service suffix: /.well-known/mmm
+
+4.2. Web Service Protocol Binding
+
+   The Web Service Protocol binding makes use of the most widely
+   deployed and used protocols:
+
+         *  Discovery: DNS Service discovery
+
+         *  Transport: TLS
+
+         *  Application: HTTP
+
+         *  Presentation: DARE Message
+
+         *  Encoding: JSON, JSON-B
+
+   The chief limitations of the Web Service Protocol Binding are that
+   the use of TCP based transport results in unsatisfactory latency for
+   some applications and that the HTTP application layer only serves to
+   allow a host to support multiple services on the same TCP/IP port.
+
+4.2.1. Transport Security
+
+   Mesh Services MUST offer TLS transport and MAY offer non TLS
+   transport. MESH clients SHOULD use TLS transport when connecting to a
+   MESH service.
+
+   TLS version 1.3  or higher MUST be supported. Client authentication
+   SHOULD NOT be used.
+
+4.2.2. HTTP Message Binding
+
+   All messages are exchanged as HTTP POST transactions. Support for and
+   use of HTTP/1.1  is REQUIRED. Services MAY support HTTP/2.
+
+   In contrast to other approaches to the design of Web Services, the
+   only use made of the HTTP transport is to distinguish between
+   different services on the same host using the Host header and .well-
+   known convention and for message framing.  No use is made of the URI
+   request line to identify commands, nor are the caching or proxy
+   capabilities of HTTP made use of.
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 9]
+
+                        Mesh Protocol Reference                July 2020
+
+4.2.3. Request
+
+   The HTTP request MAY contain any valid HTTP header specified in .
+
+         Request Line URI
+
+         Request Line Method
+
+         Host: Header
+
+         Content-Encoding
+
+         Content-Type
+
+         Content-Length or Transfer-Encoding
+
+         Payload
+
+   [Note, this is showing the payload, not the binding as is intended
+   because the current code  doesn't implement it as intended yet]
+
+   {
+     "Hello": {}}
+
+4.2.4. Response
+
+   The response MAY contain any HTTP response header but since JWB
+   services do not make use of HTTP caching and messages are not
+   intended to be modified by HTTP intermediaries, only a limited number
+   of headers have significance:
+
+         Response Code
+
+         Content-Type
+
+         Content-Length or Transfer-Encoding
+
+         Cache-Control
+
+   [Note, this is showing the payload, not the binding as is intended
+   because the current code  doesn't implement it as intended yet]
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 10]
+
+                        Mesh Protocol Reference                July 2020
+
+   {
+     "MeshHelloResponse": {
+       "Status": 201,
+       "Version": {
+         "Major": 3,
+         "Minor": 0,
+         "Encodings": [{
+             "ID": ["application/json"]}]},
+       "EnvelopedProfileService": [{
+           "dig": "SHA2"},
+         "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJLZXlPZmZsaW5lU2l
+     nbmF0dXJlIjogewogICAgICAiVURGIjogIk1BWFotSVBHNy1WSEFPLVdRVVQtQ
+     0JUTC1ITFMyLVNLT1ciLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICA
+     gICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0N
+     DgiLAogICAgICAgICAgIlB1YmxpYyI6ICJiY2paaUQzQmdQcThOSEE4VFFzbEp
+     RbzBzOE14R1o0VWRPUV8zcGZBWGhmUkdLdDh3aVhlCiAgZTl6MzZ4V0JxVGVKR
+     khhd09uTWNPcmlBIn19fSwKICAgICJLZXlFbmNyeXB0aW9uIjogewogICAgICA
+     iVURGIjogIk1EM0gtM09LRi1LTDM0LU02Q0YtSkVHVS1BMkVNLUNUWVUiLAogI
+     CAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUN
+     ESCI6IHsKICAgICAgICAgICJjcnYiOiAiWDQ0OCIsCiAgICAgICAgICAiUHVib
+     GljIjogInBJcjlQeTVrWm52QU9paTZ0REdRejc1ZFVCNTNpQkIxM0ZKQXZzSDJ
+     NdHlJU2RQWFZ3TWMKICBrU3FOTGl5TzBpUTJaanE5QkRXVmpmOEEifX19fX0",
+         {
+           "signatures": [{
+               "alg": "SHA2",
+               "kid": "MAXZ-IPG7-VHAO-WQUT-CBTL-HLS2-SKOW",
+               "signature": "Q8tU8qUnPvpxEqpZd_TWkvIN8_1YtRCkxGqSk2Exad_4PlWzr
+     AzG_cX9VT5UmOaJ6cmi-lM8hF8Am-OgRNkxGkb1y_OYtaKBXnUeBGHG3jtnplU
+     vx3VlWReJn0VqYMiTfcAQ5PKNujHbf4iCso6PSAcA"}],
+           "PayloadDigest": "tWH90O5uV-b6VvIjiwiClRkJ6D2C64GZLXqZk5pAhxtQW
+     wqcCzKM3f7s6slOuJ6fZ267uDg6QQ2UF55_vjsiSA"}],
+       "EnvelopedProfileHost": [{
+           "dig": "SHA2"},
+         "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJLZXlPZmZsaW5lU2lnbmF
+     0dXJlIjogewogICAgICAiVURGIjogIk1CM1otSzVITC1FS0FCLTZNNUotM1BLW
+     S1CSVlCLUpZSzUiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICA
+     gICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiL
+     AogICAgICAgICAgIlB1YmxpYyI6ICJnamlvV3pVYllqNkxMQ2I0NGRrYUw4STV
+     wOTFpcE5IaHJOTVF0VlFJbFA2aXg3MmZVWnFYCiAgRFpBTmdKSzNpOXU4RGNIT
+     XhpV0hsalFBIn19fSwKICAgICJLZXlBdXRoZW50aWNhdGlvbiI6IHsKICAgICA
+     gIlVERiI6ICJNQ1g3LTZQQ0QtV1BISC1WRjRMLVZRNVgtSVNJSC1UVk0zIiwKI
+     CAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUV
+     DREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgICAgIlB1Y
+     mxpYyI6ICJPbGViSVA0Y3otOEVWV05lRFBVTE9rajJlczd2dTdBUF9OTEo1MWs
+     xSDBYb1N0UWtFaWtQCiAgQ19vM3FCVmJsVUh2Uk0wblBFQmxjdGdBIn19fX19",
+         {
+           "signatures": [{
+               "alg": "SHA2",
+               "kid": "MB3Z-K5HL-EKAB-6M5J-3PKY-BIYB-JYK5",
+               "signature": "Ten3iq7kUJdif_NE94cr-RJ0OJD8qrG-9gj7eu-M6aeoqLk3_
+     Ew9MqJ8nxvpI13YWEq1Zb9uRfaAbcOghmncfeN9rwTeoApfGEE5lZ5O2h97s1m
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 11]
+
+                        Mesh Protocol Reference                July 2020
+     inEKmUEWMOoT2-CBkVSZlH50rYADhbJ9N1ZpWRDAA"}],
+           "PayloadDigest": "2K1y20hWCmxcFb_DzTRpHlEyPbqySb-TPF8cA6Y_T5ifc
+     OupwDkIwlLqWQBML9IxCZyqtZ37vJh4DkAA6LGWWg"}]}}
+
+4.3. DARE Message Encapsulation
+
+   The payload of the HTTP requests and responses is a DARE Message
+   whose payload contains the Mesh Service request or response.
+
+   The DARE Message encapsulation is used to authenticate the request or
+   response data. The form of the authentication depending on the
+   credentials available to the sender at the time the request is made.
+
+   Mesh Service MUST support the use of Mutually Authenticated Key
+   Exchange  to establish the Master Key used for authentication of
+   requests and responses.
+
+   Requests and Responses MUST be authenticated. Requests and Responses
+   MUST be encrypted if the transport is not encrypted and MAY be
+   encrypted otherwise.
+
+4.3.1. Null Authentication
+
+   Null Authentication MAY be used to make a Hello Request.
+
+   The Null Authentication mechanism MUST NOT be used for any Mesh
+   Service request or response other than a Hello request.
+
+   Since the Mutually Authenticated key exchange requires both parties
+   to know the public key of the other, it is not possible for a client
+   to authenticate itself to the service until it has obtained the
+   service public key. One means by which the client MAY obtain the
+   service public key is by requesting the service return the credential
+   in a Hello transaction.
+
+4.3.2. Device Authentication
+
+   Device Authentication is used in two circumstances
+
+         *  When requesting creation of an account
+
+         *  When a device is requesting connection to a profile.
+
+4.3.3. Profile Authentication
+
+   Profile Authentication has the same form as Device Authentication
+   except that the client provides its Device Connection Assertion as
+   part of the request:
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 12]
+
+                        Mesh Protocol Reference                July 2020
+
+4.3.4. Ticket Authentication
+
+   Ticket Authentication is used after a device has obtained an
+   authentication ticket from a service. The ticket is returned in the
+   response to a previous Profile Authentication exchange.
+
+4.4. Payload Encoding
+
+   The Dare Message payload of a Hello request MUST be encoded in JSON
+   encoding. The payload of all other requests MUST be in either JSON
+   encoding or one of the encodings advertised as being accepted in a
+   Hello response from the Service. Services MUST accept JSON encoding
+   and MAY support the JSON-B or JSON-C encodings as specified in this
+   document. Services MUST generate a response that is compatible with
+   the DARE Message Content-Type specified in the request.
+
+   JSON was originally developed to provide a serialization format for
+   the JavaScript programming language . While this approach is
+   generally applicable to the type systems of scripting programming
+   languages, it is less well matched to the richer type systems of
+   modern object oriented programming languages such as Java and C#.
+
+   Working within a subset of the capabilities of JSON allows a Web
+   Service protocol to be accessed with equal ease from either platform
+   type. The following capabilities of JSON are avoided:
+
+   The ability to use arbitrary strings as field names.
+
+   The use of JSON objects to define maps directly
+
+   The following data field types are used:
+
+         Integer
+
+         String
+
+         Boolean
+
+         Sequence
+
+         Object of known type
+
+         Object of variable type
+
+         Binary Data
+
+         Date Time
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 13]
+
+                        Mesh Protocol Reference                July 2020
+
+4.5. Error handling and response codes
+
+   It is possible for an error to occur at any of the three layers in
+   the Web Service binding:
+
+   Service Layer
+
+   HTTP Layer
+
+   Transport Layer
+
+   Services SHOULD always attempt to return error codes at the highest
+   level possible. However, it is clearly impossible for a connection
+   that is refused at the Transport layer to return an error code at the
+   HTTP layer. It is however possible for a HTTP layer error response to
+   contain a content body.
+
+   In the case that a response contains both a HTTP response code and a
+   well-formed payload containing a response, the payload response SHALL
+   have precedence.
+
+5. Service Description
+
+   The Hello transaction is used to determine the features supported by
+   the service and obtain the service credentials
+
+   The request payload:
+
+   {
+     "Hello": {}}
+
+   The response payload:
+
+   {
+     "MeshHelloResponse": {
+       "Status": 201,
+       "Version": {
+         "Major": 3,
+         "Minor": 0,
+         "Encodings": [{
+             "ID": ["application/json"]}]},
+       "EnvelopedProfileService": [{
+           "dig": "SHA2"},
+         "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJLZXlPZmZsaW5lU2l
+     nbmF0dXJlIjogewogICAgICAiVURGIjogIk1BWFotSVBHNy1WSEFPLVdRVVQtQ
+     0JUTC1ITFMyLVNLT1ciLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICA
+     gICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0N
+     DgiLAogICAgICAgICAgIlB1YmxpYyI6ICJiY2paaUQzQmdQcThOSEE4VFFzbEp
+     RbzBzOE14R1o0VWRPUV8zcGZBWGhmUkdLdDh3aVhlCiAgZTl6MzZ4V0JxVGVKR
+     khhd09uTWNPcmlBIn19fSwKICAgICJLZXlFbmNyeXB0aW9uIjogewogICAgICA
+     iVURGIjogIk1EM0gtM09LRi1LTDM0LU02Q0YtSkVHVS1BMkVNLUNUWVUiLAogI
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 14]
+
+                        Mesh Protocol Reference                July 2020
+
+     CAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUN
+     ESCI6IHsKICAgICAgICAgICJjcnYiOiAiWDQ0OCIsCiAgICAgICAgICAiUHVib
+     GljIjogInBJcjlQeTVrWm52QU9paTZ0REdRejc1ZFVCNTNpQkIxM0ZKQXZzSDJ
+     NdHlJU2RQWFZ3TWMKICBrU3FOTGl5TzBpUTJaanE5QkRXVmpmOEEifX19fX0",
+         {
+           "signatures": [{
+               "alg": "SHA2",
+               "kid": "MAXZ-IPG7-VHAO-WQUT-CBTL-HLS2-SKOW",
+               "signature": "Q8tU8qUnPvpxEqpZd_TWkvIN8_1YtRCkxGqSk2Exad_4PlWzr
+     AzG_cX9VT5UmOaJ6cmi-lM8hF8Am-OgRNkxGkb1y_OYtaKBXnUeBGHG3jtnplU
+     vx3VlWReJn0VqYMiTfcAQ5PKNujHbf4iCso6PSAcA"}],
+           "PayloadDigest": "tWH90O5uV-b6VvIjiwiClRkJ6D2C64GZLXqZk5pAhxtQW
+     wqcCzKM3f7s6slOuJ6fZ267uDg6QQ2UF55_vjsiSA"}],
+       "EnvelopedProfileHost": [{
+           "dig": "SHA2"},
+         "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJLZXlPZmZsaW5lU2lnbmF
+     0dXJlIjogewogICAgICAiVURGIjogIk1CM1otSzVITC1FS0FCLTZNNUotM1BLW
+     S1CSVlCLUpZSzUiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICA
+     gICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiL
+     AogICAgICAgICAgIlB1YmxpYyI6ICJnamlvV3pVYllqNkxMQ2I0NGRrYUw4STV
+     wOTFpcE5IaHJOTVF0VlFJbFA2aXg3MmZVWnFYCiAgRFpBTmdKSzNpOXU4RGNIT
+     XhpV0hsalFBIn19fSwKICAgICJLZXlBdXRoZW50aWNhdGlvbiI6IHsKICAgICA
+     gIlVERiI6ICJNQ1g3LTZQQ0QtV1BISC1WRjRMLVZRNVgtSVNJSC1UVk0zIiwKI
+     CAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUV
+     DREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgICAgIlB1Y
+     mxpYyI6ICJPbGViSVA0Y3otOEVWV05lRFBVTE9rajJlczd2dTdBUF9OTEo1MWs
+     xSDBYb1N0UWtFaWtQCiAgQ19vM3FCVmJsVUh2Uk0wblBFQmxjdGdBIn19fX19",
+         {
+           "signatures": [{
+               "alg": "SHA2",
+               "kid": "MB3Z-K5HL-EKAB-6M5J-3PKY-BIYB-JYK5",
+               "signature": "Ten3iq7kUJdif_NE94cr-RJ0OJD8qrG-9gj7eu-M6aeoqLk3_
+     Ew9MqJ8nxvpI13YWEq1Zb9uRfaAbcOghmncfeN9rwTeoApfGEE5lZ5O2h97s1m
+     inEKmUEWMOoT2-CBkVSZlH50rYADhbJ9N1ZpWRDAA"}],
+           "PayloadDigest": "2K1y20hWCmxcFb_DzTRpHlEyPbqySb-TPF8cA6Y_T5ifc
+     OupwDkIwlLqWQBML9IxCZyqtZ37vJh4DkAA6LGWWg"}]}}
+
+6. Account Management
+
+   A Mesh Account is bound to a Mesh Service by completing a
+   CreateAccount transaction with the service.
+
+   The client requesting the account creation specifies the ProfileMesh
+   profile describing the requested account and lists of initial entries
+   to populate the devices and contacts catalogs. Additional catalogs
+   MAY be synchronized if the account creation request is accepted.
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 15]
+
+                        Mesh Protocol Reference                July 2020
+
+   The request payload:
+
+   {
+     "Hello": {}}
+
+   The response payload:
+
+   {
+     "MeshHelloResponse": {
+       "Status": 201,
+       "Version": {
+         "Major": 3,
+         "Minor": 0,
+         "Encodings": [{
+             "ID": ["application/json"]}]},
+       "EnvelopedProfileService": [{
+           "dig": "SHA2"},
+         "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJLZXlPZmZsaW5lU2l
+     nbmF0dXJlIjogewogICAgICAiVURGIjogIk1BWFotSVBHNy1WSEFPLVdRVVQtQ
+     0JUTC1ITFMyLVNLT1ciLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICA
+     gICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0N
+     DgiLAogICAgICAgICAgIlB1YmxpYyI6ICJiY2paaUQzQmdQcThOSEE4VFFzbEp
+     RbzBzOE14R1o0VWRPUV8zcGZBWGhmUkdLdDh3aVhlCiAgZTl6MzZ4V0JxVGVKR
+     khhd09uTWNPcmlBIn19fSwKICAgICJLZXlFbmNyeXB0aW9uIjogewogICAgICA
+     iVURGIjogIk1EM0gtM09LRi1LTDM0LU02Q0YtSkVHVS1BMkVNLUNUWVUiLAogI
+     CAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUN
+     ESCI6IHsKICAgICAgICAgICJjcnYiOiAiWDQ0OCIsCiAgICAgICAgICAiUHVib
+     GljIjogInBJcjlQeTVrWm52QU9paTZ0REdRejc1ZFVCNTNpQkIxM0ZKQXZzSDJ
+     NdHlJU2RQWFZ3TWMKICBrU3FOTGl5TzBpUTJaanE5QkRXVmpmOEEifX19fX0",
+         {
+           "signatures": [{
+               "alg": "SHA2",
+               "kid": "MAXZ-IPG7-VHAO-WQUT-CBTL-HLS2-SKOW",
+               "signature": "Q8tU8qUnPvpxEqpZd_TWkvIN8_1YtRCkxGqSk2Exad_4PlWzr
+     AzG_cX9VT5UmOaJ6cmi-lM8hF8Am-OgRNkxGkb1y_OYtaKBXnUeBGHG3jtnplU
+     vx3VlWReJn0VqYMiTfcAQ5PKNujHbf4iCso6PSAcA"}],
+           "PayloadDigest": "tWH90O5uV-b6VvIjiwiClRkJ6D2C64GZLXqZk5pAhxtQW
+     wqcCzKM3f7s6slOuJ6fZ267uDg6QQ2UF55_vjsiSA"}],
+       "EnvelopedProfileHost": [{
+           "dig": "SHA2"},
+         "ewogICJQcm9maWxlSG9zdCI6IHsKICAgICJLZXlPZmZsaW5lU2lnbmF
+     0dXJlIjogewogICAgICAiVURGIjogIk1CM1otSzVITC1FS0FCLTZNNUotM1BLW
+     S1CSVlCLUpZSzUiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICA
+     gICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiL
+     AogICAgICAgICAgIlB1YmxpYyI6ICJnamlvV3pVYllqNkxMQ2I0NGRrYUw4STV
+     wOTFpcE5IaHJOTVF0VlFJbFA2aXg3MmZVWnFYCiAgRFpBTmdKSzNpOXU4RGNIT
+     XhpV0hsalFBIn19fSwKICAgICJLZXlBdXRoZW50aWNhdGlvbiI6IHsKICAgICA
+     gIlVERiI6ICJNQ1g3LTZQQ0QtV1BISC1WRjRMLVZRNVgtSVNJSC1UVk0zIiwKI
+     CAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUV
+     DREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgICAgIlB1Y
+     mxpYyI6ICJPbGViSVA0Y3otOEVWV05lRFBVTE9rajJlczd2dTdBUF9OTEo1MWs
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 16]
+
+                        Mesh Protocol Reference                July 2020
+
+     xSDBYb1N0UWtFaWtQCiAgQ19vM3FCVmJsVUh2Uk0wblBFQmxjdGdBIn19fX19",
+         {
+           "signatures": [{
+               "alg": "SHA2",
+               "kid": "MB3Z-K5HL-EKAB-6M5J-3PKY-BIYB-JYK5",
+               "signature": "Ten3iq7kUJdif_NE94cr-RJ0OJD8qrG-9gj7eu-M6aeoqLk3_
+     Ew9MqJ8nxvpI13YWEq1Zb9uRfaAbcOghmncfeN9rwTeoApfGEE5lZ5O2h97s1m
+     inEKmUEWMOoT2-CBkVSZlH50rYADhbJ9N1ZpWRDAA"}],
+           "PayloadDigest": "2K1y20hWCmxcFb_DzTRpHlEyPbqySb-TPF8cA6Y_T5ifc
+     OupwDkIwlLqWQBML9IxCZyqtZ37vJh4DkAA6LGWWg"}]}}
+
+   An account registration is deleted using the DeleteAccount
+   transaction.
+
+7. Container Synchronization
+
+   All the state associated with a Mesh profile is stored as a sequence
+   of DARE Messages in a Dare Container. The Mesh Service holding the
+   master copy of the persistence stores and the devices connected to
+   the profile containing complete copies (replicas) or partial copies
+   (redactions).
+
+   Thus, the only primitive needed to achieve synchronization of the
+   profile state are those required for synchronization of a DARE
+   Container. These steps are:
+
+         *  Obtain the status of the catalogs and spools associated with
+            the account.
+
+         *  Download catalog and spool updates
+
+         *  Upload catalog updates.
+
+   To ensure a satisfactory user experience, Mesh Messages are
+   intentionally limited in size to 64 KB or less, thus ensuring that an
+   application can retrieve the most recent 100 messages almost
+   instantaneously on a high bandwidth connection and without undue
+   delay on a slower one.
+
+7.1. Status Transaction
+
+   The status transaction returns the status of the containers the
+   device is authorized to access for the specified account together
+   with the updated Device Connection Entry if this has been modified
+   since the entry presented to authenticate the request was issued.
+
+7.2. Download Transaction
+
+   The download transaction returns a collection of entries from one or
+   more containers associated with the profile.
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 17]
+
+                        Mesh Protocol Reference                July 2020
+
+   Optional filtering criteria MAY be specified to only return objects
+   matching specific criteria and/or only return certain parts of the
+   selected messages.
+
+   The service MAY limit the number of entries returned in an individual
+   response for performance reasons.
+
+7.2.1. Conflict Detection
+
+   Clients SHOULD check to determine if updates to a container conflict
+   with pending updates on the device waiting to be uploaded. For
+   example, if a contact that the user modified on the device attempting
+   to synchronize was subsequently deleted.
+
+   The means of resolving such conflicts is not in the scope of this
+   specification.
+
+7.2.2. Filtering
+
+   Clients may request container updates be filtered to redact catalog
+   entries that have been updated or deleted or spool entries that have
+   been read, deleted or were received before a certain date.
+
+7.3. Upload Transaction
+
+   The upload transaction upload objects to a catalog or spool.
+
+   Multiple objects MAY be uploaded at once. Object updates MAY be
+   conditional on the successful completion of other upload requests.
+
+   The transaction MAY be performed in one request/response round trip
+   or with separate round trips to confirm that the transaction is
+   accepted by the service before sending large number of updates.
+
+8. Device Connection
+
+   Devices request connection to a Mesh profile using the Connect
+   transaction. Three connection mechanisms are currently defined. All
+   three of which offer strong mutual authentication.
+
+   Device Authenticated
+
+   Pin Authenticated
+
+   EARL Connection Mode
+
+   The first two of these mechanisms are initiated from the device being
+   connected which requires that the Mesh Service Account it is being
+   connected to be entered into it. Use of these mechanisms thus
+   requires keyboard and display affordances or accessibility
+   equivalents.
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 18]
+
+                        Mesh Protocol Reference                July 2020
+
+
+   The last mechanism is initiated from an administration device that is
+   already connected to the account. It is intended for use in
+   circumstances where the device being connected does not have the
+   necessary affordances to allow the Device or PIN authenticated modes.
+
+   In either case, the connection request is completed by the device
+   requesting synchronization with the Mesh Account using its device
+   credential for authentication. If the connection request was
+   accepted, the device will be provisioned with the Device Connection
+   Assertion allowing it to complete the process.
+
+   The Device Connection Assertion includes an overlay device profile
+   containing a set of private key contributions to be used to perform
+   key cogeneration on the original set of device keys to create a new
+   device profile to be used for all purposes associated with the Mesh
+   Profile to which it has just been connected. This assures the user
+   that the keys the device uses for performing operation in the context
+   of their profile are not affected by any compromise that might have
+   occurred during manufacture or at any point after up to the time it
+   was connected to their profile.
+
+8.1. Device Authenticated
+
+   The direct connection mechanism requires that both the administration
+   device and the device originating the connection request have data
+   entry and output affordances and that it is possible for the user to
+   compare the authentication codes presented by the two devices to
+   check that they are identical.
+
+8.2. PIN Authenticated
+
+   The PIN Connection mechanism is similar to the Direct connection
+   mechanism except that the process is initiated on an administration
+   device by requesting assignment of a new authentication PIN. The PIN
+   is then input to the connecting device to authenticate the request.
+
+8.3. EARL connection mode
+
+   The EARL/QR code connection mechanisms are used to connect a
+   constrained device to a Mesh profile by means of an Encrypted
+   Authenticated Resource Locator, typically presented as a QR code on
+   the device itself or its packaging.
+
+9. Mesh Messaging
+
+   Mesh Messages provide a means of communication between Mesh Service
+   Accounts with capabilities that are not possible or poorly supported
+   in traditional SMTP mail messaging:
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 19]
+
+                        Mesh Protocol Reference                July 2020
+
+         *  End-to-end confidentiality and authentication by default.
+
+         *  Abuse mitigation by applying access control to every inbound
+            and outbound message.
+
+         *  End-to-end secure group messaging.
+
+         *  Transfer of very large data sets (Terabytes).
+
+   Note that although Mesh Messaging is designed to facilitate the
+   transfer of very large data sets, the size of Mesh Messages
+   themselves is severely restricted. The current default maximum size
+   being 64 KB. This approach allows Mesh
+
+   In addition, the platform anticipates but does not currently support
+   additional cryptographic security capabilities:
+
+         *  Traffic analysis resistance using mix networks (Chaum).
+
+         *  Simultaneous contract binding using fair contract signing
+            (Micali).
+
+   While these capabilities might in time cause Mesh Messaging to
+   replace SMTP, this is not a near term goal. The short-term goal of
+   Mesh Messaging is to support the Contact Exchange and Confirmation
+   applications.
+
+   Two important classes of application that are not currently supported
+   directly are payments and presence. While prototypes of these
+   applications have been considered, it is not clear if these are best
+   implemented as special cases of the Confirmation and Contact Exchange
+   applications or as separate applications in their own right.
+
+9.1. Message Exchange
+
+   To enable effective abuse mitigation, Mesh Messaging enforces a four
+   corner communication model in which all outbound and inbound messages
+   pass through a Mesh Service which accredits and authorizes the
+   messages on the user's behalf.
+
+   The Post transaction is used for client-service and service-service
+   messaging transactions.
+
+9.1.1. Client-Service (Post Transaction)
+
+   To send a message, the client creates the Mesh Message structure,
+   encapsulates it in a DARE Message and forwards this to its service
+   using a Post transaction.
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 20]
+
+                        Mesh Protocol Reference                July 2020
+
+   The Post transaction is authenticated to the service by device using
+   the usual means of profile or ticket authentication.
+
+   The DARE Message MUST be signed under a device signature key
+   accredited by a Device Connection Assertion provided in the message
+   signature block.
+
+9.1.2. Service-Service (Post Transaction)
+
+   The Mesh Service receiving the message from the user's device MAY
+   attempt immediate retransmission or queue it to be sent at a future
+   time. Mesh Services SHOULD forward messages without undue delay.
+
+   The Post transaction forwarding the message to the destination
+   service carries the same payload as the original request but is
+   authenticated by the service forwarding it. This authentication MAY
+   be my means of either profile or ticket authentication.
+
+9.1.2.1. Denial of Service Mitigation
+
+   Services SHOULD implement Denial of Service mitigation strategies
+   including limiting the maximum time taken to complete a transaction
+   and refusing connections from clients that engage in patterns of
+   behavior consistent with abuse.
+
+   The limitation in message size allows Mesh Services to aggressively
+   time out connections that take too long to complete a transaction. A
+   Mesh Service that hosted on a 10Mb/s link should be able to transfer
+   20 messages a second. If the service is taking more than 5 seconds to
+   complete a transaction, either the source or the destination service
+   is overloaded or the message itself is an attack.
+
+   Imposing hard constraints on Mesh Service performance requires
+   deployments to scale and apply resources appropriately. If a service
+   is attempting to transfer 100 messages simultaneously and 40% are
+   taking 4 seconds or more, this indicates that the number of
+   simultaneous transfers being attempted should be reduced. Contrawise,
+   if 90% are completinin less than a second, the number of threads
+   allocated to sending outbound messages might be increased.
+
+9.1.2.2. Access Control
+
+   The inbound service MUST subject inbound messages to Access Control
+   according to the credentials presented in the DARE Message payload.
+
+   After verifying the signature and checking that the key is properly
+   accredited in accordance with site policy, the service applies
+   authorization controls taking account of:
+
+         *  The accreditation of the sender
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 21]
+
+                        Mesh Protocol Reference                July 2020
+
+         *  The accreditation of the transmitting Service
+
+         *  The type of Mesh Message being sent
+
+         *  User policy as specified in their Contact Catalog
+
+         *  Site policy.
+
+9.1.3. Service-Client (Synchronization)
+
+   The final recipient receives the message by synchronizing their
+   inbound spool.
+
+10. Protocol Schema
+
+         HTTP Well Known Service Prefix: /.well-known/mmm
+
+   Every Mesh Portal Service transaction consists of exactly one request
+   followed by exactly one response. Mesh Service transactions MAY cause
+   modification of the data stored in the Mesh Service or the Mesh
+   itself but do not cause changes to the connection state. The protocol
+   itself is thus idempotent. There is no set sequence in which
+   operations are required to be performed. It is not necessary to
+   perform a Hello transaction prior to any other transaction.
+
+10.1. Request Messages
+
+   A Mesh Portal Service request consists of a payload object that
+   inherits from the MeshRequest class. When using the  HTTP binding,
+   the request MUST specify the portal DNS address in the HTTP Host
+   field.
+
+10.1.1. Message: MeshRequest
+
+   Base class for all request messages.
+
+   [No fields]
+
+10.1.2. Message: MeshRequestUser
+
+   Base class for all request messages made by a user.
+
+         Inherits: MeshRequest
+
+         Account: String (Optional)
+
+         DeviceProfile: DareEnvelope (Optional)
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 22]
+
+                        Mesh Protocol Reference                July 2020
+
+10.2. Response Messages
+
+   A Mesh Portal Service response consists of a payload object that
+   inherits from the MeshResponse class. When using the HTTP binding,
+   the response SHOULD report the Status response code in the HTTP
+   response  message. However the response code returned in the payload
+   object MUST always be considered authoritative.
+
+10.2.1. Message: MeshResponse
+
+   Base class for all response messages. Contains only the status code
+   and status description fields.
+
+   [No fields]
+
+10.3. Imported Objects
+
+   The Mesh Service protocol makes use of JSON objects defined in the
+   JOSE Signatgure and Encryption specifications and in the DARE Data At
+   Rest Encryption extensions to JOSE.
+
+10.4. Common Structures
+
+   The following common structures are used in the protocol messages:
+
+10.4.1. Structure: KeyValue
+
+   Describes a Key/Value structure used to make queries for records
+   matching one or more selection criteria.
+
+         Key: String (Optional)
+
+         Value: String (Optional)
+
+10.4.2. Structure: ConstraintsSelect
+
+   Specifies constraints to be applied to a search result. These  allow
+   a client to limit the number of records returned, the quantity of
+   data returned, the earliest and latest data returned, etc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 23]
+
+                        Mesh Protocol Reference                July 2020
+
+         Container: String (Optional)
+
+         IndexMin: Integer (Optional)
+
+         IndexMax: Integer (Optional)
+
+         NotBefore: DateTime (Optional)
+
+         Before: DateTime (Optional)
+
+         PageKey: String (Optional)
+
+10.4.3. Structure: ConstraintsData
+
+   Specifies constraints on the data to be sent.
+
+         MaxEntries: Integer (Optional)
+
+         BytesOffset: Integer (Optional)
+
+         BytesMax: Integer (Optional)
+
+         Header: Boolean (Optional)
+
+         Payload: Boolean (Optional)
+
+         Trailer: Boolean (Optional)
+
+10.4.4. Structure: PolicyAccount
+
+   Describes the account creation policy including constraints on
+   account names, whether there is an open account creation policy, etc.
+
+         Minimum: Integer (Optional)
+
+         Maximum: Integer (Optional)
+
+         InvalidCharacters: String (Optional)
+
+10.4.5. Structure: ContainerStatus
+
+         Container: String (Optional)
+
+         Index: Integer (Optional)
+
+         Digest: Binary (Optional)
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 24]
+
+                        Mesh Protocol Reference                July 2020
+
+10.4.6. Structure: ContainerUpdate
+
+         Inherits: ContainerStatus
+
+         Envelopes: DareEnvelope [0..Many]
+
+10.5. Transaction: Hello
+
+         Request: HelloRequest
+
+         Response: MeshHelloResponse
+
+   Report service and version information.
+
+   The Hello transaction provides a means of determining which protocol
+   versions, message encodings and transport protocols are supported by
+   the service.
+
+   The PostConstraints field MAY be used to advise senders of a maximum
+   size of payload that MAY be sent in an initial Post request.
+
+10.5.1. Message: MeshHelloResponse
+
+         ConstraintsUpdate: ConstraintsData (Optional)
+
+         ConstraintsPost: ConstraintsData (Optional)
+
+         PolicyAccount: PolicyAccount (Optional)
+
+         EnvelopedProfileService: DareEnvelope (Optional)
+
+         EnvelopedProfileHost: DareEnvelope (Optional)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 25]
+
+                        Mesh Protocol Reference                July 2020
+
+10.6. Transaction: CreateAccount
+
+         Request: CreateRequest
+
+         Response: CreateResponse
+
+   Request creation of a new service account or group.
+
+   Attempt
+
+10.6.1. Message: CreateRequest
+
+   Request binding of an account to a service address.
+
+         Inherits: MeshRequest
+
+         AccountAddress: String (Optional)
+
+         SignedProfileMesh: DareEnvelope (Optional)
+
+         SignedAssertionAccount: DareEnvelope (Optional)
+
+10.6.2. Message: CreateResponse
+
+         Inherits: MeshResponse
+
+   Reports the success or failure of a Create transaction.
+
+         Reason: String (Optional)
+
+         URL: String (Optional)
+
+10.7. Transaction: DeleteAccount
+
+         Request: DeleteRequest
+
+         Response: DeleteResponse
+
+   Request deletion of a service account.
+
+10.7.1. Message: DeleteRequest
+
+   Request creation of a new portal account. The request specifies the
+   requested account identifier and the Mesh profile to be associated
+   with the account.
+
+         Inherits: MeshRequestUser
+
+   [No fields]
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 26]
+
+                        Mesh Protocol Reference                July 2020
+
+10.7.2. Message: DeleteResponse
+
+         Inherits: MeshResponse
+
+   Reports the success or failure of a Delete transaction.
+
+   [No fields]
+
+10.8. Transaction: Complete
+
+         Request: CompleteRequest
+
+         Response: CompleteResponse
+
+10.8.1. Message: CompleteRequest
+
+         Inherits: StatusRequest
+
+         AccountAddress: String (Optional)
+
+         ResponseID: String (Optional)
+
+10.8.2. Message: CompleteResponse
+
+         Inherits: MeshResponse
+
+         SignedResponse: DareEnvelope (Optional)
+
+10.9. Transaction: Status
+
+         Request: StatusRequest
+
+         Response: StatusResponse
+
+10.9.1. Message: StatusRequest
+
+         Inherits: MeshRequestUser
+
+         DeviceUDF: String (Optional)
+
+         ProfileMasterDigest: Binary (Optional)
+
+         Catalogs: String [0..Many]
+
+         Spools: String [0..Many]
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 27]
+
+                        Mesh Protocol Reference                July 2020
+
+10.9.2. Message: StatusResponse
+
+         Inherits: MeshResponse
+
+         EnvelopedProfileMaster: DareEnvelope (Optional)
+
+         EnvelopedCatalogEntryDevice: DareEnvelope (Optional)
+
+         ContainerStatus: ContainerStatus [0..Many]
+
+10.10. Transaction: Download
+
+         Request: DownloadRequest
+
+         Response: DownloadResponse
+
+   Request objects from the specified container with the specified
+   search criteria.
+
+10.10.1. Message: DownloadRequest
+
+         Inherits: MeshRequestUser
+
+   Request objects from the specified container(s).
+
+   A client MAY request only objects matching specified search criteria
+   be returned and MAY request that only specific fields or parts of the
+   payload be returned.
+
+         Select: ConstraintsSelect [0..Many]
+
+         ConstraintsPost: ConstraintsData (Optional)
+
+10.10.2. Message: DownloadResponse
+
+         Inherits: MeshResponse
+
+   Return the set of objects requested.
+
+   Services SHOULD NOT return a response that is disproportionately
+   large relative to the speed of the network connection without a clear
+   indication from the client that it is relevant. A service MAY limit
+   the number of  objects returned. A service MAY limit the scope of
+   each response.
+
+         Updates: ContainerUpdate [0..Many]
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 28]
+
+                        Mesh Protocol Reference                July 2020
+
+10.11. Transaction: Upload
+
+         Request: UploadRequest
+
+         Response: UploadResponse
+
+   Request objects from the specified container with the specified
+   search criteria.
+
+10.11.1. Message: UploadRequest
+
+         Inherits: MeshRequestUser
+
+   Upload entries to a container. This request is only valid if it is
+   issued by the owner of the account
+
+         Updates: ContainerUpdate [0..Many]
+
+         Self: DareEnvelope [0..Many]
+
+10.11.2. Message: UploadResponse
+
+         Inherits: MeshResponse
+
+   Response to an upload request.
+
+         Entries: EntryResponse [0..Many]
+
+         ConstraintsData: ConstraintsData (Optional)
+
+10.11.3. Structure: EntryResponse
+
+         IndexRequest: Integer (Optional)
+
+         IndexContainer: Integer (Optional)
+
+         Result: String (Optional)
+
+         ConstraintsData: ConstraintsData (Optional)
+
+10.12. Transaction: Publish
+
+         Request: PublishRequest
+
+         Response: PublishResponse
+
+   Request to post to a spool from an external party. The request and
+   response messages are extensions of the corresponding messages for
+   the Upload transaction. It is expected that additional fields will be
+   added as the need arises.
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 29]
+
+                        Mesh Protocol Reference                July 2020
+
+10.12.1. Message: PublishRequest
+
+         Inherits: MeshRequest
+
+         Publications: CatalogedPublication [0..Many]
+
+10.12.2. Message: PublishResponse
+
+         Inherits: MeshResponse
+
+   [No fields]
+
+10.13. Transaction: Post
+
+         Request: PostRequest
+
+         Response: PostResponse
+
+   Request to post to a spool from an external party. The request and
+   response messages are extensions of the corresponding messages for
+   the Upload transaction. It is expected that additional fields will be
+   added as the need arises.
+
+10.13.1. Message: PostRequest
+
+         Inherits: MeshRequest
+
+         Accounts: String [0..Many]
+
+         Message: DareEnvelope [0..Many]
+
+         Self: DareEnvelope [0..Many]
+
+10.13.2. Message: PostResponse
+
+         Inherits: UploadResponse
+
+   [No fields]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 30]
+
+                        Mesh Protocol Reference                July 2020
+
+10.14. Transaction: Connect
+
+         Request: ConnectRequest
+
+         Response: ConnectResponse
+
+   Request information necessary to begin making a connection request.
+
+10.14.1. Message: ConnectRequest
+
+         Inherits: MeshRequest
+
+         MessageConnectionRequestClient: DareEnvelope (Optional)
+
+10.14.2. Message: ConnectResponse
+
+         Inherits: MeshResponse
+
+         EnvelopedConnectionResponse: DareEnvelope (Optional)
+
+         EnvelopedProfileMaster: DareEnvelope (Optional)
+
+         EnvelopedAccountAssertion: DareEnvelope (Optional)
+
+10.15. Transaction: Claim
+
+         Request: ClaimRequest
+
+         Response: ClaimResponse
+
+   Claim a publication
+
+10.15.1. Message: ClaimRequest
+
+         Inherits: MeshRequest
+
+         EnvelopedMessageClaim: DareEnvelope (Optional)
+
+10.15.2. Message: ClaimResponse
+
+         Inherits: MeshResponse
+
+         CatalogedPublication: CatalogedPublication (Optional)
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 31]
+
+                        Mesh Protocol Reference                July 2020
+
+10.16. Transaction: PollClaim
+
+         Request: PollClaimRequest
+
+         Response: PollClaimResponse
+
+   Check party making claim
+
+10.16.1. Message: PollClaimRequest
+
+         Inherits: MeshRequest
+
+         PublicationId: String (Optional)
+
+         TargetAccountAddress: String (Optional)
+
+10.16.2. Message: PollClaimResponse
+
+         Inherits: MeshResponse
+
+         EnvelopedMessageClaim: DareEnvelope (Optional)
+
+10.17. Transaction: CreateGroup
+
+         Request: CreateGroupRequest
+
+         Response: CreateGroupResponse
+
+   Check party making claim
+
+10.17.1. Message: CreateGroupRequest
+
+         Inherits: MeshRequest
+
+         AccountAddress: String (Optional)
+
+         SignedProfileGroup: DareEnvelope (Optional)
+
+10.17.2. Message: CreateGroupResponse
+
+         Inherits: CreateResponse
+
+   [No fields]
+
+10.17.3. Structure: CryptographicOperation
+
+         KeyId: String (Optional)
+
+         KeyCoefficient: Binary (Optional)
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 32]
+
+                        Mesh Protocol Reference                July 2020
+
+10.17.4. Structure: CryptographicOperationSign
+
+         Inherits: CryptographicOperation
+
+         Data: Binary (Optional)
+
+         PartialR: Binary (Optional)
+
+10.17.5. Structure: CryptographicOperationKeyAgreement
+
+         Inherits: CryptographicOperation
+
+   [No fields]
+
+10.17.6. Structure: CryptographicOperationGenerate
+
+         Inherits: CryptographicOperation
+
+   [No fields]
+
+10.17.7. Structure: CryptographicOperationShare
+
+         Inherits: CryptographicOperation
+
+         Threshold: Integer (Optional)
+
+         Shares: Integer (Optional)
+
+10.17.8. Structure: CryptographicResult
+
+         Error: String (Optional)
+
+10.17.9. Structure: CryptographicResultKeyAgreement
+
+         Inherits: CryptographicResult
+
+   [No fields]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 33]
+
+                        Mesh Protocol Reference                July 2020
+
+10.18. Transaction: Operate
+
+         Request: OperateRequest
+
+         Response: OperateResponse
+
+   Perform a set of cryptographic operations
+
+10.18.1. Message: OperateRequest
+
+         Inherits: MeshRequest
+
+         AccountAddress: String (Optional)
+
+10.18.2. Message: OperateResponse
+
+         Inherits: MeshResponse
+
+   [No fields]
+
+11. Security Considerations
+
+   The security considerations for use and implementation of Mesh
+   services and applications are described in the Mesh Security
+   Considerations guide .
+
+12. IANA Considerations
+
+   All the IANA considerations for the Mesh documents are specified in
+   this document
+
+13. Acknowledgements
+
+   A list of people who have contributed to the design of the Mesh is
+   presented in .
+
+References
+
+Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, DOI
+              10.17487/RFC2119, March 1997.
+
+   [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
+              Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006.
+
+   [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
+              Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018.
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 34]
+
+                        Mesh Protocol Reference                July 2020
+
+   [RFC7230]  Fielding, R.,Reschke, J., "Hypertext Transfer Protocol
+              (HTTP/1.1): Message Syntax and Routing", RFC 7230, DOI
+              10.17487/RFC7230, June 2014.
+
+   [RFC3339]  Klyne, G.,Newman, C., "Date and Time on the Internet:
+              Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002.
+
+   [draft-hallambaker-mesh-architecture]  Hallam-Baker, P, "Mathematical
+              Mesh 3.0 Part I: Architecture Guide", Internet-Draft
+              draft-hallambaker-mesh-architecture-13, 9 March 2020.
+
+   [draft-hallambaker-mesh-security]  Hallam-Baker, P, "Mathematical
+              Mesh 3.0 Part VII: Security Considerations", Internet-
+              Draft draft-hallambaker-mesh-security-04, 9 March 2020.
+
+Informative References
+
+   [ECMA-262]  , "ECMAScript? 2017 Language Specification ", June 2017.
+
+   [draft-hallambaker-mesh-developer]  Hallam-Baker, P, "Mathematical
+              Mesh: Reference Implementation", Internet-Draft draft-
+              hallambaker-mesh-developer-09, 23 October 2019.
+
+Author's Address
+
+   Phillip Hallam-Baker
+   ThresholdSecrets.com
+
+   phill@hallambaker.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021               [Page 35]

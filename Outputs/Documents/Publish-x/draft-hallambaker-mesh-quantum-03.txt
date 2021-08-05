@@ -1,0 +1,405 @@
+Independent Submission                             Phillip Hallam-Baker
+INTERNET-DRAFT                                          November 3, 2020
+Intended Status:
+Expires: May 7, 2021
+
+
+Mathematical Mesh 3.0 Part X: Considerations for Quantum Cryptanalysis
+                               Resistance
+                   draft-hallambaker-mesh-quantum-03
+
+Abstract
+
+   The Mathematical Mesh 'The Mesh' is an infrastructure that
+   facilitates the exchange of configuration and credential data between
+   multiple user devices and provides end-to-end security. This document
+   describes.
+
+   [Note to Readers]
+
+   Discussion of this draft takes place on the MATHMESH mailing list
+   (mathmesh@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/search/?email_list=mathmesh.
+
+   This document is also available online at .
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts. The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.It is inappropriate to use Internet-Drafts as reference material
+   or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on May 7, 2021
+
+Copyright Notice
+
+   Copyright (c) IETF Trust and the persons identified as the document
+   authors. All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document. Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.
+
+
+
+Hallam-Baker              Expires May 7, 2021                   [Page 1]
+
+                      Mathematical Mesh Reference          November 2020
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires May 7, 2021                   [Page 2]
+
+                      Mathematical Mesh Reference          November 2020
+
+Table of Contents
+
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   2.  Definitions  . . . . . . . . . . . . . . . . . . . . . . . . .  4
+      2.1.  Requirements Language . . . . . . . . . . . . . . . . . .  4
+      2.2.  Defined Terms . . . . . . . . . . . . . . . . . . . . . .  4
+      2.3.  Related Specifications  . . . . . . . . . . . . . . . . .  4
+      2.4.  Implementation Status . . . . . . . . . . . . . . . . . .  4
+   3.  Recommended and Required Algorithms  . . . . . . . . . . . . .  4
+   4.  Quantum Resistant Signatures.  . . . . . . . . . . . . . . . .  4
+      4.1.  Example: Creating a Quantum Resistant Signature 
+             Fingerprint  . . . . . . . . . . . . . . . . . . . . . .  5
+   5.  Security Considerations  . . . . . . . . . . . . . . . . . . .  6
+   6.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . .  6
+   7.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . .  6
+   References . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6
+      Normative References  . . . . . . . . . . . . . . . . . . . . .  6
+      Informative References  . . . . . . . . . . . . . . . . . . . .  7
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . .  7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires May 7, 2021                   [Page 3]
+
+                      Mathematical Mesh Reference          November 2020
+
+1. Introduction
+
+   One of the core goals of the Mesh is to move the state of the art in
+   commercial cryptography beyond that achieved in the 1990s when PKIX,
+   S/MIME and OpenPGP were first developed. While each of these
+   infrastructures and protocols has been subject to incremental
+   improvement, none has seen widespread adoption of new cryptographic
+   approaches.
+
+         *  Quantum Resistant Signatures.
+
+2. Definitions
+
+   This section presents the related specifications and standard, the
+   terms that are used as terms of art within the documents and the
+   terms used as requirements language.
+
+2.1. Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in .
+
+2.2. Defined Terms
+
+   The terms of art used in this document are described in the Mesh
+   Architecture Guide .
+
+2.3. Related Specifications
+
+   The architecture of the Mathematical Mesh is described in the Mesh
+   Architecture Guide . The Mesh documentation set and related
+   specifications are described in this document.
+
+2.4. Implementation Status
+
+   The implementation status of the reference code base is described in
+   the companion document .
+
+3. Recommended and Required Algorithms
+
+4. Quantum Resistant Signatures.
+
+   Quantum computing has made considerable advances over the past decade
+   and the field has now reached the point where a machine weighing many
+   tons can apply Shor's algorithm to factor numbers as large as 35
+   before decoherence occurs.
+
+   Should construction of a large-scale device prove practical, it will
+   in principle be possible to break all of the public key cryptosystems
+   currently in use. While public key cryptosystems that resist quantum
+
+
+
+Hallam-Baker              Expires May 7, 2021                   [Page 4]
+
+                      Mathematical Mesh Reference          November 2020
+
+   cryptanalysis are currently in development, none has yet reached a
+   sufficient state of maturity for the field to reach consensus that
+   they are resistant to ordinary cryptanalysis, let alone offer a
+   replacement.
+
+   The consequence of successful quantum cryptanalysis for encryption
+   systems is that all material encrypted under existing public key
+   systems could be decrypted by a quantum capable attacker. Nor is
+   mitigation of this consequence practical since it is not the adoption
+   of new cryptographic algorithms that make a system more secure, it is
+   the elimination of weak options that provides improvement.
+
+   The Mesh does not currently provide an infrastructure that is Quantum
+   Resistant but could in principle be used as the basis for deploying a
+   Needham-Schroeder style symmetric key infrastructure or a future PKI
+   based on an as yet undecided quantum cryptanalysis resistant public
+   key algorithm.
+
+   Mesh profiles MAY include a Quantum Resistant Signature Fingerprint
+   (QRSF). This contains the UDF fingerprint of an XMSS signature public
+   key  together with the parameters used to derive the private key set
+   for the public key from a 256 bit master secret.
+
+   Should it ever become necessary to make use of the QRSF, the user
+   first recovers the master secret from whatever archival mechanism was
+   used to protect it. The use of secret sharing to protect the secret
+   is RECOMMENDED. The master secret is then used to reconstruct the set
+   of private keys from which the public key set is reconstructed. The
+   profile owner can now authenticate themselves by means of their XMSS
+   public key.
+
+4.1. Example: Creating a Quantum Resistant Signature Fingerprint
+
+   Alice decides to add a QRSF to her Mesh Profile. She creates a 256
+   bit master secret.
+
+   TBS: 
+
+   To enable recovery of the master key, Alice creates five keyshares
+   with a quorum of three:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires May 7, 2021                   [Page 5]
+
+                      Mathematical Mesh Reference          November 2020
+
+   TBS: 
+
+   Alice uses the master secret to derrive her private key values:
+
+   TBS: 
+
+   These values are used to generate the public key value:
+
+   TBS: 
+
+   The QRSF contains the UDF fingerprint of the public key value plus
+   the XMSS parameters:
+
+   TBS: 
+
+   Alice adds the QRSF to her profile and publishes it to a Mesh Service
+   that is enrolled in at least one multi-party notary scheme.
+
+5. Security Considerations
+
+   The security considerations for use and implementation of Mesh
+   services and applications are described in the Mesh Security
+   Considerations guide .
+
+6. IANA Considerations
+
+   All the IANA considerations for the Mesh documents are specified in
+   this document
+
+7. Acknowledgements
+
+   A list of people who have contributed to the design of the Mesh is
+   presented in .
+
+References
+
+Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, DOI
+              10.17487/RFC2119, March 1997.
+
+   [draft-hallambaker-mesh-architecture]  Hallam-Baker, P, "Mathematical
+              Mesh 3.0 Part I: Architecture Guide", Internet-Draft
+              draft-hallambaker-mesh-architecture-14, 27 July 2020.
+
+   [draft-hallambaker-mesh-security]  Hallam-Baker, P, "Mathematical
+              Mesh 3.0 Part VII: Security Considerations", Internet-
+              Draft draft-hallambaker-mesh-security-05, 27 July 2020.
+
+
+
+
+
+Hallam-Baker              Expires May 7, 2021                   [Page 6]
+
+                      Mathematical Mesh Reference          November 2020
+
+Informative References
+
+   [RFC8391]  Huelsing, A.,Butin, D.,Gazdag, S.,Rijneveld, J.,Mohaisen,
+              A., "XMSS: eXtended Merkle Signature Scheme", RFC 8391,
+              DOI 10.17487/RFC8391, May 2018.
+
+   [draft-hallambaker-mesh-developer]  Hallam-Baker, P, "Mathematical
+              Mesh: Reference Implementation", Internet-Draft draft-
+              hallambaker-mesh-developer-10, 27 July 2020.
+
+Author's Address
+
+   Phillip Hallam-Baker
+
+   phill@hallambaker.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker              Expires May 7, 2021                   [Page 7]

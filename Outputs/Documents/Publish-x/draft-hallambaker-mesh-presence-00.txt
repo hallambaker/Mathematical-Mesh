@@ -1,0 +1,231 @@
+Independent Submission                             Phillip Hallam-Baker
+INTERNET-DRAFT                                     Venture Cryptography.
+Intended Status:                                           July 27, 2020
+Expires: January 28, 2021
+
+
+             Mathematical Mesh 3.0 Part XII: Mesh Presence
+                   draft-hallambaker-mesh-presence-00
+
+Abstract
+
+   https://mailarchive.ietf.org/arch/browse/mathmesh/Discussion of this
+   draft should take place on the MathMesh mailing list
+   (mathmesh@ietf.org), which is archived at .
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts. The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.It is inappropriate to use Internet-Drafts as reference material
+   or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on January 28, 2021
+
+Copyright Notice
+
+   Copyright (c) IETF Trust and the persons identified as the document
+   authors. All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document. Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 1]
+
+                             Mesh Presence                     July 2020
+
+Table of Contents
+
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  3
+   2.  Definitions  . . . . . . . . . . . . . . . . . . . . . . . . .  3
+      2.1.  Requirements Language . . . . . . . . . . . . . . . . . .  3
+      2.2.  Defined Terms . . . . . . . . . . . . . . . . . . . . . .  3
+      2.3.  Related Specifications  . . . . . . . . . . . . . . . . .  3
+      2.4.  Implementation Status . . . . . . . . . . . . . . . . . .  3
+   3.  Presence Model . . . . . . . . . . . . . . . . . . . . . . . .  3
+      3.1.  Registration Service  . . . . . . . . . . . . . . . . . .  3
+         3.1.1.  Connect  . . . . . . . . . . . . . . . . . . . . . .  3
+         3.1.2.  Keep Alive . . . . . . . . . . . . . . . . . . . . .  3
+         3.1.3.  Disconnect . . . . . . . . . . . . . . . . . . . . .  3
+         3.1.4.  Invite . . . . . . . . . . . . . . . . . . . . . . .  3
+         3.1.5.  Accept . . . . . . . . . . . . . . . . . . . . . . .  3
+      3.2.  Forwarding Service  . . . . . . . . . . . . . . . . . . .  3
+         3.2.1.  Data . . . . . . . . . . . . . . . . . . . . . . . .  3
+         3.2.2.  Administration . . . . . . . . . . . . . . . . . . .  3
+         3.2.3.  Service  . . . . . . . . . . . . . . . . . . . . . .  4
+      3.3.  Peer to Peer Service  . . . . . . . . . . . . . . . . . .  4
+   4.  Security Considerations  . . . . . . . . . . . . . . . . . . .  4
+   5.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . .  4
+   6.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . .  4
+   References . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+      Normative References  . . . . . . . . . . . . . . . . . . . . .  4
+      Informative References  . . . . . . . . . . . . . . . . . . . .  4
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . .  4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 2]
+
+                             Mesh Presence                     July 2020
+
+1. Introduction
+
+2. Definitions
+
+   This section presents the related specifications and standard, the
+   terms that are used as terms of art within the documents and the
+   terms used as requirements language.
+
+2.1. Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in .
+
+2.2. Defined Terms
+
+2.3. Related Specifications
+
+2.4. Implementation Status
+
+   The implementation status of the reference code base is described in
+   the companion document .
+
+3. Presence Model
+
+3.1. Registration Service
+
+3.1.1. Connect
+
+3.1.2. Keep Alive
+
+3.1.3. Disconnect
+
+3.1.4. Invite
+
+3.1.5. Accept
+
+3.2. Forwarding Service
+
+3.2.1. Data
+
+3.2.1.1. Push
+
+3.2.1.2. Pull
+
+3.2.2. Administration
+
+3.2.2.1. Rekey
+
+3.2.2.2. Permission
+
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 3]
+
+                             Mesh Presence                     July 2020
+
+3.2.3. Service
+
+3.2.3.1. Status
+
+   Returns the current status of the stream including the current
+   participants and their ephemeral keys (if used).
+
+3.2.3.2. Transfer
+
+   Instructs a specific participant to use a different set of service
+   hosts for upload/download.
+
+3.3. Peer to Peer Service
+
+4. Security Considerations
+
+5. IANA Considerations
+
+   This document requires no IANA actions.
+
+6. Acknowledgements
+
+References
+
+Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, DOI
+              10.17487/RFC2119, March 1997.
+
+Informative References
+
+   [draft-hallambaker-mesh-developer]  Hallam-Baker, P, "Mathematical
+              Mesh: Reference Implementation", Internet-Draft draft-
+              hallambaker-mesh-developer-09, 23 October 2019.
+
+Author's Address
+
+   Phillip Hallam-Baker
+   Venture Cryptography.
+
+   phill@hallambaker.com
+
+
+
+
+
+
+
+
+
+
+
+
+Hallam-Baker            Expires January 28, 2021                [Page 4]
