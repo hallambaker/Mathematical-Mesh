@@ -1,4 +1,4 @@
-﻿#region // Copyright
+﻿#region // Copyright - MIT License
 //  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -295,7 +295,7 @@ namespace Goedel.Protocol.Presentation {
             //byte[] encoded = null;
 
 
-            Screen.WriteLine($"Client {Protocol} - State {StreamState} Post data to {RemoteStreamId?.ToStringBase16()}");
+            //Screen.WriteLine($"Client {Protocol} - State {StreamState} Post data to {RemoteStreamId?.ToStringBase16()}");
 
             if (RudConnection.Connected) {
                 switch (StreamState) {
@@ -332,12 +332,12 @@ namespace Goedel.Protocol.Presentation {
                 LocalStreamId.GetValue(), span,
                 plaintextExtensionsIn: extensions);
 
-            Screen.WriteLine($"URI: {Uri}");
+            //Screen.WriteLine($"URI: {Uri}");
 
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
             var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
-            Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+            //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var code = PacketReader.ReadResponderMessageType(responsepacketData, ref position);
 
@@ -366,7 +366,7 @@ namespace Goedel.Protocol.Presentation {
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
             var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
-            Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+            //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
 
@@ -387,7 +387,7 @@ namespace Goedel.Protocol.Presentation {
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
             var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
-            Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+            //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
             Process(packet);
@@ -401,7 +401,7 @@ namespace Goedel.Protocol.Presentation {
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
             var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
-            Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+            //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
             Process(packet);
@@ -466,7 +466,7 @@ namespace Goedel.Protocol.Presentation {
             writer.WriteObjectEnd();
 
 
-            Screen.WriteLine($"Payload: { stream.ToArray().ToUTF8()}");
+            //Screen.WriteLine($"Payload: { stream.ToArray().ToUTF8()}");
             // avoid the copy by using a Span.
             return stream.ToArray();
             }

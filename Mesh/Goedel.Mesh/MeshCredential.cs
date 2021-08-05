@@ -1,4 +1,4 @@
-﻿#region // Copyright
+﻿#region // Copyright - MIT License
 //  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -311,13 +311,13 @@ namespace Goedel.Mesh {
 
             if (ephmeralsOffered != null) {
                 ephemeral = ephmeralsOffered[0];
-                Screen.WriteLine($"Re-Offer of = {ephemeral}");
+                //Screen.WriteLine($"Re-Offer of = {ephemeral}");
 
                 }
             else {
                 ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
                 ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
-                Screen.WriteLine($"Make Offer of = {ephemeral}");
+                //Screen.WriteLine($"Make Offer of = {ephemeral}");
                 }
 
             var extension = new PacketExtension() {

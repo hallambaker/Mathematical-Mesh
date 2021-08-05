@@ -1,4 +1,4 @@
-﻿#region // Copyright
+﻿#region // Copyright - MIT License
 //  Copyright © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy

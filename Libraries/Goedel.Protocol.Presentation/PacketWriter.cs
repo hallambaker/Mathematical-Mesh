@@ -1,4 +1,4 @@
-﻿#region // Copyright
+﻿#region // Copyright - MIT License
 //  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -237,27 +237,27 @@ namespace Goedel.Protocol.Presentation {
 
 
         private Span<byte> GetSpan(long start, long length) {
-            Screen.WriteLine($"{start} for {length}");
+            //Screen.WriteLine($"{start} for {length}");
 
             return new Span<byte>(MemoryStream.GetBuffer(), (int)start, (int)length);
             }
 
         private ReadOnlySpan<byte> GetReadOnlySpan(long start, long length) {
-            Screen.WriteLine($"{start} for {length}");
+            //Screen.WriteLine($"{start} for {length}");
             return new ReadOnlySpan<byte>(MemoryStream.GetBuffer(), (int)start, (int)length);
             }
         ///<inheritdoc/>
         public virtual void Encrypt(byte[] key, PacketWriter writerIn, bool pad = true) {
-            Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
+            //Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
             var aes = new AesGcm(key);
 
-            Screen.Write("Auth: ");
+            //Screen.Write("Auth: ");
             var authSpan = GetSpan(0, MemoryStream.Position);
 
             var iv = Platform.GetRandomBytes(Constants.SizeIvAesGcm);
             MemoryStream.Write(iv, 0, iv.Length);
 
-            Screen.Write("IV: ");
+            //Screen.Write("IV: ");
             var ivSpan = GetReadOnlySpan(MemoryStream.Position - Constants.SizeIvAesGcm, Constants.SizeIvAesGcm);
 
 
@@ -286,14 +286,14 @@ namespace Goedel.Protocol.Presentation {
             MemoryStream.SetLength(totalLength);
 
 
-            Screen.Write("cipher: ");
+            //Screen.Write("cipher: ");
             var ciphertextSpan = GetSpan(MemoryStream.Position, lengthCiphertext);
 
 
-            Screen.Write("Plaintext: ");
+            //Screen.Write("Plaintext: ");
             var plaintextSpan = writerIn.GetReadOnlySpan(0, lengthCiphertext);
 
-            Screen.Write("Tag: ");
+            //Screen.Write("Tag: ");
             var TagSpan = GetSpan(MemoryStream.Position + lengthCiphertext, Constants.SizeTagAesGcm);
 
             aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, TagSpan, authSpan);

@@ -1,4 +1,4 @@
-﻿#region // Copyright
+﻿#region // Copyright - MIT License
 //  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -117,7 +117,7 @@ namespace Goedel.Protocol.Service {
 
             var (sourceId, offset) = StreamId.GetSourceId(Buffer);
 
-            Screen.WriteLine($"Received Request {sourceId.Value}");
+            //Screen.WriteLine($"Received Request {sourceId.Value}");
 
             RudStream stream = null;
 
@@ -156,7 +156,7 @@ namespace Goedel.Protocol.Service {
             byte[] responseBytes = null;
             if ((stream is RudStreamService rudStreamService) && (packetClient?.Payload.Length > 0)) {
 
-                Screen.WriteLine($"Begin dispatch");
+                //Screen.WriteLine($"Begin dispatch");
 
                 try {
                     response = rudStreamService.JpcInterface.Dispatch(rudStreamService, reader);
@@ -165,7 +165,7 @@ namespace Goedel.Protocol.Service {
                     // here make error response wrapper
 
                     }
-                Screen.WriteLine($"End dispatch");
+                //Screen.WriteLine($"End dispatch");
 
 
                 responseBytes = response.GetBytes(true, ObjectEncoding);
@@ -230,7 +230,7 @@ namespace Goedel.Protocol.Service {
         RudStream ProcessClientData(StreamId SourceId, int offset) {
 
 
-            Screen.WriteLine($"Try to match inbound stream {SourceId.Value}");
+            //Screen.WriteLine($"Try to match inbound stream {SourceId.Value}");
 
             responsePacket = ResponderMessageType.Data;
 

@@ -153,8 +153,8 @@ namespace Goedel.Mesh.Server {
                 MessageId = witness
                 };
 
-            Screen.WriteLine($"The AcknowledgeConnection.MessageID = {acknowledgeConnection.MessageId}");
-            Screen.WriteLine($"The AcknowledgeConnection Response ID = {acknowledgeConnection.GetResponseId()}");
+            //Screen.WriteLine($"The AcknowledgeConnection.MessageID = {acknowledgeConnection.MessageId}");
+            //Screen.WriteLine($"The AcknowledgeConnection Response ID = {acknowledgeConnection.GetResponseId()}");
 
             // Sign the envelope under the service key.
             // Encrypt: We should probably encrypt here to the device key and the account key.
@@ -614,7 +614,7 @@ namespace Goedel.Mesh.Server {
                     result = containerEntry?.JsonObject as AccountEntry;
                     result.AssertNotNull(MeshUnknownAccount.Throw);
 
-                    Screen.WriteLine($"LOCK {result.AccountAddress}");
+                    //Screen.WriteLine($"LOCK {result.AccountAddress}");
 
 
                     System.Threading.Monitor.Enter(result, ref locked);
@@ -623,7 +623,7 @@ namespace Goedel.Mesh.Server {
                 }
             catch {
                 if (locked) {
-                    Screen.WriteLine($"UNLOCK {result.AccountAddress}");
+                    //Screen.WriteLine($"UNLOCK {result.AccountAddress}");
                     System.Threading.Monitor.Exit(result);
 
                     }

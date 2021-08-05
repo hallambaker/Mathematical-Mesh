@@ -54,9 +54,16 @@ namespace Scratchpad {
             Screen.WriteLine($"Start test  {DateTime.Now}");
 
 
+            //TestService.Test().ProtocolHello();
 
-            // This is failing as a result of Operate having a lock that is acquired but not released.
-            ShellTestsAdmin.Test().TestAccount();
+            //ShellTests.Test().TestMessageConfirmationReject();
+
+
+            TestPresentationMesh.Test().TestMeshService();
+
+
+            //// This is failing as a result of Operate having a lock that is acquired but not released.
+            //ShellTestsAdmin.Test().TestAccount();
 
 
             //TestPresentationMesh.Test().TestAccountDeletion();

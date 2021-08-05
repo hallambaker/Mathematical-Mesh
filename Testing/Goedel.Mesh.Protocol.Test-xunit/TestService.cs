@@ -39,10 +39,6 @@ namespace Goedel.XUnit {
 
 
     public partial class TestService {
-        // Goal: Authenticate service requests and responses
-        // Goal: Lightweight key exchange mechanism for service
-        // Goal: Service handoff to a different IP address
-        // Goal: Enable use of JSON-B encodings throughout
 
         // Task: Verify.
         // Task: Sign

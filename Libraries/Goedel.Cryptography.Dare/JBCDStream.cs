@@ -1,4 +1,4 @@
-﻿#region // Copyright
+﻿#region // Copyright - MIT License
 //  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -97,7 +97,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             if (fileStatus != FileStatus.Read) {
-                Screen.WriteLine($"Open for write {fileName}");
+                //Screen.WriteLine($"Open for write {fileName}");
 
 
                 StreamWrite = fileName.FileStream(fileStatus);
@@ -105,7 +105,7 @@ namespace Goedel.Cryptography.Dare {
                 StreamWrite.Seek(0, SeekOrigin.End);
                 }
             if (!writeOnly) {
-                Screen.WriteLine($"Open for read {fileName}");
+                //Screen.WriteLine($"Open for read {fileName}");
 
 
                 StreamRead = fileName.FileStream(FileStatus.Read);
@@ -129,7 +129,7 @@ namespace Goedel.Cryptography.Dare {
         /// Dispose method, frees all resources.
         /// </summary>
         protected override void Disposing() {
-            Screen.WriteLine($"close {Filename} read {disposeStreamRead != null} write {disposeStreamWrite!=null}");
+            //Screen.WriteLine($"close {Filename} read {disposeStreamRead != null} write {disposeStreamWrite!=null}");
 
 
 

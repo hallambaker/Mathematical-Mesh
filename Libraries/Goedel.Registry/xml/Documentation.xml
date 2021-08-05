@@ -595,7 +595,7 @@
         </member>
         <member name="M:Goedel.Registry.Boilerplate.License(System.IO.TextWriter,System.String,System.String)">
             <summary>Write license to output.The 
-            copyright information is extracted from the assembly.</summary>
+            Copyright - MIT License information is extracted from the assembly.</summary>
             <param name="_Output">The outout stream</param>
             <param name="Comment">Line comment prefix</param>
             <param name="Name">Name of the license to use. Valid values 

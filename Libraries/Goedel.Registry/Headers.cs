@@ -1,4 +1,4 @@
-#region // Copyright
+#region // Copyright - MIT License
 //  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -40,7 +40,7 @@ namespace Goedel.Registry {
         //
 
         /// <summary>Write license to output.The 
-        /// copyright information is extracted from the assembly.</summary>
+        /// Copyright - MIT License information is extracted from the assembly.</summary>
         /// <param name="_Output">The outout stream</param>
         /// <param name="Comment">Line comment prefix</param>
         /// <param name="Name">Name of the license to use. Valid values 

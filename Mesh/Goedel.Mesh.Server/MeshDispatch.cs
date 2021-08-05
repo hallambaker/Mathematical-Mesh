@@ -1,4 +1,4 @@
-﻿#region // Copyright
+﻿#region // Copyright - MIT License
 //  Copyright © 2015 by Comodo Group Inc.
 //  Copyright © 2019-2021 by Phill Hallam-Baker
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -116,7 +116,10 @@ namespace Goedel.Mesh.Server {
             ServiceConfiguration = serviceConfiguration;
             HostConfiguration = hostConfiguration;
 
-            MeshPersist = new MeshPersist(hostConfiguration.Path, FileStatus.OpenOrCreate);
+            var path = hostConfiguration?.Path ?? meshMachine.DirectoryMesh;
+
+
+            MeshPersist = new MeshPersist(path, FileStatus.OpenOrCreate);
 
             // Dummy profiles for the service and host at this point
             ProfileService = ProfileService.Generate(MeshMachine.KeyCollection);
@@ -389,7 +392,7 @@ namespace Goedel.Mesh.Server {
 
             try {
 
-                Screen.WriteLine($"Bind {request.AccountAddress}");
+                //Screen.WriteLine($"Bind {request.AccountAddress}");
 
                 var verifiedDevice = VerifyDevice(jpcSession);
 

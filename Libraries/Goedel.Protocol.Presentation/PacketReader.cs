@@ -1,4 +1,4 @@
-﻿#region // Copyright
+﻿#region // Copyright - MIT License
 //  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -254,13 +254,13 @@ namespace Goedel.Protocol.Presentation {
 
 
         private Span<byte> GetSpan(long start, long length) {
-            Screen.WriteLine($"{start} for {length}");
+            //Screen.WriteLine($"{start} for {length}");
 
             return new Span<byte>(Packet, (int)start, (int)length);
             }
 
         private ReadOnlySpan<byte> GetReadOnlySpan(int start, long length) {
-            Screen.WriteLine($"{start} for {length}");
+            //Screen.WriteLine($"{start} for {length}");
             Position = (int)(start + length);
             return new ReadOnlySpan<byte>(Packet, start, (int)length);
             }
@@ -275,12 +275,12 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>A reader for the decrypted data.</returns>
         public virtual PacketReader Decrypt(byte[] key, bool pad = true) {
 
-            Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
+            //Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
-            Screen.Write("D-Auth: ");
+            //Screen.Write("D-Auth: ");
             var authSpan = GetReadOnlySpan(0, Position);
 
-            Screen.Write("D-IV: ");
+            //Screen.Write("D-IV: ");
             var ivSpan = GetReadOnlySpan(Position, Constants.SizeIvAesGcm);
 
 
