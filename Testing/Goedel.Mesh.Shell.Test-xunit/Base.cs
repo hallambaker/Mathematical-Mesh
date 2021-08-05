@@ -99,6 +99,12 @@ namespace Goedel.XUnit {
     public partial class ShellTests : Disposable {
 
 
+
+        void EndTest() {
+            testEnvironment?.Dispose();
+            }
+
+
         public string ServiceDns => TestEnvironment.ServiceDns;
 
         TestCLI DefaultDevice => defaultDevice ?? GetTestCLI().CacheValue(out defaultDevice);
@@ -122,6 +128,10 @@ namespace Goedel.XUnit {
         TestEnvironmentCommon testEnvironment;
 
         public ShellTests() { }
+
+
+
+
 
 
         public Result Dispatch(string command, bool fail = false) =>

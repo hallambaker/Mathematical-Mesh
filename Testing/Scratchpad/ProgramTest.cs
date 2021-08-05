@@ -56,10 +56,10 @@ namespace Scratchpad {
 
             //TestService.Test().ProtocolHello();
 
-            //ShellTests.Test().TestMessageConfirmationReject();
+            ShellTests.Test().TestMessageConfirmationAccept();
 
-
-            TestPresentationMesh.Test().TestMeshService();
+            //ShellTestsHTTP.Test().TestMessageGroup();
+            //TestPresentationMesh.Test().TestMeshService();
 
 
             //// This is failing as a result of Operate having a lock that is acquired but not released.

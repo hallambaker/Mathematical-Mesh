@@ -129,7 +129,7 @@ namespace Goedel.Mesh.Server {
 
             // create an activation record and a connection record.
 
-            ActivationDevice = new ActivationDevice(ProfileHost);
+            ActivationDevice = new ActivationHost(ProfileHost);
 
 
             //Screen.WriteLine($"$$$$ Seed {ActivationDevice.ActivationSeed}");

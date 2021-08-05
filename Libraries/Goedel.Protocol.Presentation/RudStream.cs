@@ -167,6 +167,8 @@ namespace Goedel.Protocol.Presentation {
             // only set the URI if we are creating an initiator stream.
             if (RudConnection is ConnectionInitiator initiator) {
                 Uri = HttpEndpoint.GetUri(initiator.Domain, 15099, protocol, initiator.Instance);
+
+                Screen.WriteLine($"Client URI = {Uri}");
                 }
             //AccountAddress = throw new NYI();
             CredentialSelf = credentialSelf;

@@ -65,6 +65,8 @@ namespace Goedel.XUnit {
 
             var result = testCLI.Dispatch("account hello");
 
+            EndTest();
+
             }
 
 
@@ -112,6 +114,8 @@ namespace Goedel.XUnit {
             witness = message.Witness;
             device1.Dispatch($"device reject {witness}");
             device3.Dispatch($"account sync", fail: true);
+
+            EndTest();
             }
 
 
@@ -130,6 +134,8 @@ namespace Goedel.XUnit {
             c1.ProcessedResults.TestEqual(1);
             var c2 = device1.Connect(device3, accountA);
             c2.ProcessedResults.TestEqual(1);
+
+            EndTest();
             }
 
 
@@ -153,6 +159,8 @@ namespace Goedel.XUnit {
             // The connection MUST be rejected as the PIN has expired.
             device2.Dispatch($"device complete", fail: true);
             device2.Dispatch($"account sync", fail: true);
+
+            EndTest();
             }
 
 
@@ -177,6 +185,8 @@ namespace Goedel.XUnit {
             // The connection MUST be rejected as the PIN has expired.
             device2.Dispatch($"device complete", fail: true);
             device2.Dispatch($"account sync", fail: true);
+
+            EndTest();
             }
 
         [Fact]
@@ -207,6 +217,8 @@ namespace Goedel.XUnit {
             device3.Dispatch($"device complete", fail: true);
             device3.Dispatch($"account sync", fail: true);
 
+            EndTest();
+
             }
 
         /// <summary>
@@ -232,6 +244,8 @@ namespace Goedel.XUnit {
             // This is currently failing because the completion
             // message is not being found.
             var result2 = deviceConnect1.Dispatch($"device complete");
+
+            EndTest();
             }
 
         /// <summary>
@@ -261,6 +275,8 @@ namespace Goedel.XUnit {
 
             var result2 = deviceConnect1.Dispatch($"device complete");
 
+            EndTest();
+
             }
 
 
@@ -273,6 +289,8 @@ namespace Goedel.XUnit {
             TestAuthCreate(device1, device2, "/root");
             // check can do super admin things
             CheckCanSuper(device2);
+
+            EndTest();
             }
 
         [Fact]
@@ -286,6 +304,8 @@ namespace Goedel.XUnit {
             device1.Dispatch("device auth device2 /root");
 
             CheckCanSuper(device2).TestTrue();
+
+            EndTest();
             }
 
         static bool CheckCanSuper(Mesh.Test.TestCLI device2) => true;
@@ -299,6 +319,8 @@ namespace Goedel.XUnit {
             TestAuthCreate(device1, device2, "/admin");
 
             CheckCanAdmin(device2).TestTrue();
+
+            EndTest();
             }
 
         [Fact]
@@ -312,6 +334,8 @@ namespace Goedel.XUnit {
             device1.Dispatch("device auth device2 /admin");
 
             CheckCanAdmin(device2).TestTrue();
+
+            EndTest();
             }
 
         static bool CheckCanAdmin(Mesh.Test.TestCLI device2) => true;
@@ -325,6 +349,8 @@ namespace Goedel.XUnit {
             TestAuthCreate(device1, device2, "/message");
 
             CheckCanMessage(device2).TestTrue();
+
+            EndTest();
             }
 
         [Fact]
@@ -338,6 +364,8 @@ namespace Goedel.XUnit {
             device1.Dispatch("device auth device2 /message");
 
             CheckCanMessage(device2).TestTrue();
+
+            EndTest();
             }
 
         static bool CheckCanMessage(Mesh.Test.TestCLI device2) => true;
@@ -350,6 +378,8 @@ namespace Goedel.XUnit {
             TestAuthCreate(device1, device2, "/web");
 
             CheckCanWeb(device2).TestTrue();
+
+            EndTest();
             }
 
         [Fact]
@@ -363,6 +393,8 @@ namespace Goedel.XUnit {
             device1.Dispatch("device auth device2 /web");
 
             CheckCanWeb(device2).TestTrue();
+
+            EndTest();
             }
 
         static bool CheckCanWeb(Mesh.Test.TestCLI device2) => true;
@@ -375,6 +407,8 @@ namespace Goedel.XUnit {
             TestAuthCreate(device1, device2, "/device");
 
             CheckCanDevice(device2).TestTrue();
+
+            EndTest();
             }
 
         [Fact]
@@ -388,6 +422,8 @@ namespace Goedel.XUnit {
             device1.Dispatch("device auth device2 /device");
 
             CheckCanDevice(device2).TestTrue();
+
+            EndTest();
             }
 
         static bool CheckCanDevice(Mesh.Test.TestCLI device2) => true;

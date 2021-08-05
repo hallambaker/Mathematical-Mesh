@@ -69,7 +69,7 @@ namespace Goedel.Protocol.Presentation {
 
         public string Account(string username) => $"{username}@{Domain}";
 
-        public static string Specializer(string instance) => ""; //instance == null ? "" : $"{instance}/";
+        public static string Specializer(string instance) => instance == null ? "" : $"{instance}/";
 
         //public string GetUri() => GetUri(, Port, Protocol, Instance);
 
