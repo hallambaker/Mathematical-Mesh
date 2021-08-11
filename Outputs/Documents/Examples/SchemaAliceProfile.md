@@ -5,41 +5,41 @@ For example, the personal account profile Alice created is:
 {
   "ProfileUser":{
     "ProfileSignature":{
-      "Udf":"MC44-IZC3-IWZT-VCVZ-L2AG-HI4E-LOV2",
+      "Udf":"MAQT-OUN5-5QSY-7ST3-BLD3-XVWV-NEID",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"W5ugEWyCz986Pw7xPP9-ap09PFpqfc9x_MB0Uq1brUpEg
-  1ylIaitE5YaJIAeTb_Cc5y4Yr5D6kgA"}}},
+          "Public":"YB1CYyo71HVOlMGo-s9pNGQ1q764Ag7DuKBtDriuOVxP3
+  9QdR7R6kGhJNTQcnhkCL96scpjOsTmA"}}},
     "AccountAddress":"alice@example.com",
-    "ServiceUdf":"MBBY-E4VA-CMWF-52T7-ESLA-PGNT-CNNX",
+    "ServiceUdf":"MBUN-FXJA-KQKV-XMZG-BETI-IUXM-YUKT",
     "AccountEncryption":{
-      "Udf":"MCQX-PF7A-LY3G-3ZPI-AIYO-LR5D-YG6W",
+      "Udf":"MC4G-NHXB-V2IO-7BA6-TCQA-RXXS-7CWV",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"0ARE0VapsMqYf_P-tFnE0FZ2Zq2wn4e21viCH4Trhyg7Q
-  0N8FXmbpYv_72_L2VKuliiiOhddT1OA"}}},
+          "Public":"SvaQVwA5GYx27sKmlZiQhXC-s1FMOFnluUOQJeDkMFsjD
+  9ks8FXmaFxnsa2mJUQDtpm81RuS4KAA"}}},
     "AdministratorSignature":{
-      "Udf":"MCLJ-LCFX-ENE2-5NTF-GBNV-MW3P-VHSZ",
+      "Udf":"MBU6-NE5K-PW3U-475T-QOYF-D7XH-TTEV",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"GXmg8zk0pvV9b881JNvRm69dOTuL7oyYNwziQQltWF4aX
-  ZMCTjf8EM3gtCU7wHF0zuFsd1WgX8GA"}}},
+          "Public":"-VuvvBY31thi0h5rFm1FF-7yXNw2rOy_wYIvCq21TI34M
+  PhpL2mF4QSnQ06MMWyKStu_dEJYZ_2A"}}},
     "AccountAuthentication":{
-      "Udf":"MDA5-PY6A-BG2L-7YN6-EAKP-O3QB-CG5T",
+      "Udf":"MCSZ-JFBZ-FSH7-JYFV-HEDO-QRZG-D5EF",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"XcHN7AbMTW1TMQOd0mXyAHG62O6j7YHgIGhp1Oaj5xTOK
-  2uPzGxMeCeFOzX0f-YJXijL6hl_baWA"}}},
+          "Public":"IqvNmy9DGGre3BXD1_q-n1ljVDueJA8Bqea57i2RYWQFr
+  cih33WiF2bmu0bYTXd8U7w7Z8GM-D4A"}}},
     "AccountSignature":{
-      "Udf":"MCGB-4KCI-CP3G-FJSD-W7W2-UYKO-GNLU",
+      "Udf":"MAKF-X64U-ZTZ3-N6J2-UKZA-YUIJ-QWBX",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"cA1wcKtn1daj606UD0PJ8xLqFN0kOdxyjsF2QKrPZxdUY
-  gSPRVRiLsLJOEl7cIsttpaCFwuPiDOA"}}}}}
+          "Public":"rR5sNR5VX5uebpuNQ6abvepc-VCY8LxS6Y_FvlvUDeHYF
+  NSiIEUChL-ktVf6j2VaxNwVTtFOQPMA"}}}}}
 ~~~~
 

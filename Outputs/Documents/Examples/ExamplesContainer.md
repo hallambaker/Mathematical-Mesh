@@ -296,7 +296,7 @@ The signing key parameters are:
 {
   "PrivateKeyECDH":{
     "crv":"Ed25519",
-    "Private":"MIBPnv_pLhRDy_O5rHpwnjl2w6Nv40HxpWYlKYaSyNs"}}
+    "Private":"TI97eALaOSebv9J_gtyhhcqzzQvPLeN0GYMnsrfKPq4"}}
 ~~~~
 
 The sequence headers and trailers are:
@@ -371,16 +371,16 @@ Frame 0
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQC-XLMG-LV7L-7GUU-A42D-XKNH-ZSX4",
-    "Salt":"5pfKmfCcmLpt7P7dWCUF9A",
+    "kid":"EBQH-VHQA-G3KH-6MQZ-UXXF-PI2W-G6HH",
+    "Salt":"3gOktPAcGTmWLGdWW_rPXQ",
     "recipients":[{
-        "kid":"MC26-ABWY-V347-CYLP-BL4I-OJK2-USAM",
+        "kid":"MBVR-DSPX-YXLT-5VIS-V53W-XULC-MQPL",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"0H4HR8GBcerrFXhzy0Y6fj9ZK10xE1Evd6NTUdP1f7Y"}},
-        "wmk":"RULfmLICnOo1eazhF1I6r8qhygYVPNP6xJceiDXz4a1rQuicgX
-  eBkA"}
+            "Public":"kN4gJ87Rcz9hGjflfgVKM9r2q9gdmpAXd5rYJE5NVT8"}},
+        "wmk":"4rOjQLWVAH-u28uyEcuviBAdhY8QGbL-s26g2U9ls42p7RMgi1
+  cHKA"}
       ],
     "policy":{
       "enc":"none",
@@ -388,7 +388,7 @@ Frame 0
       "EncryptKeys":[{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"Ta1P1HnKnWoSh-PQ_uTO8kL-XV96lsBg2SVWI7jWtbA"}}
+            "Public":"q5NUwieRQSLIAgMJSiKsFf25tjOLtyPlYz9Ht8pNOlg"}}
         ],
       "Sealed":true},
     "ContentMetaData":"e30",
@@ -407,16 +407,16 @@ Frame 1
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQA-ZGIC-KILW-3LHB-YGZR-EBS7-TIBX",
-    "Salt":"m4_ikZ-pI31m5s4HMETf4A",
+    "kid":"EBQN-MHN5-PNZ5-SDOW-O3Y3-WFN5-NDUC",
+    "Salt":"eP-gUtXEHNZH0ouG5WXXgw",
     "recipients":[{
-        "kid":"MC26-ABWY-V347-CYLP-BL4I-OJK2-USAM",
+        "kid":"MBVR-DSPX-YXLT-5VIS-V53W-XULC-MQPL",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"ObjQPsKmEEC2VKX_08ZTW2XduMpZz88gOD-EYt7ZmZ4"}},
-        "wmk":"S0x3ZVlL36WUbqVKYf4OSBXmr1A4uktYcCy-Z2girNoZGhCSXd
-  p7aA"}
+            "Public":"bskBQp5rd_3twfNrl_AFJxN8g92hhcYqUm5s8WH7lpM"}},
+        "wmk":"TASO6IAENQIWBoiyAx0lklEEUwBKIijm0zxJ-7vlzWMeeCegu_
+  EzJg"}
       ],
     "ContentMetaData":"e30",
     "SequenceInfo":{
@@ -432,16 +432,16 @@ Frame 2
 {
   "DareHeader":{
     "enc":"A256CBC",
-    "kid":"EBQM-CSHA-PAAQ-5FGE-T7SM-GSM7-3UHQ",
-    "Salt":"dz9SGXF-XINdqv-veIloAA",
+    "kid":"EBQK-4EHA-NIAM-UQTG-OJF2-PBUZ-IZUC",
+    "Salt":"ffxxaByPUkTmwYRdAJ7gAQ",
     "recipients":[{
-        "kid":"MC26-ABWY-V347-CYLP-BL4I-OJK2-USAM",
+        "kid":"MBVR-DSPX-YXLT-5VIS-V53W-XULC-MQPL",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"Ht9BtmZjhDSlO4R_E2F12-CxNSD8ySzIPcYlrY9cIQQ"}},
-        "wmk":"tIBplAvQVCo_Pd5bpIaBoV_kWhAfhaksJDL5Gm-0TtXeiMfX2f
-  AjFA"}
+            "Public":"K1h2mR4M1tFDeD5e4YC4xsqrn-vDUZmHiEDglrDUkwA"}},
+        "wmk":"trI_kUggZ7XVKtHj22uIVYVHDBppJqObAYM05cPmUX69f5wTBl
+  JQfQ"}
       ],
     "ContentMetaData":"e30",
     "SequenceInfo":{

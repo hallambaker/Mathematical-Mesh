@@ -213,7 +213,7 @@ namespace ExampleGenerator {
 		public void _ArchitectureConnectPassword(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("For example, bacause Alice granted the device the Web role, she can now access her credential \n{0}", _Indent);
+				_Output.Write ("For example, because Alice granted the device the Web role, she can now access her credential \n{0}", _Indent);
 				_Output.Write ("catalog and decrypt the file she encrypted on her first device from the new device:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Connect.PasswordList2);
@@ -339,7 +339,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Group.GroupCreate);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Alice encrypts a test file but he can't decrypt it because she hasn't added herself \n{0}", _Indent);
+				_Output.Write ("Alice encrypts a test file but she can't decrypt it because she hasn't added herself \n{0}", _Indent);
 				_Output.Write ("to the group yet.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Group.GroupEncrypt);

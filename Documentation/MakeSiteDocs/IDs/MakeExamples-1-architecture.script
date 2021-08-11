@@ -122,7 +122,7 @@ Alice can now synchronize her newly connected device to her account:
 
 #zfile CreateExamples ArchitectureConnectPassword "Examples\\ArchitectureConnectPassword.md" Example
 
-For example, bacause Alice granted the device the Web role, she can now access her credential 
+For example, because Alice granted the device the Web role, she can now access her credential 
 catalog and decrypt the file she encrypted on her first device from the new device:
 
 #%  ConsoleExample (Example.Connect.PasswordList2);
@@ -202,7 +202,7 @@ her closest friends:
 
 #%  ConsoleExample (Example.Group.GroupCreate);
 
-Alice encrypts a test file but he can't decrypt it because she hasn't added herself 
+Alice encrypts a test file but she can't decrypt it because she hasn't added herself 
 to the group yet.
 
 #%  ConsoleExample (Example.Group.GroupEncrypt);

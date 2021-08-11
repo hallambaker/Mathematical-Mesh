@@ -31,6 +31,13 @@ using Goedel.XUnit;
 namespace Scratchpad {
 
 
+    // ToDo: Check.DisableDeletedDevices = true
+    // ToDo: we are not currently checking disabled device authorization
+    // ToDo: We are not using threshold decryption on devices.
+
+
+
+
     // Current bug: test not terminating as the service is not being KILLED
 
 

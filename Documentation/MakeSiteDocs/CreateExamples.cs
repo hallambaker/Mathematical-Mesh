@@ -280,23 +280,23 @@ namespace ExampleGenerator {
             Connect.ConnectAccept.GetResult().Success.TestTrue();
             Connect.ConnectComplete.GetResult().Success.TestTrue();
 
-            //// This is not syncing correctly. Do not have the credentials in the store(!)
-            //Account.SyncAlice = Alice2.Example(
-            //    $"account sync"
-            //    );
+            // This is not syncing correctly. Do not have the credentials in the store(!)
+            Account.SyncAlice = Alice2.Example(
+                $"account sync"
+                );
 
-            //// Password catalog access broken on device 2
-            //// Don't have the account decryption key either.
-            //Connect.PasswordList2 = Alice2.Example(
-            //    $"password get {ShellPassword.PasswordSite}",
-            //    $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
-            //    );
+            // Password catalog access broken on device 2
+            // Don't have the account decryption key either.
+            Connect.PasswordList2 = Alice2.Example(
+                $"password get {ShellPassword.PasswordSite}",
+                $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
+                );
 
-            //Connect.PasswordList2.Add(Alice2.DumpFile(Connect.EncryptResultFile));
+            Connect.PasswordList2.Add(Alice2.DumpFile(Connect.EncryptResultFile));
 
 
-            //Connect.PasswordList2.GetResult(0).Success.TestTrue();
-            //Connect.PasswordList2.GetResult(1).Success.TestTrue();
+            Connect.PasswordList2.GetResult(0).Success.TestTrue();
+            Connect.PasswordList2.GetResult(1).Success.TestTrue();
             }
 
         public void TestConnectDisconnect(string deviceId) {

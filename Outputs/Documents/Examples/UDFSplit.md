@@ -4,12 +4,12 @@ there are five key shares, three of which will be required to recover the key.
 
 ~~~~
 Alice's master secret is
-  8E FE 66 10  A5 94 81 75  55 E4 09 BE  EB A2 F9 16
+  2F BA 85 CE  0F 53 44 EB  F5 BC 14 85  69 52 A7 07
 ~~~~
 
 This has the UDF representation:
 
-R37G-MEFF-SSAX-KVPE-BG7O-XIXZ-CY
+F65I-LTQP-KNCO-X5N4-CSCW-SUVH-A4
 
 The master secret is converted to an integer applying network byte order conventions.
 Since the master secret is 128 bits, it is guaranteed to be smaller than the modulus.
@@ -20,19 +20,19 @@ The co-efficients of the polynomial a1, a2 are random numbers smaller than the
 modulus:
 
 ~~~~
-a0 = 190071288928200631860159323512976374038
-a1 = 14009151250881526762711026105093241258
-a2 = 192504880386395685081784875462483055914
+a0 = 63442196903800229039966466513021609735
+a1 = 246115659426027064403294183570649366251
+a2 = 184637917349608649053967084097639421404
 ~~~~
 
 The master secret is the value f(0) = a0. The key shares are the values f(1), f(2)...f(5):
 
 ~~~~
-f(1) = 56302953644539380241280617648784459703
-f(2) = 307544379133669498785971662709558657196
-f(3) = 263230831553714060567483243831762543503
-f(4) = 263644677825611529049189968447164330131
-f(5) = 308785917949361904231091836555764017080
+f(1) = 153913406758497479033853126749542185883
+f(2) = 273378084391473563672299347749573393332
+f(3) = 81553862881790019491930522081347020575
+f(4) = 259005476071323773419495864608399490626
+f(5) = 125168190118197898528246160467194380471
 ~~~~
 
 The first byte of each share specifies the recovery information (quorum, x value), the
@@ -40,30 +40,30 @@ remaining bytes specify the share value in network byte order:
 
 ~~~~
 f(1) = 
-  30 2A 5B 8D  EF A8 8A CE  79 F6 A8 D4  F8 AF 24 C7
-  B7
+  30 73 CA A4  D6 19 39 41  1E F9 3B 3B  0E 59 1C 7B
+  9B
 f(2) = 
-  31 E7 5E E4  95 1A B5 51  97 DE 4D E9  C4 76 A0 C0
-  AC
+  31 CD AA B4  31 EE 28 65  77 54 9F DE  B7 07 02 7B
+  B4
 f(3) = 
-  32 C6 08 6A  00 FC 14 0A  CF 0C D3 48  22 42 16 E3
-  8F
+  32 3D 5A B3  E1 8E 20 B1  F5 07 E9 FF  7F 73 04 A7
+  1F
 f(4) = 
-  33 C6 58 1E  33 4C A6 FA  1F 82 38 F0  12 11 87 30
-  93
+  33 C2 DA A3  E4 F9 22 26  98 13 19 9D  67 9D 22 FE
+  42
 f(5) = 
-  34 E8 4E 01  2C 0C 6E 1F  89 3E 7E E1  93 E4 F1 A7
-  B8
+  34 5E 2A 84  3C 2F 2C C3  60 76 2E B8  6F 85 5D 80
+  B7
 ~~~~
 
 The UDF presentation of the key shares is thus:
 
 ~~~~
-f(1) = SAYC-UW4N-56UI-VTTZ-62UN-J6FP-ETD3-O
-f(2) = SAY6-OXXE-SUNL-KUMX-3ZG6-TRDW-UDAK-Y
-f(3) = SAZM-MCDK-AD6B-ICWP-BTJU-QISC-C3RY-6
-f(4) = SAZ4-MWA6-GNGK-N6Q7-QI4P-AEQR-Q4YJ-G
-f(5) = SA2O-QTQB-FQGG-4H4J-HZ7O-DE7E-6GT3-Q
+f(1) = SAYH-HSVE-2YMT-SQI6-7E5T-WDSZ-DR5Z-W
+f(2) = SAY4-3KVU-GHXC-QZLX-KSP5-5NYH-AJ53-I
+f(3) = SAZD-2WVT-4GHC-BMPV-A7U7-673T-ASTR-6
+f(4) = SAZ4-FWVD-4T4S-EJUY-CMMZ-2Z45-EL7E-E
+f(5) = SA2F-4KUE-HQXS-ZQ3A-OYXL-Q34F-LWAL-O
 ~~~~
 
 To recover the value f(0) from any three shares, we need to fit a polynomial curve to 

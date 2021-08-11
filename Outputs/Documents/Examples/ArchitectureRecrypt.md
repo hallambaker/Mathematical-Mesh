@@ -6,11 +6,11 @@ her closest friends:
 <div="terminal">
 <cmd>Alice> group create groupw@example.com
 <rsp>Account=groupw@example.com
-UDF=MCTZ-HSH7-NUNV-MQ3Z-XNJ6-XGB3-VBPX
+UDF=MB7H-ISEX-TU5U-FKPX-3PR4-VVAK-ZZU7
 </div>
 ~~~~
 
-Alice encrypts a test file but he can't decrypt it because she hasn't added herself 
+Alice encrypts a test file but she can't decrypt it because she hasn't added herself 
 to the group yet.
 
 
@@ -31,8 +31,8 @@ Alice adds herself to the group, now she can decrypt:
 <cmd>Alice> group add groupw@example.com alice@example.com
 <rsp>{
   "ContactAddress": "alice@example.com",
-  "MemberCapabilityId": "MCHU-Q4TP-GE2Y-6DNU-UYEF-P3BF-LZTB",
-  "ServiceCapabilityId": "NA3H-TSPB-TVND-S6NK-57T4-6TYM-ZT3Z"}
+  "MemberCapabilityId": "MCWW-4X6P-PWV6-PBJC-BW63-GKXH-7Y4D",
+  "ServiceCapabilityId": "NATW-R3PI-RK6H-XNK6-NWLO-3FEF-7TQG"}
 <cmd>Alice> account sync /auto
 <cmd>Alice> dare decode groupsecret.dare grouptext_alice.dare
 <cmd>Alice> type grouptext_alice.dare
@@ -51,8 +51,8 @@ the group:
 <cmd>Alice> group add groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MCHU-Q4TP-GE2Y-6DNU-UYEF-P3BF-LZTB",
-  "ServiceCapabilityId": "NBDJ-WYQO-UIEH-OVLK-B3UM-J5TN-AQ3P"}
+  "MemberCapabilityId": "MCWW-4X6P-PWV6-PBJC-BW63-GKXH-7Y4D",
+  "ServiceCapabilityId": "NBQZ-IGDH-IXYO-XCRQ-2KQ6-DVMG-G75J"}
 </div>
 ~~~~
 
@@ -61,14 +61,14 @@ the group key without making any change to the encrypted files:
 
 
 ~~~~
-Missing example 4
+Missing example 3
 ~~~~
 
 Removing Bob from the group immediately withdraws his access.
 
 
 ~~~~
-Missing example 5
+Missing example 4
 ~~~~
 
 Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
@@ -76,6 +76,6 @@ earlier).
 
 
 ~~~~
-Missing example 6
+Missing example 5
 ~~~~
 
