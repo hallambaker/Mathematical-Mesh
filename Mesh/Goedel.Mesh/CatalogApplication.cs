@@ -112,7 +112,7 @@ namespace Goedel.Mesh {
 
         public List<CatalogedApplicationSshHost> GetSshClients() => throw new NYI();
 
-        public List<CatalogedApplicationEmail> GetEmail() => throw new NYI();
+        public List<CatalogedApplicationMail> GetEmail() => throw new NYI();
 
 
 
