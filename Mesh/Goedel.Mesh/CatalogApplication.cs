@@ -22,6 +22,8 @@
 
 
 
+using System.Collections.Generic;
+
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
@@ -102,6 +104,17 @@ namespace Goedel.Mesh {
         /// <returns>The unique catalog identifier for the group.</returns>
         public CatalogedGroup LocateGroup(string groupAddress) =>
                 Locate(CatalogedGroup.GetGroupID(groupAddress)) as CatalogedGroup;
+
+
+        public List<CatalogedApplicationSsh> GetSsh() => throw new NYI();
+
+        public List<CatalogedApplicationSshHost> GetSshHosts() => throw new NYI();
+
+        public List<CatalogedApplicationSshHost> GetSshClients() => throw new NYI();
+
+        public List<CatalogedApplicationEmail> GetEmail() => throw new NYI();
+
+
 
         #endregion
         }

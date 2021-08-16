@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/5/2021 4:00:07 PM
+//  This file was automatically generated at 8/16/2021 6:11:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -121,6 +121,8 @@ namespace Goedel.Mesh {
 			{"CatalogedNetwork", CatalogedNetwork._Factory},
 			{"CatalogedContact", CatalogedContact._Factory},
 			{"CatalogedAccess", CatalogedAccess._Factory},
+			{"Capability", Capability._Factory},
+			{"AccessCapability", AccessCapability._Factory},
 			{"CryptographicCapability", CryptographicCapability._Factory},
 			{"CapabilityDecrypt", CapabilityDecrypt._Factory},
 			{"CapabilityDecryptPartial", CapabilityDecryptPartial._Factory},
@@ -133,7 +135,7 @@ namespace Goedel.Mesh {
 			{"CatalogedApplication", CatalogedApplication._Factory},
 			{"CatalogedMember", CatalogedMember._Factory},
 			{"CatalogedGroup", CatalogedGroup._Factory},
-			{"CatalogedApplicationSSH", CatalogedApplicationSSH._Factory},
+			{"CatalogedApplicationSSH", CatalogedApplicationSsh._Factory},
 			{"CatalogedApplicationMail", CatalogedApplicationMail._Factory},
 			{"CatalogedApplicationNetwork", CatalogedApplicationNetwork._Factory},
 			{"DevicePreconfiguration", DevicePreconfiguration._Factory},
@@ -1990,6 +1992,17 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class Connection : Assertion {
+		bool								__Active = false;
+		private bool						_Active;
+        /// <summary>
+        ///If set true, the default state of the connection is active. Otherwise 
+        ///(i.e. false or null), default state is false.
+        /// </summary>
+
+		public virtual bool						Active {
+			get => _Active;
+			set {_Active = value; __Active = true; }
+			}
         /// <summary>
         ///UDF of the connection target.
         /// </summary>
@@ -2049,6 +2062,11 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((Assertion)this).SerializeX(_writer, false, ref _first);
+			if (__Active){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Active", 1);
+					_writer.WriteBoolean (Active);
+				}
 			if (Subject != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Subject", 1);
@@ -2097,6 +2115,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "Active" : {
+					Active = jsonReader.ReadBoolean ();
+					break;
+					}
 				case "Subject" : {
 					Subject = jsonReader.ReadString ();
 					break;
@@ -6782,7 +6804,7 @@ namespace Goedel.Mesh {
         ///The cataloged capability.
         /// </summary>
 
-		public virtual CryptographicCapability						Capability  {get; set;}
+		public virtual Capability						Capability  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -6874,7 +6896,7 @@ namespace Goedel.Mesh {
 			
 			switch (tag) {
 				case "Capability" : {
-					Capability = CryptographicCapability.FromJson (jsonReader, true) ;  // A tagged structure
+					Capability = Capability.FromJson (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {
@@ -6890,7 +6912,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	abstract public partial class CryptographicCapability : MeshItem {
+	abstract public partial class Capability : MeshItem {
         /// <summary>
         ///The identifier of the capability. If this is a user capability, MUST match the
         ///KeyData identifier. If this is a serviced capability, MUST match the value of
@@ -6898,6 +6920,220 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						Id  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "Capability";
+
+		/// <summary>
+        /// Factory method. Throws exception as this is an abstract class.
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => throw new CannotCreateAbstract();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (Id != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Id", 1);
+					_writer.WriteString (Id);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new Capability FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as Capability;
+				}
+			throw new CannotCreateAbstract();
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Id" : {
+					Id = jsonReader.ReadString ();
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class AccessCapability : Capability {
+        /// <summary>
+        ///Access rights associated with the key
+        /// </summary>
+
+		public virtual List<string>				Rights  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AccessCapability";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new AccessCapability();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((Capability)this).SerializeX(_writer, false, ref _first);
+			if (Rights != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Rights", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Rights) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new AccessCapability FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as AccessCapability;
+				}
+		    var Result = new AccessCapability ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Rights" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Rights = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Rights.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	abstract public partial class CryptographicCapability : Capability {
         /// <summary>
         ///The key that enables the capability
         /// </summary>
@@ -6961,11 +7197,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			if (Id != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Id", 1);
-					_writer.WriteString (Id);
-				}
+			((Capability)this).SerializeX(_writer, false, ref _first);
 			if (KeyData != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("KeyData", 1);
@@ -7028,10 +7260,6 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Id" : {
-					Id = jsonReader.ReadString ();
-					break;
-					}
 				case "KeyData" : {
 					// An untagged structure
 					KeyData = new KeyData ();
@@ -7062,6 +7290,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				default : {
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}
@@ -8354,7 +8583,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogedApplicationSSH : CatalogedApplication {
+	public partial class CatalogedApplicationSsh : CatalogedApplication {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -8370,7 +8599,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new CatalogedApplicationSSH();
+		public static new JsonObject _Factory () => new CatalogedApplicationSsh();
 
 
         /// <summary>
@@ -8410,15 +8639,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedApplicationSSH FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new CatalogedApplicationSsh FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogedApplicationSSH;
+				return Out as CatalogedApplicationSsh;
 				}
-		    var Result = new CatalogedApplicationSSH ();
+		    var Result = new CatalogedApplicationSsh ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;

@@ -165,6 +165,12 @@
         <member name="F:Goedel.Mesh.ActivationAccount.DictionaryStoreEncryptionKey">
             <summary>Dictionary mapping store names to encryption keys.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.CatalogedAccessors">
+            <summary>The access control catalog entry for the device.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.DefaultActive">
+            <summary>The default status of the device connection</summary> 
+        </member>
         <member name="M:Goedel.Mesh.ActivationAccount.#ctor">
             <summary>
             Constructor for use by deserializers.
@@ -223,7 +229,7 @@
             <param name="connectionAddress">Connection binding profile to an address.</param>
             <returns>The created group.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.MakeActivationAccount(Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},Goedel.Mesh.ITransactContextAccount)">
+        <member name="M:Goedel.Mesh.ActivationAccount.MakeActivationAccount(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,System.Collections.Generic.List{System.String},Goedel.Mesh.ITransactContextAccount)">
             <summary>
             Create an activation record for the device <paramref name="profileDevice"/> 
             with assigned roles <paramref name="roles"/> using the
@@ -245,7 +251,7 @@
             <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
             <returns>The bound key pair.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.AddCapability(Goedel.Cryptography.CryptoKey,Goedel.Mesh.ProfileDevice)">
+        <member name="M:Goedel.Mesh.ActivationAccount.AddCapability(Goedel.Cryptography.CryptoKey,Goedel.Mesh.ProfileDevice,Goedel.Mesh.Degree)">
             <summary>
             Generate a capability for the key <paramref name="keyPair"/>.
             add the service portion to the capabilities catalog.
@@ -736,7 +742,7 @@
             when creating.</summary>
         </member>
         <member name="P:Goedel.Mesh.CryptographicCapability._PrimaryKey">
-            <summary>The primary key is the value of the <see cref="P:Goedel.Mesh.CryptographicCapability.Id"/> property.</summary>
+            <summary>The primary key is the value of the <see cref="!:Id"/> property.</summary>
         </member>
         <member name="M:Goedel.Mesh.CryptographicCapability.#ctor">
             <summary>
@@ -750,13 +756,6 @@
             </summary>
             <param name="subjectId">The subject identifier.</param>
             <param name="capability">The capability type.</param>
-        </member>
-        <member name="P:Goedel.Mesh.CryptographicCapability.Id">
-             <summary>
-            The identifier of the capability. If this is a user capability, MUST match the
-            KeyData identifier. If this is a serviced capability, MUST match the value of
-            ServiceId on the corresponding service capability.
-             </summary>
         </member>
         <member name="P:Goedel.Mesh.CryptographicCapability.KeyData">
              <summary>
@@ -11235,14 +11234,8 @@
         <member name="F:Goedel.Mesh.Resource.Server">
             <summary>Service right: Holder is credentialed to offer services under (name)</summary> 
         </member>
-        <member name="F:Goedel.Mesh.Resource.Ssh">
-            <summary>Service right: Holder may access SSH services as a client.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Resource.Pgp">
-            <summary>Data right: Holder is  able to Sign/Decrypt OpenPgp messages.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Resource.Smime">
-            <summary>Data right: Holder is  able to Sign/Decrypt S/MIME messages.</summary> 
+        <member name="F:Goedel.Mesh.Resource.App">
+            <summary>Service right: Application.</summary> 
         </member>
         <member name="F:Goedel.Mesh.Resource.CatalogCredential">
             <summary>The credential catalog. Access limited to the service and
@@ -11421,7 +11414,16 @@
         <member name="F:Goedel.Mesh.Rights.IdRightsStore">
             <summary>Name for the  rights set.</summary> 
         </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsUser">
+            <summary>Name for the  rights set.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.IdRightsDirect">
+            <summary>Name for the  rights set.</summary> 
+        </member>
         <member name="F:Goedel.Mesh.Rights.RightsGrantUser">
+            <summary>Account access administration rights</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsGrantDirect">
             <summary>Account access administration rights</summary> 
         </member>
         <member name="F:Goedel.Mesh.Rights.RightsSuperAdministrator">
@@ -11780,6 +11782,12 @@
         <member name="T:Goedel.Mesh.Connection">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Connection.Active">
+             <summary>
+            If set true, the default state of the connection is active. Otherwise 
+            (i.e. false or null), default state is false.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.Connection.Subject">
              <summary>
@@ -12851,6 +12859,128 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Task.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Capability">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Capability.Id">
+             <summary>
+            The identifier of the capability. If this is a user capability, MUST match the
+            KeyData identifier. If this is a serviced capability, MUST match the value of
+            ServiceId on the corresponding service capability.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Capability._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Capability.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Capability._Factory">
+            <summary>
+            Factory method. Throws exception as this is an abstract class.
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Capability.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Capability.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Capability.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Capability.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.AccessCapability">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.AccessCapability.Rights">
+             <summary>
+            Access rights associated with the key
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.AccessCapability._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.AccessCapability.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AccessCapability._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.AccessCapability.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AccessCapability.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AccessCapability.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.AccessCapability.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

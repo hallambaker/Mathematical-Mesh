@@ -68,6 +68,11 @@ namespace Goedel.Mesh {
     public partial class ActivationAccount {
         // Properties providing access to account-wide keys.
 
+
+        public string AccountDeviceId => AccountAuthenticationKey.KeyIdentifier;
+
+
+
         ///<summary>The account profile signature key.</summary>
         public KeyPair ProfileSignatureKey { get; set; }
 
@@ -103,6 +108,21 @@ namespace Goedel.Mesh {
             new();
 
         PrivateKeyUDF secretSeed;
+
+
+        public ActivationDevice ActivationDevice;
+
+
+        ///<summary>The access control catalog entry for the device.</summary> 
+        public List<CatalogedAccess> CatalogedAccessors { get; set; }
+
+
+        public List<CatalogedApplication> CatalogedApplications { get; set; }
+
+        ///<summary>The default status of the device connection</summary> 
+        public bool DefaultActive { get; set; }  = false;
+
+
 
 
         /// <summary>
@@ -210,11 +230,11 @@ namespace Goedel.Mesh {
                         //KeyPair keyPairOnlineSignature = null, // hack. 
                         List<string> roles = null) {
 
-            var activationUser = new ActivationDevice(profileDevice);
-            var activationAccount = MakeActivationAccount(profileDevice, roles);
+            var activationDevice = new ActivationDevice(profileDevice);
+            var activationAccount = MakeActivationAccount(profileDevice, activationDevice, roles);
 
             var catalogedDevice = CreateCataloguedDevice(
-                    profileUser, profileDevice, activationUser, activationAccount,
+                    profileUser, profileDevice, activationDevice, activationAccount,
                     AdministratorSignatureKey);
 
             return catalogedDevice;
@@ -266,12 +286,41 @@ namespace Goedel.Mesh {
                 Authentication = connectionDevice.Authentication
                 };
 
+            if (activationAccount.DefaultActive) {
+                connectionAccount.Active = true;
+                }
+            else {
+                activationAccount.CatalogedAccessors ??= new List<CatalogedAccess>();
+                activationAccount.CatalogedAccessors.Add(
+                    new CatalogedAccess() {
+                        Capability = new AccessCapability() {
+                            Id = connectionDevice.AuthenticationPublic.KeyIdentifier
+                            }
+                        });
+                }
+
+
             connectionAccount.Strip();
             connectionAccount.Envelope(AdministratorSignatureKey, objectEncoding:
                         ObjectEncoding.JSON_B);
             connectionAccount.DareEnvelope.Strip();
 
             // Wrap the connectionDevice and activationDevice in envelopes
+
+
+
+
+
+            var accessCapability = new CatalogedAccess() {
+                Capability = new AccessCapability() {
+                    Id = connectionDevice.AuthenticationPublic.KeyIdentifier
+                    }
+                };
+
+            var catalogedAccessors = new List<CatalogedAccess> { accessCapability };
+
+
+
 
             var catalogEntryDevice = new CatalogedDevice() {
                 //Udf = activationAccount.ProfileSignature.Udf,
@@ -287,6 +336,18 @@ namespace Goedel.Mesh {
             return catalogEntryDevice;
 
             }
+
+        static bool GetRight(List<string> rights, string match) {
+
+            foreach (var right in rights) {
+                if (right.ToLower() == match) {
+                    return true;
+                    }
+                }
+
+            return false;
+            }
+
 
         #endregion
 
@@ -336,12 +397,16 @@ namespace Goedel.Mesh {
         /// <returns>The created activation record.</returns>
         public ActivationAccount MakeActivationAccount(
                 ProfileDevice profileDevice,
+                ActivationDevice activationDevice,
                 List<string> roles = null,
                 ITransactContextAccount transactContextAccount = null
                 ) {
 
+
+
             var newActivation = new ActivationAccount {
-                ProfileDevice = profileDevice
+                ProfileDevice = profileDevice,
+                ActivationDevice = activationDevice
                 };
 
             // Compile the accumulated set of rights.
@@ -359,6 +424,8 @@ namespace Goedel.Mesh {
             foreach (var right in rights) {
                 Grant(newActivation, right);
                 }
+
+
 
 
             return newActivation;
@@ -386,12 +453,20 @@ namespace Goedel.Mesh {
         /// <param name="keyPair">Keypair from which the capability is to be derrived.</param>
         /// <param name="profileDevice">The device to which the capability is to be added.</param>
         /// <returns>The key data for the added capability.</returns>
-        public static KeyData AddCapability(CryptoKey keyPair, ProfileDevice profileDevice) {
+        public  KeyData AddCapability(CryptoKey keyPair, ProfileDevice profileDevice, Degree degree) {
             "**** MUST add keys to devices as shared capabilities".TaskFunctionality();
 
             //var catalogCapability = GetCatalogCapability();
 
-            return new KeyData(keyPair, true);
+            if (degree == Degree.Direct) {
+
+
+                return new KeyData(keyPair, true);
+                }
+
+            CatalogedAccessors ??= new();
+
+            throw new NYI();
             }
 
 
@@ -410,11 +485,26 @@ namespace Goedel.Mesh {
                     GrantStore(newActivation, right);
                     break;
                     }
+                case Resource.App: {
+                    
+
+                    GrantApp(newActivation, right);
+                    break;
+                    }
+
                 case Resource.Account: {
                     GrantAccount(newActivation, right);
                     break;
                     }
                 }
+
+            }
+
+        void GrantApp(ActivationAccount newActivation, Right right) {
+
+            "Need to interact with the application catalog here".TaskFunctionality(true);
+            throw new NYI();
+
 
             }
 
@@ -426,7 +516,7 @@ namespace Goedel.Mesh {
         void GrantProfileRoot(ActivationAccount newActivation, Right right) {
             right.Future();
             newActivation.ProfileSignature = AddCapability(
-                        ProfileSignatureKey, newActivation.ProfileDevice);
+                        ProfileSignatureKey, newActivation.ProfileDevice, right.Degree);
             }
 
         /// <summary>
@@ -440,7 +530,8 @@ namespace Goedel.Mesh {
             (right.Resource == Resource.ProfileAdmin).AssertTrue(Internal.Throw);
             //var keyPairOnlineSignature = DeviceBindSignature(newActivation.ProfileDevice, KeyCollection);
             newActivation.AdministratorSignature = AddCapability(
-                        AdministratorSignatureKey, newActivation.ProfileDevice);
+                        AdministratorSignatureKey, newActivation.ProfileDevice, right.Degree);
+            newActivation.DefaultActive = true;
             }
 
 
@@ -452,15 +543,15 @@ namespace Goedel.Mesh {
         void GrantAccount(ActivationAccount newActivation, Right right) {
             if (right.Decrypt) {
                 newActivation.AccountEncryption = AddCapability(
-                            AccountEncryptionKey, newActivation.ProfileDevice);
+                            AccountEncryptionKey, newActivation.ProfileDevice, right.Degree);
                 }
             if (right.Authenticate) {
                 newActivation.AccountAuthentication = AddCapability(
-                            AccountAuthenticationKey, newActivation.ProfileDevice);
+                            AccountAuthenticationKey, newActivation.ProfileDevice, right.Degree);
                 }
             if (right.Sign) {
                 newActivation.AccountSignature = AddCapability(
-                            AccountSignatureKey, newActivation.ProfileDevice);
+                            AccountSignatureKey, newActivation.ProfileDevice, right.Degree);
                 }
 
             }
@@ -471,11 +562,6 @@ namespace Goedel.Mesh {
         /// <param name="newActivation">Device to which the access right is granted.</param>
         /// <param name="right">The right granted.</param>
         void GrantStore(ActivationAccount newActivation, Right right) {
-            //Screen.WriteLine($"Grant right {right.Name}/{right.Resource}");
-
-
-            // This is failing because we do not populate DictionaryStoreEncryptionKey
-            // except when initially creating the entry.
 
             // which store do we need?
             if (DictionaryStoreEncryptionKey.TryGetValue(right.Name, out var keyPair)) {

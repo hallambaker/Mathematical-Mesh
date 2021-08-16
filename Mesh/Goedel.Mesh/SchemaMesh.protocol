@@ -233,6 +233,10 @@
 
 	Structure Connection
 		Inherits Assertion
+		Boolean Active
+			Description
+				|If set true, the default state of the connection is active. Otherwise 
+				|(i.e. false or null), default state is false.
 		String Subject
 			Description
 				|UDF of the connection target.
@@ -659,20 +663,31 @@
 		Description
 			|
 
-		TStruct CryptographicCapability Capability
+		TStruct Capability Capability
 			Description
 				|The cataloged capability.
 
-
-
-	Structure CryptographicCapability
+	Structure Capability
 		Abstract
-
 		String Id
 			Description
 				|The identifier of the capability. If this is a user capability, MUST match the
 				|KeyData identifier. If this is a serviced capability, MUST match the value of
 				|ServiceId on the corresponding service capability.
+
+	Structure AccessCapability
+		Inherits Capability
+
+		String Rights
+			Multiple
+			Description
+				|Access rights associated with the key
+
+
+	Structure CryptographicCapability
+		Abstract
+		Inherits Capability
+
 		Struct KeyData KeyData 
 			Description
 				|The key that enables the capability
@@ -788,9 +803,20 @@
 				|The activation of the device within the Mesh account
 
 
-	Structure CatalogedApplicationSSH
+	Structure CatalogedApplicationSsh
 		Inherits CatalogedApplication
 		// The recryption key
+
+	Structure CatalogedApplicationSshHost
+		Inherits CatalogedApplication
+
+
+	Structure CatalogedApplicationSshClient
+		Inherits CatalogedApplication
+
+
+
+
 	Structure CatalogedApplicationMail
 		Inherits CatalogedApplication
 		// The recryption key

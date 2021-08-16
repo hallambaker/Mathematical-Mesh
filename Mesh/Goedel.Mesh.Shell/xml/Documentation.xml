@@ -3678,6 +3678,9 @@
         <member name="P:Goedel.Mesh.Shell._SSHPrivate.File">
             <summary>Field accessor for option [file]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHPrivate.ID">
+            <summary>Field accessor for option [id]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHPublic.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -3701,6 +3704,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHPublic.File">
             <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHPublic.ID">
+            <summary>Field accessor for option [id]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHMergeKnown.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -3726,6 +3732,12 @@
         <member name="P:Goedel.Mesh.Shell._SSHMergeKnown.File">
             <summary>Field accessor for parameter []</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHMergeKnown.ID">
+            <summary>Field accessor for option [id]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHMergeClient.ID">
+            <summary>Field accessor for option [id]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHAddHost.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -3746,6 +3758,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHAddHost.Application">
             <summary>Field accessor for option [application]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHAddHost.ID">
+            <summary>Field accessor for option [id]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHAddClient.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -3771,6 +3786,9 @@
         <member name="P:Goedel.Mesh.Shell._SSHAddClient.File">
             <summary>Field accessor for parameter []</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHAddClient.ID">
+            <summary>Field accessor for option [id]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHKnown.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -3792,6 +3810,9 @@
         <member name="P:Goedel.Mesh.Shell._SSHKnown.Application">
             <summary>Field accessor for option [application]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.ID">
+            <summary>Field accessor for option [id]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHAuth.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -3812,6 +3833,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHAuth.Application">
             <summary>Field accessor for option [application]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHAuth.ID">
+            <summary>Field accessor for option [id]</summary>
         </member>
         <member name="T:Goedel.Mesh.Shell.MimeMapping">
             <summary>

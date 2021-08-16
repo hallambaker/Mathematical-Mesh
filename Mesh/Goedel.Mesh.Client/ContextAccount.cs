@@ -113,6 +113,11 @@ namespace Goedel.Mesh.Client {
         #region // Activated account keys
         ///<summary>The account activation</summary>
         public ActivationAccount ActivationAccount { get; protected set; }
+
+
+        public string AccountDeviceId => ActivationAccount.AccountDeviceId;
+
+
         ///<summary>The account profile key</summary>
         protected KeyPair KeyProfile => ActivationAccount.ProfileSignatureKey;
         ///<summary>The administration signature key</summary>

@@ -22,6 +22,7 @@
 
 
 
+using System.Collections.Generic;
 using System.Text;
 
 using Goedel.Cryptography.Dare;
@@ -173,6 +174,9 @@ namespace Goedel.Mesh {
         ///to return the <see cref="ActivationAccount"/> value.</summary>
         public ActivationAccount GetActivationAccount(IKeyCollection keyCollection) =>
                     EnvelopedActivationAccount.Decode(keyCollection);
+
+
+
 
 
         #endregion

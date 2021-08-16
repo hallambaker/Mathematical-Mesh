@@ -1050,13 +1050,17 @@
 			Include AccountOptions
 			Include Reporting
 			Include PrivateKeyOptions
+			Option ID "id" String
+				Brief "Key identifier"
 
 		Command SSHPublic "public"
 			Brief "Extract the public key for this device"
 			Include AccountOptions
 			Include Reporting
 			Include PublicKeyOptions
-		
+			Option ID "id" String
+				Brief "Key identifier"
+				
 		CommandSet SSHMerge "merge"
 			Command SSHMergeKnown "host"
 				Brief "Add one or more hosts to the known_hosts file"
@@ -1064,9 +1068,13 @@
 				Include Reporting
 				Include SSHOptions
 				Parameter File "file" ExistingFile
-			
+				Option ID "id" String
+					Brief "Key identifier"
+				
 			Command SSHMergeClient "client"
 				Brief "Add one or more hosts to the known_hosts file"
+				Option ID "id" String
+					Brief "Key identifier"
 
 		// Add public keys to profile
 		CommandSet SSHAdd "add"
@@ -1075,7 +1083,8 @@
 				Include AccountOptions
 				Include Reporting
 				Include SSHOptions
-
+				Option ID "id" String
+					Brief "Key identifier"
 
 			
 			Command SSHAddClient "client"
@@ -1084,7 +1093,9 @@
 				Include Reporting
 				Include SSHOptions
 				Parameter File "file" ExistingFile
-
+				
+				Option ID "id" String
+					Brief "Key identifier"
 
 		CommandSet SSHShow "show"
 			Command SSHKnown "host"
@@ -1092,9 +1103,13 @@
 				Include AccountOptions
 				Include Reporting
 				Include SSHOptions
+				Option ID "id" String
+					Brief "Key identifier"
 
 			Command SSHAuth "client"
 				Brief "List the authorized device keys (aka authorized_keys)"
 				Include AccountOptions
 				Include Reporting	
 				Include SSHOptions
+				Option ID "id" String
+					Brief "Key identifier"

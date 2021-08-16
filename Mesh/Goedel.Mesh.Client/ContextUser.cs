@@ -1050,13 +1050,7 @@ namespace Goedel.Mesh.Client {
                 };
             if (accept) {
                 // Connect the device to the Mesh
-                var device = ActivationAccount.MakeCatalogedDevice(
-                        request.MessageConnectionRequest.ProfileDevice, ProfileUser, roles: rights);
-
-                respondConnection.CatalogedDevice = device;
-                respondConnection.Result = MeshConstants.TransactionResultAccept;
-                var catalogDevice = transactRequest.GetCatalogDevice();
-                transactRequest.CatalogUpdate(catalogDevice, device);
+                AddDevice(request, rights, transactRequest, respondConnection);
 
                 }
             else {
@@ -1078,6 +1072,24 @@ namespace Goedel.Mesh.Client {
             var responseTransaction = Transact(transactRequest);
 
             return new ResultAcknowledgeConnection(request, messagePin, responseTransaction);
+            }
+
+        private void AddDevice(AcknowledgeConnection request, List<string> rights, TransactUser transactRequest, RespondConnection respondConnection) {
+            var device = ActivationAccount.MakeCatalogedDevice(
+                    request.MessageConnectionRequest.ProfileDevice, ProfileUser, roles: rights);
+
+            respondConnection.CatalogedDevice = device;
+            respondConnection.Result = MeshConstants.TransactionResultAccept;
+            var catalogDevice = transactRequest.GetCatalogDevice();
+            transactRequest.CatalogUpdate(catalogDevice, device);
+
+            var catalogedAccessors = device.EnvelopedActivationAccount?.EnvelopedObject?.CatalogedAccessors;
+            if (catalogedAccessors != null) {
+                var catalogAccess = transactRequest.GetCatalogAccess();
+                foreach (var capability in catalogedAccessors) {
+                    transactRequest.CatalogUpdate(catalogAccess, capability);
+                    }
+                }
             }
 
 

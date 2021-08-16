@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 8/5/2021 4:00:09 PM
+//  This file was automatically generated at 8/16/2021 6:11:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -18135,7 +18135,8 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new String (),
 			new String (),
-			new NewFile ()			} ;
+			new NewFile (),
+			new String ()			} ;
 
 
 
@@ -18222,6 +18223,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _File {
 			set => _Data[8].Parameter (value);
 			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[9] as String;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[9].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -18292,6 +18302,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Output file",
 					Index = 8,
 					Key = "file"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ID", 
+					Default = null, // null if null
+					Brief = "Key identifier",
+					Index = 9,
+					Key = "id"
 					}
 				}
 			};
@@ -18314,7 +18331,8 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new String (),
-			new NewFile ()			} ;
+			new NewFile (),
+			new String ()			} ;
 
 
 
@@ -18392,6 +18410,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _File {
 			set => _Data[7].Parameter (value);
 			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[8].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -18455,6 +18482,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Output file",
 					Index = 7,
 					Key = "file"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ID", 
+					Default = null, // null if null
+					Brief = "Key identifier",
+					Index = 8,
+					Key = "id"
 					}
 				}
 			};
@@ -18477,7 +18511,8 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new String (),
-			new ExistingFile ()			} ;
+			new ExistingFile (),
+			new String ()			} ;
 
 
 
@@ -18554,6 +18589,15 @@ namespace Goedel.Mesh.Shell {
 
 		public virtual string _File {
 			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[8].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -18618,6 +18662,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "<Unspecified>",
 					Index = 7,
 					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "ID", 
+					Default = null, // null if null
+					Brief = "Key identifier",
+					Index = 8,
+					Key = "id"
 					}
 				}
 			};
@@ -18629,12 +18680,22 @@ namespace Goedel.Mesh.Shell {
 
     public class _SSHMergeClient : Goedel.Command.Dispatch  {
 
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {			} ;
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String ()			} ;
 
 
 
 
 
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[0].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -18643,6 +18704,13 @@ namespace Goedel.Mesh.Shell {
 			HandleDelegate =  CommandLineInterpreter.Handle_SSHMergeClient,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "ID", 
+					Default = null, // null if null
+					Brief = "Key identifier",
+					Index = 0,
+					Key = "id"
+					}
 				}
 			};
 
@@ -18663,6 +18731,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new String (),
 			new String ()			} ;
 
 
@@ -18732,6 +18801,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Application {
 			set => _Data[6].Parameter (value);
 			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[7].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -18788,6 +18866,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "The application format",
 					Index = 6,
 					Key = "application"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ID", 
+					Default = null, // null if null
+					Brief = "Key identifier",
+					Index = 7,
+					Key = "id"
 					}
 				}
 			};
@@ -18810,7 +18895,8 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new String (),
-			new ExistingFile ()			} ;
+			new ExistingFile (),
+			new String ()			} ;
 
 
 
@@ -18888,6 +18974,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _File {
 			set => _Data[7].Parameter (value);
 			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[8].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -18951,6 +19046,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "<Unspecified>",
 					Index = 7,
 					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "ID", 
+					Default = null, // null if null
+					Brief = "Key identifier",
+					Index = 8,
+					Key = "id"
 					}
 				}
 			};
@@ -18972,6 +19074,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new String (),
 			new String ()			} ;
 
 
@@ -19040,6 +19143,15 @@ namespace Goedel.Mesh.Shell {
 
 		public virtual string _Application {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -19097,6 +19209,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "The application format",
 					Index = 6,
 					Key = "application"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ID", 
+					Default = null, // null if null
+					Brief = "Key identifier",
+					Index = 7,
+					Key = "id"
 					}
 				}
 			};
@@ -19118,6 +19237,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new String (),
 			new String ()			} ;
 
 
@@ -19187,6 +19307,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Application {
 			set => _Data[6].Parameter (value);
 			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[7].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -19243,6 +19372,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "The application format",
 					Index = 6,
 					Key = "application"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ID", 
+					Default = null, // null if null
+					Brief = "Key identifier",
+					Index = 7,
+					Key = "id"
 					}
 				}
 			};

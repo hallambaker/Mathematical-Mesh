@@ -64,14 +64,9 @@ namespace Goedel.Mesh {
         ///<summary>Service right: Holder is credentialed to offer services under (name)</summary> 
         Server,
 
-        ///<summary>Service right: Holder may access SSH services as a client.</summary> 
-        Ssh,
+        ///<summary>Service right: Application.</summary> 
+        App,
 
-        ///<summary>Data right: Holder is  able to Sign/Decrypt OpenPgp messages.</summary> 
-        Pgp,
-
-        ///<summary>Data right: Holder is  able to Sign/Decrypt S/MIME messages.</summary> 
-        Smime,
 
 
 
@@ -253,8 +248,10 @@ namespace Goedel.Mesh {
         public const string IdRightsGroupmember = "groupmember";
         ///<summary>Name for the  rights set.</summary> 
         public const string IdRightsStore = "store";
-
-
+        ///<summary>Name for the  rights set.</summary> 
+        public const string IdRightsUser = "user";
+        ///<summary>Name for the  rights set.</summary> 
+        public const string IdRightsDirect = "direct";
 
 
         ///<summary>Account access administration rights</summary> 
@@ -272,6 +269,23 @@ namespace Goedel.Mesh {
                         new Right(Resource.Store, Access.GrantReadWrite, SpoolInbound.Label),
                         new Right(Resource.Store, Access.GrantReadWrite, SpoolOutbound.Label)
                         };
+
+        ///<summary>Account access administration rights</summary> 
+        public static List<Right> RightsGrantDirect =
+                    new() {
+                        // Needed to create and publish device connection
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label, Degree.Direct),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogContact.Label, Degree.Direct),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogTask.Label, Degree.Direct),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogBookmark.Label, Degree.Direct),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label, Degree.Direct),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogNetwork.Label, Degree.Direct),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogApplication.Label, Degree.Direct),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogPublication.Label, Degree.Direct),
+                        new Right(Resource.Store, Access.GrantReadWrite, SpoolInbound.Label, Degree.Direct),
+                        new Right(Resource.Store, Access.GrantReadWrite, SpoolOutbound.Label, Degree.Direct)
+                        };
+
 
 
         ///<summary>Super administrator rights.</summary> 
@@ -338,21 +352,21 @@ namespace Goedel.Mesh {
         ///a credential or the account key.</summary> 
         public readonly static List<Right> RightsSSH =
                     new() {
-                        new Right(Resource.Ssh, Access.Authenticate, "*"),
+                        new Right(Resource.App, Access.Authenticate, "ssh"),
                         };
 
         ///<summary>Rights granted to a PGP enabled device. This requires external messaging and
         ///the ability to sign/decrypt messages under the PGP keying.</summary> 
         public readonly static List<Right> RightsPgp =
                     new List<Right>() {
-                        new Right (Resource.Pgp, Access.ReadWrite, "*")
+                        new Right (Resource.App, Access.ReadWrite, "pgp")
                         }.Concat(RightsMessage);
 
         ///<summary>Rights granted to an S/MIME enabled device. This requires external messaging and
         ///the ability to sign/decrypt messages under the S/MIME keying.</summary> 
         public readonly static List<Right> RightsSmime =
                     new List<Right>() {
-                        new Right (Resource.Smime, Access.ReadWrite, "*")
+                        new Right (Resource.App, Access.ReadWrite, "smime")
                         }.Concat(RightsMessage);
 
         ///<summary>Rights granted to a group administrator. An administrator can add users to 
@@ -373,6 +387,8 @@ namespace Goedel.Mesh {
                         new Right(Resource.Store, Access.ReadWrite, CatalogPublication.Label),
                         };
 
+
+
         ///<summary>Dictionary mapping rights identifier to rights description.</summary> 
         public readonly static Dictionary<string, List<Right>> DictionaryRights =
             new() {
@@ -386,6 +402,8 @@ namespace Goedel.Mesh {
                 [IdRightsSmime] = RightsSmime,
                 [IdRightsGroupmember] = RightsGroupAdministrator,
                 [IdRightsStore] = RightsGroupMember,
+                [IdRightsUser] = RightsGrantUser,
+                [IdRightsDirect] = RightsGrantDirect,
                 };
 
         /// <summary>

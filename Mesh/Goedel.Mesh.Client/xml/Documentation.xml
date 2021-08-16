@@ -1518,71 +1518,6 @@
             <param name="contextAccount">The account context in which the update
             is to be applied.</param>
         </member>
-        <member name="T:Goedel.Mesh.Client.TransactUser">
-            <summary>
-            Transaction on a Mesh user account.Provides access to the account catalogs and spools.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.TransactUser.ContextAccount">
-            <summary>The account context in which this transaction takes place.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.TransactUser.ContextUser">
-            <summary>The account context in which this transaction takes place.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.#ctor(Goedel.Mesh.Client.ContextUser)">
-            <summary>
-            Constructor creating transaction instance under the account context
-            <paramref name="contextUser"/>
-            </summary>
-            <param name="contextUser">The account context in which the update
-            is to be applied.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogApplication">
-            <summary>Returns the application catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogDevice">
-            <summary>Returns the contacts catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogContact">
-            <summary>Returns the contacts catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogCredential">
-            <summary>Returns the credential catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogBookmark">
-            <summary>Returns the bookmark catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogCalendar">
-            <summary>Returns the calendar catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogNetwork">
-            <summary>Returns the network catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.GetSpoolInbound">
-            <summary>Returns the inbound spool for the account</summary>
-        </member>
-        <member name="T:Goedel.Mesh.Client.TransactGroup">
-            <summary>
-            Transaction on a Mesh group account. Provides access to the account catalogs and spools.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.TransactGroup.ContextAccount">
-            <summary>The account context in which this transaction takes place.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.TransactGroup.ContextGroup">
-            <summary>The account context in which this transaction takes place.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactGroup.#ctor(Goedel.Mesh.Client.ContextGroup)">
-            <summary>
-            Constructor creating transaction instance under the account context
-            <paramref name="contextGroup"/>
-            </summary>
-            <param name="contextGroup">The account context in which the update
-            is to be applied.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactGroup.GetCatalogMember">
-            <summary>Returns the network catalog for the account</summary>
-        </member>
         <member name="T:Goedel.Mesh.Client.Transaction`1">
             <summary>
             Transaction on a context of type <typeparamref name="TAccount"/>.
@@ -2686,6 +2621,71 @@
             Commit a Delete transaction to memory
             </summary>
             <param name="containerStoreEntry">The container store entry representing the transaction</param>
+        </member>
+        <member name="T:Goedel.Mesh.Client.TransactGroup">
+            <summary>
+            Transaction on a Mesh group account. Provides access to the account catalogs and spools.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.TransactGroup.ContextAccount">
+            <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.TransactGroup.ContextGroup">
+            <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactGroup.#ctor(Goedel.Mesh.Client.ContextGroup)">
+            <summary>
+            Constructor creating transaction instance under the account context
+            <paramref name="contextGroup"/>
+            </summary>
+            <param name="contextGroup">The account context in which the update
+            is to be applied.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactGroup.GetCatalogMember">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.TransactUser">
+            <summary>
+            Transaction on a Mesh user account.Provides access to the account catalogs and spools.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.TransactUser.ContextAccount">
+            <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.TransactUser.ContextUser">
+            <summary>The account context in which this transaction takes place.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogApplication">
+            <summary>Returns the application catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogDevice">
+            <summary>Returns the contacts catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogContact">
+            <summary>Returns the contacts catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogCredential">
+            <summary>Returns the credential catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogBookmark">
+            <summary>Returns the bookmark catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogCalendar">
+            <summary>Returns the calendar catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetCatalogNetwork">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.GetSpoolInbound">
+            <summary>Returns the inbound spool for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.#ctor(Goedel.Mesh.Client.ContextUser)">
+            <summary>
+            Constructor creating transaction instance under the account context
+            <paramref name="contextUser"/>
+            </summary>
+            <param name="contextUser">The account context in which the update
+            is to be applied.</param>
         </member>
     </members>
 </doc>

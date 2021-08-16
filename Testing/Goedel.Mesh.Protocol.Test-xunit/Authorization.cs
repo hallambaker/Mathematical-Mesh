@@ -36,7 +36,7 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void MeshDeviceDirectKey() {
-            var rights = new List<string> { "direct" };
+            var rights = new List<string> { Rights.IdRightsDirect };
 
 
             var testEnvironmentCommon = GetTestEnvironmentCommon();
@@ -58,7 +58,7 @@ namespace Goedel.XUnit {
 
 
 
-            //Check the capability catalog
+            //Check the access catalog
             //   Should have no threshold entry
             //   Should have service auth entry
 
@@ -70,7 +70,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshDeviceThresholdKey() {
 
-            var rights = new List<string> { "threshold"};
+            var rights = new List<string> { Rights.IdRightsUser };
 
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
@@ -94,6 +94,43 @@ namespace Goedel.XUnit {
             //   Should have service auth entry
 
             }
+
+
+
+        /// <summary>
+        /// Connect a device by approving a request
+        /// </summary>
+        [Fact]
+        public void MeshDeviceDeveloper() {
+            var rights = new List<string> { Rights.IdRightsPgp, Rights.IdRightsSsh, Rights.IdRightsSmime };
+
+
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+
+            // New Device
+            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+                    AccountAlice);
+
+            // Admin Device
+            contextAccountAlice.Sync();
+            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest, rights: rights);
+
+            // Check second device
+            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+            ExerciseAccount(contextOnboarded);
+
+
+
+            //Check the access catalog
+            //   Should have no threshold entry
+            //   Should have service auth entry
+
+            }
+
+
 
 
         }

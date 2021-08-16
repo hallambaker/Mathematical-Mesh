@@ -30,6 +30,14 @@ using Goedel.XUnit;
 
 namespace Scratchpad {
 
+    // ToDo: Provision Threshold Key
+    // ToDo: Provision SSH / S/MIME / PGP and other app keys
+    // ToDo: Utility dump on the Access catalog
+    // ToDo: Dump out the SSH keys
+    // ToDo: Implement add/delete rights
+
+
+
 
     // ToDo: Check.DisableDeletedDevices = true
     // ToDo: we are not currently checking disabled device authorization
@@ -63,7 +71,7 @@ namespace Scratchpad {
 
             //TestService.Test().ProtocolHello();
 
-            ShellTests.Test().TestMessageConfirmationAccept();
+            TestService.Test().MeshDeviceDirectKey();
 
             //ShellTestsHTTP.Test().TestMessageGroup();
             //TestPresentationMesh.Test().TestMeshService();
