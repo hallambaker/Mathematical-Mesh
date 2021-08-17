@@ -24,6 +24,7 @@ using System.Collections.Generic;
 
 using Goedel.Mesh;
 using Goedel.Mesh.Test;
+using Goedel.Registry;
 using Goedel.Utilities;
 
 using Xunit;
@@ -93,6 +94,56 @@ namespace Goedel.XUnit {
             //   Should have threshold entry
             //   Should have service auth entry
 
+            }
+
+
+
+        [Fact]
+        public void MeshDeviceSsh() {
+
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+
+            // New Device
+            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+                    AccountAlice);
+
+            // Admin Device
+            contextAccountAlice.Sync();
+            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest);
+
+            // Check second device
+            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+            ExerciseAccount(contextOnboarded);
+
+            var id = "ssh";
+            // Create an ssh application
+            var applicationSSH = new CatalogedApplicationSsh() {
+                Key = id
+                };
+
+
+            "Move out to separate routine that reads the device catalog".TaskFunctionality();
+            var transaction1 = contextAccountAlice.TransactBegin();
+            transaction1.ApplicationCreate(applicationSSH);
+            transaction1.ApplicationDeviceAdd(applicationSSH);
+            transaction1.ApplicationDeviceAdd(applicationSSH, contextOnboarded.ConnectionDevice);
+            var result1 = transaction1.Transact();
+
+
+            var transaction2 = contextAccountAlice.TransactBegin();
+            var applicationSsh1 = transaction2.ApplicationGetSsh(id);
+            var result2 = transaction2.Transact();
+
+
+            var transaction3 = contextOnboarded.TransactBegin();
+            var applicationSsh2 = transaction3.ApplicationGetSsh(id);
+            var result3 = transaction2.Transact();
+
+            // check applicationSsh1 == applicationSsh2
+            // check we have a private key for each device.
             }
 
 

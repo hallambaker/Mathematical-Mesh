@@ -320,7 +320,7 @@
             Condition is true</param>
             <param name="args">Reason arguments to be passed to the throw delegate.</param>
         </member>
-        <member name="M:Goedel.Utilities.Assert.AssertNotNull(System.Object,Goedel.Utilities.ThrowDelegate,System.Object[])">
+        <member name="M:Goedel.Utilities.Assert.AssertNotNull``1(``0,Goedel.Utilities.ThrowDelegate,System.Object[])">
             <summary>Throw an exception if <paramref name="test"/> is null. 
             </summary>
             <param name="test">The object to test to see if it is null</param>

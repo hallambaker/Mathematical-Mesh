@@ -81,18 +81,18 @@ namespace Goedel.Mesh.Client {
         public void ApplicationDelete(
                     string applicationId) => throw new NYI();
 
-        public CatalogedApplication ApplicationGetShh(
-                    string applicationId) => throw new NYI();
+        public CatalogedApplication ApplicationGetSsh(
+                    string applicationId, string deviceId= null) => throw new NYI();
 
         public CatalogedApplication ApplicationGetMail(
             string applicationId,
             string deviceUdf = null) => throw new NYI();
 
         public CatalogedApplication ApplicationDeviceAdd(
-            CatalogedApplicationSsh application, ProfileDevice ProfileDevice=null) => throw new NYI();
+            CatalogedApplicationSsh application, Connection ProfileDevice=null) => throw new NYI();
 
         public CatalogedApplication ApplicationDeviceAdd(
-            CatalogedApplicationMail application, ProfileDevice ProfileDevice = null) => throw new NYI();
+            CatalogedApplicationMail application, Connection ProfileDevice = null) => throw new NYI();
 
 
 
