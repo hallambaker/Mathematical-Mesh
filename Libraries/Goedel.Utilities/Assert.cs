@@ -292,11 +292,12 @@ namespace Goedel.Utilities {
         /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-        public static void AssertNotNull(this object test, ThrowDelegate throwDelegate,
+        public static T AssertNotNull<T>(this T test, ThrowDelegate throwDelegate,
                     params object[] args) {
             if (test == null) {
                 throw throwDelegate(args);
                 }
+            return test;
             }
 
         /// <summary>Test to see if two arrays are equal.

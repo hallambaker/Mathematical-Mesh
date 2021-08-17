@@ -74,14 +74,27 @@ namespace Goedel.Mesh.Client {
         public CryptoKey ApplicationCreate(
                     CatalogedApplication catalogedApplication) => throw new NYI();
 
+        public CryptoKey ApplicationUpdate(
+            CatalogedApplication catalogedApplication) => throw new NYI();
+
+
         public void ApplicationDelete(
                     string applicationId) => throw new NYI();
 
-        public CatalogedApplication ApplicationGet(
-                    string applicationId, string deviceUdf) => throw new NYI();
+        public CatalogedApplication ApplicationGetShh(
+                    string applicationId) => throw new NYI();
+
+        public CatalogedApplication ApplicationGetMail(
+            string applicationId,
+            string deviceUdf = null) => throw new NYI();
 
         public CatalogedApplication ApplicationDeviceAdd(
-                    string applicationId, ProfileDevice ProfileDevice) => throw new NYI();
+            CatalogedApplicationSsh application, ProfileDevice ProfileDevice=null) => throw new NYI();
+
+        public CatalogedApplication ApplicationDeviceAdd(
+            CatalogedApplicationMail application, ProfileDevice ProfileDevice = null) => throw new NYI();
+
+
 
         public CatalogedApplication ApplicationDeviceDelete(
                     string applicationId, string deviceUdf) => throw new NYI();

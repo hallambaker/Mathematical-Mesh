@@ -665,21 +665,14 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHAddHost(Goedel.Mesh.Shell.SSHAddHost)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHAddClient(Goedel.Mesh.Shell.SSHAddClient)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.SSHCreate(Goedel.Mesh.Shell.SSHCreate)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SSHAddHost(Goedel.Mesh.Shell.SSHAddHost)">
             <summary>
             Dispatch method
             </summary>
@@ -708,6 +701,13 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.SSHPublic(Goedel.Mesh.Shell.SSHPublic)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SSHAddClient(Goedel.Mesh.Shell.SSHAddClient)">
             <summary>
             Dispatch method
             </summary>

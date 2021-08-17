@@ -45,7 +45,7 @@ namespace Goedel.Mesh.Shell {
                 };
 
             transaction.ApplicationCreate(applicationSSH);
-            transaction.ApplicationDeviceAdd(id, contextDevice.ProfileDevice);
+            transaction.ApplicationDeviceAdd(applicationSSH);
             var result = transaction.Transact();
 
             throw new NYI();
@@ -84,7 +84,7 @@ namespace Goedel.Mesh.Shell {
             using var transaction = contextDevice.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
-            var known = catalogApplication.GetSshHosts();
+            var known = catalogApplication.GetSshHosts(id);
 
 
 
@@ -103,7 +103,7 @@ namespace Goedel.Mesh.Shell {
             using var transaction = contextDevice.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
-            var known = catalogApplication.GetSshClients();
+            var known = catalogApplication.GetSshClients(id);
             throw new NYI();
             }
 
@@ -117,7 +117,7 @@ namespace Goedel.Mesh.Shell {
             using var contextDevice = GetContextDevice(options);
             using var transaction = contextDevice.TransactBegin();
 
-            var applicationSsh = transaction.ApplicationGet(id, 
+            var applicationSsh = transaction.ApplicationGetShh(id, 
                                 contextDevice.AccountDeviceId);
 
             // here dump out the private key 
@@ -136,7 +136,7 @@ namespace Goedel.Mesh.Shell {
             using var transaction = contextDevice.TransactBegin();
 
             // need to be able to pull key from different device here.
-            var applicationSsh = transaction.ApplicationGet(id,
+            var applicationSsh = transaction.ApplicationGetShh(id,
                                 contextDevice.AccountDeviceId);
 
             // here dump out the public key 

@@ -13046,27 +13046,27 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.CatalogedApplicationSSH">
+        <member name="T:Goedel.Mesh.CatalogedApplicationSsh">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationSSH._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationSSH.__Tag">
+        <member name="P:Goedel.Mesh.CatalogedApplicationSsh._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSSH._Factory">
+        <member name="F:Goedel.Mesh.CatalogedApplicationSsh.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSSH.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -13075,7 +13075,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSSH.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -13086,7 +13086,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSSH.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -13094,7 +13094,117 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSSH.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogedApplicationSshHost">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationSshHost._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationSshHost.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSshHost._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSshHost.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSshHost.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSshHost.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSshHost.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogedApplicationSshClient">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationSshClient._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationSshClient.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSshClient._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSshClient.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSshClient.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSshClient.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSshClient.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

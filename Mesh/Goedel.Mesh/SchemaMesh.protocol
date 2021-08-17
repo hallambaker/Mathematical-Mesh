@@ -819,7 +819,13 @@
 
 	Structure CatalogedApplicationMail
 		Inherits CatalogedApplication
-		// The recryption key
+
+
+
+	Structure CatalogedApplicationMailDevice
+		Inherits CatalogedApplication
+
+
 	Structure CatalogedApplicationNetwork
 		Inherits CatalogedApplication
 		// The recryption key

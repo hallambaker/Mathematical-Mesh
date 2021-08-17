@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Registry;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh.Shell {
@@ -31,7 +32,19 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MailAdd(MailAdd options) {
+            var address = options.Address.Value.AssertNotNull(NYI.Throw);
             using var contextDevice = GetContextDevice(options);
+            using var transaction = contextDevice.TransactBegin();
+
+            var applicationMail = new CatalogedApplicationMail() {
+                Key = address
+                };
+
+            transaction.ApplicationCreate(applicationMail);
+            transaction.ApplicationDeviceAdd(applicationMail);
+
+            var result = transaction.Transact();
+
             throw new NYI();
             }
 
@@ -41,7 +54,17 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MailUpdate(MailUpdate options) {
+            var address = options.Address.Value.AssertNotNull(NYI.Throw);
             using var contextDevice = GetContextDevice(options);
+            using var transaction = contextDevice.TransactBegin();
+
+            var applicationMail = new CatalogedApplicationMail() {
+                Key = address
+                };
+
+            transaction.ApplicationUpdate(applicationMail);
+
+            var result = transaction.Transact();
             throw new NYI();
             }
 
@@ -51,7 +74,16 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MailList(MailList options) {
+
             using var contextDevice = GetContextDevice(options);
+            using var transaction = contextDevice.TransactBegin();
+
+            var catalogApplication = transaction.GetCatalogApplication();
+            var known = catalogApplication.GetMail();
+
+
+
+
             throw new NYI();
             }
 
@@ -62,7 +94,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult SMIMEPrivate(SMIMEPrivate options) {
+            var address = options.Address.Value.AssertNotNull(NYI.Throw);
             using var contextDevice = GetContextDevice(options);
+            using var transaction = contextDevice.TransactBegin();
+
+            var applicationMail = transaction.ApplicationGetMail(address);
+
+            // dump out the private SMIME from applicationMail
+
+
             throw new NYI();
             }
         /// <summary>
@@ -71,7 +111,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult SMIMEPublic(SMIMEPublic options) {
+            var address = options.Address.Value.AssertNotNull(NYI.Throw);
             using var contextDevice = GetContextDevice(options);
+            using var transaction = contextDevice.TransactBegin();
+
+            var applicationMail = transaction.ApplicationGetMail(address);
+
+            // dump out the public SMIME from applicationMail
             throw new NYI();
             }
 
@@ -81,7 +127,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PGPPrivate(PGPPrivate options) {
+            var address = options.Address.Value.AssertNotNull(NYI.Throw);
             using var contextDevice = GetContextDevice(options);
+            using var transaction = contextDevice.TransactBegin();
+
+            var applicationMail = transaction.ApplicationGetMail(address);
+
+            // dump out the private PGP from applicationMail
             throw new NYI();
             }
 
@@ -91,7 +143,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PGPPublic(PGPPublic options) {
+            var address = options.Address.Value.AssertNotNull(NYI.Throw);
             using var contextDevice = GetContextDevice(options);
+            using var transaction = contextDevice.TransactBegin();
+
+            var applicationMail = transaction.ApplicationGetMail(address);
+
+            // dump out the public PGP from applicationMail
             throw new NYI();
             }
         }

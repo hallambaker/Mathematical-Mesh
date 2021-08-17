@@ -106,13 +106,36 @@ namespace Goedel.Mesh {
                 Locate(CatalogedGroup.GetGroupID(groupAddress)) as CatalogedGroup;
 
 
-        public List<CatalogedApplicationSsh> GetSsh() => throw new NYI();
+        /// <summary>
+        /// Return a sequence of SSH applications in the catalog.
+        /// </summary>
+        /// <returns>Sequence of SSH application instances.</returns>
+        public IEnumerable<CatalogedApplicationSsh> GetSsh() => throw new NYI();
 
-        public List<CatalogedApplicationSshHost> GetSshHosts() => throw new NYI();
+        /// <summary>
+        /// Return a sequence of SSH hosts advertised in the SSH application instance
+        /// <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The SSH application instance identifier.</param>
+        /// <returns>Sequence of SSH hosts.</returns>
+        public IEnumerable<CatalogedApplicationSshHost> GetSshHosts(
+                string id) => throw new NYI();
 
-        public List<CatalogedApplicationSshHost> GetSshClients() => throw new NYI();
+        /// <summary>
+        /// Return a sequence of SSH clients advertised in the SSH application instance
+        /// <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The SSH application instance identifier.</param>
+        /// <returns>Sequence of SSH clients.</returns>
+        public IEnumerable<CatalogedApplicationSshHost> GetSshClients(
+                string id) => throw new NYI();
 
-        public List<CatalogedApplicationMail> GetEmail() => throw new NYI();
+
+        /// <summary>
+        /// Return a sequence of Mail applications in the catalog.
+        /// </summary>
+        /// <returns>Sequence of Mail application instances.</returns>
+        public IEnumerable<CatalogedApplicationMail> GetMail() => throw new NYI();
 
 
 
@@ -127,6 +150,53 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => Key;
 
         }
+
+    public partial class CatalogedApplicationMail {
+
+        /// <summary>
+        /// The primary key used to catalog the entry.
+        /// </summary>
+        public override string _PrimaryKey => Key;
+
+        }
+
+    public partial class CatalogedApplicationMailDevice {
+
+        /// <summary>
+        /// The primary key used to catalog the entry.
+        /// </summary>
+        public override string _PrimaryKey => Key;
+
+        }
+
+
+    public partial class CatalogedApplicationSsh {
+
+        /// <summary>
+        /// The primary key used to catalog the entry.
+        /// </summary>
+        public override string _PrimaryKey => Key;
+
+        }
+
+    public partial class CatalogedApplicationSshHost {
+
+        /// <summary>
+        /// The primary key used to catalog the entry.
+        /// </summary>
+        public override string _PrimaryKey => Key;
+
+        }
+
+    public partial class CatalogedApplicationSshClient {
+
+        /// <summary>
+        /// The primary key used to catalog the entry.
+        /// </summary>
+        public override string _PrimaryKey => Key;
+
+        }
+
 
     public partial class CatalogedGroup {
         #region // Properties
