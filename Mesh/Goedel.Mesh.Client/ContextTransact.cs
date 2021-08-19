@@ -433,7 +433,7 @@ namespace Goedel.Mesh.Client {
 
 
             var result = new TransactionUpdate<TEntry>(catalog);
-
+            containerUpdates.Add(result);
             return result;
             }
 
@@ -450,7 +450,6 @@ namespace Goedel.Mesh.Client {
             TransactRequest.Updates ??= new List<ContainerUpdate>();
             var update = GetContainerUpdate(TransactRequest.Updates, catalog);
             update.Update(catalogedEntry);
-            TransactRequest.Updates.Add(update);
             }
 
         /// <summary>
@@ -466,7 +465,6 @@ namespace Goedel.Mesh.Client {
             TransactRequest.Updates ??= new List<ContainerUpdate>();
             var update = GetContainerUpdate(TransactRequest.Updates, catalog);
             update.Delete(catalogedEntry);
-            TransactRequest.Updates.Add(update);
             }
         #endregion
 

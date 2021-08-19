@@ -90,11 +90,11 @@ namespace Goedel.Mesh {
         Enveloped<ActivationDevice> envelopedActivationDevice;
 
         ///<summary>The connection value.</summary>
-        public override Connection Connection => ConnectionUser;
+        public override Connection Connection => ConnectionDevice;
 
-        ///<summary>The <see cref="ConnectionUser"/> instance binding the activated device
+        ///<summary>The <see cref="ConnectionDevice"/> instance binding the activated device
         ///to a MeshProfile.</summary>
-        public ConnectionDevice ConnectionUser { get; set; }
+        public ConnectionDevice ConnectionDevice { get; set; }
 
 
 
@@ -132,7 +132,7 @@ namespace Goedel.Mesh {
         /// specified, it is used as the seed value. Otherwise, a seed value of
         /// length <paramref name="bits"/> is generated.
         /// The public key value is calculated for the public key pairs and the corresponding
-        /// <see cref="ConnectionUser"/> generated for the public values.
+        /// <see cref="ConnectionDevice"/> generated for the public values.
         /// </summary>
         /// <param name="profileDevice">The base profile that the activation activates.</param>
         /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
@@ -159,7 +159,7 @@ namespace Goedel.Mesh {
                             MeshActor, MeshKeyOperation.Authenticate);
 
             // Create the (unsigned) ConnectionUser
-            ConnectionUser = new ConnectionDevice() {
+            ConnectionDevice = new ConnectionDevice() {
                 Encryption = new KeyData(deviceEncryption),
                 Signature = new KeyData(deviceSignature),
                 Authentication = new KeyData(deviceAuthentication)

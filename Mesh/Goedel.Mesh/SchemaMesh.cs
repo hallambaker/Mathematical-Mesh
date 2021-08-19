@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/17/2021 6:29:37 PM
+//  This file was automatically generated at 8/19/2021 4:21:39 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -227,6 +227,18 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual Key						PrivateParameters  {get; set;}
+        /// <summary>
+        ///The identifier used to claim the capability from the service.[Only present for
+        ///a partial key.]
+        /// </summary>
+
+		public virtual string						ServiceId  {get; set;}
+        /// <summary>
+        ///The service account that supports a serviced capability. [Only present for
+        ///a partial key.]	
+        /// </summary>
+
+		public virtual string						ServiceAddress  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -333,6 +345,16 @@ namespace Goedel.Mesh {
 						_writer.WriteObjectEnd();
 						}
 				}
+			if (ServiceId != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ServiceId", 1);
+					_writer.WriteString (ServiceId);
+				}
+			if (ServiceAddress != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ServiceAddress", 1);
+					_writer.WriteString (ServiceAddress);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -403,6 +425,14 @@ namespace Goedel.Mesh {
 					}
 				case "PrivateParameters" : {
 					PrivateParameters = Key.FromJson (jsonReader, true) ;  // A tagged structure
+					break;
+					}
+				case "ServiceId" : {
+					ServiceId = jsonReader.ReadString ();
+					break;
+					}
+				case "ServiceAddress" : {
+					ServiceAddress = jsonReader.ReadString ();
 					break;
 					}
 				default : {
@@ -979,6 +1009,18 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual KeyData						Key  {get; set;}
+        /// <summary>
+        ///The identifier used to claim the capability from the service.[Only present for
+        ///a partial capability.]
+        /// </summary>
+
+		public virtual string						ServiceId  {get; set;}
+        /// <summary>
+        ///The service account that supports a serviced capability. [Only present for
+        ///a partial capability.]
+        /// </summary>
+
+		public virtual string						ServiceAddress  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1032,6 +1074,16 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Key", 1);
 					Key.Serialize (_writer, false);
 				}
+			if (ServiceId != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ServiceId", 1);
+					_writer.WriteString (ServiceId);
+				}
+			if (ServiceAddress != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ServiceAddress", 1);
+					_writer.WriteString (ServiceAddress);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -1074,6 +1126,14 @@ namespace Goedel.Mesh {
 					Key = new KeyData ();
 					Key.Deserialize (jsonReader);
  
+					break;
+					}
+				case "ServiceId" : {
+					ServiceId = jsonReader.ReadString ();
+					break;
+					}
+				case "ServiceAddress" : {
+					ServiceAddress = jsonReader.ReadString ();
 					break;
 					}
 				default : {

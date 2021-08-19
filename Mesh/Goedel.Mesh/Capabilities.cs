@@ -81,6 +81,14 @@ namespace Goedel.Mesh {
         }
 
 
+    public partial class AccessCapability {
+
+        ///<inheritdoc/>
+        public override string _PrimaryKey => Id;
+
+        }
+
+
     public partial class CryptographicCapability {
 
 

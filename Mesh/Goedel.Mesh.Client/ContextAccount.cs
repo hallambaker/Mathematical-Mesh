@@ -112,7 +112,7 @@ namespace Goedel.Mesh.Client {
         #endregion
         #region // Activated account keys
         ///<summary>The account activation</summary>
-        public ActivationAccount ActivationAccount { get; protected set; }
+        public ActivationAccount ActivationAccount { get;  set; }
 
 
         public string AccountDeviceId => ActivationAccount.AccountDeviceId;

@@ -150,13 +150,15 @@ namespace Goedel.Mesh.Client {
                 KeyCollection.Add(KeyAccountEncryption);
                 }
 
-            // Some validation checks
-            (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionDevice.Signature.Udf,
-                    KeyActivationFailed.Throw);
-            (DeviceEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.Encryption.Udf,
-                    KeyActivationFailed.Throw);
-            (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.Authentication.Udf,
-                    KeyActivationFailed.Throw);
+            if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionDevice != null) {
+                // Some validation checks
+                (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionDevice.Signature.Udf,
+                        KeyActivationFailed.Throw);
+                (DeviceEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.Encryption.Udf,
+                        KeyActivationFailed.Throw);
+                (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.Authentication.Udf,
+                        KeyActivationFailed.Throw);
+                }
             }
 
         #endregion
@@ -1076,20 +1078,20 @@ namespace Goedel.Mesh.Client {
 
         private void AddDevice(AcknowledgeConnection request, List<string> rights, TransactUser transactRequest, RespondConnection respondConnection) {
             var device = ActivationAccount.MakeCatalogedDevice(
-                    request.MessageConnectionRequest.ProfileDevice, ProfileUser, roles: rights);
+                    request.MessageConnectionRequest.ProfileDevice, ProfileUser, roles: rights, transactContextAccount: transactRequest);
 
             respondConnection.CatalogedDevice = device;
             respondConnection.Result = MeshConstants.TransactionResultAccept;
             var catalogDevice = transactRequest.GetCatalogDevice();
             transactRequest.CatalogUpdate(catalogDevice, device);
 
-            var catalogedAccessors = device.EnvelopedActivationAccount?.EnvelopedObject?.CatalogedAccessors;
-            if (catalogedAccessors != null) {
-                var catalogAccess = transactRequest.GetCatalogAccess();
-                foreach (var capability in catalogedAccessors) {
-                    transactRequest.CatalogUpdate(catalogAccess, capability);
-                    }
-                }
+            //var catalogedAccessors = device.EnvelopedActivationAccount?.EnvelopedObject?.CatalogedAccessors;
+            //if (catalogedAccessors != null) {
+            //    var catalogAccess = transactRequest.GetCatalogAccess();
+            //    foreach (var capability in catalogedAccessors) {
+            //        transactRequest.CatalogUpdate(catalogAccess, capability);
+            //        }
+            //    }
             }
 
 

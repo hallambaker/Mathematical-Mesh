@@ -25,6 +25,7 @@ using System.Collections.Generic;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
@@ -160,7 +161,7 @@ namespace Goedel.Mesh {
         /// <param name="capability">Capability to add.</param>
 
         public void Add(
-                    CryptographicCapability capability
+                    Capability capability
                     ) {
             var catalogedCapability = new CatalogedAccess(capability);
             New(catalogedCapability);
@@ -211,6 +212,51 @@ namespace Goedel.Mesh {
                     }
                 }
             }
+
+
+        public ActivationEntry MakeActivation(
+                    Right right, 
+                    KeyPairAdvanced keyPair, 
+                    ITransactContextAccount transactContextAccount = null) {
+            switch (right.Degree) {
+                case Degree.Direct: {
+                    return new ActivationEntry() {
+                        Resource = right.Name,
+                        Key = new KeyData(keyPair, true)
+                        };
+                    }
+                case Degree.Service: {
+                    var keys = keyPair.IKeyAdvancedPrivate.MakeThresholdKeySet(2);
+                    var deviceKey = keys[0].GetKeyPair(KeySecurity.Exportable, KeyUses.Encrypt);
+
+                    var capabilityService = new CapabilityDecryptServiced() {
+                        Id = deviceKey.KeyIdentifier,
+                        SubjectId = right.Name,
+                        //AuthenticationId = ContextUser.ProfileUser.Udf,
+                        //KeyDataEncryptionKey = serviceEncryptionKey,
+                        KeyData = new KeyData(keys[1])
+                        };
+
+                    var catalogedCapability = new CatalogedAccess(capabilityService);
+                    transactContextAccount.CatalogUpdate(this, catalogedCapability);
+
+
+                    return new ActivationEntry() {
+                        Resource = right.Name,
+                        Key = new KeyData(keys[0]) {
+                            Udf = keyPair.KeyIdentifier,
+                            ServiceId = deviceKey.KeyIdentifier
+                            }
+                        };
+
+                    }
+                default: {
+                    throw new NYI();
+                    }
+                }
+            }
+
+
         #endregion
         }
 
@@ -231,7 +277,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Create a cataloged capability for <paramref name="capability"/>.
         /// </summary>
-        public CatalogedAccess(CryptographicCapability capability) => Capability = capability;
+        public CatalogedAccess(Capability capability) => Capability = capability;
         #endregion
         }
 

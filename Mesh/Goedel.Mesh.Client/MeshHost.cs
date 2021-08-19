@@ -252,8 +252,16 @@ namespace Goedel.Mesh.Client {
 
             // Create the set of cryptographic keys to initialize the account.
             // create the root activation.
-            var activationRoot = new ActivationAccount(KeyCollection, accountSeed);
+            var activationRoot = new ActivationAccount(KeyCollection, accountSeed) {
+                DefaultActive = true
+                
+                };
+            //activationRoot.Envelope();
 
+
+            //activationRoot.DareEnvelope = new DareEnvelope() {
+            //    JsonObject = activationRoot
+            //    };
             // create the initial profile
             var profileUser = new ProfileUser(accountAddress, activationRoot);
 
@@ -272,8 +280,25 @@ namespace Goedel.Mesh.Client {
                 Rights.IdRightsWeb
                 };
 
-            // create a Cataloged Device entry for the admin device
-            var catalogedDevice = activationRoot.MakeCatalogedDevice(profileDevice, profileUser, rights);
+
+            var activationDevice = new ActivationDevice(profileDevice);
+
+
+            //activationDevice.Envelope();
+
+            // create a Cataloged activationRoot.Device entry for the admin device
+            var catalogedDevice = activationRoot.CreateCataloguedDevice(
+                    profileUser, profileDevice, activationDevice, activationRoot,
+                    activationRoot.AdministratorSignatureKey);
+
+
+
+            //new CatalogedDevice() {
+            //    EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
+            //    EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
+            //    EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
+            //    EnvelopedActivationAccount = activationRoot.EnvelopedActivationAccount
+            //    };
 
             // Create the host catalog entry and apply to the context user.
             var catalogedMachine = new CatalogedStandard() {
@@ -291,15 +316,23 @@ namespace Goedel.Mesh.Client {
                 }
             KeyCollection.Persist(profileUser.Udf, accountSeed, false);
 
-            var contextUser = new ContextUser(this, catalogedMachine);
-            contextUser.ActivationAccount.ProfileSignatureKey =
-                activationRoot.ProfileSignatureKey;
+            var contextUser = new ContextUser(this, catalogedMachine) {
+                ActivationAccount = activationRoot
+                };
+            //contextUser.ActivationAccount.ProfileSignatureKey =
+            //    activationRoot.ProfileSignatureKey;
 
             // Set the service 
             contextUser.SetService(accountAddress);
 
             // Add the catalog device under the new user context.
             var transactRequest = contextUser.TransactBegin();
+
+
+            catalogedMachine.CatalogedDevice = activationRoot.MakeCatalogedDevice(
+                profileDevice, profileUser, rights, transactRequest, activationDevice);
+
+
             var catalogDevice = transactRequest.GetCatalogDevice();
             transactRequest.CatalogUpdate(catalogDevice, catalogedDevice);
             transactRequest.Transact();

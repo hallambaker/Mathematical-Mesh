@@ -191,7 +191,7 @@ namespace Goedel.Mesh {
         /// <param name="access">The access granted.</param>
         /// <param name="degree">The form of access (direct, service mediated, etc.)</param>
         /// <param name="name">The named sub-resource (e.g. account).</param>
-        public Right(Resource resource, Access access = Access.Decrypt, string name = null, Degree degree = Degree.Service) {
+        public Right(Resource resource, Access access = Access.Decrypt, string name = null, Degree degree = Degree.Direct) {
             Resource = resource;
             Access = access;
             Name = name;
@@ -258,16 +258,16 @@ namespace Goedel.Mesh {
         public static List<Right> RightsGrantUser =
                     new() {
                         // Needed to create and publish device connection
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogContact.Label),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogTask.Label),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogBookmark.Label),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogNetwork.Label),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogApplication.Label),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogPublication.Label),
-                        new Right(Resource.Store, Access.GrantReadWrite, SpoolInbound.Label),
-                        new Right(Resource.Store, Access.GrantReadWrite, SpoolOutbound.Label)
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label, Degree.Service),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogContact.Label, Degree.Service),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogTask.Label, Degree.Service),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogBookmark.Label, Degree.Service),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label, Degree.Service),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogNetwork.Label, Degree.Service),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogApplication.Label, Degree.Service),
+                        new Right(Resource.Store, Access.GrantReadWrite, CatalogPublication.Label, Degree.Service),
+                        new Right(Resource.Store, Access.GrantReadWrite, SpoolInbound.Label, Degree.Service),
+                        new Right(Resource.Store, Access.GrantReadWrite, SpoolOutbound.Label, Degree.Service)
                         };
 
         ///<summary>Account access administration rights</summary> 
