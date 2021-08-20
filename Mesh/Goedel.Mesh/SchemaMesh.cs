@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/19/2021 4:21:39 PM
+//  This file was automatically generated at 8/20/2021 5:54:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -90,10 +90,10 @@ namespace Goedel.Mesh {
 			{"ProfileHost", ProfileHost._Factory},
 			{"Connection", Connection._Factory},
 			{"ConnectionAddress", ConnectionAddress._Factory},
+			{"ConnectionService", ConnectionService._Factory},
 			{"ConnectionDevice", ConnectionDevice._Factory},
 			{"ConnectionApplication", ConnectionApplication._Factory},
 			{"ConnectionGroup", ConnectionGroup._Factory},
-			{"ConnectionService", ConnectionService._Factory},
 			{"ConnectionHost", ConnectionHost._Factory},
 			{"ActivationDevice", ActivationDevice._Factory},
 			{"ActivationHost", ActivationHost._Factory},
@@ -2320,12 +2320,118 @@ namespace Goedel.Mesh {
 	///
 	/// Asserts that a device is connected to an account profile
 	/// </summary>
-	public partial class ConnectionDevice : Connection {
+	public partial class ConnectionService : Connection {
         /// <summary>
         ///The account address
         /// </summary>
 
 		public virtual string						Account  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ConnectionService";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new ConnectionService();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((Connection)this).SerializeX(_writer, false, ref _first);
+			if (Account != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Account", 1);
+					_writer.WriteString (Account);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ConnectionService FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as ConnectionService;
+				}
+		    var Result = new ConnectionService ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Account" : {
+					Account = jsonReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Asserts that a device is connected to an account profile
+	/// </summary>
+	public partial class ConnectionDevice : ConnectionService {
+        /// <summary>
+        /// </summary>
+
+		public virtual List<string>				Roles  {get; set;}
         /// <summary>
         ///The signature key for use of the device under the profile
         /// </summary>
@@ -2379,12 +2485,19 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((Connection)this).SerializeX(_writer, false, ref _first);
-			if (Account != null) {
+			((ConnectionService)this).SerializeX(_writer, false, ref _first);
+			if (Roles != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Account", 1);
-					_writer.WriteString (Account);
+				_writer.WriteToken ("Roles", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Roles) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
 				}
+
 			if (Signature != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Signature", 1);
@@ -2428,8 +2541,15 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Account" : {
-					Account = jsonReader.ReadString ();
+				case "Roles" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Roles = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Roles.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
 					break;
 					}
 				case "Signature" : {
@@ -2619,97 +2739,6 @@ namespace Goedel.Mesh {
 				return Out as ConnectionGroup;
 				}
 		    var Result = new ConnectionGroup ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				default : {
-					base.DeserializeToken(jsonReader, tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class ConnectionService : Connection {
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "ConnectionService";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ConnectionService();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			((Connection)this).SerializeX(_writer, false, ref _first);
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new ConnectionService FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ConnectionService;
-				}
-		    var Result = new ConnectionService ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -6039,6 +6068,11 @@ namespace Goedel.Mesh {
         ///The public assertion demonstrating connection of the Device to the Mesh
         /// </summary>
 
+		public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+        /// <summary>
+        ///The public assertion demonstrating connection of the Device to the Mesh
+        /// </summary>
+
 		public virtual Enveloped<ConnectionDevice>						EnvelopedConnectionDevice  {get; set;}
         /// <summary>
         ///The activation of the device within the Mesh account
@@ -6128,6 +6162,11 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("EnvelopedConnectionAddress", 1);
 					EnvelopedConnectionAddress.Serialize (_writer, false);
+				}
+			if (EnvelopedConnectionService != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedConnectionService", 1);
+					EnvelopedConnectionService.Serialize (_writer, false);
 				}
 			if (EnvelopedConnectionDevice != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -6224,6 +6263,13 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					EnvelopedConnectionAddress = new Enveloped<ConnectionAddress> ();
 					EnvelopedConnectionAddress.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "EnvelopedConnectionService" : {
+					// An untagged structure
+					EnvelopedConnectionService = new Enveloped<ConnectionService> ();
+					EnvelopedConnectionService.Deserialize (jsonReader);
  
 					break;
 					}
@@ -8240,6 +8286,14 @@ namespace Goedel.Mesh {
 
 		public virtual string						Key  {get; set;}
         /// <summary>
+        /// </summary>
+
+		public virtual List<string>				Grant  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<string>				Deny  {get; set;}
+        /// <summary>
         ///Enveloped keys for use with Application
         /// </summary>
 
@@ -8293,6 +8347,30 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Key", 1);
 					_writer.WriteString (Key);
 				}
+			if (Grant != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Grant", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Grant) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (Deny != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Deny", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Deny) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (EnvelopedCapabilities != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("EnvelopedCapabilities", 1);
@@ -8345,6 +8423,28 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "Key" : {
 					Key = jsonReader.ReadString ();
+					break;
+					}
+				case "Grant" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Grant = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Grant.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "Deny" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Deny = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Deny.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
 					break;
 					}
 				case "EnvelopedCapabilities" : {
@@ -9206,6 +9306,11 @@ namespace Goedel.Mesh {
 
 		public virtual Enveloped<ConnectionDevice>						EnvelopedConnectionDevice  {get; set;}
         /// <summary>
+        ///The device connection
+        /// </summary>
+
+		public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+        /// <summary>
         ///The device private key
         /// </summary>
 
@@ -9269,6 +9374,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("EnvelopedConnectionDevice", 1);
 					EnvelopedConnectionDevice.Serialize (_writer, false);
 				}
+			if (EnvelopedConnectionService != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedConnectionService", 1);
+					EnvelopedConnectionService.Serialize (_writer, false);
+				}
 			if (PrivateKey != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("PrivateKey", 1);
@@ -9331,6 +9441,13 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					EnvelopedConnectionDevice = new Enveloped<ConnectionDevice> ();
 					EnvelopedConnectionDevice.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "EnvelopedConnectionService" : {
+					// An untagged structure
+					EnvelopedConnectionService = new Enveloped<ConnectionService> ();
+					EnvelopedConnectionService.Deserialize (jsonReader);
  
 					break;
 					}

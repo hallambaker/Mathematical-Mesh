@@ -37,7 +37,7 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void MeshDeviceDirectKey() {
-            var rights = new List<string> { Rights.IdRightsDirect };
+            var rights = new List<string> { Rights.IdRolesDirect };
 
 
             var testEnvironmentCommon = GetTestEnvironmentCommon();
@@ -51,7 +51,7 @@ namespace Goedel.XUnit {
             // Admin Device
             contextAccountAlice.Sync();
             var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest, rights: rights);
+            contextAccountAlice.Process(connectRequest, roles: rights);
 
             // Check second device
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
@@ -71,7 +71,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshDeviceThresholdKey() {
 
-            var rights = new List<string> { Rights.IdRightsUser };
+            var roles = new List<string> { Rights.IdRolesUser };
 
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
@@ -84,7 +84,7 @@ namespace Goedel.XUnit {
             // Admin Device
             contextAccountAlice.Sync();
             var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest, rights:rights);
+            contextAccountAlice.Process(connectRequest, roles:roles);
 
             // Check second device
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
@@ -100,6 +100,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshDeviceSsh() {
+            var roles = new List<string> { Rights.IdRolesWeb };
 
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
@@ -112,7 +113,7 @@ namespace Goedel.XUnit {
             // Admin Device
             contextAccountAlice.Sync();
             var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest);
+            contextAccountAlice.Process(connectRequest, roles: roles);
 
             // Check second device
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
@@ -121,15 +122,16 @@ namespace Goedel.XUnit {
             var id = "ssh";
             // Create an ssh application
             var applicationSSH = new CatalogedApplicationSsh() {
-                Key = id
+                Key = id,
+                Grant = roles
                 };
 
 
             "Move out to separate routine that reads the device catalog".TaskFunctionality();
             var transaction1 = contextAccountAlice.TransactBegin();
             transaction1.ApplicationCreate(applicationSSH);
-            transaction1.ApplicationDeviceAdd(applicationSSH);
-            transaction1.ApplicationDeviceAdd(applicationSSH, contextOnboarded.ConnectionDevice);
+            //transaction1.ApplicationDeviceAdd(applicationSSH);
+            //transaction1.ApplicationDeviceAdd(applicationSSH, contextOnboarded.ConnectionDevice);
             var result1 = transaction1.Transact();
 
 
@@ -153,7 +155,7 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void MeshDeviceDeveloper() {
-            var rights = new List<string> { Rights.IdRightsPgp, Rights.IdRightsSsh, Rights.IdRightsSmime };
+            var rights = new List<string> { Rights.IdRolesDeveloper, Rights.IdRolesWeb};
 
 
             var testEnvironmentCommon = GetTestEnvironmentCommon();
@@ -167,7 +169,7 @@ namespace Goedel.XUnit {
             // Admin Device
             contextAccountAlice.Sync();
             var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest, rights: rights);
+            contextAccountAlice.Process(connectRequest, roles: rights);
 
             // Check second device
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);

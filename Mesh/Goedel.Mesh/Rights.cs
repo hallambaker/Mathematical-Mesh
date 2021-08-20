@@ -227,31 +227,33 @@ namespace Goedel.Mesh {
             }
 
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsSuper = "super";
+        public const string IdRolesSuper = "super";
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsAdmin = "admin";
+        public const string IdRolesAdmin = "admin";
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsDevice = "device";
+        public const string IdRolesDevice = "device";
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsMessage = "message";
+        public const string IdRolesMessage = "message";
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsWeb = "web";
+        public const string IdRolesWeb = "web";
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsSsh = "ssh";
+        public const string IdRolesDeveloper = "developer";
+        /////<summary>Name for the  rights set.</summary> 
+        //public const string IdRightsSsh = "ssh";
+        /////<summary>Name for the  rights set.</summary> 
+        //public const string IdRightsPgp = "pgp";
+        /////<summary>Name for the  rights set.</summary> 
+        //public const string IdRightsSmime = "smime";
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsPgp = "pgp";
+        public const string IdRolesGroupadmin = "groupadmin";
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsSmime = "smime";
+        public const string IdRolesGroupmember = "groupmember";
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsGroupadmin = "groupadmin";
+        public const string IdRolesStore = "store";
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsGroupmember = "groupmember";
+        public const string IdRolesUser = "user";
         ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsStore = "store";
-        ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsUser = "user";
-        ///<summary>Name for the  rights set.</summary> 
-        public const string IdRightsDirect = "direct";
+        public const string IdRolesDirect = "direct";
 
 
         ///<summary>Account access administration rights</summary> 
@@ -392,18 +394,18 @@ namespace Goedel.Mesh {
         ///<summary>Dictionary mapping rights identifier to rights description.</summary> 
         public readonly static Dictionary<string, List<Right>> DictionaryRights =
             new() {
-                [IdRightsSuper] = RightsSuperAdministrator,
-                [IdRightsAdmin] = RightsAdministrator,
-                [IdRightsDevice] = RightsDevce,
-                [IdRightsMessage] = RightsMessage,
-                [IdRightsWeb] = RightsWeb,
-                [IdRightsSsh] = RightsSSH,
-                [IdRightsPgp] = RightsPgp,
-                [IdRightsSmime] = RightsSmime,
-                [IdRightsGroupmember] = RightsGroupAdministrator,
-                [IdRightsStore] = RightsGroupMember,
-                [IdRightsUser] = RightsGrantUser,
-                [IdRightsDirect] = RightsGrantDirect,
+                [IdRolesSuper] = RightsSuperAdministrator,
+                [IdRolesAdmin] = RightsAdministrator,
+                [IdRolesDevice] = RightsDevce,
+                [IdRolesMessage] = RightsMessage,
+                [IdRolesWeb] = RightsWeb,
+                //[IdRightsSsh] = RightsSSH,
+                //[IdRightsPgp] = RightsPgp,
+                //[IdRightsSmime] = RightsSmime,
+                [IdRolesGroupmember] = RightsGroupAdministrator,
+                [IdRolesStore] = RightsGroupMember,
+                [IdRolesUser] = RightsGrantUser,
+                [IdRolesDirect] = RightsGrantDirect,
                 };
 
         /// <summary>

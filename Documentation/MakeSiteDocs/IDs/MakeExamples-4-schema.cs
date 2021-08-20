@@ -532,8 +532,8 @@ namespace ExampleGenerator {
 				 var profileUser = resultCreateAccount?.ProfileAccount;
 				 var activationUser = resultCreateAccount?.ActivationDevice;
 				 var catalogedDevice = AliceProfiles?.CatalogedDevice;
-				 var connectionUser = catalogedDevice?.ConnectionUser;
-				_Output.Write ("\n{0}", _Indent);
+				 var connectionDevice = catalogedDevice?.ConnectionDevice;
+				 var connectionService = catalogedDevice?.ConnectionService;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The account profile specifies the online and offline signature keys used to maintain the\n{0}", _Indent);
 				_Output.Write ("profile and the encryption key to be used by the account.\n{0}", _Indent);
@@ -547,7 +547,12 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The resulting key set is specified in the device connection:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Format(connectionUser);
+				 Format(connectionDevice);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The authentication key on its own is specified in the service connection:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(connectionService);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("All the above plus the ProfileDevice are combined to form the CatalogedDevice entry:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

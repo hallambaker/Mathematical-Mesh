@@ -94,7 +94,7 @@ namespace Goedel.Mesh.Client {
         public override ProfileDevice ProfileDevice =>
                     EnvelopedProfileDevice.Decode();
         ///<summary>The decoded connection device</summary> 
-        public ConnectionDevice ConnectionDevice =>
+        public ConnectionService ConnectionDevice =>
                     EnvelopedConnectionDevice.Decode();
 
         //            (var account, var key) = MeshUri.ParseConnectUri(devicePreconfiguration.ConnectUri);

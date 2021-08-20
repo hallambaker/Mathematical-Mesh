@@ -204,7 +204,7 @@ namespace Goedel.Mesh {
 
             activationDevice.Activate(deviceKeySeed);
 
-            var connectionDevice = catalogedMachine?.EnvelopedConnectionDevice?.Decode();
+            var connectionDevice = catalogedMachine?.EnvelopedConnectionService?.Decode();
 
 
             return new MeshCredentialPrivate(

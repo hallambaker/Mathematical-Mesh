@@ -155,8 +155,13 @@ namespace Goedel.Mesh {
         /// for a newly added device or by decoding the SignedDeviceConnection entry after 
         /// deserialization.
         /// </summary>
-        public ConnectionDevice ConnectionUser =>
-                    EnvelopedConnectionDevice.Decode(KeyCollection);
+        public ConnectionService ConnectionService =>
+                    EnvelopedConnectionService.Decode(KeyCollection);
+
+        public ConnectionDevice ConnectionDevice =>
+            EnvelopedConnectionDevice.Decode(KeyCollection);
+
+
 
         /// <summary>
         /// The account connection assertion.
@@ -221,7 +226,7 @@ namespace Goedel.Mesh {
 
             ProfileUser.ToBuilder(builder, indent, "[Profile Mesh Missing]");
             ProfileDevice.ToBuilder(builder, indent, "[Profile Device Missing]");
-            ConnectionUser.ToBuilder(builder, indent, "[Connection Device Missing]");
+            ConnectionService.ToBuilder(builder, indent, "[Connection Device Missing]");
 
             // Can't write this out to the console because it is encrypted under the device key!
             //GetActivationDevice(keyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
@@ -245,7 +250,7 @@ namespace Goedel.Mesh {
             ProfileDevice.Validate();
 
             // Verify that the connection and activation entries are signed under the master profile
-            ProfileUser.Verify(EnvelopedConnectionDevice);
+            ProfileUser.Verify(EnvelopedConnectionService);
             ProfileUser.Verify(EnvelopedActivationDevice);
 
             return true; // this will probably turn into exception return.

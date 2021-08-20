@@ -56,7 +56,7 @@ namespace Goedel.Mesh.Server {
         public ActivationDevice ActivationDevice { get; init; }
 
         ///<summary>The host connection record.</summary> 
-        public ConnectionDevice ConnectionDevice { get; init; }
+        public ConnectionService ConnectionDevice { get; init; }
 
         ///<summary>The service configuration</summary> 
         public ServiceConfiguration ServiceConfiguration { get; init; }
@@ -145,7 +145,7 @@ namespace Goedel.Mesh.Server {
 
             // Sign the connection and connection slim
 
-            this.ConnectionDevice = new ConnectionDevice() {
+            this.ConnectionDevice = new ConnectionService() {
                 Account = "@example",
                 Subject = connectionDevice.Subject,
                 Authority = connectionDevice.Authority,
@@ -267,7 +267,7 @@ namespace Goedel.Mesh.Server {
 
             activationDevice.Activate(profileHost.SecretSeed);
             var connectionDevice1 = activationDevice.Connection;
-            var connectionDevice = new ConnectionDevice() {
+            var connectionDevice = new ConnectionService() {
                 Account = deviceAddress,
                 Subject = connectionDevice1.Authentication.CryptoKey.KeyIdentifier,
                 Authority = profileService.Udf,
@@ -284,7 +284,7 @@ namespace Goedel.Mesh.Server {
                 EnvelopedProfileService = profileService.EnvelopedProfileService,
                 EnvelopedProfileHost = profileHost.EnvelopedProfileHost,
                 EnvelopedActivationHost = activationDevice.EnvelopedActivationHost,
-                EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice
+                EnvelopedConnectionService = connectionDevice.EnvelopedConnectionService
                 };
             meshMachine.MeshHost.Register(catalogedService, null);
 

@@ -275,9 +275,9 @@ namespace Goedel.Mesh.Client {
 
 
             rights ??= new List<string> {
-                Rights.IdRightsSuper,
-                Rights.IdRightsAdmin,
-                Rights.IdRightsWeb
+                Rights.IdRolesSuper,
+                Rights.IdRolesAdmin,
+                Rights.IdRolesWeb
                 };
 
 

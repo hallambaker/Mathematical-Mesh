@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Collections.Generic;
+
 using Goedel.Cryptography;
 using Goedel.Utilities;
 
@@ -71,8 +73,29 @@ namespace Goedel.Mesh.Client {
 
         #endregion
         #region // Methods
-        public CryptoKey ApplicationCreate(
-                    CatalogedApplication catalogedApplication) => throw new NYI();
+        public void ApplicationCreate(
+                    CatalogedApplication catalogedApplication) {
+
+            var catalog = GetCatalogApplication();
+            CatalogUpdate(catalog, catalogedApplication);
+
+            var catalogDevice = GetCatalogDevice();
+            var updated = new List<CatalogedDevice>();
+            foreach (var device in catalogDevice.AsCatalogedType) {
+
+                Screen.WriteLine("Got device");
+                if (catalogedApplication.DeviceAuthorized(device)) {
+                    var activationApplication = new ActivationApplication() {
+                        };
+
+                    updated.Add(device);
+                    }
+                }
+            foreach (var device in updated) {
+                CatalogUpdate(catalogDevice, device);
+                }
+
+            }
 
         public CryptoKey ApplicationUpdate(
             CatalogedApplication catalogedApplication) => throw new NYI();

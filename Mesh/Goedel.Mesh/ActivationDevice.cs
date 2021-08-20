@@ -90,11 +90,12 @@ namespace Goedel.Mesh {
         Enveloped<ActivationDevice> envelopedActivationDevice;
 
         ///<summary>The connection value.</summary>
-        public override Connection Connection => ConnectionDevice;
+        public override Connection Connection => ConnectionService;
 
-        ///<summary>The <see cref="ConnectionDevice"/> instance binding the activated device
+        ///<summary>The <see cref="ConnectionService"/> instance binding the activated device
         ///to a MeshProfile.</summary>
-        public ConnectionDevice ConnectionDevice { get; set; }
+        public ConnectionService ConnectionService { get; set; }
+
 
 
 
@@ -132,7 +133,7 @@ namespace Goedel.Mesh {
         /// specified, it is used as the seed value. Otherwise, a seed value of
         /// length <paramref name="bits"/> is generated.
         /// The public key value is calculated for the public key pairs and the corresponding
-        /// <see cref="ConnectionDevice"/> generated for the public values.
+        /// <see cref="ConnectionService"/> generated for the public values.
         /// </summary>
         /// <param name="profileDevice">The base profile that the activation activates.</param>
         /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
@@ -148,21 +149,22 @@ namespace Goedel.Mesh {
 
             AccountUdf = profileDevice.Udf;
 
-            var deviceEncryption = ActivationSeed.ActivatePublic(
+            DeviceEncryption = ActivationSeed.ActivatePublic(
                     profileDevice.Encryption.GetKeyPairAdvanced(),
                             MeshActor, MeshKeyOperation.Encrypt);
-            var deviceSignature = ActivationSeed.ActivatePublic(
+            DeviceSignature = ActivationSeed.ActivatePublic(
                     profileDevice.Signature.GetKeyPairAdvanced(),
                             MeshActor, MeshKeyOperation.Sign);
-            var deviceAuthentication = ActivationSeed.ActivatePublic(
+            DeviceAuthentication = ActivationSeed.ActivatePublic(
                     profileDevice.Authentication.GetKeyPairAdvanced(),
                             MeshActor, MeshKeyOperation.Authenticate);
 
+
+
+
             // Create the (unsigned) ConnectionUser
-            ConnectionDevice = new ConnectionDevice() {
-                Encryption = new KeyData(deviceEncryption),
-                Signature = new KeyData(deviceSignature),
-                Authentication = new KeyData(deviceAuthentication)
+            ConnectionService = new ConnectionService() {
+                Authentication = new KeyData(DeviceAuthentication)
                 };
             }
 

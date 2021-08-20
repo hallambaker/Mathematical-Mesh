@@ -287,6 +287,11 @@
             The device profile presented to the service.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedConnectionService">
+             <summary>
+            The device connection used to authenticate to the service.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedConnectionDevice">
              <summary>
             The device connection used to authenticate to the service.
@@ -1025,6 +1030,9 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.ProfileUser">
             <summary>The profile</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionService">
+            <summary>The connection device</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionDevice">
             <summary>The connection device</summary>
         </member>
@@ -1245,7 +1253,7 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String@,Goedel.Mesh.ProfileDevice@,System.String@,System.String)">
             <summary>
-            Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)"/>. Generates a device profile
+            Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionService@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)"/>. Generates a device profile
             and writes the <see cref="T:Goedel.Mesh.DevicePreconfiguration"/> data to a file in the directory
             specified by <paramref name="path"/>.
             </summary>
@@ -1255,7 +1263,7 @@
             <param name="path"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionService@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)">
             <summary>
             Create an EARL for a device, publish the result to the Mesh service and return 
             the device profile <paramref name="profileDevice"/>, secret seed value 
@@ -1346,7 +1354,7 @@
             <param name="accept">If true, accept the request, otherwise reject it.</param>
             <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
             contact information in response to an initial contact request.</param>
-            <param name="rights">The list of rights to be granted to the device.</param>
+            <param name="roles">The list of rights to be granted to the device.</param>
             <returns>The result of processing.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ContactReply(Goedel.Mesh.MessageContact,System.Boolean,System.String)">
@@ -2356,7 +2364,7 @@
             The activation record for this host
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedConnectionDevice">
+        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedConnectionService">
              <summary>
             The connection of the host to the service
              </summary>

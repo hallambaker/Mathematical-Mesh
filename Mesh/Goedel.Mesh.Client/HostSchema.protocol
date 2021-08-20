@@ -43,7 +43,7 @@
 		Struct Enveloped<ActivationHost> EnvelopedActivationHost
 			Description
 				|The activation record for this host
-		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
+		Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
 				|The connection of the host to the service
 
@@ -82,6 +82,9 @@
 		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile presented to the service.
+		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+			Description
+				|The device connection used to authenticate to the service.
 		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 			Description
 				|The device connection used to authenticate to the service.

@@ -30,6 +30,17 @@ using Goedel.XUnit;
 
 namespace Scratchpad {
 
+    // Bug: Only doing threshold for STOREs and not for the ACCOUNT ENCRYPTION. MAD!
+    // Need to add means of adding application and tying it to a RIGHT.
+    // Probably work on documenting this a bit.
+
+    // Need to process the device catalog and for each device still active, 
+    // check if it has the corresponding right and assign the right if so.
+
+    // Can then delete the applications catalog???
+
+
+
     // ToDo: Provision Threshold Key
     // ToDo: Provision SSH / S/MIME / PGP and other app keys
     // ToDo: Utility dump on the Access catalog
@@ -70,8 +81,12 @@ namespace Scratchpad {
 
 
             //TestService.Test().ProtocolHello();
+            TestService.Test().MeshDeviceSsh();
 
-            TestService.Test().MeshDeviceDirectKey();
+
+            //TestService.Test().MeshDeviceDirectKey();
+            //TestService.Test().MeshDeviceThresholdKey();
+
 
             //ShellTestsHTTP.Test().TestMessageGroup();
             //TestPresentationMesh.Test().TestMeshService();

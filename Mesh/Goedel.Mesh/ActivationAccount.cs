@@ -122,7 +122,7 @@ namespace Goedel.Mesh {
         ///<summary>The default status of the device connection</summary> 
         public bool DefaultActive { get; set; }  = false;
 
-
+        public ConnectionDevice ConnectionDevice { get; set; }
 
 
         /// <summary>
@@ -276,17 +276,24 @@ namespace Goedel.Mesh {
             activationAccount.DareEnvelope.AssertNotNull(Internal.Throw);
 
 
-            var connectionDevice = activationDevice.ConnectionDevice;
+            var connectionService = activationDevice.ConnectionService;
+            connectionService.AssertNotNull(Internal.Throw);
+            connectionService.Envelope(signature, objectEncoding:
+                        ObjectEncoding.JSON_B);
+            connectionService.DareEnvelope.AssertNotNull(Internal.Throw);
+
+            var connectionDevice = activationAccount.ConnectionDevice;
             connectionDevice.AssertNotNull(Internal.Throw);
             connectionDevice.Envelope(signature, objectEncoding:
                         ObjectEncoding.JSON_B);
             connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
+
             var connectionAccount = new ConnectionAddress() {
                 Account = profileUser?.AccountAddress,
-                Subject = connectionDevice.Subject,
-                Authority = connectionDevice.Authority,
-                Authentication = connectionDevice.Authentication
+                Subject = connectionService.Subject,
+                Authority = connectionService.Authority,
+                Authentication = connectionService.Authentication
                 };
 
             if (activationAccount.DefaultActive) {
@@ -295,7 +302,7 @@ namespace Goedel.Mesh {
             else {
                 var catalogAccess = transactContextAccount.GetCatalogAccess();
                 catalogAccess.Add( new AccessCapability() {
-                            Id = connectionDevice.AuthenticationPublic.KeyIdentifier
+                            Id = connectionService.AuthenticationPublic.KeyIdentifier
                             });
                 }
 
@@ -313,7 +320,7 @@ namespace Goedel.Mesh {
 
             var accessCapability = new CatalogedAccess() {
                 Capability = new AccessCapability() {
-                    Id = connectionDevice.AuthenticationPublic.KeyIdentifier
+                    Id = connectionService.AuthenticationPublic.KeyIdentifier
                     }
                 };
 
@@ -326,6 +333,7 @@ namespace Goedel.Mesh {
                 //Udf = activationAccount.ProfileSignature.Udf,
                 EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
+                EnvelopedConnectionService = connectionService.EnvelopedConnectionService,
                 EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice,
                 EnvelopedConnectionAddress = connectionAccount.EnvelopedConnectionAddress,
                 EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
@@ -424,7 +432,13 @@ namespace Goedel.Mesh {
                 Grant(newActivation, right, transactContextAccount);
                 }
 
-
+            // Create the (unsigned) ConnectionUser
+            ConnectionDevice = new ConnectionDevice() {
+                Encryption = new KeyData(activationDevice.DeviceEncryption),
+                Signature = new KeyData(activationDevice.DeviceSignature),
+                Authentication = new KeyData(activationDevice.DeviceAuthentication),
+                Roles = roles
+                };
 
 
             return newActivation;

@@ -274,13 +274,22 @@
 				|The account address
 
 
-	Structure ConnectionDevice
+
+	Structure ConnectionService
 		Inherits Connection
 		Description
 			|Asserts that a device is connected to an account profile
 		String Account
 			Description
 				|The account address
+
+
+	Structure ConnectionDevice
+		Inherits ConnectionService
+		Description
+			|Asserts that a device is connected to an account profile
+		String Roles
+			Multiple
 		Struct KeyData Signature
 			Description
 				|The signature key for use of the device under the profile
@@ -299,8 +308,6 @@
 			|Describes the connection of a member to a group.
 		Inherits Connection
 
-	Structure ConnectionService
-		Inherits Connection
 
 	Structure ConnectionHost
 		Inherits Connection
@@ -613,6 +620,9 @@
 		Struct Enveloped<ConnectionAddress> EnvelopedConnectionAddress
 			Description
 				|Slim version of ConnectionDevice used by the presentation layer
+		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+			Description
+				|The public assertion demonstrating connection of the Device to the Mesh
 		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
@@ -791,6 +801,10 @@
 		// The application profile
 		Inherits CatalogedEntry
 		String Key
+		String Grant
+			Multiple
+		String Deny
+			Multiple
 		Struct DareEnvelope EnvelopedCapabilities
 			Multiple
 			Description
@@ -855,6 +869,9 @@
 			Description
 				|The device profile
 		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
+			Description
+				|The device connection
+		Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
 				|The device connection
 		TStruct Key PrivateKey

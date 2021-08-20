@@ -48,13 +48,24 @@ namespace Goedel.Mesh {
             }
 
         }
+
     public partial class ConnectionDevice {
 
-        ///<summary>Typed enveloped data</summary> 
         public Enveloped<ConnectionDevice> EnvelopedConnectionDevice =>
-            envelopedConnectionDevice ?? new Enveloped<ConnectionDevice>(DareEnvelope).
-                    CacheValue(out envelopedConnectionDevice);
+    envelopedConnectionDevice ?? new Enveloped<ConnectionDevice>(DareEnvelope).
+            CacheValue(out envelopedConnectionDevice);
         Enveloped<ConnectionDevice> envelopedConnectionDevice;
+
+        }
+
+
+    public partial class ConnectionService {
+
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<ConnectionService> EnvelopedConnectionService =>
+            envelopedConnectionService ?? new Enveloped<ConnectionService>(DareEnvelope).
+                    CacheValue(out envelopedConnectionService);
+        Enveloped<ConnectionService> envelopedConnectionService;
 
 
         ///<inheritdoc cref="ICredential"/>
@@ -64,7 +75,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Constructor for use by deserializers.
         /// </summary>
-        public ConnectionDevice() {
+        public ConnectionService() {
             }
 
 
@@ -89,7 +100,7 @@ namespace Goedel.Mesh {
             //        builder.AppendIndent(indent, $"   KeysOnlineSignature: {online.UDF} ");
             //        }
             //    }
-            builder.AppendIndent(indent, $"KeyEncryption:       {Encryption.Udf} ");
+            //builder.AppendIndent(indent, $"KeyEncryption:       {Encryption.Udf} ");
             builder.AppendIndent(indent, $"KeyAuthentication:   {Authentication.Udf} ");
 
             }

@@ -192,7 +192,7 @@ namespace Goedel.Mesh.Shell {
                     throw new NYI();
                     }
                 }
-            var processResult = contextAccount.Process(message, accept, rights: rights);
+            var processResult = contextAccount.Process(message, accept, roles: rights);
 
             // Hack: need to obtain the actual result.
             var result = new ResultProcess() {

@@ -459,8 +459,8 @@ namespace Goedel.Mesh.Shell {
 
     public partial class ResultCreatePersonal {
 
-        ///<summary>The <see cref="Mesh.ConnectionDevice"/> instance.</summary>
-        public ConnectionDevice ConnectionUser = null;
+        ///<summary>The <see cref="Mesh.ConnectionService"/> instance.</summary>
+        public ConnectionService ConnectionUser = null;
 
 
         /// <summary>

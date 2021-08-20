@@ -121,7 +121,7 @@ namespace Goedel.Mesh {
         public ProfileDevice ProfileDevice { get; }
 
         ///<summary>The connection device</summary> 
-        public ConnectionDevice ConnectionDevice { get; }
+        public ConnectionService ConnectionDevice { get; }
 
         ///<summary>The address connection.</summary> 
         public ConnectionAddress ConnectionAccount { get; }
@@ -140,7 +140,7 @@ namespace Goedel.Mesh {
         /// <param name="authenticationKey">The authentication key</param>
         /// <param name="meshCredentialPrivate">The private credential.</param>
         public MeshCredential(ProfileDevice profileDevice,
-                ConnectionDevice connectionDevice,
+                ConnectionService connectionDevice,
                 ConnectionAddress connectionAccount,
                 KeyPairAdvanced authenticationKey,
                 MeshCredentialPrivate meshCredentialPrivate = null) {
@@ -232,7 +232,7 @@ namespace Goedel.Mesh {
         /// <param name="meshCredentialPrivate"></param>
         public MeshCredentialPrivate(
                 ProfileDevice profileDevice,
-                ConnectionDevice connectionDevice,
+                ConnectionService connectionDevice,
                 ConnectionAddress connectionAccount,
                 KeyPairAdvanced authenticationKey,
                 MeshCredentialPrivate meshCredentialPrivate = null) : base
@@ -272,7 +272,7 @@ namespace Goedel.Mesh {
         ///<inheritdoc/>
         public ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
 
-            ConnectionDevice connectionDevice = null;
+            ConnectionService connectionDevice = null;
             ConnectionAddress connectionAddress = null;
             ProfileDevice profileDevice = null;
             KeyPairAdvanced keyAuthentication = null;
@@ -289,7 +289,7 @@ namespace Goedel.Mesh {
                     case Constants.ExtensionTagsMeshConnectionDeviceTag: {
                         // convert the enveloped ConnectionDevice
                         var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                        connectionDevice = envelope.DecodeJsonObject() as ConnectionDevice;
+                        connectionDevice = envelope.DecodeJsonObject() as ConnectionService;
                         keyAuthentication = connectionDevice.AuthenticationPublic;
                         break;
                         }

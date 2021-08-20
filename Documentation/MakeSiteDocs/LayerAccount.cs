@@ -72,7 +72,7 @@ namespace ExampleGenerator {
         public ProfileDevice AliceProfileDeviceCoffee;
         public ActivationDevice AliceActivationDeviceCoffee;
         public ActivationAccount AliceActivationAccountCoffee;
-        public ConnectionDevice AliceConnectionDeviceCoffee;
+        public ConnectionService AliceConnectionDeviceCoffee;
         public ActivationDevice AliceActivationDeviceWatch;
         public ProfileDevice AliceProfileDeviceWatch;
 

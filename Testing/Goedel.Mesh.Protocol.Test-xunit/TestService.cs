@@ -704,6 +704,11 @@ namespace Goedel.XUnit {
             return true;
             }
 
+        public static bool Verify(ConnectionService first, ConnectionService second) {
+            (first.Authentication.Udf == second.Authentication.Udf).TestTrue();
+            return true;
+            }
+
         #endregion
         }
     }

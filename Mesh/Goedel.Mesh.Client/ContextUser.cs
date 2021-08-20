@@ -64,8 +64,10 @@ namespace Goedel.Mesh.Client {
         public ProfileUser ProfileUser { get; set; }
 
         ///<summary>The connection device</summary>
-        public ConnectionDevice ConnectionDevice => CatalogedDevice?.ConnectionUser;
+        public ConnectionService ConnectionService => CatalogedDevice?.ConnectionService;
 
+        ///<summary>The connection device</summary>
+        public ConnectionDevice ConnectionDevice => CatalogedDevice?.ConnectionDevice;
 
         ///<summary>The connection device</summary>
         public ConnectionAddress ConnectionAddress => CatalogedDevice?.ConnectionAccount;
@@ -150,7 +152,7 @@ namespace Goedel.Mesh.Client {
                 KeyCollection.Add(KeyAccountEncryption);
                 }
 
-            if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionDevice != null) {
+            if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionService != null) {
                 // Some validation checks
                 (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionDevice.Signature.Udf,
                         KeyActivationFailed.Throw);
@@ -729,7 +731,9 @@ namespace Goedel.Mesh.Client {
             CreateDeviceEarl(
                     out var secretSeed,
                     out profileDevice,
+                    out var connectionService,
                     out var connectionDevice,
+                    
                     out var connectKey,
                     out connectUri);
 
@@ -739,7 +743,8 @@ namespace Goedel.Mesh.Client {
                 PrivateKey = secretSeed,
                 ConnectUri = connectUri,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
-                EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice
+                EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice,
+                EnvelopedConnectionService = connectionService.EnvelopedConnectionService
                 };
             devicePreconfiguration.ToFile(filename, tagged: true);
 
@@ -767,6 +772,7 @@ namespace Goedel.Mesh.Client {
         public bool CreateDeviceEarl(
                     out PrivateKeyUDF secretSeed,
                     out ProfileDevice profileDevice,
+                    out ConnectionService connectionService,
                     out ConnectionDevice connectionDevice,
                     out string pin,
                     out string connectURI,
@@ -797,13 +803,17 @@ namespace Goedel.Mesh.Client {
             profileDevice = new ProfileDevice(secretSeed);
 
             // Create and sign the connection
+            connectionService = new ConnectionService() {
+                Authentication = profileDevice.Encryption
+                };
+            connectionService.Envelope(KeyAdministratorSign);
+
             connectionDevice = new ConnectionDevice() {
                 Signature = profileDevice.Signature,
                 Encryption = profileDevice.Encryption,
                 Authentication = profileDevice.Encryption
                 };
             connectionDevice.Envelope(KeyAdministratorSign);
-
 
             // Convert the enveloped profile device to a binary field and take the envelope
             // of that.
@@ -1125,16 +1135,16 @@ namespace Goedel.Mesh.Client {
         /// <param name="accept">If true, accept the request, otherwise reject it.</param>
         /// <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
         /// contact information in response to an initial contact request.</param>
-        /// <param name="rights">The list of rights to be granted to the device.</param>
+        /// <param name="roles">The list of rights to be granted to the device.</param>
         /// <returns>The result of processing.</returns>
         public ProcessResult Process(Message meshMessage, bool accept = true, bool reciprocate = true,
-                    List<string> rights = null) {
+                    List<string> roles = null) {
             "Merge this processing loop with the other processing loop".TaskFunctionality();
             reciprocate.Future();
 
             switch (meshMessage) {
                 case AcknowledgeConnection connection: {
-                    return Process(connection, accept, rights: rights);
+                    return Process(connection, accept, rights: roles);
                     }
                 case MessageContact requestContact: {
                     return ContactReply(requestContact, accept);

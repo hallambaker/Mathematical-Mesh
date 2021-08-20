@@ -149,6 +149,13 @@ namespace Goedel.Mesh {
         /// </summary>
         public override string _PrimaryKey => Key;
 
+
+        public virtual bool DeviceAuthorized(CatalogedDevice catalogedDevice) {
+            throw new NYI();
+
+            return true;
+            }
+
         }
 
     public partial class CatalogedApplicationMail {
