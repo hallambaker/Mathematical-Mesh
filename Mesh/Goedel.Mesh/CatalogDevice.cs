@@ -159,7 +159,7 @@ namespace Goedel.Mesh {
                     EnvelopedConnectionService.Decode(KeyCollection);
 
         public ConnectionDevice ConnectionDevice =>
-            EnvelopedConnectionDevice.Decode(KeyCollection);
+            EnvelopedConnectionDevice?.Decode(KeyCollection);
 
 
 

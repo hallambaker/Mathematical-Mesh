@@ -283,11 +283,12 @@ namespace Goedel.Mesh {
             connectionService.DareEnvelope.AssertNotNull(Internal.Throw);
 
             var connectionDevice = activationAccount.ConnectionDevice;
-            connectionDevice.AssertNotNull(Internal.Throw);
-            connectionDevice.Envelope(signature, objectEncoding:
-                        ObjectEncoding.JSON_B);
-            connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
-
+            if (connectionDevice != null) {
+                connectionDevice.AssertNotNull(Internal.Throw);
+                connectionDevice.Envelope(signature, objectEncoding:
+                            ObjectEncoding.JSON_B);
+                connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
+                }
 
             var connectionAccount = new ConnectionAddress() {
                 Account = profileUser?.AccountAddress,
@@ -333,11 +334,11 @@ namespace Goedel.Mesh {
                 //Udf = activationAccount.ProfileSignature.Udf,
                 EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
-                EnvelopedConnectionService = connectionService.EnvelopedConnectionService,
-                EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice,
-                EnvelopedConnectionAddress = connectionAccount.EnvelopedConnectionAddress,
-                EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
-                EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
+                EnvelopedConnectionService = connectionService?.EnvelopedConnectionService,
+                EnvelopedConnectionDevice = connectionDevice?.EnvelopedConnectionDevice,
+                EnvelopedConnectionAddress = connectionAccount?.EnvelopedConnectionAddress,
+                EnvelopedActivationDevice = activationDevice?.EnvelopedActivationDevice,
+                EnvelopedActivationAccount = activationAccount?.EnvelopedActivationAccount,
                 DeviceUdf = profileDevice.Udf
                 };
 
@@ -433,7 +434,7 @@ namespace Goedel.Mesh {
                 }
 
             // Create the (unsigned) ConnectionUser
-            ConnectionDevice = new ConnectionDevice() {
+            newActivation.ConnectionDevice = new ConnectionDevice() {
                 Encryption = new KeyData(activationDevice.DeviceEncryption),
                 Signature = new KeyData(activationDevice.DeviceSignature),
                 Authentication = new KeyData(activationDevice.DeviceAuthentication),

@@ -110,7 +110,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>The credential</returns>
         public override MeshCredentialPrivate GetMeshCredentialPrivate() => new(
-                ProfileDevice, ConnectionDevice, ConnectionAddress,
+                ProfileDevice, ConnectionService, ConnectionAddress,
                 DeviceAuthentication ?? BaseAuthenticate);
 
         #endregion
@@ -144,6 +144,8 @@ namespace Goedel.Mesh.Client {
             ActivationDevice = CatalogedDevice?.GetActivationDevice(KeyCollection);
             ActivationDevice.Activate(deviceKeySeed);
 
+            KeyCollection.Add(ActivationDevice.DeviceEncryption);
+
             // Activate the device to communicate as the account (via threshold)
             ActivationAccount = CatalogedDevice?.GetActivationAccount(KeyCollection);
             ActivationAccount.Activate(KeyCollection);
@@ -154,6 +156,13 @@ namespace Goedel.Mesh.Client {
 
             if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionService != null) {
                 // Some validation checks
+                (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionService.Authentication.Udf,
+                        KeyActivationFailed.Throw);
+                }
+
+
+            if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionDevice != null) {
+                // Some validation checks
                 (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionDevice.Signature.Udf,
                         KeyActivationFailed.Throw);
                 (DeviceEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.Encryption.Udf,
@@ -161,6 +170,8 @@ namespace Goedel.Mesh.Client {
                 (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.Authentication.Udf,
                         KeyActivationFailed.Throw);
                 }
+
+
             }
 
         #endregion
