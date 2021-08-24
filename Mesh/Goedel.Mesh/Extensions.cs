@@ -27,7 +27,9 @@ using System.Text;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.KeyFile;
 using Goedel.Utilities;
+using Goedel.IO;
 
 namespace Goedel.Mesh {
 
@@ -126,5 +128,22 @@ namespace Goedel.Mesh {
                     }
                 }
             }
+
+
+        /// <summary>
+        /// Convert key pair to specified format
+        /// </summary>
+        /// <param name="keyData">Keypair to convert</param>
+        /// <param name="KeyFileFormat">Format to convert to</param>
+        /// <returns>The keyfile data</returns>
+        public static void ToKeyFile(
+                this KeyData keyData,
+                string filename,
+                KeyFileFormat KeyFileFormat = KeyFileFormat.Default) {
+            var data = keyData.GetKeyPair(KeySecurity.Exportable).ToKeyFile(KeyFileFormat);
+
+            filename.WriteFileNew(data);
+            }
+
         }
     }

@@ -1039,6 +1039,9 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAddress">
             <summary>The connection device</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.ApplicationEntries">
+            <summary>The connection device</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ActivationDevice">
             <summary>The device activation</summary>
         </member>

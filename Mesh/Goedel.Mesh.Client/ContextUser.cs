@@ -72,6 +72,10 @@ namespace Goedel.Mesh.Client {
         ///<summary>The connection device</summary>
         public ConnectionAddress ConnectionAddress => CatalogedDevice?.ConnectionAccount;
 
+        ///<summary>The connection device</summary>
+        public List<ApplicationEntry> ApplicationEntries => CatalogedDevice?.ApplicationEntries;
+
+
         ///<summary>The device activation</summary>
         public ActivationDevice ActivationDevice { get; private set; }
 
@@ -315,6 +319,37 @@ namespace Goedel.Mesh.Client {
 
             }
 
+        public override int UpdateStore(ContainerUpdate containerUpdate) {
+            var count = base.UpdateStore(containerUpdate);
+
+
+            CatalogedDevice catalogedDevice = null;
+            if (containerUpdate.Container == CatalogDevice.Label &
+                    containerUpdate.Envelopes != null) {
+                foreach (var entry in containerUpdate.Envelopes) {
+                    if (CatalogedDevice.DeviceUdf == entry.Header.ContentMeta.UniqueId) {
+
+                        catalogedDevice = entry.DecodeJsonObject(KeyCollection) as
+                            CatalogedDevice;
+                        }
+
+                    }
+
+
+                }
+
+            if (catalogedDevice != null) {
+                UpdateCatalogedMachine(catalogedDevice);
+                }
+            return count;
+
+            }
+
+
+        public void UpdateCatalogedMachine(CatalogedDevice catalogedDevice) {
+            CatalogedMachine.CatalogedDevice = catalogedDevice;
+            MeshHost.Register(CatalogedMachine);
+            }
 
         #endregion
         #region // Contact management
@@ -1577,6 +1612,44 @@ namespace Goedel.Mesh.Client {
             (GetStore(CatalogContact.Label) as CatalogContact).GetByAccountEncrypt(networkAddress);
 
         #endregion
+
+        #endregion
+
+        #region // Application entries
+
+        public CatalogedApplicationSsh GetApplicationSsh(
+                string applicationId)  => GetApplication(applicationId) as CatalogedApplicationSsh;
+
+        public CatalogedApplicationMail GetApplicationMail(
+                string applicationId) => GetApplication(applicationId) as CatalogedApplicationMail;
+
+
+        public ApplicationEntry GetApplicationEntry(
+                string applicationId) {
+
+            if (ApplicationEntries != null) {
+
+                foreach (var entry in ApplicationEntries) {
+                    if (entry.Identifier == applicationId) {
+                        entry.Decode(KeyCollection);
+                        return entry;
+                        }
+                    }
+                }
+            return null;
+
+
+            }
+
+
+
+        public ApplicationEntrySsh GetApplicationEntrySsh(
+                string applicationId) => GetApplicationEntry(applicationId) as ApplicationEntrySsh;
+
+        public ApplicationEntryMail GetApplicationEntryMail(
+                string applicationId) => GetApplicationEntry(applicationId) as ApplicationEntryMail;
+
+
 
         #endregion
         }

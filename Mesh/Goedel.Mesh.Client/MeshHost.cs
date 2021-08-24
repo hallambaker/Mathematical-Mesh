@@ -190,7 +190,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="create">If true, a new item will be created if it does not
         /// already exist.</param>
         /// <param name="context">The dynamic context that interfaces to the catalog item.</param>
-        public void Register(HostCatalogItem catalogItem, ContextAccount context, bool create = true) {
+        public void Register(HostCatalogItem catalogItem, ContextAccount context=null, bool create = true) {
 
             // persist the permanent record.
             ContainerHost.Update(catalogItem, create);

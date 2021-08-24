@@ -107,15 +107,8 @@ namespace Goedel.Mesh.Client {
                     string applicationId) => throw new NYI();
 
 
-        // Refactor this, it moves to ContextUser
-        // Only requires the ConnectionDevice information
 
-        public CatalogedApplication ApplicationGetSsh(
-                    string applicationId, string deviceId= null) => throw new NYI();
 
-        public CatalogedApplication ApplicationGetMail(
-            string applicationId,
-            string deviceUdf = null) => throw new NYI();
 
         public CatalogedApplication ApplicationDeviceAdd(
             CatalogedApplicationSsh application, Connection ProfileDevice=null) => throw new NYI();

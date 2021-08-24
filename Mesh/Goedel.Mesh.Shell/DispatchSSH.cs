@@ -115,10 +115,9 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult SSHPrivate(SSHPrivate options) {
             var id = options.ID.Value ?? "ssh";
             using var contextDevice = GetContextDevice(options);
-            using var transaction = contextDevice.TransactBegin();
 
-            var applicationSsh = transaction.ApplicationGetSsh(id, 
-                                contextDevice.AccountDeviceId);
+
+            var applicationSsh = contextDevice.GetApplicationSsh(id);
 
             // here dump out the private key 
 
@@ -133,11 +132,10 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult SSHPublic(SSHPublic options) {
             var id = options.ID.Value ?? "ssh";
             using var contextDevice = GetContextDevice(options);
-            using var transaction = contextDevice.TransactBegin();
+
 
             // need to be able to pull key from different device here.
-            var applicationSsh = transaction.ApplicationGetSsh(id,
-                                contextDevice.AccountDeviceId);
+            var applicationSsh = contextDevice.GetApplicationSsh(id);
 
             // here dump out the public key 
 

@@ -22,9 +22,11 @@
 using System;
 using System.Collections.Generic;
 
+using Goedel.Cryptography.KeyFile;
 using Goedel.Mesh;
 using Goedel.Mesh.Test;
 using Goedel.Registry;
+using Goedel.Test;
 using Goedel.Utilities;
 
 using Xunit;
@@ -127,18 +129,29 @@ namespace Goedel.XUnit {
             transaction1.ApplicationCreate(applicationSSH);
             var result1 = transaction1.Transact();
 
+            contextOnboarded.Sync();
 
-            var transaction2 = contextAccountAlice.TransactBegin();
-            var applicationSsh1 = transaction2.ApplicationGetSsh(id);
-            var result2 = transaction2.Transact();
-
-
-            var transaction3 = contextOnboarded.TransactBegin();
-            var applicationSsh2 = transaction3.ApplicationGetSsh(id);
-            var result3 = transaction2.Transact();
+            var applicationSsh1 = contextAccountAlice.GetApplicationSsh(id);
+            var applicationEntrySsh1 = contextAccountAlice.GetApplicationEntrySsh(id);
+            var applicationSsh2 = contextOnboarded.GetApplicationSsh(id);
+            var applicationEntrySsh2 = contextOnboarded.GetApplicationEntrySsh(id);
 
             // check applicationSsh1 == applicationSsh2
             // check we have a private key for each device.
+
+            applicationSsh1.TestNotNull();
+            applicationEntrySsh1.TestNotNull();
+            applicationSsh2.TestNotNull();
+            applicationEntrySsh2.TestNotNull();
+
+            // now extract some files
+
+            applicationSsh1.ClientKey.ToKeyFile("MeshDeviceSshPublic1", KeyFileFormat.OpenSSH);
+            applicationSsh2.ClientKey.ToKeyFile("MeshDeviceSshPublic2", KeyFileFormat.OpenSSH);
+
+            applicationEntrySsh1.Activation.ClientKey.ToKeyFile("MeshDeviceSshPrivate1", KeyFileFormat.PEMPrivate);
+            applicationEntrySsh2.Activation.ClientKey.ToKeyFile("MeshDeviceSshPrivate2", KeyFileFormat.PEMPrivate);
+
             }
 
 

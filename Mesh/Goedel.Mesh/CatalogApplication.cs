@@ -27,6 +27,7 @@ using System.Collections.Generic;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.KeyFile;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh {
@@ -202,32 +203,36 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => Key;
 
 
-        public KeyPair SmimeSign { private get; init; }
-        public KeyPair SmimeEncrypt { private get; init; }
+        public KeyPair SmimeSignKeyPair { private get; init; }
+        public KeyPair SmimeEncryptKeyPair { private get; init; }
 
 
-        public KeyPair OpenpgpSign { private get; init; }
-        public KeyPair OpenpgpEncrypt { private get; init; }
+        public KeyPair OpenpgpSignKeyPair { private get; init; }
+        public KeyPair OpenpgpEncryptKeyPair { private get; init; }
 
         public static CatalogedApplicationMail Create(string key, List<string> roles) {
 
-
-
-            // don't need to add it to the application record though because every device will have a copy.
-
+            var smimeSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                     KeySecurity.Exportable, keySize: 2048);
+            var smimeEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                    KeySecurity.Exportable, keySize: 2048);
+            var openpgpSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                    KeySecurity.Exportable, keySize: 2048);
+            var openpgpEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                   KeySecurity.Exportable, keySize: 2048);
 
             return new CatalogedApplicationMail() {
                 Key = key,
                 Grant = roles,
-                SmimeSign = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                    KeySecurity.Exportable, keySize: 2048),
-                SmimeEncrypt = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                    KeySecurity.Exportable, keySize: 2048),
-                OpenpgpSign = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                    KeySecurity.Exportable, keySize: 2048),
-                OpenpgpEncrypt = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                    KeySecurity.Exportable, keySize: 2048)
-            };
+                SmimeSignKeyPair = smimeSignKeyPair,
+                SmimeEncryptKeyPair = smimeEncryptKeyPair,
+                OpenpgpSignKeyPair = openpgpSignKeyPair,
+                OpenpgpEncryptKeyPair = openpgpEncryptKeyPair,
+                SmimeSign = new KeyData (smimeSignKeyPair),
+                SmimeEncrypt = new KeyData(smimeEncryptKeyPair),
+                OpenpgpSign = new KeyData(openpgpSignKeyPair),
+                OpenpgpEncrypt = new KeyData(openpgpEncryptKeyPair)
+                };
 
 
 
@@ -239,17 +244,17 @@ namespace Goedel.Mesh {
         ///<inheritdoc/>
         public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
             var activation = new ActivationApplicationMail() {
-                SmimeSign = new KeyData(SmimeSign, true),
-                SmimeEncrypt = new KeyData(SmimeEncrypt, true),
-                OpenpgpSign = new KeyData(OpenpgpSign, true),
-                OpenpgpEncrypt = new KeyData(OpenpgpEncrypt, true)
+                SmimeSign = new KeyData(SmimeSignKeyPair, true),
+                SmimeEncrypt = new KeyData(SmimeEncryptKeyPair, true),
+                OpenpgpSign = new KeyData(OpenpgpSignKeyPair, true),
+                OpenpgpEncrypt = new KeyData(OpenpgpEncryptKeyPair, true)
                 };
 
             activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
             
             return new ApplicationEntryMail() {
                 Identifier = Key,
-                Activation = activation
+                EnvelopedActivation = activation.EnvelopedActivationApplicationMail
                 };
             }
 
@@ -274,7 +279,7 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => Key;
 
 
-        public KeyPair ClientKey { private get; init; }
+        public KeyPair ClientKeyPrivate { private get; init; }
 
         public static CatalogedApplicationSsh Create(string key, List<string>roles) {
 
@@ -289,7 +294,8 @@ namespace Goedel.Mesh {
             var applicationSSH = new CatalogedApplicationSsh() {
                 Key = key,
                 Grant = roles,
-                ClientKey = clientKey
+                ClientKeyPrivate = clientKey,
+                ClientKey = new KeyData(clientKey)
                 };
 
 
@@ -298,15 +304,10 @@ namespace Goedel.Mesh {
             }
 
 
-        // So need to refactor here, divide the application into a public and a private part
-        // so that the public part can be used to select the application.
-
-
-
         ///<inheritdoc/>
         public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
             var activation =  new ActivationApplicationSsh() {
-                ClientKey = new KeyData(ClientKey, true)
+                ClientKey = new KeyData(ClientKeyPrivate, true)
                 };
 
             activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
@@ -314,10 +315,13 @@ namespace Goedel.Mesh {
 
             return new ApplicationEntrySsh() {
                 Identifier = Key,
-                Activation = activation
+                EnvelopedActivation = activation.EnvelopedActivationApplicationSsh
                 };
 
             }
+
+
+
 
 
 

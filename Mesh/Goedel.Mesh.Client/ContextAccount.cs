@@ -478,7 +478,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="containerUpdate">The update to apply.</param>
         /// <returns>The number of envelopes successfully added.</returns>
-        public int UpdateStore(ContainerUpdate containerUpdate) {
+        public virtual int UpdateStore(ContainerUpdate containerUpdate) {
             int count = 0;
             if (DictionaryStores.TryGetValue(containerUpdate.Container, out var syncStore)) {
                 var store = syncStore.Store;
@@ -489,6 +489,9 @@ namespace Goedel.Mesh.Client {
 
                     count++;
                     store.AppendDirect(entry);
+
+
+
                     }
 
 

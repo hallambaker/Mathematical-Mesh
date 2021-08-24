@@ -96,9 +96,8 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult SMIMEPrivate(SMIMEPrivate options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
             using var contextDevice = GetContextDevice(options);
-            using var transaction = contextDevice.TransactBegin();
 
-            var applicationMail = transaction.ApplicationGetMail(address);
+            var applicationMail = contextDevice.GetApplicationMail(address);
 
             // dump out the private SMIME from applicationMail
 
@@ -115,7 +114,7 @@ namespace Goedel.Mesh.Shell {
             using var contextDevice = GetContextDevice(options);
             using var transaction = contextDevice.TransactBegin();
 
-            var applicationMail = transaction.ApplicationGetMail(address);
+            var applicationMail = contextDevice.GetApplicationMail(address);
 
             // dump out the public SMIME from applicationMail
             throw new NYI();
@@ -131,7 +130,7 @@ namespace Goedel.Mesh.Shell {
             using var contextDevice = GetContextDevice(options);
             using var transaction = contextDevice.TransactBegin();
 
-            var applicationMail = transaction.ApplicationGetMail(address);
+            var applicationMail = contextDevice.GetApplicationMail(address);
 
             // dump out the private PGP from applicationMail
             throw new NYI();
@@ -145,9 +144,8 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult PGPPublic(PGPPublic options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
             using var contextDevice = GetContextDevice(options);
-            using var transaction = contextDevice.TransactBegin();
 
-            var applicationMail = transaction.ApplicationGetMail(address);
+            var applicationMail = contextDevice.GetApplicationMail(address);
 
             // dump out the public PGP from applicationMail
             throw new NYI();

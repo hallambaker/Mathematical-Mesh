@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/24/2021 12:23:11 AM
+//  This file was automatically generated at 8/24/2021 4:55:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -3699,7 +3699,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual ActivationApplicationSsh						Activation  {get; set;}
+		public virtual Enveloped<ActivationApplicationSsh>						EnvelopedActivation  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3744,10 +3744,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((ApplicationEntry)this).SerializeX(_writer, false, ref _first);
-			if (Activation != null) {
+			if (EnvelopedActivation != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Activation", 1);
-					Activation.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedActivation", 1);
+					EnvelopedActivation.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -3782,10 +3782,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Activation" : {
+				case "EnvelopedActivation" : {
 					// An untagged structure
-					Activation = new ActivationApplicationSsh ();
-					Activation.Deserialize (jsonReader);
+					EnvelopedActivation = new Enveloped<ActivationApplicationSsh> ();
+					EnvelopedActivation.Deserialize (jsonReader);
  
 					break;
 					}
@@ -3806,7 +3806,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual ActivationApplicationMail						Activation  {get; set;}
+		public virtual Enveloped<ActivationApplicationMail>						EnvelopedActivation  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3851,10 +3851,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((ApplicationEntry)this).SerializeX(_writer, false, ref _first);
-			if (Activation != null) {
+			if (EnvelopedActivation != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Activation", 1);
-					Activation.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedActivation", 1);
+					EnvelopedActivation.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -3889,10 +3889,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Activation" : {
+				case "EnvelopedActivation" : {
 					// An untagged structure
-					Activation = new ActivationApplicationMail ();
-					Activation.Deserialize (jsonReader);
+					EnvelopedActivation = new Enveloped<ActivationApplicationMail> ();
+					EnvelopedActivation.Deserialize (jsonReader);
  
 					break;
 					}
@@ -9322,6 +9322,11 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class CatalogedApplicationSsh : CatalogedApplication {
+        /// <summary>
+        ///The S/Mime encryption key
+        /// </summary>
+
+		public virtual KeyData						ClientKey  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -9366,6 +9371,11 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((CatalogedApplication)this).SerializeX(_writer, false, ref _first);
+			if (ClientKey != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ClientKey", 1);
+					ClientKey.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -9399,6 +9409,13 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "ClientKey" : {
+					// An untagged structure
+					ClientKey = new KeyData ();
+					ClientKey.Deserialize (jsonReader);
+ 
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;
@@ -9413,6 +9430,26 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class CatalogedApplicationMail : CatalogedApplication {
+        /// <summary>
+        ///The S/Mime signature key
+        /// </summary>
+
+		public virtual KeyData						SmimeSign  {get; set;}
+        /// <summary>
+        ///The S/Mime encryption key
+        /// </summary>
+
+		public virtual KeyData						SmimeEncrypt  {get; set;}
+        /// <summary>
+        ///The OpenPGP signature key
+        /// </summary>
+
+		public virtual KeyData						OpenpgpSign  {get; set;}
+        /// <summary>
+        ///The OpenPGP encryption key
+        /// </summary>
+
+		public virtual KeyData						OpenpgpEncrypt  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -9457,6 +9494,26 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((CatalogedApplication)this).SerializeX(_writer, false, ref _first);
+			if (SmimeSign != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("SmimeSign", 1);
+					SmimeSign.Serialize (_writer, false);
+				}
+			if (SmimeEncrypt != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("SmimeEncrypt", 1);
+					SmimeEncrypt.Serialize (_writer, false);
+				}
+			if (OpenpgpSign != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("OpenpgpSign", 1);
+					OpenpgpSign.Serialize (_writer, false);
+				}
+			if (OpenpgpEncrypt != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("OpenpgpEncrypt", 1);
+					OpenpgpEncrypt.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -9490,6 +9547,34 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "SmimeSign" : {
+					// An untagged structure
+					SmimeSign = new KeyData ();
+					SmimeSign.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "SmimeEncrypt" : {
+					// An untagged structure
+					SmimeEncrypt = new KeyData ();
+					SmimeEncrypt.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "OpenpgpSign" : {
+					// An untagged structure
+					OpenpgpSign = new KeyData ();
+					OpenpgpSign.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "OpenpgpEncrypt" : {
+					// An untagged structure
+					OpenpgpEncrypt = new KeyData ();
+					OpenpgpEncrypt.Deserialize (jsonReader);
+ 
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;

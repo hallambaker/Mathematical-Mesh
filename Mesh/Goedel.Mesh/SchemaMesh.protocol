@@ -384,12 +384,12 @@
 
 	Structure ApplicationEntrySsh
 		Inherits ApplicationEntry
-		Struct ActivationApplicationSsh Activation
+		Struct Enveloped<ActivationApplicationSsh> EnvelopedActivation
 
 
 	Structure ApplicationEntryMail
 		Inherits ApplicationEntry
-		Struct ActivationApplicationMail Activation
+		Struct Enveloped<ActivationApplicationMail> EnvelopedActivation
 
 
 	Section 2 "Data Structures"
@@ -871,26 +871,27 @@
 
 	Structure CatalogedApplicationSsh
 		Inherits CatalogedApplication
-		// The recryption key
-
-	//Structure CatalogedApplicationSshHost
-	//	Inherits CatalogedApplication
-
-
-	//Structure CatalogedApplicationSshClient
-	//	Inherits CatalogedApplication
+		Struct KeyData ClientKey
+			Description
+				|The S/Mime encryption key
 
 
 
 
 	Structure CatalogedApplicationMail
 		Inherits CatalogedApplication
-
-
-
-	//Structure CatalogedApplicationMailDevice
-	//	Inherits CatalogedApplication
-
+		Struct KeyData SmimeSign
+			Description
+				|The S/Mime signature key
+		Struct KeyData SmimeEncrypt
+			Description
+				|The S/Mime encryption key
+		Struct KeyData OpenpgpSign
+			Description
+				|The OpenPGP signature key
+		Struct KeyData OpenpgpEncrypt
+			Description
+				|The OpenPGP encryption key
 
 	Structure CatalogedApplicationNetwork
 		Inherits CatalogedApplication

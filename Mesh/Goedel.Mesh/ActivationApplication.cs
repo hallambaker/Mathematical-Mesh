@@ -1,5 +1,5 @@
-﻿
-//  Copyright (c) 2016 by .
+﻿#region // Copyright - MIT License
+//  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -18,21 +18,8 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-//  
-//  
-//  This file was automatically generated at 8/22/2021 4:26:59 PM
-//   
-//  Changes to this file may be overwritten without warning
-//  
-//  Generator:  protogen version 3.0.0.652
-//      Goedel Script Version : 0.1   Generated 
-//      Goedel Schema Version : 0.1   Generated
-//  
-//      Copyright : © 2015-2019
-//  
-//  Build Platform: Win32NT 10.0.18362.0
-//  
-//  
+#endregion
+
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 using Goedel.Utilities;
@@ -52,5 +39,29 @@ namespace Goedel.Mesh {
 
         }
 
-	}
+    public partial class ActivationApplicationMail {
+
+        ///<summary>The enveloped object</summary> 
+        public Enveloped<ActivationApplicationMail> EnvelopedActivationApplicationMail =>
+            envelopedActivationApplicationMail ?? new Enveloped<ActivationApplicationMail>(DareEnvelope).
+                    CacheValue(out envelopedActivationApplicationMail);
+        Enveloped<ActivationApplicationMail> envelopedActivationApplicationMail;
+
+
+
+        }
+
+    public partial class ActivationApplicationSsh {
+
+        ///<summary>The enveloped object</summary> 
+        public Enveloped<ActivationApplicationSsh> EnvelopedActivationApplicationSsh =>
+            envelopedActivationApplicationSsh ?? new Enveloped<ActivationApplicationSsh>(DareEnvelope).
+                    CacheValue(out envelopedActivationApplicationSsh);
+        Enveloped<ActivationApplicationSsh> envelopedActivationApplicationSsh;
+
+
+
+        }
+
+    }
 
