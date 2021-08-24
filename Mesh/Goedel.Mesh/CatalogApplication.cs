@@ -24,6 +24,7 @@
 
 using System.Collections.Generic;
 
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
@@ -112,23 +113,23 @@ namespace Goedel.Mesh {
         /// <returns>Sequence of SSH application instances.</returns>
         public IEnumerable<CatalogedApplicationSsh> GetSsh() => throw new NYI();
 
-        /// <summary>
-        /// Return a sequence of SSH hosts advertised in the SSH application instance
-        /// <paramref name="id"/>.
-        /// </summary>
-        /// <param name="id">The SSH application instance identifier.</param>
-        /// <returns>Sequence of SSH hosts.</returns>
-        public IEnumerable<CatalogedApplicationSshHost> GetSshHosts(
-                string id) => throw new NYI();
+        ///// <summary>
+        ///// Return a sequence of SSH hosts advertised in the SSH application instance
+        ///// <paramref name="id"/>.
+        ///// </summary>
+        ///// <param name="id">The SSH application instance identifier.</param>
+        ///// <returns>Sequence of SSH hosts.</returns>
+        //public IEnumerable<CatalogedApplicationSshHost> GetSshHosts(
+        //        string id) => throw new NYI();
 
-        /// <summary>
-        /// Return a sequence of SSH clients advertised in the SSH application instance
-        /// <paramref name="id"/>.
-        /// </summary>
-        /// <param name="id">The SSH application instance identifier.</param>
-        /// <returns>Sequence of SSH clients.</returns>
-        public IEnumerable<CatalogedApplicationSshHost> GetSshClients(
-                string id) => throw new NYI();
+        ///// <summary>
+        ///// Return a sequence of SSH clients advertised in the SSH application instance
+        ///// <paramref name="id"/>.
+        ///// </summary>
+        ///// <param name="id">The SSH application instance identifier.</param>
+        ///// <returns>Sequence of SSH clients.</returns>
+        //public IEnumerable<CatalogedApplicationSshHost> GetSshClients(
+        //        string id) => throw new NYI();
 
 
         /// <summary>
@@ -150,10 +151,44 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => Key;
 
 
-        public virtual bool DeviceAuthorized(CatalogedDevice catalogedDevice) {
-            throw new NYI();
+        /// <summary>
+        /// Construct an activation record for the application.
+        /// </summary>
+        /// <param name="catalogedDevice">The device to activate.</param>
+        /// <returns>The activation record.</returns>
+        public abstract ActivationApplication GetActivation(CatalogedDevice catalogedDevice);
 
-            return true;
+
+        public virtual bool DeviceAuthorized(CatalogedDevice catalogedDevice) {
+            if (catalogedDevice?.ConnectionDevice?.Roles == null) {
+                return false;
+                }
+            if (Grant == null) {
+                return false;
+                }
+
+            // Check for Deny first.
+            if (Deny != null) {
+                foreach (var right in Deny) {
+                    foreach (var match in catalogedDevice.ConnectionDevice.Roles) {
+                        if (right.ToLower() == match.ToLower()) {
+                            return false;
+                            }
+                        }
+                    }
+                }
+
+            // Do we have a grant?
+            foreach (var right in Grant) {
+                foreach (var match in catalogedDevice.ConnectionDevice.Roles) {
+                    if (right.ToLower() == match.ToLower()) {
+                        return true;
+                        }
+                    }
+                }
+
+            // Accept it.
+            return false;
             }
 
         }
@@ -165,16 +200,64 @@ namespace Goedel.Mesh {
         /// </summary>
         public override string _PrimaryKey => Key;
 
+
+        public KeyPair SmimeSign { private get; init; }
+        public KeyPair SmimeEncrypt { private get; init; }
+
+
+        public KeyPair OpenpgpSign { private get; init; }
+        public KeyPair OpenpgpEncrypt { private get; init; }
+
+        public static CatalogedApplicationMail Create(string key, List<string> roles) {
+
+
+
+            // don't need to add it to the application record though because every device will have a copy.
+
+
+            return new CatalogedApplicationMail() {
+                Key = key,
+                Grant = roles,
+                SmimeSign = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                    KeySecurity.Exportable, keySize: 2048),
+                SmimeEncrypt = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                    KeySecurity.Exportable, keySize: 2048),
+                OpenpgpSign = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                    KeySecurity.Exportable, keySize: 2048),
+                OpenpgpEncrypt = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                    KeySecurity.Exportable, keySize: 2048)
+            };
+
+
+
+            }
+
+
+
+
+        ///<inheritdoc/>
+        public override ActivationApplication GetActivation(CatalogedDevice catalogedDevice) {
+            return new ActivationApplicationMail() {
+                SmimeSign = new KeyData(SmimeSign, true),
+                SmimeEncrypt = new KeyData(SmimeEncrypt, true),
+                OpenpgpSign = new KeyData(OpenpgpSign, true),
+                OpenpgpEncrypt = new KeyData(OpenpgpEncrypt, true)
+                };
+
+
+            }
+
+
         }
 
-    public partial class CatalogedApplicationMailDevice {
+    //public partial class CatalogedApplicationMailDevice {
 
-        /// <summary>
-        /// The primary key used to catalog the entry.
-        /// </summary>
-        public override string _PrimaryKey => Key;
+    //    /// <summary>
+    //    /// The primary key used to catalog the entry.
+    //    /// </summary>
+    //    public override string _PrimaryKey => Key;
 
-        }
+    //    }
 
 
     public partial class CatalogedApplicationSsh {
@@ -184,25 +267,70 @@ namespace Goedel.Mesh {
         /// </summary>
         public override string _PrimaryKey => Key;
 
+
+        public KeyPair ClientKey { private get; init; }
+
+        public static CatalogedApplicationSsh Create(string key, List<string>roles) {
+
+
+            // generate an RSA client key here.
+            var clientKey = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                    KeySecurity.Exportable, keySize: 2048);
+
+            // don't need to add it to the application record though because every device will have a copy.
+
+
+            var applicationSSH = new CatalogedApplicationSsh() {
+                Key = key,
+                Grant = roles,
+                ClientKey = clientKey
+                };
+
+
+
+            return applicationSSH;
+            }
+
+
+        // So need to refactor here, divide the application into a public and a private part
+        // so that the public part can be used to select the application.
+
+
+
+        ///<inheritdoc/>
+        public override ActivationApplication GetActivation(CatalogedDevice catalogedDevice) {
+            var activation =  new ActivationApplicationSsh() {
+                ClientKey = new KeyData(ClientKey, true)
+                };
+
+            activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
+
+
+            return activation;
+
+            }
+
+
+
         }
 
-    public partial class CatalogedApplicationSshHost {
+    //public partial class CatalogedApplicationSshHost {
 
-        /// <summary>
-        /// The primary key used to catalog the entry.
-        /// </summary>
-        public override string _PrimaryKey => Key;
+    //    /// <summary>
+    //    /// The primary key used to catalog the entry.
+    //    /// </summary>
+    //    public override string _PrimaryKey => Key;
 
-        }
+    //    }
 
-    public partial class CatalogedApplicationSshClient {
+    //public partial class CatalogedApplicationSshClient {
 
-        /// <summary>
-        /// The primary key used to catalog the entry.
-        /// </summary>
-        public override string _PrimaryKey => Key;
+    //    /// <summary>
+    //    /// The primary key used to catalog the entry.
+    //    /// </summary>
+    //    public override string _PrimaryKey => Key;
 
-        }
+    //    }
 
 
     public partial class CatalogedGroup {
@@ -243,9 +371,34 @@ namespace Goedel.Mesh {
         public CatalogedGroup() {
             }
 
+
+        ///<inheritdoc/>
+        public override ActivationApplication GetActivation(CatalogedDevice catalogedDevice) {
+            return new ActivationApplication() {
+                };
+
+
+            }
+
+
+
         #endregion
 
         }
+
+
+    public partial class CatalogedApplicationNetwork {
+
+        ///<inheritdoc/>
+        public override ActivationApplication GetActivation(CatalogedDevice catalogedDevice) {
+            return new ActivationApplication() {
+                };
+
+
+            }
+
+        }
+
     #endregion
 
 

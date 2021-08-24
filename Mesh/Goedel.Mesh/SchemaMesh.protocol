@@ -355,6 +355,26 @@
 	Structure ActivationApplication
 		Inherits Activation
 
+	Structure ActivationApplicationSsh
+		Inherits ActivationApplication
+		Struct KeyData ClientKey
+			Description
+				|The SSH client key.
+
+	Structure ActivationApplicationMail
+		Inherits ActivationApplication
+		Struct KeyData SmimeSign
+			Description
+				|The S/Mime signature key
+		Struct KeyData SmimeEncrypt
+			Description
+				|The S/Mime encryption key
+		Struct KeyData OpenpgpSign
+			Description
+				|The OpenPGP signature key
+		Struct KeyData OpenpgpEncrypt
+			Description
+				|The OpenPGP encryption key
 
 	Section 2 "Data Structures"
 		Description
@@ -632,7 +652,7 @@
 		Struct Enveloped<ActivationAccount> EnvelopedActivationAccount
 			Description
 				|The activation of the device within the Mesh account
-		Struct Enveloped<ActivationApplication> EnvelopedActivationApplication
+		Struct Enveloped<ActivationApplication> EnvelopedActivationApplications
 			Multiple
 			Description
 				|Application activations granted to the device.
@@ -799,6 +819,7 @@
 
 	Structure CatalogedApplication
 		// The application profile
+		Abstract
 		Inherits CatalogedEntry
 		String Key
 		String Grant
@@ -836,12 +857,12 @@
 		Inherits CatalogedApplication
 		// The recryption key
 
-	Structure CatalogedApplicationSshHost
-		Inherits CatalogedApplication
+	//Structure CatalogedApplicationSshHost
+	//	Inherits CatalogedApplication
 
 
-	Structure CatalogedApplicationSshClient
-		Inherits CatalogedApplication
+	//Structure CatalogedApplicationSshClient
+	//	Inherits CatalogedApplication
 
 
 
@@ -851,8 +872,8 @@
 
 
 
-	Structure CatalogedApplicationMailDevice
-		Inherits CatalogedApplication
+	//Structure CatalogedApplicationMailDevice
+	//	Inherits CatalogedApplication
 
 
 	Structure CatalogedApplicationNetwork

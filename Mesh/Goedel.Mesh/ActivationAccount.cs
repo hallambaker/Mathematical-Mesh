@@ -105,9 +105,9 @@ namespace Goedel.Mesh {
 
         ///<summary>The enveloped object</summary> 
         public Enveloped<ActivationAccount> EnvelopedActivationAccount =>
-            envelopedProfileUser ?? new Enveloped<ActivationAccount>(DareEnvelope).
-                    CacheValue(out envelopedProfileUser);
-        Enveloped<ActivationAccount> envelopedProfileUser;
+            envelopedActivationAccount ?? new Enveloped<ActivationAccount>(DareEnvelope).
+                    CacheValue(out envelopedActivationAccount);
+        Enveloped<ActivationAccount> envelopedActivationAccount;
 
         ///<summary>Dictionary mapping store names to encryption keys.</summary> 
         public Dictionary<string, KeyPair> DictionaryStoreEncryptionKey =

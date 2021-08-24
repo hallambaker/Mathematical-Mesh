@@ -121,17 +121,10 @@ namespace Goedel.XUnit {
 
             var id = "ssh";
             // Create an ssh application
-            var applicationSSH = new CatalogedApplicationSsh() {
-                Key = id,
-                Grant = roles
-                };
+            var applicationSSH = CatalogedApplicationSsh.Create(id, roles);
 
-
-            "Move out to separate routine that reads the device catalog".TaskFunctionality();
             var transaction1 = contextAccountAlice.TransactBegin();
             transaction1.ApplicationCreate(applicationSSH);
-            //transaction1.ApplicationDeviceAdd(applicationSSH);
-            //transaction1.ApplicationDeviceAdd(applicationSSH, contextOnboarded.ConnectionDevice);
             var result1 = transaction1.Transact();
 
 

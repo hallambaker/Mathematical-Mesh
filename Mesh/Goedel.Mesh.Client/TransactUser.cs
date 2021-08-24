@@ -85,8 +85,11 @@ namespace Goedel.Mesh.Client {
 
                 Screen.WriteLine("Got device");
                 if (catalogedApplication.DeviceAuthorized(device)) {
-                    var activationApplication = new ActivationApplication() {
-                        };
+                    var activationApplication = catalogedApplication.GetActivation(device);
+
+                    device.EnvelopedActivationApplications ??= new();
+                    device.EnvelopedActivationApplications.Add(
+                            activationApplication.EnvelopedActivationApplication);
 
                     updated.Add(device);
                     }
@@ -103,6 +106,10 @@ namespace Goedel.Mesh.Client {
 
         public void ApplicationDelete(
                     string applicationId) => throw new NYI();
+
+
+        // Refactor this, it moves to ContextUser
+        // Only requires the ConnectionDevice information
 
         public CatalogedApplication ApplicationGetSsh(
                     string applicationId, string deviceId= null) => throw new NYI();

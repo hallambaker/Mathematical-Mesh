@@ -283,7 +283,7 @@ namespace Goedel.Mesh.Client {
 
             var activationDevice = new ActivationDevice(profileDevice);
 
-
+            //var activationAccount = MakeActivationAccount(profileDevice, activationDevice, roles, transactContextAccount);
             //activationDevice.Envelope();
 
             // create a Cataloged activationRoot.Device entry for the admin device
@@ -334,7 +334,7 @@ namespace Goedel.Mesh.Client {
 
 
             var catalogDevice = transactRequest.GetCatalogDevice();
-            transactRequest.CatalogUpdate(catalogDevice, catalogedDevice);
+            transactRequest.CatalogUpdate(catalogDevice, catalogedMachine.CatalogedDevice);
             transactRequest.Transact();
 
             // Register the mesh description on the local machine.

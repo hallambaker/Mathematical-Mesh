@@ -65,10 +65,10 @@ namespace Goedel.Mesh.Shell {
             var catalogApplication = transaction.GetCatalogApplication();
 
 
-            var applicationSSH = new CatalogedApplicationSshHost() {
-                Key = id
-                };
-            catalogApplication.New(applicationSSH);
+            //var applicationSSH = new CatalogedApplicationSshHost() {
+            //    Key = id
+            //    };
+            //catalogApplication.New(applicationSSH);
 
             throw new NYI();
             }
@@ -84,7 +84,7 @@ namespace Goedel.Mesh.Shell {
             using var transaction = contextDevice.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
-            var known = catalogApplication.GetSshHosts(id);
+            //var known = catalogApplication.GetSshHosts(id);
 
 
 
@@ -103,7 +103,7 @@ namespace Goedel.Mesh.Shell {
             using var transaction = contextDevice.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
-            var known = catalogApplication.GetSshClients(id);
+            //var known = catalogApplication.GetSshClients(id);
             throw new NYI();
             }
 
@@ -158,10 +158,10 @@ namespace Goedel.Mesh.Shell {
             var catalogApplication = transaction.GetCatalogApplication();
 
 
-            var applicationSSH = new CatalogedApplicationSshClient() {
-                Key = id
-                };
-            catalogApplication.New(applicationSSH);
+            //var applicationSSH = new CatalogedApplicationSshClient() {
+            //    Key = id
+            //    };
+            //catalogApplication.New(applicationSSH);
             throw new NYI();
             }
 
