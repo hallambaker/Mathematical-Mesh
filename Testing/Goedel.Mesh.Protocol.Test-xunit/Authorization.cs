@@ -129,13 +129,18 @@ namespace Goedel.XUnit {
             transaction1.ApplicationCreate(applicationSSH);
             var result1 = transaction1.Transact();
 
+            // Check third device
+            var contextOnboarded2 = TestCompletionSuccess(contextOnboardPending);
+            ExerciseAccount(contextOnboarded2);
+
             contextOnboarded.Sync();
 
             var applicationSsh1 = contextAccountAlice.GetApplicationSsh(id);
             var applicationEntrySsh1 = contextAccountAlice.GetApplicationEntrySsh(id);
             var applicationSsh2 = contextOnboarded.GetApplicationSsh(id);
             var applicationEntrySsh2 = contextOnboarded.GetApplicationEntrySsh(id);
-
+            var applicationSsh3 = contextOnboarded2.GetApplicationSsh(id);
+            var applicationEntrySsh3 = contextOnboarded2.GetApplicationEntrySsh(id);
             // check applicationSsh1 == applicationSsh2
             // check we have a private key for each device.
 
@@ -144,6 +149,14 @@ namespace Goedel.XUnit {
             applicationSsh2.TestNotNull();
             applicationEntrySsh2.TestNotNull();
 
+
+            applicationSsh3.TestNotNull();
+            applicationEntrySsh3.TestNotNull();
+
+            CheckKeysMatch(applicationSsh1.ClientKey, applicationSsh2.ClientKey, applicationSsh3.ClientKey,
+                    applicationEntrySsh1.Activation.ClientKey, applicationEntrySsh2.Activation.ClientKey,
+                    applicationEntrySsh3.Activation.ClientKey);
+
             // now extract some files
 
             applicationSsh1.ClientKey.ToKeyFile("MeshDeviceSshPublic1", KeyFileFormat.OpenSSH);
@@ -151,6 +164,21 @@ namespace Goedel.XUnit {
 
             applicationEntrySsh1.Activation.ClientKey.ToKeyFile("MeshDeviceSshPrivate1", KeyFileFormat.PEMPrivate);
             applicationEntrySsh2.Activation.ClientKey.ToKeyFile("MeshDeviceSshPrivate2", KeyFileFormat.PEMPrivate);
+
+            }
+
+
+        void CheckKeysMatch(params KeyData[] keys) {
+
+            keys.TestNotNull();
+            if (keys.Length == 0) {
+                return;
+                }
+            var keyIdentifier = keys[0].GetKeyPair().KeyIdentifier;
+            foreach (var key in keys) {
+                (keyIdentifier == key.GetKeyPair().KeyIdentifier).TestTrue();
+                }
+
 
             }
 
