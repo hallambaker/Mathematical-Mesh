@@ -109,8 +109,7 @@ namespace Goedel.XUnit {
                     DeviceAliceAdmin, AccountAlice, "main");
 
             // New Device
-            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
-                    AccountAlice);
+            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, AccountAlice);
 
             // Admin Device
             contextAccountAlice.Sync();
@@ -129,8 +128,17 @@ namespace Goedel.XUnit {
             transaction1.ApplicationCreate(applicationSSH);
             var result1 = transaction1.Transact();
 
-            // Check third device
-            var contextOnboarded2 = TestCompletionSuccess(contextOnboardPending);
+
+            // Connect a third device
+            var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
+
+            // Admin Device
+            contextAccountAlice.Sync();
+            var connectRequest2 = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest2, roles: roles);
+
+
+            var contextOnboarded2 = TestCompletionSuccess(contextOnboardPending2);
             ExerciseAccount(contextOnboarded2);
 
             contextOnboarded.Sync();
