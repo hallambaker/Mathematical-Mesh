@@ -22,6 +22,7 @@
 
 
 
+using System;
 using System.Collections.Generic;
 
 using Goedel.Cryptography;
@@ -156,7 +157,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="catalogedDevice">The device to activate.</param>
         /// <returns>The activation record.</returns>
-        public abstract ActivationApplication GetActivation(CatalogedDevice catalogedDevice);
+        public abstract ApplicationEntry GetActivation(CatalogedDevice catalogedDevice);
 
 
         public virtual bool DeviceAuthorized(CatalogedDevice catalogedDevice) {
@@ -236,15 +237,20 @@ namespace Goedel.Mesh {
 
 
         ///<inheritdoc/>
-        public override ActivationApplication GetActivation(CatalogedDevice catalogedDevice) {
-            return new ActivationApplicationMail() {
+        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+            var activation = new ActivationApplicationMail() {
                 SmimeSign = new KeyData(SmimeSign, true),
                 SmimeEncrypt = new KeyData(SmimeEncrypt, true),
                 OpenpgpSign = new KeyData(OpenpgpSign, true),
                 OpenpgpEncrypt = new KeyData(OpenpgpEncrypt, true)
                 };
 
-
+            activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
+            
+            return new ApplicationEntryMail() {
+                Identifier = Key,
+                Activation = activation
+                };
             }
 
 
@@ -298,7 +304,7 @@ namespace Goedel.Mesh {
 
 
         ///<inheritdoc/>
-        public override ActivationApplication GetActivation(CatalogedDevice catalogedDevice) {
+        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
             var activation =  new ActivationApplicationSsh() {
                 ClientKey = new KeyData(ClientKey, true)
                 };
@@ -306,7 +312,10 @@ namespace Goedel.Mesh {
             activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
 
 
-            return activation;
+            return new ApplicationEntrySsh() {
+                Identifier = Key,
+                Activation = activation
+                };
 
             }
 
@@ -373,12 +382,7 @@ namespace Goedel.Mesh {
 
 
         ///<inheritdoc/>
-        public override ActivationApplication GetActivation(CatalogedDevice catalogedDevice) {
-            return new ActivationApplication() {
-                };
-
-
-            }
+        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
 
 
 
@@ -390,12 +394,7 @@ namespace Goedel.Mesh {
     public partial class CatalogedApplicationNetwork {
 
         ///<inheritdoc/>
-        public override ActivationApplication GetActivation(CatalogedDevice catalogedDevice) {
-            return new ActivationApplication() {
-                };
-
-
-            }
+        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
 
         }
 

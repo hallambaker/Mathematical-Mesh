@@ -85,11 +85,10 @@ namespace Goedel.Mesh.Client {
 
                 Screen.WriteLine("Got device");
                 if (catalogedApplication.DeviceAuthorized(device)) {
-                    var activationApplication = catalogedApplication.GetActivation(device);
+                    var applicationEntry = catalogedApplication.GetActivation(device);
 
-                    device.EnvelopedActivationApplications ??= new();
-                    device.EnvelopedActivationApplications.Add(
-                            activationApplication.EnvelopedActivationApplication);
+                    device.ApplicationEntries ??= new();
+                    device.ApplicationEntries.Add(applicationEntry);
 
                     updated.Add(device);
                     }

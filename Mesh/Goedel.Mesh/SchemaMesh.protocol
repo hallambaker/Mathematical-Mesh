@@ -375,6 +375,22 @@
 		Struct KeyData OpenpgpEncrypt
 			Description
 				|The OpenPGP encryption key
+	
+	Section 2 "Application Data"
+		
+	Structure ApplicationEntry
+		Abstract
+		String Identifier
+
+	Structure ApplicationEntrySsh
+		Inherits ApplicationEntry
+		Struct ActivationApplicationSsh Activation
+
+
+	Structure ApplicationEntryMail
+		Inherits ApplicationEntry
+		Struct ActivationApplicationMail Activation
+
 
 	Section 2 "Data Structures"
 		Description
@@ -652,7 +668,7 @@
 		Struct Enveloped<ActivationAccount> EnvelopedActivationAccount
 			Description
 				|The activation of the device within the Mesh account
-		Struct Enveloped<ActivationApplication> EnvelopedActivationApplications
+		TStruct ApplicationEntry ApplicationEntries
 			Multiple
 			Description
 				|Application activations granted to the device.
