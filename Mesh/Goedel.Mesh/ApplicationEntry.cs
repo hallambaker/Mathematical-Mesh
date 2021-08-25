@@ -31,36 +31,18 @@ namespace Goedel.Mesh {
     /// </summary>
     abstract public partial class ApplicationEntry {
 
+        /// <summary>
+        /// Decode the application entry using keys from <paramref name="keyCollection"/>.
+        /// </summary>
+        /// <param name="keyCollection">Key collection to use to resolve decryption keys</param>
+
         public abstract void Decode(IKeyCollection keyCollection);
 
         }
 
 
-    public partial class ApplicationEntrySsh {
-
-        public ActivationApplicationSsh Activation { get; set; }
-
-
-        public override void Decode(IKeyCollection keyCollection) {
-
-            Activation = EnvelopedActivation.Decode(keyCollection);
-
-            }
-
-
-        }
-
-    public partial class ApplicationEntryMail {
 
 
 
-        public ActivationApplicationMail Activation { get; set; }
-
-        public override void Decode(IKeyCollection keyCollection) {
-
-            Activation = EnvelopedActivation.Decode(keyCollection);
-
-            }
-        }
     }
 

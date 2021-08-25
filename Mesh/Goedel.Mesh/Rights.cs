@@ -54,6 +54,14 @@ namespace Goedel.Mesh {
         ///<summary>Profile administrative signature key.</summary> 
         ProfileAdmin,
 
+
+        ///<summary>Account encryption key.</summary> 
+        AccountEncrypt,
+        ///<summary>Account authentication key.</summary> 
+        AccountAuthenticate,
+        ///<summary>Account authentication key.</summary> 
+        AccountSign,
+
         ///<summary>The named store</summary>
         Store,
 
@@ -250,32 +258,19 @@ namespace Goedel.Mesh {
         public const string IdRolesGroupmember = "groupmember";
         ///<summary>Name for the  rights set.</summary> 
         public const string IdRolesStore = "store";
-        ///<summary>Name for the  rights set.</summary> 
-        public const string IdRolesUser = "user";
-        ///<summary>Name for the  rights set.</summary> 
-        public const string IdRolesDirect = "direct";
+        /////<summary>Name for the  rights set.</summary> 
+        //public const string IdRolesUser = "user";
 
+        ///<summary>Name for the  rights set.</summary> 
+        public const string IdRolesThreshold = "threshold";
 
         ///<summary>Account access administration rights</summary> 
         public static List<Right> RightsGrantUser =
                     new() {
                         // Needed to create and publish device connection
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label, Degree.Service),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogContact.Label, Degree.Service),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogTask.Label, Degree.Service),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogBookmark.Label, Degree.Service),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label, Degree.Service),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogNetwork.Label, Degree.Service),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogApplication.Label, Degree.Service),
-                        new Right(Resource.Store, Access.GrantReadWrite, CatalogPublication.Label, Degree.Service),
-                        new Right(Resource.Store, Access.GrantReadWrite, SpoolInbound.Label, Degree.Service),
-                        new Right(Resource.Store, Access.GrantReadWrite, SpoolOutbound.Label, Degree.Service)
-                        };
-
-        ///<summary>Account access administration rights</summary> 
-        public static List<Right> RightsGrantDirect =
-                    new() {
-                        // Needed to create and publish device connection
+                        new Right(Resource.AccountEncrypt, Access.ReadWrite),
+                        new Right(Resource.AccountAuthenticate, Access.ReadWrite),
+                        new Right(Resource.AccountSign, Access.ReadWrite),
                         new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label, Degree.Direct),
                         new Right(Resource.Store, Access.GrantReadWrite, CatalogContact.Label, Degree.Direct),
                         new Right(Resource.Store, Access.GrantReadWrite, CatalogTask.Label, Degree.Direct),
@@ -287,8 +282,6 @@ namespace Goedel.Mesh {
                         new Right(Resource.Store, Access.GrantReadWrite, SpoolInbound.Label, Degree.Direct),
                         new Right(Resource.Store, Access.GrantReadWrite, SpoolOutbound.Label, Degree.Direct)
                         };
-
-
 
         ///<summary>Super administrator rights.</summary> 
         public readonly static List<Right> RightsSuperAdministrator =
@@ -305,7 +298,6 @@ namespace Goedel.Mesh {
                         new Right (Resource.ProfileAdmin, Access.Sign),
                         new Right (Resource.Store, Access.Sign, SpoolLocal.Label)
                         }.Concat(RightsGrantUser);
-
 
 
         ///<summary>Rights granted to every device connected to a Mesh. These are currently
@@ -388,7 +380,11 @@ namespace Goedel.Mesh {
                         new Right(Resource.Account, Access.Decrypt),
                         new Right(Resource.Store, Access.ReadWrite, CatalogPublication.Label),
                         };
-
+        ///<summary>Rights granted a device afforded Web access in addition to external
+        ///messaging. These add the right to read/update the credential, calendar and 
+        ///bookmark catalogs.</summary> 
+        public readonly static List<Right> RightsGrantThreashold =
+            RightsWeb.Override (new Right(Resource.Account, Access.ReadWrite | Access.Authenticate, degree:Degree.Service));
 
 
         ///<summary>Dictionary mapping rights identifier to rights description.</summary> 
@@ -404,8 +400,7 @@ namespace Goedel.Mesh {
                 //[IdRightsSmime] = RightsSmime,
                 [IdRolesGroupmember] = RightsGroupAdministrator,
                 [IdRolesStore] = RightsGroupMember,
-                [IdRolesUser] = RightsGrantUser,
-                [IdRolesDirect] = RightsGrantDirect,
+                [IdRolesThreshold] = RightsGrantThreashold,
                 };
 
         /// <summary>
@@ -446,6 +441,28 @@ namespace Goedel.Mesh {
 
             return dictionary;
             }
+
+
+        static List<Right> Override(
+            this List<Right> rights,
+            params Right[] overrides) {
+
+            var result = new List<Right>();
+            foreach (var right in rights) {
+                Right? swap = null;
+                foreach (var overrider in overrides) {
+                    if (right.Resource == overrider.Resource) {
+                        swap = overrider;
+                        }
+                    }
+                result.Add(swap ?? right); 
+                }
+
+
+            return result;
+
+            }
+
 
         static bool Update(List<Right> rights, Right right) {
             // Can't use foreach because Right is a struct and thus passed by value.

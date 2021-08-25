@@ -96,7 +96,7 @@ namespace Goedel.Mesh {
         ///when creating.</summary>
         public CryptoKey KeyDataEncryptionKey;
 
-        ///<summary>The primary key is the value of the <see cref="Id"/> property.</summary>
+        ///<summary>The primary key is the value of the <see cref="Capability.Id"/> property.</summary>
         public override string _PrimaryKey => Id;
 
         /// <summary>

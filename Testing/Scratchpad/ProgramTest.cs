@@ -81,11 +81,11 @@ namespace Scratchpad {
 
 
             //TestService.Test().ProtocolHello();
-            TestService.Test().MeshDeviceSsh();
-
+            //TestService.Test().MeshDeviceSsh();
+            //TestService.Test().MeshDeviceMail();
 
             //TestService.Test().MeshDeviceDirectKey();
-            //TestService.Test().MeshDeviceThresholdKey();
+            TestService.Test().MeshDeviceThresholdKey();
 
 
             //ShellTestsHTTP.Test().TestMessageGroup();

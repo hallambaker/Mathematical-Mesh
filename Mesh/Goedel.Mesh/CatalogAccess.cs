@@ -215,15 +215,23 @@ namespace Goedel.Mesh {
 
 
         public ActivationEntry MakeActivation(
+                                Right right,
+                    KeyPairAdvanced keyPair,
+                    ITransactContextAccount transactContextAccount = null) {
+            return new ActivationEntry() {
+                Resource = right.Name,
+                Key = MakeKeyData(right, keyPair, transactContextAccount)
+                };
+            }
+
+
+        public KeyData MakeKeyData(
                     Right right, 
                     KeyPairAdvanced keyPair, 
                     ITransactContextAccount transactContextAccount = null) {
             switch (right.Degree) {
                 case Degree.Direct: {
-                    return new ActivationEntry() {
-                        Resource = right.Name,
-                        Key = new KeyData(keyPair, true)
-                        };
+                    return new KeyData(keyPair, true);
                     }
                 case Degree.Service: {
                     var keys = keyPair.IKeyAdvancedPrivate.MakeThresholdKeySet(2);
@@ -240,14 +248,9 @@ namespace Goedel.Mesh {
                     var catalogedCapability = new CatalogedAccess(capabilityService);
                     transactContextAccount.CatalogUpdate(this, catalogedCapability);
 
-
-                    return new ActivationEntry() {
-                        Resource = right.Name,
-                        Key = new KeyData(keys[0]) {
+                    return new KeyData(keys[0]) {
                             Udf = keyPair.KeyIdentifier,
-                            ServiceId = deviceKey.KeyIdentifier
-                            }
-                        };
+                            ServiceId = deviceKey.KeyIdentifier };
 
                     }
                 default: {

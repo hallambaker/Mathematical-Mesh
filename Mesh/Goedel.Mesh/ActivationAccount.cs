@@ -475,113 +475,73 @@ namespace Goedel.Mesh {
         /// <param name="keyPair">Keypair from which the capability is to be derrived.</param>
         /// <param name="profileDevice">The device to which the capability is to be added.</param>
         /// <returns>The key data for the added capability.</returns>
-        public  KeyData AddCapability(CryptoKey keyPair, ProfileDevice profileDevice, Degree degree) {
-            "**** MUST add keys to devices as shared capabilities".TaskFunctionality();
+        public  KeyData AddCapability(
+                    CryptoKey keyPair, 
+                    ProfileDevice profileDevice, 
+                    Degree degree,
+                    ITransactContextAccount transactContextAccount) {
+            //"**** MUST add keys to devices as shared capabilities".TaskFunctionality();
 
             //var catalogCapability = GetCatalogCapability();
 
             if (degree == Degree.Direct) {
-
-
                 return new KeyData(keyPair, true);
                 }
-
+            //var activationEntry = transactContextAccount.GetCatalogAccess().MakeActivation(
+            //    right, keyPair as KeyPairAdvanced, transactContextAccount);
 
             throw new NYI();
             }
 
 
         void Grant(ActivationAccount newActivation, Right right, ITransactContextAccount transactContextAccount = null) {
+            var catalog = transactContextAccount.GetCatalogAccess();
+
 
             switch (right.Resource) {
                 case Resource.ProfileRoot: {
-                    GrantProfileRoot(newActivation, right, transactContextAccount);
+
+                    newActivation.ProfileSignature = catalog.MakeKeyData(right,
+                        ProfileSignatureKey as KeyPairAdvanced, transactContextAccount);
+
                     break;
                     }
                 case Resource.ProfileAdmin: {
-                    GrantProfileAdmin(newActivation, right, transactContextAccount);
+                    newActivation.ProfileSignature = catalog.MakeKeyData(right,
+                        AdministratorSignatureKey as KeyPairAdvanced, transactContextAccount);
+                    newActivation.DefaultActive = true;
                     break;
                     }
                 case Resource.Store: {
                     GrantStore(newActivation, right, transactContextAccount);
                     break;
                     }
-                case Resource.App: {
-                    
-
-                    GrantApp(newActivation, right, transactContextAccount);
-                    break;
-                    }
-
                 case Resource.Account: {
-                    GrantAccount(newActivation, right, transactContextAccount);
+                    if (right.Decrypt) {
+                        newActivation.AccountEncryption = catalog.MakeKeyData(right,
+                                AccountEncryptionKey as KeyPairAdvanced, transactContextAccount);
+                        }
+                    if (right.Authenticate) {
+                        newActivation.AccountAuthentication = catalog.MakeKeyData(right,
+                                AccountAuthenticationKey as KeyPairAdvanced, transactContextAccount);
+                        }
+                    if (right.Sign) {
+                        newActivation.AccountSignature = catalog.MakeKeyData(right,
+                                AccountSignatureKey as KeyPairAdvanced, transactContextAccount);
+                        }
                     break;
                     }
                 }
 
             }
 
-        void GrantApp(ActivationAccount newActivation, Right right, ITransactContextAccount transactContextAccount = null) {
-
-            "Need to interact with the application catalog here".TaskFunctionality(true);
-            throw new NYI();
-
-
-            }
-
-        /// <summary>
-        /// Grant super administrator access.
-        /// </summary>
-        /// <param name="newActivation">Device to which the access right is granted.</param>
-        /// <param name="right">The right granted.</param>
-        void GrantProfileRoot(ActivationAccount newActivation, Right right, ITransactContextAccount transactContextAccount = null) {
-            right.Future();
-            newActivation.ProfileSignature = AddCapability(
-                        ProfileSignatureKey, newActivation.ProfileDevice, right.Degree);
-            }
-
-        /// <summary>
-        /// Grant device administrator access.
-        /// </summary>
-        /// <param name="newActivation">Device to which the access right is granted.</param>
-        /// <param name="right">The right granted.</param>
-        void GrantProfileAdmin(
-                            ActivationAccount newActivation,
-                            Right right, ITransactContextAccount transactContextAccount = null) {
-            (right.Resource == Resource.ProfileAdmin).AssertTrue(Internal.Throw);
-            //var keyPairOnlineSignature = DeviceBindSignature(newActivation.ProfileDevice, KeyCollection);
-            newActivation.AdministratorSignature = AddCapability(
-                        AdministratorSignatureKey, newActivation.ProfileDevice, right.Degree);
-            newActivation.DefaultActive = true;
-            }
-
-
-        /// <summary>
-        /// Grant access to global account.
-        /// </summary>
-        /// <param name="newActivation">Device to which the access right is granted.</param>
-        /// <param name="right">The right granted.</param>
-        void GrantAccount(ActivationAccount newActivation, Right right, ITransactContextAccount transactContextAccount = null) {
-            if (right.Decrypt) {
-                newActivation.AccountEncryption = AddCapability(
-                            AccountEncryptionKey, newActivation.ProfileDevice, right.Degree);
-                }
-            if (right.Authenticate) {
-                newActivation.AccountAuthentication = AddCapability(
-                            AccountAuthenticationKey, newActivation.ProfileDevice, right.Degree);
-                }
-            if (right.Sign) {
-                newActivation.AccountSignature = AddCapability(
-                            AccountSignatureKey, newActivation.ProfileDevice, right.Degree);
-                }
-
-            }
 
         /// <summary>
         /// Grant access to the store X.
         /// </summary>
         /// <param name="newActivation">Device to which the access right is granted.</param>
         /// <param name="right">The right granted.</param>
+        /// <param name="transactContextAccount">The transaction context.</param>
         void GrantStore(ActivationAccount newActivation, Right right, ITransactContextAccount transactContextAccount = null) {
 
             // which store do we need?

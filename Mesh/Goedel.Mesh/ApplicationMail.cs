@@ -21,23 +21,21 @@
 #endregion
 
 using Goedel.Cryptography.Dare;
-using Goedel.Protocol;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh {
-    /// <summary>
-    /// </summary>
-    public partial class ActivationApplication {
+    // Todo: Mail Store account access details, passwords, etc.
 
-        ///<summary>The enveloped object</summary> 
-        public Enveloped<ActivationApplication> EnvelopedActivationApplication =>
-            envelopedActivationApplication ?? new Enveloped<ActivationApplication>(DareEnvelope).
-                    CacheValue(out envelopedActivationApplication);
-        Enveloped<ActivationApplication> envelopedActivationApplication;
+    // Todo: Mail PGP Passprase for PEM keys
+    // Todo: Mail PGP Support for PGP ECC algorithms
+    // Todo: Mail PGP Create PGP subkey / fingerprint / etc.
+    // Todo: Mail PGP Push key to MIT key server
 
+    // Todo: Mail SMIME Create CSR
+    // Todo: Mail SMIME Request CA issued cert via ACME
+    // Todo: Mail SMIME Save private key as P12
+    // Todo: Mail SMIME Self signed root o'trust
 
-
-        }
 
     public partial class ActivationApplicationMail {
 
@@ -51,16 +49,19 @@ namespace Goedel.Mesh {
 
         }
 
-    public partial class ActivationApplicationSsh {
-
-        ///<summary>The enveloped object</summary> 
-        public Enveloped<ActivationApplicationSsh> EnvelopedActivationApplicationSsh =>
-            envelopedActivationApplicationSsh ?? new Enveloped<ActivationApplicationSsh>(DareEnvelope).
-                    CacheValue(out envelopedActivationApplicationSsh);
-        Enveloped<ActivationApplicationSsh> envelopedActivationApplicationSsh;
+    public partial class ApplicationEntryMail {
 
 
+        ///<summary>The decrypted activation.</summary> 
+        public ActivationApplicationMail Activation { get; set; }
 
+        ///<inheritdoc/>
+
+        public override void Decode(IKeyCollection keyCollection) {
+
+            Activation = EnvelopedActivation.Decode(keyCollection);
+
+            }
         }
 
     }

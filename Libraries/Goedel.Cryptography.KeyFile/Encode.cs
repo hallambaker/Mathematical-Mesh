@@ -58,6 +58,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="KeyPair">Keypair to convert</param>
         /// <param name="KeyFileFormat">Format to convert to</param>
+        /// <param name="passphrase">Optional passphrase to be used as encryption key.</param>
         /// <returns>The keyfile data</returns>
         public static string ToKeyFile(this KeyPair KeyPair, KeyFileFormat KeyFileFormat,
                 string passphrase = null) {
@@ -114,6 +115,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// Convert key pair to PEMPrivate format
         /// </summary>
         /// <param name="KeyPair">Key pair to convert</param>
+        /// <param name="passphrase">Optional passphrase to be used as encryption key.</param>
         /// <returns>The keyfile data</returns>
         public static string ToPEMPrivate(this KeyPair KeyPair, string passphrase=null) {
 
@@ -200,6 +202,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// Convert key pair to PEM formatted string.
         /// </summary>
         /// <param name="RSAKeyPair">An RSA Key pair</param>
+        /// <param name="passphrase">Optional passphrase to be used as encryption key.</param>
         /// <returns>Key Pair in PEM format</returns>
         public static string ToPEMPrivateRSA(KeyPairBaseRSA RSAKeyPair, string passphrase = null) {
             //throw new NYI();
@@ -216,7 +219,7 @@ namespace Goedel.Cryptography.KeyFile {
             ////RSAParameters.Dump();
 
             //var RSAPrivateKey = RSAParameters.RSAPrivateKey();
-
+            passphrase.AssertNull(NYI.Throw);
             var RSAPrivateKey = RSAKeyPair.PKIXPrivateKey;
 
             var Builder = new StringBuilder();

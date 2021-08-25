@@ -55,8 +55,6 @@ namespace Goedel.Mesh {
         /// If the value <paramref name="masterSecret"/> is
         /// specified, it is used as the seed value. Otherwise, a seed value of
         /// length <paramref name="bits"/> is generated.
-        /// The public key value is calculated for the public key pairs and the corresponding
-        /// <see cref="ConnectionUser"/> generated for the public values.
         /// </summary>
         /// <param name="profileDevice">The base profile that the activation activates.</param>
         /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
@@ -69,10 +67,7 @@ namespace Goedel.Mesh {
                     int bits = 256) : base(
                         profileDevice, masterSecret, bits) {
             ProfileDevice = profileDevice;
-
             AccountUdf = profileDevice.Udf;
-
-
             }
 
         #endregion

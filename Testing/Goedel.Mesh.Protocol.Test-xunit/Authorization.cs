@@ -39,7 +39,7 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void MeshDeviceDirectKey() {
-            var rights = new List<string> { Rights.IdRolesDirect };
+            var rights = new List<string> { Rights.IdRolesWeb };
 
 
             var testEnvironmentCommon = GetTestEnvironmentCommon();
@@ -73,7 +73,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshDeviceThresholdKey() {
 
-            var roles = new List<string> { Rights.IdRolesUser };
+            var roles = new List<string> { Rights.IdRolesThreshold };
 
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
@@ -91,6 +91,13 @@ namespace Goedel.XUnit {
             // Check second device
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
             ExerciseAccount(contextOnboarded);
+
+
+
+            // Delete second device
+
+            // check 
+
 
             //Check the capability catalog
             //   Should have threshold entry
