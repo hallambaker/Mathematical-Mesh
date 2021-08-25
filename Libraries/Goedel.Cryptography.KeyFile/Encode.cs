@@ -115,7 +115,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
-        public static string ToPEMPrivate(this KeyPair KeyPair, string passphrase) {
+        public static string ToPEMPrivate(this KeyPair KeyPair, string passphrase=null) {
 
             passphrase.AssertNull(NYI.Throw);
 
@@ -201,7 +201,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="RSAKeyPair">An RSA Key pair</param>
         /// <returns>Key Pair in PEM format</returns>
-        public static string ToPEMPrivateRSA(KeyPairBaseRSA RSAKeyPair, string passphrase) {
+        public static string ToPEMPrivateRSA(KeyPairBaseRSA RSAKeyPair, string passphrase = null) {
             //throw new NYI();
             //RSACryptoServiceProvider Provider = RSAKeyPair.Provider;
             //Assert.NotNull(Provider, NoProviderSpecified.Throw);
