@@ -30,46 +30,29 @@ using Goedel.XUnit;
 
 namespace Scratchpad {
 
-    // Bug: Only doing threshold for STOREs and not for the ACCOUNT ENCRYPTION. MAD!
-    // Need to add means of adding application and tying it to a RIGHT.
-    // Probably work on documenting this a bit.
+    // ToDo: Server check auth permissions
+    // ToDo: Server logging
+    // ToDo: Server status info
+    // ToDo: Client decrypt files with threshold key
 
-    // Need to process the device catalog and for each device still active, 
-    // check if it has the corresponding right and assign the right if so.
+    // ToDo: Remove application from Mesh
 
-    // Can then delete the applications catalog???
+    // ToDo: Test for delected device being denied access to stores etc.
+    // ToDo: Test for threshold device being unable to decrypt after deletion
 
-
-
-    // ToDo: Provision Threshold Key
-    // ToDo: Provision SSH / S/MIME / PGP and other app keys
-    // ToDo: Utility dump on the Access catalog
-    // ToDo: Dump out the SSH keys
-    // ToDo: Implement add/delete rights
+    // ToDo: Test write validator, read in all catalogs and check encryption etc. status
 
 
 
+    // ToDo: Test Clear all unit tests
 
-    // ToDo: Check.DisableDeletedDevices = true
-    // ToDo: we are not currently checking disabled device authorization
-    // ToDo: We are not using threshold decryption on devices.
-
-
-
-
-    // Current bug: test not terminating as the service is not being KILLED
-
-
-
-    // ToDo: 5) Clear all unit tests
+    // ToDo: Documentation - clear all examples in IDs.
 
     // ToDo: RUD Documentation - Grab examples from connection formation
     // ToDo: RUD Documentation - Describe stream lifecycle
     // ToDo: RUD Documentation - Describe account binding
 
-    // ToDo: Server logging
-    // ToDo: Server status info
-    // ToDo: Server admin permissions
+
 
 
     // Refactor: Convert all DareEnvelope to Enveloped<type> and use Decode for cached accessor
