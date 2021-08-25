@@ -87,7 +87,7 @@
             <remarks>This currently hard wires to the .NET framework providers
             rather than the portable base classes.</remarks>
         </member>
-        <member name="M:Goedel.Cryptography.KeyFile.Extension.ToKeyFile(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyFile.KeyFileFormat)">
+        <member name="M:Goedel.Cryptography.KeyFile.Extension.ToKeyFile(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyFile.KeyFileFormat,System.String)">
             <summary>
             Convert key pair to specified format
             </summary>
@@ -102,7 +102,7 @@
             <param name="KeyPair">Key pair to convert</param>
             <returns>The keyfile data</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyFile.Extension.ToPEMPrivate(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Cryptography.KeyFile.Extension.ToPEMPrivate(Goedel.Cryptography.KeyPair,System.String)">
             <summary>
             Convert key pair to PEMPrivate format
             </summary>
@@ -145,7 +145,7 @@
             <param name="RSAKeyPair">A  Key pair</param>
             <returns>Key Pair in PEM format</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyFile.Extension.ToPEMPrivate(Goedel.Cryptography.KeyPairBaseRSA)">
+        <member name="M:Goedel.Cryptography.KeyFile.Extension.ToPEMPrivateRSA(Goedel.Cryptography.KeyPairBaseRSA,System.String)">
             <summary>
             Convert key pair to PEM formatted string.
             </summary>

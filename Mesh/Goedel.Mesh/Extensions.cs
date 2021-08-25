@@ -139,7 +139,8 @@ namespace Goedel.Mesh {
         public static void ToKeyFile(
                 this KeyData keyData,
                 string filename,
-                KeyFileFormat KeyFileFormat = KeyFileFormat.Default) {
+                KeyFileFormat KeyFileFormat = KeyFileFormat.Default,
+                string passphrase=null) {
             var data = keyData.GetKeyPair(KeySecurity.Exportable).ToKeyFile(KeyFileFormat);
 
             filename.WriteFileNew(data);

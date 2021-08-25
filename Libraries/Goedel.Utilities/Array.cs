@@ -29,6 +29,37 @@ namespace Goedel.Utilities {
     /// </summary>
     public static class ArrayUtilities {
 
+
+        /// <summary>
+        /// Returns <code>true</code> iff the intersection of <paramref name="list1"/> and <paramref name="list2"/>
+        /// is non-empty.
+        /// </summary>
+        /// <typeparam name="T">Any object that supports testing for equality.</typeparam>
+        /// <param name="list1">The first list to compare.</param>
+        /// <param name="list2">The second list to compare.</param>
+        /// <returns><code>true</code> iff the intersection of <paramref name="list1"/> and <paramref name="list2"/>
+        /// is non-empty; otherwise, <code>false</code>.</returns>
+        public static bool Intersects<T>(this IEnumerable<T> list1, IEnumerable<T> list2) where T : IEquatable<T> {
+
+            if (list1 == null | list2 == null) {
+                return false;
+                }
+
+            foreach (var item1 in list1) {
+
+                foreach (var item2 in list2) {
+                    if (item1.Equals(item2)) {
+                        return true;
+                        }
+                    }
+                }
+
+
+            return false;
+            }
+
+
+
         /// <summary>Test to see if two arrays are equal.
         /// </summary>
         /// <param name="test1">First test value</param>

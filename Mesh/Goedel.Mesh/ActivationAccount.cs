@@ -230,7 +230,10 @@ namespace Goedel.Mesh {
                         //KeyPair keyPairOnlineSignature = null, // hack. 
                         List<string> roles = null,
                         ITransactContextAccount transactContextAccount = null,
-                        ActivationDevice activationDevice = null) {
+                        ActivationDevice activationDevice = null,
+                        List<ApplicationEntry> applicationEntries = null) {
+
+
 
             activationDevice ??= new ActivationDevice(profileDevice);
             var activationAccount = MakeActivationAccount(profileDevice, activationDevice, roles, transactContextAccount);
@@ -258,7 +261,8 @@ namespace Goedel.Mesh {
                     ActivationDevice activationDevice,
                     ActivationAccount activationAccount,
                     KeyPair signature,
-                    ITransactContextAccount transactContextAccount = null) {
+                    ITransactContextAccount transactContextAccount = null,
+                    List<ApplicationEntry> applicationEntries = null) {
 
             //PrivateAccountOnlineSignature.AssertNotNull(NotAdministrator.Throw);
 
@@ -339,6 +343,7 @@ namespace Goedel.Mesh {
                 EnvelopedConnectionAddress = connectionAccount?.EnvelopedConnectionAddress,
                 EnvelopedActivationDevice = activationDevice?.EnvelopedActivationDevice,
                 EnvelopedActivationAccount = activationAccount?.EnvelopedActivationAccount,
+                ApplicationEntries = applicationEntries,
                 DeviceUdf = profileDevice.Udf
                 };
 
@@ -445,6 +450,9 @@ namespace Goedel.Mesh {
             return newActivation;
 
             }
+
+
+
 
         /// <summary>
         /// Create a key pair bound to the private key <paramref name="profileDevice.OfflineSignature"/>

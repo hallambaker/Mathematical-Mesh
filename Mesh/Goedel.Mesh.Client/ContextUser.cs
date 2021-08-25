@@ -1135,7 +1135,7 @@ namespace Goedel.Mesh.Client {
         private void AddDevice(AcknowledgeConnection request, List<string> rights, TransactUser transactRequest, RespondConnection respondConnection) {
             var device = ActivationAccount.MakeCatalogedDevice(
                     request.MessageConnectionRequest.ProfileDevice, ProfileUser, roles: rights, transactContextAccount: transactRequest);
-
+            device.ApplicationEntries = MakeApplicationEntries(rights, transactRequest, device);
             respondConnection.CatalogedDevice = device;
             respondConnection.Result = MeshConstants.TransactionResultAccept;
             var catalogDevice = transactRequest.GetCatalogDevice();
@@ -1151,7 +1151,27 @@ namespace Goedel.Mesh.Client {
             }
 
 
+        public List<ApplicationEntry> MakeApplicationEntries(
+            List<string> roles,
+            TransactUser transactRequest,
+            CatalogedDevice catalogedDevice
+            ) {
 
+            var catalogApplication = transactRequest.GetCatalogApplication();
+            if (catalogApplication == null) {
+                return null;
+                }
+            List<ApplicationEntry> result = null;
+            foreach (var application in catalogApplication.AsCatalogedType) {
+                if (!application.Deny.Intersects(roles)  &&
+                    application.Grant.Intersects(roles)) {
+                    result ??= new();
+                    result.Add(application.GetActivation(catalogedDevice));
+                    }
+                }
+
+            return result;
+            }
 
 
         /// <summary>

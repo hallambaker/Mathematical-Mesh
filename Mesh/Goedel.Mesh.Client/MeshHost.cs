@@ -21,6 +21,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
@@ -332,6 +333,8 @@ namespace Goedel.Mesh.Client {
             catalogedMachine.CatalogedDevice = activationRoot.MakeCatalogedDevice(
                 profileDevice, profileUser, rights, transactRequest, activationDevice);
 
+            // Enable existing applications on the device
+
 
             var catalogDevice = transactRequest.GetCatalogDevice();
             transactRequest.CatalogUpdate(catalogDevice, catalogedMachine.CatalogedDevice);
@@ -342,6 +345,11 @@ namespace Goedel.Mesh.Client {
 
             return contextUser;
             }
+
+
+
+
+
 
 
         /// <summary>

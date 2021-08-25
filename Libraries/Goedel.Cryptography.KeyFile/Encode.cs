@@ -59,10 +59,15 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="KeyPair">Keypair to convert</param>
         /// <param name="KeyFileFormat">Format to convert to</param>
         /// <returns>The keyfile data</returns>
-        public static string ToKeyFile(this KeyPair KeyPair, KeyFileFormat KeyFileFormat) {
+        public static string ToKeyFile(this KeyPair KeyPair, KeyFileFormat KeyFileFormat,
+                string passphrase = null) {
+
+
+
+
             switch (KeyFileFormat) {
                 case KeyFileFormat.PEMPrivate: {
-                    return ToPEMPrivate(KeyPair);
+                    return ToPEMPrivate(KeyPair, passphrase);
                     }
                 case KeyFileFormat.PEMPublic: {
                     return ToPEMPublic(KeyPair);
@@ -110,9 +115,12 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="KeyPair">Key pair to convert</param>
         /// <returns>The keyfile data</returns>
-        public static string ToPEMPrivate(this KeyPair KeyPair) {
+        public static string ToPEMPrivate(this KeyPair KeyPair, string passphrase) {
+
+            passphrase.AssertNull(NYI.Throw);
+
             if (KeyPair is KeyPairBaseRSA RSAKeyPair) {
-                return ToPEMPrivate(RSAKeyPair);
+                return ToPEMPrivateRSA(RSAKeyPair, passphrase);
                 }
 
             //switch (KeyPair) {
@@ -193,7 +201,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="RSAKeyPair">An RSA Key pair</param>
         /// <returns>Key Pair in PEM format</returns>
-        public static string ToPEMPrivate(KeyPairBaseRSA RSAKeyPair) {
+        public static string ToPEMPrivateRSA(KeyPairBaseRSA RSAKeyPair, string passphrase) {
             //throw new NYI();
             //RSACryptoServiceProvider Provider = RSAKeyPair.Provider;
             //Assert.NotNull(Provider, NoProviderSpecified.Throw);

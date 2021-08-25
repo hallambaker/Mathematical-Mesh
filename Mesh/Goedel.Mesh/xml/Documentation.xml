@@ -192,7 +192,7 @@
             </summary>
             <param name="profileService">Description of the service to bind to.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,System.Collections.Generic.List{System.String},Goedel.Mesh.ITransactContextAccount,Goedel.Mesh.ActivationDevice)">
+        <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,System.Collections.Generic.List{System.String},Goedel.Mesh.ITransactContextAccount,Goedel.Mesh.ActivationDevice,System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry})">
             <summary>
             Add the device specified by <paramref name="profileDevice"/> to the account granting 
             the set of privileged specified in <paramref name="roles"/>.
@@ -203,7 +203,7 @@
             to a rights list.</param>
             <returns>The catalog entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.KeyPair,Goedel.Mesh.ITransactContextAccount)">
+        <member name="M:Goedel.Mesh.ActivationAccount.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.KeyPair,Goedel.Mesh.ITransactContextAccount,System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry})">
             <summary>
             Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
             and activation <paramref name="activationDevice"/>.
@@ -5817,7 +5817,7 @@
             <param name="builder">The string builder.</param>
             <param name="indent">The indentation level.</param>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.ToKeyFile(Goedel.Mesh.KeyData,System.String,Goedel.Cryptography.KeyFile.KeyFileFormat)">
+        <member name="M:Goedel.Mesh.Extensions.ToKeyFile(Goedel.Mesh.KeyData,System.String,Goedel.Cryptography.KeyFile.KeyFileFormat,System.String)">
             <summary>
             Convert key pair to specified format
             </summary>

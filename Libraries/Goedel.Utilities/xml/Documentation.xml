@@ -9,6 +9,17 @@
             Static class containing extension methods for array manipulation.
             </summary>
         </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.Intersects``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns <code>true</code> iff the intersection of <paramref name="list1"/> and <paramref name="list2"/>
+            is non-empty.
+            </summary>
+            <typeparam name="T">Any object that supports testing for equality.</typeparam>
+            <param name="list1">The first list to compare.</param>
+            <param name="list2">The second list to compare.</param>
+            <returns><code>true</code> iff the intersection of <paramref name="list1"/> and <paramref name="list2"/>
+            is non-empty; otherwise, <code>false</code>.</returns>
+        </member>
         <member name="M:Goedel.Utilities.ArrayUtilities.IsEqualTo(System.Byte[],System.Byte[])">
             <summary>Test to see if two arrays are equal.
             </summary>

@@ -176,6 +176,119 @@ namespace Goedel.XUnit {
             }
 
 
+        [Fact]
+        public void MeshDeviceMail() {
+            var roles = new List<string> { Rights.IdRolesWeb };
+
+            var testEnvironmentCommon = GetTestEnvironmentCommon();
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+
+            // New Device
+            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, AccountAlice);
+
+            // Admin Device
+            contextAccountAlice.Sync();
+            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest, roles: roles);
+
+            // Check second device
+            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+            ExerciseAccount(contextOnboarded);
+
+            var id = "mail";
+            // Create an ssh application
+            var applicationMail = CatalogedApplicationMail.Create(id, roles);
+
+            var transaction1 = contextAccountAlice.TransactBegin();
+            transaction1.ApplicationCreate(applicationMail);
+            var result1 = transaction1.Transact();
+
+
+            // Connect a third device
+            var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
+
+            // Admin Device
+            contextAccountAlice.Sync();
+            var connectRequest2 = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest2, roles: roles);
+
+
+            var contextOnboarded2 = TestCompletionSuccess(contextOnboardPending2);
+            ExerciseAccount(contextOnboarded2);
+
+            contextOnboarded.Sync();
+
+            var application1 = contextAccountAlice.GetApplicationMail(id);
+            var applicationEntry1 = contextAccountAlice.GetApplicationEntryMail(id);
+            var application2 = contextOnboarded.GetApplicationMail(id);
+            var applicationEntry2 = contextOnboarded.GetApplicationEntryMail(id);
+            var application3 = contextOnboarded2.GetApplicationMail(id);
+            var applicationEntry3 = contextOnboarded2.GetApplicationEntryMail(id);
+            // check applicationSsh1 == applicationSsh2
+            // check we have a private key for each device.
+
+            application1.TestNotNull();
+            applicationEntry1.TestNotNull();
+            application2.TestNotNull();
+            applicationEntry2.TestNotNull();
+
+
+            application3.TestNotNull();
+            applicationEntry3.TestNotNull();
+
+            CheckKeysMatch(application1.OpenpgpEncrypt, application2.OpenpgpEncrypt, application3.OpenpgpEncrypt,
+                    applicationEntry1.Activation.OpenpgpEncrypt, applicationEntry2.Activation.OpenpgpEncrypt,
+                    applicationEntry3.Activation.OpenpgpEncrypt);
+
+            CheckKeysMatch(application1.OpenpgpSign, application2.OpenpgpSign, application3.OpenpgpSign,
+                    applicationEntry1.Activation.OpenpgpSign, applicationEntry2.Activation.OpenpgpSign,
+                    applicationEntry3.Activation.OpenpgpSign);
+
+            CheckKeysMatch(application1.SmimeEncrypt, application2.SmimeEncrypt, application3.SmimeEncrypt,
+                    applicationEntry1.Activation.SmimeEncrypt, applicationEntry2.Activation.SmimeEncrypt,
+                    applicationEntry3.Activation.SmimeEncrypt);
+            CheckKeysMatch(application1.SmimeSign, application2.SmimeSign, application3.SmimeSign,
+                    applicationEntry1.Activation.SmimeSign, applicationEntry2.Activation.SmimeSign,
+                    applicationEntry3.Activation.SmimeSign);
+
+            // Check the keys differ and are not null
+            CheckKeysDiffer(application1.OpenpgpEncrypt, application1.OpenpgpSign, application1.SmimeEncrypt,
+                applicationEntry1.Activation.SmimeSign);
+
+            // now extract some files
+
+            application1.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic1", KeyFileFormat.PEMPublic);
+            application2.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic2", KeyFileFormat.PEMPublic);
+
+            applicationEntry1.Activation.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate1", KeyFileFormat.PEMPrivate);
+            applicationEntry2.Activation.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate2", KeyFileFormat.PEMPrivate);
+
+
+            // Test: Bagging on these for now, export in S/MIME formats
+
+            //application1.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic1", KeyFileFormat.X509DER);
+            //application2.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic2", KeyFileFormat.X509DER);
+
+            //applicationEntry1.Activation.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate1", KeyFileFormat.PKCS12);
+            //applicationEntry2.Activation.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate2", KeyFileFormat.PKCS12);
+
+            }
+
+
+
+        void CheckKeysDiffer(params KeyData[] keys) {
+
+            var dictionary = new SortedSet<string>();
+
+            foreach (var key in keys) {
+                key.TestNotNull();
+                dictionary.Add(key.GetKeyPair().KeyIdentifier).TestTrue();
+                }
+
+            }
+
+
         void CheckKeysMatch(params KeyData[] keys) {
 
             keys.TestNotNull();
