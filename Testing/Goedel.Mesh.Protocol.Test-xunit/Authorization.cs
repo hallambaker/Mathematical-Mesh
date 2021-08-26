@@ -22,33 +22,60 @@
 using System;
 using System.Collections.Generic;
 
+using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.KeyFile;
 using Goedel.Mesh;
+using Goedel.Mesh.Client;
 using Goedel.Mesh.Test;
 using Goedel.Registry;
 using Goedel.Test;
 using Goedel.Utilities;
+using Goedel.Test.Core;
 
 using Xunit;
+using Goedel.Cryptography;
 
 namespace Goedel.XUnit {
     public partial class TestService {
+
+
+        string TestFileText = "Test plaintext data";
 
         /// <summary>
         /// Connect a device by approving a request
         /// </summary>
         [Fact]
-        public void MeshDeviceDirectKey() {
-            var rights = new List<string> { Rights.IdRolesWeb };
+        public void MeshDeviceDirectKey() => MeshCheckAccountAuth(Rights.IdRolesWeb);
+
+        /// <summary>
+        /// Connect a device by approving a request
+        /// </summary>
+        [Fact]
+        public void MeshDeviceThresholdKey() => MeshCheckAccountAuth(Rights.IdRolesThreshold);
+
+        void MeshCheckAccountAuth(string role)    {
+            var rights = new List<string> { role };
 
 
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
+            // Encrypt file here
+            var testFile = new TestFile(TestFileText);
+            testFile.Encrypt(contextAccountAlice, AccountAlice, AccountAlice);
+            testFile.Decrypt(contextAccountAlice.KeyCollection);
+
+
             // New Device
             var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
                     AccountAlice);
+
+
+            // test decrypt - onbaording FAIL
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() => 
+                testFile.Decrypt(contextOnboardPending.KeyCollection));
+
 
             // Admin Device
             contextAccountAlice.Sync();
@@ -57,53 +84,30 @@ namespace Goedel.XUnit {
 
             // Check second device
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
-            ExerciseAccount(contextOnboarded);
+
+            // test decrypt, sync - onbaording Success
+
+            contextOnboarded.Sync();
+
+            var newContext = MeshMachineTest.RefetchContextUser(contextOnboarded);
+            testFile.Decrypt(contextOnboarded.KeyCollection);
+
+            contextAccountAlice.DeleteDevice(contextOnboarded.CatalogedDevice.DeviceUdf);
+
+            // test sync, decrypt - FAIL
+            Xunit.Assert.Throws<Exception> (() => contextOnboarded.Sync());
 
 
+            if (role == Rights.IdRolesThreshold) {
+                Xunit.Assert.Throws<Exception>(() => testFile.Decrypt(contextOnboarded.KeyCollection));
 
-            //Check the access catalog
-            //   Should have no threshold entry
-            //   Should have service auth entry
-
-            }
-
-        /// <summary>
-        /// Connect a device by approving a request
-        /// </summary>
-        [Fact]
-        public void MeshDeviceThresholdKey() {
-
-            var roles = new List<string> { Rights.IdRolesThreshold };
-
-            var testEnvironmentCommon = GetTestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                    DeviceAliceAdmin, AccountAlice, "main");
-
-            // New Device
-            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
-                    AccountAlice);
-
-            // Admin Device
-            contextAccountAlice.Sync();
-            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest, roles:roles);
-
-            // Check second device
-            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
-            ExerciseAccount(contextOnboarded);
-
-
-
-            // Delete second device
-
-            // check 
-
-
-            //Check the capability catalog
-            //   Should have threshold entry
-            //   Should have service auth entry
+                }
+            else {
+                testFile.Decrypt(contextOnboarded.KeyCollection);
+                }
 
             }
+
 
 
 
@@ -172,7 +176,7 @@ namespace Goedel.XUnit {
                     applicationEntrySsh1.Activation.ClientKey, applicationEntrySsh2.Activation.ClientKey,
                     applicationEntrySsh3.Activation.ClientKey);
 
-            // now extract some files
+            // Extract some files
 
             applicationSsh1.ClientKey.ToKeyFile("MeshDeviceSshPublic1", KeyFileFormat.OpenSSH);
             applicationSsh2.ClientKey.ToKeyFile("MeshDeviceSshPublic2", KeyFileFormat.OpenSSH);
@@ -263,7 +267,7 @@ namespace Goedel.XUnit {
             CheckKeysDiffer(application1.OpenpgpEncrypt, application1.OpenpgpSign, application1.SmimeEncrypt,
                 applicationEntry1.Activation.SmimeSign);
 
-            // now extract some files
+            // Extract some files
 
             application1.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic1", KeyFileFormat.PEMPublic);
             application2.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic2", KeyFileFormat.PEMPublic);

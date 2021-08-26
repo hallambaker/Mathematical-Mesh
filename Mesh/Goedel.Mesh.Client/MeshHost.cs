@@ -83,7 +83,7 @@ namespace Goedel.Mesh.Client {
 
             }
 
-        ContextAccount Register(CatalogedMachine catalogedMachine) {
+        public ContextAccount Register(CatalogedMachine catalogedMachine) {
             switch (catalogedMachine) {
                 // consider adding a machine catalog entry for a group...
                 case CatalogedStandard standardEntry: {

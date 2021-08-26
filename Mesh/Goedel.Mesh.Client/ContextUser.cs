@@ -329,6 +329,9 @@ namespace Goedel.Mesh.Client {
                 foreach (var entry in containerUpdate.Envelopes) {
                     if (CatalogedDevice.DeviceUdf == entry.Header.ContentMeta.UniqueId) {
 
+                        // current: Need to fix this because we should not get here.
+                        // current failing to decrypt here because we lack the account encrypt key???
+
                         catalogedDevice = entry.DecodeJsonObject(KeyCollection) as
                             CatalogedDevice;
                         }
@@ -930,6 +933,9 @@ namespace Goedel.Mesh.Client {
             var catalogDevice = transact.GetCatalogDevice();
 
             var deviceEntry = catalogDevice.Locate(id);
+
+            // Current: reate a revocation entry in the access log here
+            "Need to create a revocation entry in the access log".TaskFunctionality();
 
             transact.CatalogDelete(catalogDevice, deviceEntry);
             Transact(transact);

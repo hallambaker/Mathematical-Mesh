@@ -194,6 +194,11 @@ namespace Goedel.Mesh {
 
             AuthenticationPublic.MatchKeyIdentifier(
                 ConnectionDevice.AuthenticationPublic.KeyIdentifier).AssertTrue(NotAuthenticated.Throw);
+
+            // Current:  check the access log here
+            "Here we need to check the access log".TaskFunctionality();
+            
+            
             CredentialValidation = CredentialValidation.Account;
             return new MeshVerifiedAccount(this);
 

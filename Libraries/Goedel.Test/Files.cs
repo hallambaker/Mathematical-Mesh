@@ -41,6 +41,8 @@ namespace Goedel.Test {
             }
 
 
+
+
         public static void CheckFilesEqual(this string File1, string File2) {
 
             using var FileStream1 = File1.OpenFileRead();

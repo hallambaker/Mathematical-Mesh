@@ -67,8 +67,8 @@ namespace Scratchpad {
             //TestService.Test().MeshDeviceSsh();
             //TestService.Test().MeshDeviceMail();
 
-            //TestService.Test().MeshDeviceDirectKey();
-            TestService.Test().MeshDeviceThresholdKey();
+            TestService.Test().MeshDeviceDirectKey();
+            //TestService.Test().MeshDeviceThresholdKey();
 
 
             //ShellTestsHTTP.Test().TestMessageGroup();

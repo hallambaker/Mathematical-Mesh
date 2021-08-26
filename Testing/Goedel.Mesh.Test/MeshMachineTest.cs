@@ -32,6 +32,7 @@ using Goedel.Mesh.Client;
 using Goedel.Protocol.Presentation;
 using Goedel.Test;
 using Goedel.Test.Core;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Test {
 
@@ -104,6 +105,16 @@ namespace Goedel.Mesh.Test {
             var contextUser = result.MeshHost.CreateMesh(accountAddress, localName);
             return contextUser;
             }
+
+
+        public static ContextUser RefetchContextUser(ContextUser contextUser) {
+            var host = contextUser.MeshHost;
+            var catalogedMachine = contextUser.CatalogedMachine;
+
+            host.Deregister(contextUser);
+            return host.Register(catalogedMachine) as ContextUser;
+            }
+
 
         public override string ToString() => $"TestMachine:{Name}";
 
