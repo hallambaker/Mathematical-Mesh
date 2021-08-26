@@ -85,8 +85,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Read a byte in the reverse direction, i.e. the byte immediately preceding the 
-        /// current position.
+        /// Read a byte in the reverse direction, i.e. the byte immediately preceding the current position.
         /// </summary>
         /// <returns>The byte read or -1.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>

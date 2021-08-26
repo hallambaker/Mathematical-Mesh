@@ -107,8 +107,8 @@ namespace Goedel.Protocol {
 
 
     /// <summary>
-    /// Interface allowing a character or binary stream reader to checkpoint the
-    /// current point in the stream and return to it to re-read data.
+    /// Interface allowing a character or binary stream reader to checkpoint 
+    /// the current point in the stream and return to it to re-read data.
     /// </summary>
     public interface IBufferedStream {
 

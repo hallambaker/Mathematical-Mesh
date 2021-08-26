@@ -198,8 +198,8 @@ namespace Goedel.Cryptography.Dare {
         public virtual void WriteByte(byte Value) => StreamWrite.WriteByte(Value);
 
         /// <summary>
-        /// Writes a sequence of bytes to the current stream and advances the 
-        /// current position within this stream by the number of bytes written.
+        /// Writes a sequence of bytes to the current stream and advances
+        /// the current position within this stream by the number of bytes written.
         /// </summary>
         /// <param name="Buffer">An array of bytes. This method copies count bytes from buffer to the current stream.</param>
         /// <param name="Offset">The zero-based byte offset in buffer at which to begin copying bytes to the current stream.</param>
@@ -235,8 +235,7 @@ namespace Goedel.Cryptography.Dare {
         public virtual int ReadByte() => StreamRead.ReadByte();
 
         /// <summary>
-        /// Read a byte in the reverse direction, i.e. the byte immediately preceding the 
-        /// current position.
+        /// Read a byte in the reverse direction, i.e. the byte immediately preceding the current position.
         /// </summary>
         /// <returns>The byte read or -1.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>

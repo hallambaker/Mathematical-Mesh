@@ -88,8 +88,8 @@ namespace Goedel.Cryptography.PKIX {
         /// Set the validity interval in years from the present date.
         /// 
         /// To reduce errors caused by clock skew between machines, the time interval
-        /// is backdated to one minute after midnight UTC on the day of one hour before the
-        /// current time.
+        /// is backdated to one minute after midnight UTC on the day of one hour before 
+        /// the current time.
         /// </summary>
         /// <param name="Years">Number of years for certificate to be valid</param>
         public void SetValidity(int Years) {
@@ -101,8 +101,8 @@ namespace Goedel.Cryptography.PKIX {
         /// Set the validity interval to the present data plus a specified time span.
         /// 
         /// To reduce errors caused by clock skew between machines, the time interval
-        /// is backdated to one minute after midnight UTC on the day of one hour before the
-        /// current time.
+        /// is backdated to one minute after midnight UTC on the day of one hour before
+        /// the current time.
         /// </summary>
         /// <param name="TimeSpan">Time interval.</param>
         public void SetValidity(TimeSpan TimeSpan) {

@@ -67,7 +67,7 @@ namespace Goedel.Utilities {
 
         /// <summary>
         /// Writes a sequence of bytes to the current CryptoStream and advances the 
-        /// current position within the stream by the number of bytes written.
+        /// position within the stream by the number of bytes written.
         /// </summary>
         /// <param name="Stream">The stream to be written to.</param>
         /// <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from <paramref name="buffer"/> to the current stream.</param>

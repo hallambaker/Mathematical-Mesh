@@ -153,8 +153,7 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         public List<TraceMessage> Messages { get; set; }
 
-        /// <summary>
-        /// Current level of trace detail
+        /// <summary>Current level of trace detail
         /// </summary>
         public int Level => TraceDictionary.Level;
 

@@ -133,7 +133,7 @@ namespace Goedel.Protocol.Presentation {
 
         ///<inheritdoc/>
         public override void MutualKeyExchange(string keyId) {
-            var privateEphemeral = EphemeralsCurrent[0];  // hack, should pull ephemeral from current or previous.
+            var privateEphemeral = EphemeralsCurrent[0];  // hack, should pull ephemeral properly by Id.
             MutualKeyExchange(privateEphemeral, CredentialOther.AuthenticationPublic);
             }
 
