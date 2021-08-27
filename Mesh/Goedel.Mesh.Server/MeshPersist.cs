@@ -586,7 +586,7 @@ namespace Goedel.Mesh.Server {
 
             accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
             accountEntry.Verify(verifiedAccount);
-            return new AccountHandleVerified(accountEntry);
+            return new AccountHandleVerified(accountEntry, jpcSession.Credential);
             }
 
         /// <summary>

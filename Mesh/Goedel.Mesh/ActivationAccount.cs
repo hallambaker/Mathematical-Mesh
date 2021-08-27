@@ -281,12 +281,23 @@ namespace Goedel.Mesh {
 
 
             var connectionService = activationDevice.ConnectionService;
+            var connectionDevice = activationAccount.ConnectionDevice;
+
+            if (activationAccount.DefaultActive) {
+                connectionService.Active = true;
+                }
+            else {
+                var catalogAccess = transactContextAccount.GetCatalogAccess();
+                catalogAccess.Add(new AccessCapability() {
+                    Id = connectionService.AuthenticationPublic.KeyIdentifier
+                    });
+                }
+
             connectionService.AssertNotNull(Internal.Throw);
             connectionService.Envelope(signature, objectEncoding:
                         ObjectEncoding.JSON_B);
             connectionService.DareEnvelope.AssertNotNull(Internal.Throw);
 
-            var connectionDevice = activationAccount.ConnectionDevice;
             if (connectionDevice != null) {
                 connectionDevice.AssertNotNull(Internal.Throw);
                 connectionDevice.Envelope(signature, objectEncoding:
@@ -301,15 +312,7 @@ namespace Goedel.Mesh {
                 Authentication = connectionService.Authentication
                 };
 
-            if (activationAccount.DefaultActive) {
-                connectionAccount.Active = true;
-                }
-            else {
-                var catalogAccess = transactContextAccount.GetCatalogAccess();
-                catalogAccess.Add( new AccessCapability() {
-                            Id = connectionService.AuthenticationPublic.KeyIdentifier
-                            });
-                }
+
 
 
             connectionAccount.Strip();

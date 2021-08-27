@@ -283,6 +283,7 @@ namespace Goedel.Mesh.Client {
 
 
             var activationDevice = new ActivationDevice(profileDevice);
+            //activationDevice.ConnectionService.Active = true;
 
             //var activationAccount = MakeActivationAccount(profileDevice, activationDevice, roles, transactContextAccount);
             //activationDevice.Envelope();

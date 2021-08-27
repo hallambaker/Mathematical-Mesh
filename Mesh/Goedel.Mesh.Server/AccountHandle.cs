@@ -25,6 +25,7 @@
 using System.Collections.Generic;
 
 using Goedel.Cryptography.Dare;
+using Goedel.Protocol;
 using Goedel.Utilities;
 namespace Goedel.Mesh.Server {
 
@@ -186,6 +187,12 @@ namespace Goedel.Mesh.Server {
     /// Verified account accessor, has access to spools and to catalogues
     /// </summary>
     public class AccountHandleVerified : AccountHandleUnverified {
+        CatalogAccess CatalogAccess { get; }
+
+        protected override void Disposing() {
+            base.Disposing();
+            CatalogAccess?.Dispose();
+            }
 
         //public string Directory => AccountEntry.Directory;
 
@@ -193,9 +200,28 @@ namespace Goedel.Mesh.Server {
         /// Constructor returning a verified account handle for <paramref name="accountEntry"/>.
         /// </summary>
         /// <param name="accountEntry"></param>
-        public AccountHandleVerified(AccountEntry accountEntry) : base(accountEntry) {
+        public AccountHandleVerified(AccountEntry accountEntry, ICredential credential) : base(accountEntry) {
+
+
+            CatalogAccess= new CatalogAccess(AccountEntry.Directory);
+            VerifyAccess(credential as MeshCredential);
+            }
+
+
+        public void VerifyAccess(MeshCredential credential) {
+            if (CatalogAccess != null) {
+
+                foreach (var access in CatalogAccess.AsCatalogedType) {
+                    if (access.Capability is AccessCapability) {
+
+
+                        }
+                    }
+                }
+            credential.ConnectionDevice.Active.AssertTrue(NotAuthorized.Throw);
 
             }
+
 
         /// <summary>
         /// Return the status of the catalog <paramref name="label"/>.

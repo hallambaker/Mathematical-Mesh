@@ -271,7 +271,7 @@
             Verified account accessor, has access to spools and to catalogues
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.#ctor(Goedel.Mesh.Server.AccountEntry)">
+        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.#ctor(Goedel.Mesh.Server.AccountEntry,Goedel.Protocol.ICredential)">
             <summary>
             Constructor returning a verified account handle for <paramref name="accountEntry"/>.
             </summary>
