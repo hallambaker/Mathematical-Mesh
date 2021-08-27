@@ -1123,8 +1123,8 @@
         </member>
         <member name="T:Goedel.Protocol.IBufferedStream">
             <summary>
-            Interface allowing a character or binary stream reader to checkpoint the
-            current point in the stream and return to it to re-read data.
+            Interface allowing a character or binary stream reader to checkpoint 
+            the current point in the stream and return to it to re-read data.
             </summary>
         </member>
         <member name="M:Goedel.Protocol.IBufferedStream.Mark">

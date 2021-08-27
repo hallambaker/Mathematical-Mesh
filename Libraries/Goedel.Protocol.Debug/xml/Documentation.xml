@@ -128,8 +128,7 @@
             </summary>
         </member>
         <member name="P:Goedel.Protocol.Debug.TracePoint.Level">
-            <summary>
-            Current level of trace detail
+            <summary>Current level of trace detail
             </summary>
         </member>
         <member name="P:Goedel.Protocol.Debug.TracePoint.TraceDictionary">

@@ -601,14 +601,18 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The decoded object.</returns>
         public JsonObject DecodeJsonObject(IKeyLocate keyCollection = null) {
             var plaintext = GetPlaintext(keyCollection);
-
+            if (plaintext == null | plaintext?.Length ==0) {
+                return null;
+                }
             //Console.WriteLine(plaintext.ToUTF8());
 
             var reader = new JsonBcdReader(plaintext);
 
 
             var result = reader.ReadTaggedObject(TagDictionary);
-            result.Enveloped = this;
+            if (result != null) {
+                result.Enveloped = this;
+                }
             return result;
             }
 
