@@ -13541,6 +13541,10 @@
             ServiceId on the corresponding service capability.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Capability.Active">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Capability._Tag">
             <summary>
             Tag identifying this class

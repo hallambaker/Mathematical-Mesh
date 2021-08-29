@@ -73,8 +73,8 @@ namespace Goedel.XUnit {
 
 
             // test decrypt - onbaording FAIL
-            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() => 
-                testFile.Decrypt(contextOnboardPending.KeyCollection));
+            //Xunit.Assert.Throws<NoAvailableDecryptionKey>(() => 
+            //    testFile.Decrypt(contextOnboardPending.KeyCollection));
 
 
             // Admin Device
@@ -95,7 +95,7 @@ namespace Goedel.XUnit {
             contextAccountAlice.DeleteDevice(contextOnboarded.CatalogedDevice.DeviceUdf);
 
             // test sync, decrypt - FAIL
-            Xunit.Assert.Throws<Exception> (() => contextOnboarded.Sync());
+            Xunit.Assert.Throws<ServerResponseInvalid> (() => newContext.Sync());
 
 
             if (role == Rights.IdRolesThreshold) {

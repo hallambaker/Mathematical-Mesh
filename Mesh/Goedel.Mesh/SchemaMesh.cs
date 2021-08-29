@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/27/2021 5:40:14 PM
+//  This file was automatically generated at 8/29/2021 5:20:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -7607,6 +7607,15 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						Id  {get; set;}
+		bool								__Active = false;
+		private bool						_Active;
+        /// <summary>
+        /// </summary>
+
+		public virtual bool						Active {
+			get => _Active;
+			set {_Active = value; __Active = true; }
+			}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -7655,6 +7664,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Id", 1);
 					_writer.WriteString (Id);
 				}
+			if (__Active){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Active", 1);
+					_writer.WriteBoolean (Active);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -7687,6 +7701,10 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "Id" : {
 					Id = jsonReader.ReadString ();
+					break;
+					}
+				case "Active" : {
+					Active = jsonReader.ReadBoolean ();
 					break;
 					}
 				default : {

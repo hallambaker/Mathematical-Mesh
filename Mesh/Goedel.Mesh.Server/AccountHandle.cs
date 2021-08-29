@@ -208,12 +208,16 @@ namespace Goedel.Mesh.Server {
             }
 
 
-        public void VerifyAccess(MeshCredential credential) {
+        void VerifyAccess(MeshCredential credential) {
             if (CatalogAccess != null) {
 
                 foreach (var access in CatalogAccess.AsCatalogedType) {
-                    if (access.Capability is AccessCapability) {
-
+                    if (access.Capability is AccessCapability accessCapability) {
+                        if (credential?.ConnectionDevice?.AuthenticationPublic?.MatchKeyIdentifier(
+                            accessCapability.Id) == true) {
+                            accessCapability.Active.AssertTrue (NotAuthorized.Throw);
+                            return;
+                            }
 
                         }
                     }

@@ -735,6 +735,7 @@
 				|The identifier of the capability. If this is a user capability, MUST match the
 				|KeyData identifier. If this is a serviced capability, MUST match the value of
 				|ServiceId on the corresponding service capability.
+		Boolean Active
 
 	Structure AccessCapability
 		Inherits Capability

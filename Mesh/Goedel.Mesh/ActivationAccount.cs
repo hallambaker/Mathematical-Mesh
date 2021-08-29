@@ -283,22 +283,14 @@ namespace Goedel.Mesh {
             var connectionService = activationDevice.ConnectionService;
             var connectionDevice = activationAccount.ConnectionDevice;
 
-            if (activationAccount.DefaultActive) {
-                connectionService.Active = true;
-                }
-            else {
-                var catalogAccess = transactContextAccount.GetCatalogAccess();
-                catalogAccess.Add(new AccessCapability() {
-                    Id = connectionService.AuthenticationPublic.KeyIdentifier
-                    });
-                }
-
+            connectionService.Active = activationAccount.DefaultActive;
             connectionService.AssertNotNull(Internal.Throw);
             connectionService.Envelope(signature, objectEncoding:
                         ObjectEncoding.JSON_B);
             connectionService.DareEnvelope.AssertNotNull(Internal.Throw);
 
             if (connectionDevice != null) {
+                connectionDevice.Active = activationAccount.DefaultActive;
                 connectionDevice.AssertNotNull(Internal.Throw);
                 connectionDevice.Envelope(signature, objectEncoding:
                             ObjectEncoding.JSON_B);
@@ -312,30 +304,22 @@ namespace Goedel.Mesh {
                 Authentication = connectionService.Authentication
                 };
 
-
-
-
             connectionAccount.Strip();
             connectionAccount.Envelope(AdministratorSignatureKey, objectEncoding:
                         ObjectEncoding.JSON_B);
             connectionAccount.DareEnvelope.Strip();
 
-            // Wrap the connectionDevice and activationDevice in envelopes
-
-
-
-
-
             var accessCapability = new CatalogedAccess() {
                 Capability = new AccessCapability() {
-                    Id = connectionService.AuthenticationPublic.KeyIdentifier
+                    Id = connectionService.AuthenticationPublic.KeyIdentifier,
+                    Active = true
                     }
                 };
 
-            var catalogedAccessors = new List<CatalogedAccess> { accessCapability };
-
-
-
+            if (transactContextAccount != null) {
+                var catalogAccess = transactContextAccount.GetCatalogAccess();
+                transactContextAccount.CatalogUpdate(catalogAccess, accessCapability);
+                }
 
             var catalogEntryDevice = new CatalogedDevice() {
                 //Udf = activationAccount.ProfileSignature.Udf,

@@ -92,6 +92,11 @@ namespace Goedel.Mesh {
                     StatusExtended = (int)MeshServerStatus.NotAdministrator;
                     return;
                     }
+                case NotAuthorized e: {
+                    StatusDescriptionCode = MeshConstants.MeshServerStatusNotAuthorizedTag;
+                    StatusExtended = (int)MeshServerStatus.NotAuthorized;
+                    return;
+                    }
                 default:
                 break;
                 }
