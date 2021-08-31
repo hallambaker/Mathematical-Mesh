@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.IO;
 
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
@@ -157,68 +158,77 @@ namespace Goedel.Mesh.Client {
             // will fail because the ProfileService is not set.
             var serviceEncryptionKey = ContextUser.ProfileService.ServiceEncryption.CryptoKey;
 
-            // Create the capability 
-            var capabilityService = new CapabilityDecryptServiced() {
-                AuthenticationId = ContextUser.ProfileUser.Udf,
-                KeyDataEncryptionKey = serviceEncryptionKey
-                };
-
-            var capabilityMember = new CapabilityDecryptPartial() {
-                Id = ProfileGroup.AccountEncryption.Udf,
-                SubjectId = ProfileGroup.AccountEncryption.Udf,
-                ServiceAddress = AccountAddress,
-                KeyDataEncryptionKey = userEncryptionKey
-                };
-
             var keyGenerate = transactInvitation.GetCatalogAccess().TryFindKeyGenerate(
-                            ProfileGroup.AccountEncryption.Udf);
-            keyGenerate.CreateShares(capabilityService, capabilityMember);
+                ProfileGroup.AccountEncryption.Udf);
+            //var (keyData, capabilityDecryptServiced) = CatalogAccess.MakeShare(keyGenerate, AccountAddress);
 
-            // Fix up the identifiers.
-            capabilityMember.ServiceId = capabilityMember.KeyData.Udf;
-            capabilityService.Id = capabilityMember.ServiceId;
-            capabilityService.SubjectId = capabilityMember.ServiceId;
+            "Fix up add member to group.".TaskFunctionality(true);
+
+            throw new NYI();
+
+
+            //// Create the capability 
+            //var capabilityService = new CapabilityDecryptServiced() {
+            //    AuthenticationId = ContextUser.ProfileUser.Udf,
+            //    KeyDataEncryptionKey = serviceEncryptionKey
+            //    };
+
+            //var capabilityMember = new CapabilityDecryptPartial() {
+            //    Id = ProfileGroup.AccountEncryption.Udf,
+            //    SubjectId = ProfileGroup.AccountEncryption.Udf,
+            //    ServiceAddress = AccountAddress,
+            //    KeyDataEncryptionKey = userEncryptionKey
+            //    };
+
+            //var keyGenerate = transactInvitation.GetCatalogAccess().TryFindKeyGenerate(
+            //                ProfileGroup.AccountEncryption.Udf);
+            //keyGenerate.CreateShares(capabilityService, capabilityMember);
+
+            //// Fix up the identifiers.
+            //capabilityMember.ServiceId = capabilityMember.KeyData.Udf;
+            //capabilityService.Id = capabilityMember.ServiceId;
+            //capabilityService.SubjectId = capabilityMember.ServiceId;
 
             // Create and send the invitation
 
-            var listCapability = new List<CryptographicCapability> { capabilityMember };
+            //var listCapability = new List<CryptographicCapability> { capabilityMember };
 
-            var contact = CreateContact(listCapability);
+            //var contact = CreateContact(listCapability);
 
-            var groupInvitation = new GroupInvitation() {
-                Sender = ContextUser.AccountAddress,
-                Recipient = memberAddress,
-                Text = text,
-                Contact = contact
-                };
+            //var groupInvitation = new GroupInvitation() {
+            //    Sender = ContextUser.AccountAddress,
+            //    Recipient = memberAddress,
+            //    Text = text,
+            //    Contact = contact
+            //    };
 
-            var catalogedMember = new CatalogedMember() {
-                ContactAddress = memberAddress,
-                MemberCapabilityId = capabilityMember.Id,
-                ServiceCapabilityId = capabilityService.Id,
-                };
+            //var catalogedMember = new CatalogedMember() {
+            //    ContactAddress = memberAddress,
+            //    MemberCapabilityId = capabilityMember.Id,
+            //    ServiceCapabilityId = capabilityService.Id,
+            //    };
 
-            transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);
+            //transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);
 
-            // update the capabilities catalog to add the service capability
-            var catalogAccess = transactGroup.GetCatalogAccess();
-            var catalogedCapability = new CatalogedAccess(capabilityService);
-            transactGroup.CatalogUpdate(catalogAccess, catalogedCapability);
+            //// update the capabilities catalog to add the service capability
+            //var catalogAccess = transactGroup.GetCatalogAccess();
+            //var catalogedCapability = new CatalogedAccess(capabilityService);
+            //transactGroup.CatalogUpdate(catalogAccess, catalogedCapability);
 
-            // update the members catalog to add the member entry
-            var catalogMember = transactGroup.GetCatalogMember();
-            transactGroup.CatalogUpdate(catalogMember, catalogedMember);
+            //// update the members catalog to add the member entry
+            //var catalogMember = transactGroup.GetCatalogMember();
+            //transactGroup.CatalogUpdate(catalogMember, catalogedMember);
 
-            // commit the transactions
-            Transact(transactGroup);
-            Transact(transactInvitation);
+            //// commit the transactions
+            //Transact(transactGroup);
+            //Transact(transactInvitation);
 
-            // ToDo: Handle error return properly if the group transaction fails (need retry race);
+            //// ToDo: Handle error return properly if the group transaction fails (need retry race);
 
-            catalogAccess.Dump();
-            catalogMember.Dump();
+            //catalogAccess.Dump();
+            //catalogMember.Dump();
 
-            return catalogedMember;
+            //return catalogedMember;
             }
 
         /// <summary>

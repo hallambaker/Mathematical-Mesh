@@ -6331,11 +6331,6 @@
             The public key data formatted as a PKIX KeyInfo data blob.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPair.PrivateKeyInfoData">
-            <summary>
-            The private key data formatted as a PKIX KeyInfo data blob.
-            </summary>
-        </member>
         <member name="P:Goedel.Cryptography.KeyPair.PKIXPrivateKey">
             <summary>
             The private key data formatted as a PKIX KeyInfo data blob.
@@ -6758,11 +6753,6 @@
             The public key data formatted as a PKIX KeyInfo data blob.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPairDH.PrivateKeyInfoData">
-            <summary>
-            The private key data formatted as a PKIX KeyInfo data blob.
-            </summary>
-        </member>
         <member name="M:Goedel.Cryptography.KeyPairDH.#ctor(System.Int32,Goedel.Cryptography.KeySecurity)">
             <summary>
             Create a new DH keypair.
@@ -6969,11 +6959,6 @@
         <member name="P:Goedel.Cryptography.KeyPairECDH.KeyInfoData">
             <summary>
             The public key data formatted as a PKIX KeyInfo data blob.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.KeyPairECDH.PrivateKeyInfoData">
-            <summary>
-            The private key data formatted as a PKIX KeyInfo data blob.
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairECDH.KeyPairFactory(Goedel.Cryptography.CryptoAlgorithmId,System.Numerics.BigInteger,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
@@ -7644,11 +7629,6 @@
             Return a PKIX SubjectPublicKeyInfo structure for the public key.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.KeyPairRSA.PrivateKeyInfoData">
-            <summary>
-            Return a PKIX SubjectPublicKeyInfo structure for the private key.
-            </summary>
-        </member>
         <member name="M:Goedel.Cryptography.KeyPairRSA.#ctor(System.Security.Cryptography.RSACryptoServiceProvider,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
             <summary>
             Generate an ephemeral RSA key with the specified key size.
@@ -7714,7 +7694,7 @@
             <param name="pkixParameters">The parameters to construct from</param>
             <returns>The created key pair</returns>
         </member>
-        <member name="M:Goedel.Cryptography.KeyPairRSA.KeyPairPrivateFactory(Goedel.Cryptography.PKIX.PkixPrivateKeyRsa,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Cryptography.KeyPairRSA.KeyPairPrivateFactory(Goedel.Cryptography.PKIX.PkixPrivateKeyRsa,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Delegate to create a key pair base
             </summary>

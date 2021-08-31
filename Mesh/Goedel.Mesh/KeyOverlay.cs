@@ -167,15 +167,18 @@ namespace Goedel.Mesh {
                 MeshKeyOperation operation,
                 IKeyCollection keyCollection = null,
                 KeySecurity keySecurity = KeySecurity.Ephemeral) {
-            //Screen.WriteLine($"{type}=={actor}-{operation}::{secretSeed}");
+            //Screen.WriteLine($"{type}=={actor}-{operation}::{secretSeed.KeyType}");
 
 
             var keyName = type.ToLabel() + actor.ToLabel() + operation.ToLabel();
             var keyUses = GetMeshKeyType(operation);
             var cryptoAlgorithmID = GetCryptoAlgorithmID(operation, secretSeed);
 
-            return UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,
+            var result =  UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,
                     keySecurity, keyUses: keyUses, cryptoAlgorithmID, keyName) as KeyPairAdvanced;
+
+            Screen.WriteLine($"{type}=={actor}-{operation}::{secretSeed.KeyType} -> {result.KeyIdentifier}");
+            return result;
             }
 
         /// <summary>

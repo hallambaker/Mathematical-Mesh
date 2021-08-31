@@ -68,7 +68,6 @@ namespace Goedel.Cryptography {
 
         #endregion
 
-        KeySecurity keyType = KeySecurity.Public;
         byte[] encodedPrivateKey = null;
 
         /// <summary>
@@ -87,7 +86,7 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
 
             CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.X448);
-            this.keyType = keyType;
+            this.KeySecurity = keyType;
             KeyUses = keyUses;
             if (keyType == KeySecurity.Public) {
                 PublicKey = new CurveX448Public(key);
@@ -143,8 +142,11 @@ namespace Goedel.Cryptography {
             PrivateKey = privateKey;
             PublicKey = privateKey.Public;
             PKIXPublicKeyECDH = new PKIXPublicKeyX448(PublicKey.Encoding);
-            keyType = keySecurity;
+            KeySecurity = keySecurity;
             KeyUses = keyUses;
+            if (keySecurity.IsExportable()) {
+                PKIXPrivateKeyECDH = new PKIXPrivateKeyX448(privateKey.Secret, PKIXPublicKeyECDH);
+                }
             }
 
 
@@ -227,7 +229,7 @@ namespace Goedel.Cryptography {
         public override void Persist(KeyCollection keyCollection) {
             Assert.AssertTrue(PersistPending, CryptographicException.Throw);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyX448() { Data = encodedPrivateKey };
-            keyCollection.Persist(KeyIdentifier, pkix, keyType.IsExportable());
+            keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());
             }
 
         #region // Operations

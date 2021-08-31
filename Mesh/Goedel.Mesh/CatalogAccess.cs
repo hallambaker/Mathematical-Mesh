@@ -25,6 +25,7 @@ using System.Collections.Generic;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh {
@@ -186,7 +187,7 @@ namespace Goedel.Mesh {
             var catalogedCapability = catalogedEntry as CatalogedAccess;
             switch (catalogedCapability.Capability) {
                 case CapabilityDecrypt capabilityDecryption: {
-                    DictionaryDecryptByKeyId.Add(capabilityDecryption.SubjectId,
+                    DictionaryDecryptByKeyId.Add(capabilityDecryption.Id,
                         capabilityDecryption);
 
                     if (capabilityDecryption is ICapabilityPartial meshClientCapability) {
@@ -234,30 +235,63 @@ namespace Goedel.Mesh {
                     return new KeyData(keyPair, true);
                     }
                 case Degree.Service: {
-                    var keys = keyPair.IKeyAdvancedPrivate.MakeThresholdKeySet(2);
-                    var deviceKey = keys[0].GetKeyPair(KeySecurity.Exportable, KeyUses.Encrypt);
+                    transactContextAccount.AssertNotNull(NYI.Throw);
 
-                    var capabilityService = new CapabilityDecryptServiced() {
-                        Id = deviceKey.KeyIdentifier,
-                        SubjectId = right.Name,
-                        //AuthenticationId = ContextUser.ProfileUser.Udf,
-                        //KeyDataEncryptionKey = serviceEncryptionKey,
-                        KeyData = new KeyData(keys[1])
-                        };
+                    var (keyData, capabilityDecryptServiced) = MakeShare(keyPair,
+                            transactContextAccount.AccountId,
+                            transactContextAccount.ProfileService.ServiceEncryption.GetKeyPair(),
+                            transactContextAccount.ConnectionDevice.AuthenticationPublic.KeyIdentifier);
 
-                    var catalogedCapability = new CatalogedAccess(capabilityService);
+                    var catalogedCapability = new CatalogedAccess(capabilityDecryptServiced);
                     transactContextAccount.CatalogUpdate(this, catalogedCapability);
 
-                    return new KeyData(keys[0]) {
-                            Udf = keyPair.KeyIdentifier,
-                            ServiceId = deviceKey.KeyIdentifier };
-
+                    return keyData;
                     }
                 default: {
                     throw new NYI();
                     }
                 }
             }
+
+        /// <summary>
+        /// Make a KeyShare / capabilityService pair for the key <paramref name="key"/> and
+        /// label with the service identifier <paramref name="serviceId"/>.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="serviceId"></param>
+
+        public static (KeyData, CapabilityDecryptServiced) MakeShare(
+                    KeyPairAdvanced key, string serviceId,
+                    KeyPair serviceEncrypt, string granteeUdf, string granteeAccount=null) {
+
+            var shares = key.IKeyAdvancedPrivate.MakeThresholdKeySet(2);
+            var deviceKey = shares[0].GetKeyPair(KeySecurity.Exportable, KeyUses.Encrypt);
+
+
+            var keyShare = new KeyShare() {
+                PublicPrimary = Key.GetPublic(key),
+                Share = Key.GetPrivate(deviceKey),
+                ServiceAddress = serviceId,
+                };
+
+            var keyData = new KeyData() {
+                PrivateParameters = keyShare,
+                Udf = key.KeyIdentifier
+                };
+            var enveloped = keyData.Envelope(encryptionKey: serviceEncrypt);
+
+            var capabilityDecrypt = new CapabilityDecryptServiced() {
+                Id = deviceKey.KeyIdentifier,
+                //AuthenticationId = ContextUser.ProfileUser.Udf,
+                //KeyDataEncryptionKey = serviceEncryptionKey,
+                GranteeUdf = granteeUdf,
+                GranteeAccount = granteeAccount,
+                EnvelopedKeyShare = keyData.EnvelopedKeyData
+                };
+
+            return (keyData, capabilityDecrypt);
+            }
+
 
 
         #endregion

@@ -99,6 +99,14 @@ namespace Goedel.Mesh {
         ///<summary>The primary key is the value of the <see cref="Capability.Id"/> property.</summary>
         public override string _PrimaryKey => Id;
 
+        // current: implement here.
+        
+        ///<summary>Convenience accessor, pulls the information out of the key.</summary> 
+        public virtual string SubjectId => throw new NYI();
+        ///<summary>Convenience accessor, pulls the information out of the key.</summary> 
+        public virtual string SubjectAddress => throw new NYI();
+
+
         /// <summary>
         /// Default constructor used for deserialization.
         /// </summary>
@@ -112,7 +120,7 @@ namespace Goedel.Mesh {
         /// <param name="subjectId">The subject identifier.</param>
         /// <param name="capability">The capability type.</param>
         public CryptographicCapability(string subjectId, string capability) {
-            SubjectId = subjectId;
+            //SubjectId = subjectId;
 
             var contentType = MeshConstants.IanaTypeMeshCapabilityId + capability;
             Id = UDF.ContentDigestOfDataString(subjectId.ToUTF8(), contentType);
@@ -228,7 +236,7 @@ namespace Goedel.Mesh {
 
             lagrange.Future();
 
-
+            // current: this is where decryption capabilities are used
             var operation = new CryptographicOperationKeyAgreement() {
                 KeyId = keyId,
                 PublicKey = Key.GetPublic(ephemeral)

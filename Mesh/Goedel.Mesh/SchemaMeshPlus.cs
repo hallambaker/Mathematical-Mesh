@@ -27,6 +27,7 @@ using System.Text;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
+
 namespace Goedel.Mesh {
 
 
@@ -149,8 +150,6 @@ namespace Goedel.Mesh {
 
 
         }
-
-
     public partial class MessageError {
         /////<summary>Always false for an error result.</summary>
         //public override bool Success => false;

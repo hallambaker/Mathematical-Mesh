@@ -46,6 +46,25 @@
 			Description
 				|The private key parameters as defined in the JOSE specification.
 
+		//String ServiceId
+		//	Description
+		//		|The identifier used to claim the capability from the service.[Only present for
+		//		|a partial key.]
+		//String ServiceAddress
+		//	Description
+		//		|The service account that supports a serviced capability. [Only present for
+		//		|a partial key.]	
+	
+
+
+	Structure KeyShare
+		Inherits Key
+		TStruct Key PublicPrimary
+			Description
+				|The public key parameters of the primary key.
+		TStruct Key Share
+			Description
+				|The private key parameters of the share as defined in the JOSE specification.		
 		String ServiceId
 			Description
 				|The identifier used to claim the capability from the service.[Only present for
@@ -54,7 +73,7 @@
 			Description
 				|The service account that supports a serviced capability. [Only present for
 				|a partial key.]	
-	
+
 	Structure CompositePrivate
 		Inherits Key
 		String DeviceKeyUdf
@@ -732,9 +751,10 @@
 		Abstract
 		String Id
 			Description
-				|The identifier of the capability. If this is a user capability, MUST match the
-				|KeyData identifier. If this is a serviced capability, MUST match the value of
-				|ServiceId on the corresponding service capability.
+				|The identifier of the capability. If this is a cryptographic capability,
+				|this is the KeyIdentifier of the primary key that was shared. If
+				|this is an access capability, this is the KeyIdentifier of the authentication
+				|key being authorized for access.
 		Boolean Active
 
 	Structure AccessCapability
@@ -753,16 +773,21 @@
 		Struct KeyData KeyData 
 			Description
 				|The key that enables the capability
-		Struct Enveloped<KeyData> EnvelopedKeyShares
-			Multiple
+		String GranteeAccount
+			Description
+		String GranteeUdf
+			Description
+		Struct Enveloped<KeyData> EnvelopedKeyShare
 			Description
 				|One or more enveloped key shares.
-		String SubjectId
-			Description
-				|The identifier of the resource that is controlled using the key.
-		String SubjectAddress
-			Description
-				|The address of the resource that is controlled using the key.
+
+
+		//String SubjectId
+		//	Description
+		//		|The identifier of the resource that is controlled using the key.
+		//String SubjectAddress
+		//	Description
+		//		|The address of the resource that is controlled using the key.
 
 	Structure CapabilityDecrypt
 		Inherits CryptographicCapability

@@ -144,6 +144,9 @@ namespace Goedel.Cryptography {
             PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
             KeySecurity = keySecurity;
             KeyUses = keyUses;
+            if (keySecurity.IsExportable()) {
+                PKIXPrivateKeyECDH = new PKIXPrivateKeyEd448(privateKey.Secret, PKIXPublicKeyECDH);
+                }
             }
 
 

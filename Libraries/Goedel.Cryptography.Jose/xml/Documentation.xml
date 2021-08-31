@@ -101,7 +101,7 @@
             Return the parameters as a PKIX RSAPublicKey structure;
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyDH.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyDH.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Extract a KeyPair object from the JOSE data structure.
             </summary>
@@ -201,7 +201,7 @@
             Return the parameters as PKIX RSAPrivateKey structure;
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyDH.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyDH.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Extract a KeyPair object from the JOSE data structure.
             </summary>
@@ -293,7 +293,7 @@
             Return the parameters as a PKIX RSAPublicKey structure;
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyECDH.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyECDH.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Extract a KeyPair object from the JOSE data structure.
             </summary>
@@ -406,7 +406,7 @@
             Return the parameters as PKIX RSAPrivateKey structure;
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyECDH.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyECDH.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Extract a KeyPair object from the JOSE data structure.
             </summary>
@@ -1623,7 +1623,7 @@
         <member name="P:Goedel.Cryptography.Jose.Key.KeyPair">
             <summary>Convert to Goedel.Cryptography.KeyPair</summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.Key.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Cryptography.Jose.Key.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Extract a KeyPair object from the JOSE data structure.
             </summary>
@@ -1860,7 +1860,7 @@
             Return the parameters as a PKIX RSAPublicKey structure;
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyRSA.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyRSA.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Extract a KeyPair object from the JOSE data structure.
             </summary>
@@ -1981,7 +1981,7 @@
             Return the parameters as PKIX RSAPrivateKey structure;
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyRSA.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyRSA.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Extract a KeyPair object from the JOSE data structure.
             </summary>

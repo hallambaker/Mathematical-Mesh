@@ -64,10 +64,11 @@ namespace Goedel.Mesh {
                 Catalog<TEntry> catalog,
                 TEntry catalogedEntry) where TEntry : CatalogedEntry;
 
+        string AccountId { get; }
 
+        ProfileService ProfileService { get; }
 
-
-
+        ConnectionDevice ConnectionDevice { get; }
 
         }
 
@@ -178,11 +179,16 @@ namespace Goedel.Mesh {
                 return;
                 }
 
-            ProfileSignatureKey = ProfileSignature?.GetKeyPair(KeySecurity.Exportable);
-            AdministratorSignatureKey = AdministratorSignature?.GetKeyPair(KeySecurity.Exportable);
-            AccountEncryptionKey = AccountEncryption?.GetKeyPair(KeySecurity.Exportable);
-            AccountAuthenticationKey = AccountAuthentication?.GetKeyPair(KeySecurity.Exportable);
-            AccountSignatureKey = AccountSignature?.GetKeyPair(KeySecurity.Exportable);
+            ProfileSignatureKey = ProfileSignature?.GetKeyPair(
+                    KeySecurity.Exportable, keyCollection);
+            AdministratorSignatureKey = AdministratorSignature?.GetKeyPair
+                    (KeySecurity.Exportable, keyCollection);
+            AccountEncryptionKey = AccountEncryption?.GetKeyPair(
+                    KeySecurity.Exportable, keyCollection);
+            AccountAuthenticationKey = AccountAuthentication?.GetKeyPair(
+                    KeySecurity.Exportable, keyCollection);
+            AccountSignatureKey = AccountSignature?.GetKeyPair(
+                    KeySecurity.Exportable, keyCollection);
 
             if (AccountEncryptionKey != null) {
                 keyCollection.Add(AccountEncryptionKey);

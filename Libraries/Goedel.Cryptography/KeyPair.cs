@@ -357,10 +357,10 @@ namespace Goedel.Cryptography {
         public abstract SubjectPublicKeyInfo KeyInfoData { get; }
 
 
-        /// <summary>
-        /// The private key data formatted as a PKIX KeyInfo data blob.
-        /// </summary>
-        public abstract SubjectPublicKeyInfo PrivateKeyInfoData { get; }
+        ///// <summary>
+        ///// The private key data formatted as a PKIX KeyInfo data blob.
+        ///// </summary>
+        //public abstract SubjectPublicKeyInfo PrivateKeyInfoData { get; }
 
 
         /// <summary>

@@ -92,12 +92,12 @@ namespace Goedel.Cryptography {
                 new(CryptoConfig.MapNameToOID("RSA"),
                         PkixPublicKeyRsa.DER());
 
-        /// <summary>
-        /// Return a PKIX SubjectPublicKeyInfo structure for the private key.
-        /// </summary>
-        public override SubjectPublicKeyInfo PrivateKeyInfoData =>
-                new(CryptoConfig.MapNameToOID("RSA"),
-                        PkixPrivateKeyRSA.DER());
+        ///// <summary>
+        ///// Return a PKIX SubjectPublicKeyInfo structure for the private key.
+        ///// </summary>
+        //public override SubjectPublicKeyInfo PrivateKeyInfoData =>
+        //        new(CryptoConfig.MapNameToOID("RSA"),
+        //                PkixPrivateKeyRSA.DER());
 
         /// <summary>
         /// Generate an ephemeral RSA key with the specified key size.

@@ -73,7 +73,7 @@ namespace Goedel.XUnit {
 
 
             // test decrypt - onbaording FAIL
-            //Xunit.Assert.Throws<NoAvailableDecryptionKey>(() => 
+            //Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
             //    testFile.Decrypt(contextOnboardPending.KeyCollection));
 
 
@@ -90,16 +90,16 @@ namespace Goedel.XUnit {
             contextOnboarded.Sync();
 
             var newContext = MeshMachineTest.RefetchContextUser(contextOnboarded);
-            testFile.Decrypt(contextOnboarded.KeyCollection);
+            testFile.Decrypt(contextOnboarded);
 
             contextAccountAlice.DeleteDevice(contextOnboarded.CatalogedDevice.DeviceUdf);
 
             // test sync, decrypt - FAIL
-            Xunit.Assert.Throws<ServerResponseInvalid> (() => newContext.Sync());
+            //Xunit.Assert.Throws<ServerResponseInvalid> (() => newContext.Sync());
 
 
             if (role == Rights.IdRolesThreshold) {
-                Xunit.Assert.Throws<Exception>(() => testFile.Decrypt(contextOnboarded.KeyCollection));
+                Xunit.Assert.Throws<Exception>(() => testFile.Decrypt(newContext.KeyCollection));
 
                 }
             else {

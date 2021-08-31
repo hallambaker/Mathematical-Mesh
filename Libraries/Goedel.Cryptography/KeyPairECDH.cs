@@ -138,10 +138,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         public override SubjectPublicKeyInfo KeyInfoData => PKIXPublicKeyECDH.SubjectPublicKeyInfo();
 
-        /// <summary>
-        /// The private key data formatted as a PKIX KeyInfo data blob.
-        /// </summary>
-        public override SubjectPublicKeyInfo PrivateKeyInfoData => PKIXPrivateKeyECDH.SubjectPublicKeyInfo();
+        ///// <summary>
+        ///// The private key data formatted as a PKIX KeyInfo data blob.
+        ///// </summary>
+        //public override SubjectPublicKeyInfo PrivateKeyInfoData => PKIXPrivateKeyECDH.SubjectPublicKeyInfo();
 
 
         /// <summary>

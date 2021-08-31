@@ -30,6 +30,10 @@ namespace Goedel.Cryptography {
     /// Interface describing private key operations
     /// </summary>
     public interface IKeyDecrypt {
+
+        // current: IKeyDecrypt is where it is at.
+
+
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
@@ -310,7 +314,7 @@ namespace Goedel.Cryptography {
     /// <returns>the created key pair</returns>
     public delegate KeyPair FactoryRSAPrivateKeyDelegate(
             PkixPrivateKeyRsa pkixParameters,
-            KeySecurity keyType, KeyCollection keyCollection);
+            KeySecurity keyType, IKeyLocate keyCollection);
 
     /// <summary>
     /// RSA Key Pair
@@ -337,7 +341,8 @@ namespace Goedel.Cryptography {
         /// Construct a KeyPair entry from PKIX parameters. Initialized by the cryptographic
         /// platform provider.
         /// </summary>
-        public static FactoryRSAPrivateKeyDelegate KeyPairPrivateFactory { get; set; } = KeyPairRSA.KeyPairPrivateFactory;
+        public static FactoryRSAPrivateKeyDelegate KeyPairPrivateFactory { get; set; } = 
+                    KeyPairRSA.KeyPairPrivateFactory;
 
 
 

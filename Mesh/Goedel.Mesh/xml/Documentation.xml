@@ -1120,6 +1120,12 @@
         <member name="P:Goedel.Mesh.CryptographicCapability._PrimaryKey">
             <summary>The primary key is the value of the <see cref="P:Goedel.Mesh.Capability.Id"/> property.</summary>
         </member>
+        <member name="P:Goedel.Mesh.CryptographicCapability.SubjectId">
+            <summary>Convenience accessor, pulls the information out of the key.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicCapability.SubjectAddress">
+            <summary>Convenience accessor, pulls the information out of the key.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.CryptographicCapability.#ctor">
             <summary>
             Default constructor used for deserialization.
@@ -1138,19 +1144,17 @@
             The key that enables the capability
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CryptographicCapability.EnvelopedKeyShares">
+        <member name="P:Goedel.Mesh.CryptographicCapability.GranteeAccount">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicCapability.GranteeUdf">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicCapability.EnvelopedKeyShare">
              <summary>
             One or more enveloped key shares.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CryptographicCapability.SubjectId">
-             <summary>
-            The identifier of the resource that is controlled using the key.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CryptographicCapability.SubjectAddress">
-             <summary>
-            The address of the resource that is controlled using the key.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CryptographicCapability._Tag">
@@ -1866,6 +1870,14 @@
             in the dictionaries serving key discovery.
             </summary>
             <param name="catalogedEntry">The entry being updated.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogAccess.MakeShare(Goedel.Cryptography.KeyPairAdvanced,System.String,Goedel.Cryptography.KeyPair,System.String,System.String)">
+            <summary>
+            Make a KeyShare / capabilityService pair for the key <paramref name="key"/> and
+            label with the service identifier <paramref name="serviceId"/>.
+            </summary>
+            <param name="key"></param>
+            <param name="serviceId"></param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedAccess">
              <summary>
@@ -5869,6 +5881,141 @@
             <param name="actor">The actor for whom the key is generated.</param>
             <param name="operation">The operation for which the key is to be used.</param>
             <returns>The derrived private key</returns>
+        </member>
+        <member name="T:Goedel.Mesh.KeyShare">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyShare.PublicPrimary">
+             <summary>
+            The public key parameters of the primary key.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyShare.Share">
+             <summary>
+            The private key parameters of the share as defined in the JOSE specification.		
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyShare.ServiceId">
+             <summary>
+            The identifier used to claim the capability from the service.[Only present for
+            a partial key.]
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyShare.ServiceAddress">
+             <summary>
+            The service account that supports a serviced capability. [Only present for
+            a partial key.]	
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyShare._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.KeyShare.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.KeyShare._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.KeyShare.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.KeyShare.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.KeyShare.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.KeyShare.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.KeyPairServiced">
+            <summary>
+             A serviced KeyPair
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyPairServiced.KeyUses">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.KeyPairServiced.LengthSignature">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.KeyPairServiced.KeyInfoData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.KeyPairServiced.PKIXPrivateKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.KeyPairServiced.PkixPublicKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.KeyPairServiced.PublicOnly">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.KeyPairServiced.Share">
+            <summary>The key share</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.KeyPairServiced.Primary">
+            <summary>The key share</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.KeyPairServiced.ServiceAddress">
+            <summary>The service address</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.KeyPairServiced.#ctor(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPairAdvanced,System.String,Goedel.Cryptography.IKeyLocate)">
+            <summary>
+            Constructor returning a serviced key pair with public parameters <paramref name="primary"/>
+            and share <paramref name="share"/>.
+            </summary>
+            <param name="primary">The public parameters of the shared key.</param>
+            <param name="share">The threshold share.</param>
+        </member>
+        <member name="M:Goedel.Mesh.KeyPairServiced.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.KeyPairServiced.KeyPairPublic">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.KeyPairServiced.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.KeyPairServiced.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.KeyPairServiced.Persist(Goedel.Cryptography.KeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.KeyPairServiced.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.StateSpoolInbound">
             <summary>Inbound spool message state</summary>
@@ -11706,6 +11853,9 @@
              trust assertions associated with a public key.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.KeyData.EnvelopedKeyData">
+            <summary>Typed enveloped data</summary> 
+        </member>
         <member name="F:Goedel.Mesh.KeyData.keyPair">
             <summary>
             The cryptolib representation of the Key Pair. This is the point of access
@@ -11737,7 +11887,7 @@
             <param name="TestUDF">The fingerprint value.</param>
             <returns>true if the verification succeeds, false otherwise.</returns>
         </member>
-        <member name="M:Goedel.Mesh.KeyData.GetKeyPair(Goedel.Cryptography.KeySecurity)">
+        <member name="M:Goedel.Mesh.KeyData.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Return a <see cref="T:Goedel.Cryptography.KeyPair"/> instance for the key parameters.
             </summary>
@@ -11838,18 +11988,6 @@
         <member name="P:Goedel.Mesh.KeyData.PrivateParameters">
              <summary>
             The private key parameters as defined in the JOSE specification.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyData.ServiceId">
-             <summary>
-            The identifier used to claim the capability from the service.[Only present for
-            a partial key.]
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyData.ServiceAddress">
-             <summary>
-            The service account that supports a serviced capability. [Only present for
-            a partial key.]	
              </summary>
         </member>
         <member name="P:Goedel.Mesh.KeyData._Tag">
@@ -13536,9 +13674,10 @@
         </member>
         <member name="P:Goedel.Mesh.Capability.Id">
              <summary>
-            The identifier of the capability. If this is a user capability, MUST match the
-            KeyData identifier. If this is a serviced capability, MUST match the value of
-            ServiceId on the corresponding service capability.
+            The identifier of the capability. If this is a cryptographic capability,
+            this is the KeyIdentifier of the primary key that was shared. If
+            this is an access capability, this is the KeyIdentifier of the authentication
+            key being authorized for access.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.Capability.Active">

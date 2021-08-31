@@ -333,7 +333,7 @@ namespace Goedel.Cryptography.Algorithms {
         public byte[] Encoding { get; }
 
         /// <summary>The random secret used to generate the private key</summary>
-        byte[] Secret { get; }
+        public byte[] Secret { get; }
 
         /// <summary>If true, this is a recryption key.</summary>
         public bool IsRecryption { get; set; } = false;

@@ -152,7 +152,7 @@ namespace Goedel.Mesh.Client {
 
             // Activate the device to communicate as the account (via threshold)
             ActivationAccount = CatalogedDevice?.GetActivationAccount(KeyCollection);
-            ActivationAccount.Activate(KeyCollection);
+            ActivationAccount.Activate(this);
 
             if (KeyAccountEncryption != null) {
                 KeyCollection.Add(KeyAccountEncryption);

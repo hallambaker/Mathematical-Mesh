@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 8/29/2021 5:20:51 PM
+//  This file was automatically generated at 8/31/2021 4:21:31 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -76,6 +76,7 @@ namespace Goedel.Mesh {
 				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"KeyData", KeyData._Factory},
+			{"KeyShare", KeyShare._Factory},
 			{"CompositePrivate", CompositePrivate._Factory},
 			{"Assertion", Assertion._Factory},
 			{"Condition", Condition._Factory},
@@ -229,18 +230,6 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual Key						PrivateParameters  {get; set;}
-        /// <summary>
-        ///The identifier used to claim the capability from the service.[Only present for
-        ///a partial key.]
-        /// </summary>
-
-		public virtual string						ServiceId  {get; set;}
-        /// <summary>
-        ///The service account that supports a serviced capability. [Only present for
-        ///a partial key.]	
-        /// </summary>
-
-		public virtual string						ServiceAddress  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -347,16 +336,6 @@ namespace Goedel.Mesh {
 						_writer.WriteObjectEnd();
 						}
 				}
-			if (ServiceId != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceId", 1);
-					_writer.WriteString (ServiceId);
-				}
-			if (ServiceAddress != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceAddress", 1);
-					_writer.WriteString (ServiceAddress);
-				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -429,6 +408,162 @@ namespace Goedel.Mesh {
 					PrivateParameters = Key.FromJson (jsonReader, true) ;  // A tagged structure
 					break;
 					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class KeyShare : Key {
+        /// <summary>
+        ///The public key parameters of the primary key.
+        /// </summary>
+
+		public virtual Key						PublicPrimary  {get; set;}
+        /// <summary>
+        ///The private key parameters of the share as defined in the JOSE specification.		
+        /// </summary>
+
+		public virtual Key						Share  {get; set;}
+        /// <summary>
+        ///The identifier used to claim the capability from the service.[Only present for
+        ///a partial key.]
+        /// </summary>
+
+		public virtual string						ServiceId  {get; set;}
+        /// <summary>
+        ///The service account that supports a serviced capability. [Only present for
+        ///a partial key.]	
+        /// </summary>
+
+		public virtual string						ServiceAddress  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "KeyShare";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new KeyShare();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((Key)this).SerializeX(_writer, false, ref _first);
+			if (PublicPrimary != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("PublicPrimary", 1);
+					// expand this to a tagged structure
+					//PublicPrimary.Serialize (_writer, false);
+					{
+						_writer.WriteObjectStart();
+						_writer.WriteToken(PublicPrimary._Tag, 1);
+						bool firstinner = true;
+						PublicPrimary.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
+						}
+				}
+			if (Share != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Share", 1);
+					// expand this to a tagged structure
+					//Share.Serialize (_writer, false);
+					{
+						_writer.WriteObjectStart();
+						_writer.WriteToken(Share._Tag, 1);
+						bool firstinner = true;
+						Share.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
+						}
+				}
+			if (ServiceId != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ServiceId", 1);
+					_writer.WriteString (ServiceId);
+				}
+			if (ServiceAddress != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ServiceAddress", 1);
+					_writer.WriteString (ServiceAddress);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new KeyShare FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as KeyShare;
+				}
+		    var Result = new KeyShare ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "PublicPrimary" : {
+					PublicPrimary = Key.FromJson (jsonReader, true) ;  // A tagged structure
+					break;
+					}
+				case "Share" : {
+					Share = Key.FromJson (jsonReader, true) ;  // A tagged structure
+					break;
+					}
 				case "ServiceId" : {
 					ServiceId = jsonReader.ReadString ();
 					break;
@@ -438,6 +573,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				default : {
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}
@@ -7601,9 +7737,10 @@ namespace Goedel.Mesh {
 	/// </summary>
 	abstract public partial class Capability : MeshItem {
         /// <summary>
-        ///The identifier of the capability. If this is a user capability, MUST match the
-        ///KeyData identifier. If this is a serviced capability, MUST match the value of
-        ///ServiceId on the corresponding service capability.
+        ///The identifier of the capability. If this is a cryptographic capability,
+        ///this is the KeyIdentifier of the primary key that was shared. If
+        ///this is an access capability, this is the KeyIdentifier of the authentication
+        ///key being authorized for access.
         /// </summary>
 
 		public virtual string						Id  {get; set;}
@@ -7845,20 +7982,18 @@ namespace Goedel.Mesh {
 
 		public virtual KeyData						KeyData  {get; set;}
         /// <summary>
+        /// </summary>
+
+		public virtual string						GranteeAccount  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						GranteeUdf  {get; set;}
+        /// <summary>
         ///One or more enveloped key shares.
         /// </summary>
 
-		public virtual List<Enveloped<KeyData>>				EnvelopedKeyShares  {get; set;}
-        /// <summary>
-        ///The identifier of the resource that is controlled using the key.
-        /// </summary>
-
-		public virtual string						SubjectId  {get; set;}
-        /// <summary>
-        ///The address of the resource that is controlled using the key.
-        /// </summary>
-
-		public virtual string						SubjectAddress  {get; set;}
+		public virtual Enveloped<KeyData>						EnvelopedKeyShare  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -7908,32 +8043,20 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("KeyData", 1);
 					KeyData.Serialize (_writer, false);
 				}
-			if (EnvelopedKeyShares != null) {
+			if (GranteeAccount != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedKeyShares", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in EnvelopedKeyShares) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
+				_writer.WriteToken ("GranteeAccount", 1);
+					_writer.WriteString (GranteeAccount);
 				}
-
-			if (SubjectId != null) {
+			if (GranteeUdf != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SubjectId", 1);
-					_writer.WriteString (SubjectId);
+				_writer.WriteToken ("GranteeUdf", 1);
+					_writer.WriteString (GranteeUdf);
 				}
-			if (SubjectAddress != null) {
+			if (EnvelopedKeyShare != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SubjectAddress", 1);
-					_writer.WriteString (SubjectAddress);
+				_writer.WriteToken ("EnvelopedKeyShare", 1);
+					EnvelopedKeyShare.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -7972,26 +8095,19 @@ namespace Goedel.Mesh {
  
 					break;
 					}
-				case "EnvelopedKeyShares" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					EnvelopedKeyShares = new List <Enveloped<KeyData>> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  Enveloped<KeyData> ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new Enveloped<KeyData> (jsonReader);
-						EnvelopedKeyShares.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
+				case "GranteeAccount" : {
+					GranteeAccount = jsonReader.ReadString ();
 					break;
 					}
-				case "SubjectId" : {
-					SubjectId = jsonReader.ReadString ();
+				case "GranteeUdf" : {
+					GranteeUdf = jsonReader.ReadString ();
 					break;
 					}
-				case "SubjectAddress" : {
-					SubjectAddress = jsonReader.ReadString ();
+				case "EnvelopedKeyShare" : {
+					// An untagged structure
+					EnvelopedKeyShare = new Enveloped<KeyData> ();
+					EnvelopedKeyShare.Deserialize (jsonReader);
+ 
 					break;
 					}
 				default : {

@@ -24,6 +24,7 @@
 
 
 using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
@@ -34,6 +35,13 @@ namespace Goedel.Mesh {
 
 
     public partial class KeyData {
+
+
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<KeyData> EnvelopedKeyData =>
+            envelopedProfileDevice ?? new Enveloped<KeyData>(DareEnvelope).
+                    CacheValue(out envelopedProfileDevice);
+        Enveloped<KeyData> envelopedProfileDevice;
 
 
         /// <summary>
@@ -109,9 +117,10 @@ namespace Goedel.Mesh {
         /// Return a <see cref="KeyPair"/> instance for the key parameters.
         /// </summary>
         /// <returns>The created key pair.</returns>
-        public KeyPair GetKeyPair(KeySecurity keySecurity = KeySecurity.Bound) {
+        public KeyPair GetKeyPair(KeySecurity keySecurity = KeySecurity.Bound,
+                    IKeyCollection keyCollection=null) {
             if (PrivateParameters != null) {
-                return PrivateParameters.GetKeyPair(keySecurity);
+                return PrivateParameters.GetKeyPair(keySecurity, keyCollection);
                 }
             if (PublicParameters != null) {
                 return PublicParameters.GetKeyPair(keySecurity);
@@ -161,17 +170,13 @@ namespace Goedel.Mesh {
                 _ => throw new NYI()
                 };
 
+
         /// <summary>
         /// Create a Private Parameters property that contains the 
         /// private parameters of the key.
         /// </summary>
         public void ExportPrivateParameters() =>
-            PrivateParameters = CryptoKey switch {
-                KeyPairBaseRSA keyPairBaseRSA => new PrivateKeyRSA(keyPairBaseRSA),
-                KeyPairECDH keyPairECDH => new PrivateKeyECDH(keyPairECDH),
-                KeyPairDH keyPairDH => new PrivateKeyDH(keyPairDH),
-                _ => throw new NYI()
-                };
+            PrivateParameters = Key.GetPrivate(CryptoKey);
 
 
         /// <summary>

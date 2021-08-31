@@ -222,6 +222,7 @@ namespace Goedel.Mesh.Client {
         /// <summary>The account context in which this transaction takes place.</summary>
         public override ContextAccount ContextAccount { get; }
 
+
         /// <summary>
         /// Constructor creating transaction instance under the account context
         /// <paramref name="contextAccount"/>
@@ -252,6 +253,12 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>Inbound message signature key, the device admin signature key</summary> 
         static KeyPair SignLocalMessage => null; // ToDo: set signing key to the device admin key.
+
+        public string AccountId => ContextAccount.AccountAddress;
+        public ProfileService ProfileService => ContextAccount.ProfileService;
+
+        public ConnectionDevice ConnectionDevice => (ContextAccount as ContextUser)?.ConnectionDevice;
+
 
         bool TryFindKeyEncryption(string recipient, out CryptoKey cryptoKey) =>
                 ContextAccount.TryFindKeyEncryption(recipient, out cryptoKey);

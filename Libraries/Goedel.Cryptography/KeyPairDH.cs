@@ -223,10 +223,10 @@ namespace Goedel.Cryptography {
         public override SubjectPublicKeyInfo KeyInfoData => PKIXPublicKeyDH.SubjectPublicKeyInfo();
 
 
-        /// <summary>
-        /// The private key data formatted as a PKIX KeyInfo data blob.
-        /// </summary>
-        public override SubjectPublicKeyInfo PrivateKeyInfoData => PKIXPrivateKeyDH.SubjectPublicKeyInfo();
+        ///// <summary>
+        ///// The private key data formatted as a PKIX KeyInfo data blob.
+        ///// </summary>
+        //public override SubjectPublicKeyInfo PrivateKeyInfoData => PKIXPrivateKeyDH.SubjectPublicKeyInfo();
 
 
         #endregion
