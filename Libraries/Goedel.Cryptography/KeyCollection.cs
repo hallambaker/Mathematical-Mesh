@@ -88,6 +88,17 @@ namespace Goedel.Cryptography {
         void Persist(KeyPair keyPair);
 
 
+        /// <summary>
+        /// Perform a remote key agreement between <paramref name="share"/> and 
+        /// <paramref name="ephemeral"/>.
+        /// </summary>
+        /// <param name="serviceAddress"></param>
+        /// <param name="ephemeral">The public ephemeral.</param>
+        /// <returns>The key agreement result share.ephemeral.</returns>
+        /// <param name="shareId"></param>
+        KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId);
+
+
         }
 
 
@@ -301,7 +312,6 @@ namespace Goedel.Cryptography {
         /// <returns>The identifier.</returns>
         public virtual bool TryFindPublicKey(string keyId, out CryptoKey cryptoKey) =>
                     TryMatchRecipientKeyPair(keyId, out cryptoKey);
-
-
+        public abstract KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId);
         }
     }

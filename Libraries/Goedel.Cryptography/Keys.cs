@@ -194,17 +194,15 @@ namespace Goedel.Cryptography {
             return false;
             }
 
-        /// <summary>
-        /// Add a keypair to the collection.
-        /// </summary>
-        /// <param name="keyPair">The key pair to add.</param>
+        ///<inheritdoc cref="IKeyLocate.Add"/>
         public void Add(KeyPair keyPair) => throw new NotImplementedException();
 
-        /// <summary>
-        /// Persist a private key if permitted by the KeySecurity model of the key.
-        /// </summary>
-        /// <param name="keyPair">The key to persist.</param>
+        ///<inheritdoc cref="IKeyLocate.Persist"/>
         public void Persist(KeyPair keyPair) => throw new NotImplementedException();
+
+        ///<inheritdoc cref="IKeyLocate.RemoteAgreement"/>
+        public KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId) => throw new NotImplementedException();
+
 
         #endregion
 
@@ -289,8 +287,7 @@ namespace Goedel.Cryptography {
         /// <param name="keyPair">The key pair to perform the agreement against.</param>
         /// <returns>The key agreement result.</returns>
         public virtual KeyAgreementResult Agreement(KeyPair keyPair) => throw new System.NotImplementedException();
-
-        }
+         }
 
 
 

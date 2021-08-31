@@ -21,8 +21,11 @@
 #endregion
 
 
+using System.Collections.Generic;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
 
@@ -123,7 +126,7 @@ namespace Goedel.Mesh {
 
         #endregion
         #region // Private key methods (require service interaction
-        
+
         ///<inheritdoc/>
         public override byte[] Decrypt(
                 byte[] encryptedKey,
@@ -131,7 +134,14 @@ namespace Goedel.Mesh {
                 CryptoAlgorithmId algorithmID =
                 CryptoAlgorithmId.Default,
                 KeyAgreementResult partial = null,
-                byte[] salt = null) => throw new System.NotImplementedException();
+                byte[] salt = null) {
+
+            var partial1 = KeyCollection.RemoteAgreement(ServiceAddress, 
+                ephemeral as KeyPairAdvanced, Share.KeyIdentifier);
+            var partial2 = Share.Agreement(ephemeral);
+
+            return partial1.Decrypt(encryptedKey, ephemeral, partial2, salt);
+            }
         
         ///<inheritdoc/>
         public override void Persist(KeyCollection keyCollection) => throw new System.NotImplementedException();

@@ -26,6 +26,7 @@ using System.IO;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
@@ -642,6 +643,35 @@ namespace Goedel.Mesh.Client {
         /// <param name="cryptoKey">The key to validate.</param>
         /// <returns>The identifier.</returns>
         public virtual bool ValidateTrustAnchor(CryptoKey cryptoKey) => throw new NYI();
+
+
+        ///<inheritdoc cref="IKeyLocate.RemoteAgreement"/>
+        public KeyAgreementResult RemoteAgreement(
+                    string serviceAddress,
+                    KeyPairAdvanced ephemeral,
+                    string shareId) {
+
+            var operation = new CryptographicOperationKeyAgreement() {
+                KeyId = shareId,
+                PublicKey = Key.GetPublic(ephemeral)
+                };
+
+            var operateRequest = new OperateRequest() {
+                AccountAddress = serviceAddress,
+                Operations = new List<CryptographicOperation>() {
+                    operation
+                    }
+                };
+;
+            var response = MeshClient.Operate(operateRequest);
+
+            var result = response.Results[0] as CryptographicResultKeyAgreement;
+
+            return result.KeyAgreement.KeyAgreementResult;
+
+
+            }
+
 
         #endregion
         #region Implement IDare

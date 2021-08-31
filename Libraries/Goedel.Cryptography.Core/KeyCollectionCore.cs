@@ -183,6 +183,9 @@ namespace Goedel.Cryptography.Core {
         /// <param name="anchor">The trust anchor to evaluate relative to.</param>
         /// <returns>The trust result.</returns>
         public TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null) => throw new NotImplementedException();
+        
+        ///<inheritdoc/>
+        public override KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId) => throw new NotImplementedException();
         }
 
 

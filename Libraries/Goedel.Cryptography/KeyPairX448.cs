@@ -31,29 +31,29 @@ namespace Goedel.Cryptography {
     public class KeyPairX448 : KeyPairECDH {
 
         #region //Properties
-        ///<summary>The public key value.</summary>
+        ///<inheritdoc/>
         public CurveX448Public PublicKey { get; set; }
 
-        ///<summary>The implementation private key value (if exportable)</summary>
+        ///<inheritdoc/>
         public CurveX448Private PrivateKey { get; set; }
 
-        ///<summary>The implementation public key value</summary>
+        ///<inheritdoc/>
         public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
 
-        ///<summary>The implementation private key value (if exportable)</summary>
+        ///<inheritdoc/>
         public override IKeyAdvancedPrivate IKeyAdvancedPrivate => PrivateKey;
 
-        ///<summary>The private key parameters represented in PKIX form</summary>
+        ///<inheritdoc/>
         public override PKIXPrivateKeyECDH PKIXPrivateKeyECDH { get; }
 
-        ///<summary>The public key parameters represented in PKIX form</summary>
+        ///<inheritdoc/>
         public override PKIXPublicKeyECDH PKIXPublicKeyECDH { get; }
 
-        /// <summary>The supported key uses (e.g. signing, encryption)</summary>
+        ///<inheritdoc/>
         public override KeyUses KeyUses { get; } = KeyUses.Any;
 
 
-        ///<summary>If true, the key only has access to public key values.</summary>
+        ///<inheritdoc/>
         public override bool PublicOnly => PrivateKey == null;
 
         /// <summary>
@@ -194,38 +194,21 @@ namespace Goedel.Cryptography {
             }
 
 
-        /// <summary>
-        /// Factory method to produce a key pair from key parameters.
-        /// </summary>
-        /// <param name="PrivateKey">The private key</param>
-        /// <param name="keySecurity">The key security model.</param>
-        /// <param name="keyUses">The permitted key uses.</param>
-        /// <returns>The key pair created.</returns>
+        ///<inheritdoc/>
         public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate PrivateKey,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any) =>
             new KeyPairX448((CurveX448Private)PrivateKey, keySecurity, keyUses);
 
-        /// <summary>
-        /// Factory method to produce a key pair from implementation public key parameters
-        /// </summary>
-        /// <param name="PublicKey">The public key</param>
-        /// <param name="keyUses">The permitted key uses.</param>
-        /// <returns>The key pair created.</returns>
+        ///<inheritdoc/>
         public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic PublicKey,
                     KeyUses keyUses = KeyUses.Any) =>
             new KeyPairX448((CurveX448Public)PublicKey, keyUses: keyUses);
 
-        /// <summary>
-        /// Returns a new KeyPair instance which only has the public values.
-        /// </summary>
-        /// <returns>The new keypair that contains only the public values.</returns>
+        ///<inheritdoc/>
         public override KeyPair KeyPairPublic() => new KeyPairX448(PublicKey, keyUses: KeyUses);
 
-        /// <summary>
-        /// Persist the key to a key collection. Note that it is only possible to store a 
-        /// </summary>
-        /// <param name="keyCollection"></param>
+        ///<inheritdoc/>
         public override void Persist(KeyCollection keyCollection) {
             Assert.AssertTrue(PersistPending, CryptographicException.Throw);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyX448() { Data = encodedPrivateKey };
@@ -252,65 +235,34 @@ namespace Goedel.Cryptography {
             return new CurveX448Result() { AgreementX448 = Agreement };
             }
 
-        /// <summary>
-        /// Encrypt a bulk key.
-        /// </summary>
-        /// <returns>The encoder</returns>
-        /// <param name="Key">The key to encrypt.</param>
-        /// <param name="Ephemeral">The ephemeral key to use for the exchange (if used)</param>
-        /// <param name="Exchange">The private key to use for the exchange.</param>
-        /// <param name="Salt">Optional salt value for use in key derivation.</param>
+        ///<inheritdoc/>
         public override void Encrypt(byte[] Key,
-            out byte[] Exchange,
-            out KeyPair Ephemeral,
-            byte[] Salt = null) => PublicKey.Agreement().Encrypt(Key, out Exchange, out Ephemeral, Salt);
+            out byte[] exchange,
+            out KeyPair ephemeral,
+            byte[] salt = null) => PublicKey.Agreement().Encrypt(Key, out exchange, out ephemeral, salt);
 
-        /// <summary>
-        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
-        /// </summary>
-        /// <param name="EncryptedKey">The encrypted session</param>
-        /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
-        /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <param name="Partial">Partial key agreement carry in (for recryption)</param>
-        /// <param name="Salt">Optional salt value for use in key derivation. If specified
-        /// must match the salt used to encrypt.</param>        
-        /// <returns>The decoded data instance</returns>
-        public override byte[] Decrypt(byte[] EncryptedKey,
-            KeyPair Ephemeral = null,
-            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
-            KeyAgreementResult Partial = null, byte[] Salt = null) {
+        ///<inheritdoc/>
+        public override byte[] Decrypt(byte[] encryptedKey,
+            KeyPair ephemeral = null,
+            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+            KeyAgreementResult partial = null, byte[] salt = null) {
 
-            var keyPairX448 = Ephemeral as KeyPairX448;
+            var keyPairX448 = ephemeral as KeyPairX448;
             Assert.AssertNotNull(keyPairX448, KeyTypeMismatch.Throw);
 
-            var Agreementx = Agreement(keyPairX448, Partial as CurveX448Result);
-            return Agreementx.Decrypt(EncryptedKey, Ephemeral, Partial, Salt);
+            var Agreementx = Agreement(keyPairX448, partial as CurveX448Result);
+            return Agreementx.Decrypt(encryptedKey, ephemeral, partial, salt);
             }
 
-        /// <summary>
-        /// Sign a precomputed digest
-        /// </summary>
-        /// <param name="Data">The data to sign.</param>
-        /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <param name="Context">Additional data added to the signature scope
-        /// for protocol isolation.</param>
-        /// <returns>The signature data</returns>
-        public override byte[] SignHash(byte[] Data,
-                CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
-                byte[] Context = null) => throw new InvalidOperation();
+        ///<inheritdoc/>
+        public override byte[] SignHash(byte[] data,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                byte[] context = null) => throw new InvalidOperation();
 
-        /// <summary>
-        /// Verify a signature over the purported data digest.
-        /// </summary>
-        /// <param name="Signature">The signature blob value.</param>
-        /// <param name="AlgorithmID">The signature and hash algorithm to use.</param>
-        /// <param name="Context">Additional data added to the signature scope
-        /// for protocol isolation.</param>
-        /// <param name="Data">The digest value to be verified.</param>
-        /// <returns>True if the signature is valid, otherwise false.</returns>
+        ///<inheritdoc/>
         public override bool VerifyHash(
-            byte[] Data,
-            byte[] Signature,
+            byte[] data,
+            byte[] signature,
             CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
                 byte[] Context = null) => throw new InvalidOperation();
         #endregion

@@ -55,6 +55,9 @@
             <param name="anchor">The trust anchor to evaluate relative to.</param>
             <returns>The trust result.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Cryptography.Core.NamespaceDoc">
             <summary>
             Provides platform specific support functions for Goedel.Cryptography

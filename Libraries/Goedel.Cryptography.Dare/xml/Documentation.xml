@@ -5664,48 +5664,22 @@
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.KeyCollectionEphemeral.ErasePrivateKey(System.String)">
-            <summary>
-            Attempt to erase the private key with fingerprint <paramref name="udf"/> from the
-            associated persistence store.
-            </summary>
-            <param name="udf"></param>
-            <returns>True if the key was found, otherwise false.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.KeyCollectionEphemeral.LocatePrivateKey(System.String)">
-            <summary>
-            Locate the private key with fingerprint <paramref name="udf"/> and return
-            the corresponding JSON description.
-            </summary>
-            <param name="udf">Key to locate</param>
-            <returns>Exception <see cref="T:Goedel.Cryptography.PrivateKeyNotFound"/> since there is no 
-            backing store.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.KeyCollectionEphemeral.Persist(System.String,Goedel.Cryptography.PKIX.IPKIXPrivateKey,System.Boolean)">
-            <summary>
-            Persist the key pair specified by <paramref name="privateKey"/> and mark as exportable
-            or non-exportable according to the value of <paramref name="Exportable"/>.
-            </summary>
-            <param name="udf">The UDF of the key</param>
-            <param name="privateKey">The private key parameters.</param>
-            <param name="Exportable">If true, the key is exportable.</param>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.KeyCollectionEphemeral.Persist(System.String,Goedel.Cryptography.IJson,System.Boolean)">
-            <summary>
-            Persist the key pair specified by <paramref name="joseKey"/> and mark as exportable
-            or non-exportable according to the value of <paramref name="exportable"/>.
-            </summary>
-            <param name="udf">The UDF of the key</param>
-            <param name="joseKey">The private key parameters.</param>
-            <param name="exportable">If true, the key is exportable.</param>
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.KeyCollectionEphemeral.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.KeyCollectionEphemeral.ValidateTrustPath(Goedel.Cryptography.Dare.DareSignature,System.String)">
-            <summary>
-            Attempt to form a trust path for the key used to sign <paramref name="dareSignature"/>.
-            </summary>
-            <param name="dareSignature">The signature to validate.</param>
-            <param name="anchor">If present specifies the fingerprint of a key that MUST anchor
-            the trust path.</param>
-            <returns>The result of the trust path analysis.</returns>
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.Dare.NamespaceDoc">
             <summary>

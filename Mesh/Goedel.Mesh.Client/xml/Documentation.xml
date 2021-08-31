@@ -648,6 +648,9 @@
             <param name="cryptoKey">The key to validate.</param>
             <returns>The identifier.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
+            <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)"/>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.DareEncode(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Collections.Generic.List{System.String},System.Boolean)">
             <summary>
             Create a new DARE Envelope from the specified parameters.

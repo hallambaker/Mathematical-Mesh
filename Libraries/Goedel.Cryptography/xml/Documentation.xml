@@ -5895,6 +5895,16 @@
             </summary>
             <param name="keyPair">The key to persist.</param>
         </member>
+        <member name="M:Goedel.Cryptography.IKeyLocate.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
+            <summary>
+            Perform a remote key agreement between <paramref name="share"/> and 
+            <paramref name="ephemeral"/>.
+            </summary>
+            <param name="serviceAddress"></param>
+            <param name="ephemeral">The public ephemeral.</param>
+            <returns>The key agreement result share.ephemeral.</returns>
+            <param name="shareId"></param>
+        </member>
         <member name="T:Goedel.Cryptography.KeyCollectionDelegate">
             <summary>
             Return a new KeyCollection
@@ -8057,28 +8067,28 @@
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairX448.PublicKey">
-            <summary>The public key value.</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairX448.PrivateKey">
-            <summary>The implementation private key value (if exportable)</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairX448.IKeyAdvancedPublic">
-            <summary>The implementation public key value</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairX448.IKeyAdvancedPrivate">
-            <summary>The implementation private key value (if exportable)</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairX448.PKIXPrivateKeyECDH">
-            <summary>The private key parameters represented in PKIX form</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairX448.PKIXPublicKeyECDH">
-            <summary>The public key parameters represented in PKIX form</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairX448.KeyUses">
-            <summary>The supported key uses (e.g. signing, encryption)</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairX448.PublicOnly">
-            <summary>If true, the key only has access to public key values.</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.KeyPairX448.PublicData">
             <summary>
@@ -8142,33 +8152,16 @@
             <param name="keyUses">The permitted key uses.</param>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.KeyPair(Goedel.Cryptography.IKeyAdvancedPrivate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
-            <summary>
-            Factory method to produce a key pair from key parameters.
-            </summary>
-            <param name="PrivateKey">The private key</param>
-            <param name="keySecurity">The key security model.</param>
-            <param name="keyUses">The permitted key uses.</param>
-            <returns>The key pair created.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.KeyPair(Goedel.Cryptography.IKeyAdvancedPublic,Goedel.Cryptography.KeyUses)">
-            <summary>
-            Factory method to produce a key pair from implementation public key parameters
-            </summary>
-            <param name="PublicKey">The public key</param>
-            <param name="keyUses">The permitted key uses.</param>
-            <returns>The key pair created.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.KeyPairPublic">
-            <summary>
-            Returns a new KeyPair instance which only has the public values.
-            </summary>
-            <returns>The new keypair that contains only the public values.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.Persist(Goedel.Cryptography.KeyCollection)">
-            <summary>
-            Persist the key to a key collection. Note that it is only possible to store a 
-            </summary>
-            <param name="keyCollection"></param>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.Agreement(Goedel.Cryptography.KeyPairX448,Goedel.Cryptography.Algorithms.CurveX448Result)">
             <summary>
@@ -8179,47 +8172,16 @@
             <returns>The key agreement value ZZ</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
-            <summary>
-            Encrypt a bulk key.
-            </summary>
-            <returns>The encoder</returns>
-            <param name="Key">The key to encrypt.</param>
-            <param name="Ephemeral">The ephemeral key to use for the exchange (if used)</param>
-            <param name="Exchange">The private key to use for the exchange.</param>
-            <param name="Salt">Optional salt value for use in key derivation.</param>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
-            <summary>
-            Perform a key exchange to encrypt a bulk or wrapped key under this one.
-            </summary>
-            <param name="EncryptedKey">The encrypted session</param>
-            <param name="Ephemeral">Ephemeral key input (required for DH)</param>
-            <param name="AlgorithmID">The algorithm to use.</param>
-            <param name="Partial">Partial key agreement carry in (for recryption)</param>
-            <param name="Salt">Optional salt value for use in key derivation. If specified
-            must match the salt used to encrypt.</param>        
-            <returns>The decoded data instance</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
-            <summary>
-            Sign a precomputed digest
-            </summary>
-            <param name="Data">The data to sign.</param>
-            <param name="AlgorithmID">The algorithm to use.</param>
-            <param name="Context">Additional data added to the signature scope
-            for protocol isolation.</param>
-            <returns>The signature data</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.VerifyHash(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
-            <summary>
-            Verify a signature over the purported data digest.
-            </summary>
-            <param name="Signature">The signature blob value.</param>
-            <param name="AlgorithmID">The signature and hash algorithm to use.</param>
-            <param name="Context">Additional data added to the signature scope
-            for protocol isolation.</param>
-            <param name="Data">The digest value to be verified.</param>
-            <returns>True if the signature is valid, otherwise false.</returns>
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.IKeyDecrypt">
             <summary>
@@ -8328,16 +8290,13 @@
             <returns>A KeyPair instance bound to the private key.</returns>
         </member>
         <member name="M:Goedel.Cryptography.CryptoKey.Add(Goedel.Cryptography.KeyPair)">
-            <summary>
-            Add a keypair to the collection.
-            </summary>
-            <param name="keyPair">The key pair to add.</param>
+            <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.Add(Goedel.Cryptography.KeyPair)"/>
         </member>
         <member name="M:Goedel.Cryptography.CryptoKey.Persist(Goedel.Cryptography.KeyPair)">
-            <summary>
-            Persist a private key if permitted by the KeySecurity model of the key.
-            </summary>
-            <param name="keyPair">The key to persist.</param>
+            <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.Persist(Goedel.Cryptography.KeyPair)"/>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptoKey.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
+            <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)"/>
         </member>
         <member name="M:Goedel.Cryptography.CryptoKey.MatchKeyIdentifier(System.String)">
             <summary>
