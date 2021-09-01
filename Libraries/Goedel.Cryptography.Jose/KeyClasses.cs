@@ -148,7 +148,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keySecurity">The key security level.</param>
         public KeyContainer(byte[] keyData, KeySecurity keySecurity) {
             Exportable = keySecurity.IsExportable();
-            this.KeyData = keyData;
+            this.KeyCore = keyData;
             }
 
         }

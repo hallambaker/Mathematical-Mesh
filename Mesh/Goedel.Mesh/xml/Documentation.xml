@@ -6011,6 +6011,9 @@
         <member name="M:Goedel.Mesh.KeyPairServiced.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Mesh.KeyPairServiced.Agreement(Goedel.Cryptography.KeyPair)">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.KeyPairServiced.Persist(Goedel.Cryptography.KeyCollection)">
             <inheritdoc/>
         </member>

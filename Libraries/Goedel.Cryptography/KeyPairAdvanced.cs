@@ -24,6 +24,7 @@ using System.Numerics;
 
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -287,13 +288,16 @@ namespace Goedel.Cryptography {
         public virtual void Encrypt(byte[] key,
             out byte[] exchange, out KeyPair ephemeral, byte[] salt = null) {
 
-            // Console.Write($"PRK Encrypt is {IKM.ToStringBase16()}");
+            Screen.WriteLine($"PRK Encrypt is {IKM.ToStringBase16()}");
 
             var EncryptionKey = KeyDerive.Derive(salt, length: 256);
-            //Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
 
             exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, key);
             ephemeral = EphemeralKeyPair;
+
+            Screen.WriteLine($"Ephemeral {ephemeral.KeyIdentifier}");
+            Screen.WriteLine($"    IKM {IKM.ToStringBase16FormatHex()}");
+            Screen.WriteLine($"    EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
             }
 
         /// <summary>
@@ -313,8 +317,9 @@ namespace Goedel.Cryptography {
 
 
             var EncryptionKey = KeyDerive.Derive(salt, length: 256);
-
-            //Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
+            Screen.WriteLine($"Ephemeral {ephemeral.KeyIdentifier}");
+            Screen.WriteLine($"    IKM {IKM.ToStringBase16FormatHex()}");
+            Screen.WriteLine($"    EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
 
 
             //var KeySize = (encryptedKey.Length * 8) - 64;

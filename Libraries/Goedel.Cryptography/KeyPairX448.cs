@@ -224,7 +224,7 @@ namespace Goedel.Cryptography {
         /// <param name="Public">Public key parameters</param>
         /// <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
         /// <returns>The key agreement value ZZ</returns>
-        ResultECDH Agreement(KeyPairX448 Public, CurveX448Result Carry = null) {
+        public ResultECDH Agreement(KeyPairX448 Public, CurveX448Result Carry = null) {
             Assert.AssertTrue(KeyUses.HasFlag(KeyUses.Encrypt), CryptographicOperationNotSupported.Throw);
 
             CurveX448 Agreement;

@@ -26,7 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Goedel.Mesh.Test {
-    public class TestService {
+    public class TestHost {
         static string Domain => "example.com";
 
         static string Protocol => "mmm";

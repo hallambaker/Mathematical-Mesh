@@ -1266,7 +1266,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Cryptography.Jose.KeyData">
+        <member name="T:Goedel.Cryptography.Jose.KeyCore">
              <summary>
             
              Describe a cryptographic key
@@ -1275,64 +1275,64 @@
             Represents a JOSE KeyData structure
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyData.Enc">
+        <member name="P:Goedel.Cryptography.Jose.KeyCore.Enc">
              <summary>
             Bulk encryption algorithm for content
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyData.Dig">
+        <member name="P:Goedel.Cryptography.Jose.KeyCore.Dig">
              <summary>
             Digest algorithm hint
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyData.Alg">
+        <member name="P:Goedel.Cryptography.Jose.KeyCore.Alg">
              <summary>
             Key exchange algorithm
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyData.Kid">
+        <member name="P:Goedel.Cryptography.Jose.KeyCore.Kid">
              <summary>
             Key identifier. If a UDF fingerprint is used to identify the 
             key it is placed in this field.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyData.X5u">
+        <member name="P:Goedel.Cryptography.Jose.KeyCore.X5u">
              <summary>
             URL identifying an X.509 public key certificate
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyData.X5c">
+        <member name="P:Goedel.Cryptography.Jose.KeyCore.X5c">
              <summary>
             An X.509 public key certificate
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyData.X5t">
+        <member name="P:Goedel.Cryptography.Jose.KeyCore.X5t">
              <summary>
             SHA-1 fingerprint of X.509 certificate
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyData.X5tS256">
+        <member name="P:Goedel.Cryptography.Jose.KeyCore.X5tS256">
              <summary>
             SHA-2-256 fingerprint of X.509 certificate
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyData._Tag">
+        <member name="P:Goedel.Cryptography.Jose.KeyCore._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyData.__Tag">
+        <member name="F:Goedel.Cryptography.Jose.KeyCore.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyData._Factory">
+        <member name="M:Goedel.Cryptography.Jose.KeyCore._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyData.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Cryptography.Jose.KeyCore.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -1341,7 +1341,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyData.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Cryptography.Jose.KeyCore.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -1352,7 +1352,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyData.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Jose.KeyCore.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -1360,19 +1360,19 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyData.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Cryptography.Jose.KeyCore.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyData.#ctor">
+        <member name="M:Goedel.Cryptography.Jose.KeyCore.#ctor">
             <summary>
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyData.#ctor(Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Cryptography.Jose.KeyCore.#ctor(Goedel.Cryptography.CryptoKey)">
             <summary>
             Builds a KeyData object from a key.
             </summary>
@@ -1461,7 +1461,7 @@
             If false a handler library MUST NOT permit the private key to be exported.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyContainer.KeyData">
+        <member name="P:Goedel.Cryptography.Jose.KeyContainer.KeyCore">
              <summary>
             The key data.
              </summary>

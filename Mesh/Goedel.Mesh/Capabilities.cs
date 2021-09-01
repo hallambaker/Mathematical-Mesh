@@ -27,6 +27,7 @@ using System.Numerics;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
 using Goedel.Utilities;
 
 
@@ -135,9 +136,13 @@ namespace Goedel.Mesh {
 
 
 
-        public void DecryptShare(IKeyCollection keyCollection) {
+        public KeyPair DecryptShare(IKeyCollection keyCollection) {
+
+            //Screen.WriteLine($"Decode from  {EnvelopedKeyShare.Header.Recipients[0]}");
+            //JsonReader.Trace = true;
+
             var keyShare = EnvelopedKeyShare.Decode(keyCollection);
-            KeyShare = keyShare.GetKeyPairAdvanced();
+            return keyShare.PrivateParameters.GetKeyPair(KeySecurity.Ephemeral);
             }
 
         }

@@ -27,17 +27,17 @@ namespace Goedel.Cryptography.Jose {
     /// <summary>
     /// Represents a JOSE KeyData structure
     /// </summary>
-    public partial class KeyData {
+    public partial class KeyCore {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public KeyData() { }
+        public KeyCore() { }
 
         /// <summary>
         /// Builds a KeyData object from a key.
         /// </summary>
         /// <param name="CryptoKey">The input data</param>
-        public KeyData(CryptoKey CryptoKey) {
+        public KeyCore(CryptoKey CryptoKey) {
             }
 
         }

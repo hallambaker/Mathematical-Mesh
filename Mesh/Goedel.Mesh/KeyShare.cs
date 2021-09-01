@@ -143,11 +143,20 @@ namespace Goedel.Mesh {
             //current
             var partial1 = KeyCollection.RemoteAgreement(ServiceAddress, 
                 ephemeral as KeyPairAdvanced, Share.KeyIdentifier);
-            var partial2 = Share.Agreement(ephemeral);
 
-            return partial1.Decrypt(encryptedKey, ephemeral, partial2, salt);
+
+            return Share.Decrypt(encryptedKey, ephemeral, algorithmID, partial1, salt);
+
+
+            //var partial2 = Share.Agreement(ephemeral);
+
+            //return partial2.Decrypt(encryptedKey, ephemeral, partial2, salt);
             }
-        
+
+        ///<inheritdoc/>
+        public override KeyAgreementResult Agreement(KeyPair keyPair) => Share.Agreement(keyPair);
+
+
         ///<inheritdoc/>
         public override void Persist(KeyCollection keyCollection) => throw new System.NotImplementedException();
         

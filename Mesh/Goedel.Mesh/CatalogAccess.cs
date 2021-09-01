@@ -266,19 +266,40 @@ namespace Goedel.Mesh {
 
             var shares = key.IKeyAdvancedPrivate.MakeThresholdKeySet(2);
             var deviceKey = shares[0].GetKeyPair(KeySecurity.Exportable, KeyUses.Encrypt);
+            var remoteKey = shares[1].GetKeyPair(KeySecurity.Exportable, KeyUses.Encrypt);
 
 
-            var keyShare = new KeyShare() {
+            Screen.WriteLine($"Remote {remoteKey.KeyIdentifier} Device {deviceKey.KeyIdentifier}");
+
+
+
+            var deviceKeyShare = new KeyShare() {
                 PublicPrimary = Key.GetPublic(key),
                 Share = Key.GetPrivate(deviceKey),
                 ServiceAddress = serviceId,
                 };
 
-            var keyData = new KeyData() {
-                PrivateParameters = keyShare,
+            var deviceKeyData = new KeyData() {
+                PrivateParameters = deviceKeyShare,
                 Udf = key.KeyIdentifier
                 };
-            var enveloped = keyData.Envelope(encryptionKey: serviceEncrypt);
+
+
+            var remoteKeyShare = new KeyShare() {
+                PublicPrimary = Key.GetPublic(key),
+                Share = Key.GetPrivate(remoteKey),
+                ServiceAddress = serviceId,
+                };
+
+            var remoteKeyData = new KeyData() {
+                PrivateParameters = remoteKeyShare,
+                Udf = key.KeyIdentifier
+                };
+
+            remoteKeyData.Envelope(encryptionKey: serviceEncrypt);
+
+            //Screen.WriteLine($"Encode to  {serviceEncrypt.KeyIdentifier}");
+
 
             var capabilityDecrypt = new CapabilityDecryptServiced() {
                 Id = deviceKey.KeyIdentifier,
@@ -286,25 +307,25 @@ namespace Goedel.Mesh {
                 //KeyDataEncryptionKey = serviceEncryptionKey,
                 GranteeUdf = granteeUdf,
                 GranteeAccount = granteeAccount,
-                EnvelopedKeyShare = keyData.EnvelopedKeyData
+                EnvelopedKeyShare = remoteKeyData.EnvelopedKeyData
                 };
 
 
-            Screen.WriteLine($"Capability = {capabilityDecrypt.Id} Grantee {granteeUdf} Account {granteeAccount}");
+            //Screen.WriteLine($"Capability = {capabilityDecrypt.Id} Grantee {granteeUdf} Account {granteeAccount}");
             //Screen.WriteLine(keyShare.ToString());
             //Screen.WriteLine(keyData.ToString());
             //Screen.WriteLine(capabilityDecrypt.ToString());
 
 
-            Screen.WriteLine($"   Device Key/ Share {deviceKey.KeyIdentifier}");
-            Screen.WriteLine($"   Device Key = {deviceKey.IKeyAdvancedPrivate.Private}");
+            //Screen.WriteLine($"   Device Key/ Share {deviceKey.KeyIdentifier}");
+            //Screen.WriteLine($"   Device Key = {deviceKey.IKeyAdvancedPrivate.Private}");
 
-            Screen.WriteLine($"   Public Key {key.KeyIdentifier}");
+            //Screen.WriteLine($"   Public Key {key.KeyIdentifier}");
             //current: here
 
 
 
-            return (keyData, capabilityDecrypt);
+            return (deviceKeyData, capabilityDecrypt);
             }
 
 

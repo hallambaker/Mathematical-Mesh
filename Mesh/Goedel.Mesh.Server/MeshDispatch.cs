@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
+using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.ServiceAdmin;
@@ -71,6 +72,10 @@ namespace Goedel.Mesh.Server {
         ///<summary>The service description.</summary> 
         public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
 
+
+        public IKeyCollection KeyCollection { get; }
+
+
         #endregion
         #region // Disposing
         ///<inheritdoc/>
@@ -115,14 +120,13 @@ namespace Goedel.Mesh.Server {
             MeshMachine = meshMachine;
             ServiceConfiguration = serviceConfiguration;
             HostConfiguration = hostConfiguration;
-
+            KeyCollection = MeshMachine.KeyCollection;
+            
             var path = hostConfiguration?.Path ?? meshMachine.DirectoryMesh;
 
-            // current, need to fill in the key collection here.
-            MeshPersist = new MeshPersist(null, path, FileStatus.OpenOrCreate);
 
             // Dummy profiles for the service and host at this point
-            ProfileService = ProfileService.Generate(MeshMachine.KeyCollection);
+            ProfileService = ProfileService.Generate(KeyCollection);
 
 
             ProfileHost = ProfileHost.CreateHost(MeshMachine);
@@ -155,6 +159,11 @@ namespace Goedel.Mesh.Server {
             this.ConnectionDevice.Strip();
 
             ProfileService.Sign(this.ConnectionDevice, ObjectEncoding.JSON_B);
+
+            KeyCollection.Add(ProfileService.KeyEncryption);
+            // current, need to fill in the key collection here.
+            MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
+
 
             this.ConnectionDevice.DareEnvelope.Strip();
             }

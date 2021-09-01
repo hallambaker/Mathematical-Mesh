@@ -76,8 +76,8 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="directory">The directory in which all the service data is stored.</param>
         /// <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
-        public MeshPersist(IKeyCollection KeyCollection, string directory, FileStatus fileStatus) {
-
+        public MeshPersist(IKeyCollection keyCollection, string directory, FileStatus fileStatus) {
+            KeyCollection = keyCollection;
             // Load/create the accounts catalog
             DirectoryRoot = directory;
             Directory.CreateDirectory(directory);
@@ -473,13 +473,13 @@ namespace Goedel.Mesh.Server {
                 CatalogAccess catalogCapability,
                 CryptographicOperationKeyAgreement cryptographicOperation) {
 
-            catalogCapability.TryFindKeyDecryption(
+            catalogCapability.DictionaryDecryptByKeyId.TryGetValue(
                 cryptographicOperation.KeyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
-            var keypair = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
+            var publicEphemeral = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
 
-            capability.DecryptShare(KeyCollection);
+            var share = capability.DecryptShare(KeyCollection);
 
-            var keyAgreement = capability.Agreement(keypair);
+            var keyAgreement = share.Agreement(publicEphemeral);
 
             var cryptographicResultKeyAgreement = new CryptographicResultKeyAgreement() {
                 KeyAgreement = KeyAgreement.Factory(keyAgreement)

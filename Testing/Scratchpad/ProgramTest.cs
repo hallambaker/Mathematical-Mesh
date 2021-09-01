@@ -25,8 +25,11 @@ using System;
 
 using Goedel.Cryptography;
 using Goedel.Utilities;
+using Goedel.Mesh;
 using Goedel.XUnit;
-
+using Goedel.Test;
+using Goedel.Mesh.Test;
+using Goedel.Cryptography.Algorithms;
 
 namespace Scratchpad {
 
@@ -68,6 +71,10 @@ namespace Scratchpad {
             //TestService.Test().MeshDeviceMail();
 
             //TestService.Test().MeshDeviceDirectKey();
+
+            Debug();
+
+
             TestService.Test().MeshDeviceThresholdKey();
 
 
@@ -89,7 +96,76 @@ namespace Scratchpad {
 
             }
 
+        static void Debug() {
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var meshMachine = new MeshMachineTest(testEnvironmentCommon);
+            var keyCollection = new KeyCollectionTest(meshMachine);
 
+            var keyEncrypt = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Exportable, keyCollection) as KeyPairX448;
+            var keyService = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
+            keyCollection.Add(keyService);
+
+
+            var (keyData, capability) = CatalogAccess.MakeShare(keyEncrypt, "example", keyService, null, null);
+
+
+            var deviceShare = keyData.GetKeyPair() as KeyPairServiced;
+
+            /*
+                        var partial1 = KeyCollection.RemoteAgreement(ServiceAddress, 
+                ephemeral as KeyPairAdvanced, Share.KeyIdentifier);
+            var partial2 = Share.Agreement(ephemeral);
+
+
+                        var operation = new CryptographicOperationKeyAgreement() {
+                KeyId = shareId,
+                PublicKey = Key.GetPublic(ephemeral)
+                };
+
+            var operateRequest = new OperateRequest() {
+                AccountAddress = serviceAddress,
+                Operations = new List<CryptographicOperation>() {
+                    operation
+                    }
+                };
+
+
+                        catalogCapability.DictionaryDecryptByKeyId.TryGetValue(
+                cryptographicOperation.KeyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
+
+                        var share = capability.DecryptShare(KeyCollection);
+
+            var keyAgreement = share.Agreement(publicEphemeral);
+
+             * 
+             * 
+             */
+
+            var ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairX448;
+
+            var agreement1 = ephemeral.Agreement(keyEncrypt);
+            var agreement2 = keyEncrypt.Agreement(ephemeral);
+
+
+            var remoteShare = capability.DecryptShare(keyCollection) as KeyPairServiced;
+            var partial1 = remoteShare.Agreement(ephemeral) as CurveX448Result;
+            var partial2 = deviceShare.Agreement(ephemeral) as CurveX448Result;
+
+
+            Screen.WriteLine($"Remote {remoteShare.Share.KeyIdentifier} Device {deviceShare.Share.KeyIdentifier}");
+
+
+            partial2.AgreementX448.Accumulate(partial1.AgreementX448);
+            var aggre3 = new CurveX448Result() { AgreementX448 = partial2.AgreementX448 };
+
+            agreement1.IKM.TestEqual(agreement2.IKM);
+            agreement1.IKM.TestEqual(aggre3.IKM);
+
+
+            var agreement3 = (deviceShare.Share as KeyPairX448).Agreement(ephemeral, partial1 as CurveX448Result);
+
+            agreement1.IKM.TestEqual(agreement3.IKM);
+            }
 
 
 

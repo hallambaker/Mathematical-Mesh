@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/1/2021 11:26:18 AM
+//  This file was automatically generated at 9/1/2021 6:02:06 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -77,7 +77,7 @@ namespace Goedel.Cryptography.Jose {
 			{"JoseWebEncryption", JoseWebEncryption._Factory},
 			{"Signed", Signed._Factory},
 			{"Encrypted", Encrypted._Factory},
-			{"KeyData", KeyData._Factory},
+			{"KeyCore", KeyCore._Factory},
 			{"Header", Header._Factory},
 			{"Signature", Signature._Factory},
 			{"KeyContainer", KeyContainer._Factory},
@@ -774,7 +774,7 @@ namespace Goedel.Cryptography.Jose {
 	///
 	/// Describe a cryptographic key
 	/// </summary>
-	public partial class KeyData : Jose {
+	public partial class KeyCore : Jose {
         /// <summary>
         ///Bulk encryption algorithm for content
         /// </summary>
@@ -825,13 +825,13 @@ namespace Goedel.Cryptography.Jose {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "KeyData";
+		public new const string __Tag = "KeyCore";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new KeyData();
+		public static new JsonObject _Factory () => new KeyCore();
 
 
         /// <summary>
@@ -910,15 +910,15 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyData FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new KeyCore FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as KeyData;
+				return Out as KeyCore;
 				}
-		    var Result = new KeyData ();
+		    var Result = new KeyCore ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -978,7 +978,7 @@ namespace Goedel.Cryptography.Jose {
 	///
 	/// A JOSE Header.
 	/// </summary>
-	public partial class Header : KeyData {
+	public partial class Header : KeyCore {
         /// <summary>
         ///JWK Set URL
         /// </summary>
@@ -1058,7 +1058,7 @@ namespace Goedel.Cryptography.Jose {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((KeyData)this).SerializeX(_writer, false, ref _first);
+			((KeyCore)this).SerializeX(_writer, false, ref _first);
 			if (Jku != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("jku", 1);
@@ -1351,7 +1351,7 @@ namespace Goedel.Cryptography.Jose {
         ///The key data.
         /// </summary>
 
-		public virtual byte[]						KeyData  {get; set;}
+		public virtual byte[]						KeyCore  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1400,10 +1400,10 @@ namespace Goedel.Cryptography.Jose {
 				_writer.WriteToken ("Exportable", 1);
 					_writer.WriteBoolean (Exportable);
 				}
-			if (KeyData != null) {
+			if (KeyCore != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("KeyData", 1);
-					_writer.WriteBinary (KeyData);
+				_writer.WriteToken ("KeyCore", 1);
+					_writer.WriteBinary (KeyCore);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -1442,8 +1442,8 @@ namespace Goedel.Cryptography.Jose {
 					Exportable = jsonReader.ReadBoolean ();
 					break;
 					}
-				case "KeyData" : {
-					KeyData = jsonReader.ReadBinary ();
+				case "KeyCore" : {
+					KeyCore = jsonReader.ReadBinary ();
 					break;
 					}
 				default : {
@@ -1461,7 +1461,7 @@ namespace Goedel.Cryptography.Jose {
 	/// A JOSE key. All fields map onto the equivalent fields defined in
 	/// RFC 7517
 	/// </summary>
-	public partial class Key : KeyData {
+	public partial class Key : KeyCore {
 		bool								__Exportable = false;
 		private bool						_Exportable;
         /// <summary>
@@ -1536,7 +1536,7 @@ namespace Goedel.Cryptography.Jose {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((KeyData)this).SerializeX(_writer, false, ref _first);
+			((KeyCore)this).SerializeX(_writer, false, ref _first);
 			if (__Exportable){
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Exportable", 1);

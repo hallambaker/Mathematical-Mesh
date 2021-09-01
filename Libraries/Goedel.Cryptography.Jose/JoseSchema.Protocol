@@ -100,7 +100,7 @@
 			Description
 				|The signature data
 
-	Structure KeyData
+	Structure KeyCore
 		Description
 			|Describe a cryptographic key
 		String Enc
@@ -141,7 +141,7 @@
 	Structure Header
 		Description
 			|A JOSE Header.
-		Inherits KeyData
+		Inherits KeyCore
 
 		String Jku
 			Tag "jku"
@@ -197,7 +197,7 @@
 		Boolean Exportable
 			Description
 				|If false a handler library MUST NOT permit the private key to be exported.
-		Binary KeyData
+		Binary KeyCore
 			Description
 				|The key data.
 
@@ -208,7 +208,7 @@
 		Description
 			|A JOSE key. All fields map onto the equivalent fields defined in
 			|RFC 7517
-		Inherits KeyData
+		Inherits KeyCore
 		Boolean Exportable
 			Description
 				|If true, a stored key may be exported from the machine on 
