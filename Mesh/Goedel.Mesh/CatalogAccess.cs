@@ -302,6 +302,7 @@ namespace Goedel.Mesh {
 
 
             var capabilityDecrypt = new CapabilityDecryptServiced() {
+                Active = true,
                 Id = deviceKey.KeyIdentifier,
                 //AuthenticationId = ContextUser.ProfileUser.Udf,
                 //KeyDataEncryptionKey = serviceEncryptionKey,

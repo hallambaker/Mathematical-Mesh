@@ -205,8 +205,8 @@ namespace Goedel.Mesh {
         /// <param name="keyPair">The key pair to perform the agreement against.</param>
         /// <returns>The key agreement result.</returns>
         public virtual KeyAgreementResult Agreement(KeyPair keyPair) {
-            
-            
+
+            Active.AssertTrue(NYI.Throw);
          
             return KeyPair.Agreement(keyPair);
             }

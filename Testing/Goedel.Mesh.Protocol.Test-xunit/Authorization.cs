@@ -97,7 +97,7 @@ namespace Goedel.XUnit {
             // test sync, decrypt - FAIL
             //Xunit.Assert.Throws<ServerResponseInvalid> (() => newContext.Sync());
 
-
+            // Current this is succeeding when it is supposed to fail because the service has not picked up the new capability.
             if (role == Rights.IdRolesThreshold) {
                 Xunit.Assert.Throws<Exception>(() => testFile.Decrypt(newContext.KeyCollection));
 

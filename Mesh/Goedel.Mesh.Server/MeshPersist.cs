@@ -477,6 +477,8 @@ namespace Goedel.Mesh.Server {
                 cryptographicOperation.KeyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
             var publicEphemeral = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
 
+
+            capability.Active.AssertTrue(NotAuthorized.Throw);
             var share = capability.DecryptShare(KeyCollection);
 
             var keyAgreement = share.Agreement(publicEphemeral);

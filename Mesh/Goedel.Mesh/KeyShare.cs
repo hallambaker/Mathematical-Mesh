@@ -138,7 +138,7 @@ namespace Goedel.Mesh {
                 KeyAgreementResult partial = null,
                 byte[] salt = null) {
 
-            Screen.WriteLine($"Remote Decrypt {ServiceAddress} Public {Primary.KeyIdentifier} Share {Share.KeyIdentifier}");
+            //Screen.WriteLine($"Remote Decrypt {ServiceAddress} Public {Primary.KeyIdentifier} Share {Share.KeyIdentifier}");
 
             //current
             var partial1 = KeyCollection.RemoteAgreement(ServiceAddress, 

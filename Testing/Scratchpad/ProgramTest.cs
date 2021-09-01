@@ -72,7 +72,7 @@ namespace Scratchpad {
 
             //TestService.Test().MeshDeviceDirectKey();
 
-            Debug();
+            //Debug();
 
 
             TestService.Test().MeshDeviceThresholdKey();
@@ -152,7 +152,7 @@ namespace Scratchpad {
             var partial2 = deviceShare.Agreement(ephemeral) as CurveX448Result;
 
 
-            Screen.WriteLine($"Remote {remoteShare.Share.KeyIdentifier} Device {deviceShare.Share.KeyIdentifier}");
+            //Screen.WriteLine($"Remote {remoteShare.Share.KeyIdentifier} Device {deviceShare.Share.KeyIdentifier}");
 
 
             partial2.AgreementX448.Accumulate(partial1.AgreementX448);
