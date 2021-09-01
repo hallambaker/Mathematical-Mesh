@@ -586,7 +586,7 @@ namespace Goedel.Cryptography.Algorithms {
 
 
         /// <summary>The random secret used to generate the private key</summary>
-        byte[] Secret { get; }
+        public byte[] Secret { get; }
 
         /// <summary>Hash of the secret value bytes [0:31]</summary>
         byte[] PreSecret { get; }

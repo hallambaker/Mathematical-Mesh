@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Numerics;
 
 using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
 
@@ -107,6 +108,10 @@ namespace Goedel.Mesh {
         public virtual string SubjectAddress => throw new NYI();
 
 
+
+        public KeyPairAdvanced KeyShare { get; set; }
+
+
         /// <summary>
         /// Default constructor used for deserialization.
         /// </summary>
@@ -128,6 +133,12 @@ namespace Goedel.Mesh {
 
             }
 
+
+
+        public void DecryptShare(IKeyCollection keyCollection) {
+            var keyShare = EnvelopedKeyShare.Decode(keyCollection);
+            KeyShare = keyShare.GetKeyPairAdvanced();
+            }
 
         }
 
@@ -188,8 +199,14 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="keyPair">The key pair to perform the agreement against.</param>
         /// <returns>The key agreement result.</returns>
-        public virtual KeyAgreementResult Agreement(KeyPair keyPair) =>
-            KeyPair.Agreement(keyPair);
+        public virtual KeyAgreementResult Agreement(KeyPair keyPair) {
+            
+            
+         
+            return KeyPair.Agreement(keyPair);
+            }
+        // Current: Fails here because we are not decrypting the enveloped key!
+
 
         }
     public partial class CapabilityDecryptPartial : ICapabilityPartial {

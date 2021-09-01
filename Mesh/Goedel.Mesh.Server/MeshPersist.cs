@@ -52,6 +52,9 @@ namespace Goedel.Mesh.Server {
         ///<summary>The service signature key.</summary> 
         public static CryptoKey ServiceSignatureKey => null;
 
+
+        public IKeyCollection KeyCollection { get; }
+
         #endregion
 
 
@@ -73,7 +76,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="directory">The directory in which all the service data is stored.</param>
         /// <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
-        public MeshPersist(string directory, FileStatus fileStatus) {
+        public MeshPersist(IKeyCollection KeyCollection, string directory, FileStatus fileStatus) {
 
             // Load/create the accounts catalog
             DirectoryRoot = directory;
@@ -466,13 +469,15 @@ namespace Goedel.Mesh.Server {
             throw new NYI();
             }
 
-        static CryptographicResult Operate(
+        CryptographicResult Operate(
                 CatalogAccess catalogCapability,
                 CryptographicOperationKeyAgreement cryptographicOperation) {
 
             catalogCapability.TryFindKeyDecryption(
                 cryptographicOperation.KeyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
             var keypair = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
+
+            capability.DecryptShare(KeyCollection);
 
             var keyAgreement = capability.Agreement(keypair);
 
@@ -485,6 +490,8 @@ namespace Goedel.Mesh.Server {
 
 
             }
+
+
 
 
         /// <summary>

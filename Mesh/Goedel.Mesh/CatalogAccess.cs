@@ -289,6 +289,21 @@ namespace Goedel.Mesh {
                 EnvelopedKeyShare = keyData.EnvelopedKeyData
                 };
 
+
+            Screen.WriteLine($"Capability = {capabilityDecrypt.Id} Grantee {granteeUdf} Account {granteeAccount}");
+            //Screen.WriteLine(keyShare.ToString());
+            //Screen.WriteLine(keyData.ToString());
+            //Screen.WriteLine(capabilityDecrypt.ToString());
+
+
+            Screen.WriteLine($"   Device Key/ Share {deviceKey.KeyIdentifier}");
+            Screen.WriteLine($"   Device Key = {deviceKey.IKeyAdvancedPrivate.Private}");
+
+            Screen.WriteLine($"   Public Key {key.KeyIdentifier}");
+            //current: here
+
+
+
             return (keyData, capabilityDecrypt);
             }
 

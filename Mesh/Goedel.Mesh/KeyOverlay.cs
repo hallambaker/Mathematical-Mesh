@@ -177,7 +177,7 @@ namespace Goedel.Mesh {
             var result =  UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,
                     keySecurity, keyUses: keyUses, cryptoAlgorithmID, keyName) as KeyPairAdvanced;
 
-            Screen.WriteLine($"{type}=={actor}-{operation}::{secretSeed.KeyType} -> {result.KeyIdentifier}");
+            //Screen.WriteLine($"{type}=={actor}-{operation}::{secretSeed.KeyType} -> {result.KeyIdentifier}");
             return result;
             }
 
