@@ -948,6 +948,27 @@ namespace Goedel.Mesh.Client {
                 };
             transact.CatalogUpdate(catalogAccess, accessCapability);
 
+            foreach (var entry in catalogAccess.AsCatalogedType) {
+                if (entry.Capability is CryptographicCapability cryptographicCapability) {
+                    if (cryptographicCapability.GranteeUdf == 
+                            deviceEntry.ConnectionDevice.AuthenticationPublic.KeyIdentifier) {
+
+                        var cryptoCapability = new CatalogedAccess() {
+                            Capability = new NullCapability() {
+                                Id = cryptographicCapability.Id,
+                                Active = false
+                                }
+                            };
+                        transact.CatalogUpdate(catalogAccess, cryptoCapability);
+                        }
+                    }
+
+
+                }
+
+
+
+
             transact.CatalogDelete(catalogDevice, deviceEntry);
             Transact(transact);
             }

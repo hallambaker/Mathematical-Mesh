@@ -182,8 +182,6 @@ namespace Goedel.Mesh {
 
 
 
-
-
         #endregion
         #region // Factory methods and constructors
 

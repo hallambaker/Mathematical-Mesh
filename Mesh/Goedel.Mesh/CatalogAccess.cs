@@ -237,6 +237,9 @@ namespace Goedel.Mesh {
                 case Degree.Service: {
                     transactContextAccount.AssertNotNull(NYI.Throw);
 
+                    //current: oops, we are labelling the grantee as the ADMIN device.
+                    "Fix this!!!".TaskFunctionality(true);
+
                     var (keyData, capabilityDecryptServiced) = MakeShare(keyPair,
                             transactContextAccount.AccountId,
                             transactContextAccount.ProfileService.ServiceEncryption.GetKeyPair(),

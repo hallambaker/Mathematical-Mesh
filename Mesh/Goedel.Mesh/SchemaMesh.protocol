@@ -757,6 +757,10 @@
 				|key being authorized for access.
 		Boolean Active
 
+	Structure NullCapability
+		Inherits Capability
+
+
 	Structure AccessCapability
 		Inherits Capability
 
