@@ -428,7 +428,8 @@ namespace Goedel.Mesh {
 
             // Grant each right
             foreach (var right in rights) {
-                Grant(newActivation, right, transactContextAccount);
+                Grant(newActivation, right, activationDevice.DeviceAuthentication.KeyIdentifier, 
+                            transactContextAccount);
                 }
 
             // Create the (unsigned) ConnectionUser
@@ -487,7 +488,8 @@ namespace Goedel.Mesh {
             }
 
 
-        void Grant(ActivationAccount newActivation, Right right, ITransactContextAccount transactContextAccount = null) {
+        void Grant(ActivationAccount newActivation, Right right,
+                string keyIdentifier, ITransactContextAccount transactContextAccount = null) {
             var catalog = transactContextAccount.GetCatalogAccess();
 
 
@@ -495,32 +497,32 @@ namespace Goedel.Mesh {
                 case Resource.ProfileRoot: {
 
                     newActivation.ProfileSignature = catalog.MakeKeyData(right,
-                        ProfileSignatureKey as KeyPairAdvanced, transactContextAccount);
+                        ProfileSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
 
                     break;
                     }
                 case Resource.ProfileAdmin: {
                     newActivation.ProfileSignature = catalog.MakeKeyData(right,
-                        AdministratorSignatureKey as KeyPairAdvanced, transactContextAccount);
+                        AdministratorSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
                     newActivation.DefaultActive = true;
                     break;
                     }
                 case Resource.Store: {
-                    GrantStore(newActivation, right, transactContextAccount);
+                    GrantStore(newActivation, right, keyIdentifier, transactContextAccount);
                     break;
                     }
                 case Resource.Account: {
                     if (right.Decrypt) {
                         newActivation.AccountEncryption = catalog.MakeKeyData(right,
-                                AccountEncryptionKey as KeyPairAdvanced, transactContextAccount);
+                                AccountEncryptionKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
                         }
                     if (right.Authenticate) {
                         newActivation.AccountAuthentication = catalog.MakeKeyData(right,
-                                AccountAuthenticationKey as KeyPairAdvanced, transactContextAccount);
+                                AccountAuthenticationKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
                         }
                     if (right.Sign) {
                         newActivation.AccountSignature = catalog.MakeKeyData(right,
-                                AccountSignatureKey as KeyPairAdvanced, transactContextAccount);
+                                AccountSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
                         }
                     break;
                     }
@@ -535,7 +537,7 @@ namespace Goedel.Mesh {
         /// <param name="newActivation">Device to which the access right is granted.</param>
         /// <param name="right">The right granted.</param>
         /// <param name="transactContextAccount">The transaction context.</param>
-        void GrantStore(ActivationAccount newActivation, Right right, ITransactContextAccount transactContextAccount = null) {
+        void GrantStore(ActivationAccount newActivation, Right right, string keyIdentifier, ITransactContextAccount transactContextAccount = null) {
 
             // which store do we need?
             if (DictionaryStoreEncryptionKey.TryGetValue(right.Name, out var keyPair)) {
@@ -554,7 +556,7 @@ namespace Goedel.Mesh {
             //keyPair.AssertNotNull(NotAdministrator.Throw);
 
             var activationEntry = transactContextAccount.GetCatalogAccess().MakeActivation(
-                right, keyPair as KeyPairAdvanced, transactContextAccount);
+                right, keyPair as KeyPairAdvanced, keyIdentifier,transactContextAccount);
 
 
             newActivation.Entries ??= new List<ActivationEntry>();

@@ -89,7 +89,10 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => Id;
 
         }
-
+    public partial class NullCapability {
+        ///<inheritdoc/>
+        public override string _PrimaryKey => Id;
+        }
 
     public partial class CryptographicCapability {
 

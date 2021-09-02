@@ -217,19 +217,19 @@ namespace Goedel.Mesh {
 
         public ActivationEntry MakeActivation(
                                 Right right,
-                    KeyPairAdvanced keyPair,
+                    KeyPairAdvanced keyPair, string keyIdentifier,
                     ITransactContextAccount transactContextAccount = null) {
             return new ActivationEntry() {
                 Resource = right.Name,
-                Key = MakeKeyData(right, keyPair, transactContextAccount)
+                Key = MakeKeyData(right, keyPair, keyIdentifier, transactContextAccount)
                 };
             }
 
 
         public KeyData MakeKeyData(
-                    Right right, 
-                    KeyPairAdvanced keyPair, 
-                    ITransactContextAccount transactContextAccount = null) {
+                    Right right,
+                    KeyPairAdvanced keyPair,
+                    string keyIdentifier, ITransactContextAccount transactContextAccount = null) {
             switch (right.Degree) {
                 case Degree.Direct: {
                     return new KeyData(keyPair, true);
@@ -237,13 +237,10 @@ namespace Goedel.Mesh {
                 case Degree.Service: {
                     transactContextAccount.AssertNotNull(NYI.Throw);
 
-                    //current: oops, we are labelling the grantee as the ADMIN device.
-                    "Fix this!!!".TaskFunctionality(true);
-
-                    var (keyData, capabilityDecryptServiced) = MakeShare(keyPair,
+                                        var (keyData, capabilityDecryptServiced) = MakeShare(keyPair,
                             transactContextAccount.AccountId,
                             transactContextAccount.ProfileService.ServiceEncryption.GetKeyPair(),
-                            transactContextAccount.ConnectionDevice.AuthenticationPublic.KeyIdentifier);
+                            keyIdentifier);
 
                     var catalogedCapability = new CatalogedAccess(capabilityDecryptServiced);
                     transactContextAccount.CatalogUpdate(this, catalogedCapability);

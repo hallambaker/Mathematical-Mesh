@@ -34,6 +34,7 @@ using Goedel.Test.Core;
 
 using Xunit;
 using Goedel.Cryptography;
+using Goedel.Mesh.Server;
 
 namespace Goedel.XUnit {
     public partial class TestService {
@@ -99,7 +100,7 @@ namespace Goedel.XUnit {
 
             // Current this is succeeding when it is supposed to fail because the service has not picked up the new capability.
             if (role == Rights.IdRolesThreshold) {
-                Xunit.Assert.Throws<Exception>(() => testFile.Decrypt(newContext.KeyCollection));
+                Xunit.Assert.Throws<MeshOperationFailed>(() => testFile.Decrypt(newContext.KeyCollection));
 
                 }
             else {
