@@ -64,10 +64,13 @@ namespace Goedel.Mesh {
                 Catalog<TEntry> catalog,
                 TEntry catalogedEntry) where TEntry : CatalogedEntry;
 
+        ///<summary>The account address.</summary> 
         string AccountId { get; }
 
+        ///<summary>The service profile.</summary> 
         ProfileService ProfileService { get; }
 
+        ///<summary>The device credential</summary> 
         ConnectionDevice ConnectionDevice { get; }
 
         }
@@ -75,10 +78,8 @@ namespace Goedel.Mesh {
     public partial class ActivationAccount {
         // Properties providing access to account-wide keys.
 
-
+        ///<summary>The device identifier.</summary> 
         public string AccountDeviceId => AccountAuthenticationKey.KeyIdentifier;
-
-
 
         ///<summary>The account profile signature key.</summary>
         public KeyPair ProfileSignatureKey { get; set; }
@@ -116,15 +117,15 @@ namespace Goedel.Mesh {
 
         PrivateKeyUDF secretSeed;
 
-
+        ///<summary>The device activation.</summary> 
         public ActivationDevice ActivationDevice;
 
 
         ///<summary>The default status of the device connection</summary> 
         public bool DefaultActive { get; set; }  = false;
 
+        ///<summary>The device connection.</summary> 
         public ConnectionDevice ConnectionDevice { get; set; }
-
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -229,6 +230,8 @@ namespace Goedel.Mesh {
         /// <param name="profileUser">User profile to which the device is added.</param>
         /// <param name="roles">The initial roles to be assigned to the device. These will be expanded
         /// to a rights list.</param>
+        /// <param name="transactContextAccount">The transacton context in which to build catalog updates.</param>
+        /// <param name="activationDevice">The device activation.</param>
         /// <returns>The catalog entry.</returns>
         public CatalogedDevice MakeCatalogedDevice(
                         ProfileDevice profileDevice,
@@ -236,8 +239,7 @@ namespace Goedel.Mesh {
                         //KeyPair keyPairOnlineSignature = null, // hack. 
                         List<string> roles = null,
                         ITransactContextAccount transactContextAccount = null,
-                        ActivationDevice activationDevice = null,
-                        List<ApplicationEntry> applicationEntries = null) {
+                        ActivationDevice activationDevice = null) {
 
 
 
@@ -260,6 +262,9 @@ namespace Goedel.Mesh {
         /// <param name="activationDevice">The device key overlay.</param>
         /// <param name="activationAccount">The account key overlay.</param>
         /// <param name="signature">The signature key to use to sign the entry.</param>
+        /// <param name="transactContextAccount">Transaction context to which updates are to be appended.
+        /// This is null during creation of a profile.</param>
+        /// <param name="applicationEntries">The list of application entries to be bound.</param>
         /// <returns>The CatalogedDevice entry.</returns>
         public CatalogedDevice CreateCataloguedDevice(
                     ProfileUser profileUser,
@@ -344,18 +349,6 @@ namespace Goedel.Mesh {
 
             }
 
-        static bool GetRight(List<string> rights, string match) {
-
-            foreach (var right in rights) {
-                if (right.ToLower() == match) {
-                    return true;
-                    }
-                }
-
-            return false;
-            }
-
-
         #endregion
 
         /// <summary>
@@ -399,6 +392,7 @@ namespace Goedel.Mesh {
         /// changes to the catalogs.
         /// </summary>
         /// <param name="profileDevice">The device to add the roles to.</param>
+        /// <param name="activationDevice">The device activation record.</param>
         /// <param name="roles">The roles to add</param>
         /// <param name="transactContextAccount">Transaction context for making the update.</param>
         /// <returns>The created activation record.</returns>
@@ -444,49 +438,6 @@ namespace Goedel.Mesh {
             return newActivation;
 
             }
-
-
-
-
-        /// <summary>
-        /// Create a key pair bound to the private key <paramref name="profileDevice.OfflineSignature"/>
-        /// The public parameters of the returned key represent the combined parameters, the 
-        /// private parameters represent the offset from the device key.
-        /// </summary>
-        /// <param name="profileDevice">Profile providing the base key.</param>
-        /// <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
-        /// <returns>The bound key pair.</returns>
-        public static KeyPair DeviceBindSignature(
-                    ProfileDevice profileDevice,
-                    IKeyCollection keyCollection) => KeyPair.FactorySignature(profileDevice.ProfileSignature.CryptoKey.CryptoAlgorithmId,
-                            KeySecurity.ExportableStored, keyCollection);
-
-
-        /// <summary>
-        /// Generate a capability for the key <paramref name="keyPair"/>.
-        /// add the service portion to the capabilities catalog.
-        /// </summary>
-        /// <param name="keyPair">Keypair from which the capability is to be derrived.</param>
-        /// <param name="profileDevice">The device to which the capability is to be added.</param>
-        /// <returns>The key data for the added capability.</returns>
-        public  KeyData AddCapability(
-                    CryptoKey keyPair, 
-                    ProfileDevice profileDevice, 
-                    Degree degree,
-                    ITransactContextAccount transactContextAccount) {
-            //"**** MUST add keys to devices as shared capabilities".TaskFunctionality();
-
-            //var catalogCapability = GetCatalogCapability();
-
-            if (degree == Degree.Direct) {
-                return new KeyData(keyPair, true);
-                }
-            //var activationEntry = transactContextAccount.GetCatalogAccess().MakeActivation(
-            //    right, keyPair as KeyPairAdvanced, transactContextAccount);
-
-            throw new NYI();
-            }
-
 
         void Grant(ActivationAccount newActivation, Right right,
                 string keyIdentifier, ITransactContextAccount transactContextAccount = null) {
@@ -536,6 +487,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="newActivation">Device to which the access right is granted.</param>
         /// <param name="right">The right granted.</param>
+        /// <param name="keyIdentifier">The authentication key to be used to claim this capability.</param>
         /// <param name="transactContextAccount">The transaction context.</param>
         void GrantStore(ActivationAccount newActivation, Right right, string keyIdentifier, ITransactContextAccount transactContextAccount = null) {
 
@@ -545,19 +497,14 @@ namespace Goedel.Mesh {
                 }
             else if (GetEntry(right.Name, out var entry)) {
                 keyPair = entry.Key.GetKeyPair(KeySecurity.Exportable);
-
                 }
 
             else {
                 return;
                 }
 
-
-            //keyPair.AssertNotNull(NotAdministrator.Throw);
-
             var activationEntry = transactContextAccount.GetCatalogAccess().MakeActivation(
-                right, keyPair as KeyPairAdvanced, keyIdentifier,transactContextAccount);
-
+                right, keyPair as KeyPairAdvanced, keyIdentifier, transactContextAccount);
 
             newActivation.Entries ??= new List<ActivationEntry>();
             newActivation.Entries.Add(activationEntry);

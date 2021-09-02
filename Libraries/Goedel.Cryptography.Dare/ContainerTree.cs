@@ -204,12 +204,6 @@ namespace Goedel.Cryptography.Dare {
             //Obtain the position of the very last record in the file, this must be known.
             var Record = FrameCount - 1;
             Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(Record, out position), SequenceDataCorrupt.Throw);
-            // Bug: this is failing because the position dictionary is not being updated.
-            // check that commit frame is being properly called on deferred writes.
-            // Also check every operation on the device catalog
-
-            // ContainerHeader is not being properly updated.
-            // Also check on the calculation of the trailer.
 
             long nextRecord;
             bool found = true;

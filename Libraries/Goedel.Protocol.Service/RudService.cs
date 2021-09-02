@@ -210,21 +210,6 @@ namespace Goedel.Protocol.Service {
 
             }
 
-        async Task<ServiceRequest> MiniProcess(HttpListener httpListener) {
-
-            var connection = httpListener.GetContextAsync();
-            await connection;
-
-            var respond = "hello world".ToBytes();
-
-            var context = connection.Result;
-            context.Response.OutputStream.Write(respond, 0, respond.Length);
-            context.Response.OutputStream.Close();
-
-            return null;
-            }
-
-
 
         #endregion
         #region // Methods 

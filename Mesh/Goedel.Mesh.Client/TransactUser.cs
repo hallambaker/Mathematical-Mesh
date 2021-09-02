@@ -73,6 +73,12 @@ namespace Goedel.Mesh.Client {
 
         #endregion
         #region // Methods
+
+        /// <summary>
+        /// Add the application described in <paramref name="catalogedApplication"/> to the
+        /// profile and create application entries for each authorized device.
+        /// </summary>
+        /// <param name="catalogedApplication"></param>
         public void ApplicationCreate(
                     CatalogedApplication catalogedApplication) {
 
@@ -83,7 +89,7 @@ namespace Goedel.Mesh.Client {
             var updated = new List<CatalogedDevice>();
             foreach (var device in catalogDevice.AsCatalogedType) {
 
-                Screen.WriteLine("Got device");
+                //Screen.WriteLine("Got device");
                 if (catalogedApplication.DeviceAuthorized(device)) {
                     var applicationEntry = catalogedApplication.GetActivation(device);
 
@@ -99,33 +105,41 @@ namespace Goedel.Mesh.Client {
 
             }
 
-        public CryptoKey ApplicationUpdate(
+        // Phase2: Update applications after grant
+        /// <summary>
+        /// Update the application
+        /// </summary>
+        /// <param name="catalogedApplication">The updated application entry</param>
+        public void ApplicationUpdate(
             CatalogedApplication catalogedApplication) => throw new NYI();
 
-
+        // Phase2: Delete applications after grant
+        /// <summary>
+        /// Delete the application
+        /// </summary>
+        /// <param name="applicationId">The application to remove</param>
         public void ApplicationDelete(
                     string applicationId) => throw new NYI();
 
 
-
-
-
-        public CatalogedApplication ApplicationDeviceAdd(
+        // Phase2: Add SSH application explicitly
+        /// <summary>
+        /// Add SSH application to existing device.
+        /// </summary>
+        /// <param name="application">The application description.</param>
+        /// <param name="ProfileDevice">The device profile.</param>
+        public void ApplicationDeviceAdd(
             CatalogedApplicationSsh application, Connection ProfileDevice=null) => throw new NYI();
 
-        public CatalogedApplication ApplicationDeviceAdd(
+
+        // Phase2: Add Mail application explicitly
+        /// <summary>
+        /// Add Mail application to existing device.
+        /// </summary>
+        /// <param name="application">The application description.</param>
+        /// <param name="ProfileDevice">The device profile.</param>
+        public void ApplicationDeviceAdd(
             CatalogedApplicationMail application, Connection ProfileDevice = null) => throw new NYI();
-
-
-
-        public CatalogedApplication ApplicationDeviceDelete(
-                    string applicationId, string deviceUdf) => throw new NYI();
-
-
-
-        public KeyPairAdvanced CreateServiced(
-                    KeyPairAdvanced primaryKey,
-                    KeyPair deviceEncryption) => throw new NYI();
 
 
         #endregion

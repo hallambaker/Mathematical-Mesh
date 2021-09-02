@@ -75,7 +75,7 @@ namespace Scratchpad {
             //Debug();
 
 
-            TestService.Test().MeshDeviceThresholdKey();
+            TestService.Test().MeshCatalogGroup();
 
 
             //ShellTestsHTTP.Test().TestMessageGroup();
@@ -96,7 +96,7 @@ namespace Scratchpad {
 
             }
 
-        static void Debug() {
+        public static void Debug() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var meshMachine = new MeshMachineTest(testEnvironmentCommon);
             var keyCollection = new KeyCollectionTest(meshMachine);

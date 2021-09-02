@@ -49,10 +49,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Free resources associated with the handle. In particular the lock on the account entry.
         /// </summary>
-        protected override void Disposing() {
-            //Screen.WriteLine($"UnLOCK {AccountEntry.AccountAddress}");
-            System.Threading.Monitor.Exit(AccountEntry);
-            }
+        protected override void Disposing() => System.Threading.Monitor.Exit(AccountEntry);
 
         /// <summary>
         /// Base constructor.
@@ -155,10 +152,6 @@ namespace Goedel.Mesh.Server {
         /// <param name="messageId">Message to return.</param>
         /// <returns>The message (if found).</returns>
         public DareEnvelope GetLocal(string messageId) {
-
-            // Hack: should be get spool here.
-            // and look for the envelope values
-
             var envelopeId = Message.GetEnvelopeId(messageId);
 
             using var spoolLocal = GetStoreLocal();
@@ -169,9 +162,6 @@ namespace Goedel.Mesh.Server {
                     }
 
                 }
-            // this is currently failing because on connect, the connecting device is looking
-            // for a different message ID to the one specified by the admin device in the response.
-
             return null;
             }
 
@@ -189,17 +179,19 @@ namespace Goedel.Mesh.Server {
     public class AccountHandleVerified : AccountHandleUnverified {
         CatalogAccess CatalogAccess { get; }
 
+        /// <summary>
+        /// Disposing method.
+        /// </summary>
         protected override void Disposing() {
             base.Disposing();
             CatalogAccess?.Dispose();
             }
 
-        //public string Directory => AccountEntry.Directory;
-
         /// <summary>
         /// Constructor returning a verified account handle for <paramref name="accountEntry"/>.
         /// </summary>
-        /// <param name="accountEntry"></param>
+        /// <param name="accountEntry">The account entry from the catalog.</param>
+        /// <param name="credential">The credential used to claim the account.</param>
         public AccountHandleVerified(AccountEntry accountEntry, ICredential credential) : base(accountEntry) {
 
 

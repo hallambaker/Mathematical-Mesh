@@ -214,18 +214,35 @@ namespace Goedel.Mesh {
                 }
             }
 
-
+        /// <summary>
+        /// Create an activation entry
+        /// </summary>
+        /// <param name="right">The right under which the activation is granted.</param>
+        /// <param name="keyPair">The key to grant.</param>
+        /// <param name="keyIdentifier">The key identifier.</param>
+        /// <param name="transactContextAccount">The transaction context to add threshold key
+        /// creations to.</param>
+        /// <returns>The entry created.</returns>
         public ActivationEntry MakeActivation(
                                 Right right,
                     KeyPairAdvanced keyPair, string keyIdentifier,
-                    ITransactContextAccount transactContextAccount = null) {
-            return new ActivationEntry() {
-                Resource = right.Name,
-                Key = MakeKeyData(right, keyPair, keyIdentifier, transactContextAccount)
-                };
-            }
+                    ITransactContextAccount transactContextAccount = null) => new ActivationEntry() {
+                        Resource = right.Name,
+                        Key = MakeKeyData(right, keyPair, keyIdentifier, transactContextAccount)
+                        };
 
-
+        /// <summary>
+        /// Make a key data entry granting the key <paramref name="keyPair"/> according to
+        /// the right <paramref name="right"/>. If a threshold share is created, create
+        /// a capability to be claimed under the authentication key
+        /// <paramref name="keyIdentifier"/> and append to the access catalog of
+        /// <paramref name="transactContextAccount"/>.
+        /// </summary>
+        /// <param name="right"></param>
+        /// <param name="keyPair"></param>
+        /// <param name="keyIdentifier"></param>
+        /// <param name="transactContextAccount"></param>
+        /// <returns></returns>
         public KeyData MakeKeyData(
                     Right right,
                     KeyPairAdvanced keyPair,
@@ -236,15 +253,12 @@ namespace Goedel.Mesh {
                     }
                 case Degree.Service: {
                     transactContextAccount.AssertNotNull(NYI.Throw);
-
-                                        var (keyData, capabilityDecryptServiced) = MakeShare(keyPair,
-                            transactContextAccount.AccountId,
-                            transactContextAccount.ProfileService.ServiceEncryption.GetKeyPair(),
-                            keyIdentifier);
-
+                    var (keyData, capabilityDecryptServiced) = MakeShare(keyPair,
+                        transactContextAccount.AccountId,
+                        transactContextAccount.ProfileService.ServiceEncryption.GetKeyPair(),
+                        keyIdentifier);
                     var catalogedCapability = new CatalogedAccess(capabilityDecryptServiced);
                     transactContextAccount.CatalogUpdate(this, catalogedCapability);
-
                     return keyData;
                     }
                 default: {
@@ -259,6 +273,9 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="key"></param>
         /// <param name="serviceId"></param>
+        /// <param name="serviceEncrypt">The service encryption key.</param>
+        /// <param name="granteeUdf">If not null, </param>
+        /// <param name="granteeAccount"></param>
 
         public static (KeyData, CapabilityDecryptServiced) MakeShare(
                     KeyPairAdvanced key, string serviceId,
@@ -269,9 +286,7 @@ namespace Goedel.Mesh {
             var remoteKey = shares[1].GetKeyPair(KeySecurity.Exportable, KeyUses.Encrypt);
 
 
-            Screen.WriteLine($"Remote {remoteKey.KeyIdentifier} Device {deviceKey.KeyIdentifier}");
-
-
+            //Screen.WriteLine($"Remote {remoteKey.KeyIdentifier} Device {deviceKey.KeyIdentifier}");
 
             var deviceKeyShare = new KeyShare() {
                 PublicPrimary = Key.GetPublic(key),

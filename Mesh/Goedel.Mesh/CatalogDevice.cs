@@ -151,13 +151,15 @@ namespace Goedel.Mesh {
                     EnvelopedProfileDevice.Decode(KeyCollection);
 
         /// <summary>
+        /// The slim device connection assertion for authentication only.
+        /// </summary>
+        public ConnectionService ConnectionService =>
+                    EnvelopedConnectionService.Decode(KeyCollection);
+        /// <summary>
         /// The device connection assertion. This is set by either a new assertion being generated
         /// for a newly added device or by decoding the SignedDeviceConnection entry after 
         /// deserialization.
         /// </summary>
-        public ConnectionService ConnectionService =>
-                    EnvelopedConnectionService.Decode(KeyCollection);
-
         public ConnectionDevice ConnectionDevice =>
             EnvelopedConnectionDevice?.Decode(KeyCollection);
 

@@ -72,7 +72,7 @@ namespace Goedel.Mesh.Server {
         ///<summary>The service description.</summary> 
         public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
 
-
+        ///<summary>Key collection giving access to host and service keys.</summary> 
         public IKeyCollection KeyCollection { get; }
 
 
@@ -161,7 +161,6 @@ namespace Goedel.Mesh.Server {
             ProfileService.Sign(this.ConnectionDevice, ObjectEncoding.JSON_B);
 
             KeyCollection.Add(ProfileService.KeyEncryption);
-            // current, need to fill in the key collection here.
             MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
 
 

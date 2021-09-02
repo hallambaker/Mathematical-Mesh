@@ -131,9 +131,21 @@
             <param name="catalogedEntry">The entry to add as an update.</param>
             <typeparam name="TEntry">The entry type.</typeparam>
         </member>
+        <member name="P:Goedel.Mesh.ITransactContextAccount.AccountId">
+            <summary>The account address.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ITransactContextAccount.ProfileService">
+            <summary>The service profile.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ITransactContextAccount.ConnectionDevice">
+            <summary>The device credential</summary> 
+        </member>
         <member name="T:Goedel.Mesh.ActivationAccount">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.AccountDeviceId">
+            <summary>The device identifier.</summary> 
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount.ProfileSignatureKey">
             <summary>The account profile signature key.</summary>
@@ -165,8 +177,14 @@
         <member name="F:Goedel.Mesh.ActivationAccount.DictionaryStoreEncryptionKey">
             <summary>Dictionary mapping store names to encryption keys.</summary> 
         </member>
+        <member name="F:Goedel.Mesh.ActivationAccount.ActivationDevice">
+            <summary>The device activation.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.ActivationAccount.DefaultActive">
             <summary>The default status of the device connection</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.ConnectionDevice">
+            <summary>The device connection.</summary> 
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.#ctor">
             <summary>
@@ -192,7 +210,7 @@
             </summary>
             <param name="profileService">Description of the service to bind to.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,System.Collections.Generic.List{System.String},Goedel.Mesh.ITransactContextAccount,Goedel.Mesh.ActivationDevice,System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry})">
+        <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ProfileUser,System.Collections.Generic.List{System.String},Goedel.Mesh.ITransactContextAccount,Goedel.Mesh.ActivationDevice)">
             <summary>
             Add the device specified by <paramref name="profileDevice"/> to the account granting 
             the set of privileged specified in <paramref name="roles"/>.
@@ -201,6 +219,8 @@
             <param name="profileUser">User profile to which the device is added.</param>
             <param name="roles">The initial roles to be assigned to the device. These will be expanded
             to a rights list.</param>
+            <param name="transactContextAccount">The transacton context in which to build catalog updates.</param>
+            <param name="activationDevice">The device activation.</param>
             <returns>The catalog entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.KeyPair,Goedel.Mesh.ITransactContextAccount,System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry})">
@@ -213,6 +233,9 @@
             <param name="activationDevice">The device key overlay.</param>
             <param name="activationAccount">The account key overlay.</param>
             <param name="signature">The signature key to use to sign the entry.</param>
+            <param name="transactContextAccount">Transaction context to which updates are to be appended.
+            This is null during creation of a profile.</param>
+            <param name="applicationEntries">The list of application entries to be bound.</param>
             <returns>The CatalogedDevice entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.MakeCatalogedGroup(Goedel.Mesh.ProfileGroup,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.CryptoKey,Goedel.Mesh.ConnectionAddress)">
@@ -234,28 +257,10 @@
             changes to the catalogs.
             </summary>
             <param name="profileDevice">The device to add the roles to.</param>
+            <param name="activationDevice">The device activation record.</param>
             <param name="roles">The roles to add</param>
             <param name="transactContextAccount">Transaction context for making the update.</param>
             <returns>The created activation record.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.DeviceBindSignature(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
-            <summary>
-            Create a key pair bound to the private key <paramref name="profileDevice.OfflineSignature.OfflineSignature"/>
-            The public parameters of the returned key represent the combined parameters, the 
-            private parameters represent the offset from the device key.
-            </summary>
-            <param name="profileDevice">Profile providing the base key.</param>
-            <param name="keyCollection">Key collection in which the resulting key is to be stored.</param>
-            <returns>The bound key pair.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.AddCapability(Goedel.Cryptography.CryptoKey,Goedel.Mesh.ProfileDevice,Goedel.Mesh.Degree,Goedel.Mesh.ITransactContextAccount)">
-            <summary>
-            Generate a capability for the key <paramref name="keyPair"/>.
-            add the service portion to the capabilities catalog.
-            </summary>
-            <param name="keyPair">Keypair from which the capability is to be derrived.</param>
-            <param name="profileDevice">The device to which the capability is to be added.</param>
-            <returns>The key data for the added capability.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.GrantStore(Goedel.Mesh.ActivationAccount,Goedel.Mesh.Right,System.String,Goedel.Mesh.ITransactContextAccount)">
             <summary>
@@ -263,6 +268,7 @@
             </summary>
             <param name="newActivation">Device to which the access right is granted.</param>
             <param name="right">The right granted.</param>
+            <param name="keyIdentifier">The authentication key to be used to claim this capability.</param>
             <param name="transactContextAccount">The transaction context.</param>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.InitializeStore(System.String)">
@@ -784,6 +790,109 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.CatalogedApplicationMail">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail._PrimaryKey">
+            <summary>
+            The primary key used to catalog the entry.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.SmimeSignKeyPair">
+            <summary>The S/MIME signature key.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.SmimeEncryptKeyPair">
+            <summary>The S/MIME encryption key.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.OpenpgpSignKeyPair">
+            <summary>The OpenPGP signature key.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.OpenpgpEncryptKeyPair">
+            <summary>The OpenPGP encryption key.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.Create(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Create a new mail application instance.
+            </summary>
+            <param name="key">The name of the mail application.</param>
+            <param name="roles">The roles to which the application is granted.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.GetActivation(Goedel.Mesh.CatalogedDevice)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.SmimeSign">
+             <summary>
+            The S/Mime signature key
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.SmimeEncrypt">
+             <summary>
+            The S/Mime encryption key
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.OpenpgpSign">
+             <summary>
+            The OpenPGP signature key
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.OpenpgpEncrypt">
+             <summary>
+            The OpenPGP encryption key
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationMail.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Mesh.ActivationApplicationSsh">
             <summary>
             </summary>
@@ -906,6 +1015,85 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ApplicationEntrySsh.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogedApplicationSsh">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationSsh._PrimaryKey">
+            <summary>
+            The primary key used to catalog the entry.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationSsh.ClientKeyPrivate">
+            <summary>The privatge client key</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Create(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Create a new catalog entry for a set of client authentication keys.
+            </summary>
+            <param name="key">The application key.</param>
+            <param name="roles">The roles to which the key is to be granted.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.GetActivation(Goedel.Mesh.CatalogedDevice)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationSsh.ClientKey">
+             <summary>
+            The S/Mime encryption key
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationSsh._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationSsh.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -1196,6 +1384,10 @@
             </summary>
             <param name="subjectId">The subject identifier.</param>
             <param name="capability">The capability type.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CryptographicCapability.DecryptShare(Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>Decrypt the enveloped key share using keys from 
+            <paramref name="keyCollection"/></summary> 
         </member>
         <member name="P:Goedel.Mesh.CryptographicCapability.KeyData">
              <summary>
@@ -1929,6 +2121,31 @@
             </summary>
             <param name="catalogedEntry">The entry being updated.</param>
         </member>
+        <member name="M:Goedel.Mesh.CatalogAccess.MakeActivation(Goedel.Mesh.Right,Goedel.Cryptography.KeyPairAdvanced,System.String,Goedel.Mesh.ITransactContextAccount)">
+            <summary>
+            Create an activation entry
+            </summary>
+            <param name="right">The right under which the activation is granted.</param>
+            <param name="keyPair">The key to grant.</param>
+            <param name="keyIdentifier">The key identifier.</param>
+            <param name="transactContextAccount">The transaction context to add threshold key
+            creations to.</param>
+            <returns>The entry created.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogAccess.MakeKeyData(Goedel.Mesh.Right,Goedel.Cryptography.KeyPairAdvanced,System.String,Goedel.Mesh.ITransactContextAccount)">
+            <summary>
+            Make a key data entry granting the key <paramref name="keyPair"/> according to
+            the right <paramref name="right"/>. If a threshold share is created, create
+            a capability to be claimed under the authentication key
+            <paramref name="keyIdentifier"/> and append to the access catalog of
+            <paramref name="transactContextAccount"/>.
+            </summary>
+            <param name="right"></param>
+            <param name="keyPair"></param>
+            <param name="keyIdentifier"></param>
+            <param name="transactContextAccount"></param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.CatalogAccess.MakeShare(Goedel.Cryptography.KeyPairAdvanced,System.String,Goedel.Cryptography.KeyPair,System.String,System.String)">
             <summary>
             Make a KeyShare / capabilityService pair for the key <paramref name="key"/> and
@@ -1936,6 +2153,9 @@
             </summary>
             <param name="key"></param>
             <param name="serviceId"></param>
+            <param name="serviceEncrypt">The service encryption key.</param>
+            <param name="granteeUdf">If not null, </param>
+            <param name="granteeAccount"></param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedAccess">
              <summary>
@@ -2089,6 +2309,14 @@
             <param name="catalogedDevice">The device to activate.</param>
             <returns>The activation record.</returns>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedApplication.DeviceAuthorized(Goedel.Mesh.CatalogedDevice)">
+            <summary>
+            Determine if the device is authorized to use the application.
+            </summary>
+            <param name="catalogedDevice">The device record.</param>
+            <returns>True if the device <paramref name="catalogedDevice"/> is authorized to 
+            use this application according to the authorization criteria for the device.</returns>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedApplication.Key">
             <summary>
             </summary>
@@ -2151,157 +2379,6 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplication.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.CatalogedApplicationMail">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationMail._PrimaryKey">
-            <summary>
-            The primary key used to catalog the entry.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.GetActivation(Goedel.Mesh.CatalogedDevice)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationMail.SmimeSign">
-             <summary>
-            The S/Mime signature key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationMail.SmimeEncrypt">
-             <summary>
-            The S/Mime encryption key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationMail.OpenpgpSign">
-             <summary>
-            The OpenPGP signature key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationMail.OpenpgpEncrypt">
-             <summary>
-            The OpenPGP encryption key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationMail._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationMail.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.CatalogedApplicationSsh">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationSsh._PrimaryKey">
-            <summary>
-            The primary key used to catalog the entry.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.GetActivation(Goedel.Mesh.CatalogedDevice)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationSsh.ClientKey">
-             <summary>
-            The S/Mime encryption key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationSsh._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationSsh.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSsh._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -3430,6 +3507,11 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.ConnectionService">
             <summary>
+            The slim device connection assertion for authentication only.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ConnectionDevice">
+            <summary>
             The device connection assertion. This is set by either a new assertion being generated
             for a newly added device or by decoding the SignedDeviceConnection entry after 
             deserialization.
@@ -4343,6 +4425,9 @@
             
              Asserts that a device is connected to an account profile
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionDevice.EnvelopedConnectionDevice">
+            <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ConnectionDevice.Roles">
             <summary>
@@ -5828,7 +5913,9 @@
             Convert key pair to specified format
             </summary>
             <param name="keyData">Keypair to convert</param>
+            <param name="filename">Name of the file to be created.</param>
             <param name="KeyFileFormat">Format to convert to</param>
+            <param name="passphrase">Optional encryption passphrase.</param>
             <returns>The keyfile data</returns>
         </member>
         <member name="M:Goedel.Mesh.Extensions.GetMeshKeyType(Goedel.Cryptography.UdfAlgorithmIdentifier)">
@@ -5944,6 +6031,9 @@
             <summary>
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.KeyShare.GetKeyPair(Goedel.Cryptography.KeySecurity,Goedel.Cryptography.IKeyLocate)">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.KeyShare.PublicPrimary">
              <summary>
             The public key parameters of the primary key.
@@ -6056,6 +6146,8 @@
             </summary>
             <param name="primary">The public parameters of the shared key.</param>
             <param name="share">The threshold share.</param>
+            <param name="serviceAddress">The service account to which requests should be directed.</param>
+            <param name="keyCollection">The key collection to be used to obtain the client.</param>
         </member>
         <member name="M:Goedel.Mesh.KeyPairServiced.Encrypt(System.Byte[],System.Byte[]@,Goedel.Cryptography.KeyPair@,System.Byte[])">
             <inheritdoc/>

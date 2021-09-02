@@ -164,7 +164,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="directory">Directory to store persistence data.</param>
         protected MeshMachineCore(string directory) : base(directory) {
-            // Now read the container to get the directories.
+            // Read the container to get the directories.
             var containerHost = new PersistHost(FileNameHost, FileTypeHost,
                 fileStatus: FileStatus.ConcurrentLocked,
                 containerType: SequenceType.Merkle);
@@ -198,9 +198,7 @@ namespace Goedel.Mesh {
                     MeshActor.Host, MeshKeyOperation.Encrypt);
             KeyCollection.Add(baseDecrypt);
 
-            // Bug: profileHost has no encryption key specified!!!!
             var activationDevice = catalogedMachine?.EnvelopedActivationHost?.Decode(KeyCollection);
-            //activationDevice.MeshActor = MeshActor.Host;
 
             activationDevice.Activate(deviceKeySeed);
 

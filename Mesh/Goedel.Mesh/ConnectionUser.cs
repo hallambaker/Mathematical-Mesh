@@ -50,7 +50,7 @@ namespace Goedel.Mesh {
         }
 
     public partial class ConnectionDevice {
-
+        ///<summary>Typed enveloped data</summary> 
         public Enveloped<ConnectionDevice> EnvelopedConnectionDevice =>
     envelopedConnectionDevice ?? new Enveloped<ConnectionDevice>(DareEnvelope).
             CacheValue(out envelopedConnectionDevice);

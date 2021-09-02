@@ -160,7 +160,12 @@ namespace Goedel.Mesh {
         /// <returns>The activation record.</returns>
         public abstract ApplicationEntry GetActivation(CatalogedDevice catalogedDevice);
 
-
+        /// <summary>
+        /// Determine if the device is authorized to use the application.
+        /// </summary>
+        /// <param name="catalogedDevice">The device record.</param>
+        /// <returns>True if the device <paramref name="catalogedDevice"/> is authorized to 
+        /// use this application according to the authorization criteria for the device.</returns>
         public virtual bool DeviceAuthorized(CatalogedDevice catalogedDevice) {
             if (catalogedDevice?.ConnectionDevice?.Roles == null) {
                 return false;
@@ -189,143 +194,14 @@ namespace Goedel.Mesh {
                     }
                 }
 
-            // Accept it.
+            // Reject it.
             return false;
             }
 
         }
 
-    public partial class CatalogedApplicationMail {
-
-        /// <summary>
-        /// The primary key used to catalog the entry.
-        /// </summary>
-        public override string _PrimaryKey => Key;
 
 
-        public KeyPair SmimeSignKeyPair { private get; init; }
-        public KeyPair SmimeEncryptKeyPair { private get; init; }
-
-
-        public KeyPair OpenpgpSignKeyPair { private get; init; }
-        public KeyPair OpenpgpEncryptKeyPair { private get; init; }
-
-        public static CatalogedApplicationMail Create(string key, List<string> roles) {
-
-            var smimeSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                     KeySecurity.Exportable, keySize: 2048);
-            var smimeEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                    KeySecurity.Exportable, keySize: 2048);
-            var openpgpSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                    KeySecurity.Exportable, keySize: 2048);
-            var openpgpEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                   KeySecurity.Exportable, keySize: 2048);
-
-            return new CatalogedApplicationMail() {
-                Key = key,
-                Grant = roles,
-                SmimeSignKeyPair = smimeSignKeyPair,
-                SmimeEncryptKeyPair = smimeEncryptKeyPair,
-                OpenpgpSignKeyPair = openpgpSignKeyPair,
-                OpenpgpEncryptKeyPair = openpgpEncryptKeyPair,
-                SmimeSign = new KeyData (smimeSignKeyPair),
-                SmimeEncrypt = new KeyData(smimeEncryptKeyPair),
-                OpenpgpSign = new KeyData(openpgpSignKeyPair),
-                OpenpgpEncrypt = new KeyData(openpgpEncryptKeyPair)
-                };
-
-
-
-            }
-
-
-
-
-        ///<inheritdoc/>
-        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
-            var activation = new ActivationApplicationMail() {
-                SmimeSign = new KeyData(SmimeSignKeyPair, true),
-                SmimeEncrypt = new KeyData(SmimeEncryptKeyPair, true),
-                OpenpgpSign = new KeyData(OpenpgpSignKeyPair, true),
-                OpenpgpEncrypt = new KeyData(OpenpgpEncryptKeyPair, true)
-                };
-
-            activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
-            
-            return new ApplicationEntryMail() {
-                Identifier = Key,
-                EnvelopedActivation = activation.EnvelopedActivationApplicationMail
-                };
-            }
-
-
-        }
-
-    //public partial class CatalogedApplicationMailDevice {
-
-    //    /// <summary>
-    //    /// The primary key used to catalog the entry.
-    //    /// </summary>
-    //    public override string _PrimaryKey => Key;
-
-    //    }
-
-
-    public partial class CatalogedApplicationSsh {
-
-        /// <summary>
-        /// The primary key used to catalog the entry.
-        /// </summary>
-        public override string _PrimaryKey => Key;
-
-
-        public KeyPair ClientKeyPrivate { private get; init; }
-
-        public static CatalogedApplicationSsh Create(string key, List<string>roles) {
-
-
-            // generate an RSA client key here.
-            var clientKey = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                    KeySecurity.Exportable, keySize: 2048);
-
-            // don't need to add it to the application record though because every device will have a copy.
-
-
-            var applicationSSH = new CatalogedApplicationSsh() {
-                Key = key,
-                Grant = roles,
-                ClientKeyPrivate = clientKey,
-                ClientKey = new KeyData(clientKey)
-                };
-
-
-
-            return applicationSSH;
-            }
-
-
-        ///<inheritdoc/>
-        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
-            var activation =  new ActivationApplicationSsh() {
-                ClientKey = new KeyData(ClientKeyPrivate, true)
-                };
-
-            activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
-
-
-            return new ApplicationEntrySsh() {
-                Identifier = Key,
-                EnvelopedActivation = activation.EnvelopedActivationApplicationSsh
-                };
-
-            }
-
-
-
-
-
-
-        }
 
     //public partial class CatalogedApplicationSshHost {
 

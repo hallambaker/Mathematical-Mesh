@@ -52,7 +52,7 @@ namespace Goedel.Mesh.Server {
         ///<summary>The service signature key.</summary> 
         public static CryptoKey ServiceSignatureKey => null;
 
-
+        ///<summary>The key collection.</summary> 
         public IKeyCollection KeyCollection { get; }
 
         #endregion
@@ -74,6 +74,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Open or create the accounts persistence container.
         /// </summary>
+        /// <param name="keyCollection">The key collection to be used for decrypting data.</param>
         /// <param name="directory">The directory in which all the service data is stored.</param>
         /// <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
         public MeshPersist(IKeyCollection keyCollection, string directory, FileStatus fileStatus) {

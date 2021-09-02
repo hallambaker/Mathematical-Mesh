@@ -271,11 +271,17 @@
             Verified account accessor, has access to spools and to catalogues
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.Disposing">
+            <summary>
+            Disposing method.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleVerified.#ctor(Goedel.Mesh.Server.AccountEntry,Goedel.Protocol.ICredential)">
             <summary>
             Constructor returning a verified account handle for <paramref name="accountEntry"/>.
             </summary>
-            <param name="accountEntry"></param>
+            <param name="accountEntry">The account entry from the catalog.</param>
+            <param name="credential">The credential used to claim the account.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleVerified.GetStatusStore(System.String)">
             <summary>
@@ -933,6 +939,9 @@
         <member name="P:Goedel.Mesh.Server.PublicMeshService.ServiceDescription">
             <summary>The service description.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.KeyCollection">
+            <summary>Key collection giving access to host and service keys.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>
         </member>
@@ -1094,6 +1103,9 @@
         <member name="P:Goedel.Mesh.Server.MeshPersist.ServiceSignatureKey">
             <summary>The service signature key.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.MeshPersist.KeyCollection">
+            <summary>The key collection.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Disposing">
             <inheritdoc/>
         </member>
@@ -1101,6 +1113,7 @@
             <summary>
             Open or create the accounts persistence container.
             </summary>
+            <param name="keyCollection">The key collection to be used for decrypting data.</param>
             <param name="directory">The directory in which all the service data is stored.</param>
             <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
         </member>

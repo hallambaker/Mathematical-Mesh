@@ -74,10 +74,10 @@ namespace Goedel.Utilities {
         public virtual string Format(params object[] reasons) => "Formatted reasons...";
 
         ///<summary>Templates used to format the exception message.</summary>
-        public static System.Collections.Generic.List<string> Templates = null;
+        public static System.Collections.Generic.List<string> Templates { get; set; } = null;
 
         ///<summary>The exception formatting delegate</summary>
-        public static ExceptionFormatDelegate ExceptionFormatDelegate = FormatException;
+        public static ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } = FormatException;
 
         ///<summary>Default error message return</summary>
         public static string NoMessageSpecified { get; set; } = "Unspecified error";

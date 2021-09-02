@@ -24,7 +24,6 @@ using System.Collections.Generic;
 
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
-using Goedel.Mesh;
 
 namespace Goedel.Mesh.ServiceAdmin {
 
@@ -163,7 +162,6 @@ namespace Goedel.Mesh.ServiceAdmin {
     public partial class ServiceConfiguration {
 
         #region // Properties
-
         /// <summary>The service profile.</summary>
         public Goedel.Mesh.ProfileService ProfileService => throw new NYI();
 
@@ -175,34 +173,8 @@ namespace Goedel.Mesh.ServiceAdmin {
 
 
         #endregion
-
         #region // Methods 
 
-        /// <summary>
-        /// Returns the endpoints for the service configuration.
-        /// </summary>
-        /// <returns>The endpoints</returns>
-        //public List<Endpoint> GetEndpoints(string serviceId=null) {
-        //    var endpoints = new List<Endpoint>();
-
-
-        //    var wellknown = serviceId == null ? WellKnown : WellKnown + "/" + serviceId;
-
-        //    foreach (var address in Addresses) {
-        //        if (address.IsDns()) {
-        //            endpoints.Add(new HttpEndpoint(address, wellknown, Instance));
-        //            }
-        //        else if (address.IsCallSign()) {
-
-
-        //            }
-
-        //        }
-
-
-
-        //    return endpoints;
-        //    }
 
 
         #endregion
@@ -229,7 +201,6 @@ namespace Goedel.Mesh.ServiceAdmin {
 
 
         #endregion
-
         #region // Methods 
 
         /// <summary>
@@ -237,7 +208,6 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// </summary>
         /// <returns>The endpoints</returns>
         public List<Endpoint> GetEndpoints(string wellKnown = null) {
-
 
             var endpoints = new List<Endpoint>();
 
@@ -248,16 +218,9 @@ namespace Goedel.Mesh.ServiceAdmin {
                         endpoints.Add(new HttpEndpoint(address, wellKnown ?? service.WellKnown, service.Instance, Port:Port));
                         }
                     else if (address.IsCallSign()) {
-
-
                         }
-
-
                     }
-
-
                 }
-
 
             return endpoints;
             }
@@ -268,8 +231,6 @@ namespace Goedel.Mesh.ServiceAdmin {
         /// <returns>The private credential</returns>
         public ICredentialPrivate GetCredential(IMeshMachine meshMachine) =>
             meshMachine.GetCredential(DeviceUdf, ProfileUdf);
-
-
 
         #endregion
         }

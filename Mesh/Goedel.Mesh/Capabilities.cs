@@ -27,7 +27,6 @@ using System.Numerics;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
 using Goedel.Utilities;
 
 
@@ -82,7 +81,6 @@ namespace Goedel.Mesh {
 
         }
 
-
     public partial class AccessCapability {
 
         ///<inheritdoc/>
@@ -96,7 +94,6 @@ namespace Goedel.Mesh {
 
     public partial class CryptographicCapability {
 
-
         ///<summary>If not null, specifies a key to which key shares MUST be encrypted
         ///when creating.</summary>
         public CryptoKey KeyDataEncryptionKey;
@@ -104,17 +101,10 @@ namespace Goedel.Mesh {
         ///<summary>The primary key is the value of the <see cref="Capability.Id"/> property.</summary>
         public override string _PrimaryKey => Id;
 
-        // current: implement here.
-        
         ///<summary>Convenience accessor, pulls the information out of the key.</summary> 
         public virtual string SubjectId => throw new NYI();
         ///<summary>Convenience accessor, pulls the information out of the key.</summary> 
         public virtual string SubjectAddress => throw new NYI();
-
-
-
-        public KeyPairAdvanced KeyShare { get; set; }
-
 
         /// <summary>
         /// Default constructor used for deserialization.
@@ -129,21 +119,14 @@ namespace Goedel.Mesh {
         /// <param name="subjectId">The subject identifier.</param>
         /// <param name="capability">The capability type.</param>
         public CryptographicCapability(string subjectId, string capability) {
-            //SubjectId = subjectId;
-
             var contentType = MeshConstants.IanaTypeMeshCapabilityId + capability;
             Id = UDF.ContentDigestOfDataString(subjectId.ToUTF8(), contentType);
-
-
             }
 
 
-
+        ///<summary>Decrypt the enveloped key share using keys from 
+        ///<paramref name="keyCollection"/></summary> 
         public KeyPair DecryptShare(IKeyCollection keyCollection) {
-
-            //Screen.WriteLine($"Decode from  {EnvelopedKeyShare.Header.Recipients[0]}");
-            //JsonReader.Trace = true;
-
             var keyShare = EnvelopedKeyShare.Decode(keyCollection);
             return keyShare.PrivateParameters.GetKeyPair(KeySecurity.Ephemeral);
             }
@@ -201,26 +184,17 @@ namespace Goedel.Mesh {
                 byte[] salt = null) => KeyPair.Decrypt(encryptedKey,
                     ephemeral, algorithmID, partial, salt);
 
-
         /// <summary>
         /// Perform a key agreement.
         /// </summary>
         /// <param name="keyPair">The key pair to perform the agreement against.</param>
         /// <returns>The key agreement result.</returns>
         public virtual KeyAgreementResult Agreement(KeyPair keyPair) {
-
             Active.AssertTrue(NYI.Throw);
-         
             return KeyPair.Agreement(keyPair);
             }
-        // Current: Fails here because we are not decrypting the enveloped key!
-
-
         }
     public partial class CapabilityDecryptPartial : ICapabilityPartial {
-
-
-
 
         ///<summary>Instance exposing the <see cref="IMeshClient"/> interface allowing
         ///a client to be obtained for resolving the service.</summary>

@@ -103,17 +103,6 @@ namespace ExampleGenerator {
 
     public partial class CreateExamples {
 
-        void bogus() {
-
-            var x1 = Connect.PasswordList2;
-
-
-            }
-
-
-
-
-
         public bool GitHub = true;
         public string Preformat => GitHub ? "````" : "~~~~";
 

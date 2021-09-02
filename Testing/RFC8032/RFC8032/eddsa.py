@@ -330,7 +330,7 @@ class Edwards25519Point(EdwardsPoint):
     #The coding length
     def b(self): return 256
 
-    #Validity check (for debugging)
+    # check point
     def is_valid_point(self):
         x,y,z,t=self.x,self.y,self.z,self.t
         x2=x*x
@@ -409,7 +409,8 @@ class Edwards448Point(EdwardsPoint):
     def n(self): return 447
     #The coding length.
     def b(self): return 456
-    #Validity check (for debugging).
+
+    # check point
     def is_valid_point(self):
         x,y,z=self.x,self.y,self.z
         x2=x*x

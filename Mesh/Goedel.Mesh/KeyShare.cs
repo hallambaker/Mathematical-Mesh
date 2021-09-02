@@ -31,14 +31,14 @@ using Goedel.Utilities;
 
 namespace Goedel.Mesh {
     public partial class KeyShare {
-
+        ///<inheritdoc/>
         public override KeyPair GetKeyPair(
                     KeySecurity keySecurity,
                     IKeyLocate keyCollection = null) {
             var share = Share.GetKeyPair(keySecurity, keyCollection) as KeyPairAdvanced;
             var primary = PublicPrimary.GetKeyPair(keySecurity, keyCollection);
 
-            Screen.WriteLine($"   Device Key = {share.IKeyAdvancedPrivate.Private}");
+            //Screen.WriteLine($"   Device Key = {share.IKeyAdvancedPrivate.Private}");
 
             return new KeyPairServiced(primary, share, ServiceAddress, keyCollection);
             //current: here
@@ -94,6 +94,8 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="primary">The public parameters of the shared key.</param>
         /// <param name="share">The threshold share.</param>
+        /// <param name="serviceAddress">The service account to which requests should be directed.</param>
+        /// <param name="keyCollection">The key collection to be used to obtain the client.</param>
         public KeyPairServiced(
                 KeyPair primary, 
                 KeyPairAdvanced share,

@@ -30,7 +30,7 @@ namespace Goedel.Cryptography.Standard {
     /// Provider for bulk encryption algorithms (e.g. AES). Prior to the introduction of
     /// .NET Standard and the unification of the cryptographic processing algorithms, this
     /// class was necessary as a means of enabling the use of different providers. It is
-    /// now redundant and will be removed in due course.
+    /// redundant and will be removed in due course.
     /// </summary>
     public abstract class CryptoProviderEncryption :
                 Goedel.Cryptography.CryptoProviderEncryption {

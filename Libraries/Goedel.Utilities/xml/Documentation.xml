@@ -193,10 +193,10 @@
             <param name="reasons">Exception parameter data.</param>
             <returns>The formated exception description.</returns>
         </member>
-        <member name="F:Goedel.Utilities.GoedelException.Templates">
+        <member name="P:Goedel.Utilities.GoedelException.Templates">
             <summary>Templates used to format the exception message.</summary>
         </member>
-        <member name="F:Goedel.Utilities.GoedelException.ExceptionFormatDelegate">
+        <member name="P:Goedel.Utilities.GoedelException.ExceptionFormatDelegate">
             <summary>The exception formatting delegate</summary>
         </member>
         <member name="P:Goedel.Utilities.GoedelException.NoMessageSpecified">

@@ -137,8 +137,8 @@ namespace ExampleGenerator {
             ShellAccount.ConnectPin = Alice3.Example($"device request {AliceAccount} /pin={pin}");
 
             // Bug: fails because of spool not having envelope written to it and this causes closed message to crash
-            //ConnectPending3 = testCLIAlice1.Example($"device pending");
-            //ConnectSyncPIN = testCLIAlice3.Example($"account sync");
+            ShellAccount.ConnectPending3 = Alice1.Example($"device pending");
+            ShellAccount.ConnectSyncPIN = Alice3.Example($"account sync");
 
 
             ShellAccount.ConnectEarlPrep = Alice4.Example("key earl");

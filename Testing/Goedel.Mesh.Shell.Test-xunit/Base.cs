@@ -100,9 +100,7 @@ namespace Goedel.XUnit {
 
 
 
-        void EndTest() {
-            testEnvironment?.Dispose();
-            }
+        void EndTest() => testEnvironment?.Dispose();
 
 
         public string ServiceDns => TestEnvironment.ServiceDns;

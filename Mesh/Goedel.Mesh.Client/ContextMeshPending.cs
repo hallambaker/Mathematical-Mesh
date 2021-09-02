@@ -239,7 +239,7 @@ namespace Goedel.Mesh.Client {
             var catalogedEntry = respondConnection.CatalogedDevice;
             var profileUser = catalogedEntry.ProfileUser;
 
-            // now create the host catalog entry
+            // create the host catalog entry
             var catalogedStandard = new CatalogedStandard() {
                 Id = ProfileDevice.Udf,
                 CatalogedDevice = catalogedEntry,
@@ -253,7 +253,7 @@ namespace Goedel.Mesh.Client {
 
             MeshHost.Register(catalogedStandard, contextUser);
 
-            // now create the account context for the account we asked to connect to and initialize
+            // create the account context for the account we asked to connect to and initialize
             Directory.CreateDirectory(contextUser.StoresDirectory);
             contextUser.Sync();
             return contextUser;

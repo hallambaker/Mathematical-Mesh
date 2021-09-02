@@ -333,13 +333,13 @@ namespace Goedel.Protocol {
         public bool EOF => CharacterInput.EOF;
 
         /// <summary>If true, emit trace value for debugging.</summary>
-        public static bool Trace = false;
+        public static bool Trace { get; set; } = false;
 
         /// <summary>
         /// Delegate method for creating structured readers
         /// </summary>
-        public static JSONReaderFactoryDelegate JSONReaderFactory => _JSONReaderFactoryByte;
-        static JsonReader _JSONReaderFactoryByte(byte[] Data) => new(Data);
+        public static JSONReaderFactoryDelegate JSONReaderFactory => JsonReaderFactoryByte;
+        static JsonReader JsonReaderFactoryByte(byte[] Data) => new(Data);
 
 
         StringBuilder stringBuilder = new();

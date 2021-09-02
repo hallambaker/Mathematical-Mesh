@@ -319,6 +319,7 @@ namespace Goedel.Mesh.Client {
 
             }
 
+        ///<inheritdoc/>
         public override int UpdateStore(ContainerUpdate containerUpdate) {
             var count = base.UpdateStore(containerUpdate);
 
@@ -328,12 +329,7 @@ namespace Goedel.Mesh.Client {
                     containerUpdate.Envelopes != null) {
                 foreach (var entry in containerUpdate.Envelopes) {
                     if (CatalogedDevice.DeviceUdf == entry.Header.ContentMeta.UniqueId) {
-
-                        // current: Need to fix this because we should not get here.
-                        // current failing to decrypt here because we lack the account encrypt key???
-
-                        catalogedDevice = entry.DecodeJsonObject(KeyCollection) as
-                            CatalogedDevice;
+                        catalogedDevice = entry.DecodeJsonObject(KeyCollection) as CatalogedDevice;
                         }
 
                     }
@@ -348,7 +344,10 @@ namespace Goedel.Mesh.Client {
 
             }
 
-
+        /// <summary>
+        /// Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
+        /// </summary>
+        /// <param name="catalogedDevice">The entry to update.</param>
         public void UpdateCatalogedMachine(CatalogedDevice catalogedDevice) {
             CatalogedMachine.CatalogedDevice = catalogedDevice;
             MeshHost.Register(CatalogedMachine);
@@ -757,10 +756,6 @@ namespace Goedel.Mesh.Client {
         #region // Device connection
 
 
-
-
-
-
         /// <summary>
         /// Convenience wrapper for <see cref="CreateDeviceEarl"/>. Generates a device profile
         /// and writes the <see cref="DevicePreconfiguration"/> data to a file in the directory
@@ -809,6 +804,8 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="secretSeed">The computed secret seed value.</param>
         /// <param name="profileDevice">The computed device profile.</param>
+        /// <param name="connectionService">Slim version of the device connection for 
+        /// authentication to the service.</param>
         /// <param name="connectionDevice">The computed device connection.</param>
         /// <param name="pin">The computed PIN code.</param>
         /// <param name="connectURI">The connection URI to be used for pickup.</param>
@@ -1188,8 +1185,15 @@ namespace Goedel.Mesh.Client {
             //    }
             }
 
-
-        public List<ApplicationEntry> MakeApplicationEntries(
+        /// <summary>
+        /// Create a list of application entries.
+        /// </summary>
+        /// <param name="roles">The roles under which the application entries are to be
+        /// granted.</param>
+        /// <param name="transactRequest">The transaction under which catalog updates are to be added.</param>
+        /// <param name="catalogedDevice">The device entry.</param>
+        /// <returns>The list of application entries.</returns>
+        public static List<ApplicationEntry> MakeApplicationEntries(
             List<string> roles,
             TransactUser transactRequest,
             CatalogedDevice catalogedDevice
@@ -1675,13 +1679,27 @@ namespace Goedel.Mesh.Client {
 
         #region // Application entries
 
+        /// <summary>
+        /// Get the SSH application <paramref name="applicationId"/>.
+        /// </summary>
+        /// <param name="applicationId">The name of the specific SSH application.</param>
+        /// <returns>The application iff found, otherwise null.</returns>
         public CatalogedApplicationSsh GetApplicationSsh(
                 string applicationId)  => GetApplication(applicationId) as CatalogedApplicationSsh;
 
+        /// <summary>
+        /// Get the Mail application <paramref name="applicationId"/>.
+        /// </summary>
+        /// <param name="applicationId">The name of the specific Mail application.</param>
+        /// <returns>The application iff found, otherwise null.</returns>
         public CatalogedApplicationMail GetApplicationMail(
                 string applicationId) => GetApplication(applicationId) as CatalogedApplicationMail;
 
-
+        /// <summary>
+        /// Get the application entry  for the context device.<paramref name="applicationId"/>.
+        /// </summary>
+        /// <param name="applicationId">The name of the specific application entry.</param>
+        /// <returns>The application iff found, otherwise null.</returns>
         public ApplicationEntry GetApplicationEntry(
                 string applicationId) {
 
@@ -1695,15 +1713,22 @@ namespace Goedel.Mesh.Client {
                     }
                 }
             return null;
-
-
             }
 
 
-
+        /// <summary>
+        /// Get the SSH application entry for the context device.<paramref name="applicationId"/>.
+        /// </summary>
+        /// <param name="applicationId">The name of the specific SSH application.</param>
+        /// <returns>The application iff found, otherwise null.</returns>
         public ApplicationEntrySsh GetApplicationEntrySsh(
                 string applicationId) => GetApplicationEntry(applicationId) as ApplicationEntrySsh;
 
+        /// <summary>
+        /// Get the Mail application entry  for the context device.<paramref name="applicationId"/>.
+        /// </summary>
+        /// <param name="applicationId">The name of the specific Mail application entry.</param>
+        /// <returns>The application iff found, otherwise null.</returns>
         public ApplicationEntryMail GetApplicationEntryMail(
                 string applicationId) => GetApplicationEntry(applicationId) as ApplicationEntryMail;
 

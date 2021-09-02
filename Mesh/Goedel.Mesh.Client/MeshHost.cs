@@ -83,6 +83,11 @@ namespace Goedel.Mesh.Client {
 
             }
 
+        /// <summary>
+        /// Create a context for the machine entry <paramref name="catalogedMachine"/>.
+        /// </summary>
+        /// <param name="catalogedMachine">The machine to create the context for.</param>
+        /// <returns>The context created.</returns>
         public ContextAccount Register(CatalogedMachine catalogedMachine) {
             switch (catalogedMachine) {
                 // consider adding a machine catalog entry for a group...

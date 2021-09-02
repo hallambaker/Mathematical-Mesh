@@ -28,89 +28,6 @@ using Goedel.Utilities;
 namespace Goedel.Cryptography {
 
     /// <summary>
-    /// Key discovery interface.
-    /// </summary>
-    public interface IKeyLocate {
-        /// <summary>
-        /// Attempt to find a private key for the specified recipient entry.
-        /// </summary>
-        /// <param name="keyID">The key identifier to match</param>
-        /// <param name="cryptoKey">The key (if found)</param>
-        /// <returns>True if a match is found, otherwise false.</returns>
-        bool TryFindKeyDecryption(string keyID, out IKeyDecrypt cryptoKey);
-
-        /// <summary>
-        /// Locate a private key
-        /// </summary>
-        /// <param name="UDF">fingerprint of key to locate.</param>
-        /// <param name="cryptoKey">The key (if found)</param>
-        /// <returns>A KeyPair instance bound to the private key.</returns>
-        bool LocatePrivateKeyPair(string UDF, out CryptoKey cryptoKey);
-
-        /// <summary>
-        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
-        /// an account identifier or strong account identifier.
-        /// </summary>
-        /// <param name="keyID">The identifier to resolve.</param>
-        /// <param name="cryptoKey">The key (if found)</param>
-        /// <returns>true if a key is found, otherwise, false.</returns>
-        bool TryFindKeyEncryption(string keyID, out CryptoKey cryptoKey);
-
-        /// <summary>
-        /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
-        /// an account identifier or strong account identifier.
-        /// </summary>
-        /// <param name="signingKey">The identifier to resolve.</param>
-        /// <param name="cryptoKey">The key (if found)</param>
-        /// <returns>The identifier.</returns>
-        bool TryFindKeySignature(string signingKey, out CryptoKey cryptoKey);
-
-        /// <summary>
-        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
-        /// an account identifier or strong account identifier.
-        /// </summary>
-        /// <param name="keyId">The identifier to resolve.</param>
-        /// <param name="cryptoKey">The key (if found)</param>
-        /// <returns>The identifier.</returns>
-        bool TryFindPublicKey(string keyId, out CryptoKey cryptoKey);
-
-
-        /// <summary>
-        /// Add a keypair to the collection.
-        /// </summary>
-        /// <param name="keyPair">The key pair to add.</param>
-        void Add(KeyPair keyPair);
-
-        /// <summary>
-        /// Persist a private key if permitted by the KeySecurity model of the key.
-        /// </summary>
-        /// <param name="keyPair">The key to persist.</param>
-        void Persist(KeyPair keyPair);
-
-
-        /// <summary>
-        /// Perform a remote key agreement between <paramref name="share"/> and 
-        /// <paramref name="ephemeral"/>.
-        /// </summary>
-        /// <param name="serviceAddress"></param>
-        /// <param name="ephemeral">The public ephemeral.</param>
-        /// <returns>The key agreement result share.ephemeral.</returns>
-        /// <param name="shareId"></param>
-        KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId);
-
-
-        }
-
-
-
-
-    /// <summary>
-    /// Return a new KeyCollection
-    /// </summary>
-    /// <returns></returns>
-    public delegate KeyCollection KeyCollectionDelegate();
-
-    /// <summary>
     /// Track a collection of keys from various sources allowing recall when required for recryption use.
     /// </summary>
     public abstract class KeyCollection : IKeyLocate {
@@ -122,8 +39,6 @@ namespace Goedel.Cryptography {
         /// The default collection.
         /// </summary>
         public static KeyCollection Default { get; set; }
-
-        //static KeyCollection _Default = null;
 
         ///<summary>Key pairs by UDF value.</summary>
         protected Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new();
@@ -139,10 +54,6 @@ namespace Goedel.Cryptography {
 
         ///<summary>Signature keypairs by Account</summary>
         protected Dictionary<string, KeyPair> DictionaryKeyPairByAccountSign = new();
-
-
-        //Dictionary<string, KeyPair> DictionaryKeyPairPrivateByUDF = new Dictionary<string, KeyPair>();
-
 
 
         /// <summary>
@@ -168,7 +79,6 @@ namespace Goedel.Cryptography {
                     }
                 }
             }
-
 
         /// <summary>
         /// Attempt to find a private key for the specified recipient entry.
@@ -207,7 +117,6 @@ namespace Goedel.Cryptography {
             return false;
             }
 
-
         /// <summary>
         /// Locate the private key with fingerprint <paramref name="udf"/> and return
         /// the corresponding JSON description.
@@ -244,8 +153,6 @@ namespace Goedel.Cryptography {
                 }
 
             }
-
-
 
         /// <summary>
         /// Persist the key pair specified by <paramref name="privateKey"/> and mark as exportable
@@ -310,8 +217,20 @@ namespace Goedel.Cryptography {
         /// <param name="keyId">The identifier to resolve.</param>
         /// <param name="cryptoKey">The key (if found)</param>
         /// <returns>The identifier.</returns>
-        public virtual bool TryFindPublicKey(string keyId, out CryptoKey cryptoKey) =>
-                    TryMatchRecipientKeyPair(keyId, out cryptoKey);
-        public abstract KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId);
+        public virtual bool TryFindPublicKey(
+                    string keyId, 
+                    out CryptoKey cryptoKey) => TryMatchRecipientKeyPair(keyId, out cryptoKey);
+
+        /// <summary>
+        /// Perform a remote key agreement.
+        /// </summary>
+        /// <param name="serviceAddress">The service to present the agreement to.</param>
+        /// <param name="ephemeral">The ephemeral to perform the agreement against.</param>
+        /// <param name="shareId">The share to perform the agreement against.</param>
+        /// <returns>The result of the key agreement.</returns>
+        public abstract KeyAgreementResult RemoteAgreement(
+                    string serviceAddress, 
+                    KeyPairAdvanced ephemeral, 
+                    string shareId);
         }
     }

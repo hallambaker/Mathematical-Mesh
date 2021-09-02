@@ -31,9 +31,6 @@ namespace Goedel.Cryptography {
     /// </summary>
     public interface IKeyDecrypt {
 
-        // current: IKeyDecrypt is where it is at.
-
-
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>

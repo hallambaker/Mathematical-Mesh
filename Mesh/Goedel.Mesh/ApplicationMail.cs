@@ -20,49 +20,130 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography;
+using System.Collections.Generic;
+
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh {
-    // Todo: Mail Store account access details, passwords, etc.
+    // Phase2: Mail Store account access details, passwords, etc.
 
-    // Todo: Mail PGP Passprase for PEM keys
-    // Todo: Mail PGP Support for PGP ECC algorithms
-    // Todo: Mail PGP Create PGP subkey / fingerprint / etc.
-    // Todo: Mail PGP Push key to MIT key server
+    // Phase2: Mail PGP Passprase for PEM keys
+    // Phase2: Mail PGP Support for PGP ECC algorithms
+    // Phase2: Mail PGP Create PGP subkey / fingerprint / etc.
+    // Phase2: Mail PGP Push key to MIT key server
 
-    // Todo: Mail SMIME Create CSR
-    // Todo: Mail SMIME Request CA issued cert via ACME
-    // Todo: Mail SMIME Save private key as P12
-    // Todo: Mail SMIME Self signed root o'trust
+    // Phase2: Mail SMIME Create CSR
+    // Phase2: Mail SMIME Request CA issued cert via ACME
+    // Phase2: Mail SMIME Save private key as P12
+    // Phase2: Mail SMIME Self signed root o'trust
 
-
+    #region // ActivationApplicationMail
     public partial class ActivationApplicationMail {
-
+        #region // Properties
         ///<summary>The enveloped object</summary> 
         public Enveloped<ActivationApplicationMail> EnvelopedActivationApplicationMail =>
             envelopedActivationApplicationMail ?? new Enveloped<ActivationApplicationMail>(DareEnvelope).
                     CacheValue(out envelopedActivationApplicationMail);
         Enveloped<ActivationApplicationMail> envelopedActivationApplicationMail;
 
+        #endregion
 
 
         }
+    #endregion
+    #region // ApplicationEntryMail
 
     public partial class ApplicationEntryMail {
 
-
+        #region // Properties
         ///<summary>The decrypted activation.</summary> 
         public ActivationApplicationMail Activation { get; set; }
 
+        #endregion
+        #region // Methods
+
         ///<inheritdoc/>
-
-        public override void Decode(IKeyCollection keyCollection) {
-
+        public override void Decode(IKeyCollection keyCollection) => 
             Activation = EnvelopedActivation.Decode(keyCollection);
+        
+        #endregion
 
-            }
         }
+    #endregion
+    #region // CatalogedApplicationMail
+    public partial class CatalogedApplicationMail {
+        #region // Properties
+        /// <summary>
+        /// The primary key used to catalog the entry.
+        /// </summary>
+        public override string _PrimaryKey => Key;
+
+        ///<summary>The S/MIME signature key.</summary> 
+        public KeyPair SmimeSignKeyPair { private get; init; }
+        ///<summary>The S/MIME encryption key.</summary> 
+        public KeyPair SmimeEncryptKeyPair { private get; init; }
+
+        ///<summary>The OpenPGP signature key.</summary> 
+        public KeyPair OpenpgpSignKeyPair { private get; init; }
+        ///<summary>The OpenPGP encryption key.</summary> 
+        public KeyPair OpenpgpEncryptKeyPair { private get; init; }
+        #endregion
+        #region // Constructors and factories
+        /// <summary>
+        /// Create a new mail application instance.
+        /// </summary>
+        /// <param name="key">The name of the mail application.</param>
+        /// <param name="roles">The roles to which the application is granted.</param>
+        /// <returns></returns>
+        public static CatalogedApplicationMail Create(string key, List<string> roles) {
+
+            var smimeSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                     KeySecurity.Exportable, keySize: 2048);
+            var smimeEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                    KeySecurity.Exportable, keySize: 2048);
+            var openpgpSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                    KeySecurity.Exportable, keySize: 2048);
+            var openpgpEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                   KeySecurity.Exportable, keySize: 2048);
+
+            return new CatalogedApplicationMail() {
+                Key = key,
+                Grant = roles,
+                SmimeSignKeyPair = smimeSignKeyPair,
+                SmimeEncryptKeyPair = smimeEncryptKeyPair,
+                OpenpgpSignKeyPair = openpgpSignKeyPair,
+                OpenpgpEncryptKeyPair = openpgpEncryptKeyPair,
+                SmimeSign = new KeyData(smimeSignKeyPair),
+                SmimeEncrypt = new KeyData(smimeEncryptKeyPair),
+                OpenpgpSign = new KeyData(openpgpSignKeyPair),
+                OpenpgpEncrypt = new KeyData(openpgpEncryptKeyPair)
+                };
+            }
+        #endregion
+        #region // Methods
+        ///<inheritdoc/>
+        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+            var activation = new ActivationApplicationMail() {
+                SmimeSign = new KeyData(SmimeSignKeyPair, true),
+                SmimeEncrypt = new KeyData(SmimeEncryptKeyPair, true),
+                OpenpgpSign = new KeyData(OpenpgpSignKeyPair, true),
+                OpenpgpEncrypt = new KeyData(OpenpgpEncryptKeyPair, true)
+                };
+
+            activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
+
+            return new ApplicationEntryMail() {
+                Identifier = Key,
+                EnvelopedActivation = activation.EnvelopedActivationApplicationMail
+                };
+            }
+        #endregion
+
+        }
+
+    #endregion
 
     }
 

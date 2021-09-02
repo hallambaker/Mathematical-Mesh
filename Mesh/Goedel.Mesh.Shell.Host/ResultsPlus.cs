@@ -56,7 +56,7 @@ namespace Goedel.Mesh.Shell.Host {
                     Builder.Append(" - ");
                     Builder.Append(Reason);
                     }
-                Builder.Append("\n");
+                Builder.Append('\n');
                 }
             return Builder;
 
@@ -71,11 +71,11 @@ namespace Goedel.Mesh.Shell.Host {
 
             return Builder.ToString();
             }
-
-
-
         }
+
     public partial class ResultStartService {
+
+        ///<summary>The RUD service that was started.</summary> 
         public RudService RudService { get; set; }
         }
     }

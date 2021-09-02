@@ -315,6 +315,9 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultStartService.RudService">
+            <summary>The RUD service that was started.</summary> 
+        </member>
         <member name="T:Goedel.Mesh.Shell.MeshShellException">
             <summary>
             Generic error in Mesh Shell library

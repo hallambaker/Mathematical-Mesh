@@ -39,7 +39,7 @@ using Goedel.Utilities;
 
 namespace Goedel.Mesh.Test {
     public class TestEnvironmentRdpShell : TestEnvironmentRdp {
-        MeshMachineTest HostMachine;
+        MeshMachineTest HostMachine { get; set; }
         Goedel.Mesh.Shell.ServiceAdmin.Shell ServiceAdminShell { get; set; }
         Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter ServiceAdminCLI { get; set; }
 
@@ -75,7 +75,7 @@ namespace Goedel.Mesh.Test {
             ServiceAdmin($"dns {serviceConfig} {dnsConfig}");
 
 
-            // now start the host
+            // Start the host
             HostShell = new Shell.Host.Shell(
                 PublicMeshService.ServiceDescription,
                 ServiceManagementProvider.ServiceDescriptionHost) {
@@ -186,7 +186,7 @@ namespace Goedel.Mesh.Test {
         public virtual string ServiceDns => "example.com";
 
         static string TestPath = "TestPath";
-        public static string TestRoot;
+        public static string TestRoot { get; set; }
 
         public static string CommonData => System.IO.Path.Combine(TestRoot, "CommonData");
         public static string WorkingDirectory => System.IO.Path.Combine(TestRoot, "WorkingDirectory");

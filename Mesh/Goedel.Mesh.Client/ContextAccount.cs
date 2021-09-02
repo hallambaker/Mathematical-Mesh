@@ -115,7 +115,7 @@ namespace Goedel.Mesh.Client {
         ///<summary>The account activation</summary>
         public ActivationAccount ActivationAccount { get;  set; }
 
-
+        ///<summary>The device identifier within the account.</summary> 
         public string AccountDeviceId => ActivationAccount.AccountDeviceId;
 
 
@@ -155,7 +155,7 @@ namespace Goedel.Mesh.Client {
         public virtual Dictionary<string, StoreFactoryDelegate> DictionarySpoolDelegates => StaticSpoolDelegates;
 
         ///<summary>List of spools, these are the same for each type of account.</summary>
-        protected static Dictionary<string, StoreFactoryDelegate> StaticSpoolDelegates = new() {
+        protected static Dictionary<string, StoreFactoryDelegate> StaticSpoolDelegates { get; set; } = new() {
                 { SpoolInbound.Label, SpoolInbound.Factory },
                 { SpoolOutbound.Label, SpoolOutbound.Factory },
                 { SpoolLocal.Label, SpoolLocal.Factory },

@@ -431,6 +431,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.ActivationAccount">
             <summary>The account activation</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountDeviceId">
+            <summary>The device identifier within the account.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyProfile">
             <summary>The account profile key</summary>
         </member>
@@ -464,7 +467,7 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.DictionarySpoolDelegates">
             <summary>List of spools, these are the same for each type of account.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ContextAccount.StaticSpoolDelegates">
+        <member name="P:Goedel.Mesh.Client.ContextAccount.StaticSpoolDelegates">
             <summary>List of spools, these are the same for each type of account.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Disposing">
@@ -1136,6 +1139,15 @@
             <param name="activationAccount">The account activation</param>
             <param name="keyLocate">the key locator.</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.UpdateStore(Goedel.Mesh.ContainerUpdate)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.UpdateCatalogedMachine(Goedel.Mesh.CatalogedDevice)">
+            <summary>
+            Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
+            </summary>
+            <param name="catalogedDevice">The entry to update.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelf(Goedel.Mesh.Contact,System.String)">
             <summary>
             Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
@@ -1278,6 +1290,8 @@
             </summary>
             <param name="secretSeed">The computed secret seed value.</param>
             <param name="profileDevice">The computed device profile.</param>
+            <param name="connectionService">Slim version of the device connection for 
+            authentication to the service.</param>
             <param name="connectionDevice">The computed device connection.</param>
             <param name="pin">The computed PIN code.</param>
             <param name="connectURI">The connection URI to be used for pickup.</param>
@@ -1341,6 +1355,16 @@
             <param name="rights">The list of rights to be granted to the device.</param>
             <param name="messagePin">The PIN value to be used to authenticate the regquest.</param>
             <returns>The result of processing.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.MakeApplicationEntries(System.Collections.Generic.List{System.String},Goedel.Mesh.Client.TransactUser,Goedel.Mesh.CatalogedDevice)">
+            <summary>
+            Create a list of application entries.
+            </summary>
+            <param name="roles">The roles under which the application entries are to be
+            granted.</param>
+            <param name="transactRequest">The transaction under which catalog updates are to be added.</param>
+            <param name="catalogedDevice">The device entry.</param>
+            <returns>The list of application entries.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Process(System.String,System.Boolean,System.Boolean)">
             <summary>
@@ -1516,6 +1540,41 @@
             <param name="networkAddress">The address to return the entry for.</param>
             <returns>The mesh account encryption key if found, otherwise, null.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetApplicationSsh(System.String)">
+            <summary>
+            Get the SSH application <paramref name="applicationId"/>.
+            </summary>
+            <param name="applicationId">The name of the specific SSH application.</param>
+            <returns>The application iff found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetApplicationMail(System.String)">
+            <summary>
+            Get the Mail application <paramref name="applicationId"/>.
+            </summary>
+            <param name="applicationId">The name of the specific Mail application.</param>
+            <returns>The application iff found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetApplicationEntry(System.String)">
+            <summary>
+            Get the application entry  for the context device.<paramref name="applicationId"/>.
+            </summary>
+            <param name="applicationId">The name of the specific application entry.</param>
+            <returns>The application iff found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetApplicationEntrySsh(System.String)">
+            <summary>
+            Get the SSH application entry for the context device.<paramref name="applicationId"/>.
+            </summary>
+            <param name="applicationId">The name of the specific SSH application.</param>
+            <returns>The application iff found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetApplicationEntryMail(System.String)">
+            <summary>
+            Get the Mail application entry  for the context device.<paramref name="applicationId"/>.
+            </summary>
+            <param name="applicationId">The name of the specific Mail application entry.</param>
+            <returns>The application iff found, otherwise null.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Client.TransactAccount">
             <summary>
             Transaction on a Mesh account. Provides access to the account catalogs and spools.
@@ -1551,6 +1610,15 @@
         </member>
         <member name="P:Goedel.Mesh.Client.Transaction`1.SignLocalMessage">
             <summary>Inbound message signature key, the device admin signature key</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.Transaction`1.AccountId">
+            <summary>The account identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.Transaction`1.ProfileService">
+            <summary>The service profile.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.Transaction`1.ConnectionDevice">
+            <summary>The full device connection.</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.Transaction`1.TransactRequest">
             <summary>The transaction request message being assembled</summary>
@@ -2463,6 +2531,13 @@
             <param name="meshMachine">The Mesh Machine.</param>
             <param name="containerHost">The host catalog.</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.Register(Goedel.Mesh.Client.CatalogedMachine)">
+            <summary>
+            Create a context for the machine entry <paramref name="catalogedMachine"/>.
+            </summary>
+            <param name="catalogedMachine">The machine to create the context for.</param>
+            <returns>The context created.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.GetCatalogHost(Goedel.Mesh.IMeshMachine)">
             <summary>
             Get the host catalog from the specified mesh machine.
@@ -2700,6 +2775,39 @@
             </summary>
             <param name="contextUser">The account context in which the update
             is to be applied.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.ApplicationCreate(Goedel.Mesh.CatalogedApplication)">
+            <summary>
+            Add the application described in <paramref name="catalogedApplication"/> to the
+            profile and create application entries for each authorized device.
+            </summary>
+            <param name="catalogedApplication"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.ApplicationUpdate(Goedel.Mesh.CatalogedApplication)">
+            <summary>
+            Update the application
+            </summary>
+            <param name="catalogedApplication">The updated application entry</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.ApplicationDelete(System.String)">
+            <summary>
+            Delete the application
+            </summary>
+            <param name="applicationId">The application to remove</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.ApplicationDeviceAdd(Goedel.Mesh.CatalogedApplicationSsh,Goedel.Mesh.Connection)">
+            <summary>
+            Add SSH application to existing device.
+            </summary>
+            <param name="application">The application description.</param>
+            <param name="ProfileDevice">The device profile.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.ApplicationDeviceAdd(Goedel.Mesh.CatalogedApplicationMail,Goedel.Mesh.Connection)">
+            <summary>
+            Add Mail application to existing device.
+            </summary>
+            <param name="application">The application description.</param>
+            <param name="ProfileDevice">The device profile.</param>
         </member>
     </members>
 </doc>

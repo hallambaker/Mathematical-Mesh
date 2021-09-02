@@ -1,4 +1,5 @@
-﻿//  © 2021 by Phill Hallam-Baker
+﻿#region // Copyright - MIT License
+//  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -17,7 +18,7 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-//  
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -40,8 +41,9 @@ namespace Goedel.XUnit {
     public partial class TestService {
 
 
-        string TestFileText = "Test plaintext data";
+        string TestFileText { get; } = "Test plaintext data";
 
+        #region // Device access to account decryption key
         /// <summary>
         /// Connect a device by approving a request
         /// </summary>
@@ -57,7 +59,6 @@ namespace Goedel.XUnit {
         void MeshCheckAccountAuth(string role)    {
             var rights = new List<string> { role };
 
-
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
@@ -67,16 +68,13 @@ namespace Goedel.XUnit {
             testFile.Encrypt(contextAccountAlice, AccountAlice, AccountAlice);
             testFile.Decrypt(contextAccountAlice.KeyCollection);
 
-
             // New Device
             var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
                     AccountAlice);
 
-
             // test decrypt - onbaording FAIL
-            //Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
-            //    testFile.Decrypt(contextOnboardPending.KeyCollection));
-
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
+                testFile.Decrypt(contextOnboardPending.KeyCollection));
 
             // Admin Device
             contextAccountAlice.Sync();
@@ -96,9 +94,8 @@ namespace Goedel.XUnit {
             contextAccountAlice.DeleteDevice(contextOnboarded.CatalogedDevice.DeviceUdf);
 
             // test sync, decrypt - FAIL
-            //Xunit.Assert.Throws<ServerResponseInvalid> (() => newContext.Sync());
+            Xunit.Assert.Throws<ServerResponseInvalid>(() => newContext.Sync());
 
-            // Current this is succeeding when it is supposed to fail because the service has not picked up the new capability.
             if (role == Rights.IdRolesThreshold) {
                 Xunit.Assert.Throws<MeshOperationFailed>(() => testFile.Decrypt(newContext.KeyCollection));
 
@@ -108,9 +105,8 @@ namespace Goedel.XUnit {
                 }
 
             }
-
-
-
+        #endregion
+        #region // Device access to applications
 
         [Fact]
         public void MeshDeviceSsh() {
@@ -277,7 +273,7 @@ namespace Goedel.XUnit {
             applicationEntry2.Activation.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate2", KeyFileFormat.PEMPrivate);
 
 
-            // Test: Bagging on these for now, export in S/MIME formats
+            // Phase2: Bagging on these for now, export in S/MIME formats
 
             //application1.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic1", KeyFileFormat.X509DER);
             //application2.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic2", KeyFileFormat.X509DER);
@@ -297,7 +293,6 @@ namespace Goedel.XUnit {
                 key.TestNotNull();
                 dictionary.Add(key.GetKeyPair().KeyIdentifier).TestTrue();
                 }
-
             }
 
 
@@ -311,11 +306,7 @@ namespace Goedel.XUnit {
             foreach (var key in keys) {
                 (keyIdentifier == key.GetKeyPair().KeyIdentifier).TestTrue();
                 }
-
-
             }
-
-
 
         /// <summary>
         /// Connect a device by approving a request
@@ -342,14 +333,13 @@ namespace Goedel.XUnit {
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
             ExerciseAccount(contextOnboarded);
 
-
-
             //Check the access catalog
             //   Should have no threshold entry
             //   Should have service auth entry
 
             }
 
+        #endregion
 
 
 

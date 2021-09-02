@@ -134,7 +134,9 @@ namespace Goedel.Mesh {
         /// Convert key pair to specified format
         /// </summary>
         /// <param name="keyData">Keypair to convert</param>
+        /// <param name="filename">Name of the file to be created.</param>
         /// <param name="KeyFileFormat">Format to convert to</param>
+        /// <param name="passphrase">Optional encryption passphrase.</param>
         /// <returns>The keyfile data</returns>
         public static void ToKeyFile(
                 this KeyData keyData,

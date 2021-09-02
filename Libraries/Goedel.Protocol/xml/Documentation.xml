@@ -2555,7 +2555,7 @@
         <member name="P:Goedel.Protocol.JsonReader.EOF">
             <summary>If true, have reached the end of the current record.</summary>
         </member>
-        <member name="F:Goedel.Protocol.JsonReader.Trace">
+        <member name="P:Goedel.Protocol.JsonReader.Trace">
             <summary>If true, emit trace value for debugging.</summary>
         </member>
         <member name="P:Goedel.Protocol.JsonReader.JSONReaderFactory">

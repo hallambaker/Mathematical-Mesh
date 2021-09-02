@@ -254,9 +254,13 @@ namespace Goedel.Mesh.Client {
         ///<summary>Inbound message signature key, the device admin signature key</summary> 
         static KeyPair SignLocalMessage => null; // ToDo: set signing key to the device admin key.
 
+        ///<summary>The account identifier.</summary> 
         public string AccountId => ContextAccount.AccountAddress;
+
+        ///<summary>The service profile.</summary> 
         public ProfileService ProfileService => ContextAccount.ProfileService;
 
+        ///<summary>The full device connection.</summary> 
         public ConnectionDevice ConnectionDevice => (ContextAccount as ContextUser)?.ConnectionDevice;
 
 

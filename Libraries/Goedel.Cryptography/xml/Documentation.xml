@@ -5822,19 +5822,6 @@
             which it is stored.
              </summary>
         </member>
-        <member name="T:Goedel.Cryptography.Initialization">
-            <summary>Static class whose only function is to contain the initialization 
-            routine.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Initialization.Initialized">
-            <summary>Initialization witness flag. This may be used to force initialization
-            of the module prior to other modules being initialized.</summary> 
-        </member>
-        <member name="M:Goedel.Cryptography.Initialization.Initialize">
-            <summary>
-            Initialization routine for cryptographic functions on the dotNet Core platform.
-            </summary>
-        </member>
         <member name="T:Goedel.Cryptography.IKeyLocate">
             <summary>
             Key discovery interface.
@@ -5897,7 +5884,7 @@
         </member>
         <member name="M:Goedel.Cryptography.IKeyLocate.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
             <summary>
-            Perform a remote key agreement between <paramref name="share"/> and 
+            Perform a remote key agreement between the key identified by <paramref name="shareId"/> and 
             <paramref name="ephemeral"/>.
             </summary>
             <param name="serviceAddress"></param>
@@ -5905,11 +5892,18 @@
             <returns>The key agreement result share.ephemeral.</returns>
             <param name="shareId"></param>
         </member>
-        <member name="T:Goedel.Cryptography.KeyCollectionDelegate">
+        <member name="T:Goedel.Cryptography.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Initialization.Initialize">
             <summary>
-            Return a new KeyCollection
+            Initialization routine for cryptographic functions on the dotNet Core platform.
             </summary>
-            <returns></returns>
         </member>
         <member name="T:Goedel.Cryptography.KeyCollection">
             <summary>
@@ -6027,6 +6021,15 @@
             <param name="keyId">The identifier to resolve.</param>
             <param name="cryptoKey">The key (if found)</param>
             <returns>The identifier.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyCollection.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
+            <summary>
+            Perform a remote key agreement.
+            </summary>
+            <param name="serviceAddress">The service to present the agreement to.</param>
+            <param name="ephemeral">The ephemeral to perform the agreement against.</param>
+            <param name="shareId">The share to perform the agreement against.</param>
+            <returns>The result of the key agreement.</returns>
         </member>
         <member name="T:Goedel.Cryptography.KeyDerive">
             <summary>
@@ -13098,7 +13101,7 @@
             Provider for bulk encryption algorithms (e.g. AES). Prior to the introduction of
             .NET Standard and the unification of the cryptographic processing algorithms, this
             class was necessary as a means of enabling the use of different providers. It is
-            now redundant and will be removed in due course.
+            redundant and will be removed in due course.
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Standard.CryptoProviderEncryption.AlgorithmClass">

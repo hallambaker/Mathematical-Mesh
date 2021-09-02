@@ -240,15 +240,6 @@ namespace Goedel.XUnit {
             }
 
 
-        bool CreateAlice(out TestCLI device1, out TestCLI device2, out TestCLI device3) {
-            device3 = GetTestCLI("Device3");
-
-            CreateAlice(out device1, out device2);
-            device1.Connect(device3, AliceAccount);
-
-            return true;
-            }
-
         bool CreateAliceBob(out TestCLI deviceA, out TestCLI deviceB) {
 
             deviceA = GetTestCLI("MachineAlice");
