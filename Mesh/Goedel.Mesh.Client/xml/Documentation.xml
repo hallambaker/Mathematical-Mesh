@@ -780,14 +780,6 @@
             <param name="catalogedGroup">Description of the group to return the
             context for.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.ActivationAccount)">
-            <summary>
-            Generation constructor: create a group using the seed value <paramref name="activationAccount"/>
-            and return a client context under <paramref name="contextuser"/>
-            </summary>
-            <param name="contextuser"></param>
-            <param name="activationAccount"></param>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.CreateGroup(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup)">
             <summary>
             Create a new group.

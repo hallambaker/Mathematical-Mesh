@@ -245,7 +245,7 @@
             </summary>
             <param name="profileGroup">The group profile.</param>
             <param name="activationAccount">The activation data.</param>
-            <param name="capability">Optional capabilities to add.</param>
+            <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
             <param name="connectionAddress">Connection binding profile to an address.</param>
             <returns>The created group.</returns>
         </member>
@@ -1771,15 +1771,6 @@
             </summary>
             <param name="subjectId">The subject identifier.</param>
             <param name="capability">The capability type.</param>
-        </member>
-        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.CreateThreshold(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair)">
-            <summary>
-            Factory method returning a new capability for the private key 
-            <paramref name="keyPair"/> encrypting the one of the shares under <paramref name="encrypt"/>.
-            </summary>
-            <param name="keyPair">The key to split</param>
-            <param name="encrypt">The key to encrypt the shaed key under.</param>
-            <returns>The generated capability.</returns>
         </member>
         <member name="M:Goedel.Mesh.CapabilityKeyGenerate.CreateDirect(Goedel.Cryptography.KeyPair)">
             <summary>

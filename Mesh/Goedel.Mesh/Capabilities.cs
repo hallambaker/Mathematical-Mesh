@@ -283,21 +283,21 @@ namespace Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Factory method returning a new capability for the private key 
-        /// <paramref name="keyPair"/> encrypting the one of the shares under <paramref name="encrypt"/>.
-        /// </summary>
-        /// <param name="keyPair">The key to split</param>
-        /// <param name="encrypt">The key to encrypt the shaed key under.</param>
-        /// <returns>The generated capability.</returns>
-        public static CapabilityKeyGenerate CreateThreshold(KeyPair keyPair,
-                        KeyPair encrypt = null) {
-            if (encrypt == null) {
-                return CreateDirect(keyPair);
-                }
+        ///// <summary>
+        ///// Factory method returning a new capability for the private key 
+        ///// <paramref name="keyPair"/> encrypting the one of the shares under <paramref name="encrypt"/>.
+        ///// </summary>
+        ///// <param name="keyPair">The key to split</param>
+        ///// <param name="encrypt">The key to encrypt the shaed key under.</param>
+        ///// <returns>The generated capability.</returns>
+        //public static CapabilityKeyGenerate CreateThreshold(KeyPair keyPair,
+        //                KeyPair encrypt = null) {
+        //    if (encrypt == null) {
+        //        return CreateDirect(keyPair);
+        //        }
 
-            return null;
-            }
+        //    return null;
+        //    }
 
         /// <summary>
         /// Create a direct key generation capability.

@@ -66,6 +66,9 @@ namespace Goedel.Mesh.Client {
         ///<summary>Convenience accessor for the connection.</summary>
         public override Connection Connection => ConnectionGroup;
 
+        /////<inheritdoc/>
+        //public override IKeyCollection KeyCollection => ContextUser;
+
 
         ///<inheritdoc/>
         public override MeshCredentialPrivate GetMeshCredentialPrivate() => new(
@@ -103,19 +106,9 @@ namespace Goedel.Mesh.Client {
             ContextUser = contextAccount;
 
             // Activate the device to communicate as the account (via threshold)
-            ActivationAccount = CatalogedGroup?.GetActivationAccount(KeyCollection);
+            ActivationAccount = CatalogedGroup?.GetActivationAccount(ContextUser);
             ActivationAccount.Activate(KeyCollection);
             }
-
-
-        /// <summary>
-        /// Generation constructor: create a group using the seed value <paramref name="activationAccount"/>
-        /// and return a client context under <paramref name="contextuser"/>
-        /// </summary>
-        /// <param name="contextuser"></param>
-        /// <param name="activationAccount"></param>
-        public ContextGroup(ContextUser contextuser, ActivationAccount activationAccount) :
-                    base(activationAccount) => ContextUser = contextuser;
 
 
         /// <summary>
@@ -156,17 +149,15 @@ namespace Goedel.Mesh.Client {
             var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
 
             // will fail because the ProfileService is not set.
-            var serviceEncryptionKey = ContextUser.ProfileService.ServiceEncryption.CryptoKey;
-
-            var keyGenerate = transactInvitation.GetCatalogAccess().TryFindKeyGenerate(
-                ProfileGroup.AccountEncryption.Udf);
-            //var (keyData, capabilityDecryptServiced) = CatalogAccess.MakeShare(keyGenerate, AccountAddress);
-
-            "Fix up add member to group.".TaskFunctionality(true);
-
-            throw new NYI();
+            var serviceEncryptionKey = ContextUser.ProfileService.ServiceEncryption.GetKeyPair();
 
 
+            var keyGenerate = ActivationAccount.AccountEncryptionKey as KeyPairAdvanced;
+            var (keyData, capabilityService) = CatalogAccess.MakeShare(
+                        keyGenerate, AccountAddress, serviceEncryptionKey, memberAddress);
+
+
+            #region grott
             //// Create the capability 
             //var capabilityService = new CapabilityDecryptServiced() {
             //    AuthenticationId = ContextUser.ProfileUser.Udf,
@@ -188,47 +179,49 @@ namespace Goedel.Mesh.Client {
             //capabilityMember.ServiceId = capabilityMember.KeyData.Udf;
             //capabilityService.Id = capabilityMember.ServiceId;
             //capabilityService.SubjectId = capabilityMember.ServiceId;
+            #endregion
 
             // Create and send the invitation
 
             //var listCapability = new List<CryptographicCapability> { capabilityMember };
 
-            //var contact = CreateContact(listCapability);
+            //var contact = CreateContact();
 
-            //var groupInvitation = new GroupInvitation() {
-            //    Sender = ContextUser.AccountAddress,
-            //    Recipient = memberAddress,
-            //    Text = text,
-            //    Contact = contact
-            //    };
+            var groupInvitation = new GroupInvitation() {
+                Sender = ContextUser.AccountAddress,
+                Recipient = memberAddress,
+                Text = text
+                };
 
-            //var catalogedMember = new CatalogedMember() {
-            //    ContactAddress = memberAddress,
-            //    MemberCapabilityId = capabilityMember.Id,
-            //    ServiceCapabilityId = capabilityService.Id,
-            //    };
+            var catalogedMember = new CatalogedMember() {
+                ContactAddress = memberAddress,
+                //MemberCapabilityId = capabilityMember.Id,
+                //ServiceCapabilityId = capabilityService.Id,
+                };
 
-            //transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);
+            transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);
 
-            //// update the capabilities catalog to add the service capability
-            //var catalogAccess = transactGroup.GetCatalogAccess();
-            //var catalogedCapability = new CatalogedAccess(capabilityService);
-            //transactGroup.CatalogUpdate(catalogAccess, catalogedCapability);
+            // update the capabilities catalog to add the service capability
+            var catalogAccess = transactGroup.GetCatalogAccess();
+            var catalogedCapability = new CatalogedAccess(capabilityService);
+            transactGroup.CatalogUpdate(catalogAccess, catalogedCapability);
 
-            //// update the members catalog to add the member entry
-            //var catalogMember = transactGroup.GetCatalogMember();
-            //transactGroup.CatalogUpdate(catalogMember, catalogedMember);
+            // update the members catalog to add the member entry
+            var catalogMember = transactGroup.GetCatalogMember();
+            transactGroup.CatalogUpdate(catalogMember, catalogedMember);
 
-            //// commit the transactions
-            //Transact(transactGroup);
-            //Transact(transactInvitation);
+            // commit the transactions
+            Transact(transactGroup);
+            Transact(transactInvitation);
 
             //// ToDo: Handle error return properly if the group transaction fails (need retry race);
 
             //catalogAccess.Dump();
             //catalogMember.Dump();
 
-            //return catalogedMember;
+            return catalogedMember;
+
+
             }
 
         /// <summary>

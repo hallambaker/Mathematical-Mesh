@@ -357,13 +357,13 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="profileGroup">The group profile.</param>
         /// <param name="activationAccount">The activation data.</param>
-        /// <param name="capability">Optional capabilities to add.</param>
+        /// <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
         /// <param name="connectionAddress">Connection binding profile to an address.</param>
         /// <returns>The created group.</returns>
         public CatalogedGroup MakeCatalogedGroup(
                         ProfileGroup profileGroup,
                         ActivationAccount activationAccount,
-                        CryptoKey capability,
+                        CryptoKey encryptionKey,
                         ConnectionAddress connectionAddress
                         ) {
 
@@ -371,7 +371,7 @@ namespace Goedel.Mesh {
 
             // encrypt the activationAccount under the device encryption key.
             activationAccount.AssertNotNull(Internal.Throw);
-            activationAccount.Envelope(AdministratorSignatureKey, capability);
+            activationAccount.Envelope(AdministratorSignatureKey, encryptionKey);
             activationAccount.DareEnvelope.AssertNotNull(Internal.Throw);
 
             var catalogedGroup = new CatalogedGroup() {

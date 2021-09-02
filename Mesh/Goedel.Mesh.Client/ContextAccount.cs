@@ -83,7 +83,7 @@ namespace Goedel.Mesh.Client {
         protected IMeshMachineClient MeshMachine => MeshHost.MeshMachine;
 
         ///<summary>The key collection for use with the context.</summary>
-        public IKeyCollection KeyCollection => MeshMachine.KeyCollection;
+        public virtual IKeyCollection KeyCollection => MeshMachine.KeyCollection;
 
         ///<summary>The connection binding the calling context to the account.</summary>
         public abstract Connection Connection { get; }

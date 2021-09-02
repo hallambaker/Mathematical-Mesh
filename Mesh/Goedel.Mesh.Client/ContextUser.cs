@@ -664,7 +664,11 @@ namespace Goedel.Mesh.Client {
             accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
 
             var keyCollectionGroup = new KeyCollectionEphemeral();
-            var activationGroup = new ActivationAccount(keyCollectionGroup, accountSeed);
+
+            // Phase3: Work out a better way to manage the activation seed for groups
+            var activationGroup = new ActivationAccount(keyCollectionGroup, accountSeed) {
+                ActivationKey = accountSeed.PrivateValue
+                };
             var profileGroup = new ProfileGroup(groupName, activationGroup);
 
             // Check that the profile is valid before using it.
@@ -677,7 +681,8 @@ namespace Goedel.Mesh.Client {
                 Subject = ProfileUser.Udf,
                 Authority = profileGroup.Udf
                 };
-            var envelopedConnectionGroup = connectionGroup.Envelope(activationGroup.AdministratorSignatureKey);
+            var envelopedConnectionGroup = connectionGroup.Envelope(
+                        activationGroup.AdministratorSignatureKey);
 
 
 
@@ -707,9 +712,14 @@ namespace Goedel.Mesh.Client {
             var contact = contextGroup.CreateContact();
 
 
-            // create key generation capabilities
-            var capabilityGroupEncrypt = CapabilityKeyGenerate.CreateThreshold(activationGroup.AccountEncryptionKey);
-            var capabilityGroupSign = CapabilityKeyGenerate.CreateThreshold(activationGroup.AccountSignatureKey);
+            //KeyCollection.Persist(profileGroup.Udf, accountSeed, false);
+
+
+            //// create key generation capabilities
+            //var capabilityGroupEncrypt = 
+            //        CapabilityKeyGenerate.CreateThreshold(activationGroup.AccountEncryptionKey);
+            //var capabilityGroupSign = 
+            //        CapabilityKeyGenerate.CreateThreshold(activationGroup.AccountSignatureKey);
 
             // Commit all changes to the administrator context in a single transaction.
             using (var transaction = TransactBegin()) {
@@ -718,8 +728,8 @@ namespace Goedel.Mesh.Client {
                 transaction.CatalogUpdate(catalogApplication, catalogedGroup);
 
                 var catalogAccess = transaction.GetCatalogAccess();
-                catalogAccess.Add(capabilityGroupEncrypt);
-                catalogAccess.Add(capabilityGroupSign);
+                //catalogAccess.Add(capabilityGroupEncrypt);
+                //catalogAccess.Add(capabilityGroupSign);
 
                 // Create a contact for the group and add to the contact catalog
                 var contactCatalog = transaction.GetCatalogContact();
@@ -728,6 +738,8 @@ namespace Goedel.Mesh.Client {
 
                 transaction.Transact();
                 }
+
+
 
             return contextGroup;
 
