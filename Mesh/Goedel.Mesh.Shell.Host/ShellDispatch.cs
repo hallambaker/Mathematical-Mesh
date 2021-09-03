@@ -236,7 +236,7 @@ namespace Goedel.Mesh.Shell.Host {
                 // Tell .NET to not terminate the process
                 ea.Cancel = true;
 
-                Screen.WriteLine("Received SIGINT (Ctrl+C)");
+                Screen.WriteInfo("Received SIGINT (Ctrl+C)");
                 service.Dispose();
                 sigintReceived = true;
             };
@@ -244,11 +244,11 @@ namespace Goedel.Mesh.Shell.Host {
             // Catch SIGTERM
             AppDomain.CurrentDomain.ProcessExit += (_, _) => {
                 if (!sigintReceived) {
-                    Screen.WriteLine("Received SIGTERM");
+                    Screen.WriteInfo("Received SIGTERM");
                     service.Dispose();
                     }
                 else {
-                    Screen.WriteLine("Received SIGTERM, ignoring it because already processed SIGINT");
+                    Screen.WriteInfo("Received SIGTERM, ignoring it because already processed SIGINT");
                     }
             };
 

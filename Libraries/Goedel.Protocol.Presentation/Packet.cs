@@ -70,7 +70,7 @@ namespace Goedel.Protocol.Presentation {
         /// Debug routine, print the tag value to the screen.
         /// </summary>
         public void Dump() {
-            Screen.WriteLine($"    {Tag} -> {Value.ToStringBase16()}");
+            Screen.WriteInfo($"    {Tag} -> {Value.ToStringBase16()}");
             }
 
         #endregion
@@ -102,7 +102,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         public virtual void Dump() {
             if (PlaintextExtensions != null) {
-                Screen.WriteLine("Plaintext extensions");
+                //Screen.WriteLine("Plaintext extensions");
                 foreach (var extension in PlaintextExtensions) {
                     extension.Dump();
                     }

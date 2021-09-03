@@ -271,7 +271,7 @@ namespace Goedel.Mesh.Client {
             // create the initial profile
             var profileUser = new ProfileUser(accountAddress, activationRoot);
 
-            Screen.WriteLine(profileUser.ToString());
+            //Screen.WriteLine(profileUser.ToString());
 
             // Check that the profile is valid before using it.
             profileUser.Validate();

@@ -75,7 +75,7 @@ namespace ExampleGenerator {
 
         public void ReportMissing() {
             CountMissing++;
-            Screen.WriteLine("Missing example!");
+            Screen.WriteInfo("Missing example!");
             }
 
 

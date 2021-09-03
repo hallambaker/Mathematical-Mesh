@@ -63,7 +63,7 @@ namespace Scratchpad {
 
     partial class Program {
         static void Main() {
-            Screen.WriteLine($"Start test  {DateTime.Now}");
+            Screen.WriteInfo($"Start test  {DateTime.Now}");
 
 
             //TestService.Test().ProtocolHello();
@@ -110,36 +110,6 @@ namespace Scratchpad {
 
 
             var deviceShare = keyData.GetKeyPair() as KeyPairServiced;
-
-            /*
-                        var partial1 = KeyCollection.RemoteAgreement(ServiceAddress, 
-                ephemeral as KeyPairAdvanced, Share.KeyIdentifier);
-            var partial2 = Share.Agreement(ephemeral);
-
-
-                        var operation = new CryptographicOperationKeyAgreement() {
-                KeyId = shareId,
-                PublicKey = Key.GetPublic(ephemeral)
-                };
-
-            var operateRequest = new OperateRequest() {
-                AccountAddress = serviceAddress,
-                Operations = new List<CryptographicOperation>() {
-                    operation
-                    }
-                };
-
-
-                        catalogCapability.DictionaryDecryptByKeyId.TryGetValue(
-                cryptographicOperation.KeyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
-
-                        var share = capability.DecryptShare(KeyCollection);
-
-            var keyAgreement = share.Agreement(publicEphemeral);
-
-             * 
-             * 
-             */
 
             var ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairX448;
 

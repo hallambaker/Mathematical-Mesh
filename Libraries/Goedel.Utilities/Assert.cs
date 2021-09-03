@@ -380,7 +380,7 @@ namespace Goedel.Utilities {
         /// <param name="description">Description of the missing functionality.</param>
         /// <param name="exception">If true, throw an exception.</param>
         public static void TaskFunctionality(this string description, bool exception = false) {
-            Screen.WriteLine($"***Functionality missing***{description}");
+            Screen.WriteInfo($"***Functionality missing***{description}");
             if (exception) {
                 throw new NYI();
                 }
@@ -394,7 +394,7 @@ namespace Goedel.Utilities {
         /// <param name="result">The result value to be returned.</param>
         /// <returns>The value <paramref name="result"/>.</returns>
         public static string Task(this string result, string description) {
-            Screen.WriteLine($"***Task***{description}");
+            Screen.WriteInfo($"***Task***{description}");
             return result;
             }
 

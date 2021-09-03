@@ -32,7 +32,16 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="format">The format string</param>
         /// <param name="arg">Arguments to apply to the format string.</param>
-        public static void WriteLine(string format, params object[] arg) {
+        public static void WriteLine(string format, params object[] arg) =>
+            WriteInfo(format, arg);
+
+
+        /// <summary>
+        /// Write debug output to current trace listener.
+        /// </summary>
+        /// <param name="format">The format string</param>
+        /// <param name="arg">Arguments to apply to the format string.</param>
+        public static void WriteInfo(string format, params object[] arg) {
 
             var caller = AssemblyStack.GetCallerMethodName();
             if (caller == "TaskFunctionality") {

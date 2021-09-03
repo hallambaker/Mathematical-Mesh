@@ -164,19 +164,6 @@ namespace Goedel.Mesh.Client {
                 Id = ProfileGroup.AccountEncryption.Udf,
                 EnvelopedKeyShare = keyData.EnvelopedKeyData
                 };
-            #region grott
-
-
-
-            //var keyGenerate = transactInvitation.GetCatalogAccess().TryFindKeyGenerate(
-            //                ProfileGroup.AccountEncryption.Udf);
-            //keyGenerate.CreateShares(capabilityService, capabilityMember);
-
-            //// Fix up the identifiers.
-            //capabilityMember.ServiceId = capabilityMember.KeyData.Udf;
-            //capabilityService.Id = capabilityMember.ServiceId;
-            //capabilityService.SubjectId = capabilityMember.ServiceId;
-            #endregion
 
             // Create and send the invitation
 
@@ -211,11 +198,6 @@ namespace Goedel.Mesh.Client {
             // commit the transactions
             Transact(transactGroup);
             Transact(transactInvitation);
-
-            //// ToDo: Handle error return properly if the group transaction fails (need retry race);
-
-            //catalogAccess.Dump();
-            //catalogMember.Dump();
 
             return catalogedMember;
 

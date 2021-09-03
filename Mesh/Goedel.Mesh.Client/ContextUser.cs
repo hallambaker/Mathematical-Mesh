@@ -703,23 +703,10 @@ namespace Goedel.Mesh.Client {
             var createResponse = MeshClient.BindAccount(createRequest);
             createResponse.AssertSuccess();
 
-
-
-
-
             // create the group context
             var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
             var contact = contextGroup.CreateContact();
 
-
-            //KeyCollection.Persist(profileGroup.Udf, accountSeed, false);
-
-
-            //// create key generation capabilities
-            //var capabilityGroupEncrypt = 
-            //        CapabilityKeyGenerate.CreateThreshold(activationGroup.AccountEncryptionKey);
-            //var capabilityGroupSign = 
-            //        CapabilityKeyGenerate.CreateThreshold(activationGroup.AccountSignatureKey);
 
             // Commit all changes to the administrator context in a single transaction.
             using (var transaction = TransactBegin()) {
@@ -728,8 +715,6 @@ namespace Goedel.Mesh.Client {
                 transaction.CatalogUpdate(catalogApplication, catalogedGroup);
 
                 var catalogAccess = transaction.GetCatalogAccess();
-                //catalogAccess.Add(capabilityGroupEncrypt);
-                //catalogAccess.Add(capabilityGroupSign);
 
                 // Create a contact for the group and add to the contact catalog
                 var contactCatalog = transaction.GetCatalogContact();

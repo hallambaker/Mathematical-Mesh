@@ -417,7 +417,7 @@ namespace Goedel.Protocol {
             Lookahead = false;
 
             if (Trace) {
-                Screen.WriteLine($"Got  {TokenType} \"{ResultString}\"");
+                Screen.WriteInfo($"Got  {TokenType} \"{ResultString}\"");
                 }
             }
 

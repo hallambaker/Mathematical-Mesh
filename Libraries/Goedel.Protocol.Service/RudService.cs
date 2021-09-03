@@ -154,7 +154,7 @@ namespace Goedel.Protocol.Service {
                 foreach (var endpoint in provider.HTTPEndpoints) {
                     var uri = endpoint.GetUriPrefix();
                     //uri = "http://+:15099/.well-known/";
-                    Screen.WriteLine($"Connect to URI {uri}");
+                    //Screen.WriteLine($"Connect to URI {uri}");
 
                     httpListener.Prefixes.Add(uri);
                     providerMap.Add(uri, provider);

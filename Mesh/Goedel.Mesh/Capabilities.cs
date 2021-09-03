@@ -201,20 +201,7 @@ namespace Goedel.Mesh {
                 KeyPair ephemeral = null,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 KeyAgreementResult partial = null,
-                byte[] salt = null) {
-
-            //var keyPairServiced = KeyPair as KeyPairServiced;
-
-            //// delegate service... 
-            //var partial2 = KeyAgreement(keyPairServiced.ServiceAddress,
-            //    keyPairServiced.Share.KeyIdentifier, ephemeral);
-
-            //if (partial != null) {
-            //    //partial2 = partial2.Add(partial);
-            //    }
-
-            return KeyPair.Decrypt(encryptedKey, ephemeral, algorithmID, null, salt);
-            }
+                byte[] salt = null) => KeyPair.Decrypt(encryptedKey, ephemeral, algorithmID, null, salt);
 
 
 

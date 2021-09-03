@@ -152,44 +152,7 @@ namespace Goedel.Mesh {
 
             return Share.Decrypt(encryptedKey, ephemeral, algorithmID, partial1, salt);
 
-
-            //var partial2 = Share.Agreement(ephemeral);
-
-            //return partial2.Decrypt(encryptedKey, ephemeral, partial2, salt);
             }
-
-
-        //KeyAgreementResult RemoteAgreement(
-        //        string accountAddress,
-        //        string keyId,
-        //        KeyPair ephemeral,
-        //        BigInteger? lagrange = null) {
-
-        //    lagrange.Future();
-
-        //    // current: this is where decryption capabilities are used
-        //    var operation = new CryptographicOperationKeyAgreement() {
-        //        KeyId = keyId,
-        //        PublicKey = Key.GetPublic(ephemeral)
-        //        };
-
-        //    var operateRequest = new OperateRequest() {
-        //        AccountAddress = accountAddress,
-        //        Operations = new List<CryptographicOperation>() {
-        //            operation
-        //            }
-        //        };
-
-
-        //    var client = KeyCollection.MeshClient;
-        //    var response = client.Operate(operateRequest);
-
-        //    var result = response.Results[0] as CryptographicResultKeyAgreement;
-
-        //    return result.KeyAgreement.KeyAgreementResult;
-        //    }
-
-
 
         ///<inheritdoc/>
         public override KeyAgreementResult Agreement(KeyPair keyPair) => Share.Agreement(keyPair);

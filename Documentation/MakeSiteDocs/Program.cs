@@ -109,7 +109,7 @@ namespace ExampleGenerator {
         static CreateExamples() => Initialization.Initialized.AssertTrue(Goedel.Utilities.NYI.Throw);
 
         static void Main() {
-            Screen.WriteLine("Make Document Set");
+            Screen.WriteInfo("Make Document Set");
             var createWeb = new CreateExamples();
             createWeb.Examples();
             }

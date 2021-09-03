@@ -168,7 +168,7 @@ namespace Goedel.Protocol.Presentation {
             if (RudConnection is ConnectionInitiator initiator) {
                 Uri = HttpEndpoint.GetUri(initiator.Domain, 15099, protocol, initiator.Instance);
 
-                Screen.WriteLine($"Client URI = {Uri}");
+                //Screen.WriteLine($"Client URI = {Uri}");
                 }
             //AccountAddress = throw new NYI();
             CredentialSelf = credentialSelf;
@@ -203,7 +203,7 @@ namespace Goedel.Protocol.Presentation {
                     byte[] streamId,
                     byte[] encryptionOptions) {
 
-            Screen.WriteLine($"Stream set Stream Id {streamId.ToStringBase16()}");
+            //Screen.WriteLine($"Stream set Stream Id {streamId.ToStringBase16()}");
 
             RemoteStreamId = streamId;
             //AccountAddress = account?.ToUTF8();
@@ -227,10 +227,10 @@ namespace Goedel.Protocol.Presentation {
                 }
 
 
-            Screen.WriteLine($"Client {Protocol} - Post data to {RemoteStreamId?.ToStringBase16()}");
+            //Screen.WriteLine($"Client {Protocol} - Post data to {RemoteStreamId?.ToStringBase16()}");
             var packet = await PostWeb(span);
 
-            Screen.WriteLine($"Client {Protocol} - Posted data to {RemoteStreamId?.ToStringBase16()}");
+            //Screen.WriteLine($"Client {Protocol} - Posted data to {RemoteStreamId?.ToStringBase16()}");
 
 
 

@@ -26,6 +26,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
+using Goedel.Mesh.Server;
 using Goedel.Mesh.Test;
 using Goedel.Protocol;
 using Goedel.Test;
@@ -561,11 +562,8 @@ namespace Goedel.XUnit {
             // Encrypt to the group
             var envelope = contextAccountAlice.DareEncode(plaintext, recipients: groupList, sign: true);
 
-            // attempt to decrypt with Alice's key this should fail as Alice doesn't have the decryption key.
-            // Current: is succeeding because the encryption key is being registered to the collection.
-
-            //Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
-            //    contextAccountAlice.DareDecode(envelope, verify: true));
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
+                contextAccountAlice.DareDecode(envelope, verify: true));
 
             // Create a member entry for Alice
             contextGroup.Add(AccountAlice);
@@ -578,8 +576,8 @@ namespace Goedel.XUnit {
             var decrypt2 = contextAccountAlice.DareDecode(envelope, verify: true);
             decrypt2.IsEqualTo(plaintext).TestTrue();
 
-            //Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
-            //  contextAccountBob.DareDecode(envelope, verify: true));
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
+              contextAccountBob.DareDecode(envelope, verify: true));
 
             // Create a member entry fo Bob
             contextGroup.Add(AccountBob);
@@ -602,7 +600,7 @@ namespace Goedel.XUnit {
             decrypt5.IsEqualTo(plaintext).TestTrue();
 
 
-            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
+            Xunit.Assert.Throws<MeshOperationFailed>(() =>
               contextAccountBob.DareDecode(envelope, verify: true));
 
             }
@@ -621,8 +619,8 @@ namespace Goedel.XUnit {
         static void ReportDevices(ContextUser contextUser) {
             var catalogDevice = contextUser.GetStore(CatalogDevice.Label) as CatalogDevice;
 
-            Screen.WriteLine("");
-            Screen.WriteLine(catalogDevice.Report());
+            Screen.WriteInfo("");
+            Screen.WriteInfo(catalogDevice.Report());
 
             }
 
