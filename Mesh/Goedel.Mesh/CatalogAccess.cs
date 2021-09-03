@@ -191,7 +191,7 @@ namespace Goedel.Mesh {
                         capabilityDecryption);
 
                     if (capabilityDecryption is ICapabilityPartial meshClientCapability) {
-                        meshClientCapability.CryptographicClient = this.MeshClient;
+                        meshClientCapability.KeyCollection = KeyCollection;
                         }
 
                     break;

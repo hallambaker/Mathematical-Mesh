@@ -24,6 +24,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
@@ -442,9 +443,12 @@ namespace Goedel.Mesh.Server {
             using var catalogCapability = accountEntry.GetCatalogCapability();
 
             var results = new List<CryptographicResult>();
+
+            // Phase2: validate right to access...
+
             // Different stores depending on user or group account
             foreach (var operation in operations) {
-                results.Add(Operate(catalogCapability, operation));
+                results.Add(Operate(catalogCapability, operation, jpcSession.Credential.Account));
                 }
 
             var response = new OperateResponse() {
@@ -458,11 +462,12 @@ namespace Goedel.Mesh.Server {
 
         CryptographicResult Operate(
                         CatalogAccess catalogCapability,
-                        CryptographicOperation cryptographicOperation) {
+                        CryptographicOperation cryptographicOperation, 
+                        string accountAddress) {
 
             switch (cryptographicOperation) {
                 case CryptographicOperationKeyAgreement operationKeyAgreement: {
-                    return Operate(catalogCapability, operationKeyAgreement);
+                    return Operate(catalogCapability, operationKeyAgreement, accountAddress);
                     }
                 }
 
@@ -472,10 +477,15 @@ namespace Goedel.Mesh.Server {
 
         CryptographicResult Operate(
                 CatalogAccess catalogCapability,
-                CryptographicOperationKeyAgreement cryptographicOperation) {
+                CryptographicOperationKeyAgreement cryptographicOperation, string accountAddress) {
+
+            var keyId = cryptographicOperation.KeyId ?? accountAddress;
+            // Phase2: validate the access to this key id
 
             catalogCapability.DictionaryDecryptByKeyId.TryGetValue(
-                cryptographicOperation.KeyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
+                keyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
+            
+            
             var publicEphemeral = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
 
 

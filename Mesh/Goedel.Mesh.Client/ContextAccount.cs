@@ -552,10 +552,10 @@ namespace Goedel.Mesh.Client {
 
             if (DictionaryCatalogDelegates.TryGetValue(name, out var factory)) {
                 var darePolicy = ActivationAccount.GetDarePolicy(name);
-                return factory(StoresDirectory, name, this, darePolicy, null, KeyCollection);
+                return factory(StoresDirectory, name, this, darePolicy, null, this);
                 }
             if (DictionarySpoolDelegates.TryGetValue(name, out factory)) {
-                return factory(StoresDirectory, name, this, null, null, KeyCollection);
+                return factory(StoresDirectory, name, this, null, null, this);
                 }
 
 
@@ -662,7 +662,7 @@ namespace Goedel.Mesh.Client {
                     operation
                     }
                 };
-;
+            ;
             var response = MeshClient.Operate(operateRequest);
 
             var result = response.Results[0] as CryptographicResultKeyAgreement;

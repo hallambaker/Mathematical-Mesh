@@ -40,6 +40,8 @@ namespace Goedel.Mesh {
         ///<summary>Return a Mesh client</summary> 
         public MeshServiceClient MeshClient { get; }
 
+
+
         }
 
     /// <summary>
@@ -48,21 +50,8 @@ namespace Goedel.Mesh {
     /// </summary>
     public interface ICapabilityPartial {
 
-        /// <summary>
-        ///The identifier used to claim the capability from the service.
-        /// </summary>
-        string ServiceId { get; set; }
-
-        /// <summary>
-        ///The service account that supports a serviced capability. 
-        /// </summary>
-        string ServiceAddress { get; set; }
-
-        /// <summary>
-        /// Instance with interface that returns a Mesh client for an account. This could
-        /// be changed to a delegate function.
-        /// </summary>
-        IMeshClient CryptographicClient { get; set; }
+        ///<summary>A KeyCollection.</summary> 
+        IKeyCollection KeyCollection { get; set; }
 
         }
 
@@ -128,7 +117,7 @@ namespace Goedel.Mesh {
         ///<paramref name="keyCollection"/></summary> 
         public KeyPair DecryptShare(IKeyCollection keyCollection) {
             var keyShare = EnvelopedKeyShare.Decode(keyCollection);
-            return keyShare.PrivateParameters.GetKeyPair(KeySecurity.Ephemeral);
+            return keyShare.PrivateParameters.GetKeyPair(KeySecurity.Ephemeral, keyCollection);
             }
 
         }
@@ -156,14 +145,12 @@ namespace Goedel.Mesh {
 
     public partial class CapabilityDecrypt : IKeyDecrypt {
 
-
-
         ///<summary>The cached <see cref="KeyPairAdvanced"/> instance corresponding
         ///to <see cref="KeyData"/></summary>
-        protected KeyPairAdvanced KeyPair => keyPair ??
-                KeyData.GetKeyPairAdvanced().CacheValue(out keyPair);
+        protected KeyPair KeyPair => keyPair ??
+                DecryptShare(KeyCollection).CacheValue(out keyPair);
 
-        KeyPairAdvanced keyPair;
+        KeyPair keyPair;
 
 
         /// <summary>
@@ -196,9 +183,8 @@ namespace Goedel.Mesh {
         }
     public partial class CapabilityDecryptPartial : ICapabilityPartial {
 
-        ///<summary>Instance exposing the <see cref="IMeshClient"/> interface allowing
-        ///a client to be obtained for resolving the service.</summary>
-        public IMeshClient CryptographicClient { get; set; }
+
+
 
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
@@ -217,45 +203,20 @@ namespace Goedel.Mesh {
                 KeyAgreementResult partial = null,
                 byte[] salt = null) {
 
-            // delegate service... 
-            var partial2 = KeyAgreement(ServiceAddress, ServiceId, ephemeral);
+            //var keyPairServiced = KeyPair as KeyPairServiced;
 
-            if (partial != null) {
-                //partial2 = partial2.Add(partial);
-                }
+            //// delegate service... 
+            //var partial2 = KeyAgreement(keyPairServiced.ServiceAddress,
+            //    keyPairServiced.Share.KeyIdentifier, ephemeral);
 
-            return KeyPair.Decrypt(encryptedKey, ephemeral, algorithmID, partial2, salt);
+            //if (partial != null) {
+            //    //partial2 = partial2.Add(partial);
+            //    }
+
+            return KeyPair.Decrypt(encryptedKey, ephemeral, algorithmID, null, salt);
             }
 
-        KeyAgreementResult KeyAgreement(
-            string accountAddress,
-            string keyId,
-            KeyPair ephemeral,
-            BigInteger? lagrange = null) {
 
-            lagrange.Future();
-
-            // current: this is where decryption capabilities are used
-            var operation = new CryptographicOperationKeyAgreement() {
-                KeyId = keyId,
-                PublicKey = Key.GetPublic(ephemeral)
-                };
-
-            var operateRequest = new OperateRequest() {
-                AccountAddress = accountAddress,
-                Operations = new List<CryptographicOperation>() {
-                    operation
-                    }
-                };
-
-
-            var client = CryptographicClient.MeshClient;
-            var response = client.Operate(operateRequest);
-
-            var result = response.Results[0] as CryptographicResultKeyAgreement;
-
-            return result.KeyAgreement.KeyAgreementResult;
-            }
 
         }
     public partial class CapabilityDecryptServiced : ICapabilityServiced {

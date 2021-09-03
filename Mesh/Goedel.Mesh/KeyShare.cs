@@ -22,6 +22,7 @@
 
 
 using System.Collections.Generic;
+using System.Numerics;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
@@ -105,6 +106,8 @@ namespace Goedel.Mesh {
             Share = share;
             ServiceAddress = serviceAddress;
             KeyCollection = keyCollection;
+
+            //(KeyCollection as IMeshClient).AssertNotNull(NYI.Throw);
             }
 
         #endregion
@@ -154,6 +157,39 @@ namespace Goedel.Mesh {
 
             //return partial2.Decrypt(encryptedKey, ephemeral, partial2, salt);
             }
+
+
+        //KeyAgreementResult RemoteAgreement(
+        //        string accountAddress,
+        //        string keyId,
+        //        KeyPair ephemeral,
+        //        BigInteger? lagrange = null) {
+
+        //    lagrange.Future();
+
+        //    // current: this is where decryption capabilities are used
+        //    var operation = new CryptographicOperationKeyAgreement() {
+        //        KeyId = keyId,
+        //        PublicKey = Key.GetPublic(ephemeral)
+        //        };
+
+        //    var operateRequest = new OperateRequest() {
+        //        AccountAddress = accountAddress,
+        //        Operations = new List<CryptographicOperation>() {
+        //            operation
+        //            }
+        //        };
+
+
+        //    var client = KeyCollection.MeshClient;
+        //    var response = client.Operate(operateRequest);
+
+        //    var result = response.Results[0] as CryptographicResultKeyAgreement;
+
+        //    return result.KeyAgreement.KeyAgreementResult;
+        //    }
+
+
 
         ///<inheritdoc/>
         public override KeyAgreementResult Agreement(KeyPair keyPair) => Share.Agreement(keyPair);

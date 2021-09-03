@@ -561,8 +561,8 @@ namespace Goedel.XUnit {
             // Encrypt to the group
             var envelope = contextAccountAlice.DareEncode(plaintext, recipients: groupList, sign: true);
 
-            // attempt to decrypt with Alice's key
-            // this should fail as Alice doesn't have the decryption key.
+            // attempt to decrypt with Alice's key this should fail as Alice doesn't have the decryption key.
+            // Current: is succeeding because the encryption key is being registered to the collection.
 
             //Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
             //    contextAccountAlice.DareDecode(envelope, verify: true));
@@ -578,8 +578,8 @@ namespace Goedel.XUnit {
             var decrypt2 = contextAccountAlice.DareDecode(envelope, verify: true);
             decrypt2.IsEqualTo(plaintext).TestTrue();
 
-            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
-              contextAccountBob.DareDecode(envelope, verify: true));
+            //Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
+            //  contextAccountBob.DareDecode(envelope, verify: true));
 
             // Create a member entry fo Bob
             contextGroup.Add(AccountBob);
@@ -587,11 +587,23 @@ namespace Goedel.XUnit {
             var decrypt3 = contextAccountAlice.DareDecode(envelope, verify: true);
             decrypt3.IsEqualTo(plaintext).TestTrue();
 
+            // this is going to be failing because Bob has to get and process the contact request.
+            contextAccountBob.Sync();
+            contextAccountBob.ProcessAutomatics();
+
+
+            var decrypt4 = contextAccountBob.DareDecode(envelope, verify: true);
+            decrypt4.IsEqualTo(plaintext).TestTrue();
+
             // Create a member entry fo Bob
             contextGroup.Delete(AccountBob);
 
-            var decrypt4 = contextAccountAlice.DareDecode(envelope, verify: true);
-            decrypt4.IsEqualTo(plaintext).TestTrue();
+            var decrypt5 = contextAccountAlice.DareDecode(envelope, verify: true);
+            decrypt5.IsEqualTo(plaintext).TestTrue();
+
+
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
+              contextAccountBob.DareDecode(envelope, verify: true));
 
             }
 

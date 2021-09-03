@@ -107,7 +107,10 @@ namespace Goedel.Mesh.Client {
 
             // Activate the device to communicate as the account (via threshold)
             ActivationAccount = CatalogedGroup?.GetActivationAccount(ContextUser);
-            ActivationAccount.Activate(KeyCollection);
+
+            // Phase2: This is a hack, we are throwing the encryption key away rather than registering it.
+            var keyCollectionGroup = new KeyCollectionEphemeral();
+            ActivationAccount.Activate(keyCollectionGroup);
             }
 
 
@@ -156,20 +159,14 @@ namespace Goedel.Mesh.Client {
             var (keyData, capabilityService) = CatalogAccess.MakeShare(
                         keyGenerate, AccountAddress, serviceEncryptionKey, memberAddress);
 
-
+            keyData.Envelope(encryptionKey: userEncryptionKey);
+            var capabilityMember = new CapabilityDecryptPartial() {
+                Id = ProfileGroup.AccountEncryption.Udf,
+                EnvelopedKeyShare = keyData.EnvelopedKeyData
+                };
             #region grott
-            //// Create the capability 
-            //var capabilityService = new CapabilityDecryptServiced() {
-            //    AuthenticationId = ContextUser.ProfileUser.Udf,
-            //    KeyDataEncryptionKey = serviceEncryptionKey
-            //    };
 
-            //var capabilityMember = new CapabilityDecryptPartial() {
-            //    Id = ProfileGroup.AccountEncryption.Udf,
-            //    SubjectId = ProfileGroup.AccountEncryption.Udf,
-            //    ServiceAddress = AccountAddress,
-            //    KeyDataEncryptionKey = userEncryptionKey
-            //    };
+
 
             //var keyGenerate = transactInvitation.GetCatalogAccess().TryFindKeyGenerate(
             //                ProfileGroup.AccountEncryption.Udf);
@@ -183,20 +180,21 @@ namespace Goedel.Mesh.Client {
 
             // Create and send the invitation
 
-            //var listCapability = new List<CryptographicCapability> { capabilityMember };
+            var listCapability = new List<CryptographicCapability> { capabilityMember };
 
-            //var contact = CreateContact();
+            var contact = CreateContact(listCapability);
 
             var groupInvitation = new GroupInvitation() {
                 Sender = ContextUser.AccountAddress,
                 Recipient = memberAddress,
-                Text = text
+                Text = text,
+                Contact = contact
                 };
 
             var catalogedMember = new CatalogedMember() {
                 ContactAddress = memberAddress,
-                //MemberCapabilityId = capabilityMember.Id,
-                //ServiceCapabilityId = capabilityService.Id,
+                MemberCapabilityId = capabilityMember.Id,
+                ServiceCapabilityId = capabilityService.Id,
                 };
 
             transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);

@@ -1206,21 +1206,8 @@
             the counterparty operation for a partial capability.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ICapabilityPartial.ServiceId">
-             <summary>
-            The identifier used to claim the capability from the service.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ICapabilityPartial.ServiceAddress">
-             <summary>
-            The service account that supports a serviced capability. 
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ICapabilityPartial.CryptographicClient">
-            <summary>
-            Instance with interface that returns a Mesh client for an account. This could
-            be changed to a delegate function.
-            </summary>
+        <member name="P:Goedel.Mesh.ICapabilityPartial.KeyCollection">
+            <summary>A KeyCollection.</summary> 
         </member>
         <member name="T:Goedel.Mesh.ICapabilityServiced">
             <summary>
@@ -1611,10 +1598,6 @@
              The corresponding key is an encryption key
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CapabilityDecryptPartial.CryptographicClient">
-            <summary>Instance exposing the <see cref="T:Goedel.Mesh.IMeshClient"/> interface allowing
-            a client to be obtained for resolving the service.</summary>
-        </member>
         <member name="M:Goedel.Mesh.CapabilityDecryptPartial.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
             Perform a key exchange to encrypt a bulk or wrapped key under this one.
@@ -1626,18 +1609,6 @@
             <param name="salt">Optional salt value for use in key derivation. If specified
             must match the salt used to encrypt.</param>        
             <returns>The decoded data instance</returns>
-        </member>
-        <member name="P:Goedel.Mesh.CapabilityDecryptPartial.ServiceId">
-             <summary>
-            The identifier used to claim the capability from the service.[Only present for
-            a partial capability.]
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CapabilityDecryptPartial.ServiceAddress">
-             <summary>
-            The service account that supports a serviced capability. [Only present for
-            a partial capability.]
-             </summary>
         </member>
         <member name="P:Goedel.Mesh.CapabilityDecryptPartial._Tag">
             <summary>

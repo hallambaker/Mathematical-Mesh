@@ -802,14 +802,6 @@
 		Inherits CapabilityDecrypt
 		Description
 			|The corresponding key is an encryption key
-		String ServiceId
-			Description
-				|The identifier used to claim the capability from the service.[Only present for
-				|a partial capability.]
-		String ServiceAddress
-			Description
-				|The service account that supports a serviced capability. [Only present for
-				|a partial capability.]
 
 	Structure CapabilityDecryptServiced
 		Inherits CapabilityDecrypt

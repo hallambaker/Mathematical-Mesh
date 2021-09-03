@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/2/2021 4:57:10 PM
+//  This file was automatically generated at 9/3/2021 2:40:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -8311,18 +8311,6 @@ namespace Goedel.Mesh {
 	/// The corresponding key is an encryption key
 	/// </summary>
 	public partial class CapabilityDecryptPartial : CapabilityDecrypt {
-        /// <summary>
-        ///The identifier used to claim the capability from the service.[Only present for
-        ///a partial capability.]
-        /// </summary>
-
-		public virtual string						ServiceId  {get; set;}
-        /// <summary>
-        ///The service account that supports a serviced capability. [Only present for
-        ///a partial capability.]
-        /// </summary>
-
-		public virtual string						ServiceAddress  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -8367,16 +8355,6 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((CapabilityDecrypt)this).SerializeX(_writer, false, ref _first);
-			if (ServiceId != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceId", 1);
-					_writer.WriteString (ServiceId);
-				}
-			if (ServiceAddress != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceAddress", 1);
-					_writer.WriteString (ServiceAddress);
-				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -8410,14 +8388,6 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ServiceId" : {
-					ServiceId = jsonReader.ReadString ();
-					break;
-					}
-				case "ServiceAddress" : {
-					ServiceAddress = jsonReader.ReadString ();
-					break;
-					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;
