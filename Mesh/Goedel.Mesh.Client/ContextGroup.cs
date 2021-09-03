@@ -145,8 +145,6 @@ namespace Goedel.Mesh.Client {
             var transactInvitation = ContextUser.TransactBegin();
             var transactGroup = TransactBegin();
 
-            // Bug: Should create an entry for the member
-
             // Pull the contact information from the user's contact catalog
             var networkProtocolEntry = ContextUser.GetNetworkEntry(memberAddress);
             var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;

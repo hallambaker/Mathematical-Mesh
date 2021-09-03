@@ -39,10 +39,7 @@ namespace Goedel.Mesh {
             var share = Share.GetKeyPair(keySecurity, keyCollection) as KeyPairAdvanced;
             var primary = PublicPrimary.GetKeyPair(keySecurity, keyCollection);
 
-            //Screen.WriteLine($"   Device Key = {share.IKeyAdvancedPrivate.Private}");
-
             return new KeyPairServiced(primary, share, ServiceAddress, keyCollection);
-            //current: here
             }
 
         }
@@ -143,9 +140,6 @@ namespace Goedel.Mesh {
                 KeyAgreementResult partial = null,
                 byte[] salt = null) {
 
-            //Screen.WriteLine($"Remote Decrypt {ServiceAddress} Public {Primary.KeyIdentifier} Share {Share.KeyIdentifier}");
-
-            //current
             var partial1 = KeyCollection.RemoteAgreement(ServiceAddress, 
                 ephemeral as KeyPairAdvanced, Share.KeyIdentifier);
 

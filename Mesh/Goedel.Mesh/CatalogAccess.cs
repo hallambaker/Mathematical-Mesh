@@ -285,9 +285,6 @@ namespace Goedel.Mesh {
             var deviceKey = shares[0].GetKeyPair(KeySecurity.Exportable, KeyUses.Encrypt);
             var remoteKey = shares[1].GetKeyPair(KeySecurity.Exportable, KeyUses.Encrypt);
 
-
-            //Screen.WriteLine($"Remote {remoteKey.KeyIdentifier} Device {deviceKey.KeyIdentifier}");
-
             var deviceKeyShare = new KeyShare() {
                 PublicPrimary = Key.GetPublic(key),
                 Share = Key.GetPrivate(deviceKey),
@@ -313,33 +310,14 @@ namespace Goedel.Mesh {
 
             remoteKeyData.Envelope(encryptionKey: serviceEncrypt);
 
-            //Screen.WriteLine($"Encode to  {serviceEncrypt.KeyIdentifier}");
-
 
             var capabilityDecrypt = new CapabilityDecryptServiced() {
                 Active = true,
                 Id = deviceKey.KeyIdentifier,
-                //AuthenticationId = ContextUser.ProfileUser.Udf,
-                //KeyDataEncryptionKey = serviceEncryptionKey,
                 GranteeUdf = granteeUdf,
                 GranteeAccount = granteeAccount,
                 EnvelopedKeyShare = remoteKeyData.EnvelopedKeyData
                 };
-
-
-            //Screen.WriteLine($"Capability = {capabilityDecrypt.Id} Grantee {granteeUdf} Account {granteeAccount}");
-            //Screen.WriteLine(keyShare.ToString());
-            //Screen.WriteLine(keyData.ToString());
-            //Screen.WriteLine(capabilityDecrypt.ToString());
-
-
-            //Screen.WriteLine($"   Device Key/ Share {deviceKey.KeyIdentifier}");
-            //Screen.WriteLine($"   Device Key = {deviceKey.IKeyAdvancedPrivate.Private}");
-
-            //Screen.WriteLine($"   Public Key {key.KeyIdentifier}");
-            //current: here
-
-
 
             return (deviceKeyData, capabilityDecrypt);
             }

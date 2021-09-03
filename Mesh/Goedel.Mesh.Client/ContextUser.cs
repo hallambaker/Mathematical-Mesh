@@ -928,9 +928,6 @@ namespace Goedel.Mesh.Client {
 
             var deviceEntry = catalogDevice.Locate(id);
 
-            // Current: reate a revocation entry in the access log here
-            "Need to create a revocation entry in the access log".TaskFunctionality();
-
             var catalogAccess = transact.GetCatalogAccess();
             //var authenticationI = 
 
