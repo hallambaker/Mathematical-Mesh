@@ -51,7 +51,20 @@ namespace Goedel.Mesh.Test {
     /// </summary>
     public class MeshMachineTest : MeshMachineCore {
 
-        public List<Trace> MeshProtocolMessages = new();
+        public List<Trace> MeshProtocolMessages {
+            get {
+                Screen.WriteLine($"GET MeshProtocolMessages { meshProtocolMessages.GetHashCode()}" );
+                return meshProtocolMessages;
+                }
+            set {
+                meshProtocolMessages = value;
+                Screen.WriteLine($"SET MeshProtocolMessages { meshProtocolMessages.GetHashCode()}");
+
+                }
+            }
+        List<Trace> meshProtocolMessages;
+
+
         TestEnvironmentCommon testEnvironmentCommon;
 
         public string Name;

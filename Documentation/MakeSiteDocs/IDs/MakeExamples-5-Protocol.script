@@ -173,12 +173,12 @@ The response payload:
 
 #zfile CreateExamples ProtocolCryptoKeyAgree "Examples\\ProtocolCryptoKeyAgree.md" Example
 The request payload:
-
-#%  DescribeRequest (Group?.GroupDecryptBobSuccess?[0].Traces?[1]);
+#{Unfinished ("ProtocolCryptoKeyAgree  [GroupDecryptBobSuccess]")}
+#!%  DescribeRequest (Group?.GroupDecryptBobSuccess?[1].Traces?[1]);
 
 The response payload:
 
-#%  DescribeResponse (Group?.GroupDecryptBobSuccess?[0].Traces?[1]);
+#!%  DescribeResponse (Group?.GroupDecryptBobSuccess?[1].Traces?[1]);
 #end zfile
 
 

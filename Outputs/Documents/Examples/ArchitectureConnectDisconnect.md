@@ -4,7 +4,7 @@ Alice disconnects the new device:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device delete MAMZ-AVQJ-U5VG-ONAI-7FEK-F7BJ-XYXF
+<cmd>Alice> device delete MC33-643H-BAE6-7LAN-GMWQ-HKQJ-JHHQ
 </div>
 ~~~~
 
@@ -14,6 +14,7 @@ The device can no longer access the password catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice2> account sync
+<rsp>ERROR - The server returned an invalid response.
 <cmd>Alice2> dare decode ciphertext.dare plaintext2.txt
 </div>
 ~~~~

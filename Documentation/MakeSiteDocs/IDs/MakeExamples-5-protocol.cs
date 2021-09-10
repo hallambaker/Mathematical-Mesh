@@ -300,12 +300,10 @@ namespace ExampleGenerator {
 		public void _ProtocolCryptoKeyAgree(CreateExamples Example) {
 
 				_Output.Write ("The request payload:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Group?.GroupDecryptBobSuccess?[0].Traces?[1]);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolCryptoKeyAgree  [GroupDecryptBobSuccess]"));
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Group?.GroupDecryptBobSuccess?[0].Traces?[1]);
 					}
 		
 

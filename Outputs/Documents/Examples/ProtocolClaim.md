@@ -9,7 +9,7 @@ resource being claimed and the address of the Mesh account making the claim.
 
 
 ~~~~
-Missing example 25
+Missing example 21
 ~~~~
 
 The message is signed by the claimant to make a RequestClaim to the service:

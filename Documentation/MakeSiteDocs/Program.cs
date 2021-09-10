@@ -291,9 +291,9 @@ namespace ExampleGenerator {
             MakeDocs();
             }
 
-        public bool All = true;
+        //public bool All = true;
 
-
+        public bool All = false;
 
         public static void MakeClean() {
             var Process = System.Diagnostics.Process.Start("CMD.exe", "/C MakeClean");
@@ -307,7 +307,8 @@ namespace ExampleGenerator {
             }
 
 
-
+        public string Unfinished(string example = null) => 
+            $">>>> Unfinished {example}\n\n" ?? "TBS";
 
 
         public TestEnvironmentCommon TestEnvironment;

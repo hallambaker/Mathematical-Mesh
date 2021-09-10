@@ -490,7 +490,7 @@
             </summary>
             <param name="activationAccount">The activation record.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{System.String})">
             <summary>
             Create a PIN value of length <paramref name="length"/> bits valid for 
             <paramref name="validity"/> minutes.

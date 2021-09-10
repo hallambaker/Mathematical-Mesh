@@ -1,5 +1,4 @@
 
-
 The account profile specifies the online and offline signature keys used to maintain the
 profile and the encryption key to be used by the account.
 
@@ -9,6 +8,10 @@ key contribtions added to the manufacturer device profile keys:
 
 
 The resulting key set is specified in the device connection:
+
+
+The authentication key on its own is specified in the service connection:
+
 
 
 All the above plus the ProfileDevice are combined to form the CatalogedDevice entry:

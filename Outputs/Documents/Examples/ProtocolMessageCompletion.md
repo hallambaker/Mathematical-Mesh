@@ -5,6 +5,6 @@ a completion message to the Local spool.
 
 
 ~~~~
-Missing example 32
+Missing example 26
 ~~~~
 

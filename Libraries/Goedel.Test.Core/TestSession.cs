@@ -21,6 +21,7 @@
 #endregion
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.PortableExecutable;
 
 using Goedel.Protocol;
 
@@ -54,7 +55,7 @@ namespace Goedel.Test.Core {
         //        new TestSession(jpcCredential as JpcCredentialTest);
 
 
-
+        public object Machine;
 
         public List<Trace> MeshProtocolMessages;
 
@@ -66,7 +67,10 @@ namespace Goedel.Test.Core {
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
         /// <param name="UDF">Authentication key identifier.</param>
-        public TestSession(JpcInterface host, ICredential credential, List<Trace> meshProtocolMessages) : base(host, credential) {
+        public TestSession(JpcInterface host, ICredential credential, 
+                    List<Trace> meshProtocolMessages, object machine) : 
+                        base(host, credential) {
+            Machine = machine;
             MeshProtocolMessages = meshProtocolMessages;
             }
 

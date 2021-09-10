@@ -213,7 +213,7 @@ namespace Goedel.Mesh.Test {
             JpcSession session = JpcConnection switch {
                 JpcConnection.Direct => new JpcSessionDirect(MeshService, credential),
                 JpcConnection.Serialized => new TestSession(MeshService, credential,
-                        meshMachineTest.MeshProtocolMessages),
+                        meshMachineTest.MeshProtocolMessages, meshMachineTest),
                 _ => throw new NYI()
                 };
 

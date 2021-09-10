@@ -81,8 +81,8 @@ The response payload:
 ~~~~
 {
   "TransactResponse":{
-    "Status":201,
-    "StatusDescription":"Operation completed successfully"}}
+    "Status":400,
+    "StatusDescription":"Error occurred"}}
 ~~~~
 
 

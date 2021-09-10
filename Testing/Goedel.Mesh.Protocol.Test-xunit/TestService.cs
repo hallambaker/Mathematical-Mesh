@@ -21,6 +21,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Data;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
@@ -137,7 +138,7 @@ namespace Goedel.XUnit {
             var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.Pin);
             var sync = contextAccountAlice_1_a.Sync();
             var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-            contextAccountAlice_1_a.Process(connectRequest);
+            contextAccountAlice_1_a.Process(connectRequest, roles: RightsDirect);
             contextAccountAlice_2.Complete();
 
 
@@ -152,6 +153,7 @@ namespace Goedel.XUnit {
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
             var machineAdminBob = new MeshMachineTest(testEnvironmentCommon, DeviceBobAdmin);
+
 
             machineAdminAlice.CheckHostCatalogExtended();
 
@@ -188,7 +190,7 @@ namespace Goedel.XUnit {
 
 
             var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-            contextAccountAlice_1_a.Process(connectRequest);
+            contextAccountAlice_1_a.Process(connectRequest, roles: RightsDirect);
 
             contextAccountAlice_2.Complete();
             machineAlice2.CheckHostCatalogExtended(); // Complete
@@ -211,7 +213,7 @@ namespace Goedel.XUnit {
 
             sync = contextAccountAlice_1_a.Sync();
             var connectRequest3 = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-            contextAccountAlice_1_a.Process(connectRequest3);
+            contextAccountAlice_1_a.Process(connectRequest3,roles: RightsThreshold);
 
             contextAccount3.Complete();
 
@@ -281,7 +283,7 @@ namespace Goedel.XUnit {
             // Admin Device
             contextAccountAlice.Sync();
             var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest);
+            contextAccountAlice.Process(connectRequest, roles: RightsDirect);
 
             // Check second device
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
@@ -299,9 +301,10 @@ namespace Goedel.XUnit {
                 testEnvironmentCommon, DeviceAliceAdmin, AccountAlice, "main");
 
             // Admin Device
-            var boundPin = contextAdmin.GetPIN(MeshConstants.MessagePINActionDevice);
+            var boundPin = contextAdmin.GetPIN(MeshConstants.MessagePINActionDevice, roles: RightsDirect);
             ReportDevices(contextAdmin);
 
+            // Current: This is failing because the roles are not being carried through...!
             // New Device
             var contextOnboarding = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
                 AccountAlice, PIN: boundPin.Pin);
@@ -447,7 +450,7 @@ namespace Goedel.XUnit {
             // Admin Device
             contextAccountAlice.Sync();
             var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest);
+            contextAccountAlice.Process(connectRequest, roles: RightsDirect);
 
             // Check second device
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);

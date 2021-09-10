@@ -220,7 +220,12 @@ namespace Goedel.Mesh.Client {
         /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
         public MessagePin GetPIN(string action, bool automatic = true,
                             int length = 80, long validity = MeshConstants.DayInTicks,
-                            bool register = true, CryptoKey encryptKey = null) {
+                            bool register = true, CryptoKey encryptKey = null,
+                            List<string> roles=null) {
+
+            (roles == null).AssertTrue(NYI.Throw);
+
+
             var pin = UDF.AuthenticationKey(length);
             var expires = DateTime.Now.AddTicks(validity);
             var messagePin = new MessagePin(pin, automatic, expires, AccountAddress, action);

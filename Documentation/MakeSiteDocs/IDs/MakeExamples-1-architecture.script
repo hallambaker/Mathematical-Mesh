@@ -20,6 +20,7 @@
 #% ArchitectureCredential(Example);
 #% ArchitectureConnectDirect(Example);
 #% ArchitectureConnectDisconnect(Example);
+#% ArchitectureConfigSSH(Example);
 #% ArchitectureConnectSSH(Example);
 #% ArchitectureContactRemote(Example);
 #% ArchitectureConfirm(Example);
@@ -77,6 +78,7 @@ or removable storage without disclosing the contents.
 #end zfile
 
 #zfile CreateExamples ArchitectureRecovery "Examples\\ArchitectureRecovery.md" Example
+#{Unfinished ("ArchitectureRecovery")}
 #%  ConsoleExample (Example.Account.ProfileRecover);
 #end zfile
 
@@ -144,15 +146,22 @@ The device can no longer access the password catalog:
 
 #end zfile
 
-
-#zfile CreateExamples ArchitectureConnectSSH "Examples\\ArchitectureConnectSSH.md" Example
+#zfile CreateExamples ArchitectureConfigSSH "Examples\\ArchitectureConfigSSH.md" Example
+#{Unfinished ("ArchitectureConfigSSH")}
 
 Alice creates an SSH profile within her Mesh on the administrative device.
 
 #%  ConsoleExample (Example.Apps.SSH);
 
+
 After configuring an SSH server to accept her new SSH credential, she can use any of her devices 
 that has been granted the SSH right to connect to it.
+
+#end zfile
+
+#zfile CreateExamples ArchitectureConnectSSH "Examples\\ArchitectureConnectSSH.md" Example
+#{Unfinished ("ArchitectureConnectSSH")}
+
 
 #end zfile
 
@@ -209,6 +218,7 @@ to the group yet.
 
 Alice adds herself to the group, now she can decrypt:
 
+
 #%  ConsoleExample (Example.Group.GroupAddAlice);
 
 At this point, Bob can't encrypt or decrypt messages because he doesn't know the 
@@ -227,10 +237,19 @@ Removing Bob from the group immediately withdraws his access.
 
 #%  ConsoleExample (Example.Group.GroupDeleteBob);
 
-Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
-earlier).
+Bob cannot decrypt files encrypted under the group key any more. But he 
+still has access to the file #{Group.GroupDecryptBobFile} he decrypted earlier.
 
 #%  ConsoleExample (Example.Group.GroupDecryptBobRevoked);
+
+The threshold key service acts as a policy enforcement point and can impose 
+additional accounting and authorization controls on the use of the decryption
+service.
+
+For example, the threshold key service might be configured to alert a 
+supervisor and/or deny decryption requests if a group member made an unusual 
+volume of requests in a short period.
+
 
 #end zfile
 
@@ -247,6 +266,8 @@ earlier).
 #end zfile
 
 #zfile CreateExamples ArchitectureConnectEARL "Examples\\ArchitectureConnectEARL.md" Example
+#{Unfinished ("ArchitectureConnectEARL")}
+
 #{Preformat}
 #{Connect.ConnectEARL}
 #{Preformat}

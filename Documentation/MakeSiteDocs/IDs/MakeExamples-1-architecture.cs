@@ -31,6 +31,7 @@ namespace ExampleGenerator {
 			 ArchitectureCredential(Example);
 			 ArchitectureConnectDirect(Example);
 			 ArchitectureConnectDisconnect(Example);
+			 ArchitectureConfigSSH(Example);
 			 ArchitectureConnectSSH(Example);
 			 ArchitectureContactRemote(Example);
 			 ArchitectureConfirm(Example);
@@ -138,6 +139,7 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureRecovery(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureRecovery"));
 				  ConsoleExample (Example.Account.ProfileRecover);
 					}
 		
@@ -246,6 +248,29 @@ namespace ExampleGenerator {
 		
 
 		//
+		// ArchitectureConfigSSH
+		//
+		public static void ArchitectureConfigSSH(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ArchitectureConfigSSH.md");
+			Example._Output = _Output;
+			Example._ArchitectureConfigSSH(Example);
+			}
+		public void _ArchitectureConfigSSH(CreateExamples Example) {
+
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureConfigSSH"));
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice creates an SSH profile within her Mesh on the administrative device.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.Apps.SSH);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("After configuring an SSH server to accept her new SSH credential, she can use any of her devices \n{0}", _Indent);
+				_Output.Write ("that has been granted the SSH right to connect to it.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
 		// ArchitectureConnectSSH
 		//
 		public static void ArchitectureConnectSSH(CreateExamples Example) { /* XFile  */
@@ -255,13 +280,8 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureConnectSSH(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureConnectSSH"));
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Alice creates an SSH profile within her Mesh on the administrative device.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Example.Apps.SSH);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("After configuring an SSH server to accept her new SSH credential, she can use any of her devices \n{0}", _Indent);
-				_Output.Write ("that has been granted the SSH right to connect to it.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -346,6 +366,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice adds herself to the group, now she can decrypt:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Group.GroupAddAlice);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("At this point, Bob can't encrypt or decrypt messages because he doesn't know the \n{0}", _Indent);
@@ -364,10 +385,19 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Group.GroupDeleteBob);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Bob cannot decrypt any more files (but he may have kept copies of files he decrypted \n{0}", _Indent);
-				_Output.Write ("earlier).\n{0}", _Indent);
+				_Output.Write ("Bob cannot decrypt files encrypted under the group key any more. But he \n{0}", _Indent);
+				_Output.Write ("still has access to the file {1} he decrypted earlier.\n{0}", _Indent, Group.GroupDecryptBobFile);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Group.GroupDecryptBobRevoked);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The threshold key service acts as a policy enforcement point and can impose \n{0}", _Indent);
+				_Output.Write ("additional accounting and authorization controls on the use of the decryption\n{0}", _Indent);
+				_Output.Write ("service.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("For example, the threshold key service might be configured to alert a \n{0}", _Indent);
+				_Output.Write ("supervisor and/or deny decryption requests if a group member made an unusual \n{0}", _Indent);
+				_Output.Write ("volume of requests in a short period.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -403,6 +433,8 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureConnectEARL(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureConnectEARL"));
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Preformat);
 				_Output.Write ("{1}\n{0}", _Indent, Connect.ConnectEARL);
 				_Output.Write ("{1}\n{0}", _Indent, Preformat);

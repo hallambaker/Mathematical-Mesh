@@ -24,13 +24,11 @@ LinkFiles = \
     Goedel.Protocol.dll
 
 ToolTargets = \
-	Exceptions.cs\
-	StatusSchema.cs
+	Exceptions.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
-StatusSchema.cs : StatusSchema.Protocol 
-	protogen StatusSchema.Protocol  /cs  StatusSchema.cs
+
 
 
 

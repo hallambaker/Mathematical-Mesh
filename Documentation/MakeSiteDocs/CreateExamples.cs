@@ -456,14 +456,16 @@ namespace ExampleGenerator {
                  );
 
             Group.EncryptSourceFile.WriteFileNew(Group.TestText);
-
-            Group.GroupEncrypt = Alice1.Example(
+            var dump = Alice1.DumpFile(Account.EncryptSourceFile);
+            var encode = Alice1.Example(
                 $"dare encode {Group.EncryptSourceFile} {Group.EncryptTargetFile} /encrypt {GroupAccount}",
-                $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile}"
+                $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptAliceFile}"
                 );
 
 
-
+            Group.GroupEncrypt = new List<ExampleResult>() {
+                dump, encode[0], encode[1]
+                };
 
             Group.GroupDecryptAlice = Alice1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
@@ -494,28 +496,28 @@ namespace ExampleGenerator {
             var addBob = Group.GroupAddBob[0].Traces[1].RequestObject as TransactRequest;
             Group.GroupInvitation = addBob.Outbound[0].JsonObject as GroupInvitation;
 
-            //Group.GroupDecryptBobSuccess = Bob1.Example(
-            //    $"account sync  /auto",
-            //    $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile}"
-            //     );
-            //Group.GroupDecryptBobSuccess.Add(Bob1.DumpFile(Group.GroupDecryptBobFile));
-            //// dump EncryptTargetFile 
+            Group.GroupDecryptBobSuccess = Bob1.Example(
+                $"account sync  /auto",
+                $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile}"
+                 );
+            Group.GroupDecryptBobSuccess.Add(Bob1.DumpFile(Group.GroupDecryptBobFile));
+            // dump EncryptTargetFile 
 
-            //Group.GroupDeleteBob = Alice1.Example(
-            //    $"group delete {GroupAccount} {BobAccount}"
-            //     );
+            Group.GroupDeleteBob = Alice1.Example(
+                $"group delete {GroupAccount} {BobAccount}"
+                 );
 
-            //Group.GroupDecryptBobRevoked = Bob1.Example(
-            //    $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile2}"
-            //     );
+            Group.GroupDecryptBobRevoked = Bob1.Example(
+                $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile2}"
+                 );
 
-            //Group.GroupDecryptAlice.GetResult().Success.TestTrue();
-            //Group.GroupDecryptBobFail.GetResult().Success.TestFalse();
-            //Group.GroupAddBob.GetResult().Success.TestTrue();
-            //Group.GroupDecryptBobSuccess.GetResult(0).Success.TestTrue();
-            //Group.GroupDecryptBobSuccess.GetResult(1).Success.TestTrue();
-            //Group.GroupDeleteBob.GetResult().Success.TestTrue();
-            //Group.GroupDecryptBobRevoked.GetResult().Success.TestFalse();
+            Group.GroupDecryptAlice.GetResult().Success.TestTrue();
+            Group.GroupDecryptBobFail.GetResult().Success.TestFalse();
+            Group.GroupAddBob.GetResult().Success.TestTrue();
+            Group.GroupDecryptBobSuccess.GetResult(0).Success.TestTrue();
+            Group.GroupDecryptBobSuccess.GetResult(1).Success.TestTrue();
+            Group.GroupDeleteBob.GetResult().Success.TestTrue();
+            Group.GroupDecryptBobRevoked.GetResult().Success.TestFalse();
 
             }
 
@@ -557,31 +559,31 @@ namespace ExampleGenerator {
             // this is probably failing because previous auto complete actions are not being marked closed.
 
             var connectPendingPIN = Connect.ConnectPINPending.GetResultPending();
-            //var syncUpdates = Connect.ConnectPINPending[1].Traces[1].RequestObject as TransactRequest;
+            var syncUpdates = Connect.ConnectPINPending[1].Traces[1].RequestObject as TransactRequest;
 
-            //Connect.ConnectPINCompleteMessage = syncUpdates.Local[1].JsonObject as MessageComplete; // change here!!!
+            Connect.ConnectPINCompleteMessage = syncUpdates.Local[1].JsonObject as MessageComplete; // change here!!!
 
-            //Connect.ConnectPINComplete = Alice3.Example(
-            //    $"device complete",
-            //    $"account sync"
-            //    );
+            Connect.ConnectPINComplete = Alice3.Example(
+                $"device complete",
+                $"account sync"
+                );
 
-            // this is not being assigned correctly
+            //this is not being assigned correctly
 
-            //var connectPINComplete = Connect.ConnectPINComplete.GetResultConnect();
-            //Connect.RespondConnectionPIN = connectPINComplete.RespondConnection;
-
-
-            //Connect.ConnectPINActivationDevice = null;
-            //Connect.ConnectPINCatalogedDevice = null;
-
-            //Connect.ConnectPINRequestComplete = Connect.ConnectPINComplete[0].Traces[0];
-            //Connect.ConnectPINRespondComplete = Connect.ConnectPINComplete[0].Traces[0];
+            var connectPINComplete = Connect.ConnectPINComplete.GetResultConnect();
+            Connect.RespondConnectionPIN = connectPINComplete.RespondConnection;
 
 
-            //var watchMachine = connectPINComplete.CatalogedMachine;
-            //Connect.AliceProfileDeviceWatch = watchMachine.ProfileDevice;
-            //Connect.AliceActivationDeviceWatch = watchMachine.ProfileDevice;
+            Connect.ConnectPINActivationDevice = null;
+            Connect.ConnectPINCatalogedDevice = null;
+
+            Connect.ConnectPINRequestComplete = Connect.ConnectPINComplete[0].Traces[0];
+            Connect.ConnectPINRespondComplete = Connect.ConnectPINComplete[0].Traces[0];
+
+
+            var watchMachine = connectPINComplete.CatalogedMachine;
+            Connect.AliceProfileDeviceWatch = watchMachine.ProfileDevice;
+            //Connect.AliceActivationDeviceWatch = watchMachine.A;
             }
 
         public void ConnectStaticQR() {
@@ -613,27 +615,27 @@ namespace ExampleGenerator {
                 );
 
 
-            //Connect.RequestClaim = Connect.ConnectStaticClaim[0].Traces[0];
-            //Connect.ResponseClaim = Connect.ConnectStaticClaim[0].Traces[0];
+            Connect.RequestClaim = Connect.ConnectStaticClaim[0].Traces[0];
+            Connect.ResponseClaim = Connect.ConnectStaticClaim[0].Traces[0];
 
-            //var requestClaim = Connect.RequestClaim.RequestObject as ClaimRequest;
-            //Connect.MessageClaim = requestClaim.EnvelopedMessageClaim.Decode();
-
-
-            //Connect.ConnectStaticPollSuccess = Alice4.Example(
-            //    $"device complete"
-            //    );
-
-            //Connect.RequestPollClaim = Connect.ConnectStaticPollSuccess[0].Traces[0];
-            //Connect.ResponsePollClaim = Connect.ConnectStaticPollSuccess[0].Traces[0];
+            var requestClaim = Connect.RequestClaim.RequestObject as ClaimRequest;
+            Connect.MessageClaim = requestClaim.EnvelopedMessageClaim.Decode();
 
 
-            //var connectStaticPollSuccess = Connect.ConnectStaticPollSuccess.GetResultConnect();
-            //var coffeePotMachine = connectStaticPollSuccess?.CatalogedMachine;
-            //var coffeePotDevice = coffeePotMachine?.CatalogedDevice;
-            //Connect.AliceProfileDeviceCoffee = coffeePotMachine.ProfileDevice;
-            //Connect.AliceActivationDeviceCoffee = connectStaticPollSuccess.ActivationDevice;
-            ////Connect.AliceActivationAccountCoffee = connectStaticPollSuccess.ActivationAccount;
+            Connect.ConnectStaticPollSuccess = Alice4.Example(
+                $"device complete"
+                );
+
+            Connect.RequestPollClaim = Connect.ConnectStaticPollSuccess[0].Traces[0];
+            Connect.ResponsePollClaim = Connect.ConnectStaticPollSuccess[0].Traces[0];
+
+
+            var connectStaticPollSuccess = Connect.ConnectStaticPollSuccess.GetResultConnect();
+            var coffeePotMachine = connectStaticPollSuccess?.CatalogedMachine;
+            var coffeePotDevice = coffeePotMachine?.CatalogedDevice;
+            Connect.AliceProfileDeviceCoffee = coffeePotMachine.ProfileDevice;
+            Connect.AliceActivationDeviceCoffee = connectStaticPollSuccess.ActivationDevice;
+            //Connect.AliceActivationAccountCoffee = connectStaticPollSuccess.ActivationAccount;
             //Connect.AliceConnectionDeviceCoffee = coffeePotDevice.ConnectionUser;
             }
 
@@ -648,18 +650,18 @@ namespace ExampleGenerator {
             var share1 = resultEscrow.Shares[0];
             var share2 = resultEscrow.Shares[2];
 
-            //Account.DeleteAlice = Alice1.Example(
-            //    $"account delete {AliceProfileAccount.Udf}"
-            //    );
+            Account.DeleteAlice = Alice1.Example(
+                $"account delete {AliceProfileAccount.Udf}"
+                );
 
-            //Account.ProfileRecover = Alice2.Example(
-            //    $"account recover {share1} {share2} /verify"
-            //    );
+            Account.ProfileRecover = Alice2.Example(
+                $"account recover {share1} {share2} /verify"
+                );
 
 
-            //Account.ProfileEscrow.GetResult().Success.TestTrue();
-            //Account.DeleteAlice.GetResult().Success.TestTrue();
-            //Account.ProfileRecover.GetResult().Success.TestTrue();
+            Account.ProfileEscrow.GetResult().Success.TestTrue();
+            Account.DeleteAlice.GetResult().Success.TestTrue();
+            Account.ProfileRecover.GetResult().Success.TestTrue();
 
 
             }
