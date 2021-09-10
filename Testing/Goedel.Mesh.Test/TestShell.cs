@@ -186,7 +186,7 @@ namespace Goedel.Mesh.Test {
                 Count++;
                 CountTotal++;
                 try {
-                    Shell.MeshMachineTest.MeshProtocolMessages = new();
+                    Shell.MeshMachineTest.MeshProtocolMessages.Clear();
 
                     Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
                     result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
