@@ -526,7 +526,7 @@ namespace ExampleGenerator {
 
             // Connect device using a PIN (which can be presented as a QR code)
             Connect.ConnectPINCreate = Alice1.Example(
-                    $"account pin"
+                    $"account pin /web"
                     );
             var pinResult = Connect.ConnectPINCreate.GetResultPIN();
             var pin = pinResult.MessagePIN.Pin;
@@ -610,8 +610,8 @@ namespace ExampleGenerator {
             //Connect.ConnectStaticPollFail = testCLIAlice4.Example(
             //    $"device complete"
             //    );
-            Connect.ConnectStaticClaim = Maker1.Example(
-                $"account connect {resultPublishDevice.Uri}"
+            Connect.ConnectStaticClaim = Alice1.Example(
+                $"account connect {resultPublishDevice.Uri} /web"
                 );
 
 

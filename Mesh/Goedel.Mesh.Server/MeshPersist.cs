@@ -123,7 +123,8 @@ namespace Goedel.Mesh.Server {
                 Directory.CreateDirectory(directory);
                 // Create the pro-forma containers.
                 new Spool(directory, SpoolInbound.Label).Dispose();
-
+                //new CatalogAccess(directory).Dispose();
+                //new CatalogPublication(directory).Dispose();
                 }
             }
 
@@ -312,7 +313,7 @@ namespace Goedel.Mesh.Server {
 
             if (updates != null) {
                 foreach (var update in updates) {
-                    //update.ToConsole();
+                    Screen.WriteLine(update.ToString());
                     accountEntry.StoreAppend(update.Container, update.Envelopes);
                     }
                 }

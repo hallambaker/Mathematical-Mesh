@@ -70,12 +70,17 @@ namespace Scratchpad {
             //TestService.Test().MeshDeviceSsh();
             //TestService.Test().MeshDeviceMail();
 
-            TestService.Test().MeshDeviceDirectKey();
+            //TestService.Test().MeshDeviceDirectKey();
 
             //Debug();
+            //TestService.Test().MeshDeviceDeveloper();
 
 
-            TestService.Test().MeshServiceFull();
+
+            //TestService.Test().MeshDeviceConnectPIN();
+            //TestService.Test().MeshDeviceConnectDynamicQR();
+            TestService.Test().MeshDeviceConnectStaticQR();
+
 
 
             //ShellTestsHTTP.Test().TestMessageGroup();

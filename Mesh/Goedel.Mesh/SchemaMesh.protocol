@@ -994,6 +994,10 @@
 		String Action
 			Description
 				|The action to which this PIN code is bound.
+		String Roles
+			Multiple
+			Description
+				|The set of rights bound to the PIN grant.
 				
 	Structure RequestConnection
 		Description

@@ -6994,6 +6994,11 @@
             The action to which this PIN code is bound.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.MessagePin.Roles">
+             <summary>
+            The set of rights bound to the PIN grant.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.MessagePin._Tag">
             <summary>
             Tag identifying this class
@@ -12404,6 +12409,11 @@
             messages under the public credentials for the account.</summary> 
         </member>
         <member name="F:Goedel.Mesh.Rights.RightsWeb">
+            <summary>Rights granted a device afforded Web access in addition to external
+            messaging. These add the right to read/update the credential, calendar and 
+            bookmark catalogs.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Rights.RightsDeveloper">
             <summary>Rights granted a device afforded Web access in addition to external
             messaging. These add the right to read/update the credential, calendar and 
             bookmark catalogs.</summary> 

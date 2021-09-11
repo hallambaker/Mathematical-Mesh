@@ -329,7 +329,7 @@ namespace Goedel.XUnit {
                 "main");
 
             // Create the QR Code with PIN
-            var boundPin = contextAdmin.GetPIN(MeshConstants.MessagePINActionDevice);
+            var boundPin = contextAdmin.GetPIN(MeshConstants.MessagePINActionDevice, roles: RightsDirect);
             var connectUri = MeshUri.ConnectUri(contextAdmin.AccountAddress, boundPin.Pin);
 
             ReportDevices(contextAdmin);

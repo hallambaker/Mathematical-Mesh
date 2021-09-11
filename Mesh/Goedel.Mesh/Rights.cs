@@ -341,6 +341,15 @@ namespace Goedel.Mesh {
                         new Right(Resource.Store, Access.ReadWrite, CatalogBookmark.Label)
                         }.Concat(RightsMessage);
 
+        ///<summary>Rights granted a device afforded Web access in addition to external
+        ///messaging. These add the right to read/update the credential, calendar and 
+        ///bookmark catalogs.</summary> 
+        public readonly static List<Right> RightsDeveloper =
+                    new List<Right>() {
+
+                        }.Concat(RightsWeb);
+
+
         ///<summary>Rights granted an SSH client device. This is limited to access to an
         ///SSH authenticator under the account. Which may be a device specific key plus
         ///a credential or the account key.</summary> 
@@ -395,6 +404,7 @@ namespace Goedel.Mesh {
                 [IdRolesDevice] = RightsDevce,
                 [IdRolesMessage] = RightsMessage,
                 [IdRolesWeb] = RightsWeb,
+                [IdRolesDeveloper] = RightsDeveloper,
                 //[IdRightsSsh] = RightsSSH,
                 //[IdRightsPgp] = RightsPgp,
                 //[IdRightsSmime] = RightsSmime,
@@ -412,9 +422,9 @@ namespace Goedel.Mesh {
         public static List<Right> GetRights(string role, out string subresource) {
             subresource = null; // NYI: handling of account based rights.
 
-            DictionaryRights.TryGetValue(role, out var dictionary).AssertTrue(UnknownRight.Throw, role);
+            DictionaryRights.TryGetValue(role, out var rights).AssertTrue(UnknownRight.Throw, role);
 
-            return dictionary;
+            return rights;
 
             }
 

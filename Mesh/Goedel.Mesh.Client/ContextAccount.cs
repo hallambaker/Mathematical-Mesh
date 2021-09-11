@@ -223,12 +223,12 @@ namespace Goedel.Mesh.Client {
                             bool register = true, CryptoKey encryptKey = null,
                             List<string> roles=null) {
 
-            (roles == null).AssertTrue(NYI.Throw);
-
 
             var pin = UDF.AuthenticationKey(length);
             var expires = DateTime.Now.AddTicks(validity);
-            var messagePin = new MessagePin(pin, automatic, expires, AccountAddress, action);
+            var messagePin = new MessagePin(pin, automatic, expires, AccountAddress, action) {
+                Roles = roles
+                };
 
             encryptKey ??= KeyAccountEncryption;
 

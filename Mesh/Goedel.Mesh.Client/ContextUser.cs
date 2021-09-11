@@ -301,13 +301,17 @@ namespace Goedel.Mesh.Client {
             foreach (var entry in StaticCatalogDelegates) {
 
                 var storeName = entry.Key;
+                var factory = entry.Value;
                 if (!ServiceCatalogs.Contains(storeName)) {
 
-                    var factory = entry.Value;
+                    
                     var policy = activationAccount.InitializeStore(storeName);
 
                     using var store = factory(StoresDirectory, storeName, null, policy, keyCollection: keyLocate);
                     }
+                //else {
+                //    using var store = factory(StoresDirectory, storeName, null, null, keyCollection: keyLocate);
+                //    }
                 }
             foreach (var entry in StaticSpoolDelegates) {
                 var storeName = entry.Key;
@@ -1130,6 +1134,8 @@ namespace Goedel.Mesh.Client {
         /// <returns>The result of processing.</returns>
         ProcessResult Process(AcknowledgeConnection request, bool accept = true, MessagePin messagePin = null,
                List<string> rights = null) {
+
+            rights ??= messagePin.Roles;
             var transactRequest = TransactBegin();
 
             var respondConnection = new RespondConnection() {

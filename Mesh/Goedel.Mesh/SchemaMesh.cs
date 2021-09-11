@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/10/2021 5:52:29 PM
+//  This file was automatically generated at 9/11/2021 2:55:15 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -10595,6 +10595,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						Action  {get; set;}
+        /// <summary>
+        ///The set of rights bound to the PIN grant.
+        /// </summary>
+
+		public virtual List<string>				Roles  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -10664,6 +10669,18 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Action", 1);
 					_writer.WriteString (Action);
 				}
+			if (Roles != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Roles", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Roles) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -10715,6 +10732,17 @@ namespace Goedel.Mesh {
 					}
 				case "Action" : {
 					Action = jsonReader.ReadString ();
+					break;
+					}
+				case "Roles" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Roles = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Roles.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
 					break;
 					}
 				default : {

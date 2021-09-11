@@ -270,6 +270,7 @@ namespace Goedel.Mesh.Server {
                     result.Add(GetStatusStore(CatalogDevice.Label));
                     result.Add(GetStatusStore(CatalogContact.Label));
                     result.Add(GetStatusStore(CatalogApplication.Label));
+                    result.Add(GetStatusStore(CatalogPublication.Label));
                     result.Add(GetStatusStore(CatalogBookmark.Label));
                     result.Add(GetStatusStore(CatalogTask.Label));
                     break;
