@@ -405,7 +405,7 @@ namespace Goedel.Mesh.Server {
                 var verifiedDevice = VerifyDevice(jpcSession);
 
                 var accountEntry = new AccountUser(request);
-                MeshPersist.AccountAdd(jpcSession, verifiedDevice, accountEntry);
+                MeshPersist.AccountAdd(jpcSession, verifiedDevice, accountEntry, request.CatalogAccessEnvelopes);
                 return new BindResponse();
                 }
             catch (System.Exception exception) {

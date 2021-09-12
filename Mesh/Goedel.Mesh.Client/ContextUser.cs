@@ -230,7 +230,8 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="accountAddress">The account address</param>
         public void SetService(
-                string accountAddress) {
+                string accountAddress,
+                TransactUser transactUser) {
             KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
 
             // Query the service capabilities
@@ -247,6 +248,7 @@ namespace Goedel.Mesh.Client {
             var createRequest = new BindRequest() {
                 AccountAddress = accountAddress,
                 EnvelopedProfileAccount = ProfileUser.EnvelopedProfileAccount,
+                Upp = transactUser
                 };
 
             // Attempt to register with service in question

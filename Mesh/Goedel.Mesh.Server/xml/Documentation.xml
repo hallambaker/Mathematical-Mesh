@@ -1117,7 +1117,7 @@
             <param name="directory">The directory in which all the service data is stored.</param>
             <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountAdd(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedDevice,Goedel.Mesh.Server.AccountEntry)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountAdd(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedDevice,Goedel.Mesh.Server.AccountEntry,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope})">
             <summary>
             Add a new account. The account name must be unique.
             </summary>

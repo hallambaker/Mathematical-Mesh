@@ -105,7 +105,8 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession">The session connection data.</param>
         public void AccountAdd(IJpcSession jpcSession,
                         MeshVerifiedDevice account,
-                        AccountEntry accountEntry) {
+                        AccountEntry accountEntry,
+                        List<DareEnvelope> accessEntries) {
 
             jpcSession.Future();
             StoreEntry containerEntry;
@@ -121,6 +122,13 @@ namespace Goedel.Mesh.Server {
 
             lock (containerEntry) {
                 Directory.CreateDirectory(directory);
+                // prepopulate the access catalog
+                using var CatalogAccess = new CatalogAccess(directory);
+                if (accessEntries != null) {
+                    foreach (var entry in accessEntries) {
+                        CatalogAccess.AppendDirect(entry);
+                        }
+                    }
                 // Create the pro-forma containers.
                 new Spool(directory, SpoolInbound.Label).Dispose();
                 //new CatalogAccess(directory).Dispose();

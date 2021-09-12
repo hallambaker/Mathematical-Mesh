@@ -140,50 +140,53 @@ namespace Goedel.Mesh.Client {
         /// <param name="transact">The transaction to perform.</param>
         /// <returns>Response from the Mesh service.</returns>
         public TransactResponse Transact<TContext>(
-                Transaction<TContext> transact) where TContext : ContextAccount {
-
+                Transaction<TContext> transact,
+                bool direct = false) where TContext : ContextAccount {
+            TransactResponse response = null;
             var transactRequest = transact.TransactRequest;
 
-            if (transact.InboundReferences != null) {
-                var message = new MessageComplete() {
-                    References = transact.InboundReferences
-                    };
-                transact.InboundMessage(message);
-                }
-            if (transact.LocalReferences != null) {
-                var message = new MessageComplete() {
-                    References = transact.LocalReferences
-                    };
-                transact.LocalMessage(message, null);
-                // Hack: should completion messages be encrypted or not?
+            if (!direct) {
 
-                }
-
-            var response = MeshClient.Transact(transactRequest);
-
-
-            if (response.Success()) {
-                if (transactRequest.Updates != null) {
-                    // Perform local updates to each store.
-                    foreach (var update in transactRequest.Updates) {
-                        var catalogUpdate = update as TransactionUpdate;
-                        catalogUpdate.Commit();
-                        }
+                if (transact.InboundReferences != null) {
+                    var message = new MessageComplete() {
+                        References = transact.InboundReferences
+                        };
+                    transact.InboundMessage(message);
                     }
-                if (transactRequest.Inbound != null) {
-                    var spoolInbound = GetStore(SpoolInbound.Label) as SpoolInbound;
-                    foreach (var envelope in transactRequest.Inbound) {
-                        spoolInbound.Add(envelope);
-                        }
-                    }
-                if (transactRequest.Local != null) {
-                    var spoolLocal = GetStore(SpoolLocal.Label) as SpoolLocal;
-                    foreach (var envelope in transactRequest.Local) {
-                        spoolLocal.Add(envelope);
-                        }
+                if (transact.LocalReferences != null) {
+                    var message = new MessageComplete() {
+                        References = transact.LocalReferences
+                        };
+                    transact.LocalMessage(message, null);
+                    // Hack: should completion messages be encrypted or not?
+
                     }
 
+                response = MeshClient.Transact(transactRequest);
+                response.Success().AssertTrue(NYI.Throw);
                 }
+
+            if (transactRequest.Updates != null) {
+                // Perform local updates to each store.
+                foreach (var update in transactRequest.Updates) {
+                    var catalogUpdate = update as TransactionUpdate;
+                    catalogUpdate.Commit();
+                    }
+                }
+            if (transactRequest.Inbound != null) {
+                var spoolInbound = GetStore(SpoolInbound.Label) as SpoolInbound;
+                foreach (var envelope in transactRequest.Inbound) {
+                    spoolInbound.Add(envelope);
+                    }
+                }
+            if (transactRequest.Local != null) {
+                var spoolLocal = GetStore(SpoolLocal.Label) as SpoolLocal;
+                foreach (var envelope in transactRequest.Local) {
+                    spoolLocal.Add(envelope);
+                    }
+                }
+
+
 
             return response;
             }
@@ -483,6 +486,7 @@ namespace Goedel.Mesh.Client {
         /// Apply the transaction and return the response.
         /// </summary>
         /// <returns></returns>
-        public TransactResponse Transact() => ContextAccount.Transact(this);
+        public TransactResponse Transact(bool direct=false) => 
+                    ContextAccount.Transact(this, direct);
         }
     }

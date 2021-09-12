@@ -216,6 +216,11 @@
 		Struct Enveloped<ProfileAccount> EnvelopedProfileAccount
 			Description
 				|The signed assertion describing the account.
+		Struct ContainerUpdate Updates			
+			Multiple
+			Description
+				|Data to be prepopulated to the account stores. This MUST include the access 
+				|authorization for the devices to be used to complete the account initialization.
 
 	Message BindResponse
 		Inherits MeshResponse

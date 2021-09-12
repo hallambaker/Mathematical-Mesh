@@ -8,7 +8,7 @@
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
     <IsPackable>false</IsPackable>
-
+    <UseSharedCompilation>false</UseSharedCompilation>
   </PropertyGroup>
 
   <ItemGroup>

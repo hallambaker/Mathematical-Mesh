@@ -9937,6 +9937,12 @@
             The signed assertion describing the account.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.BindRequest.Updates">
+             <summary>
+            Data to be prepopulated to the account stores. This MUST include the access 
+            authorization for the devices to be used to complete the account initialization.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.BindRequest._Tag">
             <summary>
             Tag identifying this class

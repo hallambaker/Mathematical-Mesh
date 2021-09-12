@@ -330,17 +330,22 @@ namespace Goedel.Mesh.Client {
             //    activationRoot.ProfileSignatureKey;
 
             // Set the service 
-            contextUser.SetService(accountAddress);
+
 
             // Add the catalog device under the new user context.
-            var transactRequest = contextUser.TransactBegin();
+            var transactRequest1 = contextUser.TransactBegin();
 
 
             catalogedMachine.CatalogedDevice = activationRoot.MakeCatalogedDevice(
-                profileDevice, profileUser, rights, transactRequest, activationDevice);
+                profileDevice, profileUser, rights, transactRequest1, activationDevice);
+
 
             // Enable existing applications on the device
 
+            contextUser.SetService(accountAddress, transactRequest1);
+            transactRequest1.Transact(true);
+
+            var transactRequest = contextUser.TransactBegin();
 
             var catalogDevice = transactRequest.GetCatalogDevice();
             transactRequest.CatalogUpdate(catalogDevice, catalogedMachine.CatalogedDevice);

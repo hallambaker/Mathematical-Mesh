@@ -8,6 +8,7 @@
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
 		<DocumentationFile>xml\Documentation.xml</DocumentationFile>
+    <UseSharedCompilation>false</UseSharedCompilation>
 	</PropertyGroup>
 	
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">

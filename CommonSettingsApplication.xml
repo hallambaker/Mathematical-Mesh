@@ -11,6 +11,7 @@
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
 		<DocumentationFile>xml\Documentation.xml</DocumentationFile>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <UseSharedCompilation>false</UseSharedCompilation>
 	</PropertyGroup>
 
   <ItemGroup>
