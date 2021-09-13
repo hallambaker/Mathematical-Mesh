@@ -248,7 +248,7 @@ namespace Goedel.Mesh.Client {
             var createRequest = new BindRequest() {
                 AccountAddress = accountAddress,
                 EnvelopedProfileAccount = ProfileUser.EnvelopedProfileAccount,
-                Upp = transactUser
+                Updates = transactUser.TransactRequest.Updates
                 };
 
             // Attempt to register with service in question
@@ -480,8 +480,8 @@ namespace Goedel.Mesh.Client {
             };
 
         static SortedSet<string> ServiceCatalogs = new() {
-            CatalogAccess.Label,
-            CatalogPublication.Label
+            //CatalogAccess.Label,
+            //CatalogPublication.Label
             };
 
         ///<summary>Returns the inbound spool for the account</summary>
@@ -899,8 +899,9 @@ namespace Goedel.Mesh.Client {
 
             // Approve the request
             // Have to add in the Mesh profile here and Account Assertion
-
-            var cataloguedDevice = ActivationAccount.MakeCatalogedDevice(profileDevice, ProfileUser, roles: rights);
+            var transact = TransactBegin();
+            var cataloguedDevice = ActivationAccount.MakeCatalogedDevice(profileDevice, 
+                    ProfileUser, transactContextAccount: transact, roles: rights);
 
             //Console.WriteLine($"Accept connection ID is {responseId}");
             var respondConnection = new RespondConnection() {
@@ -910,7 +911,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             // Transactional update.
-            var transact = TransactBegin();
+
             transact.LocalMessage(respondConnection, deviceEncrypt);
 
             var catalogDevice = transact.GetCatalogDevice();

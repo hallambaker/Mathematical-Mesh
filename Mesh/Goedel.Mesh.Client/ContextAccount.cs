@@ -142,7 +142,7 @@ namespace Goedel.Mesh.Client {
         public virtual string StoresDirectory { get; set; }
 
         ///<summary>Dictionary locating the stores connected to the context.</summary>
-        protected Dictionary<string, SyncStatus> DictionaryStores = new();
+        public Dictionary<string, SyncStatus> DictionaryStores = new();
 
         ///<summary>List of catalogs</summary>
         public virtual Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;

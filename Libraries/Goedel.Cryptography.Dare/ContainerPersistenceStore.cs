@@ -250,6 +250,10 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="frameIndex">The container position</param>
         /// <param name="jSONObject">The object being committed in deserialized form.</param>
         public virtual void CommitTransaction(SequenceFrameIndex frameIndex, JsonObject jSONObject) {
+            if (frameIndex.Header.Index == 0) {
+                return; // we do not commit fram zero transactions to memory.
+                }
+
             var contentMeta = frameIndex.Header.ContentMeta;
 
             ObjectIndex.TryGetValue(contentMeta.UniqueId, out var Previous);

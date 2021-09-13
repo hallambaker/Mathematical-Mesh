@@ -140,12 +140,11 @@ namespace Goedel.Mesh.Client {
         /// <param name="transact">The transaction to perform.</param>
         /// <returns>Response from the Mesh service.</returns>
         public TransactResponse Transact<TContext>(
-                Transaction<TContext> transact,
-                bool direct = false) where TContext : ContextAccount {
+                Transaction<TContext> transact) where TContext : ContextAccount {
             TransactResponse response = null;
             var transactRequest = transact.TransactRequest;
 
-            if (!direct) {
+            if (!transact.Local) {
 
                 if (transact.InboundReferences != null) {
                     var message = new MessageComplete() {
@@ -205,7 +204,9 @@ namespace Goedel.Mesh.Client {
         /// Begin a transaction.
         /// </summary>
         /// <returns>The transaction handle</returns>
-        public new TransactUser TransactBegin() => new(this);
+        public new TransactUser TransactBegin(bool local=false) => new(this) {
+            Local = local
+            };
         }
 
 
@@ -279,7 +280,8 @@ namespace Goedel.Mesh.Client {
         /// <summary>List of completion references to be added to the inbound spool</summary>
         public List<Reference> InboundReferences;
 
-
+        ///<summary>If true, only perform the transaction to the local stores.</summary> 
+        public bool Local { get; init; } = false;
         #endregion
         #region // Operations
         ///<summary>Returns the publication catalog for the account</summary>
@@ -480,13 +482,25 @@ namespace Goedel.Mesh.Client {
             var update = GetContainerUpdate(TransactRequest.Updates, catalog);
             update.Delete(catalogedEntry);
             }
+
+
+        public void FirstFrame<TEntry>(Catalog<TEntry> catalog) where TEntry : CatalogedEntry {
+            TransactRequest.Updates ??= new List<ContainerUpdate>();
+            var update = new TransactionUpdate<TEntry>(catalog) {
+                Envelopes = new List<DareEnvelope> {
+                    catalog.Container.FrameZero
+                    }
+                };
+            TransactRequest.Updates.Add(update);
+            }
+
         #endregion
 
         /// <summary>
         /// Apply the transaction and return the response.
         /// </summary>
         /// <returns></returns>
-        public TransactResponse Transact(bool direct=false) => 
-                    ContextAccount.Transact(this, direct);
+        public TransactResponse Transact() => 
+                    ContextAccount.Transact(this);
         }
     }

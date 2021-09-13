@@ -24,6 +24,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.Emit;
 using System.Security.Cryptography;
 
 using Goedel.Cryptography;
@@ -106,7 +107,7 @@ namespace Goedel.Mesh.Server {
         public void AccountAdd(IJpcSession jpcSession,
                         MeshVerifiedDevice account,
                         AccountEntry accountEntry,
-                        List<DareEnvelope> accessEntries) {
+                        List<ContainerUpdate> accessEntries) {
 
             jpcSession.Future();
             StoreEntry containerEntry;
@@ -123,10 +124,11 @@ namespace Goedel.Mesh.Server {
             lock (containerEntry) {
                 Directory.CreateDirectory(directory);
                 // prepopulate the access catalog
-                using var CatalogAccess = new CatalogAccess(directory);
+                //using var CatalogAccess = new CatalogAccess(directory);
                 if (accessEntries != null) {
                     foreach (var entry in accessEntries) {
-                        CatalogAccess.AppendDirect(entry);
+
+                        Store.Append(directory, null, entry.Envelopes, entry.Container);
                         }
                     }
                 // Create the pro-forma containers.

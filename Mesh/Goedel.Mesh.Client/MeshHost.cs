@@ -326,30 +326,29 @@ namespace Goedel.Mesh.Client {
             var contextUser = new ContextUser(this, catalogedMachine) {
                 ActivationAccount = activationRoot
                 };
-            //contextUser.ActivationAccount.ProfileSignatureKey =
-            //    activationRoot.ProfileSignatureKey;
 
-            // Set the service 
+            var transactRequest = contextUser.TransactBegin(true);
 
-
-            // Add the catalog device under the new user context.
-            var transactRequest1 = contextUser.TransactBegin();
+            var catalogAccess = transactRequest.GetCatalogAccess();
+            transactRequest.FirstFrame(catalogAccess);
+            var catalogDevice = transactRequest.GetCatalogDevice();
+            transactRequest.FirstFrame(catalogDevice);
 
 
             catalogedMachine.CatalogedDevice = activationRoot.MakeCatalogedDevice(
-                profileDevice, profileUser, rights, transactRequest1, activationDevice);
+                    profileDevice, profileUser, rights, transactRequest, activationDevice);
 
-
-            // Enable existing applications on the device
-
-            contextUser.SetService(accountAddress, transactRequest1);
-            transactRequest1.Transact(true);
-
-            var transactRequest = contextUser.TransactBegin();
-
-            var catalogDevice = transactRequest.GetCatalogDevice();
             transactRequest.CatalogUpdate(catalogDevice, catalogedMachine.CatalogedDevice);
+            foreach (var update in transactRequest.TransactRequest.Updates) {
+                contextUser.DictionaryStores.TryGetValue(update.Container, out var status).AssertTrue(NYI.Throw);
+                status.Index = update.Envelopes.Count;
+                }
+            contextUser.SetService(accountAddress, transactRequest);
             transactRequest.Transact();
+
+
+
+
 
             // Register the mesh description on the local machine.
             Register(catalogedMachine, contextUser);

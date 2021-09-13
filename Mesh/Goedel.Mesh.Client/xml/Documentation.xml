@@ -1004,7 +1004,7 @@
             Context for interacting with a Mesh Account
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.TransactBegin">
+        <member name="M:Goedel.Mesh.Client.ContextUser.TransactBegin(System.Boolean)">
             <summary>
             Begin a transaction.
             </summary>
@@ -1106,7 +1106,7 @@
             <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The encrypted escrow entry and the key shares.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.SetService(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.SetService(System.String,Goedel.Mesh.Client.TransactUser)">
             <summary>
             Set the initial Mesh Service. This MUST be called before devices are added to the 
             personal mesh. This method does not support transfer of the Mesh Service.
@@ -1620,6 +1620,9 @@
         </member>
         <member name="F:Goedel.Mesh.Client.Transaction`1.InboundReferences">
             <summary>List of completion references to be added to the inbound spool</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.Transaction`1.Local">
+            <summary>If true, only perform the transaction to the local stores.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.GetCatalogPublication">
             <summary>Returns the publication catalog for the account</summary>

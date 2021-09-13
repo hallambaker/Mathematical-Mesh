@@ -367,7 +367,7 @@ namespace Goedel.XUnit {
 
             var contextOnboardPreconfigured = DeviceOnboarding.Install(filename);
 
-            contextAdmin.Connect(connectUri);
+            contextAdmin.Connect(connectUri, RightsDirect);
 
             // Attempt to 
             var contextOnboardPending = contextOnboardPreconfigured.Poll();

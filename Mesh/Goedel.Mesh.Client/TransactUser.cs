@@ -60,6 +60,11 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>Returns the inbound spool for the account</summary>
         public SpoolInbound GetSpoolInbound() => ContextUser.GetStore(SpoolInbound.Label) as SpoolInbound;
+
+
+
+        
+        
         #endregion
         #region // Constructors
 
