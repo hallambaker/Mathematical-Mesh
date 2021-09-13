@@ -227,7 +227,7 @@ namespace Goedel.XUnit {
 
         TestCLI CreateMasterDevice(string name, string account) {
             var device1 = GetTestCLI(name);
-            device1.Dispatch($"mesh create /service={account}");
+            device1.Dispatch($"account create {account}");
 
             return device1;
             }

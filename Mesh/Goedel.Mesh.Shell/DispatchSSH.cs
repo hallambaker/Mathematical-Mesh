@@ -35,13 +35,14 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHCreate(SSHCreate options) {
-
+            var rights = GetRights(options);
             var id = options.ID.Value ?? "ssh";
             using var contextDevice = GetContextDevice(options);
             using var transaction = contextDevice.TransactBegin();
 
             var applicationSSH = new CatalogedApplicationSsh() {
-                Key = id
+                Key = id,
+                Grant = rights
                 };
 
             transaction.ApplicationCreate(applicationSSH);

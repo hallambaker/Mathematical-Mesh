@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 9/13/2021 4:35:00 PM
+//  This file was automatically generated at 9/13/2021 5:25:07 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -16802,12 +16802,23 @@ namespace Goedel.Mesh.Shell {
         } // class DarePurge
 
     public class _MailAdd : Goedel.Command.Dispatch ,
+							IDeviceAuthOptions,
 							IAccountOptions,
 							IReporting,
 							IMailOptions,
 							ICryptoOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String (),
+			new String (),
 			new String (),
 			new String (),
 			new String (),
@@ -16836,122 +16847,212 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Address {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
+		/// <summary>Field accessor for option [auth]</summary>
+		public virtual String Auth {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _AccountAddress {
+		public virtual string _Auth {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [local]</summary>
-		public virtual String LocalName {
-			get => _Data[2] as String;
+		/// <summary>Field accessor for option [root]</summary>
+		public virtual Flag AuthSuper {
+			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _LocalName {
+		public virtual string _AuthSuper {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[3] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [admin]</summary>
+		public virtual Flag AuthAdmin {
+			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _AuthAdmin {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
+		/// <summary>Field accessor for option [message]</summary>
+		public virtual Flag AuthMessage {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _AuthMessage {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [web]</summary>
+		public virtual Flag AuthWeb {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _AuthWeb {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [device]</summary>
+		public virtual Flag AuthDevice {
 			get => _Data[6] as Flag;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _AuthDevice {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [openpgp]</summary>
-		public virtual Flag OpenPGP {
-			get => _Data[7] as Flag;
+		/// <summary>Field accessor for option [ssh]</summary>
+		public virtual String AuthSSH {
+			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _OpenPGP {
+		public virtual string _AuthSSH {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [smime]</summary>
-		public virtual Flag SMIME {
-			get => _Data[8] as Flag;
+		/// <summary>Field accessor for option [email]</summary>
+		public virtual String AuthEmail {
+			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _SMIME {
+		public virtual string _AuthEmail {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [configuration]</summary>
-		public virtual ExistingFile Configuration {
-			get => _Data[9] as ExistingFile;
+		/// <summary>Field accessor for option [member]</summary>
+		public virtual String AuthGroupMember {
+			get => _Data[9] as String;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Configuration {
+		public virtual string _AuthGroupMember {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [ca]</summary>
-		public virtual String CA {
+		/// <summary>Field accessor for option [group]</summary>
+		public virtual String AuthGroupAdmin {
 			get => _Data[10] as String;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _CA {
+		public virtual string _AuthGroupAdmin {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for option [inbound]</summary>
-		public virtual String Inbound {
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
 			get => _Data[11] as String;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Inbound {
+		public virtual string _AccountAddress {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [outbound]</summary>
-		public virtual String Outbound {
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
 			get => _Data[12] as String;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Outbound {
+		public virtual string _LocalName {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for option [alg]</summary>
-		public virtual String Algorithms {
-			get => _Data[13] as String;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[13] as Enumeration<EnumReporting>;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _Algorithms {
+		public virtual string _EnumReporting {
 			set => _Data[13].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[14] as Flag;
+			set => _Data[14]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[14].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[15] as Flag;
+			set => _Data[15]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[15].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[16] as Flag;
+			set => _Data[16]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[16].Parameter (value);
+			}
+		/// <summary>Field accessor for option [openpgp]</summary>
+		public virtual Flag OpenPGP {
+			get => _Data[17] as Flag;
+			set => _Data[17]  = value;
+			}
+
+		public virtual string _OpenPGP {
+			set => _Data[17].Parameter (value);
+			}
+		/// <summary>Field accessor for option [smime]</summary>
+		public virtual Flag SMIME {
+			get => _Data[18] as Flag;
+			set => _Data[18]  = value;
+			}
+
+		public virtual string _SMIME {
+			set => _Data[18].Parameter (value);
+			}
+		/// <summary>Field accessor for option [configuration]</summary>
+		public virtual ExistingFile Configuration {
+			get => _Data[19] as ExistingFile;
+			set => _Data[19]  = value;
+			}
+
+		public virtual string _Configuration {
+			set => _Data[19].Parameter (value);
+			}
+		/// <summary>Field accessor for option [ca]</summary>
+		public virtual String CA {
+			get => _Data[20] as String;
+			set => _Data[20]  = value;
+			}
+
+		public virtual string _CA {
+			set => _Data[20].Parameter (value);
+			}
+		/// <summary>Field accessor for option [inbound]</summary>
+		public virtual String Inbound {
+			get => _Data[21] as String;
+			set => _Data[21]  = value;
+			}
+
+		public virtual string _Inbound {
+			set => _Data[21].Parameter (value);
+			}
+		/// <summary>Field accessor for option [outbound]</summary>
+		public virtual String Outbound {
+			get => _Data[22] as String;
+			set => _Data[22]  = value;
+			}
+
+		public virtual string _Outbound {
+			set => _Data[22].Parameter (value);
+			}
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String Algorithms {
+			get => _Data[23] as String;
+			set => _Data[23]  = value;
+			}
+
+		public virtual string _Algorithms {
+			set => _Data[23].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -16969,94 +17070,164 @@ namespace Goedel.Mesh.Shell {
 					Key = ""
 					},
 				new DescribeEntryOption () {
+					Identifier = "Auth", 
+					Default = null, // null if null
+					Brief = "(De)Authorize the specified function on the device",
+					Index = 1,
+					Key = "auth"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthSuper", 
+					Default = "false", // null if null
+					Brief = "Device as super administration device",
+					Index = 2,
+					Key = "root"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthAdmin", 
+					Default = "false", // null if null
+					Brief = "Device as administration device",
+					Index = 3,
+					Key = "admin"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthMessage", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for Mesh messaging",
+					Index = 4,
+					Key = "message"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthWeb", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for Mesh messaging and Web.",
+					Index = 5,
+					Key = "web"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthDevice", 
+					Default = "false", // null if null
+					Brief = "Device restrictive access",
+					Index = 6,
+					Key = "device"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthSSH", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for specified SSH account",
+					Index = 7,
+					Key = "ssh"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthEmail", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for specified smtp email account",
+					Index = 8,
+					Key = "email"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthGroupMember", 
+					Default = "false", // null if null
+					Brief = "Authorize member rights for specified Mesh group",
+					Index = 9,
+					Key = "member"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthGroupAdmin", 
+					Default = "false", // null if null
+					Brief = "Authorize group administrator rights for specified Mesh group",
+					Index = 10,
+					Key = "group"
+					},
+				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
+					Index = 11,
 					Key = "account"
 					},
 				new DescribeEntryOption () {
 					Identifier = "LocalName", 
 					Default = null, // null if null
 					Brief = "Local name for account (e.g. personal)",
-					Index = 2,
+					Index = 12,
 					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 3,
+					Index = 13,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 4,
+					Index = 14,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 5,
+					Index = 15,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 6,
+					Index = 16,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "OpenPGP", 
 					Default = null, // null if null
 					Brief = "Create encryption and signature keys for OpenPGP",
-					Index = 7,
+					Index = 17,
 					Key = "openpgp"
 					},
 				new DescribeEntryOption () {
 					Identifier = "SMIME", 
 					Default = null, // null if null
 					Brief = "Create encryption and signature keys for S/MIME",
-					Index = 8,
+					Index = 18,
 					Key = "smime"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Configuration", 
 					Default = null, // null if null
 					Brief = "Configuration file describing network settings",
-					Index = 9,
+					Index = 19,
 					Key = "configuration"
 					},
 				new DescribeEntryOption () {
 					Identifier = "CA", 
 					Default = null, // null if null
 					Brief = "Certificate Authority to request certificate from",
-					Index = 10,
+					Index = 20,
 					Key = "ca"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Inbound", 
 					Default = null, // null if null
 					Brief = "inbound service configuration",
-					Index = 11,
+					Index = 21,
 					Key = "inbound"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Outbound", 
 					Default = null, // null if null
 					Brief = "outbound service configuration",
-					Index = 12,
+					Index = 22,
 					Key = "outbound"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Algorithms", 
 					Default = null, // null if null
 					Brief = "List of algorithm specifiers",
-					Index = 13,
+					Index = 23,
 					Key = "alg"
 					}
 				}
@@ -18115,7 +18286,8 @@ namespace Goedel.Mesh.Shell {
 							IAccountOptions,
 							IReporting,
 							ISSHOptions,
-							ICryptoOptions {
+							ICryptoOptions,
+							IDeviceAuthOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
@@ -18124,6 +18296,16 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new String (),
+			new String (),
+			new String (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String (),
 			new String (),
 			new String (),
 			new String ()			} ;
@@ -18204,14 +18386,104 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Algorithms {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [id]</summary>
-		public virtual String ID {
+		/// <summary>Field accessor for option [auth]</summary>
+		public virtual String Auth {
 			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _ID {
+		public virtual string _Auth {
 			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [root]</summary>
+		public virtual Flag AuthSuper {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _AuthSuper {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [admin]</summary>
+		public virtual Flag AuthAdmin {
+			get => _Data[10] as Flag;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _AuthAdmin {
+			set => _Data[10].Parameter (value);
+			}
+		/// <summary>Field accessor for option [message]</summary>
+		public virtual Flag AuthMessage {
+			get => _Data[11] as Flag;
+			set => _Data[11]  = value;
+			}
+
+		public virtual string _AuthMessage {
+			set => _Data[11].Parameter (value);
+			}
+		/// <summary>Field accessor for option [web]</summary>
+		public virtual Flag AuthWeb {
+			get => _Data[12] as Flag;
+			set => _Data[12]  = value;
+			}
+
+		public virtual string _AuthWeb {
+			set => _Data[12].Parameter (value);
+			}
+		/// <summary>Field accessor for option [device]</summary>
+		public virtual Flag AuthDevice {
+			get => _Data[13] as Flag;
+			set => _Data[13]  = value;
+			}
+
+		public virtual string _AuthDevice {
+			set => _Data[13].Parameter (value);
+			}
+		/// <summary>Field accessor for option [ssh]</summary>
+		public virtual String AuthSSH {
+			get => _Data[14] as String;
+			set => _Data[14]  = value;
+			}
+
+		public virtual string _AuthSSH {
+			set => _Data[14].Parameter (value);
+			}
+		/// <summary>Field accessor for option [email]</summary>
+		public virtual String AuthEmail {
+			get => _Data[15] as String;
+			set => _Data[15]  = value;
+			}
+
+		public virtual string _AuthEmail {
+			set => _Data[15].Parameter (value);
+			}
+		/// <summary>Field accessor for option [member]</summary>
+		public virtual String AuthGroupMember {
+			get => _Data[16] as String;
+			set => _Data[16]  = value;
+			}
+
+		public virtual string _AuthGroupMember {
+			set => _Data[16].Parameter (value);
+			}
+		/// <summary>Field accessor for option [group]</summary>
+		public virtual String AuthGroupAdmin {
+			get => _Data[17] as String;
+			set => _Data[17]  = value;
+			}
+
+		public virtual string _AuthGroupAdmin {
+			set => _Data[17].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[18] as String;
+			set => _Data[18]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[18].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -18278,10 +18550,80 @@ namespace Goedel.Mesh.Shell {
 					Key = "alg"
 					},
 				new DescribeEntryOption () {
+					Identifier = "Auth", 
+					Default = null, // null if null
+					Brief = "(De)Authorize the specified function on the device",
+					Index = 8,
+					Key = "auth"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthSuper", 
+					Default = "false", // null if null
+					Brief = "Device as super administration device",
+					Index = 9,
+					Key = "root"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthAdmin", 
+					Default = "false", // null if null
+					Brief = "Device as administration device",
+					Index = 10,
+					Key = "admin"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthMessage", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for Mesh messaging",
+					Index = 11,
+					Key = "message"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthWeb", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for Mesh messaging and Web.",
+					Index = 12,
+					Key = "web"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthDevice", 
+					Default = "false", // null if null
+					Brief = "Device restrictive access",
+					Index = 13,
+					Key = "device"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthSSH", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for specified SSH account",
+					Index = 14,
+					Key = "ssh"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthEmail", 
+					Default = "false", // null if null
+					Brief = "Authorize rights for specified smtp email account",
+					Index = 15,
+					Key = "email"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthGroupMember", 
+					Default = "false", // null if null
+					Brief = "Authorize member rights for specified Mesh group",
+					Index = 16,
+					Key = "member"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AuthGroupAdmin", 
+					Default = "false", // null if null
+					Brief = "Authorize group administrator rights for specified Mesh group",
+					Index = 17,
+					Key = "group"
+					},
+				new DescribeEntryOption () {
 					Identifier = "ID", 
 					Default = null, // null if null
 					Brief = "Key identifier",
-					Index = 8,
+					Index = 18,
 					Key = "id"
 					}
 				}

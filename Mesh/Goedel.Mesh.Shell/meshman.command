@@ -978,7 +978,7 @@
 			Brief "Add a mail application profile to a personal profile"
 			Parameter Address "address" String
 				Brief "Mail account to create profile from"
-
+			Include DeviceAuthOptions
 			Include AccountOptions
 			Include Reporting
 			Include MailOptions
@@ -1044,6 +1044,7 @@
 			Include Reporting
 			Include SSHOptions
 			Include CryptoOptions
+			Include DeviceAuthOptions
 			Option ID "id" String
 				Brief "Key identifier"
 

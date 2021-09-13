@@ -31,43 +31,43 @@ namespace Goedel.XUnit {
         public void TestProfileSSHPrivate() {
             CreateAlice(out var device1, out var device2);
 
-            device1.Dispatch($"profile ssh create");
-            device1.Dispatch($"profile ssh private");
-            device1.Dispatch($"profile ssh public");
-            device1.Dispatch($"profile ssh show auth");
+            device1.Dispatch($"ssh add");
+            device1.Dispatch($"ssh private");
+            device1.Dispatch($"ssh public");
+            device1.Dispatch($"ssh show auth");
 
-            device2.Dispatch($"profile ssh private");
-            device2.Dispatch($"profile ssh public");
-            device2.Dispatch($"profile ssh show auth");
+            device2.Dispatch($"ssh private");
+            device2.Dispatch($"ssh public");
+            device2.Dispatch($"ssh show auth");
 
             var device3 = GetConnectedCLI(device1, "Device3", AliceAccount);
 
-            device3.Dispatch($"profile ssh private");
-            device3.Dispatch($"profile ssh public");
+            device3.Dispatch($"ssh private");
+            device3.Dispatch($"ssh public");
 
             // should all match
-            device1.Dispatch($"profile ssh show auth");
-            device2.Dispatch($"profile ssh show auth");
-            device3.Dispatch($"profile ssh show auth");
+            device1.Dispatch($"ssh show auth");
+            device2.Dispatch($"ssh show auth");
+            device3.Dispatch($"ssh show auth");
             }
 
-        [Fact]
-        public void TestProfileSSHPublic() {
-            var knownHosts = "known_hosts";
+        //[Fact]
+        //public void TestProfileSSHPublic() {
+        //    var knownHosts = "known_hosts";
 
-            CreateAlice(out var device1, out var device2);
+        //    CreateAlice(out var device1, out var device2);
 
-            device1.Dispatch($"profile ssh add known {knownHosts}");
+        //    device1.Dispatch($"ssh add known {knownHosts}");
 
-            device1.Dispatch($"profile ssh show known");
-            device2.Dispatch($"profile ssh show known");
+        //    device1.Dispatch($"ssh show known");
+        //    device2.Dispatch($"ssh show known");
 
-            var device3 = GetConnectedCLI(device1, "Device3", AliceAccount);
+        //    var device3 = GetConnectedCLI(device1, "Device3", AliceAccount);
 
-            device1.Dispatch($"profile ssh show known");
-            device2.Dispatch($"profile ssh show known");
-            device3.Dispatch($"profile ssh show known");
-            }
+        //    device1.Dispatch($"ssh show known");
+        //    device2.Dispatch($"ssh show known");
+        //    device3.Dispatch($"ssh show known");
+        //    }
 
 
         }

@@ -23,12 +23,14 @@
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Utilities;
+
+using Xunit;
 //using Goedel.Mesh.Shell.ServiceAdmin;
 
 
 namespace Goedel.XUnit {
 
-
+    [Collection("Sequential")]
     public partial class ShellTestsAdmin : ShellTests {
         TestEnvironmentCommon testEnvironmentCommon;
 
@@ -65,7 +67,7 @@ namespace Goedel.XUnit {
         }
 
 
-
+    [Collection("Sequential")]
     public partial class ShellTestsHTTP : ShellTests {
         TestEnvironmentCommon testEnvironmentCommon;
 

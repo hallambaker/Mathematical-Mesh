@@ -33,11 +33,14 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MailAdd(MailAdd options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
+            var rights = GetRights(options);
+
             using var contextDevice = GetContextDevice(options);
             using var transaction = contextDevice.TransactBegin();
 
             var applicationMail = new CatalogedApplicationMail() {
-                Key = address
+                Key = address,
+                Grant = rights
                 };
 
             transaction.ApplicationCreate(applicationMail);

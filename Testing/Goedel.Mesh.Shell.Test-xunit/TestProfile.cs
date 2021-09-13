@@ -198,7 +198,7 @@ namespace Goedel.XUnit {
 
             device1.Dispatch($"account create {AliceAccount}");
 
-            var result = device1.Dispatch($"account pin") as ResultPIN;
+            var result = device1.Dispatch($"account pin /web") as ResultPIN;
 
 
             var pin = result.MessagePIN.Pin;

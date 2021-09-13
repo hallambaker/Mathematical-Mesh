@@ -37,20 +37,20 @@ namespace Goedel.XUnit {
 
             CreateAlice(out var device1, out var device2);
 
-            device1.Dispatch($"profile mail create {mailaddress} /inbound {mailinbound1} /outbound {mailoutbound}");
-            device1.Dispatch($"profile mail smime private");
-            device1.Dispatch($"profile mail smime public");
-            device1.Dispatch($"profile mail openpgp private");
-            device1.Dispatch($"profile mail openpgp public");
+            device1.Dispatch($"mail add {mailaddress} /inbound {mailinbound1} /outbound {mailoutbound}");
+            device1.Dispatch($"mail smime private");
+            device1.Dispatch($"mail smime public");
+            device1.Dispatch($"mail openpgp private");
+            device1.Dispatch($"mail openpgp public");
 
-            device2.Dispatch($"profile mail list");
-            device2.Dispatch($"profile mail smime private");
-            device2.Dispatch($"profile mail smime public");
-            device2.Dispatch($"profile mail openpgp private");
-            device2.Dispatch($"profile mail openpgp public");
+            device2.Dispatch($"mail list");
+            device2.Dispatch($"mail smime private");
+            device2.Dispatch($"mail smime public");
+            device2.Dispatch($"mail openpgp private");
+            device2.Dispatch($"mail openpgp public");
 
-            device1.Dispatch($"profile mail update {mailaddress} /inbound {mailinbound2} /outbound {mailoutbound}");
-            device2.Dispatch($"profile mail list");
+            device1.Dispatch($"mail update {mailaddress} /inbound {mailinbound2} /outbound {mailoutbound}");
+            device2.Dispatch($"mail list");
             }
 
 
