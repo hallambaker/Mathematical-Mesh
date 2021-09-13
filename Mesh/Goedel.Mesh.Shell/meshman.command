@@ -215,6 +215,8 @@
 				Default "1"
 			Include AccountOptions
 			Include Reporting
+			Include DeviceAuthOptions
+
 
 		Command AccountPublish "publish"
 			Brief "Create a new device profile and register the corresponding URI."

@@ -1305,6 +1305,36 @@
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.Auth">
+            <summary>Field accessor for option [auth]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthSuper">
+            <summary>Field accessor for option [root]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthAdmin">
+            <summary>Field accessor for option [admin]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthMessage">
+            <summary>Field accessor for option [message]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthWeb">
+            <summary>Field accessor for option [web]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthDevice">
+            <summary>Field accessor for option [device]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthSSH">
+            <summary>Field accessor for option [ssh]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthEmail">
+            <summary>Field accessor for option [email]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthGroupMember">
+            <summary>Field accessor for option [member]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthGroupAdmin">
+            <summary>Field accessor for option [group]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountPublish.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>

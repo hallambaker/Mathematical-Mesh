@@ -346,7 +346,7 @@ namespace Goedel.Mesh.Test {
 
 
         public ResultSync Connect(TestCLI newDevice, string account) {
-            var result = Dispatch($"account pin") as ResultPIN;
+            var result = Dispatch($"account pin /web") as ResultPIN;
             var pin = result.MessagePIN.Pin;
 
             newDevice.Dispatch($"device request {account} /pin {pin}");

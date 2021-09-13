@@ -79,8 +79,15 @@ namespace Scratchpad {
 
             //TestService.Test().MeshDeviceConnectPIN();
             //TestService.Test().MeshDeviceConnectDynamicQR();
-            TestService.Test().MeshDeviceConnectStaticQR();
+            //TestService.Test().MeshDeviceConnectStaticQR();
 
+
+            ShellTests.Test().TestProfileConnectPin();
+
+
+            //ShellTests.Test().TestProfileConnect();
+            ShellTests.Test().TestProfileConnectDynamicQR();
+            ShellTests.Test().TestProfileConnectStaticQR();
 
 
             //ShellTestsHTTP.Test().TestMessageGroup();

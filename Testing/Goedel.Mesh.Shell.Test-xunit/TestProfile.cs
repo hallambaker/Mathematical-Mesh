@@ -98,7 +98,7 @@ namespace Goedel.XUnit {
             var message = (result2 as ResultPending).Messages[0] as AcknowledgeConnection;
             var witness = message.Witness;
 
-            device1.Dispatch($"device accept {witness}");
+            device1.Dispatch($"device accept {witness} /web");
             device2.Dispatch($"device complete");
 
             device2.CheckHostCatalogExtended();
@@ -235,7 +235,7 @@ namespace Goedel.XUnit {
             deviceAdmin.Dispatch($"account create {AliceAccount}");
 
             // create the connection QR code
-            var invite = deviceAdmin.Dispatch($"account pin") as ResultPIN;
+            var invite = deviceAdmin.Dispatch($"account pin /web") as ResultPIN;
             var uri = invite.MessagePIN.GetURI();
 
             var result1 = deviceConnect1.Dispatch($"device join {uri}");
@@ -270,7 +270,7 @@ namespace Goedel.XUnit {
 
             deviceAdmin.Dispatch($"account create {AliceAccount}");
 
-            deviceAdmin.Dispatch($"account connect {deviceInit.Uri} ");
+            deviceAdmin.Dispatch($"account connect {deviceInit.Uri} /web");
 
 
             var result2 = deviceConnect1.Dispatch($"device complete");

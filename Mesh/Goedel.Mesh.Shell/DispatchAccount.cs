@@ -146,12 +146,13 @@ namespace Goedel.Mesh.Shell {
         /// <returns>The result of the operation.</returns>
         public override ShellResult AccountGetPIN(AccountGetPIN options) {
             var contextAccount = GetContextUser(options);
+            var rights = GetRights(options);
 
             var expire = TimeSpan.Parse(options.Expire.Value);
             // ToDo: Allow other actions besides device.
 
             var messageConnectionPIN = contextAccount.GetPIN(MeshConstants.MessagePINActionDevice,
-                        validity: expire.Ticks);
+                        validity: expire.Ticks, roles: rights);
 
             var result = new ResultPIN() {
                 MessagePIN = messageConnectionPIN,

@@ -187,7 +187,7 @@ namespace Goedel.XUnit {
             var id1 = resultPending.Messages[1].MessageId;
 
 
-            var ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
+            var ConnectAccept = testCLIAlice1.Example($"device accept {id1} /web");
 
 
             var id2 = resultPending.Messages[0].MessageId;
