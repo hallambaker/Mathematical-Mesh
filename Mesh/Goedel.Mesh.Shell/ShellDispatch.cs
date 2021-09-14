@@ -248,17 +248,6 @@ namespace Goedel.Mesh.Shell {
 
 
         /// <summary>
-        /// Obtain a device context for the options specified in <paramref name="options"/>.
-        /// </summary>
-        /// <param name="options">The command options.</param>
-        /// <returns>The device context.</returns>
-        public virtual ContextUser GetContextDevice(IAccountOptions options) {
-            options.Future();
-            throw new NYI();
-            //CatalogHost.GetContextDevice();
-            }
-
-        /// <summary>
         /// Obtain a key collection for the options specified in <paramref name="options"/>.
         /// </summary>
         /// <param name="options">The command options.</param>

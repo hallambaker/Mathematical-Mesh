@@ -35,16 +35,14 @@ namespace Goedel.Mesh.Shell {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
             var rights = GetRights(options);
 
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
-            var applicationMail = new CatalogedApplicationMail() {
-                Key = address,
-                Grant = rights
-                };
+            var key = $"mailto:{address}";
+            var applicationMail = CatalogedApplicationMail.Create(key,rights);
 
             transaction.ApplicationCreate(applicationMail);
-            transaction.ApplicationDeviceAdd(applicationMail);
+            transaction.ApplicationCreate(applicationMail);
 
             var result = transaction.Transact();
 
@@ -58,7 +56,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MailUpdate(MailUpdate options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
             var applicationMail = new CatalogedApplicationMail() {
@@ -78,7 +76,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MailList(MailList options) {
 
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
@@ -98,7 +96,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SMIMEPrivate(SMIMEPrivate options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
 
             var applicationMail = contextDevice.GetApplicationMail(address);
 
@@ -114,7 +112,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SMIMEPublic(SMIMEPublic options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
             var applicationMail = contextDevice.GetApplicationMail(address);
@@ -130,7 +128,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult PGPPrivate(PGPPrivate options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
             var applicationMail = contextDevice.GetApplicationMail(address);
@@ -146,7 +144,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult PGPPublic(PGPPublic options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
 
             var applicationMail = contextDevice.GetApplicationMail(address);
 

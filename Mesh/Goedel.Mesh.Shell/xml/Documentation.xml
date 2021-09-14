@@ -802,13 +802,6 @@
             <param name="options">The command options.</param>
             <returns>The account context.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.GetContextDevice(Goedel.Mesh.Shell.IAccountOptions)">
-            <summary>
-            Obtain a device context for the options specified in <paramref name="options"/>.
-            </summary>
-            <param name="options">The command options.</param>
-            <returns>The device context.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.GetKeyCollection(Goedel.Mesh.Shell.IAccountOptions)">
             <summary>
             Obtain a key collection for the options specified in <paramref name="options"/>.

@@ -127,24 +127,24 @@ namespace Goedel.Mesh.Client {
                     string applicationId) => throw new NYI();
 
 
-        // Phase2: Add SSH application explicitly
-        /// <summary>
-        /// Add SSH application to existing device.
-        /// </summary>
-        /// <param name="application">The application description.</param>
-        /// <param name="ProfileDevice">The device profile.</param>
-        public void ApplicationDeviceAdd(
-            CatalogedApplicationSsh application, Connection ProfileDevice=null) => throw new NYI();
+        //// Phase2: Add SSH application explicitly
+        ///// <summary>
+        ///// Add SSH application to existing device.
+        ///// </summary>
+        ///// <param name="application">The application description.</param>
+        ///// <param name="ProfileDevice">The device profile.</param>
+        //public void ApplicationDeviceAdd(
+        //    CatalogedApplicationSsh application, Connection ProfileDevice=null) => throw new NYI();
 
 
-        // Phase2: Add Mail application explicitly
-        /// <summary>
-        /// Add Mail application to existing device.
-        /// </summary>
-        /// <param name="application">The application description.</param>
-        /// <param name="ProfileDevice">The device profile.</param>
-        public void ApplicationDeviceAdd(
-            CatalogedApplicationMail application, Connection ProfileDevice = null) => throw new NYI();
+        //// Phase2: Add Mail application explicitly
+        ///// <summary>
+        ///// Add Mail application to existing device.
+        ///// </summary>
+        ///// <param name="application">The application description.</param>
+        ///// <param name="ProfileDevice">The device profile.</param>
+        //public void ApplicationDeviceAdd(
+        //    CatalogedApplicationMail application, Connection ProfileDevice = null) => throw new NYI();
 
 
         #endregion

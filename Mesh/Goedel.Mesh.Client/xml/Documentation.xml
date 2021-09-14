@@ -2790,19 +2790,5 @@
             </summary>
             <param name="applicationId">The application to remove</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.ApplicationDeviceAdd(Goedel.Mesh.CatalogedApplicationSsh,Goedel.Mesh.Connection)">
-            <summary>
-            Add SSH application to existing device.
-            </summary>
-            <param name="application">The application description.</param>
-            <param name="ProfileDevice">The device profile.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.ApplicationDeviceAdd(Goedel.Mesh.CatalogedApplicationMail,Goedel.Mesh.Connection)">
-            <summary>
-            Add Mail application to existing device.
-            </summary>
-            <param name="application">The application description.</param>
-            <param name="ProfileDevice">The device profile.</param>
-        </member>
     </members>
 </doc>

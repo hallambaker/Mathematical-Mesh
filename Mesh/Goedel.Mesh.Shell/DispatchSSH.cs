@@ -37,7 +37,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult SSHCreate(SSHCreate options) {
             var rights = GetRights(options);
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
             var applicationSSH = new CatalogedApplicationSsh() {
@@ -46,7 +46,7 @@ namespace Goedel.Mesh.Shell {
                 };
 
             transaction.ApplicationCreate(applicationSSH);
-            transaction.ApplicationDeviceAdd(applicationSSH);
+            //transaction.ApplicationDeviceAdd(applicationSSH);
             var result = transaction.Transact();
 
             throw new NYI();
@@ -60,7 +60,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHAddHost(SSHAddHost options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
@@ -81,7 +81,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHKnown(SSHKnown options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
@@ -100,7 +100,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHAuth(SSHAuth options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
@@ -115,7 +115,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHPrivate(SSHPrivate options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
 
 
             var applicationSsh = contextDevice.GetApplicationSsh(id);
@@ -132,7 +132,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHPublic(SSHPublic options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
 
 
             // need to be able to pull key from different device here.
@@ -151,7 +151,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHAddClient(SSHAddClient options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextDevice(options);
+            using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
