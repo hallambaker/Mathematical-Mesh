@@ -4046,10 +4046,77 @@
             <returns>The <see cref="M:Goedel.Mesh.Shell.Result.StringBuilder"/> instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Result.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Result.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
             <summary>
-            Converts the value of this instance to a <see langword="String"/>.
+            Append the description of the report to <paramref name="builder"/>.
             </summary>
-            <returns>The current string.</returns>
+            <param name="builder">The builder to return the report to.</param>
+            <param name="verbosity">The level of detail to return.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultFail">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFail.Success">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFail.Reason">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFail._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultFail.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultFail._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultFail.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultFail.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultFail.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultFail.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultKey">
             <summary>
@@ -4118,11 +4185,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultKey.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultKey.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultDigest">
             <summary>
@@ -4191,11 +4255,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDigest.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultDigest.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultFile">
             <summary>
@@ -4258,6 +4319,77 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Shell.ResultFile.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultKeyFile">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultKeyFile.Udf">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultKeyFile.Public">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultKeyFile.Algorithm">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultKeyFile.Format">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultKeyFile._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultKeyFile.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultKeyFile._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultKeyFile.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultKeyFile.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultKeyFile.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultKeyFile.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -4516,11 +4648,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultFileDare.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultFileDare.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultFileEARL">
             <summary>
@@ -4648,11 +4777,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDump.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultDump.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultList">
             <summary>
@@ -4973,11 +5099,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreateDevice.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultCreateDevice.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultCreatePersonal">
             <summary>
@@ -5041,11 +5164,8 @@
         <member name="F:Goedel.Mesh.Shell.ResultCreatePersonal.ConnectionUser">
             <summary>The <see cref="T:Goedel.Mesh.ConnectionService"/> instance.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreatePersonal.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultCreatePersonal.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultCreateAccount">
             <summary>
@@ -5113,11 +5233,8 @@
         <member name="P:Goedel.Mesh.Shell.ResultCreateAccount.Account">
             <summary>The account UDF.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreateAccount.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultCreateAccount.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultDeleteAccount">
             <summary>
@@ -5237,11 +5354,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultRegisterService.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultRegisterService.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultRecover">
             <summary>
@@ -5357,11 +5471,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultStatus.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultStatus.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultSync">
             <summary>
@@ -5493,11 +5604,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultEscrow.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultEscrow.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultMachine">
             <summary>
@@ -5621,11 +5729,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPIN.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultPIN.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultHello">
             <summary>
@@ -5686,11 +5791,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultHello.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultHello.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultSequence">
             <summary>
@@ -5894,10 +5996,7 @@
             <param name="tag">The tag</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.ResultEntry.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultEntrySent">
             <summary>
@@ -6190,11 +6289,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultSent.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultSent.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultPending">
             <summary>
@@ -6255,11 +6351,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPending.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultPending.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultAuthorize">
             <summary>
@@ -6379,11 +6472,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultProcess.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultProcess.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultConnect">
             <summary>
@@ -6468,11 +6558,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultConnect.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.Shell.ResultConnect.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultTransactionRequest">
             <summary>
@@ -6596,11 +6683,146 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultReceived.ToString">
+        <member name="M:Goedel.Mesh.Shell.ResultReceived.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultApplication">
             <summary>
-            Converts the value of this instance to a <see langword="String"/>.
             </summary>
-            <returns>The current string.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultApplication.Application">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultApplication._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultApplication.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplication._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplication.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplication.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplication.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplication.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplication.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultApplicationList">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultApplicationList.Applications">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultApplicationList._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultApplicationList.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplicationList._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplicationList.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplicationList.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplicationList.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplicationList.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultApplicationList.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.Verbosity">
+            <summary>
+            Information level to be returned in a result.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Verbosity.Terse">
+            <summary>Minimal information, no additional text.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Verbosity.Standard">
+            <summary>Standard descriptive result.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Verbosity.Full">
+            <summary>Verbose report with maximum information.</summary> 
         </member>
         <member name="T:Goedel.Mesh.NamespaceDoc">
             <summary>

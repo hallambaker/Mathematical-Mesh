@@ -24,6 +24,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
@@ -138,7 +139,15 @@ namespace Goedel.Mesh {
         /// Return a sequence of Mail applications in the catalog.
         /// </summary>
         /// <returns>Sequence of Mail application instances.</returns>
-        public IEnumerable<CatalogedApplicationMail> GetMail() => throw new NYI();
+        public List<CatalogedApplication> GetMail() {
+            var result = new List<CatalogedApplication>();
+            foreach (var application in AsCatalogedType) {
+                if (application is CatalogedApplicationMail catalogedApplicationMail) {
+                    result.Add(catalogedApplicationMail);
+                    }
+                }
+            return result;
+            }
 
 
 
@@ -197,6 +206,10 @@ namespace Goedel.Mesh {
             // Reject it.
             return false;
             }
+
+
+        public abstract void ToBuilder(StringBuilder output);
+
 
         }
 
@@ -265,6 +278,9 @@ namespace Goedel.Mesh {
         public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
 
 
+        public override void ToBuilder(StringBuilder output) {
+
+            }
 
         #endregion
 
@@ -276,6 +292,9 @@ namespace Goedel.Mesh {
         ///<inheritdoc/>
         public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
 
+        public override void ToBuilder(StringBuilder output) {
+
+            }
         }
 
     #endregion

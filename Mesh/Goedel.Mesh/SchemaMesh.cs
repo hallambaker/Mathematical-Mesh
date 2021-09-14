@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/14/2021 12:03:00 AM
+//  This file was automatically generated at 9/14/2021 4:46:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -9627,6 +9627,18 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class CatalogedApplicationMail : CatalogedApplication {
         /// <summary>
+        /// </summary>
+
+		public virtual string						AccountAddress  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						InboundConnect  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						OutboundConnect  {get; set;}
+        /// <summary>
         ///The S/Mime signature key
         /// </summary>
 
@@ -9690,6 +9702,21 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((CatalogedApplication)this).SerializeX(_writer, false, ref _first);
+			if (AccountAddress != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AccountAddress", 1);
+					_writer.WriteString (AccountAddress);
+				}
+			if (InboundConnect != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("InboundConnect", 1);
+					_writer.WriteString (InboundConnect);
+				}
+			if (OutboundConnect != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("OutboundConnect", 1);
+					_writer.WriteString (OutboundConnect);
+				}
 			if (SmimeSign != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("SmimeSign", 1);
@@ -9743,6 +9770,18 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "AccountAddress" : {
+					AccountAddress = jsonReader.ReadString ();
+					break;
+					}
+				case "InboundConnect" : {
+					InboundConnect = jsonReader.ReadString ();
+					break;
+					}
+				case "OutboundConnect" : {
+					OutboundConnect = jsonReader.ReadString ();
+					break;
+					}
 				case "SmimeSign" : {
 					// An untagged structure
 					SmimeSign = new KeyData ();

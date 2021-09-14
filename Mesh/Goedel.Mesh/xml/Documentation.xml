@@ -822,6 +822,21 @@
         <member name="M:Goedel.Mesh.CatalogedApplicationMail.GetActivation(Goedel.Mesh.CatalogedDevice)">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.ToBuilder(System.Text.StringBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.AccountAddress">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.InboundConnect">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail.OutboundConnect">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedApplicationMail.SmimeSign">
              <summary>
             The S/Mime signature key

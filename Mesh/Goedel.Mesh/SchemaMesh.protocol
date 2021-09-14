@@ -902,6 +902,9 @@
 
 	Structure CatalogedApplicationMail
 		Inherits CatalogedApplication
+		String AccountAddress
+		String InboundConnect
+		String OutboundConnect
 		Struct KeyData SmimeSign
 			Description
 				|The S/Mime signature key

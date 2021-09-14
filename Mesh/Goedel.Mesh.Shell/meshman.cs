@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 9/14/2021 12:03:08 AM
+//  This file was automatically generated at 9/14/2021 4:46:42 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -370,35 +370,34 @@ namespace Goedel.Mesh.Shell {
 				} // End Entries
 			};
 
-		public static DescribeCommandSet DescribeCommandSet_Mail = new DescribeCommandSet () {
-            Identifier = "mail",
+		public static DescribeCommandSet DescribeCommandSet_Mail = new DescribeCommandSet() {
+			Identifier = "mail",
 			Brief = "Manage mail profiles connected to a personal profile",
-			Entries = new  SortedDictionary<string, DescribeCommand> () {
+			Entries = new SortedDictionary<string, DescribeCommand>() {
 				{"add", _MailAdd._DescribeCommand },
 				{"update", _MailUpdate._DescribeCommand },
-				{"smime", DescribeCommandSet_SMIME},
-				{"openpgp", DescribeCommandSet_PGP},
+				{"smime", new DescribeCommandSet () {
+						Identifier = "smime",
+						Brief = "<Unspecified>",
+						Entries = new  SortedDictionary<string, DescribeCommand> () {
+							{"private", _SMIMEPrivate._DescribeCommand },
+							{"public", _SMIMEPublic._DescribeCommand }
+							} // End Entries
+						}
+					},
+				{"openpgp", new DescribeCommandSet () {
+						Identifier = "openpgp",
+						Brief = "<Unspecified>",
+						Entries = new  SortedDictionary<string, DescribeCommand> () {
+							{"private", _PGPPrivate._DescribeCommand },
+							{"public", _PGPPublic._DescribeCommand }
+							} // End Entries
+						}
+					},
 				{"list", _MailList._DescribeCommand }
 				} // End Entries
 			};
 
-		public static DescribeCommandSet DescribeCommandSet_SMIME = new DescribeCommandSet () {
-            Identifier = "smime",
-			Brief = "<Unspecified>",
-			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"private", _SMIMEPrivate._DescribeCommand },
-				{"public", _SMIMEPublic._DescribeCommand }
-				} // End Entries
-			};
-
-		public static DescribeCommandSet DescribeCommandSet_PGP = new DescribeCommandSet () {
-            Identifier = "openpgp",
-			Brief = "<Unspecified>",
-			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"private", _PGPPrivate._DescribeCommand },
-				{"public", _PGPPublic._DescribeCommand }
-				} // End Entries
-			};
 
 		public static DescribeCommandSet DescribeCommandSet_SSH = new DescribeCommandSet () {
             Identifier = "ssh",

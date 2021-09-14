@@ -11,6 +11,11 @@
 		String			Reason
 
 
+	Structure ResultFail
+		Inherits		Result
+		Boolean			Success
+		String			Reason
+
 	Structure ResultKey
 		Inherits		Result
 		String			Key
@@ -29,6 +34,14 @@
 		String			Filename
 		Integer			TotalBytes
 		Boolean			Verified
+
+	Structure ResultKeyFile
+		Inherits		Result
+		String			Udf
+		Boolean			Public
+		String			Algorithm
+		String			Format
+
 	Structure ResultListLog
 		Inherits		Result
 		String			Filename
@@ -230,9 +243,12 @@
 
 
 
+	Structure ResultApplication
+		Inherits		Result
+		TStruct CatalogedApplication Application
 
-
-
-
-
+	Structure ResultApplicationList
+		Inherits		Result
+		TStruct CatalogedApplication Applications
+			Multiple
 		

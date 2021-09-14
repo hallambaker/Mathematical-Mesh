@@ -137,7 +137,7 @@ namespace Goedel.Cryptography.Dare {
         public ContainerEnumerator GetEnumerator() => this;
 
 
-        object IEnumerator.Current => throw new NotImplementedException();
+        object IEnumerator.Current => Current;
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

@@ -25,6 +25,7 @@ using System.Collections.Generic;
 
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
+using System.Text;
 
 namespace Goedel.Mesh {
     // Phase2: Mail Store account access details, passwords, etc.
@@ -139,6 +140,23 @@ namespace Goedel.Mesh {
                 EnvelopedActivation = activation.EnvelopedActivationApplicationMail
                 };
             }
+
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder output) {
+            output.AppendNotNull(AccountAddress,        $"Account:         {AccountAddress}");
+            output.AppendNotNull(InboundConnect,        $"Inbound Server:  {InboundConnect}");
+            output.AppendNotNull(OutboundConnect,       $"Outbound Server: {OutboundConnect}");
+            output.AppendNotNull(SmimeSign?.Udf,        $"S/Mime Sign:     {SmimeSign?.Udf}");
+            output.AppendNotNull(SmimeEncrypt?.Udf,     $"S/Mime Encrypt:  {SmimeEncrypt?.Udf}");
+            output.AppendNotNull(OpenpgpSign?.Udf,      $"OpenPGP Sign:    {OpenpgpSign?.Udf}");
+            output.AppendNotNull(OpenpgpEncrypt?.Udf,   $"OpenPGP Encrypt: {OpenpgpEncrypt?.Udf}");
+            //output.AppendNotNull(AccountAddress, $"/n");
+            //output.AppendNotNull(AccountAddress, $"/n");
+            //output.AppendNotNull(AccountAddress, $"/n");
+            //output.AppendNotNull(AccountAddress, $"/n");
+            }
+
+
         #endregion
 
         }

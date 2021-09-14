@@ -22,10 +22,23 @@
 
 using System.Text;
 
+using Goedel.Cryptography;
 using Goedel.Mesh.Client;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh.Shell {
+
+    /// <summary>
+    /// Information level to be returned in a result.
+    /// </summary>
+    public enum Verbosity {
+        ///<summary>Minimal information, no additional text.</summary> 
+        Terse,
+        ///<summary>Standard descriptive result.</summary> 
+        Standard,
+        ///<summary>Verbose report with maximum information.</summary> 
+        Full
+        }
 
     public partial class ShellResult {
 
@@ -50,156 +63,133 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <returns>The <see cref="StringBuilder"/> instance.</returns>
         public virtual StringBuilder StringBuilder() {
-            var Builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             if (!Success) {
-                Builder.Append("ERROR");
+                builder.Append("ERROR");
                 if (Reason != null) {
-                    Builder.Append(" - ");
-                    Builder.Append(Reason);
+                    builder.Append(" - ");
+                    builder.Append(Reason);
                     }
-                Builder.Append("\n");
+                builder.Append("\n");
                 }
-            return Builder;
+            return builder;
 
+            }
+
+        ///<inheritdoc/>
+        public override string ToString() {
+            var builder = StringBuilder();
+            ToBuilder(builder);
+            return builder.ToString();
             }
 
         /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
+        /// Append the description of the report to <paramref name="builder"/>.
         /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = StringBuilder();
-
-            return Builder.ToString();
+        /// <param name="builder">The builder to return the report to.</param>
+        /// <param name="verbosity">The level of detail to return.</param>
+        public virtual void ToBuilder(StringBuilder builder, Verbosity verbosity= Verbosity.Standard) {
             }
-
-
-
         }
 
 
     public partial class ResultKey {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
 
             if (Key != null) {
-                Builder.AppendLine(Key);
+                builder.AppendLine(Key);
                 }
             if (Identifier != null) {
-                Builder.AppendLine(Identifier);
+                builder.AppendLine(Identifier);
                 }
             if (Shares != null) {
                 foreach (var share in Shares) {
-                    Builder.AppendLine(share);
+                    builder.AppendLine(share);
                     }
                 }
-            return Builder.ToString();
             }
         }
 
     public partial class ResultReceived {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
 
 
             switch (Message) {
                 case null: {
-                    Builder.AppendLine("Pending");
+                    builder.AppendLine("Pending");
                     break;
                     }
                 case ResponseConfirmation responseConfirmation: {
-                    Builder.AppendLine(responseConfirmation.Accept ? "Accept" : "Reject");
+                    builder.AppendLine(responseConfirmation.Accept ? "Accept" : "Reject");
                     break;
                     }
 
 
                 }
 
-
-
-
-
-            return Builder.ToString();
             }
         }
 
 
     public partial class ResultDigest {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
 
             if (Verified) {
-                Builder.AppendLine($"{Success}");
+                builder.AppendLine($"{Success}");
                 }
             else {
                 if (Digest != null) {
-                    Builder.AppendLine(Digest);
+                    builder.AppendLine(Digest);
                     }
                 if (Key != null) {
-                    Builder.AppendLine(Key);
+                    builder.AppendLine(Key);
                     }
                 }
 
-
-            return Builder.ToString();
             }
         }
 
     public partial class ResultHello {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
 
             if (Response != null) {
 
 
                 if (Response.Version != null) {
-                    Builder.AppendLine($"MeshService {Response.Version.Major}.{Response.Version.Minor}");
+                    builder.AppendLine($"MeshService {Response.Version.Major}.{Response.Version.Minor}");
                     }
                 if (Response.EnvelopedProfileService != null) {
                     var profileService = Response.EnvelopedProfileService.Decode();
-                    Builder.AppendLine($"   Service UDF = {profileService.Udf}");
+                    builder.AppendLine($"   Service UDF = {profileService.Udf}");
                     }
                 if (Response.EnvelopedProfileHost != null) {
                     var profileHost = Response.EnvelopedProfileHost.Decode();
-                    Builder.AppendLine($"   Host UDF = {profileHost.Udf}");
+                    builder.AppendLine($"   Host UDF = {profileHost.Udf}");
                     }
                 }
 
 
-            return Builder.ToString();
             }
         }
 
 
     public partial class ResultConnect {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
 
 
             switch (CatalogedMachine) {
@@ -207,18 +197,18 @@ namespace Goedel.Mesh.Shell {
                 case CatalogedPending catalogedPending: {
                     var acknowledgeConnection =
                             catalogedPending.EnvelopedAcknowledgeConnection.Decode();
-                    Builder.AppendLine($"   Device UDF = {catalogedPending.DeviceUDF}");
-                    Builder.AppendLine($"   Witness value = {acknowledgeConnection.Witness}");
+                    builder.AppendLine($"   Device UDF = {catalogedPending.DeviceUDF}");
+                    builder.AppendLine($"   Witness value = {acknowledgeConnection.Witness}");
 
                     break;
                     }
                 case CatalogedStandard catalogedStandard: {
-                    Builder.AppendLine($"   Device UDF = {catalogedStandard.ProfileDevice.Udf}");
+                    builder.AppendLine($"   Device UDF = {catalogedStandard.ProfileDevice.Udf}");
 
                     if (Profile is ProfileUser profileUser) {
-                        Builder.AppendLine($"   Account = {profileUser.AccountAddress}");
+                        builder.AppendLine($"   Account = {profileUser.AccountAddress}");
                         }
-                    Builder.AppendLine($"   Account UDF = {Profile.Udf}");
+                    builder.AppendLine($"   Account UDF = {Profile.Udf}");
 
                     break;
                     }
@@ -229,25 +219,22 @@ namespace Goedel.Mesh.Shell {
                 default:
                 break;
                 }
-            return Builder.ToString();
+
             }
         }
 
 
     public partial class ResultProcess {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
 
             switch (ProcessResult) {
                 case RespondConnection respondConnection: {
-                    Builder.AppendLine($"Result: {respondConnection.Result}");
+                    builder.AppendLine($"Result: {respondConnection.Result}");
                     if (respondConnection.Result == MeshConstants.TransactionResultAccept) {
-                        Builder.AppendLine($"Added device: {respondConnection.CatalogedDevice.DeviceUdf}");
+                        builder.AppendLine($"Added device: {respondConnection.CatalogedDevice.DeviceUdf}");
                         }
                     break;
                     }
@@ -255,37 +242,31 @@ namespace Goedel.Mesh.Shell {
                 default:
                 break;
                 }
-            return Builder.ToString();
+
             }
         }
 
 
     public partial class ResultSent {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
             if (Message != null) {
-                Builder.AppendLine($"Envelope ID: {Message.EnvelopeId}");
-                Builder.AppendLine($"Message ID: {Message.MessageId}");
-                Builder.AppendLine($"Response ID: {Message.GetResponseId()}");
+                builder.AppendLine($"Envelope ID: {Message.EnvelopeId}");
+                builder.AppendLine($"Message ID: {Message.MessageId}");
+                builder.AppendLine($"Response ID: {Message.GetResponseId()}");
                 }
-            return Builder.ToString();
+
             }
         }
 
 
     public partial class ResultStatus {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
 
             if (StatusResponse != null) {
 
@@ -298,25 +279,21 @@ namespace Goedel.Mesh.Shell {
                         var digest = containerStatus.Digest == null ? "" :
                             containerStatus.Digest.ToStringBase32(format: ConversionFormat.Dash4, outputMax: 120);
 
-                        Builder.Append($"   [{containerStatus.Container}] {containerStatus.Index}  {digest}");
-                        Builder.AppendLine();
+                        builder.Append($"   [{containerStatus.Container}] {containerStatus.Index}  {digest}");
+                        builder.AppendLine();
                         }
                     }
                 }
 
-            return Builder.ToString();
             }
         }
 
 
     public partial class ResultPending {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
 
             foreach (var message in Messages) {
 
@@ -367,7 +344,6 @@ namespace Goedel.Mesh.Shell {
                     }
                 }
 
-            return builder.ToString();
             }
 
         static void ToBuilder(StringBuilder builder, Message message, string tag) {
@@ -381,79 +357,59 @@ namespace Goedel.Mesh.Shell {
 
     public partial class ResultPIN {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
 
             if (Uri != null) {
-                Builder.Append($"URI={Uri}");
+                builder.Append($"URI={Uri}");
                 }
 
             else if (MessagePIN != null) {
-                Builder.Append($"PIN={MessagePIN.Pin}");
+                builder.Append($"PIN={MessagePIN.Pin}");
 
                 if (MessagePIN.Expires != null) {
-                    Builder.Append($"\n (Expires={MessagePIN.Expires.ToRFC3339()})");
+                    builder.Append($"\n (Expires={MessagePIN.Expires.ToRFC3339()})");
                     }
-                Builder.AppendLine();
+                builder.AppendLine();
                 }
 
-
-            return Builder.ToString();
             }
         }
 
 
     public partial class ResultCreateDevice {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = StringBuilder();
-            Builder.Append($"Device Profile UDF={DeviceUDF}\n");
-            return Builder.ToString();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
+            builder.Append($"Device Profile UDF={DeviceUDF}\n");
+
             }
         }
 
 
     public partial class ResultCreateAccount {
 
-        //public AssertionDeviceConnection ConnectionDevice = null;
-        //public AssertionDevicePrivate PrivateDevice = null;
-        //public AssertionAccount AssertionAccount = null;
-        //CatalogEntryDevice.EnvelopedDevicePrivate.;
-
         ///<summary>The account UDF.</summary>
         public string Account => ActivationDevice?.AccountUdf;
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var builder = StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
             builder.AppendNotNull(ProfileAccount?.AccountAddress, $"Account={ProfileAccount?.AccountAddress}");
             builder.AppendNotNull(ProfileAccount?.ProfileSignature?.Udf, $"UDF={ProfileAccount?.ProfileSignature?.Udf}");
-            return builder.ToString();
+
             }
         }
 
     public partial class ResultRegisterService {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = StringBuilder();
-            Builder.AppendNotNull(Account, $"Account={Account}");
-            Builder.AppendNotNull(AccountAddress, $"AccountAddress={AccountAddress}");
-            return Builder.ToString();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+            builder.AppendNotNull(Account, $"Account={Account}");
+            builder.AppendNotNull(AccountAddress, $"AccountAddress={AccountAddress}");
+
             }
         }
 
@@ -463,56 +419,43 @@ namespace Goedel.Mesh.Shell {
         public ConnectionService ConnectionUser = null;
 
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = StringBuilder();
-            Builder.Append($"Device Profile UDF={DeviceUDF}\n");
-            Builder.Append($"Personal Profile UDF={MeshUDF}\n");
-            Builder.AppendNotNull(Account, $"Account={Account}\n");
-            return Builder.ToString();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
+            builder.Append($"Device Profile UDF={DeviceUDF}\n");
+            builder.Append($"Personal Profile UDF={MeshUDF}\n");
+            builder.AppendNotNull(Account, $"Account={Account}\n");
+
             }
         }
 
 
     public partial class ResultEntry {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
+        ///<inheritdoc/>
         public override string ToString() => CatalogEntry?.ToString() + "\n" ?? "Empty\n";
 
 
         }
 
     public partial class ResultDump {
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var builder = StringBuilder();
             foreach (var entry in CatalogedEntries) {
                 entry.Describe(builder);
                 builder.AppendLine();
                 }
-            return builder.ToString();
+
             }
         }
 
 
     public partial class ResultFileDare {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var builder = StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
             builder.Append($"File: {Filename}\n");
             builder.Append($"    Bytes: {TotalBytes}\n");
             if (Envelope == null) {
@@ -521,7 +464,7 @@ namespace Goedel.Mesh.Shell {
             else {
                 ToString(builder);
                 }
-            return builder.ToString();
+
             }
 
         void ToString(StringBuilder builder) {
@@ -549,20 +492,40 @@ namespace Goedel.Mesh.Shell {
 
     public partial class ResultEscrow {
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = new StringBuilder();
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
 
             foreach (var share in Shares) {
-                Builder.AppendLine($"Share: {share}");
+                builder.AppendLine($"Share: {share}");
                 }
 
-            return Builder.ToString();
+
             }
         }
 
+    public partial class ResultApplication {
 
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
+
+            Application.ToBuilder(builder);
+
+            }
+
+        }
+
+
+    public partial class ResultApplicationList {
+
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
+            foreach (var application in Applications) {
+                application.ToBuilder(builder);
+                }
+            }
+
+        }
     }

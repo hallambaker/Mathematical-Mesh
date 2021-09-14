@@ -42,11 +42,20 @@ namespace Goedel.Mesh.Shell {
             var applicationMail = CatalogedApplicationMail.Create(key,rights);
 
             transaction.ApplicationCreate(applicationMail);
-            transaction.ApplicationCreate(applicationMail);
+            //transaction.ApplicationCreate(applicationMail);
 
-            var result = transaction.Transact();
+            var resultTransact = transaction.Transact();
 
-            throw new NYI();
+            return resultTransact.Success() ?
+                new ResultApplication() {
+                    Success = true,
+                    Application = applicationMail
+                    } :
+                    new ResultFail() {
+                        Success = false,
+                        Reason = "TBS"
+                        };
+
             }
 
         /// <summary>
@@ -65,8 +74,16 @@ namespace Goedel.Mesh.Shell {
 
             transaction.ApplicationUpdate(applicationMail);
 
-            var result = transaction.Transact();
-            throw new NYI();
+            var resultTransact = transaction.Transact();
+            return resultTransact.Success() ?
+                new ResultApplication() {
+                    Success = true,
+                    Application = applicationMail
+                    } :
+                    new ResultFail() {
+                        Success = false,
+                        Reason = "TBS"
+                        };
             }
 
         /// <summary>
@@ -83,9 +100,11 @@ namespace Goedel.Mesh.Shell {
             var known = catalogApplication.GetMail();
 
 
+            return new ResultApplicationList() {
+                Success = true,
+                Applications = known
+                };
 
-
-            throw new NYI();
             }
 
 

@@ -38,11 +38,13 @@ namespace Goedel.XUnit {
             CreateAlice(out var device1, out var device2);
 
             device1.Dispatch($"mail add {mailaddress} /inbound {mailinbound1} /outbound {mailoutbound}");
+            device1.Dispatch($"mail list");
             device1.Dispatch($"mail smime private");
             device1.Dispatch($"mail smime public");
             device1.Dispatch($"mail openpgp private");
             device1.Dispatch($"mail openpgp public");
-
+            
+            device2.Dispatch($"account sync");
             device2.Dispatch($"mail list");
             device2.Dispatch($"mail smime private");
             device2.Dispatch($"mail smime public");

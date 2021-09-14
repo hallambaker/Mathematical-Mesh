@@ -25,6 +25,7 @@ using System.Collections.Generic;
 
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
+using System.Text;
 
 
 // Todo: SSH Add support for SSH ECC Algorithms
@@ -116,6 +117,11 @@ namespace Goedel.Mesh {
                 Identifier = Key,
                 EnvelopedActivation = activation.EnvelopedActivationApplicationSsh
                 };
+
+            }
+
+        public override void ToBuilder(StringBuilder output) {
+            output.AppendNotNull(ClientKey?.Udf, $"Account: {ClientKey?.Udf}/n");
 
             }
 
