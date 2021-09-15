@@ -72,11 +72,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestProfileMail();
             ShellTests.Test().TestProfileSSHPrivate();
             //ShellTests.Test().TestProfileSSHPublic();
-            ShellTests.Test().TestAuthAdmin();
-            ShellTests.Test().TestAuthMessage();
-            ShellTests.Test().TestAuthWeb();
-            ShellTests.Test().TestAuthDevice();
-            ShellTests.Test().TestAuthSuper();
+
 
 
 
