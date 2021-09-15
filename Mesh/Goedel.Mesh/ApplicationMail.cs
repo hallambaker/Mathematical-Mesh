@@ -110,6 +110,7 @@ namespace Goedel.Mesh {
                    KeySecurity.Exportable, keySize: 2048);
 
             return new CatalogedApplicationMail() {
+                AccountAddress = address,
                 Key = key,
                 Grant = roles,
                 SmimeSignKeyPair = smimeSignKeyPair,

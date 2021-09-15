@@ -48,10 +48,7 @@
       <LastGenOutput>meshman.cs</LastGenOutput>
       <Generator>CommandCS</Generator>
     </None>
-    <None Update="Results - Copy.protogen">
-      <LastGenOutput>ServiceDescription.cs</LastGenOutput>
-      <Generator>ProtoGen</Generator>
-    </None>
+
     <None Update="Results.protogen">
       <LastGenOutput>Results.cs</LastGenOutput>
       <Generator>ProtoGen</Generator>

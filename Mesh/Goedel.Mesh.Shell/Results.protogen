@@ -13,8 +13,6 @@
 
 	Structure ResultFail
 		Inherits		Result
-		Boolean			Success
-		String			Reason
 
 	Structure ResultKey
 		Inherits		Result
@@ -36,9 +34,9 @@
 		Boolean			Verified
 
 	Structure ResultKeyFile
-		Inherits		Result
+		Inherits		ResultFile
 		String			Udf
-		Boolean			Public
+		Boolean			Private
 		String			Algorithm
 		String			Format
 

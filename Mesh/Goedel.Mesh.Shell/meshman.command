@@ -107,19 +107,16 @@
 		Option Outbound "outbound" String
 			Brief "outbound service configuration"
 
-	OptionSet PublicKeyOptions
+	OptionSet KeyFileOptions
 		Option Format "format" String"
 			Brief "File format"
 		Option File "file" NewFile
 			Brief "Output file"
-
-	OptionSet PrivateKeyOptions
-		Option Format "format" String
-			Brief "File format"
 		Option Password "password" String
 			Brief "Password to encrypt private key"
-		Option File "file" NewFile
-			Brief "Output file"
+		Option Private "private" Flag
+			Default "false"
+
 
 	OptionSet LengthOptions
 		Option Bits "bits" Integer
@@ -992,38 +989,39 @@
 			Include Reporting
 
 		CommandSet SMIME "smime"
-			Command SMIMEPrivate "private"
-				Brief "Extract the private key for the specified account"
+			Command SmimeSign "sign"
+				Brief "Extract the signature key for the specified account"
 				Include AccountOptions
 				Include Reporting
-				Include PrivateKeyOptions
+				Include KeyFileOptions
 				Parameter Address "address" String
 					Brief "Mail account to update"
 
-			Command SMIMEPublic "public"
+			Command SmimeEncrypt "encrypt"
 				Brief "Extract the public key/certificate for the specified account"
 				Include AccountOptions
 				Include Reporting
-				Include PublicKeyOptions
+				Include KeyFileOptions
 				Parameter Address "address" String
 					Brief "Mail account identifier"
 
 		CommandSet PGP "openpgp"
-			Command PGPPrivate "private"
-				Brief "Extract the private key for the specified account"
+			Command OpenpgpSign "sign"
+				Brief "Extract the signature key for the specified account"
 				Include AccountOptions
 				Include Reporting
-				Include PrivateKeyOptions
+				Include KeyFileOptions
 				Parameter Address "address" String
 					Brief "Mail account to update"
 
-			Command PGPPublic "public"
+			Command OpenpgpEncrypt "encrypt"
 				Brief "Extract the public key/certificate for the specified account"
 				Include AccountOptions
 				Include Reporting
-				Include PublicKeyOptions
+				Include KeyFileOptions
 				Parameter Address "address" String
 					Brief "Mail account identifier"
+
 
 		Command MailList "list"
 			Brief "List mail account information"
@@ -1052,7 +1050,7 @@
 			Brief "Extract the private key for this device"
 			Include AccountOptions
 			Include Reporting
-			Include PrivateKeyOptions
+			Include KeyFileOptions
 			Option ID "id" String
 				Brief "Key identifier"
 
@@ -1060,7 +1058,7 @@
 			Brief "Extract the public key for this device"
 			Include AccountOptions
 			Include Reporting
-			Include PublicKeyOptions
+			Include KeyFileOptions
 			Option ID "id" String
 				Brief "Key identifier"
 				

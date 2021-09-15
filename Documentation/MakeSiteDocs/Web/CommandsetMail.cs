@@ -124,10 +124,10 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _MailAdd._DescribeCommand);
 				 Describe(CommandSet, _MailUpdate._DescribeCommand);
-				 Describe(CommandSet, _SMIMEPrivate._DescribeCommand);
-				 Describe(CommandSet, _SMIMEPublic._DescribeCommand);
-				 Describe( CommandSet, _PGPPrivate._DescribeCommand);
-				 Describe( CommandSet, _PGPPublic._DescribeCommand);
+				 Describe(CommandSet, _SmimeSign._DescribeCommand);
+				 Describe(CommandSet, _SmimeEncrypt._DescribeCommand);
+				 Describe( CommandSet, _OpenpgpSign._DescribeCommand);
+				 Describe( CommandSet, _OpenpgpEncrypt._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}

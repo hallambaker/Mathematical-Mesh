@@ -18,7 +18,6 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Cryptography.Core.dll\
     Goedel.Mesh.Shell.ServiceAdmin.dll
 
 ToolTargets = 
@@ -38,5 +37,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget serviceadmin.exe $(LinkFiles) 
+	powershell publishtarget serviceadmin.dll
 

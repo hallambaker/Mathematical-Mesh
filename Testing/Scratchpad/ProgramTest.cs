@@ -65,9 +65,11 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
+            //TestService.Test().MeshDeviceMail();
+
 
             //ShellTests.Test().TestProfileConnectPinReused();
-            ShellTests.Test().TestProfileMail();
+            //ShellTests.Test().TestProfileMail();
             ShellTests.Test().TestProfileSSHPrivate();
             //ShellTests.Test().TestProfileSSHPublic();
             ShellTests.Test().TestAuthAdmin();
@@ -80,7 +82,7 @@ namespace Scratchpad {
 
             //TestService.Test().ProtocolHello();
             //TestService.Test().MeshDeviceSsh();
-            //TestService.Test().MeshDeviceMail();
+
 
             //TestService.Test().MeshDeviceDirectKey();
 

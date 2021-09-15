@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/15/2021 12:45:56 AM
+//  This file was automatically generated at 9/15/2021 2:50:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -265,19 +265,6 @@ namespace Goedel.Mesh.Shell {
 	/// <summary>
 	/// </summary>
 	public partial class ResultFail : Result {
-		bool								__Success = false;
-		private bool						_Success;
-        /// <summary>
-        /// </summary>
-
-		public virtual bool						Success {
-			get => _Success;
-			set {_Success = value; __Success = true; }
-			}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Reason  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -322,16 +309,6 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteObjectStart ();
 				}
 			((Result)this).SerializeX(_writer, false, ref _first);
-			if (__Success){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Success", 1);
-					_writer.WriteBoolean (Success);
-				}
-			if (Reason != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Reason", 1);
-					_writer.WriteString (Reason);
-				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -365,14 +342,6 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Success" : {
-					Success = jsonReader.ReadBoolean ();
-					break;
-					}
-				case "Reason" : {
-					Reason = jsonReader.ReadString ();
-					break;
-					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;
@@ -805,19 +774,19 @@ namespace Goedel.Mesh.Shell {
 
 	/// <summary>
 	/// </summary>
-	public partial class ResultKeyFile : Result {
+	public partial class ResultKeyFile : ResultFile {
         /// <summary>
         /// </summary>
 
 		public virtual string						Udf  {get; set;}
-		bool								__Public = false;
-		private bool						_Public;
+		bool								__Private = false;
+		private bool						_Private;
         /// <summary>
         /// </summary>
 
-		public virtual bool						Public {
-			get => _Public;
-			set {_Public = value; __Public = true; }
+		public virtual bool						Private {
+			get => _Private;
+			set {_Private = value; __Private = true; }
 			}
         /// <summary>
         /// </summary>
@@ -870,16 +839,16 @@ namespace Goedel.Mesh.Shell {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((Result)this).SerializeX(_writer, false, ref _first);
+			((ResultFile)this).SerializeX(_writer, false, ref _first);
 			if (Udf != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Udf", 1);
 					_writer.WriteString (Udf);
 				}
-			if (__Public){
+			if (__Private){
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Public", 1);
-					_writer.WriteBoolean (Public);
+				_writer.WriteToken ("Private", 1);
+					_writer.WriteBoolean (Private);
 				}
 			if (Algorithm != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -928,8 +897,8 @@ namespace Goedel.Mesh.Shell {
 					Udf = jsonReader.ReadString ();
 					break;
 					}
-				case "Public" : {
-					Public = jsonReader.ReadBoolean ();
+				case "Private" : {
+					Private = jsonReader.ReadBoolean ();
 					break;
 					}
 				case "Algorithm" : {

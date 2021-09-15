@@ -20,6 +20,10 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Runtime.InteropServices.ComTypes;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.KeyFile;
 using Goedel.Registry;
 using Goedel.Utilities;
@@ -46,7 +50,9 @@ namespace Goedel.Mesh.Shell {
 
 
             transaction.ApplicationCreate(applicationMail);
-            //transaction.ApplicationCreate(applicationMail);
+
+            // Bug: not updating the connection devices!!!
+
 
             var resultTransact = transaction.Transact();
 
@@ -112,39 +118,27 @@ namespace Goedel.Mesh.Shell {
             }
 
 
-        /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult SMIMEPrivate(SMIMEPrivate options) {
-            var address = options.Address.Value.AssertNotNull(NYI.Throw);
-            var fileName = options.File.Value;
+
+        ShellResult KeyToFile(KeyPair keyPair, 
+                    string fileName, 
+                    string format,
+                    string password,
+                    bool privateKey,
+                    KeyFileFormat keyFileFormatDefault) {
+
             
-            using var contextDevice = GetContextUser(options);
 
-            var applicationMail = contextDevice.GetApplicationMail(address);
+            var length = (int)keyPair.ToKeyFile(fileName, keyFileFormatDefault);
 
-            // dump out the private SMIME from applicationMail
-            applicationMail.SmimeEncryptKeyPair.ToKeyFile(fileName, KeyFileFormat.PEMPrivate);
-
-
-            throw new NYI();
-            }
-        /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult SMIMEPublic(SMIMEPublic options) {
-            var address = options.Address.Value.AssertNotNull(NYI.Throw);
-            using var contextDevice = GetContextUser(options);
-            using var transaction = contextDevice.TransactBegin();
-
-            var applicationMail = contextDevice.GetApplicationMail(address);
-
-            // dump out the public SMIME from applicationMail
-            throw new NYI();
+            return new ResultKeyFile() {
+                Success = true,
+                Filename = fileName,
+                TotalBytes = length,
+                Udf = keyPair.KeyIdentifier,
+                Private = privateKey,
+                Algorithm = keyPair.CryptoAlgorithmId.ToJoseID(),
+                Format = format
+                };
             }
 
         /// <summary>
@@ -152,15 +146,37 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult PGPPrivate(PGPPrivate options) {
+        public override ShellResult SmimeSign(SmimeSign options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
-            using var contextDevice = GetContextUser(options);
-            using var transaction = contextDevice.TransactBegin();
+            var format = options.Format.Value;
+            var fileName = options.File.Value;
+            var password = options.Password.Value;
+            var privateKey = options.Private.Value;
+            using var contextUser = GetContextUser(options);
 
-            var applicationMail = contextDevice.GetApplicationMail(address);
 
-            // dump out the private PGP from applicationMail
-            throw new NYI();
+            KeyPair keyPair;
+            KeyFileFormat keyFileFormat;
+            if (!privateKey) {
+                var applicationMail = contextUser.GetApplicationMail(address);
+                keyPair = applicationMail.SmimeSign.GetKeyPair();
+                keyFileFormat = KeyFileFormat.PEMPublic;
+                }
+            else {
+                var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
+                var keyData = applicationEntryMail.Activation.SmimeSign;
+                keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
+                keyFileFormat = KeyFileFormat.PEMPrivate;
+                }
+
+            return KeyToFile(
+                    keyPair,
+                    fileName,
+                    format,
+                    password,
+                    privateKey,
+                    keyFileFormat
+                    );
             }
 
         /// <summary>
@@ -168,14 +184,114 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult PGPPublic(PGPPublic options) {
+        public override ShellResult SmimeEncrypt(SmimeEncrypt options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
-            using var contextDevice = GetContextUser(options);
+            var format = options.Format.Value;
+            var fileName = options.File.Value;
+            var password = options.Password.Value;
+            var privateKey = options.Private.Value;
+            using var contextUser = GetContextUser(options);
 
-            var applicationMail = contextDevice.GetApplicationMail(address);
+            KeyPair keyPair;
+            KeyFileFormat keyFileFormat;
+            if (!privateKey) {
+                var applicationMail = contextUser.GetApplicationMail(address);
+                keyPair = applicationMail.SmimeEncrypt.GetKeyPair();
+                keyFileFormat = KeyFileFormat.PEMPublic;
+                }
+            else {
+                var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
+                var keyData = applicationEntryMail.Activation.SmimeEncrypt;
+                keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
+                keyFileFormat = KeyFileFormat.PEMPrivate;
+                }
 
-            // dump out the public PGP from applicationMail
-            throw new NYI();
+            return KeyToFile(
+                    keyPair,
+                    fileName,
+                    format,
+                    password,
+                    privateKey,
+                    keyFileFormat
+                    );
+
             }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult OpenpgpSign(OpenpgpSign options) {
+            var address = options.Address.Value.AssertNotNull(NYI.Throw);
+            var format = options.Format.Value;
+            var fileName = options.File.Value;
+            var password = options.Password.Value;
+            var privateKey = options.Private.Value;
+            using var contextUser = GetContextUser(options);
+
+            KeyPair keyPair;
+            KeyFileFormat keyFileFormat;
+            if (!privateKey) {
+                var applicationMail = contextUser.GetApplicationMail(address);
+                keyPair = applicationMail.OpenpgpSign.GetKeyPair();
+                keyFileFormat = KeyFileFormat.PEMPublic;
+                }
+            else {
+                var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
+                var keyData = applicationEntryMail.Activation.OpenpgpSign;
+                keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
+                keyFileFormat = KeyFileFormat.PEMPrivate;
+                }
+
+            return KeyToFile(
+                    keyPair,
+                    fileName,
+                    format,
+                    password,
+                    privateKey,
+                    keyFileFormat
+                    );
+
+            }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult OpenpgpEncrypt(OpenpgpEncrypt options) {
+            var address = options.Address.Value.AssertNotNull(NYI.Throw);
+            var format = options.Format.Value;
+            var fileName = options.File.Value;
+            var password = options.Password.Value;
+            var privateKey = options.Private.Value;
+            using var contextUser = GetContextUser(options);
+
+            KeyPair keyPair;
+            KeyFileFormat keyFileFormat;
+            if (!privateKey) {
+                var applicationMail = contextUser.GetApplicationMail(address);
+                keyPair = applicationMail.OpenpgpEncrypt.GetKeyPair();
+                keyFileFormat = KeyFileFormat.PEMPublic;
+                }
+            else {
+                var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
+                var keyData = applicationEntryMail.Activation.OpenpgpEncrypt;
+                keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
+                keyFileFormat = KeyFileFormat.PEMPrivate;
+                }
+
+            return KeyToFile(
+                    keyPair,
+                    fileName,
+                    format,
+                    password,
+                    privateKey,
+                    keyFileFormat
+                    );
+
+            }
+
         }
     }

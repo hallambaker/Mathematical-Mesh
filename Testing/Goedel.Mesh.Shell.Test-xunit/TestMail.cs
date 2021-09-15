@@ -37,22 +37,24 @@ namespace Goedel.XUnit {
 
             CreateAlice(out var device1, out var device2);
 
-            device1.Dispatch($"mail add {mailaddress} /inbound {mailinbound1} /outbound {mailoutbound}");
+            device1.Dispatch($"mail add {mailaddress} /inbound {mailinbound1} /outbound {mailoutbound} /web");
             device1.Dispatch($"mail list");
-            device1.Dispatch($"mail smime private {mailaddress} /file=d1_smime_prv.p12");
-            device1.Dispatch($"mail smime public {mailaddress} /file=d1_smime_prv.pem");
-            device1.Dispatch($"mail openpgp private {mailaddress} /file=d1_pgp_pum.pem");
-            device1.Dispatch($"mail openpgp public {mailaddress} /file=d1_pgp_pub.pem");
+            device1.Dispatch($"mail smime sign {mailaddress} /file=d1_smime_prv.p12 /private");
+            device1.Dispatch($"mail smime encrypt {mailaddress} /file=d1_smime_prv.pem /private");
+            device1.Dispatch($"mail openpgp sign {mailaddress} /file=d1_pgp_pub.pem");
+            device1.Dispatch($"mail openpgp encrypt {mailaddress} /file=d1_pgp_pub.pem");
             
             device2.Dispatch($"account sync");
             device2.Dispatch($"mail list");
-            device2.Dispatch($"mail smime private {mailaddress} /file=d2_smime_prv.p12");
-            device2.Dispatch($"mail smime public {mailaddress} /file=d2_smime_pub.pem");
-            device2.Dispatch($"mail openpgp private {mailaddress} /file=d2_pgp_prv.pem");
-            device2.Dispatch($"mail openpgp public {mailaddress} /file=d2_pgp_pub.pem");
+            device2.Dispatch($"mail smime sign {mailaddress} /file=d2_smime_prv.p12 /private");
+            device2.Dispatch($"mail smime encrypt {mailaddress} /file=d2_smime_pub.pem");
+            device2.Dispatch($"mail openpgp sign {mailaddress} /file=d2_pgp_prv.pem /private");
+            device2.Dispatch($"mail openpgp encrypt {mailaddress} /file=d2_pgp_pub.pem");
 
-            device1.Dispatch($"mail update {mailaddress} /inbound {mailinbound2} /outbound {mailoutbound}");
-            device2.Dispatch($"mail list");
+            //device1.Dispatch($"mail update {mailaddress} /inbound {mailinbound2} /outbound {mailoutbound}");
+
+            //device2.Dispatch($"account sync");
+            //device2.Dispatch($"mail list");
             }
 
 

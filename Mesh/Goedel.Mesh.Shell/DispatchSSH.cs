@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography.KeyFile;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh.Shell {
@@ -115,14 +116,23 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHPrivate(SSHPrivate options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextUser(options);
+            var format = options.Format.Value;
+            var fileName = options.File.Value;
+            var password = options.Password.Value;
+            using var contextUser = GetContextUser(options);
 
 
-            var applicationSsh = contextDevice.GetApplicationSsh(id);
 
-            // here dump out the private key 
+            var applicationSsh = contextUser.GetApplicationSsh(id);
 
-            throw new NYI();
+            return KeyToFile(
+                applicationSsh.ClientKeyPrivate,
+                fileName,
+                format,
+                password,
+                true,
+                KeyFileFormat.PEMPrivate
+                );
             }
 
         /// <summary>
@@ -132,15 +142,23 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHPublic(SSHPublic options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextUser(options);
+            var format = options.Format.Value;
+            var fileName = options.File.Value;
+            var password = options.Password.Value;
+            using var contextUser = GetContextUser(options);
 
 
-            // need to be able to pull key from different device here.
-            var applicationSsh = contextDevice.GetApplicationSsh(id);
 
-            // here dump out the public key 
+            var applicationSsh = contextUser.GetApplicationSsh(id);
 
-            throw new NYI();
+            return KeyToFile(
+                applicationSsh.ClientKeyPrivate,
+                fileName,
+                format,
+                password,
+                false,
+                KeyFileFormat.PEMPrivate
+                );
             }
 
 

@@ -18,7 +18,6 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Cryptography.Core.dll\
     Goedel.Mesh.Management.dll\
     Goedel.Mesh.Server.dll\
     Goedel.Mesh.Shell.Host.dll
@@ -40,5 +39,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget meshhost.exe $(LinkFiles) 
+	powershell publishtarget meshhost.dll
 

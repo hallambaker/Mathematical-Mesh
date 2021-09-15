@@ -157,14 +157,14 @@ namespace Goedel.Mesh {
         /// <param name="KeyFileFormat">Format to convert to</param>
         /// <param name="passphrase">Optional encryption passphrase.</param>
         /// <returns>The keyfile data</returns>
-        public static void ToKeyFile(
+        public static long ToKeyFile(
                 this KeyPair keyPair,
                 string filename,
                 KeyFileFormat KeyFileFormat = KeyFileFormat.Default,
                 string passphrase = null) {
             var data = keyPair.ToKeyFile(KeyFileFormat);
 
-            filename.WriteFileNew(data);
+            return filename.WriteFileNew(data);
             }
 
 

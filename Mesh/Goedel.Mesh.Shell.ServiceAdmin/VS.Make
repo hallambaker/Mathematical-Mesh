@@ -39,9 +39,6 @@ Exceptions.cs : Exceptions.Exceptional
 meshman.cs : meshman.command 
 	commandparse meshman.command  /cs  meshman.cs
 
-Results - Copy.cs : Results - Copy.protogen 
-	protogen Results - Copy.protogen  /cs  Results - Copy.cs
-
 Results.cs : Results.protogen 
 	protogen Results.protogen  /cs  Results.cs
 

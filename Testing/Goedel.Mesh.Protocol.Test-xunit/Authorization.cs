@@ -204,7 +204,7 @@ namespace Goedel.XUnit {
             var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
             ExerciseAccount(contextOnboarded);
 
-            var id = "mail";
+            var id = "alice@example.net";
             // Create an ssh application
             var applicationMail = CatalogedApplicationMail.Create(id, roles);
 

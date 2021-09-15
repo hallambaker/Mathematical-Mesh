@@ -1734,7 +1734,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="applicationId">The name of the specific Mail application entry.</param>
         /// <returns>The application iff found, otherwise null.</returns>
         public ApplicationEntryMail GetApplicationEntryMail(
-                string applicationId) => GetApplicationEntry(applicationId) as ApplicationEntryMail;
+                string applicationId) => GetApplicationEntry(
+                    CatalogedApplicationMail.GetKey(applicationId)) as ApplicationEntryMail;
 
 
 

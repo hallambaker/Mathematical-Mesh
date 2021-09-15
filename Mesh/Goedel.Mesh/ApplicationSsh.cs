@@ -76,7 +76,7 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => Key;
 
         ///<summary>The privatge client key</summary> 
-        public KeyPair ClientKeyPrivate { private get; init; }
+        public KeyPair ClientKeyPrivate { get; init; }
         #endregion
         #region // Constructors and factories
 

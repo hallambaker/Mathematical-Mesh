@@ -23,8 +23,6 @@
     <ProjectReference Include="..\Goedel.Mesh.Protocol.Test-xunit\Goedel.Mesh.Protocol.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Shell.Test-xunit\Goedel.Mesh.Shell.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Store.Test-xunit\Goedel.Mesh.Store.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.xunit\Goedel.Mesh.Test-xunit.csproj" />
-    <ProjectReference Include="..\Goedel.Protocol.Service.Test-xunit\Goedel.Protocol.Service.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Protocol.Test-xunit\Goedel.Protocol.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Utilities.Test-xunit\Goedel.Utilities.Test-xunit.csproj" />
     <ProjectReference Include="..\Test.Constants\Test.Common.csproj" />

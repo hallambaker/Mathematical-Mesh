@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 9/14/2021 6:29:01 PM
+//  This file was automatically generated at 9/15/2021 2:50:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  commandparse version 3.0.0.685
+//  Generator:  commandparse version 3.0.0.689
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -386,8 +386,8 @@ namespace Goedel.Mesh.Shell {
             Identifier = "smime",
 			Brief = "<Unspecified>",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"private", _SMIMEPrivate._DescribeCommand },
-				{"public", _SMIMEPublic._DescribeCommand }
+				{"sign", _SmimeSign._DescribeCommand },
+				{"encrypt", _SmimeEncrypt._DescribeCommand }
 				} // End Entries
 			};
 
@@ -395,8 +395,8 @@ namespace Goedel.Mesh.Shell {
             Identifier = "openpgp",
 			Brief = "<Unspecified>",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"private", _PGPPrivate._DescribeCommand },
-				{"public", _PGPPublic._DescribeCommand }
+				{"sign", _OpenpgpSign._DescribeCommand },
+				{"encrypt", _OpenpgpEncrypt._DescribeCommand }
 				} // End Entries
 			};
 
@@ -1400,43 +1400,43 @@ namespace Goedel.Mesh.Shell {
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_SMIMEPrivate (
+		public static void Handle_SmimeSign (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			SMIMEPrivate		Options = new SMIMEPrivate ();
+			SmimeSign		Options = new SmimeSign ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.SMIMEPrivate (Options);
+			var result = Dispatch.SmimeSign (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_SMIMEPublic (
+		public static void Handle_SmimeEncrypt (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			SMIMEPublic		Options = new SMIMEPublic ();
+			SmimeEncrypt		Options = new SmimeEncrypt ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.SMIMEPublic (Options);
+			var result = Dispatch.SmimeEncrypt (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_PGPPrivate (
+		public static void Handle_OpenpgpSign (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			PGPPrivate		Options = new PGPPrivate ();
+			OpenpgpSign		Options = new OpenpgpSign ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.PGPPrivate (Options);
+			var result = Dispatch.OpenpgpSign (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_PGPPublic (
+		public static void Handle_OpenpgpEncrypt (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			PGPPublic		Options = new PGPPublic ();
+			OpenpgpEncrypt		Options = new OpenpgpEncrypt ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.PGPPublic (Options);
+			var result = Dispatch.OpenpgpEncrypt (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -1596,15 +1596,11 @@ namespace Goedel.Mesh.Shell {
 		String			Outbound{get; set;}
 		}
 
-	public interface IPublicKeyOptions {
+	public interface IKeyFileOptions {
 		String			Format{get; set;}
 		NewFile			File{get; set;}
-		}
-
-	public interface IPrivateKeyOptions {
-		String			Format{get; set;}
 		String			Password{get; set;}
-		NewFile			File{get; set;}
+		Flag			Private{get; set;}
 		}
 
 	public interface ILengthOptions {
@@ -17383,207 +17379,10 @@ namespace Goedel.Mesh.Shell {
     public partial class MailUpdate : _MailUpdate {
         } // class MailUpdate
 
-    public class _SMIMEPrivate : Goedel.Command.Dispatch ,
+    public class _SmimeSign : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting,
-							IPrivateKeyOptions {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String (),
-			new String (),
-			new NewFile (),
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [local]</summary>
-		public virtual String LocalName {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _LocalName {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [format]</summary>
-		public virtual String Format {
-			get => _Data[6] as String;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Format {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for option [password]</summary>
-		public virtual String Password {
-			get => _Data[7] as String;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _Password {
-			set => _Data[7].Parameter (value);
-			}
-		/// <summary>Field accessor for option [file]</summary>
-		public virtual NewFile File {
-			get => _Data[8] as NewFile;
-			set => _Data[8]  = value;
-			}
-
-		public virtual string _File {
-			set => _Data[8].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Address {
-			get => _Data[9] as String;
-			set => _Data[9]  = value;
-			}
-
-		public virtual string _Address {
-			set => _Data[9].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "private",
-			Brief =  "Extract the private key for the specified account",
-			HandleDelegate =  CommandLineInterpreter.Handle_SMIMEPrivate,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryOption () {
-					Identifier = "LocalName", 
-					Default = null, // null if null
-					Brief = "Local name for account (e.g. personal)",
-					Index = 1,
-					Key = "local"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Format", 
-					Default = null, // null if null
-					Brief = "File format",
-					Index = 6,
-					Key = "format"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Password", 
-					Default = null, // null if null
-					Brief = "Password to encrypt private key",
-					Index = 7,
-					Key = "password"
-					},
-				new DescribeEntryOption () {
-					Identifier = "File", 
-					Default = null, // null if null
-					Brief = "Output file",
-					Index = 8,
-					Key = "file"
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Address", 
-					Default = null, // null if null
-					Brief = "Mail account to update",
-					Index = 9,
-					Key = ""
-					}
-				}
-			};
-
-		}
-
-    public partial class SMIMEPrivate : _SMIMEPrivate {
-        } // class SMIMEPrivate
-
-    public class _SMIMEPublic : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting,
-							IPublicKeyOptions {
+							IKeyFileOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
@@ -17594,6 +17393,8 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new String (),
 			new NewFile (),
+			new String (),
+			new Flag (),
 			new String ()			} ;
 
 
@@ -17672,21 +17473,39 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _File {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Address {
+		/// <summary>Field accessor for option [password]</summary>
+		public virtual String Password {
 			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Address {
+		public virtual string _Password {
 			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [private]</summary>
+		public virtual Flag Private {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Private {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Address {
+			get => _Data[10] as String;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Address {
+			set => _Data[10].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "public",
-			Brief =  "Extract the public key/certificate for the specified account",
-			HandleDelegate =  CommandLineInterpreter.Handle_SMIMEPublic,
+			Identifier = "sign",
+			Brief =  "Extract the signature key for the specified account",
+			HandleDelegate =  CommandLineInterpreter.Handle_SmimeSign,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -17744,209 +17563,26 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Output file",
 					Index = 7,
 					Key = "file"
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Address", 
-					Default = null, // null if null
-					Brief = "Mail account identifier",
-					Index = 8,
-					Key = ""
-					}
-				}
-			};
-
-		}
-
-    public partial class SMIMEPublic : _SMIMEPublic {
-        } // class SMIMEPublic
-
-    public class _PGPPrivate : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting,
-							IPrivateKeyOptions {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String (),
-			new String (),
-			new NewFile (),
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [local]</summary>
-		public virtual String LocalName {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _LocalName {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [format]</summary>
-		public virtual String Format {
-			get => _Data[6] as String;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Format {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for option [password]</summary>
-		public virtual String Password {
-			get => _Data[7] as String;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _Password {
-			set => _Data[7].Parameter (value);
-			}
-		/// <summary>Field accessor for option [file]</summary>
-		public virtual NewFile File {
-			get => _Data[8] as NewFile;
-			set => _Data[8]  = value;
-			}
-
-		public virtual string _File {
-			set => _Data[8].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Address {
-			get => _Data[9] as String;
-			set => _Data[9]  = value;
-			}
-
-		public virtual string _Address {
-			set => _Data[9].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "private",
-			Brief =  "Extract the private key for the specified account",
-			HandleDelegate =  CommandLineInterpreter.Handle_PGPPrivate,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryOption () {
-					Identifier = "LocalName", 
-					Default = null, // null if null
-					Brief = "Local name for account (e.g. personal)",
-					Index = 1,
-					Key = "local"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Format", 
-					Default = null, // null if null
-					Brief = "File format",
-					Index = 6,
-					Key = "format"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Password", 
 					Default = null, // null if null
 					Brief = "Password to encrypt private key",
-					Index = 7,
+					Index = 8,
 					Key = "password"
 					},
 				new DescribeEntryOption () {
-					Identifier = "File", 
-					Default = null, // null if null
-					Brief = "Output file",
-					Index = 8,
-					Key = "file"
+					Identifier = "Private", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 9,
+					Key = "private"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Address", 
 					Default = null, // null if null
 					Brief = "Mail account to update",
-					Index = 9,
+					Index = 10,
 					Key = ""
 					}
 				}
@@ -17954,13 +17590,13 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class PGPPrivate : _PGPPrivate {
-        } // class PGPPrivate
+    public partial class SmimeSign : _SmimeSign {
+        } // class SmimeSign
 
-    public class _PGPPublic : Goedel.Command.Dispatch ,
+    public class _SmimeEncrypt : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting,
-							IPublicKeyOptions {
+							IKeyFileOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
@@ -17971,6 +17607,8 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new String (),
 			new NewFile (),
+			new String (),
+			new Flag (),
 			new String ()			} ;
 
 
@@ -18049,21 +17687,39 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _File {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Address {
+		/// <summary>Field accessor for option [password]</summary>
+		public virtual String Password {
 			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Address {
+		public virtual string _Password {
 			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [private]</summary>
+		public virtual Flag Private {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Private {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Address {
+			get => _Data[10] as String;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Address {
+			set => _Data[10].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "public",
+			Identifier = "encrypt",
 			Brief =  "Extract the public key/certificate for the specified account",
-			HandleDelegate =  CommandLineInterpreter.Handle_PGPPublic,
+			HandleDelegate =  CommandLineInterpreter.Handle_SmimeEncrypt,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -18122,11 +17778,25 @@ namespace Goedel.Mesh.Shell {
 					Index = 7,
 					Key = "file"
 					},
+				new DescribeEntryOption () {
+					Identifier = "Password", 
+					Default = null, // null if null
+					Brief = "Password to encrypt private key",
+					Index = 8,
+					Key = "password"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Private", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 9,
+					Key = "private"
+					},
 				new DescribeEntryParameter () {
 					Identifier = "Address", 
 					Default = null, // null if null
 					Brief = "Mail account identifier",
-					Index = 8,
+					Index = 10,
 					Key = ""
 					}
 				}
@@ -18134,8 +17804,436 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class PGPPublic : _PGPPublic {
-        } // class PGPPublic
+    public partial class SmimeEncrypt : _SmimeEncrypt {
+        } // class SmimeEncrypt
+
+    public class _OpenpgpSign : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting,
+							IKeyFileOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new NewFile (),
+			new String (),
+			new Flag (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [format]</summary>
+		public virtual String Format {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Format {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [file]</summary>
+		public virtual NewFile File {
+			get => _Data[7] as NewFile;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [password]</summary>
+		public virtual String Password {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Password {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [private]</summary>
+		public virtual Flag Private {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Private {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Address {
+			get => _Data[10] as String;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Address {
+			set => _Data[10].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "sign",
+			Brief =  "Extract the signature key for the specified account",
+			HandleDelegate =  CommandLineInterpreter.Handle_OpenpgpSign,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Format", 
+					Default = null, // null if null
+					Brief = "File format",
+					Index = 6,
+					Key = "format"
+					},
+				new DescribeEntryOption () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "Output file",
+					Index = 7,
+					Key = "file"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Password", 
+					Default = null, // null if null
+					Brief = "Password to encrypt private key",
+					Index = 8,
+					Key = "password"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Private", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 9,
+					Key = "private"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Address", 
+					Default = null, // null if null
+					Brief = "Mail account to update",
+					Index = 10,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class OpenpgpSign : _OpenpgpSign {
+        } // class OpenpgpSign
+
+    public class _OpenpgpEncrypt : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting,
+							IKeyFileOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new NewFile (),
+			new String (),
+			new Flag (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [format]</summary>
+		public virtual String Format {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Format {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [file]</summary>
+		public virtual NewFile File {
+			get => _Data[7] as NewFile;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [password]</summary>
+		public virtual String Password {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Password {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [private]</summary>
+		public virtual Flag Private {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Private {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Address {
+			get => _Data[10] as String;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Address {
+			set => _Data[10].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "encrypt",
+			Brief =  "Extract the public key/certificate for the specified account",
+			HandleDelegate =  CommandLineInterpreter.Handle_OpenpgpEncrypt,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Format", 
+					Default = null, // null if null
+					Brief = "File format",
+					Index = 6,
+					Key = "format"
+					},
+				new DescribeEntryOption () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "Output file",
+					Index = 7,
+					Key = "file"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Password", 
+					Default = null, // null if null
+					Brief = "Password to encrypt private key",
+					Index = 8,
+					Key = "password"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Private", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 9,
+					Key = "private"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Address", 
+					Default = null, // null if null
+					Brief = "Mail account identifier",
+					Index = 10,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class OpenpgpEncrypt : _OpenpgpEncrypt {
+        } // class OpenpgpEncrypt
 
     public class _MailList : Goedel.Command.Dispatch ,
 							IAccountOptions,
@@ -18637,204 +18735,7 @@ namespace Goedel.Mesh.Shell {
     public class _SSHPrivate : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting,
-							IPrivateKeyOptions {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String (),
-			new String (),
-			new NewFile (),
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [local]</summary>
-		public virtual String LocalName {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _LocalName {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [format]</summary>
-		public virtual String Format {
-			get => _Data[6] as String;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Format {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for option [password]</summary>
-		public virtual String Password {
-			get => _Data[7] as String;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _Password {
-			set => _Data[7].Parameter (value);
-			}
-		/// <summary>Field accessor for option [file]</summary>
-		public virtual NewFile File {
-			get => _Data[8] as NewFile;
-			set => _Data[8]  = value;
-			}
-
-		public virtual string _File {
-			set => _Data[8].Parameter (value);
-			}
-		/// <summary>Field accessor for option [id]</summary>
-		public virtual String ID {
-			get => _Data[9] as String;
-			set => _Data[9]  = value;
-			}
-
-		public virtual string _ID {
-			set => _Data[9].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "private",
-			Brief =  "Extract the private key for this device",
-			HandleDelegate =  CommandLineInterpreter.Handle_SSHPrivate,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryOption () {
-					Identifier = "LocalName", 
-					Default = null, // null if null
-					Brief = "Local name for account (e.g. personal)",
-					Index = 1,
-					Key = "local"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Format", 
-					Default = null, // null if null
-					Brief = "File format",
-					Index = 6,
-					Key = "format"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Password", 
-					Default = null, // null if null
-					Brief = "Password to encrypt private key",
-					Index = 7,
-					Key = "password"
-					},
-				new DescribeEntryOption () {
-					Identifier = "File", 
-					Default = null, // null if null
-					Brief = "Output file",
-					Index = 8,
-					Key = "file"
-					},
-				new DescribeEntryOption () {
-					Identifier = "ID", 
-					Default = null, // null if null
-					Brief = "Key identifier",
-					Index = 9,
-					Key = "id"
-					}
-				}
-			};
-
-		}
-
-    public partial class SSHPrivate : _SSHPrivate {
-        } // class SSHPrivate
-
-    public class _SSHPublic : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting,
-							IPublicKeyOptions {
+							IKeyFileOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
@@ -18845,6 +18746,8 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new String (),
 			new NewFile (),
+			new String (),
+			new Flag (),
 			new String ()			} ;
 
 
@@ -18923,14 +18826,246 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _File {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [id]</summary>
-		public virtual String ID {
+		/// <summary>Field accessor for option [password]</summary>
+		public virtual String Password {
 			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _ID {
+		public virtual string _Password {
 			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [private]</summary>
+		public virtual Flag Private {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Private {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[10] as String;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[10].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "private",
+			Brief =  "Extract the private key for this device",
+			HandleDelegate =  CommandLineInterpreter.Handle_SSHPrivate,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Format", 
+					Default = null, // null if null
+					Brief = "File format",
+					Index = 6,
+					Key = "format"
+					},
+				new DescribeEntryOption () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "Output file",
+					Index = 7,
+					Key = "file"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Password", 
+					Default = null, // null if null
+					Brief = "Password to encrypt private key",
+					Index = 8,
+					Key = "password"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Private", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 9,
+					Key = "private"
+					},
+				new DescribeEntryOption () {
+					Identifier = "ID", 
+					Default = null, // null if null
+					Brief = "Key identifier",
+					Index = 10,
+					Key = "id"
+					}
+				}
+			};
+
+		}
+
+    public partial class SSHPrivate : _SSHPrivate {
+        } // class SSHPrivate
+
+    public class _SSHPublic : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting,
+							IKeyFileOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new NewFile (),
+			new String (),
+			new Flag (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [format]</summary>
+		public virtual String Format {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Format {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [file]</summary>
+		public virtual NewFile File {
+			get => _Data[7] as NewFile;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [password]</summary>
+		public virtual String Password {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Password {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [private]</summary>
+		public virtual Flag Private {
+			get => _Data[9] as Flag;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Private {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[10] as String;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[10].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -18997,10 +19132,24 @@ namespace Goedel.Mesh.Shell {
 					Key = "file"
 					},
 				new DescribeEntryOption () {
+					Identifier = "Password", 
+					Default = null, // null if null
+					Brief = "Password to encrypt private key",
+					Index = 8,
+					Key = "password"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Private", 
+					Default = "false", // null if null
+					Brief = "<Unspecified>",
+					Index = 9,
+					Key = "private"
+					},
+				new DescribeEntryOption () {
 					Identifier = "ID", 
 					Default = null, // null if null
 					Brief = "Key identifier",
-					Index = 8,
+					Index = 10,
 					Key = "id"
 					}
 				}
@@ -20390,22 +20539,22 @@ namespace Goedel.Mesh.Shell {
 			return null;
 			}
 
-		public virtual ShellResult SMIMEPrivate ( SMIMEPrivate Options) {
+		public virtual ShellResult SmimeSign ( SmimeSign Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult SMIMEPublic ( SMIMEPublic Options) {
+		public virtual ShellResult SmimeEncrypt ( SmimeEncrypt Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult PGPPrivate ( PGPPrivate Options) {
+		public virtual ShellResult OpenpgpSign ( OpenpgpSign Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult PGPPublic ( PGPPublic Options) {
+		public virtual ShellResult OpenpgpEncrypt ( OpenpgpEncrypt Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

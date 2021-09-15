@@ -34,11 +34,11 @@ namespace Goedel.XUnit {
             device1.Dispatch($"ssh add");
             device1.Dispatch($"ssh private");
             device1.Dispatch($"ssh public");
-            device1.Dispatch($"ssh show auth");
+            //device1.Dispatch($"ssh show auth");
 
             device2.Dispatch($"ssh private");
             device2.Dispatch($"ssh public");
-            device2.Dispatch($"ssh show auth");
+            //device2.Dispatch($"ssh show auth");
 
             var device3 = GetConnectedCLI(device1, "Device3", AliceAccount);
 
@@ -46,9 +46,9 @@ namespace Goedel.XUnit {
             device3.Dispatch($"ssh public");
 
             // should all match
-            device1.Dispatch($"ssh show auth");
-            device2.Dispatch($"ssh show auth");
-            device3.Dispatch($"ssh show auth");
+            //device1.Dispatch($"ssh show auth");
+            //device2.Dispatch($"ssh show auth");
+            //device3.Dispatch($"ssh show auth");
             }
 
         //[Fact]

@@ -532,28 +532,28 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SMIMEPrivate(Goedel.Mesh.Shell.SMIMEPrivate)">
+        <member name="M:Goedel.Mesh.Shell.Shell.SmimeSign(Goedel.Mesh.Shell.SmimeSign)">
             <summary>
             Dispatch method
             </summary>
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SMIMEPublic(Goedel.Mesh.Shell.SMIMEPublic)">
+        <member name="M:Goedel.Mesh.Shell.Shell.SmimeEncrypt(Goedel.Mesh.Shell.SmimeEncrypt)">
             <summary>
             Dispatch method
             </summary>
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.PGPPrivate(Goedel.Mesh.Shell.PGPPrivate)">
+        <member name="M:Goedel.Mesh.Shell.Shell.OpenpgpSign(Goedel.Mesh.Shell.OpenpgpSign)">
             <summary>
             Dispatch method
             </summary>
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.PGPPublic(Goedel.Mesh.Shell.PGPPublic)">
+        <member name="M:Goedel.Mesh.Shell.Shell.OpenpgpEncrypt(Goedel.Mesh.Shell.OpenpgpEncrypt)">
             <summary>
             Dispatch method
             </summary>
@@ -3542,118 +3542,136 @@
         <member name="P:Goedel.Mesh.Shell._MailUpdate.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.LocalName">
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.Verbose">
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.Report">
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.Json">
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.Format">
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.Format">
             <summary>Field accessor for option [format]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.Password">
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.Password">
             <summary>Field accessor for option [password]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.File">
-            <summary>Field accessor for option [file]</summary>
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.Private">
+            <summary>Field accessor for option [private]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.Address">
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.LocalName">
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.Verbose">
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.Report">
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.Json">
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.Format">
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.Format">
             <summary>Field accessor for option [format]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.File">
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.File">
             <summary>Field accessor for option [file]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.Address">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.Format">
-            <summary>Field accessor for option [format]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.Password">
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.Password">
             <summary>Field accessor for option [password]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.File">
-            <summary>Field accessor for option [file]</summary>
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.Private">
+            <summary>Field accessor for option [private]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.Address">
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPublic.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPublic.LocalName">
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPublic.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPublic.Verbose">
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPublic.Report">
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPublic.Json">
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPublic.Format">
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.Format">
             <summary>Field accessor for option [format]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPublic.File">
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.File">
             <summary>Field accessor for option [file]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPublic.Address">
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.Password">
+            <summary>Field accessor for option [password]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.Private">
+            <summary>Field accessor for option [private]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.Address">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.Format">
+            <summary>Field accessor for option [format]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.Password">
+            <summary>Field accessor for option [password]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.Private">
+            <summary>Field accessor for option [private]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailList.AccountAddress">
@@ -3755,11 +3773,14 @@
         <member name="P:Goedel.Mesh.Shell._SSHPrivate.Format">
             <summary>Field accessor for option [format]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHPrivate.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHPrivate.Password">
             <summary>Field accessor for option [password]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.File">
-            <summary>Field accessor for option [file]</summary>
+        <member name="P:Goedel.Mesh.Shell._SSHPrivate.Private">
+            <summary>Field accessor for option [private]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHPrivate.ID">
             <summary>Field accessor for option [id]</summary>
@@ -3787,6 +3808,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHPublic.File">
             <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHPublic.Password">
+            <summary>Field accessor for option [password]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHPublic.Private">
+            <summary>Field accessor for option [private]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHPublic.ID">
             <summary>Field accessor for option [id]</summary>
@@ -4059,14 +4086,6 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultFail.Success">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ResultFail.Reason">
-            <summary>
-            </summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell.ResultFail._Tag">
             <summary>
             Tag identifying this class
@@ -4333,7 +4352,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultKeyFile.Public">
+        <member name="P:Goedel.Mesh.Shell.ResultKeyFile.Private">
             <summary>
             </summary>
         </member>

@@ -17,7 +17,43 @@
 
 MSBuildThisFileDirectory = 
 
-LinkFiles = 
+LinkFiles = \
+    Microsoft.Bcl.AsyncInterfaces.dll\
+    Microsoft.Extensions.Configuration.dll\
+    Microsoft.Extensions.Configuration.Abstractions.dll\
+    Microsoft.Extensions.Configuration.Binder.dll\
+    Microsoft.Extensions.Configuration.CommandLine.dll\
+    Microsoft.Extensions.Configuration.EnvironmentVariables.dll\
+    Microsoft.Extensions.Configuration.FileExtensions.dll\
+    Microsoft.Extensions.Configuration.Json.dll\
+    Microsoft.Extensions.DependencyInjection.dll\
+    Microsoft.Extensions.DependencyInjection.Abstractions.dll\
+    Microsoft.Extensions.FileProviders.Abstractions.dll\
+    Microsoft.Extensions.FileProviders.Physical.dll\
+    Microsoft.Extensions.FileSystemGlobbing.dll\
+    Microsoft.Extensions.Hosting.Abstractions.dll\
+    Microsoft.Extensions.Logging.dll\
+    Microsoft.Extensions.Logging.Abstractions.dll\
+    Microsoft.Extensions.Logging.Configuration.dll\
+    Microsoft.Extensions.Logging.Console.dll\
+    Microsoft.Extensions.Logging.Debug.dll\
+    Microsoft.Extensions.Logging.EventLog.dll\
+    Microsoft.Extensions.Logging.EventSource.dll\
+    Microsoft.Extensions.Options.dll\
+    Microsoft.Extensions.Options.ConfigurationExtensions.dll\
+    Microsoft.Extensions.Primitives.dll\
+    System.Buffers.dll\
+    System.Diagnostics.DiagnosticSource.dll\
+    System.Memory.dll\
+    System.Numerics.Vectors.dll\
+    System.Runtime.CompilerServices.Unsafe.dll\
+    System.Runtime.InteropServices.RuntimeInformation.dll\
+    System.Security.Cryptography.Algorithms.dll\
+    System.Security.Cryptography.Primitives.dll\
+    System.Text.Encodings.Web.dll\
+    System.Text.Json.dll\
+    System.Threading.Tasks.Extensions.dll\
+    System.ValueTuple.dll
 
 ToolTargets = \
 	Applications.aml\
