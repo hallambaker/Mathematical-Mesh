@@ -1541,9 +1541,9 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetApplicationMail(System.String)">
             <summary>
-            Get the Mail application <paramref name="applicationId"/>.
+            Get the Mail application <paramref name="address"/>.
             </summary>
-            <param name="applicationId">The name of the specific Mail application.</param>
+            <param name="address">The email address.</param>
             <returns>The application iff found, otherwise null.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetApplicationEntry(System.String)">

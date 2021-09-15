@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography.KeyFile;
 using Goedel.Registry;
 using Goedel.Utilities;
 
@@ -38,8 +39,11 @@ namespace Goedel.Mesh.Shell {
             using var contextDevice = GetContextUser(options);
             using var transaction = contextDevice.TransactBegin();
 
-            var key = $"mailto:{address}";
-            var applicationMail = CatalogedApplicationMail.Create(key,rights);
+            var applicationMail = CatalogedApplicationMail.Create(address, rights);
+            applicationMail.AccountAddress = address;
+            applicationMail.InboundConnect = options.Inbound.Value;
+            applicationMail.OutboundConnect = options.Outbound.Value;
+
 
             transaction.ApplicationCreate(applicationMail);
             //transaction.ApplicationCreate(applicationMail);
@@ -115,11 +119,14 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SMIMEPrivate(SMIMEPrivate options) {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
+            var fileName = options.File.Value;
+            
             using var contextDevice = GetContextUser(options);
 
             var applicationMail = contextDevice.GetApplicationMail(address);
 
             // dump out the private SMIME from applicationMail
+            applicationMail.SmimeEncryptKeyPair.ToKeyFile(fileName, KeyFileFormat.PEMPrivate);
 
 
             throw new NYI();

@@ -371,10 +371,11 @@ namespace Goedel.IO {
         /// <param name="filename">The new file name.</param>
         /// <param name="text">Text to write to file.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static void WriteFileNew(this string filename, string text) {
+        public static long WriteFileNew(this string filename, string text) {
             using var outStream = filename.OpenFileNew();
             using var textWriter = new StreamWriter(outStream);
             textWriter.Write(text);
+            return outStream.Position;
             }
 
         /// <summary>

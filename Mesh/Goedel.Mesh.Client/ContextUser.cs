@@ -1691,12 +1691,13 @@ namespace Goedel.Mesh.Client {
                 string applicationId)  => GetApplication(applicationId) as CatalogedApplicationSsh;
 
         /// <summary>
-        /// Get the Mail application <paramref name="applicationId"/>.
+        /// Get the Mail application <paramref name="address"/>.
         /// </summary>
-        /// <param name="applicationId">The name of the specific Mail application.</param>
+        /// <param name="address">The email address.</param>
         /// <returns>The application iff found, otherwise null.</returns>
         public CatalogedApplicationMail GetApplicationMail(
-                string applicationId) => GetApplication(applicationId) as CatalogedApplicationMail;
+                string address) => GetApplication(
+                    CatalogedApplicationMail.GetKey(address)) as CatalogedApplicationMail;
 
         /// <summary>
         /// Get the application entry  for the context device.<paramref name="applicationId"/>.

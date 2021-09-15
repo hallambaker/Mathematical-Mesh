@@ -82,24 +82,24 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => Key;
 
         ///<summary>The S/MIME signature key.</summary> 
-        public KeyPair SmimeSignKeyPair { private get; init; }
+        public KeyPair SmimeSignKeyPair {  get; init; }
         ///<summary>The S/MIME encryption key.</summary> 
-        public KeyPair SmimeEncryptKeyPair { private get; init; }
+        public KeyPair SmimeEncryptKeyPair {  get; init; }
 
         ///<summary>The OpenPGP signature key.</summary> 
-        public KeyPair OpenpgpSignKeyPair { private get; init; }
+        public KeyPair OpenpgpSignKeyPair {  get; init; }
         ///<summary>The OpenPGP encryption key.</summary> 
-        public KeyPair OpenpgpEncryptKeyPair { private get; init; }
+        public KeyPair OpenpgpEncryptKeyPair {  get; init; }
         #endregion
         #region // Constructors and factories
         /// <summary>
         /// Create a new mail application instance.
         /// </summary>
-        /// <param name="key">The name of the mail application.</param>
+        /// <param name="address">The email address.</param>
         /// <param name="roles">The roles to which the application is granted.</param>
         /// <returns></returns>
-        public static CatalogedApplicationMail Create(string key, List<string> roles) {
-
+        public static CatalogedApplicationMail Create(string address, List<string> roles) {
+            var key = GetKey(address);
             var smimeSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
                      KeySecurity.Exportable, keySize: 2048);
             var smimeEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
@@ -124,6 +124,10 @@ namespace Goedel.Mesh {
             }
         #endregion
         #region // Methods
+
+        public static string GetKey (string address) => $"mailto:{address}";
+
+
         ///<inheritdoc/>
         public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
             var activation = new ActivationApplicationMail() {
