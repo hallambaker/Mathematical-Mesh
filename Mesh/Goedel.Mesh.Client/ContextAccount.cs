@@ -530,6 +530,7 @@ namespace Goedel.Mesh.Client {
                     syncStore.Store.Dispose();
                     syncStore.Store = MakeStore(name);
                     }
+
                 return syncStore.Store;
                 }
 

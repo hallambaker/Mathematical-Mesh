@@ -20,8 +20,12 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography;
+using System.Net;
+
 using Goedel.Cryptography.KeyFile;
 using Goedel.Utilities;
+using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -38,19 +42,25 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult SSHCreate(SSHCreate options) {
             var rights = GetRights(options);
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextUser(options);
-            using var transaction = contextDevice.TransactBegin();
+            var contextUser = GetContextUser(options);
+            using var transaction = contextUser.TransactBegin();
 
-            var applicationSSH = new CatalogedApplicationSsh() {
-                Key = id,
-                Grant = rights
-                };
+            var applicationSSH = CatalogedApplicationSsh.Create(id, rights);
 
             transaction.ApplicationCreate(applicationSSH);
             //transaction.ApplicationDeviceAdd(applicationSSH);
-            var result = transaction.Transact();
+            var resultTransact = transaction.Transact();
 
-            throw new NYI();
+
+            return resultTransact.Success() ?
+                new ResultApplication() {
+                    Success = true,
+                    Application = applicationSSH
+                    } :
+                    new ResultFail() {
+                        Success = false,
+                        Reason = "TBS"
+                        };
             }
 
 
@@ -61,8 +71,8 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHAddHost(SSHAddHost options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextUser(options);
-            using var transaction = contextDevice.TransactBegin();
+            var contextUser = GetContextUser(options);
+            using var transaction = contextUser.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
 
@@ -82,8 +92,8 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHKnown(SSHKnown options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextUser(options);
-            using var transaction = contextDevice.TransactBegin();
+            var contextUser = GetContextUser(options);
+            using var transaction = contextUser.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
             //var known = catalogApplication.GetSshHosts(id);
@@ -101,8 +111,8 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHAuth(SSHAuth options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextUser(options);
-            using var transaction = contextDevice.TransactBegin();
+            var contextUser = GetContextUser(options);
+            using var transaction = contextUser.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
             //var known = catalogApplication.GetSshClients(id);
@@ -119,20 +129,23 @@ namespace Goedel.Mesh.Shell {
             var format = options.Format.Value;
             var fileName = options.File.Value;
             var password = options.Password.Value;
-            using var contextUser = GetContextUser(options);
+            var contextUser = GetContextUser(options);
 
-
+            var applicationEntrySsh = contextUser.GetApplicationEntrySsh(id);
+            var keyData = applicationEntrySsh.Activation.ClientKey;
+            var keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
+            var keyFileFormat = KeyFileFormat.PEMPrivate;
 
             var applicationSsh = contextUser.GetApplicationSsh(id);
 
             return KeyToFile(
-                applicationSsh.ClientKeyPrivate,
-                fileName,
-                format,
-                password,
-                true,
-                KeyFileFormat.PEMPrivate
-                );
+                    keyPair,
+                    fileName,
+                    format,
+                    password,
+                    true,
+                    keyFileFormat
+                    );
             }
 
         /// <summary>
@@ -145,20 +158,20 @@ namespace Goedel.Mesh.Shell {
             var format = options.Format.Value;
             var fileName = options.File.Value;
             var password = options.Password.Value;
-            using var contextUser = GetContextUser(options);
-
-
+            var contextUser = GetContextUser(options);
 
             var applicationSsh = contextUser.GetApplicationSsh(id);
+            var keyPair = applicationSsh.ClientKey.GetKeyPair();
+            var keyFileFormat = KeyFileFormat.PEMPublic;
 
             return KeyToFile(
-                applicationSsh.ClientKeyPrivate,
-                fileName,
-                format,
-                password,
-                false,
-                KeyFileFormat.PEMPrivate
-                );
+                    keyPair,
+                    fileName,
+                    format,
+                    password,
+                    false,
+                    keyFileFormat
+                    );
             }
 
 
@@ -169,8 +182,8 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult SSHAddClient(SSHAddClient options) {
             var id = options.ID.Value ?? "ssh";
-            using var contextDevice = GetContextUser(options);
-            using var transaction = contextDevice.TransactBegin();
+            var contextUser = GetContextUser(options);
+            using var transaction = contextUser.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
 

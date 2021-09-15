@@ -558,6 +558,10 @@ namespace Goedel.Mesh {
 
         ///<summary>Canonical name for local spool</summary>
         public const string Label = MeshConstants.MMM_Local;
+
+
+        protected override void Dispose(bool disposing) => 
+            base.Dispose(disposing); 
         #endregion
         #region // Factory methods and constructors
 

@@ -40,8 +40,8 @@ namespace Goedel.Mesh.Shell {
             var address = options.Address.Value.AssertNotNull(NYI.Throw);
             var rights = GetRights(options);
 
-            using var contextDevice = GetContextUser(options);
-            using var transaction = contextDevice.TransactBegin();
+            var contextUser = GetContextUser(options);
+            using var transaction = contextUser.TransactBegin();
 
             var applicationMail = CatalogedApplicationMail.Create(address, rights);
             applicationMail.AccountAddress = address;
@@ -103,8 +103,8 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MailList(MailList options) {
 
-            using var contextDevice = GetContextUser(options);
-            using var transaction = contextDevice.TransactBegin();
+            var contextUser = GetContextUser(options);
+            using var transaction = contextUser.TransactBegin();
 
             var catalogApplication = transaction.GetCatalogApplication();
             var known = catalogApplication.GetMail();
@@ -157,16 +157,16 @@ namespace Goedel.Mesh.Shell {
 
             KeyPair keyPair;
             KeyFileFormat keyFileFormat;
-            if (!privateKey) {
-                var applicationMail = contextUser.GetApplicationMail(address);
-                keyPair = applicationMail.SmimeSign.GetKeyPair();
-                keyFileFormat = KeyFileFormat.PEMPublic;
-                }
-            else {
+            if (privateKey) {
                 var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
                 var keyData = applicationEntryMail.Activation.SmimeSign;
                 keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
                 keyFileFormat = KeyFileFormat.PEMPrivate;
+                }
+            else {
+                var applicationMail = contextUser.GetApplicationMail(address);
+                keyPair = applicationMail.SmimeSign.GetKeyPair();
+                keyFileFormat = KeyFileFormat.PEMPublic;
                 }
 
             return KeyToFile(
@@ -190,20 +190,20 @@ namespace Goedel.Mesh.Shell {
             var fileName = options.File.Value;
             var password = options.Password.Value;
             var privateKey = options.Private.Value;
-            using var contextUser = GetContextUser(options);
+            var contextUser = GetContextUser(options);
 
             KeyPair keyPair;
             KeyFileFormat keyFileFormat;
-            if (!privateKey) {
-                var applicationMail = contextUser.GetApplicationMail(address);
-                keyPair = applicationMail.SmimeEncrypt.GetKeyPair();
-                keyFileFormat = KeyFileFormat.PEMPublic;
-                }
-            else {
+            if (privateKey) {
                 var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
                 var keyData = applicationEntryMail.Activation.SmimeEncrypt;
                 keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
                 keyFileFormat = KeyFileFormat.PEMPrivate;
+                }
+            else {
+                var applicationMail = contextUser.GetApplicationMail(address);
+                keyPair = applicationMail.SmimeEncrypt.GetKeyPair();
+                keyFileFormat = KeyFileFormat.PEMPublic;
                 }
 
             return KeyToFile(
@@ -228,20 +228,21 @@ namespace Goedel.Mesh.Shell {
             var fileName = options.File.Value;
             var password = options.Password.Value;
             var privateKey = options.Private.Value;
-            using var contextUser = GetContextUser(options);
+            var contextUser = GetContextUser(options);
 
             KeyPair keyPair;
             KeyFileFormat keyFileFormat;
-            if (!privateKey) {
-                var applicationMail = contextUser.GetApplicationMail(address);
-                keyPair = applicationMail.OpenpgpSign.GetKeyPair();
-                keyFileFormat = KeyFileFormat.PEMPublic;
-                }
-            else {
+            if (privateKey) {
                 var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
                 var keyData = applicationEntryMail.Activation.OpenpgpSign;
                 keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
                 keyFileFormat = KeyFileFormat.PEMPrivate;
+                }
+            else {
+                var applicationMail = contextUser.GetApplicationMail(address);
+                keyPair = applicationMail.OpenpgpSign.GetKeyPair();
+                keyFileFormat = KeyFileFormat.PEMPublic;
+
                 }
 
             return KeyToFile(
@@ -266,20 +267,20 @@ namespace Goedel.Mesh.Shell {
             var fileName = options.File.Value;
             var password = options.Password.Value;
             var privateKey = options.Private.Value;
-            using var contextUser = GetContextUser(options);
+            var contextUser = GetContextUser(options);
 
             KeyPair keyPair;
             KeyFileFormat keyFileFormat;
-            if (!privateKey) {
-                var applicationMail = contextUser.GetApplicationMail(address);
-                keyPair = applicationMail.OpenpgpEncrypt.GetKeyPair();
-                keyFileFormat = KeyFileFormat.PEMPublic;
-                }
-            else {
+            if (privateKey) {
                 var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
                 var keyData = applicationEntryMail.Activation.OpenpgpEncrypt;
                 keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
                 keyFileFormat = KeyFileFormat.PEMPrivate;
+                }
+            else {
+                var applicationMail = contextUser.GetApplicationMail(address);
+                keyPair = applicationMail.OpenpgpEncrypt.GetKeyPair();
+                keyFileFormat = KeyFileFormat.PEMPublic;
                 }
 
             return KeyToFile(
