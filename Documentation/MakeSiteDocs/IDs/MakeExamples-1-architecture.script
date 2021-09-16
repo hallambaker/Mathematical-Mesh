@@ -142,18 +142,34 @@ Alice disconnects the new device:
 
 #%  ConsoleExample (Example.Connect.Disconnect);
 
-The device can no longer access the password catalog:
 
-#%  ConsoleExample (Example.Connect.PasswordList2Disconnect);
 
 #end zfile
 
 #zfile CreateExamples ArchitectureDisconnectWebDecrypts "Examples\\ArchitectureDisconnectWebDecrypts.md" Example
+
 #{Unfinished ("ArchitectureDisconnectWebDecrypts")}
+
+The device can no longer access the password catalog:
+
+#%  ConsoleExample (Example.Connect.PasswordList2Disconnect);
+
+#{Unfinished ("ArchitectureDisconnectWebDecrypts")}
+
+But it can still decrypt files:
+
+
 #end zfile
 
 #zfile CreateExamples ArchitectureDisconnectThresholdDecrypts "Examples\\ArchitectureDisconnectThresholdDecrypts.md" Example
+
 #{Unfinished ("ArchitectureDisconnectThresholdDecrypts")}
+
+The device can no longer access the password catalog or decrypt files:
+
+#%  ConsoleExample (null);
+
+
 #end zfile
 
 #zfile CreateExamples ArchitectureConfigSSH "Examples\\ArchitectureConfigSSH.md" Example

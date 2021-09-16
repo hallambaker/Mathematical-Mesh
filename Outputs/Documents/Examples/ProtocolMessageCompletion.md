@@ -9,10 +9,10 @@ a completion message to the Local spool.
 ~~~~
 {
   "MessageComplete":{
-    "MessageId":"NCGK-JALZ-YJY7-7RI6-KYAQ-RYGU-QLOW",
+    "MessageId":"NAWW-634V-NJ4F-TULE-O2PH-TDOW-MZF5",
     "References":[{
-        "MessageId":"ABF7-CTWL-U2EV-KAEF-OLNM-XAW7-76XZ",
-        "ResponseId":"MDIU-J7RJ-ZXKZ-GWIH-PU4Z-7G57-W3BG",
+        "MessageId":"ACRP-ZONR-F3S5-JHFV-I5LK-QBDO-3PJT",
+        "ResponseId":"MD66-RSEY-3BOY-6FPY-5FX2-VTOX-WIDR",
         "Relationship":"Closed"}
       ]}}
 ~~~~

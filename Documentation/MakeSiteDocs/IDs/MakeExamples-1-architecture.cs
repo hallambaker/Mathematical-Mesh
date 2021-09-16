@@ -242,9 +242,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Connect.Disconnect);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The device can no longer access the password catalog:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Example.Connect.PasswordList2Disconnect);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -259,7 +257,18 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureDisconnectWebDecrypts(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureDisconnectWebDecrypts"));
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device can no longer access the password catalog:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.Connect.PasswordList2Disconnect);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureDisconnectWebDecrypts"));
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("But it can still decrypt files:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -273,7 +282,14 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureDisconnectThresholdDecrypts(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureDisconnectThresholdDecrypts"));
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device can no longer access the password catalog or decrypt files\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (null);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
