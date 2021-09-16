@@ -156,7 +156,6 @@ application.
 #end zfile
 
 #zfile CreateExamples ArchitectureConfigSSH "Examples\\ArchitectureConfigSSH.md" Example
-#{Unfinished ("ArchitectureConfigSSH")}
 
 Alice creates an SSH profile within her Mesh on the administrative device making the 
 private key information available to devices she has connected to her Mesh with the 
@@ -289,8 +288,6 @@ volume of requests in a short period.
 #end zfile
 
 #zfile CreateExamples ArchitectureConnectEARL "Examples\\ArchitectureConnectEARL.md" Example
-#{Unfinished ("ArchitectureConnectEARL")}
-
 #{Preformat}
 #{Connect.ConnectEARL}
 #{Preformat}
