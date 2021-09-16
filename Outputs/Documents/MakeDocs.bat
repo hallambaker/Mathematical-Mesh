@@ -13,6 +13,9 @@ constant %Root%/Libraries/Goedel.Cryptography/UDFConstants.constant /md
 constant %Root%/Mesh/Goedel.Mesh/MeshConstants.constant /md
 
 
+QRCoderConsole -i="..\Examples\ArchitectureConnectEARL-raw.md" -f=svg -o=UDFConnectEARLRAW.svg -s=7
+QRCoderConsole -i="..\Examples\ArchitectureConnectEARL-raw.md" -f=png -o=UDFConnectEARLRAW.png
+
 QRCoderConsole -i="..\Examples\UDFDigestEARL-raw.md" -f=svg -o=UDFDigestEARLRAW.svg -s=7
 QRCoderConsole -i="..\Examples\UDFDigestEARL-raw.md" -f=png -o=UDFDigestEARLRAW.png
 

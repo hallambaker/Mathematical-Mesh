@@ -45,6 +45,7 @@ namespace ExampleGenerator {
 			 UDFTableReservedId(Example);
 			 UDFShamirRecovery(Example);
 			 UDFPrimes(Example);
+			 JSONBCDApplication(Example);
 			}
 		
 
@@ -1114,6 +1115,21 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("##Command commit\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// JSONBCDApplication
+		//
+		public static void JSONBCDApplication(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\JSONBCDApplication.md");
+			Example._Output = _Output;
+			Example._JSONBCDApplication(Example);
+			}
+		public void _JSONBCDApplication(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		}

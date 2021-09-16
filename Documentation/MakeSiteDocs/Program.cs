@@ -40,61 +40,26 @@ namespace ExampleGenerator {
     // ToDo: Example - Delete account at service (implement)
     // ToDo: Documentation - Include EARLs in Architecture guide
     // ToDo: Functionality - Add KMAC to key derrivation schemes. 
+    // ToDo: Constant MeshConstantsIdentifierDerrivation
+
+    // ToDo: Documentation Schema rewrite 6.5
+    // ToDo: Documentation Schema write 9.3
+    // ToDo: Documentation Schema Appendix A: Example Container Organization(not normative)
 
 
+    // ToDo: Documentation Protocol 3. Mesh Protocols link to RUD 
+    // ToDo: Documentation Protocol 6.2.1. Bind User Account wrong message!
+    // ToDo: Documentation Protocol 6.2.2. Bind Group Account  wrong message!
 
+    // ToDo: Documentation Protocol 6.2.3. Unbind Account
+    // ToDo: Documentation Protocol 6.3.2. Download - change to Transact!!!
+    // ToDo: Documentation Protocol 6.5. Publication
+    // ToDo: Documentation Protocol 6.6.1. Generate Key Shares
+    // ToDo: Documentation Protocol 6.6.2. Key Agreement
+    // ToDo: Documentation Protocol 6.6.3. Sign
+    // ToDo: Documentation Protocol 7.2. Completion Interaction
+    // ToDo: Documentation Protocol Section 8 needs work
 
-
-    // ToDo: ProtocolAccountCreate.md has wrong transaction
-    // DescribeRequest (Account?.CreateAlice?[0].Traces?[0]);
-
-    // ToDo: ProtocolCreateGroup do we use separate transaction any more?
-    //DescribeRequest (Group?.GroupCreate?[0].Traces?[0]);
-
-
-
-    // ToDo: More bad stuff... 
-    // DescribeRequest (Account?.SyncAlice?[0].Traces?[0]);
-    // ProtocolDownload- obsolete, fix.
-    // This needs to be rewritten as well.
-
-
-    // ToDo: ProtocolPostServiceService - need to implement this.
-    // ToDo: Missing 25 Connect.ClaimUri
-
-    // ToDo: ProtocolCryptoKeyAgree
-    // DescribeRequest (Group?.GroupDecryptBobSuccess?[0].Traces?[1]);
-
-
-
-
-    // ToDo: Missing 32  Completion Interaction
-    // DescribeMessage (Connect.ConnectPINCompleteMessage);
-
-    // ToDo: Missing 40 Device Connection Phase 4 
-    // ConsoleExample (Connect.ConnectPINComplete);
-    // DescribeRequest (Connect.ConnectPINRequestComplete);
-
-    // ToDo: Kill most of part 8, make references to Threshold draft, 
-    // re-evaluate algorithm choices, etc.
-
-
-
-
-
-
-    // ToDo: Example - 1 SSH key
-    // ToDo: Example - 1 EARL and QR code
-    // ToDo: Example - 1 SINs 
-    // ToDo: Example - 5 Protocol binding - make RUD reference
-    // ToDo: Example - 5 Missing lots of examples
-    // ToDo: Example - 6 Capture RUD example data
-    // ToDo: Example - 8 Crypto examples (chek with Threshold draft overlap)
-
-    // ToDo: Application SSH
-    // ToDo: Application OpenPGP (PEM)
-    // ToDo: Application S/MIME (PKCS8 / 12) 
-    // ToDo: PEM encrypted private key
 
     public partial class CreateExamples {
 

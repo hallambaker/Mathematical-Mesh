@@ -82,6 +82,8 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult AccountDelete(AccountDelete options) {
             var profileUdf = options.ProfileUdf.Value;
 
+
+
             var contextUser = MeshHost.LocateMesh(profileUdf, false);
             contextUser.AssertNotNull(ProfileFingerprintInvalid.Throw);
 
@@ -147,12 +149,13 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult AccountGetPIN(AccountGetPIN options) {
             var contextAccount = GetContextUser(options);
             var rights = GetRights(options);
+            var bits = 5* options.Length.Value;
 
             var expire = TimeSpan.Parse(options.Expire.Value);
             // ToDo: Allow other actions besides device.
 
             var messageConnectionPIN = contextAccount.GetPIN(MeshConstants.MessagePINActionDevice,
-                        validity: expire.Ticks, roles: rights);
+                        validity: expire.Ticks, roles: rights, bits:bits);
 
             var result = new ResultPIN() {
                 MessagePIN = messageConnectionPIN,

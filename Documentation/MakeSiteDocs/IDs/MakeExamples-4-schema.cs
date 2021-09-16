@@ -163,6 +163,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaAliceDeviceCoffee(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("Connect.AliceProfileDeviceCoffee"));
 				_Output.Write ("\n{0}", _Indent);
 				  Format (Connect.AliceProfileDeviceCoffee);
 				_Output.Write ("\n{0}", _Indent);
@@ -179,7 +180,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaAliceActivationCoffee(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("Connect.AliceActivationDeviceCoffee"));
 				_Output.Write ("\n{0}", _Indent);
 				  Format (Connect.AliceActivationDeviceCoffee);
 				_Output.Write ("\n{0}", _Indent);
@@ -211,6 +212,8 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaAliceActivationWatch(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("Connect.AliceActivationDeviceWatch"));
+				_Output.Write ("\n{0}", _Indent);
 				  Format (Connect.AliceActivationDeviceWatch);
 					}
 		
@@ -486,6 +489,9 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaMaster(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("SchemaMastere"));
+				_Output.Write ("\n{0}", _Indent);
 				 Format(AliceProfileAccount);
 					}
 		
@@ -500,6 +506,9 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDevice(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("SchemaDevice"));
+				_Output.Write ("\n{0}", _Indent);
 				 Format(Connect.AliceProfileDeviceCoffee);
 					}
 		
@@ -514,6 +523,9 @@ namespace ExampleGenerator {
 			}
 		public void _DevicePreconfiguration(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("DevicePreconfiguration"));
+				_Output.Write ("\n{0}", _Indent);
 				 Format(Connect.ConnectStaticPreconfig);
 					}
 		

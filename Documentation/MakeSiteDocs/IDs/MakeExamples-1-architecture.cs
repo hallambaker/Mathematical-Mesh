@@ -37,6 +37,7 @@ namespace ExampleGenerator {
 			 ArchitectureConfirm(Example);
 			 ArchitectureRecrypt(Example);
 			 ArchVariousUDF(Example);
+			 ArchitectureConnectEARLRaw(Example);
 			 ArchitectureConnectEARL(Example);
 			 ArchSIN(Example);
 			}
@@ -442,6 +443,20 @@ namespace ExampleGenerator {
 				_Output.Write ("{1}\n{0}", _Indent, Example.ResultDigestSHA3.Digest);
 				_Output.Write ("{1}\n{0}", _Indent, Example.ResultCommitSHA2.Digest);
 				_Output.Write ("{1}\n{0}", _Indent, Preformat);
+					}
+		
+
+		//
+		// ArchitectureConnectEARLRaw
+		//
+		public static void ArchitectureConnectEARLRaw(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ArchitectureConnectEARL-raw.md");
+			Example._Output = _Output;
+			Example._ArchitectureConnectEARLRaw(Example);
+			}
+		public void _ArchitectureConnectEARLRaw(CreateExamples Example) {
+
+				_Output.Write ("{1}", _Indent, Connect.ConnectEARL);
 					}
 		
 

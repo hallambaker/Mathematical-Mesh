@@ -31,8 +31,8 @@ LinkFiles = \
 ToolTargets = \
 	Exceptions.cs\
 	meshman.cs\
-	Results - Copy.cs\
 	Results.cs
+
 Exceptions.cs : Exceptions.Exceptional 
 	exceptional Exceptions.Exceptional  /cs  Exceptions.cs
 

@@ -1892,6 +1892,9 @@
         <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.Length">
+            <summary>Field accessor for option [length]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MessageContact.Recipient">
             <summary>Field accessor for parameter []</summary>
         </member>

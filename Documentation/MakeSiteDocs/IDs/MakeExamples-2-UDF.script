@@ -35,7 +35,9 @@
 #% UDFTableReservedId(Example);
 #% UDFShamirRecovery(Example);
 #% UDFPrimes(Example);
+#% JSONBCDApplication(Example);
 #end method
+
 
 #method2 DescribeValueUDF string tag string text
 #% var ptag = (tag + ":").PadRight (12);
@@ -830,5 +832,13 @@ export HISTFILE=/dev/null
 ####Command commit
 
 #end zfile
+
+
+#zfile CreateExamples JSONBCDApplication "Examples\\JSONBCDApplication.md" Example
+
+
+#end zfile
+
+
 
 #end xclass

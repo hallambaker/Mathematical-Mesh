@@ -107,13 +107,14 @@ For example, the personal account profile Alice created is:
 #end zfile
 
 #zfile CreateExamples SchemaAliceDeviceCoffee "Examples\\SchemaAliceDeviceCoffee.md" Example
+#{Unfinished ("Connect.AliceProfileDeviceCoffee")}
 
 #%  Format (Connect.AliceProfileDeviceCoffee);
 
 #end zfile
 
 #zfile CreateExamples SchemaAliceActivationCoffee "Examples\\SchemaAliceActivationCoffee.md" Example
-
+#{Unfinished ("Connect.AliceActivationDeviceCoffee")}
 
 #%  Format (Connect.AliceActivationDeviceCoffee);
 
@@ -125,6 +126,8 @@ For example, the personal account profile Alice created is:
 #end zfile
 
 #zfile CreateExamples SchemaAliceActivationWatch "Examples\\SchemaAliceActivationWatch.md" Example
+#{Unfinished ("Connect.AliceActivationDeviceWatch")}
+
 #%  Format (Connect.AliceActivationDeviceWatch);
 #end zfile
 
@@ -262,14 +265,23 @@ witnessValue =  MAC (witnessData , saltedPINData)
 
 
 #zfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" Example
+
+#{Unfinished ("SchemaMastere")}
+
 #% Format(AliceProfileAccount);
 #end zfile
 
 #zfile CreateExamples SchemaDevice "Examples\\SchemaDevice.md" Example
+
+#{Unfinished ("SchemaDevice")}
+
 #% Format(Connect.AliceProfileDeviceCoffee);
 #end zfile
 
 #zfile CreateExamples DevicePreconfiguration "Examples\\DevicePreconfiguration.md" Example
+
+#{Unfinished ("DevicePreconfiguration")}
+
 #% Format(Connect.ConnectStaticPreconfig);
 #end zfile
 

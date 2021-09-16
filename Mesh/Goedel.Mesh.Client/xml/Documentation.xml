@@ -492,10 +492,10 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{System.String})">
             <summary>
-            Create a PIN value of length <paramref name="length"/> bits valid for 
+            Create a PIN value of length <paramref name="bits"/> bits valid for 
             <paramref name="validity"/> minutes.
             </summary>
-            <param name="length">The size of the PIN value to create in bits.</param>
+            <param name="bits">The size of the PIN value to create in bits.</param>
             <param name="validity">The validity interval in minutes from the current 
             date and time.</param>
             <param name="action">The action to which this pin is bound.</param>
@@ -1261,9 +1261,9 @@
             <param name="groupAddress">The group to return the management context for.</param>
             <returns>The created management context.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String@,Goedel.Mesh.ProfileDevice@,System.String@,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String@,Goedel.Mesh.ProfileDevice@,System.String@,System.String,System.Int32)">
             <summary>
-            Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionService@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)"/>. Generates a device profile
+            Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionService@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)"/>. Generates a device profile
             and writes the <see cref="T:Goedel.Mesh.DevicePreconfiguration"/> data to a file in the directory
             specified by <paramref name="path"/>.
             </summary>
@@ -1273,7 +1273,7 @@
             <param name="path"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionService@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionService@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)">
             <summary>
             Create an EARL for a device, publish the result to the Mesh service and return 
             the device profile <paramref name="profileDevice"/>, secret seed value 
@@ -1291,7 +1291,7 @@
             <param name="algorithmSign">The signature algorithm</param>
             <param name="algorithmAuthenticate">The signature algorithm</param>
             <param name="secret">The master secret.</param>
-            <param name="bits">The size of secret to generate in bits/</param>
+            <param name="bitsPin">The size of secret to generate in bits/</param>
             <returns>Response from the server.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Connect(System.String,System.Collections.Generic.List{System.String})">

@@ -115,7 +115,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolAccountCreate(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolAccountCreate"));
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  DescribeRequest (Account?.CreateAlice?[0].Traces?[0]);
@@ -137,7 +137,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolCreateGroup(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolCreateGroup"));
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  DescribeRequest (Group?.GroupCreate?[0].Traces?[0]);
@@ -204,6 +204,9 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolDownload(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolDownload"));
+				_Output.Write ("\n{0}", _Indent);
 				 ReportObsoleteExample();
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -221,6 +224,8 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolUpload(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolUpload"));
 				 ReportObsoleteExample();
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -261,6 +266,8 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolPostServiceService(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolPostServiceService"));
 				 ReportMissingExample();
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -277,6 +284,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolCryptoKeyShare(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolCryptoKeyShare"));
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  DescribeRequest (Group?.GroupAddBob?[0].Traces?[1]);
@@ -297,6 +305,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolCryptoKeyAgree(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolCryptoKeyAgree"));
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolCryptoKeyAgree  [GroupDecryptBobSuccess]"));
 				_Output.Write ("\n{0}", _Indent);
@@ -342,6 +351,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolMessageCompletion(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolMessageCompletion"));
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("After using the PIN code to authenticate connection of a device in the previous \n{0}", _Indent);
 				_Output.Write ("example, the corresponding MessagePin is marked as having been used by appending \n{0}", _Indent);
@@ -435,6 +445,8 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolClaim(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolClaim"));
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("A device is preconfigured during manufacture and a Device Description published to the\n{0}", _Indent);
 				_Output.Write ("EARL:\n{0}", _Indent);
@@ -471,6 +483,8 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolPollClaim(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolClaim"));
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The device in the example above periodically polls the service to which the device \n{0}", _Indent);
 				_Output.Write ("description is published to find if a claim has been registered.\n{0}", _Indent);
@@ -521,7 +535,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolConnectPIN(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolConnectPIN"));
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("### Phase 1:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -661,6 +675,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolConnectEARL(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolConnectEARL"));
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("### Phase 1\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

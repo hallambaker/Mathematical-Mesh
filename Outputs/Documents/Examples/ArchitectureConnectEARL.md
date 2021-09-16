@@ -1,3 +1,3 @@
 ~~~~
-mcu://maker@example.com/ECS7-YN44-SJUB-3Y7O-W6KM-6PIG-WOWN-NHCV-7PG2-MBEF-G2DM-3LJK-WNMJ-K
+mcu://maker@example.com/EAGV-AU5X-QPOA-YVSI-VZQH-I47K-7U
 ~~~~

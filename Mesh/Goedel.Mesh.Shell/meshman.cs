@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 9/16/2021 12:16:19 AM
+//  This file was automatically generated at 9/16/2021 1:51:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2484,8 +2484,8 @@ namespace Goedel.Mesh.Shell {
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
 					Identifier = "Length", 
-					Default = "8", // null if null
-					Brief = "Length of PIN to generate (default is 8 characters)",
+					Default = "24", // null if null
+					Brief = "Length of PIN to generate in characters",
 					Index = 0,
 					Key = "length"
 					},
@@ -6219,7 +6219,8 @@ namespace Goedel.Mesh.Shell {
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
-			new Flag ()			} ;
+			new Flag (),
+			new Integer ()			} ;
 
 
 
@@ -6279,6 +6280,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
+		/// <summary>Field accessor for option [length]</summary>
+		public virtual Integer Length {
+			get => _Data[6] as Integer;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Length {
+			set => _Data[6].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -6328,6 +6338,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Report output in JSON format",
 					Index = 5,
 					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Length", 
+					Default = "24", // null if null
+					Brief = "Length of PIN to generate in characters",
+					Index = 6,
+					Key = "length"
 					}
 				}
 			};

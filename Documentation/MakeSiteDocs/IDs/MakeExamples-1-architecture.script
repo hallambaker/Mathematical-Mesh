@@ -26,6 +26,7 @@
 #% ArchitectureConfirm(Example);
 #% ArchitectureRecrypt(Example);
 #% ArchVariousUDF(Example);
+#% ArchitectureConnectEARLRaw(Example);
 #% ArchitectureConnectEARL(Example);
 #% ArchSIN(Example);
 #end method
@@ -286,6 +287,11 @@ volume of requests in a short period.
 #{Example.ResultCommitSHA2.Digest}
 #{Preformat}
 #end zfile
+
+#zfile CreateExamples ArchitectureConnectEARLRaw "Examples\\ArchitectureConnectEARL-raw.md" Example
+#{Connect.ConnectEARL}#!
+#end zfile
+
 
 #zfile CreateExamples ArchitectureConnectEARL "Examples\\ArchitectureConnectEARL.md" Example
 #{Preformat}

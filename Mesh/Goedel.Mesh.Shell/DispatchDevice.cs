@@ -212,10 +212,12 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DevicePreconfigure(DevicePreconfigure options) {
+            var bits = 5 * options.Length.Value;
+
             using var contextAccount = GetContextUser(options);
 
             var devicePreconfiguration = contextAccount.Preconfigure(
-                out var filename, out var profileDevice, out var connectUri);
+                out var filename, out var profileDevice, out var connectUri, bits: bits);
 
             var result = new ResultPublishDevice() {
                 Uri = connectUri,

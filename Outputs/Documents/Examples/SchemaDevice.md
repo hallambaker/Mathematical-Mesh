@@ -1,32 +1,37 @@
+
+>>>> Unfinished SchemaDevice
+
+
+
 ~~~~
 {
   "ProfileDevice":{
     "ProfileSignature":{
-      "Udf":"MDXE-A6PM-RSAG-VFTZ-NJOH-K7FM-572S",
+      "Udf":"MA5Z-4LJT-DFUO-EK2C-F2FZ-IHCD-GN5A",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"uKtbnM7MAJQvHHKkUIeFo26p02xGAn36_jyK6QckNI2u5
-  X_tQ7h7YqYR1eq-dyjm1wsWpZJv-BKA"}}},
+          "Public":"EkyfxZeiovfhH5hdg-_7JIWEUQYecTWhk5a5RRp3hXNIS
+  VFfqln8ksLU8fCawBOydfsOz-_zmOOA"}}},
     "Encryption":{
-      "Udf":"MBIP-CHGH-X6HI-SKFA-2SPE-TYAM-NIZG",
+      "Udf":"MAZF-RJ35-MMV7-C4OO-3M3R-M4GI-PUOA",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"Fgpzts8Hg6-B_jUR1V6Ergn0JzRa5HChrbdzFTdZf6Y9I
-  ptzSyGpemypKPka2CTLL_6y0hi8hcGA"}}},
+          "Public":"AU_qDwErKTreENTeu3I1H7pn83WeJQw8UtT7tiL6znABD
+  vMxfGxxnwRUitVOqZAJwwbxA6XU7JwA"}}},
     "Signature":{
-      "Udf":"MAIN-G7KP-3QRD-X74C-ZWLR-L2XI-7LIG",
+      "Udf":"MAW3-KXOM-GE2E-QOK3-C6MM-DVT4-ODMA",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"nIlYBCRoue5x-K_yhyueLYG-qCteiuUdYm4JbeZy_-zJV
-  JJQCVL72Yxo2o34Ce1FVImVT39TbUGA"}}},
+          "Public":"_4Q-UeEnjyBw5iPLATD7b301xYqgDkrPw0JRdUKP87yv4
+  Q7MYRkiSqHQMAS-hIyESOGXLvo3YVaA"}}},
     "Authentication":{
-      "Udf":"MALN-TMWI-7CDM-C2PU-CBJX-3BR3-M232",
+      "Udf":"MAYW-LJBB-N2I2-CRCT-C53W-ZSXI-R3XK",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"7c4euZHwyvtzeLrx8u3dGFtKutNNQYygvaZZemiszjCqg
-  IEmtiufPdqFj2PZ5KfdFrls690thjkA"}}}}}
+          "Public":"ht3H80vspc-iwSJK380TNpahXWntwg1iaK9xYjWjDXLg6
+  BU3I9PYmwGGZiPqpKvIVJHjN4rj7hwA"}}}}}
 ~~~~

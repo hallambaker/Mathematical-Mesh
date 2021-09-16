@@ -206,10 +206,10 @@ namespace Goedel.Mesh.Client {
 
         #region // PIN code generation and use
         /// <summary>
-        /// Create a PIN value of length <paramref name="length"/> bits valid for 
+        /// Create a PIN value of length <paramref name="bits"/> bits valid for 
         /// <paramref name="validity"/> minutes.
         /// </summary>
-        /// <param name="length">The size of the PIN value to create in bits.</param>
+        /// <param name="bits">The size of the PIN value to create in bits.</param>
         /// <param name="validity">The validity interval in minutes from the current 
         /// date and time.</param>
         /// <param name="action">The action to which this pin is bound.</param>
@@ -219,12 +219,12 @@ namespace Goedel.Mesh.Client {
         /// <param name="encryptKey">The encryption key to be used to encrypt the PIN registration.</param>
         /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
         public MessagePin GetPIN(string action, bool automatic = true,
-                            int length = 80, long validity = MeshConstants.DayInTicks,
+                            int bits = 120, long validity = MeshConstants.DayInTicks,
                             bool register = true, CryptoKey encryptKey = null,
                             List<string> roles=null) {
 
 
-            var pin = UDF.AuthenticationKey(length);
+            var pin = UDF.AuthenticationKey(bits);
             var expires = DateTime.Now.AddTicks(validity);
             var messagePin = new MessagePin(pin, automatic, expires, AccountAddress, action) {
                 Roles = roles

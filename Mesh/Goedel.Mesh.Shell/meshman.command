@@ -206,8 +206,8 @@
 		Command AccountGetPIN "pin"
 			Brief "Get a pin value to pre-authorize a connection"
 			Option Length "length" Integer
-				Brief "Length of PIN to generate (default is 8 characters)"
-				Default "8"
+				Brief "Length of PIN to generate in characters"
+				Default "24"
 			Option Expire "expire" String
 				Default "1"
 			Include AccountOptions
@@ -377,7 +377,9 @@
 			Brief "Generate new device profile and publish as an EARL"
 			Include AccountOptions
 			Include Reporting
-
+			Option Length "length" Integer
+				Brief "Length of PIN to generate in characters"
+				Default "24"
 
 	CommandSet Message "message"
 		Brief "Contact and confirmation message options"

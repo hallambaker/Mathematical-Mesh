@@ -773,7 +773,8 @@ namespace Goedel.Mesh.Client {
                     out string filename,
                     out ProfileDevice profileDevice,
                     out string connectUri,
-                    string path = "") {
+                    string path = "",
+                    int bits =120) {
 
             CreateDeviceEarl(
                     out var secretSeed,
@@ -782,7 +783,8 @@ namespace Goedel.Mesh.Client {
                     out var connectionDevice,
                     
                     out var connectKey,
-                    out connectUri);
+                    out connectUri,
+                    bitsPin:bits);
 
             filename = Path.Combine(path, connectKey + ".medk");
 
@@ -816,7 +818,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="algorithmSign">The signature algorithm</param>
         /// <param name="algorithmAuthenticate">The signature algorithm</param>
         /// <param name="secret">The master secret.</param>
-        /// <param name="bits">The size of secret to generate in bits/</param>
+        /// <param name="bitsPin">The size of secret to generate in bits/</param>
         /// <returns>Response from the server.</returns>
         public bool CreateDeviceEarl(
                     out PrivateKeyUDF secretSeed,
@@ -830,7 +832,8 @@ namespace Goedel.Mesh.Client {
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                     CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
                     byte[] secret = null,
-                    int bits = 256
+                    int bitsPin = 256,
+                    int bitsSecret = 256
                     ) {
 
             // an invitation consists of a uri of the form:
@@ -839,10 +842,10 @@ namespace Goedel.Mesh.Client {
 
             secretSeed = new PrivateKeyUDF(
                 udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileDevice, secret: secret, algorithmEncrypt: algorithmEncrypt,
-                algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
+                algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits:bitsSecret);
 
 
-            pin = MeshUri.GetConnectPin(secretSeed, AccountAddress);
+            pin = MeshUri.GetConnectPin(secretSeed, AccountAddress, length:bitsPin);
 
             var key = new CryptoKeySymmetric(pin);
 

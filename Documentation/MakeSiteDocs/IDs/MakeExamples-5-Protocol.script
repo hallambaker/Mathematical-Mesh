@@ -68,7 +68,7 @@ The response payload:
 #end zfile
 
 #zfile CreateExamples ProtocolAccountCreate "Examples\\ProtocolAccountCreate.md" Example
-
+#{Unfinished ("ProtocolAccountCreate")}
 The request payload:
 
 #%  DescribeRequest (Account?.CreateAlice?[0].Traces?[0]);
@@ -80,7 +80,7 @@ The response payload:
 #end zfile
 
 #zfile CreateExamples ProtocolCreateGroup "Examples\\ProtocolCreateGroup.md" Example
-
+#{Unfinished ("ProtocolCreateGroup")}
 The request payload:
 
 #%  DescribeRequest (Group?.GroupCreate?[0].Traces?[0]);
@@ -124,6 +124,9 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolDownload "Examples\\ProtocolDownload.md" Example
+
+#{Unfinished ("ProtocolDownload")}
+
 #% ReportObsoleteExample();
 
 
@@ -132,6 +135,8 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolUpload "Examples\\ProtocolUpload.md" Example
+
+#{Unfinished ("ProtocolUpload")}
 #% ReportObsoleteExample();
 
 
@@ -154,6 +159,8 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolPostServiceService "Examples\\ProtocolPostServiceService.md" Example
+
+#{Unfinished ("ProtocolPostServiceService")}
 #% ReportMissingExample();
 
 
@@ -161,6 +168,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolCryptoKeyShare "Examples\\ProtocolCryptoKeyShare.md" Example
+#{Unfinished ("ProtocolCryptoKeyShare")}
 The request payload:
 
 #%  DescribeRequest (Group?.GroupAddBob?[0].Traces?[1]);
@@ -172,6 +180,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolCryptoKeyAgree "Examples\\ProtocolCryptoKeyAgree.md" Example
+#{Unfinished ("ProtocolCryptoKeyAgree")}
 The request payload:
 #{Unfinished ("ProtocolCryptoKeyAgree  [GroupDecryptBobSuccess]")}
 #!%  DescribeRequest (Group?.GroupDecryptBobSuccess?[1].Traces?[1]);
@@ -203,6 +212,7 @@ MessagePIN from the Local spool and use it to verify the request.
 
 
 #zfile CreateExamples ProtocolMessageCompletion "Examples\\ProtocolMessageCompletion.md" Example
+#{Unfinished ("ProtocolMessageCompletion")}
 
 After using the PIN code to authenticate connection of a device in the previous 
 example, the corresponding MessagePin is marked as having been used by appending 
@@ -251,6 +261,8 @@ QR code is #{Contact.AliceStaticQRCode} yadda yaddda
 
 
 #zfile CreateExamples ProtocolClaim "Examples\\ProtocolClaim.md" Example
+#{Unfinished ("ProtocolClaim")}
+
 
 A device is preconfigured during manufacture and a Device Description published to the
 EARL:
@@ -277,6 +289,8 @@ of a claim having been posted.
 #end zfile
 
 #zfile CreateExamples ProtocolPollClaim "Examples\\ProtocolPollClaim.md" Example
+
+#{Unfinished ("ProtocolClaim")}
 
 The device in the example above periodically polls the service to which the device 
 description is published to find if a claim has been registered.
@@ -313,7 +327,7 @@ Alice accepts the request and returns the following response:
 
 
 #zfile CreateExamples ProtocolConnectPIN "Examples\\ProtocolConnectPIN.md" Example
-
+#{Unfinished ("ProtocolConnectPIN")}
 
 ###### Phase 1:
 
@@ -435,6 +449,7 @@ The device completes the connection as before:
 
 
 #zfile CreateExamples ProtocolConnectEARL "Examples\\ProtocolConnectEARL.md" Example
+#{Unfinished ("ProtocolConnectEARL")}
 
 ###### Phase 1
 
@@ -458,12 +473,5 @@ interaction is shown in section $$$$ above.
 
 
 #end zfile
-
-
-
-
-
-
-
 
 #end xclass
