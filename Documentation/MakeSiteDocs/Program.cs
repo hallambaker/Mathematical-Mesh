@@ -213,6 +213,7 @@ namespace ExampleGenerator {
         public LayerGroup Group;
         public LayerNYI NYI;
 
+        string deviceId;
         public void Examples() {
 
             outputPath = Directory.GetCurrentDirectory();
@@ -252,7 +253,8 @@ namespace ExampleGenerator {
             // Dare uses the keys from the contacts catalog.
             PlatformDare();
 
-
+            TestConnectDisconnect(deviceId);
+            EscrowAndRecover();
 
 
             Directory.SetCurrentDirectory(outputPath);

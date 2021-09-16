@@ -1,0 +1,32 @@
+~~~~
+{
+  "ProfileDevice":{
+    "ProfileSignature":{
+      "Udf":"MB7C-YKO3-7IB3-5HD4-H6OB-N2HL-OU4D",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"Ed448",
+          "Public":"uM_qqji3hmKL-1AjNjV-S5J6yqurBXtRirwpk6tclZt4m
+  0dkKbijd_f8OnX3rLyLi8S9Ewjy_UMA"}}},
+    "Encryption":{
+      "Udf":"MBOU-DFEH-I3MS-QPWR-QQOC-JATG-7AMX",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"6BzQ69ELlOh2ZbJ_LUbxn8F1sWKMt78qxUWGpGK-FIZ3k
+  g-myvzNaPD9_oefuaiEj95sAFZdZKoA"}}},
+    "Signature":{
+      "Udf":"MD5Z-4ZBS-DPN5-U4OK-5PKP-ZJ4L-ECPO",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"Ed448",
+          "Public":"ruI9pp04AIIHrj5a-5n9CtfhdVOS8EK9616Rl-rCI2_Cw
+  IWFu5oYX_QZBEUlOjeEJH_pDeKQBsYA"}}},
+    "Authentication":{
+      "Udf":"MCVF-G7ZP-BSJU-Q7NB-4IIP-NGK2-LGA5",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"yhjswZwzKGp0SH1fiCDOQwxtdIeNmkRCVnscu8XdoQNmG
+  bbb0v9yDvXvIHgSzHvL2oFG6S6gH6iA"}}}}}
+~~~~

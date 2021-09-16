@@ -48,12 +48,7 @@ namespace Goedel.Mesh.Shell {
             applicationMail.InboundConnect = options.Inbound.Value;
             applicationMail.OutboundConnect = options.Outbound.Value;
 
-
             transaction.ApplicationCreate(applicationMail);
-
-            // Bug: not updating the connection devices!!!
-
-
             var resultTransact = transaction.Transact();
 
             return resultTransact.Success() ?

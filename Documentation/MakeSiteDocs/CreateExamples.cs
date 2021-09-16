@@ -21,6 +21,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Net.Mail;
 
 using Goedel.IO;
 using Goedel.Mesh;
@@ -99,8 +100,8 @@ namespace ExampleGenerator {
             TaskCatalog();
 
 
-            ConnectDeviceCompare(out var deviceId);
-            TestConnectDisconnect(deviceId);
+            ConnectDeviceCompare(out deviceId);
+
             SSHApp();
             MailApp();
             CreateBobAccount();
@@ -109,7 +110,12 @@ namespace ExampleGenerator {
             GroupOperations();
             ConnectPINDynamicQR();
             ConnectStaticQR();
-            EscrowAndRecover();
+
+
+
+
+
+
             }
 
 
@@ -312,48 +318,51 @@ namespace ExampleGenerator {
                 );
 
 
-            if (Check.DisableDeletedDevices) {
-                Connect.PasswordList2Disconnect.GetResult(1).Success.TestFalse();
-                }
+
+            Connect.PasswordList2Disconnect.GetResult(1).Success.TestFalse();
+
 
             }
 
 
 
 
-        public static void SSHApp() {
-            // Application tests
-            //Apps.SSH = testCLIAlice1.Example(
-            //     );
-            "SSH App config".TaskFunctionality();
+        public void SSHApp() {
 
             // Add an SSH application profile 'SSH'
+            Apps.SSH = Alice1.Example(
+                "ssh create /web");
 
             // Dump out the private key in SSH format
+            Apps.SSHPrivate = Alice1.Example(
+                $"ssh private /file={Apps.SshPrivateKey}");
 
             // Dump out the public key in SSH format
+            Apps.SSHPublic = Alice1.Example(
+                $"ssh public /file={Apps.SshPublicKey}");
 
-            if (Check.DisableSSH) {
-                throw new NYI();
-                }
+            Apps.SSHConnect = Alice2.Example(
+                    "account sync",
+                    $"ssh private /file={Apps.SshPrivateKey2}");
             }
 
-        public static void MailApp() {
-            //Apps.Mail = testCLIAlice1.Example(
-            //     );
-            "Mail App config".TaskFunctionality();
+        public void MailApp() {
+            // Add an SSH application profile 'SSH'
+            Apps.Mail = Alice1.Example(
+                $"mail add {Apps.Mailaddress} /inbound {Apps.Mailinbound1} /outbound {Apps.Mailoutbound} /web");
 
-            // Add an Email profile
+            // Dump out the private key in SSH format
+            Apps.MailSmimeSign = Alice1.Example(
+                $"ssh smime sign {Apps.Mailaddress}  /file={Apps.MailSmimeFile}");
 
+            // Dump out the public key in SSH format
+            Apps.MailOpenpgpSign = Alice1.Example(
+                $"sshopenpgp sign {Apps.Mailaddress} /file={Apps.MailOpenpgpFile}");
 
-            // Add keys for S/MIME
+            Apps.MailConnect = Alice2.Example(
+                    "account sync",
+                    "mail list");
 
-
-            // Add keys for OpenPGP
-
-            if (Check.DisableMail) {
-                throw new NYI();
-                }
             }
 
         public void CreateBobAccount() {
@@ -602,7 +611,7 @@ namespace ExampleGenerator {
 
             Connect.ConnectStaticPreconfig = resultPublishDevice.DevicePreconfiguration;
 
-            Connect.ConnectEARL = null;
+            Connect.ConnectEARL = Connect.ConnectStaticPreconfig.ConnectUri;
 
             Connect.ConnectStaticInstall = Alice4.Example(
                 $"device install {resultPublishDevice.FileName}"
@@ -654,14 +663,14 @@ namespace ExampleGenerator {
                 $"account delete {AliceProfileAccount.Udf}"
                 );
 
-            Account.ProfileRecover = Alice2.Example(
-                $"account recover {share1} {share2} /verify"
-                );
+            //Account.ProfileRecover = Alice2.Example(
+            //    $"account recover {share1} {share2} /verify"
+            //    );
 
 
-            Account.ProfileEscrow.GetResult().Success.TestTrue();
-            Account.DeleteAlice.GetResult().Success.TestTrue();
-            Account.ProfileRecover.GetResult().Success.TestTrue();
+            //Account.ProfileEscrow.GetResult().Success.TestTrue();
+            //Account.DeleteAlice.GetResult().Success.TestTrue();
+            //Account.ProfileRecover.GetResult().Success.TestTrue();
 
 
             }

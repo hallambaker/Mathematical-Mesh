@@ -243,6 +243,15 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Connect.PasswordList2Disconnect);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The device can still decrypt data encrypted under the account encryption key however.\n{0}", _Indent);
+				_Output.Write ("While a Mesh application SHOULD attempt to delete private keys after being disconnected,\n{0}", _Indent);
+				_Output.Write ("such requirements cannot be enforced since the user might choose to use a non compliant\n{0}", _Indent);
+				_Output.Write ("application. \n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Threshold]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Connect/disconnect]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -259,13 +268,24 @@ namespace ExampleGenerator {
 
 				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureConfigSSH"));
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Alice creates an SSH profile within her Mesh on the administrative device.\n{0}", _Indent);
+				_Output.Write ("Alice creates an SSH profile within her Mesh on the administrative device making the \n{0}", _Indent);
+				_Output.Write ("private key information available to devices she has connected to her Mesh with the \n{0}", _Indent);
+				_Output.Write ("'web' access right.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Apps.SSH);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("She can extract the private key to configure her SSH clients:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("After configuring an SSH server to accept her new SSH credential, she can use any of her devices \n{0}", _Indent);
-				_Output.Write ("that has been granted the SSH right to connect to it.\n{0}", _Indent);
+				  ConsoleExample (Example.Apps.SSHPrivate);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("She can also extract her public key to configure her SSH server to allow access to \n{0}", _Indent);
+				_Output.Write ("the machine:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.Apps.SSHPublic);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Ideally however, these steps would be performed on Alice's behalf by an automated script\n{0}", _Indent);
+				_Output.Write ("that detects the applications Alice has installed on her device and performs the\n{0}", _Indent);
+				_Output.Write ("necessary configuration on her behalf. \n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -280,8 +300,11 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureConnectSSH(CreateExamples Example) {
 
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureConnectSSH"));
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The SSH keys created on one device are available to every device connected by the 'web' access \n{0}", _Indent);
+				_Output.Write ("right:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.Apps.SSHConnect);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		

@@ -177,8 +177,29 @@ namespace ExampleGenerator {
 
     public partial class LayerApps : ExampleSet {
 
+        public string SshPublicKey = "alice1_ssh_pub.pem";
+        public string SshPrivateKey = "alice1_ssh_prv.pem";
+        public string SshPrivateKey2 = "alice2_ssh_prv.pem";
+
+
+        public string Mailaddress = "alice@example.net";
+        public string Mailinbound1 = "pop://alice@pop3.example.net";
+        public string Mailinbound2 = "imap://alice@imap.example.net";
+        public string Mailoutbound = "submit://alice@submit.example.net";
+
+        public string MailSmimeFile = "alice1_smime_sign.pem";
+        public string MailOpenpgpFile  = "alice1_opgp_sign.pem";
+
         public List<ExampleResult> SSH;
+        public List<ExampleResult> SSHPublic;
+        public List<ExampleResult> SSHPrivate;
+        public List<ExampleResult> SSHConnect;
+
         public List<ExampleResult> Mail;
+        public List<ExampleResult> MailSmimeSign;
+        public List<ExampleResult> MailOpenpgpSign;
+        public List<ExampleResult> MailConnect;
+
 
         public CatalogedEntry BookmarkCatalogEntry;
         public CatalogedEntry ContactCatalogEntry;

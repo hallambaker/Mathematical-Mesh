@@ -67,7 +67,7 @@ namespace Goedel.Command {
 
                 }
             foreach (var Entry in Entries) {
-                if (!Entry.Value.IsDefault) {  // BUG: Is not doing the right thing here.
+                if (!Entry.Value.IsDefault) { 
                     Entry.Value.Describe(FlagIndicator, Output);
                     }
                 }

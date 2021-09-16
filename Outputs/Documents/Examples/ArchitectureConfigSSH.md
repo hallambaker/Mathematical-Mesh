@@ -2,14 +2,38 @@
 
 
 
-Alice creates an SSH profile within her Mesh on the administrative device.
+Alice creates an SSH profile within her Mesh on the administrative device making the 
+private key information available to devices she has connected to her Mesh with the 
+'web' access right.
 
 
 ~~~~
-Missing example 2
+<div="terminal">
+<cmd>Alice> ssh create /web
+<rsp>Udf: MCHM-UFBA-CK6Z-5VO4-4MU2-JDUA-XPOZ/n
+</div>
 ~~~~
 
+She can extract the private key to configure her SSH clients:
 
-After configuring an SSH server to accept her new SSH credential, she can use any of her devices 
-that has been granted the SSH right to connect to it.
+
+~~~~
+<div="terminal">
+<cmd>Alice> ssh private /file=alice1_ssh_prv.pem
+</div>
+~~~~
+
+She can also extract her public key to configure her SSH server to allow access to 
+the machine:
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> ssh public /file=alice1_ssh_pub.pem
+</div>
+~~~~
+
+Ideally however, these steps would be performed on Alice's behalf by an automated script
+that detects the applications Alice has installed on her device and performs the
+necessary configuration on her behalf. 
 

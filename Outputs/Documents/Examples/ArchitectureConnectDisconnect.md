@@ -4,7 +4,7 @@ Alice disconnects the new device:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device delete MC33-643H-BAE6-7LAN-GMWQ-HKQJ-JHHQ
+<cmd>Alice> device delete MAPJ-QDLN-MD65-34DP-WAQL-UV55-HUPP
 </div>
 ~~~~
 
@@ -19,4 +19,13 @@ The device can no longer access the password catalog:
 </div>
 ~~~~
 
+The device can still decrypt data encrypted under the account encryption key however.
+While a Mesh application SHOULD attempt to delete private keys after being disconnected,
+such requirements cannot be enforced since the user might choose to use a non compliant
+application. 
+
+[Threshold]
+
+
+[Connect/disconnect]
 

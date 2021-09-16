@@ -213,26 +213,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerIntegrity">Specifies the degree of container integrity checking to perform.</param>
         /// <param name="keyLocate">The key collection to be used to resolve keys</param>
         void ReadContainer(IKeyLocate keyLocate, SequenceIntegrity containerIntegrity = SequenceIntegrity.None) {
-
-            // OK this here is a clusterf**k
-            // Bug: the frameIndex is not initialized here!!!!
-
-
             foreach (var frameIndex in Container) {
 
                 var item = frameIndex.GetJSONObject(Container);
 
-                // This is failing on encrypted objects because the object isn't being decrypted.
                 CommitTransaction(frameIndex, item);
-
-
                 if (containerIntegrity != SequenceIntegrity.None) {
                     throw new NYI();
                     }
-
                 }
-
-
             }
 
 

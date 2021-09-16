@@ -6,7 +6,7 @@ her closest friends:
 <div="terminal">
 <cmd>Alice> group create groupw@example.com
 <rsp>Account=groupw@example.com
-UDF=MCEF-LGNU-KJTP-WFVW-MAIF-LW6O-HPB3
+UDF=MCKC-VOJF-F5U5-YKI2-PNMM-HTBB-VCZ4
 </div>
 ~~~~
 
@@ -20,7 +20,7 @@ to the group yet.
 <rsp>This is a test
 <cmd>Alice> dare encode grouptext.txt groupsecret.dare /encrypt ^
     groupw@example.com
-<cmd>Alice> dare decode groupsecret.dare grouptext_bob.dare
+<cmd>Alice> dare decode groupsecret.dare grouptext_alice.dare
 <rsp>ERROR - No decryption key is available
 </div>
 ~~~~
@@ -34,8 +34,8 @@ Alice adds herself to the group, now she can decrypt:
 <cmd>Alice> group add groupw@example.com alice@example.com
 <rsp>{
   "ContactAddress": "alice@example.com",
-  "MemberCapabilityId": "MCDE-JLJP-LHN3-X462-HL5O-2FQO-XCPY",
-  "ServiceCapabilityId": "MCOU-H4AZ-E224-MIH2-UXMF-GFPM-NZL6"}
+  "MemberCapabilityId": "MD2W-VQ2R-CFX7-QJVQ-XN4T-OTRD-3L4W",
+  "ServiceCapabilityId": "MAQ6-FSED-NSAU-XK4S-WRKO-VKA4-WVES"}
 <cmd>Alice> account sync /auto
 <cmd>Alice> dare decode groupsecret.dare grouptext_alice.dare
 <cmd>Alice> type grouptext_alice.dare
@@ -54,16 +54,13 @@ the group:
 <cmd>Alice> group add groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MCDE-JLJP-LHN3-X462-HL5O-2FQO-XCPY",
-  "ServiceCapabilityId": "MDTP-3IJG-CAXY-M57C-XIIP-MBT6-57BB"}
+  "MemberCapabilityId": "MD2W-VQ2R-CFX7-QJVQ-XN4T-OTRD-3L4W",
+  "ServiceCapabilityId": "MAYP-27S5-E22I-XWOB-5OSN-DU4V-U5JY"}
 </div>
 ~~~~
 
 Adding Bob to the group gives him immediate access to any file encrypted under
 the group key without making any change to the encrypted files:
-
->>>> Unfinished ArchitectureRecrypt  [GroupDecryptBobSuccess]
-
 
 
 ~~~~
@@ -77,25 +74,19 @@ the group key without making any change to the encrypted files:
 
 Removing Bob from the group immediately withdraws his access.
 
->>>> Unfinished ArchitectureRecrypt  [GroupDeleteBob]
-
-
 
 ~~~~
 <div="terminal">
 <cmd>Alice> group delete groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MCDE-JLJP-LHN3-X462-HL5O-2FQO-XCPY",
-  "ServiceCapabilityId": "MDTP-3IJG-CAXY-M57C-XIIP-MBT6-57BB"}
+  "MemberCapabilityId": "MD2W-VQ2R-CFX7-QJVQ-XN4T-OTRD-3L4W",
+  "ServiceCapabilityId": "MAYP-27S5-E22I-XWOB-5OSN-DU4V-U5JY"}
 </div>
 ~~~~
 
-Bob cannot decrypt any more files (but he may have kept copies of files he decrypted 
-earlier).
-
->>>> Unfinished ArchitectureRecrypt  [GroupDecryptBobRevoked ]
-
+Bob cannot decrypt files encrypted under the group key any more. But he 
+still has access to the file grouptext_bob.dare he decrypted earlier.
 
 
 ~~~~
@@ -104,4 +95,13 @@ earlier).
 <rsp>ERROR - A requested cryptographic operation failed.
 </div>
 ~~~~
+
+The threshold key service acts as a policy enforcement point and can impose 
+additional accounting and authorization controls on the use of the decryption
+service.
+
+For example, the threshold key service might be configured to alert a 
+supervisor and/or deny decryption requests if a group member made an unusual 
+volume of requests in a short period.
+
 

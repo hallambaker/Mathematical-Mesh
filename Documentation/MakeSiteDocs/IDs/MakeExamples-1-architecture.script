@@ -143,25 +143,48 @@ The device can no longer access the password catalog:
 
 #%  ConsoleExample (Example.Connect.PasswordList2Disconnect);
 
+The device can still decrypt data encrypted under the account encryption key however.
+While a Mesh application SHOULD attempt to delete private keys after being disconnected,
+such requirements cannot be enforced since the user might choose to use a non compliant
+application. 
+
+[Threshold]
+
+
+[Connect/disconnect]
 
 #end zfile
 
 #zfile CreateExamples ArchitectureConfigSSH "Examples\\ArchitectureConfigSSH.md" Example
 #{Unfinished ("ArchitectureConfigSSH")}
 
-Alice creates an SSH profile within her Mesh on the administrative device.
+Alice creates an SSH profile within her Mesh on the administrative device making the 
+private key information available to devices she has connected to her Mesh with the 
+'web' access right.
 
 #%  ConsoleExample (Example.Apps.SSH);
 
+She can extract the private key to configure her SSH clients:
 
-After configuring an SSH server to accept her new SSH credential, she can use any of her devices 
-that has been granted the SSH right to connect to it.
+#%  ConsoleExample (Example.Apps.SSHPrivate);
+
+She can also extract her public key to configure her SSH server to allow access to 
+the machine:
+
+#%  ConsoleExample (Example.Apps.SSHPublic);
+
+Ideally however, these steps would be performed on Alice's behalf by an automated script
+that detects the applications Alice has installed on her device and performs the
+necessary configuration on her behalf. 
 
 #end zfile
 
 #zfile CreateExamples ArchitectureConnectSSH "Examples\\ArchitectureConnectSSH.md" Example
-#{Unfinished ("ArchitectureConnectSSH")}
 
+The SSH keys created on one device are available to every device connected by the 'web' access 
+right:
+
+#%  ConsoleExample (Example.Apps.SSHConnect);
 
 #end zfile
 

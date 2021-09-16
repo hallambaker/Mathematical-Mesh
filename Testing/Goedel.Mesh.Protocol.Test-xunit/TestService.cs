@@ -304,7 +304,6 @@ namespace Goedel.XUnit {
             var boundPin = contextAdmin.GetPIN(MeshConstants.MessagePINActionDevice, roles: RightsDirect);
             ReportDevices(contextAdmin);
 
-            // Current: This is failing because the roles are not being carried through...!
             // New Device
             var contextOnboarding = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
                 AccountAlice, PIN: boundPin.Pin);
