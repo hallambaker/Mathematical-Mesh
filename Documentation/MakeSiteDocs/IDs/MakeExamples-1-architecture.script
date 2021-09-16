@@ -20,6 +20,8 @@
 #% ArchitectureCredential(Example);
 #% ArchitectureConnectDirect(Example);
 #% ArchitectureConnectDisconnect(Example);
+#% ArchitectureDisconnectWebDecrypts(Example);
+#% ArchitectureDisconnectThresholdDecrypts(Example);
 #% ArchitectureConfigSSH(Example);
 #% ArchitectureConnectSSH(Example);
 #% ArchitectureContactRemote(Example);
@@ -144,16 +146,14 @@ The device can no longer access the password catalog:
 
 #%  ConsoleExample (Example.Connect.PasswordList2Disconnect);
 
-The device can still decrypt data encrypted under the account encryption key however.
-While a Mesh application SHOULD attempt to delete private keys after being disconnected,
-such requirements cannot be enforced since the user might choose to use a non compliant
-application. 
+#end zfile
 
-[Threshold]
+#zfile CreateExamples ArchitectureDisconnectWebDecrypts "Examples\\ArchitectureDisconnectWebDecrypts.md" Example
+#{Unfinished ("ArchitectureDisconnectWebDecrypts")}
+#end zfile
 
-
-[Connect/disconnect]
-
+#zfile CreateExamples ArchitectureDisconnectThresholdDecrypts "Examples\\ArchitectureDisconnectThresholdDecrypts.md" Example
+#{Unfinished ("ArchitectureDisconnectThresholdDecrypts")}
 #end zfile
 
 #zfile CreateExamples ArchitectureConfigSSH "Examples\\ArchitectureConfigSSH.md" Example

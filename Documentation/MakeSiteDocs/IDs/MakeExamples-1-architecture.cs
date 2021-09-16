@@ -31,6 +31,8 @@ namespace ExampleGenerator {
 			 ArchitectureCredential(Example);
 			 ArchitectureConnectDirect(Example);
 			 ArchitectureConnectDisconnect(Example);
+			 ArchitectureDisconnectWebDecrypts(Example);
+			 ArchitectureDisconnectThresholdDecrypts(Example);
 			 ArchitectureConfigSSH(Example);
 			 ArchitectureConnectSSH(Example);
 			 ArchitectureContactRemote(Example);
@@ -244,16 +246,34 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Connect.PasswordList2Disconnect);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The device can still decrypt data encrypted under the account encryption key however.\n{0}", _Indent);
-				_Output.Write ("While a Mesh application SHOULD attempt to delete private keys after being disconnected,\n{0}", _Indent);
-				_Output.Write ("such requirements cannot be enforced since the user might choose to use a non compliant\n{0}", _Indent);
-				_Output.Write ("application. \n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[Threshold]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("[Connect/disconnect]\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// ArchitectureDisconnectWebDecrypts
+		//
+		public static void ArchitectureDisconnectWebDecrypts(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ArchitectureDisconnectWebDecrypts.md");
+			Example._Output = _Output;
+			Example._ArchitectureDisconnectWebDecrypts(Example);
+			}
+		public void _ArchitectureDisconnectWebDecrypts(CreateExamples Example) {
+
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureDisconnectWebDecrypts"));
+					}
+		
+
+		//
+		// ArchitectureDisconnectThresholdDecrypts
+		//
+		public static void ArchitectureDisconnectThresholdDecrypts(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ArchitectureDisconnectThresholdDecrypts.md");
+			Example._Output = _Output;
+			Example._ArchitectureDisconnectThresholdDecrypts(Example);
+			}
+		public void _ArchitectureDisconnectThresholdDecrypts(CreateExamples Example) {
+
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureDisconnectThresholdDecrypts"));
 					}
 		
 

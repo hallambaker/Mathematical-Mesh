@@ -4,7 +4,7 @@ Alice disconnects the new device:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device delete MAUW-AFDM-RNWF-JWYN-R2PU-HFJT-QDYH
+<cmd>Alice> device delete MC2E-CN5B-VD4E-WYKC-PRQJ-GYP7-3HJS
 </div>
 ~~~~
 
@@ -18,14 +18,4 @@ The device can no longer access the password catalog:
 <cmd>Alice2> dare decode ciphertext.dare plaintext2.txt
 </div>
 ~~~~
-
-The device can still decrypt data encrypted under the account encryption key however.
-While a Mesh application SHOULD attempt to delete private keys after being disconnected,
-such requirements cannot be enforced since the user might choose to use a non compliant
-application. 
-
-[Threshold]
-
-
-[Connect/disconnect]
 
