@@ -1,7 +1,3 @@
->>>> Unfinished ArchitectureConnectEARL
-
-
-
 ~~~~
-mcu://maker@example.com/EB4Z-DHW5-F5VR-JM5Z-24IX-VZTR-QZXZ-VDRP-HLCL-FHCT-ADSE-ZNCW-XMZX-U
+mcu://maker@example.com/ECS7-YN44-SJUB-3Y7O-W6KM-6PIG-WOWN-NHCV-7PG2-MBEF-G2DM-3LJK-WNMJ-K
 ~~~~

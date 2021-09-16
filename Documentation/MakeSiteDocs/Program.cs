@@ -35,18 +35,15 @@ using Goedel.Utilities;
 namespace ExampleGenerator {
 
 
+    // ToDo: Example - Write connection URI to file to convert to QR code [120 bit WF]
+    // ToDo: Example - Escrow and recovery (implement)
+    // ToDo: Example - Delete account at service (implement)
+    // ToDo: Documentation - Include EARLs in Architecture guide
+    // ToDo: Functionality - Add KMAC to key derrivation schemes. 
 
 
 
 
-    // Missing from Architecture (1)
-
-    // ToDo: Missing 1 Example.Connect.PasswordList2
-    // ToDo: Missing 2 ConsoleExample (Example.Account.ProfileEscrow);
-    // ToDo: Missing 3 onsoleExample (Example.Apps.SSH);
-    // ToDo: Missing 4 ConsoleExample (Example.Group.GroupDecryptBobSuccess);
-    // ToDo: Missing 5 ConsoleExample (Example.Group.GroupDeleteBob);
-    // ToDo: Missing 6 ConsoleExample (Example.Group.GroupDecryptBobRevoked);
 
     // ToDo: ProtocolAccountCreate.md has wrong transaction
     // DescribeRequest (Account?.CreateAlice?[0].Traces?[0]);
@@ -55,8 +52,6 @@ namespace ExampleGenerator {
     //DescribeRequest (Group?.GroupCreate?[0].Traces?[0]);
 
 
-    // ToDo: ProtocolAccountDelete returning blank, not missing!
-    // DescribeRequest (Account?.DeleteAlice?[0].Traces?[0]);
 
     // ToDo: More bad stuff... 
     // DescribeRequest (Account?.SyncAlice?[0].Traces?[0]);
@@ -293,9 +288,9 @@ namespace ExampleGenerator {
             MakeDocs();
             }
 
-        //public bool All = true;
+        public bool All = true;
 
-        public bool All = false;
+        //public bool All = false;
 
         public static void MakeClean() {
             var Process = System.Diagnostics.Process.Start("CMD.exe", "/C MakeClean");

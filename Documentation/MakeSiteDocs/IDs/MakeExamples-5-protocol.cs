@@ -160,15 +160,13 @@ namespace ExampleGenerator {
 		public void _ProtocolAccountDelete(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolAccountDelete"));
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Account?.DeleteAlice?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Account?.DeleteAlice?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		

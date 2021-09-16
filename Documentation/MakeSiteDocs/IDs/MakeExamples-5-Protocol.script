@@ -95,15 +95,15 @@ The response payload:
 
 #zfile CreateExamples ProtocolAccountDelete "Examples\\ProtocolAccountDelete.md" Example
 
-
+#{Unfinished ("ProtocolAccountDelete")}
 
 The request payload:
 
-#%  DescribeRequest (Account?.DeleteAlice?[0].Traces?[0]);
+#!%  DescribeRequest (Account?.DeleteAlice?[0].Traces?[0]);
 
 The response payload:
 
-#%  DescribeResponse (Account?.DeleteAlice?[0].Traces?[0]);
+#!%  DescribeResponse (Account?.DeleteAlice?[0].Traces?[0]);
 
 #end zfile
 

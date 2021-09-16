@@ -269,6 +269,9 @@ namespace Goedel.Mesh.Client {
         public void DeleteAccount() {
             // post device leave notice to service
 
+            "Need to delete the account at the service!!!".TaskFunctionality();
+
+
             // close all open stores and clear the dictionary
             foreach (var status in DictionaryStores) {
                 var store = status.Value.Store;

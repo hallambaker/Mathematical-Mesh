@@ -266,7 +266,6 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureConfigSSH(CreateExamples Example) {
 
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureConfigSSH"));
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice creates an SSH profile within her Mesh on the administrative device making the \n{0}", _Indent);
 				_Output.Write ("private key information available to devices she has connected to her Mesh with the \n{0}", _Indent);
@@ -456,8 +455,6 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureConnectEARL(CreateExamples Example) {
 
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureConnectEARL"));
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Preformat);
 				_Output.Write ("{1}\n{0}", _Indent, Connect.ConnectEARL);
 				_Output.Write ("{1}\n{0}", _Indent, Preformat);

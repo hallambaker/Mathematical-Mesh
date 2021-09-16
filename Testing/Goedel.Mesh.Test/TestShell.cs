@@ -190,7 +190,7 @@ namespace Goedel.Mesh.Test {
 
                     Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
                     result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
-                        Traces = Shell.MeshMachineTest.MeshProtocolMessages
+                        Traces = new (Shell.MeshMachineTest.MeshProtocolMessages)
                         });
                     }
                 catch (Exception exception) {

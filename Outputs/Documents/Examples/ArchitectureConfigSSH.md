@@ -1,6 +1,3 @@
->>>> Unfinished ArchitectureConfigSSH
-
-
 
 Alice creates an SSH profile within her Mesh on the administrative device making the 
 private key information available to devices she has connected to her Mesh with the 
@@ -10,7 +7,7 @@ private key information available to devices she has connected to her Mesh with 
 ~~~~
 <div="terminal">
 <cmd>Alice> ssh create /web
-<rsp>Udf: MCHM-UFBA-CK6Z-5VO4-4MU2-JDUA-XPOZ/n
+<rsp>Udf: MDVT-AICL-XYYP-JDYV-DFME-4CWL-AAQT/n
 </div>
 ~~~~
 
