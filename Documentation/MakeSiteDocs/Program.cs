@@ -34,8 +34,8 @@ using Goedel.Utilities;
 
 namespace ExampleGenerator {
 
+    // Bug: Messages are not being marked as read as they should (ConnectPINDynamicQR)
 
-    // ToDo: Example - Write connection URI to file to convert to QR code [120 bit WF]
     // ToDo: Example - Escrow and recovery (implement)
     // ToDo: Example - Delete account at service (implement)
     // ToDo: Documentation - Include EARLs in Architecture guide

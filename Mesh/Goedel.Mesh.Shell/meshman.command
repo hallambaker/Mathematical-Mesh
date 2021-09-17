@@ -79,7 +79,9 @@
 		Option AuthDevice "device" Flag
 			Brief "Device restrictive access"
 			Default "false"		
-		
+		Option AuthThreshold "threshold" Flag
+			Brief "Authorize threshold rights for Mesh messaging and Web."
+			Default "false"		
 		Option AuthSSH "ssh" String
 			Brief "Authorize rights for specified SSH account"
 			Default "false"

@@ -19,11 +19,11 @@
 #% ArchitectureRecovery(Example);
 #% ArchitectureCredential(Example);
 #% ArchitectureConnectDirect(Example);
+#% ArchitectureConnectPin(Example);
 #% ArchitectureConnectDisconnect(Example);
 #% ArchitectureDisconnectWebDecrypts(Example);
 #% ArchitectureDisconnectThresholdDecrypts(Example);
 #% ArchitectureConfigSSH(Example);
-#% ArchitectureConnectSSH(Example);
 #% ArchitectureContactRemote(Example);
 #% ArchitectureConfirm(Example);
 #% ArchitectureRecrypt(Example);
@@ -125,6 +125,46 @@ Alice can now synchronize her newly connected device to her account:
 
 #end zfile
 
+#zfile CreateExamples ArchitectureConnectPin "Examples\\ArchitectureConnectPin.md" Example
+
+The Alice begins the connection process by creating a one time use PIN authentication code 
+on her administration device. The PIN creation request specifies the rights to be granted
+to the connecting device:
+
+#%  ConsoleExample (Example.Connect.ConnectPINCreate);
+
+A connection request is made on the connecting device as before except that this time 
+the PIN is specified. This time, only the 'threshold' right is granted.
+
+#%  ConsoleExample (Example.Connect.ConnectPINRequest);
+
+Since the connection request is pre-authenticated by the PIN, it is not necessary for 
+Alice to review the connection request. The connection request is accepted 
+automatically when the administration device is synchronized:
+
+#%  ConsoleExample (Example.Connect.ConnectPINPending);
+
+Alice can now synchronize her newly connected device to her account:
+
+#%  ConsoleExample (Example.Connect.ConnectPINComplete);
+
+#{Unfinished ("ArchitectureConnectPin/Connect.ConnectPINComplete")}
+
+The Dynamic QRCode connection scheme uses exactly the same mechanism except that instead 
+of the PIN being presented to Alice in the form of an alphanumeric string, the connection
+information is encoded as a URI and presented to the connecting device as a QR code.
+
+The URI corresponding to the connection PIN is:
+
+#{Preformat}
+#{Connect.ConnectDynamicURI}
+#{Preformat}
+
+
+#end zfile
+
+
+
 #zfile CreateExamples ArchitectureConnectPassword "Examples\\ArchitectureConnectPassword.md" Example
 
 For example, because Alice granted the device the Web role, she can now access her credential 
@@ -148,26 +188,22 @@ Alice disconnects the new device:
 
 #zfile CreateExamples ArchitectureDisconnectWebDecrypts "Examples\\ArchitectureDisconnectWebDecrypts.md" Example
 
-#{Unfinished ("ArchitectureDisconnectWebDecrypts")}
-
-The device can no longer access the password catalog:
+The device can no longer access the password catalog, but it can still decrypt files:
 
 #%  ConsoleExample (Example.Connect.PasswordList2Disconnect);
-
-#{Unfinished ("ArchitectureDisconnectWebDecrypts")}
-
-But it can still decrypt files:
-
 
 #end zfile
 
 #zfile CreateExamples ArchitectureDisconnectThresholdDecrypts "Examples\\ArchitectureDisconnectThresholdDecrypts.md" Example
 
-#{Unfinished ("ArchitectureDisconnectThresholdDecrypts")}
+The third device was connected with threshold rights, it is disconnected in the same
+way as before.
+
+#%  ConsoleExample (Example.Connect.DisconnectThresh);
 
 The device can no longer access the password catalog or decrypt files:
 
-#%  ConsoleExample (null);
+#%  ConsoleExample (Example.Connect.DisconnectThreshDecrypt);
 
 
 #end zfile
@@ -189,13 +225,9 @@ the machine:
 
 #%  ConsoleExample (Example.Apps.SSHPublic);
 
-Ideally however, these steps would be performed on Alice's behalf by an automated script
+Ideally these steps would be performed on Alice's behalf by an automated script
 that detects the applications Alice has installed on her device and performs the
 necessary configuration on her behalf. 
-
-#end zfile
-
-#zfile CreateExamples ArchitectureConnectSSH "Examples\\ArchitectureConnectSSH.md" Example
 
 The SSH keys created on one device are available to every device connected by the 'web' access 
 right:

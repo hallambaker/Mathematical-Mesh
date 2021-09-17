@@ -69,18 +69,29 @@ The response payload:
 
 #zfile CreateExamples ProtocolAccountCreate "Examples\\ProtocolAccountCreate.md" Example
 #{Unfinished ("ProtocolAccountCreate")}
+
 The request payload:
 
-#%  DescribeRequest (Account?.CreateAlice?[0].Traces?[0]);
+#%  DescribeRequest (Account?.CreateAlice?[0].Traces?[1]);
 
 The response payload:
 
-#%  DescribeResponse (Account?.CreateAlice?[0].Traces?[0]);
+#%  DescribeResponse (Account?.CreateAlice?[0].Traces?[1]);
+
+
+[Here weird stuff is happening, there is a superfluous transact request with no
+updates, followed by the actual updates..]
+
+[Here more description of the request and the initial catalog loads, then
+mentiuon that we will need to transact.]
 
 #end zfile
 
 #zfile CreateExamples ProtocolCreateGroup "Examples\\ProtocolCreateGroup.md" Example
 #{Unfinished ("ProtocolCreateGroup")}
+
+[Second group transaction is failing???]
+
 The request payload:
 
 #%  DescribeRequest (Group?.GroupCreate?[0].Traces?[0]);
@@ -96,6 +107,8 @@ The response payload:
 #zfile CreateExamples ProtocolAccountDelete "Examples\\ProtocolAccountDelete.md" Example
 
 #{Unfinished ("ProtocolAccountDelete")}
+[This is not implemented at all]
+
 
 The request payload:
 
@@ -110,7 +123,11 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolStatus "Examples\\ProtocolStatus.md" Example
+#{Unfinished ("ProtocolStatus")}
 
+[No idea why we need the profile in every status...]
+[Add the Merkle tree apex to the status ]
+[Make mini example when we add a password to one device and sync just that to another]
 
 The request payload:
 
@@ -123,27 +140,38 @@ The response payload:
 #end zfile
 
 
+#zfile CreateExamples ProtocolUpload "Examples\\ProtocolUpload.md" Example
+
+#{Unfinished ("ProtocolUpload")}
+
+[Rename to Transact here, rewrite introduction.]
+[Make mini example when we add a password to one device and sync just that to another]
+
+
+#% ReportObsoleteExample();
+
+
+#end zfile
+
+
+
 #zfile CreateExamples ProtocolDownload "Examples\\ProtocolDownload.md" Example
 
 #{Unfinished ("ProtocolDownload")}
 
-#% ReportObsoleteExample();
-
-
-
-#end zfile
-
-
-#zfile CreateExamples ProtocolUpload "Examples\\ProtocolUpload.md" Example
-
-#{Unfinished ("ProtocolUpload")}
-#% ReportObsoleteExample();
+[This should be filled from some early downloads...]
+[Make mini example when we add a password to one device and sync just that to another]
 
 
 #end zfile
+
+
+
 
 #zfile CreateExamples ProtocolPostClientService "Examples\\ProtocolPostClientService.md" Example
 
+#{Unfinished ("ProtocolPostClientService")}
+[This is total junk as we now cause messages to be posted through use of the transact method]
 
 
 The request payload:

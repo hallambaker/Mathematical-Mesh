@@ -30,11 +30,11 @@ namespace ExampleGenerator {
 			 ArchitectureRecovery(Example);
 			 ArchitectureCredential(Example);
 			 ArchitectureConnectDirect(Example);
+			 ArchitectureConnectPin(Example);
 			 ArchitectureConnectDisconnect(Example);
 			 ArchitectureDisconnectWebDecrypts(Example);
 			 ArchitectureDisconnectThresholdDecrypts(Example);
 			 ArchitectureConfigSSH(Example);
-			 ArchitectureConnectSSH(Example);
 			 ArchitectureContactRemote(Example);
 			 ArchitectureConfirm(Example);
 			 ArchitectureRecrypt(Example);
@@ -208,6 +208,54 @@ namespace ExampleGenerator {
 		
 
 		//
+		// ArchitectureConnectPin
+		//
+		public static void ArchitectureConnectPin(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ArchitectureConnectPin.md");
+			Example._Output = _Output;
+			Example._ArchitectureConnectPin(Example);
+			}
+		public void _ArchitectureConnectPin(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The Alice begins the connection process by creating a one time use PIN authentication code \n{0}", _Indent);
+				_Output.Write ("on her administration device. The PIN creation request specifies the rights to be granted\n{0}", _Indent);
+				_Output.Write ("to the connecting device:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.Connect.ConnectPINCreate);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("A connection request is made on the connecting device as before except that this time \n{0}", _Indent);
+				_Output.Write ("the PIN is specified. This time, only the 'threshold' right is granted.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.Connect.ConnectPINRequest);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Since the connection request is pre-authenticated by the PIN, it is not necessary for \n{0}", _Indent);
+				_Output.Write ("Alice to review the connection request. The connection request is accepted \n{0}", _Indent);
+				_Output.Write ("automatically when the administration device is synchronized:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.Connect.ConnectPINPending);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice can now synchronize her newly connected device to her account:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.Connect.ConnectPINComplete);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureConnectPin/Connect.ConnectPINComplete"));
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The Dynamic QRCode connection scheme uses exactly the same mechanism except that instead \n{0}", _Indent);
+				_Output.Write ("of the PIN being presented to Alice in the form of an alphanumeric string, the connection\n{0}", _Indent);
+				_Output.Write ("information is encoded as a URI and presented to the connecting device as a QR code.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The URI corresponding to the connection PIN is:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Preformat);
+				_Output.Write ("{1}\n{0}", _Indent, Connect.ConnectDynamicURI);
+				_Output.Write ("{1}\n{0}", _Indent, Preformat);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
 		// ArchitectureConnectPassword
 		//
 		public static void ArchitectureConnectPassword(CreateExamples Example) { /* XFile  */
@@ -258,16 +306,9 @@ namespace ExampleGenerator {
 		public void _ArchitectureDisconnectWebDecrypts(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureDisconnectWebDecrypts"));
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The device can no longer access the password catalog:\n{0}", _Indent);
+				_Output.Write ("The device can no longer access the password catalog, but it can still decrypt files:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Connect.PasswordList2Disconnect);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureDisconnectWebDecrypts"));
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("But it can still decrypt files:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -283,11 +324,14 @@ namespace ExampleGenerator {
 		public void _ArchitectureDisconnectThresholdDecrypts(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureDisconnectThresholdDecrypts"));
+				_Output.Write ("The third device was connected with threshold rights, it is disconnected in the same\n{0}", _Indent);
+				_Output.Write ("way as before.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The device can no longer access the password catalog or decrypt files\n{0}", _Indent);
+				  ConsoleExample (Example.Connect.DisconnectThresh);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (null);
+				_Output.Write ("The device can no longer access the password catalog or decrypt files:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.Connect.DisconnectThreshDecrypt);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -319,23 +363,9 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Apps.SSHPublic);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Ideally however, these steps would be performed on Alice's behalf by an automated script\n{0}", _Indent);
+				_Output.Write ("Ideally these steps would be performed on Alice's behalf by an automated script\n{0}", _Indent);
 				_Output.Write ("that detects the applications Alice has installed on her device and performs the\n{0}", _Indent);
 				_Output.Write ("necessary configuration on her behalf. \n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-					}
-		
-
-		//
-		// ArchitectureConnectSSH
-		//
-		public static void ArchitectureConnectSSH(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\ArchitectureConnectSSH.md");
-			Example._Output = _Output;
-			Example._ArchitectureConnectSSH(Example);
-			}
-		public void _ArchitectureConnectSSH(CreateExamples Example) {
-
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The SSH keys created on one device are available to every device connected by the 'web' access \n{0}", _Indent);
 				_Output.Write ("right:\n{0}", _Indent);

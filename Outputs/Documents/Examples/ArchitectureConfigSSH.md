@@ -7,7 +7,7 @@ private key information available to devices she has connected to her Mesh with 
 ~~~~
 <div="terminal">
 <cmd>Alice> ssh create /web
-<rsp>Udf: MC5H-6MYZ-DFJO-EXKY-6M3X-DUNF-LMGX/n
+<rsp>Udf: MBTY-JYWG-6OLK-CVCX-2ZG4-4LEB-VCAF/n
 </div>
 ~~~~
 
@@ -30,7 +30,18 @@ the machine:
 </div>
 ~~~~
 
-Ideally however, these steps would be performed on Alice's behalf by an automated script
+Ideally these steps would be performed on Alice's behalf by an automated script
 that detects the applications Alice has installed on her device and performs the
 necessary configuration on her behalf. 
+
+The SSH keys created on one device are available to every device connected by the 'web' access 
+right:
+
+
+~~~~
+<div="terminal">
+<cmd>Alice2> account sync
+<cmd>Alice2> ssh private /file=alice2_ssh_prv.pem
+</div>
+~~~~
 

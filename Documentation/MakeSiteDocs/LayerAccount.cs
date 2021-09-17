@@ -60,6 +60,7 @@ namespace ExampleGenerator {
 
     public partial class LayerConnect : ExampleSet {
         public string EncryptResultFile = "plaintext2.txt";
+        public string encryptResultFile3 = "plaintext3.txt";
 
         public List<ExampleResult> ConnectRequest;
         public List<ExampleResult> ConnectPending;
@@ -68,6 +69,10 @@ namespace ExampleGenerator {
         public List<ExampleResult> PasswordList2;
         public List<ExampleResult> Disconnect;
         public List<ExampleResult> PasswordList2Disconnect;
+
+        public List<ExampleResult> DisconnectThresh;
+
+        public List<ExampleResult> DisconnectThreshDecrypt;
 
         public ProfileDevice AliceProfileDeviceCoffee;
         public ActivationDevice AliceActivationDeviceCoffee;
@@ -101,6 +106,9 @@ namespace ExampleGenerator {
         public Trace ConnectPINRequestComplete;
         public Trace ConnectPINRespondComplete;
 
+
+        public string Device2Id;
+        public string Device3Id;
 
         public List<ExampleResult> ConnectPINCreate;
         public List<ExampleResult> ConnectPINRequest;

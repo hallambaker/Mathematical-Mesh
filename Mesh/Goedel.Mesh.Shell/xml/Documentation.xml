@@ -1316,6 +1316,9 @@
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthDevice">
             <summary>Field accessor for option [device]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthThreshold">
+            <summary>Field accessor for option [threshold]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
         </member>
@@ -1384,6 +1387,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthDevice">
             <summary>Field accessor for option [device]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthThreshold">
+            <summary>Field accessor for option [threshold]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
@@ -1616,6 +1622,9 @@
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthDevice">
             <summary>Field accessor for option [device]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthThreshold">
+            <summary>Field accessor for option [threshold]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
         </member>
@@ -1687,6 +1696,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthDevice">
             <summary>Field accessor for option [device]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthThreshold">
+            <summary>Field accessor for option [threshold]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
@@ -1801,6 +1813,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthDevice">
             <summary>Field accessor for option [device]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthThreshold">
+            <summary>Field accessor for option [threshold]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
@@ -3473,6 +3488,9 @@
         <member name="P:Goedel.Mesh.Shell._MailAdd.AuthDevice">
             <summary>Field accessor for option [device]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MailAdd.AuthThreshold">
+            <summary>Field accessor for option [threshold]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MailAdd.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
         </member>
@@ -3739,6 +3757,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.AuthDevice">
             <summary>Field accessor for option [device]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHCreate.AuthThreshold">
+            <summary>Field accessor for option [threshold]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>

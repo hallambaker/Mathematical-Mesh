@@ -293,6 +293,10 @@ namespace Goedel.Mesh.Shell {
             if (deviceAuthOptions.AuthWeb.Value) {
                 result.Add("web");
                 }
+            if (deviceAuthOptions.AuthThreshold.Value) {
+                result.Add("threshold");
+                }
+
             //if (deviceAuthOptions.AuthSSH.Value != null) {
             //    result.Add($"ssh:{deviceAuthOptions.AuthSSH.Value}");
             //    }

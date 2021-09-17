@@ -276,6 +276,7 @@ namespace ExampleGenerator {
             var resultAccept = Connect.ConnectAccept[0].Result as ResultProcess;
             deviceId = (resultAccept.ProcessResult as ResultAcknowledgeConnection).
                     AcknowledgeConnection.MessageConnectionRequest.ProfileDevice.Udf;
+            Connect.Device2Id = deviceId;
 
             Connect.ConnectComplete = Alice2.Example(
                 $"device complete"
@@ -307,20 +308,31 @@ namespace ExampleGenerator {
 
         public void TestConnectDisconnect(string deviceId) {
             Connect.Disconnect = Alice1.Example(
-            $"device delete {deviceId}"
-            );
+                $"device delete {deviceId}"
+                );
             Connect.Disconnect.GetResult().Success.TestTrue();
 
             Connect.PasswordList2Disconnect = Alice2.Example(
                 //$"password get {PasswordSite}",
                 $"account sync",
-                $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
+                $"dare decode {Account.EncryptTargetFile} {Connect.encryptResultFile3}"
                 );
-
+            Connect.PasswordList2Disconnect.Add(Alice2.DumpFile(Connect.encryptResultFile3));
 
 
             Connect.PasswordList2Disconnect.GetResult(1).Success.TestFalse();
 
+
+           Connect.DisconnectThresh = Alice1.Example(
+                $"device delete {Connect.Device3Id}"
+                );
+            Connect.DisconnectThresh.GetResult().Success.TestTrue();
+
+            Connect.DisconnectThreshDecrypt = Alice3.Example(
+                //$"password get {PasswordSite}",
+                $"account sync",
+                $"dare decode {Account.EncryptTargetFile} {Connect.encryptResultFile3}"
+                );
 
             }
 
@@ -535,7 +547,7 @@ namespace ExampleGenerator {
 
             // Connect device using a PIN (which can be presented as a QR code)
             Connect.ConnectPINCreate = Alice1.Example(
-                    $"account pin /web"
+                    $"account pin /threshold"
                     );
             var pinResult = Connect.ConnectPINCreate.GetResultPIN();
             var pin = pinResult.MessagePIN.Pin;
@@ -558,6 +570,7 @@ namespace ExampleGenerator {
 
             var responseConnection = Connect.ConnectPINResponseConnection.ResponseObject as ConnectResponse;
             Connect.ConnectPINAcknowledgeConnection = responseConnection.EnvelopedAcknowledgeConnection.Decode();
+            Connect.Device3Id = Connect.ConnectPINAcknowledgeConnection.MessageConnectionRequest.ProfileDevice.Udf;
 
 
             Connect.ConnectPINPending = Alice1.Example(

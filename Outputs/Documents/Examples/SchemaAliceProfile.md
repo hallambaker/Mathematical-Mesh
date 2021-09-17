@@ -5,41 +5,41 @@ For example, the personal account profile Alice created is:
 {
   "ProfileUser":{
     "ProfileSignature":{
-      "Udf":"MALV-QFP7-3VYX-IGEC-O5EN-QI5L-QZLC",
+      "Udf":"MBRN-NNZS-FIXI-NTAZ-YPVO-HKTD-RJ5I",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"3f-LXsbn65BwHPvIXHkeXPcU6ArF_xgaLqDjvc_AmQYJG
-  YmZnIge3TDV5nWXyUHDzcEE9slI6CMA"}}},
+          "Public":"f2VWb2eCCCq8qENm43tqmXYcqmnxYCDAL_2ZxmYFADeC6
+  8YzfTDM3gfuBZ8UV0ZByr_3srQo-HCA"}}},
     "AccountAddress":"alice@example.com",
-    "ServiceUdf":"MB22-3VUB-X2E2-66P7-GLAB-TF34-RV5M",
+    "ServiceUdf":"MCK3-G25X-KQSY-W6CN-ZGWB-H3AK-HW46",
     "AccountEncryption":{
-      "Udf":"MA4Y-DXXI-ELG2-DAL2-D5BU-4NGL-PAS3",
+      "Udf":"MD2U-G6F6-LS7F-OY5F-ZNWC-O5VG-5BOJ",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"kvXmXS0vLOBSGUVxypGg-R301r1JO10O5VsY6y6apmgMI
-  w9FNlHWL0-qFxLiBZsJmObAqshQWJKA"}}},
+          "Public":"YotfosL8yM0PYajtRGV0pkL8tdVDf8JIqAPQ6vuyygXUn
+  09XKCVoQFjlvAb1oqj4Xc8cXp-CLNGA"}}},
     "AdministratorSignature":{
-      "Udf":"MBQC-GFTF-55HP-TX5U-AKGR-OMBT-SPBF",
+      "Udf":"MAVP-MG4T-EXIA-B35K-YSJJ-SNLB-ZBRL",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"b9VK8TIijcSl4nIwFL78QHgN6pxY583HeeOWJw5u9WWoF
-  APzY2kUzN2f1ZVBun4IBUqrl57KLPCA"}}},
+          "Public":"sFx0o45xkLfOwj7HouFmxwN2FV9FdsYWK0xn4qhI0vkqQ
+  ciRKNyHuImP8xXU_2PyJuScmGa0bm4A"}}},
     "AccountAuthentication":{
-      "Udf":"MDUF-X6UN-SDUK-ETYG-MC7Q-374X-SUJO",
+      "Udf":"MBST-P5YC-LOHW-KGGQ-JAQZ-IIG4-C53Z",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"nbFPOYlyrt_w4Lz0wsdRZ5uldiLyZ_z-CGVd9qRbwJB9d
-  QeKDxfduCAOuZVkQKmE7-wL8X3Z85WA"}}},
+          "Public":"9iVCtCshTknk2eg-65Y9XXKekqnWz-gRICGIUePaBp4kW
+  yqhjyItTZ0ejOLzebpP2l7mgn37nsaA"}}},
     "AccountSignature":{
-      "Udf":"MAJ2-4LS7-7CU4-7QAD-RG2G-NURX-PGL2",
+      "Udf":"MAPC-LGSU-44P3-QT6U-U4SQ-JE3W-H3OG",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"6WIwECbpzSYX3wpPhOSzSAW_Kp5ibe75iZEGewraSBYBy
-  E35_yxkEgu_nEzxMhh1yV0utrSRMUcA"}}}}}
+          "Public":"dJX8LvYi3e_BjaNgXsy4TXV1REih0Ik7cqTotMOxUSl2V
+  Et1jIjhwMQDr_VjONbhL4fspE_CkVgA"}}}}}
 ~~~~
 

@@ -7,7 +7,7 @@ and is likely to require authentication and possibly payment.
 <div="terminal">
 <cmd>Alice> account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MALV-QFP7-3VYX-IGEC-O5EN-QI5L-QZLC
+UDF=MBRN-NNZS-FIXI-NTAZ-YPVO-HKTD-RJ5I
 </div>
 ~~~~
 
