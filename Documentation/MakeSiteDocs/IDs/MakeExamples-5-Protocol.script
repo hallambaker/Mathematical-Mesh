@@ -32,6 +32,7 @@
 #% ProtocolHelloRequest(Example);
 #% ProtocolHelloResponse(Example);
 #% ProtocolAccountDelete(Example);
+#% ProtocolAccountRecover(Example);
 #% ProtocolPostServiceService(Example);
 #% ProtocolConnectPIN(Example);
 #!!!!! Obsolete ???
@@ -68,9 +69,8 @@ The response payload:
 #end zfile
 
 #zfile CreateExamples ProtocolAccountCreate "Examples\\ProtocolAccountCreate.md" Example
-#{Unfinished ("ProtocolAccountCreate")}
 
-The request payload:
+Alice requests creation of the account #{AliceAccount}. The request payload is:
 
 #%  DescribeRequest (Account?.CreateAlice?[0].Traces?[1]);
 
@@ -79,18 +79,10 @@ The response payload:
 #%  DescribeResponse (Account?.CreateAlice?[0].Traces?[1]);
 
 
-[Here weird stuff is happening, there is a superfluous transact request with no
-updates, followed by the actual updates..]
-
-[Here more description of the request and the initial catalog loads, then
-mentiuon that we will need to transact.]
-
 #end zfile
 
 #zfile CreateExamples ProtocolCreateGroup "Examples\\ProtocolCreateGroup.md" Example
-#{Unfinished ("ProtocolCreateGroup")}
 
-[Second group transaction is failing???]
 
 The request payload:
 
@@ -105,65 +97,71 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolAccountDelete "Examples\\ProtocolAccountDelete.md" Example
-
 #{Unfinished ("ProtocolAccountDelete")}
-[This is not implemented at all]
-
 
 The request payload:
 
-#!%  DescribeRequest (Account?.DeleteAlice?[0].Traces?[0]);
+#%  DescribeRequest (Account?.DeleteAlice?[0].Traces?[0]);
 
 The response payload:
 
-#!%  DescribeResponse (Account?.DeleteAlice?[0].Traces?[0]);
+#%  DescribeResponse (Account?.DeleteAlice?[0].Traces?[0]);
+
+#end zfile
+
+
+
+#zfile CreateExamples ProtocolAccountRecover "Examples\\ProtocolAccountRecover.md" Example
+#{Unfinished ("ProtocolAccountRecover")}
+
+[TBS]
 
 #end zfile
 
 
 
 #zfile CreateExamples ProtocolStatus "Examples\\ProtocolStatus.md" Example
-#{Unfinished ("ProtocolStatus")}
-
-[No idea why we need the profile in every status...]
-[Add the Merkle tree apex to the status ]
-[Make mini example when we add a password to one device and sync just that to another]
 
 The request payload:
 
-#%  DescribeRequest (Account?.SyncAlice?[0].Traces?[0]);
+#%  DescribeRequest (Connect.AddPasswordToDevice2BySync?[0].Traces?[0]);
 
 The response payload:
 
-#%  DescribeResponse (Account?.SyncAlice?[0].Traces?[0]);
+#%  DescribeResponse (Connect.AddPasswordToDevice2BySync?[0].Traces?[0]);
+
+#end zfile
+
+
+#zfile CreateExamples ProtocolDownload "Examples\\ProtocolDownload.md" Example
+
+The previous status operation has reported that a new envelope has been added to
+one of the stores. The device requests this data from the service:
+
+#%  DescribeRequest (Connect.AddPasswordToDevice2BySync?[0].Traces?[1]);
+
+The response contains the requested data:
+
+#%  DescribeResponse (Connect.AddPasswordToDevice2BySync?[0].Traces?[1]);
 
 #end zfile
 
 
 #zfile CreateExamples ProtocolUpload "Examples\\ProtocolUpload.md" Example
 
-#{Unfinished ("ProtocolUpload")}
+The request payload specifies the data to be appended to the stores.
 
-[Rename to Transact here, rewrite introduction.]
-[Make mini example when we add a password to one device and sync just that to another]
+#%  DescribeRequest (Connect.AddPasswordToDevice2BySync?[1].Traces?[0]);
 
+The response reports successful completion:
 
-#% ReportObsoleteExample();
-
-
-#end zfile
-
-
-
-#zfile CreateExamples ProtocolDownload "Examples\\ProtocolDownload.md" Example
-
-#{Unfinished ("ProtocolDownload")}
-
-[This should be filled from some early downloads...]
-[Make mini example when we add a password to one device and sync just that to another]
-
+#%  DescribeResponse (Connect.AddPasswordToDevice2BySync?[1].Traces?[0]);
 
 #end zfile
+
+
+
+
 
 
 

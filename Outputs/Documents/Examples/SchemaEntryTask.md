@@ -2,5 +2,5 @@
 {
   "CatalogedTask":{
     "Title":"SomeItem",
-    "Key":"NDS3-3KTC-D7IX-JRBU-3XUZ-IUXK-LAJV"}}
+    "Key":"NCIN-TB4T-JERO-YOLG-O2FF-WL33-U2IH"}}
 ~~~~

@@ -41,6 +41,7 @@ namespace ExampleGenerator {
 			 ProtocolHelloRequest(Example);
 			 ProtocolHelloResponse(Example);
 			 ProtocolAccountDelete(Example);
+			 ProtocolAccountRecover(Example);
 			 ProtocolPostServiceService(Example);
 			 ProtocolConnectPIN(Example);
 			 ProtocolDownload(Example);
@@ -115,14 +116,15 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolAccountCreate(CreateExamples Example) {
 
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolAccountCreate"));
-				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Account?.CreateAlice?[0].Traces?[0]);
+				_Output.Write ("Alice requests creation of the account {1}. The request payload is:\n{0}", _Indent, AliceAccount);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequest (Account?.CreateAlice?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Account?.CreateAlice?[0].Traces?[0]);
+				  DescribeResponse (Account?.CreateAlice?[0].Traces?[1]);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -137,7 +139,8 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolCreateGroup(CreateExamples Example) {
 
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolCreateGroup"));
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  DescribeRequest (Group?.GroupCreate?[0].Traces?[0]);
@@ -159,14 +162,32 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolAccountDelete(CreateExamples Example) {
 
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolAccountDelete"));
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequest (Account?.DeleteAlice?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponse (Account?.DeleteAlice?[0].Traces?[0]);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// ProtocolAccountRecover
+		//
+		public static void ProtocolAccountRecover(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\ProtocolAccountRecover.md");
+			Example._Output = _Output;
+			Example._ProtocolAccountRecover(Example);
+			}
+		public void _ProtocolAccountRecover(CreateExamples Example) {
+
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolAccountRecover"));
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[TBS]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -182,14 +203,13 @@ namespace ExampleGenerator {
 		public void _ProtocolStatus(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeRequest (Account?.SyncAlice?[0].Traces?[0]);
+				  DescribeRequest (Connect.AddPasswordToDevice2BySync?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The response payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  DescribeResponse (Account?.SyncAlice?[0].Traces?[0]);
+				  DescribeResponse (Connect.AddPasswordToDevice2BySync?[0].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -205,11 +225,14 @@ namespace ExampleGenerator {
 		public void _ProtocolDownload(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolDownload"));
+				_Output.Write ("The previous status operation has reported that a new envelope has been added to\n{0}", _Indent);
+				_Output.Write ("one of the stores. The device requests this data from the service:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 ReportObsoleteExample();
+				  DescribeRequest (Connect.AddPasswordToDevice2BySync?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response contains the requested data:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponse (Connect.AddPasswordToDevice2BySync?[0].Traces?[1]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -225,9 +248,13 @@ namespace ExampleGenerator {
 		public void _ProtocolUpload(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolUpload"));
-				 ReportObsoleteExample();
+				_Output.Write ("The request payload specifies the data to be appended to the stores.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequest (Connect.AddPasswordToDevice2BySync?[1].Traces?[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response reports successful completion:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponse (Connect.AddPasswordToDevice2BySync?[1].Traces?[0]);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -243,6 +270,8 @@ namespace ExampleGenerator {
 		public void _ProtocolPostClientService(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolPostClientService"));
+				_Output.Write ("[This is total junk as we now cause messages to be posted through use of the transact method]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);

@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 
@@ -91,6 +92,10 @@ namespace ExampleGenerator {
             ServiceConnect();
             CreateAliceAccount();
             EncodeDecodeFile();
+
+            ConnectDeviceCompare(out deviceId);
+
+
             PasswordCatalog();
             BookmarkCatalog();
             ContactCatalog();
@@ -100,7 +105,7 @@ namespace ExampleGenerator {
             TaskCatalog();
 
 
-            ConnectDeviceCompare(out deviceId);
+
 
             SSHApp();
             MailApp();
@@ -196,7 +201,7 @@ namespace ExampleGenerator {
 
         public void BookmarkCatalog() {
             // Bookmark catalog
-            string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
+            string uri1 = "http://www.example.com", title1 = "site1", path1 = "Sites.1";
             var bookmark = Alice1.Example(
                 $"bookmark add {path1} {uri1} {title1}",
                 $"bookmark get {path1}"
@@ -304,6 +309,18 @@ namespace ExampleGenerator {
 
             Connect.PasswordList2.GetResult(0).Success.TestTrue();
             Connect.PasswordList2.GetResult(1).Success.TestTrue();
+
+
+            string uri1 = "http://www.example.net", title1 = "site2", path1 = "Sites.2";
+
+            Connect.AddPasswordToDevice1 = Alice1.Example(
+                $"password add {ShellPassword.PasswordSite} {ShellPassword.PasswordAccount1} {ShellPassword.PasswordValue1a}");
+            Connect.AddPasswordToDevice2BySync = Alice2.Example(
+                $"account sync",
+                $"bookmark add {path1} {uri1} {title1}"
+                );
+
+
             }
 
         public void TestConnectDisconnect(string deviceId) {

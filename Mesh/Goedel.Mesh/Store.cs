@@ -156,8 +156,13 @@ namespace Goedel.Mesh {
         public static ContainerStatus Status(string directory, string storeName) {
             using var store = new Store(directory, storeName);
             return new ContainerStatus() {
+
+                // Bug: This should populate the TreeDigest
+                Digest = store.Container.TrailerLast?.TreeDigest,
+
                 Index = (int)store.Container.FrameCount,
                 Container = storeName
+
                 };
             }
 

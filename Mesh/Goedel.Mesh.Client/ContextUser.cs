@@ -265,6 +265,7 @@ namespace Goedel.Mesh.Client {
             // Generate a contact and self-sign
             var contact = CreateContact();
             SetContactSelf(contact);
+
             LoadStores(); // Load all stores so that these are created on the service.
 
             SyncProgressUpload();
@@ -390,9 +391,8 @@ namespace Goedel.Mesh.Client {
             if (!success) {
                 cataloged.Contact = contact;
                 transact.CatalogUpdate(catalog, cataloged);
+                transact.Transact();
                 }
-
-            transact.Transact();
 
             return cataloged;
             }

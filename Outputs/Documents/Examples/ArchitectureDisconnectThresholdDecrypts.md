@@ -5,7 +5,7 @@ way as before.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device delete MDJQ-HLMF-R7LA-YQJT-IA6C-C4BE-TBSP
+<cmd>Alice> device delete MAM5-JIA7-DSS2-HXXB-63TD-RDS5-U4XN
 </div>
 ~~~~
 

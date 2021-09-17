@@ -61,6 +61,10 @@ namespace ExampleGenerator {
     // ToDo: Documentation Protocol Section 8 needs work
 
 
+
+    // Design: Is there a need to return the Profile Host in the account?
+    // Design: Should the access catalog he encrypted under a different key?
+
     public partial class CreateExamples {
 
         public bool GitHub = true;
@@ -253,9 +257,9 @@ namespace ExampleGenerator {
             MakeDocs();
             }
 
-        public bool All = true;
+        //public bool All = true;
 
-        //public bool All = false;
+        public bool All = false;
 
         public static void MakeClean() {
             var Process = System.Diagnostics.Process.Start("CMD.exe", "/C MakeClean");

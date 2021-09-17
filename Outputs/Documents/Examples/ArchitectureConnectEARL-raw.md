@@ -1,1 +1,1 @@
-mcu://maker@example.com/EACL-UN76-T2VA-IDIE-SM3Y-O5C3-PU
+mcu://maker@example.com/EDQO-67UD-YNHU-RQ4F-VI4R-ZJEZ-2M

@@ -343,11 +343,8 @@ namespace Goedel.Mesh.Client {
                 contextUser.DictionaryStores.TryGetValue(update.Container, out var status).AssertTrue(NYI.Throw);
                 status.Index = update.Envelopes.Count;
                 }
-            contextUser.SetService(accountAddress, transactRequest);
             transactRequest.Transact();
-
-
-
+            contextUser.SetService(accountAddress, transactRequest);
 
 
             // Register the mesh description on the local machine.

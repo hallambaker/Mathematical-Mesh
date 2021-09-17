@@ -160,6 +160,11 @@ namespace ExampleGenerator {
         public MessagePinValidated MessagePinValidated;
 
 
+        public List<ExampleResult> AddPasswordToDevice1;
+        public List<ExampleResult> AddPasswordToDevice2BySync;
+
+
+
 
         public LayerConnect(CreateExamples createExamples) :
                 base(createExamples) {

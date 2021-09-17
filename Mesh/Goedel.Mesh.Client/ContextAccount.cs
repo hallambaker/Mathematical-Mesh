@@ -271,6 +271,9 @@ namespace Goedel.Mesh.Client {
 
             "Need to delete the account at the service!!!".TaskFunctionality();
 
+            var unbindRequest = new UnbindRequest() {
+                };
+            var response = MeshClient.UnbindAccount(unbindRequest);
 
             // close all open stores and clear the dictionary
             foreach (var status in DictionaryStores) {
