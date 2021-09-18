@@ -1,8 +1,4 @@
 
->>>> Unfinished ProtocolClaim
-
-
-
 The device in the example above periodically polls the service to which the device 
 description is published to find if a claim has been registered.
 
@@ -13,7 +9,7 @@ and the publication ID:
 ~~~~
 {
   "PollClaimRequest":{
-    "PublicationId":"EBQP-LJ5U-LV2Z-2A3U-MUCB-5LEI-NVFP",
+    "PublicationId":"EBQD-KWTL-MLDJ-XVQ2-ZADS-O3JW-RBRX",
     "TargetAccountAddress":"maker@example.com"}}
 ~~~~
 
@@ -27,32 +23,32 @@ The response returns the latest claim made as signed message:
     "Status":201,
     "StatusDescription":"Operation completed successfully",
     "EnvelopedMessage":[{
-        "PayloadDigest":"-7CrSm3HJm7c3S2vwhI3kYcnBqvq1h7MU38xj7pH
-  1rtWmkP4qcvxqsXy7BRhMo0ww6bw08WNU83vDu3oWXK6Ww",
-        "EnvelopeId":"MD3P-4M24-X7FD-D22M-JGNZ-45UR-3FFN",
+        "PayloadDigest":"ceTQbNwwgRfscCOLbFDPPQVT20F8EbqpqHlCxuMN
+  CVMZ47cfi4NYgW_jyw1-stw7fZn4hF2GImyICZRbKU60Yw",
+        "EnvelopeId":"MBPE-JORV-JYL2-V5B7-HI7T-RZK3-GG23",
         "dig":"S512",
         "signatures":[{
             "alg":"S512",
-            "kid":"MAWM-77KH-5JB5-ZKBD-BKZX-BM37-SFMF",
-            "signature":"UOqQ5vh4UnGG4sO52wSMTa70IRubasfnVZxl61_s
-  EjIhgSD0Xy0X4P-uV7_k8pKW5sX4b6PbzokAjOP7aNCuDSCOEBbp7NtNcamb_WywH
-  5mb42fcPCeP1CkL3WGLze68m7wRZndjuUd1qeRJy_9nfQAA"}
+            "kid":"MD4R-NGWY-UUD5-2PZJ-IPQT-664X-FF24",
+            "signature":"sauuJTXevrJ2mpUbV4HHBPoYwnE78erMNmprRJTb
+  SAvrnVD1PGPRg1RkvGi9WexvntlkWnuOUaMAy5Xz_zFWhFW7qsuM8PECM4o7UupBM
+  9N_339dOQSucdUr6RE62IQudBSUcRwSP7AAr1QxNsWoBgwA"}
           ],
-        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQzNILUlDQVctRk
-  NZWS02WVZWLURHSEMtT05LWS1XQkJTIiwKICAiTWVzc2FnZVR5cGUiOiAiTWVzc2F
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQjVHLUVQNDItTT
+  I1Uy01WjRWLUY1RTItVEtHRi1RSlpTIiwKICAiTWVzc2FnZVR5cGUiOiAiTWVzc2F
   nZUNsYWltIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJD
-  cmVhdGVkIjogIjIwMjEtMDktMTdUMTM6MDg6NTJaIn0",
+  cmVhdGVkIjogIjIwMjEtMDktMThUMTg6NDc6MDNaIn0",
         "SequenceInfo":{
           "Index":1,
           "TreePosition":0},
-        "Received":"2021-09-17T13:08:52Z"},
-      "ewogICJNZXNzYWdlQ2xhaW0iOiB7CiAgICAiTWVzc2FnZUlkIjogIk5DM0
-  gtSUNBVy1GQ1lZLTZZVlYtREdIQy1PTktZLVdCQlMiLAogICAgIlNlbmRlciI6ICJ
+        "Received":"2021-09-18T18:47:03Z"},
+      "ewogICJNZXNzYWdlQ2xhaW0iOiB7CiAgICAiTWVzc2FnZUlkIjogIk5CNU
+  ctRVA0Mi1NMjVTLTVaNFYtRjVFMi1US0dGLVFKWlMiLAogICAgIlNlbmRlciI6ICJ
   hbGljZUBleGFtcGxlLmNvbSIsCiAgICAiUmVjaXBpZW50IjogIm1ha2VyQGV4YW1w
-  bGUuY29tIiwKICAgICJQdWJsaWNhdGlvbklkIjogIkVCUVAtTEo1VS1MVjJaLTJBM
-  1UtTVVDQi01TEVJLU5WRlAiLAogICAgIlNlcnZpY2VBdXRoZW50aWNhdGUiOiAiQU
-  NVQi1JSVUyLUkzUUQtQktJUy03TU42LVlIWlItRTY3SCIsCiAgICAiRGV2aWNlQXV
-  0aGVudGljYXRlIjogIkFCQkotNUFURC1TRTRZLUZVTkYtNjNXRy1ZU0hULTY3QzUi
+  bGUuY29tIiwKICAgICJQdWJsaWNhdGlvbklkIjogIkVCUUQtS1dUTC1NTERKLVhWU
+  TItWkFEUy1PM0pXLVJCUlgiLAogICAgIlNlcnZpY2VBdXRoZW50aWNhdGUiOiAiQU
+  E1Sy1RMkFDLUpMVlQtRk83Mi1ZUUI3LVE3WlEtSkMySiIsCiAgICAiRGV2aWNlQXV
+  0aGVudGljYXRlIjogIkFESlotQ1FZWi1OTzdZLTZIWUUtTjNYNS03UFdFLVYyRVQi
   fX0",
       {}
       ]}}

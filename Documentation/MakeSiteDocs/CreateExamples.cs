@@ -530,6 +530,12 @@ namespace ExampleGenerator {
                 $"group add {GroupAccount} {BobAccount}"
                  );
 
+            var requestBobAdd = Group.GroupAddBob[0].Traces[0].RequestObject as TransactRequest;
+            var accessEntryEnvelope = requestBobAdd.Updates[0].Envelopes[0];
+
+
+            Group.BobAccessEntry = accessEntryEnvelope.DecodeJsonObject() as CatalogedAccess;
+
             //#% var result = Group.GroupAddBob [0];
             var addBob = Group.GroupAddBob[0].Traces[1].RequestObject as TransactRequest;
             Group.GroupInvitation = addBob.Outbound[0].JsonObject as GroupInvitation;
@@ -637,8 +643,8 @@ namespace ExampleGenerator {
             Connect.ConnectStaticPrepare = Maker1.Example(
                 $"device preconfig"
                 );
-            var resultPublishDevice = Connect.ConnectStaticPrepare.GetResultPublishDevice();
-
+            var resultPublishDevice = Connect.ConnectStaticPrepare.GetResultPublishDevice() as ResultPublishDevice;
+            Connect.ConnectStaticResult = resultPublishDevice;
             Connect.ConnectStaticPreconfig = resultPublishDevice.DevicePreconfiguration;
 
             Connect.ConnectEARL = Connect.ConnectStaticPreconfig.ConnectUri;
@@ -646,7 +652,7 @@ namespace ExampleGenerator {
             Connect.ConnectStaticInstall = Alice4.Example(
                 $"device install {resultPublishDevice.FileName}"
                 );
-            //Connect.ConnectStaticPollFail = testCLIAlice4.Example(
+            //Connect.ConnectStaticPollFail = Alice4.Example(
             //    $"device complete"
             //    );
             Connect.ConnectStaticClaim = Alice1.Example(

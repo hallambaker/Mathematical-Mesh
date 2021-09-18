@@ -1,11 +1,11 @@
 To generate the paper invoice, Example.com first creates a new encryption key:
 
-EBX2-6RAI-XGVX-UC5O-3VD5-ABIH-CS2L-FW
+EDNL-TJNU-T7P6-5FYA-O5ST-5NIS-DDCJ-XP
 
 One or more electronic forms of the invoice are encrypted under the key 
-EBX2-6RAI-XGVX-UC5O-3VD5-ABIH-CS2L-FW and placed on the Example.com Web site so that 
+EDNL-TJNU-T7P6-5FYA-O5ST-5NIS-DDCJ-XP and placed on the Example.com Web site so that 
 the appropriate version is returned if Alice scans the QR code.
 
 The key is then converted to form an EARL for the example.com UDF resolution service:
 
-udf://example.com/EBX2-6RAI-XGVX-UC5O-3VD5-ABIH-CS2L-FW
+udf://example.com/EDNL-TJNU-T7P6-5FYA-O5ST-5NIS-DDCJ-XP

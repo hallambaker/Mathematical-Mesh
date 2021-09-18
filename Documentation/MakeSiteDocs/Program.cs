@@ -35,6 +35,8 @@ using Goedel.Utilities;
 namespace ExampleGenerator {
 
     // Bug: Messages are not being marked as read as they should (ConnectPINDynamicQR)
+    // Bug: store status does not have apex digest as it should
+
 
     // ToDo: Example - Escrow and recovery (implement)
     // ToDo: Example - Delete account at service (implement)

@@ -7,7 +7,7 @@ private key information available to devices she has connected to her Mesh with 
 ~~~~
 <div="terminal">
 <cmd>Alice> ssh create /web
-<rsp>Udf: MBO2-RGVC-3PQ4-H6AJ-5BN6-4ZPV-FWWQ/n
+<rsp>Udf: MBCM-OKDV-KGI6-RT5F-YEVI-Z3IF-7Z7S/n
 </div>
 ~~~~
 

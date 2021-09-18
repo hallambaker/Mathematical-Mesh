@@ -7,8 +7,8 @@ to the connecting device:
 ~~~~
 <div="terminal">
 <cmd>Alice> account pin /threshold
-<rsp>PIN=ABUT-CB72-7OD7-RCTA-ZKQK-HTBK-QI
- (Expires=2021-09-18T13:08:46Z)
+<rsp>PIN=AC33-KDTU-XZML-MBR6-53CC-HTM2-RU
+ (Expires=2021-09-19T18:46:57Z)
 </div>
 ~~~~
 
@@ -19,9 +19,9 @@ the PIN is specified. This time, only the 'threshold' right is granted.
 ~~~~
 <div="terminal">
 <cmd>Alice3> device request alice@example.com /pin ^
-    ABUT-CB72-7OD7-RCTA-ZKQK-HTBK-QI
-<rsp>   Device UDF = MAM5-JIA7-DSS2-HXXB-63TD-RDS5-U4XN
-   Witness value = AILH-UMHP-NS7S-CS5X-TOEK-RR3C-WYBS
+    AC33-KDTU-XZML-MBR6-53CC-HTM2-RU
+<rsp>   Device UDF = MC57-OPK7-466V-HXX6-F3L6-WQTQ-ISY5
+   Witness value = 54E4-BFWD-CBDK-2JAY-TSLY-2PIU-MW6O
 </div>
 ~~~~
 
@@ -33,26 +33,26 @@ automatically when the administration device is synchronized:
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: AILH-UMHP-NS7S-CS5X-TOEK-RR3C-WYBS
+<rsp>MessageID: 54E4-BFWD-CBDK-2JAY-TSLY-2PIU-MW6O
         Connection Request::
-        MessageID: AILH-UMHP-NS7S-CS5X-TOEK-RR3C-WYBS
+        MessageID: 54E4-BFWD-CBDK-2JAY-TSLY-2PIU-MW6O
         To:  From: 
-        Device:  MAM5-JIA7-DSS2-HXXB-63TD-RDS5-U4XN
-        Witness: AILH-UMHP-NS7S-CS5X-TOEK-RR3C-WYBS
-MessageID: NDRJ-MUA4-ZHUD-3PHK-MLJJ-EPLX-46FD
+        Device:  MC57-OPK7-466V-HXX6-F3L6-WQTQ-ISY5
+        Witness: 54E4-BFWD-CBDK-2JAY-TSLY-2PIU-MW6O
+MessageID: NCJY-LYGZ-3ICM-JESL-H77G-WL4K-KY3V
         Group invitation::
-        MessageID: NDRJ-MUA4-ZHUD-3PHK-MLJJ-EPLX-46FD
+        MessageID: NCJY-LYGZ-3ICM-JESL-H77G-WL4K-KY3V
         To: alice@example.com From: alice@example.com
-MessageID: NA4W-P4SA-YCM2-VPZO-NGVS-MKNS-S7VM
+MessageID: NC5F-OQN2-OLFI-HL4E-LRUR-QCA5-KOHC
         Confirmation Request::
-        MessageID: NA4W-P4SA-YCM2-VPZO-NGVS-MKNS-S7VM
+        MessageID: NC5F-OQN2-OLFI-HL4E-LRUR-QCA5-KOHC
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NDUB-2UQF-ABWX-FVM3-5BX6-XFEG-WNEB
+MessageID: ND3S-QR42-LWJ7-ORBD-3DMN-ZBTH-RMFI
         Contact Request::
-        MessageID: NDUB-2UQF-ABWX-FVM3-5BX6-XFEG-WNEB
+        MessageID: ND3S-QR42-LWJ7-ORBD-3DMN-ZBTH-RMFI
         To: alice@example.com From: bob@example.com
-        PIN: ADTM-XGIY-KTVA-CXXP-T64M-NUXC-A2OQ
+        PIN: ADUQ-WHRC-BS2A-V4XK-TEFX-52VJ-JKYQ
 <cmd>Alice> account sync /auto
 <rsp>ERROR - An attempt was made to create an object with an existing obje
 ct identifier
@@ -65,9 +65,9 @@ Alice can now synchronize her newly connected device to her account:
 ~~~~
 <div="terminal">
 <cmd>Alice3> device complete
-<rsp>   Device UDF = MAM5-JIA7-DSS2-HXXB-63TD-RDS5-U4XN
+<rsp>   Device UDF = MC57-OPK7-466V-HXX6-F3L6-WQTQ-ISY5
    Account = alice@example.com
-   Account UDF = MC76-AK7P-CEKP-ILKC-MEXU-EOIF-I6BF
+   Account UDF = MBMJ-7X6T-DWE7-6EGQ-2QGZ-RSYR-553Q
 <cmd>Alice3> account sync
 </div>
 ~~~~
@@ -83,7 +83,7 @@ information is encoded as a URI and presented to the connecting device as a QR c
 The URI corresponding to the connection PIN is:
 
 ~~~~
-mcu://alice@example.com/ABUT-CB72-7OD7-RCTA-ZKQK-HTBK-QI
+mcu://alice@example.com/AC33-KDTU-XZML-MBR6-53CC-HTM2-RU
 ~~~~
 
 

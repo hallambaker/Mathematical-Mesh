@@ -119,7 +119,7 @@ namespace ExampleGenerator {
         public string ConnectEARL;
 
 
-
+        public Goedel.Mesh.Shell.ResultPublishDevice ConnectStaticResult;
 
         public MessagePin ConnectPINMessagePin;
         public AcknowledgeConnection ConnectPINAcknowledgeConnection;
@@ -290,6 +290,8 @@ namespace ExampleGenerator {
         public List<ExampleResult> GroupDeleteBob;
         public List<ExampleResult> GroupDecryptBobRevoked;
 
+
+        public CatalogedAccess BobAccessEntry;
 
         public GroupInvitation GroupInvitation;
 

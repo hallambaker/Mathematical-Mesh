@@ -1,6 +1,6 @@
 
 The previous status operation has reported that a new envelope has been added to
-one of the stores. The device requests this data from the service:
+the credential store. The device requests this data from the service:
 
 
 ~~~~
@@ -14,7 +14,7 @@ one of the stores. The device requests this data from the service:
 ~~~~
 
 
-The response contains the requested data:
+The response contains the requested envelope:
 
 
 ~~~~
@@ -25,20 +25,20 @@ The response contains the requested data:
     "Updates":[{
         "Container":"MMM_Credential",
         "Envelopes":[[{
-              "PayloadDigest":"gMsJUQ90xoQ4_R_f_jwHNtk_XmIcj7MLNz
-  kwW97ucddqIjwv9se12xgSUsktA3xSEPaI7spgkhrr1bYxInWhOQ",
+              "PayloadDigest":"K-UFpj3lM68Ss-giQEGphiY2nzQwZ0wJKm
+  SXBxmucLZ0g_XxlvJdTGbINJKbOeFC-GWK-pfE0bfOKc21SBreFA",
               "enc":"A256CBC",
               "dig":"S512",
-              "Salt":"sfpZPZAnWAHDo1T8ZvAZtQ",
+              "Salt":"uTljzronr-lB-Y_CjrjIKw",
               "recipients":[{
-                  "kid":"MA27-7XVW-GDJL-SY6H-6HZW-EKMC-TFD3",
+                  "kid":"MCOD-RDWV-XCRC-MPYT-2NIA-P6HQ-6D33",
                   "epk":{
                     "PublicKeyECDH":{
                       "crv":"X448",
-                      "Public":"8pHdD6vQW22vGQTot9Fil--_bFooaGCjT
-  XjNqiA6i7ArTUWew170PicBnBc0_F2rHKlH9Mb-07YA"}},
-                  "wmk":"6tRKY5XxiFmduGCiJHKWFht8QPvP6xLnGd5Noa6x
-  wlKnpd76DMd7lA"}
+                      "Public":"rfy-yru7zPGHSRTTPTduLiBo7psygt4gE
+  3Pik7fkwE4j37ffyuFdKKe0Fjjt-R7AnI66DLkwf4IA"}},
+                  "wmk":"CHukJoCWi74lLhQRludAx_VxkRi1DE8slhoAeKl8
+  kERNV296VYJlUw"}
                 ],
               "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICI6ZnRwLmV4
   YW1wbGUuY29tIiwKICAiRXZlbnQiOiAiVXBkYXRlIiwKICAiRmlyc3QiOiAxLAogI
@@ -46,14 +46,19 @@ The response contains the requested data:
               "SequenceInfo":{
                 "Index":3,
                 "TreePosition":716},
-              "Received":"2021-09-17T13:08:31Z"},
-            "5VKuChSrjsIgQUObGlQX8mKLROs8T3NaGc639dCGJ8Z4YLkRhswP
-  o2leuHnGThHzS2Da_hPcOeJGks9Z9IUSCx-KcfErSAyk1uvoli5nyT5i9rBCdj0x-
-  fYPEIeUg9yFIAiDlqjLoVPhW0ZlB6Q5wfQ0LCDt7wykCPw1MvQWo7c",
+              "Received":"2021-09-18T18:46:41Z"},
+            "fN6dBWBwGSXTn6u8KGj79DkXjApF0j4J8sZmYedqQy4fXOwinOUS
+  6A5Rn6Lzp76VzpALmSNLqdNI091GSfcIt06Wm7wExMAbDR1HXI3gDpkC_8A9QvLJu
+  8yHWJcfiJuRupbOLabSNqdBqkrNLxWDAxVt3vyXFTonzO-E7Y20leQ",
             {}
             ]
           ]}
       ]}}
 ~~~~
 
+
+Future: The current implementation of the download operation is limited by the
+capabilities of the HTTP binding of the RUD transport. A future binding allowing 
+operations that consist of a single request followed by a sequence of responses 
+will allow much greater flexibility.
 

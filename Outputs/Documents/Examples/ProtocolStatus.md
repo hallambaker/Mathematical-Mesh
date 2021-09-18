@@ -1,5 +1,8 @@
 
-The request payload:
+Alice adds an entry to her bookmark catalog. Before the bookmark can be 
+added, the device synchronizes to the service. The synchronization process
+begins with a request for the status of all the stores associated with the 
+account that it has access rights for:
 
 
 ~~~~
@@ -8,7 +11,11 @@ The request payload:
 ~~~~
 
 
-The response payload:
+If the account has a very large number of stores, the device might only 
+ask for the status of specific stores of interest.
+
+The response specifies the status of each store specifying the index and
+Merkle tree apex digest values for each:
 
 
 ~~~~
@@ -54,4 +61,7 @@ The response payload:
       ]}}
 ~~~~
 
+
+Bug: The current version of the reference code is only returning the digest 
+values for the outbound store.
 

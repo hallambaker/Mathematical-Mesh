@@ -1,6 +1,3 @@
->>>> Unfinished ProtocolMessageCompletion
-
-
 
 After using the PIN code to authenticate connection of a device in the previous 
 example, the corresponding MessagePin is marked as having been used by appending 
@@ -9,10 +6,10 @@ a completion message to the Local spool.
 ~~~~
 {
   "MessageComplete":{
-    "MessageId":"ND7H-WD6O-RZT3-MXIB-7BWV-5O7K-6QCZ",
+    "MessageId":"NCKM-B7D2-LDEI-I54Z-EMNK-MHPX-KCOJ",
     "References":[{
-        "MessageId":"AD6E-S7OC-XTQK-6IQY-PCE2-FEOB-C7U5",
-        "ResponseId":"MDW6-33OF-Z3NV-GCFK-KTD3-SSYM-DFA5",
+        "MessageId":"ABBQ-7RHN-DZ2H-53DR-2N6Q-44RF-DS4W",
+        "ResponseId":"MBBH-3P4B-C4K5-LVUR-D2AS-IHPO-ETVC",
         "Relationship":"Closed"}
       ]}}
 ~~~~

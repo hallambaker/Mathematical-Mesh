@@ -1,1 +1,1 @@
-udf://example.com/EBX2-6RAI-XGVX-UC5O-3VD5-ABIH-CS2L-FW
+udf://example.com/EDNL-TJNU-T7P6-5FYA-O5ST-5NIS-DDCJ-XP
