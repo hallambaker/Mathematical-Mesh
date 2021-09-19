@@ -440,7 +440,7 @@ The PIN code is used to authenticate a connection request:
 The device generates a RequestConnect message as follows:
 
 
->>> RequestConnect  HERE
+#% Format (Connect.ConnectRequestPIN );
 
 The service receives the conenct request and authenticates the message under the
 device key. The service cannot authenticate the message under the PIN code because
@@ -489,7 +489,7 @@ combination of the public keys in the device profile and those defined by the ac
 >>> CatalogedDevice Here
 
 
->> RespondConnection message here.
+#% Format (Connect.RespondConnectionPIN );
 
 This is posted to the local spool.
 

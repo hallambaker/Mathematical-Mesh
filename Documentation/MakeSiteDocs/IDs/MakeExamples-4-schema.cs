@@ -38,10 +38,10 @@ namespace ExampleGenerator {
 			 SchemaCode1(Example);
 			 SchemaCode2(Example);
 			 SchemaCode3(Example);
-			 SchemaAliceDeviceCoffee(Example);
-			 SchemaAliceActivationCoffee(Example);
-			 SchemaConnectionCoffee(Example);
-			 SchemaAliceActivationWatch(Example);
+			 SchemaAliceDevice2(Example);
+			 SchemaAliceActivationDevice2(Example);
+			 SchemaAliceConnectionDevice2(Example);
+			 SchemaAliceActivationDevice3(Example);
 			 SchemaEntrySSH(Example);
 			 SchemaEntryMail(Example);
 			 SchemaConnectionHost(Example);
@@ -146,7 +146,11 @@ namespace ExampleGenerator {
 		public void _SchemaAliceProfile(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("For example, the personal account profile Alice created is:\n{0}", _Indent);
+				_Output.Write ("For example, Alice creates a personal account:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Account.CreateAlice);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The account profile created is:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  Format (AliceProfileAccount);
 				_Output.Write ("\n{0}", _Indent);
@@ -154,67 +158,83 @@ namespace ExampleGenerator {
 		
 
 		//
-		// SchemaAliceDeviceCoffee
+		// SchemaAliceDevice2
 		//
-		public static void SchemaAliceDeviceCoffee(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaAliceDeviceCoffee.md");
+		public static void SchemaAliceDevice2(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaAliceDevice2.md");
 			Example._Output = _Output;
-			Example._SchemaAliceDeviceCoffee(Example);
+			Example._SchemaAliceDevice2(Example);
 			}
-		public void _SchemaAliceDeviceCoffee(CreateExamples Example) {
+		public void _SchemaAliceDevice2(CreateExamples Example) {
 
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("Connect.AliceProfileDeviceCoffee"));
 				_Output.Write ("\n{0}", _Indent);
-				  Format (Connect.AliceProfileDeviceCoffee);
+				_Output.Write ("The device profile for the first device \n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.AliceProfileDevice2);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
 		//
-		// SchemaAliceActivationCoffee
+		// SchemaAliceActivationDevice2
 		//
-		public static void SchemaAliceActivationCoffee(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaAliceActivationCoffee.md");
+		public static void SchemaAliceActivationDevice2(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaAliceActivationDevice2.md");
 			Example._Output = _Output;
-			Example._SchemaAliceActivationCoffee(Example);
+			Example._SchemaAliceActivationDevice2(Example);
 			}
-		public void _SchemaAliceActivationCoffee(CreateExamples Example) {
+		public void _SchemaAliceActivationDevice2(CreateExamples Example) {
 
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("Connect.AliceActivationDeviceCoffee"));
 				_Output.Write ("\n{0}", _Indent);
-				  Format (Connect.AliceActivationDeviceCoffee);
+				_Output.Write ("For example, Alice connects a device to her account:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Connect.ConnectComplete);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The activation record granting the device rights to operate as a part\n{0}", _Indent);
+				_Output.Write ("of the account is:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.AliceActivationDevice2);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("And:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.AliceActivationAccount2);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// SchemaAliceConnectionDevice2
+		//
+		public static void SchemaAliceConnectionDevice2(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaAliceConnectionDevice2.md");
+			Example._Output = _Output;
+			Example._SchemaAliceConnectionDevice2(Example);
+			}
+		public void _SchemaAliceConnectionDevice2(CreateExamples Example) {
+
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.AliceConnectionDevice2);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.AliceConnectionService2);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
 		//
-		// SchemaConnectionCoffee
+		// SchemaAliceActivationDevice3
 		//
-		public static void SchemaConnectionCoffee(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaConnectionCoffee.md");
+		public static void SchemaAliceActivationDevice3(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaAliceActivationDevice3.md");
 			Example._Output = _Output;
-			Example._SchemaConnectionCoffee(Example);
+			Example._SchemaAliceActivationDevice3(Example);
 			}
-		public void _SchemaConnectionCoffee(CreateExamples Example) {
+		public void _SchemaAliceActivationDevice3(CreateExamples Example) {
 
-				  Format (Connect.AliceConnectionDeviceCoffee);
-					}
-		
-
-		//
-		// SchemaAliceActivationWatch
-		//
-		public static void SchemaAliceActivationWatch(CreateExamples Example) { /* XFile  */
-				using var _Output = new StreamWriter("Examples\\SchemaAliceActivationWatch.md");
-			Example._Output = _Output;
-			Example._SchemaAliceActivationWatch(Example);
-			}
-		public void _SchemaAliceActivationWatch(CreateExamples Example) {
-
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("Connect.AliceActivationDeviceWatch"));
 				_Output.Write ("\n{0}", _Indent);
-				  Format (Connect.AliceActivationDeviceWatch);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.AliceActivationAccount3);
 					}
 		
 
@@ -242,6 +262,9 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaConnectionHost(CreateExamples Example) {
 
+				  Format (Service.ProfileHost);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				  Format (Service.ConnectionHost);
 					}
 		
@@ -509,7 +532,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("SchemaDevice"));
 				_Output.Write ("\n{0}", _Indent);
-				 Format(Connect.AliceProfileDeviceCoffee);
+				 Format(Connect.AliceProfileDevice2);
 					}
 		
 

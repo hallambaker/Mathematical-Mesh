@@ -1,7 +1,5 @@
 
->>>> Unfinished SchemaDevice
-
-
+The device profile for the first device 
 
 ~~~~
 {
@@ -35,3 +33,4 @@
           "Public":"rABsDxP8bbzipLUwI7vEJb5nuWqB3CBgiajyP-26kQQNw
   TqyPDnTIrf95pPvCC3umSpl1Xp0hLgA"}}}}}
 ~~~~
+

@@ -132,6 +132,9 @@ namespace ExampleGenerator {
                 $"account hello {AliceAccount}"
                 );
             var hello = Service.Hello.GetResultHello();
+            Service.ProfileService = hello.Response.EnvelopedProfileService.Decode();
+            Service.ProfileHost = hello.Response.EnvelopedProfileHost.Decode();
+            Service.ConnectionHost = Alice1.Shell.TestEnvironmentCommon.MeshService.ConnectionDevice;
             }
 
         public void CreateAliceAccount() {
@@ -320,7 +323,15 @@ namespace ExampleGenerator {
                 $"bookmark add {path1} {uri1} {title1}"
                 );
 
+            var connectStaticPollSuccess = Connect.ConnectComplete.GetResultConnect();
+            var dev2Machine = connectStaticPollSuccess?.CatalogedMachine;
+            var dev2Device = dev2Machine?.CatalogedDevice;
 
+            Connect.AliceProfileDevice2 = dev2Machine.ProfileDevice;
+            Connect.AliceActivationDevice2 = connectStaticPollSuccess.ActivationDevice;
+            Connect.AliceActivationAccount2 = connectStaticPollSuccess.ActivationAccount;
+            Connect.AliceConnectionDevice2 = dev2Device.ConnectionDevice;
+            Connect.AliceConnectionService2 = dev2Device.ConnectionService;
             }
 
         public void TestConnectDisconnect(string deviceId) {
@@ -629,6 +640,19 @@ namespace ExampleGenerator {
             var watchMachine = connectPINComplete.CatalogedMachine;
             Connect.AliceProfileDeviceWatch = watchMachine.ProfileDevice;
             //Connect.AliceActivationDeviceWatch = watchMachine.A;
+
+
+            var connectStaticPollSuccess = Connect.ConnectComplete.GetResultConnect();
+            var dev3Machine = connectStaticPollSuccess?.CatalogedMachine;
+            var dev3Device = dev3Machine?.CatalogedDevice;
+
+            Connect.AliceProfileDevice3 = dev3Machine.ProfileDevice;
+            Connect.AliceActivationDevice3 = connectStaticPollSuccess.ActivationDevice;
+            Connect.AliceActivationAccount3 = connectStaticPollSuccess.ActivationAccount;
+            Connect.AliceConnectionDevice3 = dev3Device.ConnectionDevice;
+            Connect.AliceConnectionService3 = dev3Device.ConnectionService;
+
+
             }
 
         public void ConnectStaticQR() {
@@ -675,13 +699,10 @@ namespace ExampleGenerator {
             Connect.ResponsePollClaim = Connect.ConnectStaticPollSuccess[0].Traces[0];
 
 
-            var connectStaticPollSuccess = Connect.ConnectStaticPollSuccess.GetResultConnect();
-            var coffeePotMachine = connectStaticPollSuccess?.CatalogedMachine;
-            var coffeePotDevice = coffeePotMachine?.CatalogedDevice;
-            Connect.AliceProfileDeviceCoffee = coffeePotMachine.ProfileDevice;
-            Connect.AliceActivationDeviceCoffee = connectStaticPollSuccess.ActivationDevice;
-            //Connect.AliceActivationAccountCoffee = connectStaticPollSuccess.ActivationAccount;
-            //Connect.AliceConnectionDeviceCoffee = coffeePotDevice.ConnectionUser;
+
+
+
+
             }
 
         public void EscrowAndRecover() {

@@ -32,10 +32,10 @@
 #% SchemaCode1(Example);
 #% SchemaCode2(Example);
 #% SchemaCode3(Example);
-#% SchemaAliceDeviceCoffee(Example);
-#% SchemaAliceActivationCoffee(Example);
-#% SchemaConnectionCoffee(Example);
-#% SchemaAliceActivationWatch(Example);
+#% SchemaAliceDevice2(Example);
+#% SchemaAliceActivationDevice2(Example);
+#% SchemaAliceConnectionDevice2(Example);
+#% SchemaAliceActivationDevice3(Example);
 #!!!!! Missing
 #% SchemaEntrySSH(Example);
 #% SchemaEntryMail(Example);
@@ -100,35 +100,55 @@ witnessValue =  MAC (witnessData , saltedPINData)
 
 #zfile CreateExamples SchemaAliceProfile "Examples\\SchemaAliceProfile.md" Example
 
-For example, the personal account profile Alice created is:
+For example, Alice creates a personal account:
+
+#%  ConsoleExample (Account.CreateAlice);
+
+The account profile created is:
 
 #%  Format (AliceProfileAccount);
 
 #end zfile
 
-#zfile CreateExamples SchemaAliceDeviceCoffee "Examples\\SchemaAliceDeviceCoffee.md" Example
-#{Unfinished ("Connect.AliceProfileDeviceCoffee")}
+#zfile CreateExamples SchemaAliceDevice2 "Examples\\SchemaAliceDevice2.md" Example
 
-#%  Format (Connect.AliceProfileDeviceCoffee);
+The device profile for the first device 
 
-#end zfile
-
-#zfile CreateExamples SchemaAliceActivationCoffee "Examples\\SchemaAliceActivationCoffee.md" Example
-#{Unfinished ("Connect.AliceActivationDeviceCoffee")}
-
-#%  Format (Connect.AliceActivationDeviceCoffee);
-
+#%  Format (Connect.AliceProfileDevice2);
 
 #end zfile
 
-#zfile CreateExamples SchemaConnectionCoffee "Examples\\SchemaConnectionCoffee.md" Example
-#%  Format (Connect.AliceConnectionDeviceCoffee);
+#zfile CreateExamples SchemaAliceActivationDevice2 "Examples\\SchemaAliceActivationDevice2.md" Example
+
+For example, Alice connects a device to her account:
+
+#%  ConsoleExample (Connect.ConnectComplete);
+
+The activation record granting the device rights to operate as a part
+of the account is:
+
+
+#%  Format (Connect.AliceActivationDevice2);
+
+And:
+
+#%  Format (Connect.AliceActivationAccount2);
+
 #end zfile
 
-#zfile CreateExamples SchemaAliceActivationWatch "Examples\\SchemaAliceActivationWatch.md" Example
-#{Unfinished ("Connect.AliceActivationDeviceWatch")}
+#zfile CreateExamples SchemaAliceConnectionDevice2 "Examples\\SchemaAliceConnectionDevice2.md" Example
 
-#%  Format (Connect.AliceActivationDeviceWatch);
+#%  Format (Connect.AliceConnectionDevice2);
+
+#%  Format (Connect.AliceConnectionService2);
+
+
+#end zfile
+
+#zfile CreateExamples SchemaAliceActivationDevice3 "Examples\\SchemaAliceActivationDevice3.md" Example
+
+
+#%  Format (Connect.AliceActivationAccount3);
 #end zfile
 
 #zfile CreateExamples SchemaProfileService "Examples\\SchemaProfileService.md" Example
@@ -136,6 +156,9 @@ For example, the personal account profile Alice created is:
 #end zfile
 
 #zfile CreateExamples SchemaConnectionHost "Examples\\SchemaConnectionHost.md" Example
+#%  Format (Service.ProfileHost);
+
+
 #%  Format (Service.ConnectionHost);
 #end zfile
 
@@ -275,7 +298,7 @@ witnessValue =  MAC (witnessData , saltedPINData)
 
 #{Unfinished ("SchemaDevice")}
 
-#% Format(Connect.AliceProfileDeviceCoffee);
+#% Format(Connect.AliceProfileDevice2);
 #end zfile
 
 #zfile CreateExamples DevicePreconfiguration "Examples\\DevicePreconfiguration.md" Example

@@ -1,0 +1,195 @@
+
+For example, Alice connects a device to her account:
+
+
+~~~~
+<div="terminal">
+<cmd>Alice2> device complete
+<rsp>   Device UDF = MDWS-IM2S-B74G-PP6P-ACOD-LIIX-CIZV
+   Account = alice@example.com
+   Account UDF = MA62-NMPL-3OBH-KM2M-LPOO-RUZC-HUH3
+</div>
+~~~~
+
+The activation record granting the device rights to operate as a part
+of the account is:
+
+
+~~~~
+{
+  "ActivationDevice":{
+    "ActivationKey":"ZAAQ-HVOC-UF65-VVGZ-TC4Z-LOH5-M66I-JLEH-4P6G-6
+5HP-53LV-PPVP-3H53-YQDV",
+    "AccountUdf":"MDWS-IM2S-B74G-PP6P-ACOD-LIIX-CIZV"}}
+~~~~
+
+And:
+
+~~~~
+{
+  "ActivationAccount":{
+    "Entries":[{
+        "Resource":"MMM_Contact",
+        "Key":{
+          "Udf":"MAMD-XHP5-FHFG-OUWO-3PSS-CPEN-PG7L",
+          "PublicParameters":{
+            "PublicKeyECDH":{
+              "crv":"X448",
+              "Public":"k6Q3Qlxtxm8fIFp6WQHlomxHw01B7hojqMbzYiPoW
+  Bsllw48GK4AT1AAPSzgmj_UHWCh9EuvX-SA"}},
+          "PrivateParameters":{
+            "PrivateKeyECDH":{
+              "crv":"X448",
+              "Private":"joaA-Tk7S5v9NYiio6jUZJinJ3Tp-mu3glUcYMKr
+  2KZiXBB1e_EZE8VhQrabLS7j3HQFCgVvuH0"}}}},
+      {
+        "Resource":"MMM_Publication",
+        "Key":{
+          "Udf":"MAMD-XHP5-FHFG-OUWO-3PSS-CPEN-PG7L",
+          "PublicParameters":{
+            "PublicKeyECDH":{
+              "crv":"X448",
+              "Public":"k6Q3Qlxtxm8fIFp6WQHlomxHw01B7hojqMbzYiPoW
+  Bsllw48GK4AT1AAPSzgmj_UHWCh9EuvX-SA"}},
+          "PrivateParameters":{
+            "PrivateKeyECDH":{
+              "crv":"X448",
+              "Private":"joaA-Tk7S5v9NYiio6jUZJinJ3Tp-mu3glUcYMKr
+  2KZiXBB1e_EZE8VhQrabLS7j3HQFCgVvuH0"}}}},
+      {
+        "Resource":"MMM_Inbound",
+        "Key":{
+          "Udf":"MAMD-XHP5-FHFG-OUWO-3PSS-CPEN-PG7L",
+          "PublicParameters":{
+            "PublicKeyECDH":{
+              "crv":"X448",
+              "Public":"k6Q3Qlxtxm8fIFp6WQHlomxHw01B7hojqMbzYiPoW
+  Bsllw48GK4AT1AAPSzgmj_UHWCh9EuvX-SA"}},
+          "PrivateParameters":{
+            "PrivateKeyECDH":{
+              "crv":"X448",
+              "Private":"joaA-Tk7S5v9NYiio6jUZJinJ3Tp-mu3glUcYMKr
+  2KZiXBB1e_EZE8VhQrabLS7j3HQFCgVvuH0"}}}},
+      {
+        "Resource":"MMM_Outbound",
+        "Key":{
+          "Udf":"MAMD-XHP5-FHFG-OUWO-3PSS-CPEN-PG7L",
+          "PublicParameters":{
+            "PublicKeyECDH":{
+              "crv":"X448",
+              "Public":"k6Q3Qlxtxm8fIFp6WQHlomxHw01B7hojqMbzYiPoW
+  Bsllw48GK4AT1AAPSzgmj_UHWCh9EuvX-SA"}},
+          "PrivateParameters":{
+            "PrivateKeyECDH":{
+              "crv":"X448",
+              "Private":"joaA-Tk7S5v9NYiio6jUZJinJ3Tp-mu3glUcYMKr
+  2KZiXBB1e_EZE8VhQrabLS7j3HQFCgVvuH0"}}}},
+      {
+        "Resource":"MMM_Network",
+        "Key":{
+          "Udf":"MAMD-XHP5-FHFG-OUWO-3PSS-CPEN-PG7L",
+          "PublicParameters":{
+            "PublicKeyECDH":{
+              "crv":"X448",
+              "Public":"k6Q3Qlxtxm8fIFp6WQHlomxHw01B7hojqMbzYiPoW
+  Bsllw48GK4AT1AAPSzgmj_UHWCh9EuvX-SA"}},
+          "PrivateParameters":{
+            "PrivateKeyECDH":{
+              "crv":"X448",
+              "Private":"joaA-Tk7S5v9NYiio6jUZJinJ3Tp-mu3glUcYMKr
+  2KZiXBB1e_EZE8VhQrabLS7j3HQFCgVvuH0"}}}},
+      {
+        "Resource":"MMM_Application",
+        "Key":{
+          "Udf":"MAMD-XHP5-FHFG-OUWO-3PSS-CPEN-PG7L",
+          "PublicParameters":{
+            "PublicKeyECDH":{
+              "crv":"X448",
+              "Public":"k6Q3Qlxtxm8fIFp6WQHlomxHw01B7hojqMbzYiPoW
+  Bsllw48GK4AT1AAPSzgmj_UHWCh9EuvX-SA"}},
+          "PrivateParameters":{
+            "PrivateKeyECDH":{
+              "crv":"X448",
+              "Private":"joaA-Tk7S5v9NYiio6jUZJinJ3Tp-mu3glUcYMKr
+  2KZiXBB1e_EZE8VhQrabLS7j3HQFCgVvuH0"}}}},
+      {
+        "Resource":"MMM_Credential",
+        "Key":{
+          "Udf":"MAMD-XHP5-FHFG-OUWO-3PSS-CPEN-PG7L",
+          "PublicParameters":{
+            "PublicKeyECDH":{
+              "crv":"X448",
+              "Public":"k6Q3Qlxtxm8fIFp6WQHlomxHw01B7hojqMbzYiPoW
+  Bsllw48GK4AT1AAPSzgmj_UHWCh9EuvX-SA"}},
+          "PrivateParameters":{
+            "PrivateKeyECDH":{
+              "crv":"X448",
+              "Private":"joaA-Tk7S5v9NYiio6jUZJinJ3Tp-mu3glUcYMKr
+  2KZiXBB1e_EZE8VhQrabLS7j3HQFCgVvuH0"}}}},
+      {
+        "Resource":"MMM_Task",
+        "Key":{
+          "Udf":"MAMD-XHP5-FHFG-OUWO-3PSS-CPEN-PG7L",
+          "PublicParameters":{
+            "PublicKeyECDH":{
+              "crv":"X448",
+              "Public":"k6Q3Qlxtxm8fIFp6WQHlomxHw01B7hojqMbzYiPoW
+  Bsllw48GK4AT1AAPSzgmj_UHWCh9EuvX-SA"}},
+          "PrivateParameters":{
+            "PrivateKeyECDH":{
+              "crv":"X448",
+              "Private":"joaA-Tk7S5v9NYiio6jUZJinJ3Tp-mu3glUcYMKr
+  2KZiXBB1e_EZE8VhQrabLS7j3HQFCgVvuH0"}}}},
+      {
+        "Resource":"MMM_Bookmark",
+        "Key":{
+          "Udf":"MAMD-XHP5-FHFG-OUWO-3PSS-CPEN-PG7L",
+          "PublicParameters":{
+            "PublicKeyECDH":{
+              "crv":"X448",
+              "Public":"k6Q3Qlxtxm8fIFp6WQHlomxHw01B7hojqMbzYiPoW
+  Bsllw48GK4AT1AAPSzgmj_UHWCh9EuvX-SA"}},
+          "PrivateParameters":{
+            "PrivateKeyECDH":{
+              "crv":"X448",
+              "Private":"joaA-Tk7S5v9NYiio6jUZJinJ3Tp-mu3glUcYMKr
+  2KZiXBB1e_EZE8VhQrabLS7j3HQFCgVvuH0"}}}}
+      ],
+    "AccountEncryption":{
+      "Udf":"MAMD-XHP5-FHFG-OUWO-3PSS-CPEN-PG7L",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"k6Q3Qlxtxm8fIFp6WQHlomxHw01B7hojqMbzYiPoWBsll
+  w48GK4AT1AAPSzgmj_UHWCh9EuvX-SA"}},
+      "PrivateParameters":{
+        "PrivateKeyECDH":{
+          "crv":"X448",
+          "Private":"joaA-Tk7S5v9NYiio6jUZJinJ3Tp-mu3glUcYMKr2KZi
+  XBB1e_EZE8VhQrabLS7j3HQFCgVvuH0"}}},
+    "AccountAuthentication":{
+      "Udf":"MB72-CHTQ-277Z-BX3C-ZU7D-W7VU-KJTV",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"H2ISDW8QKBK0gcTkJPjKmnSzYBbOCjQvqV7Jif0IqEZK0
+  rBawwabcX8II2PcQFW4rQmL8laYDzAA"}},
+      "PrivateParameters":{
+        "PrivateKeyECDH":{
+          "crv":"X448",
+          "Private":"bs-bfcjpUWPUFdhkkUfHPzGRkieYVQlfE5pVX_zDlRdD
+  gXro4PI5-1-8fn_scrNLiHWMvY-qqSY"}}},
+    "AccountSignature":{
+      "Udf":"MCII-KQPJ-WB3H-OYUC-RHF6-5E6W-OHGU",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"Ed448",
+          "Public":"XZs5s5lYZuE52LLs9jSm9530pjEBe3DUEGX2uYtqfzFyj
+  Fw7QJLXnuaQfHh4s2gdhIM9GwtOhouA"}},
+      "PrivateParameters":{
+        "PrivateKeyECDH":{
+          "crv":"Ed448",
+          "Private":"czLDrUx3T1g37NDC1V6xs_-pi6un1T8qx0gvwWJKHaVt
+  BUOm2uPWG2b2KZfLo4DDsQ1QtcfbgEI"}}}}}
+~~~~
+

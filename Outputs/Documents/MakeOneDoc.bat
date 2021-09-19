@@ -30,6 +30,8 @@ copy ..\favicon.png .
 
 ::rfctool %DocSource%\hallambaker-mesh-6-rdp.docx  /auto /cache=bib.xml
 
+rfctool %DocSource%\hallambaker-mesh-4-schema.docx /auto /cache=bib.xml
+
 rfctool %DocSource%\hallambaker-mesh-5-protocol.docx  /auto /cache=bib.xml
 
 exit /b 0

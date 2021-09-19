@@ -74,10 +74,23 @@ namespace ExampleGenerator {
 
         public List<ExampleResult> DisconnectThreshDecrypt;
 
-        public ProfileDevice AliceProfileDeviceCoffee;
-        public ActivationDevice AliceActivationDeviceCoffee;
-        public ActivationAccount AliceActivationAccountCoffee;
-        public ConnectionService AliceConnectionDeviceCoffee;
+        public ProfileDevice AliceProfileDevice2;
+        public ActivationDevice AliceActivationDevice2;
+        public ActivationAccount AliceActivationAccount2;
+        public ConnectionService AliceConnectionDevice2;
+        public ConnectionService AliceConnectionService2;
+
+        public ProfileDevice AliceProfileDevice3;
+        public ActivationDevice AliceActivationDevice3;
+        public ActivationAccount AliceActivationAccount3;
+        public ConnectionService AliceConnectionDevice3;
+        public ConnectionService AliceConnectionService3;
+
+
+
+
+
+
         public ActivationDevice AliceActivationDeviceWatch;
         public ProfileDevice AliceProfileDeviceWatch;
 
@@ -177,9 +190,9 @@ namespace ExampleGenerator {
     public partial class LayerService : ExampleSet {
 
         public List<ExampleResult> Hello;
-        public ProfileDevice ProfileService;
-        public ProfileDevice ConnectionHost;
-
+        public ProfileService ProfileService;
+        public ProfileDevice ProfileHost;
+        public ConnectionService ConnectionHost;
 
         public LayerService(CreateExamples createExamples) :
                 base(createExamples) {

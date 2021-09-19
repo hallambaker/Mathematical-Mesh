@@ -1,0 +1,45 @@
+~~~~
+{
+  "ProfileHost":{
+    "ProfileSignature":{
+      "Udf":"MCFI-OMRG-ZH56-4TSA-KYKE-TG3P-DDZA",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"Ed448",
+          "Public":"gxSZLZDInVyIUOHZM-syGWan01902TQn3m8AzJ7e5weh_
+  c1rZcKCWTs7YrSaGJMMov0xaCIqhoKA"}}},
+    "Encryption":{
+      "Udf":"MDGE-NIXF-GBAJ-C7LE-XQSN-5AG3-VZHE",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"oanVna47ET-oD0qCBOaZl3_SsKPPCp2-DZigop0zu9ajo
+  dRSy26t_F2KTIEpgWXVZdjNGAScXT2A"}}},
+    "Signature":{
+      "Udf":"MCZS-W77D-NUD5-KDT5-W4PN-USMJ-D377",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"Ed448",
+          "Public":"wCfs40apU6pM5CQhIZ_uzMvKHJc_95CbmoTD0USRkGOTe
+  EXrtkVY9GZZKREBDgpAV1KqhxROyboA"}}},
+    "Authentication":{
+      "Udf":"MAZK-K5JN-YWDD-MGH4-23WH-R7JT-KUQ4",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"pID0wxKHzS77KXe82mP6SzrXgAZy6H6QC6P7vfqHthLVd
+  o3dV2N-BorAAataLEqHCCVKF4qU2lAA"}}}}}
+~~~~
+
+
+~~~~
+{
+  "ConnectionService":{
+    "Authentication":{
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"RCtmdRcwTElrQnrQTNSpxrBmYSSWQ1KJI_KEHt9PGhVjv
+  LznH8a3izICYE3wQYtIBD3NVs_rPkmA"}}},
+    "Account":"@example"}}
+~~~~

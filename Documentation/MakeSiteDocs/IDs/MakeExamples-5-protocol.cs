@@ -653,7 +653,7 @@ namespace ExampleGenerator {
 				_Output.Write ("The device generates a RequestConnect message as follows:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write (">>> RequestConnect  HERE\n{0}", _Indent);
+				 Format (Connect.ConnectRequestPIN );
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The service receives the conenct request and authenticates the message under the\n{0}", _Indent);
 				_Output.Write ("device key. The service cannot authenticate the message under the PIN code because\n{0}", _Indent);
@@ -702,7 +702,7 @@ namespace ExampleGenerator {
 				_Output.Write (">>> CatalogedDevice Here\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write (">> RespondConnection message here.\n{0}", _Indent);
+				 Format (Connect.RespondConnectionPIN );
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("This is posted to the local spool.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

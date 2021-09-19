@@ -36,7 +36,7 @@ and populates the service as before.
 ~~~~
 <div="terminal">
 <cmd>Alice> account connect ^
-    mcu://maker@example.com/EC2H-AZKL-3EF7-YHPE-HT7G-HV2D-6U /web
+    mcu://maker@example.com/ED67-6E3S-GEKS-KYF7-26NQ-WWU4-RQ /web
 </div>
 ~~~~
 
@@ -48,9 +48,9 @@ The device polls the publication service until a claim message is returned.
 ~~~~
 <div="terminal">
 <cmd>Alice4> device complete
-<rsp>   Device UDF = MCVU-WDTJ-3L4D-RM6N-C5GT-HXWW-OWDI
+<rsp>   Device UDF = MBVV-VUAI-XXNN-ERS5-G4GT-CWRA-BVMF
    Account = alice@example.com
-   Account UDF = MBMJ-7X6T-DWE7-6EGQ-2QGZ-RSYR-553Q
+   Account UDF = MA62-NMPL-3OBH-KM2M-LPOO-RUZC-HUH3
 </div>
 ~~~~
 
