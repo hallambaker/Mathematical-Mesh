@@ -714,6 +714,13 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SSHList(Goedel.Mesh.Shell.SSHList)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="P:Goedel.Mesh.Shell.Shell.MeshMachine">
             <summary>The MeshMachine</summary>
         </member>
@@ -3971,6 +3978,27 @@
         <member name="P:Goedel.Mesh.Shell._SSHAuth.ID">
             <summary>Field accessor for option [id]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.Address">
+            <summary>Field accessor for parameter []</summary>
+        </member>
         <member name="T:Goedel.Mesh.Shell.MimeMapping">
             <summary>
             Convert between IANA content types and file extensions.
@@ -5074,6 +5102,9 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultPublishDevice.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultCreateDevice">
             <summary>

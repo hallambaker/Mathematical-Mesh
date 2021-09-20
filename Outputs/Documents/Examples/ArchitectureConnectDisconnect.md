@@ -4,7 +4,7 @@ Alice disconnects the new device:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device delete MDWS-IM2S-B74G-PP6P-ACOD-LIIX-CIZV
+<cmd>Alice> device delete MDQ4-QILF-7NND-WB5K-4UPU-QDN6-NDRU
 </div>
 ~~~~
 

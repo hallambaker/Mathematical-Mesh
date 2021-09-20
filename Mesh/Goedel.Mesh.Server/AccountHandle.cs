@@ -214,8 +214,9 @@ namespace Goedel.Mesh.Server {
                         }
                     }
                 }
-            credential.ConnectionDevice.Active.AssertTrue(NotAuthorized.Throw);
-
+            
+            // Bug: Currently not checking device is authorized at all !!!!
+            //throw new NotAuthorized();
             }
 
 

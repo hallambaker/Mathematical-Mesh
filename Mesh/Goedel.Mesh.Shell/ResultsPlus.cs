@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 using Goedel.Cryptography;
@@ -174,10 +175,10 @@ namespace Goedel.Mesh.Shell {
                     var profileService = Response.EnvelopedProfileService.Decode();
                     builder.AppendLine($"   Service UDF = {profileService.Udf}");
                     }
-                if (Response.EnvelopedProfileHost != null) {
-                    var profileHost = Response.EnvelopedProfileHost.Decode();
-                    builder.AppendLine($"   Host UDF = {profileHost.Udf}");
-                    }
+                //if (Response.EnvelopedProfileHost != null) {
+                //    var profileHost = Response.EnvelopedProfileHost.Decode();
+                //    builder.AppendLine($"   Host UDF = {profileHost.Udf}");
+                //    }
                 }
 
 
@@ -528,4 +529,18 @@ namespace Goedel.Mesh.Shell {
             }
 
         }
+
+
+    public partial class ResultPublishDevice {
+
+        ///<inheritdoc/>
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
+            builder.AppendLine($"Device Udf: {ProfileDevice.Udf}");
+            builder.AppendLine($"File: {FileName}");
+
+            }
+        }
+
+
     }

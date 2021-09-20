@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/19/2021 5:51:00 PM
+//  This file was automatically generated at 9/20/2021 6:22:22 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2014,11 +2014,6 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual Enveloped<ProfileService>						EnvelopedProfileService  {get; set;}
-        /// <summary>
-        ///The enveloped profile of the host.
-        /// </summary>
-
-		public virtual Enveloped<ProfileHost>						EnvelopedProfileHost  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2083,11 +2078,6 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("EnvelopedProfileService", 1);
 					EnvelopedProfileService.Serialize (_writer, false);
 				}
-			if (EnvelopedProfileHost != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedProfileHost", 1);
-					EnvelopedProfileHost.Serialize (_writer, false);
-				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -2146,13 +2136,6 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					EnvelopedProfileService = new Enveloped<ProfileService> ();
 					EnvelopedProfileService.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "EnvelopedProfileHost" : {
-					// An untagged structure
-					EnvelopedProfileHost = new Enveloped<ProfileHost> ();
-					EnvelopedProfileHost.Deserialize (jsonReader);
  
 					break;
 					}

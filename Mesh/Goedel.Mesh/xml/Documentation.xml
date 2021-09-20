@@ -9890,11 +9890,6 @@
             The enveloped master profile of the service.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.MeshHelloResponse.EnvelopedProfileHost">
-             <summary>
-            The enveloped profile of the host.
-             </summary>
-        </member>
         <member name="P:Goedel.Mesh.MeshHelloResponse._Tag">
             <summary>
             Tag identifying this class
@@ -12796,12 +12791,6 @@
         <member name="T:Goedel.Mesh.Connection">
             <summary>
             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Connection.Active">
-             <summary>
-            If set true, the default state of the connection is active. Otherwise 
-            (i.e. false or null), default state is false.
-             </summary>
         </member>
         <member name="P:Goedel.Mesh.Connection.Subject">
              <summary>

@@ -235,6 +235,7 @@ namespace ExampleGenerator {
 
         public CatalogedEntry MailCatalogEntry;
         public CatalogedEntry SSHCatalogEntry;
+        public CatalogedEntry PublicationEntry;
 
         public LayerApps(CreateExamples createExamples) :
                 base(createExamples) {

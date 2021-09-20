@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/19/2021 5:51:00 PM
+//  This file was automatically generated at 9/20/2021 6:22:22 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2194,17 +2194,6 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class Connection : Assertion {
-		bool								__Active = false;
-		private bool						_Active;
-        /// <summary>
-        ///If set true, the default state of the connection is active. Otherwise 
-        ///(i.e. false or null), default state is false.
-        /// </summary>
-
-		public virtual bool						Active {
-			get => _Active;
-			set {_Active = value; __Active = true; }
-			}
         /// <summary>
         ///UDF of the connection target.
         /// </summary>
@@ -2264,11 +2253,6 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((Assertion)this).SerializeX(_writer, false, ref _first);
-			if (__Active){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Active", 1);
-					_writer.WriteBoolean (Active);
-				}
 			if (Subject != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Subject", 1);
@@ -2317,10 +2301,6 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Active" : {
-					Active = jsonReader.ReadBoolean ();
-					break;
-					}
 				case "Subject" : {
 					Subject = jsonReader.ReadString ();
 					break;

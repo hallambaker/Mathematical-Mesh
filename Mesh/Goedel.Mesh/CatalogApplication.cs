@@ -114,7 +114,15 @@ namespace Goedel.Mesh {
         /// Return a sequence of SSH applications in the catalog.
         /// </summary>
         /// <returns>Sequence of SSH application instances.</returns>
-        public IEnumerable<CatalogedApplicationSsh> GetSsh() => throw new NYI();
+        public List<CatalogedApplication> GetSsh() {
+            var result = new List<CatalogedApplication>();
+            foreach (var application in AsCatalogedType) {
+                if (application is CatalogedApplicationSsh catalogedApplicationSsh) {
+                    result.Add(catalogedApplicationSsh);
+                    }
+                }
+            return result;
+            }
 
         ///// <summary>
         ///// Return a sequence of SSH hosts advertised in the SSH application instance

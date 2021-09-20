@@ -194,9 +194,6 @@
 		Struct Enveloped<ProfileService> EnvelopedProfileService
 			Description
 				|The enveloped master profile of the service.
-		Struct Enveloped<ProfileHost> EnvelopedProfileHost
-			Description
-				|The enveloped profile of the host.
 
 
 	//Create account

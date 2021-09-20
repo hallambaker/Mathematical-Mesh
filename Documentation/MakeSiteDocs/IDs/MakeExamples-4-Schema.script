@@ -16,6 +16,7 @@
 #% SchemaEntryContact(Example);
 #% SchemaEntryCredential(Example);
 #% SchemaEntryBookmark(Example);
+#% SchemaEntryPublication(Example);
 #% SchemaEntryNetwork(Example);
 #% SchemaEntryTask(Example);
 #% SchemaDeriveTables(Example);
@@ -112,7 +113,7 @@ The account profile created is:
 
 #zfile CreateExamples SchemaAliceDevice2 "Examples\\SchemaAliceDevice2.md" Example
 
-The device profile for the first device 
+For example, the device profile corresponding to one of the devices belonging to Alice is:
 
 #%  Format (Connect.AliceProfileDevice2);
 
@@ -120,13 +121,12 @@ The device profile for the first device
 
 #zfile CreateExamples SchemaAliceActivationDevice2 "Examples\\SchemaAliceActivationDevice2.md" Example
 
-For example, Alice connects a device to her account:
+For example, Alice connects the device whose profile is shown above to her account:
 
 #%  ConsoleExample (Connect.ConnectComplete);
 
 The activation record granting the device rights to operate as a part
 of the account is:
-
 
 #%  Format (Connect.AliceActivationDevice2);
 
@@ -138,10 +138,21 @@ And:
 
 #zfile CreateExamples SchemaAliceConnectionDevice2 "Examples\\SchemaAliceConnectionDevice2.md" Example
 
+The ConnectionDevice assertion is used by the device to authenticate it to other 
+devices connected to the account. This connection assertion specifies the
+Encryption, Authentication, and Signature keys the device is to use in the context of
+the account and the list of roles that have been authorized for the device..
+
 #%  Format (Connect.AliceConnectionDevice2);
 
-#%  Format (Connect.AliceConnectionService2);
+The ConnectionService assertion is used to authenticate the device to the 
+Mesh service. In order to allow the assertion to fit in a single packet, it
+is important that this assertion be as small as possible. Only the 
+Authentication key is specified.
 
+The corresponding ConnectionService assertion is:
+
+#%  Format (Connect.AliceConnectionService2);
 
 #end zfile
 
@@ -156,8 +167,7 @@ And:
 #end zfile
 
 #zfile CreateExamples SchemaConnectionHost "Examples\\SchemaConnectionHost.md" Example
-#%  Format (Service.ProfileHost);
-
+#!#%  Format (Service.ProfileHost);
 
 #%  Format (Service.ConnectionHost);
 #end zfile
@@ -185,6 +195,10 @@ And:
 
 #zfile CreateExamples SchemaEntryNetwork "Examples\\SchemaEntryNetwork.md" Example
 #% Format(Apps.NetworkCatalogEntry);
+#end zfile
+
+#zfile CreateExamples SchemaEntryPublication "Examples\\SchemaEntryPublication.md" Example
+#% Format(Apps.PublicationEntry);
 #end zfile
 
 #zfile CreateExamples SchemaEntryTask "Examples\\SchemaEntryTask.md" Example
@@ -289,7 +303,7 @@ witnessValue =  MAC (witnessData , saltedPINData)
 
 #zfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" Example
 
-#{Unfinished ("SchemaMastere")}
+#{Unfinished ("SchemaMaster")}
 
 #% Format(AliceProfileAccount);
 #end zfile
@@ -303,7 +317,6 @@ witnessValue =  MAC (witnessData , saltedPINData)
 
 #zfile CreateExamples DevicePreconfiguration "Examples\\DevicePreconfiguration.md" Example
 
-#{Unfinished ("DevicePreconfiguration")}
 
 #% Format(Connect.ConnectStaticPreconfig);
 #end zfile
@@ -348,15 +361,11 @@ All the above plus the ProfileDevice are combined to form the CatalogedDevice en
 #zfile CreateExamples SchemaService "Examples\\SchemaService.md" Example
 #% var response = ResultHello?.Response;
 #% var profileService = response?.EnvelopedProfileService.Decode();
-#% var profileHost = response?.EnvelopedProfileHost.Decode();
+#!% var profileHost = response?.EnvelopedProfileHost.Decode();
 
 The service profile
 
 #% Format(profileService);
-
-The host also has a profile
-
-#% Format(profileHost);
 
 And there should be a connection of the host to the service but this isn't implemented yet:
 

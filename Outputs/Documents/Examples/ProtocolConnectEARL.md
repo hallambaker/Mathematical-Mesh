@@ -7,23 +7,142 @@ The manufacturer preconfigures the device
 ~~~~
 <div="terminal">
 <cmd>Maker> device preconfig
-<rsp>Device Profile UDF=
+<rsp>Device Udf: MCAE-LHYD-7TBQ-LOVT-GPE7-I3PX-6MQ3
+File: EBPB-YSBL-44F5-5ADN-PJHJ-CCJP-EU.medk
 </div>
 ~~~~
 
-This results in the creation of
+This results in the creation of the device preconfiguration record to be published
+to the Publication catalog of the device manufacturer:
 
->> device config 
+~~~~
+{
+  "DevicePreconfiguration":{
+    "EnvelopedProfileDevice":[{
+        "EnvelopeId":"MCAE-LHYD-7TBQ-LOVT-GPE7-I3PX-6MQ3",
+        "dig":"S512",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQ0FFLUxIWUQtN1
+  RCUS1MT1ZULUdQRTctSTNQWC02TVEzIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+  sZURldmljZSIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0IiwKICAi
+  Q3JlYXRlZCI6ICIyMDIxLTA5LTIwVDE4OjE2OjMzWiJ9"},
+      "ewogICJQcm9maWxlRGV2aWNlIjogewogICAgIlByb2ZpbGVTaWduYXR1cm
+  UiOiB7CiAgICAgICJVZGYiOiAiTUNBRS1MSFlELTdUQlEtTE9WVC1HUEU3LUkzUFg
+  tNk1RMyIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJs
+  aWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgI
+  CAiUHVibGljIjogIm84dXk2ZDhiWjRvTnlSQTlvZHNvQWJQSzl0SGVEc3loYWVQNF
+  9ia2s3WDdRMHZxSUlPSk0KICBUMy1TU2lBYlVCNzNvNnhiRzVXcEE5U0EifX19LAo
+  gICAgIkVuY3J5cHRpb24iOiB7CiAgICAgICJVZGYiOiAiTUIySi1aTVZFLUxXT0wt
+  N1dUSi1PVEw0LVkzU0QtWlY1WSIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjoge
+  wogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJYND
+  Q4IiwKICAgICAgICAgICJQdWJsaWMiOiAiVTFKbEF0TDdpWk85d2VVZVgzWktQZnB
+  3LTc5QW15cnZzVW40b1cweEI3Nk50enF5a0k0QgogIDRYdlNMYkc3ZkdPd1AtY1k5
+  Mmo5YXBPQSJ9fX0sCiAgICAiU2lnbmF0dXJlIjogewogICAgICAiVWRmIjogIk1ER
+  lAtRVhYRy1CN0g0LUFNNkktTjZDVy1NNFBYLTVXV0EiLAogICAgICAiUHVibGljUG
+  FyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICA
+  gICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJ1ek1YcTdwZUZi
+  UmVsYklrTERpenQwcW1qWmhKZ0FDdHhvN2J0SDNxVE9DYlV2bmNYMVFrCiAgVXA1d
+  WVDMUdfWUZuSnB6d09iZ09DNXNBIn19fSwKICAgICJBdXRoZW50aWNhdGlvbiI6IH
+  sKICAgICAgIlVkZiI6ICJNRDJXLVVEQ0stR05BRC1TSzVCLUFUNzUtQ0s2VS1QTEE
+  2IiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tl
+  eUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgICAgIlB1Y
+  mxpYyI6ICIycEctd1dIdmtiUGRxU2RJV1diMTFaWkc2aDJQOWY3WnRGdW1mcFlseV
+  RCTy1qWUQ1RHNaCiAgNjZvWFJPUDFkWlV5bU9qUUFsSGUxTE1BIn19fX19",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MCAE-LHYD-7TBQ-LOVT-GPE7-I3PX-6MQ3",
+            "signature":"ei7ljOVDEL4ZsmntYCuw1hJTzfhVaARcYjQXLoSi
+  I3uVOTc8QUu1mfOqxcWqBg_iJaxzLWgol6kAdYmCOXOZLJGeFcqRc8X5cp1yo_u3J
+  -RtBg16eT5OrAyyiKMAF-x14V8SZoND3AokujhS6_vn4DcA"}
+          ],
+        "PayloadDigest":"5fmX2PgCMfBvPkOAI1M3YiDPkT48IxlOlCTFclUN
+  suqOmAqSESi5KUOTINgjX_0MMMCFjX5OcCwXTENz1GH-dA"}
+      ],
+    "EnvelopedConnectionDevice":[{
+        "dig":"S512",
+        "ContentMetaData":"ewogICJNZXNzYWdlVHlwZSI6ICJDb25uZWN0aW
+  9uRGV2aWNlIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJ
+  DcmVhdGVkIjogIjIwMjEtMDktMjBUMTg6MTY6MzNaIn0"},
+      "ewogICJDb25uZWN0aW9uRGV2aWNlIjogewogICAgIkF1dGhlbnRpY2F0aW
+  9uIjogewogICAgICAiVWRmIjogIk1CMkotWk1WRS1MV09MLTdXVEotT1RMNC1ZM1N
+  ELVpWNVkiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVi
+  bGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiWDQ0OCIsCiAgICAgICAgI
+  CAiUHVibGljIjogIlUxSmxBdEw3aVpPOXdlVWVYM1pLUGZwdy03OUFteXJ2c1VuNG
+  9XMHhCNzZOdHpxeWtJNEIKICA0WHZTTGJHN2ZHT3dQLWNZOTJqOWFwT0EifX19LAo
+  gICAgIlNpZ25hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNREZQLUVYWEctQjdINC1B
+  TTZJLU42Q1ctTTRQWC01V1dBIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7C
+  iAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkND
+  Q4IiwKICAgICAgICAgICJQdWJsaWMiOiAidXpNWHE3cGVGYlJlbGJJa0xEaXp0MHF
+  talpoSmdBQ3R4bzdidEgzcVRPQ2JVdm5jWDFRawogIFVwNXVlQzFHX1lGbkpwendP
+  YmdPQzVzQSJ9fX0sCiAgICAiRW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQ
+  jJKLVpNVkUtTFdPTC03V1RKLU9UTDQtWTNTRC1aVjVZIiwKICAgICAgIlB1YmxpY1
+  BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICA
+  gICAiY3J2IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJVMUpsQXRMN2la
+  Tzl3ZVVlWDNaS1BmcHctNzlBbXlydnNVbjRvVzB4Qjc2TnR6cXlrSTRCCiAgNFh2U
+  0xiRzdmR093UC1jWTkyajlhcE9BIn19fX19",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MA6N-NN7E-CNN2-75BX-BGLB-ME6F-7FCH",
+            "signature":"ZOLaqvLsui6n-LB5_C_Q3seRS5ilBxiuFFPp_NU9
+  1fIF4qQYTh7opYmj8_h3bMuSrCBOCtmYlWgANuzu5LEtH-A_J2jR-euzFV7V3DbFJ
+  QwA8gDb9XhuRZF8FV8V0DfmN1l8AVex0Z7q-clZPodLaCcA"}
+          ],
+        "PayloadDigest":"cBn1RX2qmv9mzrgeUmHN8IhFBLKAmQnMaOUUIxri
+  yKS6DWWVyTxNrNi3D-MD-UJH9zXvSX-GPT6F95mZbm658g"}
+      ],
+    "EnvelopedConnectionService":[{
+        "dig":"S512",
+        "ContentMetaData":"ewogICJNZXNzYWdlVHlwZSI6ICJDb25uZWN0aW
+  9uU2VydmljZSIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0IiwKICA
+  iQ3JlYXRlZCI6ICIyMDIxLTA5LTIwVDE4OjE2OjMzWiJ9"},
+      "ewogICJDb25uZWN0aW9uU2VydmljZSI6IHsKICAgICJBdXRoZW50aWNhdG
+  lvbiI6IHsKICAgICAgIlVkZiI6ICJNQjJKLVpNVkUtTFdPTC03V1RKLU9UTDQtWTN
+  TRC1aVjVZIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1
+  YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgI
+  CAgIlB1YmxpYyI6ICJVMUpsQXRMN2laTzl3ZVVlWDNaS1BmcHctNzlBbXlydnNVbj
+  RvVzB4Qjc2TnR6cXlrSTRCCiAgNFh2U0xiRzdmR093UC1jWTkyajlhcE9BIn19fX1
+  9",
+      {
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MA6N-NN7E-CNN2-75BX-BGLB-ME6F-7FCH",
+            "signature":"-fKRQYisB0gxu75Xe0OKC77g2uptgJyzvmLIKIMg
+  vXsvn3Gf0BpGlJN6wwNadK4VWHY9HU9z8w-ARK_ozkDLHIUtxwntd_ws0s03AqNLm
+  K-Fjc3jf-A7lanS7OeoCAsnXfQ7Kqa91pMHbotBtPvR0RwA"}
+          ],
+        "PayloadDigest":"__OnArXqFpZbdPVxS1HVHKpKhvJ1nhD8QA0mOLzM
+  LOOgEyWe9khDNTY1M35w1rlthBjSLMV_6heRhUhqEi8VoA"}
+      ],
+    "PrivateKey":{
+      "PrivateKeyUDF":{
+        "PrivateValue":"ZAAQ-BLGK-V4DZ-ZFV7-QJZY-OOAU-SNMB-4C6Y-57P
+H-L7OQ-A3VF-655A-GYQM-H4SF",
+        "KeyType":"MeshProfileDevice"}},
+    "ConnectUri":"mcu://maker@example.com/EBPB-YSBL-44F5-5ADN-PJHJ-
+CCJP-EU"}}
+~~~~
 
-[To be installed in the device firmware.]
+The preconfiguration record is retreived and decrypted by means of an EARL:
 
->> Connection EARL
+~~~~
+QR = {Connect.ConnectEARL}
+~~~~
 
-[To be converted to a QR code and printed on the device]
 
->> device publication 
+The EARL is converted to a QR code and printed on the device.
 
-[To be published to the service]
+The private seed and connection record is provisioned to the device to be written to 
+the device firmware:
+
+>>>> Unfinished ProtocolConnectEARL/device publication
+
+
+
+
+Oh **** the data published to the spool is simply the encrypted ProfileDevice!!!!
+
+
 
 
 ### Phase 2 & 3
@@ -36,7 +155,7 @@ and populates the service as before.
 ~~~~
 <div="terminal">
 <cmd>Alice> account connect ^
-    mcu://maker@example.com/ED67-6E3S-GEKS-KYF7-26NQ-WWU4-RQ /web
+    mcu://maker@example.com/EBPB-YSBL-44F5-5ADN-PJHJ-CCJP-EU /web
 </div>
 ~~~~
 
@@ -48,9 +167,9 @@ The device polls the publication service until a claim message is returned.
 ~~~~
 <div="terminal">
 <cmd>Alice4> device complete
-<rsp>   Device UDF = MBVV-VUAI-XXNN-ERS5-G4GT-CWRA-BVMF
+<rsp>   Device UDF = MCAE-LHYD-7TBQ-LOVT-GPE7-I3PX-6MQ3
    Account = alice@example.com
-   Account UDF = MA62-NMPL-3OBH-KM2M-LPOO-RUZC-HUH3
+   Account UDF = MC6L-GFYJ-7EOP-2OWN-24ZJ-4RC7-EXTW
 </div>
 ~~~~
 

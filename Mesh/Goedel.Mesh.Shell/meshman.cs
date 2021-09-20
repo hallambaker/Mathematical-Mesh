@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 9/19/2021 5:51:08 PM
+//  This file was automatically generated at 9/20/2021 6:22:29 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -409,7 +409,8 @@ namespace Goedel.Mesh.Shell {
 				{"public", _SSHPublic._DescribeCommand },
 				{"merge", DescribeCommandSet_SSHMerge},
 				{"add", DescribeCommandSet_SSHAdd},
-				{"show", DescribeCommandSet_SSHShow}
+				{"show", DescribeCommandSet_SSHShow},
+				{"list", _SSHList._DescribeCommand }
 				} // End Entries
 			};
 
@@ -1537,6 +1538,16 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.SSHAuth (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_SSHList (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			SSHList		Options = new SSHList ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.SSHList (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -20187,6 +20198,151 @@ namespace Goedel.Mesh.Shell {
     public partial class SSHAuth : _SSHAuth {
         } // class SSHAuth
 
+    public class _SSHList : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Address {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Address {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "list",
+			Brief =  "List ssh account information",
+			HandleDelegate =  CommandLineInterpreter.Handle_SSHList,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Address", 
+					Default = null, // null if null
+					Brief = "SSH account identifier",
+					Index = 6,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class SSHList : _SSHList {
+        } // class SSHList
+
 
     public partial class  Flag : Goedel.Command._Flag {
         public Flag(string value=null) : base (value) {}
@@ -20742,6 +20898,11 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult SSHAuth ( SSHAuth Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult SSHList ( SSHList Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

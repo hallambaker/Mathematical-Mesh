@@ -196,6 +196,26 @@ namespace Goedel.Mesh.Shell {
             }
 
 
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult SSHList(SSHList options) {
+
+            var contextUser = GetContextUser(options);
+            using var transaction = contextUser.TransactBegin();
+
+            var catalogApplication = transaction.GetCatalogApplication();
+            var known = catalogApplication.GetSsh();
+
+
+            return new ResultApplicationList() {
+                Success = true,
+                Applications = known
+                };
+
+            }
 
 
         }

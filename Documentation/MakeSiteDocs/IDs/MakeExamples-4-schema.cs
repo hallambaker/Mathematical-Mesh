@@ -26,6 +26,7 @@ namespace ExampleGenerator {
 			 SchemaEntryContact(Example);
 			 SchemaEntryCredential(Example);
 			 SchemaEntryBookmark(Example);
+			 SchemaEntryPublication(Example);
 			 SchemaEntryNetwork(Example);
 			 SchemaEntryTask(Example);
 			 SchemaDeriveTables(Example);
@@ -168,7 +169,7 @@ namespace ExampleGenerator {
 		public void _SchemaAliceDevice2(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The device profile for the first device \n{0}", _Indent);
+				_Output.Write ("For example, the device profile corresponding to one of the devices belonging to Alice is:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  Format (Connect.AliceProfileDevice2);
 				_Output.Write ("\n{0}", _Indent);
@@ -186,13 +187,12 @@ namespace ExampleGenerator {
 		public void _SchemaAliceActivationDevice2(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("For example, Alice connects a device to her account:\n{0}", _Indent);
+				_Output.Write ("For example, Alice connects the device whose profile is shown above to her account:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Connect.ConnectComplete);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The activation record granting the device rights to operate as a part\n{0}", _Indent);
 				_Output.Write ("of the account is:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  Format (Connect.AliceActivationDevice2);
 				_Output.Write ("\n{0}", _Indent);
@@ -214,10 +214,21 @@ namespace ExampleGenerator {
 		public void _SchemaAliceConnectionDevice2(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The ConnectionDevice assertion is used by the device to authenticate it to other \n{0}", _Indent);
+				_Output.Write ("devices connected to the account. This connection assertion specifies the\n{0}", _Indent);
+				_Output.Write ("Encryption, Authentication, and Signature keys the device is to use in the context of\n{0}", _Indent);
+				_Output.Write ("the account and the list of roles that have been authorized for the device..\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				  Format (Connect.AliceConnectionDevice2);
 				_Output.Write ("\n{0}", _Indent);
-				  Format (Connect.AliceConnectionService2);
+				_Output.Write ("The ConnectionService assertion is used to authenticate the device to the \n{0}", _Indent);
+				_Output.Write ("Mesh service. In order to allow the assertion to fit in a single packet, it\n{0}", _Indent);
+				_Output.Write ("is important that this assertion be as small as possible. Only the \n{0}", _Indent);
+				_Output.Write ("Authentication key is specified.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The corresponding ConnectionService assertion is:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  Format (Connect.AliceConnectionService2);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -262,8 +273,6 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaConnectionHost(CreateExamples Example) {
 
-				  Format (Service.ProfileHost);
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  Format (Service.ConnectionHost);
 					}
@@ -350,6 +359,20 @@ namespace ExampleGenerator {
 		public void _SchemaEntryNetwork(CreateExamples Example) {
 
 				 Format(Apps.NetworkCatalogEntry);
+					}
+		
+
+		//
+		// SchemaEntryPublication
+		//
+		public static void SchemaEntryPublication(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaEntryPublication.md");
+			Example._Output = _Output;
+			Example._SchemaEntryPublication(Example);
+			}
+		public void _SchemaEntryPublication(CreateExamples Example) {
+
+				 Format(Apps.PublicationEntry);
 					}
 		
 
@@ -513,7 +536,7 @@ namespace ExampleGenerator {
 		public void _SchemaMaster(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("SchemaMastere"));
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("SchemaMaster"));
 				_Output.Write ("\n{0}", _Indent);
 				 Format(AliceProfileAccount);
 					}
@@ -547,7 +570,6 @@ namespace ExampleGenerator {
 		public void _DevicePreconfiguration(CreateExamples Example) {
 
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("DevicePreconfiguration"));
 				_Output.Write ("\n{0}", _Indent);
 				 Format(Connect.ConnectStaticPreconfig);
 					}
@@ -609,15 +631,10 @@ namespace ExampleGenerator {
 
 				 var response = ResultHello?.Response;
 				 var profileService = response?.EnvelopedProfileService.Decode();
-				 var profileHost = response?.EnvelopedProfileHost.Decode();
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The service profile\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Format(profileService);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The host also has a profile\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Format(profileHost);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("And there should be a connection of the host to the service but this isn't implemented yet:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

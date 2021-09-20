@@ -376,7 +376,7 @@ namespace Goedel.Mesh.Server {
                     Encodings = new List<Goedel.Protocol.Encoding>(),
                     },
                 EnvelopedProfileService = ProfileService.EnvelopedProfileService,
-                EnvelopedProfileHost = ProfileHost.EnvelopedProfileHost,
+                //EnvelopedProfileHost = ProfileHost.EnvelopedProfileHost,
                 Status = 201 // Must specify this explicitly since not derrived from MeshResponse.
                 };
 

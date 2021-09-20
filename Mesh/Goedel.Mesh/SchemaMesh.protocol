@@ -267,10 +267,6 @@
 
 	Structure Connection
 		Inherits Assertion
-		Boolean Active
-			Description
-				|If set true, the default state of the connection is active. Otherwise 
-				|(i.e. false or null), default state is false.
 		String Subject
 			Description
 				|UDF of the connection target.

@@ -1118,3 +1118,10 @@
 				Include SSHOptions
 				Option ID "id" String
 					Brief "Key identifier"
+
+		Command SSHList "list"
+			Brief "List ssh account information"
+			Include AccountOptions
+			Include Reporting
+			Parameter Address "address" String
+				Brief "SSH account identifier"

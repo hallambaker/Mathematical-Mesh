@@ -294,14 +294,14 @@ namespace Goedel.Mesh {
             var connectionService = activationDevice.ConnectionService;
             var connectionDevice = activationAccount.ConnectionDevice;
 
-            connectionService.Active = activationAccount.DefaultActive;
+            //connectionService.Active = activationAccount.DefaultActive;
             connectionService.AssertNotNull(Internal.Throw);
             connectionService.Envelope(signature, objectEncoding:
                         ObjectEncoding.JSON_B);
             connectionService.DareEnvelope.AssertNotNull(Internal.Throw);
 
             if (connectionDevice != null) {
-                connectionDevice.Active = activationAccount.DefaultActive;
+                //connectionDevice.Active = activationAccount.DefaultActive;
                 connectionDevice.AssertNotNull(Internal.Throw);
                 connectionDevice.Envelope(signature, objectEncoding:
                             ObjectEncoding.JSON_B);

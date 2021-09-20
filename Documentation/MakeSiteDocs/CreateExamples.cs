@@ -133,7 +133,7 @@ namespace ExampleGenerator {
                 );
             var hello = Service.Hello.GetResultHello();
             Service.ProfileService = hello.Response.EnvelopedProfileService.Decode();
-            Service.ProfileHost = hello.Response.EnvelopedProfileHost.Decode();
+            //Service.ProfileHost = hello.Response.EnvelopedProfileHost.Decode();
             Service.ConnectionHost = Alice1.Shell.TestEnvironmentCommon.MeshService.ConnectionDevice;
             }
 
@@ -384,6 +384,12 @@ namespace ExampleGenerator {
             Apps.SSHConnect = Alice2.Example(
                     "account sync",
                     $"ssh private /file={Apps.SshPrivateKey2}");
+
+            var sshconnect = Alice2.Example(
+                    "ssh list");
+            var appsResult = sshconnect[0].Result as ResultApplicationList;
+            Apps.SSHCatalogEntry = appsResult.Applications[0];
+
             }
 
         public void MailApp() {
@@ -402,7 +408,8 @@ namespace ExampleGenerator {
             Apps.MailConnect = Alice2.Example(
                     "account sync",
                     "mail list");
-
+            var appsResult = Apps.MailConnect[1].Result as ResultApplicationList;
+            Apps.MailCatalogEntry = appsResult.Applications[0];
             }
 
         public void CreateBobAccount() {
@@ -548,6 +555,8 @@ namespace ExampleGenerator {
             Group.BobAccessEntry = accessEntryEnvelope.DecodeJsonObject() as CatalogedAccess;
 
             //#% var result = Group.GroupAddBob [0];
+
+            // this is a different request made under the user account.
             var addBob = Group.GroupAddBob[0].Traces[1].RequestObject as TransactRequest;
             Group.GroupInvitation = addBob.Outbound[0].JsonObject as GroupInvitation;
 
@@ -667,6 +676,11 @@ namespace ExampleGenerator {
             Connect.ConnectStaticPrepare = Maker1.Example(
                 $"device preconfig"
                 );
+
+            var x1 = Connect.ConnectStaticPrepare[0].Traces[0].RequestObject as TransactRequest;
+            Apps.PublicationEntry = x1.Updates[0].Envelopes[0].JsonObject as CatalogedPublication;
+
+
             var resultPublishDevice = Connect.ConnectStaticPrepare.GetResultPublishDevice() as ResultPublishDevice;
             Connect.ConnectStaticResult = resultPublishDevice;
             Connect.ConnectStaticPreconfig = resultPublishDevice.DevicePreconfiguration;

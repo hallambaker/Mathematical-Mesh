@@ -525,19 +525,29 @@ The manufacturer preconfigures the device
 
 #%  ConsoleExample (Connect.ConnectStaticPrepare);
 
-This results in the creation of
+This results in the creation of the device preconfiguration record to be published
+to the Publication catalog of the device manufacturer:
 
->> device config 
+#% Format(Connect.ConnectStaticPreconfig);
 
-[To be installed in the device firmware.]
+The preconfiguration record is retreived and decrypted by means of an EARL:
 
->> Connection EARL
+~~~~
+QR = {Connect.ConnectEARL}
+~~~~
 
-[To be converted to a QR code and printed on the device]
 
->> device publication 
+The EARL is converted to a QR code and printed on the device.
 
-[To be published to the service]
+The private seed and connection record is provisioned to the device to be written to 
+the device firmware:
+
+#{Unfinished("ProtocolConnectEARL/device publication")}
+
+
+Oh **** the data published to the spool is simply the encrypted ProfileDevice!!!!
+
+
 
 
 ###### Phase 2 & 3
