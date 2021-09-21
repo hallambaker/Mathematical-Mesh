@@ -327,6 +327,9 @@ namespace ExampleGenerator {
             var dev2Machine = connectStaticPollSuccess?.CatalogedMachine;
             var dev2Device = dev2Machine?.CatalogedDevice;
 
+
+            // Failing here because the catalog keys are now different for each key of course!!!!
+
             Connect.AliceProfileDevice2 = dev2Machine.ProfileDevice;
             Connect.AliceActivationDevice2 = connectStaticPollSuccess.ActivationDevice;
             Connect.AliceActivationAccount2 = connectStaticPollSuccess.ActivationAccount;
