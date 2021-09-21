@@ -761,7 +761,7 @@ namespace Goedel.Mesh.Client {
 
         /// <summary>
         /// Convenience wrapper for <see cref="CreateDeviceEarl"/>. Generates a device profile
-        /// and writes the <see cref="DevicePreconfiguration"/> data to a file in the directory
+        /// and writes the <see cref="DevicePreconfigurationPrivate"/> data to a file in the directory
         /// specified by <paramref name="path"/>.
         /// </summary>
         /// <param name="filename"></param>
@@ -769,7 +769,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="connectUri"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public DevicePreconfiguration Preconfigure(
+        public DevicePreconfigurationPrivate Preconfigure(
                     out string filename,
                     out ProfileDevice profileDevice,
                     out string connectUri,
@@ -788,7 +788,7 @@ namespace Goedel.Mesh.Client {
 
             filename = Path.Combine(path, connectKey + ".medk");
 
-            var devicePreconfiguration = new DevicePreconfiguration() {
+            var devicePreconfiguration = new DevicePreconfigurationPrivate() {
                 PrivateKey = secretSeed,
                 ConnectUri = connectUri,
                 EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,

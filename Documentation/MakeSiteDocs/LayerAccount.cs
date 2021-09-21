@@ -128,7 +128,7 @@ namespace ExampleGenerator {
         public List<ExampleResult> ConnectPINComplete;
         public List<ExampleResult> ConnectPINPending;
 
-        public DevicePreconfiguration ConnectStaticPreconfig;
+        public DevicePreconfigurationPrivate ConnectStaticPreconfig;
         public string ConnectEARL;
 
 

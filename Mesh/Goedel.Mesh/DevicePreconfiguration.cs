@@ -24,10 +24,10 @@
 using Goedel.IO;
 using Goedel.Protocol;
 namespace Goedel.Mesh {
-    public partial class DevicePreconfiguration {
+    public partial class DevicePreconfigurationPrivate {
 
         ///<summary>Base constructor for deserialization.</summary>
-        public DevicePreconfiguration() {
+        public DevicePreconfigurationPrivate() {
             }
 
 
@@ -37,7 +37,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="filename">The file to read.</param>
         /// <returns>The DevicePreconfiguration instance created from the file data.</returns>
-        public static DevicePreconfiguration FromFile(string filename) {
+        public static DevicePreconfigurationPrivate FromFile(string filename) {
             using var inputStream = filename.OpenFileRead();
             using var reader = new JsonReader(inputStream);
 

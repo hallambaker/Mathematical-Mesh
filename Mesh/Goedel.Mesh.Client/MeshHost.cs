@@ -451,7 +451,7 @@ namespace Goedel.Mesh.Client {
             algorithmAuthenticate.Future();
 
             // read the device file
-            var devicePreconfiguration = DevicePreconfiguration.FromFile(filename);
+            var devicePreconfiguration = DevicePreconfigurationPrivate.FromFile(filename);
 
             // create a ContextMeshPending for it.
             var context = ContextMeshPreconfigured.Install(this, devicePreconfiguration);

@@ -143,7 +143,7 @@ namespace Goedel.Mesh.Client {
         /// <returns>Context for the preconfigured device.</returns>
         public static ContextMeshPreconfigured Install(
                     MeshHost meshHost,
-                    DevicePreconfiguration devicePreconfiguration) {
+                    DevicePreconfigurationPrivate devicePreconfiguration) {
 
             var privateKeyUDF = devicePreconfiguration.PrivateKey as PrivateKeyUDF;
             (var accountAddress, var key) = MeshUri.ParseConnectUri(devicePreconfiguration.ConnectUri);

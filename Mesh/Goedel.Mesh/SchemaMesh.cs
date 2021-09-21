@@ -145,7 +145,7 @@ namespace Goedel.Mesh {
 			{"CatalogedApplicationSsh", CatalogedApplicationSsh._Factory},
 			{"CatalogedApplicationMail", CatalogedApplicationMail._Factory},
 			{"CatalogedApplicationNetwork", CatalogedApplicationNetwork._Factory},
-			{"DevicePreconfiguration", DevicePreconfiguration._Factory},
+			{"DevicePreconfiguration", DevicePreconfigurationPrivate._Factory},
 			{"Message", Message._Factory},
 			{"MessageError", MessageError._Factory},
 			{"MessageComplete", MessageComplete._Factory},
@@ -9896,7 +9896,7 @@ namespace Goedel.Mesh {
 	///
 	/// A data structure that is passed 
 	/// </summary>
-	public partial class DevicePreconfiguration : MeshItem {
+	public partial class DevicePreconfigurationPrivate : MeshItem {
         /// <summary>
         ///The device profile
         /// </summary>
@@ -9938,7 +9938,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new DevicePreconfiguration();
+		public static new JsonObject _Factory () => new DevicePreconfigurationPrivate();
 
 
         /// <summary>
@@ -10010,15 +10010,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DevicePreconfiguration FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new DevicePreconfigurationPrivate FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as DevicePreconfiguration;
+				return Out as DevicePreconfigurationPrivate;
 				}
-		    var Result = new DevicePreconfiguration ();
+		    var Result = new DevicePreconfigurationPrivate ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;

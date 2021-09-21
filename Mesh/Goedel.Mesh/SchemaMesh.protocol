@@ -219,14 +219,17 @@
 		Struct KeyData AdministratorSignature
 			Description
 				|Key used to sign connection assertions to the account.
+		Struct KeyData AccountAuthentication
+			Description
+				|Key used to authenticate requests made under this user account.
+				|This key SHOULD NOT be provisioned to any device except for the
+				|purpose of enabling account recovery.
 
 	Structure ProfileUser
 		Inherits ProfileAccount
 		Description 
 			|Account assertion. This is signed by the service hosting the account.
-		Struct KeyData AccountAuthentication
-			Description
-				|Key used to authenticate requests made under this user account.
+
 		Struct KeyData AccountSignature
 			Description
 				|Key used to sign data under the account.
@@ -753,6 +756,18 @@
 				|key being authorized for access.
 		Boolean Active
 
+
+		String Mode
+			Description
+				|The authentication mode: Device, Account, PIN
+		String Udf
+			Description
+				|Identifies the authentication credential. For a device, this is the authentication key identifier, 
+				|for an account, the profile identifier, for a PIN, the locator value of the PIN.
+		String Witness
+			Description
+				|The verification value used to perform proof of knowledge of the secret.
+
 	Structure NullCapability
 		Inherits Capability
 
@@ -764,7 +779,26 @@
 			Multiple
 			Description
 				|Access rights associated with the key
+		Struct Publication Publications
+			Multiple
+			Description
+				|Published data that may be claimed by the authorized party
 
+			
+	Structure Publication
+		Description
+			|
+		String Identifier
+			Description
+				|Selector allowing a specific document to be requested.
+		String Digest
+			Description
+				|Document digest, this allows a status/claim request to 
+				|request an update to be returned only if the document
+				|has changed.
+		Binary Data
+			Description
+				|The published document.
 
 	Structure CryptographicCapability
 		Abstract
@@ -921,12 +955,22 @@
 
 	Section 2 "Publications"
 
-	Structure DevicePreconfiguration
-		Description
-			|A data structure that is passed 
+	Structure DevicePreconfigurationPublic
 		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile
+		String Hailing
+			Multiple
+			Description
+				|A list of URIs specifying hailing transports that may be used to
+				|initiate a connection to the device. This allows a device to 
+				|specify that it can be reached by WiFi transport to a particular 
+				|private SSID, or by Bluetooth, IR etc. etc.
+
+	Structure DevicePreconfigurationPrivate
+		Inherits DevicePreconfigurationPublic
+		Description
+			|A data structure that is passed 
 		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 			Description
 				|The device connection

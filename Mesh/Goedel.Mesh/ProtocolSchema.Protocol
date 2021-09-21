@@ -39,6 +39,9 @@
 			Description
 				|The fully qualified account name (including DNS address) to which the
 				|request is directed.
+		String Capability
+			Description
+				|The identifier of the capability under which access is claimed.
 		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|Device profile of the device making the request.

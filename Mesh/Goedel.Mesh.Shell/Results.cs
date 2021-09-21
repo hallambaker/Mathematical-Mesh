@@ -2076,7 +2076,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual DevicePreconfiguration						DevicePreconfiguration  {get; set;}
+		public virtual DevicePreconfigurationPrivate						DevicePreconfiguration  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2191,7 +2191,7 @@ namespace Goedel.Mesh.Shell {
 					}
 				case "DevicePreconfiguration" : {
 					// An untagged structure
-					DevicePreconfiguration = new DevicePreconfiguration ();
+					DevicePreconfiguration = new DevicePreconfigurationPrivate ();
 					DevicePreconfiguration.Deserialize (jsonReader);
  
 					break;
