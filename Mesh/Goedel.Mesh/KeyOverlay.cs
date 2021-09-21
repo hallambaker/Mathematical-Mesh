@@ -166,11 +166,12 @@ namespace Goedel.Mesh {
                 MeshActor actor,
                 MeshKeyOperation operation,
                 IKeyCollection keyCollection = null,
-                KeySecurity keySecurity = KeySecurity.Ephemeral) {
+                KeySecurity keySecurity = KeySecurity.Ephemeral,
+                string info=null) {
             //Screen.WriteLine($"{type}=={actor}-{operation}::{secretSeed.KeyType}");
 
 
-            var keyName = type.ToLabel() + actor.ToLabel() + operation.ToLabel();
+            var keyName = type.ToLabel() + actor.ToLabel() + operation.ToLabel() + (info??"");
             var keyUses = GetMeshKeyType(operation);
             var cryptoAlgorithmID = GetCryptoAlgorithmID(operation, secretSeed);
 

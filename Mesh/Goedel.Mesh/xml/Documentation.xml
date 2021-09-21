@@ -5961,7 +5961,7 @@
             <param name="keySecurity">The key security model of the derrived key.</param>
             <returns>KeyData for the public parameters of the derrived key.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.GenerateContributionKeyPair(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.KeySecurity)">
+        <member name="M:Goedel.Mesh.Extensions.GenerateContributionKeyPair(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.KeySecurity,System.String)">
             <summary>
             Derive a base private key of type <paramref name="type"/> for the
             actor <paramref name="actor"/> for the key use <paramref name="operation"/> from the 

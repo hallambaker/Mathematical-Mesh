@@ -535,7 +535,8 @@ namespace Goedel.Mesh {
         /// <returns>Cryptographic parameters for the store.</returns>
         public DarePolicy InitializeStore(string storeName) {
             var encryptionKey = secretSeed.GenerateContributionKeyPair(MeshKeyType.Complete,
-                MeshActor.Account, MeshKeyOperation.Encrypt, keySecurity: KeySecurity.Exportable);
+                MeshActor.Account, MeshKeyOperation.Encrypt, keySecurity: KeySecurity.Exportable,
+                info: storeName);
 
             DictionaryStoreEncryptionKey.Add(storeName, encryptionKey);
 
