@@ -25,20 +25,20 @@ The response contains the requested envelope:
     "Updates":[{
         "Container":"MMM_Credential",
         "Envelopes":[[{
-              "PayloadDigest":"sy1ssbIvs3DVwUObsWIpbtGquWaoEYtCqY
-  1smobL0T5ydXU29v8ixwUGCDO_pWxh3rWS5yXbOK4rhufAQfMq7w",
+              "PayloadDigest":"geWmizdTD1WxP8M8enXbrltI_4R6daQeP3
+  63_KUXF-SyB1Lb-RpsmPOtB2UZZCpLIlsiRm0hXvS9EvQFFxRoBg",
               "enc":"A256CBC",
               "dig":"S512",
-              "Salt":"YnQw4J41v4oCWz8krGmFNQ",
+              "Salt":"yNJavH7J9jYVHVwakOBC0A",
               "recipients":[{
-                  "kid":"MDQY-J72A-VPAO-WDOD-GYY7-4ZZ5-PLVL",
+                  "kid":"MC73-BTKN-7UXP-UEUS-L4AR-LS3X-7XSX",
                   "epk":{
                     "PublicKeyECDH":{
                       "crv":"X448",
-                      "Public":"_dHVp-Pmr9wgX8Br8zwPEyTT4puZ-N2Z2
-  cRql0WuuTAXm8Antqfg0dHit2iy5tD9C_ji4FcuoPcA"}},
-                  "wmk":"Il9yeV5COdhTo6ULAbHU084HB3qPqVIgyHIexstl
-  Dk7H1gWixmkj9A"}
+                      "Public":"0N6uO76osmiK7TJ9wNik74zhFsXHFS5Wv
+  l7OIwJ4N9AZUH9aQ0o8QWilPztxmuGrpmTtHrKXQeoA"}},
+                  "wmk":"Up8ltTn5auDPoKx0AeeG6SJ4E09DruLm4WwFIJ5F
+  xon86wHKmQpIUw"}
                 ],
               "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICI6ZnRwLmV4
   YW1wbGUuY29tIiwKICAiRXZlbnQiOiAiVXBkYXRlIiwKICAiRmlyc3QiOiAxLAogI
@@ -46,10 +46,10 @@ The response contains the requested envelope:
               "SequenceInfo":{
                 "Index":3,
                 "TreePosition":716},
-              "Received":"2021-09-20T18:15:28Z"},
-            "TprbdZruvdRXXzOAP_SAxvADHwrULXW_XrLtrvd_vvrbRAeXXmus
-  fRrL8sIZod3f4uXNZPUbwDAiiJTeT1z0vKzoMYNsJ7gkgbdBx5wvKS_APbzHnfBAd
-  qdKZJDPZCf9NIWrjPs7uaMxCmHajt2o2jgNbbmE17Ewua_YX1hsxHY",
+              "Received":"2021-09-21T00:47:37Z"},
+            "lWJHptUqDmwLn2w7f4h8OjpSbbYYMIlCqd2W3AMMBiGPjbxULgHe
+  SyTi81dWVFBo4Ktua9GDjKA8a1p9x7J4dhqXdSmb2HDAXRonH3r8nIcB_oYO751tp
+  H-Ohso88u42w7k-Iyo9DTrj2RmQCri7iEZYb12ePFQmEJlzFdRdFFQ",
             {}
             ]
           ]}

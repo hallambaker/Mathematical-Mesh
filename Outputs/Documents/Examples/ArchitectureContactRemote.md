@@ -9,9 +9,9 @@ Bob sends Alice a contact exchange request:
 ~~~~
 <div="terminal">
 <cmd>Bob> message contact alice@example.com
-<rsp>Envelope ID: MDR6-KBEI-XQMN-RR7F-MXND-I3PJ-KS74
-Message ID: NDAP-F3KS-HNFO-7I3L-2ZHA-IGKR-3RGZ
-Response ID: MADL-FXEZ-65YA-L6SZ-N7GL-UMLO-I3ZO
+<rsp>Envelope ID: MDWV-73WN-EVRJ-X7LD-LHPK-XGLN-CQ5S
+Message ID: NC7T-SBTN-ZUL4-Z7LB-DMN4-LUFW-5MQF
+Response ID: MCRD-XXXX-Y2UZ-4ZHB-DWNI-WGZI-FKRO
 </div>
 ~~~~
 
@@ -22,21 +22,21 @@ Alice checks his Mesh messages and approves Bob's request:
 <div="terminal">
 <cmd>Alice> account sync
 <cmd>Alice> message pending
-<rsp>MessageID: NDAP-F3KS-HNFO-7I3L-2ZHA-IGKR-3RGZ
+<rsp>MessageID: NC7T-SBTN-ZUL4-Z7LB-DMN4-LUFW-5MQF
         Contact Request::
-        MessageID: NDAP-F3KS-HNFO-7I3L-2ZHA-IGKR-3RGZ
+        MessageID: NC7T-SBTN-ZUL4-Z7LB-DMN4-LUFW-5MQF
         To: alice@example.com From: bob@example.com
-        PIN: ADN6-CJ3X-KEFJ-BMMU-TKN3-J3JS-73ZA
-<cmd>Alice> message accept NDAP-F3KS-HNFO-7I3L-2ZHA-IGKR-3RGZ
+        PIN: AABR-4QTD-CQQK-A3T6-EVBJ-HVRS-FFSQ
+<cmd>Alice> message accept NC7T-SBTN-ZUL4-Z7LB-DMN4-LUFW-5MQF
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MC6L-GFYJ-7EOP-2OWN-24ZJ-4RC7-EXTW
-  Person MC6L-GFYJ-7EOP-2OWN-24ZJ-4RC7-EXTW
-  Anchor MC6L-GFYJ-7EOP-2OWN-24ZJ-4RC7-EXTW
+<rsp>Entry<CatalogedContact>: MANR-I5NN-5ZQH-APAD-4XOK-HR3F-L2FR
+  Person MANR-I5NN-5ZQH-APAD-4XOK-HR3F-L2FR
+  Anchor MANR-I5NN-5ZQH-APAD-4XOK-HR3F-L2FR
   Address alice@example.com
 
-Entry<CatalogedContact>: NCV5-EEX7-NUXG-XSCC-W76U-ZZJ4-5WNS
+Entry<CatalogedContact>: NAN3-LJW4-PU6O-V532-ACI4-OKA6-R27X
   Person 
-  Anchor MBDZ-QPJN-S5CR-LUFO-VPOQ-5ZK2-ENE6
+  Anchor MDUO-EPBE-B77S-K6F4-TG22-5N4N-XQIB
   Address bob@example.com
 
 </div>
@@ -49,14 +49,14 @@ Bob can now collect Alice's contact:
 <div="terminal">
 <cmd>Bob> account sync /auto
 <cmd>Bob> contact list
-<rsp>Entry<CatalogedContact>: MBDZ-QPJN-S5CR-LUFO-VPOQ-5ZK2-ENE6
-  Person MBDZ-QPJN-S5CR-LUFO-VPOQ-5ZK2-ENE6
-  Anchor MBDZ-QPJN-S5CR-LUFO-VPOQ-5ZK2-ENE6
+<rsp>Entry<CatalogedContact>: MDUO-EPBE-B77S-K6F4-TG22-5N4N-XQIB
+  Person MDUO-EPBE-B77S-K6F4-TG22-5N4N-XQIB
+  Anchor MDUO-EPBE-B77S-K6F4-TG22-5N4N-XQIB
   Address bob@example.com
 
-Entry<CatalogedContact>: NBOV-SEBU-YMQP-OYOR-3EDV-QODY-44M6
+Entry<CatalogedContact>: NDV2-3BUI-WT3T-5OAH-JN6M-WHBQ-PQDY
   Person 
-  Anchor MC6L-GFYJ-7EOP-2OWN-24ZJ-4RC7-EXTW
+  Anchor MANR-I5NN-5ZQH-APAD-4XOK-HR3F-L2FR
   Address alice@example.com
 
 </div>

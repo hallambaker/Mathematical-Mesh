@@ -7,155 +7,147 @@ The manufacturer preconfigures the device
 ~~~~
 <div="terminal">
 <cmd>Maker> device preconfig
-<rsp>Device Udf: MCAE-LHYD-7TBQ-LOVT-GPE7-I3PX-6MQ3
-File: EBPB-YSBL-44F5-5ADN-PJHJ-CCJP-EU.medk
+<rsp>Device Udf: MBY6-TMUL-EY7I-EYSE-3XSH-7LWA-DXX7
+File: ECRO-45W3-2E7Z-VT6Y-2P3J-VJME-NU.medk
 </div>
 ~~~~
 
-This results in the creation of the device preconfiguration record to be published
-to the Publication catalog of the device manufacturer:
+This results in the creation of a primary secret which is used to compute a ProfileDevice
+and corresponding connection records signed by the manufacturer's administrator key.
+
+The data is combined to create a DevicePreconfiguration record that is provisioned to
+the firmware of the device being preconfigured.
 
 ~~~~
 {
   "DevicePreconfiguration":{
     "EnvelopedProfileDevice":[{
-        "EnvelopeId":"MCAE-LHYD-7TBQ-LOVT-GPE7-I3PX-6MQ3",
+        "EnvelopeId":"MBY6-TMUL-EY7I-EYSE-3XSH-7LWA-DXX7",
         "dig":"S512",
-        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQ0FFLUxIWUQtN1
-  RCUS1MT1ZULUdQRTctSTNQWC02TVEzIiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQlk2LVRNVUwtRV
+  k3SS1FWVNFLTNYU0gtN0xXQS1EWFg3IiwKICAiTWVzc2FnZVR5cGUiOiAiUHJvZml
   sZURldmljZSIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0IiwKICAi
-  Q3JlYXRlZCI6ICIyMDIxLTA5LTIwVDE4OjE2OjMzWiJ9"},
+  Q3JlYXRlZCI6ICIyMDIxLTA5LTIxVDAwOjU2OjEwWiJ9"},
       "ewogICJQcm9maWxlRGV2aWNlIjogewogICAgIlByb2ZpbGVTaWduYXR1cm
-  UiOiB7CiAgICAgICJVZGYiOiAiTUNBRS1MSFlELTdUQlEtTE9WVC1HUEU3LUkzUFg
-  tNk1RMyIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJs
+  UiOiB7CiAgICAgICJVZGYiOiAiTUJZNi1UTVVMLUVZN0ktRVlTRS0zWFNILTdMV0E
+  tRFhYNyIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJs
   aWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgI
-  CAiUHVibGljIjogIm84dXk2ZDhiWjRvTnlSQTlvZHNvQWJQSzl0SGVEc3loYWVQNF
-  9ia2s3WDdRMHZxSUlPSk0KICBUMy1TU2lBYlVCNzNvNnhiRzVXcEE5U0EifX19LAo
-  gICAgIkVuY3J5cHRpb24iOiB7CiAgICAgICJVZGYiOiAiTUIySi1aTVZFLUxXT0wt
-  N1dUSi1PVEw0LVkzU0QtWlY1WSIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjoge
+  CAiUHVibGljIjogIl9hWFBQUGZoMVdpQkZFdUZkVm9tZFZuNmpxXzI5ZUQ1c0tPX0
+  81U1dpaFgwRzNFY3k1ZE4KICAwWUhNWWtJdEczV1VkTDhwUFJvTm90TUEifX19LAo
+  gICAgIkVuY3J5cHRpb24iOiB7CiAgICAgICJVZGYiOiAiTUJQSi1aVUhQLVhHWEot
+  VUhMRy1TRjNELVdYUUgtUFhOUiIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjoge
   wogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJYND
-  Q4IiwKICAgICAgICAgICJQdWJsaWMiOiAiVTFKbEF0TDdpWk85d2VVZVgzWktQZnB
-  3LTc5QW15cnZzVW40b1cweEI3Nk50enF5a0k0QgogIDRYdlNMYkc3ZkdPd1AtY1k5
-  Mmo5YXBPQSJ9fX0sCiAgICAiU2lnbmF0dXJlIjogewogICAgICAiVWRmIjogIk1ER
-  lAtRVhYRy1CN0g0LUFNNkktTjZDVy1NNFBYLTVXV0EiLAogICAgICAiUHVibGljUG
+  Q4IiwKICAgICAgICAgICJQdWJsaWMiOiAic0pMMWIyUUpWTEZOd1BjeUZ5ZzQ0dTV
+  YQl9heG1MLVpKOFQ3WVZQQ2s2ejhnVzlqakN3OQogIFlPSVdBVElHTGd6b0ZGTF9Z
+  WWpjSl9TQSJ9fX0sCiAgICAiU2lnbmF0dXJlIjogewogICAgICAiVWRmIjogIk1EW
+  kgtNFNXVi1QUTc2LTZTVE8tRjVWWS0zVU40LVhZN1AiLAogICAgICAiUHVibGljUG
   FyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICA
-  gICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJ1ek1YcTdwZUZi
-  UmVsYklrTERpenQwcW1qWmhKZ0FDdHhvN2J0SDNxVE9DYlV2bmNYMVFrCiAgVXA1d
-  WVDMUdfWUZuSnB6d09iZ09DNXNBIn19fSwKICAgICJBdXRoZW50aWNhdGlvbiI6IH
-  sKICAgICAgIlVkZiI6ICJNRDJXLVVEQ0stR05BRC1TSzVCLUFUNzUtQ0s2VS1QTEE
-  2IiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tl
+  gICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJhU3d1SUVGQktm
+  c1RqM01FS3VnN1RzM0xQQmFQOG1paFhjMk9ZenlXTUs4ak1ISWVfWnM0CiAgWlJKd
+  2ZpX1pWVjBtRTZfYmZEbkRDTE9BIn19fSwKICAgICJBdXRoZW50aWNhdGlvbiI6IH
+  sKICAgICAgIlVkZiI6ICJNQ1MzLUdIRDQtMkg1VC1NRkw3LUtXN1gtUEVSUS1WUkF
+  KIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tl
   eUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgICAgIlB1Y
-  mxpYyI6ICIycEctd1dIdmtiUGRxU2RJV1diMTFaWkc2aDJQOWY3WnRGdW1mcFlseV
-  RCTy1qWUQ1RHNaCiAgNjZvWFJPUDFkWlV5bU9qUUFsSGUxTE1BIn19fX19",
+  mxpYyI6ICIwa2RqUzFDYjFQZ2dhSW10aTlfNG83TEhia09NYU5fX2xSamRlbEh1QU
+  ZUbHUzZUxNTjk3CiAgZUZHblJiS2RMRVctek5NNjl0UW1pVnVBIn19fX19",
       {
         "signatures":[{
             "alg":"S512",
-            "kid":"MCAE-LHYD-7TBQ-LOVT-GPE7-I3PX-6MQ3",
-            "signature":"ei7ljOVDEL4ZsmntYCuw1hJTzfhVaARcYjQXLoSi
-  I3uVOTc8QUu1mfOqxcWqBg_iJaxzLWgol6kAdYmCOXOZLJGeFcqRc8X5cp1yo_u3J
-  -RtBg16eT5OrAyyiKMAF-x14V8SZoND3AokujhS6_vn4DcA"}
+            "kid":"MBY6-TMUL-EY7I-EYSE-3XSH-7LWA-DXX7",
+            "signature":"3bJzOWJgLcxhgQzvYp7ovkgyqMzsKSExINuR1TYl
+  s0e8Atzw1imh9PoUdgUFYL49fNNmKuusDT0ALeaPgeCUZmI2BVe2HmSuS5lmb1OGt
+  q1BTX5zaibbkvU8ptTlcNFNiOh6NlQuUSrw6VQpqHpdOCoA"}
           ],
-        "PayloadDigest":"5fmX2PgCMfBvPkOAI1M3YiDPkT48IxlOlCTFclUN
-  suqOmAqSESi5KUOTINgjX_0MMMCFjX5OcCwXTENz1GH-dA"}
+        "PayloadDigest":"CLq0YlVanyYhKD6xVvTIZ7SfzQXJDB2CsoV2B_dC
+  SFat0fxJaXmtCsQLmERyDh85H-v7B6-_nbC5bef1cLmYjQ"}
       ],
     "EnvelopedConnectionDevice":[{
         "dig":"S512",
         "ContentMetaData":"ewogICJNZXNzYWdlVHlwZSI6ICJDb25uZWN0aW
   9uRGV2aWNlIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJ
-  DcmVhdGVkIjogIjIwMjEtMDktMjBUMTg6MTY6MzNaIn0"},
+  DcmVhdGVkIjogIjIwMjEtMDktMjFUMDA6NTY6MTBaIn0"},
       "ewogICJDb25uZWN0aW9uRGV2aWNlIjogewogICAgIkF1dGhlbnRpY2F0aW
-  9uIjogewogICAgICAiVWRmIjogIk1CMkotWk1WRS1MV09MLTdXVEotT1RMNC1ZM1N
-  ELVpWNVkiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVi
+  9uIjogewogICAgICAiVWRmIjogIk1CUEotWlVIUC1YR1hKLVVITEctU0YzRC1XWFF
+  ILVBYTlIiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVi
   bGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiWDQ0OCIsCiAgICAgICAgI
-  CAiUHVibGljIjogIlUxSmxBdEw3aVpPOXdlVWVYM1pLUGZwdy03OUFteXJ2c1VuNG
-  9XMHhCNzZOdHpxeWtJNEIKICA0WHZTTGJHN2ZHT3dQLWNZOTJqOWFwT0EifX19LAo
-  gICAgIlNpZ25hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNREZQLUVYWEctQjdINC1B
-  TTZJLU42Q1ctTTRQWC01V1dBIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7C
+  CAiUHVibGljIjogInNKTDFiMlFKVkxGTndQY3lGeWc0NHU1WEJfYXhtTC1aSjhUN1
+  lWUENrNno4Z1c5ampDdzkKICBZT0lXQVRJR0xnem9GRkxfWVlqY0pfU0EifX19LAo
+  gICAgIlNpZ25hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNRFpILTRTV1YtUFE3Ni02
+  U1RPLUY1VlktM1VONC1YWTdQIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7C
   iAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkND
-  Q4IiwKICAgICAgICAgICJQdWJsaWMiOiAidXpNWHE3cGVGYlJlbGJJa0xEaXp0MHF
-  talpoSmdBQ3R4bzdidEgzcVRPQ2JVdm5jWDFRawogIFVwNXVlQzFHX1lGbkpwendP
-  YmdPQzVzQSJ9fX0sCiAgICAiRW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQ
-  jJKLVpNVkUtTFdPTC03V1RKLU9UTDQtWTNTRC1aVjVZIiwKICAgICAgIlB1YmxpY1
+  Q4IiwKICAgICAgICAgICJQdWJsaWMiOiAiYVN3dUlFRkJLZnNUajNNRUt1ZzdUczN
+  MUEJhUDhtaWhYYzJPWXp5V01LOGpNSEllX1pzNAogIFpSSndmaV9aVlYwbUU2X2Jm
+  RG5EQ0xPQSJ9fX0sCiAgICAiRW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQ
+  lBKLVpVSFAtWEdYSi1VSExHLVNGM0QtV1hRSC1QWE5SIiwKICAgICAgIlB1YmxpY1
   BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICA
-  gICAiY3J2IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJVMUpsQXRMN2la
-  Tzl3ZVVlWDNaS1BmcHctNzlBbXlydnNVbjRvVzB4Qjc2TnR6cXlrSTRCCiAgNFh2U
-  0xiRzdmR093UC1jWTkyajlhcE9BIn19fX19",
+  gICAiY3J2IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJzSkwxYjJRSlZM
+  Rk53UGN5RnlnNDR1NVhCX2F4bUwtWko4VDdZVlBDazZ6OGdXOWpqQ3c5CiAgWU9JV
+  0FUSUdMZ3pvRkZMX1lZamNKX1NBIn19fX19",
       {
         "signatures":[{
             "alg":"S512",
-            "kid":"MA6N-NN7E-CNN2-75BX-BGLB-ME6F-7FCH",
-            "signature":"ZOLaqvLsui6n-LB5_C_Q3seRS5ilBxiuFFPp_NU9
-  1fIF4qQYTh7opYmj8_h3bMuSrCBOCtmYlWgANuzu5LEtH-A_J2jR-euzFV7V3DbFJ
-  QwA8gDb9XhuRZF8FV8V0DfmN1l8AVex0Z7q-clZPodLaCcA"}
+            "kid":"MBXG-NS7P-YHE6-GR2E-3MPF-2JP5-KOGH",
+            "signature":"gNwv0wn93UrGaO-9LLLC9dtcEzx3mLSXE8ncK41E
+  u7ylW6huiqIXSDMwXcjMoBuCiFLL1nsR3OKActnn_1jeqLrZmI13CZvVeZd4iCOgG
+  14J2IQ0mMc37iW1w2tZ-iFWCrMWNSNib7TH1BuEPjhVTyUA"}
           ],
-        "PayloadDigest":"cBn1RX2qmv9mzrgeUmHN8IhFBLKAmQnMaOUUIxri
-  yKS6DWWVyTxNrNi3D-MD-UJH9zXvSX-GPT6F95mZbm658g"}
+        "PayloadDigest":"vL9FTdDtXIEl7SVQ9-8oL_bvE-QXgE9UaifGgAUN
+  FV_0u0co47enKjs4ms8-tN39lZVnw2PlZof59J8bWjjI_Q"}
       ],
     "EnvelopedConnectionService":[{
         "dig":"S512",
         "ContentMetaData":"ewogICJNZXNzYWdlVHlwZSI6ICJDb25uZWN0aW
   9uU2VydmljZSIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0IiwKICA
-  iQ3JlYXRlZCI6ICIyMDIxLTA5LTIwVDE4OjE2OjMzWiJ9"},
+  iQ3JlYXRlZCI6ICIyMDIxLTA5LTIxVDAwOjU2OjEwWiJ9"},
       "ewogICJDb25uZWN0aW9uU2VydmljZSI6IHsKICAgICJBdXRoZW50aWNhdG
-  lvbiI6IHsKICAgICAgIlVkZiI6ICJNQjJKLVpNVkUtTFdPTC03V1RKLU9UTDQtWTN
-  TRC1aVjVZIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1
+  lvbiI6IHsKICAgICAgIlVkZiI6ICJNQlBKLVpVSFAtWEdYSi1VSExHLVNGM0QtV1h
+  RSC1QWE5SIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1
   YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIlg0NDgiLAogICAgICAgI
-  CAgIlB1YmxpYyI6ICJVMUpsQXRMN2laTzl3ZVVlWDNaS1BmcHctNzlBbXlydnNVbj
-  RvVzB4Qjc2TnR6cXlrSTRCCiAgNFh2U0xiRzdmR093UC1jWTkyajlhcE9BIn19fX1
+  CAgIlB1YmxpYyI6ICJzSkwxYjJRSlZMRk53UGN5RnlnNDR1NVhCX2F4bUwtWko4VD
+  dZVlBDazZ6OGdXOWpqQ3c5CiAgWU9JV0FUSUdMZ3pvRkZMX1lZamNKX1NBIn19fX1
   9",
       {
         "signatures":[{
             "alg":"S512",
-            "kid":"MA6N-NN7E-CNN2-75BX-BGLB-ME6F-7FCH",
-            "signature":"-fKRQYisB0gxu75Xe0OKC77g2uptgJyzvmLIKIMg
-  vXsvn3Gf0BpGlJN6wwNadK4VWHY9HU9z8w-ARK_ozkDLHIUtxwntd_ws0s03AqNLm
-  K-Fjc3jf-A7lanS7OeoCAsnXfQ7Kqa91pMHbotBtPvR0RwA"}
+            "kid":"MBXG-NS7P-YHE6-GR2E-3MPF-2JP5-KOGH",
+            "signature":"3aB6ftKbk_H_Rfk9kyT1VP3iBW0LG5QM1tbNjaaq
+  ElQqXBXghXykotp_SZBGK_W54FVxvk4MescApQtGpYxH3fuksNrTlviyJlZk_g5qw
+  baH3MTEsqUwyZH5FJA4MkCgwU84fU7z3A_I6PnaEBLyMiUA"}
           ],
-        "PayloadDigest":"__OnArXqFpZbdPVxS1HVHKpKhvJ1nhD8QA0mOLzM
-  LOOgEyWe9khDNTY1M35w1rlthBjSLMV_6heRhUhqEi8VoA"}
+        "PayloadDigest":"B_GOrI4alO-3YJxDbQDiE0ZJ2T2w90Sc5_XeITEe
+  1ts7h2xDUj2_lCcQeD9ErnEM7l3TpcSYr5fE-7jDRgSOtg"}
       ],
     "PrivateKey":{
       "PrivateKeyUDF":{
-        "PrivateValue":"ZAAQ-BLGK-V4DZ-ZFV7-QJZY-OOAU-SNMB-4C6Y-57P
-H-L7OQ-A3VF-655A-GYQM-H4SF",
+        "PrivateValue":"ZAAQ-BSEX-OXLB-MF7R-7JDM-OI6F-AIGQ-WGII-RMF
+J-3UCB-22LO-EMKN-3ID5-NNP5",
         "KeyType":"MeshProfileDevice"}},
-    "ConnectUri":"mcu://maker@example.com/EBPB-YSBL-44F5-5ADN-PJHJ-
-CCJP-EU"}}
+    "ConnectUri":"mcu://maker@example.com/ECRO-45W3-2E7Z-VT6Y-2P3J-
+VJME-NU"}}
 ~~~~
 
-The preconfiguration record is retreived and decrypted by means of an EARL:
+An EARL is created specifying the means by which an administration device can acquire the
+information required to complete a connection to the device:
 
 ~~~~
 QR = {Connect.ConnectEARL}
 ~~~~
 
-
-The EARL is converted to a QR code and printed on the device.
-
-The private seed and connection record is provisioned to the device to be written to 
-the device firmware:
-
->>>> Unfinished ProtocolConnectEARL/device publication
-
-
-
-
-Oh **** the data published to the spool is simply the encrypted ProfileDevice!!!!
-
-
+The preconfigured ProfileDevice is encrypted under the encryption key and published to
+the location key derived from the EARL.
 
 
 ### Phase 2 & 3
 
 The administration device scans the QR code and obtains the Device Description using
-the Claim operation as shown in section $$$$. The administration device creates the ActivationDevice and CatalogedDevice records
-and populates the service as before.
+the Claim operation as shown in section $$$$. The administration device creates the 
+ActivationDevice and CatalogedDevice records and populates the service as before.
 
 
 ~~~~
 <div="terminal">
 <cmd>Alice> account connect ^
-    mcu://maker@example.com/EBPB-YSBL-44F5-5ADN-PJHJ-CCJP-EU /web
+    mcu://maker@example.com/ECRO-45W3-2E7Z-VT6Y-2P3J-VJME-NU /web
 </div>
 ~~~~
 
@@ -167,15 +159,15 @@ The device polls the publication service until a claim message is returned.
 ~~~~
 <div="terminal">
 <cmd>Alice4> device complete
-<rsp>   Device UDF = MCAE-LHYD-7TBQ-LOVT-GPE7-I3PX-6MQ3
+<rsp>   Device UDF = MBY6-TMUL-EY7I-EYSE-3XSH-7LWA-DXX7
    Account = alice@example.com
-   Account UDF = MC6L-GFYJ-7EOP-2OWN-24ZJ-4RC7-EXTW
+   Account UDF = MANR-I5NN-5ZQH-APAD-4XOK-HR3F-L2FR
 </div>
 ~~~~
 
->> The poll claim result.
-
 ### Phase 5
 
-Completion of the device is the same as before.
+Having been advised that an account has published a claim to bind to it, the device
+posts a connection Complete request to the specified account and completes the
+connection process as before.
 

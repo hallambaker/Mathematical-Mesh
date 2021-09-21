@@ -37,12 +37,12 @@
 #% SchemaAliceActivationDevice2(Example);
 #% SchemaAliceConnectionDevice2(Example);
 #% SchemaAliceActivationDevice3(Example);
-#!!!!! Missing
 #% SchemaEntrySSH(Example);
 #% SchemaEntryMail(Example);
 #% SchemaConnectionHost(Example);
-#% SchemaAccount(Example);
-#% SchemaService(Example);
+#!!!!Obsolete??
+#!% SchemaAccount(Example);
+#!% SchemaService(Example);
 #end method
 
 

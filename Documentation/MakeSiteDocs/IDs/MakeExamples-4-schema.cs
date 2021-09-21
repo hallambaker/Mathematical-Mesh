@@ -46,8 +46,6 @@ namespace ExampleGenerator {
 			 SchemaEntrySSH(Example);
 			 SchemaEntryMail(Example);
 			 SchemaConnectionHost(Example);
-			 SchemaAccount(Example);
-			 SchemaService(Example);
 			}
 		
 

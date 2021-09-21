@@ -29,14 +29,15 @@
 #% ProtocolConfirmation(Example);
 #% ProtocolConnectEARL(Example);
 #% ProtocolMessageCompletion(Example);
-#% ProtocolHelloRequest(Example);
-#% ProtocolHelloResponse(Example);
 #% ProtocolAccountDelete(Example);
 #% ProtocolAccountRecover(Example);
 #% ProtocolPostServiceService(Example);
 #% ProtocolConnectPIN(Example);
 #% ProtocolDownload(Example);
 #% ProtocolUpload(Example);
+#!!!!Obsolete
+#!% ProtocolHelloRequest(Example);
+#!% ProtocolHelloResponse(Example);
 #end method
 
 #zfile CreateExamples ProtocolHelloRequest "Examples\\ProtocolHelloRequest.md" Example
@@ -472,27 +473,16 @@ The administration device determines that the device connection request is authe
 by a PIN code. The PIN code is retrieved and the message authenticated. This is shown in
 the PIN registration interation example in section $$$ above.
 
-#%  Format (Connect.ConnectPINActivationDevice);
-
 Bug: This command is currently showing superflous pending messages due to the failure to
 clear messages processed in earlier examples.
 
 The Cataloged device record is created from the public key values corresponding to the
-combination of the public keys in the device profile and those defined by the activation:
+combination of the public keys in the device profile and those defined by the activation.
 
-#%  Format (Connect.ConnectPINCatalogedDevice);
-
-[Updates to multiple spools here.]
-
->>> ActivationDevice Here
-
->>> CatalogedDevice Here
-
+This is returned to the onboarding device by wrapping it in a RespondConnection message
+posted to the local spool of the account.
 
 #% Format (Connect.RespondConnectionPIN );
-
-This is posted to the local spool.
-
 
 ###### Phase 4
 
@@ -525,36 +515,30 @@ The manufacturer preconfigures the device
 
 #%  ConsoleExample (Connect.ConnectStaticPrepare);
 
-This results in the creation of the device preconfiguration record to be published
-to the Publication catalog of the device manufacturer:
+This results in the creation of a primary secret which is used to compute a ProfileDevice
+and corresponding connection records signed by the manufacturer's administrator key.
+
+The data is combined to create a DevicePreconfiguration record that is provisioned to
+the firmware of the device being preconfigured.
 
 #% Format(Connect.ConnectStaticPreconfig);
 
-The preconfiguration record is retreived and decrypted by means of an EARL:
+An EARL is created specifying the means by which an administration device can acquire the
+information required to complete a connection to the device:
 
 ~~~~
 QR = {Connect.ConnectEARL}
 ~~~~
 
-
-The EARL is converted to a QR code and printed on the device.
-
-The private seed and connection record is provisioned to the device to be written to 
-the device firmware:
-
-#{Unfinished("ProtocolConnectEARL/device publication")}
-
-
-Oh **** the data published to the spool is simply the encrypted ProfileDevice!!!!
-
-
+The preconfigured ProfileDevice is encrypted under the encryption key and published to
+the location key derived from the EARL.
 
 
 ###### Phase 2 & 3
 
 The administration device scans the QR code and obtains the Device Description using
-the Claim operation as shown in section $$$$. The administration device creates the ActivationDevice and CatalogedDevice records
-and populates the service as before.
+the Claim operation as shown in section $$$$. The administration device creates the 
+ActivationDevice and CatalogedDevice records and populates the service as before.
 
 #%  ConsoleExample (Connect.ConnectStaticClaim);
 
@@ -564,11 +548,11 @@ The device polls the publication service until a claim message is returned.
 
 #%  ConsoleExample (Connect.ConnectStaticPollSuccess);
 
->> The poll claim result.
-
 ###### Phase 5
 
-Completion of the device is the same as before.
+Having been advised that an account has published a claim to bind to it, the device
+posts a connection Complete request to the specified account and completes the
+connection process as before.
 
 #end zfile
 

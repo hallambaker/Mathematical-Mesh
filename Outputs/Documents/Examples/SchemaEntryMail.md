@@ -8,51 +8,51 @@
     "InboundConnect":"pop://alice@pop3.example.net",
     "OutboundConnect":"submit://alice@submit.example.net",
     "SmimeSign":{
-      "Udf":"MB76-DMYD-676V-4SJS-2WZW-GFZX-Y3H2",
+      "Udf":"MBOJ-BRUM-KFW2-OBNF-UN6L-GHV6-JREN",
       "PublicParameters":{
         "PublicKeyRSA":{
-          "kid":"MB76-DMYD-676V-4SJS-2WZW-GFZX-Y3H2",
-          "n":"xL5dT71zYqvmXYB1pkdhkGaWFJO_Bc8450qQOSJ-58sOqCxKoC
-  tpscvw3-xUbetBQpN-fs6qful8VmySbTVXAbV61t0qqBI_Fp3GPba3oN_z1RKaaJY
-  ryj7Nn4BzlqakYl97uFW8kyooZ0PEyNbT0PPdZYOlOh826pqaNRExBKbG7pfms-eq
-  B_3rsOjzFsBWt9Cn7CWqe75os_3_uKnYSIacprUDAmQd4-l-nkkIBUB2kYoDwFEbQ
-  2iuODQtnKELiDvICWKivHYk8CLuPsdJmG1ErwfJ41DDcO5e-4Ap1wgfbriQH-q95e
-  HSVVYaYBucfq5EXZ4jArHph5GLBznQuQ",
+          "kid":"MBOJ-BRUM-KFW2-OBNF-UN6L-GHV6-JREN",
+          "n":"qc107QHDI8V7-wLwNNJERJkcgaDwaX5EkpJKgX3ftOaPfbRqjq
+  Su25VSWgYPZto7ermcFQPSRESPl81NxX9q1QnQnh1Gdk8H7-iLdigqKI42jQR5Ggv
+  WrakveNE2Oc_LTuqRdwu5BrEK4UU1mCJfNp7ZmllLPQO7bEsUh4Fp6YpXojpF3C3N
+  Ez_MKm1I_ccjCIN9g7DtbDfcUiW7C8b5a2-vEoh0vV0EK-3fONo6hLKrsTTGruL9h
+  fPhOZpENsLWu2S5oNGxvOeOqLwKuz6xulFWiLgAItWNFxydLQQpHkdd93xbfTFGFX
+  UsPSBmqEexCUah4UMsaEYXjsR9rHSeJQ",
           "e":"AQAB"}}},
     "SmimeEncrypt":{
-      "Udf":"MCUH-ZSKL-LIJ5-ILN4-JY5T-MQ77-ZDZ5",
+      "Udf":"MCMW-WTZA-5HGL-P2PK-GGG3-QWE4-IJCC",
       "PublicParameters":{
         "PublicKeyRSA":{
-          "kid":"MCUH-ZSKL-LIJ5-ILN4-JY5T-MQ77-ZDZ5",
-          "n":"5V5suy1a_2P6kN-7T9kVKbmA0cogC1tYsQtVRxp-gbBLpt1fV3
-  zaJWnVhR8EOadlM5hqsY5yDwdUExYfjXTyjQXHsah6fpz6H796pX2-nktwgifGWrV
-  eBie-URvijcM8_kERBBVpjkJncnea6aMzgB4qZVaNi2SeKI7EOA8CZ4ICr490-Qni
-  d34_NJuVlGoyswLCjU84IV9Ncn_uPPsfUcECakDv8P6e-cjcyLEsbBaDTjfXzDozN
-  SvAeXoeHk-caIiDfBZeRSCkUhYnOIzeWblpGkWqAeaQZ5Ir3qm-UOzl3THFCsLIsK
-  pM_mKbG_vvbuKlOU7f_BESU4sZsjav5Q",
+          "kid":"MCMW-WTZA-5HGL-P2PK-GGG3-QWE4-IJCC",
+          "n":"5a2e_WXO0MdOkEKSnp-PHvb_QXjetO6Mk-z-e4t-t_kpkZEjzD
+  umq03pglnhiZ90jvdHvH3nfcqbcB533lbIhvYEsgm4b_ZMSJC48yZWg0y6hRyZn8S
+  gpumLHmUsGr7WAPxkP6HO2_HFaixnyQbrs51uCcFRj2jB5jG7OwhCbA6K21F2RmUL
+  qS69hRINm6XkYevj7BdLL8hg82_JOWIck65QJLXru9qCgo9RBOQ-StVDjg6VTDjRN
+  8oXshMFG8YpY2IlOy4trsFpOMYl0m1wiaUsMONFi71yN713NkuzsaSjrPPHZ1iXxk
+  5MfncgtK9HvJIHfAU67iRqLdBkqY_M5Q",
           "e":"AQAB"}}},
     "OpenpgpSign":{
-      "Udf":"MCJU-HICA-WMAL-QBMV-XWI3-SQC7-GY26",
+      "Udf":"MBW6-3WR3-7JJN-UPLO-6DHH-VSGP-YHRL",
       "PublicParameters":{
         "PublicKeyRSA":{
-          "kid":"MCJU-HICA-WMAL-QBMV-XWI3-SQC7-GY26",
-          "n":"rAoaKqq47qVE4qzISrMPA4Lf3RLt8BycKzZqxl7w3DWdhcWz3q
-  7w_w-BNXJrmpmwSlYXlMY2ExHnEGSvlLqAsNN4btF_jixk0-cRG55ncBxFgXDd-3F
-  TWnz-q2tYtv1MzSVfIIVe9K-fzRagUuh044gz0K1TvJ8zZ8byqs6x1PQyADtZK6C3
-  fsoOWMUNtG2j-tgAFLINM3NjIg5CHDAEEfEtc3tpbFcBJ0yd05XMQMxKlFvowFQde
-  sQIx8O7qEXe3qxOl3Y2WXZiV38hsIHedbyap1LTZGyBLv9bXBg4wU_Ym_E1k_Leiq
-  OjlGXiN_6DyR33p3S0lyLAwkHZVWsjEQ",
+          "kid":"MBW6-3WR3-7JJN-UPLO-6DHH-VSGP-YHRL",
+          "n":"x5MSri_eb-mO3SrP4KdcK_F9U0QkwQdBqCjVtS4gbGiT12wWLb
+  LSErc6jMF_7s7TDPIXwoJeQpCLreYw1yJwVCke4AMTfmllKgwJxTTzPhXLQap5I3B
+  UFWK8FOf3U7zYC_P8Wv5WmodCtzjIGGF1rVwmu8_OuRystLelxW0kbS7bu4xeUIXa
+  YbLIEVlBO5zLL9Yu6upvy5ynTNQXaic1SPAAGRHp6rn3tEs0dIeDz09bZL3rJ9y3a
+  Gnx2-eT_0yiJanQ5_jViXxApQwO_fiRuNDTzaDmVmbyipk6S1eA4dCx0ciD56lAbm
+  sFIqNOdomNPBs88yBLuGRuT_q-G6bHCQ",
           "e":"AQAB"}}},
     "OpenpgpEncrypt":{
-      "Udf":"MCGO-TL62-NM3Q-MDYN-6L6W-35G7-4A4T",
+      "Udf":"MAGL-WOOX-FD2J-WXDA-KMNS-RK2L-BNJW",
       "PublicParameters":{
         "PublicKeyRSA":{
-          "kid":"MCGO-TL62-NM3Q-MDYN-6L6W-35G7-4A4T",
-          "n":"n28x4q9yAiniWEptzdMG9UmbwjeU4sX0xVlA1EUec_B2RrKi3x
-  KMFPV7P27wZCYqUQ-hbGqE-xk2cNXtvAk6UyRukMGiVFGAnrCmKDxHPR2e8GJfWKf
-  2ZLcBBojWGoUiAT0G3JxE-m5kA7db-2DhSJdddYrGr2dbksE44-OMEx9YjRUQk7i6
-  cn2jmbmdQX4ONEtFb6hZMUBP7D9EWkDsoqj4HRkEwwapbIUJ8SM4HiWrg5al-7gIb
-  0d0kqKB0kdRYf8bU8Vhjzef17R1p487ip27Q3-w-cWoIAJeD0VTWboLIVlbWcmHEf
-  5oxwiNkZm4VcSu4N6Vmvg0YqQ72yeHGQ",
+          "kid":"MAGL-WOOX-FD2J-WXDA-KMNS-RK2L-BNJW",
+          "n":"6FY8OcGilde9VDEcvUqTR3U6QMQwKwBnK8OOnbUSzVdWLrfgg_
+  7t9_NPlAhhHfQpRSKxvl4hqzKAMR9lWhvDPFQwAV2nlgGjCkDyrluK4rCYxOzjJYH
+  uIaa-ug472bHB_QCJrlOJsNHxJK6hF9DtJTuUQQZanRW-NeInQlyL3z6m3UYpkz1C
+  qRQoIF4-1qDdA4aS8OT9C6CZFwbJxJYY4OnQv00tKhpmZ0jHDws2kRCifIjkpAwDx
+  gFuT25K-cI59sIKGzpIwyWrTgKRn9XT-A_T3H4137nvQ7gHVbX4xR7pGVRDBvkd6Q
+  u7GdGpZ6ze-6vV1BfOV7iOUGn-sCbkKQ",
           "e":"AQAB"}}}}}
 ~~~~
