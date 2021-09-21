@@ -39,7 +39,6 @@ namespace ExampleGenerator {
 			 ProtocolConfirmation(Example);
 			 ProtocolConnectEARL(Example);
 			 ProtocolMessageCompletion(Example);
-			_Output.Write ("\n{0}", _Indent);
 			 ProtocolAccountDelete(Example);
 			 ProtocolAccountRecover(Example);
 			 ProtocolPostServiceService(Example);

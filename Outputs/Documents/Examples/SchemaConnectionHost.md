@@ -6,7 +6,7 @@
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"ytR_Ga2IZSU3Rc1jZ3ck2xLA5cdqsaGvVhFq7VLyoSz3J
-  j-QLcxWaU4hnp3TRicm3veq5ttb9HUA"}}},
+          "Public":"zma1_9x993mJJQQAJBUSCB7ZvQ_2Cpqoese9Lke6a4uyr
+  BOgeDA4-b8fdlTolrX8_pX8DN4Yf4qA"}}},
     "Account":"@example"}}
 ~~~~

@@ -4,8 +4,8 @@ The connection request is initiated on the device being connected:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MBWA-UVSH-42NP-7I5O-EVUD-S67G-4U67
-   Witness value = FT32-MN72-Q7BY-OUUK-47MR-CMER-7USB
+<rsp>   Device UDF = MDWJ-NKCM-Z2RV-6IFX-53V6-FZBZ-JQGP
+   Witness value = F2SX-YPEF-MTTJ-ETZO-JLVN-76Z4-ZWRF
 </div>
 ~~~~
 
@@ -17,13 +17,13 @@ accepts the request, granting the new device the messaging and web roles:
 ~~~~
 <div="terminal">
 <cmd>Alice> device pending
-<rsp>MessageID: FT32-MN72-Q7BY-OUUK-47MR-CMER-7USB
+<rsp>MessageID: F2SX-YPEF-MTTJ-ETZO-JLVN-76Z4-ZWRF
         Connection Request::
-        MessageID: FT32-MN72-Q7BY-OUUK-47MR-CMER-7USB
+        MessageID: F2SX-YPEF-MTTJ-ETZO-JLVN-76Z4-ZWRF
         To:  From: 
-        Device:  MBWA-UVSH-42NP-7I5O-EVUD-S67G-4U67
-        Witness: FT32-MN72-Q7BY-OUUK-47MR-CMER-7USB
-<cmd>Alice> device accept FT32-MN72-Q7BY-OUUK-47MR-CMER-7USB /message /web
+        Device:  MDWJ-NKCM-Z2RV-6IFX-53V6-FZBZ-JQGP
+        Witness: F2SX-YPEF-MTTJ-ETZO-JLVN-76Z4-ZWRF
+<cmd>Alice> device accept F2SX-YPEF-MTTJ-ETZO-JLVN-76Z4-ZWRF /message /web
 </div>
 ~~~~
 
@@ -33,9 +33,9 @@ Alice can now synchronize her newly connected device to her account:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device complete
-<rsp>   Device UDF = MBWA-UVSH-42NP-7I5O-EVUD-S67G-4U67
+<rsp>   Device UDF = MDWJ-NKCM-Z2RV-6IFX-53V6-FZBZ-JQGP
    Account = alice@example.com
-   Account UDF = MANR-I5NN-5ZQH-APAD-4XOK-HR3F-L2FR
+   Account UDF = MCST-2JUP-UNOG-O4A3-Q6KS-O2V5-HSQL
 </div>
 ~~~~
 

@@ -10,11 +10,11 @@ connection request to be accepted without asking for further input from the user
 ~~~~
 {
   "MessagePin":{
-    "MessageId":"ACLZ-SOE3-SD37-MLE2-VG3Q-RQJL-Q2JH",
+    "MessageId":"AAVE-RXUN-6AYB-FMU3-3BZA-VFVP-SARG",
     "Account":"alice@example.com",
-    "Expires":"2021-09-22T00:56:05Z",
+    "Expires":"2021-09-22T00:58:53Z",
     "Automatic":true,
-    "SaltedPin":"AC7J-WKPX-QWLV-DNXN-UDEF-HMDN-4L5T",
+    "SaltedPin":"ABSR-KCDG-7PWS-XGJF-WNG7-2T4Y-ARQV",
     "Action":"Device",
     "Roles":["threshold"
       ]}}

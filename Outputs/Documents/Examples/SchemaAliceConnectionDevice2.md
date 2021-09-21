@@ -8,29 +8,29 @@ the account and the list of roles that have been authorized for the device..
 {
   "ConnectionDevice":{
     "Authentication":{
-      "Udf":"MATM-JRGO-RVHK-YUI3-2YMW-GQZI-HWVH",
+      "Udf":"MBNB-OU2G-NLQU-FOIB-ZHEB-WQQP-W2IU",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"zD5w7SAL4Bz2JZo7urN58bgS057ldoz6zFr8yD_XzPbVr
-  yvdgTFETSxOpbtrxgeUslyOpdjEZwoA"}}},
+          "Public":"L4nladXNX0hQO2YpoPfEiKwE--eHLkU6EpsHmZCSt6C9A
+  vUm6b_pXIgWUawgD8lybKdLIrXXJEMA"}}},
     "Roles":["message",
       "web"
       ],
     "Signature":{
-      "Udf":"MBIR-6RB4-2ZMR-SUV3-DU5O-2FWT-PK3O",
+      "Udf":"MBPC-6PL6-XMMN-JV66-4ALP-52SU-XSU7",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"JmWVO9NUWfWPEN_5lkd7VuFemLRXr5Ca-64fn4sXqjeYN
-  ACm4ZSbjV3NbXdaneOcur6Umfa6jQoA"}}},
+          "Public":"u6_7sDuUi5Bzykwp1MMmBtvgT8QLSVEQrZclf89GPdC5Q
+  G0H8rJtphNZFkE_ITpzKPj-ty9hWTOA"}}},
     "Encryption":{
-      "Udf":"MCFN-WQTF-JQUN-MU73-FZOS-Q73Q-I7SC",
+      "Udf":"MA6H-H3OR-VMFQ-EF5C-GF6L-FRHW-YB7Z",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"dVsvLz-Xo0Yk3LEMoCxMZwqYrRE6w2rdD3bnE8cGtjgGE
-  BfSS8rDZ5MEk9C1A2pBQZV1ZU8objQA"}}}}}
+          "Public":"Tn9Z1-GMa3gDSUGDuGIvojZ2Ape6y5NHQbkmRZ_WhAux7
+  bMQAXOzDPmnhih40zznvpfB7dyoqQUA"}}}}}
 ~~~~
 
 The ConnectionService assertion is used to authenticate the device to the 
@@ -44,11 +44,11 @@ The corresponding ConnectionService assertion is:
 {
   "ConnectionService":{
     "Authentication":{
-      "Udf":"MATM-JRGO-RVHK-YUI3-2YMW-GQZI-HWVH",
+      "Udf":"MBNB-OU2G-NLQU-FOIB-ZHEB-WQQP-W2IU",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"zD5w7SAL4Bz2JZo7urN58bgS057ldoz6zFr8yD_XzPbVr
-  yvdgTFETSxOpbtrxgeUslyOpdjEZwoA"}}}}}
+          "Public":"L4nladXNX0hQO2YpoPfEiKwE--eHLkU6EpsHmZCSt6C9A
+  vUm6b_pXIgWUawgD8lybKdLIrXXJEMA"}}}}}
 ~~~~
 

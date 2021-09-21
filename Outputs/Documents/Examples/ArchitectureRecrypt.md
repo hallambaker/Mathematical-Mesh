@@ -6,7 +6,7 @@ her closest friends:
 <div="terminal">
 <cmd>Alice> group create groupw@example.com
 <rsp>Account=groupw@example.com
-UDF=MAHW-ARE4-O5T3-S5LV-ZX24-N5MN-27XJ
+UDF=MCHX-THLV-3AII-AJT7-LT6W-TQTK-TIMX
 </div>
 ~~~~
 
@@ -34,8 +34,8 @@ Alice adds herself to the group, now she can decrypt:
 <cmd>Alice> group add groupw@example.com alice@example.com
 <rsp>{
   "ContactAddress": "alice@example.com",
-  "MemberCapabilityId": "MAPZ-5C2Z-2AIX-MCOB-7NCK-LSHE-TDEB",
-  "ServiceCapabilityId": "MB6Z-7AJ6-ZHZ5-H4IS-A2JZ-52I5-D64F"}
+  "MemberCapabilityId": "MC32-24R6-YG43-GAH5-O3KJ-YTE4-3OCS",
+  "ServiceCapabilityId": "MDJK-DDSC-REZA-HJHA-7EXB-X4PW-5VVL"}
 <cmd>Alice> account sync /auto
 <cmd>Alice> dare decode groupsecret.dare grouptext_alice.dare
 <cmd>Alice> type grouptext_alice.dare
@@ -54,8 +54,8 @@ the group:
 <cmd>Alice> group add groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MAPZ-5C2Z-2AIX-MCOB-7NCK-LSHE-TDEB",
-  "ServiceCapabilityId": "MDXM-ETUI-4MNW-XJEE-OU5J-L725-ODYN"}
+  "MemberCapabilityId": "MC32-24R6-YG43-GAH5-O3KJ-YTE4-3OCS",
+  "ServiceCapabilityId": "MBMI-CCU4-T2BW-ZCOG-ZG4X-WQ43-CQ2S"}
 </div>
 ~~~~
 
@@ -80,8 +80,8 @@ Removing Bob from the group immediately withdraws his access.
 <cmd>Alice> group delete groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MAPZ-5C2Z-2AIX-MCOB-7NCK-LSHE-TDEB",
-  "ServiceCapabilityId": "MDXM-ETUI-4MNW-XJEE-OU5J-L725-ODYN"}
+  "MemberCapabilityId": "MC32-24R6-YG43-GAH5-O3KJ-YTE4-3OCS",
+  "ServiceCapabilityId": "MBMI-CCU4-T2BW-ZCOG-ZG4X-WQ43-CQ2S"}
 </div>
 ~~~~
 

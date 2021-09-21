@@ -9,9 +9,9 @@ Bob sends Alice a contact exchange request:
 ~~~~
 <div="terminal">
 <cmd>Bob> message contact alice@example.com
-<rsp>Envelope ID: MDWV-73WN-EVRJ-X7LD-LHPK-XGLN-CQ5S
-Message ID: NC7T-SBTN-ZUL4-Z7LB-DMN4-LUFW-5MQF
-Response ID: MCRD-XXXX-Y2UZ-4ZHB-DWNI-WGZI-FKRO
+<rsp>Envelope ID: MA3Z-2HY4-ARAX-PQP3-SALJ-WZC4-PFSQ
+Message ID: NCKJ-A26T-F457-ZDUM-KCLY-DI3W-LICQ
+Response ID: MB2A-ACXF-XW3Q-2XUC-BTRG-6SIY-MAOT
 </div>
 ~~~~
 
@@ -22,21 +22,21 @@ Alice checks his Mesh messages and approves Bob's request:
 <div="terminal">
 <cmd>Alice> account sync
 <cmd>Alice> message pending
-<rsp>MessageID: NC7T-SBTN-ZUL4-Z7LB-DMN4-LUFW-5MQF
+<rsp>MessageID: NCKJ-A26T-F457-ZDUM-KCLY-DI3W-LICQ
         Contact Request::
-        MessageID: NC7T-SBTN-ZUL4-Z7LB-DMN4-LUFW-5MQF
+        MessageID: NCKJ-A26T-F457-ZDUM-KCLY-DI3W-LICQ
         To: alice@example.com From: bob@example.com
-        PIN: AABR-4QTD-CQQK-A3T6-EVBJ-HVRS-FFSQ
-<cmd>Alice> message accept NC7T-SBTN-ZUL4-Z7LB-DMN4-LUFW-5MQF
+        PIN: ADVA-25BJ-2FZG-LMV3-IUVO-QRF4-JHXA
+<cmd>Alice> message accept NCKJ-A26T-F457-ZDUM-KCLY-DI3W-LICQ
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MANR-I5NN-5ZQH-APAD-4XOK-HR3F-L2FR
-  Person MANR-I5NN-5ZQH-APAD-4XOK-HR3F-L2FR
-  Anchor MANR-I5NN-5ZQH-APAD-4XOK-HR3F-L2FR
+<rsp>Entry<CatalogedContact>: MCST-2JUP-UNOG-O4A3-Q6KS-O2V5-HSQL
+  Person MCST-2JUP-UNOG-O4A3-Q6KS-O2V5-HSQL
+  Anchor MCST-2JUP-UNOG-O4A3-Q6KS-O2V5-HSQL
   Address alice@example.com
 
-Entry<CatalogedContact>: NAN3-LJW4-PU6O-V532-ACI4-OKA6-R27X
+Entry<CatalogedContact>: NDJR-EAB7-AXSL-GEIH-PTG2-2MCU-44YC
   Person 
-  Anchor MDUO-EPBE-B77S-K6F4-TG22-5N4N-XQIB
+  Anchor MC3D-YVUI-DVMZ-PGO6-DRMI-TYGY-KMFL
   Address bob@example.com
 
 </div>
@@ -49,14 +49,14 @@ Bob can now collect Alice's contact:
 <div="terminal">
 <cmd>Bob> account sync /auto
 <cmd>Bob> contact list
-<rsp>Entry<CatalogedContact>: MDUO-EPBE-B77S-K6F4-TG22-5N4N-XQIB
-  Person MDUO-EPBE-B77S-K6F4-TG22-5N4N-XQIB
-  Anchor MDUO-EPBE-B77S-K6F4-TG22-5N4N-XQIB
+<rsp>Entry<CatalogedContact>: MC3D-YVUI-DVMZ-PGO6-DRMI-TYGY-KMFL
+  Person MC3D-YVUI-DVMZ-PGO6-DRMI-TYGY-KMFL
+  Anchor MC3D-YVUI-DVMZ-PGO6-DRMI-TYGY-KMFL
   Address bob@example.com
 
-Entry<CatalogedContact>: NDV2-3BUI-WT3T-5OAH-JN6M-WHBQ-PQDY
+Entry<CatalogedContact>: NC6K-ZUNP-PDMR-5HZM-BRN5-FWNO-HOSQ
   Person 
-  Anchor MANR-I5NN-5ZQH-APAD-4XOK-HR3F-L2FR
+  Anchor MCST-2JUP-UNOG-O4A3-Q6KS-O2V5-HSQL
   Address alice@example.com
 
 </div>
