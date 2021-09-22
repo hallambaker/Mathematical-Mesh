@@ -96,8 +96,8 @@
 		Inherits							ResultCreateDevice
 		String								Uri
 		String								FileName
-		Struct ProfileDevice				ProfileDevice
-		Struct DevicePreconfiguration		DevicePreconfiguration
+		Struct DevicePreconfigurationPublic			DevicePreconfigurationPublic
+		Struct DevicePreconfigurationPrivate		DevicePreconfigurationPrivate
 
 	Structure ResultCreateDevice
 		Inherits							Result

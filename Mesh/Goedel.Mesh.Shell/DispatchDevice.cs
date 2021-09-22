@@ -216,14 +216,16 @@ namespace Goedel.Mesh.Shell {
 
             using var contextAccount = GetContextUser(options);
 
-            var devicePreconfiguration = contextAccount.Preconfigure(
+            var (devicePreconfigurationPublic, devicePreconfigurationPrivate) = contextAccount.Preconfigure(
                 out var filename, out var profileDevice, out var connectUri, bits: bits);
+
+
 
             var result = new ResultPublishDevice() {
                 Uri = connectUri,
-                ProfileDevice = profileDevice,
                 FileName = filename,
-                DevicePreconfiguration = devicePreconfiguration
+                DevicePreconfigurationPrivate = devicePreconfigurationPrivate,
+                DevicePreconfigurationPublic = devicePreconfigurationPublic
                 };
             "".TaskFunctionality();
             return result;

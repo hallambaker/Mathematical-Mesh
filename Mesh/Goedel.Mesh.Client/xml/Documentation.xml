@@ -943,7 +943,7 @@
             <returns>If successfull returns an ContextAccountService instance to allow access
             to the connected account. Otherwise, a null value is returned.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.Install(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.DevicePreconfiguration)">
+        <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.Install(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.DevicePreconfigurationPrivate)">
             <summary>
             Write the device configuration <paramref name="devicePreconfiguration"/> to
             the Mesh host <paramref name="meshHost"/>.
@@ -1264,7 +1264,7 @@
         <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String@,Goedel.Mesh.ProfileDevice@,System.String@,System.String,System.Int32)">
             <summary>
             Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionService@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)"/>. Generates a device profile
-            and writes the <see cref="T:Goedel.Mesh.DevicePreconfiguration"/> data to a file in the directory
+            and writes the <see cref="T:Goedel.Mesh.DevicePreconfigurationPrivate"/> data to a file in the directory
             specified by <paramref name="path"/>.
             </summary>
             <param name="filename"></param>

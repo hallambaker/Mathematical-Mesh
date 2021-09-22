@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/21/2021 1:09:09 AM
+//  This file was automatically generated at 9/22/2021 12:53:38 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2072,11 +2072,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual ProfileDevice						ProfileDevice  {get; set;}
+		public virtual DevicePreconfigurationPublic						DevicePreconfigurationPublic  {get; set;}
         /// <summary>
         /// </summary>
 
-		public virtual DevicePreconfigurationPrivate						DevicePreconfiguration  {get; set;}
+		public virtual DevicePreconfigurationPrivate						DevicePreconfigurationPrivate  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2131,15 +2131,15 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteToken ("FileName", 1);
 					_writer.WriteString (FileName);
 				}
-			if (ProfileDevice != null) {
+			if (DevicePreconfigurationPublic != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ProfileDevice", 1);
-					ProfileDevice.Serialize (_writer, false);
+				_writer.WriteToken ("DevicePreconfigurationPublic", 1);
+					DevicePreconfigurationPublic.Serialize (_writer, false);
 				}
-			if (DevicePreconfiguration != null) {
+			if (DevicePreconfigurationPrivate != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("DevicePreconfiguration", 1);
-					DevicePreconfiguration.Serialize (_writer, false);
+				_writer.WriteToken ("DevicePreconfigurationPrivate", 1);
+					DevicePreconfigurationPrivate.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -2182,17 +2182,17 @@ namespace Goedel.Mesh.Shell {
 					FileName = jsonReader.ReadString ();
 					break;
 					}
-				case "ProfileDevice" : {
+				case "DevicePreconfigurationPublic" : {
 					// An untagged structure
-					ProfileDevice = new ProfileDevice ();
-					ProfileDevice.Deserialize (jsonReader);
+					DevicePreconfigurationPublic = new DevicePreconfigurationPublic ();
+					DevicePreconfigurationPublic.Deserialize (jsonReader);
  
 					break;
 					}
-				case "DevicePreconfiguration" : {
+				case "DevicePreconfigurationPrivate" : {
 					// An untagged structure
-					DevicePreconfiguration = new DevicePreconfigurationPrivate ();
-					DevicePreconfiguration.Deserialize (jsonReader);
+					DevicePreconfigurationPrivate = new DevicePreconfigurationPrivate ();
+					DevicePreconfigurationPrivate.Deserialize (jsonReader);
  
 					break;
 					}

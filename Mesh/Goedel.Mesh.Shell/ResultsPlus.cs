@@ -536,7 +536,9 @@ namespace Goedel.Mesh.Shell {
         ///<inheritdoc/>
         public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
 
-            builder.AppendLine($"Device Udf: {ProfileDevice.Udf}");
+            var profileDevice = DevicePreconfigurationPublic.EnvelopedProfileDevice.Decode();
+
+            builder.AppendLine($"Device Udf: {profileDevice.Udf}");
             builder.AppendLine($"File: {FileName}");
 
             }

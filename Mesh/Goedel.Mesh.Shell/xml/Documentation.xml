@@ -5044,11 +5044,11 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultPublishDevice.ProfileDevice">
+        <member name="P:Goedel.Mesh.Shell.ResultPublishDevice.DevicePreconfigurationPublic">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultPublishDevice.DevicePreconfiguration">
+        <member name="P:Goedel.Mesh.Shell.ResultPublishDevice.DevicePreconfigurationPrivate">
             <summary>
             </summary>
         </member>

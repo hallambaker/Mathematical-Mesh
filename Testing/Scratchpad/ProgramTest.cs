@@ -33,23 +33,20 @@ using Goedel.Cryptography.Algorithms;
 
 namespace Scratchpad {
 
-    // ToDo: Server check auth permissions
+
     // ToDo: Server logging
     // ToDo: Server status info
-    // ToDo: Client decrypt files with threshold key
 
-    // ToDo: Remove application from Mesh
+
+    // ToDo: Remove application from Account
 
     // ToDo: Test for delected device being denied access to stores etc.
     // ToDo: Test for threshold device being unable to decrypt after deletion
 
     // ToDo: Test write validator, read in all catalogs and check encryption etc. status
 
-
-
     // ToDo: Test Clear all unit tests
 
-    // ToDo: Documentation - clear all examples in IDs.
 
     // ToDo: RUD Documentation - Grab examples from connection formation
     // ToDo: RUD Documentation - Describe stream lifecycle
@@ -65,18 +62,23 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
+
+
+
+            TestService.Test().MeshEscrowRecover();
+
+            TestService.Test().MeshCatalogGroup();
+
+
+
             //TestService.Test().MeshDeviceMail();
 
 
             //ShellTests.Test().TestProfileConnectPinReused();
             //ShellTests.Test().TestProfileMail();
-            ShellTests.Test().TestProfileSSHPrivate();
+            //ShellTests.Test().TestProfileSSHPrivate();
             //ShellTests.Test().TestProfileSSHPublic();
 
-
-
-
-            //TestService.Test().ProtocolHello();
             //TestService.Test().MeshDeviceSsh();
 
 

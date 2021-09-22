@@ -769,12 +769,15 @@ namespace Goedel.Mesh.Client {
         /// <param name="connectUri"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public DevicePreconfigurationPrivate Preconfigure(
+        public (DevicePreconfigurationPublic, DevicePreconfigurationPrivate) Preconfigure(
                     out string filename,
                     out ProfileDevice profileDevice,
                     out string connectUri,
                     string path = "",
                     int bits =120) {
+
+
+            // need to refactor this to return the DevicePreconfigurationPublic/DevicePreconfigurationPrivate
 
             CreateDeviceEarl(
                     out var secretSeed,
@@ -797,7 +800,11 @@ namespace Goedel.Mesh.Client {
                 };
             devicePreconfiguration.ToFile(filename, tagged: true);
 
-            return devicePreconfiguration;
+            var devicePreconfigurationPublic = new DevicePreconfigurationPublic() {
+                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice
+                };
+
+            return (devicePreconfigurationPublic, devicePreconfiguration);
             }
 
 

@@ -686,7 +686,7 @@ namespace ExampleGenerator {
 
             var resultPublishDevice = Connect.ConnectStaticPrepare.GetResultPublishDevice() as ResultPublishDevice;
             Connect.ConnectStaticResult = resultPublishDevice;
-            Connect.ConnectStaticPreconfig = resultPublishDevice.DevicePreconfiguration;
+            Connect.ConnectStaticPreconfig = resultPublishDevice.DevicePreconfigurationPrivate;
 
             Connect.ConnectEARL = Connect.ConnectStaticPreconfig.ConnectUri;
 

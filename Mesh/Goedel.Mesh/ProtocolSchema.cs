@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/21/2021 1:09:01 AM
+//  This file was automatically generated at 9/22/2021 12:53:32 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -856,6 +856,11 @@ namespace Goedel.Mesh {
 
 		public virtual string						Account  {get; set;}
         /// <summary>
+        ///The identifier of the capability under which access is claimed.
+        /// </summary>
+
+		public virtual string						Capability  {get; set;}
+        /// <summary>
         ///Device profile of the device making the request.
         /// </summary>
 
@@ -909,6 +914,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Account", 1);
 					_writer.WriteString (Account);
 				}
+			if (Capability != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Capability", 1);
+					_writer.WriteString (Capability);
+				}
 			if (EnvelopedProfileDevice != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("EnvelopedProfileDevice", 1);
@@ -949,6 +959,10 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "Account" : {
 					Account = jsonReader.ReadString ();
+					break;
+					}
+				case "Capability" : {
+					Capability = jsonReader.ReadString ();
 					break;
 					}
 				case "EnvelopedProfileDevice" : {
