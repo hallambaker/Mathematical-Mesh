@@ -89,6 +89,9 @@ File PresentationConstants
 		Code X448					"X448"
 			Description
 				|Ephemeral key for X448 key exchange.
+		Code X25519					"X25519"
+			Description
+				|Ephemeral key for X448 key exchange.
 		Code PkixX509				"PKIXC"
 			Description
 				|A PKIX Certificate

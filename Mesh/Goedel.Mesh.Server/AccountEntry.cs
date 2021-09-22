@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Protocol;
+
 namespace Goedel.Mesh.Server {
     public abstract partial class AccountEntry {
 
@@ -40,6 +42,10 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <returns>True if the account entry is properly formatted.</returns>
         public abstract void Verify(MeshVerifiedAccount meshVerifiedAccount);
+
+
+
+        public abstract void Verify(IJpcSession jpcSession);
 
         }
 
@@ -73,6 +79,13 @@ namespace Goedel.Mesh.Server {
             AccountAddress = request.AccountAddress;
             EnvelopedProfileUser = request.EnvelopedProfileAccount;
             Directory = AccountAddress;
+            }
+
+
+
+
+        public override void Verify(IJpcSession jpcSession) {
+
             }
 
         ///<inheritdoc/>

@@ -29,6 +29,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.IO;
 using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
@@ -234,6 +235,16 @@ namespace Goedel.Mesh.Client {
                 TransactUser transactUser) {
             KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
 
+            // Since the service does not know this account (yet)
+
+            var credentialPrivate = new KeyCredentialPrivate(
+                        ProfileUser.AccountAuthenticationKey as KeyPairAdvanced);
+
+
+            MeshClient = MeshMachine.GetMeshClient(credentialPrivate, null, AccountAddress);
+
+
+
             // Query the service capabilities
             var helloRequest = new HelloRequest();
             var helloResponse = MeshClient.Hello(helloRequest);
@@ -270,7 +281,9 @@ namespace Goedel.Mesh.Client {
 
             SyncProgressUpload();
 
-            // should probably save the updated profile at some point.
+            // Reset the Mesh Client so that further operations make use of the device credential
+            MeshClient = null;
+
             }
 
         /// <summary>

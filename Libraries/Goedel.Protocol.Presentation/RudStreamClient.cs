@@ -22,12 +22,19 @@
 
 
 
+using Goedel.Utilities;
+
 namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// The client side of an RDP transactional stream.
     /// </summary>
     public class RudStreamClient : RudStream, IJpcSession {
         #region // Properties
+
+        ///<inheritdoc/>
+        public virtual string TargetAccount => throw new NYI();
+
+
 
         #endregion
         #region // Constructors

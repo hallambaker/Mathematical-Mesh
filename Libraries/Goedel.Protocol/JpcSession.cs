@@ -87,10 +87,8 @@ namespace Goedel.Protocol {
         ///<summary>The client interface.</summary> 
         public JpcClientInterface JpcClientInterface;
 
-        /// <summary>
-        /// VerifiedAccount instance describing the verified account details. 
-        /// </summary>
-        public virtual IVerifiedAccount VerifiedAccount => throw new NYI();
+        ///<inheritdoc/> 
+        public virtual string TargetAccount { get; init; }
 
         /// <summary>
         /// Default constructor.

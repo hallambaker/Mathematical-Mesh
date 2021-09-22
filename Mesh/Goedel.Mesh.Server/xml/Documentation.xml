@@ -311,6 +311,39 @@
             </summary>
             <returns>The list of container status entries.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Server.AccountContext.Close">
+            <summary>
+            Called just before a caller unlocks the file, Updates the 
+            last access timestamp to allow intelligent cache management.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandleLocked.AccountContext">
+            <summary>
+            The account description. This is only accessible through the account handle.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostInbound(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Post a message to the spool associated with the account. This is the only operation
+            that is supported for a device that is not connected to the account profile.
+            </summary>
+            <param name="dareMessage">The message to post.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostLocal(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Post a message to the spool associated with the account. This is the only operation
+            that is supported for a device that is not connected to the account profile.
+            </summary>
+            <param name="envelope">The message to post.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.StoreAppend(System.String,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope})">
+            <summary>
+            Append the envelopes <paramref name="envelopes"/> to the store named
+            <paramref name="label"/>.
+            </summary>
+            <param name="label">The store to add the envelopes to.</param>
+            <param name="envelopes">The envelopes to append.</param>
+        </member>
         <member name="T:Goedel.Mesh.Server.MeshServerException">
             <summary>
             Generic Mesh Service Error
@@ -988,6 +1021,14 @@
             <param name="hostConfiguration"></param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.VerifyDevice(Goedel.Mesh.ProfileAccount,Goedel.Protocol.IJpcSession)">
+            <summary>
+            
+            </summary>
+            <param name="profileAccount"></param>
+            <param name="jpcSession"></param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Hello(Goedel.Protocol.HelloRequest,Goedel.Protocol.IJpcSession)">
             <summary>
             Respond with the 'hello' version and encoding info. This request does not 
@@ -1001,6 +1042,14 @@
         <member name="M:Goedel.Mesh.Server.PublicMeshService.BindAccount(Goedel.Mesh.BindRequest,Goedel.Protocol.IJpcSession)">
             <summary>
             Server method implementing the transaction CreateAccount.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.UnbindAccount(Goedel.Mesh.UnbindRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Server method implementing the transaction  DeleteAccount.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
@@ -1025,14 +1074,6 @@
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Status(Goedel.Mesh.StatusRequest,Goedel.Protocol.IJpcSession)">
             <summary>
             Server method implementing the transaction Download.
-            </summary>
-            <param name="request">The request object to send to the host.</param>
-            <param name="jpcSession">The connection authentication context.</param>
-            <returns>The response object from the service</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.UnbindAccount(Goedel.Mesh.UnbindRequest,Goedel.Protocol.IJpcSession)">
-            <summary>
-            Server method implementing the transaction  DeleteAccount.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
@@ -1117,13 +1158,21 @@
             <param name="directory">The directory in which all the service data is stored.</param>
             <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountAdd(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedDevice,Goedel.Mesh.Server.AccountEntry,System.Collections.Generic.List{Goedel.Mesh.ContainerUpdate})">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountBind(Goedel.Mesh.Server.AccountEntry,System.Collections.Generic.List{Goedel.Mesh.ContainerUpdate})">
             <summary>
             Add a new account. The account name must be unique.
             </summary>
-            <param name="account">The verified account data.</param>
             <param name="accountEntry">Account data to add.</param>
+            <param name="storeEntries">Updates to be prepopulated to the account stores.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDelete(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedAccount,System.String)">
+            <summary>
+            Update an account record. There must be an existing record and the request must
+            be appropriately authenticated.
+            </summary>
             <param name="jpcSession">The session connection data.</param>
+            <param name="account">The account to be deleted.</param> 
+            <param name="accountAddress">The account address.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Connect(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedDevice,Goedel.Mesh.RequestConnection)">
             <summary>
@@ -1159,7 +1208,7 @@
             <param name="account">The account for which the status is requested..</param>
             <param name="selections">The selection criteria.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountUpdate(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedAccount,System.Collections.Generic.List{Goedel.Mesh.ContainerUpdate},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountUpdate(Goedel.Protocol.IJpcSession,System.Collections.Generic.List{Goedel.Mesh.ContainerUpdate},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{System.String})">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.
@@ -1171,15 +1220,6 @@
             <param name="outbound">Entries to be added to the user's outbound store.</param>
             <param name="local">Entries to be added to the user's local store.</param>
             <param name="accounts">Accounts to which outbound messages are to be sent.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDelete(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedAccount,System.String)">
-            <summary>
-            Update an account record. There must be an existing record and the request must
-            be appropriately authenticated.
-            </summary>
-            <param name="jpcSession">The session connection data.</param>
-            <param name="account">The account to be deleted.</param> 
-            <param name="accountAddress">The account address.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Claim(Goedel.Protocol.IJpcSession,Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
@@ -1208,16 +1248,6 @@
             <param name="operations">The operations requested.</param>
             <returns>Result of the decryption request.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePost(Goedel.Protocol.JpcSession,Goedel.Mesh.MeshVerifiedAccount,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Process an inbound message to an account.
-            </summary>
-            <param name="jpcSession">The session connection data.</param>
-            <param name="account">The verified sending account.</param>
-            <param name="accounts">The account to which the message is directed.</param>
-            <param name="dareMessage">The message.</param>
-            <returns>Identifier of the message posted.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostSelf(Goedel.Protocol.JpcSession,Goedel.Mesh.MeshVerifiedAccount,Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Post message to the local pickup spool.
@@ -1227,7 +1257,7 @@
             <param name="dareMessage">The message.</param>
             <returns>Identifier of the message posted.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostOther(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedAccount,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostOther(Goedel.Protocol.IJpcSession,Goedel.Mesh.Server.AccountHandleLocked,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Post message to a remote user.
             </summary>

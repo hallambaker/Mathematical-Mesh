@@ -345,8 +345,16 @@ namespace Goedel.Mesh.Server {
 
 
 
-        /////<inheritdoc/>
-        //public override JpcSession GetSession() => new JpcSessionHost();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profileAccount"></param>
+        /// <param name="jpcSession"></param>
+        /// <returns></returns>
+        public bool VerifyDevice(ProfileAccount profileAccount, IJpcSession jpcSession) => 
+                profileAccount.AccountEncryptionKey.MatchKeyIdentifier(
+                    jpcSession.Credential.AuthenticationKeyId);
+
 
 
 
@@ -400,13 +408,18 @@ namespace Goedel.Mesh.Server {
 
             try {
 
-                //Screen.WriteLine($"Bind {request.AccountAddress}");
+                // Authenticate and authorize the request before acting on it.
+                var profileAccount = request.EnvelopedProfileAccount.Decode();
+                VerifyDevice(profileAccount, jpcSession).AssertTrue(NotAuthenticated.Throw);
 
-                var verifiedDevice = VerifyDevice(jpcSession);
-
+                // Create the account (not transactional)
                 var accountEntry = new AccountUser(request);
-                MeshPersist.AccountAdd(jpcSession, verifiedDevice, accountEntry,
-                    request.Updates);
+
+                // Perform the transaction.
+                MeshPersist.AccountBind(accountEntry, request.Updates);
+
+                // ToDo: Allow the BindResponse to specify a different host
+                // ToDo: Allow the BindResponse to specify a unique service encryption key for the acount                
                 return new BindResponse();
                 }
             catch (System.Exception exception) {
@@ -414,13 +427,34 @@ namespace Goedel.Mesh.Server {
                 }
             }
 
-
         /// <summary>
-		/// Server method implementing the transaction  Connect.
+        /// Server method implementing the transaction  DeleteAccount.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
-		/// <returns>The response object from the service</returns>
+        /// <returns>The response object from the service</returns>
+        public override UnbindResponse UnbindAccount(
+                UnbindRequest request, IJpcSession jpcSession) {
+
+            try {
+                MeshPersist.AccountDelete(jpcSession, VerifyAccount(jpcSession), request.Account);
+                return new UnbindResponse();
+                }
+            catch (System.Exception exception) {
+                return new UnbindResponse(exception);
+
+                }
+
+            }
+
+
+
+        /// <summary>
+        /// Server method implementing the transaction  Connect.
+        /// </summary>
+        /// <param name="request">The request object to send to the host.</param>
+        /// <param name="jpcSession">The connection authentication context.</param>
+        /// <returns>The response object from the service</returns>
         public override ConnectResponse Connect(
                 ConnectRequest request, IJpcSession jpcSession) {
 
@@ -477,28 +511,6 @@ namespace Goedel.Mesh.Server {
 
 
         /// <summary>
-        /// Server method implementing the transaction  DeleteAccount.
-        /// </summary>
-        /// <param name="request">The request object to send to the host.</param>
-        /// <param name="jpcSession">The connection authentication context.</param>
-        /// <returns>The response object from the service</returns>
-        public override UnbindResponse UnbindAccount(
-                UnbindRequest request, IJpcSession jpcSession) {
-
-            try {
-                MeshPersist.AccountDelete(jpcSession, VerifyAccount(jpcSession), request.Account);
-                return new UnbindResponse();
-                }
-            catch (System.Exception exception) {
-                return new UnbindResponse(exception);
-
-                }
-
-
-            }
-
-
-        /// <summary>
 		/// Server method implementing the transaction  Download.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
@@ -525,8 +537,8 @@ namespace Goedel.Mesh.Server {
         public override TransactResponse Transact(
                 TransactRequest request, IJpcSession jpcSession) {
             try {
-                var account = VerifyAccount(jpcSession);
-                MeshPersist.AccountUpdate(jpcSession, account,
+                //var account = VerifyAccount(jpcSession);
+                MeshPersist.AccountUpdate(jpcSession, 
                         request.Updates, request.Inbound, request.Outbound, request.Local, request.Accounts); ;
                 return new TransactResponse();
                 }

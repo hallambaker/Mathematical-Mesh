@@ -36,6 +36,13 @@ namespace Goedel.Protocol {
         ICredential Credential { get; }
 
         /// <summary>
+        /// The target account this session is attempting to interact with.
+        /// </summary>
+        public string TargetAccount { get;  }
+
+
+
+        /// <summary>
         /// Post the request <paramref name="request"/> 
         /// </summary>
         /// <param name="tag">The transaction identifier.</param>

@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 9/22/2021 12:53:29 AM
+//  This file was automatically generated at 9/22/2021 6:05:31 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -86,6 +86,8 @@ namespace Goedel.Protocol.Presentation {
         Unknown = -1,
         ///<summary>X448</summary>
         X448,
+        ///<summary>X25519</summary>
+        X25519,
         ///<summary>PKIXC</summary>
         PkixX509,
         ///<summary>PKIXO</summary>
@@ -323,6 +325,8 @@ namespace Goedel.Protocol.Presentation {
 
         ///<summary>Jose enumeration tag for ExtensionTags.X448</summary>
         public const string  ExtensionTagsX448Tag = "X448";
+        ///<summary>Jose enumeration tag for ExtensionTags.X25519</summary>
+        public const string  ExtensionTagsX25519Tag = "X25519";
         ///<summary>Jose enumeration tag for ExtensionTags.PkixX509</summary>
         public const string  ExtensionTagsPkixX509Tag = "PkixX509";
         ///<summary>Jose enumeration tag for ExtensionTags.PkixOcsp</summary>
@@ -377,6 +381,7 @@ namespace Goedel.Protocol.Presentation {
         public static ExtensionTags ToExtensionTags (this string text) =>
             text switch {
                 ExtensionTagsX448Tag => ExtensionTags.X448,
+                ExtensionTagsX25519Tag => ExtensionTags.X25519,
                 ExtensionTagsPkixX509Tag => ExtensionTags.PkixX509,
                 ExtensionTagsPkixOcspTag => ExtensionTags.PkixOcsp,
                 ExtensionTagsMeshProfileDeviceTag => ExtensionTags.MeshProfileDevice,
@@ -411,6 +416,7 @@ namespace Goedel.Protocol.Presentation {
         public static string ToLabel (this ExtensionTags data) =>
             data switch {
                 ExtensionTags.X448 => ExtensionTagsX448Tag,
+                ExtensionTags.X25519 => ExtensionTagsX25519Tag,
                 ExtensionTags.PkixX509 => ExtensionTagsPkixX509Tag,
                 ExtensionTags.PkixOcsp => ExtensionTagsPkixOcspTag,
                 ExtensionTags.MeshProfileDevice => ExtensionTagsMeshProfileDeviceTag,

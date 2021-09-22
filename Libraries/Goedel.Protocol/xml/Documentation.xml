@@ -1148,6 +1148,11 @@
             <summary>The verified account bound to this session (used for inbound sessions
             only.)</summary> 
         </member>
+        <member name="P:Goedel.Protocol.IJpcSession.TargetAccount">
+            <summary>
+            The target account this session is attempting to interact with.
+            </summary>
+        </member>
         <member name="M:Goedel.Protocol.IJpcSession.Post(System.String,Goedel.Protocol.JsonObject)">
             <summary>
             Post the request <paramref name="request"/> 
@@ -1310,10 +1315,8 @@
         <member name="F:Goedel.Protocol.JpcSession.JpcClientInterface">
             <summary>The client interface.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.JpcSession.VerifiedAccount">
-            <summary>
-            VerifiedAccount instance describing the verified account details. 
-            </summary>
+        <member name="P:Goedel.Protocol.JpcSession.TargetAccount">
+            <inheritdoc/> 
         </member>
         <member name="M:Goedel.Protocol.JpcSession.#ctor">
             <summary>

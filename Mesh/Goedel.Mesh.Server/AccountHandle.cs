@@ -29,6 +29,8 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 namespace Goedel.Mesh.Server {
 
+
+
     /// <summary>
     /// Provides a means of accessing an account mediated by the permissions specified
     /// in the corresponding AccountEntry. This class and its descendants implement the
@@ -37,7 +39,7 @@ namespace Goedel.Mesh.Server {
     public class AccountHandle : Disposable {
 
 
-
+        IJpcSession JpcSession;
 
 
 
@@ -56,6 +58,17 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="accountEntry">The account entry to create a handle for.</param>
         public AccountHandle(AccountEntry accountEntry) => AccountEntry = accountEntry;
+
+
+        public AccountHandle( IJpcSession jpcSession)  {
+            JpcSession = jpcSession;
+            //AccountEntry = accountEntry;
+            }
+
+
+
+
+
 
         }
 
@@ -99,7 +112,8 @@ namespace Goedel.Mesh.Server {
             }
 
 
-
+        public AccountHandleUnverified(IJpcSession jpcSession) : base(jpcSession) {
+            }
 
         /// <summary>
         /// Return the publication catalog. This is a catalog that the service MUST have
@@ -186,6 +200,10 @@ namespace Goedel.Mesh.Server {
             base.Disposing();
             CatalogAccess?.Dispose();
             }
+
+        public AccountHandleVerified(IJpcSession jpcSession): base (jpcSession) {
+            }
+
 
         /// <summary>
         /// Constructor returning a verified account handle for <paramref name="accountEntry"/>.

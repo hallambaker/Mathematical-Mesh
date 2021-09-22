@@ -92,24 +92,22 @@ namespace Goedel.Mesh.Server {
             }
         #endregion
 
-        #region // Service initialization methods 
 
 
 
 
-        #region // Service dispatch methods 
+
+        #region // Account maintenance AccountBind/
+
+
         /// <summary>
         /// Add a new account. The account name must be unique.
         /// </summary>
-        /// <param name="account">The verified account data.</param>
         /// <param name="accountEntry">Account data to add.</param>
-        /// <param name="jpcSession">The session connection data.</param>
-        public void AccountAdd(IJpcSession jpcSession,
-                        MeshVerifiedDevice account,
+        /// <param name="storeEntries">Updates to be prepopulated to the account stores.</param>
+        public void AccountBind(
                         AccountEntry accountEntry,
-                        List<ContainerUpdate> accessEntries) {
-
-            jpcSession.Future();
+                        List<ContainerUpdate> storeEntries) {
             StoreEntry containerEntry;
 
             var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
@@ -121,22 +119,41 @@ namespace Goedel.Mesh.Server {
                 containerEntry = Container.New(accountEntry) as StoreEntry;
                 }
 
+            // Lock the container entry so that we can initialize it.
             lock (containerEntry) {
                 Directory.CreateDirectory(directory);
-                // prepopulate the access catalog
-                //using var CatalogAccess = new CatalogAccess(directory);
-                if (accessEntries != null) {
-                    foreach (var entry in accessEntries) {
-
+                if (storeEntries != null) {
+                    foreach (var entry in storeEntries) {
                         Store.Append(directory, null, entry.Envelopes, entry.Container);
                         }
                     }
-                // Create the pro-forma containers.
                 new Spool(directory, SpoolInbound.Label).Dispose();
-                //new CatalogAccess(directory).Dispose();
-                //new CatalogPublication(directory).Dispose();
                 }
             }
+
+        /// <summary>
+        /// Update an account record. There must be an existing record and the request must
+        /// be appropriately authenticated.
+        /// </summary>
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The account to be deleted.</param> 
+        /// <param name="accountAddress">The account address.</param>
+        public bool AccountDelete(IJpcSession jpcSession, MeshVerifiedAccount account,
+                string accountAddress) {
+            jpcSession.Future();
+
+
+            lock (Container) {
+                return Container.Delete(accountAddress);
+                }
+            }
+
+
+
+        #endregion
+        #region // Service dispatch methods 
+
+
 
         /// <summary>
         /// Process a connection request.
@@ -292,7 +309,6 @@ namespace Goedel.Mesh.Server {
         /// <param name="accounts">Accounts to which outbound messages are to be sent.</param>
         public void AccountUpdate(
                     IJpcSession jpcSession,
-                    MeshVerifiedAccount account,
                     List<ContainerUpdate> updates,
                     List<Enveloped<Message>> inbound,
                     List<Enveloped<Message>> outbound,
@@ -315,33 +331,33 @@ namespace Goedel.Mesh.Server {
 
             */
             // report the updates to be applied here
+            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
 
-
-            using var accountEntry = GetAccountVerified(account, jpcSession);
-            accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
+            //using var accountEntry = GetAccountVerified(account, jpcSession);
+            //accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
 
 
             if (updates != null) {
                 foreach (var update in updates) {
                     Screen.WriteLine(update.ToString());
-                    accountEntry.StoreAppend(update.Container, update.Envelopes);
+                    accountHandle.StoreAppend(update.Container, update.Envelopes);
                     }
                 }
             if (inbound != null) {
                 foreach (var envelope in inbound) {
-                    accountEntry.PostInbound(envelope);
+                    accountHandle.PostInbound(envelope);
                     }
                 }
             if (local != null) {
                 foreach (var envelope in local) {
-                    accountEntry.PostLocal(envelope);
+                    accountHandle.PostLocal(envelope);
                     }
                 }
 
             // we always do these last
             if (outbound != null) {
                 foreach (var envelope in outbound) {
-                    MessagePostOther(jpcSession, account, accounts, envelope);
+                    MessagePostOther(jpcSession, accountHandle, accounts, envelope);
                     }
                 }
 
@@ -350,22 +366,7 @@ namespace Goedel.Mesh.Server {
 
             }
 
-        /// <summary>
-        /// Update an account record. There must be an existing record and the request must
-        /// be appropriately authenticated.
-        /// </summary>
-        /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The account to be deleted.</param> 
-        /// <param name="accountAddress">The account address.</param>
-        public bool AccountDelete(IJpcSession jpcSession, MeshVerifiedAccount account,
-                string accountAddress) {
-            jpcSession.Future();
 
-
-            lock (Container) {
-                return Container.Delete(accountAddress);
-                }
-            }
 
 
         /// <summary>
@@ -518,19 +519,19 @@ namespace Goedel.Mesh.Server {
 
 
 
-        /// <summary>
-        /// Process an inbound message to an account.
-        /// </summary>
-        /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The verified sending account.</param>
-        /// <param name="accounts">The account to which the message is directed.</param>
-        /// <param name="dareMessage">The message.</param>
-        /// <returns>Identifier of the message posted.</returns>
-        public string MessagePost(
-                    JpcSession jpcSession,
-                    MeshVerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) =>
-            accounts == null ? MessagePostSelf(jpcSession, account, dareMessage) :
-                 MessagePostOther(jpcSession, account, accounts, dareMessage);
+        ///// <summary>
+        ///// Process an inbound message to an account.
+        ///// </summary>
+        ///// <param name="jpcSession">The session connection data.</param>
+        ///// <param name="account">The verified sending account.</param>
+        ///// <param name="accounts">The account to which the message is directed.</param>
+        ///// <param name="dareMessage">The message.</param>
+        ///// <returns>Identifier of the message posted.</returns>
+        //public string MessagePost(
+        //            JpcSession jpcSession,
+        //            MeshVerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) =>
+        //    accounts == null ? MessagePostSelf(jpcSession, account, dareMessage) :
+        //         MessagePostOther(jpcSession, account, accounts, dareMessage);
 
         /// <summary>
         /// Post message to the local pickup spool.
@@ -563,7 +564,7 @@ namespace Goedel.Mesh.Server {
         /// <returns>Identifier of the message posted.</returns>
         public string MessagePostOther(
                 IJpcSession jpcSession,
-                MeshVerifiedAccount senderAccount,
+                AccountHandleLocked senderAccount,
                 List<string> accounts,
                 DareEnvelope dareMessage) {
 
@@ -572,7 +573,7 @@ namespace Goedel.Mesh.Server {
             var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
             identifier.AssertNotNull(InvalidMessageID.Throw);
 
-            var senderService = senderAccount.MeshCredential.Provider;
+            var senderService = senderAccount.Provider;
 
             foreach (var recipient in accounts) {
                 var recipientService = recipient.GetService();
@@ -613,11 +614,11 @@ namespace Goedel.Mesh.Server {
         /// <param name="verifiedAccount">The account for which the data is requested.</param>
         /// <returns></returns>
         AccountHandleVerified GetAccountVerified(MeshVerifiedAccount verifiedAccount, IJpcSession jpcSession) {
-            var accountEntry = GetAccountLocked(verifiedAccount.AccountAddress);
+            var accountEntry = GetAccountLocked(jpcSession.TargetAccount);
 
             accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
-            accountEntry.Verify(verifiedAccount);
-            return new AccountHandleVerified(accountEntry, jpcSession.Credential);
+            accountEntry.Verify(jpcSession);
+            return new AccountHandleVerified(jpcSession);
             }
 
         /// <summary>
@@ -662,10 +663,28 @@ namespace Goedel.Mesh.Server {
                 }
             }
 
+
+        AccountHandleLocked GetAccountHandleLocked(IJpcSession session,
+                AccountPrivilege accountPrivilege) {
+            var accountEntry = GetAccountLocked(session.TargetAccount);
+
+            // Performance: Cache the account context to permit reuse.
+            var accountContext = new AccountContext() {
+                AccountEntry = accountEntry
+                };
+            accountContext.Authenticate(
+                session, accountPrivilege).AssertTrue(NotAuthenticated.Throw);
+
+            return new AccountHandleLocked(session, accountContext) { 
+                AccountPrivilege = accountPrivilege};
+            }
+
+
+
         #endregion 
 
         }
 
-    #endregion
+
 
     }

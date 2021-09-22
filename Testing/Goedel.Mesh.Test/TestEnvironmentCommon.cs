@@ -211,9 +211,13 @@ namespace Goedel.Mesh.Test {
                 string accountAddress) {
 
             JpcSession session = JpcConnection switch {
-                JpcConnection.Direct => new JpcSessionDirect(MeshService, credential),
+                JpcConnection.Direct => new JpcSessionDirect(MeshService, credential) {
+                    TargetAccount = accountAddress
+                    },
                 JpcConnection.Serialized => new TestSession(MeshService, credential,
-                        meshMachineTest.MeshProtocolMessages, meshMachineTest),
+                        meshMachineTest.MeshProtocolMessages, meshMachineTest) {
+                    TargetAccount = accountAddress
+                    },
                 _ => throw new NYI()
                 };
 

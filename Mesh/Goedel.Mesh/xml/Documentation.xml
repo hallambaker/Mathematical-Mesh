@@ -6295,57 +6295,26 @@
         <member name="F:Goedel.Mesh.MeshServerStatus.Timeout">
             <summary>Request timed out</summary>
         </member>
-        <member name="T:Goedel.Mesh.MeshVerifiedAccount">
+        <member name="M:Goedel.Mesh.IVerifyCredential.VerifyDevice">
             <summary>
-            A verified account credential.
+            Verify the device.
             </summary>
+            <returns>The verified device (if successful)</returns>
         </member>
-        <member name="P:Goedel.Mesh.MeshVerifiedAccount.AccountAddress">
-            <summary>The account address</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.MeshVerifiedAccount.#ctor(Goedel.Mesh.MeshCredential)">
+        <member name="M:Goedel.Mesh.IVerifyCredential.VerifyAccount">
             <summary>
-            Construct an instance from the credential <paramref name="meshCredential"/>
+            Verify the account
             </summary>
-            <param name="meshCredential">The credential from which the instance is to be created.</param>
-        </member>
-        <member name="M:Goedel.Mesh.MeshVerifiedAccount.Validate(Goedel.Mesh.ProfileUser)">
-            <summary>
-            Validate the profile <paramref name="profile"/> under this credential
-            </summary>
-            <param name="profile">The profile to validate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.MeshVerifiedAccount.Validate(Goedel.Mesh.ProfileGroup)">
-            <summary>
-            Validate the profile <paramref name="profile"/> under this credential
-            </summary>
-            <param name="profile">The profile to validate.</param>
-        </member>
-        <member name="T:Goedel.Mesh.MeshVerifiedDevice">
-            <summary>
-            A verified device credential.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.MeshVerifiedDevice.Provider">
-            <summary>The credential provider.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.MeshVerifiedDevice.CredentialValidation">
-            <summary>The validation data??</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.MeshVerifiedDevice.MeshCredential">
-            <summary>Return the underlying credential.</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.MeshVerifiedDevice.#ctor(Goedel.Mesh.MeshCredential)">
-            <summary>
-            Construct an instance from the credential <paramref name="meshCredential"/>
-            </summary>
-            <param name="meshCredential">The credential from which the instance is to be created.</param>
+            <returns>The verified account (if successful)</returns>
         </member>
         <member name="T:Goedel.Mesh.MeshCredential">
             <summary>
             JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
             assertion).
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshCredential.AuthenticationPublic">
+            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="P:Goedel.Mesh.MeshCredential.Account">
             <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
@@ -6360,9 +6329,6 @@
             <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="P:Goedel.Mesh.MeshCredential.AuthenticationPrivate">
-            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
-        </member>
-        <member name="P:Goedel.Mesh.MeshCredential.AuthenticationPublic">
             <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>
         <member name="P:Goedel.Mesh.MeshCredential.ProfileDevice">
@@ -6407,9 +6373,6 @@
             <summary>
             Wrapper for a private credential.
             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.MeshCredentialPrivate.Tag">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.MeshCredentialPrivate.Value">
             <inheritdoc/>
@@ -7750,6 +7713,57 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.MeshVerifiedCredential">
+            <summary>
+            A verified device credential.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.MeshVerifiedDevice">
+            <summary>
+            A verified device credential.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshVerifiedDevice.Provider">
+            <summary>The credential provider.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.MeshVerifiedDevice.CredentialValidation">
+            <summary>The validation data??</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.MeshVerifiedDevice.MeshCredential">
+            <summary>Return the underlying credential.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.MeshVerifiedDevice.#ctor(Goedel.Mesh.MeshCredential)">
+            <summary>
+            Construct an instance from the credential <paramref name="meshCredential"/>
+            </summary>
+            <param name="meshCredential">The credential from which the instance is to be created.</param>
+        </member>
+        <member name="T:Goedel.Mesh.MeshVerifiedAccount">
+            <summary>
+            A verified account credential.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshVerifiedAccount.AccountAddress">
+            <summary>The account address</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.MeshVerifiedAccount.#ctor(Goedel.Mesh.MeshCredential)">
+            <summary>
+            Construct an instance from the credential <paramref name="meshCredential"/>
+            </summary>
+            <param name="meshCredential">The credential from which the instance is to be created.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshVerifiedAccount.Validate(Goedel.Mesh.ProfileUser)">
+            <summary>
+            Validate the profile <paramref name="profile"/> under this credential
+            </summary>
+            <param name="profile">The profile to validate.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshVerifiedAccount.Validate(Goedel.Mesh.ProfileGroup)">
+            <summary>
+            Validate the profile <paramref name="profile"/> under this credential
+            </summary>
+            <param name="profile">The profile to validate.</param>
         </member>
         <member name="T:Goedel.Mesh.MessageClaim">
             <summary>

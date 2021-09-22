@@ -420,6 +420,9 @@
         <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsX448Tag">
             <summary>Jose enumeration tag for ExtensionTags.X448</summary>
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsX25519Tag">
+            <summary>Jose enumeration tag for ExtensionTags.X25519</summary>
+        </member>
         <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsPkixX509Tag">
             <summary>Jose enumeration tag for ExtensionTags.PkixX509</summary>
         </member>
@@ -644,12 +647,6 @@
             Credential with private key affordances.
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Presentation.ICredentialPrivate.Tag">
-            <summary><see cref="T:Goedel.Protocol.Presentation.PacketExtension"/> tag for credential type.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.ICredentialPrivate.Value">
-            <summary><see cref="T:Goedel.Protocol.Presentation.PacketExtension"/> binary data.</summary> 
-        </member>
         <member name="M:Goedel.Protocol.Presentation.ICredentialPrivate.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
             Extract the first recognized credential from the exension list 
@@ -693,6 +690,46 @@
             <param name="keyId">The key identifier.</param>
             <param name="ephemeral">Ephemeral data specifying a public key </param>
             <returns>The ephemeral private key and credential public key.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.KeyCredentialPublic">
+            <summary>
+            Connection credentialed by means of raw key alone.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.KeyCredentialPublic.AuthenticationPublic">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.KeyCredentialPublic.Account">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPublic.#ctor(Goedel.Protocol.Presentation.PacketExtension)">
+            <summary>
+            Create a new credential from a raw key specified in <paramref name="packetExtension"/>
+            </summary>
+            <param name="packetExtension">The packet extension specifying the key</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPublic.#ctor(Goedel.Cryptography.KeyPairAdvanced)">
+            <summary>
+            Create a new instance with the public key <paramref name="authenticationPublic"/>
+            </summary>
+            <param name="authenticationPublic">The public key.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPublic.SelectKey">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPublic.SelectKey(System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced},System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.KeyCredentialPrivate">
+            <summary>
+            Private key credential specifying only a raw key.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.#ctor(Goedel.Cryptography.KeyPairAdvanced)">
+            <summary>
+            Create a new instance with the private key <paramref name="authenticationPrivate"/>
+            </summary>
+            <param name="authenticationPrivate">The private key.</param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PortId">
             <summary>
@@ -1340,6 +1377,9 @@
         <member name="F:Goedel.Protocol.Presentation.ExtensionTags.X448">
             <summary>X448</summary>
         </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.X25519">
+            <summary>X25519</summary>
+        </member>
         <member name="F:Goedel.Protocol.Presentation.ExtensionTags.PkixX509">
             <summary>PKIXC</summary>
         </member>
@@ -1858,6 +1898,9 @@
             <summary>
             The client side of an RDP transactional stream.
             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.RudStreamClient.TargetAccount">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStreamClient.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,Goedel.Protocol.Presentation.RudConnection)">
             <summary>

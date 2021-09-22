@@ -78,11 +78,6 @@ namespace Goedel.Protocol.Presentation {
     public interface ICredentialPrivate : ICredentialPublic {
         #region // Properties
 
-        ///<summary><see cref="PacketExtension"/> tag for credential type.</summary> 
-        abstract string Tag { get; }
-
-        ///<summary><see cref="PacketExtension"/> binary data.</summary> 
-        abstract byte[] Value { get; }
 
         #endregion
         #region // Methods 

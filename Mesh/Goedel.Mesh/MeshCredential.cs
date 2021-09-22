@@ -32,64 +32,55 @@ using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
-    /// <summary>
-    /// A verified account credential.
-    /// </summary>
-    public class MeshVerifiedAccount : MeshVerifiedDevice {
 
-        ///<summary>The account address</summary> 
-        public string AccountAddress => MeshCredential.Account;
+
+    public interface IVerifyCredential {
 
         /// <summary>
-        /// Construct an instance from the credential <paramref name="meshCredential"/>
+        /// Verify the device.
         /// </summary>
-        /// <param name="meshCredential">The credential from which the instance is to be created.</param>
-        public MeshVerifiedAccount(MeshCredential meshCredential) : base(meshCredential) {
-            }
+        /// <returns>The verified device (if successful)</returns>
+        public MeshVerifiedDevice VerifyDevice();
 
         /// <summary>
-        /// Validate the profile <paramref name="profile"/> under this credential
+        /// Verify the account
         /// </summary>
-        /// <param name="profile">The profile to validate.</param>
-        public virtual void Validate(ProfileUser profile) => MeshCredential.ConnectionDevice.Validate(profile);
-
-        /// <summary>
-        /// Validate the profile <paramref name="profile"/> under this credential
-        /// </summary>
-        /// <param name="profile">The profile to validate.</param>
-        public virtual void Validate(ProfileGroup profile) {
-            //MeshCredential.ConnectionDevice.Validate(profile);
-
-
-            // stub this out for now.
-
-            }
-
+        /// <returns>The verified account (if successful)</returns>
+        public MeshVerifiedAccount VerifyAccount();
 
         }
 
-    /// <summary>
-    /// A verified device credential.
-    /// </summary>
-    public class MeshVerifiedDevice {
 
-        ///<summary>The credential provider.</summary> 
-        public string Provider => MeshCredential.Provider;
 
-        ///<summary>The validation data??</summary> 
-        public CredentialValidation CredentialValidation => MeshCredential.CredentialValidation;
 
-        ///<summary>Return the underlying credential.</summary> 
-        public MeshCredential MeshCredential { get; }
 
-        /// <summary>
-        /// Construct an instance from the credential <paramref name="meshCredential"/>
-        /// </summary>
-        /// <param name="meshCredential">The credential from which the instance is to be created.</param>
-        public MeshVerifiedDevice(MeshCredential meshCredential) =>
-            MeshCredential = meshCredential;
 
-        }
+
+    //public class MeshKeyCredentialPublic : KeyCredentialPublic, IVerifyCredential {
+
+
+    //    public override KeyCredentialPublic(KeyPairAdvanced authenticationPublic)
+    //            => new KeyCredentialPublic(MeshKeyCredentialPublic);
+
+
+
+    //    /// <summary>
+    //    /// Create a new credential from a raw key specified in <paramref name="packetExtension"/>
+    //    /// </summary>
+    //    /// <param name="packetExtension">The packet extension specifying the key</param>
+    //    public MeshKeyCredentialPublic(PacketExtension packetExtension) : base (packetExtension) {
+    //        throw new NYI();
+    //        }
+
+
+
+
+
+    //    }
+
+
+    //public class MeshKeyCredentialPrivate : KeyCredentialPrivate {
+    //    }
 
 
     /// <summary>
@@ -97,8 +88,12 @@ namespace Goedel.Mesh {
     /// assertion).
     /// </summary>
 
-    public class MeshCredential : ICredentialPublic {
+    public class MeshCredential : ICredentialPublic, IVerifyCredential {
         #region // Properties
+
+        ///<inheritdoc cref="ICredential"/>
+        public KeyPairAdvanced AuthenticationPublic { get; }
+
         ///<inheritdoc cref="ICredential"/>
         public string Account { get; private set; }
 
@@ -114,8 +109,8 @@ namespace Goedel.Mesh {
         ///<inheritdoc cref="ICredential"/>
         public KeyPairAdvanced AuthenticationPrivate { get; }
 
-        ///<inheritdoc cref="ICredential"/>
-        public KeyPairAdvanced AuthenticationPublic { get; }
+
+
 
         ///<summary>The device profile</summary> 
         public ProfileDevice ProfileDevice { get; }
@@ -211,8 +206,7 @@ namespace Goedel.Mesh {
     public class MeshCredentialPrivate : MeshCredential, ICredentialPrivate {
         #region // Properties
 
-        ///<inheritdoc/>
-        public string Tag { get; }
+
 
         ///<inheritdoc/>
         public byte[] Value { get; }
@@ -280,6 +274,12 @@ namespace Goedel.Mesh {
 
             foreach (var extension in extensions) {
                 switch (extension.Tag) {
+                    case Constants.ExtensionTagsX25519Tag:
+                    case Constants.ExtensionTagsX448Tag: {
+                        return new KeyCredentialPublic(extension);
+                        }
+
+
                     case Constants.ExtensionTagsMeshProfileDeviceTag: {
                         // convert the enveloped ConnectionDevice
                         var envelope = DareEnvelope.FromJSON(extension.Value, false);
