@@ -230,6 +230,8 @@ namespace Goedel.Mesh.Client {
         /// personal mesh. This method does not support transfer of the Mesh Service.
         /// </summary>
         /// <param name="accountAddress">The account address</param>
+        /// <param name="transactUser">Transaction containing entries to be prepopulated
+        /// to the account stores.</param>
         public void SetService(
                 string accountAddress,
                 TransactUser transactUser) {
@@ -777,20 +779,18 @@ namespace Goedel.Mesh.Client {
         /// and writes the <see cref="DevicePreconfigurationPrivate"/> data to a file in the directory
         /// specified by <paramref name="path"/>.
         /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="profileDevice"></param>
-        /// <param name="connectUri"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="filename">File the private configuration was to.</param>
+        /// <param name="profileDevice">A pregenerated device profile.</param>
+        /// <param name="connectUri">The connection URI from which the configuration is to be claimed.</param>
+        /// <param name="path">Path to write the configuration file to.</param>
+        /// <param name="bits">Work factor of the connection secret in bits.</param>
+        /// <returns>The public and private configuration instances.</returns>
         public (DevicePreconfigurationPublic, DevicePreconfigurationPrivate) Preconfigure(
                     out string filename,
                     out ProfileDevice profileDevice,
                     out string connectUri,
                     string path = "",
                     int bits =120) {
-
-
-            // need to refactor this to return the DevicePreconfigurationPublic/DevicePreconfigurationPrivate
 
             CreateDeviceEarl(
                     out var secretSeed,
@@ -838,6 +838,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="algorithmSign">The signature algorithm</param>
         /// <param name="algorithmAuthenticate">The signature algorithm</param>
         /// <param name="secret">The master secret.</param>
+        /// <param name="bitsSecret">Work factor of the master secret in bits.</param>
         /// <param name="bitsPin">The size of secret to generate in bits/</param>
         /// <returns>Response from the server.</returns>
         public bool CreateDeviceEarl(

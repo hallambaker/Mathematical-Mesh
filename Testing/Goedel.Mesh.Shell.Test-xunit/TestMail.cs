@@ -32,7 +32,7 @@ namespace Goedel.XUnit {
 
             var mailaddress = "alice@example.net";
             var mailinbound1 = "pop://alice@pop3.example.net";
-            var mailinbound2 = "imap://alice@imap.example.net";
+            //var mailinbound2 = "imap://alice@imap.example.net";
             var mailoutbound = "submit://alice@submit.example.net";
 
             CreateAlice(out var device1, out var device2);

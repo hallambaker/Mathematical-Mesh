@@ -40,6 +40,7 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The verified account.</summary> 
         public override IVerifiedAccount VerifiedAccount { get; }
 
+        ///<summary>The account the stream claims to be operating under.</summary> 
         public string TargetAccount => throw new System.NotImplementedException();
 
         #region // Constructors

@@ -136,7 +136,6 @@ namespace Goedel.Mesh.Server {
         /// be appropriately authenticated.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The account to be deleted.</param> 
         /// <param name="accountAddress">The account address.</param>
         public bool AccountUnbind(IJpcSession jpcSession, string accountAddress) {
 
@@ -158,7 +157,6 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="requestConnection">TThe message connection request.</param>
-        /// <param name="account">The verified account data.</param>
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(IJpcSession jpcSession,
                         RequestConnection requestConnection) {
@@ -206,7 +204,6 @@ namespace Goedel.Mesh.Server {
         /// Complete an account connection request.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The account for which the status is requested..</param>
         /// <param name="completeRequest">The completion request.</param>
         public CompleteResponse AccountComplete(IJpcSession jpcSession,
                     CompleteRequest completeRequest) {
@@ -237,7 +234,6 @@ namespace Goedel.Mesh.Server {
         /// be appropriately authenticated.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The account for which the status is requested..</param>
         public StatusResponse AccountStatus(IJpcSession jpcSession) {
 
             using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
@@ -262,15 +258,14 @@ namespace Goedel.Mesh.Server {
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
-        /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The account for which the status is requested..</param>
+        /// <param name="session">The session connection data.</param>
         /// <param name="selections">The selection criteria.</param>
         public List<ContainerUpdate> AccountDownload(
-                    IJpcSession jpcSession,
+                    IJpcSession session,
 
                     List<ConstraintsSelect> selections) {
             
-            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
+            using var accountHandle = GetAccountHandleLocked(session, AccountPrivilege.Connected);
 
             //using var accountEntry = GetAccountVerified(account, jpcSession);
             var updates = new List<ContainerUpdate>();
@@ -581,7 +576,7 @@ namespace Goedel.Mesh.Server {
                     IJpcSession jpcSession,
                     string targetAccount,
                     string id) {
-            using var accountEntry = GetAccountHandleLocked(targetAccount);
+            using var accountEntry = GetAccountHandleLocked(jpcSession, AccountPrivilege.Post);
             var message = accountEntry.GetLocal(id);
 
             // return the message if found (otherwise null)

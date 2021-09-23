@@ -37,13 +37,16 @@ namespace Goedel.Protocol.Presentation {
         ///<inheritdoc/>
         public KeyPairAdvanced AuthenticationPublic { get; private set; }
 
-        ///<inheritdoc/>
+        ///<summary>The account being claimed (unverified).</summary> 
         public string Account { get; init ; }
 
-        public string Provider => throw new NotImplementedException();
+        ///<summary>The credential provider (always null)</summary> 
+        public string Provider => null;
 
+        ///<summary>The authentication key identifier.</summary> 
         public string AuthenticationKeyId => AuthenticationPublic.KeyIdentifier;
 
+        ///<summary>The credential validation report (always fails as no provider)</summary> 
         public CredentialValidation CredentialValidation => throw new NotImplementedException();
         #endregion
         #region // Constructors
@@ -111,18 +114,23 @@ namespace Goedel.Protocol.Presentation {
             }
 
         #endregion
-
         #region // Implement Interface: ICredentialPrivate
+
+        ///<inheritdoc/>
         public void AddCredentials(List<PacketExtension> extensions) => throw new NotImplementedException();
+        
+        ///<inheritdoc/>
         public void AddEphemerals(List<PacketExtension> extensions, ref List<KeyPairAdvanced> ephmeralsOffered) => throw new NotImplementedException();
+        
+        ///<inheritdoc/>
         public ICredentialPublic GetCredentials(List<PacketExtension> extensions) => throw new NotImplementedException();
+        
+        ///<inheritdoc/>
         public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) => throw new NotImplementedException();
+        
+        ///<inheritdoc/>
         public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) => throw new NotImplementedException();
 
-
         #endregion
-
-
-
         }
     }

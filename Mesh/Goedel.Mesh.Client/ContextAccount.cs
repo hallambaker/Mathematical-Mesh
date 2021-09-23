@@ -217,6 +217,7 @@ namespace Goedel.Mesh.Client {
         /// to authenticate and authorize the action.</param>
         /// <param name="register">If true, register the pin at the service.</param>
         /// <param name="encryptKey">The encryption key to be used to encrypt the PIN registration.</param>
+        /// <param name="roles">The authorized roles.</param>
         /// <returns>A <see cref="MessagePin"/> instance describing the created parameters.</returns>
         public MessagePin GetPIN(string action, bool automatic = true,
                             int bits = 120, long validity = MeshConstants.DayInTicks,

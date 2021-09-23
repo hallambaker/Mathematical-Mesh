@@ -32,18 +32,11 @@ namespace Goedel.Protocol.Presentation {
     public interface ICredentialPublic : ICredential {
         #region // Properties
 
-
-
-
         ///<summary>The public authentication key.</summary> 
         public KeyPairAdvanced AuthenticationPublic { get; }
 
         #endregion
         #region // Methods 
-
-
-
-
 
 
         /// <summary>

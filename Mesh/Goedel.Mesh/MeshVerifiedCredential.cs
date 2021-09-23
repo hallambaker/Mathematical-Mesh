@@ -31,18 +31,6 @@ namespace Goedel.Mesh {
     public class MeshVerifiedCredential {
         IJpcSession JpcSession;
 
-
-        public MeshVerifiedCredential() {
-            }
-
-
-        public MeshVerifiedCredential(IJpcSession jpcSession) {
-            JpcSession = jpcSession;
-            }
-
-
-
-
         }
 
 
