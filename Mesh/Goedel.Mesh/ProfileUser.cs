@@ -42,6 +42,13 @@ namespace Goedel.Mesh {
                     CacheValue(out envelopedProfileAccount);
         Enveloped<ProfileAccount> envelopedProfileAccount;
 
+
+        ///<summary>The account encryption key</summary> 
+        public KeyPair AccountAuthenticationKey => accountAuthenticationKey ??
+            AccountAuthentication.GetKeyPair().CacheValue(out accountAuthenticationKey);
+        KeyPair accountAuthenticationKey;
+
+
         ///<summary>The account encryption key</summary> 
         public KeyPair AccountEncryptionKey => accountEncryptionKey ??
             AccountEncryption.GetKeyPair().CacheValue(out accountEncryptionKey);

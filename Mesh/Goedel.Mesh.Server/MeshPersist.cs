@@ -161,7 +161,6 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The verified account data.</param>
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(IJpcSession jpcSession,
-                        MeshVerifiedDevice account,
                         RequestConnection requestConnection) {
             jpcSession.Future();
 
@@ -210,7 +209,6 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The account for which the status is requested..</param>
         /// <param name="completeRequest">The completion request.</param>
         public CompleteResponse AccountComplete(IJpcSession jpcSession,
-                    MeshVerifiedDevice account,
                     CompleteRequest completeRequest) {
 
             //using var accountHandle = GetAccountUnverified(completeRequest.AccountAddress);
@@ -240,7 +238,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account for which the status is requested..</param>
-        public StatusResponse AccountStatus(IJpcSession jpcSession, MeshVerifiedAccount account) {
+        public StatusResponse AccountStatus(IJpcSession jpcSession) {
 
             using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
             //using var accountHandle = GetAccountVerified(account, jpcSession);
@@ -269,7 +267,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="selections">The selection criteria.</param>
         public List<ContainerUpdate> AccountDownload(
                     IJpcSession jpcSession,
-                    MeshVerifiedAccount account,
+
                     List<ConstraintsSelect> selections) {
             
             using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);

@@ -31,14 +31,20 @@ using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 namespace Goedel.Mesh.Server {
 
+    /// <summary>
+    /// Account privileges
+    /// </summary>
     [Flags]
     public enum AccountPrivilege {
-        Unbind = 0b1,
-        Connected = 0b10,
-        Pending = 0b100,
-        Device = 0b1000,
-        Post = 0b10_000,
-        Local = 0b10_0000
+        Unbind      = 0b0000_0001,
+        Connected   = 0b0000_0010,
+        Pending     = 0b0000_0100,
+        Device      = 0b0000_1000,
+        Post        = 0b0001_0000,
+        Local       = 0b0010_0000,
+
+        ///<summary>All privileges.</summary> 
+        All         = 0xFFF
         }
 
     public class AccountContext {
@@ -71,8 +77,8 @@ namespace Goedel.Mesh.Server {
                     IJpcSession session, 
                     AccountPrivilege accountPrivilege) {
             switch (session.Credential) {
-                case KeyCredentialPublic: {
-                    break;
+                case KeyCredentialPublic keyCredentialPublic: {
+                    return Authenticate(keyCredentialPublic, accountPrivilege);
                     }
                 }
             return false;
@@ -82,6 +88,12 @@ namespace Goedel.Mesh.Server {
                     KeyCredentialPublic credential,
                     AccountPrivilege accountPrivilege) {
 
+            var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
+
+            // To operate under the account authentication key, the request must be
+            // authenticated under the AccountAuthenticationKey
+            (profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
+                    credential.AuthenticationKeyId)).AssertTrue (NotAuthorized.Throw);
 
             return true;
             }

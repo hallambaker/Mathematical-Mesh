@@ -358,12 +358,12 @@ namespace Goedel.Mesh.Server {
 
 
 
-        private MeshVerifiedDevice VerifyDevice(IJpcSession jpcSession) =>
-            (jpcSession.Credential as MeshCredential).VerifyDevice();
+        //private MeshVerifiedDevice VerifyDevice(IJpcSession jpcSession) =>
+        //    (jpcSession.Credential as MeshCredential).VerifyDevice();
 
 
-        private MeshVerifiedAccount VerifyAccount(IJpcSession jpcSession) =>
-            (jpcSession.Credential as MeshCredential).VerifyAccount();
+        //private MeshVerifiedAccount VerifyAccount(IJpcSession jpcSession) =>
+        //    (jpcSession.Credential as MeshCredential).VerifyAccount();
 
 
         /// <summary>
@@ -462,7 +462,7 @@ namespace Goedel.Mesh.Server {
             var requestConnection = request.EnvelopedRequestConnection.Decode();
 
             try {
-                var connectResponse = MeshPersist.Connect(jpcSession, VerifyDevice(jpcSession), requestConnection);
+                var connectResponse = MeshPersist.Connect(jpcSession,  requestConnection);
                 return connectResponse;
                 }
             catch (System.Exception exception) {
@@ -482,7 +482,7 @@ namespace Goedel.Mesh.Server {
         public override CompleteResponse Complete(
                 CompleteRequest request, IJpcSession jpcSession) {
             try {
-                return MeshPersist.AccountComplete(jpcSession, VerifyDevice(jpcSession), request);
+                return MeshPersist.AccountComplete(jpcSession, request);
                 }
             catch (System.Exception exception) {
                 return new CompleteResponse(exception);
@@ -500,7 +500,7 @@ namespace Goedel.Mesh.Server {
         public override StatusResponse Status(
                 StatusRequest request, IJpcSession jpcSession) {
             try {
-                return MeshPersist.AccountStatus(jpcSession, VerifyAccount(jpcSession));
+                return MeshPersist.AccountStatus(jpcSession);
                 }
             catch (System.Exception exception) {
                 return new StatusResponse(exception);
@@ -519,7 +519,7 @@ namespace Goedel.Mesh.Server {
         public override DownloadResponse Download(
                 DownloadRequest request, IJpcSession jpcSession) {
             try {
-                var Updates = MeshPersist.AccountDownload(jpcSession, VerifyAccount(jpcSession), request.Select);
+                var Updates = MeshPersist.AccountDownload(jpcSession, request.Select);
                 return new DownloadResponse() { Updates = Updates };
                 }
             catch (System.Exception exception) {
