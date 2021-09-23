@@ -180,16 +180,99 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.Server.AccountPrivilege">
+            <summary>
+            Account privileges
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountPrivilege.Unbind">
+            <summary>Unbind the account from the service permitting it to be deleted.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountPrivilege.Connected">
+            <summary>Operations requiring a connection to the account</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountPrivilege.Pending">
+            <summary>Device in a pending state, authenticated by key alone.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountPrivilege.Device">
+            <summary>???</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountPrivilege.Post">
+            <summary>???</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountPrivilege.Local">
+            <summary>???</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountPrivilege.All">
+            <summary>All privileges.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.Server.AccountContext">
+            <summary>
+            Wrapper for the AccountEntry permitting the context in which the account entry
+            is used to be cached and shared between operations.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.AccountEntry">
+            <summary>The account entry from the host store.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountContext.#ctor">
+            <summary>
+            Return a new instance.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountContext.Close">
             <summary>
             Called just before a caller unlocks the file, Updates the 
             last access timestamp to allow intelligent cache management.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Server.AccountContext.Authenticate(Goedel.Protocol.IJpcSession,Goedel.Mesh.Server.AccountPrivilege)">
+            <summary>
+            Verify that the request <paramref name="session"/> has the 
+            privileges <paramref name="accountPrivilege"/>.
+            </summary>
+            <param name="session">The request session.</param>
+            <param name="accountPrivilege">The privileges required to perform the operation.</param>
+            <returns>True if all the privileges are granted, otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Server.AccountHandleLocked">
+            <summary>
+            Account handle, implements the security monitor mediating all access to 
+            account stores.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountHandleLocked.Provider">
+            <summary>The service provider.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandleLocked.AccountPrivilege">
+            <summary>The privilege granted to the client.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountHandleLocked.AccountContext">
             <summary>
             The account description. This is only accessible through the account handle.
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandleLocked.AccountAddress">
+            <summary>Convenience accessor for the account address</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandleLocked.AccountUser">
+            <summary>The account entry in the service catalog.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandleLocked.ProfileAccount">
+            <summary>The account profile</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandleLocked.Directory">
+            <summary>The directory in which all the account data is stored.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.#ctor(Goedel.Mesh.Server.AccountContext)">
+            <summary>
+            Return an account handle for the account context <paramref name="accountContext"/>.
+            </summary>
+            <param name="accountContext">The account context.</param>
+            
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.GetStatusStore(System.String)">
             <summary>
@@ -1084,7 +1167,7 @@
             <param name="account">The account to be deleted.</param> 
             <param name="accountAddress">The account address.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.Connect(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedDevice,Goedel.Mesh.RequestConnection)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.Connect(Goedel.Protocol.IJpcSession,Goedel.Mesh.RequestConnection)">
             <summary>
             Process a connection request.
             </summary>
@@ -1093,7 +1176,7 @@
             <param name="account">The verified account data.</param>
             <returns>The connection response.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountComplete(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedDevice,Goedel.Mesh.CompleteRequest)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountComplete(Goedel.Protocol.IJpcSession,Goedel.Mesh.CompleteRequest)">
             <summary>
             Complete an account connection request.
             </summary>
@@ -1101,7 +1184,7 @@
             <param name="account">The account for which the status is requested..</param>
             <param name="completeRequest">The completion request.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedAccount)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession)">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.
@@ -1109,7 +1192,7 @@
             <param name="jpcSession">The session connection data.</param>
             <param name="account">The account for which the status is requested..</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDownload(Goedel.Protocol.IJpcSession,Goedel.Mesh.MeshVerifiedAccount,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect})">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDownload(Goedel.Protocol.IJpcSession,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect})">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.

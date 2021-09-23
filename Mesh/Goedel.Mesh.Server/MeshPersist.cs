@@ -654,7 +654,7 @@ namespace Goedel.Mesh.Server {
                 AccountEntry = accountEntry
                 };
 
-            return new AccountHandleLocked(null, accountContext) {
+            return new AccountHandleLocked(accountContext) {
                 AccountPrivilege = AccountPrivilege.Post
                 };
             }
@@ -671,7 +671,7 @@ namespace Goedel.Mesh.Server {
             accountContext.Authenticate(
                 session, accountPrivilege).AssertTrue(NotAuthenticated.Throw);
 
-            return new AccountHandleLocked(session, accountContext) { 
+            return new AccountHandleLocked(accountContext) { 
                 AccountPrivilege = accountPrivilege};
             }
 

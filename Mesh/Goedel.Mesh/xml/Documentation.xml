@@ -8611,6 +8611,9 @@
         <member name="P:Goedel.Mesh.ProfileAccount.EnvelopedProfileAccount">
             <summary>Typed enveloped data</summary> 
         </member>
+        <member name="P:Goedel.Mesh.ProfileAccount.AccountAuthenticationKey">
+            <summary>The account encryption key</summary> 
+        </member>
         <member name="P:Goedel.Mesh.ProfileAccount.AccountEncryptionKey">
             <summary>The account encryption key</summary> 
         </member>

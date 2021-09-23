@@ -36,30 +36,53 @@ namespace Goedel.Mesh.Server {
     /// </summary>
     [Flags]
     public enum AccountPrivilege {
+        ///<summary>Unbind the account from the service permitting it to be deleted.</summary> 
         Unbind      = 0b0000_0001,
+        ///<summary>Operations requiring a connection to the account</summary> 
         Connected   = 0b0000_0010,
+        ///<summary>Device in a pending state, authenticated by key alone.</summary> 
         Pending     = 0b0000_0100,
+        ///<summary>???</summary> 
         Device      = 0b0000_1000,
+        ///<summary>???</summary> 
         Post        = 0b0001_0000,
+        ///<summary>???</summary> 
         Local       = 0b0010_0000,
 
         ///<summary>All privileges.</summary> 
         All         = 0xFFF
         }
 
+    /// <summary>
+    /// Wrapper for the AccountEntry permitting the context in which the account entry
+    /// is used to be cached and shared between operations.
+    /// </summary>
     public class AccountContext {
 
-        DateTime Created;
-        DateTime Accessed;
+        #region // Public and private properties
+
+        ///<summary>Timestamp of context creation.</summary> 
+        public DateTime Created { get; }
+
+        ///<summary>Timestamp of context last accessed</summary> 
+        public DateTime Accessed { get; private set; }
+
+        ///<summary>The account entry from the host store.</summary> 
         public AccountEntry AccountEntry { get; init; }
 
-        public Dictionary <string, Store> DictionaryStores = new ();
 
+        Dictionary <string, Store> DictionaryStores = new ();
 
-        public AccountContext() {
-            Created = Accessed = DateTime.Now;
-            }
+        #endregion
+        #region // Constructors
 
+        /// <summary>
+        /// Return a new instance.
+        /// </summary>
+        public AccountContext() => Created = Accessed = DateTime.Now;
+
+        #endregion
+        #region // Methods
         Store GetStore() {
             throw new NYI();
             }
@@ -72,7 +95,13 @@ namespace Goedel.Mesh.Server {
             Accessed = DateTime.Now;
             }
 
-
+        /// <summary>
+        /// Verify that the request <paramref name="session"/> has the 
+        /// privileges <paramref name="accountPrivilege"/>.
+        /// </summary>
+        /// <param name="session">The request session.</param>
+        /// <param name="accountPrivilege">The privileges required to perform the operation.</param>
+        /// <returns>True if all the privileges are granted, otherwise false.</returns>
         public bool Authenticate(
                     IJpcSession session, 
                     AccountPrivilege accountPrivilege) {
@@ -84,7 +113,7 @@ namespace Goedel.Mesh.Server {
             return false;
             }
 
-        public bool Authenticate(
+        bool Authenticate(
                     KeyCredentialPublic credential,
                     AccountPrivilege accountPrivilege) {
 
@@ -98,16 +127,21 @@ namespace Goedel.Mesh.Server {
             return true;
             }
 
+        #endregion
         }
 
 
+    /// <summary>
+    /// Account handle, implements the security monitor mediating all access to 
+    /// account stores.
+    /// </summary>
     public class AccountHandleLocked : Disposable {
 
-
-
+        #region // Public and private properties
+        ///<summary>The service provider.</summary> 
         public string Provider;
 
-
+        ///<summary>The privilege granted to the client.</summary> 
         public AccountPrivilege AccountPrivilege { get; init; }
 
         /// <summary>
@@ -115,28 +149,41 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         protected AccountContext AccountContext { get; }
 
+
+        ///<summary>Convenience accessor for the account address</summary> 
         public string AccountAddress => AccountContext.AccountEntry.AccountAddress;
 
-
+        ///<summary>The account entry in the service catalog.</summary> 
         protected AccountUser AccountUser => AccountContext.AccountEntry as AccountUser;
 
+        ///<summary>The account profile</summary> 
         public ProfileAccount ProfileAccount => AccountUser.GetProfileAccount();
 
-
+        ///<summary>The directory in which all the account data is stored.</summary> 
         string Directory => AccountContext.AccountEntry.Directory;
 
+        #endregion
+        #region // Disposal
+
+        ///<inheritdoc/>
         protected override void Disposing() {
             AccountContext.Close();
             System.Threading.Monitor.Exit(AccountContext);
             }
 
+        #endregion
+        #region // Constructors
 
+        /// <summary>
+        /// Return an account handle for the account context <paramref name="accountContext"/>.
+        /// </summary>
+        /// <param name="accountContext">The account context.</param>
+        /// 
+        public AccountHandleLocked(AccountContext accountContext) => 
+                    AccountContext = accountContext;
 
-        public AccountHandleLocked(IJpcSession session, AccountContext accountContext) {
-            accountContext = AccountContext;
-            }
-
-
+        #endregion
+        #region // Methods
         /// <summary>
         /// Return the status of the catalog <paramref name="label"/>.
         /// </summary>
@@ -268,5 +315,6 @@ namespace Goedel.Mesh.Server {
             }
 
 
+        #endregion
         }
     }

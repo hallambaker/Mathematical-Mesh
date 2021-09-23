@@ -352,7 +352,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession"></param>
         /// <returns></returns>
         public bool VerifyDevice(ProfileAccount profileAccount, IJpcSession jpcSession) => 
-                profileAccount.AccountEncryptionKey.MatchKeyIdentifier(
+                profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
                     jpcSession.Credential.AuthenticationKeyId);
 
 
