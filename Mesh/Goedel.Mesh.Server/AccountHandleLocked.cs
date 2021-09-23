@@ -168,7 +168,7 @@ namespace Goedel.Mesh.Server {
         ///<inheritdoc/>
         protected override void Disposing() {
             AccountContext.Close();
-            System.Threading.Monitor.Exit(AccountContext);
+            System.Threading.Monitor.Exit(AccountContext.AccountEntry);
             }
 
         #endregion

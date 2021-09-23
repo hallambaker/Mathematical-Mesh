@@ -117,7 +117,7 @@ namespace Goedel.Mesh.Test {
                     string localName = null) {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-            var contextUser = result.MeshHost.CreateMesh(accountAddress, localName);
+            var contextUser = result.MeshHost.ConfigureMesh(accountAddress, localName);
             return contextUser;
             }
 

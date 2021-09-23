@@ -108,10 +108,7 @@ namespace Goedel.Mesh {
 
     public partial class ProfileUser {
 
-        ///<summary>The account authentication key</summary> 
-        public KeyPair AccountAuthenticationKey => accountAuthenticationKey ??
-            AccountEncryption.GetKeyPair().CacheValue(out accountAuthenticationKey);
-        KeyPair accountAuthenticationKey;
+
 
         ///<summary>The account signature key</summary> 
         public KeyPair AccountSignatureKey => accountSignatureKey ??

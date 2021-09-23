@@ -78,7 +78,7 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>The device activation</summary>
-        public ActivationDevice ActivationDevice { get; private set; }
+        public ActivationDevice ActivationDevice { get; set; }
 
 
         ///<summary>The device key generation seed</summary>
@@ -233,19 +233,14 @@ namespace Goedel.Mesh.Client {
         /// <param name="transactUser">Transaction containing entries to be prepopulated
         /// to the account stores.</param>
         public void SetService(
-                string accountAddress,
-                TransactUser transactUser) {
+                string accountAddress) {
             KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
 
             // Since the service does not know this account (yet)
-
             var credentialPrivate = new KeyCredentialPrivate(
                         ProfileUser.AccountAuthenticationKey as KeyPairAdvanced);
 
-
             MeshClient = MeshMachine.GetMeshClient(credentialPrivate, null, AccountAddress);
-
-
 
             // Query the service capabilities
             var helloRequest = new HelloRequest();
@@ -257,16 +252,7 @@ namespace Goedel.Mesh.Client {
             ProfileUser.AccountAddress = accountAddress;
             ProfileUser.Envelope(KeyProfile);
 
-            // Request binding
-            var createRequest = new BindRequest() {
-                AccountAddress = accountAddress,
-                EnvelopedProfileAccount = ProfileUser.EnvelopedProfileAccount,
-                Updates = transactUser.TransactRequest.Updates
-                };
 
-            // Attempt to register with service in question
-            var response = MeshClient.BindAccount(createRequest);
-            response.AssertSuccess(ServerOperationFailed.Throw);
 
             ActivationAccount.BindService(ProfileService);
 
@@ -279,14 +265,63 @@ namespace Goedel.Mesh.Client {
             var contact = CreateContact();
             SetContactSelf(contact);
 
-            LoadStores(); // Load all stores so that these are created on the service.
 
-            SyncProgressUpload();
 
-            // Reset the Mesh Client so that further operations make use of the device credential
-            MeshClient = null;
+
+
+
 
             }
+
+
+        public void BidService(string accountAddress) {
+
+            // Request binding
+            var createRequest = new BindRequest() {
+                AccountAddress = accountAddress,
+                EnvelopedProfileAccount = ProfileUser.EnvelopedProfileAccount
+                //Updates = transactUser.TransactRequest.Updates
+                };
+
+            // Attempt to register with service in question
+            var response = MeshClient.BindAccount(createRequest);
+            response.AssertSuccess(ServerOperationFailed.Throw);
+
+
+            LoadStores(); // Load all stores so that these are created on the service.
+            SyncProgressUpload();
+            }
+
+
+        public void MakeAdministrator(List<string> rights) {
+
+            var transactRequest = TransactBegin();
+
+            CatalogedMachine.CatalogedDevice = ActivationAccount.MakeCatalogedDevice(
+                    ProfileDevice, ProfileUser, rights, transactRequest, ActivationDevice);
+
+            //var catalogAccess = transactRequest.GetCatalogAccess();
+            //transactRequest.FirstFrame(catalogAccess);
+            var catalogDevice = transactRequest.GetCatalogDevice();
+            //transactRequest.FirstFrame(catalogDevice);
+
+
+
+            transactRequest.CatalogUpdate(catalogDevice, CatalogedMachine.CatalogedDevice);
+            foreach (var update in transactRequest.TransactRequest.Updates) {
+                DictionaryStores.TryGetValue(update.Container, out var status).AssertTrue(NYI.Throw);
+                status.Index = update.Envelopes.Count;
+                }
+
+            transactRequest.Transact();
+
+
+
+
+            }
+
+
+
 
         /// <summary>
         /// Returns the stores directory on <paramref name="meshHost"/> for the profile 

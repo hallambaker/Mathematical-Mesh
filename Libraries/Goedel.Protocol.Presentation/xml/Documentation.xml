@@ -700,7 +700,16 @@
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.Presentation.KeyCredentialPublic.Account">
-            <inheritdoc/>
+            <summary>The account being claimed (unverified).</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.KeyCredentialPublic.Provider">
+            <summary>The credential provider (always null)</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.KeyCredentialPublic.AuthenticationKeyId">
+            <summary>The authentication key identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.KeyCredentialPublic.CredentialValidation">
+            <summary>The credential validation report (always fails as no provider)</summary> 
         </member>
         <member name="M:Goedel.Protocol.Presentation.KeyCredentialPublic.#ctor(Goedel.Protocol.Presentation.PacketExtension)">
             <summary>
@@ -730,6 +739,21 @@
             Create a new instance with the private key <paramref name="authenticationPrivate"/>
             </summary>
             <param name="authenticationPrivate">The private key.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.AddCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.AddEphemerals(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension},System.Collections.Generic.List{Goedel.Cryptography.KeyPairAdvanced}@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.SelectKey(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.SelectKey(System.String,System.Byte[])">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PortId">
             <summary>
@@ -1995,6 +2019,9 @@
         </member>
         <member name="P:Goedel.Protocol.Presentation.RudStreamService.VerifiedAccount">
             <summary>The verified account.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.RudStreamService.TargetAccount">
+            <summary>The account the stream claims to be operating under.</summary> 
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStreamService.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>

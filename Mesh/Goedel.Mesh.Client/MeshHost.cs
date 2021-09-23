@@ -235,16 +235,51 @@ namespace Goedel.Mesh.Client {
         /// profile bound to the machine hardware.</param>
         /// <param name="rights">The rights to be granted to the initial connected device.</param>
         /// <returns>Context for administering the Mesh</returns>
-        public ContextUser CreateMesh(
+        public ContextUser ConfigureMesh(
                 string accountAddress,
                 string localName = null,
                 PrivateKeyUDF accountSeed = null,
                 ProfileDevice profileDevice = null,
-                List<string> rights = null) {
+                List<string> rights = null,
+                bool create = true) {
 
+
+            var contextUser = InitializeAdminContext(accountAddress, localName,
+                ref accountSeed, ref profileDevice, ref rights,
+                 out var activationRoot);
+
+
+            contextUser.SetService(accountAddress);
+
+            if (create) {
+                contextUser.BidService(accountAddress);
+                }
+            else {
+                contextUser.Sync();
+                }
+
+            contextUser.MakeAdministrator(rights);
+            
+            // Return to normal privilege.
+            contextUser.MeshClient = null;
+
+            // Register the mesh description on the local machine.
+            Register(contextUser.CatalogedMachine, contextUser);
+
+            return contextUser;
+            }
+
+
+        private ContextUser InitializeAdminContext(
+                    string accountAddress, 
+                    string localName, 
+                    ref PrivateKeyUDF accountSeed, 
+                    ref ProfileDevice profileDevice, 
+                    ref List<string> rights, 
+
+                    out ActivationAccount activationRoot) {
             // Generate the initial seed for the account if not already specified.
             accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
-            //Screen.WriteLine($"***** Secret Seed = {accountSeed.PrivateValue}");
 
             // Generate a device profile if needed
             var persistDevice = profileDevice == null;
@@ -258,24 +293,18 @@ namespace Goedel.Mesh.Client {
 
             // Create the set of cryptographic keys to initialize the account.
             // create the root activation.
-            var activationRoot = new ActivationAccount(KeyCollection, accountSeed) {
+            activationRoot = new ActivationAccount(KeyCollection, accountSeed) {
                 DefaultActive = true
-                
+
                 };
-            //activationRoot.Envelope();
 
-
-            //activationRoot.DareEnvelope = new DareEnvelope() {
-            //    JsonObject = activationRoot
-            //    };
             // create the initial profile
             var profileUser = new ProfileUser(accountAddress, activationRoot);
 
-            //Screen.WriteLine(profileUser.ToString());
 
             // Check that the profile is valid before using it.
             profileUser.Validate();
-            //profileUser.Activate(KeyCollection);
+
             // Create the account directory.
             ContextUser.CreateDirectory(this, profileUser, activationRoot, KeyCollection);
 
@@ -288,24 +317,11 @@ namespace Goedel.Mesh.Client {
 
 
             var activationDevice = new ActivationDevice(profileDevice);
-            //activationDevice.ConnectionService.Active = true;
-
-            //var activationAccount = MakeActivationAccount(profileDevice, activationDevice, roles, transactContextAccount);
-            //activationDevice.Envelope();
 
             // create a Cataloged activationRoot.Device entry for the admin device
             var catalogedDevice = activationRoot.CreateCataloguedDevice(
                     profileUser, profileDevice, activationDevice, activationRoot,
                     activationRoot.AdministratorSignatureKey);
-
-
-
-            //new CatalogedDevice() {
-            //    EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
-            //    EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
-            //    EnvelopedActivationDevice = activationDevice.EnvelopedActivationDevice,
-            //    EnvelopedActivationAccount = activationRoot.EnvelopedActivationAccount
-            //    };
 
             // Create the host catalog entry and apply to the context user.
             var catalogedMachine = new CatalogedStandard() {
@@ -315,42 +331,19 @@ namespace Goedel.Mesh.Client {
                 EnvelopedProfileAccount = profileUser.EnvelopedProfileAccount
                 };
 
-
-
             //Persist the results.
             if (persistDevice) {
                 profileDevice.PersistSeed(KeyCollection);
                 }
             KeyCollection.Persist(profileUser.Udf, accountSeed, false);
 
-            var contextUser = new ContextUser(this, catalogedMachine) {
-                ActivationAccount = activationRoot
+
+            // Return a user context. It is necessary to ovewrite the activation records
+            // because the cataloged device entry in catalogedMachine is not yet final. 
+            return new ContextUser(this, catalogedMachine) {
+                ActivationAccount = activationRoot,
+                ActivationDevice = activationDevice
                 };
-
-            var transactRequest = contextUser.TransactBegin(true);
-
-            var catalogAccess = transactRequest.GetCatalogAccess();
-            transactRequest.FirstFrame(catalogAccess);
-            var catalogDevice = transactRequest.GetCatalogDevice();
-            transactRequest.FirstFrame(catalogDevice);
-
-
-            catalogedMachine.CatalogedDevice = activationRoot.MakeCatalogedDevice(
-                    profileDevice, profileUser, rights, transactRequest, activationDevice);
-
-            transactRequest.CatalogUpdate(catalogDevice, catalogedMachine.CatalogedDevice);
-            foreach (var update in transactRequest.TransactRequest.Updates) {
-                contextUser.DictionaryStores.TryGetValue(update.Container, out var status).AssertTrue(NYI.Throw);
-                status.Index = update.Envelopes.Count;
-                }
-            transactRequest.Transact();
-            contextUser.SetService(accountAddress, transactRequest);
-
-
-            // Register the mesh description on the local machine.
-            Register(catalogedMachine, contextUser);
-
-            return contextUser;
             }
 
 
@@ -475,7 +468,7 @@ namespace Goedel.Mesh.Client {
             algorithmAuthenticate.Future();
 
 
-            var contextMeshAdmin = CreateMesh(localName);
+            var contextMeshAdmin = ConfigureMesh(localName);
 
             throw new NYI();
             //return contextMeshAdmin.CreateAccount(localName);

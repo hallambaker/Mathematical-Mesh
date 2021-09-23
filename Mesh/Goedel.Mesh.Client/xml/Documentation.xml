@@ -503,6 +503,7 @@
             to authenticate and authorize the action.</param>
             <param name="register">If true, register the pin at the service.</param>
             <param name="encryptKey">The encryption key to be used to encrypt the PIN registration.</param>
+            <param name="roles">The authorized roles.</param>
             <returns>A <see cref="T:Goedel.Mesh.MessagePin"/> instance describing the created parameters.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetMessagePIN(System.String)">
@@ -1106,12 +1107,14 @@
             <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The encrypted escrow entry and the key shares.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.SetService(System.String,Goedel.Mesh.Client.TransactUser)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.SetService(System.String)">
             <summary>
             Set the initial Mesh Service. This MUST be called before devices are added to the 
             personal mesh. This method does not support transfer of the Mesh Service.
             </summary>
             <param name="accountAddress">The account address</param>
+            <param name="transactUser">Transaction containing entries to be prepopulated
+            to the account stores.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetStoresDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser)">
             <summary>
@@ -1267,11 +1270,12 @@
             and writes the <see cref="T:Goedel.Mesh.DevicePreconfigurationPrivate"/> data to a file in the directory
             specified by <paramref name="path"/>.
             </summary>
-            <param name="filename"></param>
-            <param name="profileDevice"></param>
-            <param name="connectUri"></param>
-            <param name="path"></param>
-            <returns></returns>
+            <param name="filename">File the private configuration was to.</param>
+            <param name="profileDevice">A pregenerated device profile.</param>
+            <param name="connectUri">The connection URI from which the configuration is to be claimed.</param>
+            <param name="path">Path to write the configuration file to.</param>
+            <param name="bits">Work factor of the connection secret in bits.</param>
+            <returns>The public and private configuration instances.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,Goedel.Mesh.ConnectionService@,Goedel.Mesh.ConnectionDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32,System.Int32)">
             <summary>
@@ -1291,6 +1295,7 @@
             <param name="algorithmSign">The signature algorithm</param>
             <param name="algorithmAuthenticate">The signature algorithm</param>
             <param name="secret">The master secret.</param>
+            <param name="bitsSecret">Work factor of the master secret in bits.</param>
             <param name="bitsPin">The size of secret to generate in bits/</param>
             <returns>Response from the server.</returns>
         </member>
@@ -2576,7 +2581,7 @@
             </summary>
             <param name="key">The profile to delete</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.CreateMesh(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMesh(System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean)">
              <summary>
              Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
              </summary>

@@ -8735,9 +8735,6 @@
              Account assertion. This is signed by the service hosting the account.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ProfileUser.AccountAuthenticationKey">
-            <summary>The account authentication key</summary> 
-        </member>
         <member name="P:Goedel.Mesh.ProfileUser.AccountSignatureKey">
             <summary>The account signature key</summary> 
         </member>

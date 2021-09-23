@@ -64,7 +64,7 @@ namespace Goedel.Mesh.Shell {
             var accountID = options.NewAccountID.Value;
             var localname = options.Localname.Value;
 
-            var contextUser = MeshHost.CreateMesh(accountID, localname);
+            var contextUser = MeshHost.ConfigureMesh(accountID, localname);
             return new ResultCreateAccount() {
                 Success = true,
                 ProfileAccount = contextUser.ProfileUser,
@@ -259,7 +259,7 @@ namespace Goedel.Mesh.Shell {
 
 
             var accountSeed = new PrivateKeyUDF(secret.UDFKey);
-            var contextUser = MeshHost.CreateMesh("main", accountSeed: accountSeed);
+            var contextUser = MeshHost.ConfigureMesh("main", accountSeed: accountSeed);
 
 
             return new ResultCreateAccount() {

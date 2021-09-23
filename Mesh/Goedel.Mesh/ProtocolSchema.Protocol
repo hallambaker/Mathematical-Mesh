@@ -202,9 +202,11 @@
 	//Create account
 	Transaction Admin BindAccount BindRequest BindResponse
 		Description
-			|Request creation of a new service account or group.
+			|Request binding of an account to the service. This method
+			|is called during account creation and binding.
 		Description
-			|Attempt 
+			|The operation is called Bind rather than Create because the 
+			|account is created by the user, not the service.
 
 	Message BindRequest
 		Description

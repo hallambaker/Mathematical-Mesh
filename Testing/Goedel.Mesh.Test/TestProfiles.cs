@@ -44,7 +44,7 @@ namespace Goedel.Mesh.Test {
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice Admin");
             var machineAliceRecover = new MeshMachineTest(testEnvironmentCommon, name: "Alice Admin Recovered");
 
-            var deviceAdmin = machineAliceAdmin.MeshHost.CreateMesh("main");
+            var deviceAdmin = machineAliceAdmin.MeshHost.ConfigureMesh("main");
 
             throw new NYI();
 

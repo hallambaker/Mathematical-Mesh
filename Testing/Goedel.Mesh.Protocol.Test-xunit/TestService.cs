@@ -116,7 +116,7 @@ namespace Goedel.XUnit {
             var machineAdminBob = new MeshMachineTest(testEnvironmentCommon, DeviceBobAdmin);
 
             // first device
-            var contextAccountAlice_1_a = machineAdminAlice.MeshHost.CreateMesh(AccountAlice, "personal");
+            var contextAccountAlice_1_a = machineAdminAlice.MeshHost.ConfigureMesh(AccountAlice, "personal");
             contextAccountAlice_1_a.SetContactSelf(ContactAlice);
 
             var profileAlice = contextAccountAlice_1_a.ProfileUser;
@@ -159,7 +159,7 @@ namespace Goedel.XUnit {
 
 
             // Create a presonal mesh 
-            var contextAccountAlice_1_a = machineAdminAlice.MeshHost.CreateMesh(AccountAlice, "personal");
+            var contextAccountAlice_1_a = machineAdminAlice.MeshHost.ConfigureMesh(AccountAlice, "personal");
             machineAdminAlice.CheckHostCatalogExtended();
 
 
@@ -226,7 +226,7 @@ namespace Goedel.XUnit {
                 }
 
             // Check message handling - introduce Bob
-            var contextAccountBob = machineAdminBob.MeshHost.CreateMesh(AccountBob, "personal");
+            var contextAccountBob = machineAdminBob.MeshHost.ConfigureMesh(AccountBob, "personal");
 
 
             //var contactCatalogBob = contextAccountBob.GetCatalogContact();
@@ -398,8 +398,8 @@ namespace Goedel.XUnit {
             var secret = new SharedSecret(recoveryShares);
 
             var accountSeed = new PrivateKeyUDF(secret.UDFKey);
-            var recoveredAccount = recoveryMachine.MeshHost.CreateMesh("recover",
-                        accountSeed: accountSeed);
+            var recoveredAccount = recoveryMachine.MeshHost.ConfigureMesh(AccountAlice,
+                        accountSeed: accountSeed, create:false);
 
             // delete seed
             contextAliceOriginal.EraseMeshSecret();

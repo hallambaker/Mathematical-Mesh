@@ -212,6 +212,12 @@
             is used to be cached and shared between operations.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.Created">
+            <summary>Timestamp of context creation.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.Accessed">
+            <summary>Timestamp of context last accessed</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountContext.AccountEntry">
             <summary>The account entry from the host store.</summary> 
         </member>
@@ -1164,7 +1170,6 @@
             be appropriately authenticated.
             </summary>
             <param name="jpcSession">The session connection data.</param>
-            <param name="account">The account to be deleted.</param> 
             <param name="accountAddress">The account address.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Connect(Goedel.Protocol.IJpcSession,Goedel.Mesh.RequestConnection)">
@@ -1173,7 +1178,6 @@
             </summary>
             <param name="jpcSession">The session connection data.</param>
             <param name="requestConnection">TThe message connection request.</param>
-            <param name="account">The verified account data.</param>
             <returns>The connection response.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountComplete(Goedel.Protocol.IJpcSession,Goedel.Mesh.CompleteRequest)">
@@ -1181,7 +1185,6 @@
             Complete an account connection request.
             </summary>
             <param name="jpcSession">The session connection data.</param>
-            <param name="account">The account for which the status is requested..</param>
             <param name="completeRequest">The completion request.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession)">
@@ -1190,15 +1193,13 @@
             be appropriately authenticated.
             </summary>
             <param name="jpcSession">The session connection data.</param>
-            <param name="account">The account for which the status is requested..</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDownload(Goedel.Protocol.IJpcSession,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect})">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.
             </summary>
-            <param name="jpcSession">The session connection data.</param>
-            <param name="account">The account for which the status is requested..</param>
+            <param name="session">The session connection data.</param>
             <param name="selections">The selection criteria.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountTransact(Goedel.Protocol.IJpcSession,System.Collections.Generic.List{Goedel.Mesh.ContainerUpdate},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Message}},System.Collections.Generic.List{System.String})">
