@@ -437,7 +437,7 @@ namespace Goedel.Mesh.Server {
                 UnbindRequest request, IJpcSession jpcSession) {
 
             try {
-                MeshPersist.AccountDelete(jpcSession, VerifyAccount(jpcSession), request.Account);
+                MeshPersist.AccountUnbind(jpcSession, request.Account);
                 return new UnbindResponse();
                 }
             catch (System.Exception exception) {
@@ -538,7 +538,7 @@ namespace Goedel.Mesh.Server {
                 TransactRequest request, IJpcSession jpcSession) {
             try {
                 //var account = VerifyAccount(jpcSession);
-                MeshPersist.AccountUpdate(jpcSession, 
+                MeshPersist.AccountTransact(jpcSession, 
                         request.Updates, request.Inbound, request.Outbound, request.Local, request.Accounts); ;
                 return new TransactResponse();
                 }

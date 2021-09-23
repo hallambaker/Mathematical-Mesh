@@ -103,6 +103,12 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         protected AccountContext AccountContext { get; }
 
+        public string AccountAddress => AccountContext.AccountEntry.AccountAddress;
+
+
+        protected AccountUser AccountUser => AccountContext.AccountEntry as AccountUser;
+
+        public ProfileAccount ProfileAccount => AccountUser.GetProfileAccount();
 
 
         string Directory => AccountContext.AccountEntry.Directory;
@@ -119,6 +125,39 @@ namespace Goedel.Mesh.Server {
             }
 
 
+        /// <summary>
+        /// Return the status of the catalog <paramref name="label"/>.
+        /// </summary>
+        /// <param name="label">Catalog to return status on.</param>
+        /// <returns>The status vector.</returns>
+        public ContainerStatus GetStatusStore(string label) =>
+            Store.Status(Directory, label);
+
+
+        /// <summary>
+        /// Open the store <paramref name="label"/> and return an accessor.
+        /// </summary>
+        /// <param name="label">The store to open</param>
+        /// <returns></returns>
+        public Store GetStore(string label) =>
+            new(Directory, label);
+
+
+        /// <summary>
+        /// Return the publication catalog. This is a catalog that the service MUST have
+        /// read access to. Not clear that the clients need access though.
+        /// </summary>
+        /// <returns></returns>
+        public CatalogAccess GetCatalogCapability() =>
+            new(Directory);
+
+        /// <summary>
+        /// Return the publication catalog. This is a catalog that the service MUST have
+        /// read access to. Not clear that the clients need access though.
+        /// </summary>
+        /// <returns></returns>
+        public CatalogPublication GetCatalogPublication() =>
+            new(Directory);
 
 
         /// <summary>
@@ -157,5 +196,65 @@ namespace Goedel.Mesh.Server {
             AccountPrivilege.HasFlag(AccountPrivilege.Connected).AssertTrue(NotAuthorized.Throw);
             Store.Append(Directory, null, envelopes, label);
             }
+
+
+
+
+
+
+        /// <summary>
+        /// Obtain status values for all the stores associated with an account.
+        /// </summary>
+        /// <returns>The list of container status entries.</returns>
+        public List<ContainerStatus> GetContainerStatuses() {
+            var result = new List<ContainerStatus> {
+                    GetStatusStore (SpoolInbound.Label),
+                    GetStatusStore (SpoolOutbound.Label),
+                    GetStatusStore (SpoolLocal.Label),
+                    GetStatusStore (CatalogAccess.Label)
+
+                };
+
+            switch (AccountContext.AccountEntry) {
+                //case AccountGroup _: {
+                //    result.Add(GetStatusStore(CatalogMember.Label));
+                //    break;
+                //    }
+
+                case Goedel.Mesh.Server.AccountUser _: {
+                    result.Add(GetStatusStore(CatalogCredential.Label));
+                    result.Add(GetStatusStore(CatalogDevice.Label));
+                    result.Add(GetStatusStore(CatalogContact.Label));
+                    result.Add(GetStatusStore(CatalogApplication.Label));
+                    result.Add(GetStatusStore(CatalogPublication.Label));
+                    result.Add(GetStatusStore(CatalogBookmark.Label));
+                    result.Add(GetStatusStore(CatalogTask.Label));
+                    break;
+                    }
+                }
+
+            return result;
+            }
+
+        /// <summary>
+        /// Return the message with identifier <paramref name="messageId"/> from the local spool.
+        /// </summary>
+        /// <param name="messageId">Message to return.</param>
+        /// <returns>The message (if found).</returns>
+        public DareEnvelope GetLocal(string messageId) {
+            var envelopeId = Message.GetEnvelopeId(messageId);
+
+            using var spoolLocal = GetStore(SpoolLocal.Label);
+
+            foreach (var message in spoolLocal.Select(0, reverse: true)) {
+                if (message?.EnvelopeId == envelopeId) {
+                    return message;
+                    }
+
+                }
+            return null;
+            }
+
+
         }
     }

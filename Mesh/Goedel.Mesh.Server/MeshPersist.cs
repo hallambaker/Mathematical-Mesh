@@ -97,7 +97,7 @@ namespace Goedel.Mesh.Server {
 
 
 
-        #region // Account maintenance AccountBind/
+        #region // Account maintenance AccountBind/AccountUnbind
 
 
         /// <summary>
@@ -138,22 +138,20 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account to be deleted.</param> 
         /// <param name="accountAddress">The account address.</param>
-        public bool AccountDelete(IJpcSession jpcSession, MeshVerifiedAccount account,
-                string accountAddress) {
-            jpcSession.Future();
+        public bool AccountUnbind(IJpcSession jpcSession, string accountAddress) {
 
+            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Unbind);
+            accountAddress.AssertEqual(accountHandle.AccountAddress, NYI.Throw);
 
             lock (Container) {
-                return Container.Delete(accountAddress);
+                return Container.Delete(accountHandle.AccountAddress);
                 }
             }
 
 
 
         #endregion
-        #region // Service dispatch methods 
-
-
+        #region // Connect
 
         /// <summary>
         /// Process a connection request.
@@ -167,10 +165,11 @@ namespace Goedel.Mesh.Server {
                         RequestConnection requestConnection) {
             jpcSession.Future();
 
-            using var accountHandle = GetAccountUnverified(requestConnection.AccountAddress);
+            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Device);
+            //using var accountHandle = GetAccountUnverified(requestConnection.AccountAddress);
             var serviceNonce = CryptoCatalog.GetBits(128);
 
-            var MeshUDF = accountHandle.ProfileUser.ProfileSignature.CryptoKey.UDFBytes;
+            var MeshUDF = accountHandle.ProfileAccount.ProfileSignature.CryptoKey.UDFBytes;
             var DeviceUDF = requestConnection.ProfileDevice.ProfileSignature.CryptoKey.UDFBytes;
 
             var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
@@ -198,7 +197,7 @@ namespace Goedel.Mesh.Server {
 
             var connectResponse = new ConnectResponse() {
                 EnvelopedAcknowledgeConnection = acknowledgeConnection.EnvelopedAcknowledgeConnection,
-                EnvelopedProfileAccount = accountHandle.ProfileUser.EnvelopedProfileAccount
+                EnvelopedProfileAccount = accountHandle.ProfileAccount.EnvelopedProfileAccount
                 };
 
             return connectResponse;
@@ -214,7 +213,9 @@ namespace Goedel.Mesh.Server {
                     MeshVerifiedDevice account,
                     CompleteRequest completeRequest) {
 
-            using var accountHandle = GetAccountUnverified(completeRequest.AccountAddress);
+            //using var accountHandle = GetAccountUnverified(completeRequest.AccountAddress);
+            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Device);
+
 
             // pull the request off SpoolLocal
             var envelope = accountHandle.GetLocal(completeRequest.ResponseID);
@@ -231,8 +232,8 @@ namespace Goedel.Mesh.Server {
                 EnvelopedRespondConnection = new Enveloped<RespondConnection>(envelope)
                 };
             }
-
-
+        #endregion
+        #region // Store maintenance methods
         /// <summary>
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
@@ -241,10 +242,8 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The account for which the status is requested..</param>
         public StatusResponse AccountStatus(IJpcSession jpcSession, MeshVerifiedAccount account) {
 
-
-            using var accountHandle = GetAccountVerified(account, jpcSession);
-
-
+            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
+            //using var accountHandle = GetAccountVerified(account, jpcSession);
 
             var containerStatus = accountHandle.GetContainerStatuses();
 
@@ -255,11 +254,9 @@ namespace Goedel.Mesh.Server {
                 };
 
             // summarize the status here.
-
             statusResponse.ToConsole();
 
             return statusResponse;
-
             }
 
 
@@ -274,16 +271,17 @@ namespace Goedel.Mesh.Server {
                     IJpcSession jpcSession,
                     MeshVerifiedAccount account,
                     List<ConstraintsSelect> selections) {
+            
+            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
 
-            using var accountEntry = GetAccountVerified(account, jpcSession);
+            //using var accountEntry = GetAccountVerified(account, jpcSession);
             var updates = new List<ContainerUpdate>();
             foreach (var selection in selections) {
-                using var store = accountEntry.GetStore(selection.Container);
+                using var store = accountHandle.GetStore(selection.Container);
                 var update = new ContainerUpdate() {
                     Container = selection.Container,
                     Envelopes = new List<DareEnvelope>()
                     };
-
 
                 foreach (var message in store.Select(selection.IndexMin)) {
                     update.Envelopes.Add(message);
@@ -295,19 +293,17 @@ namespace Goedel.Mesh.Server {
             }
 
 
-
         /// <summary>
         /// Update an account record. There must be an existing record and the request must
         /// be appropriately authenticated.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The account for which the status is requested.</param>
         /// <param name="updates">Entries to be added to catalogs.</param>
         /// <param name="inbound">Entries to be added to the user's inbound store.</param>
         /// <param name="outbound">Entries to be added to the user's outbound store.</param>
         /// <param name="local">Entries to be added to the user's local store.</param>
         /// <param name="accounts">Accounts to which outbound messages are to be sent.</param>
-        public void AccountUpdate(
+        public void AccountTransact(
                     IJpcSession jpcSession,
                     List<ContainerUpdate> updates,
                     List<Enveloped<Message>> inbound,
@@ -339,7 +335,7 @@ namespace Goedel.Mesh.Server {
 
             if (updates != null) {
                 foreach (var update in updates) {
-                    Screen.WriteLine(update.ToString());
+                    //Screen.WriteLine(update.ToString());
                     accountHandle.StoreAppend(update.Container, update.Envelopes);
                     }
                 }
@@ -366,193 +362,27 @@ namespace Goedel.Mesh.Server {
 
             }
 
-
-
-
-        /// <summary>
-        /// Verify a claim to a publication and return the value if accepted.
-        /// </summary>
-        /// <param name="jpcSession">The Mesh session.</param>
-        /// <param name="dareEnvelope">Envelope containing the MessageClaim</param>
-        /// <returns>The claim response.</returns>
-        public ClaimResponse Claim(
-                    IJpcSession jpcSession,
-                    DareEnvelope dareEnvelope) {
-
-            var messageClaim = MeshItem.Decode(dareEnvelope) as MessageClaim;
-            using var accountEntry = GetAccountUnverified(messageClaim.Recipient);
-            using var store = accountEntry.GetCatalogPublication();
-
-
-            // Fetch the record by request.ID
-            var id = messageClaim.PublicationId;
-            var publicationEntry = store.GetEntry(id);
-
-            if (publicationEntry.JsonObject is not CatalogedPublication publication) {
-                return null;
-                }
-
-            // verify the claim.
-            if (!publication.VerifyService(messageClaim.Sender,
-                        messageClaim.ServiceAuthenticate)) {
-                return null;
-                }
-
-            // Post the claim to the local spool. The unique identifier is the
-            // publication identifier.
-            dareEnvelope.Header.EnvelopeId = Message.GetEnvelopeId(id);
-            accountEntry.PostLocal(dareEnvelope);
-
-            // Hack: Allow for the possibility of multiple claims on the same item.
-            // Test: Multiple claims on the same item functions correctly.
-
-            var response = new ClaimResponse() {
-                CatalogedPublication = publication
-                };
-
-            return response;
-
-            }
-
-        /// <summary>
-        /// Poll service to see if a claim has been made for a given publication and
-        /// if so return the latest claim made.
-        /// </summary>
-        /// <param name="jpcSession">The Mesh session.</param>
-        /// <param name="targetAccount"></param>
-        /// <param name="id"></param>
-        /// <returns>The result of the transaction.</returns>
-        public PollClaimResponse PollClaim(
-                    IJpcSession jpcSession,
-                    string targetAccount,
-                    string id) {
-            using var accountEntry = GetAccountUnverified(targetAccount);
-            var message = accountEntry.GetLocal(id);
-
-            // return the message if found (otherwise null)
-            var response = message == null ? null : new PollClaimResponse() {
-                EnvelopedMessage = new Enveloped<Message>(message)
-                };
-            return response;
-            }
-
-
-        /// <summary>
-        /// Respond to a set of cryptographic operations.
-        /// </summary>
-        /// <param name="jpcSession">The Mesh client session.</param>
-        /// <param name="accountAddress">The account to which the capabilities are attached.</param>
-        /// <param name="operations">The operations requested.</param>
-        /// <returns>Result of the decryption request.</returns>
-        public OperateResponse Operate(
-                    IJpcSession jpcSession,
-                    string accountAddress,
-                    List<CryptographicOperation> operations) {
-
-            // Fetch the account 
-            using var accountEntry = GetAccountUnverified(accountAddress);
-
-            using var catalogCapability = accountEntry.GetCatalogCapability();
-
-            var results = new List<CryptographicResult>();
-
-            // Phase2: validate right to access...
-
-            // Different stores depending on user or group account
-            foreach (var operation in operations) {
-                results.Add(Operate(catalogCapability, operation, jpcSession.Credential.Account));
-                }
-
-            var response = new OperateResponse() {
-                Results = results
-                };
-
-
-            return response;
-            }
-
-
-        CryptographicResult Operate(
-                        CatalogAccess catalogCapability,
-                        CryptographicOperation cryptographicOperation, 
-                        string accountAddress) {
-
-            switch (cryptographicOperation) {
-                case CryptographicOperationKeyAgreement operationKeyAgreement: {
-                    return Operate(catalogCapability, operationKeyAgreement, accountAddress);
-                    }
-                }
-
-
-            throw new NYI();
-            }
-
-        CryptographicResult Operate(
-                CatalogAccess catalogCapability,
-                CryptographicOperationKeyAgreement cryptographicOperation, string accountAddress) {
-
-            var keyId = cryptographicOperation.KeyId ?? accountAddress;
-            // Phase2: validate the access to this key id
-
-            catalogCapability.DictionaryDecryptByKeyId.TryGetValue(
-                keyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
-            
-            
-            var publicEphemeral = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
-
-
-            capability.Active.AssertTrue(NotAuthorized.Throw);
-            var share = capability.DecryptShare(KeyCollection);
-
-            var keyAgreement = share.Agreement(publicEphemeral);
-
-            var cryptographicResultKeyAgreement = new CryptographicResultKeyAgreement() {
-                KeyAgreement = KeyAgreement.Factory(keyAgreement)
-                };
-
-
-            return cryptographicResultKeyAgreement;
-
-
-            }
-
-
-
+        #endregion
+        #region // Post
 
         ///// <summary>
-        ///// Process an inbound message to an account.
+        ///// Post message to the local pickup spool.
         ///// </summary>
         ///// <param name="jpcSession">The session connection data.</param>
         ///// <param name="account">The verified sending account.</param>
-        ///// <param name="accounts">The account to which the message is directed.</param>
         ///// <param name="dareMessage">The message.</param>
         ///// <returns>Identifier of the message posted.</returns>
-        //public string MessagePost(
-        //            JpcSession jpcSession,
-        //            MeshVerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) =>
-        //    accounts == null ? MessagePostSelf(jpcSession, account, dareMessage) :
-        //         MessagePostOther(jpcSession, account, accounts, dareMessage);
+        //public string MessagePostSelf(JpcSession jpcSession, MeshVerifiedAccount account, DareEnvelope dareMessage) {
 
-        /// <summary>
-        /// Post message to the local pickup spool.
-        /// </summary>
-        /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The verified sending account.</param>
-        /// <param name="dareMessage">The message.</param>
-        /// <returns>Identifier of the message posted.</returns>
-        public string MessagePostSelf(JpcSession jpcSession, MeshVerifiedAccount account, DareEnvelope dareMessage) {
+        //    var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
+        //    identifier.AssertNotNull(InvalidMessageID.Throw);
+        //    using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
+        //    //using var accountEntry = GetAccountVerified(account, jpcSession);
+        //    dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ?? new ContentMeta();
+        //    accountHandle.PostLocal(dareMessage);
 
-            var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
-
-            identifier.AssertNotNull(InvalidMessageID.Throw);
-
-            using var accountEntry = GetAccountVerified(account, jpcSession);
-            dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ?? new ContentMeta();
-
-            accountEntry.PostLocal(dareMessage);
-
-            return identifier;
-            }
+        //    return identifier;
+        //    }
 
         /// <summary>
         /// Post message to a remote user.
@@ -591,7 +421,7 @@ namespace Goedel.Mesh.Server {
 
         bool MessagePostLocal(string recipient, DareEnvelope dareMessage) {
 
-            using var recipientAccount = GetAccountUnverified(recipient);
+            using var recipientAccount = GetAccountHandleLocked(recipient);
             recipientAccount.PostInbound(dareMessage);
 
             return true;
@@ -605,31 +435,188 @@ namespace Goedel.Mesh.Server {
             throw new NYI();
             }
 
-
+        #endregion
+        #region // Operate
 
         /// <summary>
-        /// Get access to an account record for an authenticated request.
+        /// Respond to a set of cryptographic operations.
         /// </summary>
-        /// <param name="jpcSession">The session connection data.</param>      
-        /// <param name="verifiedAccount">The account for which the data is requested.</param>
-        /// <returns></returns>
-        AccountHandleVerified GetAccountVerified(MeshVerifiedAccount verifiedAccount, IJpcSession jpcSession) {
-            var accountEntry = GetAccountLocked(jpcSession.TargetAccount);
+        /// <param name="jpcSession">The Mesh client session.</param>
+        /// <param name="accountAddress">The account to which the capabilities are attached.</param>
+        /// <param name="operations">The operations requested.</param>
+        /// <returns>Result of the decryption request.</returns>
+        public OperateResponse Operate(
+                    IJpcSession jpcSession,
+                    string accountAddress,
+                    List<CryptographicOperation> operations) {
 
-            accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
-            accountEntry.Verify(jpcSession);
-            return new AccountHandleVerified(jpcSession);
+            // Fetch the account 
+            //using var accountEntry = GetAccountUnverified(accountAddress);
+            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
+            using var catalogCapability = accountHandle.GetCatalogCapability();
+
+            var results = new List<CryptographicResult>();
+
+            // Phase2: validate right to access...
+
+            // Different stores depending on user or group account
+            foreach (var operation in operations) {
+                results.Add(Operate(catalogCapability, operation, jpcSession.Credential.Account));
+                }
+
+            var response = new OperateResponse() {
+                Results = results
+                };
+
+
+            return response;
             }
 
+
+        CryptographicResult Operate(
+                 CatalogAccess catalogCapability,
+                 CryptographicOperation cryptographicOperation,
+                 string accountAddress) {
+
+            switch (cryptographicOperation) {
+                case CryptographicOperationKeyAgreement operationKeyAgreement: {
+                    return Operate(catalogCapability, operationKeyAgreement, accountAddress);
+                    }
+                }
+
+
+            throw new NYI();
+            }
+
+        CryptographicResult Operate(
+                CatalogAccess catalogCapability,
+                CryptographicOperationKeyAgreement cryptographicOperation, string accountAddress) {
+
+            var keyId = cryptographicOperation.KeyId ?? accountAddress;
+            // Phase2: validate the access to this key id
+
+            catalogCapability.DictionaryDecryptByKeyId.TryGetValue(
+                keyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
+
+
+            var publicEphemeral = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
+
+
+            capability.Active.AssertTrue(NotAuthorized.Throw);
+            var share = capability.DecryptShare(KeyCollection);
+
+            var keyAgreement = share.Agreement(publicEphemeral);
+
+            var cryptographicResultKeyAgreement = new CryptographicResultKeyAgreement() {
+                KeyAgreement = KeyAgreement.Factory(keyAgreement)
+                };
+
+
+            return cryptographicResultKeyAgreement;
+
+
+            }
+
+
+        #endregion
+        #region // External
+
         /// <summary>
-        /// Get access to an account record for an authenticated request.
+        /// Verify a claim to a publication and return the value if accepted.
         /// </summary>
-        /// <param name="account">The account to access.</param>
-        /// <returns>The access handle.</returns>
-        AccountHandleUnverified GetAccountUnverified(string account) =>
-            new(GetAccountLocked(account));
+        /// <param name="jpcSession">The Mesh session.</param>
+        /// <param name="dareEnvelope">Envelope containing the MessageClaim</param>
+        /// <returns>The claim response.</returns>
+        public ClaimResponse Claim(
+                    IJpcSession jpcSession,
+                    DareEnvelope dareEnvelope) {
+
+            var messageClaim = MeshItem.Decode(dareEnvelope) as MessageClaim;
+
+            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Post);
+            //using var accountEntry = GetAccountUnverified(messageClaim.Recipient);
+            using var store = accountHandle.GetCatalogPublication();
 
 
+            // Fetch the record by request.ID
+            var id = messageClaim.PublicationId;
+            var publicationEntry = store.GetEntry(id);
+
+            if (publicationEntry.JsonObject is not CatalogedPublication publication) {
+                return null;
+                }
+
+            // verify the claim.
+            if (!publication.VerifyService(messageClaim.Sender,
+                        messageClaim.ServiceAuthenticate)) {
+                return null;
+                }
+
+            // Post the claim to the local spool. The unique identifier is the
+            // publication identifier.
+            dareEnvelope.Header.EnvelopeId = Message.GetEnvelopeId(id);
+            accountHandle.PostLocal(dareEnvelope);
+
+            // Hack: Allow for the possibility of multiple claims on the same item.
+            // Test: Multiple claims on the same item functions correctly.
+
+            var response = new ClaimResponse() {
+                CatalogedPublication = publication
+                };
+
+            return response;
+
+            }
+
+        #endregion
+        #region // Obsolete Methods
+
+        /// <summary>
+        /// Poll service to see if a claim has been made for a given publication and
+        /// if so return the latest claim made.
+        /// </summary>
+        /// <param name="jpcSession">The Mesh session.</param>
+        /// <param name="targetAccount"></param>
+        /// <param name="id"></param>
+        /// <returns>The result of the transaction.</returns>
+        public PollClaimResponse PollClaim(
+                    IJpcSession jpcSession,
+                    string targetAccount,
+                    string id) {
+            using var accountEntry = GetAccountHandleLocked(targetAccount);
+            var message = accountEntry.GetLocal(id);
+
+            // return the message if found (otherwise null)
+            var response = message == null ? null : new PollClaimResponse() {
+                EnvelopedMessage = new Enveloped<Message>(message)
+                };
+            return response;
+            }
+
+        ///// <summary>
+        ///// Get access to an account record for an authenticated request.
+        ///// </summary>
+        ///// <param name="jpcSession">The session connection data.</param>      
+        ///// <param name="verifiedAccount">The account for which the data is requested.</param>
+        ///// <returns></returns>
+        //AccountHandleVerified GetAccountVerified(MeshVerifiedAccount verifiedAccount, IJpcSession jpcSession) {
+        //    var accountEntry = GetAccountLocked(jpcSession.TargetAccount);
+
+        //    accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
+        //    accountEntry.Verify(jpcSession);
+        //    return new AccountHandleVerified(jpcSession);
+        //    }
+
+        ///// <summary>
+        ///// Get access to an account record for an authenticated request.
+        ///// </summary>
+        ///// <param name="account">The account to access.</param>
+        ///// <returns>The access handle.</returns>
+        //AccountHandleUnverified GetAccountUnverified(string account) =>
+        //    new(GetAccountLocked(account));
+
+        #endregion
+        #region // Account handle management
         /// <summary>
         /// Get the account record and lock it. The entry must be disposed properly 
         /// to prevent access to the account being blocked from other threads.
@@ -661,6 +648,17 @@ namespace Goedel.Mesh.Server {
                     }
                 return null;
                 }
+            }
+
+        AccountHandleLocked GetAccountHandleLocked(string Account) {
+            var accountEntry = GetAccountLocked(Account);
+            var accountContext = new AccountContext() {
+                AccountEntry = accountEntry
+                };
+
+            return new AccountHandleLocked(null, accountContext) {
+                AccountPrivilege = AccountPrivilege.Post
+                };
             }
 
 

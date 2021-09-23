@@ -22,6 +22,7 @@
 
 
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Server {
     public abstract partial class AccountEntry {
@@ -53,9 +54,13 @@ namespace Goedel.Mesh.Server {
     public partial class AccountUser {
 
 
-        ///<summary>Cached convenience accessor for <see cref="ProfileAccount"/></summary>
-        public ProfileAccount GetProfileAccount() => EnvelopedProfileUser.Decode();
+        ///<summary>Cached convenience accessor for <see cref="profileAccount"/></summary>
+        public ProfileAccount GetProfileAccount() =>
+            profileAccount ?? EnvelopedProfileUser.Decode().CacheValue (out profileAccount);
 
+        ProfileAccount profileAccount;
+
+        //public ProfileUser ProfileUser => GetProfileAccount() as ProfileUser;
 
         ///<summary>Cached convenience accessor for <see cref="ProfileUser"/></summary>
         public ProfileUser ProfileUser => GetProfileAccount() as ProfileUser;
