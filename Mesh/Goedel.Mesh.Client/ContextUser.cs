@@ -776,6 +776,10 @@ namespace Goedel.Mesh.Client {
                 EnvelopedProfileAccount = profileGroup.EnvelopedProfileAccount
                 };
 
+
+            // here we need to create aMesh client to use to control the group account.
+            // We should also preserve the group key so we can add users.
+
             var createResponse = MeshClient.BindAccount(createRequest);
             createResponse.AssertSuccess();
 
