@@ -588,8 +588,12 @@ namespace Goedel.Mesh.Client {
                 return true;
                 }
 
-            var catalogCapability = GetStore(CatalogAccess.Label) as CatalogAccess;
-            return catalogCapability.TryFindKeyDecryption(keyId, out cryptoKey);
+
+            //Bug? This might cause group decryption to fail.
+            //var catalogCapability = GetStore(CatalogAccess.Label) as CatalogAccess;
+            //return catalogCapability.TryFindKeyDecryption(keyId, out cryptoKey);
+
+            return false;
             }
         #endregion
         #region // Message Handling - Get/Process pending.
